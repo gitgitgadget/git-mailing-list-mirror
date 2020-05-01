@@ -7,125 +7,141 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85A9FC47256
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61009C47256
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:12:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F764216FD
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:10:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C6AC21775
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 23:12:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="XGp9qpW9"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="zVKHTctc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726336AbgEAXKq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 19:10:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57320 "EHLO
+        id S1726759AbgEAXMq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 19:12:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726045AbgEAXKq (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 1 May 2020 19:10:46 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB85C061A0C
-        for <git@vger.kernel.org>; Fri,  1 May 2020 16:10:44 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id r4so5201834pgg.4
-        for <git@vger.kernel.org>; Fri, 01 May 2020 16:10:44 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726045AbgEAXMo (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 1 May 2020 19:12:44 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0391EC061A0C
+        for <git@vger.kernel.org>; Fri,  1 May 2020 16:12:43 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id l20so5185832pgb.11
+        for <git@vger.kernel.org>; Fri, 01 May 2020 16:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=sUG28fThwNZWu1+IhTPXdH+rfq4bZLz40PZC69kH9bE=;
-        b=XGp9qpW9ipdMD7bV9+dencANK1l2Z5AeCgaOekt/IepAeT0UuN99XlcO9pa8uhYjhn
-         OvU1SGMLGuG7MycmSlqYcYiLRoCLDhutFK/CBO5JPJHfEuKseAm+hJjlMYcLcV9+Mdbs
-         L+GJ7da7RkW6fPwXcx3T14OFeJXulzI1euWy2MO5RwPtGy9+MXzV26EeDEPmuDsmrKuF
-         w1PVpgSl7c+JFRkb5LsBATvkEDdboRn2gBgoD8QqXFwDRKOt7UwJsYY3MbWNppzuVBPD
-         GT4ZylFVQgHJWvVmGTSdozlxMZ1DKqxAzAz57PHAqQQxqdPCG6zL3u2ErLF48GH8lMKz
-         ENiA==
+        bh=GUkfhrLCjv2w0MleJfVn2/PyK6aQ1hGwEqdWB+9qX6A=;
+        b=zVKHTctc0rcFoiCdU/gcTUvampKQASAwOI7iYr0h1So7Q3is0sgnfUKLEO+mngXzmb
+         H23+v5J2nUX3OoYXoj1UO6Kzoxn2HM0pM3aVoQCJUIK+7qt6v2PzAxAmLKAnnNZFQhu0
+         79xm3d/PEfDzfXGF8gBvW7vr/fDEsxw5Av27x01FWeGFLtTR5uo9iKta9nRCzDgQ/Ei0
+         d5fggBXcPAVI5O9jdxSmiqntWnndqOH33LzQoiMqt4wHkU4IMb7nytxEa6KpdkXBXuwd
+         uyJOVFR+aTB5uYinXVBz1iX0WgvUDLChbpZyKU9Ik/JTx0acza48F9KG8AlDSt/FdhTP
+         rQQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=sUG28fThwNZWu1+IhTPXdH+rfq4bZLz40PZC69kH9bE=;
-        b=sF9ZHlc+vRVbypOvMSZQbr8pOED0B3ytqur1Nyg7/R6IeFtV7wCkX26hdC/3/p8AEy
-         IoxuDW2meO+l2gbrklbaOHeKiIU93oDh95S810dBtKhpbxYVd8J0MYoQvxGcaQrdCyo6
-         i/RAYBmhLlxiMxn2hy/EvFYogDdFLFTsPylXvW8eXGpvcDMznytdxneWGwR1x4dz/qNZ
-         k+Iz7LAHWoQuG6WUC6I7eV3TuDM3jtQC8aP05CtGhvtUcFz9MR25j0LMK3mInRDjbYAF
-         gOYsqVvMAX/vAIVvUxhPXdohMiYxt+d2Gl0GSE5YZDIKU3rVTAGvSsMwxH4HlcwlVx5w
-         p6GQ==
-X-Gm-Message-State: AGi0PuaCLTdF0DMybTUp7lhP+uaMMdJDJEbvdyGR1Ixcj2heiTA1CHKz
-        qQY936QLCGow6tOzzcptEGjdE6dsnxE8rKNr
-X-Google-Smtp-Source: APiQypJXFVkKcYdw/NAMVWC+zU8gNRl7jeX1rXdhp/DXuANWtKJfGQtO4wR2e4mnzx5FMWDPbkYt3Q==
-X-Received: by 2002:a65:58c4:: with SMTP id e4mr6526999pgu.61.1588374643966;
-        Fri, 01 May 2020 16:10:43 -0700 (PDT)
+        bh=GUkfhrLCjv2w0MleJfVn2/PyK6aQ1hGwEqdWB+9qX6A=;
+        b=mlBk9jkc1OemhKNH6cIW0pg8nd0kvNTis4dMz7j2KVm3eS+OJRDSG+gA/IZ+hTxgFu
+         Ckftgore0a1DtJNe4q25b1WXG3+VX+7+Uyfug4kdxyr59pcULLJcRSXmqYGHu4gGy6Vv
+         mK0Gi6GJeZXHLb6oZBslnQQvBBu0xfzhJZq5K83GA8QihWhlQrp4py0McyhCHjZjycs5
+         6RmXYda8/02BTYvsfPNoV0u0tFo4kCDBB4uGH4uMnP1JbIWdvpurJBLJEe1G51E6f361
+         9MivpmNUIzjXTOTqh5UNJM+Nws4eiE43/cCavMC9406pzSzZ5+hOZIavjsHzZKTBjCHL
+         PepA==
+X-Gm-Message-State: AGi0Puad8m0ps1S+KcFowYqxXwbD++Ty8OJ72yTQ+MfTB9ro0QmeXhfN
+        AMMiX8vuMkiMMJ076qG9/JNiYQ==
+X-Google-Smtp-Source: APiQypInYtfWrjUWUlxuETZNZ+BshrDzHwD4czRWgXrqoBoy9d072KBwpwWRn+SQWOkLWlr2g0RrHw==
+X-Received: by 2002:aa7:97b2:: with SMTP id d18mr6427211pfq.89.1588374762463;
+        Fri, 01 May 2020 16:12:42 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id fu12sm641989pjb.20.2020.05.01.16.10.42
+        by smtp.gmail.com with ESMTPSA id c1sm3063768pfc.94.2020.05.01.16.12.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 16:10:43 -0700 (PDT)
-Date:   Fri, 1 May 2020 17:10:42 -0600
+        Fri, 01 May 2020 16:12:41 -0700 (PDT)
+Date:   Fri, 1 May 2020 17:12:40 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
         garimasigit@gmail.com, szeder.dev@gmail.com, jnareb@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 05/12] bloom: parse commit before computing filters
-Message-ID: <20200501231042.GB46422@syl.local>
+Subject: Re: [PATCH 06/12] bloom: use num_changes not nr for limit detection
+Message-ID: <20200501231240.GC46422@syl.local>
 References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
- <ef4c08e401bd57dddf327910032220632a36885f.1588347029.git.gitgitgadget@gmail.com>
+ <7d5561575d5e81128dcccb411bf2b052491d1850.1588347029.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ef4c08e401bd57dddf327910032220632a36885f.1588347029.git.gitgitgadget@gmail.com>
+In-Reply-To: <7d5561575d5e81128dcccb411bf2b052491d1850.1588347029.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 01, 2020 at 03:30:22PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Fri, May 01, 2020 at 03:30:23PM +0000, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> When computing changed-path Bloom filters for a commit, we need to
-> know if the commit has a parent or not. If the commit is not parsed,
-> then its parent pointer will be NULL.
+> As diff_tree_oid() computes a diff, it will terminate early if the
+> total number of changed paths is strictly larger than max_changes.
+> This includes the directories that changed, not just the file paths.
+> However, only the file paths are reflected in the resulting diff
+> queue "nr" value.
+
+Nit; s/queue/queue's
+
 >
-> As far as I can tell, the only opportunity to reach this code
-> without parsing the commit is inside "test-tool bloom
-> get_filter_for_commit" but it is best to be safe.
+> Use the "num_changes" from diffopt to check if the diff terminated
+> early. This is incredibly important, as it can result in incorrect
+> filters! For example, the first commit in the Linux kernel repo
+> reports only 471 changes, but since these are nested inside several
+> directories they expand to 513 "real" changes, and in fact the
+> total list of changes is not reported. Thus, the computed filter
+> for this commit is incorrect.
+
+Wow, this is a great find. Nicely done!
+
+> Demonstrate the subtle difference by using one fewer file change
+> in the 'get bloom filter for commit with 513 changes' test. Before,
+> this edited 513 files inside "bigDir" which hit this inequality.
+> However, dropping the file count by one demonstrates how the
+> previous inequality was incorrect but the new one is correct.
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  bloom.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  bloom.c          | 2 +-
+>  t/t0095-bloom.sh | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
 > diff --git a/bloom.c b/bloom.c
-> index eb08571c628..c3b81b1a38a 100644
+> index c3b81b1a38a..9a8386ac676 100644
 > --- a/bloom.c
 > +++ b/bloom.c
-> @@ -206,6 +206,9 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
->  	diffopt.max_changes = max_changes;
->  	diff_setup_done(&diffopt);
+> @@ -215,7 +215,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+>  		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
+>  	diffcore_std(&diffopt);
 >
-> +	/* ensure commit is parsed so we have parent information */
+> -	if (diff_queued_diff.nr <= max_changes) {
+> +	if (diffopt.num_changes <= max_changes) {
+>  		struct hashmap pathmap;
+>  		struct pathmap_hash_entry *e;
+>  		struct hashmap_iter iter;
+> diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
+> index 6defeb544f1..48a90625596 100755
+> --- a/t/t0095-bloom.sh
+> +++ b/t/t0095-bloom.sh
+> @@ -100,7 +100,7 @@ test_expect_success EXPENSIVE 'get bloom filter for commit with 513 changes' '
+>  	rm actual &&
+>  	rm expect &&
+>  	mkdir bigDir &&
+> -	for i in $(test_seq 0 512)
+> +	for i in $(test_seq 0 511)
 
-I don't think that this comment is critical to the change, since
-familiar readers will know why this 'parse_commit' call is here, but I
-don't really mind either way...
+Thanks for demonstrating the fix. This is change is very subtle, but I
+think that it's right on.
 
-> +	parse_commit(c);
-> +
-
-OK. I figure that we could force the callers to parse these commits, but
-I think that this approach makes more sense. This should be a no-op for
-already-parsed commits, which means we'll get out of this call pretty
-quickly.
-
-The benefit there, of course, would be that we don't have to worry about
-some callers forgetting to make sure that they are passing
-already-parsed commits, and that the trade-off we make to allow such a
-thing is pretty cheap, relatively speaking.
-
->  	if (c->parents)
->  		diff_tree_oid(&c->parents->item->object.oid, &c->object.oid, "", &diffopt);
->  	else
+>  	do
+>  		echo $i >bigDir/$i
+>  	done &&
 > --
 > gitgitgadget
-
-Makes sense, thanks.
 
   Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
