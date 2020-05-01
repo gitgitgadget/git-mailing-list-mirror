@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C9BC47258
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09E2FC47259
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83F60208DB
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEC62208DB
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBRPYqHf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kUqu/Z0G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729844AbgEAPaj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 11:30:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41472 "EHLO
+        id S1729853AbgEAPak (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 11:30:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729661AbgEAPah (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 11:30:37 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93603C061A0C
-        for <git@vger.kernel.org>; Fri,  1 May 2020 08:30:37 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id l18so1174109wrn.6
-        for <git@vger.kernel.org>; Fri, 01 May 2020 08:30:37 -0700 (PDT)
+        with ESMTP id S1728742AbgEAPai (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 11:30:38 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619B5C061A0E
+        for <git@vger.kernel.org>; Fri,  1 May 2020 08:30:38 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id 188so75614wmc.2
+        for <git@vger.kernel.org>; Fri, 01 May 2020 08:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=w5R3fvbChOogMJmaRFfwAONf/Hm4fSZS4S5dv4d04tk=;
-        b=mBRPYqHf+yrWVTkBvHGWyFb0rAQRS62L0WnOmF1EKFbGWABd+zWndzVWYgueMdG72h
-         pDGhC9ClDxPJHpW8EKhWbGk3PnY9Dux8kIculspMInUlMI72NepJrGisL+zojgtbGv5s
-         eZKB9LJYn9Q6DntzpP8ZRLt+5ZSrcjfa5NktK12wgBW0DTgT3FswQoVJqch30PxSt7h/
-         wnwVBkHnmvS0EOeoH3Kj12ibmKbYzmEHZbjaGzPm4QcEYIVIZqSIWFrN9/IvZpu/CG4T
-         RdEZ4WMHLElU72k7ooUo8o0aPN2ytvbxGdmUGbCLgQCFHy1uM4kTvreNOCu+8OSsY8Vg
-         tHFw==
+        bh=N+OYlNIdFj9SqGVPBqA/nbDPJTmYCtz6vCoqvufPBmg=;
+        b=kUqu/Z0GyU74r7oQ5VPy1gx5n6z3tV5Duo7pb0nqtd2ugZtIPRYeiArsR7AzMYqJl2
+         k4x19Sgxbe+dISSBrELuqnQgRHUMpO1osbt6bUInCur54xzC9QWlTHVT7oqMfZL/YsV8
+         OxJWZEvlOpZXZSLwFvugyDvExo+po5uBXg8Iu6Go4d+/sOIYfjcB5J6Dh5ZoGttP38VU
+         NGM7jcj2YQqrGFKk+S0kV2rFhmlHDah+/k7wbMk5oa+u4q4FWcn14cSgtfGg3PQvUDah
+         M7VgzWSH12jqdAu3U5SLE/ggwWGE4NjOY4NiXxKyvOgAlteV7OB72bHASpt1/l9EG+Xm
+         /1Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=w5R3fvbChOogMJmaRFfwAONf/Hm4fSZS4S5dv4d04tk=;
-        b=NEsZql4aPyGkSxoTTBP/Do2leiUhAjzNyjgsDGyKaCcsgZtw5rqG3CID5eGtt5uIFs
-         x3uZBnkvyB7lGyrl8QpyyFN4d91fEjgakZq/2rbObH5Lex1KNLUuV7TKjF/bINl5RvYA
-         893pSyNZLYn1zoqQuwV78H7Sihd0yfS/QqDDQ1BMNhs4esV40yG4TrRVQfynJ5PZzUG3
-         tjcemv5iPOQf2FwsU7wDq4BnE+k33aJwJ/NTZCXKhxI9VlauyegICleDFKiGNh2BsrKO
-         ldZ8pz2bDqPSOecf6YehO8PW8Rpm/7cqTqNxSZmoz4RhfQ104n8C+QiyD/iXIUcRx/ZU
-         upag==
-X-Gm-Message-State: AGi0Pub2ZYcMsBwNMbMgHbxe3ebZq+XXeMH+ZY2xCIzgbKB8gpY/GWl0
-        G/JHcOvfkIMTPnvTbZEVRewJmWS5
-X-Google-Smtp-Source: APiQypJvEX3g9mMD2ZSYM0PJR3WUg2pPqV1GWaPjqFJaUjdFOK0kysTMaBCA6snwB35sY/eYLvQZOQ==
-X-Received: by 2002:a5d:4950:: with SMTP id r16mr595716wrs.350.1588347036186;
+        bh=N+OYlNIdFj9SqGVPBqA/nbDPJTmYCtz6vCoqvufPBmg=;
+        b=kaGnTYryA18sEkLv3wdsAmNDJzM+jDCbCcNvnwoi+qO8/tGf/sLtUc2JWmMwO2mYr0
+         NPUD+FD7GariZO2KWpvAPGwx7dDtiuAoMLfoUg81v+ZnZwsQEFJrdO54r5XlGQjfze/h
+         QIWAKSw5ziuFuUEcbotiHk9+85SsY9m0fcM1IdhJl8oH1l0fFdBDbA8LnKRjsEo5w+M5
+         S1/GbRrzm8eSLoSF40qDjouAXgbEWdxkkDYGo+rHCxwsV8XXUu08jmALvdmNvVC/BpOo
+         07VM1XAA+Fg2zcsk8uhbF88JvApbZ9pkqWbx31YAQ2iSJKaTKpxCGlzRxuQx442m2dub
+         GEfA==
+X-Gm-Message-State: AGi0PuZwZpqROvFQT4SZHdw99P/gzwjkNtVXnn8SpDhChcdfF9vhgZMK
+        sLCPsGSOR0G/mKLcFUBXsQfutz9F
+X-Google-Smtp-Source: APiQypK8ZMCV3RK45l7wtXKrwQsHoc9TIIDou4BTqkSOR/5g0IxlQFd6rlfwooxCz/qcpJOhc5NO4Q==
+X-Received: by 2002:a05:600c:2c0f:: with SMTP id q15mr69202wmg.185.1588347036957;
         Fri, 01 May 2020 08:30:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i19sm4773826wrb.16.2020.05.01.08.30.35
+        by smtp.gmail.com with ESMTPSA id i17sm12231wml.23.2020.05.01.08.30.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 08:30:35 -0700 (PDT)
-Message-Id: <35d2901957efbb8727142ef633ae0953b613c0d1.1588347029.git.gitgitgadget@gmail.com>
+        Fri, 01 May 2020 08:30:36 -0700 (PDT)
+Message-Id: <1f326612da05dfa74ebaaee6a852d5ef92a4ed29.1588347029.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.622.git.1588347029.gitgitgadget@gmail.com>
 References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 01 May 2020 15:30:24 +0000
-Subject: [PATCH 07/12] completion: offer '--(no-)patch' among 'git log'
- options
+Date:   Fri, 01 May 2020 15:30:25 +0000
+Subject: [PATCH 08/12] line-log: remove unused fields from 'struct
+ line_log_data'
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,24 +81,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
+Remove the unused fields 'status', 'arg_alloc', 'arg_nr' and 'args'
+from 'struct line_log_data'.  They were already part of the struct
+when it was introduced in commit 12da1d1f6 (Implement line-history
+search (git log -L), 2013-03-28), but as far as I can tell none of
+them have ever been actually used.
+
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
+ line-log.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c21786f2fd0..ec6ff1d5fb8 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1860,6 +1860,7 @@ _git_log ()
- 			$merge
- 			$__git_diff_common_options
- 			--pickaxe-all --pickaxe-regex
-+			--patch --no-patch
- 			"
- 		return
- 		;;
+diff --git a/line-log.h b/line-log.h
+index 8ee7a2bd4a1..882c5055bb8 100644
+--- a/line-log.h
++++ b/line-log.h
+@@ -46,10 +46,7 @@ void sort_and_merge_range_set(struct range_set *);
+ struct line_log_data {
+ 	struct line_log_data *next;
+ 	char *path;
+-	char status;
+ 	struct range_set ranges;
+-	int arg_alloc, arg_nr;
+-	const char **args;
+ 	struct diff_filepair *pair;
+ 	struct diff_ranges diff;
+ };
 -- 
 gitgitgadget
 
