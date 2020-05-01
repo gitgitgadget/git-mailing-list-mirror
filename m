@@ -7,63 +7,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA524C47257
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6134C47258
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 999F52137B
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5F78208DB
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 15:30:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AM9QiUuk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZgUQy6eX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729817AbgEAPaf (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1729812AbgEAPaf (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 1 May 2020 11:30:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41458 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729661AbgEAPaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 11:30:35 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5201C061A0E
-        for <git@vger.kernel.org>; Fri,  1 May 2020 08:30:34 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id 188so75456wmc.2
-        for <git@vger.kernel.org>; Fri, 01 May 2020 08:30:34 -0700 (PDT)
+        with ESMTP id S1729396AbgEAPae (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 11:30:34 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3B47C061A0C
+        for <git@vger.kernel.org>; Fri,  1 May 2020 08:30:33 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id d15so11928608wrx.3
+        for <git@vger.kernel.org>; Fri, 01 May 2020 08:30:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UwX7rpa/0dmihTdWuZokctG8o3dYHs2dPW7HrFPKabw=;
-        b=AM9QiUuktcSXjzla712yjORr4mMuWPPG2tGe3svTDdxKTA1bySiCtlyEimneiUICru
-         AdI7oLY0yQVd5oqPFMnCFJwj5YeCCi+4IFk4Dz9n7Xw48y0ly+Lwxk1pU06a/5URh9oI
-         mRbD2SHyZVhabkSUtSsPum1Ef1RBz7/vZWQD0AeIHkqNANgFoesidaT+DDEJC74bJ9WK
-         lecYxrgaN6R+yCf62SkzjvL+dGdP3rDlMy2Fvip36xWLBcMEBOe34bovmtEAs+/Qec45
-         t3QEfYvO+Z8ZYHnNbQfV2oeKuSY3sKkppV3YPuncYsH8h6/NcUPAlaoJMdZf3/TfBQX5
-         m/FQ==
+        bh=35ZUm74A7NtqM8sZEopnVoZ7DH1TKQD8huiWnIPF4N0=;
+        b=ZgUQy6eXkSpynj2f6OKwaQmdZQHyGnFgzV3Ld+8ODaQWlh24yk2fldi9uNIScnKaxb
+         udHPKKQbWrG9KXlKB08IxM9wSCJ4eDLPuI9nxm9i2EioDin80me95fnGEh+1rQcAraNj
+         8Fj1OmZ2NPSBSNX1x0VglfQMu4wtD9uZ+2EHUmLUeWmQ97zTyHiEfmfl1a3YVMhIrmAn
+         Yin1q+AxJPIA5iQ7iwVhvUOkVPTEkOVbamjLY3XlCV5nbe00/kh+S/dQ+5ibT6nzWA+1
+         yN4+zktzf/EABJZpZ2lgrdyrOPgNcFBjg6luOdcZy2uJJFsL3ShYGfemFzkrqi7F2Sb7
+         Tj7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UwX7rpa/0dmihTdWuZokctG8o3dYHs2dPW7HrFPKabw=;
-        b=Rjun9F/hZFniicMUzLKThdnaYmqId4az+aP8UVTvelz+49Z9p/yyAjDqCLZSRJiIeK
-         QU5glc6ewNkBgNM7r08JNjbCErPdGXQ3ydCRt7onEqbp5752LsSr7u73yzpLxEk77U0S
-         WDtqaavec1Cc5xbqvTvOuGiDfKe8IhjeRE0yL/U0xXhQKkgVqDunIk7nlgFBm1AWObgD
-         QNFkMrYk56SEuUY/1ssWnj1FYGgA3gBi3VE7wRJJ+goDzzrh5hLW/MRhMcYRg8ugJB9p
-         cWE+Z8GqAaugqRzDDDTokn1wsAU0mEqmyxfUlFt/2cj3w6610pqTFWusybnhTBIa8yuX
-         8Pqg==
-X-Gm-Message-State: AGi0PubwqXT+NEQgJ1MHWQPezKK5HNN5HOFhb7JNUXJUCpIPl0XpSRgC
-        Zkc7gzMWsFleKjurYbXt0s6+Awsr
-X-Google-Smtp-Source: APiQypLns7HgvZO2HYZV6pINXWudu8w1JoDkhkMeKvNwAQ7kcB4QH77U/vPedMdkRqENpF0upcKqTw==
-X-Received: by 2002:a05:600c:4112:: with SMTP id j18mr86570wmi.69.1588347033160;
-        Fri, 01 May 2020 08:30:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j22sm5043294wre.84.2020.05.01.08.30.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=35ZUm74A7NtqM8sZEopnVoZ7DH1TKQD8huiWnIPF4N0=;
+        b=m722hsS22ZC17AAP/+qmmAnLAAl1F89ijXQAz91JRZknCWSByhZny5tiZCGiTR6UC5
+         jgSfwRjkxf+f7L7tQHxIlvd7YuxpxJOvRZNCYX8Y5ezdb0Rt4y4Ug3myJAAyqEE1CMaf
+         2LDL2szWVyI9lglg/a5DF1+H5ITeq3mUx4P9BQNScrRMDC2tt6Gn4fKCY/Xyl/RdqPHX
+         fKIXu0/rusNizAphwo3N1EePKhErvF0WBD+nKSn+UPxY6Yiji0U5woWhFgl1EOmxqOvf
+         Zym3Q52PvLkwT6zpF98rBdTGhCF03/WzzC1Pdx/jUOb9jdkhPiVlazdHrYt1D3kmjSxH
+         fpSQ==
+X-Gm-Message-State: AGi0PubSxGtfDTJ6cQRC1/Qkcb96aMaLFot0XZv61Pid1Y6LtZcO/Ogr
+        mSuB0Flh3gTCyE0lkLBoOTTmFcF1
+X-Google-Smtp-Source: APiQypJ6bUx6aFlVAZGIEnaZ6GGTKEi5BiVMLOhaKMfk1m3HRKdMMVvrUK7suVLYCNOyULQ5htMc1g==
+X-Received: by 2002:adf:e943:: with SMTP id m3mr4572972wrn.248.1588347032429;
         Fri, 01 May 2020 08:30:32 -0700 (PDT)
-Message-Id: <03b2c84db36754b321dd15cd8a9e1a22b7c11c36.1588347029.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e2sm4778744wrv.89.2020.05.01.08.30.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 May 2020 08:30:31 -0700 (PDT)
+Message-Id: <572d0508fe0364119d83c08e01a66153810958e9.1588347029.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.622.git.1588347029.gitgitgadget@gmail.com>
 References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 May 2020 15:30:20 +0000
-Subject: [PATCH 03/12] Documentation: changed-path Bloom filters use byte
- words
+Date:   Fri, 01 May 2020 15:30:19 +0000
+Subject: [PATCH 02/12] test-bloom: fix usage typo
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,52 +79,24 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In Documentation/technical/commit-graph-format.txt, the definition
-of the BIDX chunk specifies the length is a number of 8-byte words.
-During development we discovered that using 8-byte words in the
-Murmur3 hash algorithm causes issues with Big-Endian versus Little-
-Endian machines. Thus, the hash algorithm was adapted to work on a
-byte-by-byte basis. However, this caused a change in the definition
-of a "word" in bloom.h. Now, a "word" is a single byte, which allows
-filters to be as small as two bytes. These length-two filters are
-demonstrated in t0095-bloom.sh, and a larger filter of length 25 is
-demonstrated as well.
-
-The original point of using 8-byte words was for alignment reasons.
-It also presented opportunities for extremely sparse Bloom filters
-when there were a small number of changes at a commit, creating a
-very low false-positive rate. However, modifying the format at this
-point is unlikely to be a valuable exercise. Also, this use of
-single-byte granularity does present opportunities to save space.
-It is unclear if 8-byte alignment of the filters would present any
-meaningful performance benefits.
-
-Modify the format document to reflect reality.
-
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/commit-graph-format.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/helper/test-bloom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
-index de56f9f1efd..1beef171822 100644
---- a/Documentation/technical/commit-graph-format.txt
-+++ b/Documentation/technical/commit-graph-format.txt
-@@ -97,10 +97,10 @@ CHUNK DATA:
-       bit on. The other bits correspond to the position of the last parent.
+diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+index 77eb27adac7..00c1d44a561 100644
+--- a/t/helper/test-bloom.c
++++ b/t/helper/test-bloom.c
+@@ -44,7 +44,7 @@ static void get_bloom_filter_for_commit(const struct object_id *commit_oid)
+ }
  
-   Bloom Filter Index (ID: {'B', 'I', 'D', 'X'}) (N * 4 bytes) [Optional]
--    * The ith entry, BIDX[i], stores the number of 8-byte word blocks in all
--      Bloom filters from commit 0 to commit i (inclusive) in lexicographic
--      order. The Bloom filter for the i-th commit spans from BIDX[i-1] to
--      BIDX[i] (plus header length), where BIDX[-1] is 0.
-+    * The ith entry, BIDX[i], stores the number of bytes in all Bloom filters
-+      from commit 0 to commit i (inclusive) in lexicographic order. The Bloom
-+      filter for the i-th commit spans from BIDX[i-1] to BIDX[i] (plus header
-+      length), where BIDX[-1] is 0.
-     * The BIDX chunk is ignored if the BDAT chunk is not present.
+ static const char *bloom_usage = "\n"
+-"  test-tool bloom get_murmer3 <string>\n"
++"  test-tool bloom get_murmur3 <string>\n"
+ "  test-tool bloom generate_filter <string> [<string>...]\n"
+ "  test-tool get_filter_for_commit <commit-hex>\n";
  
-   Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
 -- 
 gitgitgadget
 
