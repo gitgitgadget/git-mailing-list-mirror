@@ -2,212 +2,574 @@ Return-Path: <SRS0=YBbL=6P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81398C47256
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85E8CC47254
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:09:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 527A320857
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:08:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 425E920857
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:09:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QZUR2ZQu"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="K+DEtpBR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726381AbgEAWIq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 18:08:46 -0400
-Received: from mout.gmx.net ([212.227.17.22]:35077 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgEAWIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 18:08:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1588370922;
-        bh=agevN/6jYvJo/l/B4nMAmQZ8WaPtEmoUIPqITmBMSPE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QZUR2ZQuK/sTIzPlG0NBJm08DtvZu7abNIW1QtrFmc5g2I5YKLnrRDkzBtoCnkb3X
-         0frWE1NZ1IIharn9M2CUEny/bQlqeIkQSaw2qwuA2TR8ZAFVIf9xwr8iWrI+pz4PaL
-         oPpHH7lZ9TvZIB/jU7LO9pj4ILdVwyB+Hbt8q0QQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([89.1.213.255]) by mail.gmx.com
- (mrgmx104 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 1MbzyJ-1isoqL0BMF-00dZoK; Sat, 02 May 2020 00:08:42 +0200
-Date:   Sat, 2 May 2020 00:08:41 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Han-Wen Nienhuys <hanwen@google.com>
-cc:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: Git Test Coverage Report (April 30, 2020)
-In-Reply-To: <CAFQ2z_PP9Ld+GDctV-v2CDKFamF6zKdJZ_-jhahj_fcm3wy4Hw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2005012316350.18039@tvgsbejvaqbjf.bet>
-References: <fda6d0db-f79e-f44e-7c2b-b60ed1794cd0@gmail.com> <CAFQ2z_PP9Ld+GDctV-v2CDKFamF6zKdJZ_-jhahj_fcm3wy4Hw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726405AbgEAWJJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 18:09:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57553 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbgEAWJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 18:09:09 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 324825B25A;
+        Fri,  1 May 2020 18:09:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=M
+        2TfLLm6pptlnyEcExRflMhlFQ8=; b=K+DEtpBRIDdccL77OoAJZSTScWxpFfOZX
+        N+Dzbw3VBlKd5FSDUe+9pLHx4V485Q2J3w+4CosWgai9qYcmse1sXjPAdziybKwv
+        opV842K/SLPUNCAXdRAeQbgQWON1dVGOrVFBZK7rtk8IeM55558zN/AZCEaZYMw5
+        38tRTxMFgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=taI
+        CtGq/Dv/samSAkwFn9BR/H79IiWvlCFUMwgUX4VbVLn/ufrqOduNv9hGZeteDwwp
+        cYwGj13kcDsdeu+/y/SDB5AmhXJRA0zxDTB9D8m6gMl88dYzMdIYifoOpO8x0wnu
+        kQuTr3h6+urRn3fBBd3TX/YqS9h9UjZVNfRAOujI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AA325B259;
+        Fri,  1 May 2020 18:09:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7C1405B252;
+        Fri,  1 May 2020 18:09:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (May 2020, #01; Fri, 1)
+X-master-at: b34789c0b0d3b137f0bb516b417bd8d75e0cb306
+X-next-at: 232c24e857ed6ddde51b0435add1905f58948aec
+Date:   Fri, 01 May 2020 15:08:59 -0700
+Message-ID: <xmqq8sibl344.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XQlXLfOZiXTnn4uQastp+6R+xUywrltYfNWOlPFcJDnoDOsXnTF
- 7br1ghOfufVnSR3XV6xNO9Vbq/83fsYW6c8N5IRAJDNQLBoVvjiJJsP3sRgUEo6hEacWRyu
- +/M2PmHAtqIItshQ+9+gNcFy52Ta813Cv9Qt2LpGJSC4pbRLYYpWStjt7/sjIjpdP7C2m9f
- Ai0aHAVDf/eB5cP0G76Fw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xnZ+QJx6Zk8=:0IlbvNaUZQRwkj/FOKGChs
- 4xt+45w7SbS7JFc6dJNh7z/+XLvHg10+q8Q6EsBLfdML3rmNFOs27ZsAT0MorE9PH9s23d8Iu
- UV5ZIAFDBPpuY1iGS07er9x/eSgxq4UglbHDgCA4Rd7NgiHILFkiB8SGGkIj0gI/6ybC4QeSM
- jkPsAyyCxk+FRLZTJvx2zHRRC8hHOVRWOQefXVmLt+0jNuuXxd0Ta1zM2rK0BdTZ/B5QuaU4E
- XJaEDTQGRGOrqtnuQEfOBIrRWWrVNgEq8wexjbxXsy1GB+kfYYO6Pc1RHWZntEX6TwwmVYYYv
- X6+Lyk1KCYX+vBqK3x5MIZ/o+jQZ3fCvzLoZmHXkC7zIwLPtCUSPcbmOPTEFz67L8tz+ezYWl
- Bwy+hZK27rI3xJ/iXVn+0kVMKFk+9ZPUzryJyOWKZg4uB/zgNklxKcJW+CYRWuV38ZPN0vxJJ
- vPOeKb6YwgoPKHcnDNclPhrpGvn9L6Tl1lOGnoBV82HI9X72K2GODAFKvu09FaosmFSw5qYk7
- qaBpgy4PfIA9DI9jRZjvqxIscJb3VaiznQE3EF8nuJ62qKeLo7WtRAFLnPWCHvXrpxyN39AuN
- BHBtQ3/a6CzncEbR+DjJWK/6utjL+yGH+HxS7ArqLNtrP2aNrmy/olZFRVE5jUlYljeyST+8C
- 955YKyGtRM7m9jaBGqfCfqshVVlni0E6XkCCM3RF0Ib0Ku0jiRC5JW8V68HaLoHqPG2VQNbM4
- /zANcBCQfJt0d27uBP5CuRTs+XUktvIE5WfdrqXKijzjhFgS+/xGApifq5YGn20cF3tBJvh/N
- ZNB063dWmm1MpIKN/AeXxO+Q3dWZZWe/TK3QObkLioOGufCXQOYM/M76EimOiD9/MTtoF5t8S
- txvRz0Ku6UviJK8OEKwO05YblYDmp5Tj6AOHpgKCsz9H9AwstsxP39VFuHgdovuDYOkTs0v7D
- L4dISakxT1S8ATIKPXcrv0UoNtz/x0X0kruaFzoyYVxhFVfUdRyX9WAzCjwEyk6mUdYsbaW16
- maOaflHLkoySF9Y9iurRlSRvN0fbUDKDm+eJMSlcZHAGUNDezb05s3DIPfBQEgFiSbyihOUyk
- RNgc32enpIXbSHovdqyQNwKZk2TTzRGWmz9cuIuhtBOk4yaZkEIVqpXLM5ie1405PqDT1hC+z
- Gn2dvJoHTuUV8wn5DDiVZ6Yhlx79GoxzftmtuQXKF9IMZ6Gs0B5fLr1fMvermHH2ShdNPowoA
- wpr3qg0oWTBszyLiP
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C5228FE-8BF8-11EA-AE7A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Han-Wen,
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-On Thu, 30 Apr 2020, Han-Wen Nienhuys wrote:
+The sixth batch merged quite a few topics to 'master'; they haven't
+spent the usual "at least a week" in the 'next' branch, but all of
+them looked quite safe and benign.  Knock wood.
 
-> On Thu, Apr 30, 2020 at 1:22 PM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > Hello,
-> >
-> > Here is today's test coverage report.
-> >
-> > It appears that _all_ of the reftable code shows up in this report as
-> > untested. Perhaps that is the state of the world right now, or perhaps
-> > I need to initialize a GIT_TEST_ environment variable to ensure it run=
-s?
->
-> > In either way, do we have any test coverage of that massive contributi=
-on?
-> > Please take a look at the online report [1] for that part of the repor=
-t,
-> > as I snipped it out of this email.
->
-> (again in plain text)
->
-> The reftable code is currently exercised in a small way by
-> t0031-reftable.sh
+You can find the changes described here in the integration branches
+of the repositories listed at
 
-Very small, and yet even the simple change I made had uncovered
-a segmentation fault that the unit tests you refer to below had not.
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-Which makes me think even more than I already thought that it would have
-made a lot more sense to develop the reftable library inside of git.git
-instead of completely separate from it.
+--------------------------------------------------
+[Graduated to "master"]
 
-That would also have staved off the many, many style issues that make this
-thing hard to review, not to mention the sheer size that threatens to dull
-any mind pouring over the diff.
+* dd/mailinfo-with-nul (2020-04-22) 3 commits
+  (merged to 'next' on 2020-04-28 at b1d3e40d49)
+ + mailinfo: disallow NUL character in mail's header
+ + mailinfo.c: avoid strlen on strings that can contains NUL
+ + t4254: merge 2 steps of a single test
 
-It is probably not a secret by now that these issues keep me from
-reviewing the code.
+ Tighten "git mailinfo" to notice and error out when decoded result
+ contains NUL in it.
 
-I mean, I want the reftables feature to finally address the problem on
-Windows where branch names are sometimes treated as case sensitive, but
-then all of a sudden they are not (because of the file system backend). So
-there is motivation on my side to help the patches along. Yet, the way the
-patches are presented does not invite me to do so.
 
-In a private conversation I had recently, the situation was likened to
-having a neat home that you really like and take care of because you,
-well, care, and therefore you ask guests to take off their shoes, but one
-of the guests just ignores the local customs and walks in with their muddy
-shoes, right over your white carpet.
+* dd/sparse-fixes (2020-04-27) 4 commits
+  (merged to 'next' on 2020-04-28 at d809f916ee)
+ + progress.c: silence cgcc suggestion about internal linkage
+ + graph.c: limit linkage of internal variable
+ + compat/regex: move stdlib.h up in inclusion chain
+ + test-parse-pathspec-file.c: s/0/NULL/ for pointer type
 
-It is a bit of a crass picture that was painted there because the
-situation is not _all_ that bad. Yet... it _is_ very unenticing to have
-the coding style stepped all over, as well as the convention to "tell a
-story with your patches and commit messages" not exactly followed even to
-the letter "d" (let alone "t").
+ Compilation fix.
 
-I understand that it seemed easier to first implement a library in a
-familiar language (Go) and then "port" it (where the "port" part shows by
-using constructs that are uncommon in C).
 
-However, when I think about the potential users, there really are only
-two: Git and libgit2. And since libgit2 is relatively similar in origin to
-Git, I don't think it was the best idea to start with an abstraction layer
-over data types. It would have been a lot easier to build the code in
-git.git first, test the heck out of it, and then abstract it _just_ enough
-to let libgit2 essentially use a copy (just like it does with the libxdiff
-code).
+* dl/test-must-fail-fixes-4 (2020-04-20) 7 commits
+  (merged to 'next' on 2020-04-28 at 6f4804aa09)
+ + t9819: don't use test_must_fail with p4
+ + t9164: use test_must_fail only on git commands
+ + t9160: use test_path_is_missing()
+ + t9141: use test_path_is_missing()
+ + t7508: don't use `test_must_fail test_cmp`
+ + t7408: replace incorrect uses of test_must_fail
+ + t6030: use test_path_is_missing()
 
-Speaking of testing: there is no doubt in my mind that _iff_ these patches
-make it into git.git, then the vast majority of bug fixes will flow _from_
-git.git. And if that is indeed the case, it makes it very, very awkward to
-ask every contributor to go to _another_ project to get those fixes in
-there first, and only then have them trickle back to the actual user.
+ Test clean-up.
 
-In light of this, I wonder whether there is anything you could do to
-change the way you develop this patch series that would make it more in
-line with the code contributions the Git project enjoys? Or at least to
-tell a much more elegant story arc in the patch series and abide by the
-coding conventions?
 
-I could imagine that just throwing away all that data type abstraction and
-reusing what is in git.git, including all the helper functions, would go a
-long way of not only simplifying the structure of the patch series to
-allow for a meaningful review (in the current form, I don't think that
-_any_ human could possibly verify the correctness, as the complexity and
-the size is just too daunting and too overwhelming), but it would also
-avoid implementing redundant functionality, which would not only reduce
-the size, but would also let us rely on tried-and-tested implementation in
-git.git.
+* ds/blame-on-bloom (2020-04-23) 6 commits
+  (merged to 'next' on 2020-04-28 at 6152eb2eb3)
+ + test-bloom: check that we have expected arguments
+ + test-bloom: fix some whitespace issues
+ + blame: drop unused parameter from maybe_changed_path
+  (merged to 'next' on 2020-04-22 at dc4f24e54b)
+ + blame: use changed-path Bloom filters
+ + tests: write commit-graph with Bloom filters
+ + revision: complicated pathspecs disable filters
+ (this branch is used by ds/line-log-on-bloom; uses gs/commit-graph-path-filter.)
 
-Just to name an example, pretty much the entire `basics.c` could go away.
+ "git blame" learns to take advantage of the "changed-paths" Bloom
+ filter stored in the commit-graph file.
 
-To give you a concrete data point for tried-and-tested function: the
-`string_list_split()` function has a short and sweet implementation that
-has not had to be fixed in more than seven years. That is quite a track
-record. Using this function instead of `parse_names()` would give us the
-instant benefit of relying on something we do _not_ have to review for
-correctness. And there is the distinct possibility that using a
-`string_list` with an explicit length (instead of throwing it away in
-`parse_names()` and then painstakingly re-calculating it in
-`names_length()`) might actually improve performance, too.
 
-I firmly believe that this patch series, in particular the huge patch, can
-be transformed into something that looks a lot more like git.git code, is
-a lot smaller, and is a _lot_ easier to review. Without the confidence
-such a reviewable shape provides, I would actually not trust it enough to
-put it into the hands of end-users.
+* ds/build-homebrew-gettext-fix (2020-04-27) 1 commit
+  (merged to 'next' on 2020-04-28 at 70c6eca470)
+ + macOS/brew: let the build find gettext headers/libraries/msgfmt
 
-> The upstream library has unittests, see
-> https://cs.bazel.build/search?q=3Dr%3Areftable+f%3A_test.c&num=3D0, but =
-I
-> believe Git doesn't do unittests?
+ Recent update to Homebrew used by macOS folks breaks build by
+ moving gettext library and necessary headers.
 
-That is a misconception.
 
-We usually implement some test helper in `t/helper/` (or a new subcommand
-in one test helper) and run that as part of the test suite.
+* ds/multi-pack-index (2020-04-24) 1 commit
+  (merged to 'next' on 2020-04-28 at b8f9691cbc)
+ + multi-pack-index: close file descriptor after mmap
 
-And to repeat my point above: I don't think that I would have found a
-segfault _immediately_ after modifying t0031 in a rather trivial way if
-this library was developed _inside_ git.git rather than outside of it,
-with an incremental story accompanied by unit tests.
+ The multi-pack-index left mmapped file descriptors open when it
+ does not have to.
 
-At the end of the day, it matters more that the reftable works in Git than
-it matters that it passes the unit tests when compiled somewhere else.
 
-> I'll try to generate a coverage report for them.
->
-> You can set GIT_TEST_REFTABLE to see coverage for reftable, but I'm
-> not sure how useful it is given that ~15% of the tests fail.
+* eb/gitweb-more-trailers (2020-04-24) 1 commit
+  (merged to 'next' on 2020-04-28 at 7b16ac0810)
+ + gitweb: Recognize *-to and Closes/Fixes trailers
 
-15%? That's a lot... I hope that that's mostly test cases that incorrectly
-assume that they can access refs directly on disk, in loose format.
+ Gitweb updates.
 
-Ciao,
-Dscho
+
+* en/rebase-root-and-fork-point-are-incompatible (2020-04-27) 1 commit
+  (merged to 'next' on 2020-04-28 at 8ea4882905)
+ + rebase: display an error if --root and --fork-point are both provided
+
+ Incompatible options "--root" and "--fork-point" of "git rebase"
+ have been marked and documented as being incompatible.
+
+
+* es/bugreport (2020-04-27) 6 commits
+  (merged to 'next' on 2020-04-28 at fdfd36a5d7)
+ + bugreport: drop extraneous includes
+  (merged to 'next' on 2020-04-22 at f5a2ab988e)
+ + bugreport: add compiler info
+ + bugreport: add uname info
+ + bugreport: gather git version and build info
+ + bugreport: add tool to generate debugging info
+ + help: move list_config_help to builtin/help
+ (this branch is used by es/bugreport-with-hooks.)
+
+ The "bugreport" tool.
+
+
+* gs/commit-graph-path-filter (2020-04-09) 16 commits
+  (merged to 'next' on 2020-04-22 at 34b35f43bd)
+ + bloom: ignore renames when computing changed paths
+ + commit-graph: add GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS test flag
+ + t4216: add end to end tests for git log with Bloom filters
+ + revision.c: add trace2 stats around Bloom filter usage
+ + revision.c: use Bloom filters to speed up path based revision walks
+ + commit-graph: add --changed-paths option to write subcommand
+ + commit-graph: reuse existing Bloom filters during write
+ + commit-graph: write Bloom filters to commit graph file
+ + commit-graph: examine commits by generation number
+ + commit-graph: examine changed-path objects in pack order
+ + commit-graph: compute Bloom filters for changed paths
+ + diff: halt tree-diff early after max_changes
+ + bloom.c: core Bloom filter implementation for changed paths.
+ + bloom.c: introduce core Bloom filter constructs
+ + bloom.c: add the murmur3 hash implementation
+ + commit-graph: define and use MAX_NUM_CHUNKS
+ (this branch is used by ds/blame-on-bloom and ds/line-log-on-bloom.)
+
+ Introduce an extension to the commit-graph to make it efficient to
+ check for the paths that were modified at each commit using Bloom
+ filters.
+
+
+* jk/build-with-right-curl (2020-04-05) 3 commits
+  (merged to 'next' on 2020-04-28 at 1718c25b44)
+ + Makefile: avoid running curl-config unnecessarily
+ + Makefile: use curl-config --cflags
+ + Makefile: avoid running curl-config multiple times
+
+ The build procedure did not use the libcurl library and its include
+ files correctly for a custom-built installation.
+ cf. <20200428033611.GB2369457@coredump.intra.peff.net>
+
+
+* js/anonymise-push-url-in-errors (2020-04-28) 1 commit
+  (merged to 'next' on 2020-04-28 at 49539cf116)
+ + push: anonymize URLs in error messages and warnings
+
+ Error and verbose trace messages from "git push" did not redact
+ credential material embedded in URLs.
+
+
+* jt/v2-fetch-nego-fix (2020-04-28) 3 commits
+  (merged to 'next' on 2020-04-28 at c6f9ebf2f7)
+ + fetch-pack: in protocol v2, reset in_vain upon ACK
+ + fetch-pack: in protocol v2, in_vain only after ACK
+ + fetch-pack: return enum from process_acks()
+
+ The upload-pack protocol v2 gave up too early before finding a
+ common ancestor, resulting in a wasteful fetch from a fork of a
+ project.  This has been corrected to match the behaviour of v0
+ protocol.
+
+
+* mt/doc-worktree-ref (2020-04-24) 1 commit
+  (merged to 'next' on 2020-04-28 at d96c05cb0a)
+ + config doc: fix reference to config.worktree info
+
+ Docfix.
+
+
+* tb/commit-graph-fd-exhaustion-fix (2020-04-24) 4 commits
+  (merged to 'next' on 2020-04-28 at 6d5fd6bc49)
+ + commit-graph: close descriptors after mmap
+ + commit-graph.c: gracefully handle file descriptor exhaustion
+ + t/test-lib.sh: make ULIMIT_FILE_DESCRIPTORS available to tests
+ + commit-graph.c: don't use discarded graph_name in error
+ (this branch is tangled with tb/commit-graph-split-strategy.)
+
+ The commit-graph code exhausted file descriptors easily when it
+ does not have to.
+
+
+* tb/commit-graph-split-strategy (2020-04-29) 8 commits
+  (merged to 'next' on 2020-04-29 at 99fa922569)
+ + Revert "commit-graph.c: introduce '--[no-]check-oids'"
+ + commit-graph.c: introduce '--[no-]check-oids'
+ + commit-graph.h: replace 'commit_hex' with 'commits'
+ + oidset: introduce 'oidset_size'
+ + builtin/commit-graph.c: introduce split strategy 'replace'
+ + builtin/commit-graph.c: introduce split strategy 'no-merge'
+ + builtin/commit-graph.c: support for '--split[=<strategy>]'
+ + t/helper/test-read-graph.c: support commit-graph chains
+ (this branch is tangled with tb/commit-graph-fd-exhaustion-fix.)
+
+ "git commit-graph write" learned different ways to write out split
+ files.
+
+
+* tb/reset-shallow (2020-04-24) 2 commits
+  (merged to 'next' on 2020-04-28 at 9510639ae8)
+ + shallow.c: use '{commit,rollback}_shallow_file'
+ + t5537: use test_write_lines and indented heredocs for readability
+ (this branch is used by tb/shallow-cleanup.)
+
+ Fix in-core inconsistency after fetching into a shallow repository
+ that broke the code to write out commit-graph.
+
+--------------------------------------------------
+[New Topics]
+
+* ds/line-log-on-bloom (2020-05-01) 12 commits
+ - line-log: integrate with changed-path Bloom filters
+ - line-log: try to use generation number-based topo-ordering
+ - line-log: more responsive, incremental 'git log -L'
+ - t4211-line-log: add tests for parent oids
+ - line-log: remove unused fields from 'struct line_log_data'
+ - completion: offer '--(no-)patch' among 'git log' options
+ - bloom: use num_changes not nr for limit detection
+ - bloom: parse commit before computing filters
+ - bloom: de-duplicate directory entries
+ - Documentation: changed-path Bloom filters use byte words
+ - test-bloom: fix usage typo
+ - bloom: fix whitespace around tab length
+
+ "git log -L..." now takes advantage of the "which paths are touched
+ by this commit?" info stored in the commit-graph system.
+
+
+* es/restore-staged-from-head-by-default (2020-05-01) 3 commits
+ - restore: default to HEAD when combining --worktree and --staged
+ - fixup! restore: require --source when combining --worktree and --staged
+ - restore: require --source when combining --worktree and --staged
+
+ "git restore --staged --worktree" now defaults to take the contents
+ out of "HEAD", instead of erroring out.
+
+
+* jk/credential-sample-update (2020-05-01) 2 commits
+ - gitcredentials(7): make shell-snippet example more realistic
+ - gitcredentials(7): clarify quoting of helper examples
+
+ The samples in the credential documentation has been updated to
+ make it clear that we depict what would appear in the .git/config
+ file, by adding appropriate quotes as needed..
+
+ Will merge to 'next'.
+
+--------------------------------------------------
+[Stalled]
+
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
+
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
+
+--------------------------------------------------
+[Cooking]
+
+* cb/credential-store-warn-bogus-lines (2020-04-30) 2 commits
+ - credential-store: warn instead of fatal for bogus lines from store
+ - credential-store: document the file format a bit more
+
+ With the recent tightening of the code that is used to parse
+ various parts of a URL for use in the credential subsystem, a
+ hand-edited credential-store file causes the credential helper to
+ die, which is a bit too harsh to the users.  Demote the error
+ behaviour to only warn and keep using well-formed lines instead.
+
+ Expecting a final reroll.
+ It seems that we decided to do absolute minimum to avoid doing any
+ unnecessary harm.  Ignore malformed lines but without warning.
+ cf. <20200501135757.GF33264@Carlos-MBP>
+
+
+* dl/switch-c-option-in-error-message (2020-04-30) 1 commit
+ - switch: fix errors and comments related to -c and -C
+
+ In error messages that "git switch" mentions its option to create a
+ new branch, "-b/-B" options were shown, where "-c/-C" options
+ should be, which has been corrected.
+
+ Will merge to 'next'.
+
+
+* es/bugreport-with-hooks (2020-04-30) 2 commits
+ - SQUASH???
+ - bugreport: collect list of populated hooks
+
+ "git bugreport" learned to report enabled hooks in the repository.
+
+ Needs polishing the tests.
+
+
+* tb/shallow-cleanup (2020-04-30) 4 commits
+ - shallow: use struct 'shallow_lock' for additional safety
+ - shallow.h: document '{commit,rollback}_shallow_file'
+ - shallow: extract a header file for shallow-related functions
+ - commit: make 'commit_graft_pos' non-static
+
+ Code cleanup.
+
+ Will merge to 'next'.
+
+
+* bc/wildcard-credential (2020-04-27) 1 commit
+  (merged to 'next' on 2020-04-28 at 1a0d6b91dc)
+ + credential: fix matching URLs with multiple levels in path
+
+ Update the parser used for credential.<URL>.<variable>
+ configuration, to handle <URL>s with '/' in them correctly.
+
+ Will merge to 'master'.
+
+
+* ah/userdiff-markdown (2020-04-30) 1 commit
+ - userdiff: support Markdown
+
+ The userdiff patterns for Markdown documents have been added.
+
+ Will merge to 'next'.
+
+
+* mr/bisect-in-c-2 (2020-04-23) 12 commits
+ - bisect--helper: retire `--bisect-autostart` subcommand
+ - bisect--helper: retire `--write-terms` subcommand
+ - bisect--helper: retire `--check-expected-revs` subcommand
+ - bisect--helper: reimplement `bisect_state` & `bisect_head` shell functions in C
+ - bisect--helper: retire `--next-all` subcommand
+ - bisect--helper: retire `--bisect-clean-state` subcommand
+ - bisect--helper: finish porting `bisect_start()` to C
+ - bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell functions in C
+ - bisect--helper: reimplement `bisect_autostart` shell function in C
+ - bisect--helper: introduce new `write_in_file()` function
+ - bisect--helper: use '-res' in 'cmd_bisect__helper' return
+ - bisect--helper: fix `cmd_*()` function switch default return
+
+ Rewrite of the remainder of "git bisect" script in C continues.
+
+ Any volunteer to review this?
+
+
+* js/partial-urlmatch-2.17 (2020-04-29) 3 commits
+  (merged to 'next' on 2020-05-01 at 7c69571f89)
+ + credential: handle `credential.<partial-URL>.<key>` again
+ + credential: optionally allow partial URLs in credential_from_url_gently()
+ + credential: fix grammar
+ (this branch is used by js/partial-urlmatch.)
+
+ Recent updates broke parsing of "credential.<url>.<key>" where
+ <url> is not a full URL (e.g. [credential "https://"] helper = ...)
+ stopped working, which has been corrected.
+
+ Will merge to 'master'.
+
+
+* js/partial-urlmatch (2020-04-29) 3 commits
+  (merged to 'next' on 2020-05-01 at e7017fcfd1)
+ + Sync with js/partial-urlmatch-2.17
+ + credential: handle `credential.<partial-URL>.<key>` again
+ + credential: optionally allow partial URLs in credential_from_url_gently()
+ (this branch uses js/partial-urlmatch-2.17.)
+
+ The same as js/partial-urlmatch-2.17, built on more recent codebase
+ to avoid unnecessary merge conflicts.
+
+ Will merge to 'master'.
+
+
+* jk/complete-git-switch (2020-04-28) 11 commits
+ - completion: complete remote branches for git switch --track
+ - completion: recognize -c/-C when completing for git switch
+ - completion: fix completion for git switch with no options
+ - completion: perform DWIM logic directly in __git_complete_refs
+ - completion: extract function __git_dwim_remote_heads
+ - completion: rename --track option of __git_complete_refs
+ - completion: stop completing refs for git switch --orphan
+ - completion: add tests showing lack of support for git switch -c/-C
+ - completion: add test highlighting subpar git switch --track completion
+ - completion: add test showing subpar git switch completion
+ - completion: add some simple test cases for git switch completion
+
+ The command line completion (in contrib/) learned to complete
+ options that the "git switch" command takes.
+
+
+* tb/commit-graph-perm-bits (2020-04-29) 5 commits
+  (merged to 'next' on 2020-04-29 at 66a87c1fbc)
+ + commit-graph.c: make 'commit-graph-chain's read-only
+ + commit-graph.c: ensure graph layers respect core.sharedRepository
+ + commit-graph.c: write non-split graphs as read-only
+ + lockfile.c: introduce 'hold_lock_file_for_update_mode'
+ + tempfile.c: introduce 'create_tempfile_mode'
+
+ Some of the files commit-graph subsystem keeps on disk did not
+ correctly honor the core.sharedRepository settings and some were
+ left read-write.
+
+ Will merge to 'master'.
+
+
+* dl/opt-callback-cleanup (2020-04-28) 1 commit
+  (merged to 'next' on 2020-04-28 at aa773e183a)
+ + Use OPT_CALLBACK and OPT_CALLBACK_F
+
+ Code cleanup.
+
+ Will merge to 'master'.
+
+
+* dl/push-recurse-submodules-fix (2020-04-28) 1 commit
+  (merged to 'next' on 2020-04-28 at c2cd20ef9e)
+ + push: unset PARSE_OPT_OPTARG for --recurse-submodules
+
+ Code cleanup.
+
+ Will merge to 'master'.
+
+
+* jk/test-fail-prereqs-fix (2020-04-28) 1 commit
+  (merged to 'next' on 2020-04-28 at 75787711c0)
+ + t0000: disable GIT_TEST_FAIL_PREREQS in sub-tests
+
+ Test update.
+
+ Will merge to 'master'.
+
+
+* dr/push-remoteref-fix (2020-04-23) 1 commit
+ - remote.c: fix handling of %(push:remoteref)
+
+ The "%(push:remoteref)" placeholder in the "--format=" argument of
+ "git format-patch" (and friends) only showed what got explicitly
+ configured, not what ref at the receiving end would be updated when
+ "git push" was used, as it ignored the default behaviour (e.g. update
+ the same ref as the source).
+
+ Expecting a reroll.
+ cf. <20200416152145.wp2zeibxmuyas6y6@feanor>
+
+
+* pw/rebase-i-more-options (2020-04-29) 5 commits
+ - rebase: add --reset-author-date
+ - rebase -i: support --ignore-date
+ - sequencer: rename amend_author to author_to_free
+ - rebase -i: support --committer-date-is-author-date
+ - rebase -i: add --ignore-whitespace flag
+
+ "git rebase -i" learns a bit more options.
+
+
+* dd/iso-8601-updates (2020-04-24) 4 commits
+  (merged to 'next' on 2020-04-28 at 18fba39171)
+ + date.c: allow compact version of ISO-8601 datetime
+ + date.c: skip fractional second part of ISO-8601
+ + date.c: validate and set time in a helper function
+ + date.c: s/is_date/set_date/
+
+ The approxidate parser learns to parse seconds with fraction.
+
+ Will merge to 'master'.
+
+
+* jx/proc-receive-hook (2020-04-15) 8 commits
+ - SQUASH???
+ - doc: add documentation for the proc-receive hook
+ - receive-pack: new config receive.procReceiveRefs
+ - refs.c: refactor to reuse ref_is_hidden()
+ - send-pack: extension for client-side status report
+ - receive-pack: add new proc-receive hook
+ - connect: export parse_feature_value()
+ - transport: not report a non-head push as a branch
+
+ "git receive-pack" that accepts requests by "git push" learned to
+ outsource most of the ref updates to the new "proc-receive" hook.
+
+
+* hn/reftable (2020-04-27) 12 commits
+ - t: use update-ref and show-ref to reading/writing refs
+ - Add some reftable testing infrastructure
+ - Reftable support for git-core
+ - Add reftable library
+ - reftable: clarify how empty tables should be written
+ - reftable: define version 2 of the spec to accomodate SHA256
+ - reftable: file format documentation
+ - Add .gitattributes for the reftable/ directory
+ - refs: document how ref_iterator_advance_fn should handle symrefs
+ - create .git/refs in files-backend.c
+ - Iterate over the "refs/" namespace in for_each_[raw]ref
+ - refs.h: clarify reflog iteration order
+
+ A new refs backend "reftable" to replace the traditional
+ combination of packed-refs files and one-file-per-ref loose refs
+ has been implemented and integrated for improved performance and
+ atomicity.
+
+ At v10.  VCbuild may have to be updated to deal with the new lib.
+ cf. https://github.com/git/git/runs/624424705?check_suite_focus=true
+ cf. <pull.539.v10.git.1588018418.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Discarded]
+
+* jc/credential-store-file-format-doc (2020-04-27) 1 commit
+ . credential-store: document the file format a bit more
+
+ Now has become a part of Carlo's credential-store fix patches.
