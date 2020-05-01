@@ -2,145 +2,203 @@ Return-Path: <SRS0=YBbL=6P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CC06C4724C
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 822F6C4724C
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:10:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A77772137B
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:09:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C82C24954
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:10:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5EubkoQ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gnmTsgIU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730063AbgEARJS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 13:09:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56912 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728970AbgEARJS (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 1 May 2020 13:09:18 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77A27C061A0C
-        for <git@vger.kernel.org>; Fri,  1 May 2020 10:09:16 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id g12so359777wmh.3
-        for <git@vger.kernel.org>; Fri, 01 May 2020 10:09:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=eqPIU12N8xyhu2ZWS62PqlGQ1qqBOeP3kOHZtW62qnY=;
-        b=L5EubkoQrI1exPv2m7rW5Bl4HbnT1uOBPEVb4iT4fkE8Ri9mm8cd6OX6PUtlcavCG/
-         MuuGBTCDsqqlQRqyO9XUKn/RYnU07V89hi/NuPheCfTC2/ChxGBKmr2vDV5IJxxOZMcN
-         Dura0qR9QSOkHem2MjodX8IMZlxgf4cGwj2MZEeL6ni7y0sxZGafIzzjNTqCN/SMiQ1X
-         KpkW+LG7N5c0lYJHU7n6n0ZoDweMCNUpzAKeJdcYGslE10GmyhzBhBmK9n55xpbIZcel
-         etepnQIsYNEYZ3l1fs4SljAXsaB/JKzPmF2kYVcOTTOi9oLaxmUD6maTlhFe6hj3AA+W
-         PdVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=eqPIU12N8xyhu2ZWS62PqlGQ1qqBOeP3kOHZtW62qnY=;
-        b=h4x9pjPAEQBaQjIT8I7n97MYINPsp79/8feYQFVmml3edk7b+T19Ts3u0vesf0Lgcm
-         c8CvyBPeIolFajc2kJ72E0DzO0AB0tVeucV3p30TVnKenzEGwiYckup0PNjc5OWWsMDH
-         aXhgn0WU4bDKW/AwBYrymM6cXsU9rR2Pn/gFiDETl7efsxbp8NEeQTeoDXTA1ao2N1Fd
-         YfCos+rGd2SkbKRV59ZeDKLcPG7oEXb2x8dR9aQ1To7XfUp3P3aRpiDokmtgV4MtU6BA
-         MOqQ84zDBdDxadRoe6gNh6xChXaxvz2fqb6sFQfbIMFQzeRnNQbZ+PS+oNF62SV0KC8Z
-         r/mw==
-X-Gm-Message-State: AGi0PuZMNWfDX6rr5GDUAmkYq+XWlROLbNvRfIDSr5i9DAfzB4Jva5qj
-        0JW+J5EP+cjQf4SPunqfh6wO3m97
-X-Google-Smtp-Source: APiQypIXTf6hOth+W0rZggU5oymKJQerNDsxCtC/CjbodyHDzbdKJqO1CJ2XC403VK2jQiQ9yyY/tA==
-X-Received: by 2002:a1c:abc3:: with SMTP id u186mr494390wme.42.1588352954058;
-        Fri, 01 May 2020 10:09:14 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 36sm5411350wrc.35.2020.05.01.10.09.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 10:09:13 -0700 (PDT)
-Message-Id: <pull.775.git.git.1588352952840.gitgitgadget@gmail.com>
-From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 May 2020 17:09:12 +0000
-Subject: [PATCH] git-p4.py: fix --prepare-p4-only error with multiple commits
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729046AbgEARKZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 13:10:25 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55340 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730134AbgEARKY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 13:10:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AD860C2819;
+        Fri,  1 May 2020 13:10:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Z3rPK6i0XE7uUPFYQeDegk9xqsk=; b=gnmTsg
+        IUfcpQ/WM45JjHZkatsA/8jv3cXamKwDICHRUt+tM6oM5+Bhu5XFgxMy7kiMF1Im
+        B7iQ22yq+TE+FEsqZnY35WSWMwd1IzgpOhw3KhWmoPmGDtSD4mR9X3Bp1eE5Up6n
+        xmfOG5xcXI0p/vzzQb2LAYcDRaigvoUeatRCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gkLxm2rI/vM8aPg+VWvi40vaSuGlwoph
+        jP4XLGlXVFdjToFJ7sJ4rOge3+Ain3yVz+jwNoPt5VyD5OPcymiAOC010JBjMJKf
+        nj7gLPMI5DPN8MHGmqLOHalkDupnBNrb14V01oXkQxbecPvssK9Fgznze/AMGoKy
+        0g76vpjTEzs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4E78C2818;
+        Fri,  1 May 2020 13:10:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E7D46C2817;
+        Fri,  1 May 2020 13:10:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Antonio Russo <antonio.e.russo@gmail.com>
+Cc:     git-ml <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/3 v3] Clean up t6016-rev-list-graph-simplify-history
+References: <df0b9e59-e6d7-8839-ca3b-86145dc3bdf3@gmail.com>
+        <d3079ba8-33e1-3b68-23d2-ea97b9ca1e97@gmail.com>
+        <3a2605b6-c612-f70c-a11e-1e1cc3f59184@gmail.com>
+Date:   Fri, 01 May 2020 10:10:15 -0700
+In-Reply-To: <3a2605b6-c612-f70c-a11e-1e1cc3f59184@gmail.com> (Antonio Russo's
+        message of "Fri, 1 May 2020 08:21:04 -0600")
+Message-ID: <xmqq4kszoa2w.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Ben Keene <seraphire@gmail.com>, Ben Keene <seraphire@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A10BE176-8BCE-11EA-AF67-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Keene <seraphire@gmail.com>
+Antonio Russo <antonio.e.russo@gmail.com> writes:
 
-When using git p4 submit with the --prepare-p4-only option, the program
-should prepare a single p4 changelist and notify the user that more
-commits are pending and then stop processing.
+> +check_graph () {
+> +	cat >expected &&
 
-A bug has been introduced by the p4-changelist hook feature that
-causes the program to continue to try and process all pending
-changelists at the same time.
+Not a new issue, but we may want to fix this to align to majority of
+tests by calling it "expect".
 
-The function applyCommit should return True when applying the commit
-was successful and the program should continue. In the case of the
---prepare-p4-only flag, the function should return False, alerting the
-caller that the program should not proceed with additional commits.
+> +	git rev-list --graph "$@" | sed "$(cat sedscript)" > actual &&
 
-Change the return value from True to False in the applyCommit function
-when git-p4 is executed with --prepare-p4-only flag.
+Style. No SP between > (or < for that matter) and the filename.
 
-Signed-off-by: Ben Keene <seraphire@gmail.com>
----
-    git-p4.py: fix --prepare-p4-only error with multiple commits
-    
-    When using git p4 submit with the --prepare-p4-only option, the program
-    should prepare a single p4 changelist and notify the user that more
-    commits are pending and then stop processing.
-    
-    A bug has been introduced by the p4-changelist hook feature that causes
-    the program to continue to try and process all pending changelists at
-    the same time.
-    
-    The function applyCommit should return True when applying the commit was
-    successful and the program should continue. In the case of the
-    --prepare-p4-only flag, the function should return False, alerting the
-    caller that the program should not proceed with additional commits.
-    
-    Change the return value from True to False in the applyCommit function
-    when git-p4 is executed with --prepare-p4-only flag.
+The "sed" utility can be told to read its script from a file with
+its "-f" option.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-775%2Fseraphire%2Fseraphire%2Fp4-hook-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-775/seraphire/seraphire/p4-hook-v1
-Pull-Request: https://github.com/git/git/pull/775
+Correctness.  Never run "git" command that is the target being
+tested on the left side of a pipe.  It will hide the exit status.
 
- git-p4.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> +	test_cmp expected actual
+> +}
 
-diff --git a/git-p4.py b/git-p4.py
-index b8b2a1679e7..d9ced1bf552 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1984,7 +1984,7 @@ def get_diff_description(self, editedFiles, filesToAdd, symlinks):
-         return (diff + newdiff).replace('\r\n', '\n')
- 
-     def applyCommit(self, id):
--        """Apply one commit, return True if it succeeded."""
-+        """Apply one commit, return True if it should continue processing."""
- 
-         print("Applying", read_pipe(["git", "show", "-s",
-                                      "--format=format:%h %s", id]))
-@@ -2222,7 +2222,7 @@ def applyCommit(self, id):
-                         print("  " + f)
-                 print("")
-                 sys.stdout.flush()
--                return True
-+                return False
- 
-             if self.edit_template(fileName):
-                 if not self.no_verify:
+>  test_expect_success 'set up rev-list --graph test' '
+>  	# 3 commits on branch A
+>  	test_commit A1 foo.txt &&
+> @@ -43,76 +49,62 @@ test_expect_success 'set up rev-list --graph test' '
+>
+>  	test_commit A7 bar.txt &&
+>
+> -	# Store commit names in variables for later use
+> -	A1=$(git rev-parse --verify A1) &&
+> -	A2=$(git rev-parse --verify A2) &&
+> -	A3=$(git rev-parse --verify A3) &&
+> -	A4=$(git rev-parse --verify A4) &&
+> -	A5=$(git rev-parse --verify A5) &&
+> -	A6=$(git rev-parse --verify A6) &&
+> -	A7=$(git rev-parse --verify A7) &&
+> -	B1=$(git rev-parse --verify B1) &&
+> -	B2=$(git rev-parse --verify B2) &&
+> -	C1=$(git rev-parse --verify C1) &&
+> -	C2=$(git rev-parse --verify C2) &&
+> -	C3=$(git rev-parse --verify C3) &&
+> -	C4=$(git rev-parse --verify C4)
+> -	'
+> +	echo "s/ *$//;" > sedscript &&
+> +	( for tag in $(git tag -l) ; do echo "s/$(git rev-parse --verify $tag)/$tag/;" >> sedscript ; done )
 
-base-commit: d61d20c9b413225793f8a0b491bbbec61c184e26
--- 
-gitgitgadget
+Avoid unreadable one-liner with needless subshell.
+
+I suspect that this is a task for-each-ref was designed for,
+something along the lines of...
+
+	git for-each-ref --format='s|%(objectname)|%(refname:short)|' \
+		refs/tags/ >>sedScript
+
+> +'
+>
+>  test_expect_success '--graph --all' '
+> -	rm -f expected &&
+> -	echo "* $A7" >> expected &&
+> -	echo "*   $A6" >> expected &&
+> -	echo "|\\  " >> expected &&
+> -	echo "| * $C4" >> expected &&
+> -	echo "| * $C3" >> expected &&
+> -	echo "* | $A5" >> expected &&
+> -	echo "| |   " >> expected &&
+> -	echo "|  \\  " >> expected &&
+> -	echo "*-. | $A4" >> expected &&
+> -	echo "|\\ \\| " >> expected &&
+> -	echo "| | * $C2" >> expected &&
+> -	echo "| | * $C1" >> expected &&
+> -	echo "| * | $B2" >> expected &&
+> -	echo "| * | $B1" >> expected &&
+> -	echo "* | | $A3" >> expected &&
+> -	echo "| |/  " >> expected &&
+> -	echo "|/|   " >> expected &&
+> -	echo "* | $A2" >> expected &&
+> -	echo "|/  " >> expected &&
+> -	echo "* $A1" >> expected &&
+> -	git rev-list --graph --all > actual &&
+> -	test_cmp expected actual
+> -	'
+> +	check_graph --all <<-\EOF
+> +	* A7
+> +	*   A6
+> +	|\
+> +	| * C4
+> +	| * C3
+> +	* | A5
+> +	| |
+> +	|  \
+> +	*-. | A4
+> +	|\ \|
+> +	| | * C2
+> +	| | * C1
+> +	| * | B2
+> +	| * | B1
+> +	* | | A3
+> +	| |/
+> +	|/|
+> +	* | A2
+> +	|/
+> +	* A1
+> +	EOF
+
+Much nicer to see.
+
+Having said all that, I am not sure if this change of design is
+sound.
+
+The original approach would have worked even if two or more of these
+tags pointed at the same object.  Your version will pick one of
+them.  If two tags, say A5 and C8, pointed at the same commit, and
+the illustration given to check_graph helper from its standard
+output labeled a commit as C8, wouldn't the actual output converted
+to show A5 with your sedScript approach?
+
+I think it is salvageable by changing the direction you munge.
+Instead of munging the rev-list output, you can store it as-is in
+"actual", and instead pass the illustration that comes from the
+standard input of the check_graph helper through sed to expand the
+symbolic names to actual object names before comparing. i.e.
+
+	check_graph () {
+		sed -f expand_tag_to_objects.sed >expect &&
+		git rev-list --graph "$@" >actual &&
+		test_cmp expect actual
+	}
+
+Note that I renamed the overly generic "sedscript" to a name that
+reflects the purpose of the file (and the contents being of a
+certain type is conveyed by .sed suffix, just like you'd use
+suffixes like .c, .txt).  A good discipline to learn, I would say.
+
+Thanks.
