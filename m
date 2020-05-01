@@ -2,109 +2,158 @@ Return-Path: <SRS0=YBbL=6P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6EDAC47254
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83F73C47256
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:16:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B05B52166E
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:13:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5EE0C216FD
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:16:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="0zdv1Q/5"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="JkSlL9At"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726886AbgEAWNg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 18:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48404 "EHLO
+        id S1726475AbgEAWQQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 18:16:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726488AbgEAWNg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 18:13:36 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBBA0C061A0C
-        for <git@vger.kernel.org>; Fri,  1 May 2020 15:13:34 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id w65so2142272pfc.12
-        for <git@vger.kernel.org>; Fri, 01 May 2020 15:13:34 -0700 (PDT)
+        with ESMTP id S1726045AbgEAWQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 18:16:15 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B95E9C061A0C
+        for <git@vger.kernel.org>; Fri,  1 May 2020 15:16:15 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id l20so5130819pgb.11
+        for <git@vger.kernel.org>; Fri, 01 May 2020 15:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=giqiie9QcagB/WH0BWazSlXPTrNynsgnVBOwSOlGRwM=;
-        b=0zdv1Q/56WP9NVx40Y+bcE+fyCbTBNOTtRliPES0FA0j3RDc3e/L7WcMBPq/zbdXjM
-         o5y/8TcDdFkUfa2H/WYF9ZnoWHF2HcXwhUPMmItl2WhXLWxtoKYoyY6pEkjVUXSoU7Ex
-         DQBuaU5BBKGAnVWfqo+Uu+1B/cWKrmjqIWCKcUooSJKUGPfRsYA8ttSnXAzm9Bl/wrct
-         dFdlZvxdFrqYozsj5aBIeVLmJIInZ0w5omnhcUViBYVLF6VQCmToJcUMxqw48tTVe5OO
-         UqGSyZyt+z8zKqXAkPr/Tg+KSE1vH3SWSAesC0dktEd8EyqfRNJQBjzFEVGVd0K/k6jS
-         t8RA==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=C4GGFFQ95rypQUHCVZRqsiEmMOWWbXQU0Bpl66h2vgQ=;
+        b=JkSlL9AtsAdr75bN1u8choFg9H98/R+CGlUvYfh5sF0c8J3yqx4PBv803MrUZfyhsy
+         eS+bSE172uv/43vW2lLZyTjCf3yUlIXs4K36y8ccvvDmh7EjCm9I59m3gmJuX4j8UPFQ
+         2ooA0q43QSW94ajpkwL83pnqUiVFVnJfzQsHPxQRZUrYS3ORFgmx806Z4hcfdC1PG9fZ
+         4rWcZAcDE/a+ILC2LYSBPfbkSrewFRnV/2AjRytJIrjPRbPNZhcr0NNQvCovxHmVfjwY
+         oZxAgPLesXR3jVGH5nxzbcH2QFQ2hdn5HhQdZT05I2lwh21pdJ5BU9cRbg787Q1hzG8A
+         Ngig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=giqiie9QcagB/WH0BWazSlXPTrNynsgnVBOwSOlGRwM=;
-        b=cth45b2gbosU0Q2O8gYZOCa31Q57bANdgSyBHbbJf10kb3AuRQG0wJwauzFMAVnyg2
-         JvKJcGupxbct8Ih3Ucd97ntJJuJFKxADY3+pIl/8QzsbBnyJsU8Ty8dSuwff1Db2DbQm
-         IWYdylsYcsp39yHFfRUGWRms6P7aYa6xAAuvFZGic8oLENM3nggtzHGjXX7LM65rPNJH
-         CvYqHRtMP/wkyCtqWFVGV7H2duJ3R9pjNTzBYdXukIHpz7kBPd45xf5daGZuDBHUju7K
-         QMCZhjTsvd1QKB2+RNL5Qm4+dBB/+bBDNATD1cYCfyTgQDQFALvsvw6YG5st/Y7qpeIV
-         4Nqg==
-X-Gm-Message-State: AGi0PubNqKSQBe4dLNTp8LO/QMUddYGIku4q9SoXQLUgD5Eo5mv8LN7e
-        /CSfqFGSWUZB7DgaJ6yCWHbJDA==
-X-Google-Smtp-Source: APiQypIsfmY0c8ZkJJmmOeqA2mLfml+/yt6p9QfFdRY2gCiHdCjhZxKmAL86kXliedYlTB7edb57Jw==
-X-Received: by 2002:a62:81c6:: with SMTP id t189mr6038322pfd.174.1588371213935;
-        Fri, 01 May 2020 15:13:33 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=C4GGFFQ95rypQUHCVZRqsiEmMOWWbXQU0Bpl66h2vgQ=;
+        b=lmgEpkUZCBrAhKYvqITy+k2R/EqBou//hfK4cOOpFFVk3QYCUs1m8UPEanNR+Y4pH/
+         CvPcBN00MmLkY1dGcO+qsETsHkI91z6i/9mwf0E6suPaJD+HwOGR7hXqqZyzi9XuTwsi
+         mpDfVnaIaCT4FgVY/nNv31HC9te/L7Z7jxHs9Q79Vg8W1aZsNv8Mm7d7Gd9UbJik6G/+
+         ZyNUDT7ljHcxWhnOnlvJGube32dBzsmrCKpJpEDv/VNElCJ+N57uHkxODRiVMJxvH74r
+         gEgJepFY1gwgp629AFsT4O5wXYEw1PXkHqCa5W1X2De8jfYE1SiG3G/KEruUIfkzswqt
+         68Ew==
+X-Gm-Message-State: AGi0PubjERNHYiESGb9ntFpE7FAw476M8tGseQQG10LmT8AIJYUtqZIW
+        q8ymd2QLrMLrmYqzDpZ47K3MBw==
+X-Google-Smtp-Source: APiQypIUOlfYoowp+fby6KxD4XWUW3ykw4rJPyPdGbgOmujxxfMhaqSmEUtqIe/Efky2wgL8N2lH5g==
+X-Received: by 2002:a63:e050:: with SMTP id n16mr6170059pgj.93.1588371375099;
+        Fri, 01 May 2020 15:16:15 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id fy21sm528160pjb.25.2020.05.01.15.13.32
+        by smtp.gmail.com with ESMTPSA id j6sm3019962pfe.134.2020.05.01.15.16.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2020 15:13:33 -0700 (PDT)
-Date:   Fri, 1 May 2020 16:13:32 -0600
+        Fri, 01 May 2020 15:16:14 -0700 (PDT)
+Date:   Fri, 1 May 2020 16:16:13 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Son Luong Ngoc <sluongng@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Seg Fault on git fetch with fetch.negotiationAlgorithm=skipping
-Message-ID: <20200501221332.GB41612@syl.local>
-References: <450D5CC7-113A-40D8-9CD4-53786198526D@gmail.com>
- <20200430202014.GB2014@syl.local>
- <BFB84B3B-FB39-4217-A6C6-7599F6F755E2@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org,
+        Harri =?utf-8?B?TWVodMOkbMOk?= <harri.mehtala@finago.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] restore: require --source when combining --worktree
+ and --staged
+Message-ID: <20200501221613.GC41612@syl.local>
+References: <20200501082746.23943-1-sunshine@sunshineco.com>
+ <20200501082746.23943-2-sunshine@sunshineco.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <BFB84B3B-FB39-4217-A6C6-7599F6F755E2@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200501082746.23943-2-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 01, 2020 at 10:13:43AM +0200, Son Luong Ngoc wrote:
-> Hi Taylor,
->
-> > On Apr 30, 2020, at 22:20, Taylor Blau <me@ttaylorr.com> wrote:
-> >
-> > Are you able to share a core file? If not, it would be very helpful for
-> > you to 'git fast-export --anonymize ...' and see if you can reproduce
-> > the problem on an anonymized copy of your repository.
->
-> I played a bit with --anonymized yesterday but export/import is slow and I still need to review
-> the history to see whether it could be released.
->
-> It might take more time than just a few days.
+On Fri, May 01, 2020 at 04:27:45AM -0400, Eric Sunshine wrote:
+> The default restore source for --worktree is the index, and the default
+> source for --staged is HEAD. When combining --worktree and --staged in
+> the same invocation, the restore source is ambiguous ("should it restore
+> from the index or from HEAD?"). To avoid such ambiguity, the git-restore
+> documentation has always stated that --source must be used when
+> combining --worktree and --staged. However, this restriction is not
+> actually enforced. Address this deficiency by making the implementation
+> match the documented behavior (to wit, error out if --source is not
+> specified when combining --worktree and --staged).
 
-That's OK. Please let us know when you have it by responding in the
-sub-thread here, and I will be happy to take a look.
+This explanation is very helpful, and makes the fix below very natural.
+Thanks for a helpful explanation.
 
-> > I can speculate about the cause of the crash from your strace above, but
-> > a core file would be more helpful.
+> While at it, enhance the documentation to mention the --source
+> requirement prominently in the "Description" section (rather than only
+> in the description of the --source option itself).
 >
-> I have added perf trace2 in https://gist.github.com/sluongng/e48327cc911c617ed2ef8578acc2ea34#file-perf-trace2-L52
-> (git version is 2.26.2)
+> Reported-by: Harri Mehtälä <harri.mehtala@finago.com>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  Documentation/git-restore.txt | 3 ++-
+>  builtin/checkout.c            | 3 +++
+>  t/t2070-restore.sh            | 5 +++++
+>  3 files changed, 10 insertions(+), 1 deletion(-)
 >
-> I think this trace is a lot cleared than the strace log.
+> diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+> index 8e3b339802..8906499637 100644
+> --- a/Documentation/git-restore.txt
+> +++ b/Documentation/git-restore.txt
+> @@ -24,7 +24,8 @@ The command can also be used to restore the content in the index with
 >
-> > Thanks,
-> > Taylor
+>  By default, the restore sources for working tree and the index are the
+>  index and `HEAD` respectively. `--source` could be used to specify a
+> -commit as the restore source.
+> +commit as the restore source; it is required when combining `--staged`
+> +and `--worktree`.
 >
-> Cheers,
-> Son Luong.
+>  See "Reset, restore and revert" in linkgit:git[1] for the differences
+>  between the three commands.
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 8bc94d392b..7a01d00f53 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1604,6 +1604,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>  	}
+>  	if (opts->checkout_index < 0 || opts->checkout_worktree < 0)
+>  		BUG("these flags should be non-negative by now");
+> +	if (opts->checkout_index > 0 && opts->checkout_worktree > 0 &&
+> +	    !opts->from_treeish)
+> +		die(_("--source required when using --worktree and --staged"));
+>  	/*
+>  	 * convenient shortcut: "git restore --staged" equals
+>  	 * "git restore --staged --source HEAD"
+> diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+> index 076d0df7fc..19efa21fdb 100755
+> --- a/t/t2070-restore.sh
+> +++ b/t/t2070-restore.sh
+> @@ -69,6 +69,11 @@ test_expect_success 'restore --staged uses HEAD as source' '
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success 'restore --worktree --staged requires --source' '
+> +	test_must_fail git restore --worktree --staged first.t 2>err &&
+> +	test_i18ngrep "source required when using --worktree and --staged" err
+> +'
+> +
+>  test_expect_success 'restore --ignore-unmerged ignores unmerged entries' '
+>  	git init unmerged &&
+>  	(
+> --
+> 2.26.2.526.g744177e7f7
+
+Very sane.
+
+  Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
 Thanks,
 Taylor
