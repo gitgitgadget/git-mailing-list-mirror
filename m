@@ -6,199 +6,95 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 822F6C4724C
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F36C47253
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:34:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C82C24954
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:10:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6BED2166E
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 17:34:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gnmTsgIU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vBxJMYP1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729046AbgEARKZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 13:10:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55340 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730134AbgEARKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 13:10:24 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AD860C2819;
-        Fri,  1 May 2020 13:10:19 -0400 (EDT)
+        id S1729221AbgEARev (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 13:34:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50901 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728951AbgEARev (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 13:34:51 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C540767881;
+        Fri,  1 May 2020 13:34:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z3rPK6i0XE7uUPFYQeDegk9xqsk=; b=gnmTsg
-        IUfcpQ/WM45JjHZkatsA/8jv3cXamKwDICHRUt+tM6oM5+Bhu5XFgxMy7kiMF1Im
-        B7iQ22yq+TE+FEsqZnY35WSWMwd1IzgpOhw3KhWmoPmGDtSD4mR9X3Bp1eE5Up6n
-        xmfOG5xcXI0p/vzzQb2LAYcDRaigvoUeatRCU=
+        :content-type; s=sasl; bh=QBRrj8UjIy1AsrJYHiMdE7QC9Kw=; b=vBxJMY
+        P1tpku/zh2NEoF0MSXiO3ZUIetXRL/4YXsFYF3sOQ1HoMt77WyYD7NN+3W0wbSfh
+        lraU5ZAnH0edgcZSBt2cl4kUOCZfKGZa8vU8F1OGraRElIeTp6jE1o1SJZnF08Sm
+        zirZT+39A+hkKmoJdM5SyEQpjrt91jTZXbiKc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gkLxm2rI/vM8aPg+VWvi40vaSuGlwoph
-        jP4XLGlXVFdjToFJ7sJ4rOge3+Ain3yVz+jwNoPt5VyD5OPcymiAOC010JBjMJKf
-        nj7gLPMI5DPN8MHGmqLOHalkDupnBNrb14V01oXkQxbecPvssK9Fgznze/AMGoKy
-        0g76vpjTEzs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4E78C2818;
-        Fri,  1 May 2020 13:10:19 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=NROwsi5C7QQisEKn27fb352JE5wDlx5r
+        ySsuZtQNO37U09u9isv3aow8d3SEwKUKCA3q3dDT77GW1rl5+5/HVygcXSTbD8Vp
+        WBbdXf7IdY1GK8cFS1RKj1hEmiIPm4aED7CELMZUxORghbOzaQ357l7q7XXz7KYG
+        W+qRsmvM75I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B253967880;
+        Fri,  1 May 2020 13:34:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E7D46C2817;
-        Fri,  1 May 2020 13:10:16 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE1206787F;
+        Fri,  1 May 2020 13:34:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Antonio Russo <antonio.e.russo@gmail.com>
-Cc:     git-ml <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
+        garimasigit@gmail.com, szeder.dev@gmail.com, jnareb@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/3 v3] Clean up t6016-rev-list-graph-simplify-history
-References: <df0b9e59-e6d7-8839-ca3b-86145dc3bdf3@gmail.com>
-        <d3079ba8-33e1-3b68-23d2-ea97b9ca1e97@gmail.com>
-        <3a2605b6-c612-f70c-a11e-1e1cc3f59184@gmail.com>
-Date:   Fri, 01 May 2020 10:10:15 -0700
-In-Reply-To: <3a2605b6-c612-f70c-a11e-1e1cc3f59184@gmail.com> (Antonio Russo's
-        message of "Fri, 1 May 2020 08:21:04 -0600")
-Message-ID: <xmqq4kszoa2w.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH 00/12] Integrating line-log and changed-path Bloom filters
+References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
+Date:   Fri, 01 May 2020 10:34:46 -0700
+In-Reply-To: <pull.622.git.1588347029.gitgitgadget@gmail.com> (Derrick Stolee
+        via GitGitGadget's message of "Fri, 01 May 2020 15:30:17 +0000")
+Message-ID: <xmqqzharmudl.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A10BE176-8BCE-11EA-AF67-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 0DC7A8E2-8BD2-11EA-8AEB-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Antonio Russo <antonio.e.russo@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +check_graph () {
-> +	cat >expected &&
-
-Not a new issue, but we may want to fix this to align to majority of
-tests by calling it "expect".
-
-> +	git rev-list --graph "$@" | sed "$(cat sedscript)" > actual &&
-
-Style. No SP between > (or < for that matter) and the filename.
-
-The "sed" utility can be told to read its script from a file with
-its "-f" option.
-
-Correctness.  Never run "git" command that is the target being
-tested on the left side of a pipe.  It will hide the exit status.
-
-> +	test_cmp expected actual
-> +}
-
->  test_expect_success 'set up rev-list --graph test' '
->  	# 3 commits on branch A
->  	test_commit A1 foo.txt &&
-> @@ -43,76 +49,62 @@ test_expect_success 'set up rev-list --graph test' '
+> This series is organized as follows:
 >
->  	test_commit A7 bar.txt &&
->
-> -	# Store commit names in variables for later use
-> -	A1=$(git rev-parse --verify A1) &&
-> -	A2=$(git rev-parse --verify A2) &&
-> -	A3=$(git rev-parse --verify A3) &&
-> -	A4=$(git rev-parse --verify A4) &&
-> -	A5=$(git rev-parse --verify A5) &&
-> -	A6=$(git rev-parse --verify A6) &&
-> -	A7=$(git rev-parse --verify A7) &&
-> -	B1=$(git rev-parse --verify B1) &&
-> -	B2=$(git rev-parse --verify B2) &&
-> -	C1=$(git rev-parse --verify C1) &&
-> -	C2=$(git rev-parse --verify C2) &&
-> -	C3=$(git rev-parse --verify C3) &&
-> -	C4=$(git rev-parse --verify C4)
-> -	'
-> +	echo "s/ *$//;" > sedscript &&
-> +	( for tag in $(git tag -l) ; do echo "s/$(git rev-parse --verify $tag)/$tag/;" >> sedscript ; done )
+>  * Patches 1-4 are minor Bloom filter cleanups, including a documentation
+>    bug.
+>    
+>    
+>  * Patch 5 fixes a problem where the Bloom filters use much larger filters
+>    than expected.
+>    
+>    
+>  * Patch 6 fixes a bug related to the short-circuit of large diffs from
+>    e369698016 (diff: halt tree-diff early after max_changes, 2020-03-30).
+>    The condition for halting the diff computation is different than the
+>    check in bloom.c to see if that short-circuit was hit, which leads to
+>    some commits with large diffs getting an incomplete Bloom filter. This
+>    happened on the root commit of the Linux kernel repo, for example.
+> ...   
+> I organized these patches so patches 1-6 could be split into its own topic,
+> if beneficial to take earlier than the line-log changes.
 
-Avoid unreadable one-liner with needless subshell.
+Nice.
 
-I suspect that this is a task for-each-ref was designed for,
-something along the lines of...
+> The end result of this combined effort is the following: git log -L commands
+> feel much more responsive to a terminal user because Szeder's changes make
+> the computation incremental, and they have better end-to-end performance
+> because of the integration with Bloom filters to reduce time spent running
+> tree diffs for TREESAME commits.
 
-	git for-each-ref --format='s|%(objectname)|%(refname:short)|' \
-		refs/tags/ >>sedScript
+Nice, again.
 
-> +'
->
->  test_expect_success '--graph --all' '
-> -	rm -f expected &&
-> -	echo "* $A7" >> expected &&
-> -	echo "*   $A6" >> expected &&
-> -	echo "|\\  " >> expected &&
-> -	echo "| * $C4" >> expected &&
-> -	echo "| * $C3" >> expected &&
-> -	echo "* | $A5" >> expected &&
-> -	echo "| |   " >> expected &&
-> -	echo "|  \\  " >> expected &&
-> -	echo "*-. | $A4" >> expected &&
-> -	echo "|\\ \\| " >> expected &&
-> -	echo "| | * $C2" >> expected &&
-> -	echo "| | * $C1" >> expected &&
-> -	echo "| * | $B2" >> expected &&
-> -	echo "| * | $B1" >> expected &&
-> -	echo "* | | $A3" >> expected &&
-> -	echo "| |/  " >> expected &&
-> -	echo "|/|   " >> expected &&
-> -	echo "* | $A2" >> expected &&
-> -	echo "|/  " >> expected &&
-> -	echo "* $A1" >> expected &&
-> -	git rev-list --graph --all > actual &&
-> -	test_cmp expected actual
-> -	'
-> +	check_graph --all <<-\EOF
-> +	* A7
-> +	*   A6
-> +	|\
-> +	| * C4
-> +	| * C3
-> +	* | A5
-> +	| |
-> +	|  \
-> +	*-. | A4
-> +	|\ \|
-> +	| | * C2
-> +	| | * C1
-> +	| * | B2
-> +	| * | B1
-> +	* | | A3
-> +	| |/
-> +	|/|
-> +	* | A2
-> +	|/
-> +	* A1
-> +	EOF
-
-Much nicer to see.
-
-Having said all that, I am not sure if this change of design is
-sound.
-
-The original approach would have worked even if two or more of these
-tags pointed at the same object.  Your version will pick one of
-them.  If two tags, say A5 and C8, pointed at the same commit, and
-the illustration given to check_graph helper from its standard
-output labeled a commit as C8, wouldn't the actual output converted
-to show A5 with your sedScript approach?
-
-I think it is salvageable by changing the direction you munge.
-Instead of munging the rev-list output, you can store it as-is in
-"actual", and instead pass the illustration that comes from the
-standard input of the check_graph helper through sed to expand the
-symbolic names to actual object names before comparing. i.e.
-
-	check_graph () {
-		sed -f expand_tag_to_objects.sed >expect &&
-		git rev-list --graph "$@" >actual &&
-		test_cmp expect actual
-	}
-
-Note that I renamed the overly generic "sedscript" to a name that
-reflects the purpose of the file (and the contents being of a
-certain type is conveyed by .sed suffix, just like you'd use
-suffixes like .c, .txt).  A good discipline to learn, I would say.
-
-Thanks.
