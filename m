@@ -2,61 +2,81 @@ Return-Path: <SRS0=YBbL=6P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 067C0C47256
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 21:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 142EEC47256
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:03:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3DE0216FD
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 21:55:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B536420857
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 22:03:15 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IoMX3iH9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726926AbgEAVzD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 17:55:03 -0400
-Received: from hz00.koulikoff.ru ([78.46.42.68]:57347 "EHLO smtp.koulikoff.ru"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726045AbgEAVzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 17:55:03 -0400
-X-Greylist: delayed 1144 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 May 2020 17:55:03 EDT
-Received: from p5dda6ee6.dip0.t-ipconnect.de ([93.218.110.230] helo=hp470.localnet)
-        by smtp.koulikoff.ru with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.86)
-        (envelope-from <dima@koulikoff.ru>)
-        id 1jUdK9-0006Yr-LP
-        for git@vger.kernel.org; Fri, 01 May 2020 23:35:57 +0200
-From:   Dmitry Kulikov <dima@koulikoff.ru>
-To:     git@vger.kernel.org
-Subject: git log --since=<date>
-Date:   Fri, 01 May 2020 23:35:53 +0200
-Message-ID: <3860060.ab4mYtCOl4@hp470>
-User-Agent: KMail/4.14.10 (Linux/4.4.219; KDE/4.14.38; x86_64; ; )
+        id S1726336AbgEAWDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 18:03:14 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54333 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726045AbgEAWDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 18:03:14 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 493EB419B7;
+        Fri,  1 May 2020 18:03:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rvPJwf59Jzu8nr6Z/13J9kGRW2A=; b=IoMX3i
+        H9fqGzYQCWtsgkA/8uVC7+X5oEstIIxJAkW8pq+PllvORbVJw3+P/pji7pi3AQk9
+        isoNDhTTTAMjMc7TBBO7MHULOL0d6gSjSkyusryXxCuogaJfxoBg7LA4m9WNyUvU
+        HXPmxxyoOmHm2FIG2H2sFdPxGfG6LEgb5XJLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Oh/u/nnG9AVtAxzt/IDkpOVo/PRxmAXv
+        wdNrLN4/O981ROHEm+NKgALi0LztNfjj15Smd4AWv5U98livZe2skiZJWt0Xd4au
+        eFCH2tbZyepatcCmxvh5j5lcBTcmqOu0X4o8BuXv1MmUyihpbqacyafC0B9BcDY5
+        jwwb52fbi9k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 40601419B6;
+        Fri,  1 May 2020 18:03:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BF7FB419B3;
+        Fri,  1 May 2020 18:03:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Dmitry Kulikov <dima@koulikoff.ru>
+Cc:     git@vger.kernel.org
+Subject: Re: git log --since=<date>
+References: <3860060.ab4mYtCOl4@hp470>
+Date:   Fri, 01 May 2020 15:03:10 -0700
+In-Reply-To: <3860060.ab4mYtCOl4@hp470> (Dmitry Kulikov's message of "Fri, 01
+        May 2020 23:35:53 +0200")
+Message-ID: <xmqqd07nl3dt.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Envelope-Sender: dima@koulikoff.ru
-Envelope-Recipients: git@vger.kernel.org
-Envelope-Sender: dima@koulikoff.ru
-Envelope-Recipients: git@vger.kernel.org
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8BDE2CEA-8BF7-11EA-B72E-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, 
+Dmitry Kulikov <dima@koulikoff.ru> writes:
 
-I have found a problem.
+> I have found a problem.
+>
+> It turned out, that the timestamp used to determinate which commit is later 
+> the given date is not at 0h 0m 0s, Instead it is at the current time.
+>
+> Similarly --until=<date> uses not 23h 59m 59s but also current time.
 
-It turned out, that the timestamp used to determinate which commit is later 
-the given date is not at 0h 0m 0s, Instead it is at the current time.
+The behaviour is as designed.  "git log --since=yesterday" does the
+same "as nobody said which hour and minute, we take it to mean this
+time yesterday".
 
-Similarly --until=<date> uses not 23h 59m 59s but also current time.
--- 
+You of course can say "git log --since=yesterday.midnight" if you
+want to be exact ;-).
 
-With best regards,
-   Dmitry Kulikov
-
-mailto:dima@koulikoff.ru
-skype: dima.koulikoff
-phone: +49 151 6338 5032
-Viber, WhatsApp: +7 925 505 2185
