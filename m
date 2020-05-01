@@ -2,121 +2,112 @@ Return-Path: <SRS0=YBbL=6P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D9E4C35280
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 20:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB1BC35280
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 20:24:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 154E4208DB
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 20:10:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90DF72137B
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 20:24:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ZBHgAjt8"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="NQPnJjen"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726692AbgEAUKI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 16:10:08 -0400
-Received: from mout.gmx.net ([212.227.15.18]:39907 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgEAUKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 16:10:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1588363793;
-        bh=hceJkCRCtyuWGuPMhA4qWN0UY6xHskpMLxZHFBG0R3c=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZBHgAjt8L/+9yHfpqam2BI44GcuUlLgG/cNHm08fD9bYFB4ue3djYFofDUNslzflk
-         U9QCmj1ZboUqQdz+LY3HvgFHnt1LhMWqBCoyKIaX9ukuCtY8RItTY2b2sw73fWLazA
-         Lxfy5v8F/PeJMYRjBleLUWXZ98w3nZM8klDCMCsk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB.fritz.box ([89.1.213.255]) by mail.gmx.com
- (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 1N3se2-1j4BDF0Yca-00zq2m; Fri, 01 May 2020 22:09:53 +0200
-Date:   Fri, 1 May 2020 22:09:52 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
-cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/4] progress.c: silence cgcc suggestion about internal
- linkage
-In-Reply-To: <d66d9aa677944205cdd5af77192c35ec929692ea.1587996766.git.congdanhqx@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2005012206300.18039@tvgsbejvaqbjf.bet>
-References: <cover.1587648870.git.congdanhqx@gmail.com> <cover.1587996765.git.congdanhqx@gmail.com> <d66d9aa677944205cdd5af77192c35ec929692ea.1587996766.git.congdanhqx@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726534AbgEAUYP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 16:24:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59500 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726333AbgEAUYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 16:24:15 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2103BC061A0C
+        for <git@vger.kernel.org>; Fri,  1 May 2020 13:24:14 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id 145so2022435pfw.13
+        for <git@vger.kernel.org>; Fri, 01 May 2020 13:24:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=d4tzwUGx4hrV4ywFtV2rEDjdHcErsCxSY1lHXOsQnqE=;
+        b=NQPnJjeny9dcfKVPzUfmCtpXKm6CtL5nxBAo3SscAzV/pcq3q8AnFehqKyXPFr+Vo8
+         qzfTF4T/00jS9XZDUcGqph3JwQJOjk/X5sVCrnWaNQqfg4X6Bz9ZKpVws00iLMx+EPgI
+         WGStoZx95sJl59JGyGrMTK+pKDusIYY+EZg4fIisBWIzU7Vmif7r/UtBed+l9tzt+IKO
+         yIgIPwy/+dTld2WJJe50zJDkKogva6dGuEsZ/Lo/xYfsMSmkp0+qyrAG+v1z0sElj1ib
+         8z217QoaAFfnlOtEBRWAZ851itnLcpTWoVs0ayoOdibB/xTC6trj2pvawMUVwKxOZAiQ
+         OeDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=d4tzwUGx4hrV4ywFtV2rEDjdHcErsCxSY1lHXOsQnqE=;
+        b=YXVVyWOnxLzCwBwauLHkeNGTe+5GfwaZlKkKSXEn4EYzudVst6p4OfSIper6uThFDk
+         qmWUPvfLBFk2De8TsfQHaRIICcDxjahbtVGgNqCbr9WQUfz7jhj0XBU+WSrrzAgcyXMf
+         LAY63KhGtX7Y80jR/ohX44VwatpyKPaAMzBlAmdDwSLScnvdkNHoSf6flkv4ZDWuYxgJ
+         wDyxq7Ij5LVEtgMEMXVBqZn48J1cuHeYVEJWNRjA3Licgyur1ZTbB6pLHkMEtitfHOqK
+         VyhBs4qROEbjNti7X8tulS14FV/0L42tRnxHFzy0bNMddPY7F2/Qc7iYvzrB1yF3KmI0
+         FQ/g==
+X-Gm-Message-State: AGi0PuZLNPnb1lczLMCQ1cmvx7kbN8M8Wi06UjCIdFgGusP/cQmhSgUx
+        0Aq3pI+X76MutioLvU8eiel4fVG6UmYcbA==
+X-Google-Smtp-Source: APiQypLrP10nSLZHDONRdkl2tsYo/IxapuxJqN7OUsv0D98OPWl2IH9WHz8qqU22HM5bZfReA2hmLg==
+X-Received: by 2002:a62:2544:: with SMTP id l65mr5881116pfl.288.1588364653568;
+        Fri, 01 May 2020 13:24:13 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id i190sm2954274pfe.114.2020.05.01.13.24.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 May 2020 13:24:12 -0700 (PDT)
+Date:   Fri, 1 May 2020 14:24:11 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2020, #04; Thu, 30)
+Message-ID: <20200501202411.GA41612@syl.local>
+References: <xmqqmu6spocm.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-253040544-1588363793=:18039"
-X-Provags-ID: V03:K1:H15rLrblUm6uLzB6B9ORcMmglJLu3dY7o7Ex1gTpfhAJK2AS3W+
- h6gRXKcQ4r+v1EJ8gBx94H9UUaO046IH6euPiA2xfdckhn/+uKaQRjkpMVLkKBClDljRd4P
- /dX7P5YQDa/hQ64zI8K0jLwP/6nQhQUMciY71FR3xQaizALx8d5seMEw6dsiVm7ODqLk7mK
- pIF4789u5LA3WEeG93zEg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xqUfT8eY9bQ=:++zyGYSccqK4mWxuIBCXrh
- AgtOnOgeXB6nK8EeOjTtdyyyZfSJTTYp0o65jr/ulZkbbVmMQe3aANmlJR2PVp5Cy4FMaRYxb
- O1G69L/1Rz7Yuimubzon5T7uMFcAvfeKnARg84ZYsFOLVE8C34YjYUmhfi5uwBnHU5/LWHGma
- aHkqCLTS8AEVRnHHWMj7MscKZfYbumoljml5w3l119v/vQ96+GgS3qok5aXSxd6fLrOBTdRJG
- 0em6AAhhZaCe9NZpV4JdbmHKkJFB/sT0dH7iqudUqarsm87aeVhwE1d0wnoeKSCqQUflBDM9j
- NUVITn9Vc4qv/2WuQMGs52bg7DuR890AoD4i18l4XXy+8gRvSCdbhIq9wj3q472+QNG8NWMAG
- 5H0PcADHHgxpRZUcm4ov/xcMP2GQvDKhlKBoJ7jieLjyjSOsX53teFAtRSb8JMmT4LXk6Frb/
- rnh/nnbJJ8Jr7p6IrLe05ImwzxbxKsQfon+yo2zLhgeyLIbOUoah2gWLzUKWikTw29+cx61Sn
- 5NEIbl+LK+HYKo4O4u8b0TGL5iaixQwQwV1X6wNzp9CzNQd0J9hDAu1CkY4R8ud69DizwMcRm
- N+fxDYsDloEN6pyzFpQ84M4yZcmiVcnVVWAgS2efQIbwYeHnprRWFn9FwO/ZGSDf3fV3NxO/y
- 77NJmMxrHxO4leBimfyBuQyrCpHRxx2hEw57h74o9LbGnkAFpc/W0UnVUp/kcw8Tv/9un8CO1
- IQYnPb4Y3S2vJoOFuhTngwdB70HtRSXTvHayTjjegoUoEnXqORxd9bvG89+QefsU58H1vJhA4
- YUR+3RDQnOkS/TIfqa5bvWQQ1O+Pv5byP/v2QVv9gTJyV6tUbyq9aUUOoOp6dMOGbBRHF6+bn
- cygZgoo1H1D5TmSlpMMehP5Dulc9VEaWmffyPM2A1JIoDub0MZwDO/SIqtuFMVeETMIzErIWx
- gqAzvrNLOKWU3RAN/yIAifi89IA+IE5sX2rquneMAgJRzBabDWmUcNgGS86uSUZJwb2NwNyhZ
- DRC0tGo31DxPzLxO1v1tNdP2/Fa7EnuZgnp+VrjQVn+MthwciVdjouElw9lfuSTsJpVT9exlN
- akX9Xede2kKJDJHYHpM6Q/JaAM8LqZkDopsEPGD2cEfx25FywZA4Qld1WxgpfNekoi7+lU+NU
- Tge1vZ7iK7HJivbQrsu6phrLeBh0+J+YTV1StLZ4O3hV+iyodOT5seHrTMEq8tT3MsKwxxyMK
- qt4VgAKt6AbGBhPF5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqmu6spocm.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-253040544-1588363793=:18039
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, Apr 30, 2020 at 04:04:25PM -0700, Junio C Hamano wrote:
 
-Hi,
+Thanks for an update. Here are some new topics that I have been tracking
+as well:
 
-On Mon, 27 Apr 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> [New Topics]
 
-> diff --git a/progress.h b/progress.h
-> index 847338911f..f1913acf73 100644
-> --- a/progress.h
-> +++ b/progress.h
-> @@ -3,6 +3,14 @@
->
->  struct progress;
->
-> +#ifdef GIT_TEST_PROGRESS_ONLY
-> +
-> +extern int progress_testing;
-> +extern uint64_t progress_test_ns;
-> +void progress_test_force_update(void);
-> +
-> +#endif
-> +
->  void display_throughput(struct progress *progress, uint64_t total);
->  void display_progress(struct progress *progress, uint64_t n);
->  struct progress *start_progress(const char *title, uint64_t total);
+The only topics that I've been tracking that aren't here are still going
+through some review. Those are:
 
-A slightly cleaner strategy would be to add a separate header file, say,
-`progress-internal.h` or `internal/progress.h` to declare the variables
-and the function.
+  * Sibi's patches to start building with CMake [1].
 
-I guess at some stage we really need to define a proper API of libgit.a.
-Just because we refuse to declare such an API doesn't mean that people
-don't use libgit.a in that way (e.g. cgit, cinnabar). We might just as
-well face reality and split up `cache.h` and put the API part into header
-files in a subdirectory `include/`.
+  * The fifth part of Denton's patches to replace 'test_must_fail'
+    usage with another approach [2].
 
-Ciao,
-Dscho
+  * Dogulas Fuller's patches to update a quoting issue in documentation
+    [3].
 
---8323328-253040544-1588363793=:18039--
+One thing that may have been passed over is my series to teach the
+bitmap machinery how to quickly interpret '--filter=tree:0' by
+discarding non-named trees from the result set. That is here:
+
+  https://lore.kernel.org/git/cover.1587597151.git.me@ttaylorr.com/
+
+This didn't get much review outside of from Peff, who wrote some of the
+patches, so I'd be happy to re-send it or wait longer for others to have
+a look, too. For what it's worth, these changes are fairly
+straightforward and we have been running them at GitHub (and allowing
+partial clones with `--filter=tree:0`!) for some time now.
+
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/pull.614.git.1587700897.gitgitgadget@gmail.com/
+[2]: https://lore.kernel.org/git/cover.1588162842.git.liu.denton@gmail.com/
+[3]: https://lore.kernel.org/git/63f35287c9ced4d674f938bedd439aefa6c46f41.camel@gmail.com/
