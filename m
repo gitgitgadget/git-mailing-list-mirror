@@ -6,32 +6,33 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCC7DC47254
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47D96C47256
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:33:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C320D214D8
-	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:33:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24F312173E
+	for <git@archiver.kernel.org>; Fri,  1 May 2020 07:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728353AbgEAHdG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 May 2020 03:33:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33412 "HELO cloud.peff.net"
+        id S1728357AbgEAHdM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 May 2020 03:33:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33418 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726452AbgEAHdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 May 2020 03:33:06 -0400
-Received: (qmail 2451 invoked by uid 109); 1 May 2020 07:33:05 -0000
+        id S1726452AbgEAHdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 May 2020 03:33:12 -0400
+Received: (qmail 2460 invoked by uid 109); 1 May 2020 07:33:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 01 May 2020 07:33:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 01 May 2020 07:33:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15996 invoked by uid 111); 1 May 2020 07:33:05 -0000
+Received: (qmail 16007 invoked by uid 111); 1 May 2020 07:33:11 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 May 2020 03:33:05 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 May 2020 03:33:11 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 1 May 2020 03:33:05 -0400
+Date:   Fri, 1 May 2020 03:33:11 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     douglas.fuller@gmail.com, git@vger.kernel.org
-Subject: [PATCH v2 1/2] gitcredentials(7): clarify quoting of helper examples
-Message-ID: <20200501073305.GA27675@coredump.intra.peff.net>
+Subject: [PATCH v2 2/2] gitcredentials(7): make shell-snippet example more
+ realistic
+Message-ID: <20200501073311.GB27675@coredump.intra.peff.net>
 References: <20200501073222.GB27392@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,64 +43,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We give several helper config examples, but don't make clear that these
-are raw values. It's up to the user to add the appropriate quoting to
-put them into a config file (either by running with "git config" and
-quoting against the shell, or by adding double-quotes as appropriate
-within the git-config file).
+There's an example of using your own bit of shell to act as a credential
+helper, but it's not very realistic:
 
-Let's flesh them out as full config blocks, which makes the syntax more
-clear (and makes it possible for people to just cut-and-paste them as a
-starting point). I added double-quotes to any values larger than a
-single word. That isn't strictly necessary in all cases, but it
-sidesteps explaining the rules about exactly when you need to quote a
-value.
+ - It's stupid to hand out your secret password to _every_ host. In the
+   real world you'd use the config-matcher to limit it to a particular
+   host.
 
-The existing quotes can be converted to single-quotes in one instance,
-and backslash-esccaped in the other. I also swapped out backticks for
-our preferred $().
+ - We never provided a username. We can easily do that in another config
+   option (you can do it in the helper, too, but this is much more
+   readable).
 
-Reported-by: douglas.fuller@gmail.com
+ - We were sending the secret even for store/erase operations. This
+   is OK because Git would just ignore it, but a real system would
+   probably be unlocking a password store, which you wouldn't want to do
+   more than necessary.
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/gitcredentials.txt | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ Documentation/gitcredentials.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index 1814d2d23c..8127dfcd2f 100644
+index 8127dfcd2f..0d0f7149bd 100644
 --- a/Documentation/gitcredentials.txt
 +++ b/Documentation/gitcredentials.txt
-@@ -216,20 +216,25 @@ Here are some example specifications:
- 
- ----------------------------------------------------
- # run "git credential-foo"
--foo
-+[credential]
-+	helper = foo
- 
- # same as above, but pass an argument to the helper
--foo --bar=baz
-+[credential]
-+	helper = "foo --bar=baz"
- 
- # the arguments are parsed by the shell, so use shell
- # quoting if necessary
--foo --bar="whitespace arg"
-+[credential]
-+	helper = "foo --bar='whitespace arg'"
- 
- # you can also use an absolute path, which will not use the git wrapper
--/path/to/my/helper --with-arguments
-+[credential]
-+	helper = "/path/to/my/helper --with-arguments"
+@@ -233,8 +233,9 @@ Here are some example specifications:
+ 	helper = "/path/to/my/helper --with-arguments"
  
  # or you can specify your own shell snippet
--!f() { echo "password=`cat $HOME/.secret`"; }; f
-+[credential]
-+	helper = "!f() { echo \"password=$(cat $HOME/.secret)\"; }; f"
+-[credential]
+-	helper = "!f() { echo \"password=$(cat $HOME/.secret)\"; }; f"
++[credential "https://example.com"]
++	username = your_user
++	helper = "!f() { test \"$1\" = get && echo \"password=$(cat $HOME/.secret)\"; }; f"
  ----------------------------------------------------
  
  Generally speaking, rule (3) above is the simplest for users to specify.
 -- 
 2.26.2.933.gdf62622942
-
