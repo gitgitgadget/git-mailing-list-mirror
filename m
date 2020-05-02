@@ -2,133 +2,136 @@ Return-Path: <SRS0=N0vB=6Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBDA6C3A5A9
-	for <git@archiver.kernel.org>; Sat,  2 May 2020 14:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E474C3A5A9
+	for <git@archiver.kernel.org>; Sat,  2 May 2020 14:59:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2A4D21835
-	for <git@archiver.kernel.org>; Sat,  2 May 2020 14:51:05 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AHoDLOWK"
+	by mail.kernel.org (Postfix) with ESMTP id 1E1CC2072E
+	for <git@archiver.kernel.org>; Sat,  2 May 2020 14:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728106AbgEBOvF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 May 2020 10:51:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728025AbgEBOvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 May 2020 10:51:04 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C6EC061A0C
-        for <git@vger.kernel.org>; Sat,  2 May 2020 07:51:03 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id v38so6143016qvf.6
-        for <git@vger.kernel.org>; Sat, 02 May 2020 07:51:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JLXP+O+pZMWl4dtcNs1vx3jcHig2bVp+LXBEesZya1o=;
-        b=AHoDLOWKkfTFD2hetVMrFR6qBSn7bfOFbZP8eUTbRSM7rOj4dawkRKGsvhucsmadyg
-         SdFW9SZXw5mwXnIn7RC1Wbkm2W50ual8JOaew+NV/73J0//sYW/NOiAN/9/2SLXh+anU
-         Ptu/o5JVh87SYVpQQurdBnVLA6p41Ehp4i1dX1XlChJTbyTx+JIAYkGJ+qedHlC5Ug55
-         Vx64UMKZUILh+gl1S6RbUlDq9PT5Xm+PIbeAlsrUJALry8vgwDf9Z/iaak2D1DRUggmM
-         3tHxMw2S964Q8i9wUQXCiqpMGLS5x8ii3/bZ0JkzK/wY4P52MqQe1d6GqUo/T6L8e+w7
-         jKtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JLXP+O+pZMWl4dtcNs1vx3jcHig2bVp+LXBEesZya1o=;
-        b=F47IN0VSaTufCn+uyngHAOZWQN26o0XOqe646wGx54fwObFs1ehu/cU4BC0/x0TUDp
-         Yem0krk6sinwJWJBD/WV6g1/afnXK33d4ssrnRZSU79LVQ0xZya5ft5J85XQSL7DLf5D
-         WHEZp08LxY8SFWQ3gOCs4foJTwBjaH1Fmlr+QMCg/RoWbxR5J1+BIY2lkA0jjs9V66Pp
-         vF+1DDkijVoxLhSzq+v4NbNx2kDV8xZNpUKEOBXI12BNK4fE5g/2WhPLjNUnD6nKP1qo
-         nhqw/Hxx79gS+KoRWrEAn/bEcxS2m8XoZdjxOgidgfLGWOioo1guzDD79tMeuayzfBYE
-         o+fA==
-X-Gm-Message-State: AGi0PuYhOT9KA9xFSQB2MbCJht8CeLjW8vceDSC5sUqxLQon9BPlH8Yt
-        BGs5C387zomtqrFs5wD6w+jVCzUpdlv33+nLF6M=
-X-Google-Smtp-Source: APiQypJuy77M2nhGh93/OwF+u8cGNC0IATsPjSSQ4cAigYdl82NK6sCxNtAmPEOV6XDd/sHYTschi3vVJyt57ayAXVU=
-X-Received: by 2002:a0c:a692:: with SMTP id t18mr8716831qva.56.1588431062325;
- Sat, 02 May 2020 07:51:02 -0700 (PDT)
+        id S1728106AbgEBO7R convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 2 May 2020 10:59:17 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:52550 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728035AbgEBO7Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 May 2020 10:59:16 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 042Ex2e4005736
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 2 May 2020 10:59:03 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Sibi Siddharthan'" <sibisiddharthan.github@gmail.com>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+Cc:     "'Jeff King'" <peff@peff.net>,
+        "'Danh Doan'" <congdanhqx@gmail.com>,
+        "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Sibi Siddharthan via GitGitGadget'" <gitgitgadget@gmail.com>,
+        <git@vger.kernel.org>
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com> <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com> <xmqq8sikblv2.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet> <20200427200852.GC1728884@coredump.intra.peff.net> <20200427201228.GD1728884@coredump.intra.peff.net> <20200428135222.GB31366@danh.dev> <20200428210750.GE4000@coredump.intra.peff.net> <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com> <nycvar.QRO.7.76.6.2005012130010.18039@tvgsbejvaqbjf.bet> <CAKiG+9UvnLtF7eS9FsPLyRR4ZPNSnakZwyYy3dO7WoAnRpvoMA@mail.gmail.com>
+In-Reply-To: <CAKiG+9UvnLtF7eS9FsPLyRR4ZPNSnakZwyYy3dO7WoAnRpvoMA@mail.gmail.com>
+Subject: RE: [PATCH 0/8] CMake build system for git
+Date:   Sat, 2 May 2020 10:58:57 -0400
+Message-ID: <04eb01d62092$3865fb90$a931f2b0$@nexbridge.com>
 MIME-Version: 1.0
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
- <xmqq8sikblv2.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
- <20200427200852.GC1728884@coredump.intra.peff.net> <20200427201228.GD1728884@coredump.intra.peff.net>
- <20200428135222.GB31366@danh.dev> <20200428210750.GE4000@coredump.intra.peff.net>
- <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com> <20200502132144.GB3143@danh.dev>
-In-Reply-To: <20200502132144.GB3143@danh.dev>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Sat, 2 May 2020 20:20:50 +0530
-Message-ID: <CAKiG+9WNkM-9hfp83xz_xv0s3LQaiyG0voMFKoxvMwFKt4YoZQ@mail.gmail.com>
-Subject: Re: [PATCH 0/8] CMake build system for git
-To:     Danh Doan <congdanhqx@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIJYRHyQ1C8LhW18tSt1A8NYmssxgIMvlsFAl1C5c8CWGEsHAGNGc14AVFkj6UCyyeDkAH1pLQ9AazbvdcCD3jpegF5aEVjAkqaxvunf1Em0A==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 2, 2020 at 6:51 PM Danh Doan <congdanhqx@gmail.com> wrote:
->
-> Hi Sibi,
->
-> On 2020-04-29 14:12:43+0530, Sibi Siddharthan <sibisiddharthan.github@gmail.com> wrote:
-> > > > Please correct me if I were wrong (I recall this from my memory
-> > > > without checking anything).
+On May 2, 2020 10:32 AM, Sibi Siddharthan Wrote:
+> On Sat, May 2, 2020 at 1:02 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Wed, 29 Apr 2020, Sibi Siddharthan wrote:
+> >
+> > > Adding the CMake script to contrib/buildsystem is a good option.
+> >
+> > I'd actually prefer it to live in a different subdirectory: what is in
+> > contrib/buildsystem/ uses the technique of running `make` in a dry-run
+> > mode, parsing the output, and then generating project files. But that
+> > is not what CMakeLists.txt is about.
+> >
+> > How about contrib/cmake/?
+> >
+> 
+> The CMakeLists.txt will be non-functional if it in any other directory except
+> the root source directory. To help users we can, add some instructions in
+> INSTALL on how to use the script.
+> OR
+> create a dummy CMakeLists.txt in the root directory which just says
+> `message("Copy and Replace the CMakeLists from `whatever-folder` to
+> here")` along with some instructions if necessary. This is what LLVM does for
+> autoconf.
+> > > Is there any changes (apart from the CMakeLists.txt critique and)
+> > > that I have to do on my part?
+> >
+> > No, I think that's it!
+> >
+> > Thanks,
+> > Dscho
+> >
+> > >
+> > > Thank You,
+> > > Sibi Siddharthan
+> > >
+> > > On Wed, Apr 29, 2020 at 2:37 AM Jeff King <peff@peff.net> wrote:
 > > > >
-> > > > The worst thing about CMake is we can't override (Make's) variable
-> > > > in Makefile generated by CMake.
+> > > > On Tue, Apr 28, 2020 at 08:52:37PM +0700, Danh Doan wrote:
+> > > >
+> > > > > On 2020-04-27 16:12:28-0400, Jeff King <peff@peff.net> wrote:
+> > > > > > On Mon, Apr 27, 2020 at 04:08:52PM -0400, Jeff King wrote:
+> > > > > >
+> > > > > > > Skimming the patches, I do wish I didn't see so much
+> > > > > > > repetition with the existing Makefile. I know that some of
+> > > > > > > the logic will just have to be ported manually, but surely
+> > > > > > > we could be pulling things like the list of libgit_SOURCES from the
+> Makefile as the single source of truth?
+> > > > > >
+> > > > > > Thinking I surely couldn't be the only one to think of this, I
+> > > > > > dug further into some of the sub-threads. And indeed, it seems
+> > > > > > like you are on the same page here.
+> > > > > >
+> > > > > > IMHO it is worth making the cmake file depend as much as
+> > > > > > possible on what's in the Makefile.
+> > > > >
+> > > > > Please correct me if I were wrong (I recall this from my memory
+> > > > > without checking anything).
+> > > > >
+> > > > > The worst thing about CMake is we can't override (Make's)
+> > > > > variable in Makefile generated by CMake.
+> > > >
+> > > > I really don't know enough about cmake to say one way or the
+> > > > other. I can well believe there are parts of the Makefile that
+> > > > will need to be manually translated, and that it may not ever hit full
+> parity.
+> > > >
+> > > > But as long as it just a tool for people using Visual Studio, and
+> > > > if they are happier being able to use that tool, even with a few
+> > > > deficiencies, then it may still be worth doing.
+> > > >
+> > > > -Peff
 > > >
-> > > I really don't know enough about cmake to say one way or the other. I
-> > > can well believe there are parts of the Makefile that will need to be
-> > > manually translated, and that it may not ever hit full parity.
-> > >
-> > > But as long as it just a tool for people using Visual Studio, and if
-> > > they are happier being able to use that tool, even with a few
-> > > deficiencies, then it may still be worth doing.
-> > Adding the CMake script to contrib/buildsystem is a good option.
-> > Is there any changes (apart from the CMakeLists.txt critique and) that
-> > I have to do on my part?
->
-> (Sorry for this late reply, it's holiday over here).
->
-> It's long time since last time I worked with CMake, but I have some
-> suggestion, maybe it was written in my previous comment, maybe not.
->
-> - If we could find anything in CMake that equivalent with `sysconfdir`
->   in autotools, please use it for configuration files instead of
->   relative to `CMAKE_INSTALL_PREFIX`
 
-The module GNUInstallDirs does what you ask.
+Just a head's up that neither the HPE NonStop OSS nor IBM z/OS USS platforms currently have any support for CMake nor do I expect any support in the foreseeable future. We are seeing very strong adoption rates on both platforms (sorry, cannot share statistics at this time).
 
-> - I'll change (this and alikes)
->         find_program(SH_PATH, "sh")
->   with:
->         option(SHELL_PATH "path to POSIX compliance shell" "/bin/sh")
->   in order to support Solaris people, should they want to try CMake
-> - I'll wrap the incompatible option of gettext under uname check
-> - and remove ${} around variable in `if`
->
+Regards,
+Randall
 
-The thing with options in cmake is the values it takes are boolean only.
-To do what you want I think you have to do something along the lines of this.
-if(NOT DEFINED SHELL_PATH)
-set(SHELL_PATH  <default value> CACHE STRING "path to POSIX compliance shell")
-endif()
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
-Then if you want to change this value, edit this value in CMakeCache.txt.
 
-Thank You,
-Sibi Siddharthan
 
-> --
-> Danh
