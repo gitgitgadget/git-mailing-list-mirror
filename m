@@ -2,86 +2,95 @@ Return-Path: <SRS0=N0vB=6Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67270C3A5A9
-	for <git@archiver.kernel.org>; Sat,  2 May 2020 19:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D539AC3A5A9
+	for <git@archiver.kernel.org>; Sat,  2 May 2020 20:32:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40B04206CD
-	for <git@archiver.kernel.org>; Sat,  2 May 2020 19:31:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8BBA720731
+	for <git@archiver.kernel.org>; Sat,  2 May 2020 20:32:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N92pKjEH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728259AbgEBTbG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 May 2020 15:31:06 -0400
-Received: from sauhun.de ([88.99.104.3]:50560 "EHLO pokefinder.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728052AbgEBTbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 May 2020 15:31:05 -0400
-Received: from localhost (p5486C608.dip0.t-ipconnect.de [84.134.198.8])
-        by pokefinder.org (Postfix) with ESMTPSA id 846FA2C052E;
-        Sat,  2 May 2020 21:31:02 +0200 (CEST)
-Date:   Sat, 2 May 2020 21:31:02 +0200
-From:   Wolfram Sang <wsa@the-dreams.de>
-To:     Kevin Daudt <me@ikke.info>, Wolfram Sang <wsa@kernel.org>,
-        git@vger.kernel.org, Thomas Koutcher <thomas.koutcher@online.fr>,
-        Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: tig: bug when binding to 'generic'?
-Message-ID: <20200502193102.GA1160@kunai>
-References: <20200502190433.GB25220@ninjato>
- <20200502190729.GC1838755@alpha>
+        id S1728501AbgEBUcE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 May 2020 16:32:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728495AbgEBUcE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 May 2020 16:32:04 -0400
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC13CC061A0C
+        for <git@vger.kernel.org>; Sat,  2 May 2020 13:32:03 -0700 (PDT)
+Received: by mail-ua1-x92c.google.com with SMTP id a16so1627923uaq.5
+        for <git@vger.kernel.org>; Sat, 02 May 2020 13:32:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=6b9QdJvD3wWBickw72/iUneScDqEmbMkT5LBGTWz4N4=;
+        b=N92pKjEHkQjQkvkrCnyLXr20sZ8S9tbAnbe8pxcjX1WcPSq1v8KCna10gvANbhlNm3
+         pDdhn3Wsq02yqgg3IrK69EE6WxiWjTGJ+unRHHkZBCtmgfAmIwEPRN7lPWcb4msnijJa
+         WknWApS7nf1rxZ2MjuEkSlS9TRLoCo12WK4OrfUgie9cNssyZrzRlNqpGCzO6XXYewPj
+         O6eEYl3yxv8W9EHGMcDShVkiYNFWBR9Nnf2BSQU9EIt5qsDqdUgmvn/+CgOk3t6RT94V
+         Z8/Pm4AtvgpxUgx5TMGlLPJEjSlkF6BTrdQeA8jei7/1A/+xfRVeRMXNQYmbHuhwYCSz
+         B2sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=6b9QdJvD3wWBickw72/iUneScDqEmbMkT5LBGTWz4N4=;
+        b=mMxyUK2+zAJjjRY6TCohkKgBfHWLkpfVorPBLDEqaFdaV6plLpH55tlC7P/yWeEyp4
+         7zoyfa1XCREbE3cKjKHoDQN5jaIYjkW7igJsrRffktjtGQxtHYrOBbNrG9irtLcYzWQH
+         Oh81N6FjHlB44GCzpQdtSNmM6yDjKG4j3H6r6//jtmutcpRP8PcimrLCgjyWBT2cYN1p
+         shY2GKQIyw/P7U4utECE1Z1bj2jSvAOcK0Zm2BhG0hrJ5QiP3sSq4pvgG/DwZb6ZVRbP
+         bWelX2MaUqy/ds1ZPDoDGUSWkTtpYomiJlzkDRazNFfGxDwwb5ZHIcqPs4YISx5722vT
+         wZKw==
+X-Gm-Message-State: AGi0PuYuzpSHkZ3+83xXbK2miMwq5el9xzaAYPm0HWqPxdGbBtGB1a4A
+        xlnuKNO8GWRpQOmMTTbIFmD/ivss0xbqL5BwVATYUl3k
+X-Google-Smtp-Source: APiQypKJzOHW98kq8+w0w+FOf1Gl+HHT7a4soLot7uv6grebL3J6zM+Tn/wvkz+6hBaTSmxiACkFEZXPWV5YHQGg1Eg=
+X-Received: by 2002:ab0:5a84:: with SMTP id w4mr6768793uae.61.1588451522460;
+ Sat, 02 May 2020 13:32:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BOKacYhQ+x31HxR3"
-Content-Disposition: inline
-In-Reply-To: <20200502190729.GC1838755@alpha>
+From:   clime <clime7@gmail.com>
+Date:   Sat, 2 May 2020 22:31:50 +0200
+Message-ID: <CAGqZTUvuJgZH-YUxDTYunng3QD4-wwPgquZX1P=1P1R=Ku0s2g@mail.gmail.com>
+Subject: git for-each-ref - sorting by multiple keys
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
---BOKacYhQ+x31HxR3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I have the following command:
 
-Hi Kevin,
+/usr/bin/git for-each-ref --merged="${GIT_HEAD-HEAD}"
+--sort='-taggerdate' --sort='-*committerdate'
+--format="%(*committerdate)|%(taggerdate)|%(tag)" refs/tags
 
-> Tig is a third-party interface, not maintained by git. You can report
-> issues for tig on [github][0]
+I thought this will use: -*commiterdate as a primary key and
+-taggerdate as a secondary. According to man page for --sort: "You may
+use the --sort=<key> option multiple times, in which case the last key
+becomes the primary key."
 
-I know it is third-party. Seems the README in tig needs fixing, too:
+But that doesn't seem to be the case. I created a repo with a single
+commit and created annotated tags on the commit in the following
+order:
 
-===
-Bugs and feature requests can be reported using the issue tracker or by
-mail to either the Git mailing list or directly to the maintainer.
-==
+$ git tag -a -m "foo" B
+$ git tag -a -m "foo" C
+$ git tag -a -m "foo" A
 
-I prefer the mail option, so I wrote here and CCed the maintainers.
+Yet the order I am getting after running the command is:
 
-Kind regards,
+Sat May 2 22:10:30 2020 +0200|Sat May 2 22:14:49 2020 +0200|C
+Sat May 2 22:10:30 2020 +0200|Sat May 2 22:14:45 2020 +0200|B
+Sat May 2 22:10:30 2020 +0200|Sat May 2 22:14:51 2020 +0200|A
 
-   Wolfram
+Is it a mistake in man pages? Is there any way to sort by multiple keys?
 
-
---BOKacYhQ+x31HxR3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl6tynIACgkQFA3kzBSg
-KbZTHQ/8Dc93SZhtRwuu4QC7bH+oCvotpZrK1iN+kBGbYCBxPEuUffTD9oouKKZ1
-nL2P8YFqp7TbLDm3V/4n+e3owU1hXKDpphav8FidW7TMZ+vVxYjXHfMLvU2OjECb
-s02sevbvo7fnl4mKxNP8X6D0YjO/XbuwjJARqN7S5jPH4w8kAEnb+pasegyx4hDA
-cTFgrVxgywgPTXpzttdqHGVmAohaQEaF0yt4yqrAom/yAXfqBWBnkB9gBpstpLpP
-gJh/JboKkzFR7fI3L6IMZjMs8uGJlOosohsak5AjDC7iCkbJtGr34in8NYfjZ3Cb
-cyq5EExzLh0nsEuugy4HSHS7aVr+AywZglEIMMW68lHr7DBXyxlttHWjNwuW8fca
-sihvxtL3UHMiW3Ow1yDcBa/vsNkN20v6KN6fQSC/06ghLgItmPpOSGMSW6dkf5E8
-1wQ/wNyajS8tM2iuTlgMPOK3vNgP1GCxA9lEZeJx8zjxPs701W2WA2HvZBH1RbYL
-CK+L0SuirW0so+UnF+d3+JMTXr0KEUTjLCmxmR+JFQUJAUcel417KUNYXBu0jGfx
-nGXlijHCpIB0f96GI6ijdeBofzbPIGX0qHrCKRN+Pq/RFE6v+8OZao49WBS4Herr
-0y32GL1EbWUzhKoGbs/4utoRnimrWgJ+/v8DSfZktWu3tTowhpw=
-=LN6Q
------END PGP SIGNATURE-----
-
---BOKacYhQ+x31HxR3--
+Thank you
+clime
