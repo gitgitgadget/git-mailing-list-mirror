@@ -2,125 +2,132 @@ Return-Path: <SRS0=N0vB=6Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF080C3A5A9
-	for <git@archiver.kernel.org>; Sat,  2 May 2020 13:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C918FC3A5A9
+	for <git@archiver.kernel.org>; Sat,  2 May 2020 13:25:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C1A821974
-	for <git@archiver.kernel.org>; Sat,  2 May 2020 13:21:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="As07KcGo"
+	by mail.kernel.org (Postfix) with ESMTP id AFA6821974
+	for <git@archiver.kernel.org>; Sat,  2 May 2020 13:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728006AbgEBNVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 May 2020 09:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47918 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727818AbgEBNVs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 May 2020 09:21:48 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7A4C061A0C
-        for <git@vger.kernel.org>; Sat,  2 May 2020 06:21:48 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id z1so2987356pfn.3
-        for <git@vger.kernel.org>; Sat, 02 May 2020 06:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G+LJW5tbYvEd9+U7Yj4sCCMEeOlYTZvZwiPxA+6keNo=;
-        b=As07KcGoSluRdxBsngBrA2+NuviB1eXh+v6ASYCJI7LaXQi7Qfiu87oE0I1mwqNOT2
-         lFw1vwfK4GyJGftUPwUNAqJ+4+eM5f05tivGAoQ1dBVISI+YaZ2Vfy2LFF5Wl7kSLtsa
-         JHz9zxfe1Gvoa6B5YGFyXgBjMldqrgPXldrtmb4t99zgIxZ4l9bLOAuHywPcPbYzUllZ
-         PVLPaOUa6+7B4QjUR3Mc1LLAw4wE6W2ALylYsLTOcJEe+TvmXlDbw/jzmBvd1bH3dWXd
-         gKyu/Y2vap86EVDkda/tKvIdNIE8dP72kmhZ7ZnSpY15AHi9/FPVgA2HiPjU4IpYoxYR
-         qz9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G+LJW5tbYvEd9+U7Yj4sCCMEeOlYTZvZwiPxA+6keNo=;
-        b=b/jPPejHixtSG3E/atsDyvBipqqmeZkf9AkYzTlMQoT7WwC6vqxSlKSNEdQEwdqmu8
-         KIoDCuwpWHTtCKLiWW2RZK9L3PJrmSqMTwKI9N59CkTf5zm03miWE6Fe1HqRmh+Ukc/b
-         +2SHxkuWiloyc0ur14VTyTh+kxDDdDOnllmeIpGEwWckvnz+LbDDDFDAl1K6JeRkVxTV
-         qaYatcl3PepUr1uC+gaKzrFk2526vL20q1MkSfo5oVTJeKfndqPLO/QlFr8md8UcPwk7
-         bROkSjt+adk4W8qzqa/IJ4DstgCdPRVft8D6gFPMPp/p0jE3RYKwXQb/ztgOzx/YJ+DY
-         Dg9Q==
-X-Gm-Message-State: AGi0PubrrgK7M20eftMCmKQ09dlhN9SsM/FfvqQiu3aan1gjsOQkjGUY
-        +sNo9cj9fXclAIxX4F2xhj2I6vnm
-X-Google-Smtp-Source: APiQypLA5vYhwJ73J81cytNz1UvrTWhMSGfmYZqTsquyBVqHVmJOWT5YimC+dJ1/jIBkaXKwWXcM2g==
-X-Received: by 2002:a63:225e:: with SMTP id t30mr8180219pgm.244.1588425707654;
-        Sat, 02 May 2020 06:21:47 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
-        by smtp.gmail.com with ESMTPSA id h13sm2526339pgm.69.2020.05.02.06.21.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 May 2020 06:21:47 -0700 (PDT)
-Date:   Sat, 2 May 2020 20:21:44 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S1727914AbgEBNZg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 May 2020 09:25:36 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:30659 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727818AbgEBNZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 May 2020 09:25:36 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 49DqcX3Qvgz5tlB;
+        Sat,  2 May 2020 15:25:32 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 6390416AB;
+        Sat,  2 May 2020 15:25:31 +0200 (CEST)
+Subject: Re: [PATCH 2/3 v3] Teach git-rev-list --ignore-merge-bases
+To:     Antonio Russo <antonio.e.russo@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/8] CMake build system for git
-Message-ID: <20200502132144.GB3143@danh.dev>
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <xmqqv9lod85m.fsf@gitster.c.googlers.com>
- <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
- <xmqq8sikblv2.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
- <20200427200852.GC1728884@coredump.intra.peff.net>
- <20200427201228.GD1728884@coredump.intra.peff.net>
- <20200428135222.GB31366@danh.dev>
- <20200428210750.GE4000@coredump.intra.peff.net>
- <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <df0b9e59-e6d7-8839-ca3b-86145dc3bdf3@gmail.com>
+ <d3079ba8-33e1-3b68-23d2-ea97b9ca1e97@gmail.com>
+ <1716d20d-6f0d-3872-cf36-6fc8d7bdb457@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <37b157a3-f2d6-f459-2f2c-2ab53ba2f7ac@kdbg.org>
+Date:   Sat, 2 May 2020 15:25:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>
+In-Reply-To: <1716d20d-6f0d-3872-cf36-6fc8d7bdb457@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sibi,
+Am 01.05.20 um 16:22 schrieb Antonio Russo:
+> +--ignore-merge-bases::
+> +	Show commits that are introduced by each merge before showing
+> +	the first parent of the merge but remove edges from those commits
+> +	to commits reachable from the first parent. When used with
+> +	`--graph`, this can help visualize repositories with many merges
+> +	when you are not interested in the merge base used for each
+> +	merge. It also reduces the width of the graph visualization
+> +	when used with `--graph`.
 
-On 2020-04-29 14:12:43+0530, Sibi Siddharthan <sibisiddharthan.github@gmail.com> wrote:
-> > > Please correct me if I were wrong (I recall this from my memory
-> > > without checking anything).
-> > >
-> > > The worst thing about CMake is we can't override (Make's) variable
-> > > in Makefile generated by CMake.
-> >
-> > I really don't know enough about cmake to say one way or the other. I
-> > can well believe there are parts of the Makefile that will need to be
-> > manually translated, and that it may not ever hit full parity.
-> >
-> > But as long as it just a tool for people using Visual Studio, and if
-> > they are happier being able to use that tool, even with a few
-> > deficiencies, then it may still be worth doing.
-> Adding the CMake script to contrib/buildsystem is a good option.
-> Is there any changes (apart from the CMakeLists.txt critique and) that
-> I have to do on my part?
+I wonder whether there is some potential to prettify another aspect of
+--graph once this feature is in place: In particular, when I *am*
+interested in merge-bases, I use --boundary, and I get this chart:
 
-(Sorry for this late reply, it's holiday over here).
+$ git log --graph --boundary --oneline --no-decorate 7d28d69174~4..7d28d69174
 
-It's long time since last time I worked with CMake, but I have some
-suggestion, maybe it was written in my previous comment, maybe not.
+*   7d28d69174 Merge branch 'jc/allow-strlen-substitution-in-shell-scripts'
+|\  
+| * 78725ebda9 CodingGuidelines: allow ${#posix} == strlen($posix)
+* |   dfdce31ce6 Merge branch 'en/pull-do-not-rebase-after-fast-forwarding'
+|\ \  
+| * | fbae70ddc6 pull: avoid running both merge and rebase
+| |/  
+* |   b660a76d0f Merge branch 'dl/wrapper-fix-indentation'
+|\ \  
+| * | 7cd54d37dc wrapper: indent with tabs
+* | |   3d6c56dd66 Merge branch 'ag/sequencer-i18n-messages'
+|\ \ \  
+| * | | 4d55d63bde sequencer: mark messages for translation
+| o | | 3bab5d5625 The second batch post 2.26 cycle
+|  / /  
+o / / 9f471e4b95 Merge branch 'rs/pull-options-sync-code-and-doc'
+ / /  
+o / 0b6806b9e4 xread, xwrite: limit size of IO to 8MB
+ /  
+o b6d4d82bd5 msvc: accommodate for vcpkg's upgrade to OpenSSL v1.1.x
 
-- If we could find anything in CMake that equivalent with `sysconfdir`
-  in autotools, please use it for configuration files instead of
-  relative to `CMAKE_INSTALL_PREFIX`
-- I'll change (this and alikes)
-  	find_program(SH_PATH, "sh")
-  with:
-  	option(SHELL_PATH "path to POSIX compliance shell" "/bin/sh")
-  in order to support Solaris people, should they want to try CMake
-- I'll wrap the incompatible option of gettext under uname check
-- and remove ${} around variable in `if`
+but I would prefer to see something like this:
 
--- 
-Danh
+*   7d28d69174 Merge branch 'jc/allow-strlen-substitution-in-shell-scripts'
+|\  
+| * 78725ebda9 CodingGuidelines: allow ${#posix} == strlen($posix)
+* |   dfdce31ce6 Merge branch 'en/pull-do-not-rebase-after-fast-forwarding'
+|\ \  
+| * | fbae70ddc6 pull: avoid running both merge and rebase
+| |/
+| o b6d4d82bd5 msvc: accommodate for vcpkg's upgrade to OpenSSL v1.1.x  
+*   b660a76d0f Merge branch 'dl/wrapper-fix-indentation'
+|\  
+| * 7cd54d37dc wrapper: indent with tabs
+| o 0b6806b9e4 xread, xwrite: limit size of IO to 8MB
+*   3d6c56dd66 Merge branch 'ag/sequencer-i18n-messages'
+|\  
+| * 4d55d63bde sequencer: mark messages for translation
+| o 3bab5d5625 The second batch post 2.26 cycle
+o 9f471e4b95 Merge branch 'rs/pull-options-sync-code-and-doc'
+
+Maybe that is just an easy fall-out?
+
+> diff --git a/object.h b/object.h
+> index b22328b838..0bf6fb0d55 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -59,7 +59,7 @@ struct object_array {
+> 
+>  /*
+>   * object flag allocation:
+> - * revision.h:               0---------10         15                   25----28
+> + * revision.h:               0---------10         15                   23----28
+
+I think the intent is that the line is like a ruler with marks: you
+should move "23" sufficiently far to the left, because the "23" mark
+cannot be at the same spot where the "25" mark was.
+
+(I'm not reviewing this patch as I am illiterate when it comes to the
+revision walker, I just happened to notice this when I skimmed the
+patch.)
+
+>   * fetch-pack.c:             01
+>   * negotiator/default.c:       2--5
+>   * walker.c:                 0-2
+
+-- Hannes
