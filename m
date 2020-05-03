@@ -7,96 +7,114 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC7BC28CBC
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 20:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92A2BC28CBC
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 23:48:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED7012054F
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 20:03:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63F8F206E9
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 23:48:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oJMeIcwD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BSvkOXtE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729034AbgECUD2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 May 2020 16:03:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728992AbgECUD1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 May 2020 16:03:27 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92D3AC061A0E
-        for <git@vger.kernel.org>; Sun,  3 May 2020 13:03:27 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id w4so10186864ioc.6
-        for <git@vger.kernel.org>; Sun, 03 May 2020 13:03:27 -0700 (PDT)
+        id S1726353AbgECXsh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 May 2020 19:48:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56770 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726181AbgECXsh (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 3 May 2020 19:48:37 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82048C061A0E
+        for <git@vger.kernel.org>; Sun,  3 May 2020 16:48:37 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id mq3so2977488pjb.1
+        for <git@vger.kernel.org>; Sun, 03 May 2020 16:48:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=5MP6M9GG1YmTSuFUD58FJe3b0uSRzqNH+7HNVT6mZ8M=;
-        b=oJMeIcwDAAwViqok6L79LbEXLQjTVPi8Q8/Pi+S7Vqr52Vg/nrNRoN9xi+TdxUsX0M
-         k8BoqB4rPBQawAx7r1u6uRlDaYbJV5vmYgul7+4bPETu/hyx43XsYHg2RlEgS1nSw0dl
-         L3jTCEqH7K4KFY9vSQwj71oCbQPM3ZNvmO8GvHoxIgUybq/jU2V9VqPpOz8+0n66fcaQ
-         xmJCD/XpoKY8Yn2GDZ97RYSEB92D/7Op7EBVeTL5w6hZgw9IbEbPc/0qLqB7Z/l5ZFgM
-         x+hd9S6zz/mZ9LoTH0mb/zDCuFRhfVsOBk7CJQewIWPm3vSsujDH2p1z9MFlwNJcOUGU
-         +YoQ==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SbQDSbmAbVERJFmOT7ZwlNove1BIFctW9IUGXb/cOw0=;
+        b=BSvkOXtEyesoxi6rShDxZEtBTQEpV6vagH19KyQRIuO0dJMsaOYeI/bZ30OI9jfKdM
+         iT1Wupj79UBBCmfwy5AeWrkbz8JwjQgMGkOv/iwzBymuGNtqfoxY/hl8KxvPbR2ugpBQ
+         9JZntS4IGqsyLxQnpOqZlxDRoPOd5ZCPJUFE2lsrEZnAhwrZ7DBdvIEkuNyVAa1Lvc3L
+         7FSBNkHTIAJs+pKZy7CQfAEJgW2DpOWLpEtwg9GXcSecrplbHQJ16WqjCS9tOpDvWvwh
+         3grm+Lxxegp2MNy+RQmhEVw2hlw11pJKkhYB5L2NmlysDF5ZTK7qegVTNjQgl7KyG/OG
+         lsqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=5MP6M9GG1YmTSuFUD58FJe3b0uSRzqNH+7HNVT6mZ8M=;
-        b=k/Kxn50XzoaGPuiq3ihHvvMtGu0eB36I+ncvl+nMwsGEVbClIrlieK/AZPvSfEEXgK
-         8zDCn4hP/e9wtGCwUc5tx0zZElb3r3tUWuXIbBl4ZmlWIFNg+b2WEtilKxl2dCEVNJY2
-         NtJOf6kkvrANl3xoczhxzYvZUBIx/Fmd+IwdsE2P92KItJlueLjZVIzMEk3+31Kd0X1+
-         I42vlVURWgmRKCv6xsaGf4ZO8Ll+APHQCIl7WWRXEh48wQpj7k8e48wNUaB3rm1jkt9i
-         LgtdOnKrSgf7VpZnYlE4RIumB6Ev/vEtpnDhRiYdTlaT4SM6TbtD1YDFgF1DrD+dBHWX
-         RU8Q==
-X-Gm-Message-State: AGi0PuYHc5wUeCX9CcUBYB6sfsBQgvYnoGAQXHoKeLtMHHinKzs8oIvw
-        +6jgC9dRNBCiSCfpSJC3/nwGPMDRlmH8DUX2GeKgtXY=
-X-Google-Smtp-Source: APiQypKiWqnn9iMRvDjTjEGUqRL2zyW4fTcX2acc5bL6gEWt+nZLeF3BUe24WlCZGytAWNcSBWCPSmgNagR2SHWyOTk=
-X-Received: by 2002:a05:6638:102:: with SMTP id x2mr11411405jao.119.1588536206550;
- Sun, 03 May 2020 13:03:26 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SbQDSbmAbVERJFmOT7ZwlNove1BIFctW9IUGXb/cOw0=;
+        b=Oer/8d/uBboqV0YzuBLSuuBHo6E5uCPUKWRUW3Km97UJO9PgzfZ7Mo6H4bJ/6F4eMn
+         /Pzl8kWEtequsi3+VzDbAJwzJbvcEcEIEEBpxE3qumeWX9gB5dseCO1JooisWEtgO2Kk
+         qPP81MVzbe89TSji5mTsnQaEwACgRD/aYIzppbJdY7MfPQ9a36fmlu+dTvPS5GqiualS
+         y03Ub5nye3vfKDDdZiVB+RP2rixbLL7JZNKxARls9MWmc9h6E6vLvJQZVBHNd8I1PLIv
+         ZNsuFNuHSyyLNtnAgJYfP6pU4sn3iFMrWQpbk7cZ/9+w1zDwQX/Wq2XMICsuHJ2bNXbf
+         6xig==
+X-Gm-Message-State: AGi0PuYNxAAwO8qLjbe1aiW4z8c853PoIfl0FY0+dZ6t1EtMRWFBVQvR
+        NnwC3hGBmAW0/DPkyEwCJ+0=
+X-Google-Smtp-Source: APiQypJTnRghj8j9HJvIuiefZxT7vk5GmGT/KvRE5B+whKKNV7P1gokFk1uyUK+3qrlAad8vKcpPNQ==
+X-Received: by 2002:a17:90a:d153:: with SMTP id t19mr14072201pjw.42.1588549716745;
+        Sun, 03 May 2020 16:48:36 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id z7sm7118750pff.47.2020.05.03.16.48.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 May 2020 16:48:36 -0700 (PDT)
+Date:   Sun, 3 May 2020 16:48:34 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Leonardo Bras <leobras.c@gmail.com>, git@vger.kernel.org,
+        Jan Viktorin <viktorin@rehivetech.com>,
+        Michal Nazarewicz <mina86@mina86.com>
+Subject: Re: [PATCH] send-email: Defines smtpPassCmd config option
+Message-ID: <20200503234834.GA86805@Carlos-MBP>
+References: <20200501105131.297457-1-leobras.c@gmail.com>
+ <20200501125308.GE33264@Carlos-MBP>
+ <xmqqees3odrb.fsf@gitster.c.googlers.com>
+ <20200501222723.GF41612@syl.local>
+ <20200501235948.GD6530@camp.crustytoothpaste.net>
+ <20200503094348.GE170902@coredump.intra.peff.net>
+ <20200503162757.GE6530@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-References: <CAEoQP9gVur=UDDPzHnLq-AryDnd45uYdEs3kajzLrtr572e_rA@mail.gmail.com>
-In-Reply-To: <CAEoQP9gVur=UDDPzHnLq-AryDnd45uYdEs3kajzLrtr572e_rA@mail.gmail.com>
-From:   =?UTF-8?B?RXdhIMWabGl3acWEc2th?= <kreska07@gmail.com>
-Date:   Sun, 3 May 2020 22:03:15 +0200
-Message-ID: <CAEoQP9iY-0+=ETA0vrHL0HngccwtNA_3KX4WSSokJpOgJDGUeA@mail.gmail.com>
-Subject: file is showing as modified even that it was never commited
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200503162757.GE6530@camp.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, May 03, 2020 at 04:27:57PM +0000, brian m. carlson wrote:
+> On 2020-05-03 at 09:43:48, Jeff King wrote:
+> > On Fri, May 01, 2020 at 11:59:48PM +0000, brian m. carlson wrote:
+> > 
+> > > I think perhaps many folks aren't aware that you can invoke Git with an
+> > > arbitrary shell command as "credential.helper", which of course makes
+> > > life a lot easier.  So if you want to invoke a separate command, it's
+> > > really as easy as this:
+> > > 
+> > >   git config credential.smtp://smtp.crustytoothpaste.net.helper \
+> > >     '!f() { echo username=my-username; echo "password=$(my-password-command)"; }; f'
+> > > 
+> > > So I think that documenting the use of the credential helper is step 1,
+> > > because probably most people _do_ want to use that for their passwords,
+> > > and then documenting that credential helpers can be arbitrary shell
+> > > commands that speak the protocol is step 2, so that people who don't can
+> > > figure out a way to do what they want.
+> > > 
+> > > I'll send some patches later which document the latter feature, since I
+> > > don't think we mention it anywhere outside of the FAQ.  I actually
+> > > didn't know about it until Peff mentioned it to me one time.
+> > 
+> > This is documented, but only recently did it make it out of
+> > Documentation/technical/ and into gitcredentials(7). I don't mind adding
+> > more pointers, though.
+> 
+> Ah, yes, I remembered that series, but forgot that it introduced
+> documentation for that.
 
-I=E2=80=99m probably missing something here, but it looks really weird and =
-I
-can=E2=80=99t find any information on this.
+if we are going to mention an example or a credential helper specially
+tailored to smtp, then the recently reintroduced syntax by Dscho in
+9a121b0d22 (credential: handle `credential.<partial-URL>.<key>` again,
+2020-04-24), might come up handy IMHO.
 
-My situation is as following:
-I created empty repository on Bitbucket, then cloned it, added code
-and made one initial commit (without push).
-
-Now I changed the code and I would like to commit it, but I have some troub=
-les.
-
-The problem is some files are showing as changed while I never committed th=
-em.
-I never intended to commit them (they are under .idea directory, which
-I added to .gitignore).
-I checked with git log - I have only this one commit.
-I checked files affected by this commit using git show --pretty=3D""
---name-only. Mentioned files are not there.
-Also checked the history of one particular file, using git log -p - no
-history here.|
-
-At the same time, file is showing is changes not staged for commit
-when calling git status.
-For what is worth, file is even not there.
-
-I hope you=E2=80=99ll help me unravel this. I am out of ideas, kind of seem=
-s like a bug.
-
-Best regards
-Ewa
+Carlo
