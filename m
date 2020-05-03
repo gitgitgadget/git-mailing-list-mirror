@@ -2,170 +2,117 @@ Return-Path: <SRS0=AD9v=6R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E59C28CBC
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 12:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3F39C28CBC
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 15:33:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D29042075B
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 12:05:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D21920757
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 15:33:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lnHE/Au0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9h9GdxK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728477AbgECMFu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 May 2020 08:05:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728399AbgECMFu (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 3 May 2020 08:05:50 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1386DC061A0C
-        for <git@vger.kernel.org>; Sun,  3 May 2020 05:05:50 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id l12so4302962pgr.10
-        for <git@vger.kernel.org>; Sun, 03 May 2020 05:05:50 -0700 (PDT)
+        id S1728723AbgECPdm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 May 2020 11:33:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728207AbgECPdm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 May 2020 11:33:42 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA0CFC061A0E
+        for <git@vger.kernel.org>; Sun,  3 May 2020 08:33:41 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id c10so3079417qka.4
+        for <git@vger.kernel.org>; Sun, 03 May 2020 08:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ydNvOllajXuLAxFHD26TO9vaN1hacBtHmVS5miSpLsM=;
-        b=lnHE/Au0JLNSV5/oZNgWgqBkXATC6cuhMeX8lRqtywn3L4lIyv02s0aJqYLOo9RFc3
-         tyLrSfi0x8vKxqzi5qA2/mV4Mlgvhayacyw1Ba1amqMWNQFCmOrW4gibMCE1U1cgRUUr
-         x18bH1jBJZVABLJuo3Prjw63zFiQsGdailOpMkmMpQykR1RL4tlZ57t7lD1Hp8ppsNBd
-         tFIeqDoeLyAjs/wNmripwgcVfAAeWZRiNkctu6X+5vhSVKuoxq/ZKxt3Qj3tpFKPFcBJ
-         i0TUoVDVjjUaPcK5sPU9O3WJbxqVsSKnK1cUCRdkBSRZASt//YffPy6huH1Aq3hX/nF4
-         sJfg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yXQMAUV/neJJOqdvgfin2Hb9LahWvdFx7YwYMbhfqLY=;
+        b=e9h9GdxK1slXQ9TZsn1h2BT7tFxQhgFTqFgttntqfihkScDxzGOP6a/pMPvAgCyKtO
+         9BJhXVX3TrOopuOgvT3GOvo2eidK7U8jaXbqdGkTniQ6SQGsyQyCDlVQG6zwS5Hh8crR
+         LI/lU1mw2EL/XFX4QMIlkQ7PmwMNftwCUOO8a6tsEI/eO2zlerFzEoWnv0BpAyIzEqLY
+         YZrZmChzCh3DC092dPO42yfKeAuAt6R1oHbECOkWmMToeDnJj4pWnYizsj7SY2jiNwWi
+         YxcdsvJSrj+C+XrvGjd2rbV88Wpi2vK6aRSAC+1JFwvZSvfQqAa4zjFfg3UmjdltDXYp
+         D8Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ydNvOllajXuLAxFHD26TO9vaN1hacBtHmVS5miSpLsM=;
-        b=F4ycMgujMbTiOXDwIUHiKs2F27kK654V2cW9mSk+c+xQ6wL+vMrMEYFcYgkLTbPv3g
-         4/sZSNq4JmeEftlZtVmFGUAtnHBkASIsskpjg44VeCDrHE8t11rg0Ue2qxJoCiFKkNRj
-         7dq7lHtxRG9a/pjHQH+1wGARRS42CARxZKla83HrXDK84HVFbmraBtLyhoGmSe+jqKJv
-         2OxlvxMTGVQXErUHeJFKBlV6yI3q6bi6r8ZXGnCftA+DbzYrIAZvty9mMoPmfUtrERx2
-         6XXBZEYZpY/ZTAusB7qjLgPFYs6zKh5wDahVpXp8zUNrvUqxt3wg9gp8LMoWi4gG1N8m
-         rrDQ==
-X-Gm-Message-State: AGi0PuakqfLJFUkDxUwyzdOdxk6A5MGYG69s6911WrArqEFsUBKFptS5
-        QNIVdgxfl41vViHSSvBg9rY=
-X-Google-Smtp-Source: APiQypJeyGww+9Dd641uXFjqJ9CEdotBBkhekFCPrDQ9pwC7McXFX5L5LjK2rLYHW6+6xBANhjJJmg==
-X-Received: by 2002:a62:7cc1:: with SMTP id x184mr12362154pfc.282.1588507549461;
-        Sun, 03 May 2020 05:05:49 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
-        by smtp.gmail.com with ESMTPSA id nu10sm4451505pjb.9.2020.05.03.05.05.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 May 2020 05:05:48 -0700 (PDT)
-Date:   Sun, 3 May 2020 19:05:46 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: respect the [skip ci] convention in our GitHub
- workflow "CI/PR"
-Message-ID: <20200503120546.GB28680@danh.dev>
-References: <pull.776.git.git.1588432087854.gitgitgadget@gmail.com>
- <20200503093646.GC170902@coredump.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yXQMAUV/neJJOqdvgfin2Hb9LahWvdFx7YwYMbhfqLY=;
+        b=axe6QOySeMjeNJS5Ae/iVRj5WVaR17GhYhQzu2GuxeFt/SxVS+F+VG9adHgMMhSviy
+         DNPCODT9kQJTDKXxGufLyYt2iWnm9sGQPWQ3K6tsuijID3ItriYhWZBVXPqqmOr3AfzD
+         ITIM9D5OpgRY3VzNyjTzLWa/QRxJXxpENICnm8ehQyDh+8akbulwSKEHrPOA+8jplaCm
+         OrR1ta9+61UAJtzxxS0M++j5/d66FhLd720so2Gw6+UZN1jf2fD/4BqzumHJa0DCFGJf
+         kcy849aeK6TTDunwad07hkJYDziEC6RkJ676lbvakA2kNguuajSVThHG+2DLlkoZSyZ+
+         eOBg==
+X-Gm-Message-State: AGi0PubpjhyNX8RUbHz1nqNPx/4WKdB8yycXaCbaPJgK0uSFuX02T58g
+        YS04Bj1vHR54hVfER37oBYEeQMmTCPS/vIpw8lk=
+X-Google-Smtp-Source: APiQypKIZyXyUgqiXGqrVn6uaVC+/HLDzFivyL+t5/qtESdBOMFmqW7M4eE7d3DjmAO6l5nEngUXnZKVHYK5sPtDjaw=
+X-Received: by 2002:a05:620a:688:: with SMTP id f8mr12061173qkh.431.1588520021222;
+ Sun, 03 May 2020 08:33:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200503093646.GC170902@coredump.intra.peff.net>
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
+ <xmqq8sikblv2.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
+ <20200427200852.GC1728884@coredump.intra.peff.net> <20200427201228.GD1728884@coredump.intra.peff.net>
+ <20200428135222.GB31366@danh.dev> <20200428210750.GE4000@coredump.intra.peff.net>
+ <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2005012130010.18039@tvgsbejvaqbjf.bet> <CAKiG+9UvnLtF7eS9FsPLyRR4ZPNSnakZwyYy3dO7WoAnRpvoMA@mail.gmail.com>
+ <xmqq4ksyl4mz.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq4ksyl4mz.fsf@gitster.c.googlers.com>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Sun, 3 May 2020 21:03:29 +0530
+Message-ID: <CAKiG+9Vvwz_ajhJ1KPVWtq25UaGtJOH57eXTA=cgm5qzoZCfGw@mail.gmail.com>
+Subject: Re: [PATCH 0/8] CMake build system for git
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Danh Doan <congdanhqx@gmail.com>,
+        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-05-03 05:36:46-0400, Jeff King <peff@peff.net> wrote:
-> On Sat, May 02, 2020 at 03:08:07PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> 
-> >     It was mentioned to me that it might not be totally helpful to run all 
-> >     the builds whenever an in-progress branch is pushed to GitHub. For
-> >     example, if a contributor has dozens of topic branches in flight, they
-> >     might not want to have all of them built whenever a new end-of-day push
-> >     happens.
-> 
-> As I was probably (one of) the mentioners here, thank you for looking
-> into this. This definitely _helps_, and if you don't want to go further
-> I could certainly make do with it[1].
-> 
-> But here are some thoughts on what a more ideal solution would look
-> like (to me, anyway).
-> 
-> What I'd _most_ like is a separately-maintained list of branches (or
-> branch patterns) on which to run CI.  I mostly care about just testing
-> my personal equivalent of "next" (which is really "next" plus my stable
-> topics), and I'd probably only list that branch. Plus potentially a
-> special CI branch that I'd use when chasing down a failure that I can't
-> reproduce locally.
-> 
-> But I don't think there's any good way to implement that via GitHub
-> Actions. I thought perhaps we could pull data from a different branch in
-> the same repo, but referring to external "Actions" seems to require a
-> full repo name (and obviously putting git/git in that name doesn't help
-> anybody who's trying to override something in a fork).
-> 
-> Another alternative: could we trigger CI based on branch-names? Locally,
-> I call my unstable branches "jk/something-wip", and I'd like to skip all
-> of the "-wip" branches. That's basically equivalent to "[skip ci]" in
-> that I could just amend the tip commit of the -wip branches to say "skip
-> ci". But what if we flipped the default to _not_ build? I.e.:
-> 
->   - continue to build all pull requests; if you opened one, you're
->     serious enough to have other people look and should get CI feedback
-> 
->   - build branches with a few well-known names or patterns. Maybe
->     names like "master"? Or maybe "refs/heads/build-ci/*"? Or maybe
->     anything in "refs/heads/<initials>/*"? We'd have to decide on a
->     convention as a community.
+On Sat, May 2, 2020 at 9:18 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+>
+> >> How about contrib/cmake/?
+> >>
+> >
+> > The CMakeLists.txt will be non-functional if it in any other directory except
+> > the root source directory. To help users we can,
+> > add some instructions in INSTALL on how to use the script.
+> > OR
+> > create a dummy CMakeLists.txt in the root directory which just
+> > says
+> > `message("Copy and Replace the CMakeLists from `whatever-folder` to here")`
+> > along with some instructions if necessary. This is what LLVM does for autoconf.
+>
+> Isn't there a corresponding feature to make's "-f" option to specify
+> which file to read instructions from?
 
-I think this is better approach for Junio, and we can help people opt
-in by asking them to push into "for-ci/<some-name>.
+Sadly, CMake expects CMakeLists.txt only, nothing else.
 
-This is my proposal for it:
+>
+> As you say, an extra instruction in INSTALL file to tell users to
+> copy from contrib/cmake may workable, though it is unsatisfactory.
+> But the other one will not simply work.  If we need to have a new
+> file with string "CMake" in its name at the top-level *anyway*, we
+> should have the real thing to reduce one step from those who want to
+> use it.  Those who do not want to see "CMake" at the toplevel are
+> already harmed either way, if is a dummy or if it is the real thing.
 
-------------------8<-------------
-From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
- <congdanhqx@gmail.com>
-Date: Sun, 3 May 2020 18:56:50 +0700
-Subject: [PATCH] CI: GitHub: limit GitHub Action to intergration branches
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In your opinion, what would be the best way to communicate with users, there is
+an optional CMake build system for git?
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
- .github/workflows/main.yml | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+Thank You,
+Sibi Siddharthan
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index fd4df939b5..303393ba73 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -1,6 +1,19 @@
- name: CI/PR
- 
--on: [push, pull_request]
-+on:
-+  pull_request:
-+    branches:
-+      - '*'
-+  push:
-+    branches:
-+      - maint
-+      - master
-+      - next
-+      - jch
-+      - pu
-+      - 'for-ci/**'
-+    tags:
-+      - '*'
- 
- env:
-   DEVELOPER: 1
--- 
-2.26.2.672.g232c24e857
-
+>
+> Thanks.
