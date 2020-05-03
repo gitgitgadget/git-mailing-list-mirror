@@ -2,100 +2,101 @@ Return-Path: <SRS0=AD9v=6R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8F8AC28CBC
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 19:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC7BC28CBC
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 20:03:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1016206E9
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 19:51:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED7012054F
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 20:03:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kWYMaJlo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oJMeIcwD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729041AbgECTun (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 May 2020 15:50:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65339 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728956AbgECTum (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 May 2020 15:50:42 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B83B51D39;
-        Sun,  3 May 2020 15:50:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=A4pH8WUJmRA5MWlpS7RIyNALMUo=; b=kWYMaJ
-        louhtpNxctqydp+ESNyNKHF/S3YOcteE6Wee3vA3VtygUhuDkvdCP6D+mM+r4nkk
-        SCKO75r/lGUX+OqPjMi8K2QDhfiPkBfhhoHcGVzgSugfTSZgG8v5hxVA2TupiKgO
-        63lCvqiXRMQLUxZlqq6u4P2Ey2F9dfVhVzhkg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UZ2AVOjT4ALK2Lm7+2JOxfwXwtv+uP2Q
-        /lTxBjcLKkKT0J0PUIUenPvfheeN+IJ9F6Jd8RRxoEnpqB+2ZSAdhRhQCfhT8HYX
-        xw8BNFKqgwhhOEelcY3K63fP1klVrwX3E+GV2jhsKF9YqjbGtSy4VDQT67cI42ah
-        WFVidf2z1js=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 831B851D38;
-        Sun,  3 May 2020 15:50:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 15B0951D37;
-        Sun,  3 May 2020 15:50:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Konstantin Tokarev <annulen@yandex.ru>
-Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Danh Doan <congdanhqx@gmail.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 0/8] CMake build system for git
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
-        <xmqqv9lod85m.fsf@gitster.c.googlers.com>
-        <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
-        <xmqq8sikblv2.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
-        <20200427200852.GC1728884@coredump.intra.peff.net>
-        <20200427201228.GD1728884@coredump.intra.peff.net>
-        <20200428135222.GB31366@danh.dev>
-        <20200428210750.GE4000@coredump.intra.peff.net>
-        <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2005012130010.18039@tvgsbejvaqbjf.bet>
-        <CAKiG+9UvnLtF7eS9FsPLyRR4ZPNSnakZwyYy3dO7WoAnRpvoMA@mail.gmail.com>
-        <xmqq4ksyl4mz.fsf@gitster.c.googlers.com>
-        <CAKiG+9Vvwz_ajhJ1KPVWtq25UaGtJOH57eXTA=cgm5qzoZCfGw@mail.gmail.com>
-        <xmqqsgghhr32.fsf@gitster.c.googlers.com>
-        <689741588534833@mail.yandex.ru>
-Date:   Sun, 03 May 2020 12:50:39 -0700
-In-Reply-To: <689741588534833@mail.yandex.ru> (Konstantin Tokarev's message of
-        "Sun, 03 May 2020 22:42:01 +0300")
-Message-ID: <xmqqo8r4iyr4.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729034AbgECUD2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 May 2020 16:03:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728992AbgECUD1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 May 2020 16:03:27 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92D3AC061A0E
+        for <git@vger.kernel.org>; Sun,  3 May 2020 13:03:27 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id w4so10186864ioc.6
+        for <git@vger.kernel.org>; Sun, 03 May 2020 13:03:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=5MP6M9GG1YmTSuFUD58FJe3b0uSRzqNH+7HNVT6mZ8M=;
+        b=oJMeIcwDAAwViqok6L79LbEXLQjTVPi8Q8/Pi+S7Vqr52Vg/nrNRoN9xi+TdxUsX0M
+         k8BoqB4rPBQawAx7r1u6uRlDaYbJV5vmYgul7+4bPETu/hyx43XsYHg2RlEgS1nSw0dl
+         L3jTCEqH7K4KFY9vSQwj71oCbQPM3ZNvmO8GvHoxIgUybq/jU2V9VqPpOz8+0n66fcaQ
+         xmJCD/XpoKY8Yn2GDZ97RYSEB92D/7Op7EBVeTL5w6hZgw9IbEbPc/0qLqB7Z/l5ZFgM
+         x+hd9S6zz/mZ9LoTH0mb/zDCuFRhfVsOBk7CJQewIWPm3vSsujDH2p1z9MFlwNJcOUGU
+         +YoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=5MP6M9GG1YmTSuFUD58FJe3b0uSRzqNH+7HNVT6mZ8M=;
+        b=k/Kxn50XzoaGPuiq3ihHvvMtGu0eB36I+ncvl+nMwsGEVbClIrlieK/AZPvSfEEXgK
+         8zDCn4hP/e9wtGCwUc5tx0zZElb3r3tUWuXIbBl4ZmlWIFNg+b2WEtilKxl2dCEVNJY2
+         NtJOf6kkvrANl3xoczhxzYvZUBIx/Fmd+IwdsE2P92KItJlueLjZVIzMEk3+31Kd0X1+
+         I42vlVURWgmRKCv6xsaGf4ZO8Ll+APHQCIl7WWRXEh48wQpj7k8e48wNUaB3rm1jkt9i
+         LgtdOnKrSgf7VpZnYlE4RIumB6Ev/vEtpnDhRiYdTlaT4SM6TbtD1YDFgF1DrD+dBHWX
+         RU8Q==
+X-Gm-Message-State: AGi0PuYHc5wUeCX9CcUBYB6sfsBQgvYnoGAQXHoKeLtMHHinKzs8oIvw
+        +6jgC9dRNBCiSCfpSJC3/nwGPMDRlmH8DUX2GeKgtXY=
+X-Google-Smtp-Source: APiQypKiWqnn9iMRvDjTjEGUqRL2zyW4fTcX2acc5bL6gEWt+nZLeF3BUe24WlCZGytAWNcSBWCPSmgNagR2SHWyOTk=
+X-Received: by 2002:a05:6638:102:: with SMTP id x2mr11411405jao.119.1588536206550;
+ Sun, 03 May 2020 13:03:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5DB61CCA-8D77-11EA-877A-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <CAEoQP9gVur=UDDPzHnLq-AryDnd45uYdEs3kajzLrtr572e_rA@mail.gmail.com>
+In-Reply-To: <CAEoQP9gVur=UDDPzHnLq-AryDnd45uYdEs3kajzLrtr572e_rA@mail.gmail.com>
+From:   =?UTF-8?B?RXdhIMWabGl3acWEc2th?= <kreska07@gmail.com>
+Date:   Sun, 3 May 2020 22:03:15 +0200
+Message-ID: <CAEoQP9iY-0+=ETA0vrHL0HngccwtNA_3KX4WSSokJpOgJDGUeA@mail.gmail.com>
+Subject: file is showing as modified even that it was never commited
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Tokarev <annulen@yandex.ru> writes:
+Hi,
 
-> FWIW, CMakeLists.txt doesn't have to be in the root of source tree in
-> order to work. It can perfectly work from contrib/cmake after necessary
-> changes in relative paths.
+I=E2=80=99m probably missing something here, but it looks really weird and =
+I
+can=E2=80=99t find any information on this.
 
-That's great to know---perhaps you can work with Sibi to help
-whipping the CMakeLists.txt into shape, placing it in contrib/cmake/
-directory?
+My situation is as following:
+I created empty repository on Bitbucket, then cloned it, added code
+and made one initial commit (without push).
 
-When that is in place, my answer to Sibi's question, i.e. "what is
-the best way to tell users they can use CMake for their Windows
-build?" would be "the same way as we advertise contrib/buildsystems
-and/or compat/vcbuild to them", I think.
+Now I changed the code and I would like to commit it, but I have some troub=
+les.
 
-Thanks.
+The problem is some files are showing as changed while I never committed th=
+em.
+I never intended to commit them (they are under .idea directory, which
+I added to .gitignore).
+I checked with git log - I have only this one commit.
+I checked files affected by this commit using git show --pretty=3D""
+--name-only. Mentioned files are not there.
+Also checked the history of one particular file, using git log -p - no
+history here.|
+
+At the same time, file is showing is changes not staged for commit
+when calling git status.
+For what is worth, file is even not there.
+
+I hope you=E2=80=99ll help me unravel this. I am out of ideas, kind of seem=
+s like a bug.
+
+Best regards
+Ewa
