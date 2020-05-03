@@ -6,126 +6,86 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D0CC28CBC
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 16:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88C87C28CBC
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 16:46:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DEF220757
-	for <git@archiver.kernel.org>; Sun,  3 May 2020 16:28:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24A5C206CD
+	for <git@archiver.kernel.org>; Sun,  3 May 2020 16:46:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AwrGD5Ev"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FgaAQTh2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728879AbgECQ2F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 May 2020 12:28:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37888 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728002AbgECQ2F (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 3 May 2020 12:28:05 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728906AbgECQqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 May 2020 12:46:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51312 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728783AbgECQqS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 May 2020 12:46:18 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 815E6403BA;
+        Sun,  3 May 2020 12:46:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9vV3a43h80oh0FP46QSJL8b1ShY=; b=FgaAQT
+        h2uZ3XzGKcyG0SoUuHaBbPXluuWHZ/dyQJD/9NnOU5L9mCmqkQ0o+cH67kIglTOM
+        7ytQshPSsqezo0JSI1IcCXYnRx6/U6mXzbOmuibe297jOytRUjoner+qpwCay2yA
+        Sr1JtTPHZ5CI7trDN6QM78tC+AQAnFN4qIMbU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=x6nwGqzAcCHg0vj4iYTktpH5QMjiiwLR
+        RcdquHWPMA7RQK5Je4VsbATwU5EzzF6ZFBrB0BL2/RYDonDfSoeN4nffn12b46w0
+        fbNAemife9EwuUrEDkWNcmJlupaHB1OBXyuIPZFUmoKvNbM9/DzlIMxSUTTbiw0K
+        FPoTCJvW8cM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78E0C403B9;
+        Sun,  3 May 2020 12:46:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 494936044D;
-        Sun,  3 May 2020 16:28:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1588523283;
-        bh=A+6/KcKZteFXq3gQfZ7kqvFyk9nzIMI734HCyECwKP8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=AwrGD5Eva3DDdUIQJQPhWHApDjGPEfy2X6jdgX0bJvxBs9hZI38MzjKpdg74NTexo
-         gdnozOkd6c0HIFVHkd6lLbhzH86ZwHEJWE7M/EwO2Si4/huzwXk0SxylApE7JJHZa4
-         gb7QDrRo6OWcpfN4ML/yLZPftdYU/izYT53Gbqag0wK5ukvxcdqWjqaTbVpD+BiJlJ
-         MTJMdC0ZmlAzBQdhlZpAKOJm9RUiWakzRKSr0blvveU5lJZJopvitwJWQji2SeHshG
-         LXlQ8Yldz8M/99biIjYo12XQ/yU1eHu7Ig1b950+KNbsL45yKY/3b/3uKdKGGI4CU+
-         EVX0sqcbKYYgUt8JgvANWTEnAmz9i3vbQMBiwCJ5gF9ytSt4J+4b2CFrhzDeiWg7gB
-         IuTB+AMfRTNcEA+6Qf7PofW8N6v04rG5ou8ZwxT0ocIgE+pV/k4/t4gRrebSw3yAwW
-         ErQNRKFJ8vXjEiYvqhA8ZCsjxzdr1UPnTWJHR/Sfvw01aAZJ9Mj
-Date:   Sun, 3 May 2020 16:27:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB2B3403AE;
+        Sun,  3 May 2020 12:46:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        Leonardo Bras <leobras.c@gmail.com>, git@vger.kernel.org,
-        Jan Viktorin <viktorin@rehivetech.com>,
-        Michal Nazarewicz <mina86@mina86.com>
-Subject: Re: [PATCH] send-email: Defines smtpPassCmd config option
-Message-ID: <20200503162757.GE6530@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        Leonardo Bras <leobras.c@gmail.com>, git@vger.kernel.org,
-        Jan Viktorin <viktorin@rehivetech.com>,
-        Michal Nazarewicz <mina86@mina86.com>
-References: <20200501105131.297457-1-leobras.c@gmail.com>
- <20200501125308.GE33264@Carlos-MBP>
- <xmqqees3odrb.fsf@gitster.c.googlers.com>
- <20200501222723.GF41612@syl.local>
- <20200501235948.GD6530@camp.crustytoothpaste.net>
- <20200503094348.GE170902@coredump.intra.peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci: respect the [skip ci] convention in our GitHub workflow "CI/PR"
+References: <pull.776.git.git.1588432087854.gitgitgadget@gmail.com>
+        <20200503093646.GC170902@coredump.intra.peff.net>
+Date:   Sun, 03 May 2020 09:46:15 -0700
+In-Reply-To: <20200503093646.GC170902@coredump.intra.peff.net> (Jeff King's
+        message of "Sun, 3 May 2020 05:36:46 -0400")
+Message-ID: <xmqqa72pj7ag.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wTWi5aaYRw9ix9vO"
-Content-Disposition: inline
-In-Reply-To: <20200503094348.GE170902@coredump.intra.peff.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-trunk-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9AFA8680-8D5D-11EA-A206-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
---wTWi5aaYRw9ix9vO
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I'm not sure whether we want to be building all of the individual topics
+> in gitster/git or not. In theory that provides more information, but I'm
+> not sure if anybody is looking at them (and all of the notifications
+> would go to Junio anyway).
 
-On 2020-05-03 at 09:43:48, Jeff King wrote:
-> On Fri, May 01, 2020 at 11:59:48PM +0000, brian m. carlson wrote:
->=20
-> > I think perhaps many folks aren't aware that you can invoke Git with an
-> > arbitrary shell command as "credential.helper", which of course makes
-> > life a lot easier.  So if you want to invoke a separate command, it's
-> > really as easy as this:
-> >=20
-> >   git config credential.smtp://smtp.crustytoothpaste.net.helper \
-> >     '!f() { echo username=3Dmy-username; echo "password=3D$(my-password=
--command)"; }; f'
-> >=20
-> > So I think that documenting the use of the credential helper is step 1,
-> > because probably most people _do_ want to use that for their passwords,
-> > and then documenting that credential helpers can be arbitrary shell
-> > commands that speak the protocol is step 2, so that people who don't can
-> > figure out a way to do what they want.
-> >=20
-> > I'll send some patches later which document the latter feature, since I
-> > don't think we mention it anywhere outside of the FAQ.  I actually
-> > didn't know about it until Peff mentioned it to me one time.
->=20
-> This is documented, but only recently did it make it out of
-> Documentation/technical/ and into gitcredentials(7). I don't mind adding
-> more pointers, though.
+I do not think I am letting GitHub notifications for gitster/* come
+to my mailbox, so it is quite possible that many have piled up there
+without anybody (not even me) seeing them.
 
-Ah, yes, I remembered that series, but forgot that it introduced
-documentation for that.
+I won't be locally able to notice breakages introduced by an
+individual topic to an environment I do not have access to, and
+building these topics with GitHub Actions may reveal which ones
+break, say, vsbuild, but I won't be debugging and fixing such issues
+myself anyway, so at least to me it is useless to run build there.
 
-I'll just send a patch that updates the config option to mention the
-other cases, since we already document it in gitcredentials(7).
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I think I agree with your outline, i.e. build pull requests to help
+contributors, and build public integration branches to help the
+project as a whole.
 
---wTWi5aaYRw9ix9vO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXq7xDAAKCRB8DEliiIei
-gashAQCIRQutnQCWhp9Az6owbh5HoVBOxYCa+r0MNgi/U3uv4QD+JFMI+yKVh1zK
-nHN5BJ/KpAqlPwmfB2+3sA9qw2x8Lg0=
-=QRKY
------END PGP SIGNATURE-----
-
---wTWi5aaYRw9ix9vO--
+Thanks.
