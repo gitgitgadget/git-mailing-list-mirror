@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58F24C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 460B5C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:12:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30328206EB
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:12:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23366206EB
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:12:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="N0zE5VMC"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="w6MkwYOj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728344AbgEDXMf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 19:12:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49364 "EHLO
+        id S1728347AbgEDXMi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 19:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728258AbgEDXMe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 19:12:34 -0400
+        with ESMTP id S1728258AbgEDXMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 19:12:37 -0400
 Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F3FC061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 16:12:34 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id a5so158142pjh.2
-        for <git@vger.kernel.org>; Mon, 04 May 2020 16:12:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADC8AC061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 16:12:37 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id t9so163451pjw.0
+        for <git@vger.kernel.org>; Mon, 04 May 2020 16:12:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Xwp9MlTM06nhTCGk+Beg6uQkrBO7tHv/m7wbf/1smis=;
-        b=N0zE5VMCaPfrlTv/ZGE1DdGa+8TNFbAFkZVatGuQCKuDQY/6bPCy2C64Qnr4N3Sf2l
-         EWnJYn2HoFNaex9Sw1/2DoL3/piFRnnQvgft/YKqav53hMc2889Y2y+7p+lbM7eUBi4e
-         NsIgbPoZCA0C9Ak4b5RBXsaZG7XSH2gp41f8Tu2kQ6tBGW16XPWQnTxD5+HKwxz++cyr
-         8dKN/wODcgym3uPB0slC+vBGf1sbUYfj5q28DH36yhAMMrCUNvgvNN6rXX6BGPEyPYZM
-         KPmX8tTWZaeqA7NTXSWhivVNaS+apKvOzdnwTAIqr3htnN5mA24jEyvC+XvxDB1xPXMl
-         NcLw==
+        bh=hKNtToHuliZ3nQ0FY+hFcX6SvM5rjP2ey+YWDHWEPGo=;
+        b=w6MkwYOjpfeqH0f3sDJ7ErNJj0S3NNecYcH9kci9xXfnsUnHVFeNHF7cvSF3gYKkTL
+         6WvK25J7y6x5C1RQ2icH18zCvFaWfJ34hTHRb5B+fdVveLWTKnyWG7rMt6FTq89uCGdd
+         X6J8Rrm8RqQo3HQZ8UHMm0kjuCqh6TqblZ4XSb2HpZXz0RR8ni/cZ72tSwYsCed3Tr2F
+         AuVn/nUMTuKUCVo8FGI9ArtdcszQXIsZoyzYf8yku3sHtuG9ih3GOiRBEietRDTXnh84
+         5HCLNtVEYplPUB8+A7nWN37ct/qrxUqNGckgepsPYId/8EdfBNRlEQgv1J2MLked1NZ3
+         SBgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Xwp9MlTM06nhTCGk+Beg6uQkrBO7tHv/m7wbf/1smis=;
-        b=RtNaSQschSELqsRqUgWy8ahoocdLsGALsdKWLxuwjFXEDd511/Eq/NOUpGgLc4U7PK
-         F2OL5Jw5vmQqJYuB5pGl4h/HqMY70Le+9I2a+vyMD3OfS+X2AoL7+fHjXx1QHiUFaWE4
-         2xnKabRgYzWHTnytd1lUHr5uYA1bjUkxlZHcqWdfSJipUJu3enkxRm8n7aMdRqIQf5WK
-         f8qJdwbur9iQ8W4aJuBM8tTmR11QwN8nJjq4BTlvJ2iDdhkxQlX5w9sv9Po/gcSpI3gk
-         q6Zy0Ow31nNunSTlr7V1Q2lFDJ5C1f/hB4+PoBGbY7YH0AkueAyiEzFXIsCSL/a9ogg1
-         is5A==
-X-Gm-Message-State: AGi0PuYCIMmasXaXPI7hSiZr3JWTjQDDTD+LC4eujQyw8i0liLtCKeya
-        /XQ+/Ut4mIgsC+vxMF/tJE7C9QRdwtvm1Q==
-X-Google-Smtp-Source: APiQypLlx8xLA+SFBD6gywgB3if8iTJOXvx2sD+nrOlmz1QJ7/Z0bT2Jvh6fTXjIIbahBppY1o0+wg==
-X-Received: by 2002:a17:90a:cb09:: with SMTP id z9mr181453pjt.120.1588633953451;
-        Mon, 04 May 2020 16:12:33 -0700 (PDT)
+        bh=hKNtToHuliZ3nQ0FY+hFcX6SvM5rjP2ey+YWDHWEPGo=;
+        b=ufa+ExCgu4eUsKYnfXwycWrcqfmav9KeoM3/jN4tudD6gGQ0QGUtByKvJXgkYODhek
+         GZGYgUsUXzCUIw1WZYtEMAcrjZ/BZsOf3q83eaCTlYFd71duS60h3biakhXT0AZ/ga1E
+         c/zfN1m20vosCeAAvbu+xN1xKE+J5HZ/oO6IKTqQrwQaoDQ786faTtEVU3vaocHWiNcA
+         IB20EG5FhWbjhDfIfqfwOPoGNzsKHjSzjzOBgh0PFjzY7pRVL3QkIhnNMWTfk3m6ZANL
+         GgLvMg8WfBzfOT1QrXnR3M2y57QhH6Mvjhl+EFRaduehhHH4o4g0hk65HZnIrCbkq1zO
+         k7IA==
+X-Gm-Message-State: AGi0Puam4k0tLy7J54W38OfWNv2IAQ4+3sJEjVpoyHGXrMJkAYbL3EL6
+        av9GEP/qPWX0UJ2gXosOmxyoEC9oCxnD2w==
+X-Google-Smtp-Source: APiQypJVHI/j23QQwPKbaXHtf14Rn6eJdg25I8MjH3WrGaYeIE7EPCzVCH4778lSwhhjM1xxpYEtQw==
+X-Received: by 2002:a17:902:b187:: with SMTP id s7mr349048plr.0.1588633956789;
+        Mon, 04 May 2020 16:12:36 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id d12sm166691pfq.36.2020.05.04.16.12.32
+        by smtp.gmail.com with ESMTPSA id b3sm100614pgh.75.2020.05.04.16.12.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 16:12:32 -0700 (PDT)
-Date:   Mon, 4 May 2020 17:12:31 -0600
+        Mon, 04 May 2020 16:12:36 -0700 (PDT)
+Date:   Mon, 4 May 2020 17:12:35 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, chriscool@tuxfamily.org
-Subject: [PATCH 2/4] pack-bitmap.c: make object filtering functions generic
-Message-ID: <b43a12894e7edf7d54ce2e9679f8db7dabec23e0.1588633810.git.me@ttaylorr.com>
+Subject: [PATCH 3/4] pack-bitmap.c: support 'tree:0' filtering
+Message-ID: <87b21d72bb588f7366d928544aeaf4de68b027a7.1588633810.git.me@ttaylorr.com>
 References: <cover.1588633810.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,123 +73,129 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 4f3bd5606a (pack-bitmap: implement BLOB_NONE filtering, 2020-02-14),
-filtering support for bitmaps was added for the 'LOFC_BLOB_NONE' filter.
+In the previous patch, we made it easy to define other filters that
+exclude all objects of a certain type. Use that in order to implement
+bitmap-level filtering for the '--filter=tree:<n>' filter when 'n' is
+equal to 0.
 
-In the future, we would like to add support for filters that behave as
-if they exclude a certain type of object, for e.g., the tree depth
-filter with depth 0.
+The general case is not helped by bitmaps, since for values of 'n > 0',
+the object filtering machinery requires a full-blown tree traversal in
+order to determine the depth of a given tree. Caching this is
+non-obvious, too, since the same tree object can have a different depth
+depending on the context (e.g., a tree was moved up in the directory
+hierarchy between two commits).
 
-To prepare for this, make some of the functions used for filtering more
-generic, such as 'find_tip_blobs' and 'filter_bitmap_blob_none' so that
-they can work over arbitrary object types.
+But, the 'n = 0' case can be helped, and this patch does so. Running
+p5310.11 in this tree and on master with the kernel, we can see that
+this case is helped substantially:
 
-To that end, create 'find_tip_objects' and
-'filter_bitmap_exclude_type', and redefine the aforementioned functions
-in terms of those.
+  Test                                  master              this tree
+  --------------------------------------------------------------------------------
+  5310.11: rev-list count with tree:0   10.68(10.39+0.27)   0.06(0.04+0.01) -99.4%
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ pack-bitmap.c                      | 25 ++++++++++++++++++++++++-
+ t/perf/p5310-pack-bitmaps.sh       |  5 +++++
+ t/t6113-rev-list-bitmap-filters.sh | 21 +++++++++++++++++++++
+ 3 files changed, 50 insertions(+), 1 deletion(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 49a8d10d0c..3693c9e62f 100644
+index 3693c9e62f..195ee8cad0 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -715,8 +715,9 @@ static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
- 	return 0;
- }
- 
--static struct bitmap *find_tip_blobs(struct bitmap_index *bitmap_git,
--				     struct object_list *tip_objects)
-+static struct bitmap *find_tip_objects(struct bitmap_index *bitmap_git,
-+				       struct object_list *tip_objects,
-+				       enum object_type type)
- {
- 	struct bitmap *result = bitmap_new();
- 	struct object_list *p;
-@@ -724,7 +725,7 @@ static struct bitmap *find_tip_blobs(struct bitmap_index *bitmap_git,
- 	for (p = tip_objects; p; p = p->next) {
- 		int pos;
- 
--		if (p->item->type != OBJ_BLOB)
-+		if (p->item->type != type)
- 			continue;
- 
- 		pos = bitmap_position(bitmap_git, &p->item->oid);
-@@ -737,9 +738,10 @@ static struct bitmap *find_tip_blobs(struct bitmap_index *bitmap_git,
- 	return result;
- }
- 
--static void filter_bitmap_blob_none(struct bitmap_index *bitmap_git,
--				    struct object_list *tip_objects,
--				    struct bitmap *to_filter)
-+static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
-+				       struct object_list *tip_objects,
-+				       struct bitmap *to_filter,
-+				       enum object_type type)
- {
- 	struct eindex *eindex = &bitmap_git->ext_index;
- 	struct bitmap *tips;
-@@ -747,18 +749,21 @@ static void filter_bitmap_blob_none(struct bitmap_index *bitmap_git,
+@@ -749,7 +749,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
  	eword_t mask;
  	uint32_t i;
  
-+	if (type != OBJ_BLOB)
-+		BUG("filter_bitmap_exclude_type: unsupported type '%d'", type);
-+
- 	/*
- 	 * The non-bitmap version of this filter never removes
--	 * blobs which the other side specifically asked for,
-+	 * objects which the other side specifically asked for,
- 	 * so we must match that behavior.
- 	 */
--	tips = find_tip_blobs(bitmap_git, tip_objects);
-+	tips = find_tip_objects(bitmap_git, tip_objects, type);
+-	if (type != OBJ_BLOB)
++	if (type != OBJ_BLOB && type != OBJ_TREE)
+ 		BUG("filter_bitmap_exclude_type: unsupported type '%d'", type);
  
  	/*
- 	 * We can use the blob type-bitmap to work in whole words
- 	 * for the objects that are actually in the bitmapped packfile.
- 	 */
--	for (i = 0, init_type_iterator(&it, bitmap_git, OBJ_BLOB);
-+	for (i = 0, init_type_iterator(&it, bitmap_git, type);
- 	     i < to_filter->word_alloc && ewah_iterator_next(&mask, &it);
- 	     i++) {
- 		if (i < tips->word_alloc)
-@@ -773,7 +778,7 @@ static void filter_bitmap_blob_none(struct bitmap_index *bitmap_git,
- 	 */
- 	for (i = 0; i < eindex->count; i++) {
- 		uint32_t pos = i + bitmap_git->pack->num_objects;
--		if (eindex->objects[i]->type == OBJ_BLOB &&
-+		if (eindex->objects[i]->type == type &&
- 		    bitmap_get(to_filter, pos) &&
- 		    !bitmap_get(tips, pos))
- 			bitmap_unset(to_filter, pos);
-@@ -782,6 +787,14 @@ static void filter_bitmap_blob_none(struct bitmap_index *bitmap_git,
+@@ -867,6 +867,20 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
  	bitmap_free(tips);
  }
  
-+static void filter_bitmap_blob_none(struct bitmap_index *bitmap_git,
-+				    struct object_list *tip_objects,
-+				    struct bitmap *to_filter)
++static void filter_bitmap_tree_depth(struct bitmap_index *bitmap_git,
++				     struct object_list *tip_objects,
++				     struct bitmap *to_filter,
++				     unsigned long limit)
 +{
++	if (limit)
++		BUG("filter_bitmap_tree_depth given non-zero limit");
++
++	filter_bitmap_exclude_type(bitmap_git, tip_objects, to_filter,
++				   OBJ_TREE);
 +	filter_bitmap_exclude_type(bitmap_git, tip_objects, to_filter,
 +				   OBJ_BLOB);
 +}
 +
- static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
- 				     uint32_t pos)
- {
-@@ -820,7 +833,7 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
- 	eword_t mask;
- 	uint32_t i;
+ static int filter_bitmap(struct bitmap_index *bitmap_git,
+ 			 struct object_list *tip_objects,
+ 			 struct bitmap *to_filter,
+@@ -890,6 +904,15 @@ static int filter_bitmap(struct bitmap_index *bitmap_git,
+ 		return 0;
+ 	}
  
--	tips = find_tip_blobs(bitmap_git, tip_objects);
-+	tips = find_tip_objects(bitmap_git, tip_objects, OBJ_BLOB);
++	if (filter->choice == LOFC_TREE_DEPTH &&
++	    filter->tree_exclude_depth == 0) {
++		if (bitmap_git)
++			filter_bitmap_tree_depth(bitmap_git, tip_objects,
++						 to_filter,
++						 filter->tree_exclude_depth);
++		return 0;
++	}
++
+ 	/* filter choice not handled */
+ 	return -1;
+ }
+diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
+index 80c53edca7..75ccf9f4e3 100755
+--- a/t/perf/p5310-pack-bitmaps.sh
++++ b/t/perf/p5310-pack-bitmaps.sh
+@@ -53,6 +53,11 @@ test_perf 'rev-list count with blob:limit=1k' '
+ 		--filter=blob:limit=1k >/dev/null
+ '
  
- 	for (i = 0, init_type_iterator(&it, bitmap_git, OBJ_BLOB);
- 	     i < to_filter->word_alloc && ewah_iterator_next(&mask, &it);
++test_perf 'rev-list count with tree:0' '
++	git rev-list --use-bitmap-index --count --objects --all \
++		--filter=tree:0 >/dev/null
++'
++
+ test_perf 'simulated partial clone' '
+ 	git pack-objects --stdout --all --filter=blob:none </dev/null >/dev/null
+ '
+diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-filters.sh
+index 145603f124..2b551e6fd0 100755
+--- a/t/t6113-rev-list-bitmap-filters.sh
++++ b/t/t6113-rev-list-bitmap-filters.sh
+@@ -53,4 +53,25 @@ test_expect_success 'blob:limit filter with specified blob' '
+ 	test_bitmap_traversal expect actual
+ '
+ 
++test_expect_success 'tree:0 filter' '
++	git rev-list --objects --filter=tree:0 HEAD >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter=tree:0 HEAD >actual &&
++	test_bitmap_traversal expect actual
++'
++
++test_expect_success 'tree:0 filter with specified blob, tree' '
++	git rev-list --objects --filter=tree:0 HEAD HEAD:two.t >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter=tree:0 HEAD HEAD:two.t >actual &&
++	test_bitmap_traversal expect actual
++'
++
++test_expect_success 'tree:1 filter' '
++	git rev-list --objects --filter=tree:1 HEAD >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter=tree:1 HEAD >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.26.0.113.ge9739cdccc
 
