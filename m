@@ -4,109 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA479C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38DB9C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:33:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82BB02064C
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:25:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A8BC2068E
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 23:33:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lhxNiUqa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cPqiqJ+B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728314AbgEDXZP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 19:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51340 "EHLO
+        id S1728258AbgEDXdA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 19:33:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727982AbgEDXZP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 19:25:15 -0400
+        with ESMTP id S1728092AbgEDXc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 19:32:59 -0400
 Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137FBC061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 16:25:15 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id a31so171831pje.1
-        for <git@vger.kernel.org>; Mon, 04 May 2020 16:25:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D71EBC061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 16:32:58 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id t9so183087pjw.0
+        for <git@vger.kernel.org>; Mon, 04 May 2020 16:32:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=kgNfXpH3JnZcMw135ER4EQ1wZ048ZWZfGBsW6FSwD68=;
-        b=lhxNiUqaZvQmiiyukXMp454xuiGOMeCElV5AvQMA1bX0FRZXWBLVyx/VYgEJiny6pw
-         mpsozs2dFhs6zo/h/Yrr0m8j8Z0yBjlBIZLg/TglBo1u+Pe7T20GEPmEwxA9gDIbgv0Y
-         Rl0G9WC8epW0J8ihmmqcVgbxE2E4IUvz3lFGXyUrgtNqEehu37v6FZisb8Q+v8D/HTtz
-         f0fzFWASHp4z+/rYA6Y7XTrhq0RG0W9nGgyf/u5HIXa1ovdoUVgV9/0C3SINBtaqc8kY
-         S+U2g6NhkX748YHS6Gf/xVAF6siM+mIFLv4SrlcJac+oUzV4mbJ1YujvvQ2+L36XPNaU
-         GOKQ==
+        bh=J4sJWi5ANimeid59+dKh9Nf3iO6iuqFmoOhaBOS7VMI=;
+        b=cPqiqJ+BIDZNlSooBflaX9sGkao52VwH6aLrQVFjQehkOX7gDfhFrBwXzB/OT74OjA
+         httOmn8ZfSZ3YppsYTaChyItqa58E4+tR6MQgNNl1akUdCwNASFX+n36AoDRyVeFk9Wd
+         nub61O8Y5n+YZLjaQJLCf83adE1TIVwR4On+cZ+TgHKga7oaeTvTBfHA6YF/LkPmxCK+
+         ySwP/p1ui4QKK9azv0di4XLcYOHP1WmAVkqhFxDuGsV5A4C3KHdC17ASzGVIPlhk75V4
+         gVN0rVTp4fEskDPsh9gAhdQtqO1jGEJ936SSHe4NInmy7kOhAFjVMKWFP14zTVqxYYYF
+         E7hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=kgNfXpH3JnZcMw135ER4EQ1wZ048ZWZfGBsW6FSwD68=;
-        b=DjTzFALwoo8Ao3cX0IE4YHagspN98gkU/Uh6jzr0P3XPt2uLQ8e+gCpZyrhskxD3Bi
-         o84KbqqSApEV2CAV6HZMFv+sGLSTgEL5U/HwmAUz6kJj7pyVQGzlijAgVBzg0PKdA4fm
-         GVT3ARf5+Z49qnuvgjmhgA1ryDwtO3SBpfrDX4zeE8I9QhEpzBi3KVKx/l4UCs4iayUj
-         iJQZWDikwkiAVsdQ4Hc64DsEfbX4jM4bsHcsjpwP4t23AOVQ9e26VXrS/mrG+Psy5214
-         DmcFZNA6BCbTx+6qg5pMQAKj+pfwjpfqUE2oVNh1+wKL0TMx+EVmLQAJfXuAs0CQDy8S
-         kyFA==
-X-Gm-Message-State: AGi0PuZayfLiLVUm/BQZ3RFrYXWQUI0M7m8Y5pGzJty7S8esjSkXuKeZ
-        gqjNWFP5ZjtqpAx5L2uHWmM=
-X-Google-Smtp-Source: APiQypK8x19jkwaDhI1dsFKISjzh1Gwwd6BWlR7XT+LzvKELS/iNZxzX4nZbCteUVdu2KYad+DQbog==
-X-Received: by 2002:a17:90a:f689:: with SMTP id cl9mr231945pjb.43.1588634714589;
-        Mon, 04 May 2020 16:25:14 -0700 (PDT)
+        bh=J4sJWi5ANimeid59+dKh9Nf3iO6iuqFmoOhaBOS7VMI=;
+        b=oaYaxHjQfgFiOuqWiV/vab8VW6UvDQLRtrei1UtateaXfJTH8SEeZvG49Q3sojCGxF
+         wbcMEaZJ7H2zcIp0mma9xrn2S6ltm/Lb2WwlGsHT1lhrTMV0GKPBm7gD8A/vO2CoRbij
+         1iO5bq/yc8zSgMSOoSndlQrd5QqdHaxLGLrNI55HlmPgOasDHPi7uRhcTsYbCfqBG3QJ
+         lU2GwB2gNZpy+1zq/1K3rr9PhVZhK1IkKn+7KDnfPWOEj+wh18GIVVDe5TxaduAp/cSu
+         /1UfRsxgRtL881Vnb7oup0QE9CL0+L5pnw2Z1cKtanCBlmXKJ3lWntu/sV1O17o6dAjQ
+         zQeQ==
+X-Gm-Message-State: AGi0PuZ8JHArjmMjoOqdOVdWTk0Chj2v6O0Esa6uPPNauFQEdMFzWUXN
+        pl/GKOIG4WxPd6kwK1u/9g8=
+X-Google-Smtp-Source: APiQypLlEGH0D9qsLczejEZn9ZLXA5nfnAUJdhmKUwZ/tUglmFEEf9CYCgvnb0zNkSPzmBxYTZt44w==
+X-Received: by 2002:a17:902:347:: with SMTP id 65mr386514pld.21.1588635178302;
+        Mon, 04 May 2020 16:32:58 -0700 (PDT)
 Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
-        by smtp.gmail.com with ESMTPSA id d12sm87296pjx.1.2020.05.04.16.25.13
+        by smtp.gmail.com with ESMTPSA id f30sm112780pje.29.2020.05.04.16.32.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 16:25:13 -0700 (PDT)
-Date:   Tue, 5 May 2020 06:25:11 +0700
+        Mon, 04 May 2020 16:32:57 -0700 (PDT)
+Date:   Tue, 5 May 2020 06:32:55 +0700
 From:   Danh Doan <congdanhqx@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 10/12] tests: when run in Bash, annotate test failures
- with file name/line number
-Message-ID: <20200504232511.GB29599@danh.dev>
-References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
- <cover.1586538752.git.congdanhqx@gmail.com>
- <ce0038598704e03becc65731a71abf596bdfbe98.1586538752.git.congdanhqx@gmail.com>
- <20200504174636.GG86805@Carlos-MBP>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, clime <clime7@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] CodingGuidelines: drop arithmetic expansion advice to
+ use "$x"
+Message-ID: <20200504233255.GC29599@danh.dev>
+References: <20200503090952.GA170768@coredump.intra.peff.net>
+ <20200503091157.GA170902@coredump.intra.peff.net>
+ <20200503114351.GA28680@danh.dev>
+ <20200504151351.GC11373@coredump.intra.peff.net>
+ <xmqqh7wviud9.fsf@gitster.c.googlers.com>
+ <20200504160709.GB12842@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200504174636.GG86805@Carlos-MBP>
+In-Reply-To: <20200504160709.GB12842@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-05-04 10:46:36-0700, Carlo Marcelo Arenas Belón <carenas@gmail.com> wrote:
-> On Sat, Apr 11, 2020 at 12:18:12AM +0700, Đoàn Trần Công Danh wrote:
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index 0ea1e5a05e..40a00983f7 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -657,6 +657,18 @@ die () {
-> >  	fi
-> >  }
-> >  
-> > +file_lineno () {
-> > +	test -z "$GIT_TEST_FRAMEWORK_SELFTEST" && test -n "$BASH" || return 0
-> > +	local i
-> > +	for i in ${!BASH_SOURCE[*]}
+On 2020-05-04 12:07:09-0400, Jeff King <peff@peff.net> wrote:
+> On Mon, May 04, 2020 at 08:37:38AM -0700, Junio C Hamano wrote:
 > 
-> this line breaks with NetBSD's sh (and probably other POSIX complaint shells)
+> Subject: CodingGuidelines: drop arithmetic expansion advice to use "$x"
 > 
-> the Coding Guidelines mention "no shell arrays" and while the tests are more
-> relaxed against that rule, usually workarounds are needed, as it is shown by:
-> 5826b7b595 (test-lib: check Bash version for '-x' without using shell arrays,
-> 2019-01-03)
+> The advice to use "$x" rather than "x" in arithmetric expansion was
+> working around a dash bug fixed in 0.5.4. Even Debian oldstable has
+> 0.5.7 these days. And in the meantime, we've added almost two dozen
+> instances of the "x" form which you can find with:
+> 
+>   git grep '$(([a-z]'
+> 
+> and nobody seems to have complained. Let's declare this workaround
+> obsolete and simplify our style guide.
+> 
+> Helped-by: Danh Doan <congdanhqx@gmail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-This function will be called in CI only, and when the the shell used
-is bash, to annotate the faulty line.
+I see this patch hasn't been merged to pu yet.
 
-We have a test guarding it already.
-So, I think it's fine.
+Please have my name as (if it's not too much trouble for you):
+
+	Đoàn Trần Công Danh <congdanhqx@gmail.com>
+
+(I'm going to change my name in email setting)
 
 -- 
 Danh
