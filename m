@@ -2,146 +2,112 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD2CAC3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D2FCC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:59:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B276220663
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:58:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C6B5206A4
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:59:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="QqoHYhgP"
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="hu1Pek91"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726433AbgEDV62 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 17:58:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37764 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726291AbgEDV61 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 17:58:27 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66EADC061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 14:58:27 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id v2so330522plp.9
-        for <git@vger.kernel.org>; Mon, 04 May 2020 14:58:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=pkv+M9sRcAu8T1ct5uu4c0C372G1vZ/gT0CLg1ZpncA=;
-        b=QqoHYhgPf67AlAfSm2URFCh5kdLD6/iuk6rEcMKWEm3P9MoiRqT9lNHFxwJ186UaWa
-         QcFY0yXhzTEqkWuNK3n+4xo572KLEauKM4VBRS6pPcY3VTSxFOi9FchOQEMtrsW1hjFl
-         Cc43rVOn6meE5TvWCfXUpKPosw0ohC1VIHOVE4l8TzapiEdRap1QkT0G7trPnAwd+XbN
-         Za1CxdbBOx4NFKwn4TyicmI9dCfnPcAAWMCUYIvsy5mTC3QlyTHT6cQuzkBkyzKJhfCx
-         ds+QQYzwPbQr0yeW1cxwDv+79sQIvbGrXOw/p1+IThEAxQrJAWbtuFlfRpSGK9F2k9/m
-         A1Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=pkv+M9sRcAu8T1ct5uu4c0C372G1vZ/gT0CLg1ZpncA=;
-        b=IP9fqJ4iU5LxA8yFH5Ue6+WHFdQlOTq1paN0uy1AFpk4uHB0e68/3LBnA7rOczcrlO
-         XyvImQe00Q6pbGqzZl1lLx9iz9MCSmdGB68eRc8AdkQaX/ODl7JYDT9SFC2+qNj3pCWA
-         ZAsg6TEmj3K3p+vuLi0Jjd2Lf8PGdsJBU55tAVpig5jEuZR2YkvdQrz08L9cbFft1Goq
-         059/CPZA9qEcayHf0BnFlmFla6+BFig2z6Rq5ppsk6U6w2wFAMDdDrvA0TuFf5DjvKXb
-         7AX9kCScEpvNTFl8e0g1xht+cKGlDDdo93bPDzbpXn9218rXm+TFKcvFLJTo2ByQbseT
-         qqgA==
-X-Gm-Message-State: AGi0Pua6csUd6ntV3jdHZAVdWsNEtb3YX8bPIizVNiZZiHkjPNIR8D8H
-        VaHRC0C1MvflQ39QqXdGAbqOGZSc4qE=
-X-Google-Smtp-Source: APiQypI5OrCA/ychXOrQOJYRemiJxfoIDfLsiAKROa5eGqB966Pm4tRPezW0cXov8/36lEg8TufIAQ==
-X-Received: by 2002:a17:902:7141:: with SMTP id u1mr48771plm.164.1588629506645;
-        Mon, 04 May 2020 14:58:26 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id u14sm32367pgh.71.2020.05.04.14.58.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 14:58:25 -0700 (PDT)
-Date:   Mon, 4 May 2020 15:58:24 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
-Message-ID: <20200504215824.GC45250@syl.local>
-References: <20200504150105.GB11373@coredump.intra.peff.net>
- <cover.1588607262.git.congdanhqx@gmail.com>
- <73de97dfebfccabe9f1bf32ea41aea5008a949cd.1588607262.git.congdanhqx@gmail.com>
- <20200504162311.GE12842@coredump.intra.peff.net>
+        id S1728090AbgEDV7x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 17:59:53 -0400
+Received: from forward501p.mail.yandex.net ([77.88.28.111]:56761 "EHLO
+        forward501p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726453AbgEDV7x (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 17:59:53 -0400
+Received: from mxback6g.mail.yandex.net (mxback6g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:167])
+        by forward501p.mail.yandex.net (Yandex) with ESMTP id C5E2B3500252;
+        Tue,  5 May 2020 00:59:50 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback6g.mail.yandex.net (mxback/Yandex) with ESMTP id 7GMAzR2Vht-xnQGhcbJ;
+        Tue, 05 May 2020 00:59:50 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1588629590;
+        bh=sU6KEfhHUUuGBnOmiTB2+ytvL0SzTTTSkq7+6g+bxEI=;
+        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
+        b=hu1Pek91DSYmVOxRBWFokjQVzMf/ZG+aDo8zHt6FjpPGab5RXfSaId2zuc46RR2t8
+         V7bBKjRiMIhqJnLSttlvy8KAh8kQQ0ou+wSqhOkfw1plbHmWJ/i6DONMs7jfhDV1PU
+         6XO45pSTpN9jKYeAxJ/wYqabLKGQP979h5CJLaXU=
+Authentication-Results: mxback6g.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by myt5-5e0e3f348369.qloud-c.yandex.net with HTTP;
+        Tue, 05 May 2020 00:59:49 +0300
+From:   Konstantin Tokarev <annulen@yandex.ru>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
+        Jeff King <peff@peff.net>, Danh Doan <congdanhqx@gmail.com>,
+        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <nycvar.QRO.7.76.6.2005041630150.56@tvgsbejvaqbjf.bet>
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>         <xmqqv9lod85m.fsf@gitster.c.googlers.com>         <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>         <xmqq8sikblv2.fsf@gitster.c.googlers.com>        
+         <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>         <20200427200852.GC1728884@coredump.intra.peff.net>         <20200427201228.GD1728884@coredump.intra.peff.net>         <20200428135222.GB31366@danh.dev>         <20200428210750.GE4000@coredump.intra.peff.net>
+                 <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>         <nycvar.QRO.7.76.6.2005012130010.18039@tvgsbejvaqbjf.bet>         <CAKiG+9UvnLtF7eS9FsPLyRR4ZPNSnakZwyYy3dO7WoAnRpvoMA@mail.gmail.com>         <xmqq4ksyl4mz.fsf@gitster.c.googlers.com>
+        <CAKiG+9Vvwz_ajhJ1KPVWtq25UaGtJOH57eXTA=cgm5qzoZCfGw@mail.gmail.com> <xmqqsgghhr32.fsf@gitster.c.googlers.com> <689741588534833@mail.yandex.ru> <nycvar.QRO.7.76.6.2005041630150.56@tvgsbejvaqbjf.bet>
+Subject: Re: [PATCH 0/8] CMake build system for git
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Tue, 05 May 2020 00:59:49 +0300
+Message-Id: <848941588629532@mail.yandex.ru>
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200504162311.GE12842@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 04, 2020 at 12:23:11PM -0400, Jeff King wrote:
-> On Mon, May 04, 2020 at 10:49:31PM +0700, Đoàn Trần Công Danh wrote:
->
-> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> > index fd4df939b5..ea43b03092 100644
-> > --- a/.github/workflows/main.yml
-> > +++ b/.github/workflows/main.yml
-> > @@ -1,6 +1,18 @@
-> >  name: CI/PR
-> >
-> > -on: [push, pull_request]
-> > +on:
-> > +  pull_request:
-> > +    branches:
-> > +      - '**'
->
-> Doing "**" here makes sense to catch everything (it would be even better
-> if we could just say "everything with a pull request" by omitting the
-> branch filter entirely, but maybe that's not possible).
->
-> > +    tags:
-> > +      - '*'
->
-> Would we want that here, too? I guess nobody is likely to push
-> "foo/v1.2.3".
->
-> Or on the flip side, would we want to tighten this? If I push a tag
-> "wip", I probably don't want it built. Probably the right rule is
-> "annotated tags only", but I suspect that's not possible.
->
-> > +  push:
-> > +    branches:
-> > +      - maint
-> > +      - master
-> > +      - next
-> > +      - jch
-> > +      - pu
->
-> What happened to "for-ci" (presumably "for-ci/**")?
 
-Huh; I'm not sure that I'm sold on the idea of a 'for-ci' namespace
-here. In addition to running 'make test' on patches locally before I
-send them, I find it tremendously convenient for GitHub to run them for
-me when I push 'tb/' branches up to 'ttaylorr/git'.
 
-So, while the above is more-or-less what I'd expect the monitored list
-of branches to look like (at least, ignoring the missing 'for-ci/**'
-bits), I wish that I could also build every branch that I push up to my
-fork.
+05.05.2020, 00:32, "Johannes Schindelin" <johannes.schindelin@gmx.de>:
+> Hi Konst,
+>
+> On Sun, 3 May 2020, Konstantin Tokarev wrote:
+>
+>>  03.05.2020, 20:21, "Junio C Hamano" <gitster@pobox.com>:
+>>  > Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+>>  >
+>>  >>>  As you say, an extra instruction in INSTALL file to tell users to
+>>  >>>  copy from contrib/cmake may workable, though it is unsatisfactory.
+>>  >>>  But the other one will not simply work. If we need to have a new
+>>  >>>  file with string "CMake" in its name at the top-level *anyway*, we
+>>  >>>  should have the real thing to reduce one step from those who want to
+>>  >>>  use it. Those who do not want to see "CMake" at the toplevel are
+>>  >>>  already harmed either way, if is a dummy or if it is the real thing.
+>>  >>
+>>  >>  In your opinion, what would be the best way to communicate with users, there is
+>>  >>  an optional CMake build system for git?
+>>  >
+>>  > You do not want to hear my opinion, as my priorities would be
+>>  > different from yours ;-)
+>>  >
+>>  > Given that we all agreed that the only reason we contemplate use of
+>>  > CMake in our project is strictly to help Windows build, i.e. due to
+>>  > the same reason why we have contrib/buildsystems/, it is not one of
+>>  > my goals to communicate with general users about optional CMake
+>>  > support in the first place. It has lower priority than keeping the
+>>  > project tree and the project history less cluttered.
+>>  >
+>>  > So my first preference would be an instruction somewhere in install
+>>  > or readme that tells those who want to build for windows to copy
+>>  > from (or perhaps update cmake to offer the "-f" option and tell it
+>>  > to read from) contrib/cmake/CMakeLists.txt to the toplevel before
+>>  > doing anything [*1*].
+>>
+>>  FWIW, CMakeLists.txt doesn't have to be in the root of source tree in
+>>  order to work. It can perfectly work from contrib/cmake after necessary
+>>  changes in relative paths.
+>
+> Would you have an example handy, or a link to an article describing this?
 
-Of course, I don't want to maintain a one-patch difference between
-ttaylorr/git@master and git/git@master, so I wonder if we could get a
-little more creative with these rules and actually run Actions on
-*every* branch, but introduce a new first step which stops the rest of
-the actions run (so that in practice we're not running CI on
-non-integration branches in Junio's tree).
+It's so trivial that I'm not sure what such an article would have to describe.
 
-I figure that we need something more flexible than the 'push.branches'
-list, but I'd be very curious to hear if something like what I'm
-describing is possible.
+https://github.com/annulen/cmake-example
 
-> -Peff
+-- 
+Regards,
+Konstantin
 
-Thanks,
-Taylor
