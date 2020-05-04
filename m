@@ -2,407 +2,96 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B0F3C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:20:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B69B4C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:47:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18979206C0
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:20:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 938D820721
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:47:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kwa0fAB5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LU9pBDfy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbgEDTUl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 15:20:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726338AbgEDTUk (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 15:20:40 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69CB3C061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 12:20:40 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id f3so13589251ioj.1
-        for <git@vger.kernel.org>; Mon, 04 May 2020 12:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=UAyKzTUqVdYst5XYcKXHdZ1bc5VQ2hABLfiFVZ3uyNs=;
-        b=Kwa0fAB5rqOCKQNLHykyA9Gk8oVsZ+uCnZNCbbVxczaVYWy9fNhSXXeOAsF1DfEZp6
-         q4BgGg324ySi63qTEBc9Ic2C6fTgtZDa6hbe4+CdIkJii44zqino7t/NX5Szj6p2XDQN
-         PuDV9nxYdC9ZGwNqOjmg5GhXXDAUMmEIgXEWT8su80MdZyDvhj50a3lE/4HHG4T6Ibxa
-         QxLhL6zZbXX2a1upUauMS7HX2K200uI5ehVvulZBJ7/GGGKZ7OblN4so+PX4jjUUe82e
-         UaOhHtmrlw2mMwNBVabmGSwJYLVmeRrGQLMzuG9+/KWDUq9BTZIewNMsPb4N2NRy4Rjo
-         Oedg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=UAyKzTUqVdYst5XYcKXHdZ1bc5VQ2hABLfiFVZ3uyNs=;
-        b=cMxNtzF1upYG5OIOmkZFHAe+E2QoQvn+LM74KSbBhRcsud2eO47siT+8oYRuGVPMF8
-         qMupfK5eeT3kgtKuodUJODP1syCxnZuub8Mc8XLBNynohf5KLOmk+KNIjwaOTeAZRHvq
-         m2Wuy+2/vuCcnAusdMl14rST2n+kw1wuyp0fsbIVaiOJUzXwkfEjK2iDFjk5+4ZDkDNH
-         TPZIokEAVZ+2/NBmBgu2N/1Bz3eoI7x398xRPX4cxtI7OLujcIm9bzZEmtuyXOE7OQSS
-         uyP5FDYAZEBn8NRj4uoL7wYETcizqxhc/UWwQVdY6n7gY+gWTC5etnOtjcsXj+lnvTdS
-         L8fg==
-X-Gm-Message-State: AGi0PuYEmc9n9TX+f/nrjTuQgXNF/K0WpuEWoMPCvIGCWURbDWDfr6EB
-        omqV38Fo1nL6+r3iS0T3Xx1m7viLJu8JXJi0p7U=
-X-Google-Smtp-Source: APiQypLQtlDXw3UlI2sdtcOz+SRoQjm50mKLClEhrMKflMCmVfFlHbEZdD35QvbStEXkDKqH9aD6aoWi/Ksv4ZcNbkM=
-X-Received: by 2002:a6b:750c:: with SMTP id l12mr3514947ioh.66.1588620039666;
- Mon, 04 May 2020 12:20:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAH8yC8myTMOetxgaj1wt0MbvSQ0LSRV0FHz4ywsBM1zzhUQG=w@mail.gmail.com>
- <20200504165214.GF86805@Carlos-MBP> <CAPig+cSPXqvFg3-25aDzptuVOHmqOcnmsCKHgjMB9poPyJR2gw@mail.gmail.com>
- <20200504190830.g2tlrognjw6ddipo@tb-raspi4>
-In-Reply-To: <20200504190830.g2tlrognjw6ddipo@tb-raspi4>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 4 May 2020 15:20:11 -0400
-Message-ID: <CAH8yC8=zsbXDVV99tdBMHwEhr-=dO=wrwBYZi=0J8iFmUHkk=g@mail.gmail.com>
-Subject: Re: Git 2.26.2 and failed self tests on OS X
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        id S1727119AbgEDTrY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 15:47:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53436 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbgEDTrY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 15:47:24 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 013655C13E;
+        Mon,  4 May 2020 15:47:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=fUY5vmBy2Tzb
+        1VHQDGrIOYroPmo=; b=LU9pBDfyBc2Ar73ey1Ayxbc4BVuj5gYMuGBBWCgsoosU
+        ZIO3oLuW8QV79vKv8FYzqk+ygJmG8afmW+rF8S69MLzz0mX+/ZL8fhI4ZlwLJ+XZ
+        qOzjgjk7XvfhyPgiBEGB3W9XnGj+3fqGsEhFX/5/z7kVvDEGipukBIrkfg95ITg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GueiS2
+        skAPxMRsbx2xzox4RyjVcWVoPTuLufkY6bUMpb1KQ9G9jqfuzWnW+5W9LV537xgZ
+        bYA3F3Z6nqz142HIRHwqD86SxyO/PnYyrna8uO884y7G+Y5OOOwm9/JbXsEZqg5c
+        Lp0crQcSa1pwdQn1e5W6x9Cv1yJByD77fnwtI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EB3B65C13D;
+        Mon,  4 May 2020 15:47:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76E245C13C;
+        Mon,  4 May 2020 15:47:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        Danh Doan <congdanhqx@gmail.com>, clime <clime7@gmail.com>,
         Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] CodingGuidelines: drop arithmetic expansion advice to use "$x"
+References: <20200503090952.GA170768@coredump.intra.peff.net>
+        <20200503091157.GA170902@coredump.intra.peff.net>
+        <20200503114351.GA28680@danh.dev>
+        <20200504151351.GC11373@coredump.intra.peff.net>
+        <xmqqh7wviud9.fsf@gitster.c.googlers.com>
+        <20200504160709.GB12842@coredump.intra.peff.net>
+        <20200504162844.GE86805@Carlos-MBP>
+        <20200504163325.GA18103@coredump.intra.peff.net>
+Date:   Mon, 04 May 2020 12:47:20 -0700
+In-Reply-To: <20200504163325.GA18103@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 4 May 2020 12:33:25 -0400")
+Message-ID: <xmqqy2q7fpo7.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 11BFFB1E-8E40-11EA-B32D-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 4, 2020 at 3:08 PM Torsten B=C3=B6gershausen <tboegi@web.de> wr=
-ote:
+Jeff King <peff@peff.net> writes:
+
+> On Mon, May 04, 2020 at 09:28:44AM -0700, Carlo Marcelo Arenas Bel=C3=B3=
+n wrote:
 >
-> On Mon, May 04, 2020 at 01:18:06PM -0400, Eric Sunshine wrote:
-> > On Mon, May 4, 2020 at 12:52 PM Carlo Marcelo Arenas Bel=C3=B3n
-> > <carenas@gmail.com> wrote:
-> > > On Mon, May 04, 2020 at 03:03:01AM -0400, Jeffrey Walton wrote:
-> > > > I'm building Git 2.26.2 from sources on a Mac-mini with OS X 10.12.=
-6
-> > > > and a PowerMac with OS X 10.5. Some of the t3902-quoted.sh tests ar=
-e
-> > > > failing.
-> > > >
-> > > > The Mac-Mini uses Bash 3.2.57(1)-release. The PowerMac uses 3.2.17(=
-1)-release.
-> > >
-> > > if the problem is the bash version but you can build/install a newer =
-one that
-> > > doesn't have this problem [...]
-> >
-> > My OS X 10.13.6 has Bash 3.2.57, as well, and I'm unable to reproduce
-> > these failures, so it seems fairly unlikely that the problem Jeffrey
-> > is seeing isn't tied to Bash.
+>> On Mon, May 04, 2020 at 12:07:09PM -0400, Jeff King wrote:
+>> > -- >8 --
+>> > Subject: CodingGuidelines: drop arithmetic expansion advice to use "=
+$x"
+>> >=20
+>> > The advice to use "$x" rather than "x" in arithmetric expansion was
+>> > working around a dash bug fixed in 0.5.4. Even Debian oldstable has
+>> > 0.5.7 these days.
+>>=20
+>> that would be oldoldstable, oldstable is actually in 0.5.8 ;)
 >
-> Should I read this as
-> ".. seems fairly likely that the problem Jeffrey is seeing is tied to bas=
-h" ?
->
-> I can't reproduce it either, so my reasoning would rather be
-> "The problem is probably not caused by the shipped bash version"
->
-> It could be something in the environemt, that confuses our tests here.
->
-> Does
-> ./t3902-quoted.sh   -v -d
-> give anything useful ?
+> Oh, you're right. I forgot they're doing an extra layer these days. It
+> will officially become obsolete in less than 2 months. :)
 
-Yes, it looks like the command reveals a couple of problems.
-
-I'll have to look into my iconv recipe. It has not changed in a while,
-so something else may be responsible for the failure.
-https://github.com/noloader/Build-Scripts/blob/master/build-iconv.sh.
-
-I'm not sure what to do with the HEAD problems.
-
-$ ./t3902-quoted.sh   -v -d
-Initialized empty Git repository in
-/Users/jwalton/Build-Scripts/git-2.26.2/t/trash
-directory.t3902-quoted/.git/
-expecting success of 3902.1 'setup':
-
-        mkdir "$FN" &&
-        for_each_name "echo initial >\"\$name\"" &&
-        git add . &&
-        git commit -q -m Initial &&
-
-        for_each_name "echo second >\"\$name\"" &&
-        git commit -a -m Second &&
-
-        for_each_name "echo modified >\"\$name\""
-
-
-fatal: iconv_open(UTF-8,UTF-8-MAC) failed, but needed:
-    precomposed unicode is not supported.
-    If you want to use decomposed unicode, run
-    "git config core.precomposeunicode false"
-
-not ok 1 - setup
-#
-#
-#               mkdir "$FN" &&
-#               for_each_name "echo initial >\"\$name\"" &&
-#               git add . &&
-#               git commit -q -m Initial &&
-#
-#               for_each_name "echo second >\"\$name\"" &&
-#               git commit -a -m Second &&
-#
-#               for_each_name "echo modified >\"\$name\""
-#
-#
-
-expecting success of 3902.2 'setup expected files':
-cat >expect.quoted <<\EOF &&
-Name
-"Name and a\nLF"
-"Name and an\tHT"
-"Name\""
-With SP in it
-"\346\277\261\351\207\216\t\347\264\224"
-"\346\277\261\351\207\216\n\347\264\224"
-"\346\277\261\351\207\216 \347\264\224"
-"\346\277\261\351\207\216\"\347\264\224"
-"\346\277\261\351\207\216/file"
-"\346\277\261\351\207\216\347\264\224"
-EOF
-
-cat >expect.raw <<\EOF
-Name
-"Name and a\nLF"
-"Name and an\tHT"
-"Name\""
-With SP in it
-"=E6=BF=B1=E9=87=8E\t=E7=B4=94"
-"=E6=BF=B1=E9=87=8E\n=E7=B4=94"
-=E6=BF=B1=E9=87=8E =E7=B4=94
-"=E6=BF=B1=E9=87=8E\"=E7=B4=94"
-=E6=BF=B1=E9=87=8E/file
-=E6=BF=B1=E9=87=8E=E7=B4=94
-EOF
-
-ok 2 - setup expected files
-
-expecting success of 3902.3 'check fully quoted output from ls-files':
-
-        git ls-files >current && test_cmp expect.quoted current
-
-
---- expect.quoted       2020-05-04 19:14:39.000000000 +0000
-+++ current     2020-05-04 19:14:39.000000000 +0000
-@@ -1,11 +0,0 @@
--Name
--"Name and a\nLF"
--"Name and an\tHT"
--"Name\""
--With SP in it
--"\346\277\261\351\207\216\t\347\264\224"
--"\346\277\261\351\207\216\n\347\264\224"
--"\346\277\261\351\207\216 \347\264\224"
--"\346\277\261\351\207\216\"\347\264\224"
--"\346\277\261\351\207\216/file"
--"\346\277\261\351\207\216\347\264\224"
-not ok 3 - check fully quoted output from ls-files
-#
-#
-#               git ls-files >current && test_cmp expect.quoted current
-#
-#
-
-expecting success of 3902.4 'check fully quoted output from diff-files':
-
-        git diff --name-only >current &&
-        test_cmp expect.quoted current
-
-
---- expect.quoted       2020-05-04 19:14:39.000000000 +0000
-+++ current     2020-05-04 19:14:39.000000000 +0000
-@@ -1,11 +0,0 @@
--Name
--"Name and a\nLF"
--"Name and an\tHT"
--"Name\""
--With SP in it
--"\346\277\261\351\207\216\t\347\264\224"
--"\346\277\261\351\207\216\n\347\264\224"
--"\346\277\261\351\207\216 \347\264\224"
--"\346\277\261\351\207\216\"\347\264\224"
--"\346\277\261\351\207\216/file"
--"\346\277\261\351\207\216\347\264\224"
-not ok 4 - check fully quoted output from diff-files
-#
-#
-#               git diff --name-only >current &&
-#               test_cmp expect.quoted current
-#
-#
-
-expecting success of 3902.5 'check fully quoted output from diff-index':
-
-        git diff --name-only HEAD >current &&
-        test_cmp expect.quoted current
-
-
-fatal: ambiguous argument 'HEAD': unknown revision or path not in the
-working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-not ok 5 - check fully quoted output from diff-index
-#
-#
-#               git diff --name-only HEAD >current &&
-#               test_cmp expect.quoted current
-#
-#
-
-expecting success of 3902.6 'check fully quoted output from diff-tree':
-
-        git diff --name-only HEAD^ HEAD >current &&
-        test_cmp expect.quoted current
-
-
-fatal: ambiguous argument 'HEAD^': unknown revision or path not in the
-working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-not ok 6 - check fully quoted output from diff-tree
-#
-#
-#               git diff --name-only HEAD^ HEAD >current &&
-#               test_cmp expect.quoted current
-#
-#
-
-expecting success of 3902.7 'check fully quoted output from ls-tree':
-
-        git ls-tree --name-only -r HEAD >current &&
-        test_cmp expect.quoted current
-
-
-fatal: Not a valid object name HEAD
-not ok 7 - check fully quoted output from ls-tree
-#
-#
-#               git ls-tree --name-only -r HEAD >current &&
-#               test_cmp expect.quoted current
-#
-#
-
-expecting success of 3902.8 'setting core.quotepath':
-
-        git config --bool core.quotepath false
-
-
-ok 8 - setting core.quotepath
-
-expecting success of 3902.9 'check fully quoted output from ls-files':
-
-        git ls-files >current && test_cmp expect.raw current
-
-
---- expect.raw  2020-05-04 19:14:39.000000000 +0000
-+++ current     2020-05-04 19:14:40.000000000 +0000
-@@ -1,11 +0,0 @@
--Name
--"Name and a\nLF"
--"Name and an\tHT"
--"Name\""
--With SP in it
--"=E6=BF=B1=E9=87=8E\t=E7=B4=94"
--"=E6=BF=B1=E9=87=8E\n=E7=B4=94"
--=E6=BF=B1=E9=87=8E =E7=B4=94
--"=E6=BF=B1=E9=87=8E\"=E7=B4=94"
--=E6=BF=B1=E9=87=8E/file
--=E6=BF=B1=E9=87=8E=E7=B4=94
-not ok 9 - check fully quoted output from ls-files
-#
-#
-#               git ls-files >current && test_cmp expect.raw current
-#
-#
-
-expecting success of 3902.10 'check fully quoted output from diff-files':
-
-        git diff --name-only >current &&
-        test_cmp expect.raw current
-
-
---- expect.raw  2020-05-04 19:14:39.000000000 +0000
-+++ current     2020-05-04 19:14:40.000000000 +0000
-@@ -1,11 +0,0 @@
--Name
--"Name and a\nLF"
--"Name and an\tHT"
--"Name\""
--With SP in it
--"=E6=BF=B1=E9=87=8E\t=E7=B4=94"
--"=E6=BF=B1=E9=87=8E\n=E7=B4=94"
--=E6=BF=B1=E9=87=8E =E7=B4=94
--"=E6=BF=B1=E9=87=8E\"=E7=B4=94"
--=E6=BF=B1=E9=87=8E/file
--=E6=BF=B1=E9=87=8E=E7=B4=94
-not ok 10 - check fully quoted output from diff-files
-#
-#
-#               git diff --name-only >current &&
-#               test_cmp expect.raw current
-#
-#
-
-expecting success of 3902.11 'check fully quoted output from diff-index':
-
-        git diff --name-only HEAD >current &&
-        test_cmp expect.raw current
-
-
-fatal: ambiguous argument 'HEAD': unknown revision or path not in the
-working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-not ok 11 - check fully quoted output from diff-index
-#
-#
-#               git diff --name-only HEAD >current &&
-#               test_cmp expect.raw current
-#
-#
-
-expecting success of 3902.12 'check fully quoted output from diff-tree':
-
-        git diff --name-only HEAD^ HEAD >current &&
-        test_cmp expect.raw current
-
-
-fatal: ambiguous argument 'HEAD^': unknown revision or path not in the
-working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-not ok 12 - check fully quoted output from diff-tree
-#
-#
-#               git diff --name-only HEAD^ HEAD >current &&
-#               test_cmp expect.raw current
-#
-#
-
-expecting success of 3902.13 'check fully quoted output from ls-tree':
-
-        git ls-tree --name-only -r HEAD >current &&
-        test_cmp expect.raw current
-
-
-fatal: Not a valid object name HEAD
-not ok 13 - check fully quoted output from ls-tree
-#
-#
-#               git ls-tree --name-only -r HEAD >current &&
-#               test_cmp expect.raw current
-#
-#
-
-# failed 11 among 13 test(s)
-1..13
+Thanks, both.  I'll just do s/0.5.7/0.5.8/ when I add Carlo's
+reviewed-by to queue the patch.
