@@ -2,106 +2,308 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80740C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 805BAC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:39:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BAAC20658
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:31:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CF2320752
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:39:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=bocoup-com.20150623.gappssmtp.com header.i=@bocoup-com.20150623.gappssmtp.com header.b="KHjCqnW1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="guKs7ons"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730206AbgEDSbo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 14:31:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33702 "EHLO
+        id S1726900AbgEDSjX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 14:39:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729762AbgEDSbo (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 14:31:44 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF22C061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 11:31:43 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id b8so148660pgi.11
-        for <git@vger.kernel.org>; Mon, 04 May 2020 11:31:43 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726404AbgEDSjW (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 14:39:22 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CECAC061A0F
+        for <git@vger.kernel.org>; Mon,  4 May 2020 11:39:22 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id s10so12235186iln.11
+        for <git@vger.kernel.org>; Mon, 04 May 2020 11:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bocoup-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aQwpIo2T6YSHaab5z8a1q+PSQt7rZPECrVD/V+1EQr8=;
-        b=KHjCqnW1QmcuakE3Odb9BQ2V49PgxQY9FJPq6hz9ZbAphzFsjfh0MReJ0c06PwKtSo
-         yP3+i1iPb0An9gnJmaaZlx9zfW2bkiAVuhRCtG/HRodGmrZ6oBRV5g/8rAj/HlrDZUwS
-         OE7TzrMGYlBDldlpvJ4z2NnVdB2QdV5efmllVGRBU2ZlvyVt0Lvbiqb97OHZhk25g9Mm
-         eFEH5KGT9lz/bXYojkvOkuiUM+KtvPKVjkUVR7qmPbQZSkmQr6+gK4JKwc4cId5RyOtV
-         V/FtnFPADZK9cxbros5z/DodmGT9siwdzgs8sjQdH8t38VHMpc1UBlBBePJ9J0TmH62m
-         0p4g==
+         :cc:content-transfer-encoding;
+        bh=ySgovYACOPA4DuvGLXFlguB34hCroMkEmEwDtjRUMPk=;
+        b=guKs7onsLVbNcMXab6B3cH/IhlfiK5Y5l+wEdbGNh+7aTLworZGlnDjkLy6hukq+cd
+         8MG6983eYkXx+LH7Vx7QgPQa46z/s3b9ItX366KUn2Cvs1gVPQGhtWm52Z1X36oN3d2V
+         JUuD4vnptUWBuhlm/vR2YyzgDy6w0WUcWq3pu+2NVHWTE09nfAIB1p9t729K85JS+9Le
+         W4mU8dlj9dXRjXWlMF+Z+Ic3zVYrg+09e1O1AVta18Q8GWb+v+qybI4PTIy838lGeOkI
+         q7105cH4VYcKIdRgP0Mwn7L62SdIKgH343xXnrBmHLLog76kCiJ9o+jlXUg5qoaxMI7h
+         67Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aQwpIo2T6YSHaab5z8a1q+PSQt7rZPECrVD/V+1EQr8=;
-        b=bivdJOF0xgfgF5pRY0bkr3SAOOV8/VhiZRfV76j+1CRXOL9po2220bfSZ+6SH6Lts9
-         AhOCa6KiJVntEsQHODf9KAU8uohiauG0JRCOR8MUw8xjw9gC0jwExOVznMzomRwcAsRm
-         Bu3r0D5nJb3m9dXdIJ4+6X4tfEpRa8Pu3C/tsl8OzM0+6Zr0EjWMqx/TCOL+2BCVTEVx
-         m7aokOYIonFClS5mYBtMpFfVR6GVxxyrvbhpLXARy/vvNE5AKtSESlXgfMAyoG1L8ml4
-         y0Q6pg1SGD6bt5zhLe6ldw3r/N6lZUdXPS0g1a79ftMZgMWDK9bQlwVrpZNT6f6JlzGC
-         adUg==
-X-Gm-Message-State: AGi0PuZ2LlOnIgL6s4GfjuJLkQvuX34bptcb7ijpVRBacdgPOY2xFLO3
-        C32G36w6kheoTPqsaCXFIASh8QlSvLMdUcpau1WtDA==
-X-Google-Smtp-Source: APiQypLIv64yapHknV/JD2TjgqBNyhm40r72d4FOgof9rM49JpE9PZef11oOPmISNr9O2Coqg8r5MFurXq0L0BZMtlM=
-X-Received: by 2002:a63:155f:: with SMTP id 31mr328433pgv.0.1588617103418;
- Mon, 04 May 2020 11:31:43 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ySgovYACOPA4DuvGLXFlguB34hCroMkEmEwDtjRUMPk=;
+        b=r/jG4JSCt9JWyLSe/tBwJP0N8L3LW0jU/IlxAdfU7mfMATix08rg8FmPp8g/IpuFLN
+         /Y/pFPptj951cAkJfxVNFOmxrqohnMF7csiYRpXllfPvdtP/jD+WwkBOZ/XT38W7T1oO
+         YLDbCWreSe8f5vmBlpoh4k4M/XBUq7RlCTdo4eylqOCNlG52/B2ffZHpGO2ry6OtRFei
+         v4FrMhfLgLpp33yTq364YxFpd51KJONMWolkY7BR4X0FUs7M1gA8gI1Tw6NKEJYaltWQ
+         6cJ3Ku40r3cLB1ZDsF3je0eUFVQh41vm09fPqA5I6grh51qMO3bCIfmZ6LpwG7r2i0zw
+         ZLlg==
+X-Gm-Message-State: AGi0Pub2FtxRd3MMdYFMGiDnR6iX5/yXCMTSD9iT+nz4UfdXftjQCS+4
+        yvU3v8oSpKlJkNqpss/rKbUhCUY6HAakYPSAIMzs2m+wsA==
+X-Google-Smtp-Source: APiQypJVH1Gg2Srd1BPMvxXuNDvjoUiPaVg4qJAI2tSN2tw9VPr8lAU7wf9ap2zW+HQjjRvtQn7AECPgE23CchQJZMY=
+X-Received: by 2002:a92:9c0a:: with SMTP id h10mr15634271ili.12.1588617561642;
+ Mon, 04 May 2020 11:39:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
- <20200504174548.r3zaftqcq52yhd2u@chatter.i7.local>
-In-Reply-To: <20200504174548.r3zaftqcq52yhd2u@chatter.i7.local>
-From:   Simon Pieters <simon@bocoup.com>
-Date:   Mon, 4 May 2020 20:31:32 +0200
-Message-ID: <CAOAHyQxuRwGpKtBNy3YiocgdktsJ+FJR9Oj35qENh0P7ZGn2+g@mail.gmail.com>
-Subject: Re: Rename offensive terminology (master)
-To:     Simon Pieters <simon@bocoup.com>
-Cc:     git@vger.kernel.org
+References: <CAEoQP9iY-0+=ETA0vrHL0HngccwtNA_3KX4WSSokJpOgJDGUeA@mail.gmail.com>
+ <20200504055530.GA13290@konoha> <CAEoQP9hyMi=oj18atTJo+dR3ve_zzrLQoOja0CKAAVHei6rA0g@mail.gmail.com>
+ <20200504120024.GA3372@konoha> <CAEoQP9gs-a1NanNpYiFQgTs0C+CeYhbD8rMjoFVat1ZSijNA2A@mail.gmail.com>
+ <874ksvei1r.fsf@osv.gnss.ru>
+In-Reply-To: <874ksvei1r.fsf@osv.gnss.ru>
+From:   =?UTF-8?B?RXdhIMWabGl3acWEc2th?= <kreska07@gmail.com>
+Date:   Mon, 4 May 2020 20:39:10 +0200
+Message-ID: <CAEoQP9guAWg8E95Pi4MOih7z5rPg7OCB+_jZ6EMhJxpFsM3A1A@mail.gmail.com>
+Subject: Re: file is showing as modified even that it was never commited
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 4, 2020 at 7:45 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Mon, May 04, 2020 at 07:20:33PM +0200, Simon Pieters wrote:
-> > "master" is an offensive term, as it can be interpreted as being
-> > slavery-origin terminology. See
-> > https://en.wikipedia.org/wiki/Master/slave_(technology)#Terminology_concerns
->
-> Git doesn't use "master-slave" terminology -- the "master" comes from
-> the concept of having a "master" from which copies (branches) are made:
->
-> https://simple.wikipedia.org/wiki/Master_recording
->
-> The concept predates the music business and goes back to middle ages
-> when a guild master would create a "master work" or "master piece" that
-> the apprentices could use for study or for imitation.
->
-> https://en.wikipedia.org/wiki/Master_craftsman
->
-> So, while I wholeheartedly support using inclusive language, I think git
-> is in the clear here.
+Hi Sergey,
 
-Thanks. This may be so, but it's still the case that it can be (and
-has been) interpreted as being slavery-origin terminology.
+Thanks for engaging here.
 
-If you decide to not change this, then I think it may still be good to
-add something like the above to the git documentation (like in [1] and
-[2]), so that projects using git are less inclined to change it for
-their projects, and maybe the people who are offended by it would be
-more comfortable if they know that the project maintainers are aware
-of this issue and could explain why this usage of the word is ok.
+Actually, I gave some details in the first email, I'm not sure if they
+were even noticed.
 
-[1] https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefmasteramaster
-[2] https://git-scm.com/docs/git-init
--- 
-Simon Pieters
-Bocoup https://bocoup.com/
+About asking second time: I emphasized this because I felt this part
+was ignored and I didn't like it.
+
+I wanted to describe problem more generally and gave you the commands.
+But now I will paste the console full output as you demanded:
+
+mac:lp3rater noelo$ git status
+
+On branch master
+
+Your branch is based on 'origin/master', but the upstream is gone.
+
+  (use "git branch --unset-upstream" to fixup)
+
+
+Changes to be committed:
+
+  (use "git reset HEAD <file>..." to unstage)
+
+
+new file:   .idea/.gitignore
+
+new file:   .idea/compiler.xml
+
+new file:   .idea/encodings.xml
+
+new file:   .idea/jarRepositories.xml
+
+new file:   .idea/libraries/Maven__commons_codec_commons_codec_1_11.xml
+
+new file:   .idea/libraries/Maven__commons_io_commons_io_2_6.xml
+
+new file:   .idea/libraries/Maven__commons_logging_commons_logging_1_2.xml
+
+new file:   .idea/libraries/Maven__commons_net_commons_net_3_6.xml
+
+new file:   .idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_2_39_1=
+.xml
+
+new file:   .idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_core_j=
+s_2_39_0.xml
+
+new file:   .idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_csspar=
+ser_1_5_0.xml
+
+new file:   .idea/libraries/Maven__net_sourceforge_htmlunit_neko_htmlunit_2=
+_39_0.xml
+
+new file:   .idea/libraries/Maven__org_apache_commons_commons_lang3_3_10.xm=
+l
+
+new file:   .idea/libraries/Maven__org_apache_commons_commons_text_1_8.xml
+
+new file:   .idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5=
+_12.xml
+
+new file:   .idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_1=
+3.xml
+
+new file:   .idea/libraries/Maven__org_apache_httpcomponents_httpmime_4_5_1=
+2.xml
+
+new file:   .idea/libraries/Maven__org_brotli_dec_0_1_2.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_jetty_client_9_4_27_v2=
+0200227.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_jetty_http_9_4_27_v202=
+00227.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_jetty_io_9_4_27_v20200=
+227.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_jetty_util_9_4_27_v202=
+00227.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_jetty_xml_9_4_27_v2020=
+0227.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_ap=
+i_9_4_27_v20200227.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_cl=
+ient_9_4_27_v20200227.xml
+
+new file:   .idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_co=
+mmon_9_4_27_v20200227.xml
+
+new file:   .idea/libraries/Maven__xalan_serializer_2_7_2.xml
+
+new file:   .idea/libraries/Maven__xalan_xalan_2_7_2.xml
+
+new file:   .idea/libraries/Maven__xerces_xercesImpl_2_12_0.xml
+
+new file:   .idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml
+
+new file:   .idea/misc.xml
+
+new file:   .idea/modules.xml
+
+new file:   .idea/sonarlint/issuestore/2/2/22a598feccb13c958ecc8eff5c53a9a7=
+f9470a72
+
+new file:   .idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1=
+792140ec
+
+new file:   .idea/sonarlint/issuestore/c/0/c02b58f69e810278d2d423bdee557628=
+145ed943
+
+new file:   .idea/sonarlint/issuestore/f/b/fb31951790c271e26d568f9ac5b7681e=
+7f0804ec
+
+new file:   .idea/sonarlint/issuestore/index.pb
+
+new file:   .idea/vcs.xml
+
+
+Changes not staged for commit:
+
+  (use "git add <file>..." to update what will be committed)
+
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+
+modified:   .idea/sonarlint/issuestore/c/0/c02b58f69e810278d2d423bdee557628=
+145ed943
+
+modified:   .idea/sonarlint/issuestore/f/b/fb31951790c271e26d568f9ac5b7681e=
+7f0804ec
+
+modified:   .idea/sonarlint/issuestore/index.pb
+
+modified:   src/main/java/Downloader.java
+
+mac:lp3rater noelo$ git log
+
+commit 50001426b28ed80433484f24831c160fcf15eec1 (HEAD -> master)
+
+Author: Ewa =C5=9Aliwiska <kreska07@gmail.com>
+
+Date:   Fri May 1 22:02:10 2020 +0200
+
+
+    content of the main page displayed
+
+mac:lp3rater noelo$ git show --pretty=3D"" --name-only 5000142
+
+.gitignore
+
+pom.xml
+
+src/main/java/Application.java
+
+src/main/java/Downloader.java
+
+mac:lp3rater noelo$ git log -p
+.idea/sonarlint/issuestore/c/0/c02b58f69e810278d2d423bdee557628145ed943
+
+mac:lp3rater noelo$
+
+Best regards
+Ewa
+
+On Mon, 4 May 2020 at 19:17, Sergey Organov <sorganov@gmail.com> wrote:
+>
+> Dear Ewa,
+>
+> Please see below.
+>
+> Ewa =C5=9Aliwi=C5=84ska <kreska07@gmail.com> writes:
+>
+> >> That actually was a solution to your problem, not a workaround.
+>
+> > Not really, because I would like to investigate what happened, not
+> > just fix it. In that case I could as well recreate repository I
+> > guess...
+> >
+> > I agree that I could add those files accidentally. But I'm really
+> > disappointed in fact that you seem to ignore all the part where I
+> > described in details how I checked this and why I think this is not
+> > the case.
+>
+> Except you didn't give actual details. Please give exact commands you
+> issued and exact answers you've got.
+>
+> For example:
+>
+> $ ls .test
+> a  x
+> $ git status
+> On branch v4.0
+> Your branch and 'origin/v4.0' have diverged,
+> and have 2 and 29 different commits each, respectively.
+>   (use "git pull" to merge the remote branch into yours)
+>
+> Changes not staged for commit:
+>   (use "git add <file>..." to update what will be committed)
+>   (use "git checkout -- <file>..." to discard changes in working director=
+y)
+>
+>         modified:   .test/a
+>
+> no changes added to commit (use "git add" and/or "git commit -a")
+> $ git log -- .test
+> commit e1e7818f4120b5ebc622c8dbf1b257ea8a03530c
+> Author: Sergey Organov <sorganov@gmail.com>
+> Date:   Mon May 4 18:55:58 2020 +0300
+>
+>     Test
+>
+> $ git log -- .test/a
+> commit e1e7818f4120b5ebc622c8dbf1b257ea8a03530c
+> Author: Sergey Organov <sorganov@gmail.com>
+> Date:   Mon May 4 18:55:58 2020 +0300
+>
+>     Test
+> $ git log -- .test/x
+> $
+>
+> > Could you please answer if there was something wrong with my checking?
+>
+> Nobody could tell unless you actually show us your checkings.
+>
+> > I'm asking second time.
+>
+> Thanks, we've noticed.
+>
+> -- Sergey
