@@ -6,109 +6,156 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B188C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 22:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D8DC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 22:09:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 489D3206A4
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 22:05:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A92C20735
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 22:09:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="bi8XmEak"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="nRyTdg/f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbgEDWFU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 18:05:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38870 "EHLO
+        id S1727933AbgEDWJT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 18:09:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726334AbgEDWFU (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 18:05:20 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07BCBC061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 15:05:20 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id u22so329075plq.12
-        for <git@vger.kernel.org>; Mon, 04 May 2020 15:05:20 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726419AbgEDWJT (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 18:09:19 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DDF2C061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 15:09:19 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id a4so121737pgc.0
+        for <git@vger.kernel.org>; Mon, 04 May 2020 15:09:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=p1GljsQjS0MbXkTjBiSYiFp1YDBe1sS7b9FuCKEl+64=;
-        b=bi8XmEakmFLGhCvRoxaTschpyVN8NDkBBgUWM/glqtip5Ctai95+z1eGIA9A+07Day
-         uXpaq0bOycG2RaHiLqI7qmzysco8bLE8ZJbJ9WO7JPFun8WLGkXTuxVCtdKD0jgYkCkI
-         lGW1brVAvPrV/MWOOEsbUBzJS2EQqyLQotvsffDrLbxPNfkXazOfM99rJ7k9UB/faO/5
-         UjYTQFhByO4Kmx6dbKcDmyR9RTxxpm09MG4y1W/bMCoToDgZTxHUNpEOGJYgdqaqnSYq
-         jnrkM31gjhrJVj28x66TZ8ACT7XDUu1m9qWogltQtW2VmNcVB10BuF5LqFzTNFrEzTuD
-         1DMA==
+        bh=Xef6t8FoFbjUQwAL5IFjXBngUL/Ye7SkvQocSPeyfUU=;
+        b=nRyTdg/fiR0zKeP8EHkLfjAlwY26HBV5kQ6JYSGw2/Ygf8XJN6wWVvQf7oD7UPfhIw
+         2qCOlWBxndCGzD9GcglSq0I3QVWcp/0IGSh0oYGKgtoRnMosbkMznsttN+NU+VYd6IYV
+         a+s0KNNOYzNhtLM1G92MCBi4cx9+8iFMxceBJMegmvh7CIwVYKoMW2odFD9mG8XVxHXJ
+         DSnpiF6hY/lJVd0QmPrUjkYI3OH7rNeupLsCSGmIot6nZ/62ic32WSfl2v4IP1k1CyKl
+         JFppWpRkYIdYEmih/+znKYd2IIhfjN9mYf3kO/eXPoLN9Jy4R6Oih2ierf0RgMHM0weU
+         yYvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=p1GljsQjS0MbXkTjBiSYiFp1YDBe1sS7b9FuCKEl+64=;
-        b=lGBvHf2xotNw/vTNkJlExYl6wMNrv4zrWK5XkQBCYeNxXkGICWY9W6+W1Y9sz9Ngvc
-         JHql2WoO3mBDRHgcrsQ/WJhEHfpF55q1Og0/F1YeZQ4bV8b32ZuaygP01epFceKG1DNr
-         759MQoG3y9B0DOZhuduhmUV+hNZn+Xgch1ZprM9gFko9IH7OByQo3vtDPlMopOkw1L+q
-         sf511Kwu6pmtqXWYWkQpXSvd7KcZUhXB9PPGM2rNLabEnDuMZ7Q1tWL7lGfvMfIt4JSj
-         ZfSWhJWbLnhIQUQ5kAMEK+gltnGOoXJdMR+kfPl/mABDJUILLOxwQeBNgleYiNhA86DJ
-         toEg==
-X-Gm-Message-State: AGi0PubTRJwFhwfH9gqJRoDsyoKrCAraoo3P7Q+7SmHn0KRk30hd1LCZ
-        4Octg04McHIuNheuiW0TMuK+nQ==
-X-Google-Smtp-Source: APiQypJJD7o6BqVKqbcLEde4d8+gTDos98QSRhO7FqINKgVlPXjLD8pzeuCOqbkHdW7IG8VX/IWkmA==
-X-Received: by 2002:a17:90a:cc9:: with SMTP id 9mr69681pjt.16.1588629919443;
-        Mon, 04 May 2020 15:05:19 -0700 (PDT)
+        bh=Xef6t8FoFbjUQwAL5IFjXBngUL/Ye7SkvQocSPeyfUU=;
+        b=YGbRy5YN//poo4dAyVxk7mYqWRJeo5xd3hbdX4PTdDt+36axhwMjDUcRmjuAi7yZdr
+         7NIlwD0Nn5mjZh1gidEpf4PYFoZuhj7grs+toUaQMrkNDLS6nFHIKx3CEhI9BrthQFXr
+         Oa1u//43+3veJdBLGycHDWMFcHXlyoFJudxnBWo1ykHobKRIEMXCzWGutK4hmMuTXPxu
+         kpeTXRUv9xmcq1PtX3hhBqhJncqH4OUK4UkUWih1psy+qBYN5eDnODngifOV8dvrbr/3
+         TbUBh9YTovY03SxZJvWh3nsLZP5z/mHZ+lbyNvV9KDAXGutdYUzfw5GokCl0bNiMn2Of
+         iWxw==
+X-Gm-Message-State: AGi0PuYZDUU8E/dd+hVdNZKpqx9aA/fFNNO7TWS+pYrNg7A5MSZ6Sy/E
+        H96fpXrsWE3BhstRjpGKPwd2fg==
+X-Google-Smtp-Source: APiQypIcPgyhiuIzqjrJgQbEjj6XouwNKb8rIkRnEYgyHt1zTcZ5lE3Yra8GExBgCIdjxaWh7aj3tA==
+X-Received: by 2002:a62:3181:: with SMTP id x123mr25394pfx.109.1588630158496;
+        Mon, 04 May 2020 15:09:18 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id y21sm57688pfn.148.2020.05.04.15.05.18
+        by smtp.gmail.com with ESMTPSA id a15sm34152pju.3.2020.05.04.15.09.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 15:05:18 -0700 (PDT)
-Date:   Mon, 4 May 2020 16:05:17 -0600
+        Mon, 04 May 2020 15:09:17 -0700 (PDT)
+Date:   Mon, 4 May 2020 16:09:16 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Wolfram Sang <wsa@the-dreams.de>
-Cc:     Kevin Daudt <me@ikke.info>, Wolfram Sang <wsa@kernel.org>,
-        git@vger.kernel.org, Thomas Koutcher <thomas.koutcher@online.fr>,
-        Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: tig: bug when binding to 'generic'?
-Message-ID: <20200504220517.GE45250@syl.local>
-References: <20200502190433.GB25220@ninjato>
- <20200502190729.GC1838755@alpha>
- <20200502193102.GA1160@kunai>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
+Message-ID: <20200504220916.GF45250@syl.local>
+References: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
+ <20200504213326.GA31037@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200502193102.GA1160@kunai>
+In-Reply-To: <20200504213326.GA31037@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 02, 2020 at 09:31:02PM +0200, Wolfram Sang wrote:
-> Hi Kevin,
+On Mon, May 04, 2020 at 05:33:26PM -0400, Jeff King wrote:
+> On Mon, May 04, 2020 at 08:40:04PM +0000, Johannes Schindelin via GitGitGadget wrote:
 >
-> > Tig is a third-party interface, not maintained by git. You can report
-> > issues for tig on [github][0]
+> > When rearranging the todo list so that the fixups/squashes are reordered
+> > just after the commits they intend to fix up, we use two arrays to
+> > maintain that list: `next` and `tail`.
+> >
+> > The idea is that `next[i]`, if set to a non-negative value, contains the
+> > index of the item that should be rearranged just after the `i`th item.
+> >
+> > To avoid having to walk the entire `next` chain when appending another
+> > fixup/squash, we also store the end of the `next` chain in `last[i]`.
 >
-> I know it is third-party. Seems the README in tig needs fixing, too:
+> s/last/tail/, I think? (and below)
 >
-> ===
-> Bugs and feature requests can be reported using the issue tracker or by
-> mail to either the Git mailing list or directly to the maintainer.
-> ==
+> > The good news is that it is easy to fix this: we can detect the
+> > situation by looking at `last[i2]` (which will be `-1` if `i2` is
+> > actually in the middle of a fixup chain), and in that case we simply
+> > need to squeeze the current item into the middle of the `next` chain,
+> > without touching `last` (i.e. leaving the end index of the fixup chain
+> > alone).
 >
-> I prefer the mail option, so I wrote here and CCed the maintainers.
+> OK, good. I definitely had figured out how to detect the case, but
+> wasn't quite sure how to manipulate next.
+>
+> But your fix here makes sense:
+>
+> >  			if (next[i2] < 0)
+> >  				next[i2] = i;
+> > -			else
+> > +			else if (tail[i2] >= 0)
+> >  				next[tail[i2]] = i;
+> > +			else {
+> > +				/*
+> > +				 * i2 refers to a fixup commit in the middle of
+> > +				 * a fixup chain
+> > +				 */
+> > +				next[i] = next[i2];
+> > +				next[i2] = i;
+> > +				continue;
+> > +			}
+>
+> I do have one question, though. What happens if we add a second
+> fixup-of-a-fixup?
 
-Thanks for clarifying. I was a little confused when I read your patch
-series, since on first blush I thought that you were submitting it to be
-applied in Git's integration branches, and not Tig's.
+Thanks for asking this question, I was a little curious about it, too.
 
-In either case, the heads-up is appreciated, but I do not think
-necessary in general. I am not sure about the feelings of others, but I
-do not think Tig-specific bugs need to be reported on Git's mailing
-list.
-
-Of course, if there are Git bugs that affect Tig (or any other project),
-we would be interested in hearing about them.
-
-That's all to say that I think the README there should be updated.
-
-> Kind regards,
+> We'd see its "next" slot filled, but now pointing to the first
+> fixup-of-a-fixup. And we'd add ourselves at the front of that list. So I
+> think:
 >
->    Wolfram
+>   1234 foo
+>   5678 !fixup foo
+>   abcd !fixup 5678
+>   dbaf !fixup 5678
 >
+> would end up reordering abcd and dbaf (putting dbaf first), wouldn't it?
+>
+> But when I tested it doesn't seem to:
+>
+>   git init
+>   git commit -m base --allow-empty
+>   git commit --squash HEAD -m 'this is the first squash' --allow-empty
+>   s=$(git rev-parse HEAD)
+>   git commit -m "squash! $s" -m 'this is the second squash' --allow-empty
+>   git commit -m "squash! $s" -m 'this is the third squash' --allow-empty
+>   git rebase -ki --autosquash --root
+>
+> So I think there's something I don't quite understand about how the
+> chain of "next" works. If you can enlighten me, I'd be grateful.
+
+Ditto.
+
+> But your patch does seem to work as advertised. It might be worth adding
+> the double-squash-of-squash to the test.
+
+Yes, I think that this is a good, worthwhile addition to the patch.
+Sorry Johannes for suggesting that you do more work on an already-great
+patch. No good deed goes unpunished, I guess ;).
+
+> -Peff
 
 Thanks,
 Taylor
