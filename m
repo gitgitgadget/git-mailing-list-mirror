@@ -2,100 +2,110 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6874C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05994C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:29:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F10621582
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:28:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CAF0E206D9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:29:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fpf63WxE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="w99axtUY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729577AbgEDQ2t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 12:28:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42454 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729551AbgEDQ2s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 12:28:48 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CF4C061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 09:28:47 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id v63so5734785pfb.10
-        for <git@vger.kernel.org>; Mon, 04 May 2020 09:28:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=PUx9SlmLeEujSRwwFPemMgSSgSj12XfoEHL6mHxkY+4=;
-        b=Fpf63WxElFY7wdwiTzltoMTA3oHq7l6ogxQ9S+NN7xVdiIRmB4O2dcvyGB2R6hub5P
-         3yvKTkJioPOI0TCA2hSmUKY+P2rr1LA4Gz+QvbUtkx8TegOEmuQCq2cxJ7m2CUhM1Sne
-         P6wQ/N+M2DCCAo+AFNumZawLgkkCvUaZPfAKv2yUtQMdsFYkUTiO6StR98pcFeBzlvo3
-         CB4qUWHSv8gQVIC30aDFEYhGF53BY/IqklktDsKBIZqy0S4VQILrypxKCHaMUFAC68iA
-         v2bsTpSsOGtrbranz1uHM7BDostvXiOA5zp/ohpASpsSUKtp4yh0ZTyQkn6zIq1tO80W
-         Ektg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=PUx9SlmLeEujSRwwFPemMgSSgSj12XfoEHL6mHxkY+4=;
-        b=PIOcllqP6x5TRCH6YSStccPD3vtzs23Xz92hHQdoEzqepPvQdU1TQYqxk0jJF5tjhF
-         bn8t68yu6U9JCQwYwImJAoUDB/5u4ZdsCcDaMVyRjIOvm92QSApB1CPu0ik9BK/DfMTF
-         gZO2AX5YJDpbQpF9W6qp5OhedkyWBGNHQuV8SyZhgRXBO37KwjVu9S+amOGLU3o0NvzS
-         Uy+ZB0Ygyjn2hVZk4iTmfBS0pLUbk7RZzqBkUDUBgcOB47mTxat/ip/LRmjBmrhKlO2s
-         TUoMwSPiT5gu2JyWHTtR6cd39iJiisDEVFiDNc7MLcrq0qHghR6/Wlv86FBqsjXHBYCh
-         +5Tg==
-X-Gm-Message-State: AGi0PuY23sVTkpkuZruK821k1nrYDzKWpdEz1zQw9Ky1dIwALagKtP10
-        +KIDq4hUff8s/OcoaFDBd+s=
-X-Google-Smtp-Source: APiQypLy+parpF8Gpz2puozpzH7ZJuztEX8xIYW3YcwckBkcFR50fAKyedcVfpHkxm9HOcoZQOnmDQ==
-X-Received: by 2002:a63:5445:: with SMTP id e5mr16890179pgm.185.1588609726878;
-        Mon, 04 May 2020 09:28:46 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id o1sm7376825pjs.39.2020.05.04.09.28.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 09:28:46 -0700 (PDT)
-Date:   Mon, 4 May 2020 09:28:44 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+        id S1729635AbgEDQ3i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 12:29:38 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57963 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729634AbgEDQ3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 12:29:37 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DC72DA32C;
+        Mon,  4 May 2020 12:29:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SaAXZIre7HzWd57Gj13IIAhC6aY=; b=w99axt
+        UYzQFm44LIWHt1CkKfpKgXMYR7vvx7Nt5GpYpsibdkt+o2f/FVZ4SFnqhmbrZFU3
+        HLf5sYS5S678JxAvOx1TQ+9cJgNgOp3WwD+MNPf9k0PNxm58M4RtC2jzMBtBQ/kA
+        7mp47+b6LxpCIE9JLjap8KykYu4g+pz6qDqLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=igZtaVPUDKMtlo3H9g4rmIG/z85OEYs5
+        TjG2G4fz65y8Mu0u2b/M7M6reDFJYkbGet88fh1RPzgFoNkvmY6S30sesBahQsGS
+        A4paHcEZ2dzu7FQr/9wqcP7N2a1bT19WudfslMVBV4ZhZeq+icmkUzEEFnLdogX6
+        69V+uPwGJH4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 062EEDA32B;
+        Mon,  4 May 2020 12:29:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 32E5FDA32A;
+        Mon,  4 May 2020 12:29:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Danh Doan <congdanhqx@gmail.com>, clime <clime7@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] CodingGuidelines: drop arithmetic expansion advice to
- use "$x"
-Message-ID: <20200504162844.GE86805@Carlos-MBP>
-References: <20200503090952.GA170768@coredump.intra.peff.net>
- <20200503091157.GA170902@coredump.intra.peff.net>
- <20200503114351.GA28680@danh.dev>
- <20200504151351.GC11373@coredump.intra.peff.net>
- <xmqqh7wviud9.fsf@gitster.c.googlers.com>
- <20200504160709.GB12842@coredump.intra.peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, dstolee@microsoft.com, martin.agren@gmail.com
+Subject: Re: [PATCH 7/7] commit-graph.c: introduce '--[no-]check-oids'
+References: <cover.1586836700.git.me@ttaylorr.com>
+        <1ff42f4c3d568dd25889d2808cda3edf38a36cb9.1586836700.git.me@ttaylorr.com>
+        <20200415042930.GA11703@syl.local> <20200415043137.GA12136@syl.local>
+        <20200422105536.GB3063@szeder.dev> <20200422233930.GB19100@syl.local>
+        <20200424105957.GB5925@szeder.dev> <20200501223848.GH41612@syl.local>
+        <20200503094005.GD170902@coredump.intra.peff.net>
+        <xmqq5zddj6us.fsf@gitster.c.googlers.com>
+        <20200504145937.GA11373@coredump.intra.peff.net>
+Date:   Mon, 04 May 2020 09:29:29 -0700
+In-Reply-To: <20200504145937.GA11373@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 4 May 2020 10:59:37 -0400")
+Message-ID: <xmqqv9lbhdee.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200504160709.GB12842@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6E82B128-8E24-11EA-93E6-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 04, 2020 at 12:07:09PM -0400, Jeff King wrote:
-> -- >8 --
-> Subject: CodingGuidelines: drop arithmetic expansion advice to use "$x"
-> 
-> The advice to use "$x" rather than "x" in arithmetric expansion was
-> working around a dash bug fixed in 0.5.4. Even Debian oldstable has
-> 0.5.7 these days.
+Jeff King <peff@peff.net> writes:
 
-that would be oldoldstable, oldstable is actually in 0.5.8 ;)
+> On Sun, May 03, 2020 at 09:55:39AM -0700, Junio C Hamano wrote:
+>
+>> >> Does that seem reasonable?
+>> >
+>> > FWIW, I think that is the best direction. If anybody is depending on the
+>> > "commit-graph write will complain about non-commits" behavior, they
+>> > could only be doing so for a few versions; prior to v2.24.0 we did not.
+>> 
+>> If we had it for the past 180 days or so, that's not like " people
+>> have seen it for only a brief time", but working it around shouldn't
+>> be too difficult---they need to validate the input they feed to the
+>> command themselves (or do they need to do more?).
+>
+> Yeah, my point wasn't so much that it was brief as that we've had it
+> both ways, and nobody was complaining about it before v2.24.0 (the
+> type-restriction change came as a side effect of another tightening).
+>
+> But yeah, if somebody really wants that validation, they can do it
+> themselves with "cat-file --batch-check". Or even for-each-ref directly:
+>
+>   git for-each-ref --format='%(objectname) %(objecttype) %(*objecttype)' |
+>   awk '/commit/ { print $1 }' |
+>   git commit-graph write --stdin-commits
+>
+> If you're using --stdin-commits, you're presumably processing the input
+> anyway (since otherwise you'd just be using --reachable).
+>
+> I suppose you could argue the other way, too (that the user could be
+> filtering out non-commits). But so far we have one data point in either
+> direction, and it wants the more forgiving behavior. :)
 
-> Helped-by: Danh Doan <congdanhqx@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
+Yup.  I agree that Taylor outlined the best direction going forward.
 
-Reviewed-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-
-Carlo
+Thanks.
