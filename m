@@ -2,136 +2,93 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A061C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82D56C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:24:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DFBB206A4
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:19:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53239206A4
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 21:24:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W+8D2aaW"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="bl93I0w4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbgEDVTe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 17:19:34 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58653 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbgEDVTe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 17:19:34 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BBEDFDC7A6;
-        Mon,  4 May 2020 17:19:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nSCKJhV0gF5XBv79vNd/DxBqxVc=; b=W+8D2a
-        aWIkrWDrKeU0Pw74EFGQvtYgXPM1CPjLcrKbEAi0NUUvWc3tM9/IGlQw3IjeLtWZ
-        CT5mfTyPlm9xDvefJnDbARvyO1/7HM09qvJ1vdEx404F69Yuzo9tGuL+uCEzFmB+
-        U7zEorDVCN3B7zQ9MYP3DlWrwrKrwNf7VPnZc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VOCPc7iiMPV0kGBzjOlXbxd0npNYT5VQ
-        CRt71ORUuvzM/zvp/5aKtES7PzuQB9no5jCPr3Fp+NVTWGQlLi7sfHhgV47aycOS
-        ljKfPn2VzBxKvjHeRpqM7ZZP17wVKwEkjVOGb2+Fn0qcPqjHvcYwgSyEsrE+XtMA
-        gAGxKV1BXN0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3FA4DC7A5;
-        Mon,  4 May 2020 17:19:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 04AC6DC7A4;
-        Mon,  4 May 2020 17:19:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
-References: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
-Date:   Mon, 04 May 2020 14:19:26 -0700
-In-Reply-To: <pull.625.git.1588624804554.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Mon, 04 May 2020 20:40:04
-        +0000")
-Message-ID: <xmqq4ksvflep.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726793AbgEDVYr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 17:24:47 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52601 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726469AbgEDVYq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 17:24:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1588627484;
+        bh=t4RUzKhraldPv3NJ7hZ7veQqROsxNF8ktMS9BVlW6zM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bl93I0w4VrqJQ7gsVey9fFdNW/mQHWCyzKejRBy/W/OmFMUjwGne32l02Qz7QDI0r
+         a5lOxLHUXf3qKp66XO2JCcfvQwuI4BfAw213Axso/Tn4ST2JFZaPXYt8wJu93QP4M6
+         YP4RkfXDHFW1Vlhy4jlHX9ESUbz5FLXWXVx+f29U=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.224.161] ([89.1.215.201]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCbIx-1jNmUy3TRz-009hKB; Mon, 04
+ May 2020 23:24:43 +0200
+Date:   Mon, 4 May 2020 16:23:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Taylor Blau <me@ttaylorr.com>
+cc:     Doug Glidden <41mortimer@gmail.com>, git@vger.kernel.org
+Subject: Re: git fast-export not preserving executable permissions?
+In-Reply-To: <20200501223240.GG41612@syl.local>
+Message-ID: <nycvar.QRO.7.76.6.2005041620540.56@tvgsbejvaqbjf.bet>
+References: <CAHTRwmjXXYAU_LTBF_9sX1CXFnGyHsu5_KHuCp1rB76-4zn=Gg@mail.gmail.com> <20200429184909.GE83442@syl.local> <CAHTRwmhhQCs4i04atAK66REiFJP_9e910MoYMt9iyu2v6S2jVw@mail.gmail.com> <20200501223240.GG41612@syl.local>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EFD12958-8E4C-11EA-871D-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Mbd/eraisZ2GJga88CLlO7icT+0/YENDxIUu74k9g+0FyaxYfi3
+ yFgSkTU+2OM9nEkAfRR8M5IE2QXxUPoNInhuKs+1Q86xI6XxidJ9I0Fd9An+YhSojgbtqp3
+ LxCoOltHkYtCt0ohaK82HMtcgUOoSEsDLj9wfiURwwNNn3OEX2Phy1Jp1nSfDXMlEys1mCC
+ /A0P9NdfepJWJ2FkQdx3Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:P4MqM4yJ+i0=:xkiMBnROkfGlrH0zhrpS0x
+ /k2itww5Y4STsa9x34X9Mbr2qHox9fRn8x3qt7ATjOXV8U4flmfeFyL0ooTBDVTf3bGR0vWTR
+ 7RenhU2+V6C/4d5Sh3OVOzS/qhOlhbq8Lf9noB8PTIYZXa/Uys4YipZdsjqzQwT2d1+tvD6HV
+ 6YZKBE6TbQD4OQtGlNBq0u3Ja88wE2niD/9iM/S7blLRKO6KbikhsGrLhrubM7iJaeFDWuKgr
+ eQRQOuXBDRewA+YfYrAyxH7Fw34yWH6FHiJC29Fj0fWw+7kFKFZwGQ7LN3jpH7aICF16uQdTD
+ Z+W+r5VjeFEBd1Hb9cMHOHP69jyc0NTAu7gKJNEGz0fAJUQuwWadrcXriozBUwXFP/FCbQ6ML
+ yYszC0z3A5cRK3g2I3MFu5i1oxnP7iAVGfBBnadqd9IaQQ+83/sO5/tZ/Ir8aGt8/+BWTWCWE
+ 2xe0L8sBT47Zwcic57fqFcglnywK+/2DY4Kzh+7z2VYRzO4MFoEYh939/436e0qcmblZ0k/Fe
+ t4SBM2UWxFPswB2pNg7LzON7UIbxrsmuapjeLkxZVNissoBuixbaIX2J2xrZmkqogouZjkoMk
+ KOiesdzD2fK0dKRrQ6LCZovJYZrSOrJq4+MwFUZCpe2bBH8aBAa8lNnP3y6tmLtTbTdOGWUvM
+ EPUKrqGu9OjxyPacMyMz2XLW+VIm9r8ujlepvnIZXydnIBekSEpqKYpvWhL7EsMjzX0UNvIeT
+ fJvOt0Zx5pgX5kE3xG9rI4vPBR5j3Qx6VuzOyWIB89WuFSSZpmH5kXnyVYyGIO7ojO2frI6hM
+ yAXit2+0GfXH233EBHM4HOTBMEfpGJv8c5Hu3JcEq33MjH8mKCnWggur4XUDYqtO/SLMM6cnx
+ XBWuS76PaQcTJ2alEm4g+Yp13IDpjM1MlYXlOVtdN24Lk3VDe94gkmWYi7I5h9uWKHOQcuSgd
+ habMKJrGs0ccLygVPx370y2W2aTI/hI2B//qGy0kAFeRhxKd9n/MtSlHk8lxGQ58lPXmc4Oja
+ 14ZFHf28fV12wVj2TE8SG3RXFH3PJ0Xnz9qrjxBocw1cBOEl+n1fB9ie99UhIMxn9MMD0vc93
+ PXf46Ez25QXBRd+cyXbE0xSCqwlv+HnMRLD6svlGbxrwKwVevuFKjLhI+vhxShx45ZLG771rm
+ LRh87nkYhTlHMPLVdK1J/H0gPOAzPVXsheXh11vrfdXi+oBafsFX6lg0T8axXD7f5twxjdgVT
+ BVr5X/zxW8d71GU8H
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi,
 
-> diff --git a/sequencer.c b/sequencer.c
-> index e528225e787..0d4d53d2a49 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -5266,8 +5266,17 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
->  				TODO_FIXUP : TODO_SQUASH;
->  			if (next[i2] < 0)
->  				next[i2] = i;
-> -			else
-> +			else if (tail[i2] >= 0)
->  				next[tail[i2]] = i;
-> +			else {
-> +				/*
-> +				 * i2 refers to a fixup commit in the middle of
-> +				 * a fixup chain
-> +				 */
-> +				next[i] = next[i2];
-> +				next[i2] = i;
-> +				continue;
+On Fri, 1 May 2020, Taylor Blau wrote:
 
-OK, this would catch the case even when fixing up a fix-up of
-antoher fix-up, so we won't need further "else if" in the future ;-)
+> If you are using NTFS or FAT32, neither of these filesystems support
+> execute permission bits. (I am certainly not an expert here, but I know
+> that Dscho (cc'd) would be able to answer authoritatively here.)
 
-I suspect that this breakage is as old as 2.14, introduced by
-c44a4c65 (rebase -i: rearrange fixup/squash lines using the
-rebase--helper, 2017-07-14), but perhaps we won't need to backmerge
-the fix that far.  We don't even backport security fixes beyond 2.17
-(which is two years old).
+On Windows, there are indeed no executable bits. A file is considered
+executable if it has a file extension indicating it, e.g. `.exe`.
 
-Just in case I'll queue this immediately on top of f2a04904
-(sequencer: refactor rearrange_squash() to work on a todo_list,
-2019-03-05); that would give us a potential to cover as far back to
-2.20 series.
+In Git for Windows' Bash (which comes from MSYS2), `ls -l` will also
+consider files whose first line is a hash-bang one (e.g. `#!/bin/sh`) as
+executable. This information is however _not_ used by Git.
 
-Thanks.
+If you want to mark a file as executable in Git for Windows, you will have
+to use `git add --chmod=+x <file>`.
 
-> +			}
->  			tail[i2] = i;
->  		} else if (!hashmap_get_from_hash(&subject2item,
->  						strhash(subject), subject)) {
-> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-> index 093de9005b7..ca135349346 100755
-> --- a/t/t3415-rebase-autosquash.sh
-> +++ b/t/t3415-rebase-autosquash.sh
-> @@ -424,4 +424,18 @@ test_expect_success 'abort last squash' '
->  	! grep first actual
->  '
->  
-> +test_expect_success 'fixup a fixup' '
-> +	echo 0to-fixup >file0 &&
-> +	test_tick &&
-> +	git commit -m "to-fixup" file0 &&
-> +	test_tick &&
-> +	git commit --squash HEAD -m X --allow-empty &&
-> +	test_tick &&
-> +	git commit --squash HEAD^ -m Y --allow-empty &&
-> +	test_tick &&
-> +	git commit -m "squash! $(git rev-parse HEAD^)" -m Z --allow-empty &&
-> +	git rebase -ki --autosquash HEAD~4 &&
-> +	test XZY = $(git show | tr -cd X-Z)
-> +'
-> +
->  test_done
->
-> base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
+Ciao,
+Johannes
