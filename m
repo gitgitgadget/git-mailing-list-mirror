@@ -2,109 +2,114 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2960CC3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6810FC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:09:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0969A20752
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:08:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4160620746
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 19:09:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="a4wQw7wZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iNHBk9mi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726469AbgEDTIe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 15:08:34 -0400
-Received: from mout.web.de ([212.227.15.3]:36289 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726377AbgEDTId (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 15:08:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1588619311;
-        bh=PumEqW3gMKnUIPZZwNA8D+cAQSrGg2dtw/tbizkeB3Y=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=a4wQw7wZsxcyk4B/1/XuuohmGe0fmoMIWEdKM2L58B8we3vF78ByUOuaRrLDYe9Ng
-         7sutTO1mDrv8jVwJXGTzCzykDCm0qptvFoxz+k6/KVH2aLPEbEysGhUElTfUfXAmNE
-         Oh1/eKqJfnD00TbiS3z31Dc+KzzPoZBCkXmtQjHw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LopIp-1ivGEu0SXj-00grFb; Mon, 04
- May 2020 21:08:31 +0200
-Date:   Mon, 4 May 2020 21:08:30 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= <carenas@gmail.com>,
-        Jeffrey Walton <noloader@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Git 2.26.2 and failed self tests on OS X
-Message-ID: <20200504190830.g2tlrognjw6ddipo@tb-raspi4>
-References: <CAH8yC8myTMOetxgaj1wt0MbvSQ0LSRV0FHz4ywsBM1zzhUQG=w@mail.gmail.com>
- <20200504165214.GF86805@Carlos-MBP>
- <CAPig+cSPXqvFg3-25aDzptuVOHmqOcnmsCKHgjMB9poPyJR2gw@mail.gmail.com>
+        id S1726487AbgEDTJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 15:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39668 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725981AbgEDTJ0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 15:09:26 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59E3BC061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 12:09:25 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id s30so495781qth.2
+        for <git@vger.kernel.org>; Mon, 04 May 2020 12:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :organization:user-agent:mime-version:content-transfer-encoding;
+        bh=cjWue2bQ/fV54dGhMTofnDebWnEN10XV78H2Kw7sLFc=;
+        b=iNHBk9mi+fggoCS6BQVBmnFCG3o1r8Tk8xzR9Isyl1EcwHh54L/Frgt8i7osuLHNos
+         NfQr2oprWQoH96ebH9QUgEDGnlP1klUthLz+lBfgLEyEwHBN4Gb8CVsVnFY5J5X6tDYX
+         2Xox4qXREVOxxXU8qTOtGit0g4UMxDtYJMnk4015HYh3tRO+/mDxHZvdXkfHp+Ml4Sdh
+         VJCoGkoxsFR2DQGjS9jJAOWCH/kfVyIouFOQ+VhdlExBnYYq1S2ar7+w/EsEVCo8myUz
+         wdSbEXqhYmNkvybOzj8hAPVbDFrSmDmpAXrHI6yETneATieriqFAd3FJZ12oSmqri5FX
+         gZJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cjWue2bQ/fV54dGhMTofnDebWnEN10XV78H2Kw7sLFc=;
+        b=RLijdNtFFw93nDEB3UDiJjHzICvWf3odPvq2hD5I3Q622f0p7QQ7viGh3SxSWZi+xU
+         XVhBG+LIG2z/TPmem6VwLdQO+1H1i8uaIm+nd/VRy4VOHEcYMJsXPaJxcPgtxh2UL+E4
+         SdYpDqd0u6Skf9L4FHopuHkZmTPoCAZrUQ1zL2Fm5feBh7fFgfnuV/tyScNF+IoUyucx
+         wZ1xhoOdz/JBgkeRjL/Ru+qsMsCbDALGpkG9oDRUSs5dDwMgBK72NIYEYBnRYQidTVZt
+         zVqnCNxSge0KLmAPlcM8/vqTs5S2ste57i/wRZZdOTCY+s0t4p6f2lsYIbZSpNa/VhQD
+         ru/g==
+X-Gm-Message-State: AGi0PuYvxjO3GakLwAGfMtUCk7Q5mx41DPypEtdaChf+PpI5H2yKwwqe
+        Lk7vW7UP/tGJkqi7N4G/z1Y=
+X-Google-Smtp-Source: APiQypIZDW4Zc9EA0AN/s7PVfIaJiOi+xne1gzDnKPQP3Dm4q+Zk7d5qyRUaxIgiO/difQbNcgQBLQ==
+X-Received: by 2002:ac8:470e:: with SMTP id f14mr616986qtp.87.1588619364533;
+        Mon, 04 May 2020 12:09:24 -0700 (PDT)
+Received: from LeoBras (179-125-207-129.dynamic.desktop.com.br. [179.125.207.129])
+        by smtp.gmail.com with ESMTPSA id h25sm10964556qto.87.2020.05.04.12.09.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2020 12:09:23 -0700 (PDT)
+Message-ID: <aeff4d773cc69b6845e89a79a6de79d3137b7da2.camel@gmail.com>
+Subject: Re: [PATCH] send-email: Defines smtpPassCmd config option
+From:   Leonardo Bras <leobras.c@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?ISO-8859-1?Q?Bel=F3n?= 
+        <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Jan Viktorin <viktorin@rehivetech.com>,
+        Michal Nazarewicz <mina86@mina86.com>
+Date:   Mon, 04 May 2020 16:09:07 -0300
+In-Reply-To: <xmqqees3odrb.fsf@gitster.c.googlers.com>
+References: <20200501105131.297457-1-leobras.c@gmail.com>
+         <20200501125308.GE33264@Carlos-MBP>
+         <xmqqees3odrb.fsf@gitster.c.googlers.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAPig+cSPXqvFg3-25aDzptuVOHmqOcnmsCKHgjMB9poPyJR2gw@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:PRdXOpZ7CaI0sHCKFI8waCXn0XFpRieUwwblbmx0g/7kmINJS77
- LdKOt6hbxBssyUPScpbPo62Kgyn7RJmrYI0DuzAHGChlcqmEUAl0NoytbDK2xWe7bv/xhOA
- QbfTlJNHINy4YpjHOF5g0/v31Ok3ezuH4MXe9UsXxzpYwlN4k0RfWzM8CFnKM1sGN/WytVE
- IoUktSClCwb/cmNp0fPyQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8mZtKj9oOmo=:Qh1rTNzOH0XNKUMNmkdTHY
- s1QzO6y0oS10FMThqIhHuWQCzeUX1cxyB66JuDZar5EwmeiWarrKwqcsry/W2H1ll3pbnbde7
- gAcKhNI7j2k7A9DzO742bUHEru4ZfUPZO6Eb+M/KpaS2U6oQPkPwkomNEEU41So5cH69K4SgZ
- 09mlkQ84u0oaS2UBOLjYLac7430rinV6m7XWucsPWGKWZt/P33WoLKqYNWWwoct+HhpV8VF2z
- cVkt37HPhjJ141dVLQ3hzZ7b+mxEnygcJlwbJrO3QtlPF8XRSi3rmrottCZwLiHt4rID+r5gL
- PiRG10JiYinOlbAQMyC8N+riBv3iiFi1pyOVj5cFVTRzju/BcEEov3kGJdQj/CPudNxfy4NYk
- JhosGNEFt9v1E6Y8MB0ECnYfUTojuGrWS/UzsDuGnvWmS90XRuDHYOsbVdFoYgVn3ZM5UtzAg
- S1Cp1wtmOpoxqoHSCNJMp2cGThLLPplYjgcslyoYnuEn0PrN/YN2UBhW5MR96/YeqOiLbwgCW
- taATwygMux129nV9wIiScvNAlCleGf8isoTeTCQ6irZ/DloKVCEoReDZf8+aJWDHC9ktNr/I1
- DIQmPxTYegMOrq7JptZ4KJnehxW5SqM2d0AKCp2IFqYVFYXSM0p6p0OON3Cyk62HKKdoOcjz9
- 7/MfVbBR/Q5JwRC2nXDPrIJoYb2YWXXgt3nC65CgEbzlgMeMm+bY3xy60YADIgzwtRigiNHg7
- sjqxU9QLMMaZs22FQ4uY8BqgNKnjK9h1dg50CSNc+RoFIpini5CB6mENc4THq0zfBdIcCG49Y
- f7Y9Zz0+164u9q6lJUPj8LKzuCiKT+UiLOClZAopcnbAO5H9zroP8GVhkY4C3V/MgB6uZSgLp
- gYHy7hAu8hXfXT+tfFTTvNYwmgNmiYzSFUaX1NX74pNGdFf8Dl+BMGd4vBWNw1UHwKqu+otc/
- KM+ZKs4ss2+JeGyi0xKXxR7gk1nf8e6WDwwqKnrYNg1P4UdXrvXZsM8G2XzQw7Fu1nbQEikkK
- bDdlD9tiN7uEUbxtsyPwm6c8W2g8/wFyfimBZeN0d2q0UZfxsASF9ujkFEFWkF1xxufWdNbVb
- Z8RVbNazRLt2vyeKF9+VOYRGgYYsTlisVpIByLD8Swsnz8O6AjBlfvA+4pnqTEAu1k+HDivhk
- jrNotTabqCHRfk2Ykbylf+84P6i37xuYAQiyCMYLwSB11/08BwAfbeGwRzOO0QOrPfU413h0A
- HYVgU098p8tRXcUEm
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 04, 2020 at 01:18:06PM -0400, Eric Sunshine wrote:
-> On Mon, May 4, 2020 at 12:52 PM Carlo Marcelo Arenas Bel=F3n
-> <carenas@gmail.com> wrote:
-> > On Mon, May 04, 2020 at 03:03:01AM -0400, Jeffrey Walton wrote:
-> > > I'm building Git 2.26.2 from sources on a Mac-mini with OS X 10.12.6
-> > > and a PowerMac with OS X 10.5. Some of the t3902-quoted.sh tests are
-> > > failing.
-> > >
-> > > The Mac-Mini uses Bash 3.2.57(1)-release. The PowerMac uses 3.2.17(1=
-)-release.
-> >
-> > if the problem is the bash version but you can build/install a newer o=
-ne that
-> > doesn't have this problem [...]
->
-> My OS X 10.13.6 has Bash 3.2.57, as well, and I'm unable to reproduce
-> these failures, so it seems fairly unlikely that the problem Jeffrey
-> is seeing isn't tied to Bash.
+On Fri, 2020-05-01 at 08:50 -0700, Junio C Hamano wrote:
+> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+> 
+> > > +of `sendemail.smtpPassCmd`), then a password is obtained using
+> > > +'git-credential'.
+> > 
+> > this last part on git credential is just undocumented, since it is already
+> > doing so since 4d31a44a08 (git-send-email: use git credential to obtain
+> > password, 2013-02-12)
+> >  
+> > and of course, assuming you use a credential helper that keeps the password
+> > encrypted you could use that instead of this new feature.
+> 
+> Up to this point I understand your response.
+> 
+> Documenting that "git send-email" can use "git credential" for its
+> password store, if it is not already documented, is of course a good
+> change.
+> 
+> But I am not sure why this is "a good alternative".  Having more
+> choices that do not offer anything substantially different is a bad
+> thing.  Is this "new mechanism" better in what way?  Simpler to use?
+> Faster?  Less error prone?  Something else?
 
-Should I read this as
-".. seems fairly likely that the problem Jeffrey is seeing is tied to bash=
-" ?
+The main reason would be "simpler to use".
+At the point the developer is configuring smtp, adding another line
+with 'command to get the password' instead of 'password' is way more
+intuitive than configure a credential.
 
-I can't reproduce it either, so my reasoning would rather be
-"The problem is probably not caused by the shipped bash version"
+Best regards,
+Leonardo Bras
 
-It could be something in the environemt, that confuses our tests here.
-
-Does
-./t3902-quoted.sh   -v -d
-give anything useful ?
