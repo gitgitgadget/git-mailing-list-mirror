@@ -2,138 +2,132 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ABECC3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 14:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B5EC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 14:44:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1010020757
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 14:34:24 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G8fnC2se"
+	by mail.kernel.org (Postfix) with ESMTP id 1C6F3206D9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 14:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728743AbgEDOeX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 10:34:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52900 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728187AbgEDOeW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 10:34:22 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A280C061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 07:34:21 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id q7so16812192qkf.3
-        for <git@vger.kernel.org>; Mon, 04 May 2020 07:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Ud7yv6IA24SO/yLRLe3hHFWwmucXL1c+JCCJ6azXtJo=;
-        b=G8fnC2seDB+b2MRjLYPIdmq3LvvbT1FLPgvIYoZ7gyhr0i0Yw7IS7FV9E2vH0taux3
-         Kpk48R47IUF/11dSXYM3iMWXXgYfCeL8Mbu6PTcmc0YmS86koITfQ4Hnhi0qPAWckOW2
-         ZxSI/xmF6soxGoKZwRkvPKV+UTTB0XYrZL0HYB3fzftRI98AMVPL6FBIR8mBtHMFkiGI
-         ZJY3mqh6a9QFn8z3IXdsPQ5Gz8qNZNVfI82N0qvysbYn1go+RpXsYUiAc/Brp6sT1Q1G
-         tFPOurFkrzMlDWN/jNW3Gj8ui8E1Nz8+XzCnxxAypz4uYkYRASvlwIkaAUAuVy9Q7/Cb
-         +vwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Ud7yv6IA24SO/yLRLe3hHFWwmucXL1c+JCCJ6azXtJo=;
-        b=N6k0PQWLTiimNtQi9I7lE11u3qQUwNL5RHlWOCu+dtDEByH9zqgawsM+IvkTKXmDfX
-         WLQGtwWNEAxgO7B8kI76w7TjUrkEEWu47EVlU88XtQlOBBX0rH/n6QRQDje0/BI0L0oh
-         L1TeSVPMcN8OHNWT2x2U35Fb7FI/2VnolsrExLwzFcZtuwyvMOkbA1FOpsTo3VCi/bB6
-         5jdt0UbeOAGh1YCMduV10uU3oTzKZjk4WABpKU8X0h9PEtH12pByE8Oe+qRUJKlMUnTO
-         R5PTVULINaPq47pCfjItzwzy12ab/3BzKJYRItlVwK27p5knQCnUzFTXLAIYRitpFTDt
-         ffqA==
-X-Gm-Message-State: AGi0PuZ1fPQlf/h4sBQM1zv4EtgIkoheRxoji8Hqali8nOjqIqOuSMRQ
-        t/64RqdCFjT5rC+0L5wuffU=
-X-Google-Smtp-Source: APiQypLp1aVYKgBM863j581jUHxTZly4btibwojcDETAN6WxhhHiLaJK6UQDihdSjmFHjABm1N9IPg==
-X-Received: by 2002:a37:9bcb:: with SMTP id d194mr3057433qke.16.1588602860419;
-        Mon, 04 May 2020 07:34:20 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id p10sm10746757qtu.14.2020.05.04.07.34.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 May 2020 07:34:19 -0700 (PDT)
-Subject: Re: [PATCH 05/15] run-job: implement pack-files job
-To:     Son Luong Ngoc <sluongng@gmail.com>, gitgitgadget@gmail.com
-Cc:     dstolee@microsoft.com, git@vger.kernel.org, jrnieder@google.com,
-        peff@peff.net
-References: <CAL3xRKfcKh=XxGso4DTRfJMAVMtwqyQkO0VUhqVuZUr_aQ5f+A@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <db35867f-bb33-1155-170f-30a895948733@gmail.com>
-Date:   Mon, 4 May 2020 10:34:17 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
- Thunderbird/76.0
+        id S1728950AbgEDOoi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 10:44:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35762 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728452AbgEDOoi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 10:44:38 -0400
+Received: (qmail 31020 invoked by uid 109); 4 May 2020 14:44:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 04 May 2020 14:44:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17411 invoked by uid 111); 4 May 2020 14:44:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 May 2020 10:44:36 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 4 May 2020 10:44:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [RFC PATCH] credential: minor documentation fixes
+Message-ID: <20200504144436.GA9893@coredump.intra.peff.net>
+References: <20200503063423.83152-1-carenas@gmail.com>
+ <20200503065826.GB1829906@coredump.intra.peff.net>
+ <20200504074520.GB86805@Carlos-MBP>
 MIME-Version: 1.0
-In-Reply-To: <CAL3xRKfcKh=XxGso4DTRfJMAVMtwqyQkO0VUhqVuZUr_aQ5f+A@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200504074520.GB86805@Carlos-MBP>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/2/2020 3:56 AM, Son Luong Ngoc wrote:
-> Hi Derrick,
+On Mon, May 04, 2020 at 12:45:20AM -0700, Carlo Marcelo Arenas Belón wrote:
+
+> On Sun, May 03, 2020 at 02:58:26AM -0400, Jeff King wrote:
+> > On Sat, May 02, 2020 at 11:34:23PM -0700, Carlo Marcelo Arenas Belón wrote:
+> > 
+> > > the order of parameters used in credential_match was inconsistent
+> > > between credential.c and credential.h as well, so update both to
+> > > match the current implementation.
+> > 
+> > Yes, looks like this has been wrong since the beginning in 118250728e
+> > (credential: apply helper config, 2011-12-10). I checked the callers to
+> > make sure none of them had gotten it backwards, but they all look right
+> > (and just the declaration is wrong).
 > 
-> Sorry for another late reply on this RFC.
-> This time is a question on the multi-pack-index repack process.
+> thanks for checking, will include this (and your typo fix) in the
+> submission; should I add your "Reviewed-by" then?
+
+Sure, feel free to.
+
+> some things that I think might need clarification (or maybe even code changes
+> after agreed on) are :
 > 
-> Why expire *before* repack and not after?
-> 
-> I thought `core.multiPackIndex=true` would prevent old pack files from
-> being used thus expiring immediately after repack is safe? (on that
-> note, are users
-> required to set this config prior to running the job?)
-> 
-> If expiring immediately after repack()+verify() is not safe, then should
-> we have a minimum allowed interval set? (although I would preferred to
-> make expire() safe)
+> * the meaning of "exactly" for matching protocol and hostname in the URL
+>   since 06 are both case insensitive per RFC3986 and we have been
+>   ambiguous on that, leading to some helpers assuming case or encoding.
 
-Suppose we run "repack" and then "expire".
+Yeah, IIRC we discussed case-sensitivity at the time and went with the
+stricter behavior in the name of safety over convenience. And I don't
+think anybody has complained since then. So I'm not really _opposed_ to
+loosening it to match the URL, but perhaps a maintenance release is not
+the best time to do so.
 
-Suppose that there is a concurrent Git process that has a read handle
-on the multi-pack-index from before the repack. This multi-pack-index
-has a pack-file that was repacked by the "repack" command, and hence
-was expired and deleted by the "expire" command (because all of its
-objects are in the _new_ pack). However, when the Git process with the
-old multi-pack-index reads an object pointing to that pack-file, it
-finds that the pack does not exist when it tries to load it.
+> * the rules for how helper matching are expected to be ordered, specially
+>   considering the recent adding of wildcard matching and the revival of
+>   partial matching, and the fact that the order is relevant for both
+>   discovery of credentials and which helpers are used.
 
-Git is usually pretty resilient to these kinds of things, but it seemed
-prudent to be extra careful here. By spacing out these jobs across a
-time where we don't expect concurrent Git processes to hold a read handle
-on that old multi-pack-index (say, 24 hours) then this method is safe.
+Yes, this could be better documented. I think the current rules are
+probably not ideal, especially when you mix credential.*.helper and
+credential.helper. So some fixes are possible there, but I think they
+might be best added as new feature (e.g., a new config like
+credential.*.helperOrder that says whether and how to use
+non-url-specific helpers; or something like that).
 
-In fact, Scalar ensures that no concurrent Git process is running at the
-start of the job [1], which means that no Git processes are _still_ running
-since the last job (but this does not stop concurrent processes from starting
-after that point and before the 'expire' command).
+> * the use of hostname as a key, since the addition of cert:// that has none
+>   and uses path instead (had emailed the author privately for clarification,
+>   but hadn't heard yet) and the effect that has on which fields are expected
+>   and which values are valid.
 
-[1] https://github.com/microsoft/scalar/blob/489764b815dfea32bec5cd4228f2157766012784/Scalar.Common/Maintenance/PackfileMaintenanceStep.cs#L106-L111
+Yeah, there could be more discussion in gitcredentials(7) there.
 
->> +
->> + if (multi_pack_index_verify()) {
->> + warning(_("multi-pack-index verify failed after expire"));
->> + return rewrite_multi_pack_index();
->> + }
->> +
->> + if (multi_pack_index_repack()) {
->> + error(_("multi-pack-index repack failed"));
->> + return 1;
->> + }
-> 
-> Again, I just think the decision to include verify() inside repack()
-> made this part a bit inconsistent.
+> * the role of overrides (ex: the documented example of passing URL and later
+>   updating it seems useful, eventhough I am not aware if being used)
 
-You're right. It is a bit inconsistent. That should be fixed in the
-next version.
+I'd be OK to see this feature removed. I have used it for various
+debugging or experimenting scenarios, but Git in general would never
+pass anything except a broken-down set of fields, and only one of each
+field.
 
-Thanks,
--Stolee
+> * clarification on which fields can be updated by the helper; currently I
+>   don't think we allow overrides for protocol and host and assume all others
+>   but the documentation doesn't clarify, and that might be a problem for
+>   cert:// where file is more relevant.
+
+I think we do allow a helper to transform a credential in any way:
+
+  echo url=https://example.com/ |
+  git \
+    -c credential.helper='!sed >&2 s/^/one:/; echo host=other.example.com;:' \
+    -c credential.helper='!sed >&2 s/^/two:/;:' \
+    credential fill
+
+produces:
+
+  one:protocol=https
+  one:host=example.com
+  two:protocol=https
+  two:host=other.example.com
+  Username for 'https://other.example.com': 
+
+So after the first helper runs, subsequent helpers (and the internal
+terminal prompt) will consider the modified hostname.
+
+Now whether that's a sane feature or not, I'm not sure.
+
+-Peff
