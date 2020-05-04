@@ -2,193 +2,119 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CD37C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 07:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B214C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 07:45:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D339121582
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 07:27:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E376D21775
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 07:45:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VoUjrv/f"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rnxQ648N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727878AbgEDH1k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 03:27:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42862 "EHLO
+        id S1727088AbgEDHpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 03:45:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726411AbgEDH1k (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 03:27:40 -0400
+        by vger.kernel.org with ESMTP id S1725921AbgEDHpX (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 03:45:23 -0400
 Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC9B4C061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 00:27:38 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id z6so6443413plk.10
-        for <git@vger.kernel.org>; Mon, 04 May 2020 00:27:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E6DC061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 00:45:23 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id x6so1781425plv.8
+        for <git@vger.kernel.org>; Mon, 04 May 2020 00:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MzB00g0Ql7c2huyECvboSkmzI6bQC/ZDgxkH1W84RIw=;
-        b=VoUjrv/fsHjlYFxxSnU+Zv9g/vLOO9AeBBB6U3UFTSLOgZe6uViqna6rpEFu4/o1LY
-         gTsn4wvPaZih0QT33ekjY/7JkqsaWAz1ZHOXdkyiJQ2MTWxtWHABSPhVzfWyE88zgHso
-         YYCVujQEUI/36Ox64yvubOpYaIG0Wv6dfiYmK5FbA1HWBmYaDbwpTNab5JZ2CtLHww+2
-         AwASjriGNxrf23W5j6RXPi5jUFGpwEjrEEokmA5GbiimvMrj9aBtfKSmcVnM+9gXDnM+
-         0uOLqDJL5A/4s9OzafFbaqFvdLN038bWue7k9YNGrfMP5HYyccugkiXw23Y4A3jIrInb
-         NgtQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=suVJsrQj6spsMC41gPziBU8w2uSUgRulrI0HBge0vUU=;
+        b=rnxQ648NQR3286jmWCfW7nXpRz4QA0gbkWKyWm6TpMabqsLEynCTgLclvt7jVE+q/e
+         vfYN+YN8MEsi+xqskbRRwCw1hH7xIZdDMHS39h6/yIUTtfSpAyoM1pgZshKYUtM0qjfJ
+         x1Wr/TcLQpT9jF0FlxQjOI9Ac6O5XCBH7dJeCaVo35pt/izfX/yczlVcfT5sd6/1cUOy
+         M457Hz12fKXeqZZO4rYIHmnalBTItCewEbiVwlJ22qdOtUN3qZH7newQ/1VfF2nWUQAX
+         yEAue26DF9VDnAd+vTrd0uyoYn8b8l7B/40Q892e32C0FNaLKi/ZBYO4kr7IgkVPMR3C
+         DsTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MzB00g0Ql7c2huyECvboSkmzI6bQC/ZDgxkH1W84RIw=;
-        b=DBLKLHMdv8kw/1kjV1jnGDO8Jroctk43JMShuPaNpa2I6BXtiqoa1bxxO84tinPWea
-         pFCxwctSB5uaMsIUsJNiwpgRH/k6lrK3l+MBkg5T9Zkd8tPpL2U98SfGo5LH/7Pmdcu9
-         qqLVvrtLtYhRfH/sQ79X+91hTTTfkIq69VMGyAonDNT2oE/h2Iy3+WygtN1qY/MYruC6
-         LMTtwifsT3D3efz+XohQvBp+VaVGjcCzMsFHiZYKiMtfitegiXsF7jPniQQT+j0nmP25
-         MkUVZfYxYUXTSFRSTLOEOXlG2o7wG6tCK1GI+qPExvcOKGTxx4637k32T4xAAJyr2fmB
-         bQAg==
-X-Gm-Message-State: AGi0PuYkIcJBZwaO6GIGQZBEQkatRLR1/pCjue08aA+mYW302vuW3CZQ
-        mB4vMOv2h5bOPW8WFrl14MMNOuL2nU3Orw==
-X-Google-Smtp-Source: APiQypJihmKMqjEeMSwBKsyJ3ohXr3zNPPQId6Hz4O9b293yosjiW2o3QdOE4JuABK5Ie+uD7WK6rw==
-X-Received: by 2002:a17:90a:6f22:: with SMTP id d31mr15872545pjk.14.1588577257843;
-        Mon, 04 May 2020 00:27:37 -0700 (PDT)
-Received: from konoha.iitr.ac.in ([103.37.201.176])
-        by smtp.gmail.com with ESMTPSA id a12sm7961292pfr.28.2020.05.04.00.27.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=suVJsrQj6spsMC41gPziBU8w2uSUgRulrI0HBge0vUU=;
+        b=ApOlSVkkjERBDpYAOJyG1ACnkWyQpTZ9cgvtCb9YyxuzqsxE168MBNunTmCs1Sfp42
+         lCJdbBCKbjIkFKsLLcg9Dg3EQmf3/olRp7e08YLgEXZm3dDTRzPz4PV5hzfL2udL+tyk
+         EDW6KK3MJIOO7rYM5AyYO5GwrfyAVLR3hDD6HyOlZu4JCg9UjTxTHeMti7wtw81oZtwe
+         RrGC50Xf1PcYHGoAb9ywIDkP3L+ehCF7bIQ4d5nEsZ9y7aWaRZN6GcNp4aYHGumwalWU
+         no8HEUUBeKEkjDBxYN2UA328bukhfGhb/0K0lgCEjpELAQK6b5BhmRh0MTpyzvOOyvJ5
+         94IA==
+X-Gm-Message-State: AGi0PuaXHzMl/7YRGnArzetaFL6ax+SJbfI4D4JN6AXv1FYHeZFvAyBU
+        0Qvt8kG16BtjW6PqOA/NLFc=
+X-Google-Smtp-Source: APiQypKaH/1yCZM7jvIOzFsHSWyZXdErpGQ0XPioMM6zgxLHDJ93fDQGelZ35qDDMHblKCZ975Wb/A==
+X-Received: by 2002:a17:90a:8b:: with SMTP id a11mr15592183pja.163.1588578322914;
+        Mon, 04 May 2020 00:45:22 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id m6sm6089362pjo.5.2020.05.04.00.45.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 00:27:37 -0700 (PDT)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, christian.couder@gmail.com,
-        liu.denton@gmail.com, peff@peff.net, heba.waly@gmail.com,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [PATCH v3] submodule: port subcommand 'set-url' from shell to C
-Date:   Mon,  4 May 2020 12:57:05 +0530
-Message-Id: <20200504072705.15261-1-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        Mon, 04 May 2020 00:45:22 -0700 (PDT)
+Date:   Mon, 4 May 2020 00:45:20 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [RFC PATCH] credential: minor documentation fixes
+Message-ID: <20200504074520.GB86805@Carlos-MBP>
+References: <20200503063423.83152-1-carenas@gmail.com>
+ <20200503065826.GB1829906@coredump.intra.peff.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200503065826.GB1829906@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert submodule subcommand 'set-url' to a builtin. Port 'set-url'to
-'submodule--helper.c' and call the latter via 'git-submodule.sh'.
+On Sun, May 03, 2020 at 02:58:26AM -0400, Jeff King wrote:
+> On Sat, May 02, 2020 at 11:34:23PM -0700, Carlo Marcelo Arenas Belón wrote:
+> 
+> > the order of parameters used in credential_match was inconsistent
+> > between credential.c and credential.h as well, so update both to
+> > match the current implementation.
+> 
+> Yes, looks like this has been wrong since the beginning in 118250728e
+> (credential: apply helper config, 2011-12-10). I checked the callers to
+> make sure none of them had gotten it backwards, but they all look right
+> (and just the declaration is wrong).
 
-Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
----
-Thank you Junio and Denton for the review :)
-Eliminated the whitespace errors and removed the callback structures
-as well. I have made the commit message more abstract for now as pointed
-out by Denton that the message seems to go into too much detail.
+thanks for checking, will include this (and your typo fix) in the
+submission; should I add your "Reviewed-by" then?
 
-Also, the variable name for `&entry` has been changed to `config_entry` so
-as to avoid confusion with `cache_entry`. The shell file has also been
-amended.
+was also curious about the other documentation updates mentioned[1] by
+Jonathan, and that I was hoping this patch will be included with.
 
- builtin/submodule--helper.c | 46 +++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 22 +-----------------
- 2 files changed, 47 insertions(+), 21 deletions(-)
+some things that I think might need clarification (or maybe even code changes
+after agreed on) are :
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1a4b391c88..6fd459988e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2246,6 +2246,51 @@ static int module_config(int argc, const char **argv, const char *prefix)
- 	usage_with_options(git_submodule_helper_usage, module_config_options);
- }
- 
-+static int module_set_url(int argc, const char **argv, const char *prefix)
-+{
-+	int quiet = 0;
-+
-+	const char *newurl = NULL;
-+	const char *path = NULL;
-+
-+	struct strbuf config_entry = STRBUF_INIT;
-+
-+	struct option set_url_options[] = {
-+		OPT__QUIET(&quiet, N_("Suppress output for setting url of a submodule")),
-+		OPT_END()
-+	};
-+
-+	const char *const usage[] = {
-+		N_("git submodule--helper set-url [--quiet] <path> <newurl>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, set_url_options,
-+			     usage, 0);
-+
-+	if (quiet)
-+		quiet |= OPT_QUIET;
-+
-+	if (argc!=2){
-+		usage_with_options(usage, set_url_options);
-+		return 1;
-+	}
-+
-+	path = argv[0];
-+	newurl = argv[1];
-+
-+	strbuf_addstr(&config_entry, "submodule.");
-+	strbuf_addstr(&config_entry, path);
-+	strbuf_addstr(&config_entry, ".url");
-+
-+	config_set_in_gitmodules_file_gently(config_entry.buf, newurl);
-+	sync_submodule(path, prefix, quiet);
-+
-+	strbuf_release(&config_entry);
-+
-+	return 0;
-+}
-+
- #define SUPPORT_SUPER_PREFIX (1<<0)
- 
- struct cmd_struct {
-@@ -2276,6 +2321,7 @@ static struct cmd_struct commands[] = {
- 	{"is-active", is_active, 0},
- 	{"check-name", check_name, 0},
- 	{"config", module_config, 0},
-+	{"set-url", module_set_url, 0},
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 08e0439df0..39ebdf25b5 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -805,27 +805,7 @@ cmd_set_url() {
- 		shift
- 	done
- 
--	if test $# -ne 2
--	then
--		usage
--	fi
--
--	# we can't use `git submodule--helper name` here because internally, it
--	# hashes the path so a trailing slash could lead to an unintentional no match
--	name="$(git submodule--helper list "$1" | cut -f2)"
--	if test -z "$name"
--	then
--		exit 1
--	fi
--
--	url="$2"
--	if test -z "$url"
--	then
--		exit 1
--	fi
--
--	git submodule--helper config submodule."$name".url "$url"
--	git submodule--helper sync ${GIT_QUIET:+--quiet} "$name"
-+	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-url ${GIT_QUIET:+--quiet} -- "$@"
- }
- 
- #
--- 
-2.26.2
+* the meaning of "exactly" for matching protocol and hostname in the URL
+  since 06 are both case insensitive per RFC3986 and we have been
+  ambiguous on that, leading to some helpers assuming case or encoding.
+* the rules for how helper matching are expected to be ordered, specially
+  considering the recent adding of wildcard matching and the revival of
+  partial matching, and the fact that the order is relevant for both
+  discovery of credentials and which helpers are used.
+* the use of hostname as a key, since the addition of cert:// that has none
+  and uses path instead (had emailed the author privately for clarification,
+  but hadn't heard yet) and the effect that has on which fields are expected
+  and which values are valid.
+* the role of overrides (ex: the documented example of passing URL and later
+  updating it seems useful, eventhough I am not aware if being used)
+* clarification on which fields can be updated by the helper; currently I
+  don't think we allow overrides for protocol and host and assume all others
+  but the documentation doesn't clarify, and that might be a problem for
+  cert:// where file is more relevant.
 
+Carlo
+
+[1] https://lore.kernel.org/git/20200428055514.GB201501@google.com/
