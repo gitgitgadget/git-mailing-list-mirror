@@ -2,139 +2,109 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 428FFC3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 15:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1610BC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 15:43:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1CFE620721
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 15:40:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OrNJhE2m"
+	by mail.kernel.org (Postfix) with ESMTP id F17BD206D7
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 15:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729313AbgEDPkA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 11:40:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34844 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728294AbgEDPkA (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 11:40:00 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1AA3C061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 08:39:59 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id h11so6886009plr.11
-        for <git@vger.kernel.org>; Mon, 04 May 2020 08:39:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=gf/wasHXkwQLNhdAA0nNDlSbkgU/aYD6PlMB/NPAflw=;
-        b=OrNJhE2miApXV3Jxq3oxGedb24De4yL5SNtuBsxDx72iUvxxPrystfRNSubScCuQMu
-         Foq+pSAY0Z6ZZq1YRpesMrXLKzUCW6HwcZnw1S0vxgaZYnnmli1rC4THAJpmhHWjVlaR
-         OShh5ekjIQ6kA3ZIoTzhQlYGzlnVCPIprEvBEBuZXC7bdqsJ/aklnG7OtXoh+xFhbXe1
-         qdDuzmAch5phY7HbPOjBNLRkxD6Jv8Y2OBm0tSrrAs0Uj3I960HN7JboapyTZhgAjd5l
-         XV1iAOuyk1KbJ6JRkaXzida1tI11Dd7ftfL1UN/sTJ5Pdvke5cQz0ZO29TuLn+AbR4TQ
-         m4mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=gf/wasHXkwQLNhdAA0nNDlSbkgU/aYD6PlMB/NPAflw=;
-        b=SltpTQBaAqoHYO/ta+EpLbKb/M/sBj2NbSE7loSjYTZodJdOMDUWi0sn85Z3Gy+8I+
-         hXsde1U/4xcqfC0/Nwdw1AowSKyh9OVqxtuKu2OCDQSu98z6WKbN3AniIWNscQDdUse+
-         qD0d66OLA2g41CJbgKrugzrFyw+GqnbM/B3ticcTJa9V3UiDGqeo1PEv4TxE4MbOkxny
-         PUlVpO+pbiYPDGrcBgR++1BLuuVh3D22dQUps3mYRDAO/pWUpJLrs0JvXq0jKNDAW35I
-         FiFcp89pq/ngAz5D0zgRihX33GHyS5OLS22Bw58uZyM8fy/47fl1WrLTFTTxGZXPi7KF
-         1Jyw==
-X-Gm-Message-State: AGi0PuZm6g5HTpRsGLnRLXH7RUuQvaYILY8SA5/93DxiVy1Nu+yqyC7h
-        Gw2j1iKVTXF5030ZSmG6OJbXfo5j
-X-Google-Smtp-Source: APiQypLafpLHIHCLEXSwN0B4uLhU0L+DBoLkli3ZBDYg9/eFl3NhIknuxHsBKJrGDPPStDzHUJN24A==
-X-Received: by 2002:a17:90b:1111:: with SMTP id gi17mr12997975pjb.121.1588606799358;
-        Mon, 04 May 2020 08:39:59 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id d35sm4301267pgd.29.2020.05.04.08.39.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 08:39:58 -0700 (PDT)
-Date:   Mon, 4 May 2020 08:39:57 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [RFC PATCH] credential: minor documentation fixes
-Message-ID: <20200504153957.GC86805@Carlos-MBP>
-References: <20200503063423.83152-1-carenas@gmail.com>
- <20200503065826.GB1829906@coredump.intra.peff.net>
- <20200504074520.GB86805@Carlos-MBP>
- <20200504144436.GA9893@coredump.intra.peff.net>
+        id S1728437AbgEDPnp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 11:43:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35878 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726509AbgEDPno (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 11:43:44 -0400
+Received: (qmail 31511 invoked by uid 109); 4 May 2020 15:43:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 04 May 2020 15:43:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17870 invoked by uid 111); 4 May 2020 15:43:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 May 2020 11:43:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 4 May 2020 11:43:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     clime <clime7@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: :format:%s for date fields seems to be shifted by timezone
+Message-ID: <20200504154343.GA12842@coredump.intra.peff.net>
+References: <CAGqZTUu2U6FFXGTXihC64O0gB5Bz_Z3MbD750kMoJWMciAGH6w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200504144436.GA9893@coredump.intra.peff.net>
+In-Reply-To: <CAGqZTUu2U6FFXGTXihC64O0gB5Bz_Z3MbD750kMoJWMciAGH6w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 04, 2020 at 10:44:36AM -0400, Jeff King wrote:
-> On Mon, May 04, 2020 at 12:45:20AM -0700, Carlo Marcelo Arenas Belón wrote:
-> > 
-> > * the meaning of "exactly" for matching protocol and hostname in the URL
-> >   since 06 are both case insensitive per RFC3986 and we have been
-> >   ambiguous on that, leading to some helpers assuming case or encoding.
+On Sun, May 03, 2020 at 12:15:14PM +0200, clime wrote:
+
+> my current timezone is UTC+0200.
 > 
-> Yeah, IIRC we discussed case-sensitivity at the time and went with the
-> stricter behavior in the name of safety over convenience. And I don't
-> think anybody has complained since then. So I'm not really _opposed_ to
-> loosening it to match the URL, but perhaps a maintenance release is not
-> the best time to do so.
+> I create a test repo, add one commit and create a tag:
+> 
+> Now:
+> 
+> $  git for-each-ref --format="%(taggerdate:format:%s)" refs/tags
+> 1588504146
+> 
+> $ date +"%s"
+> 1588500585
+> 
+> $  git for-each-ref --format="%(taggerdate:raw)" refs/tags
+> 1588500546 +0200
+> 
+> Somehow %(taggerdate:format:%s) gives a Unix timestamp which is one
+> hour in future and it is different than what ` date +"%s"` gives
+> around approximately the same time the tag was created.
 
-agree, but I was talking not in the context of a feature, but on how we
-are to define the interaction with helpers (which was meant to be part of
-this maintenance release).
+It's caused by strftime() being clever with DST. Try this:
 
-currently (since it is undefined) a naive helper could do a caseless match
-by assuming we really meant url as defined by RFC3986, and therefore affect
-the wrong credential by the operation.
+  git commit --date=@1559361600 --allow-empty -m summer
+  git commit --date=@1577854800 --allow-empty -m winter
+  git log --format=%ad --date=unix >unix
+  git log --format=%ad --date=format:%s >strftime
+  diff -u unix strftime
 
-indeed; our own code might get confused so maybe something like (not fully
-tested and likely to need some test coverage) will make sense then as part
-of this maintenance release, with some additional mention that clarifies
-we REALLY meant "exactly" so that helpers can be updated?
+We get the winter time right, but the summer time wrong.
 
-Carlo
----
-diff --git a/credential.c b/credential.c
-index 108d9e183a..d2c879a9b3 100644
---- a/credential.c
-+++ b/credential.c
-@@ -70,7 +70,7 @@ static int proto_is_http(const char *s)
- {
- 	if (!s)
- 		return 0;
--	return !strcmp(s, "https") || !strcmp(s, "http");
-+	return !strcasecmp(s, "https") || !strcasecmp(s, "http");
- }
- 
- static void credential_describe(struct credential *c, struct strbuf *out);
-diff --git a/fsck.c b/fsck.c
-index 73f30773f2..d779acdae8 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -997,10 +997,10 @@ static int url_to_curl_url(const char *url, const char **out)
- 	    skip_prefix(url, "ftp::", out) ||
- 	    skip_prefix(url, "ftps::", out))
- 		return 1;
--	if (starts_with(url, "http://") ||
--	    starts_with(url, "https://") ||
--	    starts_with(url, "ftp://") ||
--	    starts_with(url, "ftps://")) {
-+	if (istarts_with(url, "http://") ||
-+	    istarts_with(url, "https://") ||
-+	    istarts_with(url, "ftp://") ||
-+	    istarts_with(url, "ftps://")) {
- 		*out = url;
- 		return 1;
- 	}
+The issue is that strftime() takes a broken-down "struct tm", not a unix
+time_t. We have all of the right values for hour/minute/etc there, so
+using "format:%H:%M:%S" prints what you'd expect. But we never set the
+"isdst" field, so when it tries to convert back to unix time, it applies
+a one-hour offset (if it's "summer" in your local timezone).
+
+Unfortunately I don't think we can solve this easily. If we were
+operating completely in your local timezone, then we would have gotten
+that "struct tm" from localtime(), and its isdst field would be set
+properly. And indeed, if you use "--date=format-local:%s", the problem
+goes away.
+
+But when we're formatting in the original author's timezone, which is
+the default, we have no idea if they were in dst then or not. We only
+know their offset-to-gmt, so we munge the time_t ourselves and use
+gmtime().
+
+So there are a few reasons I think this is the best we can do:
+
+ - the full timezone information literally isn't there in Git; we might
+   know the author was in +0200, but we don't know if they were
+   observing DST, or if they were simply in a timezone further east.
+
+ - even if we had a zone, there's no system function to convert a time_t
+   to a tm in an arbitrary timezone (hence the gmtime() hack above;
+   we've tried playing games with $TZ and tzset(), but it's awkward and
+   unportable)
+
+ - likewise, strftime() is doing the reverse conversion using the local
+   timezone anyway, which would be wrong.
+
+So my advice is not to use "%s" (which isn't portable anyway). Use
+"--date=unix" or "%(taggerdate:unix)".
+
+-Peff
