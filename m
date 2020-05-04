@@ -2,124 +2,145 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB83C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 17:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 513DFC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:03:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90EA3206D9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 17:56:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31362205ED
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:03:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HfeRUIUp"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cBmVzMRC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730534AbgEDR4C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 13:56:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56284 "EHLO
+        id S1731542AbgEDSDe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 14:03:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729386AbgEDR4B (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 13:56:01 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2DBDC061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 10:56:01 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id w29so267422qtv.3
-        for <git@vger.kernel.org>; Mon, 04 May 2020 10:56:01 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1731532AbgEDSDd (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 14:03:33 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC6DC061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 11:03:33 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id y3so220149wrt.1
+        for <git@vger.kernel.org>; Mon, 04 May 2020 11:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=bl7DmV0XoRmmG7jzqZ3M4xiGHunitfvAV25dn79ASxQ=;
-        b=HfeRUIUpwq8ACC/ArnXzhCMx0GiVKZEBXJC6J8jR8bUbf+yodx96or0iMLclAvpBa0
-         ej4ICUNMDjyUUPQ+Tznmg1QmdDpvDi1GYxQDEbxhW9sJXGTQFvLCSeeEz+1UF0p+wdsd
-         RLjFKthmS7I5ICcXD1Mha4PvSIqfesJ8s/1Yxb2Sxat+D7CtDd5a3pxfgufmq5tpllxK
-         6vjkGshvZFQgb8fP3UvXGN/TVjO0ITJGKe6i6+aH+zO9mISBUmc4x7kX4SKttbGT1UPW
-         3huwosl1MGP62tzhEqfzuVV95IS9+2qox1AfdB88aTFnDmCTg7iqmyASeDxvinDTQme4
-         7Lng==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=j2vs5vTqV0kYghYVLFUDoFOBLuEvVi64mCkOWIcbayk=;
+        b=cBmVzMRCW3rdUYmsNamWkP1BiYzN1/0MuiYbmJW0fCYXyAsnrl94ELA2ZBTu37Roe/
+         zqHScHkpAHSw3CDRlYROL8hVnuOzAJ5NE68u37w1Y4PjsYb3QtgWPOMMmY7+X0zvGaZ8
+         0zTwUbb3MqU3j2QdLdlNgSKOWIBlN+7ZmQWGRAcRrtG7+fAZhLPNTtw6eN3CLMQCgwin
+         MnRBeLKN/rVIvmaxbRRrjT/213D6e2aMdeQwddK0zdq6/f3JWJ2M/YAU7NjoaASGAt4p
+         RklPRJEPA6JfUdqZwTi4qzw3NWhGrFQaFaOUQZnFjob0qhuqRn/bYhLv/oRGqBiKidKY
+         XvDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=bl7DmV0XoRmmG7jzqZ3M4xiGHunitfvAV25dn79ASxQ=;
-        b=VyLqVs2xpe8o8z8rLe9nEhR0itlRhpEHKFl4LAaiNtuAgM5bC0/qcxPADVHAr9xNSf
-         t9oJvCKGXU+MEzAwK/0Vs+1IKC/PCql4V3lr647d2hM0Mmw001yvW0IZED1tVUOdJae1
-         14D4YBhC/m8c9y0nSIx15itMRJW4NR1oeBZPd4rpbuPFnSbTLYExqI6wddc0G2YZOd6B
-         B9u72HtHu8XXiaq216JsfQcq+/4lTAEThRtirtcPLx/aKjoUD+XADNg3MIgyiHY7Ll5j
-         7eeaMawbT0SISw8HayF1IVHtjTZxKV0rt0bFnzTEwIKz6Z9UeWKtrP2pPHdvJaVzdrv3
-         vbww==
-X-Gm-Message-State: AGi0PuYowNVc8QqUB3rG+kHvM9AwM2PRYIX4oiNNZMYeYwf3tBs8FtAn
-        ARyRjftCH1YM4j7DeOyU2BE=
-X-Google-Smtp-Source: APiQypJlB8vNbqyHlCdbhiMsKcM00O6niuWIUtMq521MCVSCs11FpF/3hS6tcIFpu6QBPzcbhY8C+A==
-X-Received: by 2002:ac8:1b97:: with SMTP id z23mr301234qtj.294.1588614960818;
-        Mon, 04 May 2020 10:56:00 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id b42sm12073620qta.29.2020.05.04.10.55.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 May 2020 10:56:00 -0700 (PDT)
-Subject: Re: [PATCH 10/12] line-log: more responsive, incremental 'git log -L'
-To:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, garimasigit@gmail.com,
-        szeder.dev@gmail.com, jnareb@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
- <d9991d6158df6af0e62b8739591dd726d3479324.1588347029.git.gitgitgadget@gmail.com>
- <20200504175230.GB35579@syl.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4b7e5f51-9fdb-45ac-123e-2589087afa48@gmail.com>
-Date:   Mon, 4 May 2020 13:55:57 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
- Thunderbird/76.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=j2vs5vTqV0kYghYVLFUDoFOBLuEvVi64mCkOWIcbayk=;
+        b=QOyU6Whl04SOlDuVXC1JqNEwMu2t76vecQXnjKB5nM7YI+DkuDOtiw8Oowx/jIHvhA
+         twEKeUwVBNUmWdAV2kRz3N2/ikyVjOOJO/quB89K0msrK4LEieIORz+ENq47he+IRwzH
+         v99To+O4Nj7VvlwfvBu3SjFPGi8hUExaVJL2D/NgvFEkp88QZu8qRD7vOf2Z23YSt9vS
+         esGPaSnKxksJX5fZMpsu+WyoHkhWtlMvi9pQ5NWtNVXJqCEkrrhqq2t3BQZBsm15x77A
+         zk5QiCho6ZY9by5U9qKF9eVygrXnCcp4AOG0EY/+M4zHtQ7fbxvyUVjQnZU/IGezQt3J
+         j8ag==
+X-Gm-Message-State: AGi0PuaShLlj4Yq1EHzhgRkiMIIV1FdFoyouAlKjUNbTucfF8ew76/ps
+        yPBmGARyYzEnRD1mRUUCFu+Kr6IDEPlk5hmKFjCyMw==
+X-Google-Smtp-Source: APiQypLTFGRPNkUh5p33yYyyX0kNNDcv5jbg2+s9hNHNwr00XwCPbIm+5Jpr6D97V1Cuf3MFz55+Ike0bFfW9nh2Xfo=
+X-Received: by 2002:a5d:5404:: with SMTP id g4mr514575wrv.310.1588615411485;
+ Mon, 04 May 2020 11:03:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200504175230.GB35579@syl.local>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
+ <pull.539.v10.git.1588018418.gitgitgadget@gmail.com> <45fd65f72e097dcabba6ea15b1d54c85e7271593.1588018418.git.gitgitgadget@gmail.com>
+ <20200430211714.GE77802@google.com>
+In-Reply-To: <20200430211714.GE77802@google.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 4 May 2020 20:03:19 +0200
+Message-ID: <CAFQ2z_M_hG8zD9R41DLqB3X_Me42F_Ron_87eqCnaGd8K17POQ@mail.gmail.com>
+Subject: Re: [PATCH v10 02/12] Iterate over the "refs/" namespace in for_each_[raw]ref
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/4/2020 1:52 PM, Taylor Blau wrote:
-> On Fri, May 01, 2020 at 03:30:27PM +0000, SZEDER Gábor via GitGitGadget wrote:
+On Thu, Apr 30, 2020 at 11:17 PM Emily Shaffer <emilyshaffer@google.com> wr=
+ote:
+>
+> On Mon, Apr 27, 2020 at 08:13:28PM +0000, Han-Wen Nienhuys via GitGitGadg=
+et wrote:
+> >
+> >
+> > This happens implicitly in the files/packed ref backend; making it
+> > explicit simplifies adding alternate ref storage backends, such as
+> > reftable.
+>
+> As an outsider to this part of the codebase, a little more explanation
+> could be handy in the commit message. I found the backends you mentioned
+> in refs, and it seems like they're the only two, but it's not obvious
+> how this delta is related to those backends. Furthermore, grepping looks
+> like this function whose behavior is changing is being called from
+> somewhere else, with no change to that function (and it looks like the
+> callsite's callback doesn't check whether a ref begins with refs/ or
+> not).
+>
+> All this to say - it's hard to convince myself this is a safe change,
+> and I'd really like to read more to understand why you made it.
 
->> To be clear: this patch doesn't actually optimize the line-level log,
->> but merely moves most of the work from the preprocessing step to the
->> history travelsal, so the commits modifying the line range can be
-> 
-> s/travelsal/traversal
+I'll be the first to admit that I'm on shaky ground here. However,
+given that the test suite passes, if this is breaking some behavior,
+it's probably not very well tested behavior.
 
-Thanks!
+Here is what I know:
 
->> shown as soon as they are processed, and the traversal can be
->> terminated as soon as the given number of commits are shown.
->> Consequently, listing the full history of a line range, potentially
->> all the way to the root commit, will take the same time as before (but
->> at least the user might start reading the output earlier).
->> Furthermore, if the most recent commit modifying the line range is far
->> away from the starting revision, then that initial delay will still be
->> significant.
->>
->> Additional testing by Derrick Stolee: In the Linux kernel repository,
->> the MAINTAINERS file was changed ~3,500 times across the ~915,000
->> commits. In addition to that edit frequency, the file itself is quite
->> large (~18,700 lines). This means that a significant portion of the
->> computation is taken up by computing the patch-diff of the file. This
->> patch improves the time it takes to output the first result quite a
->> bit:
->>
->> Command: git log -L 100,200:MAINTAINERS -n 1 >/dev/null
->>  Before: 3.88 s
->>   After: 0.71 s
-> 
-> Are these 'real' times, or user/sys times?
+Git stores refs in multiple places:
+- normal refs, packed: .git/packed-refs
+- normal refs, loose: under refs/*/
+- special refs: HEAD, ORIG_HEAD, REBASE_HEAD.
 
-True, this is a difference between my reporting and Szeder's. I only
-report "real" time. 
+Currently, the special refs can only be read with refs_read_raw_ref().
+If you iterate over the refs in the files/packed backend, you can
+never find HEAD, ORIG_HEAD etc.
 
-Thanks,
--Stolee
+Reftable does not have different classes of ref storage, so this means
+that the whole space of refs (including HEAD) is managed by the
+reftable backend, and if you iterate over the refs, reftable will also
+produce HEAD. This is not spelled out in the spec, but JGit actually
+stores HEAD in reftable too, and we want to be interoperable.
 
+Without this patch, commands like "git show-ref" will produce an entry
+"HEAD", which is a regression.
+
+With this patch, the default iteration is limited to the "refs/"
+prefix, so we don't produce HEAD in the reftable backend by default.
+
+Now, I have several questions:
+
+* how does this interact with worktrees? It seems that there is a
+special worktree namespace?
+* if you are doing a rebase, and have unreachable objects in
+ORIG_HEAD, REBASE_HEAD, how does git-gc ensure that these objects stay
+alive? I'd think that you need to iterate over all entries (including
+REBASE_HEAD and friends), but I haven't been able to understand how
+that works.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
