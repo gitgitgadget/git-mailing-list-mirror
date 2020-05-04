@@ -2,261 +2,106 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BEFCC3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80740C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:31:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA4D724953
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:27:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BAAC20658
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:31:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UVi4gdpI"
+	dkim=pass (2048-bit key) header.d=bocoup-com.20150623.gappssmtp.com header.i=@bocoup-com.20150623.gappssmtp.com header.b="KHjCqnW1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730921AbgEDS1s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 14:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33046 "EHLO
+        id S1730206AbgEDSbo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 14:31:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730670AbgEDS1r (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 14:27:47 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AEE1C061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 11:27:47 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id v4so637928wme.1
-        for <git@vger.kernel.org>; Mon, 04 May 2020 11:27:47 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1729762AbgEDSbo (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 14:31:44 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF22C061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 11:31:43 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id b8so148660pgi.11
+        for <git@vger.kernel.org>; Mon, 04 May 2020 11:31:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=2XwHznP5JxKxjVzbVnjv9k8CC+i43Pw1Gar/p8EVGp4=;
-        b=UVi4gdpIgF16xTl22PL8BiOwqWRVIpTxvdbJOvpnKSuEjxnbujZYkiJmTTk6ZuDPvM
-         so9xpOTljQt73pNR/qEZs7BFMab3qkKrsZ7tq3jQL+voZuf9elw2Lh8T8Awh4ynhLwP8
-         5dY8+Cf+h+1vDXqlDAcjZIpb65pjOyIX9LCxzbLzSShle3CtobCWvObNXSYO9VpcNPwn
-         yL79UBqEvacwg3hFEkbFxCKK2PUd4n4fMnlv8UtaJ454qYshSRMZhkPJ4K2N+qoAd9M9
-         ysX+Wsu76/xYaq6RCgOAG7D5mTEJs3BFA0Ps2QWFfvRly+rr1DTg5eDlMX/SuFDLdtOA
-         ubQw==
+        d=bocoup-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aQwpIo2T6YSHaab5z8a1q+PSQt7rZPECrVD/V+1EQr8=;
+        b=KHjCqnW1QmcuakE3Odb9BQ2V49PgxQY9FJPq6hz9ZbAphzFsjfh0MReJ0c06PwKtSo
+         yP3+i1iPb0An9gnJmaaZlx9zfW2bkiAVuhRCtG/HRodGmrZ6oBRV5g/8rAj/HlrDZUwS
+         OE7TzrMGYlBDldlpvJ4z2NnVdB2QdV5efmllVGRBU2ZlvyVt0Lvbiqb97OHZhk25g9Mm
+         eFEH5KGT9lz/bXYojkvOkuiUM+KtvPKVjkUVR7qmPbQZSkmQr6+gK4JKwc4cId5RyOtV
+         V/FtnFPADZK9cxbros5z/DodmGT9siwdzgs8sjQdH8t38VHMpc1UBlBBePJ9J0TmH62m
+         0p4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=2XwHznP5JxKxjVzbVnjv9k8CC+i43Pw1Gar/p8EVGp4=;
-        b=gUolASFGHdSkAOANpwNXpqKgbSI+ImKnLWGuQ3o6ftM20v3F/2+nzR7FxjOUcIq2ls
-         LzDC1pl/5lSRyrB6FSiOfJZhA4Golcspj3hkIijIbLvIzyBxd7cz6kGwdAt08iuOHeEp
-         wetsE5olw9vCdwXvLMC8V27HyqoRoLrQCTNbeEfdOlnr0ZLypUlA3V8V4/SWjpHllpxc
-         uIVFlAzeVXevfLMotXx+8sJiGFfrDtnM/x0Ibw94plOz7PdCWZ1nYMoRN62ACCnD4BWH
-         8K1tNkZQNlPMfqYYUqwVN0hV19+3GnvNmDa83JgXtTZqT5F2w3TSM/DyyphmjHDfImf+
-         pl6g==
-X-Gm-Message-State: AGi0Puac7ghecZUa4a6MV693Yr2E7yBbqscxegAQST9KIZ85LULEosKr
-        WZVLfL9a2kriwjQgc3V577Gxjh/6
-X-Google-Smtp-Source: APiQypKpNm/pQzMgnkGqg8spe2Ts2oLlRtlidoYgbQu+TMAgvRD17ry3SL/J5dIdYteXouTGsqyztw==
-X-Received: by 2002:a7b:c399:: with SMTP id s25mr15498771wmj.169.1588616865699;
-        Mon, 04 May 2020 11:27:45 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm19675490wru.38.2020.05.04.11.27.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2020 11:27:44 -0700 (PDT)
-Message-Id: <pull.624.git.1588616864222.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 May 2020 18:27:43 +0000
-Subject: [PATCH] sparse-checkout: stop blocking empty workdirs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aQwpIo2T6YSHaab5z8a1q+PSQt7rZPECrVD/V+1EQr8=;
+        b=bivdJOF0xgfgF5pRY0bkr3SAOOV8/VhiZRfV76j+1CRXOL9po2220bfSZ+6SH6Lts9
+         AhOCa6KiJVntEsQHODf9KAU8uohiauG0JRCOR8MUw8xjw9gC0jwExOVznMzomRwcAsRm
+         Bu3r0D5nJb3m9dXdIJ4+6X4tfEpRa8Pu3C/tsl8OzM0+6Zr0EjWMqx/TCOL+2BCVTEVx
+         m7aokOYIonFClS5mYBtMpFfVR6GVxxyrvbhpLXARy/vvNE5AKtSESlXgfMAyoG1L8ml4
+         y0Q6pg1SGD6bt5zhLe6ldw3r/N6lZUdXPS0g1a79ftMZgMWDK9bQlwVrpZNT6f6JlzGC
+         adUg==
+X-Gm-Message-State: AGi0PuZ2LlOnIgL6s4GfjuJLkQvuX34bptcb7ijpVRBacdgPOY2xFLO3
+        C32G36w6kheoTPqsaCXFIASh8QlSvLMdUcpau1WtDA==
+X-Google-Smtp-Source: APiQypLIv64yapHknV/JD2TjgqBNyhm40r72d4FOgof9rM49JpE9PZef11oOPmISNr9O2Coqg8r5MFurXq0L0BZMtlM=
+X-Received: by 2002:a63:155f:: with SMTP id 31mr328433pgv.0.1588617103418;
+ Mon, 04 May 2020 11:31:43 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     newren@gmail.com, larsxschneider@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+ <20200504174548.r3zaftqcq52yhd2u@chatter.i7.local>
+In-Reply-To: <20200504174548.r3zaftqcq52yhd2u@chatter.i7.local>
+From:   Simon Pieters <simon@bocoup.com>
+Date:   Mon, 4 May 2020 20:31:32 +0200
+Message-ID: <CAOAHyQxuRwGpKtBNy3YiocgdktsJ+FJR9Oj35qENh0P7ZGn2+g@mail.gmail.com>
+Subject: Re: Rename offensive terminology (master)
+To:     Simon Pieters <simon@bocoup.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Mon, May 4, 2020 at 7:45 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Mon, May 04, 2020 at 07:20:33PM +0200, Simon Pieters wrote:
+> > "master" is an offensive term, as it can be interpreted as being
+> > slavery-origin terminology. See
+> > https://en.wikipedia.org/wiki/Master/slave_(technology)#Terminology_concerns
+>
+> Git doesn't use "master-slave" terminology -- the "master" comes from
+> the concept of having a "master" from which copies (branches) are made:
+>
+> https://simple.wikipedia.org/wiki/Master_recording
+>
+> The concept predates the music business and goes back to middle ages
+> when a guild master would create a "master work" or "master piece" that
+> the apprentices could use for study or for imitation.
+>
+> https://en.wikipedia.org/wiki/Master_craftsman
+>
+> So, while I wholeheartedly support using inclusive language, I think git
+> is in the clear here.
 
-Remove the error condition when updating the sparse-checkout leaves
-an empty working directory.
+Thanks. This may be so, but it's still the case that it can be (and
+has been) interpreted as being slavery-origin terminology.
 
-This behavior was added in 9e1afb167 (sparse checkout: inhibit empty
-worktree, 2009-08-20). The comment was added in a7bc906f2 (Add
-explanation why we do not allow to sparse checkout to empty working
-tree, 2011-09-22) in response to a "dubious" comment in 84563a624
-(unpack-trees.c: cosmetic fix, 2010-12-22).
+If you decide to not change this, then I think it may still be good to
+add something like the above to the git documentation (like in [1] and
+[2]), so that projects using git are less inclined to change it for
+their projects, and maybe the people who are offended by it would be
+more comfortable if they know that the project maintainers are aware
+of this issue and could explain why this usage of the word is ok.
 
-With the recent "cone mode" and "git sparse-checkout init [--cone]"
-command, it is common to set a reasonable sparse-checkout pattern
-set of
-
-	/*
-	!/*/
-
-which matches only files at root. If the repository has no such files,
-then their "git sparse-checkout init" command will fail.
-
-Now that we expect this to be a common pattern, we should not have the
-commands fail on an empty working directory. If it is a confusing
-result, then the user can recover with "git sparse-checkout disable"
-or "git sparse-checkout set". This is especially simple when using cone
-mode.
-
-Reported-by: Lars Schneider <larsxschneider@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-    sparse-checkout: stop blocking empty workdirs
-    
-    This is based on en/sparse-checkout.
-    
-    This is something that Lars Schneider discovered working with a repo
-    that had no files at root.
-    
-    Thanks, -Stolee
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-624%2Fderrickstolee%2Fsparse-checkout-allow-empty-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-624/derrickstolee/sparse-checkout-allow-empty-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/624
-
- t/t1011-read-tree-sparse-checkout.sh | 12 +++++++---
- t/t1091-sparse-checkout-builtin.sh   |  8 +++----
- unpack-trees.c                       | 34 +---------------------------
- 3 files changed, 13 insertions(+), 41 deletions(-)
-
-diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
-index 63223e13bd1..140f4599773 100755
---- a/t/t1011-read-tree-sparse-checkout.sh
-+++ b/t/t1011-read-tree-sparse-checkout.sh
-@@ -74,13 +74,19 @@ test_expect_success 'read-tree --no-sparse-checkout with empty .git/info/sparse-
- test_expect_success 'read-tree with empty .git/info/sparse-checkout' '
- 	git config core.sparsecheckout true &&
- 	echo >.git/info/sparse-checkout &&
--	read_tree_u_must_fail -m -u HEAD &&
-+	read_tree_u_must_succeed -m -u HEAD &&
- 	git ls-files --stage >result &&
- 	test_cmp expected result &&
- 	git ls-files -t >result &&
-+	cat >expected.swt <<-\EOF &&
-+	S init.t
-+	S sub/added
-+	S sub/addedtoo
-+	S subsub/added
-+	EOF
- 	test_cmp expected.swt result &&
--	test -f init.t &&
--	test -f sub/added
-+	! test -f init.t &&
-+	! test -f sub/added
- '
- 
- test_expect_success 'match directories with trailing slash' '
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index dee99eeec30..88cdde255cd 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -106,10 +106,8 @@ test_expect_success 'set enables config' '
- 		cd empty-config &&
- 		test_commit test file &&
- 		test_path_is_missing .git/config.worktree &&
--		test_must_fail git sparse-checkout set nothing &&
-+		git sparse-checkout set nothing &&
- 		test_path_is_file .git/config.worktree &&
--		test_must_fail git config core.sparseCheckout &&
--		git sparse-checkout set "/*" &&
- 		test_cmp_config true core.sparseCheckout
- 	)
- '
-@@ -302,8 +300,8 @@ test_expect_success 'revert to old sparse-checkout on empty update' '
- 		echo >file &&
- 		git add file &&
- 		git commit -m "test" &&
--		test_must_fail git sparse-checkout set nothing 2>err &&
--		test_i18ngrep "Sparse checkout leaves no entry on working directory" err &&
-+		git sparse-checkout set nothing 2>err &&
-+		test_i18ngrep ! "Sparse checkout leaves no entry on working directory" err &&
- 		test_i18ngrep ! ".git/index.lock" err &&
- 		git sparse-checkout set file
- 	)
-diff --git a/unpack-trees.c b/unpack-trees.c
-index b43f3e775ad..9a3ccd9d083 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1677,8 +1677,6 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	}
- 
- 	if (!o->skip_sparse_checkout) {
--		int empty_worktree = 1;
--
- 		/*
- 		 * Sparse checkout loop #2: set NEW_SKIP_WORKTREE on entries not in loop #1
- 		 * If they will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
-@@ -1706,19 +1704,6 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 
- 			if (apply_sparse_checkout(&o->result, ce, o))
- 				ret = 1;
--
--			if (!ce_skip_worktree(ce))
--				empty_worktree = 0;
--		}
--		/*
--		 * Sparse checkout is meant to narrow down checkout area
--		 * but it does not make sense to narrow down to empty working
--		 * tree. This is usually a mistake in sparse checkout rules.
--		 * Do not allow users to do that.
--		 */
--		if (o->result.cache_nr && empty_worktree) {
--			ret = unpack_failed(o, "Sparse checkout leaves no entry on working directory");
--			goto done;
- 		}
- 		if (ret == 1) {
- 			/*
-@@ -1779,7 +1764,7 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
- {
- 	enum update_sparsity_result ret = UPDATE_SPARSITY_SUCCESS;
- 	struct pattern_list pl;
--	int i, empty_worktree;
-+	int i;
- 	unsigned old_show_all_errors;
- 	int free_pattern_list = 0;
- 
-@@ -1810,7 +1795,6 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
- 
- 	/* Then loop over entries and update/remove as needed */
- 	ret = UPDATE_SPARSITY_SUCCESS;
--	empty_worktree = 1;
- 	for (i = 0; i < o->src_index->cache_nr; i++) {
- 		struct cache_entry *ce = o->src_index->cache[i];
- 
-@@ -1824,28 +1808,12 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
- 
- 		if (apply_sparse_checkout(o->src_index, ce, o))
- 			ret = UPDATE_SPARSITY_WARNINGS;
--
--		if (!ce_skip_worktree(ce))
--			empty_worktree = 0;
--	}
--
--	/*
--	 * Sparse checkout is meant to narrow down checkout area
--	 * but it does not make sense to narrow down to empty working
--	 * tree. This is usually a mistake in sparse checkout rules.
--	 * Do not allow users to do that.
--	 */
--	if (o->src_index->cache_nr && empty_worktree) {
--		unpack_failed(o, "Sparse checkout leaves no entry on working directory");
--		ret = UPDATE_SPARSITY_INDEX_UPDATE_FAILURES;
--		goto done;
- 	}
- 
- skip_sparse_checkout:
- 	if (check_updates(o, o->src_index))
- 		ret = UPDATE_SPARSITY_WORKTREE_UPDATE_FAILURES;
- 
--done:
- 	display_warning_msgs(o);
- 	o->show_all_errors = old_show_all_errors;
- 	if (free_pattern_list)
-
-base-commit: 5644ca28cded68972c74614fc06d6e0e1db1a7de
+[1] https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefmasteramaster
+[2] https://git-scm.com/docs/git-init
 -- 
-gitgitgadget
+Simon Pieters
+Bocoup https://bocoup.com/
