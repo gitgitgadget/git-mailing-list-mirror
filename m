@@ -2,66 +2,66 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-19.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 513DFC3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D0BC3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:10:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31362205ED
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:03:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A5532496F
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 18:10:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cBmVzMRC"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JaZSvUtR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731542AbgEDSDe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 14:03:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
+        id S1732336AbgEDSKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 14:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1731532AbgEDSDd (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 14:03:33 -0400
+        by vger.kernel.org with ESMTP id S1732076AbgEDSKc (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 14:10:32 -0400
 Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC6DC061A0E
-        for <git@vger.kernel.org>; Mon,  4 May 2020 11:03:33 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id y3so220149wrt.1
-        for <git@vger.kernel.org>; Mon, 04 May 2020 11:03:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B453C061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 11:10:32 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id d17so173134wrg.11
+        for <git@vger.kernel.org>; Mon, 04 May 2020 11:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=j2vs5vTqV0kYghYVLFUDoFOBLuEvVi64mCkOWIcbayk=;
-        b=cBmVzMRCW3rdUYmsNamWkP1BiYzN1/0MuiYbmJW0fCYXyAsnrl94ELA2ZBTu37Roe/
-         zqHScHkpAHSw3CDRlYROL8hVnuOzAJ5NE68u37w1Y4PjsYb3QtgWPOMMmY7+X0zvGaZ8
-         0zTwUbb3MqU3j2QdLdlNgSKOWIBlN+7ZmQWGRAcRrtG7+fAZhLPNTtw6eN3CLMQCgwin
-         MnRBeLKN/rVIvmaxbRRrjT/213D6e2aMdeQwddK0zdq6/f3JWJ2M/YAU7NjoaASGAt4p
-         RklPRJEPA6JfUdqZwTi4qzw3NWhGrFQaFaOUQZnFjob0qhuqRn/bYhLv/oRGqBiKidKY
-         XvDg==
+        bh=aKUNCFqjP63bKaygscQNIfFJ+kxHW6HnDOFGcdbc42o=;
+        b=JaZSvUtRlRyuP/hsYPOFWLcFuz6bM2TqELiQQmOj+9OK/S9L7TPPn01vR5WuUsSM0x
+         liNM3pR52UnmnqVNse7ET1kROdkGUKAavA7JfzSsaGiGDR89olhjqlf4eQdndS8y7W5m
+         IkfqGfsNV30wp+ZhmrbyRMDCWPPNdoskHHtYqezaW3fA7sUOxA5Jn1sAsdbvrBAmAnHv
+         f20caEkir0yrTakyFL/AI79SFqQs9e6VKrFLxdfwBSi2SV1UOJQp8pqwvYx+EJOi8W2d
+         SflO8Jj19PgPZRkhIj+oxhYTP57u1EPzfOzzi1aglDBjPm9AkN26UsdpyTSH6L7fjIlN
+         d1MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=j2vs5vTqV0kYghYVLFUDoFOBLuEvVi64mCkOWIcbayk=;
-        b=QOyU6Whl04SOlDuVXC1JqNEwMu2t76vecQXnjKB5nM7YI+DkuDOtiw8Oowx/jIHvhA
-         twEKeUwVBNUmWdAV2kRz3N2/ikyVjOOJO/quB89K0msrK4LEieIORz+ENq47he+IRwzH
-         v99To+O4Nj7VvlwfvBu3SjFPGi8hUExaVJL2D/NgvFEkp88QZu8qRD7vOf2Z23YSt9vS
-         esGPaSnKxksJX5fZMpsu+WyoHkhWtlMvi9pQ5NWtNVXJqCEkrrhqq2t3BQZBsm15x77A
-         zk5QiCho6ZY9by5U9qKF9eVygrXnCcp4AOG0EY/+M4zHtQ7fbxvyUVjQnZU/IGezQt3J
-         j8ag==
-X-Gm-Message-State: AGi0PuaShLlj4Yq1EHzhgRkiMIIV1FdFoyouAlKjUNbTucfF8ew76/ps
-        yPBmGARyYzEnRD1mRUUCFu+Kr6IDEPlk5hmKFjCyMw==
-X-Google-Smtp-Source: APiQypLTFGRPNkUh5p33yYyyX0kNNDcv5jbg2+s9hNHNwr00XwCPbIm+5Jpr6D97V1Cuf3MFz55+Ike0bFfW9nh2Xfo=
-X-Received: by 2002:a5d:5404:: with SMTP id g4mr514575wrv.310.1588615411485;
- Mon, 04 May 2020 11:03:31 -0700 (PDT)
+        bh=aKUNCFqjP63bKaygscQNIfFJ+kxHW6HnDOFGcdbc42o=;
+        b=J9KUzg/hcxRLMlvosg6I4bnspuTdmyFNDS+KhCOIzFj9Bvmsoc7o2ovA3f09U/ZzOo
+         JMxJGoi0LMVlgovI7Jd2Yhk3Hb920OgoQLyBwl09a2OJpUdSy7qRz5xscKds7DhdOVxy
+         9xxg1N0WAJx2bxRdVgKx7/I1AHi6O8uJwgt8ISMnrFBn0L4Vwj0WzPa5x5YVx7apU0ax
+         2xoVLmw6tXhi1UiAXmQvWHprK6TBBNSPN8JghnN8q4f5mNIzdna07uzwI94P++CIrNA8
+         Ika3VOYhurOKE2f3AlvChfoaMM39CxX2C7ioHfbVzjnxjG1sHpEPQE/xTPQaLSelUjml
+         0ajA==
+X-Gm-Message-State: AGi0PuaEdwLH46AoViO81it4eI9NagSOmorJNRjO2Sq+l5utTNbsyS0w
+        2br9tQt8ffWYNa+lXt9KcnJmi8Rq4o1I8POF4Zjbj1cp4OQ=
+X-Google-Smtp-Source: APiQypJmXs1zJdiIX9FAOGZjlIHmmkJH5cNQDFrCObKE5iW6HspqfxTtEWcCV8zo8mRkfBxLD8yLthyhN4TnqzscWcc=
+X-Received: by 2002:a5d:4f06:: with SMTP id c6mr655521wru.12.1588615830962;
+ Mon, 04 May 2020 11:10:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.539.v9.git.1587417295.gitgitgadget@gmail.com>
- <pull.539.v10.git.1588018418.gitgitgadget@gmail.com> <45fd65f72e097dcabba6ea15b1d54c85e7271593.1588018418.git.gitgitgadget@gmail.com>
- <20200430211714.GE77802@google.com>
-In-Reply-To: <20200430211714.GE77802@google.com>
+ <pull.539.v10.git.1588018418.gitgitgadget@gmail.com> <bc89bcd9c8c9b33e517a21bbe7c441538e288ebc.1588018418.git.gitgitgadget@gmail.com>
+ <20200430212410.GF77802@google.com>
+In-Reply-To: <20200430212410.GF77802@google.com>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 4 May 2020 20:03:19 +0200
-Message-ID: <CAFQ2z_M_hG8zD9R41DLqB3X_Me42F_Ron_87eqCnaGd8K17POQ@mail.gmail.com>
-Subject: Re: [PATCH v10 02/12] Iterate over the "refs/" namespace in for_each_[raw]ref
+Date:   Mon, 4 May 2020 20:10:19 +0200
+Message-ID: <CAFQ2z_PG=EDCpyZoPU6=crbfYUa3DMU_TG7=S2hjeOJYfGGf4Q@mail.gmail.com>
+Subject: Re: [PATCH v10 03/12] create .git/refs in files-backend.c
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
@@ -72,65 +72,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 30, 2020 at 11:17 PM Emily Shaffer <emilyshaffer@google.com> wr=
+On Thu, Apr 30, 2020 at 11:24 PM Emily Shaffer <emilyshaffer@google.com> wr=
 ote:
 >
-> On Mon, Apr 27, 2020 at 08:13:28PM +0000, Han-Wen Nienhuys via GitGitGadg=
+> On Mon, Apr 27, 2020 at 08:13:29PM +0000, Han-Wen Nienhuys via GitGitGadg=
 et wrote:
 > >
 > >
-> > This happens implicitly in the files/packed ref backend; making it
-> > explicit simplifies adding alternate ref storage backends, such as
-> > reftable.
+> > This prepares for supporting the reftable format, which will want
+> > create its own file system layout in .git
+> >
+> > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> > ---
+> >  builtin/init-db.c    | 2 --
+> >  refs/files-backend.c | 6 ++++++
+> >  2 files changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/builtin/init-db.c b/builtin/init-db.c
+> > index 0b7222e7188..3b50b1aa0e5 100644
+> > --- a/builtin/init-db.c
+> > +++ b/builtin/init-db.c
+> > @@ -251,8 +251,6 @@ static int create_default_files(const char *templat=
+e_path,
+> >        * We need to create a "refs" dir in any case so that older
+> >        * versions of git can tell that this is a repository.
+> >        */
+> > -     safe_create_dir(git_path("refs"), 1);
+> > -     adjust_shared_perm(git_path("refs"));
 >
-> As an outsider to this part of the codebase, a little more explanation
-> could be handy in the commit message. I found the backends you mentioned
-> in refs, and it seems like they're the only two, but it's not obvious
-> how this delta is related to those backends. Furthermore, grepping looks
-> like this function whose behavior is changing is being called from
-> somewhere else, with no change to that function (and it looks like the
-> callsite's callback doesn't check whether a ref begins with refs/ or
-> not).
->
-> All this to say - it's hard to convince myself this is a safe change,
-> and I'd really like to read more to understand why you made it.
+> Is the reftable completely replacing the refs/ dir? Or is the idea that
+> the refs/ dir is only used by the files backend? The commit message
+> makes it sound like it's an additional format to support, so I'm a
+> little confused. Why does the other currently-existing backend not need
+> the refs/ dir at this stage?
 
-I'll be the first to admit that I'm on shaky ground here. However,
-given that the test suite passes, if this is breaking some behavior,
-it's probably not very well tested behavior.
+I've dropped this patch from the series; it probably was from before
+the compat hack that is described in
 
-Here is what I know:
+  https://git.eclipse.org/r/#/c/157167/
 
-Git stores refs in multiple places:
-- normal refs, packed: .git/packed-refs
-- normal refs, loose: under refs/*/
-- special refs: HEAD, ORIG_HEAD, REBASE_HEAD.
-
-Currently, the special refs can only be read with refs_read_raw_ref().
-If you iterate over the refs in the files/packed backend, you can
-never find HEAD, ORIG_HEAD etc.
-
-Reftable does not have different classes of ref storage, so this means
-that the whole space of refs (including HEAD) is managed by the
-reftable backend, and if you iterate over the refs, reftable will also
-produce HEAD. This is not spelled out in the spec, but JGit actually
-stores HEAD in reftable too, and we want to be interoperable.
-
-Without this patch, commands like "git show-ref" will produce an entry
-"HEAD", which is a regression.
-
-With this patch, the default iteration is limited to the "refs/"
-prefix, so we don't produce HEAD in the reftable backend by default.
-
-Now, I have several questions:
-
-* how does this interact with worktrees? It seems that there is a
-special worktree namespace?
-* if you are doing a rebase, and have unreachable objects in
-ORIG_HEAD, REBASE_HEAD, how does git-gc ensure that these objects stay
-alive? I'd think that you need to iterate over all entries (including
-REBASE_HEAD and friends), but I haven't been able to understand how
-that works.
+for further clarification: reftable doesn't used the refs/ dir at all,
+but we still want to not confuse older git versions.
 
 --=20
 Han-Wen Nienhuys - Google Munich
