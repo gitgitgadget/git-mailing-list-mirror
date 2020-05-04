@@ -6,106 +6,76 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05994C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDBD8C47257
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:32:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAF0E206D9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:29:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE2DC206D9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:32:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="w99axtUY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S1NTmL+G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729635AbgEDQ3i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 12:29:38 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57963 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729634AbgEDQ3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 12:29:37 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DC72DA32C;
-        Mon,  4 May 2020 12:29:34 -0400 (EDT)
+        id S1729682AbgEDQcv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 12:32:51 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63971 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729606AbgEDQcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 12:32:51 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D2E3BA66E;
+        Mon,  4 May 2020 12:32:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SaAXZIre7HzWd57Gj13IIAhC6aY=; b=w99axt
-        UYzQFm44LIWHt1CkKfpKgXMYR7vvx7Nt5GpYpsibdkt+o2f/FVZ4SFnqhmbrZFU3
-        HLf5sYS5S678JxAvOx1TQ+9cJgNgOp3WwD+MNPf9k0PNxm58M4RtC2jzMBtBQ/kA
-        7mp47+b6LxpCIE9JLjap8KykYu4g+pz6qDqLA=
+        :content-type; s=sasl; bh=2f8FAF5oJqE14Ls40t33EqBYiB8=; b=S1NTmL
+        +GjeufZztaO9+kTttU4C34u1xz9bsvSasUHMevP+Usy7URClC8OQwnYZna831w6A
+        KqLT/cRCZCam55GVkrPmG02hZD0lECm7AKVsqGYRXiDbtclBu3KVix9PC7dNRI2h
+        6iSEazlx1o3QhV9vDbpQtEpOvI6gdX6npf8gw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=igZtaVPUDKMtlo3H9g4rmIG/z85OEYs5
-        TjG2G4fz65y8Mu0u2b/M7M6reDFJYkbGet88fh1RPzgFoNkvmY6S30sesBahQsGS
-        A4paHcEZ2dzu7FQr/9wqcP7N2a1bT19WudfslMVBV4ZhZeq+icmkUzEEFnLdogX6
-        69V+uPwGJH4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 062EEDA32B;
-        Mon,  4 May 2020 12:29:34 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=jTYpuXShksdemTVIVtO/McwKpFUVKUPz
+        WLmYVTS0dSKdfJONOOhzpB50VmiHTKaGW2g5UZ+zDD5R5Aw5FCcXNAHdowbzBAje
+        XEef2swm9rWdPxv1siENiv1qKDg6JKAKywwf77Hv6s5ib3zKiVgGTSCmYKLMQJlP
+        QrBCgR9woB0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 23E50BA66C;
+        Mon,  4 May 2020 12:32:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 32E5FDA32A;
-        Mon,  4 May 2020 12:29:31 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 673B0BA66B;
+        Mon,  4 May 2020 12:32:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, dstolee@microsoft.com, martin.agren@gmail.com
-Subject: Re: [PATCH 7/7] commit-graph.c: introduce '--[no-]check-oids'
-References: <cover.1586836700.git.me@ttaylorr.com>
-        <1ff42f4c3d568dd25889d2808cda3edf38a36cb9.1586836700.git.me@ttaylorr.com>
-        <20200415042930.GA11703@syl.local> <20200415043137.GA12136@syl.local>
-        <20200422105536.GB3063@szeder.dev> <20200422233930.GB19100@syl.local>
-        <20200424105957.GB5925@szeder.dev> <20200501223848.GH41612@syl.local>
-        <20200503094005.GD170902@coredump.intra.peff.net>
-        <xmqq5zddj6us.fsf@gitster.c.googlers.com>
-        <20200504145937.GA11373@coredump.intra.peff.net>
-Date:   Mon, 04 May 2020 09:29:29 -0700
-In-Reply-To: <20200504145937.GA11373@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 4 May 2020 10:59:37 -0400")
-Message-ID: <xmqqv9lbhdee.fsf@gitster.c.googlers.com>
+To:     Vadim Zeitlin <vz-git@zeitlins.org>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fetch: allow running as different users in shared repositories
+References: <E1jHGdD-00079b-06@smtp.tt-solutions.com>
+        <nycvar.QRO.7.76.6.2003261538170.46@tvgsbejvaqbjf.bet>
+        <E1jUeoi-000205-RT@smtp.tt-solutions.com>
+Date:   Mon, 04 May 2020 09:32:44 -0700
+In-Reply-To: <E1jUeoi-000205-RT@smtp.tt-solutions.com> (Vadim Zeitlin's
+        message of "Sat, 2 May 2020 01:11:36 +0200")
+Message-ID: <xmqqr1vzhd8z.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6E82B128-8E24-11EA-93E6-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E2DDDAB6-8E24-11EA-83A4-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Vadim Zeitlin <vz-git@zeitlins.org> writes:
 
-> On Sun, May 03, 2020 at 09:55:39AM -0700, Junio C Hamano wrote:
->
->> >> Does that seem reasonable?
->> >
->> > FWIW, I think that is the best direction. If anybody is depending on the
->> > "commit-graph write will complain about non-commits" behavior, they
->> > could only be doing so for a few versions; prior to v2.24.0 we did not.
->> 
->> If we had it for the past 180 days or so, that's not like " people
->> have seen it for only a brief time", but working it around shouldn't
->> be too difficult---they need to validate the input they feed to the
->> command themselves (or do they need to do more?).
->
-> Yeah, my point wasn't so much that it was brief as that we've had it
-> both ways, and nobody was complaining about it before v2.24.0 (the
-> type-restriction change came as a side effect of another tightening).
->
-> But yeah, if somebody really wants that validation, they can do it
-> themselves with "cat-file --batch-check". Or even for-each-ref directly:
->
->   git for-each-ref --format='%(objectname) %(objecttype) %(*objecttype)' |
->   awk '/commit/ { print $1 }' |
->   git commit-graph write --stdin-commits
->
-> If you're using --stdin-commits, you're presumably processing the input
-> anyway (since otherwise you'd just be using --reachable).
->
-> I suppose you could argue the other way, too (that the user could be
-> filtering out non-commits). But so far we have one data point in either
-> direction, and it wants the more forgiving behavior. :)
+>  So I'd just like to ask directly, hoping that it's not inappropriate:
+> Junio, do I need to do anything to get this patch accepted or am I just
+> being too impatient?
 
-Yup.  I agree that Taylor outlined the best direction going forward.
+I do not even recall seeing the discussion, so you are right to
+suspect that it fell thru the cracks, and it is quite appropriate to
+ping the thread directly like you did.  Mind resending the patch to
+the list, just to make sure nobody else sees any problems with it?
 
 Thanks.
