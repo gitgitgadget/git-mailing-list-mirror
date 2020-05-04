@@ -2,92 +2,107 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11789C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF5F0C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:41:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D149C206D9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:37:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E923206D9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:41:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QCDQ3le3"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bLUWfyFn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729670AbgEDQhT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 12:37:19 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60228 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729551AbgEDQhS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 12:37:18 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CD180DA397;
-        Mon,  4 May 2020 12:37:16 -0400 (EDT)
+        id S1729675AbgEDQlg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 12:41:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59860 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729310AbgEDQlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 12:41:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7285CBA735;
+        Mon,  4 May 2020 12:41:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BQ4JgK6d6NkV
-        Rsv7g7lIY+TUyN4=; b=QCDQ3le3GMmqzCzC3YEbIoh8pZq51IRqcMDYUrP3NU/5
-        LCFX3kYTmH2jOTxvfVhRtJmPVmXMPyNN9Jode4yNRDlhnv5NmgejBsLsveuwn+a1
-        F7ib5dph1hb7p/BLZM+fNTOecDwuNlw7eDL1Lp49m56X3RrY0bwD6J4ResN8LlI=
+        :content-type; s=sasl; bh=z9V4HMrX49HU4av2+gpMu/FplM8=; b=bLUWfy
+        FnEZkyQrM7RdXcBsHTWsO0WA6n2HGzIIsUDYYQnt6jUBfOsJ5wNF2irv/eEYItel
+        7SQDLtcdkoE0U0jj+BS5WGFSSrXzedzcMgZpvrMoTmLS8FG9n4Ip8TEXTm4lHUp4
+        wV3YTuDWS1QRNJ1tkTMCajxibfnLclujmj6+k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GUiKGX
-        notcYzM9fK/IEG2bpEHq3WNkLNWlXcn+ErGzsnAhClJnWrBu5qi361quJnlyY22a
-        lSItAS380F44eRhnYsBPKdJtBZJi6pW3cFkIF3QHFVDB6IRYdIh+nGZs7F4qGL0p
-        LFUfzsrcAPpzOMWkUBAAEdSU28Sa/bXQBDUDE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C55C5DA396;
-        Mon,  4 May 2020 12:37:16 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=btL01lr30rOrJe0VWKQmgzYcPJkrR2ER
+        aH8KafoQBzTa1T+8gQ1k/Sbr5IEMT4U4tv0IiQmAvviOSf076Mz349pNoT9+HsEZ
+        b5nC+Wnc6SLoZA6IoOfmjJ1fMBLA5JgUmduV9rSOzG19zLDm6NuQsvhlRGej3MNK
+        1RPn/PJ4BwY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5676FBA734;
+        Mon,  4 May 2020 12:41:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 02F80DA395;
-        Mon,  4 May 2020 12:37:12 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9DEF2BA733;
+        Mon,  4 May 2020 12:41:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] SubmittingPatches: advertise GitHub Actions CI
-References: <20200504150105.GB11373@coredump.intra.peff.net>
-        <cover.1588607262.git.congdanhqx@gmail.com>
-        <24a8fefe5add61d557a29f070bd2ca0d0f43d844.1588607262.git.congdanhqx@gmail.com>
-Date:   Mon, 04 May 2020 09:37:11 -0700
-In-Reply-To: <24a8fefe5add61d557a29f070bd2ca0d0f43d844.1588607262.git.congdanhqx@gmail.com>
-        (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Mon, 4 May
- 2020 22:49:32 +0700")
-Message-ID: <xmqqmu6nhd1k.fsf@gitster.c.googlers.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net, newren@gmail.com
+Subject: Re: [PATCH v5 1/4] gitfaq: files in .gitignore are tracked
+References: <20200504054223.11125-1-shouryashukla.oo@gmail.com>
+Date:   Mon, 04 May 2020 09:41:29 -0700
+In-Reply-To: <20200504054223.11125-1-shouryashukla.oo@gmail.com> (Shourya
+        Shukla's message of "Mon, 4 May 2020 11:12:20 +0530")
+Message-ID: <xmqqimhbhcue.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 81C46730-8E25-11EA-8D53-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1BECDB62-8E26-11EA-97FE-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Shourya Shukla <shouryashukla.oo@gmail.com> writes:
 
-> +Alternately, you can use GitHub Actions (which supports testing your c=
-hanges
-> +on Linux, macOS, and Windows) by pushing into a branch whose name star=
-ts
-> +with "for-ci/" or opening a GitHub's Pull Request against
-> +https://github.com/git/git.git
+> Add issue in 'Common Issues' section which addresses the problem of
+> Git tracking files/paths mentioned in '.gitignore'.
+>
+> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+> ---
+> Thank you Junio and Elijah for the review! :)
+> I have tried to make the solutions to the issues as concise and crisp
+> as possible, linking the Documentation wherever necessary. Also, I have
+> converted 1SP -> 2 SP after full stops(.).
 
-Can you tighten the description of "for-ci/" a bit?  It's not like
-the convention is offered in _any_ repository, but it is active only
-if you push to a fork of git.git, right?  If your fork is a fork of
-a fork, what happens (e.g. github.com/gitster/git is marked as a
-fork of git/git; when somebody forks from gitster/git, would they
-also get the for-ci/ convention)?
+Indeed I find it concise and very much to the point.  Looks quite
+well written.
 
-Thanks.
+Thanks, will queue (and please ping me if I forget ;-))
 
+>
+>  Documentation/gitfaq.txt | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+> index 1cf83df118..11d9bac859 100644
+> --- a/Documentation/gitfaq.txt
+> +++ b/Documentation/gitfaq.txt
+> @@ -223,6 +223,16 @@ a file checked into the repository which is a template or set of defaults which
+>  can then be copied alongside and modified as appropriate.  This second, modified
+>  file is usually ignored to prevent accidentally committing it.
+>  
+> +[[files-in-.gitignore-are-tracked]]
+> +I asked Git to ignore various files, yet they are still tracked::
+> +	A `gitignore` file ensures that certain file(s) which are not
+> +	tracked by Git remain untracked.  However, sometimes particular
+> +	file(s) may have been tracked before adding them into the
+> +	`.gitignore`, hence they still remain tracked.  To untrack and
+> +	ignore files/patterns, use `git rm --cached <file/pattern>`
+> +	and add a pattern to `.gitignore` that matches the <file>.
+> +	See linkgit:gitignore[5] for details.
+> +
+>  Hooks
+>  -----
