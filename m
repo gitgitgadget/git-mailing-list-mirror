@@ -2,92 +2,109 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5E0AC3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 15:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3EE9C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:06:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77682206D9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 15:59:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51674206A4
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:06:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dXLtlSZb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HpZSCXJQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729207AbgEDP7t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 11:59:49 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56581 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728251AbgEDP7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 11:59:49 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 703FC49D5C;
-        Mon,  4 May 2020 11:59:47 -0400 (EDT)
+        id S1729486AbgEDQGO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 12:06:14 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51881 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729141AbgEDQGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 12:06:14 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D445DA09D;
+        Mon,  4 May 2020 12:06:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LO57IH4wxNOG/rVLlFncTcHobj0=; b=dXLtlS
-        Zboq8EWwfNB7jTryONmI6jKVzxj9E14NxoZ6b70SyuqWFETF2EPmIMCkrtQGTh6A
-        FLAmGDhecwqnRKIboBjX7zAfT/uXWxsxa5VpK9827oh8dpJiYKfEe3XBTiYYVI2e
-        PYMZ5f5h+NbbeDhH0fK5hXb/DLA9579aM68lc=
+        :content-type; s=sasl; bh=QhAQwT7trCsOT5/DO1OPW+PCwBA=; b=HpZSCX
+        JQNBNGtvqkdXFl0edF4ujxbxsjScJRM9eH6Gcc3da/5ia2RlvYegBMcr2Kcg4EU7
+        enVMlyVRe9ppnSJWz1wsHMtTjUENSGs0zfjSdpEt7zYuF7V9ytA5Hf0EeuIK6uT7
+        5qiV+rKbbhkxht30cJ2Ze7xz6CruaMD1n9i6c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oMplI2aIMGRIfhg/K07pVgBm36xBxZuF
-        TrsP7WNxuQzCvK725gHhu3lLUpuaLEXaPtinHJYQHM3aGjavka/AoErq8Pzdt8bs
-        P5Ttv1pTcUjQKaXquElejfmOmvN0MGLHUVHPYF9j0xkyV6xbLrDknW36mzYSNy4v
-        iHGUL/JoO5E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6719F49D5B;
-        Mon,  4 May 2020 11:59:47 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=KXrGpc2zhrB9gdROq3YXOhseTVikZW1D
+        bAZNbIAG8SkvkFsu83DLeXEGR7LS5VzFqHqyBC10gixjrjtAEfZxmYwASuvGyzVd
+        rfNxxcR3ra7jZOnc+3sHBeZGSWcqM5xKddVPP8AyxrIMn6EDhvovCSPH1nfvd4RR
+        Bqkg8XmB/Pw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 34FD4DA09C;
+        Mon,  4 May 2020 12:06:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE0EA49D5A;
-        Mon,  4 May 2020 11:59:46 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 231ABDA09B;
+        Mon,  4 May 2020 12:06:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2020, #04; Thu, 30)
-References: <xmqqmu6spocm.fsf@gitster.c.googlers.com>
-        <20200501202411.GA41612@syl.local> <20200501224004.GA45288@syl.local>
-Date:   Mon, 04 May 2020 08:59:46 -0700
-In-Reply-To: <20200501224004.GA45288@syl.local> (Taylor Blau's message of
-        "Fri, 1 May 2020 16:40:04 -0600")
-Message-ID: <xmqq4ksvitcd.fsf@gitster.c.googlers.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com,
+        sandals@crustytoothpaste.net, christian.couder@gmail.com,
+        dstolee@microsoft.com, jonathantanmy@google.com
+Subject: Re: [PATCH v4 3/4] gitfaq: shallow cloning a repository
+References: <20200429093811.8475-1-shouryashukla.oo@gmail.com>
+        <20200429093811.8475-3-shouryashukla.oo@gmail.com>
+        <xmqq7dxyxlpj.fsf@gitster.c.googlers.com>
+        <20200502061355.GB5582@konoha>
+Date:   Mon, 04 May 2020 09:06:06 -0700
+In-Reply-To: <20200502061355.GB5582@konoha> (Shourya Shukla's message of "Sat,
+        2 May 2020 11:43:55 +0530")
+Message-ID: <xmqqzhanhehd.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 46FC1FEE-8E20-11EA-9AA1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 2AD03020-8E21-11EA-9D2D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Shourya Shukla <shouryashukla.oo@gmail.com> writes:
 
-> On Fri, May 01, 2020 at 02:24:11PM -0600, Taylor Blau wrote:
->> One thing that may have been passed over is my series to teach the
->> bitmap machinery how to quickly interpret '--filter=tree:0' by
->> discarding non-named trees from the result set. That is here:
->>
->>   https://lore.kernel.org/git/cover.1587597151.git.me@ttaylorr.com/
->>
->> This didn't get much review outside of from Peff, who wrote some of the
->> patches, so I'd be happy to re-send it or wait longer for others to have
->> a look, too. For what it's worth, these changes are fairly
->> straightforward and we have been running them at GitHub (and allowing
->> partial clones with `--filter=tree:0`!) for some time now.
+> On 29/04 10:09, Junio C Hamano wrote:
+>> > ---
+>> > I wanted to ask why is there no mention of partial cloning in
+>> > the 'git-clone' documentation? Is it because it is an experimental
+>> > feature?
+>> 
+>> If the folks that have been pushing the feature haven't bothered to
+>> document it fully, by definition, it must be a work in progress that
+>> is not ready for the prime time ;-)
+>> 
+>> Jokes aside, the --filter=<filter-spec> option is mentioned in the
+>> documentation and it says "...is used for the partial clone filter",
+>> without even defining what a "partial clone filter" really is.
+>> 
+>> The topic deserves its own subsection, between the "Git URLs" and
+>> the "Examples" sections, in git-clone(1).
 >
-> At the risk of nagging, would you like this one to be re-sent, or are
-> you feeling OK about picking it up?
+> May I try to add it? If yes then are there any points to be kept in mind
+> while writing this part (for eg., length of the subsection, writing
+> style, what all is to be written etc.)?
 
-Ah, I completely missed this message.  I have no strong opinions on
-the topic itself myself and I do not remember seeing anything
-objectionable in the implementation, but a resend may give it the
-last chance for exposure.
+I am much less qualified to answer these questions than others on
+the CC: list.
+
+Who added the mention to --filter and "used for the partial clone filter"
+to the page anyway?  Did you run "git blame" to find out?
+
+    ... goes and looks ...
+
+It was added by 4a465443 (clone: document --filter options, 2020-03-22).
+
+Derrick, perhaps you can help Shourya to find a good place to give
+a birds-eye description for the partial-clone feature and figure out
+what points about the feature are worth covering there?
 
 Thanks.
-
 
