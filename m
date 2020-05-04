@@ -2,189 +2,181 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4A65C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 20:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AF57C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 20:40:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 681A720721
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 20:40:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78AEF206C0
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 20:40:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="THD33hy3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GFAeEt+w"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726404AbgEDUkE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 16:40:04 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63179 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbgEDUkE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 16:40:04 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A8ADDBCACB;
-        Mon,  4 May 2020 16:40:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=38Az5GVeHv3R7b9dDkjGdHJRnzk=; b=THD33h
-        y3bQXjBuiCSHs6yJHFHJGtpW8n4FUcHv26bS1yWnOeQBsR7l+f9TEjOPFm6g0Grs
-        PsuzMMVKkQjAQMgsBC0apCQ6uMOH003ayfhPJbDiha3Q7C/dfS3Q5dy+zCAB3h6a
-        9EBusPJnueHuBcTEi0raIc29bjH6I22cszax4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DQjAnOk3b63NAFbXmqH5e/IL8LOZG5OX
-        ETZc7Fm5rz19pmzad2zQp/IxOGb/2LH1MGp5MxrklhpwYLrK7LrPeKABcdu/7y/O
-        uU4FYuuUSWesZnFbX7kYb9SqlIWbWC8yg7QwSHkCSMRK9FFYrEBpwtIqOl6NKRYb
-        NWv4She9WBc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8001BBCACA;
-        Mon,  4 May 2020 16:40:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B4446BCAC9;
-        Mon,  4 May 2020 16:39:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vadim Zeitlin <vz-git@zeitlins.org>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fetch: allow running as different users in shared repositories
-References: <E1jHGdD-00079b-06@smtp.tt-solutions.com>
-        <nycvar.QRO.7.76.6.2003261538170.46@tvgsbejvaqbjf.bet>
-        <E1jUeoi-000205-RT@smtp.tt-solutions.com>
-        <xmqqr1vzhd8z.fsf@gitster.c.googlers.com>
-        <E1jVeWV-0006Sj-JC@smtp.tt-solutions.com>
-Date:   Mon, 04 May 2020 13:39:55 -0700
-In-Reply-To: <E1jVeWV-0006Sj-JC@smtp.tt-solutions.com> (Vadim Zeitlin's
-        message of "Mon, 4 May 2020 19:04:55 +0200")
-Message-ID: <xmqqlfm7fn8k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726469AbgEDUkI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 16:40:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53840 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726410AbgEDUkH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 16:40:07 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F81EC061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 13:40:07 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id s8so81086wrt.9
+        for <git@vger.kernel.org>; Mon, 04 May 2020 13:40:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=OUAlH5xox6sVl8klla8Z9Rbzqc0UadSQ3qm2evNsoAI=;
+        b=GFAeEt+wRHsv84oU9vdv2jSs76HBxUs1fxo6iovz3ymSbAPkKs+2k+TmN/Qr/zJ9Cw
+         w5w0YDI9ZpuXxJmbXxmpv/f6mE4g3oNLg1+2b+OCirneSVxCQakF0LBvdWprid/HLy6v
+         UOzLTloLwPsQ58AqdN7ZiHVJGEEIrcBl2ZJfTEU4FhkxzDiDoOMVrGB5FGn9ikWlpZek
+         cW7kBIogIHguk6zr2zabaexbGPyXf4cYD229owhS8F8NjxkFKwXybCvIvz/M3x1pWP9T
+         0mucMmFHab+3w399PeHRMo+StxoZ6vKUWvV/XtNKmFAfvmI9a9F2tVDR04NGk9d2M9re
+         UECg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=OUAlH5xox6sVl8klla8Z9Rbzqc0UadSQ3qm2evNsoAI=;
+        b=BU307/iHtMVKIKpWwNA5hEtw3gt/3+0x1fDOnZHlLGd3SAzbZ4iavtuPPUyP1iTVpv
+         uAnLLEH2V1mANsR1ZPaEnQVR12Hd1CTN2TD8FKIUK1lE7/o0eUQfy85gCKNtg+fwFZDD
+         GhTu3+evwncIkAoE1oANpW/GIYFA54Czz4KWQajQ5r3L1kgcrli4hmytzZVGlURaJVSf
+         IhttH0jvtjU1WAaLNBmFk+zrcMUH7ZqieNlYCxSmS2Mv8MD6H/uwmphltdhujG79An+v
+         5DCocvXPEZv5kQda1RUqhzEs30eHxldJZVsjhIwSUppOJW/OvPnU5L6v9pAdy/3DmXVf
+         JYRw==
+X-Gm-Message-State: AGi0PublSFGrwogqvMPWWQOeSBFTDXDGQyz3bacMUGdpywFlImLyMJne
+        TNVJjbRN9otWnU0cHgZeTBTd5ERk
+X-Google-Smtp-Source: APiQypKwhtrGTjCN0ffrnA4OW0WPz1NAz5h0UtcfXVCsmrKtIb853h0z893C3pyI7fn+ROKQPxVKWg==
+X-Received: by 2002:adf:dc0f:: with SMTP id t15mr1119004wri.165.1588624805548;
+        Mon, 04 May 2020 13:40:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t2sm186475wmt.15.2020.05.04.13.40.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2020 13:40:05 -0700 (PDT)
+Message-Id: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 04 May 2020 20:40:04 +0000
+Subject: [PATCH] rebase --autosquash: fix a potential segfault
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6B05328C-8E47-11EA-893F-8D86F504CC47-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Paul Ganssle <paul@ganssle.io>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vadim Zeitlin <vz-git@zeitlins.org> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> From: Vadim Zeitlin <vz-git@zeitlins.org>
-> Subject: [PATCH] fetch: allow running as different users in shared repositories
+When rearranging the todo list so that the fixups/squashes are reordered
+just after the commits they intend to fix up, we use two arrays to
+maintain that list: `next` and `tail`.
 
-This pretends the change to affect ONLY "git fetch", but ...
+The idea is that `next[i]`, if set to a non-negative value, contains the
+index of the item that should be rearranged just after the `i`th item.
 
-> The function fopen_for_writing(), which was added in 79d7582e32 (commit:
-> allow editing the commit message even in shared repos, 2016-01-06) and
-> used for overwriting FETCH_HEAD since ea56518dfe (Handle more file
-> writes correctly in shared repos, 2016-01-11), didn't do it correctly in
-> shared repositories under Linux.
+To avoid having to walk the entire `next` chain when appending another
+fixup/squash, we also store the end of the `next` chain in `last[i]`.
 
-... fopen_for_writing() is not only about FETCH_HEAD.  In fact, the
-author of this patch knows "git fetch" was not the primary target.
+The logic we currently use to update these array items is based on the
+assumption that given a fixup/squash item at index `i`, we just found
+the index `i2` indicating the first item in that fixup chain.
 
-So, we need to make sure that (1) this change is beneficial to those
-other codepaths that use the helper function, and (2) describe the
-(good) effect of the patch on these other users in the log message.
-We also need to retitle the commit.
+However, as reported by Paul Ganssle, that need not be true: the special
+form `fixup! <commit-hash>` is allowed to point to _another_ fixup
+commit in the middle of the fixup chain.
 
-Hits from "git grep fopen_for_writing" are
+Example:
 
-builtin/commit.c:812:	s->fp = fopen_for_writing(git_path_commit_editmsg());
+	* 0192a To fixup
+	* 02f12 fixup! To fixup
+	* 03763 fixup! To fixup
+	* 04ecb fixup! 02f12
 
-That's .git/COMMIT_EDITMSG file.
+Note how the fourth commit targets the second commit, which is already a
+fixup that targets the first commit.
 
-builtin/fast-export.c:1049:	f = fopen_for_writing(file);
+The good news is that it is easy to fix this: we can detect the
+situation by looking at `last[i2]` (which will be `-1` if `i2` is
+actually in the middle of a fixup chain), and in that case we simply
+need to squeeze the current item into the middle of the `next` chain,
+without touching `last` (i.e. leaving the end index of the fixup chain
+alone).
 
-This is inside export_marks() to create the marks file.
+Reported-by: Paul Ganssle <paul@ganssle.io>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    rebase --autosquash: fix a potential segfault
+    
+    This patch is in response to 
+    https://lore.kernel.org/git/017dbc40-8d21-00fb-7b0e-6708d2dcb366@ganssle.io/
+    .
 
-builtin/fetch.c:1191:	FILE *fp = fopen_for_writing(filename);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-625%2Fdscho%2Fautosquash-segfault-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-625/dscho/autosquash-segfault-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/625
 
-This is the .git/FETCH_HEAD.
+ sequencer.c                  | 11 ++++++++++-
+ t/t3415-rebase-autosquash.sh | 14 ++++++++++++++
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-> This happened because in this situation the file FETCH_HEAD has mode 644
-> and attempting to overwrite it when running git-fetch under an account
-> different from the one that was had originally created it, failed with
-> EACCES, and not EPERM.
+diff --git a/sequencer.c b/sequencer.c
+index e528225e787..0d4d53d2a49 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5266,8 +5266,17 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 				TODO_FIXUP : TODO_SQUASH;
+ 			if (next[i2] < 0)
+ 				next[i2] = i;
+-			else
++			else if (tail[i2] >= 0)
+ 				next[tail[i2]] = i;
++			else {
++				/*
++				 * i2 refers to a fixup commit in the middle of
++				 * a fixup chain
++				 */
++				next[i] = next[i2];
++				next[i2] = i;
++				continue;
++			}
+ 			tail[i2] = i;
+ 		} else if (!hashmap_get_from_hash(&subject2item,
+ 						strhash(subject), subject)) {
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index 093de9005b7..ca135349346 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -424,4 +424,18 @@ test_expect_success 'abort last squash' '
+ 	! grep first actual
+ '
+ 
++test_expect_success 'fixup a fixup' '
++	echo 0to-fixup >file0 &&
++	test_tick &&
++	git commit -m "to-fixup" file0 &&
++	test_tick &&
++	git commit --squash HEAD -m X --allow-empty &&
++	test_tick &&
++	git commit --squash HEAD^ -m Y --allow-empty &&
++	test_tick &&
++	git commit -m "squash! $(git rev-parse HEAD^)" -m Z --allow-empty &&
++	git rebase -ki --autosquash HEAD~4 &&
++	test XZY = $(git show | tr -cd X-Z)
++'
++
+ test_done
 
-Isn't that because FETCH_HEAD and others are not concluded with
-adjust_shared_perm()?  The fopen_for_writing() that removes and
-recreates the target file sounds like a band-aid to me.  The right
-fix we should have done when we did 79d7582e (commit: allow editing
-the commit message even in shared repos, 2016-01-06) would have been
-to open(2) with 0666 (and let the umask(2) adjust it), and then use
-adjust_shared_perm() to give it the desired protection bits.  With
-the existing band-aid, we won't be able to fix incorrectly created
-append-only files, for example, as the band-aid depends on the
-contents in the existing file being expendable.
-
-Having said all that, I agree that EACCES is the right errno to
-detect for this band-aid, at least for FETCH_HEAD.
-
-I think COMMIT_EDITMSG is also left after "git commit" finishes,
-so it will share the same issue with FETCH_HEAD and the same fix
-should apply (this is just a hint for you to write an updated
-proposed log message for the patch).
-
-I haven't looked at or analysed how fast-export will get affected.
-I think it is used to create and leave a "marks" file, to be later
-read by another instance of the fast-export process, which may (or
-may not) further write new contents to the (same?) "marks" file, but
-I do not know the ramifications of unlinking and recreating.  In any
-case, even if that is broken, it is not a new breakage this patch is
-introducing.  You may want to look at it further to make sure you
-are not breaking things, though.
-
-So, here are the things I would like to see in this area:
-
- - The same patch text, but with updated commit log message, to tell
-   readers that we have looked at all the callers that are affected,
-   and retitle it (e.g. "fopen_for_writing: detect the reason why fopen()
-   failed correctly" or something like that, perhaps?).
-   
- - Audit other codepaths that create .git/ALL_CAPS_FILE (e.g.  I see
-   that "git branch --edit-description" creates a temporary file to
-   edit without fopen_for_writing() band-aid and it does not use
-   adjust_shared_perm(), but I think it should) and fix them.
-
- - The existing repositories have these files created and left whose
-   permission bits were set according to the then-current umask
-   without taking "core.sharedrepository" into account, so we have
-   to keep the "if unable to open for writing, unlink and recreate"
-   trick to salvage them.  But it does not mean we need to keep
-   creating the files with wrong mode.  Update fopen_for_writing()
-   and its users to leave the file created in the right mode by
-   calling adjust_shared_perm().  I think fopen_for_writing() should
-   switch from calling fopen(3) to calling open(2) and then fdopen(3)
-   on the result as the first step.
-
-The first one is better done by you to tie the loose ends for this
-discussion.  
-
-Other two items do not have to be done by you.  Anybody interested
-can do them as a clean-up (only if people agree that it is a good
-idea to do so---so I won't mark this as a left-over-bits yet).
-
-Thanks.
-
-> diff --git a/wrapper.c b/wrapper.c
-> index e1eaef2e16..f5607241da 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -373,11 +373,12 @@ FILE *fopen_for_writing(const char *path)
->  {
->  	FILE *ret = fopen(path, "w");
->  
-> -	if (!ret && errno == EPERM) {
-> +	if (!ret && (errno == EACCES || errno == EPERM)) {
-> +		int open_error = errno;
->  		if (!unlink(path))
->  			ret = fopen(path, "w");
->  		else
-> -			errno = EPERM;
-> +			errno = open_error;
->  	}
->  	return ret;
->  }
+base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
+-- 
+gitgitgadget
