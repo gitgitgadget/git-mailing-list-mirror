@@ -2,107 +2,141 @@ Return-Path: <SRS0=JCNZ=6S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF5F0C3A5A9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53242C3A5A9
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:42:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E923206D9
-	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:41:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19F2620721
+	for <git@archiver.kernel.org>; Mon,  4 May 2020 16:42:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bLUWfyFn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BFj0/Ssa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729675AbgEDQlg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 12:41:36 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59860 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729310AbgEDQlg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 May 2020 12:41:36 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7285CBA735;
-        Mon,  4 May 2020 12:41:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z9V4HMrX49HU4av2+gpMu/FplM8=; b=bLUWfy
-        FnEZkyQrM7RdXcBsHTWsO0WA6n2HGzIIsUDYYQnt6jUBfOsJ5wNF2irv/eEYItel
-        7SQDLtcdkoE0U0jj+BS5WGFSSrXzedzcMgZpvrMoTmLS8FG9n4Ip8TEXTm4lHUp4
-        wV3YTuDWS1QRNJ1tkTMCajxibfnLclujmj6+k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=btL01lr30rOrJe0VWKQmgzYcPJkrR2ER
-        aH8KafoQBzTa1T+8gQ1k/Sbr5IEMT4U4tv0IiQmAvviOSf076Mz349pNoT9+HsEZ
-        b5nC+Wnc6SLoZA6IoOfmjJ1fMBLA5JgUmduV9rSOzG19zLDm6NuQsvhlRGej3MNK
-        1RPn/PJ4BwY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5676FBA734;
-        Mon,  4 May 2020 12:41:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9DEF2BA733;
-        Mon,  4 May 2020 12:41:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net, newren@gmail.com
-Subject: Re: [PATCH v5 1/4] gitfaq: files in .gitignore are tracked
-References: <20200504054223.11125-1-shouryashukla.oo@gmail.com>
-Date:   Mon, 04 May 2020 09:41:29 -0700
-In-Reply-To: <20200504054223.11125-1-shouryashukla.oo@gmail.com> (Shourya
-        Shukla's message of "Mon, 4 May 2020 11:12:20 +0530")
-Message-ID: <xmqqimhbhcue.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729703AbgEDQmv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 12:42:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44750 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729598AbgEDQmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 12:42:50 -0400
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F11EC061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 09:42:50 -0700 (PDT)
+Received: by mail-oo1-xc43.google.com with SMTP id x17so2541728ooa.3
+        for <git@vger.kernel.org>; Mon, 04 May 2020 09:42:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=K6GGRY5oHYgyDOys1wOHw+gDF0f61QNOPdOm49STlUA=;
+        b=BFj0/Ssa15DEFLasWkttq0Xn8zzOmm/BI4TPzrXqhr/HJP7DiTOlqUYuqXYiCdlQV7
+         EmQPdyNHjvBT6BSv7SDjECHd5pVxIyFT5z+334yi5K9gmouXZ89Ttn3jj5+t2L6u9DHi
+         vDC6EXRjfOkndr3sZ4OVE2jTbp+SDPaWJIm4LHcIBXTFcq8b8uPvnjntcuitzyj4MuKV
+         GxH+546EddxWhm2jMOtmi5KkYV4rERzv1fk/ZjTBvI8EtmZUNOP037ClZt8GSBYgwZJc
+         7SIN9DR+coFS/lbD1W7bX21Vcg+2ICF2VeJyW6CjA+JTwbwVLdY3dKXdBiegYkYACC5v
+         9vmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=K6GGRY5oHYgyDOys1wOHw+gDF0f61QNOPdOm49STlUA=;
+        b=QfauEYCPOIu+0MKJkAfk4RoZLM/MObQrXehR7ErEb3LWtQ7T5wb1dxucGMLCxp0N6d
+         NX6Cx5zB3/l5A1o24jugPh0800JMsDYQRFlJsK/tI6JGMpzKvG5mTdrfa5qAjT9h471k
+         1FsTjvaRS7zw9EAw3DQew061VreyMDGpFy1bhqQksVj8Q0eyCzmgDd6y2TzrxWp7gutZ
+         Vp6NhiWLI9ptCjtiMZDakSERj/9FqBbDABUfOCOxHgDYjwEMnNPL1ZiViadnZN34Gfat
+         tO+EfGnZy0zo1y6zbvS1halZltqaUJO9cIg72Na8etAhSuDw6UNMDC1tYNPQbqB1EB/3
+         PjZw==
+X-Gm-Message-State: AGi0PuYkdnX5cNcIvfx04wFmxEweVdgwURL+ZjAvFSl7ut5cmFy6yAig
+        c3Hee4tMceLONPPCSiuAAB1LVuHBX23umiKf6eo=
+X-Google-Smtp-Source: APiQypKQ/7stPopWtPGICcqp1sVouu10bwoX1oIAIcoZ6Bb2GrjpkLft5q4MdyXoqC+ep9232XYtUEwT/34Y6x1QsXw=
+X-Received: by 2002:a4a:e40d:: with SMTP id t13mr15835446oov.32.1588610569435;
+ Mon, 04 May 2020 09:42:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1BECDB62-8E26-11EA-97FE-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20200504054223.11125-1-shouryashukla.oo@gmail.com> <20200504054223.11125-4-shouryashukla.oo@gmail.com>
+In-Reply-To: <20200504054223.11125-4-shouryashukla.oo@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 4 May 2020 09:42:38 -0700
+Message-ID: <CABPp-BE7rk=B8a9GuZmtpnrdh7O1-=+zPPmgT1AHE2JgMq25Bw@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] gitfaq: fetching and pulling a repository
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shourya Shukla <shouryashukla.oo@gmail.com> writes:
-
-> Add issue in 'Common Issues' section which addresses the problem of
-> Git tracking files/paths mentioned in '.gitignore'.
+On Sun, May 3, 2020 at 10:42 PM Shourya Shukla
+<shouryashukla.oo@gmail.com> wrote:
+>
+> Add an issue in 'Common Issues' section which addresses the confusion
+> between performing a 'fetch' and a 'pull'.
 >
 > Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 > ---
-> Thank you Junio and Elijah for the review! :)
-> I have tried to make the solutions to the issues as concise and crisp
-> as possible, linking the Documentation wherever necessary. Also, I have
-> converted 1SP -> 2 SP after full stops(.).
-
-Indeed I find it concise and very much to the point.  Looks quite
-well written.
-
-Thanks, will queue (and please ping me if I forget ;-))
-
->
->  Documentation/gitfaq.txt | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  Documentation/gitfaq.txt | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 >
 > diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index 1cf83df118..11d9bac859 100644
+> index 5dfbb32089..04ea7be99f 100644
 > --- a/Documentation/gitfaq.txt
 > +++ b/Documentation/gitfaq.txt
-> @@ -223,6 +223,16 @@ a file checked into the repository which is a template or set of defaults which
->  can then be copied alongside and modified as appropriate.  This second, modified
->  file is usually ignored to prevent accidentally committing it.
->  
-> +[[files-in-.gitignore-are-tracked]]
-> +I asked Git to ignore various files, yet they are still tracked::
-> +	A `gitignore` file ensures that certain file(s) which are not
-> +	tracked by Git remain untracked.  However, sometimes particular
-> +	file(s) may have been tracked before adding them into the
-> +	`.gitignore`, hence they still remain tracked.  To untrack and
-> +	ignore files/patterns, use `git rm --cached <file/pattern>`
-> +	and add a pattern to `.gitignore` that matches the <file>.
-> +	See linkgit:gitignore[5] for details.
+> @@ -255,6 +255,22 @@ way of cloning it in lesser space?::
+>         presumes that the user has an always-on network connection to the
+>         original repository).  See linkgit:partial-clone[1].
+>
+> +[[fetching-and-pulling]]
+> +How do I know if I want to do a fetch or a pull?::
+> +       A fetch brings in the latest changes made upstream (i.e., the
+> +       remote repository we are working on) without modifying the current
+> +       branch or the working tree.  This allows us to inspect
+> +       the changes made upstream and integrate all those changes (if
+> +       and only if we want to) or only cherry pick certain changes.
 > +
->  Hooks
->  -----
+> +       A pull is a wrapper for a fetch and merge/rebase.  This means that
+> +       doing a `git pull` will not only fetch the changes made upstream
+> +       but integrate them immediately with our current branch too.  The
+> +       merge/rebase may go smoothly or have merge conflicts depending
+> +       on the case.  Hence, a pull does not give the user a chance to
+> +       review changes before applying them to their local repository/current
+> +       branch.
+> +
+
+So a few issues; elsewhere in this thread, Junio said:
+
+    We should strive to (1) make sure any FAQ entry can have a pointer
+    to more comprehensive and canonical documentation, and (2) an FAQ
+    entry with such a pointer does not consume more than one paragraph,
+    say no more than 5 lines.
+
+* This answer is multiple paragraphs and 12 lines.
+* The answer is fairly repetitive (e.g. why add "if and only if we
+want to"; isn't that already covered by "allows us to"?).  You also
+bring up inspecting/reviewing the changes multiple times.
+* This brings up cherry-picking in a really awkward way that seems to
+be suggesting or at least condoning what sounds like a very broken
+workflow.  (If it's your upstream, why are you only cherry-picking
+changes from it?  You're going to get divergent history and the next
+merge will end up with multiple copies of the commits.  If it's
+something you only cherry-pick from, it sounds like it isn't intended
+to be an upstream but something else.)
+* This side-tracks into the results of a merge or rebase; why do we
+need to mention that it can go smoothly or have conflicts at this
+point?
+
+
+How about the five line version I suggested earlier:
+
+A fetch stores a copy of the latest changes from the remote
+repository, without modifying the working tree or current branch.  You
+can then at your leisure inspect, merge, rebase on top of, or ignore
+the upstream changes.  A pull consists of a fetch followed immediately
+by either a merge or rebase.
+
+You could optionally also add a link to the git-pull documentation
+(which incidentally also answers the original question in the first
+four sentences of its description).
