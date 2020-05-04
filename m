@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 400DBC47257
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD979C47259
 	for <git@archiver.kernel.org>; Mon,  4 May 2020 13:31:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A9362075B
+	by mail.kernel.org (Postfix) with ESMTP id 9D6CB2075B
 	for <git@archiver.kernel.org>; Mon,  4 May 2020 13:31:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kkz+HC86"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t9cAogDP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728452AbgEDNbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 09:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42952 "EHLO
+        id S1728445AbgEDNbd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 09:31:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728418AbgEDNbc (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 09:31:32 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87874C061A0F
-        for <git@vger.kernel.org>; Mon,  4 May 2020 06:31:31 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id y24so9079174wma.4
-        for <git@vger.kernel.org>; Mon, 04 May 2020 06:31:31 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728417AbgEDNbb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 09:31:31 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAE43C061A0E
+        for <git@vger.kernel.org>; Mon,  4 May 2020 06:31:30 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id k12so8422196wmj.3
+        for <git@vger.kernel.org>; Mon, 04 May 2020 06:31:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=p9wLXKAFSLFCWoje36n1B+Hg8h4ejYOaBtdMVAqK7n0=;
-        b=Kkz+HC86popgE/fXexF9sEWZiXliI8L1bdfnnpo47bcFIrwAUSpAgqV8LV3wm5WEWs
-         B+LJhTQkKKqZ0vhnN/YknIk//1fcNiw9qB1otaLglq/pywpdPMNKKjvi7mfFqZP+SWGJ
-         0Gz3qjF5n8MZHEt0HQKV2eB3G7YAJjzyeiYmbvN+klVmQhD+rCTexBM6+lf5g1J4jxjO
-         A+d7ONd82ynjurUog3gOB5U5bGwHbFj5iQVl7POI0y1PtImWZTqepIGyl2YBigePFbvS
-         waxOoncEwaSvtgNzEhPh0fPMQbJBvU+DZkfYS2oBfcIiJFnMLLjuPQnq/deY07ZwPUkJ
-         LRKg==
+        bh=gl+40ObxAzQ9BUWefXcL7ADB/tskWkmkHMV3sgw61DY=;
+        b=t9cAogDPEj2LnW/RhkYeChf2XqHPMfx7Cbns4/ieijxADrab/T0NGph4dmOSWQc07b
+         cg5CXm0ElIh0Lx76pNoPDFldk6sVDZ9g2pKlQAHJrrgnchMb5uGfuwZvUT/sTnuieU+q
+         K050fzsvQHn5axrhkjBzbKNQKcB+lD5Y67NVA9qDjQMAc8oofiy87w3WPrlxwqUDfIkL
+         XCIgzmij9ivMNxqniWXb6+hIGGR7lMhZ4jvg15/7E1XYGJ3/oPT962NO/fO4NH4+r8k4
+         ZAETIr3+yhN/blsENVGse5wCGIBq9pXArWml4vEJcNycczqFPQAE9SFzLlViohOODl7M
+         Q3dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p9wLXKAFSLFCWoje36n1B+Hg8h4ejYOaBtdMVAqK7n0=;
-        b=Cc6Nn903VybS1X3rzW4VbMpC+z57hzld2+3/IuuA8f76En6IqjI1cfkMFW/m88+UrJ
-         cMEwzlT0S983dCi/flc57zzxnkpC0WtVw1A0EPbVaaMwjU/QLU/e6M4/LRtaRZaeLrXN
-         kJcgbrucCLeufyHCL+h7Ekuieoa1Lst7qOGbSNMr/PJ2MhQLva0tat6Ax6DIYVWqplwW
-         msreu8q5chO7FETFDk0hsMOACs+PAf4dGc3+5rsVl+eQ1P5mzbxRkpZxxwHTQ2yf2MJ0
-         feap9iG1oqvGoWBifXvsRIQoGxzqcEbWBo3QZeOjhA/HckrIaGqY20OGtSc4vAIZVwPI
-         uuWw==
-X-Gm-Message-State: AGi0PuZpvgE7c+8cIKZCkExigpmYLfcwFFFkIu1SVlxHHcwQ1uXpPesC
-        04idTUKpSQH8ajjy4zjVsraDTD6k
-X-Google-Smtp-Source: APiQypLHxB74RtqldCHPmcphKdYN6uFKde0h5vbqQ4+Ighy9IAgBKdkgUNg7w10DaLeXxX6ZfPEHaA==
-X-Received: by 2002:a7b:cf1a:: with SMTP id l26mr15734029wmg.114.1588599090233;
-        Mon, 04 May 2020 06:31:30 -0700 (PDT)
+        bh=gl+40ObxAzQ9BUWefXcL7ADB/tskWkmkHMV3sgw61DY=;
+        b=Jtu26wLDShKKUwp/wwXrr8EVG8gEJ8647+jLRomT/ASK+1c3VSkPj+SGYlWtC9kDmJ
+         hQwSGKPiOXDgz1vKidEaQ9X5N7DzrU3e6cRVwsz1MpZAhtptn3yQbXi4iVjbb4OwAVOY
+         yjtfrpbior+r/zQ3tQpUmlPUh4JHwYJPLjOsP0kvlYjg0exXiSsRDHskULVs0qV3Jo36
+         uLmIWHhsLDPgFVgCzi/smCfpoYHG1JrwZxdSLCqJ6XbUkYn8NJCHJHqad9UTGms8x488
+         8oYAU5cFtSsfYFMlKdTq8krXxo72F0CJqeJbeU1thWoaDX7Q/5jJlws9bzXv0V2o3ev6
+         iVWA==
+X-Gm-Message-State: AGi0PuZMRkbNb1z9JgH9W6aBugaThAQciXYUcXsSxsFd2k7HT3d25OyB
+        uu3/GT42Q96wsrBhsYgofebuc5No
+X-Google-Smtp-Source: APiQypLj6GbwKsSQJIpIxbndv7VTbGR+TgEuadZvoNlrLAmtyY+coiyKwJlBCxK50vb3cKwRm8yXtA==
+X-Received: by 2002:a1c:66d5:: with SMTP id a204mr14774950wmc.69.1588599089517;
+        Mon, 04 May 2020 06:31:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f83sm13413829wmf.42.2020.05.04.06.31.29
+        by smtp.gmail.com with ESMTPSA id u7sm14985610wmg.41.2020.05.04.06.31.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 04 May 2020 06:31:29 -0700 (PDT)
-Message-Id: <c41b25e963973dac1eb50cd3ae1f79741bc89ed1.1588599086.git.gitgitgadget@gmail.com>
+Message-Id: <6f1868a2fe21e59d80a81b837810b09aa86a6838.1588599086.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.623.git.1588599086.gitgitgadget@gmail.com>
 References: <pull.623.git.1588599086.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 May 2020 13:31:24 +0000
-Subject: [PATCH 4/6] fixup! Add reftable library
+Date:   Mon, 04 May 2020 13:31:23 +0000
+Subject: [PATCH 3/6] fixup! Add reftable library
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,34 +78,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-`usleep()` is unportable. We need to find a way _not_ to use it.
-
-For Visual C, we can use `sleep_millisec()`, but the current design of
-libreftable seems to be _really_ keen _not_ to depend on anything in
-libgit.a.
+A `void` function cannot return a value.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- reftable/stack.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ reftable/record.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 3c5f4a43130..2d0b831dda1 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -289,7 +289,12 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
- 		free_names(names_after);
+diff --git a/reftable/record.c b/reftable/record.c
+index b0f18f26c55..5f48be1639e 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -1005,7 +1005,7 @@ int record_decode(struct record rec, struct slice key, byte extra,
  
- 		delay = delay + (delay * rand()) / RAND_MAX + 100;
-+#ifdef _MSC_VER
-+		sleep_millisec(delay/1000);
-+#else
-+		/* TODO! fix this, `usleep()` is not portable enough for us to use */
- 		usleep(delay);
-+#endif
- 	}
+ void record_clear(struct record rec)
+ {
+-	return rec.ops->clear(rec.data);
++	rec.ops->clear(rec.data);
+ }
  
- 	return 0;
+ bool record_is_deletion(struct record rec)
 -- 
 gitgitgadget
 
