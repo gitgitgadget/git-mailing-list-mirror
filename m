@@ -2,89 +2,99 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20661C47254
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AC24C47258
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:28:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0E65206B8
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:21:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 527B42064A
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:28:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ApBaMpO7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FWlXVVl2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728717AbgEEWVc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 18:21:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40668 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726568AbgEEWVb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 18:21:31 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C351C061A0F
-        for <git@vger.kernel.org>; Tue,  5 May 2020 15:21:31 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id f13so4555301wrm.13
-        for <git@vger.kernel.org>; Tue, 05 May 2020 15:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=q7v9sdNlsFf2ubilkV6ygCEFR42THcx2NQ9IXx6QIXQ=;
-        b=ApBaMpO7HsRBmgdSRugrEplZt7Xx+RzrJcS4FCdTaVzE0Z6b3Ld1JwNIwH5y4JkDNg
-         Q+2VUFbT9lr24ceRmCa+Mt8efZCxmooeTdJ8lHPPdaCLbuQim+tjXWCMHLfbY2Hmy1QK
-         rtw6ZCPGAueB+nARMak+FMsnbEN7A2BMM0c3L/9q06N53z3btqGgyifthiwTps71O4Ce
-         ok2uY6KTSfqF1J25LxqhSADzI2F96fkAi9VTIOnk8/nwex1Xz5S84Au7kCq/6sD11a6e
-         gGIS4Y64dkw7Dod1F0Zvj2Ikz6DXDa50jKzM2DJ3/NZ15XzcPYQvTJ5wa5g1m6KYdqZ9
-         WUyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=q7v9sdNlsFf2ubilkV6ygCEFR42THcx2NQ9IXx6QIXQ=;
-        b=AcEBIG7wHpJC2mEH0Hetq9+b2Gg595W1w2MHO4KAatzm4QN6tzU47VYFlwbXCdpEQC
-         bxBZ/zBNgLRRJlGMMvktS3TsH2uH8v8kB1LW4mj7LxtVeLfK3F1udOfYqjwrvGCtJ3Yt
-         B+wEPsnjWENxyV4Kuhzlb3afH5jZ2Mv6IBR/ADWIjR/w339tJe1agBjgyo9+uy797X8K
-         vG636E9VoqXvBLcQ+VTLJ6xllH65aRYreI8AIMv+NL7MrH2LMrJK7sVTJSQpbfhgiRv/
-         JkfAnb4e+v0WHGmoLgZc77IiIEwdofxAz/1bCGOPrckQAOBiPrBxpscowYbAaeLMzBu6
-         D/mg==
-X-Gm-Message-State: AGi0PuYqoY0CzW8CkqDWQwLY0Q+/Asn3i5K/h84Njwd/snzdWRYmTim2
-        aOYhPY7zQxwoNRvAXvrq3gJDSDFmmWNqtmc8oBG31A0Zxio=
-X-Google-Smtp-Source: APiQypLKZU+Qv39Wt5ka37u3j6UyJSB4X+BglrPpGJWoOoHaRP0pgPhLA24eE0KIaTl4/3iakAf4ODRqnEFZGPQ7z1Q=
-X-Received: by 2002:a5d:4a0b:: with SMTP id m11mr5900945wrq.211.1588717289039;
- Tue, 05 May 2020 15:21:29 -0700 (PDT)
+        id S1729412AbgEEW2O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 18:28:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61519 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729196AbgEEW2N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 18:28:13 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CA3F5813B;
+        Tue,  5 May 2020 18:28:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6CZwf7qywTMhPy9uLBM3bjQldq8=; b=FWlXVV
+        l2MPyK4WE8AviHPhz36nfK/Ehsjym4Xuw1x/bH8fZ9H1nfwLRZAp7tcLgtIPxFBY
+        3mzPnQwYvNd/TcVWlcGoU7MkSf6Y22jeNlSGLlE35GOMroPhNQdCqTpCRuuROUpl
+        xe9xcm4q9kHrENhyErBICUgvPKJDzm4saU1l4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tAObAY7o5y+zdGMUdcUC6iiyDiBJt604
+        gjS0+ARw2PydX9m40DoZky1hIaNAvKTu02AX832VMtN/MgvK1+2GYi/N5bAD29KL
+        JIyxbkhss8G8AbMnHUcffexGarn7sTo8olMaACN3igs93WItgp8GM5ycVK6/m98z
+        R+EjNtErwrs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 653A05813A;
+        Tue,  5 May 2020 18:28:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E101058139;
+        Tue,  5 May 2020 18:28:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
+References: <73de97dfebfccabe9f1bf32ea41aea5008a949cd.1588607262.git.congdanhqx@gmail.com>
+        <20200504162311.GE12842@coredump.intra.peff.net>
+        <20200504215824.GC45250@syl.local>
+        <20200504233634.GB39798@coredump.intra.peff.net>
+        <20200505002055.GC64230@syl.local>
+        <20200505164326.GA64077@coredump.intra.peff.net>
+        <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
+        <20200505182418.GA66702@coredump.intra.peff.net>
+        <20200505210451.GA645290@coredump.intra.peff.net>
+        <xmqqlfm69il6.fsf@gitster.c.googlers.com>
+        <20200505215843.GA646020@coredump.intra.peff.net>
+Date:   Tue, 05 May 2020 15:28:10 -0700
+In-Reply-To: <20200505215843.GA646020@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 5 May 2020 17:58:43 -0400")
+Message-ID: <xmqqd07i9fut.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Roman Gelfand <rgelfand2@gmail.com>
-Date:   Tue, 5 May 2020 18:21:17 -0400
-Message-ID: <CAJbW+rmN=QPDm0myka1=iOpvzqe2kN-yk8GisdH2VDLRc1ReHw@mail.gmail.com>
-Subject: GIT Branch Maintenance
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: B3AC3CA0-8F1F-11EA-8B24-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-I am in a process of designing a git strategy for our vs solution.
-The vs solution is a legacy asp .net webforms app which is enormous.
-CI is out of the question because of cumbersome db source  setup.  So,
-we are pretty much relying on integration testing.  We have roughly 6
-people on development team.  Each of developers are assigned separate
-feature.  Sometimes, a feature spans several releases.
+>> > Or since we're running a shell in a VM, we really
+>> > could just run "./allow-ref $refname" and let individual forks specify
+>> > whatever shell code they like.
+>> 
+>> I presume that you are saying "checking out the tree of refs/ci/config
+>> and there is a program allow-ref that can tell which one to run ci on"?
+>
+> Yes, exactly.
 
-Here are the branches:
-Master - source that made it to prod
-Feature - checked out from master Head.  The Head represents previous release.
-QA - synchronized with master at the beginning of release development.
-Upon completion, each active Feature branch is merged into QA.
-Bugfix - in case of bug in current development, QA branch is checked
-out to bugfix branch.  Upon completion, it is merged back into QA
-branch.
+I guess a simple example implementation of allow-ref script, with a
+bit of instruction to tell people how to initialize a separate and
+otherwise empty repository with just a (possibly customized) copy of
+the script in it, and push its 'master' branch to refs/ci/config of
+their Git fork, would be a way to go, then?
 
-Over time these master and qa branches will be enormous.  How do I
-keep it concise preserving detailed history in case I need to hunt
-down a specific commit?
-
-Any help is appreciated.
-
-Thanks in advance.
+Sounds simple enough.  Cycles to spin up a VM that adds 3 seconds
+latency, only to know that a branch won't need to be built, does
+sound like a bit unfortunate, though.
