@@ -2,247 +2,127 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.7 required=3.0
-	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ADB9C47247
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 12:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B43C47254
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 13:01:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ECACF206A5
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 12:29:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA6E3206D7
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 13:01:10 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="omo43sKL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728481AbgEEM31 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 08:29:27 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:53947 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727090AbgEEM31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 08:29:27 -0400
-X-Originating-IP: 106.76.68.10
-Received: from localhost (unknown [106.76.68.10])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 60691E0011;
-        Tue,  5 May 2020 12:28:54 +0000 (UTC)
-Date:   Tue, 5 May 2020 17:58:38 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Konstantin Podsvirov <konstantin@podsvirov.pro>
-Cc:     Konstantin Podsvirov via GitGitGadget <gitgitgadget@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] git-gui: msys2 compatibility patches
-Message-ID: <20200505122838.6ogymx5v7jl572gn@yadavpratyush.com>
-References: <pull.612.git.1586900734341.gitgitgadget@gmail.com>
- <20200427194546.7ce4z2ooe4jaab5w@yadavpratyush.com>
- <952341588022066@mail.yandex.ru>
+        id S1728900AbgEENBK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 09:01:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37094 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728834AbgEENBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 09:01:09 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D5DDC061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 06:01:09 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id i7so2064477qkl.12
+        for <git@vger.kernel.org>; Tue, 05 May 2020 06:01:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yQ/2/GN5XXtaAP0MYwgOatL5z7yoG27X3haxd14KjYo=;
+        b=omo43sKLG/wtnLOIRigWh8ayC442NeIqZCuy89dNszkWgB6y0LXuMBP4BEY+49LaJ6
+         iQeYw0cGfXIqGjudZ81N56PHw344PbFY3gtXBA1mvsOwcyH2nM0vR8/q/RfvyMa0heFg
+         //rz26NtaifLpWcUoRPcthxiQHe+QL4og2h1pXwPsP3ezUxm+XMKdR1gWiASrSotI4bt
+         IofhHjHF8cF25pYRBYKb4dDPo+5UnFsSWYw1OnBkD8Ko2/p8L1NKdRGk9SaWZ+4FEvps
+         hURB4rOQ8mMS6xPCDDqfVqer2qJM2MEUkUKAWBrK3Jnr4Xfdd+euZ8NgfssxzVj7ac5P
+         J4LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yQ/2/GN5XXtaAP0MYwgOatL5z7yoG27X3haxd14KjYo=;
+        b=YsNfLwuy5ln0P8PKG/2bU4U70wAmwsc/Gh0CNoYaKA9sDmQXVcntWH+i8CO4xaggUd
+         lj3MOjO34XaMI2b7BpEOxmVJSidNMfwMhtKKFhAHAM0ZiQPcdmstorTI1VcSMkD8OUlp
+         j1d2IbcpuED+OOFVdY7wgz0dQtk627QvJnZodCiUYuJAuykaFQX+mnkz22/3QT3OSRhE
+         vJISlzyRCneUKN5VFpF/Rk49k4xH1ZnUSC0JmBshq6Ydw05uhRZwQyzdSWAwnPOu598x
+         55I1vDhdNbH9TKZsACJxqxksOvOAuPyFkxWRrfd1gVuNGxPQ8bKiEUu9JFvkhwRazw9Y
+         uhTA==
+X-Gm-Message-State: AGi0Puanwu7XvYs5kSkwOGe759ib/C6B4/a46fKmRHrDH28YE7o+Ok3C
+        EfmEaxG7H9TcK8/OGDt37LeC1rV7
+X-Google-Smtp-Source: APiQypI1U1MNnxh2TRjrMdXiF12FJZh9UP2qG0roEKRQrB+dmlbbOv8XQMoGuJPq2N9B8hNwDPcT7g==
+X-Received: by 2002:a05:620a:556:: with SMTP id o22mr600921qko.434.1588683667406;
+        Tue, 05 May 2020 06:01:07 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id e24sm1707852qkl.56.2020.05.05.06.01.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2020 06:01:06 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH] Doc: reference the "stash list" in autostash docs
+Date:   Tue,  5 May 2020 09:00:59 -0400
+Message-Id: <0b898ca26b0399e9f14b9170f6586014dee80cf5.1588683624.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.26.2.548.gbb00c8a0a9
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <952341588022066@mail.yandex.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Konstantin,
+In documentation pertaining to autostash behavior, we refer to the
+"stash reflog". This description is too low-level as the reflog refers
+to an implementation detail of how the stash works and, for end-users,
+they do not need to be aware of this at all.
 
-On 28/04/20 12:33AM, Konstantin Podsvirov wrote:
-> 
-> 
-> 27.04.2020, 22:48, "Pratyush Yadav" <me@yadavpratyush.com>:
-> > Hi Konstantin,
-> >
-> > Thanks for the patch, and sorry for the late reply.
-> >
-> > On 14/04/20 09:45PM, Konstantin Podsvirov via GitGitGadget wrote:
-> >>  From: Konstantin Podsvirov <konstantin@podsvirov.pro>
-> >>
-> >>  Allow using `git gui` command via MSYS2's MINGW32/64 subsystems (apropriate shells).
-> >
-> > I think this should be the commit subject, instead of "msys2
-> > compatibility patches".
-> 
-> I do not mind.
-> 
-> >>  Just install apropriate `tk` package:
-> >>
-> >>  ```bash
-> >>  user@host MINGW32 ~
-> >>  pacman -S mingw-w64-i686-tk
-> >>  ```
-> >>
-> >>  or
-> >>
-> >>  ```bash
-> >>  user@host MINGW64 ~
-> >>  pacman -S mingw-w64-x86_64-tk
-> >>  ```
-> >>
-> >>  For more info see: https://github.com/msys2/MSYS2-packages/pull/1912
-> >
-> > Please don't just link to an external website. Put the explanation there
-> > in the commit message. Explain what the problem was, and how this patch
-> > fixes it.
-> 
-> The startup script everywhere operates on Unix paths, but on Windows they are incomplete, and the interpreter expects full native paths.
+Change references of "stash reflog" to "stash list", which should be
+provide more accessible terminology for end-users.
 
-Ok. Thanks for the explanation.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+
+Notes:
+    This patch is based on 'dl/merge-autostash-rebase-quit-fix'.
+
+ Documentation/git-merge.txt  | 4 ++--
+ Documentation/git-rebase.txt | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index ec06b2f8c2..3819fadac1 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -106,12 +106,12 @@ commit or stash your changes before running 'git merge'.
+ `MERGE_HEAD` is present unless `MERGE_AUTOSTASH` is also present in
+ which case 'git merge --abort' applies the stash entry to the worktree
+ whereas 'git reset --merge' will save the stashed changes in the stash
+-reflog.
++list.
  
-> >>  Signed-off-by: Konstantin Podsvirov <konstantin@podsvirov.pro>
-> >>  ---
-> >>   git-gui.sh | 52 ++++++++++++++++++++++++++++++----------------------
-> >>   1 file changed, 30 insertions(+), 22 deletions(-)
-> >>
-> >>  diff --git a/git-gui.sh b/git-gui.sh
-> >>  index 4610e4ca72a..512f4f121aa 100755
-> >>  --- a/git-gui.sh
-> >>  +++ b/git-gui.sh
-> >>  @@ -44,6 +44,28 @@ if {[catch {package require Tcl 8.5} err]
-> >>
-> >>   catch {rename send {}} ; # What an evil concept...
-> >>
-> >>  +######################################################################
-> >>  +##
-> >>  +## platform detection
-> >>  +
-> >>  +set _iscygwin {}
-> >>  +
-> >>  +proc is_Cygwin {} {
-> >>  + global _iscygwin
-> >>  + if {$_iscygwin eq {}} {
-> >>  + if {$::tcl_platform(platform) eq {windows}} {
-> >>  + if {[catch {set p [exec cygpath --windir]} err]} {
-> >>  + set _iscygwin 0
-> >>  + } else {
-> >>  + set _iscygwin 1
-> >>  + }
-> >>  + } else {
-> >>  + set _iscygwin 0
-> >>  + }
-> >>  + }
-> >>  + return $_iscygwin
-> >>  +}
-> >>  +
-> >>   ######################################################################
-> >>   ##
-> >>   ## locate our library
-> >>  @@ -51,7 +73,14 @@ catch {rename send {}} ; # What an evil concept...
-> >>   if { [info exists ::env(GIT_GUI_LIB_DIR) ] } {
-> >>           set oguilib $::env(GIT_GUI_LIB_DIR)
-> >>   } else {
-> >>  - set oguilib {@@GITGUI_LIBDIR@@}
-> >>  + if {[is_Cygwin]} {
-> >>  + set oguilib [exec cygpath \
-> >>  + --windows \
-> >>  + --absolute \
-> >>  + @@GITGUI_LIBDIR@@]
-> >>  + } else {
-> >>  + set oguilib {@@GITGUI_LIBDIR@@}
-> >>  + }
-> >
-> > This would convert the Windows style path to a Unix style path if we are
-> > running in Cygwin, right? This is what I assume the heart of the problem
-> > is.
-> 
-> It is true exactly the opposite.
-
-Got it.
+ --quit::
+ 	Forget about the current merge in progress. Leave the index
+ 	and the working tree as-is. If `MERGE_AUTOSTASH` is present, the
+-	stash entry will be saved to the stash reflog.
++	stash entry will be saved to the stash list.
  
-> > Style nitpick: something like this would probably be better:
-> >
-> >   set oguilib {@@GITGUI_LIBDIR@@}
-> >   if {[is_Cygwin]} {
-> >         ...
-> >   }
-> 
-> Looks good.
-> 
-> > This makes it clear that Cygwin is the exception. For all other cases,
-> > we want to use @@GITGUI_LIBDIR@@ directly.
-> 
-> Yes.
-> 
-> >>   }
-> >>   set oguirel {@@GITGUI_RELATIVE@@}
-> >>   if {$oguirel eq {1}} {
-> >>  @@ -163,7 +192,6 @@ set _isbare {}
-> >>   set _gitexec {}
-> >>   set _githtmldir {}
-> >>   set _reponame {}
-> >>  -set _iscygwin {}
-> >
-> > Why move the initialization?
-> 
-> To use this above when setting `oguilib` variable.
-
-Ok. Though I wonder if we need this variable at all. It is only used 
-with the function is_Cygwin, and seems like a performance optimization 
-so we don't need to perform the check for every call to the function. 
-But since it only is a couple of if statements, I'm not sure if it will 
-make a significant performance difference.
-
-> >>   set _search_path {}
-> >>   set _shellpath {@@SHELL_PATH@@}
-> >>
-> >>  @@ -266,26 +294,6 @@ proc is_Windows {} {
-> >>           return 0
-> >>   }
-> >>
-> >>  -proc is_Cygwin {} {
-> >>  - global _iscygwin
-> >>  - if {$_iscygwin eq {}} {
-> >>  - if {$::tcl_platform(platform) eq {windows}} {
-> >>  - if {[catch {set p [exec cygpath --windir]} err]} {
-> >>  - set _iscygwin 0
-> >>  - } else {
-> >>  - set _iscygwin 1
-> >>  - # Handle MSys2 which is only cygwin when MSYSTEM is MSYS.
-> >>  - if {[info exists ::env(MSYSTEM)] && $::env(MSYSTEM) ne "MSYS"} {
-> >>  - set _iscygwin 0
-> >>  - }
-> >
-> > I'm afraid I don't understand this hunk. I don't use Windows, and don't
-> > completely understand the difference between cygwin, msys, etc. Could
-> > you please explain further why this check is removed? Are there any
-> > negative side-effects?
-> 
-> To use `git gui` we need `tk` (wish), but `tk` (wish) can be available only when MSYSTEM is equal to MINGW32 or MINGW64.
-
-So if MYSYTEM is something other than these two, would it be possible to 
-run git-gui at all?
+ --continue::
+ 	After a 'git merge' stops due to conflicts you can conclude the
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 7d0c89a184..fa969d8064 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -257,7 +257,7 @@ See also INCOMPATIBLE OPTIONS below.
+ 	Abort the rebase operation but HEAD is not reset back to the
+ 	original branch. The index and working tree are also left
+ 	unchanged as a result. If a temporary stash entry was created
+-	using --autostash, it will be saved to the stash reflog.
++	using --autostash, it will be saved to the stash list.
  
-> >>  - }
-> >>  - } else {
-> >>  - set _iscygwin 0
-> >>  - }
-> >>  - }
-> >>  - return $_iscygwin
-> >>  -}
-> >>  -
-> >
-> > Why move the function? Can't this and the _iscygwin initialization just
-> > stay in their place? It will make the diff much easier to read.
-> 
-> To use this above when setting `oguilib` variable.
-
-Ok.
- 
-> >>   proc is_enabled {option} {
-> >>           global enabled_options
-> >>           if {[catch {set on $enabled_options($option)}]} {return 0}
-> >
-> > --
-> > Regards,
-> > Pratyush Yadav
-> 
-> What is the further course of action?
-
-You should send another version of this series with the suggestions 
-implemented. Since you are using GitGitGadget, you can amend the commit, 
-force push it, and then issue another `/submit` command, and GGG will 
-take care of the rest. The GGG welcome message would have all the 
-details as well.
-
+ --apply:
+ 	Use applying strategies to rebase (calling `git-am`
 -- 
-Regards,
-Pratyush Yadav
+2.26.2.548.gbb00c8a0a9
+
