@@ -2,99 +2,263 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AC24C47258
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25E33C47247
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:33:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 527B42064A
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:28:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E34F9206FA
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 22:33:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FWlXVVl2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYeAuqAk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729412AbgEEW2O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 18:28:14 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61519 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729196AbgEEW2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 18:28:13 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CA3F5813B;
-        Tue,  5 May 2020 18:28:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6CZwf7qywTMhPy9uLBM3bjQldq8=; b=FWlXVV
-        l2MPyK4WE8AviHPhz36nfK/Ehsjym4Xuw1x/bH8fZ9H1nfwLRZAp7tcLgtIPxFBY
-        3mzPnQwYvNd/TcVWlcGoU7MkSf6Y22jeNlSGLlE35GOMroPhNQdCqTpCRuuROUpl
-        xe9xcm4q9kHrENhyErBICUgvPKJDzm4saU1l4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tAObAY7o5y+zdGMUdcUC6iiyDiBJt604
-        gjS0+ARw2PydX9m40DoZky1hIaNAvKTu02AX832VMtN/MgvK1+2GYi/N5bAD29KL
-        JIyxbkhss8G8AbMnHUcffexGarn7sTo8olMaACN3igs93WItgp8GM5ycVK6/m98z
-        R+EjNtErwrs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 653A05813A;
-        Tue,  5 May 2020 18:28:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E101058139;
-        Tue,  5 May 2020 18:28:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
-References: <73de97dfebfccabe9f1bf32ea41aea5008a949cd.1588607262.git.congdanhqx@gmail.com>
-        <20200504162311.GE12842@coredump.intra.peff.net>
-        <20200504215824.GC45250@syl.local>
-        <20200504233634.GB39798@coredump.intra.peff.net>
-        <20200505002055.GC64230@syl.local>
-        <20200505164326.GA64077@coredump.intra.peff.net>
-        <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
-        <20200505182418.GA66702@coredump.intra.peff.net>
-        <20200505210451.GA645290@coredump.intra.peff.net>
-        <xmqqlfm69il6.fsf@gitster.c.googlers.com>
-        <20200505215843.GA646020@coredump.intra.peff.net>
-Date:   Tue, 05 May 2020 15:28:10 -0700
-In-Reply-To: <20200505215843.GA646020@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 5 May 2020 17:58:43 -0400")
-Message-ID: <xmqqd07i9fut.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728934AbgEEWdD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 18:33:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727089AbgEEWdD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 18:33:03 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D0DFC061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 15:33:03 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id h4so329140wmb.4
+        for <git@vger.kernel.org>; Tue, 05 May 2020 15:33:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/OUXGUOduu2OKR/HpVBYDsM31P+0wsZ6rbjEyKsY8tM=;
+        b=iYeAuqAkOR/AT2sReu+vwnR4KMhk6Ntv/ZxBckN+truROrdtH1adL255A+IlCKB5or
+         EZHcp15/dd0jLWbXbcdrK8IZZgyYNG06DCqJ//HOxH4Feaae2ar1BDRd/mOj14iHwttP
+         07SICmts2oweh385LjbnIdGz4aeNjdCq5xNhG125ASyA5JBjpcHfXi3WNLqc0YtpKJUJ
+         mTTsRzVyXjKaQ59HGKjey6AWKr2kW7ob/oFIqxOnrkxOi1JgU0NuPpaj9ga5iWpeb05o
+         d2x0etoEgtPAfo4gnO0h9eNNOgWFzf2Qe3AwVZWzKviSmzfr3y0Cn8ubfnNBCyr9RD9T
+         beFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=/OUXGUOduu2OKR/HpVBYDsM31P+0wsZ6rbjEyKsY8tM=;
+        b=FNsFWwnfcJwHK4NZF2SNx7JjLi8EHLyl1evq4I6/max0l9JMqznR4Z3VG8+KS6EPHy
+         jeiH8BTO8rDffQEh7E8ir+9DNQGkJKhsQxjo/4cR0e0iCmCQWfW/pmLPqgQEkEKbZU9E
+         rdvO/jqwuUwW295sBBr5MG4SMzZEpsHG0GJcQrM2fgCORyPFoekuMmrBGl5wz31N0hzZ
+         ZUaJ+QBiXWO5L+NXUuNQsLOUHVAId7CziyBis/17cWiVThG8gMz17p5IGKqaad4Omfaz
+         se1i5cnHyIYaj81hAvHaQUC0Go1L9cef8td+0sxjXz/ZQFIQ4sbYXeD3UkBGR1nVlO7N
+         Tv0Q==
+X-Gm-Message-State: AGi0PuZWASfW47lbh0kfKxD3BHQypDn0UkTJWQOMTenKkszdmtOpnjDW
+        K4BX/CHQmdszOMUyZ3LWRtzZMP3q
+X-Google-Smtp-Source: APiQypISt8elrW865BiVs0Ez8jvgOixECi2WE4Iaq7hN8IpRHmOCoF4km+lAsZ+TEByN9vf587PvPA==
+X-Received: by 2002:a1c:6a0b:: with SMTP id f11mr798905wmc.123.1588717981485;
+        Tue, 05 May 2020 15:33:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a8sm5592656wrg.85.2020.05.05.15.33.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2020 15:33:00 -0700 (PDT)
+Message-Id: <pull.625.v2.git.1588717980225.gitgitgadget@gmail.com>
+In-Reply-To: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
+References: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 05 May 2020 22:33:00 +0000
+Subject: [PATCH v2] rebase --autosquash: fix a potential segfault
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B3AC3CA0-8F1F-11EA-8B24-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     Paul Ganssle <paul@ganssle.io>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
->> > Or since we're running a shell in a VM, we really
->> > could just run "./allow-ref $refname" and let individual forks specify
->> > whatever shell code they like.
->> 
->> I presume that you are saying "checking out the tree of refs/ci/config
->> and there is a program allow-ref that can tell which one to run ci on"?
->
-> Yes, exactly.
+When rearranging the todo list so that the fixups/squashes are reordered
+just after the commits they intend to fix up, we use two arrays to
+maintain that list: `next` and `tail`.
 
-I guess a simple example implementation of allow-ref script, with a
-bit of instruction to tell people how to initialize a separate and
-otherwise empty repository with just a (possibly customized) copy of
-the script in it, and push its 'master' branch to refs/ci/config of
-their Git fork, would be a way to go, then?
+The idea is that `next[i]`, if set to a non-negative value, contains the
+index of the item that should be rearranged just after the `i`th item.
 
-Sounds simple enough.  Cycles to spin up a VM that adds 3 seconds
-latency, only to know that a branch won't need to be built, does
-sound like a bit unfortunate, though.
+To avoid having to walk the entire `next` chain when appending another
+fixup/squash, we also store the end of the `next` chain in `tail[i]`.
+
+The logic we currently use to update these array items is based on the
+assumption that given a fixup/squash item at index `i`, we just found
+the index `i2` indicating the first item in that fixup chain.
+
+However, as reported by Paul Ganssle, that need not be true: the special
+form `fixup! <commit-hash>` is allowed to point to _another_ fixup
+commit in the middle of the fixup chain.
+
+Example:
+
+	* 0192a To fixup
+	* 02f12 fixup! To fixup
+	* 03763 fixup! To fixup
+	* 04ecb fixup! 02f12
+
+Note how the fourth commit targets the second commit, which is already a
+fixup that targets the first commit.
+
+The good news is that it is easy to fix this: we use the correct
+condition (we now possibly set `tail[i2]` even for fixups in the middle)
+and we _also_ have to ensure that we _insert_ the item rather than
+_append_ it, i.e. we need to set `next[i2]` accordingly (it might still
+be set to `-1` if it was actually appended).
+
+Reported-by: Paul Ganssle <paul@ganssle.io>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    rebase --autosquash: fix a potential segfault
+    
+    This patch is in response to 
+    https://lore.kernel.org/git/017dbc40-8d21-00fb-7b0e-6708d2dcb366@ganssle.io/
+    .
+    
+    Changes since v1:
+    
+     * Fixed the order of two or more fixups-of-fixups (oddly enough, this
+       simplified the patch...)
+     * Extended the test to have two fixups-of-fixups, ensuring their order
+       is preserved.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-625%2Fdscho%2Fautosquash-segfault-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-625/dscho/autosquash-segfault-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/625
+
+Range-diff vs v1:
+
+ 1:  bb820acc342 ! 1:  de029422324 rebase --autosquash: fix a potential segfault
+     @@ Commit message
+          index of the item that should be rearranged just after the `i`th item.
+      
+          To avoid having to walk the entire `next` chain when appending another
+     -    fixup/squash, we also store the end of the `next` chain in `last[i]`.
+     +    fixup/squash, we also store the end of the `next` chain in `tail[i]`.
+      
+          The logic we currently use to update these array items is based on the
+          assumption that given a fixup/squash item at index `i`, we just found
+     @@ Commit message
+          Note how the fourth commit targets the second commit, which is already a
+          fixup that targets the first commit.
+      
+     -    The good news is that it is easy to fix this: we can detect the
+     -    situation by looking at `last[i2]` (which will be `-1` if `i2` is
+     -    actually in the middle of a fixup chain), and in that case we simply
+     -    need to squeeze the current item into the middle of the `next` chain,
+     -    without touching `last` (i.e. leaving the end index of the fixup chain
+     -    alone).
+     +    The good news is that it is easy to fix this: we use the correct
+     +    condition (we now possibly set `tail[i2]` even for fixups in the middle)
+     +    and we _also_ have to ensure that we _insert_ the item rather than
+     +    _append_ it, i.e. we need to set `next[i2]` accordingly (it might still
+     +    be set to `-1` if it was actually appended).
+      
+          Reported-by: Paul Ganssle <paul@ganssle.io>
+          Helped-by: Jeff King <peff@peff.net>
+     @@ Commit message
+      
+       ## sequencer.c ##
+      @@ sequencer.c: int todo_list_rearrange_squash(struct todo_list *todo_list)
+     + 			todo_list->items[i].command =
+     + 				starts_with(subject, "fixup!") ?
+       				TODO_FIXUP : TODO_SQUASH;
+     - 			if (next[i2] < 0)
+     +-			if (next[i2] < 0)
+     ++			if (tail[i2] < 0) {
+     ++				next[i] = next[i2];
+       				next[i2] = i;
+      -			else
+     -+			else if (tail[i2] >= 0)
+     ++			} else {
+     ++				next[i] = next[tail[i2]];
+       				next[tail[i2]] = i;
+     -+			else {
+     -+				/*
+     -+				 * i2 refers to a fixup commit in the middle of
+     -+				 * a fixup chain
+     -+				 */
+     -+				next[i] = next[i2];
+     -+				next[i2] = i;
+     -+				continue;
+      +			}
+       			tail[i2] = i;
+       		} else if (!hashmap_get_from_hash(&subject2item,
+     @@ t/t3415-rebase-autosquash.sh: test_expect_success 'abort last squash' '
+      +	git commit --squash HEAD^ -m Y --allow-empty &&
+      +	test_tick &&
+      +	git commit -m "squash! $(git rev-parse HEAD^)" -m Z --allow-empty &&
+     -+	git rebase -ki --autosquash HEAD~4 &&
+     -+	test XZY = $(git show | tr -cd X-Z)
+     ++	test_tick &&
+     ++	git commit -m "squash! $(git rev-parse HEAD^^)" -m W --allow-empty &&
+     ++	git rebase -ki --autosquash HEAD~5 &&
+     ++	test XZWY = $(git show | tr -cd W-Z)
+      +'
+      +
+       test_done
+
+
+ sequencer.c                  |  7 +++++--
+ t/t3415-rebase-autosquash.sh | 16 ++++++++++++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index e528225e787..d579f6d6c06 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5264,10 +5264,13 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 			todo_list->items[i].command =
+ 				starts_with(subject, "fixup!") ?
+ 				TODO_FIXUP : TODO_SQUASH;
+-			if (next[i2] < 0)
++			if (tail[i2] < 0) {
++				next[i] = next[i2];
+ 				next[i2] = i;
+-			else
++			} else {
++				next[i] = next[tail[i2]];
+ 				next[tail[i2]] = i;
++			}
+ 			tail[i2] = i;
+ 		} else if (!hashmap_get_from_hash(&subject2item,
+ 						strhash(subject), subject)) {
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index 093de9005b7..7bab6000dc7 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -424,4 +424,20 @@ test_expect_success 'abort last squash' '
+ 	! grep first actual
+ '
+ 
++test_expect_success 'fixup a fixup' '
++	echo 0to-fixup >file0 &&
++	test_tick &&
++	git commit -m "to-fixup" file0 &&
++	test_tick &&
++	git commit --squash HEAD -m X --allow-empty &&
++	test_tick &&
++	git commit --squash HEAD^ -m Y --allow-empty &&
++	test_tick &&
++	git commit -m "squash! $(git rev-parse HEAD^)" -m Z --allow-empty &&
++	test_tick &&
++	git commit -m "squash! $(git rev-parse HEAD^^)" -m W --allow-empty &&
++	git rebase -ki --autosquash HEAD~5 &&
++	test XZWY = $(git show | tr -cd W-Z)
++'
++
+ test_done
+
+base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
+-- 
+gitgitgadget
