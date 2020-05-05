@@ -2,169 +2,105 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88975C47256
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 07:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06EA8C47247
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 07:18:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61592206B8
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 07:18:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1FDC20721
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 07:18:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o06HK8aa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UKZB+DZ7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728441AbgEEHSR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 03:18:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
+        id S1728430AbgEEHSi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 03:18:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727849AbgEEHSQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 03:18:16 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70B21C061A0F
-        for <git@vger.kernel.org>; Tue,  5 May 2020 00:18:16 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id q7so1367959qkf.3
-        for <git@vger.kernel.org>; Tue, 05 May 2020 00:18:16 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726345AbgEEHSh (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 03:18:37 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A7D5C061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 00:18:37 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id d184so463092pfd.4
+        for <git@vger.kernel.org>; Tue, 05 May 2020 00:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=dGvBMwrMw/Jke1W9yf+uLgXQlMeaYPy36ynvxuvq4kQ=;
-        b=o06HK8aaOE7E6Z2qP4/dyw1E1TnIIAJU9KD8R5UPpbHWjdE7lukkH5wV12cWDoyOaz
-         vpdZ5onv3ErFX2/hBif4wFnmeNsF74X8omgPYbRntnrCL55q8OT6PBwmfiJYej+KEY94
-         Gqy24Hee+5dPJm/517KZHGF4lDDj2K9pNKsDRMFIYYF3Xf0Jt2a8QkXQGZmoDQiOhkJ6
-         /eW/fvyFB3mX4jaXQhaaxGrHpWV69E5FWGoWHXagH4FqIfsU8rh/zRcMNa4N8e/MnBdB
-         A8u+iSLKgGTq5t/1k7U6j3/uHpJxKhm3RzQ57J8JjZnDKSvOnzKVsIYVBuOB7nvEolff
-         MceA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=PQuJUXu3EwhXZIQM/P3Ob2Rp/7hi3zHd8bTBppgXPYM=;
+        b=UKZB+DZ7D1nUNzsVDp949sJVEGHlpU+91PSPstSj+T46MOwanfEID5/xD8v+oFSDhD
+         xbsLN67KvpWDIDRrXqPJI67Soo0F8ToBronyAawZd7c5YsJTaHwOZY3IGJIMTEcUAVcm
+         J5zKYyMENEppoEWhxrs5W6VGn1UVHSHBB13WYIIFZP0iNTSlDxjzlBWAlOGPzUff7lhZ
+         fr68GbQDjg+6fKxjZ9iG0dk+vNXRUdDkRzInk3sUp/82pMiQNbpkJBVkDJkrh1apgpMF
+         R68OYl7Ja5hxq9YgFwp62iYcajwSJXhvAJu1m1FRwh4p/A6Z1gKypFKKqjzFjtX2QHzL
+         jDLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=dGvBMwrMw/Jke1W9yf+uLgXQlMeaYPy36ynvxuvq4kQ=;
-        b=gF2dXc2jW7Q8SG5LgF4zeq2cz91an1VjMtppUPOjLaAXr75X/HMibTgEwx5hgmj9Cf
-         rw5b85fk/MN+DnK4JeqSx8tGlvxEJgAY5lRQas6so1HksE2fyIuv3eV0QtRN6y5Cv2wm
-         DDDopoKnHEPV4MvwgBVlxhnKpmio8x35z9t7JEd0gGNHh68c4t6Jxm15UmHe9GeaWQQO
-         xbAU1LbLvkCVMiM96tFUa7rIG0sNYPW7kye5rMHZUOtnrHhRPTXmYhwDg8KXPfRw73hx
-         PiP9rzeyOj5V6Ckf5E6w8ORUMmdOU60KIc7rrJjfGB+OoPAsD4kYgV5khkGzULQfuonB
-         J2FQ==
-X-Gm-Message-State: AGi0Pub0rgSZwzk4M7In9202d9A5n/alfyHoQ5RH+NhDE3ehIH+mb8uZ
-        NB4rWrKhNNYx/P/0+RRpFytlrJHV
-X-Google-Smtp-Source: APiQypKx1Lc/2kTxjrjviW0ytlRgt0Pb/IKhwsIHnRpjV5l2Mb5BJ21M+k4n/JouPlV21HZqDNdsmg==
-X-Received: by 2002:a05:620a:49e:: with SMTP id 30mr2007396qkr.294.1588663095119;
-        Tue, 05 May 2020 00:18:15 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id r51sm1019307qtk.89.2020.05.05.00.18.13
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 May 2020 00:18:14 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Harri=20Meht=C3=A4l=C3=A4?= <harri.mehtala@finago.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 1/1] restore: default to HEAD when combining --staged and --worktree
-Date:   Tue,  5 May 2020 03:17:16 -0400
-Message-Id: <20200505071716.23240-2-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.26.2.672.g232c24e857
-In-Reply-To: <20200505071716.23240-1-sunshine@sunshineco.com>
-References: <20200505071716.23240-1-sunshine@sunshineco.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=PQuJUXu3EwhXZIQM/P3Ob2Rp/7hi3zHd8bTBppgXPYM=;
+        b=U90O/nts++b8I/mteIiaVffYCJdhBWW++ZPT8+Mzdwwj+/rw23RrLOV9FqTciJQT0x
+         APKWl2w4ZEntGszKkSwPTkE27+aVHSnzLO7v7fH1jUvVEQwJrOBKpEjS6yDs1OlKqhGW
+         AvV10ujknQ5FsjkeNb+ajeheWq7Tp1sODbQhgRBbBi96WUibD0ySkawmVytTOqlIwy6C
+         /QxDqpO0/7B7gaRcLC0FCw43BFrW13PP54ULibX2JRZ21IoMPmmnyuudeHNvHSjBXYGb
+         ARxh3kfGhZFKWjzIip/rfQdnzCs/XqWKpKuFLW36pHbFVZDdZFXGU2NFNvMKBDEmwT+t
+         3euQ==
+X-Gm-Message-State: AGi0PubQDIMW66rN3e2FRlj7gLpHzIotLRQoI7XSOwsCqBkz0+2eOmgw
+        iPx+5QfDKjw+XD8EMVffEzBy8jPY
+X-Google-Smtp-Source: APiQypI4Y+g1AmImxuDlzYtx2og5TgV98Zkdaqfc9zpxjI55fJ8Ta1EAf2Qg8waQjlUYkuPmQukcBg==
+X-Received: by 2002:a63:794d:: with SMTP id u74mr1856236pgc.15.1588663116579;
+        Tue, 05 May 2020 00:18:36 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id 128sm1127080pfy.5.2020.05.05.00.18.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2020 00:18:36 -0700 (PDT)
+Date:   Tue, 5 May 2020 00:18:34 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net
+Subject: Re: [PATCH] builtin/receive-pack: avoid generic function name hmac
+Message-ID: <20200505071834.GB1218@Carlos-MBP>
+References: <20200505054630.5821-1-carenas@gmail.com>
+ <xmqqsggec2g1.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqsggec2g1.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By default, files are restored from the index for --worktree, and from
-HEAD for --staged. When --worktree and --staged are combined, --source
-must be specified to disambiguate the restore source[1], thus making it
-cumbersome to restore a file in both the worktree and the index.
+On Mon, May 04, 2020 at 11:37:18PM -0700, Junio C Hamano wrote:
+> Carlo Marcelo Arenas Belón  <carenas@gmail.com> writes:
+> > While the conflict, posses the question of why are we even implementing our
+> > own RFC 2104 complaint HMAC while alternatives are readily available, the
+> > simplest solution is to make sure the name is not as generic so it would
+> > conflict with an equivalent one from the system (or linked libraries); so
+> > rename it again to hmac_hash to reflect it will use the git's defined hash
+> > function.
+> 
+> I do not mind renaming ours, as it is harder to get the <stdlib.h>
+> fixed on the NetBSD, but I would phrase s/equivalent/unrelated/ (or
+> even "irrelevant"), as it is clearly not an "alternative" that is
+> readily available outside NetBSD.  Otherwise we would have found
+> this a lot sooner (it used to be called hmac_sha1() and renamed to
+> hmac() in August last year).
 
-However, HEAD is also a reasonable default for --worktree when combined
-with --staged, so make it the default anytime --staged is used (whether
-combined with --worktree or not).
+fair enough, would probably better drop this paragraph; but I wasn't
+referring to hmac() in NetBSD, but the fact that we are linking against
+OpenSSL (or their equivalent in macOS and Windows) that provide HMAC,
+and even using it (but with MD5) already for git-imap-send.
 
-[1]: Due to an oversight, the --source requirement, though documented,
-is not actually enforced.
+the SHA256 feature will even bring (alternatively) libgcrypt to the mix
+so it seemed strange that we didn't abstract this hmac function as part
+of that interface instead since we seemed to have plenty of alternatives
+to chose from and would had make IMHO more sense as a fallback inside
+there.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- Documentation/git-restore.txt | 11 ++++-------
- builtin/checkout.c            |  6 +++---
- t/t2070-restore.sh            | 11 +++++++++++
- 3 files changed, 18 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
-index 8e3b339802..84c6c40010 100644
---- a/Documentation/git-restore.txt
-+++ b/Documentation/git-restore.txt
-@@ -22,9 +22,8 @@ The command can also be used to restore the content in the index with
- `--staged`, or restore both the working tree and the index with
- `--staged --worktree`.
- 
--By default, the restore sources for working tree and the index are the
--index and `HEAD` respectively. `--source` could be used to specify a
--commit as the restore source.
-+By default, if `--staged` is given, the contents are restored from `HEAD`,
-+otherwise from the index. Use `--source` to restore from a different commit.
- 
- See "Reset, restore and revert" in linkgit:git[1] for the differences
- between the three commands.
-@@ -39,10 +38,8 @@ OPTIONS
- 	tree. It is common to specify the source tree by naming a
- 	commit, branch or tag associated with it.
- +
--If not specified, the default restore source for the working tree is
--the index, and the default restore source for the index is
--`HEAD`. When both `--staged` and `--worktree` are specified,
--`--source` must also be specified.
-+If not specified, the contents are restored from `HEAD` if `--staged` is
-+given, otherwise from the index.
- 
- -p::
- --patch::
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 8bc94d392b..500c3e23ff 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1605,10 +1605,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	if (opts->checkout_index < 0 || opts->checkout_worktree < 0)
- 		BUG("these flags should be non-negative by now");
- 	/*
--	 * convenient shortcut: "git restore --staged" equals
--	 * "git restore --staged --source HEAD"
-+	 * convenient shortcut: "git restore --staged [--worktree]" equals
-+	 * "git restore --staged [--worktree] --source HEAD"
- 	 */
--	if (!opts->from_treeish && opts->checkout_index && !opts->checkout_worktree)
-+	if (!opts->from_treeish && opts->checkout_index)
- 		opts->from_treeish = "HEAD";
- 
- 	/*
-diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
-index 076d0df7fc..89e5a142c9 100755
---- a/t/t2070-restore.sh
-+++ b/t/t2070-restore.sh
-@@ -69,6 +69,17 @@ test_expect_success 'restore --staged uses HEAD as source' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'restore --worktree --staged uses HEAD as source' '
-+	test_when_finished git reset --hard &&
-+	git show HEAD:./first.t >expected &&
-+	echo dirty >>first.t &&
-+	git add first.t &&
-+	git restore --worktree --staged first.t &&
-+	git show :./first.t >actual &&
-+	test_cmp expected actual &&
-+	test_cmp expected first.t
-+'
-+
- test_expect_success 'restore --ignore-unmerged ignores unmerged entries' '
- 	git init unmerged &&
- 	(
--- 
-2.26.2.672.g232c24e857
-
+Carlo
