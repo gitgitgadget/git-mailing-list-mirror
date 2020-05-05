@@ -2,121 +2,136 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 641F0C47254
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 10:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C917AC47247
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 11:35:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F08120658
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 10:53:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99533206A5
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 11:35:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WmJFTHVW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P+OMza9+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728801AbgEEKxn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 06:53:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45418 "EHLO
+        id S1728664AbgEELfc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 07:35:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728802AbgEEKxi (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 06:53:38 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10158C061A41
-        for <git@vger.kernel.org>; Tue,  5 May 2020 03:53:38 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id z8so1253268wrw.3
-        for <git@vger.kernel.org>; Tue, 05 May 2020 03:53:37 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725766AbgEELfc (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 07:35:32 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0970BC061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 04:35:32 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id 72so1350199otu.1
+        for <git@vger.kernel.org>; Tue, 05 May 2020 04:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=alFiRVZxX+n6jVXTeeoJZLpH7aeQCl4VkSj9GFGZ5AE=;
-        b=WmJFTHVWyJ2G6FpzdrN58r+tW9w2XMeOfqAayAMSVtvGXzAfCjh6J4jQ7gpVykKWBu
-         ISowRtutOGezFaaabYY5Pr0TOyp+PQ4TqdSNrAYDyOdhs7lYneffeKQjLsL8OjUHfc2N
-         2zprlGucerdgDUySUpox+ztkeQYUfIQLDoha2KCXQaxHf+A6aHmkO7js3CtsLKb9XxkA
-         eLUy48DZGMZfVL6ASWFKngKde0f7Zdmjk7qc85Vgq6FZ9ATgsBdQqfLmQDdQbrAHE5Gg
-         6YFtOHhSasA7XVw8BxYRiJUVt/HwLtcQIVI6ff0pTokWyRQ8m0bTYipo63nHN4beAB49
-         S2RQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZQMu5UsYDcgRPad78mx102v2NEvJv7YB07IXGrHpa1Y=;
+        b=P+OMza9+NSNkEnOedYey2ELPLVrOlvgcH6NGOFA8MH/QNzN3BBkSUAUxpVGauTgH6W
+         pAGymYggzRDO1jpM9C470AflLxyKIojEqeyeOXyK6VbKgv9wvP1BDkaQBWrhL/5VI8Gi
+         065Baq8IQRe0PjdYkz0+va1qGthCLoJHKF9ZJeOsrXxS62EJ26kJTkcl/WHycReA7T65
+         xD65moyC6EeBP6ZWDEPsjiPIU0gSftudPejCDeKE7jreEdN0TFsmE4BWDbiqwpRvV0IF
+         gBBmSVZEbjHJYHL7DoKHkTFGhxKyyh8m/j8J6y2afs7bdVu/oXij7DNkhdOzNhHetEw7
+         NAxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=alFiRVZxX+n6jVXTeeoJZLpH7aeQCl4VkSj9GFGZ5AE=;
-        b=ctKYstQcZ3NtlGHbmX3CodBBb7BJpq9WvRErAnixCDnz9idcoouc/RyMhknSNIFeUv
-         DKF5LrBVbaSk0hihu2mi4Mah3VGQvLa3M2ZFQGm5gxeds1slNy/pukiojX9TwDPHV9bh
-         oxU+RTv3DCUqlPuxg4nuQgsxY6Yx3R1+35+ACgsX/GR5wsc2IsUIImesH4kALT9PUvxa
-         sqyGThZKL8d2eilq7SjEUsXvYx1Q8szqZrBLzYWrBNGbYQTxfrvA+c5Gk5Et2WZNDY8T
-         WcgjlAgWSZczD9r0eL+G0UGL7GWUI+aFCL2fUohWbaasdx8IMRtdBJY3luOIHShRueMJ
-         eUiQ==
-X-Gm-Message-State: AGi0PuZLtZiWH1Gi7VeGkQ+gXEzcwOFcy+hYl/7lY00a0cCtOXBZg0pu
-        8kx/TjXSjcr4Q7gAx6ocbM1JpJns
-X-Google-Smtp-Source: APiQypLwbXjkv7NdyYO7zxIXsWQt/B7j6e67eInJBpvj0npAVl/TabBW+eGvzCQQ9F/usK3tPSi+6w==
-X-Received: by 2002:adf:d0ce:: with SMTP id z14mr3296622wrh.179.1588676016560;
-        Tue, 05 May 2020 03:53:36 -0700 (PDT)
-Received: from localhost.localdomain (atoulouse-654-1-289-61.w86-199.abo.wanadoo.fr. [86.199.72.61])
-        by smtp.googlemail.com with ESMTPSA id b85sm3170326wmb.21.2020.05.05.03.53.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 May 2020 03:53:36 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [RFC PATCH v1 6/6] stash: remove `stash_index_path'
-Date:   Tue,  5 May 2020 12:48:49 +0200
-Message-Id: <20200505104849.13602-7-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200505104849.13602-1-alban.gruin@gmail.com>
-References: <20200505104849.13602-1-alban.gruin@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZQMu5UsYDcgRPad78mx102v2NEvJv7YB07IXGrHpa1Y=;
+        b=HZaMJtbDSz0XbAm3M2onskHd07QmQwFQyr16zA4BwqkGu0ha3+RqxUTgtQVdHe4Wg5
+         GcB8+A8/97bX4ZZmkWn3g6kjqe3HhF6XA4OsjWt1eJAvP8QtyI2d3fgXZ/D2ERjdx8hH
+         DMqebME/yTi1KMJQ74hvIxci4Y4AdX1S/ktuL/VllvKD5pFLWRC3aUdtvUFSIWlC33tr
+         BUDK80BgC22SAR+R50DVd63+los4mDJDWqBhG4ZWnoI7KtVDgLTmEmaT4oqECaSM8tmF
+         TBX28VwI9wvtE4dmW9E3Y9yrVPfxHkiS3bwbQE/bz7zQipR4mg+p4HTMdcFc9MxKAy1Q
+         YI6Q==
+X-Gm-Message-State: AGi0PuYbQheQoSCCeYTlBo7BxRdWDJNNDZCCg33cbFBL0sdih25Ddrph
+        oe1VLlYqHJvsBKWFLunzR26nQG64Tbg=
+X-Google-Smtp-Source: APiQypJUr/BJhqhI0qQ02Mf1rs28Zgid03Gssfx6rMBVeBMRe64v2DND05BYAB0x0cdlCuzBfwdtWg==
+X-Received: by 2002:a05:6830:1e8d:: with SMTP id n13mr1730446otr.217.1588678531280;
+        Tue, 05 May 2020 04:35:31 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id l19sm551649otp.16.2020.05.05.04.35.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 May 2020 04:35:30 -0700 (PDT)
+Subject: Re: [PATCH 0/8] commit-graph: drop CHECK_OIDS, peel in callers
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
+        szeder.dev@gmail.com
+References: <cover.1588641176.git.me@ttaylorr.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <bc41469c-a55a-49a4-5e2e-096bbdd52751@gmail.com>
+Date:   Tue, 5 May 2020 07:35:29 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
+ Thunderbird/76.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1588641176.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since stash no longer uses a second index, `stash_index_path' is now
-unused, and can be dropped.
+On 5/4/2020 9:13 PM, Taylor Blau wrote:
+> Hi,
+> 
+> These are a few patches to address [1]
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- builtin/stash.c | 7 -------
- 1 file changed, 7 deletions(-)
+We seem to be missing links [1] and [2].
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 1eafc1fe8d..709fd5ca34 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -88,7 +88,6 @@ static const char * const git_stash_save_usage[] = {
- };
- 
- static const char *ref_stash = "refs/stash";
--static struct strbuf stash_index_path = STRBUF_INIT;
- 
- /*
-  * w_commit is set to the commit containing the working tree
-@@ -1506,8 +1505,6 @@ static int save_stash(int argc, const char **argv, const char *prefix)
- 
- int cmd_stash(int argc, const char **argv, const char *prefix)
- {
--	pid_t pid = getpid();
--	const char *index_file;
- 	struct argv_array args = ARGV_ARRAY_INIT;
- 
- 	struct option options[] = {
-@@ -1524,10 +1521,6 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, git_stash_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
- 
--	index_file = get_index_file();
--	strbuf_addf(&stash_index_path, "%s.stash.%" PRIuMAX, index_file,
--		    (uintmax_t)pid);
--
- 	if (!argc)
- 		return !!push_stash(0, NULL, prefix, 0);
- 	else if (!strcmp(argv[0], "apply"))
--- 
-2.26.2
+>   - It is often convenient to pipe the output of 'git for-each-ref' into
+>     'git commit-graph write --stdin-commits', but handling multi-layer
+>     tags is frustrating (at the very least, you have to peel them
+>     yourself in 'for-each-ref', incurring a higher-than-necessary cost
+>     outside of the commit-graph invocation)
+> 
+>   - It would be much more convenient if 'git commit-graph write
+>     --stdin-commits' ignored OIDs that peel down to non-commit objects
+>     silently, while still warning the caller about objects that (a)
+>     don't exist, or (b) invalid hash inputs (for e.g., "HEAD", or
+>     "refs/heads/foo").
+> 
+>   - By making this change, we are allowing *more* possible behaviors
+>     than in previous versions, and the only case that we are breaking
+>     (that 'git commit-graph write --stdin-commits' complains on
+>     non-commit OIDs) can be addressed by peeling outside of
+>     'commit-graph write' [2].
+
+I agree that these are worthy goals. If someone was _depending_ on
+the "git commit-graph write" command to _fail_, then they chose a
+strange way to discover a ref that points to a non-commit.
+
+> The first six patches move peeling refs out from the commit-graph
+> internals, and into the callers.
+> 
+> This has no impact on the '--stdin-commits' case, but is a potential
+> improvement for '--reachable', where it is more efficient to call
+> 'peel_ref()' than 'lookup_commit_reference_gently()'. There is an
+> intermediate state (that is resolved in the final patch) where we can
+> have more than one progress meter (since the progress meter moved with
+> the perhaps-expensive operations out of the commit-graph internals,
+> too), but the final patch addresses this.
+
+Interesting. I'll be sure to look carefully at this progress handling
+as this has potential to lose our progress options. I expect that you
+were careful about this.
+
+> The last two patches lift the restriction on input to '--stdin-commits'
+> resolving to commit objects, instead making the behavior to silently
+> drop non-commit OIDs, and continue complain about invalid OIDs, and
+> valid-but-missing OIDs.
+> 
+> Finally, this topic isn't based on anything that isn't already in
+> 'master', so I think the days of many tangle commit-graph topics are
+> behind us.
+
+Woo!
+
+-Stolee
 
