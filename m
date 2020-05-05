@@ -2,183 +2,145 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD80DC47256
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 04:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96FC6C47247
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 04:16:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A303620721
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 04:10:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B05520721
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 04:16:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="Gbrco6Pq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eCOLQvSN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbgEEEKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 00:10:37 -0400
-Received: from mout.web.de ([212.227.17.12]:50011 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725272AbgEEEKh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 00:10:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1588651834;
-        bh=whzFqkO+xyjmy9pfs7F7Kn8BJgdO1PTvZQmsadtC0as=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=Gbrco6Pqf3QWzZorf2uZ1KEdXWpFuXvBMAOjL0TXYa6T8CaG3ltSTJ+8j3QKUNcE9
-         blocCTT9va6dQ+WCgXjolaOFKz2suzrGbgk6ZYTM/RrWB1p04pFOAuUlp3Ux9Dvpo6
-         YUdjksfdSmAcKUQ063vK35WCavamqkHx2wkb9IhE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mm9Va-1ineSQ02hk-00iDgt; Tue, 05
- May 2020 06:10:34 +0200
-Date:   Tue, 5 May 2020 06:10:33 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= 
-        <carenas@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: Git 2.26.2 and failed self tests on OS X
-Message-ID: <20200505041033.w2q7h5k7otetfrus@tb-raspi4>
-References: <CAH8yC8myTMOetxgaj1wt0MbvSQ0LSRV0FHz4ywsBM1zzhUQG=w@mail.gmail.com>
- <20200504165214.GF86805@Carlos-MBP>
- <CAPig+cSPXqvFg3-25aDzptuVOHmqOcnmsCKHgjMB9poPyJR2gw@mail.gmail.com>
- <20200504190830.g2tlrognjw6ddipo@tb-raspi4>
- <CAH8yC8=zsbXDVV99tdBMHwEhr-=dO=wrwBYZi=0J8iFmUHkk=g@mail.gmail.com>
- <20200504201944.gh3zykhil3txdwnk@tb-raspi4>
- <CAH8yC8mLvG-wqrws6fnXdnuoLAoDfPqgynG9MKoSnJLhPCYu+A@mail.gmail.com>
- <CAH8yC8nyg6pRStrQxkO6DzqRbLhhza0vx1U1cGUV4P4MQ3jZ7Q@mail.gmail.com>
+        id S1726550AbgEEEQW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 00:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40092 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725294AbgEEEQW (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 00:16:22 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 204C5C061A0F
+        for <git@vger.kernel.org>; Mon,  4 May 2020 21:16:22 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id w29so963428qtv.3
+        for <git@vger.kernel.org>; Mon, 04 May 2020 21:16:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rdEUdMBKYsAPVFreAXkni0jW6xNOCn2IsIX9/GX2BsM=;
+        b=eCOLQvSNQON0EoZ1ryy/67QST8Tb0ug/9SW1BLuMyFZsQkv00VGjf7xhjAw7idghEw
+         GCfIlWk8BkFOYOO6x8ZUx5kSK4/ETTonPS4INNTEh1JAFpYhv0qsZGExKO0vaBTDqX9s
+         JwHjvay8aHCq9kXcg8rOyjbIUYKaUXaCg4C2LIsFlEU+7ggd7dGjv9MS8IShSBwrY5oH
+         8Fru6vGC7SUIogrJbm8cqDfudV5VBDwNcdECRNzUbwiPLQs3N5TIWbwahueJodzceXnz
+         XphEVL9bAWnsdptUgKe9QGBUv3vqGm1YB0WSMvxS8w7ne4so+QFlCQaTlwcqSs8Srvkx
+         0w6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rdEUdMBKYsAPVFreAXkni0jW6xNOCn2IsIX9/GX2BsM=;
+        b=HU4QXraqq8Uirw6I/W2H0OVvU6GCjNx2J45IAO7dxEVUocxl8kMy5WI62uCBhCapT4
+         FYwUmOzmg4ul1DWfvq/EaIoV9gIE/d/guTffVAp9ibjGC0uPYPjryUJPn2LxITqw2rll
+         hI5HCVVadItljO76b7zt/Ou5qVxGgX998M1ds1tQ7bq7LTgoxOvWU+7fbVWIjP1zh9Jj
+         TsF0YgTuLFY+jf6mjyLY7BNDRnNpmn/i6ND9piSDw1V2dTzQ125nFctGyHE3kfYvkyly
+         C+YcXKGsqxWQ1KrrZ3Shx+VbXIGzcmxOh34lAN9fRPwDxzzxCiAmRr4VHczW4Xd/iF7D
+         caTg==
+X-Gm-Message-State: AGi0PuaYTdNBjmcG1QdWsKsnZS30nwFg9VWUxUPAdtAF5XxDXExyQqsY
+        TkpwZQUuL+9deJZ8r6kkfjjLWSrhC+Wh/Bhwj1I=
+X-Google-Smtp-Source: APiQypKhmNP2Lxos0b6N04g1iMVszs4+InvSe6oJnbozcbk6NdGAiKyTsC2AD3vW2TdMklUgHLQ20skmw1UEKJUE944=
+X-Received: by 2002:aed:370a:: with SMTP id i10mr789255qtb.64.1588652181239;
+ Mon, 04 May 2020 21:16:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAH8yC8nyg6pRStrQxkO6DzqRbLhhza0vx1U1cGUV4P4MQ3jZ7Q@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:2X7dscErS796y3aB5RnQcm5qQYQQHQLw/VSLugY0yMyRpPv587p
- /D8oPA6+JKk2IdzCuJqG4W8gMPNLt3+QL5i9+Mzbh35RWggaC9zQtc58CEUw3+2d1VB6Ycf
- oUHQMcu2ksXTak2ZeX2bQZCr5ELb4zUdZUel5u0fM72FHH2/Mmn43BM+Z0FgM7GZ1noCAdD
- 3h03zgH6gPn4APLzNm7lw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Xmo+3lVlEMY=:SKFHIR2jr86vdpaD5+PUdM
- 50/EYsJUrq3Ah1yb2Jk97ypeCRNsDq1bNfoyt2HJvDNON/Rzsq9rtKKDiJYwBTnVy7e+8qxZC
- ElS0nwVMdpa3HK5jcAe3ohtk8y65QV4G0Znxdq9zWVEXWeSkwoBRNhUXce6cX+FWsNzK1ob64
- oJd1BJQnPi6+cS/R+fabj4oMnWQwj4N/v+yAtCT516PYLWLJebcsM5+muD/NBc5PS+I3giFE+
- wtyaF/ArUi72cH72Uxmbw/wfypXq5k+5v9crHA8LzmOXb7kF6NVtfkMbSAuVnYGVVCm8/APFq
- oIj1vYERy3aRCcqMMV6rOITOpQfdxwmYmKBAHtzg/a0fI7lxZ8hvjqjDtvmfpSPgxNOnpB9N9
- VMiQE14JwInAjE7ngXu3AYFVgGfWpm9WM8tri6jjzePNGfyil1+mlBcwi78C7BfCUTrsmYlI2
- vJSpT6kTnpR3OrfWWOVh1gMBs5Tf5vz2ysC5zP0TLFFTh59iar8FP4UFjdMGD8Ib2AhZjmKxm
- ACxHH9qAqyYObyw6cIsPM9HtGRvHYZF906SNopaV9CAQDCcru3sobK427n/DPpu1fM9ie3Dtt
- XoONlqJsLEpmBrsupskR/s9HBMMvyrU44PVj4J5zTUyRrkgbuVRHylUxGMaZR9gnjvQEH/sqH
- TYOXjSZcrd1kIaKGZJOKMibxIVvjrNK9xseAsMU4FHsP6dg5eVcJ3QSdZKqHQG0qPPA+l46vO
- G0wBI25FDPdsq6n9Q/QkuPVUUzBB/I74dRwlz+fqlc3bjpFQHeBnBrozwp45qFjDRrzDAZOWb
- qCM3aPBClUNDoa1KxB/aFMoetl4EJro62Sp5D4qNuZBTolwkKhnnlO5Gk1zgd6vWiy7cFfqYq
- qLQnAf9+eXLHZI6DQYQFnDf4MdW3I0FxHExVd84nilFzATlTwqavLnlDlrGF4q+1yrBG/gqVh
- 7zrtC/4+uUqBBdVFxF1TsrqoMWqFyzkOrJx2ATb0zONYx6LPusUoJCTZtLKuSexR8kx0g2c4O
- FLP2eI3l63aAXL7qbd6dDjGiX7zZZZQJL7kA3H07EGrtYeGYXPxCxiii+AGSSlXeoqGr/YMHs
- 6ZrliM2LZKvLUzsFzT0XcI2QKqW+eCnbzY0bch/83VAdMJeYB2X1jTWRkca99iXWPjwieRAHF
- wkoqNDAQKKu4GrchPP95z3Y8mOgT2BQw/roxwTYba9Gh3v3Ye8rajTYBMaB7TLmVt9oOUz5yn
- f5XlCHX0SJ67mvsJx
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
+ <xmqq8sikblv2.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
+ <20200427200852.GC1728884@coredump.intra.peff.net> <20200427201228.GD1728884@coredump.intra.peff.net>
+ <20200428135222.GB31366@danh.dev> <20200428210750.GE4000@coredump.intra.peff.net>
+ <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2005012130010.18039@tvgsbejvaqbjf.bet> <CAKiG+9UvnLtF7eS9FsPLyRR4ZPNSnakZwyYy3dO7WoAnRpvoMA@mail.gmail.com>
+ <xmqq4ksyl4mz.fsf@gitster.c.googlers.com> <CAKiG+9Vvwz_ajhJ1KPVWtq25UaGtJOH57eXTA=cgm5qzoZCfGw@mail.gmail.com>
+ <xmqqsgghhr32.fsf@gitster.c.googlers.com> <689741588534833@mail.yandex.ru>
+ <nycvar.QRO.7.76.6.2005041630150.56@tvgsbejvaqbjf.bet> <848941588629532@mail.yandex.ru>
+In-Reply-To: <848941588629532@mail.yandex.ru>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Tue, 5 May 2020 09:46:09 +0530
+Message-ID: <CAKiG+9Xu+eeET1Y3hFJTSpofxBCWEvwjyaY0cjFbKptzYLACNw@mail.gmail.com>
+Subject: Re: [PATCH 0/8] CMake build system for git
+To:     Konstantin Tokarev <annulen@yandex.ru>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Danh Doan <congdanhqx@gmail.com>,
+        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 04, 2020 at 05:39:50PM -0400, Jeffrey Walton wrote:
-> On Mon, May 4, 2020 at 4:30 PM Jeffrey Walton <noloader@gmail.com> wrote=
-:
+On Tue, May 5, 2020 at 3:29 AM Konstantin Tokarev <annulen@yandex.ru> wrote:
+>
+>
+>
+> 05.05.2020, 00:32, "Johannes Schindelin" <johannes.schindelin@gmx.de>:
+> > Hi Konst,
 > >
-> > On Mon, May 4, 2020 at 4:19 PM Torsten B=F6gershausen <tboegi@web.de> =
-wrote:
-> > > On Mon, May 04, 2020 at 03:20:11PM -0400, Jeffrey Walton wrote:
-> > > > ...
-> > > > > Does
-> > > > > ./t3902-quoted.sh   -v -d
-> > > > > give anything useful ?
-> > > >
-> > > > Yes, it looks like the command reveals a couple of problems.
-> > > >
-> > > > I'll have to look into my iconv recipe. It has not changed in a wh=
-ile,
-> > > > so something else may be responsible for the failure.
-> > > > https://github.com/noloader/Build-Scripts/blob/master/build-iconv.=
-sh.
-> > > >
-> > > > I'm not sure what to do with the HEAD problems.
-> > > >
-> > > > $ ./t3902-quoted.sh   -v -d
-> > > > Initialized empty Git repository in
-> > > > /Users/jwalton/Build-Scripts/git-2.26.2/t/trash
-> > > > directory.t3902-quoted/.git/
-> > > > expecting success of 3902.1 'setup':
-> > > >
-> > > >         mkdir "$FN" &&
-> > > >         for_each_name "echo initial >\"\$name\"" &&
-> > > >         git add . &&
-> > > >         git commit -q -m Initial &&
-> > > >
-> > > >         for_each_name "echo second >\"\$name\"" &&
-> > > >         git commit -a -m Second &&
-> > > >
-> > > >         for_each_name "echo modified >\"\$name\""
-> > > >
-> > > >
-> > > > fatal: iconv_open(UTF-8,UTF-8-MAC) failed, but needed:
-> > > >     precomposed unicode is not supported.
-> > > >     If you want to use decomposed unicode, run
-> > > >     "git config core.precomposeunicode false"
-> > > >
-> > >
-> > > I am quite sure, that the trouble starts here.
-> > > It seems as if you are building iconv yourself ?
-> > > And that iconv does not include "UTF-8-MAC", which is a specialty
-> > > for Mac.
+> > On Sun, 3 May 2020, Konstantin Tokarev wrote:
 > >
-> > Oh, thanks. I was not aware.
+> >>  03.05.2020, 20:21, "Junio C Hamano" <gitster@pobox.com>:
+> >>  > Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+> >>  >
+> >>  >>>  As you say, an extra instruction in INSTALL file to tell users to
+> >>  >>>  copy from contrib/cmake may workable, though it is unsatisfactory.
+> >>  >>>  But the other one will not simply work. If we need to have a new
+> >>  >>>  file with string "CMake" in its name at the top-level *anyway*, we
+> >>  >>>  should have the real thing to reduce one step from those who want to
+> >>  >>>  use it. Those who do not want to see "CMake" at the toplevel are
+> >>  >>>  already harmed either way, if is a dummy or if it is the real thing.
+> >>  >>
+> >>  >>  In your opinion, what would be the best way to communicate with users, there is
+> >>  >>  an optional CMake build system for git?
+> >>  >
+> >>  > You do not want to hear my opinion, as my priorities would be
+> >>  > different from yours ;-)
+> >>  >
+> >>  > Given that we all agreed that the only reason we contemplate use of
+> >>  > CMake in our project is strictly to help Windows build, i.e. due to
+> >>  > the same reason why we have contrib/buildsystems/, it is not one of
+> >>  > my goals to communicate with general users about optional CMake
+> >>  > support in the first place. It has lower priority than keeping the
+> >>  > project tree and the project history less cluttered.
+> >>  >
+> >>  > So my first preference would be an instruction somewhere in install
+> >>  > or readme that tells those who want to build for windows to copy
+> >>  > from (or perhaps update cmake to offer the "-f" option and tell it
+> >>  > to read from) contrib/cmake/CMakeLists.txt to the toplevel before
+> >>  > doing anything [*1*].
+> >>
+> >>  FWIW, CMakeLists.txt doesn't have to be in the root of source tree in
+> >>  order to work. It can perfectly work from contrib/cmake after necessary
+> >>  changes in relative paths.
 > >
-> > I'll open a bug report with the iconv folks letting them know
-> > configure has some gaps on OS X.
+> > Would you have an example handy, or a link to an article describing this?
 >
-> Thanks again Torsten.
+> It's so trivial that I'm not sure what such an article would have to describe.
 >
-> I am not seeing an option to enable the encoding in iConv. Would you
-> happen to know what is needed?
+> https://github.com/annulen/cmake-example
 >
-> Thanks again.
+
+Yes, this is trivial, but doing so is bad practice in general and
+difficult to maintain.
+Won't it be better just to copy the CMakeLists.txt to the root
+directory for configuring.
+
+Thank You,
+Sibi Siddharthan
+
+> --
+> Regards,
+> Konstantin
 >
-> $ cd libiconv-1.16
-> $ ./configure --help
-> `configure' configures libiconv 1.16 to adapt to many kinds of systems.
-
-Hej Jeffrey,
-I am not an iconv expert - and don't intend to become one.
-The UTF-8-MAC conversion does probably only exist in the
-code for iconv shipped on Mac OS - so it could happen that this
-code is not open source.
-There may be ways to "extract it" :
-Either that information is part of the unicode specification,
-and there may be tables that can be converted into c-code that
-fits into the iconv code base. I don't know.
-Or you can use the iconv on MacOs itself to generate such a table.
-That is all somewhat behind my horizon.
-
-For Git (under MacOS) we need UTF-8-MAC to compensate for HPS,
-(or HPF+) so that all filenames with non-ASCII codepoints are
-stored in the repo in precomposed unicode.
-This is what Linux and Windoes and Unix is using, this commit
-may give more information about the what and why:
-
-  commit 76759c7dff53e8c84e975b88cb8245587c14c7ba
-  Author: Torsten B=F6gershausen <tboegi@web.de>
-  Date:   Sun Jul 8 15:50:25 2012 +0200
-    git on Mac OS and precomposed unicode
-
-By the way, does
-./t3910-mac-os-precompose.sh
-work on your system ?
-
-So far I am not aware about any problems with iconv from MacOs
-being reported here on the list.
-Which problems/bugs did you found in the iconv shipped with MacOs,
-especially together with Git ?
-
-[snip]
