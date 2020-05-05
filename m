@@ -2,84 +2,118 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19CC1C47254
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 10:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21489C47247
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 10:53:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D61F4206B9
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 10:12:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1D1D206A5
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 10:53:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="etIgZwl+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vKVQQSGH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728487AbgEEKMH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 06:12:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38818 "EHLO
+        id S1728695AbgEEKxb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 06:53:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725766AbgEEKMF (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 06:12:05 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29DADC061A0F
-        for <git@vger.kernel.org>; Tue,  5 May 2020 03:12:04 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id s8so885319pgq.1
-        for <git@vger.kernel.org>; Tue, 05 May 2020 03:12:04 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725766AbgEEKxb (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 06:53:31 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E627AC061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 03:53:30 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id f13so2139424wrm.13
+        for <git@vger.kernel.org>; Tue, 05 May 2020 03:53:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TDAmIsAuiW6NLWLQ37MkhwCbp7rml7pjZ8+5CMqvsTw=;
-        b=etIgZwl+FEORc7ZPgnUhLM/GEhoB02cBr4YXYWUJKrOr/lXWVhe1y+iFREcNLkxH9V
-         BEpLyiCzBtGvL0teWTan6om73n9U4HIM21si0uwbCuzrlaWIjidbyKL/6q04qBrftwm0
-         VQFfuMrUHRMHZa0z1n3qcLFdXGWh1J45j5syEI9dQ8Us90USDRCWoBJB7vD03+UjhEVK
-         hHWcF9yTizlJxL8PHRHtBLl5Z1dXD5n/rcDPGVoBM9L/Y18ms+G55srk+QvZcVtg4dIC
-         IAOwh7svTKvdknpCy2A4htFgIA2+dE6j39Jzn40AOMD4+1jIQC6s1bZf71JpjaRPTRRh
-         UqyQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AHrjojOBoWbd1g4jiLPwGKp34FQjZarqC+YL62L4Soo=;
+        b=vKVQQSGHpIwi7YwnCZAEk06yZ5tPuRuVeGepgDOdiEiW/axSG00T4a9O9JtmuDRBGr
+         1tmMF08i2nei1JWiU7t2R0+7+3TC/NOdElcMlbLZP0HlmF9NtdzC0HtKVINUGtA2NBQr
+         DsUwbNcPgiJoM1IRc9nV9ex9BEKsg8EwTUV1pe13iE0eYvWGtlK4jNLptlVw/fTVTooY
+         lSYtHUa7n4oUbPXe84puJRndGPsE+/WjCbZxm/LNzGSqbgIHdTWDtmmLX8A+PiZIExvh
+         782Db92e/92i8y2vE903fn+p5LVJuHurbvLO2ss/JOa0j+NCrvybClKLADoyobWZFChy
+         q6kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TDAmIsAuiW6NLWLQ37MkhwCbp7rml7pjZ8+5CMqvsTw=;
-        b=i35G52mAEWf4yHsrynE/8hfWgjBZ2tRt77JJtVJFvVgeLNQgD6cAPiGXn5QmjBCdAE
-         jEkJA7V3/SXpqO0s/0mTezxyWwYRFyZ3gA20vpZXoziA6mKZHm4mHtTev1J56qDOskEU
-         nE1gLhFNB+zpqeXOJ5fRldlnJLARzXmmbC7CBka7GN3WEO7iILcKfhhyPJzzvRxoAviE
-         hm25jzS82phuwe0eXxus9a7klx82g5CiwLrJwrgc61uJtoBZjZryQc2YS7wYLjXm/Dpw
-         wRrKOGEDHf4PpOD5frHVldsRcNjJQXtflJajixle5OSjqlhpCvBaEk3Gf8SuLjSU2F6+
-         MwXA==
-X-Gm-Message-State: AGi0PuZSyFgkVEyHSK2DuHlIsyx9GBQq05f9XhJe0FYKujDB2pOG+PNb
-        /AVd8bwm393DN4Dnhr/t6M0=
-X-Google-Smtp-Source: APiQypIyZTg/Mymvrab3qHshQqwa3otWxQOKMcR/AO8+8lwj8juLbQM8BPyP+/w77svRCGX3UEfvfw==
-X-Received: by 2002:a63:314b:: with SMTP id x72mr2356851pgx.362.1588673522169;
-        Tue, 05 May 2020 03:12:02 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id cm14sm1575878pjb.31.2020.05.05.03.12.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2020 03:12:01 -0700 (PDT)
-Date:   Tue, 5 May 2020 03:12:00 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] builtin/receive-pack: avoid generic function name hmac
-Message-ID: <20200505101200.GC1218@Carlos-MBP>
-References: <20200505054630.5821-1-carenas@gmail.com>
- <20200505092421.GF6530@camp.crustytoothpaste.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AHrjojOBoWbd1g4jiLPwGKp34FQjZarqC+YL62L4Soo=;
+        b=QUcXoSLNVqvM6QBoF6kkvslk5D7yEYXQK8c1GgFxG9eCjbZleOXp24JAQtp78QNzpe
+         WO5hrfxaHs3dNKxJZbzm4ky5IefvKSGcgJk7GXl/Pl0wI8DgFmQ3TuomjiT2Ys+oCBmd
+         D/RMEAylldhmzlEmy77xZOoi1grGdre2fuZa+4dvQvFRX/gd3CThItSH3SHQrHSPe8nm
+         SPkvA7AywgZfWn18mCn1KJo0Z9Anb+pFnLsfMaBmGSt+AdnGZjDwW3NN2rYl64DTwwT4
+         UJnnrhDz/0mh23+GhKcX3wCtV6pX29UAzasFYsmd+0vRpk3yXFxA/9wOKKN/WjzwUWYp
+         qizA==
+X-Gm-Message-State: AGi0PubFfC3E2TNqKdAnn4hhzBPWuFQo6hOzr8Vso3LD+bVKbW4s1KyA
+        K1cCuVIk69SVhgo7JZg2Gtvd4V/u
+X-Google-Smtp-Source: APiQypKOPGEKe5+UwBOwFP5kyq42QR6Tks+NZ42KpsSgDd+dr2ib8oXsG14LRTMZsEpMueBWsmzkMg==
+X-Received: by 2002:a5d:4389:: with SMTP id i9mr3227810wrq.374.1588676009292;
+        Tue, 05 May 2020 03:53:29 -0700 (PDT)
+Received: from localhost.localdomain (atoulouse-654-1-289-61.w86-199.abo.wanadoo.fr. [86.199.72.61])
+        by smtp.googlemail.com with ESMTPSA id b85sm3170326wmb.21.2020.05.05.03.53.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 May 2020 03:53:28 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [RFC PATCH v1 0/6] stash: drop usage of a second index
+Date:   Tue,  5 May 2020 12:48:43 +0200
+Message-Id: <20200505104849.13602-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200505092421.GF6530@camp.crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 05, 2020 at 09:24:21AM +0000, brian m. carlson wrote:
-> I appreciate you pointing this out, since it was a surprise to me that
-> this would be in stdlib.h without further guards, although perhaps it
-> does have guards and we coax NetBSD to provide more than standard
-> functionality (as we do with glibc).
+The old scripted `git stash' used to create a second index to save
+modified and untracked files, and restore untracked files, without
+affecting the main index.  This behaviour was carried on when it was
+rewritten in C, and here, most operations performed on the second index
+are done by forked commands (ie. `read-tree' instead of reset_tree(),
+etc.).  This works most of the time, except in some edge case with the
+split-index when the split file has expired and is deleted by a forked
+command: the main index may still contain a reference to the now-deleted
+file, and subsequent operations on the index will fail [0].
 
-we define NETBSD_SOURCE since 9a695fbf38 (NetBSD compilation fix, 2009-04-26)
+The goal of this series is to modernise (a bit) builtin/stash.c, and to
+fix the aforementionned edge case.
 
-Carlo
+I have to admit that I don't really know how to test this.
+GIT_TEST_SPLIT_INDEX failed on me (gdb showed me that it does not enable
+the split-index at all, at least in `git stash' and its forks), and I'm
+reluctant to add explicits tests on `git stash' about the split-index,
+when nothing in its code explicitly does unusual things with the index
+once this series is applied.  If anyone wants to share opinions about
+this, I would be happy to read them.
+
+This series is based on b34789c0b0 ("The sixth batch", 2020-05-01).
+
+The tip of this series is tagged as "stash-remove-second-index-v1" at
+https://github.com/agrn/git.
+
+[0] https://lore.kernel.org/git/EED2CFF1-5BEF-429D-AB99-AD148A867614@gmail.com/
+
+Alban Gruin (6):
+  stash: mark `i_tree' in reset_tree() const
+  stash: remove the second index in stash_working_tree()
+  stash: remove the second index in stash_patch()
+  stash: remove the second index in save_untracked_files()
+  stash: remove the second index in restore_untracked()
+  stash: remove `stash_index_path'
+
+ builtin/stash.c | 151 +++++++++++++++---------------------------------
+ 1 file changed, 46 insertions(+), 105 deletions(-)
+
+-- 
+2.26.2
+
