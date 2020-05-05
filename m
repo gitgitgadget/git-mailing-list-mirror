@@ -2,123 +2,138 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8F90C47247
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 09:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80655C47254
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 09:53:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1741206CC
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 09:24:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E29A206A4
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 09:53:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="A/3YXqkX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcebYPD5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728351AbgEEJY3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 05:24:29 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37914 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725766AbgEEJY3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 05:24:29 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E36066044D;
-        Tue,  5 May 2020 09:24:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1588670668;
-        bh=ax6Qircm54O8UzkKsoPwaHleYqGZataOPtNC8mrkGDU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=A/3YXqkXqA16L0UuNdBV1J3d+1eS/SoR9e5JDV9tK0oqomWsnz2uBKGMrtbgPq0Xk
-         XTQCWwAj1/1gGbdHsvFjoEyr3x+75wOGPHFgHmnCSHUWYR0WZqzF/feXbsf+5ACzqZ
-         vL1qHPps1dNU4zx6yVhZCicsiNXk4P26E44+qi3lee/H1P1NHIuzZJM7iU65+3mDqX
-         TIIO8dXrITVBNfwDFdYVhjG6DoDpjDSr+7hr1k9ifsftkRtDthB5piQ/0nwufw1ei+
-         mft+0z/nAwbA1LCrTNrvPU7XdkXzmsCk9ovFFWItC9qWjChAqCFSIDtixYL0oYP009
-         NwytWLuEjsS5omF33OzZBTM4zkTRam2eB40AhIoreebGZ/Nj8byKw6C/MtkYJKbip2
-         Z/JKvQTgKYbmYii6G0/+sLaqU1JzsKUxNtxePLH5r6Mcdr2pF9uDy1WPMN5Hv/VVbd
-         8OebAV4RNZoxC/nSoceEyLgUbawSAqUpsRtI7VHYnHylQne6N68
-Date:   Tue, 5 May 2020 09:24:21 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] builtin/receive-pack: avoid generic function name hmac
-Message-ID: <20200505092421.GF6530@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        git@vger.kernel.org
+        id S1728268AbgEEJxe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 05:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35922 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1725766AbgEEJxe (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 05:53:34 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F89AC061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 02:53:34 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id z6so604161plk.10
+        for <git@vger.kernel.org>; Tue, 05 May 2020 02:53:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=W908UAuysw5MqFGdzt6EEgAK/TIINEp2lMzjQKFLtu0=;
+        b=LcebYPD5fR6ESrUM5/bgeShA07QNG45cc9squhvGozn3dHUKz8P86iFxyMqAqqm/ws
+         TQ3xhH77z5a0yiq5DFCANmng2p2CDGp/oD7KsON6av2qVUmEIuF7oOzauE4fKZ0eWo7s
+         1OzBd5YrnFs+qIeIeZ3ti8vET/myIfI9I914sxxy7KRYFs41GFsbn42grWpWmpigdPT1
+         UkLWMihFbOFoxI8phZBm0tbSufBOJ9mtI1Eh8t0EiFQutIgQtUkrTcO6eYz+m4z5f0lY
+         iRmO2DxALqRb8pMt2xLRrq/uU3YbfaWeCvxT6e3G8Qd08eGqUIefXblO+qEn2qX5oajX
+         d2+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=W908UAuysw5MqFGdzt6EEgAK/TIINEp2lMzjQKFLtu0=;
+        b=rRUn8vXJexT/euFvsXzUqr7/afPsw6OECK81AtyDUXNV3G/ShezpGen4Lh3lLPY2nf
+         SJygP/RDJgNdlkUzzKb2oCqVq0fKnibNywhApfeHP4Y912CXghIXy86diHuNt99GnVf9
+         qFPedLdVL0p9hzHux7KhUtQcf6y37R/rjD4fIGPHuyhw+pEdzZfjKPLsH8NHj/msAN8K
+         7ECmH4Ces/y9ZC4V81K+S8yF3xKt/k1dL8DIz9F0ki9fzOQkYkA9708D+//G5JwN+0Tq
+         ByaMBC/dDs0aUGfvM7y2DjauLhuG05eRxYCOURE53XaIfEp+DF/5VnoYf8ttMZqip4k/
+         inSA==
+X-Gm-Message-State: AGi0Pubdf6hs/CF4UScaug9sEJYk8iDwLd1e9tN7GyN+Wlwxq18/6CaO
+        2m/JxA42brbFjOUX0a6pzwIlRTod
+X-Google-Smtp-Source: APiQypLSBuEey4Upj0BLD10mjJZR1Wp2oNxpeop6M5dIqGOjDIf03He6Xtj09uBNhTC2/wAfoRU5ig==
+X-Received: by 2002:a17:90a:840e:: with SMTP id j14mr1881363pjn.85.1588672413188;
+        Tue, 05 May 2020 02:53:33 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id h14sm1565094pfq.46.2020.05.05.02.53.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 May 2020 02:53:32 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sandals@crustytoothpaste.net,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v2] builtin/receive-pack: avoid generic function name hmac()
+Date:   Tue,  5 May 2020 02:53:26 -0700
+Message-Id: <20200505095326.36374-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.26.2.686.gfaf46a9ccd
+In-Reply-To: <20200505054630.5821-1-carenas@gmail.com>
 References: <20200505054630.5821-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ULyIDA2m8JTe+TiX"
-Content-Disposition: inline
-In-Reply-To: <20200505054630.5821-1-carenas@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-trunk-amd64)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+fabec2c5c3 (builtin/receive-pack: switch to use the_hash_algo, 2019-08-18)
+renames hmac_sha1 to hmac, as it was updated to use the hash function used
+by git (which won't be sha1 in the future).
 
---ULyIDA2m8JTe+TiX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+hmac() is provided by NetBSD >= 8 libc and therefore conflicts as shown by :
 
-On 2020-05-05 at 05:46:30, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-> fabec2c5c3 (builtin/receive-pack: switch to use the_hash_algo, 2019-08-18)
-> renames hmac_sha1 to hmac, as it was updated to (optionally) use the hash
-> function used by git (which won't be sha1 in the future).
->=20
-> hmac() is provided by NetBSD > 8 libc and conflicts as shown by :
->=20
-> builtin/receive-pack.c:421:13: error: conflicting types for 'hmac'
->  static void hmac(unsigned char *out,
->              ^~~~
-> In file included from ./git-compat-util.h:172:0,
->                  from ./builtin.h:4,
->                  from builtin/receive-pack.c:1:
-> /usr/include/stdlib.h:305:10: note: previous declaration of 'hmac' was he=
-re
->  ssize_t  hmac(const char *, const void *, size_t, const void *, size_t, =
-void *,
->           ^~~~
->=20
-> While the conflict, posses the question of why are we even implementing o=
-ur
-> own RFC 2104 complaint HMAC while alternatives are readily available, the
-> simplest solution is to make sure the name is not as generic so it would
-> conflict with an equivalent one from the system (or linked libraries); so
-> rename it again to hmac_hash to reflect it will use the git's defined hash
-> function.
+builtin/receive-pack.c:421:13: error: conflicting types for 'hmac'
+ static void hmac(unsigned char *out,
+             ^~~~
+In file included from ./git-compat-util.h:172:0,
+                 from ./builtin.h:4,
+                 from builtin/receive-pack.c:1:
+/usr/include/stdlib.h:305:10: note: previous declaration of 'hmac' was here
+ ssize_t  hmac(const char *, const void *, size_t, const void *, size_t, void *,
+          ^~~~
 
-This is fine, although as others mentioned, there's a missing sign-off
-here.  While it may seem that we can use OpenSSL's version here, we
-cannot, since not all versions build with OpenSSL (for example, Debian
-does not).  In fact, it's possible to build core Git without any crypto
-library at all if you don't need HTTPS support.
+Rename it again to hmac_hash to reflect it will use the git's defined hash
+function and avoid the conflict, while at it update a comment to better
+describe the HMAC function that was used.
 
-I appreciate you pointing this out, since it was a surprise to me that
-this would be in stdlib.h without further guards, although perhaps it
-does have guards and we coax NetBSD to provide more than standard
-functionality (as we do with glibc).
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+v2
+* cleaner commit message that even has an SOB
 
---ULyIDA2m8JTe+TiX
-Content-Type: application/pgp-signature; name="signature.asc"
+ builtin/receive-pack.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 2cc18bbffd..39b0c3d70b 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -418,7 +418,7 @@ static int copy_to_sideband(int in, int out, void *arg)
+ 	return 0;
+ }
+ 
+-static void hmac(unsigned char *out,
++static void hmac_hash(unsigned char *out,
+ 		      const char *key_in, size_t key_len,
+ 		      const char *text, size_t text_len)
+ {
+@@ -463,10 +463,10 @@ static char *prepare_push_cert_nonce(const char *path, timestamp_t stamp)
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 
+ 	strbuf_addf(&buf, "%s:%"PRItime, path, stamp);
+-	hmac(hash, buf.buf, buf.len, cert_nonce_seed, strlen(cert_nonce_seed));
++	hmac_hash(hash, buf.buf, buf.len, cert_nonce_seed, strlen(cert_nonce_seed));
+ 	strbuf_release(&buf);
+ 
+-	/* RFC 2104 5. HMAC-SHA1-80 */
++	/* RFC 2104 5. HMAC-SHA1 or HMAC-SHA256 */
+ 	strbuf_addf(&buf, "%"PRItime"-%.*s", stamp, (int)the_hash_algo->hexsz, hash_to_hex(hash));
+ 	return strbuf_detach(&buf, NULL);
+ }
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXrEwxQAKCRB8DEliiIei
-gRP8AP99HPZqLAPPYDoIhjInNRSYA9L63zIrw1dc63iTvitawgD/f58xiBXQZYTa
-v9E5uQHeBDj2BpJPe2IWI+ay0EohfwE=
-=h/HE
------END PGP SIGNATURE-----
+base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
+-- 
+2.26.2.686.gfaf46a9ccd
 
---ULyIDA2m8JTe+TiX--
