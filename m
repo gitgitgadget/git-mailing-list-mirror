@@ -2,92 +2,124 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92BF4C47247
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 18:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AC44C47254
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 18:36:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5481920735
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 18:29:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68C1A206FA
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 18:36:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmkJ4QL6"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JNLB4pJ2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728875AbgEES3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 14:29:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60784 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728076AbgEES3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 14:29:47 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D64BC061A0F
-        for <git@vger.kernel.org>; Tue,  5 May 2020 11:29:47 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id 188so3365711wmc.2
-        for <git@vger.kernel.org>; Tue, 05 May 2020 11:29:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=l4R+pcMtCfylFV3QeyZbGfcaMbNzC2aSA6OxrxKhets=;
-        b=KmkJ4QL6ciXdhtFnrQLOeQNOyVspWsHSKQUHbfBbXdfAY8eQ42gQuW0Bz0xepCtB8R
-         Yoa2H8Q1jj7UVnD4j0PeVy/AOyEKXKIZ3lr66M3anFswVijuDJzU99FMqx5M/1HxAgbo
-         DKoqU1SDcbDE6zg7qI3g6Fc+bLagBSfG/QgWY/QIUPG91JojmS2eSjbc633tLy6GuFeQ
-         I97HYfTOqMMUx9RGi7c5NQez7iqrJwAB2MpHXLGUmaOb7uaaheS4lGt6oTvOylxqRHcn
-         HwQaEH/APgLVUG6ABWmhQr+1JLf6xEgxpOI42Ekk50s8S2Qi1vpK9sbkGJ/Bk1XhTL6v
-         0aYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=l4R+pcMtCfylFV3QeyZbGfcaMbNzC2aSA6OxrxKhets=;
-        b=HADutU1HDj53GaTtSbidAHznJd36Cq/mf0bDVmr5uS6AINL5oTn7XZ1J7k8DAplMID
-         HnrSPFlxB5918elZGZD1auhfhjjAcaJc4z8Ar6L0pnZRJuyz4iwkx2G5WgU0ZiXVM9MW
-         diNKOvUBKqWWJAM4py/RdRyQfnXHiqudBJoOZqq11E3it7j29PchsNk7aeeesrf6DPty
-         S0y28ESxeCERF8ud4/4VSFyOHWTVRO8Yv5PfeF/nRGBLYCZxv57Aebnz9DpKyalElJt+
-         qzkqPNyNLlH82PP6TIo7ZPLRDV+uut0A6JurcSafbikZEpUjhsY7jAVjN+9qB9JJaDrQ
-         V6IQ==
-X-Gm-Message-State: AGi0PuZf2xHsk7eCyU0Ybuw5Hq3VzCoUVptHlURWiMGAowP3RkhwR4Px
-        XmhD9s4PWd9bsC0/n9aspF1Iwtp9
-X-Google-Smtp-Source: APiQypITYbe2+ROdb89p2fuC0figGw/C+20Fvlb6AUT+g/COGeh59Dei8n6Tdz5k7gMPxH5aXD47LA==
-X-Received: by 2002:a1c:3b09:: with SMTP id i9mr52523wma.19.1588703385529;
-        Tue, 05 May 2020 11:29:45 -0700 (PDT)
-Received: from kaiser (ip-89-177-205-133.net.upcbroadband.cz. [89.177.205.133])
-        by smtp.gmail.com with ESMTPSA id r23sm5021936wra.74.2020.05.05.11.29.44
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2020 11:29:45 -0700 (PDT)
-Message-ID: <68d07bcc90de093701a0a5589107d91a10a3af08.camel@gmail.com>
-Subject: git send-email loses annotate changes on error
-From:   jtojnar@gmail.com
-To:     git@vger.kernel.org
-Date:   Tue, 05 May 2020 20:29:43 +0200
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.1 
+        id S1728937AbgEESg3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 14:36:29 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62005 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726618AbgEESg3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 14:36:29 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 46944BC921;
+        Tue,  5 May 2020 14:36:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9voxNebv4IIIRYRl39q+1L9D3jc=; b=JNLB4p
+        J2fq/TAXIVVwsd/4w2hSLe7DjVrTbtJ9W3jyeW0y4kaLhGmmCPHOcdWw5ZIosqio
+        nxlWFnzYZzoCTLNaR7Z4ixz7RxGU23TDHhZ5KPkV82Tc0TcrFieXuP7R7ZF/Yg6D
+        CsEGoRGr10zHhnqkC4MvfQAu89xn03oxAibbk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=viBLkDQcJHaP9KEi+N+UGlsmVgpo/PPX
+        xFDjLQETmaxli6JxJuGStEQOaHxfv0wybuyJm0UWgqB43j0TGQxMaYksdAOgPjXv
+        rUkk2RFU7rv1X25ZikQwWwQ22RWwqOmrErm+WJOh/TCs5Pb5CX8lveZfvbQmXo/k
+        h8n1DWXMtwA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E870BC920;
+        Tue,  5 May 2020 14:36:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6E848BC91E;
+        Tue,  5 May 2020 14:36:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] Doc: reference the "stash list" in autostash docs
+References: <0b898ca26b0399e9f14b9170f6586014dee80cf5.1588683624.git.liu.denton@gmail.com>
+Date:   Tue, 05 May 2020 11:36:22 -0700
+In-Reply-To: <0b898ca26b0399e9f14b9170f6586014dee80cf5.1588683624.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Tue, 5 May 2020 09:00:59 -0400")
+Message-ID: <xmqq8si6b55l.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 52C4F938-8EFF-11EA-9C12-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello.
+Denton Liu <liu.denton@gmail.com> writes:
 
-I tried sending a patch using `git send-email -1 --annotate`, and
-decided to describe the checks I ran in the annotation. Unfortunately,
-the submission failed due to a transient network error:
+> In documentation pertaining to autostash behavior, we refer to the
+> "stash reflog". This description is too low-level as the reflog refers
+> to an implementation detail of how the stash works and, for end-users,
+> they do not need to be aware of this at all.
+>
+> Change references of "stash reflog" to "stash list", which should be
+> provide more accessible terminology for end-users.
 
-   Unable to initialize SMTP properly. Check config and use --smtp-
-   debug. VALUES: server=smtp.gmail.com encryption=tls
-   hello=kaiser.localdomain port=587 at
-   /nix/store/d5pdyggxfcbwlk3m59nasnzdm33kdyg7-git-2.26.1/libexec/git-
-   core/.git-send-email-wrapped line 1557.
+Sounds like a good thing to do.
 
-Then I wanted to resubmit the patch but all the changes I made in the
-annotate steps were lost, as the tempdir has been cleaned up on exit:
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>
+> Notes:
+>     This patch is based on 'dl/merge-autostash-rebase-quit-fix'.
 
-https://github.com/git/git/blob/de49261b050d9cd8ec73842356077bc5b606640f/git-send-email.perl#L685
+Thanks.  This kind of note is very much appreciated.
 
-I am running git version 2.26.1.
-
+>  Documentation/git-merge.txt  | 4 ++--
+>  Documentation/git-rebase.txt | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+> index ec06b2f8c2..3819fadac1 100644
+> --- a/Documentation/git-merge.txt
+> +++ b/Documentation/git-merge.txt
+> @@ -106,12 +106,12 @@ commit or stash your changes before running 'git merge'.
+>  `MERGE_HEAD` is present unless `MERGE_AUTOSTASH` is also present in
+>  which case 'git merge --abort' applies the stash entry to the worktree
+>  whereas 'git reset --merge' will save the stashed changes in the stash
+> -reflog.
+> +list.
+>  
+>  --quit::
+>  	Forget about the current merge in progress. Leave the index
+>  	and the working tree as-is. If `MERGE_AUTOSTASH` is present, the
+> -	stash entry will be saved to the stash reflog.
+> +	stash entry will be saved to the stash list.
+>  
+>  --continue::
+>  	After a 'git merge' stops due to conflicts you can conclude the
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 7d0c89a184..fa969d8064 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -257,7 +257,7 @@ See also INCOMPATIBLE OPTIONS below.
+>  	Abort the rebase operation but HEAD is not reset back to the
+>  	original branch. The index and working tree are also left
+>  	unchanged as a result. If a temporary stash entry was created
+> -	using --autostash, it will be saved to the stash reflog.
+> +	using --autostash, it will be saved to the stash list.
+>  
+>  --apply:
+>  	Use applying strategies to rebase (calling `git-am`
