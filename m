@@ -2,134 +2,106 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65838C3A5A9
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 01:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 910C8C47247
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 03:53:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42C93206B9
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 01:40:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVGcc38P"
+	by mail.kernel.org (Postfix) with ESMTP id 7CA4320661
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 03:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727805AbgEEBjr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 May 2020 21:39:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726516AbgEEBjq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 May 2020 21:39:46 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ABD6C061A0F
-        for <git@vger.kernel.org>; Mon,  4 May 2020 18:39:45 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id l12so287176pgr.10
-        for <git@vger.kernel.org>; Mon, 04 May 2020 18:39:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=F50CeH/2zQj0c7Y0mkrkl8Tq74PEjdpt5RTCDCHlRqk=;
-        b=XVGcc38PVg0pBVk5+Rq9rgK5O0Ay6dW35biPa9pX3x5Xx9kyV+w4ul4D41Obbkmzwd
-         is4XPWaA0d8lb47hrN28fZHMbaVNPgcM+eefQOkWtRaS/abiBn+gEpcse+n9uQ0pVNS9
-         kwv2m9gCN58wItNlUWN5T5QDschkFMFSVdMvVfiklN+nb5NAxwSx1PuUxQ7m6mOa+HLM
-         BoAuKDpztBsCqskRDeqkff2pqdza1+V/tAFFmxjZ1yTGWyru/VjFVlCN6JqLumKDvM96
-         HOdwhibcS1A8GWTLv3CJpoQiW4F0Jb0XGHYv1lBV13S5bAXPEd+/OEM7vipgVmF1xRq1
-         RSUg==
+        id S1727931AbgEEDxp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 May 2020 23:53:45 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46274 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726345AbgEEDxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 May 2020 23:53:45 -0400
+Received: by mail-wr1-f68.google.com with SMTP id f13so922713wrm.13
+        for <git@vger.kernel.org>; Mon, 04 May 2020 20:53:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=F50CeH/2zQj0c7Y0mkrkl8Tq74PEjdpt5RTCDCHlRqk=;
-        b=dN9g3lqB29qNSbfSxdbE5jpm3xkNhJcWyDjYccRnaykTZAqymbWdg5TsNDrSIQj+BR
-         PetG9iR5WGpA5gE/tLu43gxAQ2eXpOg5cOzHZZee8v3+9lJAZcLiIDp4fXleQZm0BUfk
-         Vjz473ht+hUblDhNgRFOW8PkzCBThup3u83eXaWi3gpuQx3hIMkOmz3v+UV85J+/E72k
-         8WD33LWKIZVfaSFe+YB5FZGwJ3rTfaqxdWJY2Zr7sbtgEUEYYcy2VEH4ToPYETyPtQTv
-         07TZ1vTojFDM3f34dxUne3tpnswGB/XEB4NRNnCMOQUUv0f0Aier4y+YkMyE5BureSBP
-         Ht3w==
-X-Gm-Message-State: AGi0PuZ1afqvOgAbmBqQvjpqwzS8QvLXJJdUtDLUceym3XAYY/mDgzDq
-        IeqEKB+TvrfEEuGl/j0zLd0q6Zje
-X-Google-Smtp-Source: APiQypIskhh55ZSiMiljhKDYy56A10Il84zNAMBjYXnfTfyHtEzlUrwcJcOcwbP51gXViKkefWmpPQ==
-X-Received: by 2002:a63:4a54:: with SMTP id j20mr953039pgl.430.1588642784639;
-        Mon, 04 May 2020 18:39:44 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id e196sm352027pfh.43.2020.05.04.18.39.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 May 2020 18:39:44 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, jrnieder@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH 3/4] credential: update gitcredentials documentation
-Date:   Mon,  4 May 2020 18:39:07 -0700
-Message-Id: <20200505013908.4596-4-carenas@gmail.com>
-X-Mailer: git-send-email 2.26.2.686.gfaf46a9ccd
-In-Reply-To: <20200505013908.4596-1-carenas@gmail.com>
-References: <20200503063423.83152-1-carenas@gmail.com>
- <20200505013908.4596-1-carenas@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=e/C4KmENhWiX9Ww5ccb0vtcn7fwwasEZdgn7yvtgwn4=;
+        b=csoVxNlafpl4XSdtObEyEukbf+g6SGTH0FINBPGBp45B1YE0+J9pkkBduA2vFYHets
+         iOSv+fi5CKPgIDljmNc4LqSd+dWI7SHOs1VbS7ysglMirZD2gkdf2NuL/wbTZIpDoAVG
+         Nep3Gv95IqKQdB6WLhzAkjYX18cU7rloAe0bsbHx84o+i2sWdldVp1HMKG8hyOvdD9aJ
+         t3sZhI66lBxu17cHYBsPyvGE56rmzR/UUq3dIwt7GFTK7Ij05B4SoA5n1tgLmjBpQvmJ
+         NnMLG2RX2+s8KPoGQCLd4zLKTwCyEinBj9nC00jmsz09BjTAZde79IlafZJf6FKcLOdy
+         7k9w==
+X-Gm-Message-State: AGi0PuYr96cseOPyRdPtD5xJKT8ZpShJAwytassbMKA5W9srsvlhH0kE
+        SdFdBwKEUChQvmXP7hROMDrTO1MxdF+o3AGEWrxcRjYn
+X-Google-Smtp-Source: APiQypLFX3iwe6RkKWiiyQw2S0nHDWPu9vRXTq5mif6DRz5hXH60qy7FqSuAXZ0r+CGwfb5UXOdbFEgcrIZECLa6qNY=
+X-Received: by 2002:adf:fccd:: with SMTP id f13mr1277139wrs.386.1588650822925;
+ Mon, 04 May 2020 20:53:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20200501082746.23943-1-sunshine@sunshineco.com>
+ <20200501082746.23943-3-sunshine@sunshineco.com> <xmqqimhfoelf.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqimhfoelf.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 4 May 2020 23:53:31 -0400
+Message-ID: <CAPig+cT62cEx9Zk+DN02xGfAmqZD258Toa3PArSxEf8QDFeDww@mail.gmail.com>
+Subject: Re: [PATCH 2/2] restore: default to HEAD when combining --worktree
+ and --staged
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?SGFycmkgTWVodMOkbMOk?= <harri.mehtala@finago.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clarify the expected effect of all attributes and how the helpers
-are expected to handle them and the context where they operate.
+On Fri, May 1, 2020 at 11:33 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > [...] This requirement
+> > makes it cumbersome to restore a file in both the worktree and the
+> > index.
+> >
+> > However, HEAD is also a reasonably intuitive default restore source when
+> > --worktree and --staged are combined. After all, if a user is asking to
+> > throw away all local changes to a file (on disk and in the index)
+> > without specifying a restore source explicitly -- and the user expects
+> > the file to be restored from _somewhere_ -- then it is likely that the
+> > user expects them to be restored from HEAD, which is an intuitive and
+> > logical place to find a recent unadulterated copy of the file.
+>
+> I also found that these two paragraphs a bit too long, and by the
+> time I finished reading them I forgot that you mentioned that HEAD
+> is the default when --staged is given. [...]
+>
+>   ... This requirement makes it cumbersome to restore a file in
+>   both the worktree and the index.
+>
+>   As we are *not* going to restore the index and the working tree
+>   from two different sources, we need to pick a single default
+>   when both options are given, and the default used for restoring
+>   the index, HEAD, is a reasonable one in this case, too. Another
+>   plausible source might be the index, but that does not make any
+>   sense to the user who explicitly gave the `--staged` option.
+>
+>   So, make HEAD the default source when --staged is given, whether
+>   --worktree is used at the same time.
 
-While at it, space the descriptions for clarity, and add a paragraph
-mentioning the early termination in the list processing of helpers,
-to complement the one about the special "quit" attribute.
+Thanks. I was having trouble writing it without being overly
+subjective (and using words like "intuitive" and "logical"). I'll
+probably drop the "Another plausible..." bit from the rewrite, though.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- Documentation/gitcredentials.txt | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+> > +By default, the restore source for `--worktree` is the index, and the
+> > +restore source for `--staged` is `HEAD`. When combining `--worktree` and
+> > +`--staged`, the restore source is `HEAD`. `--source` can be used to specify
+> > +a different commit as the restore source.
+>
+> Clear enough, but I wonder if we can simplify it even further.
+>
+>   By default, if `--staged` is given, the contents are restored
+>   from `HEAD`. Otherwise, the contents are restored from the
+>   index.
+>
+> because `--worktree` is the default for the command when neither
+> `--staged` or `--worktree` is given.
 
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index 1814d2d23c..72faadae9e 100644
---- a/Documentation/gitcredentials.txt
-+++ b/Documentation/gitcredentials.txt
-@@ -262,16 +262,26 @@ For a `get` operation, the helper should produce a list of attributes on
- stdout in the same format (see linkgit:git-credential[1] for common
- attributes). A helper is free to produce a subset, or even no values at
- all if it has nothing useful to provide. Any provided attributes will
--overwrite those already known about by Git.  If a helper outputs a
--`quit` attribute with a value of `true` or `1`, no further helpers will
--be consulted, nor will the user be prompted (if no credential has been
--provided, the operation will then fail).
-+overwrite those already known about by Git's credential subsystem.
-+
-+While it is possible to override all attributes, well behaving helpers
-+should refrain to do so for any attributes other than username and
-+password.
-+
-+If a helper outputs a `quit` attribute with a value of `true` or `1`,
-+no further helpers will be consulted, nor will the user be prompted
-+(if no credential has been provided, the operation will then fail).
-+
-+Similarly, no more helpers will be consulted once both username and
-+password had been provided.
- 
- For a `store` or `erase` operation, the helper's output is ignored.
--If it fails to perform the requested operation, it may complain to
--stderr to inform the user. If it does not support the requested
--operation (e.g., a read-only store), it should silently ignore the
--request.
-+
-+If a helper fails to perform the requested operation or needs to notify
-+the user of a potential issue, it may write to stderr.
-+
-+If it does not support the requested operation (e.g., a read-only store),
-+it should silently ignore the request.
- 
- If a helper receives any other operation, it should silently ignore the
- request. This leaves room for future operations to be added (older
--- 
-2.26.2.686.gfaf46a9ccd
-
+Makes sense. I wasn't terribly happy with it either.
