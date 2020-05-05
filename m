@@ -2,139 +2,247 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.7 required=3.0
+	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35672C47254
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 12:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ADB9C47247
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 12:29:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EC8720735
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 12:26:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=me.com header.i=@me.com header.b="vu40+0HO"
+	by mail.kernel.org (Postfix) with ESMTP id ECACF206A5
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 12:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728584AbgEEM0n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 08:26:43 -0400
-Received: from st43p00im-ztfb10061701.me.com ([17.58.63.172]:57723 "EHLO
-        st43p00im-ztfb10061701.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728233AbgEEM0m (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 08:26:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
-        t=1588681601; bh=r+4QpngwjChrvs1klJVaePqBbZNuhbIzLW1hR8+PRWo=;
-        h=Content-Type:Subject:From:Date:Message-Id:To;
-        b=vu40+0HOn0uDCjk4MF+6KdjMjJsrcOhJ3YLZeSjmkQvV7vZDP8AB+KRutvrSrksWd
-         Tfv9y+1mQXXW9BIlZxqcZSvT0M+P92FmKeJgfzDW9nynyWnwt9P0sNR99LxQUk1jUg
-         C/iezVqU2jMlzelCAqxnu0JsvN0iKhOI3Ars0MPLe1afu3acrqWigTC3snKI1VR8l3
-         m9lT4V9jbJop6zeRVEL6HkLGKNvyMj099ZIBzmFHzX+vDu5r3E3xji1u2G6pJ0CWRa
-         cUVV2zmiAawboUH4MWOwc0rMG5Jemj2v0bZU3YaSvApagfvkkr/7BOltSZzVuWXERK
-         YySx5cfoQagjw==
-Received: from [192.168.1.127] (unknown [192.222.216.4])
-        by st43p00im-ztfb10061701.me.com (Postfix) with ESMTPSA id 1AABAAC03CA;
-        Tue,  5 May 2020 12:26:41 +0000 (UTC)
+        id S1728481AbgEEM31 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 08:29:27 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:53947 "EHLO
+        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727090AbgEEM31 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 08:29:27 -0400
+X-Originating-IP: 106.76.68.10
+Received: from localhost (unknown [106.76.68.10])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 60691E0011;
+        Tue,  5 May 2020 12:28:54 +0000 (UTC)
+Date:   Tue, 5 May 2020 17:58:38 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Konstantin Podsvirov <konstantin@podsvirov.pro>
+Cc:     Konstantin Podsvirov via GitGitGadget <gitgitgadget@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] git-gui: msys2 compatibility patches
+Message-ID: <20200505122838.6ogymx5v7jl572gn@yadavpratyush.com>
+References: <pull.612.git.1586900734341.gitgitgadget@gmail.com>
+ <20200427194546.7ce4z2ooe4jaab5w@yadavpratyush.com>
+ <952341588022066@mail.yandex.ru>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Git 2.26.2 and failed self tests on OS X
-From:   Philippe Blain <philippe.blain@me.com>
-In-Reply-To: <20200505041033.w2q7h5k7otetfrus@tb-raspi4>
-Date:   Tue, 5 May 2020 08:26:38 -0400
-Cc:     Jeffrey Walton <noloader@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?iso-8859-1?Q?Carlo_Marcelo_Arenas_Bel=F3n?= <carenas@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A6880B7C-78B7-4D90-91E3-1CED85325FF2@me.com>
-References: <CAH8yC8myTMOetxgaj1wt0MbvSQ0LSRV0FHz4ywsBM1zzhUQG=w@mail.gmail.com> <20200504165214.GF86805@Carlos-MBP> <CAPig+cSPXqvFg3-25aDzptuVOHmqOcnmsCKHgjMB9poPyJR2gw@mail.gmail.com> <20200504190830.g2tlrognjw6ddipo@tb-raspi4> <CAH8yC8=zsbXDVV99tdBMHwEhr-=dO=wrwBYZi=0J8iFmUHkk=g@mail.gmail.com> <20200504201944.gh3zykhil3txdwnk@tb-raspi4> <CAH8yC8mLvG-wqrws6fnXdnuoLAoDfPqgynG9MKoSnJLhPCYu+A@mail.gmail.com> <CAH8yC8nyg6pRStrQxkO6DzqRbLhhza0vx1U1cGUV4P4MQ3jZ7Q@mail.gmail.com> <20200505041033.w2q7h5k7otetfrus@tb-raspi4>
-To:     =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138,18.0.676
- definitions=2020-05-05_08:2020-05-04,2020-05-05 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-2002250000 definitions=main-2005050100
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <952341588022066@mail.yandex.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Hi Konstantin,
 
-> Le 5 mai 2020 =E0 00:10, Torsten B=F6gershausen <tboegi@web.de> a =
-=E9crit :
->=20
-> On Mon, May 04, 2020 at 05:39:50PM -0400, Jeffrey Walton wrote:
->> On Mon, May 4, 2020 at 4:30 PM Jeffrey Walton <noloader@gmail.com> =
-wrote:
->>>=20
->>> On Mon, May 4, 2020 at 4:19 PM Torsten B=F6gershausen =
-<tboegi@web.de> wrote:
->>>> On Mon, May 04, 2020 at 03:20:11PM -0400, Jeffrey Walton wrote:
->>>>> ...
->>>>>> Does
->>>>>> ./t3902-quoted.sh   -v -d
->>>>>> give anything useful ?
->>>>>=20
->>>>> Yes, it looks like the command reveals a couple of problems.
->>>>>=20
->>>>> fatal: iconv_open(UTF-8,UTF-8-MAC) failed, but needed:
->>>>>    precomposed unicode is not supported.
->>>>>    If you want to use decomposed unicode, run
->>>>>    "git config core.precomposeunicode false"
+On 28/04/20 12:33AM, Konstantin Podsvirov wrote:
+> 
+> 
+> 27.04.2020, 22:48, "Pratyush Yadav" <me@yadavpratyush.com>:
+> > Hi Konstantin,
+> >
+> > Thanks for the patch, and sorry for the late reply.
+> >
+> > On 14/04/20 09:45PM, Konstantin Podsvirov via GitGitGadget wrote:
+> >>  From: Konstantin Podsvirov <konstantin@podsvirov.pro>
+> >>
+> >>  Allow using `git gui` command via MSYS2's MINGW32/64 subsystems (apropriate shells).
+> >
+> > I think this should be the commit subject, instead of "msys2
+> > compatibility patches".
+> 
+> I do not mind.
+> 
+> >>  Just install apropriate `tk` package:
+> >>
+> >>  ```bash
+> >>  user@host MINGW32 ~
+> >>  pacman -S mingw-w64-i686-tk
+> >>  ```
+> >>
+> >>  or
+> >>
+> >>  ```bash
+> >>  user@host MINGW64 ~
+> >>  pacman -S mingw-w64-x86_64-tk
+> >>  ```
+> >>
+> >>  For more info see: https://github.com/msys2/MSYS2-packages/pull/1912
+> >
+> > Please don't just link to an external website. Put the explanation there
+> > in the commit message. Explain what the problem was, and how this patch
+> > fixes it.
+> 
+> The startup script everywhere operates on Unix paths, but on Windows they are incomplete, and the interpreter expects full native paths.
 
-I also came across this error a few months ago with the=20
-conda-forge build of Git [1], which for the moment builds against their =
-own
-build of (GNU) iconv.
+Ok. Thanks for the explanation.
+ 
+> >>  Signed-off-by: Konstantin Podsvirov <konstantin@podsvirov.pro>
+> >>  ---
+> >>   git-gui.sh | 52 ++++++++++++++++++++++++++++++----------------------
+> >>   1 file changed, 30 insertions(+), 22 deletions(-)
+> >>
+> >>  diff --git a/git-gui.sh b/git-gui.sh
+> >>  index 4610e4ca72a..512f4f121aa 100755
+> >>  --- a/git-gui.sh
+> >>  +++ b/git-gui.sh
+> >>  @@ -44,6 +44,28 @@ if {[catch {package require Tcl 8.5} err]
+> >>
+> >>   catch {rename send {}} ; # What an evil concept...
+> >>
+> >>  +######################################################################
+> >>  +##
+> >>  +## platform detection
+> >>  +
+> >>  +set _iscygwin {}
+> >>  +
+> >>  +proc is_Cygwin {} {
+> >>  + global _iscygwin
+> >>  + if {$_iscygwin eq {}} {
+> >>  + if {$::tcl_platform(platform) eq {windows}} {
+> >>  + if {[catch {set p [exec cygpath --windir]} err]} {
+> >>  + set _iscygwin 0
+> >>  + } else {
+> >>  + set _iscygwin 1
+> >>  + }
+> >>  + } else {
+> >>  + set _iscygwin 0
+> >>  + }
+> >>  + }
+> >>  + return $_iscygwin
+> >>  +}
+> >>  +
+> >>   ######################################################################
+> >>   ##
+> >>   ## locate our library
+> >>  @@ -51,7 +73,14 @@ catch {rename send {}} ; # What an evil concept...
+> >>   if { [info exists ::env(GIT_GUI_LIB_DIR) ] } {
+> >>           set oguilib $::env(GIT_GUI_LIB_DIR)
+> >>   } else {
+> >>  - set oguilib {@@GITGUI_LIBDIR@@}
+> >>  + if {[is_Cygwin]} {
+> >>  + set oguilib [exec cygpath \
+> >>  + --windows \
+> >>  + --absolute \
+> >>  + @@GITGUI_LIBDIR@@]
+> >>  + } else {
+> >>  + set oguilib {@@GITGUI_LIBDIR@@}
+> >>  + }
+> >
+> > This would convert the Windows style path to a Unix style path if we are
+> > running in Cygwin, right? This is what I assume the heart of the problem
+> > is.
+> 
+> It is true exactly the opposite.
 
->>>>=20
->>>> I am quite sure, that the trouble starts here.
->>>> It seems as if you are building iconv yourself ?
->>>> And that iconv does not include "UTF-8-MAC", which is a specialty
->>>> for Mac.
->>>=20
->>> Oh, thanks. I was not aware.
->>>=20
->>> I'll open a bug report with the iconv folks letting them know
->>> configure has some gaps on OS X.
->>=20
->> Thanks again Torsten.
->>=20
->> I am not seeing an option to enable the encoding in iConv. Would you
->> happen to know what is needed?
->>=20
->> Thanks again.
->>=20
->> $ cd libiconv-1.16
->> $ ./configure --help
->> `configure' configures libiconv 1.16 to adapt to many kinds of =
-systems.
->=20
-> Hej Jeffrey,
-> I am not an iconv expert - and don't intend to become one.
-> The UTF-8-MAC conversion does probably only exist in the
-> code for iconv shipped on Mac OS - so it could happen that this
-> code is not open source.
+Got it.
+ 
+> > Style nitpick: something like this would probably be better:
+> >
+> >   set oguilib {@@GITGUI_LIBDIR@@}
+> >   if {[is_Cygwin]} {
+> >         ...
+> >   }
+> 
+> Looks good.
+> 
+> > This makes it clear that Cygwin is the exception. For all other cases,
+> > we want to use @@GITGUI_LIBDIR@@ directly.
+> 
+> Yes.
+> 
+> >>   }
+> >>   set oguirel {@@GITGUI_RELATIVE@@}
+> >>   if {$oguirel eq {1}} {
+> >>  @@ -163,7 +192,6 @@ set _isbare {}
+> >>   set _gitexec {}
+> >>   set _githtmldir {}
+> >>   set _reponame {}
+> >>  -set _iscygwin {}
+> >
+> > Why move the initialization?
+> 
+> To use this above when setting `oguilib` variable.
 
-Yes, this encoding only exists in the Apple fork of iconv,
-which is open-source (probably because of the original=20
-license); tarballs can be found at [2]. However in typical Apple fashion
-the versioning of their iconv fork is kind of undecipherable and hard to =
-relate to the
-upstream iconv versioning.=20
+Ok. Though I wonder if we need this variable at all. It is only used 
+with the function is_Cygwin, and seems like a performance optimization 
+so we don't need to perform the check for every call to the function. 
+But since it only is a couple of if statements, I'm not sure if it will 
+make a significant performance difference.
 
-Also, I searched the iconv mailing list [3] when I came across this =
-error and the consensus
-seemed to be that they do not intend to add this encoding upstream.
+> >>   set _search_path {}
+> >>   set _shellpath {@@SHELL_PATH@@}
+> >>
+> >>  @@ -266,26 +294,6 @@ proc is_Windows {} {
+> >>           return 0
+> >>   }
+> >>
+> >>  -proc is_Cygwin {} {
+> >>  - global _iscygwin
+> >>  - if {$_iscygwin eq {}} {
+> >>  - if {$::tcl_platform(platform) eq {windows}} {
+> >>  - if {[catch {set p [exec cygpath --windir]} err]} {
+> >>  - set _iscygwin 0
+> >>  - } else {
+> >>  - set _iscygwin 1
+> >>  - # Handle MSys2 which is only cygwin when MSYSTEM is MSYS.
+> >>  - if {[info exists ::env(MSYSTEM)] && $::env(MSYSTEM) ne "MSYS"} {
+> >>  - set _iscygwin 0
+> >>  - }
+> >
+> > I'm afraid I don't understand this hunk. I don't use Windows, and don't
+> > completely understand the difference between cygwin, msys, etc. Could
+> > you please explain further why this check is removed? Are there any
+> > negative side-effects?
+> 
+> To use `git gui` we need `tk` (wish), but `tk` (wish) can be available only when MSYSTEM is equal to MINGW32 or MINGW64.
 
-Cheers,
+So if MYSYTEM is something other than these two, would it be possible to 
+run git-gui at all?
+ 
+> >>  - }
+> >>  - } else {
+> >>  - set _iscygwin 0
+> >>  - }
+> >>  - }
+> >>  - return $_iscygwin
+> >>  -}
+> >>  -
+> >
+> > Why move the function? Can't this and the _iscygwin initialization just
+> > stay in their place? It will make the diff much easier to read.
+> 
+> To use this above when setting `oguilib` variable.
 
-Philippe.
+Ok.
+ 
+> >>   proc is_enabled {option} {
+> >>           global enabled_options
+> >>           if {[catch {set on $enabled_options($option)}]} {return 0}
+> >
+> > --
+> > Regards,
+> > Pratyush Yadav
+> 
+> What is the further course of action?
 
-[1] https://github.com/conda-forge/git-feedstock/issues/50
-[2] https://opensource.apple.com/tarballs/libiconv/
-[3] =
-https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=3Dutf-8-mac&submit=3D=
-Search%21&idxname=3Dbug-gnu-libiconv&max=3D20&result=3Dnormal&sort=3Dscore=
+You should send another version of this series with the suggestions 
+implemented. Since you are using GitGitGadget, you can amend the commit, 
+force push it, and then issue another `/submit` command, and GGG will 
+take care of the rest. The GGG welcome message would have all the 
+details as well.
+
+-- 
+Regards,
+Pratyush Yadav
