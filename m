@@ -2,193 +2,105 @@ Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F795C47254
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 16:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15965C47254
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 16:04:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69615206A4
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 16:03:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1790206A4
+	for <git@archiver.kernel.org>; Tue,  5 May 2020 16:04:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTBM8Lxw"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="GJ/Mgd2n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729963AbgEEQDg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 12:03:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37920 "EHLO
+        id S1729915AbgEEQED (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 12:04:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729413AbgEEQDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 12:03:36 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD67FC061A0F
-        for <git@vger.kernel.org>; Tue,  5 May 2020 09:03:35 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id x4so2908440wmj.1
-        for <git@vger.kernel.org>; Tue, 05 May 2020 09:03:35 -0700 (PDT)
+        with ESMTP id S1729413AbgEEQEC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 12:04:02 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3B4C061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 09:04:02 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id t16so997220plo.7
+        for <git@vger.kernel.org>; Tue, 05 May 2020 09:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/gRrf3898gEFTL2UsGG4+YDUQOoHSmQaoyNcyILBy2E=;
-        b=OTBM8LxwdV8gHmKN42jhwXmGtgHBUVT+s2KHkOICpXPJ4RkkHUO5ESAax/ur+GVGyP
-         Myr8XMcQBmCblaUC8j9BAP6fwPHX6KXb2Ka5b03gpZN9nEPWJHTzTTF5gukZE4q83ivn
-         iT/n7DPJvBYHlJtkkeCFXqidLmHTlWdN0xHgf9Mte9A3asScbxrCttDVwwp1EhcDrul3
-         +YlBSil8Tb7LCRuiMQ74v+PrN7dxdqq6ou5mCq+t/OFcYLSMEkpJ0+gASJac0uU8hFZJ
-         AnHuvcfAj4hACeew6hx+MbwdIgba46Ta8GnqsW5H+eJNs3AQ6f+vEwwmMYCsRq2xFcwe
-         z/Lg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=p9Q7GIEpm2YZjToJElLVfrI4ISN3pDVZJLAq1injc2E=;
+        b=GJ/Mgd2nS5rwf3sdXQq8HHpni3k+F4OjLfl92UlK1v9NLA4KDKwqI70DkVB//B17cw
+         guEVQfRG0/Q5eJjSOW4ALwd2feNN/5npr8Up0zv6XIKxXDPCIsSWO5CuKdF63Bm11WST
+         Q62kSBmEBVMcsT5+MiCBVNyuZpjeljqrUoJV3a7CbIE95Ta/Uz8ux4HpR46JIS/9DXex
+         0r4oGuDHxXhPL5h8WCWMnOfagJ6YvFWLp4zDr7xjyuS+JXmH39a+GrfGN1atFDYclIyB
+         df96plGEvH/x3iTSBC2eyFK6ZRam/WFAjOqapla/MPekGFdyTBldgB/nGVoywf5Lh2EI
+         6OYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=/gRrf3898gEFTL2UsGG4+YDUQOoHSmQaoyNcyILBy2E=;
-        b=m3TG5egGDo91GKmOWCTuxTJ6HrHfStOgw+boh1bWGu6IOQM2BFXDuY3OYhtGqkSjZa
-         n4qClzwfkbGlGrg3SG7q1/FsxdshlHYTXfpDs80f5GVPxQBz1tEK/aTdwwaSvULXLyvR
-         7GMno7aUGu8IZVwCcb2S+K+uawGmkr5Huk6KPeO0IWk7vPd2pN9vyac4kSamUD200oPD
-         stx/WWpMpM6FwpZhxUDpl4WFfTaAryDpdFAPQANfA8TTEJWZfXiBuvxbhJMgKroD3uaQ
-         qfE4UJC3oUIcRsaDsOc9m0vIE/RTvdVSk9/f6l7izjHrCL9Zp2IeSZrgQwlCJ/uHYoj1
-         ropg==
-X-Gm-Message-State: AGi0PuZFxLDimz7iR/LxMUkKzqrwI+20NKAe9sWGtOeFsEARFqowaY/4
-        Y93SvruWQCQr3kw0NzP2DIE=
-X-Google-Smtp-Source: APiQypJ/wY1inWyAXSAiHFfR/KyVonrxAE9keKIg3qAu9tmj8kujMIX4PoaToDPyvdcLlJaAtRaInA==
-X-Received: by 2002:a1c:7d04:: with SMTP id y4mr4195129wmc.10.1588694614498;
-        Tue, 05 May 2020 09:03:34 -0700 (PDT)
-Received: from ?IPv6:2a02:a210:ca2:9c00:4c05:518a:3ad9:8dba? ([2a02:a210:ca2:9c00:4c05:518a:3ad9:8dba])
-        by smtp.gmail.com with ESMTPSA id n7sm3886917wrm.86.2020.05.05.09.03.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 May 2020 09:03:34 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH] midx: apply gitconfig to midx repack
-From:   Son Luong Ngoc <sluongng@gmail.com>
-In-Reply-To: <8bd91a14-75dc-76e2-31b4-54eff5bea8dd@gmail.com>
-Date:   Tue, 5 May 2020 18:03:33 +0200
-Cc:     Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <74A7FE73-6B5F-4DCF-9A57-AD11306CFAF8@gmail.com>
-References: <pull.626.git.1588684003766.gitgitgadget@gmail.com>
- <8bd91a14-75dc-76e2-31b4-54eff5bea8dd@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=p9Q7GIEpm2YZjToJElLVfrI4ISN3pDVZJLAq1injc2E=;
+        b=a/3z5Lp8waE2SsPiFHF55kYUoSZVcOCXoaaV60c8rpFfNjwZbG8GKCpnz6HKeJ4TMR
+         39alPeG2nJSSL3kRN2ltbCEniUZVCW/vtgQpxXkxn/M19B5m2O6Gg4isIPjcMEPfqYa4
+         a6NFH11J181sSTZx7pqwyH3fR5mYQKI1LS1JGw2gMyyfB0+ODh4vM+kZiQfW9NZAXyqn
+         AqiSXIx+Rlf3uHVJrRJeOoVCTepNAoWzvDTAWfgno8YNTEPhmcOcgIgO6AZjrUIQq5Xr
+         mk7SKAOk+BMyRIYotbBflEE4W/1fJJ5lSrCm1xTRsTWdHXURSdFnBPKFeWv269yOc9bl
+         T4Zw==
+X-Gm-Message-State: AGi0PuY65wbikqP7cUOk3IhmmMuRVf3v7L7/SQPjUnR02GKchLjFt/Zy
+        dfxWyc2Sb8fC8l4fHl3J72nTL+IpAj6zmQ==
+X-Google-Smtp-Source: APiQypKSlJrZjQfUqRbGGZixi0K6FVZOT7Wb1Bsr7fLQ8/Kj/7cTSGG2eHfGbVg3RdnYAj4xZVRMdQ==
+X-Received: by 2002:a17:902:24b:: with SMTP id 69mr3687014plc.52.1588694642210;
+        Tue, 05 May 2020 09:04:02 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id z190sm2332694pfz.84.2020.05.05.09.04.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2020 09:04:01 -0700 (PDT)
+Date:   Tue, 5 May 2020 10:04:00 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org,
+        Harri =?utf-8?B?TWVodMOkbMOk?= <harri.mehtala@finago.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/1] restore: default to HEAD when combining --staged
+ and --worktree
+Message-ID: <20200505160400.GC69300@syl.local>
+References: <20200505071716.23240-1-sunshine@sunshineco.com>
+ <20200505071716.23240-2-sunshine@sunshineco.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200505071716.23240-2-sunshine@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
+On Tue, May 05, 2020 at 03:17:16AM -0400, Eric Sunshine wrote:
+> By default, files are restored from the index for --worktree, and from
+> HEAD for --staged. When --worktree and --staged are combined, --source
+> must be specified to disambiguate the restore source[1], thus making it
+> cumbersome to restore a file in both the worktree and the index.
+>
+> However, HEAD is also a reasonable default for --worktree when combined
+> with --staged, so make it the default anytime --staged is used (whether
+> combined with --worktree or not).
+>
+> [1]: Due to an oversight, the --source requirement, though documented,
+> is not actually enforced.
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  Documentation/git-restore.txt | 11 ++++-------
+>  builtin/checkout.c            |  6 +++---
+>  t/t2070-restore.sh            | 11 +++++++++++
+>  3 files changed, 18 insertions(+), 10 deletions(-)
 
-Thanks for a swift and comprehensive review.
+Thanks, the new version looks good to me, too.
 
-> On May 5, 2020, at 15:50, Derrick Stolee <stolee@gmail.com> wrote:
->=20
-> In the scenario where there is a .keep pack _and_ it is small enough =
-to get
-> picked up by the batch size, the 'git multi-pack-index repack' command =
-will
-> create a new pack containing its objects (and objects from other =
-packs) but
-> the 'git multi-pack-index expire' command will not delete the pack =
-with .keep.
->=20
-> The good news is that after the first repack, the objects in the pack =
-are
-> in a newer pack, so the multi-pack-index will not repack those objects =
-from
-> that pack multiple times. However, this may be unintended behavior for =
-the
-> user that specified the .keep pack.
+  Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
-Yup I experienced exactly this when trying to test midx repack/expire
-with biggest pack file marked with `.keep`.
-Luckily the storage size bump for duplicated objects was not noticeable =
-in my case.
-You worded the situation precisely.
-
-> I think the right thing to do to respect "repack.packKeptObjects =3D =
-false" is
-> to ignore the packs when selecting the batch of objects. Instead of =
-asking
-> you to do this, I added a patch below. Please take it into your v2, if =
-you
-> don't mind.
-
-Gladly.
-This should help me a lot for re-rolling V2.
-
->> +static int delta_base_offset =3D 1;
->> +static int write_bitmaps =3D -1;
->> +static int use_delta_islands;
->> +
->=20
-> Why not make these local to the midx_repack method?
-
-No practical reason except me shamelessly lifted those from =
-builtin/repack.c.
-I was a bit confused how `git repack` houses these logic in the builtin =
-file,
-while midx was having these logic in the midx.c instead of =
-builtin/multi-pack-index.c.
-
-I make them local in V2.
-
->> int midx_repack(struct repository *r, const char *object_dir, size_t =
-batch_size, unsigned flags)
->> {
->> 	int result =3D 0;
->> @@ -1381,12 +1385,25 @@ int midx_repack(struct repository *r, const =
-char *object_dir, size_t batch_size,
->> 	} else if (fill_included_packs_all(m, include_pack))
->> 		goto cleanup;
->>=20
->> +  git_config_get_bool("repack.usedeltabaseoffset", =
-&delta_base_offset);
->> +  git_config_get_bool("repack.writebitmaps", &write_bitmaps);
->> +  git_config_get_bool("repack.usedeltaislands", &use_delta_islands);
->> +
->=20
-> It looks like you have some spacing issues here. Perhaps use tabs?
-
-Rookie mistake on my part. Will fix it in V2
-
->> +	if (write_bitmaps > 0)
->> +		argv_array_push(&cmd.args, "--write-bitmap-index");
->> +	else if (write_bitmaps < 0)
->> +		argv_array_push(&cmd.args, =
-"--write-bitmap-index-quiet");
->=20
-> These make less sense. Unless --batch-size=3D0 and there are no .keep
-> packs (with the patch below) I'm not sure we _can_ write bitmap =
-indexes
-> here. The pack-file is not necessarily closed under reachability. Or,
-> will supplying these arguments to 'git pack-objects' actually do that
-> closure?
->=20
-> I would be happy to special-case these options to the "--batch-size=3D0"=
-
-> situation and otherwise ignore them. This then gets into enough
-> complication that we should update the documentation as in the patch
-> below.
-
-You make a great point here.=20
-I completely missed this as I have been largely testing with repacking =
-only 2 packs,
-effectively with --batch-size=3D0.
-
-I think having the bitmaps index is highly desirable in `--batch-size=3D0`=
- case.
-I will try to include that in V2 (with Documentation).
-
-> At minimum, it would be good to have some tests that exercise these
-> code paths so we know they are behaving correctly.
-
-I will do some readings with the current tests for repack and midx.
-Hopefully I will have something for V2. (^_^ !)
-
-> Thanks,
-> -Stolee
-
-Cheers,
-Son Luong
-
+Thanks,
+Taylor
