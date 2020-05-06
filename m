@@ -2,106 +2,116 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1E65C28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 21:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37FDBC28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 21:48:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 887422070B
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 21:36:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 032A82075E
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 21:48:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="R0BL6SPe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="izbkK4zc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729268AbgEFVgC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 17:36:02 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58921 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728621AbgEFVgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 17:36:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1588800950;
-        bh=UG5oh1cwACkFEkTzgGBc641GwFDPtWY+CvyKAM1i4a4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=R0BL6SPehBE1b9dgwGXtflIHPMgu63aU914TUl/6W68htGeXxJYb3sytzS3QrhDQg
-         nw4XD3DvIkTq5XTStpozzD/DvuGNXk9Q3wva17oRDHCbfoVzvbnt4TWwfTGSvmsXdf
-         m1kTIQ2uDfCrGBFTGZ5ifo1mnC13Xzt8SHM59zc4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.84.97] ([89.1.213.224]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MdefD-1ix6ou402b-00Zbqa; Wed, 06
- May 2020 23:35:50 +0200
-Date:   Wed, 6 May 2020 23:35:48 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>
-Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
-In-Reply-To: <xmqqv9la9lbn.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2005062334170.56@tvgsbejvaqbjf.bet>
-References: <pull.625.git.1588624804554.gitgitgadget@gmail.com> <20200504213326.GA31037@coredump.intra.peff.net> <20200504220916.GF45250@syl.local> <xmqqv9la9lbn.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729743AbgEFVsj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 17:48:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728621AbgEFVsi (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 6 May 2020 17:48:38 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68C4EC061A0F
+        for <git@vger.kernel.org>; Wed,  6 May 2020 14:48:38 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id s20so1161526plp.6
+        for <git@vger.kernel.org>; Wed, 06 May 2020 14:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=4TjrDd77VF1uG9bmwcIglMyvhxnlsN3ZUUW8DDiOvLg=;
+        b=izbkK4zcmJO/y1JA5LiLSdOzSHBAq4AfL5vHYl+UM3FCQ7oiKrDS54kz+sWNyvEueS
+         DXJxqOTRQ5MW93lCF/5wFrnfXrdVHqoQSeFLrsNrxMCZ+bJc1YKEA3dr6ASATgIMv8c2
+         VhQf0D6+w34sWhwGCRIGO00V/qntSdrv1ChHcMVK0J8Td/OYlvBQY6/Rea7x0WOQZDnE
+         llx/XMIB4mEIxnmM2LjlYozqwMxvRd01NfFY2Os1NLzUCb5yfI2ksi3Tk0r+zlAKl1oG
+         u2TkcxbGadhzESeST06cpUzMsZhH3THr46T67VP25F7qduvvF0Jbast9vaJJH053/3gr
+         Us6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4TjrDd77VF1uG9bmwcIglMyvhxnlsN3ZUUW8DDiOvLg=;
+        b=GmmZ8unLxSYJe7EyxrUXVMxFxiEiLaQMWZFQh+4stBTyEKkRnSp/P/sse5Bvba5VXj
+         PW97vrTrETzgIXqREiAAo2l+tvx+iy0RpDbNLORbMWJDFWg9qm4A8qJTiI7V3slA3COD
+         G82rOfWtSSOJv6SUgJCdE4XMz6NHx9z4+5nJooDEGS2AfV+bee9rjb9OSpCoHDvtoBtn
+         wNQEsuhAwQMCGGWkO9fDf4jYPfhz+botF4qBoyWKTY3EAywFdjxsSx4a+ZUEuBGj5lLT
+         wRMa3Cy8w/R0yXCBNmueh0lnraPFIQS3sRF44lJnfpAOLVCz2FjqBj/2ZzfAVw4fVN6I
+         f9Jw==
+X-Gm-Message-State: AGi0Pub9YuUh6ihnCFE6S2C90l66KQcUBGy19d48HVkMLJCArJi4wiDC
+        69HO8R7Itla9dpl0rHAOwiMO0FZi
+X-Google-Smtp-Source: APiQypIE+aiXg9M4jefhvFk5J92bQleYKbHWuqz1eiBxIYW+Ee2fqjYdijHvdc3U49sfg9OWJYoOjA==
+X-Received: by 2002:a17:902:8a81:: with SMTP id p1mr10346936plo.104.1588801717415;
+        Wed, 06 May 2020 14:48:37 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id z7sm2703432pff.47.2020.05.06.14.48.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 May 2020 14:48:36 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, jrnieder@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v2 0/4] credential: documentation updates for maint
+Date:   Wed,  6 May 2020 14:47:22 -0700
+Message-Id: <20200506214726.81854-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.26.2.686.gfaf46a9ccd
+In-Reply-To: <20200505013908.4596-1-carenas@gmail.com>
+References: <20200505013908.4596-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QaE5IFF1WJ0mKqLHPQFsDKsNYQHsyfoKZjYkurtQRhDTdb7n591
- Iyt5eAEwlof1ZqgahbxoBtj30SE7KsM6Zm/q4MEFwq/Qhx/C0MPr+YNb53yTFUKhn81z3co
- HyvjTS/7PWpsZoohTJhq9QAwNL27TJoat3ZXJP7wdka7fCgLzvScjPm/kW5U0WvG1TaKFJq
- bTYHI0TyuRBLOc6dVoikQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6HVkIrYh5Eg=:jWy3563MmGA5BdU/1Mb/OP
- rzTexQmkDxTbAK1+9YH95p/5naF4oQN5AXPNxnoMecQMDie08Ylja3bQR3V9G7hIXya/rdgfg
- dIsZ0ILtR/7jGmeagDnrjeczLCGTT0LmlLvDm/BC6cogec3mhLMIzRq8f0zxRKJGcteeh1TR5
- Kn05JbPWylpNgULTJ//zaz/pGf/GQxRj3BCPM/okzquQ+edU0P2t8XFo7CCcPSjHCJLmsj1X+
- EU4etZM90lGfm/ZAcUBSAXhivWRJibj5qTrwrDm/omuIDHurS2CN7/LKy36C4v4N7MC7UOJVj
- kVAN31uyVbSfdzozHUjarqyYlL5dTTb6mljj+53JLTjy+pYm4wIZ3wPqBgdxwtByvMZLa7AGx
- bH/XD8IOnRFy74uzOr8zKZ37GU6YISI+FiaZb0tDM04xZzq1Ug2/2goTnolo7TTLkBuxdM/ys
- 4Eb4UGfyE/PXPG56MhEqD9eaDT47sIq8cQBv82DMERgwKiSHA8ELf+DOgJ9+fV9ZEPjVULZy9
- UyQHy5ffXrtvPQlAiWw1mdqbFGw8DUmuf7GNTiYQB/pTYM5WKIHWWIYu/l3FzW9tQTa1Lzpij
- ZypnzUJ0EV0ivWFGuIdNcTHumgdpzg7ycTR8NVP4vk7PzQAJzEFbCEl+QIqYqa2ztzFf6+WMb
- /NdGmagsJa9eXwigYrg+IFRWDY/Yc46dX4tRi2TiqXrOm2j7rSVf1bnTlO9lPhFLBLZ8lteaA
- qRY/nltRC/MVQKzjIJ+1m4mJgCe5BtA8nAO0Y/x9JyxthL8nmpfsZRF9VNx6smsiWXDLQ/xTU
- SkGUl0bqp18bqcJv+Z1jKFYG1+D/qGLp7mJVo4aqQuOtAuO08hnkMsB5YtdKJMnmY0OmPfgu7
- Jbu8EO3wyHwAfXfZ9MRIgd1bZVIt5i+yCEn+kKN76EqTXK+Y3l8Quskiqt9IF8ZWq5GtVOR55
- 1mveZk/eiJhuQRimmtgxsVuQDaXR9bip2ewicHJAV5+gCVk/x3eqFNFozwjUDqhKYQb+ZNDoO
- NOYc995+SwyqYl289/9z8lDESsp6qSiLw2U6w8JC7Hc48pQotIA6p8uGWAmlFs/okReEKwtza
- poXsPdZU7t0u8Q42IyWgDhV44aVZKAcs9pL8arMpUtN3sf7DVMkdi0tGnLfPZOg3CLjjULz2k
- GwYiiPvK9I0BgX4vB9AE0P2F1lnLj3TAh4gxsT7cIN2GYj1uCQlxbWAKDQEiTsHhqWX4bJUOq
- fxv/TsvVmlbXAHnxb
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+in line with Jonathan's wishlist[1] for a 2.26.3 release, the
+following changes address minimal code changes related to the latest
+updates as well to documentation changes that would guide helpers to
+adjust to the updated credential subsystem.
 
-On Tue, 5 May 2020, Junio C Hamano wrote:
+patches 1 and 2 are unchanged, patch 3 has all suggestions by Peff
+added and hopefully is ready; patch 4 does integrate all suggestions
+as well but adds some more changes that I thought were neccesary while
+rereading it.
 
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >> > +				/*
-> >> > +				 * i2 refers to a fixup commit in the middle of
-> >> > +				 * a fixup chain
-> >> > +				 */
-> >> > +				next[i] =3D next[i2];
-> >> > +				next[i2] =3D i;
-> >> > +				continue;
-> >> > +			}
-> >>
-> >> I do have one question, though. What happens if we add a second
-> >> fixup-of-a-fixup?
-> >
-> > Thanks for asking this question, I was a little curious about it, too.
->
-> Interesting that three people looked at the same patch and asked the
-> same question in different ways ;-)
+I think this time there are no grammatical issues (and a free online
+checker seems to concur), but as a non native English speaker and
+ineffective spell checker user, look forward to any suggestions there.
 
-Indeed!
+commit message has also been improved based on the feedback received.
 
-I am very grateful, as I had missed that, and it helped me figure out a
-better way to do it, and v2 looks a lot nicer, too.
+not sure how it will look like, but still think that this is the right
+time to clarify the issue of encoding, if only so that further changes
+could be coordinated more effectively with helper developers (who seem
+to be mainly out of tree) so will most likely send an RFC for a 5/4
+patch that could be considered for inclusion on a reroll.
 
-Ciao,
-Dscho
+[1] https://lore.kernel.org/git/20200428055514.GB201501@google.com/
+
+Carlo Marcelo Arenas Belón (4):
+  credential: update description for credential_from_url_gently
+  credential: correct order of parameters for credential_match
+  credential: update gitcredentials documentation
+  credential: document protocol updates
+
+ Documentation/git-credential.txt | 34 ++++++++++++++++++++------------
+ Documentation/gitcredentials.txt | 25 +++++++++++++++--------
+ credential.h                     |  8 ++++----
+ 3 files changed, 42 insertions(+), 25 deletions(-)
+
+-- 
+2.26.2.686.gfaf46a9ccd
+
