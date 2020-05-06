@@ -2,112 +2,112 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46583C28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FDD4C28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:19:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DA8D20B1F
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:18:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C72920B1F
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:19:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ztiGjTZx"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FWJSljvC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728104AbgEFRSP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 13:18:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48474 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726093AbgEFRSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 13:18:15 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3A6C061A0F
-        for <git@vger.kernel.org>; Wed,  6 May 2020 10:18:14 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id m7so769711plt.5
-        for <git@vger.kernel.org>; Wed, 06 May 2020 10:18:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xfqEoL9S9cPvCWMeXgfy1679XJReuE4hfeTiCzoDYsU=;
-        b=ztiGjTZx5LQY75KGaU1HG9eK3plWe++horBkd7sLe0LHeciMlFMsEzr9pqZBIchV6E
-         OtGbSU+malkFnhiBk+9dAEQKPMklxRD7O3p4wJxOQ+JUw51YUJiCiINB2Px9VcL2lQcH
-         IfjqYisByKdnMWboxNdt/lFMT8zfzDWtWNgbR+KWs2iW3HxGDAhv6zys2kKejSUzuv5i
-         o38qEr1vjE5IRgirPHq8Weadro424PyseF0JdAmTw7zWnDkVNo9gBYr6n0nsIGPqq7R7
-         l1PsI6RMPdWtOkQNyvR7paYW6YNCjLg2fORv0b1+zQVQ07gbyYd+df4QkY+o3m5rE0A1
-         gQSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xfqEoL9S9cPvCWMeXgfy1679XJReuE4hfeTiCzoDYsU=;
-        b=LXFbu5UYzVZZEuE0506h+RWsZXm45ayg2KcWIHhIXMLyhBI3vic5U8HaK/+3iLfdWH
-         J0dPvvV+ZF/d6KijUPYWnFT45DjaXLE7v+KyWJcIZRCs7dxwe2M98PvkM4n6xHpFwRl1
-         FFTIRZ8HKZzEjzJDd5ftXNBw57DsCG9mjaPlh7w2lDIid+QKHDaVXZo+sIRDudyHbbQ8
-         8pWxJ3sqT/UgmVItyUY9nyLhI+s9E0xIlMLHWHTmnl7ICAnLwhtoLwA+nhx7TtXkoK44
-         NUEZ9ETl20iTVRsghpmTaG2tSgpj4pTjQGBbkQaqbT7reWmwSHdgG9GBMI3Rzpg94xUD
-         qhAw==
-X-Gm-Message-State: AGi0PuYVq7M3aary5ygU618xZRgjHNUPl6bvzSXda78BT9OCNy18E+yy
-        g+3QVfnFh/ERxkBGzT6lEbClXQ==
-X-Google-Smtp-Source: APiQypJu6zwmP+14hZrNmQJns26hHV3KXHI7k07ZUVv4CJwSNzb28vW0tUMdqqfCOpBCqUoeD5+gvQ==
-X-Received: by 2002:a17:90b:692:: with SMTP id m18mr10712429pjz.39.1588785493944;
-        Wed, 06 May 2020 10:18:13 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id 10sm2350514pfn.204.2020.05.06.10.18.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 May 2020 10:18:13 -0700 (PDT)
-Date:   Wed, 6 May 2020 11:18:11 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2020, #02; Tue, 5)
-Message-ID: <20200506171811.GA6078@syl.local>
-References: <xmqq8si69fda.fsf@gitster.c.googlers.com>
+        id S1728885AbgEFRTc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 13:19:32 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59890 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726093AbgEFRTc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 13:19:32 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E5A0CECD6;
+        Wed,  6 May 2020 13:19:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JE5rMKoloEhroU7vxq2asy9IeNY=; b=FWJSlj
+        vCuX0BKLPksD02LnGziqoY0GNmv08aTZuTrnIUoP2kG+DXzd/8a7XVNf4mqmRyZt
+        fI2ZHO9BKc+Q2mjF5NXQDR6isMZARfnYxPOqkXcs1jYYBM17jTBBGfZwS+FtpoN9
+        AmIsElhh6bcDBwAhLk+i5uE2hEP2T7Yy2tX1A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=O0MBfZFh5/QWMAXAw1e3OlCOJ+zoDX7b
+        sB7op3cfLySvez0VBvkHlt67N9wJ1wtBEhUoBytnjdvVvKxJb+ca8vaCLXO1RYRP
+        n47cNTci77P7k/9+g5IOYxN604Fy+0T7RQCpA2Sg55z7MEXF+WtkMprjOXRRTVkm
+        t1IqNQT9YjM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 35F50CECD5;
+        Wed,  6 May 2020 13:19:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6CEFDCECD4;
+        Wed,  6 May 2020 13:19:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v6 4/4] gitfaq: fetching and pulling a repository
+References: <20200506080023.12521-1-shouryashukla.oo@gmail.com>
+        <20200506080023.12521-4-shouryashukla.oo@gmail.com>
+        <CABPp-BHurMUPM=NVr7N4Fvx9UccNqi-nQrFH0_vM9a96MjFzog@mail.gmail.com>
+Date:   Wed, 06 May 2020 10:19:25 -0700
+In-Reply-To: <CABPp-BHurMUPM=NVr7N4Fvx9UccNqi-nQrFH0_vM9a96MjFzog@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 6 May 2020 09:20:02 -0700")
+Message-ID: <xmqqh7wt6kwy.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8si69fda.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BD3BCB5C-8FBD-11EA-9BF0-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Elijah Newren <newren@gmail.com> writes:
 
-Thanks for an update. I couldn't find anything in my list of active
-topics that you're not already tracking below, so I'll just respond to
-the topics I authored:
-
-On Tue, May 05, 2020 at 03:38:41PM -0700, Junio C Hamano wrote:
-> * tb/bitmap-walk-with-tree-zero-filter (2020-05-04) 4 commits
->  - pack-bitmap: pass object filter to fill-in traversal
->  - pack-bitmap.c: support 'tree:0' filtering
->  - pack-bitmap.c: make object filtering functions generic
->  - list-objects-filter: treat NULL filter_options as "disabled"
+> Hi Shourya,
 >
->  The object walk with object filter "--filter=tree:0" can now take
->  advantage of the pack bitmap when available.
+> On Wed, May 6, 2020 at 1:00 AM Shourya Shukla
+> <shouryashukla.oo@gmail.com> wrote:
+>>
+>> Add an issue in 'Common Issues' section which addresses the confusion
+>> between performing a 'fetch' and a 'pull'.
+>>
+>> Helped-by: Elijah Newren <newren@gmail.com>
+>> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+>> ---
+>>  Documentation/gitfaq.txt | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>
+>> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+>> index 5dfbb32089..53e3844374 100644
+>> --- a/Documentation/gitfaq.txt
+>> +++ b/Documentation/gitfaq.txt
+>> @@ -255,6 +255,14 @@ way of cloning it in lesser space?::
+>>         presumes that the user has an always-on network connection to the
+>>         original repository).  See linkgit:partial-clone[1].
+>>
+>> +[[fetching-and-pulling]]
+>> +How do I know if I want to do a fetch or a pull?::
+>> +       A fetch stores a copy of the latest changes from the remote
+>> +       repository, without modifying the working tree or current branch.
+>> +       You can then at your leisure inspect, merge, rebase on top of, or
+>> +       ignore the upstream changes.  A pull consists of a fetch followed
+>> +       immediately     by either a merge or rebase.  See linkgit:git-pull[1].
 >
->  Will merge to 'next'.
+> Looks like you have a tab instead of a space between 'immediately' and 'by'.
 
-Thanks very much!
+Good eyes.  Otherwise the contents of this new paragraph looks OK to
+me.
 
-> * tb/commit-graph-no-check-oids (2020-05-04) 8 commits
->  - commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
->  - t5318: reorder test below 'graph_read_expect'
->  - commit-graph.c: simplify 'fill_oids_from_commits'
->  - builtin/commit-graph.c: dereference tags in builtin
->  - builtin/commit-graph.c: extract 'read_one_commit()'
->  - commit-graph.c: peel refs in 'add_ref_to_set'
->  - commit-graph.c: show progress of finding reachable commits
->  - commit-graph.c: extract 'refs_cb_data'
->
->  Clean-up the commit-graph codepath.
->
->  Expecting a reroll
->  cf. <20200505161649.GG69300@syl.local>
+There is no "git partial-clone" command, so the reference at the end
+of the previous paragraph looks bogus, but that is not a fault of
+this step.
 
-Sent: https://lore.kernel.org/git/cover.1588723543.git.me@ttaylorr.com/.
-
-Thanks,
-Taylor
+Thanks.
