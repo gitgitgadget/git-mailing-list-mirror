@@ -2,148 +2,105 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF3FCC28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 15:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA578C28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 15:12:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A7452076D
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 15:09:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 943E02076D
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 15:12:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="abwI8vx0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHCMQXUq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729193AbgEFPJy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 11:09:54 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50713 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727984AbgEFPJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 11:09:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1588777781;
-        bh=raNREtm1wlgUHgOiwYSNhm+oF6FAg7WEL3upqMIzXXA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=abwI8vx0TiFcLebvHFvn4WHI7HhE0VtONKDWJtjmoBNlJcgXYAgwzz1bu8DTVX80Y
-         Flo9znNvpafZ5OpEamGx7dKv+JAJrOz+DQVjU/aUKh2CmUcqXPgvvVW/7jQ7oqfh58
-         eSXhtbeLmyTfhB7iY/lqHNIC3xkLoZqubkzKXCEQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.84.97] ([89.1.213.224]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKKZ3-1jquhW245P-00LmD3; Wed, 06
- May 2020 17:09:41 +0200
-Date:   Wed, 6 May 2020 17:09:39 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
-In-Reply-To: <xmqqlfm69il6.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2005061623520.56@tvgsbejvaqbjf.bet>
-References: <20200504150105.GB11373@coredump.intra.peff.net>        <cover.1588607262.git.congdanhqx@gmail.com>        <73de97dfebfccabe9f1bf32ea41aea5008a949cd.1588607262.git.congdanhqx@gmail.com>        <20200504162311.GE12842@coredump.intra.peff.net>   
-     <20200504215824.GC45250@syl.local>        <20200504233634.GB39798@coredump.intra.peff.net>        <20200505002055.GC64230@syl.local>        <20200505164326.GA64077@coredump.intra.peff.net>        <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>       
- <20200505182418.GA66702@coredump.intra.peff.net>        <20200505210451.GA645290@coredump.intra.peff.net> <xmqqlfm69il6.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729368AbgEFPMt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 11:12:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728784AbgEFPMt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 11:12:49 -0400
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A90FC061A0F
+        for <git@vger.kernel.org>; Wed,  6 May 2020 08:12:48 -0700 (PDT)
+Received: by mail-lf1-x141.google.com with SMTP id j14so1646008lfg.9
+        for <git@vger.kernel.org>; Wed, 06 May 2020 08:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=2Ikb4zmsMuomhdrpEosokQSQfGUJLkIOSBgCWo7BlDw=;
+        b=GHCMQXUqXRnk1fwmemDvZNQ3lM2OKQnCyCroDYizG/OsNJarKh0ID70iLyQPzpZMg5
+         ACxzayby4CjrOQsYhTUtj1PFgq8B52sUYck+JoqukdNhmPLFJ94ne5ZfJvyKS1KwBWxz
+         A81IssBMSBhizbFMjr70uff6nZ2RoKJm6v0WE4hEf/UIlFUaSQLpji+/ZagPkLKqW5Kf
+         nACypsKNvrW4PjC8ZaZQ9HpHPCCkqrMeQF7r0n8rSNWEz+DuElA42d7G0zAirQRAkeeX
+         Bi2ova5UU1omDB2I7zVwTpoHdhy2fE74Swg42S6INvb/h8WphmwcKlvGb4nRpPzcS7AK
+         gIMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=2Ikb4zmsMuomhdrpEosokQSQfGUJLkIOSBgCWo7BlDw=;
+        b=lTirJ6mH04A9cVRRcrOtTYdNmJIvMdjmnJtW4smUdPlmw4xEfe7t+DSczsQWgNNEAG
+         jO6dWpjK3j/7zv8dqm3yzhzv1yYFvoM1ds/LOKM9A2/1XK8gIK+XB31w5Y+msOHn71xZ
+         ZteExv0YmwGq5WjY/Y9kRUvGA2EcA9iJe0o7VOMOkaAHJoQIHmRrCEmTaEL0CHBnts4G
+         R3rLXwrY/++8szra57lQtVCivqz2jqWjFIR2XdMMXbvUXyqgHxlMailbaZ/2jxSRMUac
+         fLWnUhTPpGPy/EUfrc/8AGvFUZcUNlxe5Yl+VBjJXAOYWBnb2xZ93Nh7WojJxHV7RccX
+         3QUA==
+X-Gm-Message-State: AGi0PuZfTZ4+XiZ1eIWDO6OxNDUVeYx5LIHMtjRpMli/fzkQ1A5AVpgt
+        +RM1buiWa65cFy+Q73mMhAsQ9iDm9p8=
+X-Google-Smtp-Source: APiQypJaXWMnrAZmkzk6cxS7UR4oKnG38W/TxB2TtR4ubuu1Z1OLhJoglpGsxmbnYoFI5XhBmthp2w==
+X-Received: by 2002:ac2:4213:: with SMTP id y19mr5197816lfh.99.1588777967070;
+        Wed, 06 May 2020 08:12:47 -0700 (PDT)
+Received: from [192.168.178.23] (aftr-62-216-206-147.dynamic.mnet-online.de. [62.216.206.147])
+        by smtp.gmail.com with ESMTPSA id l20sm1818109lfj.10.2020.05.06.08.12.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 May 2020 08:12:45 -0700 (PDT)
+Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Paul Ganssle <paul@ganssle.io>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <2367cf9d-2e37-b8c2-6881-f3e6c951a460@gmail.com>
+Date:   Wed, 6 May 2020 17:12:44 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rM+De7gL8DfeVI74nhYTc5qu1I2H4CPMJeX5UmDoQu0PQZA8tTH
- 8IN0oERfQWbPu5mgfhhMjbTVc5I3Nrq3FuXobQ/L6l0ffJJnkHh4CJHE6c6RVltNetCWPRS
- ugToMN5JiC6jv6kqqIcjq6Z9IT7I75PdZMjJVGwNZwpnIBRRr4MOAjbUOy3mRKHVJ6Ry3tz
- ySv+K4Hyn4HKiO2AsZ/Xg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OK0vEgigs98=:xaw3Y348XyjHXU1lkIlvn5
- +fLM5aUV08opfYZUQxkUiekVDGaIOtOY93qJT0x+9ZDazS18jD8XWpodpekFyzCqWZy4u9SZ5
- +W0nVt0vjDdQ5n+mnkvIrXILyNg3J6H+wdJwILKClyamQ5QGo0GMzWIxk3i5QXGL9tiddo0f/
- W+j7Fq2s4PQC6i7eSs4JGJadjaiEAouAENqhvBoA10Kcx66OgAj9oJf7/1A4SZJr7qeoGgnrC
- 3ZTPRMehJkL5tJJkiBHFyfc4vpj0Codq97LKEM9rSCYrbCIVA8SbDPBnmPtmbpIECZCjFouoW
- P3vy6AiQyryKb4nxhnfeTuX76tWAS4bdqzoJiS5JAVVBHZbHZBbGTSrtj2EPmhKXB80KP8cXH
- l74WvX++C/r+01GhabERTb9f0PChnkxQzeAYjjGnG3x7eG9xuAYu5x++CeLPMKQvM92IsRkxQ
- JSslC0oqhgbvyFzhddBoBneBrlK7E1YC/ZpzGfX/UGOKp2OMbk3A1dQ8Y+MnBbj23GIWS59Td
- eDagxbPAT0PyZW/3u/vkvcYNnJtuHG+gVdAyiLR0XDSf6yKejv5AcFJvsNqNvnDvLepfUDFXA
- N/ap/+UbvvBQvTrEdlSubJ6uPqP/j9zhgkiG7JN2WQNdEePq1+mPT9JkuiThSCkerDsBAl3Or
- YaHbJHed0kn+DayRkY68brZQkecbSvWxbu7M3VedwFM3AHxZMOMeWzPz/2iQ++bjfuOsUNaqV
- 7DxoLNA1MBMqArzR/LrqIIa53jz/uqqU5anyf1KgRpKBT0QFhcHDTACkHxZOHIkG7DytECvQD
- SLJ/WOy2VdhX1tlRWU6jvOONOuhYdO9Qsl+J90IosmoS8SRPrdQyIUXe+QBvEAwJLq93NlNS7
- yioKYXJZXCXuhE1k4BuuzBWzVFtiyZfhzDYi2h/+cvYoFfooXicMXSiUo9QAg/3k5+ej83nfl
- wlU9++GNW4YkPdlcBazBjuqmwBP8UTtGAZAlfsIsgy9xgGM11gh8PUrvmqLYvNPvtYiTuQvxV
- QOPto7dVd1Cn13M0bKsN+dqf5iLlziplJbhmiqYozue8OgmJ3mzTQXGsWlk61wn4MLexfMh54
- IJ8KF0yHIXv28iH1SJrBi1FI7WkQj/ZY4oCtr7kJksVuyBlaERNu3um/87U3Ko0Z4r5gWNBmd
- peTWZr9WDF1Q4mo5W/pibQz3Zf09Se8dp62f0u+2uf+Pp50AgAvY724g6+87bgkeqKtYeA+5h
- Np7zy89Wrux7nWLYM
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Tue, 5 May 2020, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On 2020-05-04 22:40, Johannes Schindelin via GitGitGadget wrote:
+> However, as reported by Paul Ganssle, that need not be true: the special
+> form `fixup! <commit-hash>` is allowed to point to _another_ fixup
+> commit in the middle of the fixup chain.
 >
-> >  jobs:
-> > +  check-ci:
-> > +      runs-on: ubuntu-latest
-> > +      outputs:
-> > +        enabled: ${{ steps.check-ref.outputs.enabled }}
-> > +      steps:
-> > +        - uses: actions/checkout@v2
-> > +          continue-on-error: true
-> > +          with:
-> > +            ref: refs/ci/config
-> > +        - id: check-ref
-> > +          name: check whether CI is enabled for ref
-> > +          run: |
-> > +            enabled=3Dyes
-> > +            if test -e ref-whitelist &&
-> > +               ! grep '^${{ github.ref }}$' ref-whitelist
-> > +            then
-> > +              enabled=3Dno
-> > +            fi
-> > +            echo "::set-output name=3Denabled::$enabled"
-> > +
-> >    windows-build:
-> > +    needs: check-ci
-> > +    if: needs.check-ci.outputs.enabled =3D=3D 'yes'
-> >      runs-on: windows-latest
-> >      steps:
-> >      - uses: actions/checkout@v1
+> Example:
 >
-> Oh, quite nice.  Simple and clean.
+> 	* 0192a To fixup
+> 	* 02f12 fixup! To fixup
+> 	* 03763 fixup! To fixup
+> 	* 04ecb fixup! 02f12
 
-The idea is indeed very neat. I think we can do a bit better with resource
-usage by not even bothering to check this branch out. Something along
-those lines (sorry, I really would love to have the time to test this...):
+Could you please clarify if I'm understanding this correctly: does this
+affect the fixups-of-a-fixup which were created by
 
-      - id: check-ref
-        name: check whether CI is enabled for ref
-        uses: actions/github-script@0.9.0
-        with:
-          script: |
-            const req =3D {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "ci/config"
-            };
+	git commit --fixup=<pointer to previous fixup! commit>
 
-            try {
-              req.tree_sha =3D (await github.git.getRef(req)).data.object.=
-sha;
-              (await github.git.getTree(req))
-              .tree.filter(e =3D> e.path =3D=3D 'ref-whitelist').map(e =3D=
-> {
-                req.file_sha =3D e.sha;
-              });
-              const list =3D Buffer.from((await github.git.getBlob(req)).d=
-ata.content, 'base64').toString('UTF-8');
-              core.setOutput('enabled', `\n${list}`.indexOf(`\n${{github.r=
-ef}}\n`) < 0 ? 'no' : 'yes');
-            } catch (e) {
-              core.setOutput('enabled', 'yes');
-            }
+? For example:
 
-Ciao,
-Dscho
+	* 0192a To fixup	
+	* 02f12 fixup! To fixup	
+	* 03763 fixup! To fixup	
+	* 04ecb fixup! fixup! To fixup
+
+Where 04ecb was created by pointing option --fixup at 02f12.
