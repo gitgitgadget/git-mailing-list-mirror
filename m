@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22426C47247
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79003C47254
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F35F9206A5
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5466720752
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="VYntB3yJ"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="MA0crFjU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729448AbgEFAHp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 20:07:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57156 "EHLO
+        id S1729464AbgEFAHr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 20:07:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728717AbgEFAHn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 20:07:43 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E9EC061A0F
-        for <git@vger.kernel.org>; Tue,  5 May 2020 17:07:41 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id t9so14601pjw.0
-        for <git@vger.kernel.org>; Tue, 05 May 2020 17:07:41 -0700 (PDT)
+        with ESMTP id S1728717AbgEFAHr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 20:07:47 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B39C061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 17:07:45 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id d184so105486pfd.4
+        for <git@vger.kernel.org>; Tue, 05 May 2020 17:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=S+j2Q8wZMBdb2cFeNRFmMRJNgzicKJJKA/eqQ+F3t3w=;
-        b=VYntB3yJi3J3ljNSz/11uQItIs3Yuf+xOcIk3vGYiDH3hRyLQaSb3dNGuOFYfCfBB+
-         T1kZJ8HY7QI5f39k0zJnE7ZQ5fddaP+C1EDuxexV6Ufz+MPPWgjopjp9YZCSBtnizmB2
-         IMMKlMGS05cxHgZfBM09u5JSU4SnSeSt1vggsJ5S5ANnsZd0cOR6r23ml95cBK0lYgjU
-         pmjSo8ZBJuym+P+htX9l2eBwowxoUZZkND7cgqcXc/K6tFeAjnQ+xN6V5jqA11s0wtwS
-         FTdU60y1N+CyF8VwlzPA5fuK4B62Npj6uh/NTJNzSvdFB3YyoSL9lo7x4aDUXRzmnpr+
-         Axiw==
+        bh=vHRIiWx89t6b6i0iG2vGJSmwe30s4IFWz7nTGrcVFZU=;
+        b=MA0crFjUk7t25+qTAjQCBQ1FG5BMpM3wbuOsf0EFWZOIeBUTxjkl4t0SHnQhya1aq4
+         rr8OPN1zlZp8XU8KHvOlHAmiJtMF5brWR6loWNxf7KU6ma4YuS3O7Y23x3YgGe+LHCXz
+         qANz9Rd3IDpGEJEK3h4er9YNAJYYsEmbdV4y/Zb4Ha8RBV0Yv+9CIfmNeVB1uiJH4hVk
+         F4sMi6+D0J4E6IK4292khKNatq2G/9LM7kdJLsCiTZESnbBQt9R67921jyaEMtGCNWi1
+         DOoV2ZgueI/mw5Stxspio7WIuDrGzHhsLP3ypbNwk6k1OrSoawXiMGK4X3kmCqnTJvUz
+         xy0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=S+j2Q8wZMBdb2cFeNRFmMRJNgzicKJJKA/eqQ+F3t3w=;
-        b=HV6woV4Z51n95LhLnDXPhNNE8n2D/X5fJeIrH+xJYHEnUjGXv72T67tTiDS51u2Rbw
-         bngbLdPTc6IOITZoeik0lb3bRJDR++leUI8Z/zQdPSVUwMFzOu7N78zMZXp9YsBgmAGx
-         vR3N0MI0jmqfPqXsKST7N594wmixJpr+eyq+tcHN7eoQdGkksxfkkeOfY1HNSwQKvp1Q
-         iymYMO+KuCiGWSYpmBksTLvT2nRF0tlOb0M82oKe5fqmKsly76BiAw/sbFki2Tys8WJY
-         8JC1OqNb1OtZgxD7Nn+yCUFWmfz8VTSLt9WHvfuoZxeOY0r1GOGJjSBzrMKWGj6mlnF2
-         KvsQ==
-X-Gm-Message-State: AGi0PuYn5+KHrE9RGXo5z6fHZGlY+Tu5eaLMW2NydO2UwCLOcQQARQ5A
-        O0TQ+mwALq+XDFv++wu3gnsEKeCwm8Y=
-X-Google-Smtp-Source: APiQypJ4W16I1OZE9wEdp7IZwN0xyGoRTsMUaYt4Mur6F7yCYhmo5foU+GDQj139JNcoGnWWCy5bmg==
-X-Received: by 2002:a17:902:7241:: with SMTP id c1mr5318212pll.113.1588723661079;
-        Tue, 05 May 2020 17:07:41 -0700 (PDT)
+        bh=vHRIiWx89t6b6i0iG2vGJSmwe30s4IFWz7nTGrcVFZU=;
+        b=i5e00XaD+yIeuw0B878h7spOtPxMmHL+Lp/IiHl8hqdXcOkVDK3nqFz2Xj4OZPS1eS
+         C32AUFAYcedzb0Xhb/nNqsVmfPZf3MWJuPJb1U23aHZp3gwzCG32KN1u/nJ3kybT0ZSD
+         87GO6bYwMPzx47pTC6v1+kAPts+/7gf6vjpS5ciu2S+YuZJXeh6HDYyUoa1+hbPHMaZb
+         DBbx3sZ+35iU+jRIXN5WMdvRHgqWLtoFaKp4BeNwgfplxGYUgEhlXcnaM4BA8nnEgWwD
+         yJah8QmMuRpjpBRHU/9qQwKXqrs/2FRsFdLhvKC6g4kJA7NKhi8xz1qMYE4KVOCALIhd
+         PC+w==
+X-Gm-Message-State: AGi0PuYDj86E6hS8/ZRclNJQ4se2TndPaXUulobnFDKva5VfqiRSU7sq
+        FzE+SyjWXT2xqZN8IKkAWLFhSds5xrs=
+X-Google-Smtp-Source: APiQypJpI7Gj8QdN0vnitLhd0qC7XucN+/XQgTddsck3+H3/t64nsAcU6Ajami3vVaohCWDymwKC4A==
+X-Received: by 2002:a65:62c7:: with SMTP id m7mr4723527pgv.16.1588723665014;
+        Tue, 05 May 2020 17:07:45 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id a196sm142081pfd.184.2020.05.05.17.07.40
+        by smtp.gmail.com with ESMTPSA id i8sm133712pfq.126.2020.05.05.17.07.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2020 17:07:40 -0700 (PDT)
-Date:   Tue, 5 May 2020 18:07:39 -0600
+        Tue, 05 May 2020 17:07:44 -0700 (PDT)
+Date:   Tue, 5 May 2020 18:07:43 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         szeder.dev@gmail.com
-Subject: [PATCH v2 3/8] commit-graph.c: peel refs in 'add_ref_to_set'
-Message-ID: <85c388a077ed9b43ad4876e6b3efaa0358c78715.1588723544.git.me@ttaylorr.com>
+Subject: [PATCH v2 4/8] builtin/commit-graph.c: extract 'read_one_commit()'
+Message-ID: <cef441b465b4129746fd9e4a04fb92d2440a3a32.1588723544.git.me@ttaylorr.com>
 References: <cover.1588641176.git.me@ttaylorr.com>
  <cover.1588723543.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,47 +75,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While iterating references (to discover the set of commits to write to
-the commit-graph with 'git commit-graph write --reachable'),
-'add_ref_to_set' can save 'fill_oids_from_commits()' some time by
-peeling the references beforehand.
+With either '--stdin-commits' or '--stdin-packs', the commit-graph
+builtin will read line-delimited input, and interpret it either as a
+series of commit OIDs, or pack names.
 
-Move peeling out of 'fill_oids_from_commits()' and into
-'add_ref_to_set()' to use 'peel_ref()' instead of 'deref_tag()'. Doing
-so allows the commit-graph machinery to use the peeled value from
-'$GIT_DIR/packed-refs' instead of having to load and parse tags.
+In a subsequent commit, we will begin handling '--stdin-commits'
+differently by processing each line as it comes in, instead of in one
+shot at the end. To make adequate room for this additional logic, split
+the '--stdin-commits' case from '--stdin-packs' by only storing the
+input when '--stdin-packs' is given.
 
-While we're at it, discard non-commit objects reachable from ref tips.
-This would be done automatically by 'fill_oids_from_commits()', but such
-functionality will be removed in a subsequent patch after the call to
-'lookup_commit_reference_gently' is dropped (at which point a non-commit
-object in the commits oidset will become an error).
+In the case of '--stdin-commits', feed each line to a new
+'read_one_commit' helper, which (for now) will merely call
+'parse_oid_hex'.
 
-Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ builtin/commit-graph.c | 54 +++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index d0397f2a23..2c3b5fd09d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1327,11 +1327,15 @@ static int add_ref_to_set(const char *refname,
- 			  const struct object_id *oid,
- 			  int flags, void *cb_data)
- {
-+	struct object_id peeled;
- 	struct refs_cb_data *data = (struct refs_cb_data *)cb_data;
- 
- 	display_progress(data->progress, oidset_size(data->commits) + 1);
- 
--	oidset_insert(data->commits, oid);
-+	if (peel_ref(refname, &peeled))
-+		peeled = *oid;
-+	if (oid_object_info(the_repository, &peeled, NULL) == OBJ_COMMIT)
-+		oidset_insert(data->commits, &peeled);
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 15fe60317c..f550d8489a 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -138,12 +138,25 @@ static int write_option_parse_split(const struct option *opt, const char *arg,
  	return 0;
+ }
+ 
++static int read_one_commit(struct oidset *commits, char *hash)
++{
++	struct object_id oid;
++	const char *end;
++
++	if (parse_oid_hex(hash, &oid, &end)) {
++		error(_("unexpected non-hex object ID: %s"), hash);
++		return 1;
++	}
++
++	oidset_insert(commits, &oid);
++	return 0;
++}
++
+ static int graph_write(int argc, const char **argv)
+ {
+-	struct string_list *pack_indexes = NULL;
++	struct string_list pack_indexes;
+ 	struct oidset commits = OIDSET_INIT;
+ 	struct object_directory *odb = NULL;
+-	struct string_list lines;
+ 	int result = 0;
+ 	enum commit_graph_write_flags flags = 0;
+ 
+@@ -209,44 +222,35 @@ static int graph_write(int argc, const char **argv)
+ 		return 0;
+ 	}
+ 
+-	string_list_init(&lines, 0);
++	string_list_init(&pack_indexes, 0);
+ 	if (opts.stdin_packs || opts.stdin_commits) {
+ 		struct strbuf buf = STRBUF_INIT;
+-
+-		while (strbuf_getline(&buf, stdin) != EOF)
+-			string_list_append(&lines, strbuf_detach(&buf, NULL));
+-
+-		if (opts.stdin_packs)
+-			pack_indexes = &lines;
+ 		if (opts.stdin_commits) {
+-			struct string_list_item *item;
+-			oidset_init(&commits, lines.nr);
+-			for_each_string_list_item(item, &lines) {
+-				struct object_id oid;
+-				const char *end;
+-
+-				if (parse_oid_hex(item->string, &oid, &end)) {
+-					error(_("unexpected non-hex object ID: "
+-						"%s"), item->string);
+-					return 1;
+-				}
+-
+-				oidset_insert(&commits, &oid);
+-			}
++			oidset_init(&commits, 0);
+ 			flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
+ 		}
+ 
++		while (strbuf_getline(&buf, stdin) != EOF) {
++			char *line = strbuf_detach(&buf, NULL);
++			if (opts.stdin_commits) {
++				int result = read_one_commit(&commits, line);
++				if (result)
++					return result;
++			} else
++				string_list_append(&pack_indexes, line);
++		}
++
+ 		UNLEAK(buf);
+ 	}
+ 
+ 	if (write_commit_graph(odb,
+-			       pack_indexes,
++			       opts.stdin_packs ? &pack_indexes : NULL,
+ 			       opts.stdin_commits ? &commits : NULL,
+ 			       flags,
+ 			       &split_opts))
+ 		result = 1;
+ 
+-	UNLEAK(lines);
++	UNLEAK(pack_indexes);
+ 	return result;
  }
  
 -- 
