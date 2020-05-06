@@ -2,65 +2,76 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 673E2C28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 19:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FDA4C28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 19:27:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D71C2076D
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 19:06:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0D6720CC7
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 19:27:30 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bfa2sFq6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727944AbgEFTGw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 15:06:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39338 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727884AbgEFTGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 15:06:52 -0400
-Received: (qmail 24120 invoked by uid 109); 6 May 2020 19:06:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 May 2020 19:06:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10598 invoked by uid 111); 6 May 2020 19:06:52 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 May 2020 15:06:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 6 May 2020 15:06:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     clime <clime7@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: :format:%s for date fields seems to be shifted by timezone
-Message-ID: <20200506190651.GA2421358@coredump.intra.peff.net>
-References: <CAGqZTUu2U6FFXGTXihC64O0gB5Bz_Z3MbD750kMoJWMciAGH6w@mail.gmail.com>
- <20200504154343.GA12842@coredump.intra.peff.net>
- <CAGqZTUs+xCPjQdeQVfU6EWARmZdjcgcHeSNxkKaTf316rX+8pg@mail.gmail.com>
+        id S1729131AbgEFT1a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 15:27:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56046 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729114AbgEFT13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 15:27:29 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89EC447B37;
+        Wed,  6 May 2020 15:27:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JyG+HVTwIamnjggLqrvABSdMrSM=; b=Bfa2sF
+        q6kh6UrobDSTDD0T9fALNc79Ly8/NgnK3FgP4ReYWLNrRZP/qnpjK/0cGslz721j
+        bloOzEIWBOS++cxyN2uhYOkJwm684n4gRvGMV3TsspXODBwEq/xcR7lOXkSJ++Gg
+        d6Wc4CkCzVR0iFE8/BEldJwl3f2rATNgUTb6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jwVA7ERpFp0p9eaoSJKat5DcNLuOBf0P
+        Z1iynafvPDQyy/rC0XPzkMBUf711vPL+KFcBlphkqziCGfSFa9yXH9G681Wa2zzL
+        dkPSm4HKLrN58pjZ/gsBLjDfUrnfrSEbxnG58H4o1IafPtw111Nq7BZjsFhXZYGt
+        dc5G2sOD1R0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8196D47B35;
+        Wed,  6 May 2020 15:27:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1454047B34;
+        Wed,  6 May 2020 15:27:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] auto-gc: pass --quiet down from am, commit, merge and rebase
+References: <20200506094327.GC31637@rillettes>
+        <xmqqd07h6kcs.fsf@gitster.c.googlers.com>
+        <xmqqpnbg6gfv.fsf_-_@gitster.c.googlers.com>
+        <xmqqlfm46g3x.fsf_-_@gitster.c.googlers.com>
+Date:   Wed, 06 May 2020 12:27:26 -0700
+In-Reply-To: <xmqqlfm46g3x.fsf_-_@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 06 May 2020 12:03:14 -0700")
+Message-ID: <xmqqh7ws6ezl.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGqZTUs+xCPjQdeQVfU6EWARmZdjcgcHeSNxkKaTf316rX+8pg@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9EA73BA6-8FCF-11EA-AF6E-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 06, 2020 at 08:03:52PM +0200, clime wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> what about just printing the raw timestamp from either commit or tag,
-> i.e. avoiding any conversion for format:%s?
+> Teach these commands to do so using the run_gc_auto() helper we
+> added earlier.
 
-We don't parse the "%s" ourselves at all. We feed everything after the
-colon to the system strftime(), and that function only takes a
-broken-down "struct tm".
+Heh, what was added was run_auto_gc(), so this patch would not work
+well with the previous one.
 
-That said, we do already intercept "%z" for similar reasons in
-strbuf_addftime(). So it would probably be possible to declare that we
-don't respect system "%s" and just handle it ourselves. It would require
-either massaging the "tm" back to a time_t, or changing the signature to
-take a redundant time_t (and not all callers might have that).
-
-So if somebody wants to work on a patch in that direction, we could see
-how ugly it ends up being. But I am reasonably happy with "don't do
-that" as a solution in the meantime.
-
--Peff
+I'll send out a fixed one sometime later today.
