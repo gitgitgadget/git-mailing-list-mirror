@@ -2,120 +2,170 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1D57C28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 20:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E087BC28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 21:08:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6B102070B
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 20:49:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B114C2075E
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 21:08:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MLZDO4Y7"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gJl2B49I"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728172AbgEFUtF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 16:49:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53216 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727772AbgEFUtF (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 6 May 2020 16:49:05 -0400
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED31AC061A0F
-        for <git@vger.kernel.org>; Wed,  6 May 2020 13:49:04 -0700 (PDT)
-Received: by mail-il1-x141.google.com with SMTP id n11so3141561ilj.4
-        for <git@vger.kernel.org>; Wed, 06 May 2020 13:49:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=1h2r5B1DbhCLa/ll27gySFGWosq2r3Yn/qosANkOEPA=;
-        b=MLZDO4Y7younQVr6x6KZeJdn35lpJ4XUNkId8k6FUj2ukG4N6Ov/IF8020Qv10NRds
-         aherEXIZvOgaiEoSDnr2/V2o0cEIEf0RBrmeEEZeoyo0UxXc5LW/zo9LjFfQL8vxLVJp
-         eKIH+Iaav6QyZzpvFXf4xwTfSaL2btWsY5zs3ciZN54FbaHFlG3ovxkF44yJ1Y+iqBMn
-         k3m0KN04gqI+v5mcJpUNKqiY9DyJ6wzuWst+04De/HkwdpDpmsh2seaZ56JpqOE6tJpf
-         X6BTvc6OuaJ5spTRCYoUKR7BkebcCyPHs+nC2fPhEf4uVipR1kW9uiIW2r+XZ2bFbJhO
-         yw/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=1h2r5B1DbhCLa/ll27gySFGWosq2r3Yn/qosANkOEPA=;
-        b=Ag4F6DtOTsAAuKg0DwLeH05XG6g7p1KhwOT3PpupPpMnh+Z1zi7b0vca5RoGltYUA1
-         fAN19pkQI0F+Ayp1yGiXKUNfH1RYcsONno0pinQB3FRd7oS0sDHYsA/kQRIbfRRyvUS0
-         cytfN/jQ2HiG9Qpbh53ervSH49+/23+R0SqEqP2awKFsOsdejzB4cJSGwP2hT7IF8EX7
-         O6bBcKIlNiNWDxQZgEXjFyYNyijeAXTI0Eo+tcXfikur8p2MUzhnZoSidHpgjoDopxzj
-         nDQduScyrXZT8QcBC+yAYSGWh6k9Co2Gra+JqXyTlphx7avwLyPWegFSa9+8nOlZ8DMi
-         u5YQ==
-X-Gm-Message-State: AGi0Pua7wzvD1ov5UDn/EeWAmpUIId5HyLYGiWi9k0LLdkm94XREt/Kp
-        RJDPe+5ydMkzri1c9zxqF0tfniW/dSsxI8AtVdC1F4rM
-X-Google-Smtp-Source: APiQypLEGmH5Z4mpam8O1ceOk2tMqbwhsIL9vtHzen05hf4ZBQnk1S5k8/IDbBknR7ByKBWx4kBypW9fTBJkr3BO5yw=
-X-Received: by 2002:a92:3652:: with SMTP id d18mr10775972ilf.212.1588798144107;
- Wed, 06 May 2020 13:49:04 -0700 (PDT)
+        id S1729372AbgEFVIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 17:08:50 -0400
+Received: from mout.gmx.net ([212.227.17.20]:34629 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728907AbgEFVIu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 17:08:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1588799324;
+        bh=9672VyhiiDmWcDJHvMrNvEH8rXb8fC7NMkBOZvqzPDw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gJl2B49IZit4OQ9Xyq7ZWZSFCTRLSPr+MaLEyG1P/XT2fst+LvXpjc3R8zGTiBw6n
+         aLq66awLHmAG+hkGitP/H4zaCilDr7T2I66MjTOqOmeAp+IZru3eeJr2UJJi1MhQSf
+         NUlhmdk2nou/YL90UD6VPXsj0ZSdCnoz3af9R+iU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.84.97] ([89.1.213.224]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MV67y-1jfofS2Cog-00S5iv; Wed, 06
+ May 2020 23:08:44 +0200
+Date:   Wed, 6 May 2020 23:08:43 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
+Subject: Re: [PATCH v2 2/3] fetch-pack: in protocol v2, in_vain only after
+ ACK
+In-Reply-To: <eb18faea2d00d9b09d3fcc79646cc7556023c258.1588031728.git.jonathantanmy@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2005062304410.56@tvgsbejvaqbjf.bet>
+References: <cover.1587775989.git.jonathantanmy@google.com> <cover.1588031728.git.jonathantanmy@google.com> <eb18faea2d00d9b09d3fcc79646cc7556023c258.1588031728.git.jonathantanmy@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAH8yC8myTMOetxgaj1wt0MbvSQ0LSRV0FHz4ywsBM1zzhUQG=w@mail.gmail.com>
- <20200504165214.GF86805@Carlos-MBP> <CAPig+cSPXqvFg3-25aDzptuVOHmqOcnmsCKHgjMB9poPyJR2gw@mail.gmail.com>
- <20200504190830.g2tlrognjw6ddipo@tb-raspi4> <CAH8yC8=zsbXDVV99tdBMHwEhr-=dO=wrwBYZi=0J8iFmUHkk=g@mail.gmail.com>
- <20200504201944.gh3zykhil3txdwnk@tb-raspi4> <CAH8yC8mLvG-wqrws6fnXdnuoLAoDfPqgynG9MKoSnJLhPCYu+A@mail.gmail.com>
- <CAH8yC8nyg6pRStrQxkO6DzqRbLhhza0vx1U1cGUV4P4MQ3jZ7Q@mail.gmail.com> <20200505041033.w2q7h5k7otetfrus@tb-raspi4>
-In-Reply-To: <20200505041033.w2q7h5k7otetfrus@tb-raspi4>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Wed, 6 May 2020 16:48:51 -0400
-Message-ID: <CAH8yC8=YfjUqYmAs7AVtwK2MtVi-W+LfiidkwAVcy4S2TYm=4A@mail.gmail.com>
-Subject: Re: Git 2.26.2 and failed self tests on OS X
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:aUxqFhbbPNT9D54nOI7sKYzQkTKJK59KT8bQ9pbfJZ4fY0ra2mj
+ gE6ny9PXDPwmHpetlr4lXbKoCEZx9z7dIUmPphUmzLpaUQ+E42i2JlF5ypIbqIqeW1EoPti
+ bUfuulOXT8svDhnSpzzn8AQNVIC8x6t+IizPOtAXDUSadCZi+nnz53CXMSDjEPL+T+Nx4ns
+ TmlvPmHBAtYVrQYrUcmcQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Rzb3lY+legw=:/uCUF90N7AeaD21O8e7fBw
+ K33pQpMhdN1Ik7YqLY21JBNSsqw6+bqJP01S3i6RG/AxlrMyVNmEeb4WtFniXp7vIc2lqJHtY
+ jYA/m5mKUB/YbZwqbaYSSkYTBb+Q7IdedwgW4nIyxeg2rlkakgECddhACXuP/+6gv0NW/pvYf
+ gITkIdvEnzGrxqU8S7/PXwuxFrIkLyu5WqkAfiYelADrSC7FzOA0aeYu6D0Yb9k76Pzd+4/fG
+ FYCHWyS3ZiFsozMI3z8rkFVJ2BzyzhttEDQtmvlnuwlTib8VVR+VqLzutyRsgVcabXYp4bj/K
+ O3kRNgwgp3rFQEmLqovKAWH3flv0krZi9jec4u2yItl7/SnPTq32e4A90v2csmHPIoxjx0YjS
+ Ky65xrcbTcqX//hbaNkwTeXTxaTnS4yykhDhxOqH7LfYiYIHXcbEj1mj3gHOViuuCDXgZ++IN
+ Thqe/qA+aWux1Fjz6KC9ZAVnzfiWhXEoMbnL4EbQFdDYxOpuYYBy2Ies0qNIqv+TUA35eNUPn
+ 0eQrkqhdIBZpRxhqSV7aQq7m+2TAocUmOSoALEoo+C4d3j/vwueVGpAeDbZJRWdgH7NgiT1EM
+ jMRnoUaZGljHAJlkUOxE3ZyX+ASV9dspS71zLOeJix/99WxsROEu9F6BiuM2XQiHBztvkqGyJ
+ Lj/PgnVQChviKvm0i2D2HOLr1eeklSsBpJNqGGnxvPEf5X6nF3RN27S+9tV4FlgeUnhzjqbai
+ BOzn/tfxFagOhzetG5kKEGhmrQYBBYlkuk/UbepDygyZDh/+Nz9LmYLauPmRc1fZPGR4p9S2L
+ 91OQgUmrdd9WnYVqi1/8SJP5iViS/Iy1OmvnQ9Kst4FICQkl8K2IFSRuCq6+53c7zCc4QMqI3
+ lh75YuYdlrCg3cT8evb/B8Lt9GcO1rGUcHMXJTiwwEUvEX8twGJItmg8kzC1BI0qcFOTkMCDE
+ mbBUPNsSZFqfQ9UgGdHToAmR+gw0dfYYVjvcGpaupEv3g3zCibCTzvNcsl/bE0eqVzs471CWm
+ LeQrYSzvBClQwIQMB2BjVeFrNBtd7oMxyebFLJbnkORfOd5GfP5DokZ+93mhPU3we8fIs2C6x
+ /gYLeS5JUS7IKBrzDmY3N7Oy5JIUf8gfX5QZL+PrKXkRXe9wiXb5uBOZlDp4R8SusuVFweefm
+ RzEhz33P6HqC18Q3qfrw6qEGD547zapvy4wC4CodMg4R1E7wBIEb6GtIxzZjHfMC+SGIZcZkt
+ ag+sesP/9PMcSCZLD
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 5, 2020 at 12:10 AM Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
+Hi Jonathan,
+
+On Mon, 27 Apr 2020, Jonathan Tan wrote:
+
+> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+> index baa1a99f45..961cd6beec 100755
+> --- a/t/t5500-fetch-pack.sh
+> +++ b/t/t5500-fetch-pack.sh
+> @@ -385,6 +385,24 @@ test_expect_success 'clone shallow with packed refs=
+' '
+>  	test_cmp count8.expected count8.actual
+>  '
 >
-> On Mon, May 04, 2020 at 05:39:50PM -0400, Jeffrey Walton wrote:
-> > On Mon, May 4, 2020 at 4:30 PM Jeffrey Walton <noloader@gmail.com> wrot=
-e:
-> > >
-> > > ...
-> By the way, does
-> ./t3910-mac-os-precompose.sh
-> work on your system ?
+> +test_expect_success 'in_vain not triggered before first ACK' '
+> +	rm -rf myserver myclient trace &&
+> +	git init myserver &&
+> +	test_commit -C myserver foo &&
+> +	git clone "file://$(pwd)/myserver" myclient &&
+> +
+> +	# MAX_IN_VAIN is 256. Because of batching, the client will send 496
+> +	# (16+32+64+128+256) commits, not 256, before giving up. So create 496
+> +	# irrelevant commits.
+> +	test_commit_bulk -C myclient 496 &&
+> +
+> +	# The new commit that the client wants to fetch.
+> +	test_commit -C myserver bar &&
+> +
+> +	GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C myclient fetch --progress ori=
+gin &&
+> +	test_i18ngrep "Total 3 " trace
+
+This just failed in one of the Pipelines I monitor:
+https://github.com/git-for-windows/git-sdk-64/runs/648253955?check_suite_f=
+ocus=3Dtrue
+
+The short of it is:
+
+=2D- snip --
+[...]
+packet:     sideband< \2Enumerating objects: 4, done.
+packet:     sideband< \2Counting objects: 25% (1/4)\15Counting objects:  5=
+0% (2/4)\15Counting objects:  75% (3/4)\15Counting objects: 100% (4/4)\15C=
+ounting obj
+packet:     sideband< \2ects: 100% (4/4), done.Compressing objects:  50% (=
+1/2)\15Compressing objects: 100% (2/2)\15Compressing objects: 100% (2/2), =
+done.T
+packet:     sideband< \2otal 3 (delta 0), reused 0 (delta 0), pack-reused =
+0
+packet:     sideband< PACK ...
+packet:  upload-pack> 0000
+packet:     sideband< 0000
+++ return 1
+error: last command exited with $?=3D1
+t/t5500-fetch-pack.sh:388: error: not ok 43 - in_vain not triggered before=
+ first ACK
+#
+#		rm -rf myserver myclient trace &&
+#		git init myserver &&
+#		test_commit -C myserver foo &&
+#		git clone "file://$(pwd)/myserver" myclient &&
+#
+#		# MAX_IN_VAIN is 256. Because of batching, the client will send 496
+#		# (16+32+64+128+256) commits, not 256, before giving up. So create 496
+#		# irrelevant commits.
+#		test_commit_bulk -C myclient 496 &&
+#
+#		# The new commit that the client wants to fetch.
+#		test_commit -C myserver bar &&
+#
+#		GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C myclient fetch --progress orig=
+in &&
+#		test_i18ngrep "Total 3 " trace
+=2D- snap --
+
+In other words, that `test_i18ngrep` assumes incorrectly that "Total 3"
+will be found in the trace, but the sideband is totally allowed to cut
+through it and deliver it in different packets.
+
+This makes t5500 flaky.
+
+Ciao,
+Johannes
+
+> +'
+> +
+>  test_expect_success 'fetch in shallow repo unreachable shallow objects'=
+ '
+>  	(
+>  		git clone --bare --branch B --single-branch "file://$(pwd)/." no-refl=
+og &&
+> --
+> 2.26.2.303.gf8c07b1a785-goog
 >
-> So far I am not aware about any problems with iconv from MacOs
-> being reported here on the list.
-> Which problems/bugs did you found in the iconv shipped with MacOs,
-> especially together with Git ?
-
-Thanks again Torsten .
-
-So there are several problems with libiconv. First, sometimes it is
-too old and carries bugs with it. For example, sed and awk fail to
-build and pass their self tests because they expect a minimum version
-of libiconv.
-
-Second, there are some modern bugs that needs fixing. They were
-reported after libiconv 1.16 was released. It needs patches.
-
-Third, libiconv cannot get through testing with UBsan. It causes a
-number of packages to fail to configure or pass their self tests. It
-needs patches.
-
-Fourth, libiconv cannot get through testing with Asan and Valgrind. It
-leaks resources like a sieve, and leaves memory and file handles open.
-It causes a number of packages to fail to configure or pass their self
-tests. It needs more patches.
-
-Due to all the problems with libiconv I just patch it and build it
-everywhere I need it.
-
-The other option is to wait for the maintainers to fix libiconv. Based
-on some reading about the UTF-8-Mac problem I don't think that will
-happen. And they are not interested in fixing the resource leaks. GNU
-has such low coding standards...
-
-Jeff
+>
+>
