@@ -2,94 +2,89 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5979C28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 16:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 131AFC28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 16:34:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8372E208E4
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 16:31:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBFB420936
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 16:34:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FgurbiQE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dukNdqcs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730355AbgEFQbh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 12:31:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41082 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729927AbgEFQbf (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 6 May 2020 12:31:35 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C9BC061A0F
-        for <git@vger.kernel.org>; Wed,  6 May 2020 09:31:35 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id d22so1335030pgk.3
-        for <git@vger.kernel.org>; Wed, 06 May 2020 09:31:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kyOw6ldJRhJL9TEawrp8CUm4Cq4IEn61sXZo1XCcN9k=;
-        b=FgurbiQEzpDaboJW+rtJ7aYh0HpfsMkBbf95Uc5U2qSrBPTDvOqgmeaJh+rYIXdvfJ
-         Xu0Idt3FYEfZHuWO+IPdXXFUrx/tu7dRN5cfVIy+qpTnsHUfi0l70AN1CXEvsvs139CW
-         g8Rf94eN9d+UQkQQQLfiqGVu9UvLIxp2YFKYpAM1ktLrUbUxSEFCBr4YcEmf3SaXFAQX
-         Xck5/d1fG8zbmJ/C4Wshejlor/iCa/2FhcbhZcbkjEK6aqoRWWn90hjHKTMRJS22ejDc
-         vEIAQffqdnOjp3E52+32C9ez+iHnPTq1leM2r0NezWm/cI9IMNHYiYHMRn20XkOGmMhN
-         2AgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kyOw6ldJRhJL9TEawrp8CUm4Cq4IEn61sXZo1XCcN9k=;
-        b=hKl5y/LMkG3PZ0MN+J8ceKBO+8mu6VKl/b5mAhTVidxM2VgfG22rybcC6ijUQxo0qK
-         WFRb7y/hh316dF2+0OBR1SC2lX6b3T33SR4SAUuJI7TMGhfWpBN26U/2jNyslxV+NSGq
-         dHQRX7dIQjg2BGs/mz6cIT91sfBWUXSDgZZli9s/1HJeLJ4xcd7cfL+5x1CcJ+VKIEcl
-         wICdD678OTy2YP1LFDrgdEKnGLplRMO3mAJ9SeI9TIS3y4GeJT+0XR8GM8irR9yLtxvR
-         cs0X4WyjWA6+RY0xl1gADsPl5J4bnKkwARul2GVPVW9DekGtGlf/bFM/4jXlU6GaGnuW
-         56rA==
-X-Gm-Message-State: AGi0PuYHdaJ5BBNd+JhXnzvgPLmRFEs+Rj8Ig1j+kcj9HdKaR/ixt/YC
-        HgVPdWsOYwHlG36idGRPT/w=
-X-Google-Smtp-Source: APiQypLmRyzLRwoA51/iHHCi04jhmXq5/FA9VMGiAA//YjXt8ToTgT0MgmLNI61kMbqW+EmniuZKgg==
-X-Received: by 2002:a63:a36f:: with SMTP id v47mr7594405pgn.242.1588782694537;
-        Wed, 06 May 2020 09:31:34 -0700 (PDT)
-Received: from konoha ([103.37.201.172])
-        by smtp.gmail.com with ESMTPSA id n30sm2288280pfq.88.2020.05.06.09.31.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 May 2020 09:31:33 -0700 (PDT)
-Date:   Wed, 6 May 2020 22:01:28 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, liu.denton@gmail.com,
-        kaartic.sivaraam@gmail.com
-Subject: Re: [PATCH v4] submodule: port subcommand 'set-url' from shell to C
-Message-ID: <20200506163128.GA14899@konoha>
-References: <20200506073717.9789-1-shouryashukla.oo@gmail.com>
- <CAP8UFD0o7WwibV8+cwYOO949BkBggSphi0zbgPUZsk6nfvYyHQ@mail.gmail.com>
+        id S1729782AbgEFQeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 12:34:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51905 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729444AbgEFQeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 12:34:03 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 569D6C52B2;
+        Wed,  6 May 2020 12:34:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JA8tvYJjtBVf
+        l1KPhml9PZPBNb4=; b=dukNdqcs0wGvj068vVSg+Z9R56iPoAbH/r19rkXTkuor
+        qPcaXkeOVRMODygziIvpBGrzJW3ppRxGdGVfA/vtJoHxiytXgeGHNbmhymxNKcFX
+        r49C/wdzQSdQCN99+sJufeKT29b4H6j4CBtKOICJIf6V1oMomQntoFKmApcFftg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ka3VYk
+        gjxJ3/6Res1dvLT3Vto3O1ldrEmncyTqovJl5VKuGc8t9gQdXgHtJVGsNkZWAZYM
+        7nHCJS+UcqIj46LQAPnm+euUyQK6uG+l/Bk5yHf/N1z6gPeS9Ar4u10G4m5fuy8P
+        qUtNmZyxyMF7HXiLei8c1w8PEpaUTAQ2vMogI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F2F0C52B1;
+        Wed,  6 May 2020 12:34:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8E7F6C52B0;
+        Wed,  6 May 2020 12:33:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Danh Doan <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5 10/12] tests: when run in Bash, annotate test failures with file name/line number
+References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
+        <cover.1586538752.git.congdanhqx@gmail.com>
+        <ce0038598704e03becc65731a71abf596bdfbe98.1586538752.git.congdanhqx@gmail.com>
+        <20200504174636.GG86805@Carlos-MBP> <20200504232511.GB29599@danh.dev>
+        <xmqqlfm7cj7s.fsf@gitster.c.googlers.com>
+        <20200506073045.GA52959@Carlos-MBP>
+        <nycvar.QRO.7.76.6.2005061447010.56@tvgsbejvaqbjf.bet>
+        <20200506134659.GA75901@Carlos-MBP>
+Date:   Wed, 06 May 2020 09:33:56 -0700
+In-Reply-To: <20200506134659.GA75901@Carlos-MBP> ("Carlo Marcelo Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Wed, 6 May 2020 06:46:59 -0700")
+Message-ID: <xmqq368d81l7.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD0o7WwibV8+cwYOO949BkBggSphi0zbgPUZsk6nfvYyHQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 62B42608-8FB7-11EA-8E85-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/05 10:09, Christian Couder wrote:
-> > +       strbuf_addf(&config_name, "submodule.%s.url", path);
-> > +
-> > +       config_set_in_gitmodules_file_gently(config_name.buf, newurl);
-> > +       sync_submodule(path, prefix, quiet ? OPT_QUIET : 0);
-> > +
-> > +       strbuf_release(&config_name);
-> 
-> Nit: it might be a bit simpler to define config_name as a "char *",
-> and then use xstrfmt() and free() instead of strbuf_addf() and
-> strbuf_release().
+Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
 
-Apart from the simplicity purposes, does doing this aid in performance
-in any way?
+>> Unfortunately, it completely breaks the feature. At that point, `$LINE=
+NO`
+>> is either unset (e.g. in `dash`) or it contains the number of the line
+>> _containing the `echo`. That is totally useless information at this po=
+int,
+>> we want the line number of the caller.
+>
+> that seems like a bug in dash, which NetBSD sh doesn't have, as LINENO
+> wouldn't be unset.
 
-> > +       return 0;
-> > +}
+I thought you already gave a perfectly well working eval '...' approach.
+Was it insufficient?
+
