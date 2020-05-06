@@ -2,229 +2,148 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5C64C28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 14:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF3FCC28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 15:09:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5AB5206D5
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 14:33:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A7452076D
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 15:09:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="D0bQwfRz"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="abwI8vx0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728991AbgEFOd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 10:33:57 -0400
-Received: from mout.gmx.net ([212.227.17.22]:33289 "EHLO mout.gmx.net"
+        id S1729193AbgEFPJy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 11:09:54 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50713 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728826AbgEFOdz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 10:33:55 -0400
+        id S1727984AbgEFPJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 11:09:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1588775628;
-        bh=qtwDkGU63dn2yQSGkcYGr982z5Mhrucac7rLYh2kaaE=;
+        s=badeba3b8450; t=1588777781;
+        bh=raNREtm1wlgUHgOiwYSNhm+oF6FAg7WEL3upqMIzXXA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=D0bQwfRzTfgnGUE8RwlV7eLnLlvUv7FdWclWwmWaZT9y0wfJ/uMyV9NSih0CBDWPF
-         K4auhi1pynt809ncf3+/mTo7ymT3tJQPSP7BtVPAUSWZ1Kd/9Mvj6JqZgWnWO7kQ8E
-         8P8A1DObieDzAbcs1XMpYo3h3HU+vg3KEGSa5ts8=
+        b=abwI8vx0TiFcLebvHFvn4WHI7HhE0VtONKDWJtjmoBNlJcgXYAgwzz1bu8DTVX80Y
+         Flo9znNvpafZ5OpEamGx7dKv+JAJrOz+DQVjU/aUKh2CmUcqXPgvvVW/7jQ7oqfh58
+         eSXhtbeLmyTfhB7iY/lqHNIC3xkLoZqubkzKXCEQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.84.97] ([89.1.213.224]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgvvJ-1iwC1J3ClZ-00hRRA; Wed, 06
- May 2020 16:33:48 +0200
-Date:   Wed, 6 May 2020 16:33:47 +0200 (CEST)
+Received: from [172.30.84.97] ([89.1.213.224]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKKZ3-1jquhW245P-00LmD3; Wed, 06
+ May 2020 17:09:41 +0200
+Date:   Wed, 6 May 2020 17:09:39 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Danh Doan <congdanhqx@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v5 10/12] tests: when run in Bash, annotate test failures
- with file name/line number
-In-Reply-To: <20200506134659.GA75901@Carlos-MBP>
-Message-ID: <nycvar.QRO.7.76.6.2005061624050.56@tvgsbejvaqbjf.bet>
-References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com> <cover.1586538752.git.congdanhqx@gmail.com> <ce0038598704e03becc65731a71abf596bdfbe98.1586538752.git.congdanhqx@gmail.com> <20200504174636.GG86805@Carlos-MBP> <20200504232511.GB29599@danh.dev>
- <xmqqlfm7cj7s.fsf@gitster.c.googlers.com> <20200506073045.GA52959@Carlos-MBP> <nycvar.QRO.7.76.6.2005061447010.56@tvgsbejvaqbjf.bet> <20200506134659.GA75901@Carlos-MBP>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
+In-Reply-To: <xmqqlfm69il6.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2005061623520.56@tvgsbejvaqbjf.bet>
+References: <20200504150105.GB11373@coredump.intra.peff.net>        <cover.1588607262.git.congdanhqx@gmail.com>        <73de97dfebfccabe9f1bf32ea41aea5008a949cd.1588607262.git.congdanhqx@gmail.com>        <20200504162311.GE12842@coredump.intra.peff.net>   
+     <20200504215824.GC45250@syl.local>        <20200504233634.GB39798@coredump.intra.peff.net>        <20200505002055.GC64230@syl.local>        <20200505164326.GA64077@coredump.intra.peff.net>        <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>       
+ <20200505182418.GA66702@coredump.intra.peff.net>        <20200505210451.GA645290@coredump.intra.peff.net> <xmqqlfm69il6.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2099862193-1588775628=:56"
-X-Provags-ID: V03:K1:yBcONTfUVep39mP2FodMepU0ZW82pXyonH9CfPVhsJR7F1fDCOM
- QwXl40RGRRmQhkobxXZY0vTnPlc2LfMT832PvHWJrlI2B8HvGO3L5wkLnFDyZR1Oi8Oa+3z
- 5jp8Avhz5MKAGmyeUWBpRE/9evfklCxVlDe9rboGXtrv/28w7wUakOqRqc1uM5e4lAaHMJg
- BLGzM536vHkJ/VIigzFJA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vX1Go6D3vkQ=:V4HJgZNjYE5YYOeclYc5ra
- zqya1gEhJZDJ/aYtdIJs4vRLJAfqUcd6iGWBe+yAffp2VsxwlMZHFG0wRY461Dp2H5R21rDhc
- 3I9xN20YL7oBJYm6Bs0Xu0nYvSidREa4QPADHiS+bzWq3yDfTMbzW7xGwxzYcsixpLxsPZyzL
- 3Pxa3a9Sp5cGZjZSmnaS6de2dhBIj8yp2XIO0Ripmemu1CO7VY/sU2zOEiXTAlGuZfkDwzwYY
- wMI1etW+btxThwFjB79xhvGiFD/m0o/TUo2Gb8LNmUVecUhD7Db6Gq7xGBjphyz5+LL//itG5
- AE6gyttmHSdoTcdqKfSa26Bht25Wrvj4F4mMVE4qen9nbFVJHy36np/HIHVz7+T11Hsvkg6z0
- lcBoKNQCOQwJ19uYEpIZUCA2Cn0nY1tu0rBISB5DNQ3xlz6QZerUejsJOC9G2ZQsk8xLepoBX
- HJINaRatXgV0TcCmSaMZvVCFm1LCFBxabXaWuMGcBlVglLlsuIhT+jvuq97Z4Huzu0w+vYPLN
- k5D3hjGpSvvnvKr0KHk3mdfoIuIjFSgMSuXFUQv3vemu0jKjvjwwlVe/bBnqXm6LvlAxttCw+
- ptusD3iqosGFG3z2ZjKsMb69tq4oKR7bbvuMU7z+khj2jVh1F6jzDDlWQrLhWXILMCxc98s2Z
- hMqScuOyXCH5Hlor5VnzGoCK3BTVCALPa9iC+Cwezo1su2N6M0eGVMdqWdF/IBMBOq8rrv4ke
- XnTe/X7XF4Y9hBGa/LaniePUoZsJAAF7TZNv5Pa7J5zUW7Bcnz9algG41Q4smX2A7QtOGnBoD
- eRbFfhn32c+8Sax5QzE2OsXFqPu/AEYU2V5qF6h7sDULWTc0eXXFgVVLX9WoIX1wE49JCDAg6
- 6lqBqJ/mFAnFq87ENpyp7YhML+TEpxLQpsOcEot9YuU4RCPk6kT9JMrxbOsaYkUBI7QBeyBLy
- 5WEogwg6H61TlUuctCgikoNjFm2bvzU5XWG+K86AL5tKwFE3OxeiQvIZy5GIHMYpwNMFHQ7kL
- tTkkWS26DxAL0K63hALM5CdSPvT+vfWdXy8BfUWfk+zLhm6I+Kb+TP/50ipuh3xishk3crEd0
- WMNd9IqMKDSVT4ghv4zSvpVqau2rpd1sv0IJ4jbW1iJycjykC9yB1pLuzg/3QyeiSitHnhiFv
- f+ebISGa4/F58q9rkxsAMVFwa5GR+19Cp+IoWGQ75frJoj9OJViLSsbfI6QCqhkipu7g4LMc5
- xDKS74zd2LanbnMzv
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rM+De7gL8DfeVI74nhYTc5qu1I2H4CPMJeX5UmDoQu0PQZA8tTH
+ 8IN0oERfQWbPu5mgfhhMjbTVc5I3Nrq3FuXobQ/L6l0ffJJnkHh4CJHE6c6RVltNetCWPRS
+ ugToMN5JiC6jv6kqqIcjq6Z9IT7I75PdZMjJVGwNZwpnIBRRr4MOAjbUOy3mRKHVJ6Ry3tz
+ ySv+K4Hyn4HKiO2AsZ/Xg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OK0vEgigs98=:xaw3Y348XyjHXU1lkIlvn5
+ +fLM5aUV08opfYZUQxkUiekVDGaIOtOY93qJT0x+9ZDazS18jD8XWpodpekFyzCqWZy4u9SZ5
+ +W0nVt0vjDdQ5n+mnkvIrXILyNg3J6H+wdJwILKClyamQ5QGo0GMzWIxk3i5QXGL9tiddo0f/
+ W+j7Fq2s4PQC6i7eSs4JGJadjaiEAouAENqhvBoA10Kcx66OgAj9oJf7/1A4SZJr7qeoGgnrC
+ 3ZTPRMehJkL5tJJkiBHFyfc4vpj0Codq97LKEM9rSCYrbCIVA8SbDPBnmPtmbpIECZCjFouoW
+ P3vy6AiQyryKb4nxhnfeTuX76tWAS4bdqzoJiS5JAVVBHZbHZBbGTSrtj2EPmhKXB80KP8cXH
+ l74WvX++C/r+01GhabERTb9f0PChnkxQzeAYjjGnG3x7eG9xuAYu5x++CeLPMKQvM92IsRkxQ
+ JSslC0oqhgbvyFzhddBoBneBrlK7E1YC/ZpzGfX/UGOKp2OMbk3A1dQ8Y+MnBbj23GIWS59Td
+ eDagxbPAT0PyZW/3u/vkvcYNnJtuHG+gVdAyiLR0XDSf6yKejv5AcFJvsNqNvnDvLepfUDFXA
+ N/ap/+UbvvBQvTrEdlSubJ6uPqP/j9zhgkiG7JN2WQNdEePq1+mPT9JkuiThSCkerDsBAl3Or
+ YaHbJHed0kn+DayRkY68brZQkecbSvWxbu7M3VedwFM3AHxZMOMeWzPz/2iQ++bjfuOsUNaqV
+ 7DxoLNA1MBMqArzR/LrqIIa53jz/uqqU5anyf1KgRpKBT0QFhcHDTACkHxZOHIkG7DytECvQD
+ SLJ/WOy2VdhX1tlRWU6jvOONOuhYdO9Qsl+J90IosmoS8SRPrdQyIUXe+QBvEAwJLq93NlNS7
+ yioKYXJZXCXuhE1k4BuuzBWzVFtiyZfhzDYi2h/+cvYoFfooXicMXSiUo9QAg/3k5+ej83nfl
+ wlU9++GNW4YkPdlcBazBjuqmwBP8UTtGAZAlfsIsgy9xgGM11gh8PUrvmqLYvNPvtYiTuQvxV
+ QOPto7dVd1Cn13M0bKsN+dqf5iLlziplJbhmiqYozue8OgmJ3mzTQXGsWlk61wn4MLexfMh54
+ IJ8KF0yHIXv28iH1SJrBi1FI7WkQj/ZY4oCtr7kJksVuyBlaERNu3um/87U3Ko0Z4r5gWNBmd
+ peTWZr9WDF1Q4mo5W/pibQz3Zf09Se8dp62f0u+2uf+Pp50AgAvY724g6+87bgkeqKtYeA+5h
+ Np7zy89Wrux7nWLYM
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-2099862193-1588775628=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 5 May 2020, Junio C Hamano wrote:
 
-Hi Carlo,
-
-On Wed, 6 May 2020, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-
-> On Wed, May 06, 2020 at 02:54:38PM +0200, Johannes Schindelin wrote:
-> > On Wed, 6 May 2020, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-> > > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > > index 1b221951a8..a8f8e4106b 100644
-> > > --- a/t/test-lib.sh
-> > > +++ b/t/test-lib.sh
-> > > @@ -676,15 +676,9 @@ die () {
-> > >  }
-> > >
-> > >  file_lineno () {
-> > > -	test -z "$GIT_TEST_FRAMEWORK_SELFTEST" && test -n "$BASH" || retur=
-n 0
-> > > -	local i
-> > > -	for i in ${!BASH_SOURCE[*]}
-> > > -	do
-> > > -		case $i,"${BASH_SOURCE[$i]##*/}" in
-> > > -		0,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:$LINENO: ${1+$1: }"; ret=
-urn;;
-> > > -		*,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:${BASH_LINENO[$(($i-1))]=
-}: ${1+$1: }"; return;;
-> > > -		esac
-> > > -	done
-> > > +	test -z "$GIT_TEST_FRAMEWORK_SELFTEST" || return 0
-> > > +
-> > > +	echo "$0:$LINENO: ${1+$1: }"
-> >
-> > That suppresses the error all right.
-> >
-> > Unfortunately, it completely breaks the feature. At that point, `$LINE=
-NO`
-> > is either unset (e.g. in `dash`) or it contains the number of the line
-> > _containing the `echo`. That is totally useless information at this po=
-int,
-> > we want the line number of the caller.
+> Jeff King <peff@peff.net> writes:
 >
-> that seems like a bug in dash, which NetBSD sh doesn't have, as LINENO
-> wouldn't be unset.
-
-And your patch makes this a real problem as you no longer skip the `echo`
-in the non-Bash case.
-
-That's what I wanted to point out: this needs to be fixed.
-
-> > Try this, for example:
-> >
-> > ```
-> > #!/bin/sh
-> >
-> > file_lineno () {
-> > 	echo "$0:$LINENO: hello"
-> > }
-> >
-> > file_lineno
-> > ```
-> >
-> > When you run this, it will print `4`. What we want is `7`.
+> >  jobs:
+> > +  check-ci:
+> > +      runs-on: ubuntu-latest
+> > +      outputs:
+> > +        enabled: ${{ steps.check-ref.outputs.enabled }}
+> > +      steps:
+> > +        - uses: actions/checkout@v2
+> > +          continue-on-error: true
+> > +          with:
+> > +            ref: refs/ci/config
+> > +        - id: check-ref
+> > +          name: check whether CI is enabled for ref
+> > +          run: |
+> > +            enabled=3Dyes
+> > +            if test -e ref-whitelist &&
+> > +               ! grep '^${{ github.ref }}$' ref-whitelist
+> > +            then
+> > +              enabled=3Dno
+> > +            fi
+> > +            echo "::set-output name=3Denabled::$enabled"
+> > +
+> >    windows-build:
+> > +    needs: check-ci
+> > +    if: needs.check-ci.outputs.enabled =3D=3D 'yes'
+> >      runs-on: windows-latest
+> >      steps:
+> >      - uses: actions/checkout@v1
 >
-> so you need instead :
->
-> ```
-> #!/bin/sh
->
-> file_lineno () {
-> 	echo "$0:$1: hello"
-> }
->
-> file_lineno $LINENO
+> Oh, quite nice.  Simple and clean.
 
-No.
+The idea is indeed very neat. I think we can do a bit better with resource
+usage by not even bothering to check this branch out. Something along
+those lines (sorry, I really would love to have the time to test this...):
 
-Please understand what the intention of the current (Bash-specific) code
-is: in case that there is a failure, it needs to print out the file and
-line number of the actual statement that caused that problem.
+      - id: check-ref
+        name: check whether CI is enabled for ref
+        uses: actions/github-script@0.9.0
+        with:
+          script: |
+            const req =3D {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "ci/config"
+            };
 
-Take this example:
-
-	test_expect_success 'For Carlo' '
-		false
-	'
-
-Obviously, this will fail, and it will print out an error message. What we
-want here is that the file that contains that `test_expect_success` and
-the actual line number of this call are printed.
-
-Your suggestion would be to clutter each and every such call with
-`$LINENO`, like so:
-
-	test_expect_success $LINENO 'For Carlo' '
-
-I don't think that is sensible an idea.
-
-Besides, it would _still_ not work, for parameterized functions that call
-`test_expect_success` and that are defined in `lib-<whatever>.sh`.
-
-Example:
-
-	# in t/lib-whatever.sh
-	super_repetitive_test () {
-		test_expect_success "first $1" '
-			...
-		'
-
-		test_expect_success "second $1" '
-			...
-		'
-
-		...
-
-		test_expect_success "gazillionth $1" '
-			...
-		'
-	}
-
-	# in t/t1234-actual-caller.sh
-	. lib-whatever.sh
-
-	super_repetitive_test hello
-	super_repetitive_test world
-	super_repetitive_test good-bye
-	super_repetitive_test dreams
-
-We will not want to print out the line number of the call in
-t/lib-whatever.sh. That is what your proposal would amount to, unless you
-want to clutter even the `super_repetitive_test` calles, which would fly
-even less.
-
-> > Even worse, as `$0` does _not_ contain `test-lib.sh` at this point,
-> > the printed information is totally bogus.
->
-> not sure I understand what you mean here, at least when runnning with ba=
-sh
-> the original code shows $0 correctly as t????.sh when I tried to force a
-> failure to test.
-
-Yes, $0 shows the correct file. But since the line number that is printed
-is from a totally different file, the combination <file>:<lineno> is
-completely and utterly bogus. Misleading. Less than useless.
+            try {
+              req.tree_sha =3D (await github.git.getRef(req)).data.object.=
+sha;
+              (await github.git.getTree(req))
+              .tree.filter(e =3D> e.path =3D=3D 'ref-whitelist').map(e =3D=
+> {
+                req.file_sha =3D e.sha;
+              });
+              const list =3D Buffer.from((await github.git.getBlob(req)).d=
+ata.content, 'base64').toString('UTF-8');
+              core.setOutput('enabled', `\n${list}`.indexOf(`\n${{github.r=
+ef}}\n`) < 0 ? 'no' : 'yes');
+            } catch (e) {
+              core.setOutput('enabled', 'yes');
+            }
 
 Ciao,
 Dscho
-
---8323328-2099862193-1588775628=:56--
