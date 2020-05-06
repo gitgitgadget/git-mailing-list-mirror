@@ -1,166 +1,140 @@
-Return-Path: <SRS0=nPiP=6T=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D49CC47254
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 23:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB18BC47247
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A7C3206FA
-	for <git@archiver.kernel.org>; Tue,  5 May 2020 23:17:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9341E206A5
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Tdnjatg0"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="pIcZsJCL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729457AbgEEXRR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 19:17:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37938 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728642AbgEEXRR (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 5 May 2020 19:17:17 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BF9C36044D;
-        Tue,  5 May 2020 23:16:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1588720606;
-        bh=APrB4PbPoqg4pFqS648KX6t1M6U19+BaqXDeXD5/ffs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Tdnjatg0JBaiX+BR7nMcMvP+dfBLQ2IMr/cPgDPv6QGdJjr9cZWZTDgkuSTzsPggq
-         6OKt12oVN7zybyyzXNjN3FKyh4G9CxbtVJTakESlNYkXamIcQcE8/2mxylcAnE2nMJ
-         eABSQZvXA7PHwEGMEzdvycrzIGSOajCDEVrJUcvU36rqgZyGeBb0/p5R+Zaa4DzdXl
-         lY7CYJhzgu5HsyMeoqlRkwS5KEzLAYUhUEsiX9XQQt4qoLBn14ph0R9aFD5EQHIKXd
-         nRKTSCUKyXjK0HodCdODl3P1E9yuepVVWsTUemQJR3xrCu6tb71hyLJqTFM/RmHo6J
-         NbdInhE8/EB1VpcAZCPBb3N5Z4i2fXDo2vBy4TVtNlK5YEhx4+t9dIFoHaEBDqZJm2
-         yKkDrCRp8LpL99MB5KXDHUzca9vGYxjThH1qN9q3sUU7RpWGbvloFVk6HBfrw6mIEb
-         /lBs82qmodLIY6ZBNhhUWTYBMVWcudb/toFaUgAV7+byRPUWg3O
-Date:   Tue, 5 May 2020 23:16:41 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Simon Pieters <simon@bocoup.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Rename offensive terminology (master)
-Message-ID: <20200505231641.GH6530@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>, git@vger.kernel.org
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+        id S1728969AbgEFAHN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 20:07:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57076 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728875AbgEFAHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 20:07:13 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125CFC061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 17:07:13 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id x77so115180pfc.0
+        for <git@vger.kernel.org>; Tue, 05 May 2020 17:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Mh7Fn0Pue6QzDB1mrp28/zrYS86ghFCIkh3fSSS/6wo=;
+        b=pIcZsJCLawi2BfEJWGDiTueirH8ocQOi5EBcSAdXsSdRndChYypMc/IB9XPGHPqf9R
+         xDJS/TmMVe4z1k1SX3p2F/Eau7zXBpq7Fah8Nd/am/lFI2KiPcv17dW783fndFi3BYqG
+         wZJAP028mZ6aF5DAmSCWX++yn3q+ngkSwNUOyHhCXFz/7olhF/eLGWCTLPslEncQrYOo
+         ignc0nWtegsnFXgGAi/X/4rPWR8f1cOAAC6KawGisRAPCqOpk1+LtM0G6dv0kpjlMPvq
+         yfDMor+tyzIuNd4DF+M7AKmaGprP9XKw+j28ZdLckjorIshci0VGej67Nuoqs4wzlzQ6
+         C+bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Mh7Fn0Pue6QzDB1mrp28/zrYS86ghFCIkh3fSSS/6wo=;
+        b=e7sgpEtcGNOZQxpNz9nUL16WfYY2GOUoCBD7xDanr1eY2rV1gnEJ5J6vqkZSx10spz
+         QdcG1IV+76bvY7aEGNNGNQKR5+5Lr9Vev4CHotZBkx+GOXayvKjiIymf18ZE4xKt1DLH
+         1rMqOjVN/UwwHsNKMsxJkOJ5aQIsFbJpwLwBJWX5x0p1owHG7uEcCR/obBSfVb8UbzqB
+         drh73JRCegePHLIJqHdp+c+TXfRDKCcU89Jp/QeiaiotNDVqmJNc4URMPHq5W+OfgQGL
+         yG1d56ECoPUV7PPYQ9FA5GQqh18J8xPTj4r6lIo0iNy+FLL/SQ5qyQfQBvKQ5FeR0fzq
+         qanQ==
+X-Gm-Message-State: AGi0PuaI6IANC0UiSU9O3JRNhO+HguBx6qlVUGY83H25bkuS6YgwRMpp
+        dWLHoEO4y1HpvfNo+xvoiuWPC0jegBs=
+X-Google-Smtp-Source: APiQypIaskt4ULp1fNXtV4vyYTmdjcb7S6riD/adwkrpw0wywjV3Dpo+GWeUpZVuQPoimQNjj+3WvQ==
+X-Received: by 2002:a63:dc41:: with SMTP id f1mr5079168pgj.348.1588723632060;
+        Tue, 05 May 2020 17:07:12 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id g9sm211979pgj.89.2020.05.05.17.07.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2020 17:07:11 -0700 (PDT)
+Date:   Tue, 5 May 2020 18:07:09 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
+        szeder.dev@gmail.com
+Subject: [PATCH v2 0/8] commit-graph: drop CHECK_OIDS, peel in callers
+Message-ID: <cover.1588723543.git.me@ttaylorr.com>
+References: <cover.1588641176.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="WRT3RXLOp/bBMgTI"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-trunk-amd64)
+In-Reply-To: <cover.1588641176.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---WRT3RXLOp/bBMgTI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Here's a small re-roll of my series to move peeling outside of the
+commit-graph internals, and drop the CHECK_OIDS flag. This re-roll was
+promised in [1], and only updates the messages used in the new progress
+meters. For convenience, a range-diff from v1 is included below.
 
-On 2020-05-04 at 17:20:33, Simon Pieters wrote:
-> "master" is an offensive term, as it can be interpreted as being
-> slavery-origin terminology. See
-> https://en.wikipedia.org/wiki/Master/slave_(technology)#Terminology_conce=
-rns
->=20
-> The Python programming language, and various other projects, have
-> taken a stance and moved away from offensive terminology including
-> "master". See https://bugs.python.org/issue34605
->=20
-> When different projects using git decide to move away from "master" as
-> the name of their main branch, inconsistency ensues between projects.
-> See https://github.com/desktop/desktop/issues/6478 (and "Related
-> Issues and Projects").
->=20
-> To avoid offensive terminology and to avoid further inconsistency, I
-> think git should use a different branch name than "master" when
-> initiating a repo. I don't have a strong opinion, but I like "main"
-> since it shares the first two characters and it's shorter.
+Thanks in advance for another review.
 
-I've been busy and haven't had much time to respond to this, but I've
-gotten some feedback from other people on this issue and so I'll share a
-few thoughts.
+[1]: https://lore.kernel.org/git/20200505161649.GG69300@syl.local/
 
-Others have pointed out that "master" meaning a canonical source may not
-share the problematic origins mentioned above.  From feedback I've
-received, I get the impression that "master", even though from a
-different origin, brings the idea of human bondage and suffering to mind
-for a non-trivial number of people, which of course was not the
-intention and is undesirable.  I suspect if we were making the decision
-today, we'd pick another name, since that's not what we want people to
-think of when they use Git.
+Taylor Blau (8):
+  commit-graph.c: extract 'refs_cb_data'
+  commit-graph.c: show progress of finding reachable commits
+  commit-graph.c: peel refs in 'add_ref_to_set'
+  builtin/commit-graph.c: extract 'read_one_commit()'
+  builtin/commit-graph.c: dereference tags in builtin
+  commit-graph.c: simplify 'fill_oids_from_commits'
+  t5318: reorder test below 'graph_read_expect'
+  commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
 
-Clearly we have compatibility concerns to consider though, so if we
-decided to make a change, we'd probably want to make it in a 3.0, which
-as far as I'm aware hasn't been discussed yet.  I also wondered what
-such a change would involve, so I did some research.
+ Documentation/git-commit-graph.txt |  6 ++-
+ builtin/commit-graph.c             | 73 ++++++++++++++++++++----------
+ commit-graph.c                     | 61 +++++++++++--------------
+ commit-graph.h                     | 10 ++--
+ t/t5318-commit-graph.sh            | 25 ++++++----
+ 5 files changed, 98 insertions(+), 77 deletions(-)
 
-It appears that if we made the obvious one-line change to
-builtin/init-db.c, we'd have 304 tests that fail, which is about a third
-of our test suite.  I haven't examined any of these tests, so I don't
-know what would be involved in changing them.  I imagine a project to do
-so would involve setting an environment variable in the test setup code
-(e.g., MAIN_BRANCH) and replacing instances of "master" with that until
-everything works with an alternate value of that variable.  Picking the
-new name itself could be deferred until later, and we could choose from
-some popular alternatives.
+Range-diff against v1:
+1:  5bdbeaf374 ! 1:  cb56a9a73b commit-graph.c: show progress of finding reachable commits
+    @@ commit-graph.c: int write_commit_graph_reachable(struct object_directory *odb,
+      	data.commits = &commits;
+     +	if (flags & COMMIT_GRAPH_WRITE_PROGRESS)
+     +		data.progress = start_delayed_progress(
+    -+			_("Finding reachable commits"), 0);
+    ++			_("Collecting referenced commits"), 0);
 
-There's also the documentation, which at first glance seems mostly to be
-examples, many of which could be changed to any suitable branch name.
-There are a large number of those cases and someone would have to audit
-them all.
+      	for_each_ref(add_ref_to_set, &data);
+      	result = write_commit_graph(odb, NULL, &commits,
+2:  5ff56feab5 = 2:  85c388a077 commit-graph.c: peel refs in 'add_ref_to_set'
+3:  9ae8745dc0 = 3:  cef441b465 builtin/commit-graph.c: extract 'read_one_commit()'
+4:  513a634f14 ! 4:  d449d83ce2 builtin/commit-graph.c: dereference tags in builtin
+    @@ builtin/commit-graph.c: static int graph_write(int argc, const char **argv)
+      			flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
+     +			if (opts.progress)
+     +				progress = start_delayed_progress(
+    -+					_("Analyzing commits from stdin"), 0);
+    ++					_("Collecting commits from input"), 0);
+      		}
 
-So it looks like this would be a reasonable amount of work for someone
-if they decided to pick it up as a project.  Since I have limited free
-time and am working on the SHA-256 transition, I won't be doing this,
-but if someone did pick it up, I would be happy to do some reviews,
-provide feedback, and include a few patches while doing other work in
-the area.
+      		while (strbuf_getline(&buf, stdin) != EOF) {
+5:  7e9d8c1f1a = 5:  61887870c7 commit-graph.c: simplify 'fill_oids_from_commits'
+6:  f2f018b54c = 6:  e393b16097 t5318: reorder test below 'graph_read_expect'
+7:  6c2d130b0c ! 7:  ad373f05ff commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
+    @@ builtin/commit-graph.c: static int graph_write(int argc, const char **argv)
+     -			flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
+      			if (opts.progress)
+      				progress = start_delayed_progress(
+    - 					_("Analyzing commits from stdin"), 0);
+    + 					_("Collecting commits from input"), 0);
 
-I realize there isn't agreement on a direction forward or whether this
-is worth doing at all, but since Git usually operates by providing
-feedback on an initial set of patches, I thought I'd sketch out what
-that might look like for folks who were interested.
-
-I should point out that it's also possible for users who dislike the
-current name to use a template to change the default branch name like
-so (using the proposed "main"):
-
-  mkdir -p ~/Templates/git
-  cp -a /usr/share/git-core/templates/* ~/Templates/git
-  echo 'ref: refs/heads/main' > ~/Templates/git/HEAD
-  git config --global init.templateDir ~/Templates/git
-
-Then "git init" will set your default branch to "main" instead of
-"master".  This does have the weirdness that it claims it's
-reinitializing your repository, but otherwise appears to work.  That is
-of course orthogonal to changing Git itself, but is an option for folks
-who'd like to make a change now.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---WRT3RXLOp/bBMgTI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHQEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXrHz2QAKCRB8DEliiIei
-gTveAPdZKP2kteajePBP3bc+xlnNKsoNt028parRTTtawrDrAP9lJJYeUUcRGUgb
-9KNWNqg6O+utWcDSHXT5+BmWva50DA==
-=xgtj
------END PGP SIGNATURE-----
-
---WRT3RXLOp/bBMgTI--
+      ## commit-graph.c ##
+     @@ commit-graph.c: struct write_commit_graph_context {
+--
+2.26.0.113.ge9739cdccc
