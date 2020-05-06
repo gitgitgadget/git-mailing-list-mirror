@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79003C47254
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16941C47247
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5466720752
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E82C020752
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 00:07:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="MA0crFjU"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="nH6jEIeY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729464AbgEFAHr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 May 2020 20:07:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57168 "EHLO
+        id S1729505AbgEFAHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 May 2020 20:07:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728717AbgEFAHr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 May 2020 20:07:47 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B39C061A0F
-        for <git@vger.kernel.org>; Tue,  5 May 2020 17:07:45 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id d184so105486pfd.4
-        for <git@vger.kernel.org>; Tue, 05 May 2020 17:07:45 -0700 (PDT)
+        with ESMTP id S1728717AbgEFAHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 May 2020 20:07:51 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E303C061A0F
+        for <git@vger.kernel.org>; Tue,  5 May 2020 17:07:50 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id a5so65942pjh.2
+        for <git@vger.kernel.org>; Tue, 05 May 2020 17:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=vHRIiWx89t6b6i0iG2vGJSmwe30s4IFWz7nTGrcVFZU=;
-        b=MA0crFjUk7t25+qTAjQCBQ1FG5BMpM3wbuOsf0EFWZOIeBUTxjkl4t0SHnQhya1aq4
-         rr8OPN1zlZp8XU8KHvOlHAmiJtMF5brWR6loWNxf7KU6ma4YuS3O7Y23x3YgGe+LHCXz
-         qANz9Rd3IDpGEJEK3h4er9YNAJYYsEmbdV4y/Zb4Ha8RBV0Yv+9CIfmNeVB1uiJH4hVk
-         F4sMi6+D0J4E6IK4292khKNatq2G/9LM7kdJLsCiTZESnbBQt9R67921jyaEMtGCNWi1
-         DOoV2ZgueI/mw5Stxspio7WIuDrGzHhsLP3ypbNwk6k1OrSoawXiMGK4X3kmCqnTJvUz
-         xy0w==
+        bh=RgpVrKtDEr5YGNcOHEq41/OIKzHF7MuIh5xDh9Eusw0=;
+        b=nH6jEIeYf4yEnmJJpL9NB9wA1r76zGd69yy5BjApThJzxiCUI2S1iPeMtICulQXpjr
+         VKCrrcPbRtyi3QRukh2m0o9B1tRqcwjax4WQS34uHdaHxGaPinQR+l/Hi2eY8Svvdn37
+         FZzxvFyegQErjap18cbBadHe2fA4mlt8Wb9lBv1Jbpo4F5HuDbag7MhIBBObz2yG05AN
+         T5lEO1aVSyD2RpqRBpFxH5gfFCa1boLwEgTnnRxXuUHLCE2Iqb0ZG/aI3rHIIVXUkEO2
+         DMFZbGWeaT0VQhBz3nWhCm5BAR5PMtF/fv2dIJtUBJpaXlhh7ZlWZo8OgdR6lGS21BO7
+         7Ppg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vHRIiWx89t6b6i0iG2vGJSmwe30s4IFWz7nTGrcVFZU=;
-        b=i5e00XaD+yIeuw0B878h7spOtPxMmHL+Lp/IiHl8hqdXcOkVDK3nqFz2Xj4OZPS1eS
-         C32AUFAYcedzb0Xhb/nNqsVmfPZf3MWJuPJb1U23aHZp3gwzCG32KN1u/nJ3kybT0ZSD
-         87GO6bYwMPzx47pTC6v1+kAPts+/7gf6vjpS5ciu2S+YuZJXeh6HDYyUoa1+hbPHMaZb
-         DBbx3sZ+35iU+jRIXN5WMdvRHgqWLtoFaKp4BeNwgfplxGYUgEhlXcnaM4BA8nnEgWwD
-         yJah8QmMuRpjpBRHU/9qQwKXqrs/2FRsFdLhvKC6g4kJA7NKhi8xz1qMYE4KVOCALIhd
-         PC+w==
-X-Gm-Message-State: AGi0PuYDj86E6hS8/ZRclNJQ4se2TndPaXUulobnFDKva5VfqiRSU7sq
-        FzE+SyjWXT2xqZN8IKkAWLFhSds5xrs=
-X-Google-Smtp-Source: APiQypJpI7Gj8QdN0vnitLhd0qC7XucN+/XQgTddsck3+H3/t64nsAcU6Ajami3vVaohCWDymwKC4A==
-X-Received: by 2002:a65:62c7:: with SMTP id m7mr4723527pgv.16.1588723665014;
-        Tue, 05 May 2020 17:07:45 -0700 (PDT)
+        bh=RgpVrKtDEr5YGNcOHEq41/OIKzHF7MuIh5xDh9Eusw0=;
+        b=gGDLLmiaiQdII4fwWV+x7D+fbfGotnwWFfLYer7HOsG0VPVtHcTmX3XDT/IZLOdTRV
+         Pcr+drTuD6ivUJizBmLKZ4GSW2n1d73lMgTH5H8S3aVC8xoP7PZKQlSBhks5CGf97+0P
+         xgTRn6Vp263nY+MAzu6QqiJOO5CT8rwpGDP1Hr14Bn1t6TotTSdGDJqFWNvoUg8sxTqw
+         5EaX6IQKPD0CjW2nF7BYDa6zLDLunXVNQIbTbdXwPx3ADNCpoK+UBRd2zePOMaB66fmC
+         mXi9z6TO4IajApTf4SJo0dB231hqWBy4N3mroOYfIRWuGBKnqHLiIk9GbRZNYWQ4sy/j
+         GFdg==
+X-Gm-Message-State: AGi0PuZdri2J2GIgTZt4Nvwwy9zY0zdl1BHMJ02qiwYb4k0Vu9CVR7xW
+        iAsQOBrQmm1LFAeKHz2G/1fahjfya1k=
+X-Google-Smtp-Source: APiQypL23PvnkAl/Kg6+Yr94oiTaXqqgYfAGOfQoQigR35Mlkva+runVn8H+6NU793vSxVk83xEtWw==
+X-Received: by 2002:a17:902:b40b:: with SMTP id x11mr5549306plr.174.1588723669476;
+        Tue, 05 May 2020 17:07:49 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id i8sm133712pfq.126.2020.05.05.17.07.43
+        by smtp.gmail.com with ESMTPSA id gz14sm3029122pjb.42.2020.05.05.17.07.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2020 17:07:44 -0700 (PDT)
-Date:   Tue, 5 May 2020 18:07:43 -0600
+        Tue, 05 May 2020 17:07:48 -0700 (PDT)
+Date:   Tue, 5 May 2020 18:07:47 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         szeder.dev@gmail.com
-Subject: [PATCH v2 4/8] builtin/commit-graph.c: extract 'read_one_commit()'
-Message-ID: <cef441b465b4129746fd9e4a04fb92d2440a3a32.1588723544.git.me@ttaylorr.com>
+Subject: [PATCH v2 5/8] builtin/commit-graph.c: dereference tags in builtin
+Message-ID: <d449d83ce2efd4f8f3b15c0cfda8217ffa710116.1588723544.git.me@ttaylorr.com>
 References: <cover.1588641176.git.me@ttaylorr.com>
  <cover.1588723543.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,115 +75,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With either '--stdin-commits' or '--stdin-packs', the commit-graph
-builtin will read line-delimited input, and interpret it either as a
-series of commit OIDs, or pack names.
+When given a list of commits, the commit-graph machinery calls
+'lookup_commit_reference_gently()' on each element in the set and treats
+the resulting set of OIDs as the base over which to close for
+reachability.
 
-In a subsequent commit, we will begin handling '--stdin-commits'
-differently by processing each line as it comes in, instead of in one
-shot at the end. To make adequate room for this additional logic, split
-the '--stdin-commits' case from '--stdin-packs' by only storing the
-input when '--stdin-packs' is given.
+In an earlier collection of commits, the 'git commit-graph write
+--reachable' case made the inner-most call to
+'lookup_commit_reference_gently()' by peeling references before they
+were passed over to the commit-graph internals.
 
-In the case of '--stdin-commits', feed each line to a new
-'read_one_commit' helper, which (for now) will merely call
-'parse_oid_hex'.
+Do the analog for 'git commit-graph write --stdin-commits' by calling
+'lookup_commit_reference_gently()' outside of the commit-graph
+machinery, making the inner-most call a noop.
+
+Since this may incur additional processing time, surround
+'read_one_commit' with a progress meter to provide output to the caller.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/commit-graph.c | 54 +++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 25 deletions(-)
+ builtin/commit-graph.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 15fe60317c..f550d8489a 100644
+index f550d8489a..6537e9acef 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -138,12 +138,25 @@ static int write_option_parse_split(const struct option *opt, const char *arg,
+@@ -6,6 +6,7 @@
+ #include "repository.h"
+ #include "commit-graph.h"
+ #include "object-store.h"
++#include "progress.h"
+ 
+ static char const * const builtin_commit_graph_usage[] = {
+ 	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
+@@ -138,8 +139,10 @@ static int write_option_parse_split(const struct option *opt, const char *arg,
  	return 0;
  }
  
-+static int read_one_commit(struct oidset *commits, char *hash)
-+{
-+	struct object_id oid;
-+	const char *end;
-+
-+	if (parse_oid_hex(hash, &oid, &end)) {
-+		error(_("unexpected non-hex object ID: %s"), hash);
-+		return 1;
-+	}
-+
-+	oidset_insert(commits, &oid);
-+	return 0;
-+}
-+
- static int graph_write(int argc, const char **argv)
+-static int read_one_commit(struct oidset *commits, char *hash)
++static int read_one_commit(struct oidset *commits, struct progress *progress,
++			   char *hash)
  {
--	struct string_list *pack_indexes = NULL;
-+	struct string_list pack_indexes;
- 	struct oidset commits = OIDSET_INIT;
- 	struct object_directory *odb = NULL;
--	struct string_list lines;
- 	int result = 0;
- 	enum commit_graph_write_flags flags = 0;
++	struct commit *result;
+ 	struct object_id oid;
+ 	const char *end;
  
-@@ -209,44 +222,35 @@ static int graph_write(int argc, const char **argv)
- 		return 0;
+@@ -148,7 +151,15 @@ static int read_one_commit(struct oidset *commits, char *hash)
+ 		return 1;
  	}
  
--	string_list_init(&lines, 0);
-+	string_list_init(&pack_indexes, 0);
- 	if (opts.stdin_packs || opts.stdin_commits) {
- 		struct strbuf buf = STRBUF_INIT;
--
--		while (strbuf_getline(&buf, stdin) != EOF)
--			string_list_append(&lines, strbuf_detach(&buf, NULL));
--
--		if (opts.stdin_packs)
--			pack_indexes = &lines;
+-	oidset_insert(commits, &oid);
++	display_progress(progress, oidset_size(commits) + 1);
++
++	result = lookup_commit_reference_gently(the_repository, &oid, 1);
++	if (result)
++		oidset_insert(commits, &result->object.oid);
++	else {
++		error(_("invalid commit object id: %s"), hash);
++		return 1;
++	}
+ 	return 0;
+ }
+ 
+@@ -159,6 +170,7 @@ static int graph_write(int argc, const char **argv)
+ 	struct object_directory *odb = NULL;
+ 	int result = 0;
+ 	enum commit_graph_write_flags flags = 0;
++	struct progress *progress = NULL;
+ 
+ 	static struct option builtin_commit_graph_write_options[] = {
+ 		OPT_STRING(0, "object-dir", &opts.obj_dir,
+@@ -228,18 +240,25 @@ static int graph_write(int argc, const char **argv)
  		if (opts.stdin_commits) {
--			struct string_list_item *item;
--			oidset_init(&commits, lines.nr);
--			for_each_string_list_item(item, &lines) {
--				struct object_id oid;
--				const char *end;
--
--				if (parse_oid_hex(item->string, &oid, &end)) {
--					error(_("unexpected non-hex object ID: "
--						"%s"), item->string);
--					return 1;
--				}
--
--				oidset_insert(&commits, &oid);
--			}
-+			oidset_init(&commits, 0);
+ 			oidset_init(&commits, 0);
  			flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
++			if (opts.progress)
++				progress = start_delayed_progress(
++					_("Collecting commits from input"), 0);
  		}
  
-+		while (strbuf_getline(&buf, stdin) != EOF) {
-+			char *line = strbuf_detach(&buf, NULL);
-+			if (opts.stdin_commits) {
-+				int result = read_one_commit(&commits, line);
-+				if (result)
-+					return result;
-+			} else
-+				string_list_append(&pack_indexes, line);
-+		}
+ 		while (strbuf_getline(&buf, stdin) != EOF) {
+ 			char *line = strbuf_detach(&buf, NULL);
+ 			if (opts.stdin_commits) {
+-				int result = read_one_commit(&commits, line);
++				int result = read_one_commit(&commits, progress,
++							     line);
+ 				if (result)
+ 					return result;
+ 			} else
+ 				string_list_append(&pack_indexes, line);
+ 		}
+ 
++		if (progress)
++			stop_progress(&progress);
 +
  		UNLEAK(buf);
  	}
- 
- 	if (write_commit_graph(odb,
--			       pack_indexes,
-+			       opts.stdin_packs ? &pack_indexes : NULL,
- 			       opts.stdin_commits ? &commits : NULL,
- 			       flags,
- 			       &split_opts))
- 		result = 1;
- 
--	UNLEAK(lines);
-+	UNLEAK(pack_indexes);
- 	return result;
- }
  
 -- 
 2.26.0.113.ge9739cdccc
