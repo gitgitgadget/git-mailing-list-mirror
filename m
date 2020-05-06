@@ -2,127 +2,114 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C071FC28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3761DC28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:37:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 974D5206B8
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:34:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12167208E4
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 17:37:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ckNIB6IS"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Rtgp95fH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729366AbgEFRd7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 13:33:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50938 "EHLO
+        id S1728094AbgEFRhQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 13:37:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728047AbgEFRd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 13:33:59 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F216C061A0F
-        for <git@vger.kernel.org>; Wed,  6 May 2020 10:33:58 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id fu13so1216956pjb.5
-        for <git@vger.kernel.org>; Wed, 06 May 2020 10:33:58 -0700 (PDT)
+        with ESMTP id S1728047AbgEFRhQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 13:37:16 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F13C061A0F
+        for <git@vger.kernel.org>; Wed,  6 May 2020 10:37:15 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id x2so1357258pfx.7
+        for <git@vger.kernel.org>; Wed, 06 May 2020 10:37:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=u3f5dBVRoqhDARAEAtG6K+VgZ88Ko/kxCgzsTA8iP6Q=;
-        b=ckNIB6ISPii2l8lQlTayHoHmHITzQbfjDZZ7FOsNyf4/g2bb2EQF9J27T19F8s5RJq
-         1YytijPMn+o1rqGBmUjxXqhs+UdW/zViMQ/Vl631xpXokXBpZOG/xcpWfN1jpXE/ovnW
-         xlm/Nbw2hkS3psB6e/mj5kW532mI5+mvFKERv7SC/nxW8QvjpSasfhHpu54DNYKHM34N
-         VBnJ/2MhraXaFpwBiQ5nqOSQyC6jbXk5Xb7ge3IuPOhtBHlTLS1OyfmPlEwSfxb4gtpE
-         1BibFgjBHIv9A4uTLJdc2LnNKFal9zVtYkIbhspHWWiju98Y6vgjXRlOXZOPlnO6Neja
-         1irA==
+         :content-disposition:in-reply-to;
+        bh=5jNN2qYwhcrSMDI7zdPs7cGooK8KcT6WdI5CfE5fBXE=;
+        b=Rtgp95fHulSmquLIQyiehSWPomNbJ+fTpBL0Bb0OFK9WAm+CMTpL5rNioDJD4/J8i2
+         B55ccGs9MlYp9AlUHGFzQtn6+fgZeuNSnVU52KY/Tf62jsnIwkwYe2JhtEJ2yfRkQvtN
+         5UrYYq91xHwt7QNEL0FKG8X5l5Guc633RwJZ2cYA3OBd4g75gLQ0fCnSBThkoKLkWG+V
+         /lw96myLdhuirCdoLrlPFeu0eH6aYF1NRoCgqSngW9w3+JQG1HwWy2XgF3PShthM0l4R
+         L0I7w1KrsmckRcJhSsL0+/naxShFLhaO0AG+kzWUaysi6zmZLRgmyOdOkbWW1uE1QNWU
+         ryYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=u3f5dBVRoqhDARAEAtG6K+VgZ88Ko/kxCgzsTA8iP6Q=;
-        b=sWsgvuMscvi9lRJZHOBB/LmQAtUuksLJD7acr9xlGfxsoqnKsY3zoWhA3ONPTWtaNI
-         Ic6c+CvgkXMKyMddxi+chxxUQRbjjlRWaih8ldQXMPhdc1sfXVGxz+2Lbklw+BBVtr/A
-         whbKL3hTalJJS0TiinI+attw5sajeCfVrNRWlvDVIn1356pd17gw2hUz2hdqtaFE9/0+
-         KxiqrTxVgKsE/ZOW8uaFQGN5yy0FiEOQPffgcDVadM9FiMyVhNJmTX3impzFwXmHpF3p
-         5EIU3LEXdP5e92s3E11S/OCZ/D2cyBQCgqFy5c4slpNL7zxFR3NaKTczUeIOY2t+FZBV
-         WfNQ==
-X-Gm-Message-State: AGi0PuZJsU00xgi7GL42MG1FqKzZ9EYl96whz3+D/hj/5q+nCOHiwmEv
-        7wOlJvPFcUSXiyGC3P+H+9n/CA==
-X-Google-Smtp-Source: APiQypK70sb5Ca/pHF7/lLTV7NgD2lVnHs+hWcemnCXwguYyaLqzqW75/CtRwNvddlUchr6rUKzXMw==
-X-Received: by 2002:a17:902:ed4a:: with SMTP id y10mr8713274plb.227.1588786437983;
-        Wed, 06 May 2020 10:33:57 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to;
+        bh=5jNN2qYwhcrSMDI7zdPs7cGooK8KcT6WdI5CfE5fBXE=;
+        b=I018gzdh42Drpsj9uYBWD7M7uln0vVOPQgyfLnWtFvhEtv4H0ir5r3fyq7l8H5oJkG
+         tCq8wtyH4rUyurGXivALxZYwsew51tL4fW1jTKelEO5kJeXlU1CIWf9GLGbBGWvuZAte
+         Plln6ikz2Z8d7spUdXoBdtkaCtQa4Yi3y79hPDKih4wRlhAQgfAknayZW+IWyO0OwIUB
+         0rTFRQr/CzDkDZkQdRQMW0P6r/2uXqBngD3sK3AUd2RFYW0jvdkFJrqzOJ65O2HH+vmV
+         V+iExdnSz85IxlM7vMhy4F+PPFsxQ/T9LsfdNNKLjb0vrSBnc9nL0986vYbtkziZgypI
+         EEUA==
+X-Gm-Message-State: AGi0PuZ4KEYHMMbiMJGJUFIBPAsY+VzGGZ4CVpDiBStgCxTaigQldlr5
+        s3NXRZQfOY2a3PmnQR2hz2hbXIrFN7I=
+X-Google-Smtp-Source: APiQypKI5ZfxGDKxRTK7+RVQEz/VLDkQBzg1Iy4waJCD4XqUg6pCa+Minw7c7OpBJIn72/3FKDkh5w==
+X-Received: by 2002:a63:564e:: with SMTP id g14mr8314040pgm.63.1588786635156;
+        Wed, 06 May 2020 10:37:15 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id w75sm2356018pfc.156.2020.05.06.10.33.56
+        by smtp.gmail.com with ESMTPSA id g6sm5206319pjx.48.2020.05.06.10.37.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 May 2020 10:33:57 -0700 (PDT)
-Date:   Wed, 6 May 2020 11:33:56 -0600
+        Wed, 06 May 2020 10:37:14 -0700 (PDT)
+Date:   Wed, 6 May 2020 11:37:13 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Pierrick Gaudry <pierrick.gaudry@loria.fr>, git@vger.kernel.org
-Subject: Re: option -q not passed from "git commit" to "git gc --auto"
-Message-ID: <20200506173356.GC6078@syl.local>
-References: <20200506094327.GC31637@rillettes>
- <20200506172823.GB6078@syl.local>
+To:     Claus Schneider <claus.schneider@eficode.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] subtree: use say and exit 0 rather than die in case of no
+ new revision found scenario
+Message-ID: <20200506173713.GD6078@syl.local>
+References: <CA+GP4boTMaShBbJUQUA0GThpXXPiCQHFGKFYUYLE3mbsjSdqTw@mail.gmail.com>
+ <CA+GP4boXi4tW23Z6CDF2v_ch2_7_dqhB_POAhi1FfYrEBG4DWQ@mail.gmail.com>
+ <CA+GP4brpeGhBy3LF0LomDO-AOEZS02tOi2phQ4e1XoTGgeAx2w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200506172823.GB6078@syl.local>
+In-Reply-To: <CA+GP4brpeGhBy3LF0LomDO-AOEZS02tOi2phQ4e1XoTGgeAx2w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 06, 2020 at 11:28:23AM -0600, Taylor Blau wrote:
-> On Wed, May 06, 2020 at 11:43:27AM +0200, Pierrick Gaudry wrote:
-> > Hello,
-> >
-> > It seems that when "git commit" is run with the "-q" option, there are
-> > still, from time to time, messages that get printed. With the French
-> > locale the message is:
-> >   Compression automatique du dépôt en tâche de fond pour optimiser les performances.
-> >   Voir "git help gc" pour toute information sur le nettoyage manuel.
-> >
-> > From what I could guess, this is due to the fact that "git commit" calls
-> > "git gc --auto", but does not propagate the "-q" option if present.
-> >
-> > A similar problem was present some time ago with "git fetch" and was
-> > solved in the 2-line patch 6fceed3b . I guess that the same should be
-> > done for "git commit".
->
-> Yes, I think so. A quick search through the list archive turns up [1],
-> which identifies and provides a patch for this issue. If I were
-> reviewing that patch today, I'd suggest the following:
->
->   * break the change from a 'char **' to a 'struct argv_array' into a
->     separate, preparatory patch.
->
->   * adjust the commit message of the second commit (which will only pass
->     '-q' to the 'git-gc' sub-process) to indicate that there may be
->     other locations
->
->   * fix those other locations that spawn 'git gc', if they exist, in a
->     similar fashion
->
->   * in each of the previous two steps, add tests in the appropriate
->     files in 't' to demonstrate that '-q' propagation works as expected.
+Hi Claus,
 
-Junio identified a much better way to do this in the email below this
-one. Since it appears that there are multiple places that ignore
-'--quiet' when running 'git gc' as a sub-process, a helper function is
-certainly you want to be using.
+On Wed, May 06, 2020 at 03:11:49PM +0200, Claus Schneider wrote:
+> Hi..
+>
+> Currently subtree dies if "No new revisions found" which is hard as it
+> is a non-operation.
+>
+> I suggest using the "say" command rather than "die".
+>
+> It will then become easier just to call "git subtree split" and you do
+> not need to handle this special case.
+>
+> Patches can be found here:
+> https://github.com/git/git/commit/fe435a1ba128698f6acb69ee1891c45be32610fa
 
-> I'm happy to do any and all of this, if you want, but you are also
-> welcome to submit the patches yourself.
->
-> > Regards,
-> > Pierrick
->
-> Thanks,
-> Taylor
->
-> [1]: https://lore.kernel.org/git/20200506140138.650455-1-abhishekkumar8222@gmail.com/
+Thanks for your patch. The Git mailing list reviews patches over email,
+so please re-submit this (and the other two patches) you sent to the
+list here.
+
+Detailed guidelines on how to do that are here:
+
+  https://github.com/git/git/blob/master/Documentation/SubmittingPatches
+
+and
+
+  https://github.com/git/git/blob/master/Documentation/MyFirstContribution.txt
+
+Alternatively, you may use GitGitGadget, which makes it convenient to
+send patches to the mailing list from GitHub's UI. More information
+about that may be found here: https://gitgitgadget.github.io/.
+
+> Best regards
+> Claus Schneider
+
 Thanks,
 Taylor
