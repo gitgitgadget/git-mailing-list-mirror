@@ -2,147 +2,168 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66237C28CBC
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5C64C28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:12:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 483B620747
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:04:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F36220747
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:12:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aGaLI7ZV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbtM6Swl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730058AbgEFSEF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 14:04:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55686 "EHLO
+        id S1729301AbgEFSMr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 14:12:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727872AbgEFSEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 14:04:04 -0400
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99308C061A0F
-        for <git@vger.kernel.org>; Wed,  6 May 2020 11:04:04 -0700 (PDT)
-Received: by mail-vs1-xe44.google.com with SMTP id a5so1612300vsm.7
-        for <git@vger.kernel.org>; Wed, 06 May 2020 11:04:04 -0700 (PDT)
+        with ESMTP id S1728566AbgEFSMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 14:12:47 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0FF5C061A0F
+        for <git@vger.kernel.org>; Wed,  6 May 2020 11:12:46 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id ms17so1269469pjb.0
+        for <git@vger.kernel.org>; Wed, 06 May 2020 11:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ppXl21xXv1h5ClKkI74Df+x4Z11Zve9UWdswAB78mMA=;
-        b=aGaLI7ZVsT7oG2Xpj8oHU5KnFSsQnJy6iZS7/QAZbA+3igWpn8zPzi0ielfHGrKbUu
-         DS98eTMUPQFtAU/mBcmLhWzVzYZlGf1+YhOoF+P6FyOcEpGJgks/0gXSgYn41mrzcnLf
-         ly66cmpxCNnfddihCPc/Wy1LlQ1OQJMZfF3vMMvn2lsEKyHPJyjx6iDq8GCWowu3nFxr
-         X7+ZrnEWVG+LM5h+3ufpHfYER/NLCnhriXxSt4Oie9jRLGGsnK8F8wWuH9mggwOErh6W
-         0nbsag6TkV/8M5XIq7If4cZFPkJPWkeGqas+l2/GF0dGz0fKJ1WQFkUd6Doftuz1XBev
-         ihIg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=l8tjucSLstlQXOtk7yvINX1NIDO9972zjzvXccwDKw4=;
+        b=HbtM6SwlNsOi3jwhKHs5xjXQqEyuinCuCXcguKjXyGj1cEHmbVy3RQfW8zoERmC/Z4
+         EH5TGQPzJQbqDvSjAESKZLO6VYCvhdNINhLtKjgri7sQhK+t2SH/6muaSIWMK61B+7+2
+         IxBqoKKC7UZga0tNr2ksQkdTY/7YruLl+VendO4GHYw9iDCT9NUZwtAPYotzgmzD2B7U
+         zSI5Yfs6nvNFj/xkbHPCEumAHlhDmby3hcU6f+5DYOWMpf2/DpfGJOgGzcs+dcuzkXK+
+         swnzACVjFIlzhbKc7zNPOFomzU+N68jwtax8YQ1thtNTlH3TUu34LsFK9oEzmKYzKeOL
+         UJIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ppXl21xXv1h5ClKkI74Df+x4Z11Zve9UWdswAB78mMA=;
-        b=IyWta8TU6c9bemWaScLfl8QCIBGt0sznmLaWPV1Kez51bF1TflLh0MPTX9qjlAus4Y
-         spIOBupA/kBrkfAo4FKevhZ1o159ZXSgzvAw3Uak/SJaGazj6z56Nnkv3EvqnmyDNPdz
-         X4vEzq3LYaBl5y8rX7/Ryj0q1tnAcYptaruTbQSEnQagDd0ZLmwQRIXer7uWPFFo5+zG
-         IipdsU2Fq3Dqov9oaQbLGJShtHM5Et9soaa2b8OdOvhF8xanfgY32q1s1NZCDXBKW1rU
-         Y+EaASQlOD+Tw0hUgEUzMHey5Ka5b4BAVUiR2Tkfn7AZ6jmtEdt+w10jZN9wJAgpwrpc
-         L9bw==
-X-Gm-Message-State: AGi0Pubk8CEwh5IxRrJhmyMp+6nNKBn6RADuUa/oRjvPPKz58H6LBAhZ
-        lcPhPLlh2tYUUWMTgvNVQbMM8DtanP6r0uOrRmzbjM2R
-X-Google-Smtp-Source: APiQypKkbOE1mFzDbfN+E5DoLGdPahLVfqBsnNW07++cYBi9YCYpZrj0V39C5gTL2IInFzt4mPWLrhzGWStyMV1nbpk=
-X-Received: by 2002:a67:edce:: with SMTP id e14mr9652013vsp.235.1588788243735;
- Wed, 06 May 2020 11:04:03 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=l8tjucSLstlQXOtk7yvINX1NIDO9972zjzvXccwDKw4=;
+        b=h9HCBLWryR8T2KZfz3Q71GJu9AuPGXaA71xtxzBSUkhkrcEVJiL9fm0vNh/YFPARzA
+         asRSRZKr8wta2TmaSVi5CaI5JTCHP2muB1lGgI4RSZu3KFHWuBQWs1qx5mJVDBhgmUGc
+         RjsDern/01WnOWGqL1HAH6WWo7vyNFeVjyojfqWIOHCgXau/q0Q01Ot+8WNJwIToAnTU
+         Nkf9RA3OFbWIMT7gLTVpBu2KboEIMB0oAy7v96VYGCzlQ52HIVDjZARIqhnkuvtdc+oO
+         b/F3Xy87tjv/a0ByR/RfH/gcKB77DnDZV++rpA+KgRxAFLcr0kFUBfhKEwG7xQKcXfSk
+         fvDg==
+X-Gm-Message-State: AGi0PubJAEG4o7YZmz2+OT/YcOksOuOSJpBoVcX3uFWriN7kdUffWr8t
+        17TNSHKWfpiyTljBRtfMu3vzFbgbTVZPKdid
+X-Google-Smtp-Source: APiQypLGM+DLp+kI+y4Tu//WZOzZ0d54RxbSr6pEJZPq1nq7TGVspz5ce6CXw1iiJL+0E5QdeyD/JQ==
+X-Received: by 2002:a17:90a:2170:: with SMTP id a103mr10583121pje.181.1588788766116;
+        Wed, 06 May 2020 11:12:46 -0700 (PDT)
+Received: from konoha ([103.37.201.172])
+        by smtp.gmail.com with ESMTPSA id h6sm5490769pje.37.2020.05.06.11.12.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 May 2020 11:12:45 -0700 (PDT)
+Date:   Wed, 6 May 2020 23:42:39 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com, liu.denton@gmail.com
+Subject: Re: [PATCH v4] submodule: port subcommand 'set-url' from shell to C
+Message-ID: <20200506181239.GA5683@konoha>
+References: <20200506073717.9789-1-shouryashukla.oo@gmail.com>
+ <xmqqtv0t6l84.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <CAGqZTUu2U6FFXGTXihC64O0gB5Bz_Z3MbD750kMoJWMciAGH6w@mail.gmail.com>
- <20200504154343.GA12842@coredump.intra.peff.net>
-In-Reply-To: <20200504154343.GA12842@coredump.intra.peff.net>
-From:   clime <clime7@gmail.com>
-Date:   Wed, 6 May 2020 20:03:52 +0200
-Message-ID: <CAGqZTUs+xCPjQdeQVfU6EWARmZdjcgcHeSNxkKaTf316rX+8pg@mail.gmail.com>
-Subject: Re: :format:%s for date fields seems to be shifted by timezone
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtv0t6l84.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 4 May 2020 at 17:43, Jeff King <peff@peff.net> wrote:
->
-> On Sun, May 03, 2020 at 12:15:14PM +0200, clime wrote:
->
-> > my current timezone is UTC+0200.
-> >
-> > I create a test repo, add one commit and create a tag:
-> >
-> > Now:
-> >
-> > $  git for-each-ref --format="%(taggerdate:format:%s)" refs/tags
-> > 1588504146
-> >
-> > $ date +"%s"
-> > 1588500585
-> >
-> > $  git for-each-ref --format="%(taggerdate:raw)" refs/tags
-> > 1588500546 +0200
-> >
-> > Somehow %(taggerdate:format:%s) gives a Unix timestamp which is one
-> > hour in future and it is different than what ` date +"%s"` gives
-> > around approximately the same time the tag was created.
->
-> It's caused by strftime() being clever with DST. Try this:
->
->   git commit --date=@1559361600 --allow-empty -m summer
->   git commit --date=@1577854800 --allow-empty -m winter
->   git log --format=%ad --date=unix >unix
->   git log --format=%ad --date=format:%s >strftime
->   diff -u unix strftime
->
-> We get the winter time right, but the summer time wrong.
->
-> The issue is that strftime() takes a broken-down "struct tm", not a unix
-> time_t. We have all of the right values for hour/minute/etc there, so
-> using "format:%H:%M:%S" prints what you'd expect. But we never set the
-> "isdst" field, so when it tries to convert back to unix time, it applies
-> a one-hour offset (if it's "summer" in your local timezone).
->
-> Unfortunately I don't think we can solve this easily. If we were
-> operating completely in your local timezone, then we would have gotten
-> that "struct tm" from localtime(), and its isdst field would be set
-> properly. And indeed, if you use "--date=format-local:%s", the problem
-> goes away.
->
-> But when we're formatting in the original author's timezone, which is
-> the default, we have no idea if they were in dst then or not. We only
-> know their offset-to-gmt, so we munge the time_t ourselves and use
-> gmtime().
->
-> So there are a few reasons I think this is the best we can do:
->
->  - the full timezone information literally isn't there in Git; we might
->    know the author was in +0200, but we don't know if they were
->    observing DST, or if they were simply in a timezone further east.
->
->  - even if we had a zone, there's no system function to convert a time_t
->    to a tm in an arbitrary timezone (hence the gmtime() hack above;
->    we've tried playing games with $TZ and tzset(), but it's awkward and
->    unportable)
->
->  - likewise, strftime() is doing the reverse conversion using the local
->    timezone anyway, which would be wrong.
->
-> So my advice is not to use "%s" (which isn't portable anyway). Use
-> "--date=unix" or "%(taggerdate:unix)".
+On 06/05 10:12, Junio C Hamano wrote: 
+> > +static int module_set_url(int argc, const char **argv, const char *prefix)
+> > +{
+> > +	int quiet = 0;
+> > +	const char *newurl;
+> > +	const char *path;
+> > +	struct strbuf config_name = STRBUF_INIT;
+> > +
+> > +	struct option set_url_options[] = {
+> > +		OPT__QUIET(&quiet, N_("Suppress output for setting url of a submodule")),
+> > +		OPT_END()
+> > +	};
+> > +
+> > +	const char *const usage[] = {
+> > +		N_("git submodule--helper set-url [--quiet] <path> <newurl>"),
+> > +		NULL
+> > +	};
+> 
+> Hmph, do we really want all the blank lines in the above?
 
-Hello Jeff,
+Apologies,will amend.
 
-what about just printing the raw timestamp from either commit or tag,
-i.e. avoiding any conversion for format:%s?
+> There is only one "struct option" the code in this function needs to
+> be aware of and worried about.  Isn't naming it set_url_options[]
+> overly redundant?  Calling it just options[] would save lines here ;-)
 
-Best regards!
-clime
+I was actually following the format of the other subcommands, will
+surely change it.
 
->
-> -Peff
+> > +	argc = parse_options(argc, argv, prefix, set_url_options,
+> > +			     usage, 0);
+> 
+> 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+> 
+> > +	if (argc!=2) {
+> 
+> Style.  SP around all binary operators like !=, i.e.
+> 
+> 	if (argc != 2) {
+> 
+> By the way, looking at print_default_remote() that takes no
+> arguments wants argc to be 1, and resolve_relative_url() that takes
+> only one or two arguments checks for 2 or 3, shouldn't this be
+> checking if argc is 3, not 2?
+
+Aren't `path` and `newurl` the only arguments we should worry about
+here as 'parse_options' will parse out the other arguments ('git
+submodule--helper' and the 'quiet' option) leaving us with only the
+aforementioned arguments. Am I missing something here?
+
+To add on, checking for `argc!=3` results in a failure of t7420.
+If we have anything but 2 arguments (either less or more) we should have
+a failure.
+
+I think that we will do a check for 3 if we pass the macro
+`PARSE_OPT_KEEP_ARGV0` in `parse_options()`. So the final code segment
+would look like:
+	
+	argc = parse_options(argc, argv, prefix, options,
+			     usage, PARSE_OPT_KEEP_ARGV0);
+
+	if (argc != 3) {
+		usage_with_options(usage, options);
+		return 1;
+	}
+
+	path = argv[1];
+	newurl = argv[2];
+
+which does pass t7420. Therefore a stricter check could be:
+	
+	argc = parse_options(argc, argv, prefix, options,
+			     usage, 0);
+
+	path = argv[0];
+	newurl = argv[1];
+
+	if (argc != 2 || path == NULL || newurl == NULL) {
+		usage_with_options(usage, options);
+		return 1;
+	}
+which passes t7420.
+
+> I thought I pointed it out in my very first review of this series.
+> 
+> 	... tries to go back and check, notices that this v4 is not
+>         ... a reply to v3 or earlier and feels somewhat irritated.
+> 	... then finally finds the following in the v2 review.
+
+I am very very sorry for this. I undestand how this must feel. Will
+ensure this from the next version. :)
