@@ -2,144 +2,160 @@ Return-Path: <SRS0=4z2X=6U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A56F1C47256
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FA12C28CBC
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:56:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80492206B8
-	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:43:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16BCE20708
+	for <git@archiver.kernel.org>; Wed,  6 May 2020 18:56:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rob8j688"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sicayi/t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730382AbgEFSnj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 May 2020 14:43:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33660 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729895AbgEFSnj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 May 2020 14:43:39 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1582FC061A0F
-        for <git@vger.kernel.org>; Wed,  6 May 2020 11:43:39 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id f83so3199725qke.13
-        for <git@vger.kernel.org>; Wed, 06 May 2020 11:43:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qvbkFHR9Pb1jDIG7mruOxSuSkT+eoJrP9FFirxfNIlc=;
-        b=rob8j688BwcVd7G6JPIek/PMP/hv1Y+GBr0SQLBkT11GnbV4tAZfsUWeWVJO15OvW7
-         Ofk90GC3Mrw38H32GVaNP3BJNRbopwRAID2824ekyFSRZ/nADRbT8yLnGSEQpNsgm++h
-         iPqfY3v7SBCzC8SDO8F3/n7AwNxKzZv/m79UycBb4ft0Hg7zf9K+8Mqa9EpY/SzdEO2x
-         j0mp2PBOyTifSKh3FtC37TkekR4l/xRLpZM+wXfMi7JA8ClcKGHmOnCCNXdVMWorEeW8
-         1a6AxBlx8CMx0LxtfQkbVNVnimTQWTdEvN89fRd0MafbcCZU41JJqKhABkpWdfTLjqJq
-         +4Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qvbkFHR9Pb1jDIG7mruOxSuSkT+eoJrP9FFirxfNIlc=;
-        b=f97qBIn6YxzxSICUVe/7mVwcerACwSWxL0OY5tb1d0npmrdm+h6Lefeslr44OYIZsV
-         Euq8A52h+bFrhKDTKd9U0xGMz4LV8m3K4evF0nh8lacDDkmUBkYMn65LLyB5gHPQnjlQ
-         rSWhY/ba+FcaXu4PJ+IOj5ieMORgt32v2N7Xwykemti3fYfAKBq6nsyZYymosgPObihO
-         aa54HzcM2F/2ZywCLH6gq9ek42BecWkWUIoBgrnkMVIG6/UrCSZI5gUi34sIVZrhlvsl
-         tsg2Y2fBfJ5KFZjsI16c1k7Iz1CwTjMemhMumF+XbeQGBdXlRMYQ/L8reVM1MGADF91w
-         NX2w==
-X-Gm-Message-State: AGi0Pubz7mwi/bCxx+FTKg3IIhjR1C4leYfRiOf4ZHQLKk7Cvld/CYc3
-        oejAVllmSFGg1kr6qLfT+oTZlYxWMI33dGlTq0w=
-X-Google-Smtp-Source: APiQypJqmKmOFDgU8i9NJO0OzbMEjAHz9aOEO2BMgCHV8PxKO4BqNbSyuPbp+uXNqyIw4MO5C20UaXuzviyypCkoy3s=
-X-Received: by 2002:a37:6c07:: with SMTP id h7mr10312018qkc.328.1588790617381;
- Wed, 06 May 2020 11:43:37 -0700 (PDT)
+        id S1730112AbgEFS4N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 May 2020 14:56:13 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65008 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729935AbgEFS4M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 May 2020 14:56:12 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 31EDAC6634;
+        Wed,  6 May 2020 14:56:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:sender:date:in-reply-to:message-id
+        :mime-version:content-type; s=sasl; bh=Fgz8iNOPisSqsBguVE6GeVw8A
+        6g=; b=sicayi/tKCAzgk+S5f8ga2sSDBWG+GMMjRLBu1+baQFjBK4CdVJb8rL6n
+        LYTuPOMcfJjKS5EZ2QFKw12KY2ydu55Ztsnd4gKhb3qa7UbXbN7Mcant9VjOAjb7
+        7o1szne48DyjdkmJ008i0IP6zutL47ldsLN9hYVD0Zk6F4g8lk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:sender:date:in-reply-to:message-id
+        :mime-version:content-type; q=dns; s=sasl; b=XMzX7kej4yUSft7HHgT
+        /J8lMYh2idDjZcMXtEIP1mDuZw5xxJ1b688bTnhb+3Sdo3ug3bulrai+GYAcLkPS
+        3fAKnKsdDt/ECE4p0l1QjWNBrhVr7Ki+fiyRLXJbpYSOsJRiSez1iW+Wiahksei7
+        L2fNU2FgsbQTCI+X6SqEgANk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A6B6C6631;
+        Wed,  6 May 2020 14:56:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6FDD8C6630;
+        Wed,  6 May 2020 14:56:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pierrick Gaudry <pierrick.gaudry@loria.fr>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re* option -q not passed from "git commit" to "git gc --auto"
+References: <20200506094327.GC31637@rillettes>
+        <xmqqd07h6kcs.fsf@gitster.c.googlers.com>
+Date:   Wed, 06 May 2020 11:56:04 -0700
+In-Reply-To: <xmqqd07h6kcs.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 06 May 2020 10:31:31 -0700")
+Message-ID: <xmqqpnbg6gfv.fsf_-_@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <xmqqv9lod85m.fsf@gitster.c.googlers.com> <CAKiG+9V_nZUXf2a689vZ54rG+xTCFMGcJe_7Av-khaxxuijERg@mail.gmail.com>
- <xmqq8sikblv2.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet>
- <20200427200852.GC1728884@coredump.intra.peff.net> <20200427201228.GD1728884@coredump.intra.peff.net>
- <20200428135222.GB31366@danh.dev> <20200428210750.GE4000@coredump.intra.peff.net>
- <CAKiG+9U2Eg5yvT4XjgpMUXu4OV-8JF9Hp_ou_P6twxfqJ1tEYA@mail.gmail.com>
- <nycvar.QRO.7.76.6.2005012130010.18039@tvgsbejvaqbjf.bet> <CAKiG+9UvnLtF7eS9FsPLyRR4ZPNSnakZwyYy3dO7WoAnRpvoMA@mail.gmail.com>
- <xmqq4ksyl4mz.fsf@gitster.c.googlers.com> <CAKiG+9Vvwz_ajhJ1KPVWtq25UaGtJOH57eXTA=cgm5qzoZCfGw@mail.gmail.com>
- <xmqqsgghhr32.fsf@gitster.c.googlers.com> <689741588534833@mail.yandex.ru>
- <nycvar.QRO.7.76.6.2005041630150.56@tvgsbejvaqbjf.bet> <848941588629532@mail.yandex.ru>
- <CAKiG+9Xu+eeET1Y3hFJTSpofxBCWEvwjyaY0cjFbKptzYLACNw@mail.gmail.com>
- <xmqqwo5qc3ec.fsf@gitster.c.googlers.com> <CAKiG+9WzQdFa1qM4dKUu8O7k+Q8JGsDMGQg-2GRJr=AJye6wJg@mail.gmail.com>
- <xmqqk11qb61j.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk11qb61j.fsf@gitster.c.googlers.com>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Thu, 7 May 2020 00:13:25 +0530
-Message-ID: <CAKiG+9WE08ikv9uzDg30w2w=+chRQs9te8hKbVg2WG0p964RZw@mail.gmail.com>
-Subject: Re: [PATCH 0/8] CMake build system for git
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Konstantin Tokarev <annulen@yandex.ru>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Danh Doan <congdanhqx@gmail.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3DB6A16E-8FCB-11EA-98B4-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 5, 2020 at 11:47 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
->
-> > I have made the following changes as suggested:
-> > 1) The CMake script works from contrib/cmake now.
-> > 2) The CMake script parses the Makefile for
-> > SCRIPT_SH
-> > SCRIPT_PERL
-> > TEST_BUILTINS_OBJS
-> > LIB_OBJS
-> > BUILTIN_OBJS
-> > XDIFF_OBJS
-> > VCSSVN_OBJS
-> > 3) Philip suggested to change the error message if sh/bash was not
-> > found on windows.
-> > 4) CMake now tests for ICONV_OMITS_BOM, NO_ST_BLOCKS_IN_STRUCT_STAT.
-> >
-> > Regarding the commits, since 1,2,4 are additions to the script, is it
-> > acceptable for those changes to be staged in the next commits?
->
-> I am not sure what you exactly mean by "to be staged in the next
-> commits".  But as a new topic (from the point of view of the general
-> public), please avoid adding a known-broken one in patch 1 and then
-> following up with a series of "oops, that was wrong and here is to
-> fix the breakage" patches.
->
-> On the other hand, if the final contents added by the resulting
-> topic is easier to explain and review if built incrementally in
-> logical steps, please do so.  In other words, a series of follow up
-> "now we have basics there, teach the machinery to do this, too"
-> patches is perfectly fine, as opposed to "oops, that was wrong and
-> here is to fix".
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-2 and 4 are additions to the capability of the script, which means
-they have to be added
-as separate commits (between 7/8 and 8/8).
-
-3 is clearly an edit (fixup 6/8)
-
-I am confused for 1 though.
-I think it would be better to add it as a new commit (between 7/8 and 8/8).
-Is this acceptable?
-
-Thank You,
-Sibi Siddharthan
+> An illustration to cover these (not even compile tested) to show
+> what I mean and help anybody get started.
 
 
-> > Regarding the workflow file(main.yml), I modified the vs-build and
-> > test steps, should I drop the commit or should I keep the changes(a
-> > modification is further needed if CMake is going to be used for
-> > vs-build)
->
-> It sounds like an integral part of the end result we would want to
-> get out of this series, so if that is the case, I do not see a
-> reason to exclude it.
->
-> Thanks.
+And this would be a good first step in the conversion.
+
+-- >8 --
+Subject: [PATCH] run_auto_gc(): extract a reusable helper
+
+Earlier we taught "git fetch --quiet" to pass the "--quiet" option
+down to "gc --auto".  This, however, is not limited to "fetch":
+
+    $ git grep -e 'gc.*--auto' \*.c
+
+finds hits in "am", "commit", "merge", and "rebase".
+
+As a preparatory step, let's introduce a helper function
+run_auto_gc(), that the caller can pass a boolean "quiet".
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/fetch.c | 10 ++--------
+ run-command.c   | 13 +++++++++++++
+ run-command.h   |  5 +++++
+ 3 files changed, 20 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bf6bab80fa..3e580b9559 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1759,7 +1759,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	struct remote *remote = NULL;
+ 	int result = 0;
+ 	int prune_tags_ok = 1;
+-	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
+ 
+ 	packet_trace_identity("fetch");
+ 
+@@ -1886,13 +1885,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 
+ 	close_object_store(the_repository->objects);
+ 
+-	if (enable_auto_gc) {
+-		argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
+-		if (verbosity < 0)
+-			argv_array_push(&argv_gc_auto, "--quiet");
+-		run_command_v_opt(argv_gc_auto.argv, RUN_GIT_CMD);
+-		argv_array_clear(&argv_gc_auto);
+-	}
++	if (enable_auto_gc)
++		run_auto_gc(verbosity < 0);
+ 
+ 	return result;
+ }
+diff --git a/run-command.c b/run-command.c
+index f5e1149f9b..2771eb936f 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1864,3 +1864,16 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
+ 
+ 	return result;
+ }
++
++int run_auto_gc(int quiet)
++{
++	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
++	int status;
++
++	argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
++	if (quiet)
++		argv_array_push(&argv_gc_auto, "--quiet");
++	status = run_command_v_opt(argv_gc_auto.argv, RUN_GIT_CMD);
++	argv_array_clear(&argv_gc_auto);
++	return status;
++}
+diff --git a/run-command.h b/run-command.h
+index 0f3cc73ab6..191dfcdafe 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -218,6 +218,11 @@ LAST_ARG_MUST_BE_NULL
+ int run_hook_le(const char *const *env, const char *name, ...);
+ int run_hook_ve(const char *const *env, const char *name, va_list args);
+ 
++/*
++ * Trigger an auto-gc
++ */
++int run_auto_gc(int quiet);
++
+ #define RUN_COMMAND_NO_STDIN 1
+ #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
+ #define RUN_COMMAND_STDOUT_TO_STDERR 4
