@@ -2,97 +2,103 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30D1DC38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 19:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BDB1C38A2A
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 20:03:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 015CC208E4
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 19:54:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CC45208DB
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 20:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728110AbgEGTyn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 15:54:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40836 "HELO cloud.peff.net"
+        id S1728378AbgEGUDH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 16:03:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40848 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726320AbgEGTym (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 15:54:42 -0400
-Received: (qmail 2157 invoked by uid 109); 7 May 2020 19:54:42 -0000
+        id S1726320AbgEGUDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 16:03:07 -0400
+Received: (qmail 2225 invoked by uid 109); 7 May 2020 20:03:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 May 2020 19:54:42 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 May 2020 20:03:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21521 invoked by uid 111); 7 May 2020 19:54:45 -0000
+Received: (qmail 21589 invoked by uid 111); 7 May 2020 20:03:09 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 May 2020 15:54:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 May 2020 16:03:09 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 May 2020 15:54:41 -0400
+Date:   Thu, 7 May 2020 16:03:05 -0400
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         szeder.dev@gmail.com
-Subject: Re: [PATCH 3/8] commit-graph.c: peel refs in 'add_ref_to_set'
-Message-ID: <20200507195441.GA29683@coredump.intra.peff.net>
+Subject: Re: [PATCH 4/8] builtin/commit-graph.c: extract 'read_one_commit()'
+Message-ID: <20200507200305.GB29683@coredump.intra.peff.net>
 References: <cover.1588641176.git.me@ttaylorr.com>
- <5ff56feab55b005b4a4d9559909ce7a08e5fa81e.1588641176.git.me@ttaylorr.com>
+ <9ae8745dc090de37af0475ab12b79d541a52713d.1588641176.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5ff56feab55b005b4a4d9559909ce7a08e5fa81e.1588641176.git.me@ttaylorr.com>
+In-Reply-To: <9ae8745dc090de37af0475ab12b79d541a52713d.1588641176.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 04, 2020 at 07:13:43PM -0600, Taylor Blau wrote:
+On Mon, May 04, 2020 at 07:13:46PM -0600, Taylor Blau wrote:
 
-> While iterating references (to discover the set of commits to write to
-> the commit-graph with 'git commit-graph write --reachable'),
-> 'add_ref_to_set' can save 'fill_oids_from_commits()' some time by
-> peeling the references beforehand.
-> 
-> Move peeling out of 'fill_oids_from_commits()' and into
-> 'add_ref_to_set()' to use 'peel_ref()' instead of 'deref_tag()'. Doing
-> so allows the commit-graph machinery to use the peeled value from
-> '$GIT_DIR/packed-refs' instead of having to load and parse tags.
+> In the case of '--stdin-commits', feed each line to a new
+> 'read_one_commit' helper, which (for now) will merely call
+> 'parse_oid_hex'.
 
-Or having to load and parse commits only to find out that they're not
-tags. :)
+Makes sense.
 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 8f61256b0a..5c3fad0dd7 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -1327,11 +1327,15 @@ static int add_ref_to_set(const char *refname,
->  			  const struct object_id *oid,
->  			  int flags, void *cb_data)
->  {
-> +	struct object_id peeled;
->  	struct refs_cb_data *data = (struct refs_cb_data *)cb_data;
->  
->  	display_progress(data->progress, oidset_size(data->commits) + 1);
->  
-> -	oidset_insert(data->commits, oid);
-> +	if (peel_ref(refname, &peeled))
-> +		peeled = *oid;
+> +static int read_one_commit(struct oidset *commits, char *hash)
 
-It may be the old-timer C programmer in me, but I always look slightly
-suspicious at struct assignments. We know that object_id doesn't need a
-deep copy, so it's obviously OK here. But should we use oidcpy() as a
-style thing?
+This could be "const char *hash", couldn't it?
 
-Alternatively, you could do this without a struct copy at all with:
+> +	struct object_id oid;
+> +	const char *end;
+> +
+> +	if (parse_oid_hex(hash, &oid, &end)) {
+> +		error(_("unexpected non-hex object ID: %s"), hash);
+> +		return 1;
+> +	}
 
-  if (!peel_ref(...))
-         oid = peeled;
-  oidset_insert(..., oid);
+Returning "-1" for error is more idiomatic in our code base (though I
+know some of the commit-graph code doesn't follow that, I think we
+should slowly try to move it back in the other direction.
 
-which is actually a bit cheaper.
+> +		while (strbuf_getline(&buf, stdin) != EOF) {
+> +			char *line = strbuf_detach(&buf, NULL);
+> +			if (opts.stdin_commits) {
+> +				int result = read_one_commit(&commits, line);
+> +				if (result)
+> +					return result;
+> +			} else
+> +				string_list_append(&pack_indexes, line);
+> +		}
 
-> +	if (oid_object_info(the_repository, &peeled, NULL) == OBJ_COMMIT)
-> +		oidset_insert(data->commits, &peeled);
+This leaks "line" for each commit in stdin_commits mode (it used to get
+added to a string list). I think you want:
 
-I probably would have left adding this "if" until a later step, but I
-think it's OK here.
+  while (strbuf_getline(&buf, stdin) != EOF) {
+        if (opts.stdin_commits) {
+	        if (read_one_commit(&commits, buf.buf)) {
+			strbuf_release(&buf);
+			return 1;
+		}
+	} else {
+	        string_list_append(&pack_indexes, strbuf_detach(&buf));
+	}
+  }
+
+Though I think it might be easier to follow if each mode simply has its
+own while loop.
+
+> +
+>  		UNLEAK(buf);
+
+Not new in your patch, but this UNLEAK() has always bugged me. ;) Why
+not just strbuf_release() it?
 
 -Peff
