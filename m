@@ -2,101 +2,158 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06571C38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 20:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62007C38A2A
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 20:40:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC4D124959
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 20:21:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44332206B9
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 20:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbgEGUVt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 16:21:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40884 "HELO cloud.peff.net"
+        id S1726937AbgEGUkG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 16:40:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40902 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726470AbgEGUVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 16:21:49 -0400
-Received: (qmail 2479 invoked by uid 109); 7 May 2020 20:21:49 -0000
+        id S1726093AbgEGUkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 16:40:06 -0400
+Received: (qmail 2598 invoked by uid 109); 7 May 2020 20:40:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 May 2020 20:21:49 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 May 2020 20:40:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21708 invoked by uid 111); 7 May 2020 20:21:52 -0000
+Received: (qmail 21827 invoked by uid 111); 7 May 2020 20:40:09 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 May 2020 16:21:52 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 May 2020 16:40:09 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 May 2020 16:21:48 -0400
+Date:   Thu, 7 May 2020 16:40:05 -0400
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         szeder.dev@gmail.com
-Subject: Re: [PATCH 6/8] commit-graph.c: simplify 'fill_oids_from_commits'
-Message-ID: <20200507202148.GD29683@coredump.intra.peff.net>
+Subject: Re: [PATCH 8/8] commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
+Message-ID: <20200507204005.GE29683@coredump.intra.peff.net>
 References: <cover.1588641176.git.me@ttaylorr.com>
- <7e9d8c1f1a124171ebb5b4d874718053d1c9064a.1588641176.git.me@ttaylorr.com>
+ <6c2d130b0cd4b6a8a541b362ae7dd44d4c282e3f.1588641176.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7e9d8c1f1a124171ebb5b4d874718053d1c9064a.1588641176.git.me@ttaylorr.com>
+In-Reply-To: <6c2d130b0cd4b6a8a541b362ae7dd44d4c282e3f.1588641176.git.me@ttaylorr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 04, 2020 at 07:13:54PM -0600, Taylor Blau wrote:
+On Mon, May 04, 2020 at 07:14:03PM -0600, Taylor Blau wrote:
 
-> In the previous handful of commits, both 'git commit-graph write
-> --reachable' and '--stdin-commits' learned to peel tags down to the
-> commits which they refer to before passing them into the commit-graph
-> internals.
+> If callers do wish to retain this behavior, they can easily work around
+> this change by doing the following:
 > 
-> This makes the call to 'lookup_commit_reference_gently()' inside of
-> 'fill_oids_from_commits()' a noop, since all OIDs are commits by that
-> point.
-> 
-> As such, remove the call entirely, as well as the progress meter, which
-> has been split and moved out to the callers in the aforementioned
-> earlier commits.
+>     git for-each-ref --format='%(objectname) %(objecttype) %(*objecttype)' |
+>     awk '/commit/ { print $1 }' |
+>     git commit-graph write --stdin-commits
 
-Yep, all this makes sense. I agree with Stolee that it's unfortunate we
-can't just reuse the oidset now, but we do need the flattened array view
-here. We could perhaps create such an array from the beginning (perhaps
-using an oid_array), but we do need to care about de-duping the input.
-That can be done easily with the sorted list, but there are pathological
-corner cases where the performance is worse (e.g., if you have a ton of
-refs all pointing to the same tags, like if you happened to be storing
-the refs for 20,000 forks of the kernel all in one giant repo).
+I know this came from my earlier email, but I think that recipe actually
+shows how to make your input work even if --check-oids were the default.
+If you really want the --check-oids behavior, you'd want the opposite:
+to complain about those ones. So it's something like:
 
-I think we'd eventually turn all these into "struct commit" (and indeed,
-we already do in --stdin-commits when we try to peel). So another
-alternative would be passing in an object_array(). But I guess that
-would require surgery to the rest of the commit-graph code to work with
-that instead of the oid list.
+     git for-each-ref --format='%(objectname) %(objecttype) %(*objecttype)' |
+     awk '
+       !/commit/ { print "not-a-commit:"$1 }
+        /commit/ { print $1 }
+     ' |
+     git commit-graph write --stdin-commits
 
->  	while ((oid = oidset_iter_next(&iter))) {
-> -		struct commit *result;
-> -
-> -		display_progress(ctx->progress, ++i);
-> -
-> -		result = lookup_commit_reference_gently(ctx->r, oid, 1);
-> -		if (result) {
-> -			ALLOC_GROW(ctx->oids.list, ctx->oids.nr + 1, ctx->oids.alloc);
-> -			oidcpy(&ctx->oids.list[ctx->oids.nr], &(result->object.oid));
-> -			ctx->oids.nr++;
-> -		} else if (ctx->check_oids) {
-> -			error(_("invalid commit object id: %s"),
-> -			      oid_to_hex(oid));
-> -			return -1;
-> -		}
-> +		ALLOC_GROW(ctx->oids.list, ctx->oids.nr + 1, ctx->oids.alloc);
-> +		oidcpy(&ctx->oids.list[ctx->oids.nr], oid);
-> +		ctx->oids.nr++;
->  	}
+> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+> index 53a650225a..fcac7d12e1 100644
+> --- a/Documentation/git-commit-graph.txt
+> +++ b/Documentation/git-commit-graph.txt
+> @@ -47,8 +47,10 @@ with `--stdin-commits` or `--reachable`.)
+>  +
+>  With the `--stdin-commits` option, generate the new commit graph by
+>  walking commits starting at the commits specified in stdin as a list
+> -of OIDs in hex, one OID per line. (Cannot be combined with
+> -`--stdin-packs` or `--reachable`.)
+> +of OIDs in hex, one OID per line. OIDs that resolve to non-commits
+> +(either directly, or by peeling tags) are silently ignored. OIDs that
+> +are malformed, or do not exist generate an error. (Cannot be combined
+> +with `--stdin-packs` or `--reachable`.)
 
-I wondered if it's worth asserting that everything we got here is a
-commit. But it's not cheap to make that check, and anyway we'd
-presumably just barf later on when we try to resolve the oids to
-commits. So there's little point in spending cycles to catch it here.
+Yeah, I think these semantics are good.
+
+> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> index 9eec68572f..3637d079fb 100644
+> --- a/builtin/commit-graph.c
+> +++ b/builtin/commit-graph.c
+> @@ -153,13 +153,14 @@ static int read_one_commit(struct oidset *commits, struct progress *progress,
+>  
+>  	display_progress(progress, oidset_size(commits) + 1);
+>  
+> +	if (oid_object_info(the_repository, &oid, NULL) < 0) {
+> +		error(_("object %s does not exist"), hash);
+> +		return 1;
+> +	}
+> +
+>  	result = lookup_commit_reference_gently(the_repository, &oid, 1);
+>  	if (result)
+>  		oidset_insert(commits, &result->object.oid);
+> -	else {
+> -		error(_("invalid commit object id: %s"), hash);
+> -		return 1;
+> -	}
+>  	return 0;
+>  }
+
+We can avoid the object-existence check entirely if
+lookup_commit_reference_gently() gives us an answer. And we'd expect
+that to be the common path.
+
+Also, using has_object_file() is cheaper than oid_object_info(), since
+it doesn't have to resolve the type for deltas.
+
+So perhaps:
+
+  result = lookup_commit_reference_gently(...);
+  if (result)
+          oidset_insert(...);
+  else if (has_object_file(&oid))
+          ; /* not a commit; quietly ignore;
+  else
+          return error(no such object...);
+
+That said, I think this technique misses some cases of corruption.
+You're checking that the outer-most object exists, but not any
+intermediate peeled objects. I.e., lookup_commit_reference_gently()
+might have failed for two reasons:
+
+  - an object it peeled to didn't exist
+
+  - an object it peeled to wasn't a commit
+
+To do it thoroughly, I think you'd have to call deref_tag() yourself and
+distinguish NULL there (an error) from a result where obj->type isn't
+OBJ_COMMIT (quietly ignore).
+
+>  enum commit_graph_write_flags {
+> -	COMMIT_GRAPH_WRITE_APPEND     = (1 << 0),
+> -	COMMIT_GRAPH_WRITE_PROGRESS   = (1 << 1),
+> -	COMMIT_GRAPH_WRITE_SPLIT      = (1 << 2),
+> -	/* Make sure that each OID in the input is a valid commit OID. */
+> -	COMMIT_GRAPH_WRITE_CHECK_OIDS = (1 << 3),
+> -	COMMIT_GRAPH_WRITE_BLOOM_FILTERS = (1 << 4),
+> +	COMMIT_GRAPH_WRITE_APPEND        = (1 << 0),
+> +	COMMIT_GRAPH_WRITE_PROGRESS      = (1 << 1),
+> +	COMMIT_GRAPH_WRITE_SPLIT         = (1 << 2),
+> +	COMMIT_GRAPH_WRITE_BLOOM_FILTERS = (1 << 3)
+
+As much as I love looking at matched-indentation lists, I think this
+diff is a good example of why it's not worth doing. It's much easier to
+see what's going on if the first three items aren't touched. I'd
+actually even leave BLOOM_FILTERS where it is, and accept the hole which
+could be refilled later.
+
+Your patch also loses the trailing comma after the final BLOOM_FILTERS
+entry.
 
 -Peff
