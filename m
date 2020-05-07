@@ -2,106 +2,80 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B4E1C38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 18:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05761C38A2A
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 18:56:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B4F320575
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 18:54:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C50D9216FD
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 18:56:18 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ro6fM2OP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727826AbgEGSyG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 14:54:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40686 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726558AbgEGSyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 14:54:06 -0400
-Received: (qmail 1729 invoked by uid 109); 7 May 2020 18:54:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 May 2020 18:54:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20804 invoked by uid 111); 7 May 2020 18:54:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 May 2020 14:54:09 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 7 May 2020 14:54:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
-Message-ID: <20200507185405.GA23736@coredump.intra.peff.net>
-References: <20200505164326.GA64077@coredump.intra.peff.net>
- <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
- <20200505182418.GA66702@coredump.intra.peff.net>
- <20200505210451.GA645290@coredump.intra.peff.net>
- <20200506004612.GE927@danh.dev>
- <xmqqr1vx90mt.fsf@gitster.c.googlers.com>
- <20200506142500.GA2429@danh.dev>
- <xmqqa72l81pe.fsf@gitster.c.googlers.com>
- <20200507122549.GB3057274@coredump.intra.peff.net>
- <xmqqeerv4n0q.fsf@gitster.c.googlers.com>
+        id S1728384AbgEGS4R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 14:56:17 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61760 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727799AbgEGS4R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 14:56:17 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4857BD90D1;
+        Thu,  7 May 2020 14:56:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XiGkUh/enSmesRoWEYfLm1QPPFQ=; b=ro6fM2
+        OPRyNEuddEcoLbDGSH2cw7OMWN76JcsZGDWTHcl7otU2xZdIppfCBOv+mmCLdfdQ
+        V+730SJ+Xl7HBIQ4c3iekYzyDMotC3aASChQPi1fIdS4e/bhiCE9OHixG5gtINcS
+        Q4oEzvAVQC4Fd6DFkAVzTBq6M376vLkEVpNOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fyTi65XiZMnfy1ziDVJc9INuohj6Yl8D
+        sGjxXXPQBJKT+tF1zRK9H6MaVUfSVVUh7DSnXMTPpAgkFLv6hiGTUHZKujP7SQr/
+        l/BPIwKeFZpN43S5ASSpNbY31s3DS3/4lDVySTsmlJ4EndUvd2ATFF0pnf7vfZvI
+        Ha4DujWgUlk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3FEC3D90D0;
+        Thu,  7 May 2020 14:56:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86CDED90CF;
+        Thu,  7 May 2020 14:56:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Git Test Coverage Report (April 30, 2020)
+References: <fda6d0db-f79e-f44e-7c2b-b60ed1794cd0@gmail.com>
+        <CAFQ2z_PP9Ld+GDctV-v2CDKFamF6zKdJZ_-jhahj_fcm3wy4Hw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2005012316350.18039@tvgsbejvaqbjf.bet>
+        <20200503095500.GF170902@coredump.intra.peff.net>
+        <xmqq1ro1j6qk.fsf@gitster.c.googlers.com>
+        <CAFQ2z_Pf7u0k-PvMG8J-kWMdRXhamm5JgHZiUM6Ffu-2zGGubQ@mail.gmail.com>
+Date:   Thu, 07 May 2020 11:56:10 -0700
+In-Reply-To: <CAFQ2z_Pf7u0k-PvMG8J-kWMdRXhamm5JgHZiUM6Ffu-2zGGubQ@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Thu, 7 May 2020 12:11:02 +0200")
+Message-ID: <xmqqa72j4lrp.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqeerv4n0q.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6BC21E70-9094-11EA-9C75-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 07, 2020 at 11:29:09AM -0700, Junio C Hamano wrote:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Yeah, I agree that all of the mechanisms for dealing with the unrelated
-> > history are somewhat awkward. Another issue is that you can't just:
-> >
-> >   git clone --single-branch -b refs/ci/config my-config
-> >
-> > to work on it, because "-b" wants only heads or tags (we could address
-> > that by putting it in refs/heads/ci-config or similar).
-> 
-> I somehow don't think that it is such a huge issue, because I expect
-> anybody who has legitimate interest in refs/ci/config to have a full
-> clone of git.git anyway.  So it is more like defining another
-> remote.origin.fetch like this:
-> 
-> 	 [remote "origin"]
-> 	 	url = https://git.kernel.org/pub/scm/git/git.git/
-> 	 	fetch = +refs/heads/*:refs/remotes/origin/*
-> 	+	fetch = +refs/ci/config:refs/remotes/origin/ci-config
-> 
->          [remote "publish"]
-> 		url = https://github.com/user/git/
-> 
-> 
-> and then do something like:
->     
-> 	$ git worktree add -b ci-config ../git-ci-config origin/ci-config
-> 	$ cd ../git-ci-config
-> 	... hack hack hack ...
-> 	$ git push publish ci-config:refs/ci/config
+> I'm discussing options on how to move forward with Jonathan Nieder.
+> Once we have sorted those out, we'll send out an email, hopefully
+> early next week.
 
-I dunno. The duality of refs/ci/config and refs/heads/ci-config is
-weird. Your two refspecs overlap on their RHS, and once you push up the
-refs/heads/ci-config you created with "git worktree add", they'll start
-to conflict (which maybe is OK as long as they're the same).
-
-In the patch I sent out a few hours ago I just caved and made
-refs/heads/ci-config the magic ref, in order to avoid complexity.
-
-But it also wouldn't be too bad to say "look, you can store this however
-you like in refs/heads/ or not at all, but install it into place with
-git push <remote> HEAD:refs/ci/config". The audience is git.git
-developers (and even advanced ones whose workflows involve tweaking
-their CI config), so I'd like to think they could figure it out.
-
-I have a feeling that fewer than 5 people in the world will end up using
-this feature either way. ;)
-
--Peff
+Thanks.
