@@ -2,152 +2,112 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6E3C38A24
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 581B4C54E49
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:37:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 757C920659
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:36:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 385E72083B
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:37:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="X3VGCKKn"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Mi4kb3nd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728004AbgEGOgE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 10:36:04 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52289 "EHLO mout.gmx.net"
+        id S1727789AbgEGO1t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 10:27:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58221 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728165AbgEGOf7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 10:35:59 -0400
+        id S1727116AbgEGO1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 10:27:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1588862156;
-        bh=QYAKJmEFDkAo09cjUcorLlGGs0Td0kObSeoAw2RHLLw=;
+        s=badeba3b8450; t=1588861657;
+        bh=uWxSLwOgVAolf+uje5HCi+VnDAjrP4R3OEmStjaJEIw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=X3VGCKKnpsiDe/hlGlAoegEpN8B4AtY0AU1hP/o4+g1edGU7ZWqx8H8OGxEVBszgk
-         2WpxQDzqGmCQnbxLrHxiElI0SL+dX4pzdS5RasUnDnyr5/BoeWA8jaefTl1CW/zO58
-         D6X60UNXoUL2wdKE0GbSFOne9Est+D8si13ULyRY=
+        b=Mi4kb3nd2glAuGtOGkZMGpxnxwnSM/NAbgz4FNFxEG9muv3PQRaZrXryhn1ycYksn
+         u+svc8BuVZpESX+JP7KEh4yHmsEl3P2IZisuuBv3kSJcnIUTTwoBsbGCG3Si/YD1rb
+         3SgOc45dCPljlVYSQJB9buIsRYkJ+5k0bnmth04A=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.84.97] ([213.196.213.71]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MiJV6-1isfmc23hm-00fV0B; Thu, 07
- May 2020 16:35:56 +0200
-Date:   Thu, 7 May 2020 16:35:56 +0200 (CEST)
+Received: from [172.30.84.97] ([213.196.213.71]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MAwXr-1jQP2n3gAj-00BMW9; Thu, 07
+ May 2020 16:27:36 +0200
+Date:   Thu, 7 May 2020 16:27:36 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Tan <jonathantanmy@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t5500: count objects through stderr, not trace
-In-Reply-To: <20200506220741.71021-1-jonathantanmy@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2005071635270.56@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2005062304410.56@tvgsbejvaqbjf.bet> <20200506220741.71021-1-jonathantanmy@google.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
+In-Reply-To: <2367cf9d-2e37-b8c2-6881-f3e6c951a460@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2005071626340.56@tvgsbejvaqbjf.bet>
+References: <pull.625.git.1588624804554.gitgitgadget@gmail.com> <2367cf9d-2e37-b8c2-6881-f3e6c951a460@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:KXgZeA1BJ/Z+V7/tezAf2DrDsp8YrhTBkUnzMipzLCXo9MjY5R1
- gaRjqzUzyR5kTQaBxrx0HhSTFpQowsYtSVrqdcv1Bif4ZJ23eMPqKSn9da5jXvuT1vMwFSh
- rlmTdZGIMtsHrPgyCvROG+ZsFP3YNBWXpo1KpxeZDBboUAn2FwU37ZK/gW/TfsV1birMnnY
- 3ikeHjYyutpeaix95G7vA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PBg09lHBb5I=:zTd7tV8DCLb3w8bXlC8OMe
- BL0rp3BvLRyzwJfWipVaaHT0jdJwQw1zqc/cylaR9xounkyskBKmN6sGEEdRMNVf0gRZ1zvjE
- NxdqtsBobaoNw2DThzGYdaoiiJVWUEaZIa2+XbwIssnW2pX4NjZ4jPQzaREEQXAaJ3jnzwo1B
- YaLL03rAdwmPFGcA/P8ii4ieOGuBoTtMtLk+qwVd4eeZrCTlUdCani47BqvO9Q68/geW86dKz
- GuZscGb7CS0YzY985MAbOLfCtx/wJPVVqxMAvOeYtR86gcO/bEBETlElFGYOs9/YRRaxiFsfx
- HJRNg0ZeF+YqCUrtx8ToVUcFLwFmRuFdLhidL4PSayrmJ2G0on6lx3O4Iqvmwaw1wUjF9o7vC
- K9BtzigGrCefP5XPH5uxpK8LKDosHxVPROEdORXH7wWrnI7PgMoQN1zfpluGeAneAM1brXKI8
- TzoDX2YlxnR8QZtFyZSychm8fonKCMf2Yf0HMNEAvzaxeKNUoqw/PQpMglU4p2jMJwmoINHY2
- eousfCVhfWjGo+vfpvMctV2F6XR+hfA9Jo8HFGdNLdxgq72s/15yBRwTEssZ8OAvod0BJwTVs
- JCOVF9POie/GhkH0j9hDJhqka4uP72UhbXtFCSvbJrlCVVPhIx5DI8fTJxqwtTgnWpueB7Tmd
- ZcdmRCrrMZpDgj4oxqGsS/OjemnS3oKXZNjcPLbNLPd5U5npTQGD2klDB5O/PKuYyI8tFFXs8
- ookOuEfGTMPmkRjUeNdIPMj/3EM8Yw4Pc3tqQ34c6x2CSJu1oeIsAK2kx5pIeMRrLngDPLz58
- fZrkE1/DpVJhgFkZXXbR8B6SfcSp76FcGJlMTGdmK8Z4l0F94b5ARvpbDwm7K1yaJeiBerqJ5
- kZeNxZ0GS8E8Ekh2bT4Ysh7UXi2Kft9LQd4CDSR/NOj7nZCW2Sule4/Qx64kYo5GNw0U8bjub
- SiiqfJXN8RFkplz8XxWyChgD6mRSXh1Z8nYoKSvCpadjm90nUL89zy7Vog+B1SO6f2UJtT3Ef
- 8qMXu0W5LDKrwJOCWMbGuETWbdxUgRj7CQQ66VqWnKuHZOxmKf5a4b43vIvtaDiVoAq1Cn4mW
- kwpzyStDYIrRXed+9Sf+HhJlTGt56lXFjvO9s/cVZnLXaRplXlsbHOWPShBrG1Be/W2DJmq2z
- b2+5GdQ6tveGwaAILWwJhgiUE0z50Ajh5q0zTSGBNeYg4VqYuixUPNzYHkAaVGd4y+lyeX50c
- +PDWpn7ePy6IZ6UJB
+X-Provags-ID: V03:K1:k6jhdpNne2QY+jEXdrvrzetC9MiwYvi5kAfJ+hSrwr9gahIPtYE
+ +bvvZ+TSknUf3ISiNpdJbEg6mp9WUzPoWumTNNjv+Sq+fyFsLxBx6vKRKUkoBxi8knl2haO
+ 9B2+vv9kaELzMFn9UmPfnJtpPGNVOdWCQvB1phTxAPLWbGQyVFxlN+vyG5i3c2oap5eXDbj
+ D2YD+4fw2eNZBt2S5+O8Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5ESy7609dF4=:BVvjf5tbm5CEm6fyFQ8RMn
+ hkXvxZ+2+4UMNUd7yVBlpi07eZI7FBmxhw3Nn4qnAXUUyl4rOK+7u5ugfZnmS7pgBvnL8tYwk
+ 1OaKObXT+l0HaiS4t7jF/IQbDyjsaIF7CfN5lUIwCnm7fmWHf1uwBYgWjXmggmLFYTtYGX6vK
+ 6u/2NT7ggYvtiyoPruRybDjc+XzA2g7lyeVnXNbWt+i0QJEZra6EmmSm9tn0+oanDpKQT7Zus
+ R4IMcaecAmRvU2q2vhqZmLpKcFsVVvXsNzdQXkdbU+jVtN/nbuin0usnKGKhYzRvvnDNx7ySJ
+ UG6usmK3tBMdBtLa+opJgrVH3LXmOVBnxeGkPVtK/qkWyYFDzVAleQDg4wT3+B9CNxDn5erOV
+ y9YM6oSkcHkAcFTuqKVVH79k5sq+/uf0lYYlZLsyckIgUBvXqfxmiu0iH8pjomElvOFrMHGnx
+ tvNDlf6lSXQTrWFM4ro55I8RkPt/111HvmsMRh+ERMGJKNzs7I6GjMUdJT5kJuUaqH0DEpLRG
+ z/v05v+tL5NYTHACgbr/QOuOIbJgjkx6y+C7bJiRQ2UpMh7jMpRxJ6pwtYqDnzwCWIo3fyqVj
+ jEnTzy40TveFLiBVAIUSGwPV0rY+BtiJuETI0PPEsfXxnOekVww2oJXcsNc2HDCHyCBqiXywA
+ 2oEj0jFzQ5b1BOGtsHomJEfsVnTB8i1OgIBG+iJn7CgzjAdeVpWhSSxBk9sPKBZoFczVHnrAJ
+ N2EA5YkENWvYfItiWmDr4l4gGuUzlr4ERf1pYEmnSgXIEbdYLPgQOCRMgc48XrWSB6gcWJbHY
+ OoAfZR/x+0d3/cZ/6uCEjGfL+AfiwtLWZJ93uZbzLC4hOrsRsio6dGCoai8Ecgrrl+E3cYNkZ
+ rB8LaZ1GZlLcrcZ2BoL/IxC1s8sa3zqtGzz5K73bmu+GC278/Yu/JtWP1KXOk561DG6OACyv0
+ FH2g+5j1DT7yyxLzBMuuYKyVi51Ms4BgSUnfIA5/hKzSO0MAkGplIdeS+1dYsQ/+Y9s+Deit5
+ AAAnOSe/5J4nHd7Ebe2M1orgAuimLR/luxMLV7YHDpiRKN/OeT747P5DUKLXvyrbMjWTbehUe
+ kFdDMFh+2VDdOMXD3ISkQ39UaaoXwkY2eXBzz5+lZDB/Yqz2j661d8dpkkjERmwJB7PvcOvuW
+ V38PF/7iDSTLIveQk5jayejG0A3zsJQot+GhoriMWsyzPU81Kp4uqQiLFPyffRlQDSKldRVXd
+ Y5A/PxvREEBtiBnK9
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Andrei,
 
-On Wed, 6 May 2020, Jonathan Tan wrote:
+On Wed, 6 May 2020, Andrei Rybak wrote:
 
-> In two tests introduced by 4fa3f00abb ("fetch-pack: in protocol v2,
-> in_vain only after ACK", 2020-04-28) and 2f0a093dd6 ("fetch-pack: in
-> protocol v2, reset in_vain upon ACK", 2020-04-28), the count of objects
-> downloaded is checked by grepping for a specific message in the packet
-> trace. However, this is flaky as that specific message may be delivered
-> over 2 or more packet lines.
+> On 2020-05-04 22:40, Johannes Schindelin via GitGitGadget wrote:
+> > However, as reported by Paul Ganssle, that need not be true: the speci=
+al
+> > form `fixup! <commit-hash>` is allowed to point to _another_ fixup
+> > commit in the middle of the fixup chain.
+> >
+> > Example:
+> >
+> > 	* 0192a To fixup
+> > 	* 02f12 fixup! To fixup
+> > 	* 03763 fixup! To fixup
+> > 	* 04ecb fixup! 02f12
 >
-> Instead, grep over stderr, just like the "fetch creating new shallow
-> root" test in the same file.
+> Could you please clarify if I'm understanding this correctly: does this
+> affect the fixups-of-a-fixup which were created by
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> Thanks, Dscho. The commits introducing the flakiness have made it to
-> master, so this commit is on master.
+> 	git commit --fixup=3D<pointer to previous fixup! commit>
+>
+> ? For example:
+>
+> 	* 0192a To fixup
+> 	* 02f12 fixup! To fixup
+> 	* 03763 fixup! To fixup
+> 	* 04ecb fixup! fixup! To fixup
+>
+> Where 04ecb was created by pointing option --fixup at 02f12.
 
-Thank you for fixing this so quickly. I agree that the patch addresses the
-underlying problem.
+No, it only affects commits whose oneline (i.e. the first line of the
+commit message) is `fixup! <commit-hash>`.
 
-Thanks!
-Dscho
-
-> ---
->  t/t5500-fetch-pack.sh | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> index 52dd1a688c..8c54e34ef1 100755
-> --- a/t/t5500-fetch-pack.sh
-> +++ b/t/t5500-fetch-pack.sh
-> @@ -386,7 +386,7 @@ test_expect_success 'clone shallow with packed refs'=
- '
->  '
->
->  test_expect_success 'in_vain not triggered before first ACK' '
-> -	rm -rf myserver myclient trace &&
-> +	rm -rf myserver myclient &&
->  	git init myserver &&
->  	test_commit -C myserver foo &&
->  	git clone "file://$(pwd)/myserver" myclient &&
-> @@ -399,12 +399,12 @@ test_expect_success 'in_vain not triggered before =
-first ACK' '
->  	# The new commit that the client wants to fetch.
->  	test_commit -C myserver bar &&
->
-> -	GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C myclient fetch --progress ori=
-gin &&
-> -	test_i18ngrep "Total 3 " trace
-> +	git -C myclient fetch --progress origin 2>log &&
-> +	test_i18ngrep "remote: Total 3 " log
->  '
->
->  test_expect_success 'in_vain resetted upon ACK' '
-> -	rm -rf myserver myclient trace &&
-> +	rm -rf myserver myclient &&
->  	git init myserver &&
->
->  	# Linked list of commits on master. The first is common; the rest are
-> @@ -429,8 +429,8 @@ test_expect_success 'in_vain resetted upon ACK' '
->  	# first. The 256th commit is common between the client and the server,
->  	# and should reset in_vain. This allows negotiation to continue until
->  	# the client reports that first_anotherbranch_commit is common.
-> -	GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C myclient fetch --progress ori=
-gin master &&
-> -	test_i18ngrep "Total 3 " trace
-> +	git -C myclient fetch --progress origin master 2>log &&
-> +	test_i18ngrep "Total 3 " log
->  '
->
->  test_expect_success 'fetch in shallow repo unreachable shallow objects'=
- '
-> --
-> 2.26.2.526.g744177e7f7-goog
->
->
+Ciao,
+Johannes
