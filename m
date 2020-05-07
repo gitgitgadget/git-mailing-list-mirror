@@ -2,176 +2,99 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D04DC38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DCDFC35280
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:58:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E8F1208D6
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:29:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D314720870
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:58:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RN/vqdlj"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UVH+K+G0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbgEGV3o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 17:29:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58316 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbgEGV3n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 17:29:43 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC245C05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 14:29:42 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id z8so8203666wrw.3
-        for <git@vger.kernel.org>; Thu, 07 May 2020 14:29:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=+vYu52kC2LTJI4mr5HsJUpVzjppouJn2WDVf5qmvgt4=;
-        b=RN/vqdljsqEU1Vr+2BFBa6Yuh83mEtc98101bMaRv5L0WvfWLgapLHENtt25LS03O2
-         lgpN9BtBdZfz78HplsqqV8c5ZK7pPQE/QGrQepfIzvAPA+LZXqfNXOZ+dRb8uXqH0Jji
-         MRHEF2qonQQ6Dn6twrZwhI4+ybiHyuLL2hgmSRwPGbQf4avL1dpkoXFZ3Eyuj0zOpuG0
-         meb/safx1AMsThVGZd6UH+GjS2AQjH4SUvL1y8AaAm3FiryDkQfECHUWTc6V/QLc58ry
-         W+43bFFSL1M6jvHZKNymh3NiNoQmy5FgkpxmG0pGzs/ZBkqX+sL0Z3a1iYrOTJB2OvWp
-         PT6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+vYu52kC2LTJI4mr5HsJUpVzjppouJn2WDVf5qmvgt4=;
-        b=BHHb644HAV3VgwmBGWo2vzaEDmgTSxkgDsVZDT+YsRHBkPb6qjNHU/An5FU31lMfsw
-         N8XtonD9O7ELvBzHobNW75tGab8KP+uTNqZAzimK+fL3DCWfcAp3oxtSZs6/TuJ49KTJ
-         XxzD5ST/GDjx9lOCXaMDa3TiZZDihIOuFdCqHf7Wajcvo69KXyxay+4SELL0APwcHHo1
-         fY1ajTHNe+lzoGA/o0UzQtVDrnUrcS8SFrRmn/kUHMj03YC6U5avA9rfWQeMpXtYsVxa
-         JdwLTw1nAhWRezy1oYuxDa1gF19JsRKBYaEdSWi4bAIiVjBI3wN1A5/pkNHvBCyd+vPY
-         Lbdg==
-X-Gm-Message-State: AGi0PubysBAzYwlLzOXWD15UrpEa+LT2W65HSE5GtCLAlRIuWIE2RfZR
-        XW3vuN1iARpjaoViNPsA9aL3ILFf
-X-Google-Smtp-Source: APiQypIgU7b626uoujYhXzlLj/DzNSmBFaHUscxQyVjZigK2yx5B8sSkhnRTyYy8/d7gxlg4vtYK6w==
-X-Received: by 2002:adf:fad0:: with SMTP id a16mr19556380wrs.149.1588886981285;
-        Thu, 07 May 2020 14:29:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o2sm3088594wmc.21.2020.05.07.14.29.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 14:29:40 -0700 (PDT)
-Message-Id: <pull.629.git.1588886980377.gitgitgadget@gmail.com>
-From:   "Christopher Warrington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 May 2020 21:29:40 +0000
-Subject: [PATCH] bisect: fix replay of CRLF logs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726515AbgEGV6X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 17:58:23 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58941 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726437AbgEGV6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 17:58:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C9ACD1B5C;
+        Thu,  7 May 2020 17:58:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RMHBQubt/8m9UsolFZeJ9IOFOoc=; b=UVH+K+
+        G0Q/q3SXOxZEDOh8EuoAXfMG7CGo4ashclqMm7kXjritaF7LT4CjFGXb32CXyNcx
+        OnXR62rt1GvhKg6ERMTDp4fNYL6ZAzQjk3ZQlP+dAm025HKWq8xtObN3JpsD3T9n
+        +oE8ievPr0Wg/54XTf+TJlytBfY929VQAcw/w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OcFuFIIrLkoxMVyEL5kGWyS5PT2yCjEy
+        BZlRGw7Nd1VL1FheFdyzrc0lIpA5ebBnDfB3qHCLduMryNwodFP5tv/3ibBZRN7+
+        7+ohtffajrd2cgWuzzcJdkfE9jaaIbojZlJ5MWXDmnEpZrpArkHoIWd8B1VNz5hq
+        0GsyGxcZeuM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 941E8D1B5B;
+        Thu,  7 May 2020 17:58:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DC93BD1B5A;
+        Thu,  7 May 2020 17:58:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] ci: allow per-branch config for GitHub Actions
+References: <20200504162311.GE12842@coredump.intra.peff.net>
+        <20200504215824.GC45250@syl.local>
+        <20200504233634.GB39798@coredump.intra.peff.net>
+        <20200505002055.GC64230@syl.local>
+        <20200505164326.GA64077@coredump.intra.peff.net>
+        <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
+        <20200505182418.GA66702@coredump.intra.peff.net>
+        <20200505210451.GA645290@coredump.intra.peff.net>
+        <20200507162011.GA3638906@coredump.intra.peff.net>
+        <xmqqwo5n34ka.fsf@gitster.c.googlers.com>
+        <20200507204626.GG29683@coredump.intra.peff.net>
+Date:   Thu, 07 May 2020 14:58:16 -0700
+In-Reply-To: <20200507204626.GG29683@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 7 May 2020 16:46:26 -0400")
+Message-ID: <xmqqo8qz2yrr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christopher Warrington <chwarr@microsoft.com>,
-        Christopher Warrington <chwarr@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DBC6AABA-90AD-11EA-BAAB-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christopher Warrington <chwarr@microsoft.com>
+Jeff King <peff@peff.net> writes:
 
-Sometimes bisect logs have CRLF newlines. (E.g., if they've been edited
-on a Windows machine and their LF-only nature wasn't preserved.)
-Previously, such log files would cause odd failures deep in the guts of
-git bisect, like "?? what are you talking about?" or "couldn't get the
-oid of the rev '...?'" (notice the trailing ?) as each line's CR ends up
-part of the final value read from the log.
+> It was deliberate in the sense that I would allow them to write useful
+> messages to the Actions log. If they want to do nonsense like
+> "::set-output", then it's their foot and their gun.
 
-This commit fixes that by stripping CRs from the log before further
-processing.
+It's not like fooling the framework you laid out here is a
+potentially useful attack vector.  We can assume that it is unlikely
+for the custom allow-ref to be writing a string that happens to
+begin with double-colon by mistake and making it harder to debug.
 
-A regression test that fails without the git-bisect.sh change, "bisect
-replay with CRLF log" has been added as well.
+> I don't know if Actions distinguishes between stdout and stderr here
+> (i.e., if we redirected the script's stdout to stderr, would that
+> prevent this case or not?).
 
-Were anyone to intentionally be using terms/revs with embedded CRs,
-replaying such bisects will no longer work with this change. I suspect
-that this is incredibly rare.
+Perhaps we can experiment with "echo >&2 we are getting called" in
+the allow-ref script itself ;-).
 
-Signed-off-by: Christopher Warrington <chwarr@microsoft.com>
----
-    [RFC] bisect: fix replay of CRLF logs
-    
-    I recently ran into a problem replaying a bisect log that was created
-    and edited on a Windows machine. During the editing process, the log's
-    LFs were converted to CRLFs, which caused git bisect replay to fail. In
-    my particular case, the error from git version 2.26.2.windows.1 was
-    "couldn't get the oid of the rev '...?'" (notice the trailing ?).
-    
-    I was able to reproduce this problem in the current maint branch,
-    af6b65d45e (Git 2.26.2, 2020-04-19) on Ubuntu 18.04 as well.
-    
-    This patch strips any CRs from the log during git bisect replay to avoid
-    these issues.
-    
-    Is this change something that makes sense to add to Git itself?
-    
-    I've opted to use tr -d '\r' to remove all CRs from the bisect log for
-    simplicity, but if there's a need to preserve CRs in the middle of log
-    lines, something like this will only remove a CR at the end of the line:
-    
-    sed $(printf 's/^\\(.*\\)\r$/\\1/') "$file" | while read ...
+In any case, I'll queue it on 'pu'.  Thanks.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-629%2Fchwarr%2Fbisect-replay-crlf-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-629/chwarr/bisect-replay-crlf-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/629
-
- git-bisect.sh               | 10 ++++++++--
- t/t6030-bisect-porcelain.sh |  7 +++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index efee12b8b1e..8406a9adc36 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -209,7 +209,11 @@ bisect_replay () {
- 	test "$#" -eq 1 || die "$(gettext "No logfile given")"
- 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
- 	git bisect--helper --bisect-reset || exit
--	while read git bisect command rev
-+
-+	# We remove any CR in the input to handle bisect log files that have
-+	# CRLF line endings. The assumption is that CR within bisect
-+	# commands also don't matter.
-+	tr -d '\r' <"$file" | while read git bisect command rev
- 	do
- 		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
- 		if test "$git" = "git-bisect"
-@@ -231,7 +235,9 @@ bisect_replay () {
- 		*)
- 			die "$(gettext "?? what are you talking about?")" ;;
- 		esac
--	done <"$file"
-+	done
-+
-+	get_terms
- 	bisect_auto_next
- }
- 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 821a0c88cf0..72c5dbab278 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -792,6 +792,13 @@ test_expect_success 'bisect replay with old and new' '
- 	git bisect reset
- '
- 
-+test_expect_success 'bisect replay with CRLF log' '
-+	awk 1 "ORS=\\r\\n" <log_to_replay.txt >log_to_replay_crlf.txt &&
-+	git bisect replay log_to_replay_crlf.txt >bisect_result_crlf &&
-+	grep "$HASH2 is the first new commit" bisect_result_crlf &&
-+	git bisect reset
-+'
-+
- test_expect_success 'bisect cannot mix old/new and good/bad' '
- 	git bisect start &&
- 	git bisect bad $HASH4 &&
-
-base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
--- 
-gitgitgadget
