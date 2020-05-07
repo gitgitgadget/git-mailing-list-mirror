@@ -2,191 +2,140 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6793BC38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10390C38A24
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:47:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4179A2064A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:32:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DAF54207DD
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:47:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PrhgNuO1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nban3b3S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726445AbgEGMcw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 08:32:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59176 "EHLO
+        id S1726445AbgEGMrE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 08:47:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725947AbgEGMcw (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 08:32:52 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C105BC05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 05:32:51 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id w2so5207766edx.4
-        for <git@vger.kernel.org>; Thu, 07 May 2020 05:32:51 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725857AbgEGMrD (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 08:47:03 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC5FC05BD43
+        for <git@vger.kernel.org>; Thu,  7 May 2020 05:47:03 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id f8so2020636plt.2
+        for <git@vger.kernel.org>; Thu, 07 May 2020 05:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UFzfn5s3vRZ20ykPbPJ8LIlCYVF33P0mjXPV4MbJzxk=;
-        b=PrhgNuO1VplJwVezcVJ3Uu6HpvJYbBBFryTcX5LED8k5lOAKY1CvHQlm3j6lVmm90b
-         EO74tejOWNC/FjiUw64qwbgfq33m10Mx7rzeepGhwmGV3K6SkX6jkrVindC8Q/MsjtN+
-         NrSDBfVnZ4RQ2oDB2ndrTMKXX22L4i1FKtGiDvdTqBLP2apDiRQ+dsM4RjajjM8REZh0
-         DZPVXatibGfbMX8t9UAQXI/8SwqGbQU5I+H1kxJCwqevYJUrmVMyiuln/7ou8TmSo4tj
-         NUsqfMw+uFxel3UTUMH9COIyIYD2yWfa49UNUOmbBjgqwkhMlkT2/fHxdsBxjSv2IKDE
-         1iTg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=VDqWldCcxM2O44+IrzGF6K5iNY4h1Uu88uEdSPSLeOU=;
+        b=nban3b3SQ50mJSpkc9hE0l/PXCPJkvaLSSjmO+LscJIRj2Q8XG3RKMZOu9HlEeWcQe
+         rbNDA1gTO1qDsZjYxDTT2IgPtWg1GXo1rsGyV+AguaM6ISIrjUAZFai0PIMpSzzusLE/
+         Ta2flX0MjKMEAWizlCaBEPESJ+rJ0IkwpRKybqT8cWnAjHlBe2gBIh5XtWBHrb+udqbr
+         h988bFhyANC7hAKzuULALTayLuETtBL/J437FWC988RKP8MFpl1aD0oQtYl8sKSzgBYx
+         e4UBKg+QqjAAu0iXj9xwfxnT06oebH4qKaDQIU/A0CcwuC2TgOng3nsFfDD1Vn3ugBWF
+         BIVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UFzfn5s3vRZ20ykPbPJ8LIlCYVF33P0mjXPV4MbJzxk=;
-        b=nz5JPrmolqv2N4eqh5QdXwQDhn+5S2QvdDXzwCu9oVV3Kr3nuhyHkmO8KPdvwcj8bl
-         5guVI4DxADxKz+xJps8iqe8k/3eDrRvKlc1XDa2Y+qsNmyqnNy6u5S/nVm4DGa0JqtuL
-         BLJFriSz5kqSEOUXByoPndgWigENpn9jlWDapYWt5JXcZFlamurjs7X3Npe+YL/T2w9Z
-         Dt3GghAm5M5GUKi0n0Hxjk40oyG7Oi9Wd8X/ZccE9UZVVfhCCzMhF8gx0pu7GRKoZht5
-         /yD6lJ7FHzSWxEhddDdeIACV4yo+5gD4o8PLYW2tAZcDUcOtSx++WpJ/0GqHNQLo19jg
-         L5Zw==
-X-Gm-Message-State: AGi0PuZ5tqzE8oq8ynTBQPVYHgNfviKCXWiGl4BOeJ1+yI6dfoCzLpOM
-        z5sbg14bMo9WAJ0qUPhwLY63HdMQ8+rQXSg+IcI=
-X-Google-Smtp-Source: APiQypIZN/eE9ygR5mc+TVFlcnP7T+RF64+IfFC9qeXvObpCRIRHGZEwSf8ILLzn1QnyJsH22P2Ykk5gnMQb8iujzVc=
-X-Received: by 2002:a05:6402:44f:: with SMTP id p15mr1437269edw.87.1588854770291;
- Thu, 07 May 2020 05:32:50 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=VDqWldCcxM2O44+IrzGF6K5iNY4h1Uu88uEdSPSLeOU=;
+        b=V75ev9fUNF7Z0W7UTGtKBNbejyP03WQI2whrsMg9q8RN39dt2NIjvEA6GtZvpaevQZ
+         6+D1OOfOQ2Ao3g/GDeEaxx7xRDB5QTe2XyRgh+8LxJeiCOdcEYx1sQhDzhOATCB+Q812
+         CwIbmQyiQ2FPC65lnggwk2sc+yk+vd0GUouAmrHldJE/T2xpcOjgyZDtJhJxCeDP6FjN
+         dr0OKoD5lD4d4/wCZ/eN/eqp0NmtJLtCte56aHIUCNzRxSFHYVO85RlF/q7CZKB5WB92
+         ehY34bRM4KkylDRrGBmwpbQTS2vDr30JL/RaaS6VgtCz2Arcvsh1K2TRON1tTqLlonAb
+         mjHw==
+X-Gm-Message-State: AGi0PuZOeuNfizt/1Xf3+WbcEySH/cqZi/5BowUEvA2kLxSLU2XEBXo9
+        QD26Zzqj7YQerzHuhPhYitY=
+X-Google-Smtp-Source: APiQypJ1+a7NACtulIgI22oakzbg+HnjI/FGplCcLEl7la5L+M5TOrfAqVZ6Rqhk5TcUbwKXQNmIJA==
+X-Received: by 2002:a17:902:c282:: with SMTP id i2mr13017325pld.20.1588855622463;
+        Thu, 07 May 2020 05:47:02 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
+        by smtp.gmail.com with ESMTPSA id y24sm4681389pfn.211.2020.05.07.05.47.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 05:47:01 -0700 (PDT)
+Date:   Thu, 7 May 2020 19:47:00 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
+Message-ID: <20200507124700.GA1378@danh.dev>
+References: <20200504215824.GC45250@syl.local>
+ <20200504233634.GB39798@coredump.intra.peff.net>
+ <20200505002055.GC64230@syl.local>
+ <20200505164326.GA64077@coredump.intra.peff.net>
+ <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
+ <20200505182418.GA66702@coredump.intra.peff.net>
+ <20200505210451.GA645290@coredump.intra.peff.net>
+ <xmqqlfm69il6.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2005061623520.56@tvgsbejvaqbjf.bet>
+ <20200507120102.GB32465@danh.dev>
 MIME-Version: 1.0
-References: <20200507095829.16894-1-chriscool@tuxfamily.org> <20200507113624.GA3027470@coredump.intra.peff.net>
-In-Reply-To: <20200507113624.GA3027470@coredump.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 7 May 2020 14:32:39 +0200
-Message-ID: <CAP8UFD3AqUGrE2W3Qg_+z6HnobmRpOEyNEdspmDPGggKUqyK+w@mail.gmail.com>
-Subject: Re: [RFC PATCH] upload-pack: fix filter options scope
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200507120102.GB32465@danh.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 7, 2020 at 1:36 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, May 07, 2020 at 11:58:29AM +0200, Christian Couder wrote:
->
-> > I am not sure why upload_pack_v2() is called twice. Also it seems
-> > that another similar issue might not be fixed by this. So this patch
-> > is RFC for now.
->
-> It's because of the request/response model of v2. The client side of the
-> conversation looks something like:
->
->   - client connects transport to server
->
->   - client issues command=ls-refs to get the ref advertisement
->
->   - client issues command=fetch and sends wants/have; the server may
->     respond with a pack when the negotiation is finished, but may also
->     respond with acks, etc, asking for more rounds of negotiation
->
->   - if there's no pack, the client then issues another command=fetch,
->     repeating until we get a pack
->
-> In stateless git-over-http, each of those request/response pairs happens in
-> its own server-side process, because the webserver kicks off a separate
-> CGI for each request. But v2 adapts git://, ssh://, and direct-pipe
-> connections to use the same request/response model, but all connected to
-> a single Git process on the other side.
->
-> So each upload_pack_v2() call needs to start with a clean slate; it
-> can't assume anything about previous rounds, and it needs to clean up
-> any allocated data from those rounds.
->
-> So your patch is going in the right direction, but we already have other
-> similar data handled by upload_pack_data, which has its own init/clear
-> functions. Probably the filter data should go in there, too.
+On 2020-05-07 19:01:02+0700, Đoàn Trần Công Danh <congdanhqx@gmail.com> wrote:
+> On 2020-05-06 17:09:39+0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > The idea is indeed very neat. I think we can do a bit better with resource
+> > usage by not even bothering to check this branch out. Something along
+> > those lines (sorry, I really would love to have the time to test this...):
+> 
+> While this can avoid the cost of checking out a whole branch (which
+> can be mitigated by using an orphan branch with single file),
+> 
+> This still spins up an VM, and actions/github-script run (I think)
+> nodejs, which is more resource intensive than git and sh script.
+> Above statement maybe wrong, I'm not interacting much with nodejs.
 
-Thank you for the detailed explanations!
+I was wrong, actions/checkout is also using nodejs,
+So, this actions/github-script actual reduces the total time for
+fetching the file ref-whitelist/ref-blacklist/allow-ref
 
-It looks like 'struct upload_pack_data' is indeed used by
-upload_pack_v2(). It's not used by upload_pack() though. So if I move
-'struct list_objects_filter_options filter_options' there, I would
-need to also make upload_pack() either have its own filter_options or
-use 'struct upload_pack_data' too.
+> >       - id: check-ref
+> >         name: check whether CI is enabled for ref
+> >         uses: actions/github-script@0.9.0
+> >         with:
+> >           script: |
+> >             const req = {
+> >               owner: context.repo.owner,
+> >               repo: context.repo.repo,
+> >               ref: "ci/config"
+> >             };
+> > 
+> >             try {
+> >               req.tree_sha = (await github.git.getRef(req)).data.object.sha;
+> >               (await github.git.getTree(req))
+> >               .tree.filter(e => e.path == 'ref-whitelist').map(e => {
+> >                 req.file_sha = e.sha;
+> >               });
+> >               const list = Buffer.from((await github.git.getBlob(req)).data.content, 'base64').toString('UTF-8');
+> >               core.setOutput('enabled', `\n${list}`.indexOf(`\n${{github.ref}}\n`) < 0 ? 'no' : 'yes');
+> 
+> And this `indexOf` will check if our ref (exact) matchs (full line)
+> with some white-list list, which is very limited.
+> So people couldn't match by some pattern (grep can work).
+> 
+> I haven't tested, but we may use part of above script to read a single
+> file from a ref, and add another steps for "grep"/"sh"
+> I'm not sure if that script will cost more resources than git-checkout
+> or not. And is that solutions over-engineered?
 
-> This is an easy bug to introduce, and I suspect we'll see equivalent
-> ones in the future (if there aren't already more lurking; there's a lot
-> of global data in Git, and I really have no idea what subtle
-> interactions one could see). One thing we could do is to truly run each
-> v2 command request in its own process, just like git-over-http does. But
-> there are a lot of complications there around holding the pipe/socket
-> open, how the parent v2 serving process interacts with the child
-> requests (e.g., noticing errors), etc. So I'd worry that going that
-> direction would be just as likely to introduce bugs as fix them.
+But this point still hold, now, I think using part of above script to
+read the file, and allow more custom logic in a separated steps maybe
+better solutions.
 
-I agree that it seems better to just get rid of the global data used
-by the upload pack functions.
-
-> > diff --git a/upload-pack.c b/upload-pack.c
-> > index 902d0ad5e1..4e22e46294 100644
-> > --- a/upload-pack.c
-> > +++ b/upload-pack.c
-> > @@ -68,7 +68,6 @@ static const char *pack_objects_hook;
-> >  static int filter_capability_requested;
-> >  static int allow_filter;
-> >  static int allow_ref_in_want;
-> > -static struct list_objects_filter_options filter_options;
->
-> Just looking at nearby bits of global data that might want similar
-> treatment:
->
->  - allow_filter and allow_ref_in_want are set by the server-side config.
->    So they're persisted between upload_pack_v2() calls, but we'd
->    overwrite them by calling git_config() in each incarnation
->
->  - filter_capability_requested is set based on client input, but it's
->    only used in v1
->
-> But boy there are a lot of global variables there to trace through.
-
-Yeah, unfortunately.
-
-> Probably a more fruitful way to find similar problems is to look at the
-> v2 process_args() to see what it touches. It looks like options like
-> ofs_delta probably ought to be part of upload_pack_data, too. We didn't
-> notice because it would require a client doing something like:
->
->   command=fetch
->   ofs-delta    [claims to support ofs-delta]
->   0001
->   [wants and haves that don't result in a pack yet...]
->   0000
->   command=fetch
->   [do not claim to support ofs-delta!]
->   0001
->   [wants and haves that result in a pack]
->   0000
->
-> The server _shouldn't_ use ofs-delta there (and wouldn't over http,
-> where the stateless server side that generates the pack knows only about
-> that second request). But in git-over-ssh, it would.
->
-> A client who does this is stupid and wrong (and I didn't check the
-> protocol spec, but it could very well be violating the spec). So I don't
-> think it's _that_ big a deal. But it would be nice if all of those
-> globals got moved into upload_pack_data, and both v1 and v2 just used it
-> consistently.
-
-Unfortunately as I discuss a bit above 'struct upload_pack_data' is
-not used by v1, only by v2. I think making v1 use upload_pack_data
-might be nice, but it's a separate issue. So I am tempted to just
-improve the commit message, adding some information from you and from
-this discussion, and then re-sending.
-
-Another intermediate solution would be to add filter_options to
-'struct upload_pack_data' for v2 and to use filter_options directly
-for v1.
+-- 
+Danh
