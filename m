@@ -2,86 +2,106 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77A42C35280
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 22:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D742CC47247
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:06:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 495D621473
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 22:59:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6567208D6
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:06:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOF279Lo"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WahNhi9X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727113AbgEGW7b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 18:59:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44014 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726533AbgEGW7b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 18:59:31 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F69C05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 15:59:30 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id w20so8182455ljj.0
-        for <git@vger.kernel.org>; Thu, 07 May 2020 15:59:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=nUi6A75XOOwMEkEO2JWdIanfc2iKzbybZ/xN3I5N5aI=;
-        b=hOF279LorrNsY8oVwYEqrbhlR9lXLXbRxAXg8KBAOc8mGk4iS/z6XeiB0h8JJyJplI
-         e9k72O652AH0iJ/yPAUFGqceB2rKZdyYc8W6EeZ91tJM5rRvkfhI03WQwKPoAkVCYHS2
-         Q+Cay1pzt5hDZMFp66O5kmKjq7usVOxSmVbWXIbKninOtWugCUG7GGr1mg75QTVE/lG/
-         s8SLA4I5xYhqdq1pj1eOQDvSuHOAikjnf0RnLO+p5J3Hgtu16c5ps32FV7Ghot6l2qmJ
-         9NwB58RX0/edEkhfq3xTICnh6pMAG4bPFEFaQzePo5WEpHsXyEhv5LA4s1YRTdFwOP8Y
-         0wBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=nUi6A75XOOwMEkEO2JWdIanfc2iKzbybZ/xN3I5N5aI=;
-        b=Q3qLud2XehxrM4qSWjTmEViCoJi2UxSMmU+6tXOGucg+Tma/kv1mz6zUpeT6Tv8lE7
-         GEc8zBLf+BWRs5JmmZE4C7SQd749a6y/QMoSdy91RPUDkNeUTF4RQioYi8zRRtj9YAmK
-         sKnlB7ppAsf9ZRkU9FDpNSmp5MDsG3NfXziZHB4Are7mIJGcGkryiqIXUkMKsSUNd81V
-         PdxkPZsvJkzLScXC3c8bvKjOiwEzwo9BtyNKsAqAv0yUMP5SkQvEw6KOjBP6tDhQy+49
-         NL64a8e+FxD/EOKryoWIVSUpbtJqH0F+/xsmYnpANB6JkxojhYbCIJm13YaCol256kzv
-         RFZw==
-X-Gm-Message-State: AGi0Pub8ywK5hkJLxQPDI4Wk36V2XWerCZF7/pjmPWMxMiSSwrgzgq21
-        FIxLKVptaeBLM2nkwoTsQLcKCLbdFMhuYKkCmBTxw5AnkF8=
-X-Google-Smtp-Source: APiQypLK9af0kVcFmuGmom+WudYeD2jSe84bsADKYPS8mH8UtbSjAp+K6F1L1kleQrPmI78WSeAESq443y05GoldO44=
-X-Received: by 2002:a2e:99cc:: with SMTP id l12mr10018408ljj.290.1588892367974;
- Thu, 07 May 2020 15:59:27 -0700 (PDT)
+        id S1727801AbgEGXGX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 19:06:23 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50876 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726531AbgEGXGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 19:06:20 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 156A7DA8D7;
+        Thu,  7 May 2020 19:06:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=E//LaNB1xfX4+YdVM/xI76p0rAg=; b=WahNhi
+        9Xm06YVpL1pr2681ahSlBWPoDAmYOKKsz0ZL2Jv93FdfG9ltBDJOfIGbchl7ZX/F
+        qKqCPOYxmYDkuPhdJTW06CEVz3H+P0J3VPrEDO46ZEPGIRk4a0+7ezZQTshZYCM+
+        JV4TTEDdg4c3X1gWSd7DqLnBy1dxVE98FXkac=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=G1q1LvEBv8i/leaucqMTcJBHNuDYJfvJ
+        AqkjiRPkyKHSF/gNbWqG6d8x/8WAbKxfJDmDAUSa7QguDS6DHN1qvCrmGxVzKPo7
+        dhEtbwhiJS4n6jgfq1+VlNCfNZ5tKmHvZ+qQ26tXf5i6LNfWzojKiuvgcZ/AfVfz
+        zDRLTnwZdAI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D887DA8D6;
+        Thu,  7 May 2020 19:06:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 579BCDA8D5;
+        Thu,  7 May 2020 19:06:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3] bugreport: collect list of populated hooks
+References: <20200427233820.179891-1-emilyshaffer@google.com>
+        <20200430012425.209122-1-emilyshaffer@google.com>
+        <20200430015049.GA115238@google.com>
+        <xmqqv9lgswar.fsf@gitster.c.googlers.com>
+        <xmqqwo5wpqvg.fsf@gitster.c.googlers.com>
+        <20200507210849.GH77802@google.com>
+Date:   Thu, 07 May 2020 16:06:14 -0700
+In-Reply-To: <20200507210849.GH77802@google.com> (Emily Shaffer's message of
+        "Thu, 7 May 2020 14:08:49 -0700")
+Message-ID: <xmqqa72j2vmh.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Alexander Mills <alexander.d.mills@gmail.com>
-Date:   Thu, 7 May 2020 15:59:16 -0700
-Message-ID: <CA+KyZp7TELrswPjNgB99BXXHEXi5pRr5bO3g_wy7zBvv1R4Kww@mail.gmail.com>
-Subject: check if one branch contains another branch
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5AB975B0-90B7-11EA-AAF2-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am looking for a command:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-1>  if branch x contains branch y
+>>  test_expect_success 'indicates populated hooks' '
+>> -	test_when_finished rm git-bugreport-hooks.txt &&
+>> -	test_when_finished rm -fr .git/hooks &&
+>
+> I'm not sure it's necessary to lose these two lines. Especially the
+> generated bugreport I'd like to clean up.
 
-right now all I can find is
+I do not care either way, actually.  I left it so that it would be
+easier to debug the test by looking at the output.
 
-2> if current branch contains commit y
+>> +	rm -fr .git/hooks &&
+>>  	mkdir .git/hooks &&
+>> -	write_script .git/hooks/applypatch-msg &&
+>> -	write_script .git/hooks/prepare-commit-msg.sample &&
+>> +	for hook in applypatch-msg prepare-commit-msg.sample
+>> +	do
+>> +		write_script ".git/hooks/$hook" <<-\EOF || return 1
+>> +		echo "hook $hook exists"
+>> +		EOF
+>> +	done &&
+>
+> I like this placeholder script a lot.
 
-can someone please accomplish #1 ?
-Crazy hard to find an answer to #1 online.
-The user case is to delete old local branches by comparing them with
-the remote integration branch.
+I actually don't.  At least the final version should not quote EOF
+(otherwise $hook will appear verbatim).
 
-more info if needed:
-https://stackoverflow.com/questions/61669056/how-to-determine-if-integration-branch-contains-feature-branch
+>>  	git bugreport -s hooks &&
+>>  	grep applypatch-msg git-bugreport-hooks.txt &&
+>>  	! grep prepare-commit-msg git-bugreport-hooks.txt
+>> -- 
+>> 2.26.2-447-gd61d20c9b4
+>> 
 
--alex
-
---
-Alexander D. Mills
-New cell phone # (415)730-1805
-linkedin.com/in/alexanderdmills
+Thanks.
