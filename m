@@ -2,150 +2,109 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B80B1C38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D1BC38A2A
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:23:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8417920731
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:08:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19ACE20731
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 21:23:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pq78LhJa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKM+USDW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726480AbgEGVI5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 17:08:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
+        id S1726638AbgEGVXz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 17:23:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbgEGVI5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 17:08:57 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94528C05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 14:08:55 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id s10so2584128plr.1
-        for <git@vger.kernel.org>; Thu, 07 May 2020 14:08:55 -0700 (PDT)
+        with ESMTP id S1726218AbgEGVXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 17:23:54 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E9F4C05BD43
+        for <git@vger.kernel.org>; Thu,  7 May 2020 14:23:54 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id 7so4280727pjo.0
+        for <git@vger.kernel.org>; Thu, 07 May 2020 14:23:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kAtqwD+kjCSRFTxG/InuXKJSLpL3/SaDKq78fVgT0fg=;
-        b=pq78LhJaBZyV3um7XhpRCQg+AfCAKLUOHUuAJ2efBsi1pbbVxWgA7sb25BdpU5ZDs1
-         Oy/xJTB+XIIc5t7NxH7bKhSEg/HE21QsPbGCFOkumr83zM1CB7CFdxZyTQLZaxTVNXMM
-         rY/nNk5lKdqNGr7J8jLJ4+Bs2xzRhX1VmmeOKDVYcC92b8P5Xhagvo9lCLvClfYpiHOJ
-         6r+sTEAcFjsR+5WhiYmc2sG6UBM1VVJ63QRvHqn/ZrkyIdG20estJUDqHONuzlxYCZhZ
-         k4LgbTdtXb/Ht5dOT4NfsnX2KHe38ZJvat5X++1ZZw3M1jaFIFfprvDx7xua+d/ubYk7
-         mgRQ==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=UZbq2+RkFWdUoXakjCKlEJhG3UAJRjqH9be9Tu+/itc=;
+        b=CKM+USDW+w/9CU32hyD7wqIFEMRcRTK7K+xKlRy0brOi8SF5v1jJweEwIOOibF1U4Z
+         8c458x3yFy/AlVpnuhd78NSveR1yHkebv47HcDeUTEGSuVAmCRWnr9N1kGwI7FyLuzq1
+         0nmbUaw0fjBXIWES2QsvG1+DzLG3oRgeEEQesRee058DPx5gDqbOLQynRrSqfy3apSFb
+         Ig6w7LbbREqVkJSYnAYAZbm/XB24ox4+A2aa0NVb2XhHuvXOhNKVFQtNvar0CiX168V9
+         Vrc3MFEC0SRWQ7e4n0cb1RLTCrUsccWFG1YWrmVLtcFEqEAvMYwFdnvy/uW7ILGrbqUz
+         Nycw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kAtqwD+kjCSRFTxG/InuXKJSLpL3/SaDKq78fVgT0fg=;
-        b=KmD1ezwtRXNLbGM1d0zbQ7W8AFIEHhZWvkXKT6TK4BcMpwBIkP+vf6XFj2K1tuEF3o
-         +93dmME7XAKOHTqhc/RJs9gCk4LIAN1jspqvHWOW0qNmGcgotvwapotzH4Ytjicflzn0
-         lVWBa5/DmMpYDRXcHFgPRPTIdmKITpQTMH0TLIjnimhvEhXaFFoOMx7uRR6AVWRmjh8q
-         eRQP3gLyis9klh3ZfTeFQLXeVCGaDRN/3cCBkYkdpAb9GFZ8H5YArILF0vQgL48EQcSn
-         iTqR/rzOrugrzZv1wNwVu1a1g67tKlRdeVSeczooXQRL5jBvnUAgcIlWHh12nIXbBTh5
-         vH8g==
-X-Gm-Message-State: AGi0PuaTv7h1vRfQnUV/T/Q6bUNwjCq39oHsIKKfJwyBeuZRTNi3WEZB
-        55eJwvfIYjjeYSvdzp0WhAbqvQ==
-X-Google-Smtp-Source: APiQypLFCvy20TTTqBGguGP7oa7icLM3IkG9zWcTs5pV3yA99pW7Wc/5Qxud8eoW0aIw9af583/9QQ==
-X-Received: by 2002:a17:902:7048:: with SMTP id h8mr15215209plt.300.1588885734739;
-        Thu, 07 May 2020 14:08:54 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id l15sm591294pjk.56.2020.05.07.14.08.53
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=UZbq2+RkFWdUoXakjCKlEJhG3UAJRjqH9be9Tu+/itc=;
+        b=OlAj0OzmPpQBOcGYjM+RzJKqbWJVpAfVOPdG88hXWlDh3sHVtrJlqqO2XitQM4yDqG
+         rbjoBG9R9OmEBcUzcdJv/koDdFXyQjYPpFd8XdQRYfDWiTMmfpHpXsA7T0XMXcdNj+hH
+         M9HN3R+whDgEBuzShiOf8UMRlojNG/LNthod+gDtpABpy0NzCNDuhl/vk6UE1KO1P+C1
+         RFlvvSHQSU8Ulw51zkrU1zNsgFZsg2jzclf26AL0O+IJ2fapJyiQt+YLTonGQhyWsnI4
+         mGIe4EZnQn+93TXw1pirYfIQ2YF5GZB1Rv4SB2rmLpPMsM3Uq3O2/PELqeheX0j3ocdl
+         0PZQ==
+X-Gm-Message-State: AGi0PuYRYvgGA+Zu+yB4phsdHctQB7XX68hq42zWdCOaeb+mlGo+X5NC
+        ixO/Ejk5Cos20qaLdH8TtzM=
+X-Google-Smtp-Source: APiQypJHp2rz5mJ5AkS229Y6reZS3h0iKyttz9EyCThK4a1JvUm29MfX3s8rS1Jgg4fZj2PQ32mQeA==
+X-Received: by 2002:a17:902:694b:: with SMTP id k11mr9574087plt.77.1588886633476;
+        Thu, 07 May 2020 14:23:53 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id a12sm4558484pgv.14.2020.05.07.14.23.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 14:08:54 -0700 (PDT)
-Date:   Thu, 7 May 2020 14:08:49 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] bugreport: collect list of populated hooks
-Message-ID: <20200507210849.GH77802@google.com>
-References: <20200427233820.179891-1-emilyshaffer@google.com>
- <20200430012425.209122-1-emilyshaffer@google.com>
- <20200430015049.GA115238@google.com>
- <xmqqv9lgswar.fsf@gitster.c.googlers.com>
- <xmqqwo5wpqvg.fsf@gitster.c.googlers.com>
+        Thu, 07 May 2020 14:23:52 -0700 (PDT)
+Date:   Thu, 7 May 2020 14:23:48 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH 0/4] credential: documentation updates for maint
+Message-ID: <20200507212348.GA19917@Carlos-MBP>
+References: <20200503063423.83152-1-carenas@gmail.com>
+ <20200505013908.4596-1-carenas@gmail.com>
+ <20200506162712.GB1275237@coredump.intra.peff.net>
+ <20200506232848.GB75901@Carlos-MBP>
+ <20200507205909.GA38308@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwo5wpqvg.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200507205909.GA38308@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 30, 2020 at 03:09:55PM -0700, Junio C Hamano wrote:
+On Thu, May 07, 2020 at 04:59:09PM -0400, Jeff King wrote:
+> On Wed, May 06, 2020 at 04:28:48PM -0700, Carlo Marcelo Arenas Belón wrote:
 > 
-> Junio C Hamano <gitster@pobox.com> writes:
+> > Subject: [RFC PATCH 5/4] credential: document encoding assumptions for values
+> > 
+> > Because of the similarity on the names of the keys with what is defined
+> > in RFC3986 is easy to assume the same rules would apply here.
+> > 
+> > Make sure that the format and encoding is well defined to avoid helper
+> > developers assuming incorrectly.
 > 
-> >> When we do that, this "mkdir .git/hooks" will fail because the
-> >> directory already exists.  Ideas:
-> >>
-> >>  A. Include a preparatory patch in this series that removes that "mv"
-> >>     command.  That way, this test can do
-> >
-> > While I do not think it is realistic to anticipate that the "test"
-> > repository may someday come with a hooks/ directory, even if we did
-> > so, we would not enable any hook by default in there.  So "move away
-> > and restore" feels way overkill.
-> >
-> >>   B. Run "git init" ourselves so we know what we're getting:
-> >
-> > That is certainly safer, and simpler.  But perhaps the simplest
-> > would be
-> >
-> >     C. Use "mkdir -p .git/hooks" so we won't get affected.
-> 
-> In the meantime, I added this SQUASH on top.  I do not claim that
-> this is the best solution, but the idea is to refuse to be affected
-> by what is left in .git/hooks either by the test framework or
-> earlier tests in the same test script file.
+> I'm not sure this really clarifies anything, because it just says "no
+> assumptions can be made". Which I guess is a statement, but I'm not sure
+> what I'd do with it as a helper developer.
 
-Thanks for the patience with the reply - like many of us, my attention
-is being pulled many directions right now :)
+not sure what part of the added lines you are referring to but I am happy
+to provide some examples of what I would expect to clarify below from
+what I'd seen from some helpers that I'd read the code from recently.
 
-This solution looks very neat to me, minus one comment. I can send a
-squash with the change I mention below.
+as an example, I would expect the helper developer to start checking for
+the locale and calling iconv in cases where it is not using utf-8, before
+sending it to a storage that requires that (ex: osxkeychain), or utf-16
+(maybe in windows).
 
- - Emily
+osxkeychain will probably also check for protocol in a case insensitive
+way to make sure it is not ignoring credentials that are not all lowercase
+as it does now.
 
-> 
->  t/t0091-bugreport.sh | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-> index 612c12a918..9450cc02e3 100755
-> --- a/t/t0091-bugreport.sh
-> +++ b/t/t0091-bugreport.sh
-> @@ -58,11 +58,14 @@ test_expect_success 'can create leading directories outside of a git dir' '
->  '
->  
->  test_expect_success 'indicates populated hooks' '
-> -	test_when_finished rm git-bugreport-hooks.txt &&
-> -	test_when_finished rm -fr .git/hooks &&
-
-I'm not sure it's necessary to lose these two lines. Especially the
-generated bugreport I'd like to clean up.
-
-> +	rm -fr .git/hooks &&
->  	mkdir .git/hooks &&
-> -	write_script .git/hooks/applypatch-msg &&
-> -	write_script .git/hooks/prepare-commit-msg.sample &&
-> +	for hook in applypatch-msg prepare-commit-msg.sample
-> +	do
-> +		write_script ".git/hooks/$hook" <<-\EOF || return 1
-> +		echo "hook $hook exists"
-> +		EOF
-> +	done &&
-
-I like this placeholder script a lot.
-
->  	git bugreport -s hooks &&
->  	grep applypatch-msg git-bugreport-hooks.txt &&
->  	! grep prepare-commit-msg git-bugreport-hooks.txt
-> -- 
-> 2.26.2-447-gd61d20c9b4
-> 
+Carlo
