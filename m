@@ -2,92 +2,152 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27008C54E4A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6E3C38A24
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:36:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC75F207DD
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:02:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 757C920659
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 14:36:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iC0k3mN7"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="X3VGCKKn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727083AbgEGOCf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 10:02:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44970 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726884AbgEGOCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 10:02:34 -0400
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com [IPv6:2607:f8b0:4864:20::a2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBBAAC05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 07:02:33 -0700 (PDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id b14so1507111vkk.10
-        for <git@vger.kernel.org>; Thu, 07 May 2020 07:02:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TaUOTAX80o/mFE835NGxU9j3KWRHgvL23SMNwlQK5F4=;
-        b=iC0k3mN7D0xa+r43QvszbCZRhGyehD1dprwyeYJNSzANahbZaeQFSZqAWDfqaWrbAZ
-         s0YXlQj/Agf9n+PqO1WcNiO9JKObE7gZ/Ayfod3eJwXUdQA9rhAh2FO+YKq6GwQlOzua
-         KThBAUxMo3kseY9kGgTDirdeqGZY8w9/27iZdgG5kMOx/IQoz6zoZf4720BhbeFCCaWh
-         hu9tpQGTaVpTM/wwpPKmyl29H8P/1xkJt9I3q4hwXRVyvBvJ2brYIHhlwwxI4Y8LkS2B
-         GgILAdrdYy0cA2lTN0n45FB6HhP3CP9Wiv1zyK2Q7W2sTIR7OIxxio4N9xqvZa1jI1Jh
-         1MyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TaUOTAX80o/mFE835NGxU9j3KWRHgvL23SMNwlQK5F4=;
-        b=MfYiotKpkdQ/DzPqprKQ2pe8PKyDZkNziFNElAU+FZHpjamzbhBtF+7bodwP3QQLEd
-         XmxBt8ECe7dUsVQM0UILpKOL9s95C4Bv/Of2FuW8z1hf8SSQXNcQ1tC6Qz1mNoNFh9ym
-         PrQht6yX2kUsTTqg1rzNZbWKjcxXace6T/2+11vv2xvrziPddXRjx2PCzpyQmG0vFk6l
-         tC8g6HT2qzzw1e6x5A23v8Xhi6V9lh96FvM3rSv1YNwB7Mk3FXAdmtHt+Pf2v7wcL17j
-         43/RJZBu3sIt2vSrzj8tMrRaCXsLMIfb3zi0pRMdzQuIep08fzZ1c1al1uXyjuxl/OI4
-         iWEA==
-X-Gm-Message-State: AGi0PuY8RmHb5C+VzMJ0Qor912N1xvsk2+vpQWrOsEDVPaD4+IPmLOVV
-        MJqK0rpRHj0nfJU4Uoca9OMqN5ZhzpZtfvttxi87n2oy
-X-Google-Smtp-Source: APiQypI9eBf9LEF6ylLSVcqqj5VPIp8Na9iM3n+8Kpy9dhp9WTDBWARDpG5AId3LTRMqIR3yV0jYhvv/2TDbY/w1LK8=
-X-Received: by 2002:a1f:9605:: with SMTP id y5mr11435613vkd.75.1588860152951;
- Thu, 07 May 2020 07:02:32 -0700 (PDT)
+        id S1728004AbgEGOgE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 10:36:04 -0400
+Received: from mout.gmx.net ([212.227.15.19]:52289 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728165AbgEGOf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 10:35:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1588862156;
+        bh=QYAKJmEFDkAo09cjUcorLlGGs0Td0kObSeoAw2RHLLw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=X3VGCKKnpsiDe/hlGlAoegEpN8B4AtY0AU1hP/o4+g1edGU7ZWqx8H8OGxEVBszgk
+         2WpxQDzqGmCQnbxLrHxiElI0SL+dX4pzdS5RasUnDnyr5/BoeWA8jaefTl1CW/zO58
+         D6X60UNXoUL2wdKE0GbSFOne9Est+D8si13ULyRY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.84.97] ([213.196.213.71]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MiJV6-1isfmc23hm-00fV0B; Thu, 07
+ May 2020 16:35:56 +0200
+Date:   Thu, 7 May 2020 16:35:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jonathan Tan <jonathantanmy@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t5500: count objects through stderr, not trace
+In-Reply-To: <20200506220741.71021-1-jonathantanmy@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2005071635270.56@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.2005062304410.56@tvgsbejvaqbjf.bet> <20200506220741.71021-1-jonathantanmy@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CANtMP6oKN6Ueu=fqFYv2VhUP5S-ifbSzPTARvbEg4eV0pcRcHw@mail.gmail.com>
- <xmqqzhak4a9o.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqzhak4a9o.fsf@gitster.c.googlers.com>
-From:   Solomon Ucko <solly.ucko@gmail.com>
-Date:   Thu, 7 May 2020 10:01:55 -0400
-Message-ID: <CANtMP6pSgU2WfuHVug-dj=10LNOL-mLL-5rTio=q3GjUs5MrgQ@mail.gmail.com>
-Subject: Re: rebase -i: quick/inline reword
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:KXgZeA1BJ/Z+V7/tezAf2DrDsp8YrhTBkUnzMipzLCXo9MjY5R1
+ gaRjqzUzyR5kTQaBxrx0HhSTFpQowsYtSVrqdcv1Bif4ZJ23eMPqKSn9da5jXvuT1vMwFSh
+ rlmTdZGIMtsHrPgyCvROG+ZsFP3YNBWXpo1KpxeZDBboUAn2FwU37ZK/gW/TfsV1birMnnY
+ 3ikeHjYyutpeaix95G7vA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PBg09lHBb5I=:zTd7tV8DCLb3w8bXlC8OMe
+ BL0rp3BvLRyzwJfWipVaaHT0jdJwQw1zqc/cylaR9xounkyskBKmN6sGEEdRMNVf0gRZ1zvjE
+ NxdqtsBobaoNw2DThzGYdaoiiJVWUEaZIa2+XbwIssnW2pX4NjZ4jPQzaREEQXAaJ3jnzwo1B
+ YaLL03rAdwmPFGcA/P8ii4ieOGuBoTtMtLk+qwVd4eeZrCTlUdCani47BqvO9Q68/geW86dKz
+ GuZscGb7CS0YzY985MAbOLfCtx/wJPVVqxMAvOeYtR86gcO/bEBETlElFGYOs9/YRRaxiFsfx
+ HJRNg0ZeF+YqCUrtx8ToVUcFLwFmRuFdLhidL4PSayrmJ2G0on6lx3O4Iqvmwaw1wUjF9o7vC
+ K9BtzigGrCefP5XPH5uxpK8LKDosHxVPROEdORXH7wWrnI7PgMoQN1zfpluGeAneAM1brXKI8
+ TzoDX2YlxnR8QZtFyZSychm8fonKCMf2Yf0HMNEAvzaxeKNUoqw/PQpMglU4p2jMJwmoINHY2
+ eousfCVhfWjGo+vfpvMctV2F6XR+hfA9Jo8HFGdNLdxgq72s/15yBRwTEssZ8OAvod0BJwTVs
+ JCOVF9POie/GhkH0j9hDJhqka4uP72UhbXtFCSvbJrlCVVPhIx5DI8fTJxqwtTgnWpueB7Tmd
+ ZcdmRCrrMZpDgj4oxqGsS/OjemnS3oKXZNjcPLbNLPd5U5npTQGD2klDB5O/PKuYyI8tFFXs8
+ ookOuEfGTMPmkRjUeNdIPMj/3EM8Yw4Pc3tqQ34c6x2CSJu1oeIsAK2kx5pIeMRrLngDPLz58
+ fZrkE1/DpVJhgFkZXXbR8B6SfcSp76FcGJlMTGdmK8Z4l0F94b5ARvpbDwm7K1yaJeiBerqJ5
+ kZeNxZ0GS8E8Ekh2bT4Ysh7UXi2Kft9LQd4CDSR/NOj7nZCW2Sule4/Qx64kYo5GNw0U8bjub
+ SiiqfJXN8RFkplz8XxWyChgD6mRSXh1Z8nYoKSvCpadjm90nUL89zy7Vog+B1SO6f2UJtT3Ef
+ 8qMXu0W5LDKrwJOCWMbGuETWbdxUgRj7CQQ66VqWnKuHZOxmKf5a4b43vIvtaDiVoAq1Cn4mW
+ kwpzyStDYIrRXed+9Sf+HhJlTGt56lXFjvO9s/cVZnLXaRplXlsbHOWPShBrG1Be/W2DJmq2z
+ b2+5GdQ6tveGwaAILWwJhgiUE0z50Ajh5q0zTSGBNeYg4VqYuixUPNzYHkAaVGd4y+lyeX50c
+ +PDWpn7ePy6IZ6UJB
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 7, 2020 at 12:52 AM Junio C Hamano <gitster@pobox.com> wrote:
-> It is probably a bad idea, as it encourages a single-liner commit
-> message without any body.
+Hi Jonathan,
 
-You could modify the title and keep the rest of the message. You could display
-the modified message similarly to how `reword` does, to allow modifying the
-rest of the message.
+On Wed, 6 May 2020, Jonathan Tan wrote:
 
-> Besides, neither is really workable, as the single line text after
-> the abbreviated commit object name in the todo list is meant as an
-> output only "informational" comment on each step, and there are
-> plans to add more than just the squashed title paragraph there
-> (cf. *1* for an example).  Even without such a future change, the
-> material there may not be just the commit title, if I am reading
-> the code correctly, when rebase.instructionFormat is in use.
+> In two tests introduced by 4fa3f00abb ("fetch-pack: in protocol v2,
+> in_vain only after ACK", 2020-04-28) and 2f0a093dd6 ("fetch-pack: in
+> protocol v2, reset in_vain upon ACK", 2020-04-28), the count of objects
+> downloaded is checked by grepping for a specific message in the packet
+> trace. However, this is flaky as that specific message may be delivered
+> over 2 or more packet lines.
+>
+> Instead, grep over stderr, just like the "fetch creating new shallow
+> root" test in the same file.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> Thanks, Dscho. The commits introducing the flakiness have made it to
+> master, so this commit is on master.
 
-You could have some sort of separator between the title and the rest of the
-info. You could disable the extra info when using this mode, if it's a
-command-line flag. You could require the title to be at the end to use this
-feature, possibly after some sort of start marker.
+Thank you for fixing this so quickly. I agree that the patch addresses the
+underlying problem.
 
-Solomon Ucko
+Thanks!
+Dscho
+
+> ---
+>  t/t5500-fetch-pack.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+> index 52dd1a688c..8c54e34ef1 100755
+> --- a/t/t5500-fetch-pack.sh
+> +++ b/t/t5500-fetch-pack.sh
+> @@ -386,7 +386,7 @@ test_expect_success 'clone shallow with packed refs'=
+ '
+>  '
+>
+>  test_expect_success 'in_vain not triggered before first ACK' '
+> -	rm -rf myserver myclient trace &&
+> +	rm -rf myserver myclient &&
+>  	git init myserver &&
+>  	test_commit -C myserver foo &&
+>  	git clone "file://$(pwd)/myserver" myclient &&
+> @@ -399,12 +399,12 @@ test_expect_success 'in_vain not triggered before =
+first ACK' '
+>  	# The new commit that the client wants to fetch.
+>  	test_commit -C myserver bar &&
+>
+> -	GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C myclient fetch --progress ori=
+gin &&
+> -	test_i18ngrep "Total 3 " trace
+> +	git -C myclient fetch --progress origin 2>log &&
+> +	test_i18ngrep "remote: Total 3 " log
+>  '
+>
+>  test_expect_success 'in_vain resetted upon ACK' '
+> -	rm -rf myserver myclient trace &&
+> +	rm -rf myserver myclient &&
+>  	git init myserver &&
+>
+>  	# Linked list of commits on master. The first is common; the rest are
+> @@ -429,8 +429,8 @@ test_expect_success 'in_vain resetted upon ACK' '
+>  	# first. The 256th commit is common between the client and the server,
+>  	# and should reset in_vain. This allows negotiation to continue until
+>  	# the client reports that first_anotherbranch_commit is common.
+> -	GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C myclient fetch --progress ori=
+gin master &&
+> -	test_i18ngrep "Total 3 " trace
+> +	git -C myclient fetch --progress origin master 2>log &&
+> +	test_i18ngrep "Total 3 " log
+>  '
+>
+>  test_expect_success 'fetch in shallow repo unreachable shallow objects'=
+ '
+> --
+> 2.26.2.526.g744177e7f7-goog
+>
+>
