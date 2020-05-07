@@ -2,136 +2,186 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E587C35280
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B951C35280
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6762E208E4
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:47:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B883C2082E
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:51:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vnc+2d/g"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="YBXiEIMR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbgEGXrZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 19:47:25 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37978 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726495AbgEGXrY (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 19:47:24 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 05D296044D;
-        Thu,  7 May 2020 23:47:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1588895243;
-        bh=CoECH4PPuFH0eFx60YquEReDHxRCwKwXKIwhnuMFzM8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=vnc+2d/gwdtRpXd6/SLHnLpjUQZhDEECrDILeCgXwxwCpP5MEaCuJyHKGpMiplqhS
-         FtQvqiQvRfYuhiTk6eyCcfkTEzohRu2mJNQGkZNH9Osmat8cALNWaYKLs5iZ1Brtfo
-         y7hY/2AfcEwBLDsxIAxGRSt+j+kdktok3iConKYJhxMQm26q1pT2I3s/D+caau5auI
-         Pe8P0n46mKkAPq7CSqvffJlrB02ax+VeWKP7g4BRbw8esaBFZI3lGV4kTj8/DdRa6d
-         eQGpoJjwFLBtdsfYrYWk+r57OSw3DpJPBh2vDaqx9D6n3sCAS9j5F6bIJ/2G3FhLTz
-         Glm9YRfVEEx3kxpJUwSln0o8l7+BqyA8W8Hzbid6aTbIuDck2DUkw+avtr2HS7LH8X
-         N+4sTgaW5olkcZXNtFxZVsWy4+3fdZvKpWesD51ASxx3dNkGsEcWEnoTT+25fnOjuR
-         9H+CsqI5Jpz3+jHSSUTDPJpVS2mHzKDnwYlvd4OL7CiDz0jfdNq
-Date:   Thu, 7 May 2020 23:47:18 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Alexander Mills <alexander.d.mills@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: check if one branch contains another branch
-Message-ID: <20200507234718.GC7234@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alexander Mills <alexander.d.mills@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <CA+KyZp7TELrswPjNgB99BXXHEXi5pRr5bO3g_wy7zBvv1R4Kww@mail.gmail.com>
- <xmqq1rnv2vi2.fsf@gitster.c.googlers.com>
- <CA+KyZp6pvqqNnOOj0ap9ekPdv9mZg2u_NQuwFgMXfwfV17SrYQ@mail.gmail.com>
- <20200507232448.GB7234@camp.crustytoothpaste.net>
- <CA+KyZp4keGp8j0rzCtr0fEogZqkKwTNLvRBZ2QOUzjStP+V2uA@mail.gmail.com>
+        id S1726770AbgEGXvI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 19:51:08 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:38571 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726476AbgEGXvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 19:51:08 -0400
+Received: from [10.0.2.15] ([217.32.115.138])
+        by smtp with ESMTPA
+        id WqIBjPiHGrXCcWqICj8L5W; Fri, 08 May 2020 00:51:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1588895466; bh=uirAlf0f9ajHniHLLfHM7EXCHA261ziOWu//oo/g2GQ=;
+        h=To:Cc:From:Subject:Date;
+        b=YBXiEIMRkRM9q6G4BThPZodjAw0DlflE9BJXXl2giy1+4XGfPN5+ZaozDvrQc6pY0
+         wCSmZ/IFbhR4dBPgtfCZEeuYCBvuG7n97vpaikVyfOxUu/T05yhHTXc/LnF852WuLR
+         HUL9Y2o/BYjg6Inx1bNTihI+9b+82bvLc2BzLv5dliivh5KKM5Hb5kVof2pdXiSKSX
+         UvO+ByQv4+1HcgRgANiVgkVT1mlz/uEMsO15WehhZyKQSjm7BRxw0b7ZbKvU80QeQt
+         nqIpIR7W5fJbHANTJOMab096G4Tf/0f71En8RTVnIcZxOS1YL/xFDGlDrzWbLCBaBQ
+         mS40lDvO1Wa0g==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Q+xJH7+a c=1 sm=1 tr=0
+ a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=EBOSESyhAAAA:8 a=VwQbUJbxAAAA:8
+ a=PKzvZo6CAAAA:8 a=xRRwe7KqCvuvnv0fuIEA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22 a=AjGcO6oz07-iQ99wixmX:22 a=q92HNjYiIAC_jH7JDaYf:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Subject: [PATCH] bloom: fix `make sparse` warning
+Message-ID: <01ff8217-bd38-e7e4-58b1-81645ba9282a@ramsayjones.plus.com>
+Date:   Fri, 8 May 2020 00:51:02 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="i7F3eY7HS/tUJxUd"
-Content-Disposition: inline
-In-Reply-To: <CA+KyZp4keGp8j0rzCtr0fEogZqkKwTNLvRBZ2QOUzjStP+V2uA@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-1-amd64)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfN9FIRFqdm6r3cRemwhnY8PUmqNboWpqp5lpJSeOkFwRlychu8ENrd8g0N/KdScoJRBjNANDyl3HDjuD4NGHFHl3mvFDXzZ2Ch98xJRaAlMqGVcARWi7
+ Io2R3HGYP15+WYiL4a7XqXPcdpADZ6Gbyd8XnFXuO7RlfUSkWSOcQ6+VpHmMwwgT9Qvf6foCzWD6UQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
+ <congdanhqx@gmail.com>
 
---i7F3eY7HS/tUJxUd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+* We need a `final_new_line` to make our source code as text file, per
+  POSIX and C specification.
+* `bloom_filters` should be limited to interal linkage only
 
-On 2020-05-07 at 23:28:40, Alexander Mills wrote:
-> Thanks will check that out.
->=20
-> This command does not seem to work :(
->=20
-> > git branch --contains branchB
->=20
-> I do this:
->=20
-> git checkout branchB
-> git commit --allow-empty -am 'empty commit message'
-> git checkout dev
-> git branch --contains branchB  =3D=3D> exit code 0
-> git branch --contains $(git rev-parse branchB)  =3D=3D> exit code 0
->=20
-> this seems like a bug or something.  Why wouldn't it exit with 1,
-> since it obviously does not contain that commit?
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-Because that command operates differently.  From git-branch(1):
+Hi Junio,
 
-  With --contains, shows only the branches that contain the named commit
-  (in other words, the branches whose tip commits are descendants of the
-  named commit)=E2=80=A6..
+This patch by Danh seems to have slipped through the cracks, so I decided
+to pass it along. The original version of this patch (which I don't seem
+to be able to find) clashed with one of Jeff's series [1], because they
+both fixed up a 'No newline at end of file' issue with test-bloom.c.
+Also as Danh points out [2], the original patch didn't fix up the test
+files.
 
-git branch --contains branchB prints only branchB, because no other
-branch contains it.  In other words, this asks to list the branches
-which contain the specified commit, and as long as it has done so
-successfully (even if that answer is "none of them"), it exits 0.  The
-current branch has no effect on it because it's listing branches which
-match a criterion, not comparing the specified revision to the current
-branch.
+Anyway, this fixes up some 8 sparse warnings on 'master' and 'next':
 
-Note that this is not a porcelain command (that is, it is not intended
-for scripting) and need not be especially performant.  git merge-base
---is-ancestor is the better way if you want to script things or get a
-more performant answer because it does less work, especially if there
-are many branches.
+  $ diff sp-out sp-out1
+  17d16
+  < bloom.h:90:6: warning: no newline at end of file
+  20,22d18
+  < bloom.c:276:1: warning: no newline at end of file
+  < bloom.h:90:6: warning: no newline at end of file
+  < bloom.c:12:26: warning: symbol 'bloom_filters' was not declared. Should it be static?
+  33d28
+  < bloom.h:90:6: warning: no newline at end of file
+  163d157
+  < bloom.h:90:6: warning: no newline at end of file
+  366,367d359
+  < ./bloom.h:90:6: warning: no newline at end of file
+  < t/helper/test-bloom.c:6:30: warning: symbol 'settings' was not declared. Should it be static?
+  $ 
+  
+... along with a further warning on 'pu', due to the 'ds/line-log-on-bloom'
+branch adding another '#include "bloom.h"'.
 
-> This kinda sucks tbh :(
 
-Certainly it fails to do the thing you wanted to do with it, but since
-that isn't what it's documented to do, I don't see that as a particular
-problem.
+[1] https://lore.kernel.org/git/20200423205851.GA1633985@coredump.intra.peff.net/
+[2] https://lore.kernel.org/git/20200424010047.GD1949@danh.dev/
 
-Is the documentation unclear in some way or could it be more helpful?
-If so, please tell us so we can improve it.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+ATB,
+Ramsay Jones
 
---i7F3eY7HS/tUJxUd
-Content-Type: application/pgp-signature; name="signature.asc"
+ bloom.c               | 4 ++--
+ bloom.h               | 2 +-
+ t/helper/test-bloom.c | 2 +-
+ t/t0095-bloom.sh      | 2 +-
+ t/t4216-log-bloom.sh  | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXrSeBgAKCRB8DEliiIei
-gbJLAPwMnPmf/vSSyqVXtmLZd1D/tktxJWzz54Sb0JL2iRPz4AEAoW1NW94GJQCp
-Jb+O2k+FX8v1hFJr957N2OBCwcrpSQU=
-=mjc1
------END PGP SIGNATURE-----
-
---i7F3eY7HS/tUJxUd--
+diff --git a/bloom.c b/bloom.c
+index dd9bab9bbd..ee025e0c61 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -9,7 +9,7 @@
+ 
+ define_commit_slab(bloom_filter_slab, struct bloom_filter);
+ 
+-struct bloom_filter_slab bloom_filters;
++static struct bloom_filter_slab bloom_filters;
+ 
+ struct pathmap_hash_entry {
+     struct hashmap_entry entry;
+@@ -273,4 +273,4 @@ int bloom_filter_contains(const struct bloom_filter *filter,
+ 	}
+ 
+ 	return 1;
+-}
+\ No newline at end of file
++}
+diff --git a/bloom.h b/bloom.h
+index b935186425..e0e59e0754 100644
+--- a/bloom.h
++++ b/bloom.h
+@@ -87,4 +87,4 @@ int bloom_filter_contains(const struct bloom_filter *filter,
+ 			  const struct bloom_key *key,
+ 			  const struct bloom_filter_settings *settings);
+ 
+-#endif
+\ No newline at end of file
++#endif
+diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+index 77eb27adac..456f5ea7f9 100644
+--- a/t/helper/test-bloom.c
++++ b/t/helper/test-bloom.c
+@@ -3,7 +3,7 @@
+ #include "test-tool.h"
+ #include "commit.h"
+ 
+-struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
++static struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+ 
+ static void add_string_to_filter(const char *data, struct bloom_filter *filter) {
+ 		struct bloom_key key;
+diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
+index 8f9eef116d..809ec7b0b8 100755
+--- a/t/t0095-bloom.sh
++++ b/t/t0095-bloom.sh
+@@ -114,4 +114,4 @@ test_expect_success EXPENSIVE 'get bloom filter for commit with 513 changes' '
+ 	test_cmp expect actual
+ '
+ 
+-test_done
+\ No newline at end of file
++test_done
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index c7011f33e2..21b68dd6c8 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -152,4 +152,4 @@ test_expect_success 'Use Bloom filters if they exist in the latest but not all c
+ 	test_bloom_filters_used_when_some_filters_are_missing "-- A/B"
+ '
+ 
+-test_done
+\ No newline at end of file
++test_done
+-- 
+2.26.2
