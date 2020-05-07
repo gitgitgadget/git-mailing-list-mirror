@@ -2,78 +2,100 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77247C35280
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CF72C4724C
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:12:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 430582063A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:08:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E529208D6
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 23:12:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iISoioe2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aAm3INu1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727124AbgEGXIz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 19:08:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64460 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726612AbgEGXIz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 19:08:55 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 83B6454D4C;
-        Thu,  7 May 2020 19:08:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ymqSukwfA3sU7BtR/F1p5CCL7Kc=; b=iISoio
-        e26TFqFt3eZ0FcDRl0wpkW5oW0xZWtTejPJhMjifGNGeigCoznxgrW5qbexHk26r
-        JS/PfM+AfvBLp3hJ3OKR1kVilueu2LKv3DaCzHraP9k5hZhunvCSQEzXtBoQcYum
-        MLQ4FB1/WKNN5HFvuUZKp+s0l92yuYdSNGLrw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qLURFze41Hn4MgHDGtrug1FxFptdVwsR
-        LpG0D6fqZcKiGX4l9g/Fm15sQo4ogkXOHep8Oc6NNnlTT+49whzEJabROeWSQsE7
-        BckxJO4EylG4HA5Ul3jwG1jxg+XK2044UIGqza6xeFZjSjn22XKvXcPaRi070Zg7
-        MqwVfWHflBU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C8B754D4B;
-        Thu,  7 May 2020 19:08:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0970954D4A;
-        Thu,  7 May 2020 19:08:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alexander Mills <alexander.d.mills@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: check if one branch contains another branch
-References: <CA+KyZp7TELrswPjNgB99BXXHEXi5pRr5bO3g_wy7zBvv1R4Kww@mail.gmail.com>
-Date:   Thu, 07 May 2020 16:08:53 -0700
-In-Reply-To: <CA+KyZp7TELrswPjNgB99BXXHEXi5pRr5bO3g_wy7zBvv1R4Kww@mail.gmail.com>
-        (Alexander Mills's message of "Thu, 7 May 2020 15:59:16 -0700")
-Message-ID: <xmqq1rnv2vi2.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726811AbgEGXMX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 19:12:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46028 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726514AbgEGXMX (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 19:12:23 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B109CC05BD43
+        for <git@vger.kernel.org>; Thu,  7 May 2020 16:12:22 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id z22so5956477lfd.0
+        for <git@vger.kernel.org>; Thu, 07 May 2020 16:12:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jnwsgSmN0OCEbZJp2MYPB7uosaUEZmgtuk4x+aq0/wQ=;
+        b=aAm3INu1iLerlFFg1sJRNaxYulsJQ/BkJeH56VePqAOE2YsPeHmoy7XYRTTOJAmVTG
+         i3gKpBasdGfDn6lpWwJUhc6Gr8G5bXjIwBRfCOiShEILzb5+5eXfz/srcKvR1DqQbFO6
+         QlFf6huQkEQzMRzsh7dYeQi1dLurFzA6Le/UOdTK2Vl7/zycJcCeYWaJP/Y4XTskJYKZ
+         FzS/E+foomnSI8zfjWRZ6pDK+hKHI7dK5MQg6EGmhZcPDn1btHKIaJ5l++TTnELxrHw6
+         eAnx479d6vO5ta4IZAVx5K9uOeDMy9LS+HuVmbRHjRRG8gLKkMzC+0WBUAgSztHp6Oj3
+         2FkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jnwsgSmN0OCEbZJp2MYPB7uosaUEZmgtuk4x+aq0/wQ=;
+        b=f9HaDyjgmeq4dIKJz/rVHRSFslb279ct9IUq5/ste6SPApZQBjNOL2U8fnWLwNY59L
+         FPgL/0eiUMLJMtj8J8QLO7zE2kt3QNlKAtlmIcCYEuLvY2qoRQOGlQchHQMWR5ZQFNur
+         uP1ZwTLbRSL8eQbJvDXtuWI5JcI4rbBoLLam7POeP8imFvRDboDAMJ4NnU+dGM8T4nia
+         BZr72T+zBHjcP5nWefHAXz6NXjnVb7TYIFPA0xaMDEWJCj9TyrBDzNyc1Y+z8rdn0Epb
+         0ZHa0cjGAKaWB0t1B+Xy2AWNee6ygrtuDGtun51gjUo7QUI6N5nLqSVq4KzMxzUUuf6D
+         7AMw==
+X-Gm-Message-State: AGi0PuYVLulWHz7zXoX0Td16aIYlWjC3mTVrQzr4B7gSd8u2BP8YkJ5u
+        OXeefZTlou6WHXGeKvylqr+5kVYGUUI7t0lSU+9zteIzlNg=
+X-Google-Smtp-Source: APiQypJLEE/wdaOPCi//LpofFik55cu/mOp9ywWp/XIwytV6W7hpdGdojo/bS3vLBZxpedmEB3LC/QuvhUnggwvEYEw=
+X-Received: by 2002:a19:4a05:: with SMTP id x5mr10424043lfa.17.1588893141001;
+ Thu, 07 May 2020 16:12:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B8B577AE-90B7-11EA-B0DF-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <CA+KyZp7TELrswPjNgB99BXXHEXi5pRr5bO3g_wy7zBvv1R4Kww@mail.gmail.com>
+ <xmqq1rnv2vi2.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq1rnv2vi2.fsf@gitster.c.googlers.com>
+From:   Alexander Mills <alexander.d.mills@gmail.com>
+Date:   Thu, 7 May 2020 16:12:09 -0700
+Message-ID: <CA+KyZp6pvqqNnOOj0ap9ekPdv9mZg2u_NQuwFgMXfwfV17SrYQ@mail.gmail.com>
+Subject: Re: check if one branch contains another branch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexander Mills <alexander.d.mills@gmail.com> writes:
+so it would be:
 
-> I am looking for a command:
->
-> 1>  if branch x contains branch y
->
-> right now all I can find is
->
-> 2> if current branch contains commit y
->
-> can someone please accomplish #1 ?
+feature_branch='my_branch'  # the branch that I want to ensure is
+completely merged into origin/dev
+git merge-base  origin/dev --is-ancestor "$feature_branch"
 
-Study "git merge-base --is-ancestor" perhaps?
+that won't work?  since git merge-base only works with current branch?
+
+On Thu, May 7, 2020 at 4:08 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Alexander Mills <alexander.d.mills@gmail.com> writes:
+>
+> > I am looking for a command:
+> >
+> > 1>  if branch x contains branch y
+> >
+> > right now all I can find is
+> >
+> > 2> if current branch contains commit y
+> >
+> > can someone please accomplish #1 ?
+>
+> Study "git merge-base --is-ancestor" perhaps?
+
+
+
+-- 
+Alexander D. Mills
+New cell phone # (415)730-1805
+linkedin.com/in/alexanderdmills
