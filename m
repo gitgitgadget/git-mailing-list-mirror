@@ -2,131 +2,121 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDAA2C38A24
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 17:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B556EC38A24
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 18:17:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDC9D20A8B
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 17:57:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6780A2145D
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 18:17:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZNM9H9aB"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VCMuaYoO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbgEGR52 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 13:57:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726514AbgEGR52 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 13:57:28 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57D56C05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 10:57:28 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id j21so3134569pgb.7
-        for <git@vger.kernel.org>; Thu, 07 May 2020 10:57:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Xwnl67QyzUDylhWZfa1iIKuTYm0vjWKFmVIC31MFbwE=;
-        b=ZNM9H9aBthPmSIvZX65q/hpCC/FnRH9h1342iOFwI2bzShTu9cMjOfc/RTW8WHktmo
-         GOwAMh+p9+oWBeFBn04bjF/on/rAsqQxmFERUecvOlBbdd8/jE/n77SHSHlS0MBv5bNm
-         IWTMWdaYkTVa7lNpDvLrWj0QKLAEmRfWav3Ziyif5tHEQh8d0FVP/E08Gcmk2Rf9WZcB
-         086KLR8o+X+TF1MKXxuuGF7ud0HElaxL4Pdfn+9WbNmV70Ubk5uRWCk8HH+FFRrnlxdC
-         5tAW44afJJNtdWk8Y6OmIShk/vyzhl5K7Xy0wroqyP9TZngas962BKcAnQYwIbwvAkTm
-         jNAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Xwnl67QyzUDylhWZfa1iIKuTYm0vjWKFmVIC31MFbwE=;
-        b=ofP3VDJXSV/icbWMCJLn6zyfSC7IAQFkC4eSq172ic+kDE3BQCuuwAzyeavCYJiXPB
-         bc0yzbH3SA/JRW1OiJn3IopzX3bm29gHFx+WOpHWlUc6l8NmG7nCZ58UpEXiB/M6NQ+1
-         EM9+UuBtjMtoEl6//PEEoZVl2SKYckNMmZaOiaYwMvkH//a3NTN32u5KA3gWDN4XzlwN
-         HW9f3QtmS2VrY9JuDPUpgqYlHg9xjpNsWC7mBs4TlnDudneyEdUHssFcp7zbQWqe0SxA
-         /k78NNMtbJd8RxFvG6LO5OP3A7iPLdo2kqnvPTpEA4tDoVYVtg3Q2t+UcL6IvBRfdcMA
-         Ljbw==
-X-Gm-Message-State: AGi0PuYabR2Dq2gGKeC0cCC/OQ35hinbk9A+ZLTJ7DN6fPrW3Czg3occ
-        +ODlMSg95jzI7wv3m3m7qWQFYikW
-X-Google-Smtp-Source: APiQypI4AKfZEb7/jkrcsO4CbYI/Xog/CtEfsVYF5q3i6mr5ERsfXlIDzv0Moatc4Xa3S0Nr0U8FzQ==
-X-Received: by 2002:a63:7b15:: with SMTP id w21mr9848780pgc.228.1588874247424;
-        Thu, 07 May 2020 10:57:27 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id r31sm4279312pgl.86.2020.05.07.10.57.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 May 2020 10:57:26 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] t/test_lib: avoid naked bash arrays in file_lineno
-Date:   Thu,  7 May 2020 10:57:06 -0700
-Message-Id: <20200507175706.19986-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.26.2.717.g5cccb0e1a8
-In-Reply-To: <20200507055118.69971-1-carenas@gmail.com>
-References: <20200507055118.69971-1-carenas@gmail.com>
+        id S1726515AbgEGSRy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 14:17:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64674 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726467AbgEGSRx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 14:17:53 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70BA252781;
+        Thu,  7 May 2020 14:17:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=25A/PKppreU+8RhOs3npSkBOjpI=; b=VCMuaY
+        oOqSrt4I5dpKPdXbfuELctPmhtdI8inCNnF+peplPqZ/GZXTHgQyzm4liqVMR1Z/
+        gKukeKRi90eyYpmB9rtGxOkqj/xXIDfCHB/J4drd8TCHg1p46f7Tpr1nMXDR+Akg
+        2OEgwqgyvKHfjXbLv3tg2Ho5h+jcqy8lBW6XY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=t0Og1Kq+tPO48GWez46zqPMNCZmV2UpQ
+        QTpAUFhXW9SoHOu4Qb6LcghDicrtG1Tl3Uxp6B+CpZ3G/pjOoB2Us5Dy7dKr+36w
+        3THItf6Q9ZnkVyuBkeQpULGvl6ynTAIyJ3NQOXkuum7oNHtn8fzn99B4WGyieWQr
+        T4GChjRPQL4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67AA352780;
+        Thu,  7 May 2020 14:17:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E9B4A5277F;
+        Thu,  7 May 2020 14:17:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
+References: <20200504233634.GB39798@coredump.intra.peff.net>
+        <20200505002055.GC64230@syl.local>
+        <20200505164326.GA64077@coredump.intra.peff.net>
+        <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
+        <20200505182418.GA66702@coredump.intra.peff.net>
+        <20200505210451.GA645290@coredump.intra.peff.net>
+        <xmqqlfm69il6.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2005061623520.56@tvgsbejvaqbjf.bet>
+        <xmqqeerx81wy.fsf@gitster.c.googlers.com>
+        <20200507121727.GA3057274@coredump.intra.peff.net>
+        <20200507140208.GA3060463@coredump.intra.peff.net>
+Date:   Thu, 07 May 2020 11:17:50 -0700
+In-Reply-To: <20200507140208.GA3060463@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 7 May 2020 10:02:08 -0400")
+Message-ID: <xmqqimh74njl.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0FE76AF6-908F-11EA-BDC3-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-662f9cf154 (tests: when run in Bash, annotate test failures with file
-name/line number, 2020-04-11), introduces a way to report the location
-(file:lineno) of a failed test case by traversing the bash callstack.
+Jeff King <peff@peff.net> writes:
 
-The implementation requires bash and uses shell arrays and is therefore
-protected by a guard but NetBSD sh will still have to parse the function
-and therefore will result in:
+> On Thu, May 07, 2020 at 08:17:27AM -0400, Jeff King wrote:
+>
+>> > But doesn't this (i.e. uses: actions/github-script) still pay the
+>> > cost of spinning up a VM?  How expensive is it to check out a small
+>> > tree with a single file, whether it is ref-whitelist or allow-ref?
+>> 
+>> I suspect this script mechanism may be much cheaper. I don't know the
+>> implementation details, but spinning up a nodejs container to run a
+>> javascript snippet should be much cheaper than a full ubuntu VM running
+>> "git clone" (the clone itself should be super cheap because it's a
+>> shallow single-branch clone of a tree with one file in it, but getting
+>> there is relatively heavy-weight).
+>
+> Sorry, this is all complete nonsense. There is no magical nodejs
+> container in Actions. You still have to say "runs-on: ubuntu-latest". So
+> it's still spinning up that VM and then running inside there.
 
-  ** t0000-basic.sh ***
-  ./test-lib.sh: 681: Syntax error: Bad substitution
+Ah, I did see "runs-on: ubuntu-latest" in the tutorial for the node
+thing, and was very much dissapointed, before I sent that "don't you
+still spin up a VM anyway?" response.  Glad to know that I wasn't
+totally misreading the documentation, and unhappy that there wasn't
+a magic bullet after all X-<.
 
-Enclose the bash specific code inside an eval to avoid parsing errors in
-the same way than 5826b7b595 (test-lib: check Bash version for '-x'
-without using shell arrays, 2019-01-03)
+> and they took 1, 2, and 3 seconds respectively. They spend 2s getting
+> the environment set up and the actions loaded. So the API one spent less
+> than 1s on the network, but the single-file checkout spent slightly
+> more. Given the timing variations I've seen, I wouldn't be surprised if
+> it sometimes goes the other way. But even if those numbers are accurate,
+> I don't think the cost difference is enough to force our hand either
+> way.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- t/test-lib.sh | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+Yup, the above tempts me to say "because we are spinning a VM
+anyway, why not just run an end-user supplied script and let it
+decide?" would be the best approach.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1b221951a8..baf94546da 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -677,14 +677,16 @@ die () {
- 
- file_lineno () {
- 	test -z "$GIT_TEST_FRAMEWORK_SELFTEST" && test -n "$BASH" || return 0
--	local i
--	for i in ${!BASH_SOURCE[*]}
--	do
--		case $i,"${BASH_SOURCE[$i]##*/}" in
--		0,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:$LINENO: ${1+$1: }"; return;;
--		*,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:${BASH_LINENO[$(($i-1))]}: ${1+$1: }"; return;;
--		esac
--	done
-+	eval '
-+		local i
-+		for i in ${!BASH_SOURCE[*]}
-+		do
-+			case $i,"${BASH_SOURCE[$i]##*/}" in
-+			0,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:$LINENO: ${1+$1: }"; return;;
-+			*,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:${BASH_LINENO[$(($i-1))]}: ${1+$1: }"; return;;
-+			esac
-+		done
-+	'
- }
- 
- GIT_EXIT_OK=
--- 
-2.26.2.717.g5cccb0e1a8
+Unless somebody finds a magic bullet, that is, but unfortunately the
+nodejs one does not seem to be one.
+
+Thanks.
 
