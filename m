@@ -2,129 +2,76 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D7D0C38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D73C38A24
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:05:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24ECF2073A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:01:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 679432075E
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:05:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXdsvDbI"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="R4qLGxbC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725964AbgEGMBH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 08:01:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54122 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725879AbgEGMBG (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 08:01:06 -0400
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908D1C05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 05:01:06 -0700 (PDT)
-Received: by mail-pg1-x543.google.com with SMTP id j21so2727464pgb.7
-        for <git@vger.kernel.org>; Thu, 07 May 2020 05:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wKN4m3qaF3NBH5ckPFZcyBaSQMGUrgzHUrSTh7nIHVs=;
-        b=fXdsvDbI94QBtf/d3WzCuXff8h8eiGnWkVjwFR2ja0JKCmi0/gPq+OCCbPZ/rP/O0l
-         EFzq+I8khy5jxcqqU63mDlhKdDtOD6woRiz6QLFri9K3Rm5W/NFqvXGIsKgaf5BvBBwm
-         tOrst832u3fSNqjOrHkGwLy0tKQvgGTRT6NXl3BnGFjl6VwsQQKYux8inOWAQhWgPpnT
-         UN4GWC+dkvTVbTprYkzgj3WD14Xo92uBwCtarA6/qSIugdap/SV5CbVi+piiNwU+Piqu
-         nqe52eoCWT8qJF74EGGKB54rhFlEKpKxwmize/cBgoL9JFjiK6nfpG+z4j+8oLyZ+7yh
-         mrJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wKN4m3qaF3NBH5ckPFZcyBaSQMGUrgzHUrSTh7nIHVs=;
-        b=TIs8BHIjn8YMQPH8PCp/YuNV6if3UYTpIpj+qgkQAybQJkBmK3lIXvPg6BiQZ+bV25
-         7lDr+1/PSuHmCwj/RfvliOiyc/8BkP0qx0jsc9zBPhixbUk4TLzjbi+EP2FSYoQ0gWoy
-         M/g07aylSHFnUgi2DjCSmrcj451iffG9WGQYUVacx2Yw1NMet++0TecUFxZ/HQHEG4jR
-         jZ6txn1QK6Dqqg7zBA8jwvgRP6y74fHfwVQAlskY+4C2ZNKrIP7yWEsRD395TqQs6s3a
-         gukQNH4uPttOC1H8S9h+koAiycBdYGzFc0FjyzOYX48XmPiam5A+Ae56kQdz36CGPzRH
-         rdYw==
-X-Gm-Message-State: AGi0PuYpm8a81eYs/5ifiJo3jqgoX9vTu1KV7xs6+i0PVeHR98fQG3rW
-        qG5f1TOyqGeJ9MWqP7BWU8M=
-X-Google-Smtp-Source: APiQypKPD+Nb0LBCAOPh1TyNjaLEhOIfG521fkaEQDlC3oCFPjz2d2QdJc7RXJyqEYZla1UkYuEWAQ==
-X-Received: by 2002:aa7:97a6:: with SMTP id d6mr13397951pfq.92.1588852865919;
-        Thu, 07 May 2020 05:01:05 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
-        by smtp.gmail.com with ESMTPSA id 71sm4798036pfw.111.2020.05.07.05.01.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 05:01:05 -0700 (PDT)
-Date:   Thu, 7 May 2020 19:01:02 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
-Message-ID: <20200507120102.GB32465@danh.dev>
-References: <20200504162311.GE12842@coredump.intra.peff.net>
- <20200504215824.GC45250@syl.local>
- <20200504233634.GB39798@coredump.intra.peff.net>
- <20200505002055.GC64230@syl.local>
- <20200505164326.GA64077@coredump.intra.peff.net>
- <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
- <20200505182418.GA66702@coredump.intra.peff.net>
- <20200505210451.GA645290@coredump.intra.peff.net>
- <xmqqlfm69il6.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2005061623520.56@tvgsbejvaqbjf.bet>
+        id S1725949AbgEGMFK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 08:05:10 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:44470 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1725848AbgEGMFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 08:05:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1588853109;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=K2b8GrKXClnDkupvOfCgZhrncjhXXm0/tHh4EGW7LO8=;
+        b=R4qLGxbCo4fMbd2/MGstqSTwqkjCmBW3bp5GpUMzWlO2juluQ+l7/XRt1cfvKHopYrk9sT
+        TfdKv+Fd1Wy1Pp/9FlYxjgtguHx2UkWOZ3a9bQWQFcupvErfBYezl949XbDWcd1mYBPOCx
+        jLdkaGs65vdGTfiN40dQUBk0qQzSIW4=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-432-NTY36ud_NEiG9JpxkZ6nZA-1; Thu, 07 May 2020 08:05:07 -0400
+X-MC-Unique: NTY36ud_NEiG9JpxkZ6nZA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 821D1107ACCD
+        for <git@vger.kernel.org>; Thu,  7 May 2020 12:05:06 +0000 (UTC)
+Received: from lacos-laptop-7.usersys.redhat.com (ovpn-114-11.ams2.redhat.com [10.36.114.11])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 24F5A60CD1
+        for <git@vger.kernel.org>; Thu,  7 May 2020 12:05:05 +0000 (UTC)
+To:     public git mailing list <git@vger.kernel.org>
+From:   Laszlo Ersek <lersek@redhat.com>
+Subject: "--quiet" for git-push does not suppress remote hook output
+Message-ID: <ba70b25b-906c-0117-2594-c606595c6816@redhat.com>
+Date:   Thu, 7 May 2020 14:05:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2005061623520.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-05-06 17:09:39+0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> The idea is indeed very neat. I think we can do a bit better with resource
-> usage by not even bothering to check this branch out. Something along
-> those lines (sorry, I really would love to have the time to test this...):
+Hi,
 
-While this can avoid the cost of checking out a whole branch (which
-can be mitigated by using an orphan branch with single file),
+being a total novice in git internals, it seems like
+"builtin/receive-pack.c" (on the server) forwards any receive hook
+output with copy_to_sideband() back to git-push (on the client), even if
+git-push was invoked with "--quiet".
 
-This still spins up an VM, and actions/github-script run (I think)
-nodejs, which is more resource intensive than git and sh script.
-Above statement maybe wrong, I'm not interacting much with nodejs.
+And "case 2" in demultiplex_sideband() seems to print that "band" to
+stderr (on the client), despite "--quiet".
 
->       - id: check-ref
->         name: check whether CI is enabled for ref
->         uses: actions/github-script@0.9.0
->         with:
->           script: |
->             const req = {
->               owner: context.repo.owner,
->               repo: context.repo.repo,
->               ref: "ci/config"
->             };
-> 
->             try {
->               req.tree_sha = (await github.git.getRef(req)).data.object.sha;
->               (await github.git.getTree(req))
->               .tree.filter(e => e.path == 'ref-whitelist').map(e => {
->                 req.file_sha = e.sha;
->               });
->               const list = Buffer.from((await github.git.getBlob(req)).data.content, 'base64').toString('UTF-8');
->               core.setOutput('enabled', `\n${list}`.indexOf(`\n${{github.ref}}\n`) < 0 ? 'no' : 'yes');
+Is this intentional? I'd prefer "git push --quiet" to suppress remote
+hook output (unless the remote hook fails).
 
-And this `indexOf` will check if our ref (exact) matchs (full line)
-with some white-list list, which is very limited.
-So people couldn't match by some pattern (grep can work).
+Thanks!
+Laszlo
 
-I haven't tested, but we may use part of above script to read a single
-file from a ref, and add another steps for "grep"/"sh"
-I'm not sure if that script will cost more resources than git-checkout
-or not. And is that solutions over-engineered?
-
--- 
-Danh
