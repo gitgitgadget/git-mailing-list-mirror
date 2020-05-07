@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1736EC54E4B
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 13:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB3CDC54E49
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 13:17:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E54F4208D6
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 13:17:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1A7920708
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 13:17:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JY5mcsdc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pAve3YO8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbgEGNR5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 09:17:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37988 "EHLO
+        id S1726913AbgEGNRy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 09:17:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726904AbgEGNRx (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 09:17:53 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07000C05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 06:17:52 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id h9so6373721wrt.0
+        by vger.kernel.org with ESMTP id S1726864AbgEGNRv (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 09:17:51 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349F1C05BD0C
+        for <git@vger.kernel.org>; Thu,  7 May 2020 06:17:51 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id e26so6488531wmk.5
         for <git@vger.kernel.org>; Thu, 07 May 2020 06:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SAG3CfsdYn6lQEMHACFgXhSN7DUoYtsea9kTn51wM78=;
-        b=JY5mcsdcDyKYRXgkS6qQeZ8HDczPeqKTmUqj2bPwp8jMXrAcYi1/hoxslPKL6y3Jbb
-         1L+KjmEN/x+tqA86Pv4uiPkTF/KOz37HKIeAowJF2wh+OLQUMhr3UQSqoFiGvSDG44Yi
-         HLZ/ZNrZHIa68KVgLeqaXwEhkpyzOS87p/4K+aylQsiXPL6tegClfIhFU1yLVIJEDM83
-         5gXxHQhDo/C5wYrHhDeGUMSxhnVh6N9JTalHd3aMiA6PCiY/fV3ZpSGyu/sQazUWYth9
-         9ar7WXlU36op5oLYlC9TizeiH3P6vFEPz/I+1uwxDgqWfp7G8ZXW2L+qwu2ZLgW9K0q5
-         PAkQ==
+        bh=QVh2I/ihn8bhGOVhEi5ckFPVrBSzgqLhPRE1/wJdP2k=;
+        b=pAve3YO89/AyFhwI3XabDFL37DyNah82eTk+Up51osCMI8noU7daQg739UjSwhFkqI
+         7L+5qKWWNojSjYESrk4aEctVRcWQVPGaGSTYMLiaa0+ZAMNVEIXwDcfV+D6vcW+R6+73
+         dDYPuzDpu+KNfEg96r64OBoWHAeNjW0Zd9ObXlzYL/n1W8UAaGXgDJt8JEHbVoQgv48y
+         5jGMcckEsLlHiTn9gYvLP5SEQPs01nv0kYNLaeD79yaBpSDTM6rN9rgzEErYAlgNHhkZ
+         bXDo+G20JqTWPO7zCfjIn0L4fYN8leFk/09TB4Jf2mAjAOq6YS+nW/8brE613OY5u8VC
+         kspQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SAG3CfsdYn6lQEMHACFgXhSN7DUoYtsea9kTn51wM78=;
-        b=cClqfmuoEuDvqKEr3DhJWKcggl8CW5r1JBC8TVDcSkOpXllh5CKTuXv37VmeGEnNZF
-         7w4JL1Pz+Z+9ry5XDXui+j3K6/pKhxcJe0oUhGwxIqmoNZL2a7uF1BFeQlD3HvVCiD0v
-         YEAmGhWzpClfyLTNjOOuyOX5qqgQ/NkAXf9O20QQCbhjw3VcaGUnHHb0XfCGvPOGEa2A
-         1hcZfPPJGrb3M+oh1MsH1ZRmZVKosmg1oFpfzoP1NFO1thhBYBC9I5XlgJd0B6Z0KQih
-         200wSu8CCE8ILugclkhRde1JO19ejuKaYd2LQtfEbgLoh3BLVzfxoIztQoQFy8g+UwfW
-         QoaQ==
-X-Gm-Message-State: AGi0PuY2nkhA7u17sRAjRXjH4BVrITmSRBozdBREAY3I8iH6pNuD2t6C
-        987/Dtyj0MoI3YJQEXKPa9/ohhLD
-X-Google-Smtp-Source: APiQypJ/kxRjUnMpsoRiULQzAk3SK6FBr2eZgu0Pgp6pPfo/khxv3kXnl5NVw5l3qEdIh59rpBzklw==
-X-Received: by 2002:a5d:54c4:: with SMTP id x4mr16694332wrv.73.1588857470620;
-        Thu, 07 May 2020 06:17:50 -0700 (PDT)
+        bh=QVh2I/ihn8bhGOVhEi5ckFPVrBSzgqLhPRE1/wJdP2k=;
+        b=HkvJoW6aNv1YkaNFFcI0/VfG6afeV7n3jdmfmjq66IlpfCVamgI3vRYzkxcPKmpv3d
+         K0+6/6C1ngw40GNi5PikSvaIiq3+kGvmrPiaZhGMKhlHeTKqjtdsD3ATjtWigjEw15vf
+         F7nXNZDDqlgAiGJuyowQ24l3Psw54E7jAOFLxIsUmGLh8O540UFs+rDDdhtw+NXsss+r
+         +rwWpuCLAsDfI4l7S6/S+UkLO5OObHEhWwHhZunFmhF7jts2XA4cK9TdG+//oTUkshvl
+         6uJwUJhoNEi/Ko9xRGBVxTg0HJACE/4XnT9PXP2xAD7SmhTJO1dqcEg+jDTmc+//f9Dg
+         KGxg==
+X-Gm-Message-State: AGi0PubYq1r+GRCdvubJNOUnU2BQHWAhc1Ip+Ls37K8R/Lw9A9V4Keny
+        uqxvxcnfG9u60lBxzmnn3245WAmm
+X-Google-Smtp-Source: APiQypKqE2r2nAoXXhO5pnTf2EnTmpXXDqSriXDqKTJvKYJ+WYdaNRbB3lO4XYHTShxHT7vTujjS8A==
+X-Received: by 2002:a1c:5502:: with SMTP id j2mr11214041wmb.56.1588857469798;
+        Thu, 07 May 2020 06:17:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b82sm8447462wmh.1.2020.05.07.06.17.49
+        by smtp.gmail.com with ESMTPSA id c20sm8267057wmd.36.2020.05.07.06.17.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 06:17:50 -0700 (PDT)
-Message-Id: <5392cb7a1065fae766b6ef3c6f59728263ec6342.1588857462.git.gitgitgadget@gmail.com>
+        Thu, 07 May 2020 06:17:49 -0700 (PDT)
+Message-Id: <4ccc5ecbf3d8106ea55b8eb17cd8ad14df3c2680.1588857462.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.627.git.1588857462.gitgitgadget@gmail.com>
 References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 May 2020 13:17:41 +0000
-Subject: [PATCH 09/10] Makefile: disable GETTEXT when 'po' is missing
+Date:   Thu, 07 May 2020 13:17:40 +0000
+Subject: [PATCH 08/10] Makefile: skip git-gui if dir is missing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,119 +82,67 @@ As an effort to promote "dogfooding" the sparse-checkout feature within
 the Git codebase, it is helpful to explore which portions of the
 codebase are optional.
 
-The NO_GETTEXT build variable can disable the translation libraries.
-The test suite then uses the NO_GETTEXT environment variable to disable
-the GETTEXT prerequisite for some tests.
+The NO_TCLTK variable in the Makefile allows ignoring the git-gui
+application at build time. If the local sparse-checkout removes that
+directory, then the build will fail without manually defining that
+variable. Instead, check to see if the directory exists at build time to
+see if we can automatically ignore this directory.
 
-The 'po' directory contains translations for strings in the Git
-codebase. While this stores extremely important data for Git users, the
-data is not typically used by Git contributors in their daily work.
-Thus, it could be removed from the working directory using
-sparse-checkout.
+With this change, the following list of directories can be supplied to
+"git sparse-checkout set" and Git will build and test on Linux:
 
-However, doing such a removal causes some tests to fail. Part of the
-failures are related to the GETTEXT prerequisite being enabled when it
-probably should not be. The other part is that some tests in
-t0200-gettext-basic.sh depend on the existence of files in the po
-directory.
+	Documentation
+	builtin
+	compat/.depend
+	contrib
+	ewah
+	mergetools
+	negotiator
+	perl
+	refs
+	sha1dc
+	sha256
+	t
+	templates
+	trace2
+	vcs-svn
+	xdiff
 
-In test-lib, disable the GETTEXT prerequisite when the po directory does
-not exist, then add the GETTEXT prerequisite to these tests that use
-files in that directory.
-
-In Makefile, define NO_GETTEXT when the po directory does not exist.
-This is necessary for "make install" to work correctly.
+The "make install" command requires the "gitweb" and "po" directories.
+The "po" directory will become optional in the next change.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile                 | 9 ++++++++-
- t/lib-gettext.sh         | 1 -
- t/t0200-gettext-basic.sh | 6 +++---
- t/test-lib.sh            | 7 ++++++-
- 4 files changed, 17 insertions(+), 6 deletions(-)
+ Makefile | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index 70760d315cb..38c2d54349a 100644
+index 2e8029b8026..70760d315cb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -72,7 +72,8 @@ all::
+@@ -313,7 +313,8 @@ all::
  #
- # Define NO_GETTEXT if you don't want Git output to be translated.
- # A translated Git requires GNU libintl or another gettext implementation,
--# plus libintl-perl at runtime.
-+# plus libintl-perl at runtime. This will also be defined if the 'po'
-+# directory is missing.
+ # Define NO_PYTHON if you do not want Python scripts or libraries at all.
  #
- # Define USE_GETTEXT_SCHEME and set it to 'fallthrough', if you don't trust
- # the installed gettext translation of the shell scripts output.
-@@ -1861,6 +1862,12 @@ ifeq ($(TCLTK_PATH),)
+-# Define NO_TCLTK if you do not want Tcl/Tk GUI.
++# Define NO_TCLTK if you do not want Tcl/Tk GUI. This will also be defined
++# if the git-gui directory is missing.
+ #
+ # Define SANE_TEXT_GREP to "-a" if you use recent versions of GNU grep
+ # and egrep that are pickier when their input contains non-ASCII data.
+@@ -1860,6 +1861,12 @@ ifeq ($(TCLTK_PATH),)
  NO_TCLTK = NoThanks
  endif
  
-+ifndef NO_GETTEXT
-+	ifeq ($(ls po),)
-+		NO_GETTEXT = NoThanks
++ifndef NO_TCLTK
++	ifeq ($(ls git-gui),)
++		NO_TCLTK = NoThanks
 +	endif
 +endif
 +
- ifndef NO_TCLTK
- 	ifeq ($(ls git-gui),)
- 		NO_TCLTK = NoThanks
-diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
-index 2139b427ca1..beeb45a1387 100644
---- a/t/lib-gettext.sh
-+++ b/t/lib-gettext.sh
-@@ -7,7 +7,6 @@
- . ./test-lib.sh
- 
- GIT_TEXTDOMAINDIR="$GIT_BUILD_DIR/po/build/locale"
--GIT_PO_PATH="$GIT_BUILD_DIR/po"
- export GIT_TEXTDOMAINDIR GIT_PO_PATH
- 
- if test -n "$GIT_TEST_INSTALLED"
-diff --git a/t/t0200-gettext-basic.sh b/t/t0200-gettext-basic.sh
-index 8853d8afb92..0f6bc941cbb 100755
---- a/t/t0200-gettext-basic.sh
-+++ b/t/t0200-gettext-basic.sh
-@@ -15,17 +15,17 @@ test_expect_success 'sanity: $TEXTDOMAIN is git' '
-     test $TEXTDOMAIN = "git"
- '
- 
--test_expect_success 'xgettext sanity: Perl _() strings are not extracted' '
-+test_expect_success GETTEXT 'xgettext sanity: Perl _() strings are not extracted' '
-     ! grep "A Perl string xgettext will not get" "$GIT_PO_PATH"/is.po
- '
- 
--test_expect_success 'xgettext sanity: Comment extraction with --add-comments' '
-+test_expect_success GETTEXT 'xgettext sanity: Comment extraction with --add-comments' '
-     grep "TRANSLATORS: This is a test" "$TEST_DIRECTORY"/t0200/* | wc -l >expect &&
-     grep "TRANSLATORS: This is a test" "$GIT_PO_PATH"/is.po  | wc -l >actual &&
-     test_cmp expect actual
- '
- 
--test_expect_success 'xgettext sanity: Comment extraction with --add-comments stops at statements' '
-+test_expect_success  GETTEXT 'xgettext sanity: Comment extraction with --add-comments stops at statements' '
-     ! grep "This is a phony" "$GIT_PO_PATH"/is.po &&
-     ! grep "the above comment" "$GIT_PO_PATH"/is.po
- '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0ea1e5a05ed..ca22d23f0d2 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1474,7 +1474,12 @@ test -z "$NO_PYTHON" && test_set_prereq PYTHON
- test -n "$USE_LIBPCRE1$USE_LIBPCRE2" && test_set_prereq PCRE
- test -n "$USE_LIBPCRE1" && test_set_prereq LIBPCRE1
- test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
--test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
-+
-+GIT_PO_PATH="$GIT_BUILD_DIR/po"
-+if test -d "$GIT_PO_PATH"
-+then
-+	test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
-+fi
- 
- if test -n "$GIT_TEST_GETTEXT_POISON_ORIG"
- then
+ ifeq ($(PERL_PATH),)
+ NO_PERL = NoThanks
+ endif
 -- 
 gitgitgadget
 
