@@ -2,107 +2,107 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99F30C38A2A
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 10:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8484AC38A24
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 10:49:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 711C22083B
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 10:11:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5556F207DD
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 10:49:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="p/b0s51q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U94fsqdh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbgEGKLR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 06:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36850 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725809AbgEGKLR (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 06:11:17 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78594C061A10
-        for <git@vger.kernel.org>; Thu,  7 May 2020 03:11:16 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id g12so6129718wmh.3
-        for <git@vger.kernel.org>; Thu, 07 May 2020 03:11:16 -0700 (PDT)
+        id S1726788AbgEGKtd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 06:49:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42882 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726509AbgEGKtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 06:49:33 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAFEBC061A10
+        for <git@vger.kernel.org>; Thu,  7 May 2020 03:49:32 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id u4so4048707lfm.7
+        for <git@vger.kernel.org>; Thu, 07 May 2020 03:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oFI0wvyX9TCY1nHHIlBzptCLZ5P4Go9+kdceCw4At6M=;
-        b=p/b0s51qQIo639QCGOVTMbhJ10n57NErx3ADH+lFqwlZO+hQioK/3pMyDWWpolpvJa
-         YvjV5tjV8KtpkoayRApm8YrvsrQyghpQSxR33bQL31x2CbM+XAXtPJ5I1Kj+nYTBGkEx
-         SzUDvs6zQqcUEcfl2xLQ9xBxfW9XnFUarGdu0lcqP/FGAVq4XSVnqfXb9pqBN+SN1JSu
-         HpoNfrbSduX00z0YbBSyxuxYhOE9I6gZDkUdO45x2R0f79rzF2zfYQFH36KhMkxaGbJl
-         satcelD9RaC1lALFE6LEx7XPD9iiGcD4R1t8LIDM3eqCjp17NOK9n9dDuATVnztR5kUi
-         mB4A==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zaCT6S+oWMa7zGU8ZtP5r3pR54CI2CFLV09f4tdKNCM=;
+        b=U94fsqdhUb83G3YzUgh78qd1fYa6jYf1xT3Ahh9WQiz2FCoLE9p2FC6lmsFpbDSBWp
+         IsbY7N0F0nViazhKuVhLyaf0LFMvT5iw17NUzz8nSqAxp3zJKsmukvnvbAJ/JZXOLyNM
+         OoEf96eTWEeeBCFzemu29H7AgxE25vamfV2DtCZx0TboaP7fOwR7rY5VFqk+JrDtdpfI
+         T64xn/yGmbd72hRWQWw2pzj1imwieFFh+jXGkxfo6OlYcf89ZoiQz8c29NiNgt9eCjGV
+         e62dYlybWYk+2yZMl2PV2uxU2ulatOyZERYMnQ278wNmJrls6alA9GOa1Fw0xcN0kbHq
+         7Uww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oFI0wvyX9TCY1nHHIlBzptCLZ5P4Go9+kdceCw4At6M=;
-        b=pKwBTIUnCIxgn51hlcBCuJbcJfdlfMicHkFJjsJiC+r9tUmudaphFZwf914Z9rh72b
-         F2UhnGj61n4ckziTnDcQ8lBM5nOJPYqGHv+26qtQh37ULcqH/pefshZPRpr+DmJAo1C3
-         VCnYr5T7m7H/c92r0sJV882wdRTJImNUYO69xV81r5upXr+m7FkKhhvds623ECWwTsgS
-         I0MPw5DJxB7jgNg8yzMMcC96o+gW4Zz08qsTQKbW+gmD8bAU+4Eg0LczHwbc9U/W0+3M
-         5HGHzmd/Yn/6jlh/TeYtc9gfw5Jv1riVO/5PrcTjqRlOjfM0jzyEc/WfN+q7jL+Q1DYf
-         CI0Q==
-X-Gm-Message-State: AGi0PuZnprCf5Im+Opj0SnnPmLHTqkCYBqCdYBXuhCFB3Pww9RwJvhjL
-        ME2M04xM1LrPuA6tNyGtbDJU+YxhJd2N3I9ju77ydg==
-X-Google-Smtp-Source: APiQypL91VoKSyBQBVe/YnDWT+S7nldb9hHImSk6W9WEzrYrztdCrWn8AFwN4rX5IcIV6eHWOBkjj35KEtghdC1Igrc=
-X-Received: by 2002:a1c:66c4:: with SMTP id a187mr509985wmc.63.1588846274688;
- Thu, 07 May 2020 03:11:14 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=zaCT6S+oWMa7zGU8ZtP5r3pR54CI2CFLV09f4tdKNCM=;
+        b=hN7kLh6tnSgiaOWV74HqJJ7klsjnxiVUGrLRAHvOtv0Rpi7+HJnBpF9HYxNYLTcymu
+         ObWG+aR1Uqd7i8XnkpPi41SMQKP16SeloM1zLjM5l6+Htt9nmENWe/F90q0z4d4YrH/+
+         SegtBJHxorBK7F8o2nryo4PdrucszXd2GDRyOLsd1TWqiLw5VO7C5gREfB049JJQ2ebs
+         UoSg3af9NeZzIcXsIdBrBSx1iwDE6l413czUeBKbMvTxemRazjRqzknTVbNdvaFmT1X4
+         jfDl/H6uN+OnVfDHGRN03S3qHxoGSpSSZIXNA9ADHsi2NLhT6Iun91vnKfFh9T2Gr+dN
+         Fw/w==
+X-Gm-Message-State: AGi0PubHqf/iZxqI9CW8dMXQqrFN4W95A3wCCrAquBMLmhTx3yNT1d1A
+        8KKwA2J49OA5dkhy5geXpb0wCvk3
+X-Google-Smtp-Source: APiQypL6MuLvtM1jJfHU8dCbdHTi1yDAzxq47EGUuIZluHbi8PXF/uiHWQhin4JHCjIRGpc4KpPV6A==
+X-Received: by 2002:a19:4f02:: with SMTP id d2mr8512498lfb.180.1588848570953;
+        Thu, 07 May 2020 03:49:30 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id h22sm3077794ljb.65.2020.05.07.03.49.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 03:49:30 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Solomon Ucko <solly.ucko@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: rebase -i: quick/inline reword
+References: <CANtMP6oKN6Ueu=fqFYv2VhUP5S-ifbSzPTARvbEg4eV0pcRcHw@mail.gmail.com>
+Date:   Thu, 07 May 2020 13:49:29 +0300
+In-Reply-To: <CANtMP6oKN6Ueu=fqFYv2VhUP5S-ifbSzPTARvbEg4eV0pcRcHw@mail.gmail.com>
+        (Solomon Ucko's message of "Thu, 7 May 2020 00:27:16 -0400")
+Message-ID: <87imh8m346.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-References: <fda6d0db-f79e-f44e-7c2b-b60ed1794cd0@gmail.com>
- <CAFQ2z_PP9Ld+GDctV-v2CDKFamF6zKdJZ_-jhahj_fcm3wy4Hw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2005012316350.18039@tvgsbejvaqbjf.bet> <20200503095500.GF170902@coredump.intra.peff.net>
- <xmqq1ro1j6qk.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq1ro1j6qk.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 7 May 2020 12:11:02 +0200
-Message-ID: <CAFQ2z_Pf7u0k-PvMG8J-kWMdRXhamm5JgHZiUM6Ffu-2zGGubQ@mail.gmail.com>
-Subject: Re: Git Test Coverage Report (April 30, 2020)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 3, 2020 at 6:58 PM Junio C Hamano <gitster@pobox.com> wrote:
+Solomon Ucko <solly.ucko@gmail.com> writes:
+
+> Currently, `rebase -i` allows modifying the commit titles in the list, and
+> the modified title is shown in the lists of previous and next commands, but
+> the changes are not saved. Currently, modifying just the titles of many
+> commits requires `reword`ing each one and separately and consecutively editing
+> each message, which is annoying when making small, repetitive edits, especially
+> since it requires double-checking each one separately. It would be much easier
+> if there were a mode where any changes to the commit titles in the list
+> modified the commits' titles. Maybe `git rebase -i --reword`?
 >
-> Jeff King <peff@peff.net> writes:
->
-> > I agree, and I think it's not just a question of review, but of
-> > maintenance going forward.
-> > ...
-> > ... I'd
-> > be even more afraid to see similar issues in something as critical as
-> > ref storage.
->
-> Thanks for saying these.  I have nothing to add.
+> Any thoughts, suggestions, questions, etc.?
 
-I have sent an updated patch to fix the header issue you pointed out.
+Yes, thanks for raising the issue!
 
-I'm discussing options on how to move forward with Jonathan Nieder.
-Once we have sorted those out, we'll send out an email, hopefully
-early next week.
+I've needed the feature many times myself, but then, as Junio already
+described in his reply, I realized it's likely a no-go with current
+design of the todo lists. Changing just the titles probably still could
+be implemented in a useful way (as with your --reword suggestion), but
+its application is in fact rather limited, so maybe isn't worth the
+trouble.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+It'd be really nice if it were possible to, say, search&replace in, or
+spell-check, interactively, all the commit messages (including titles)
+of a bunch of commits to be published, all in a single file handled by
+single rebase run.
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+This is a feature that I'd like to see being considered if and when we
+decide to design a history editing feature that is more powerful than
+current dos-batch-files-alike processing enhanced with comefrom labels.
 
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+-- Sergey
