@@ -2,105 +2,110 @@ Return-Path: <SRS0=p769=6V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72784C38A24
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BA77C38A24
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:17:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EE2220CC7
-	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:17:24 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m3y7I3w/"
+	by mail.kernel.org (Postfix) with ESMTP id 725E52083B
+	for <git@archiver.kernel.org>; Thu,  7 May 2020 12:17:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbgEGMRX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 08:17:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56652 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725879AbgEGMRW (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 08:17:22 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 823F5C05BD43
-        for <git@vger.kernel.org>; Thu,  7 May 2020 05:17:22 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id j3so6030863ljg.8
-        for <git@vger.kernel.org>; Thu, 07 May 2020 05:17:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WzWAOyb37YVIPQY/jrStfLvNf80Mdk98IjVbiE7i7jw=;
-        b=m3y7I3w/93Kd3WW2cPA0vZHk/THsqE4ccwHxO2TSO1ec2S3wgg4ODWmYpftDRamvh5
-         izq05Q3904LDF5R2J+4daSxIjseKb4uKtsnVgajDwV5pWQ2J9tbE9R+Cbs90MaDbxlm8
-         PI6XHoQyfe7zMlyz+a1cdMpEdddqLERMlScEzQAEfwn/Yq5+IeBF8wL1lDiv/kip4TTO
-         q37zOpR2TgFgaLeyQVOzYq4UzQmlpr7VQ4JJkskHZVlI1Ms1JvbPsSpUc+VQubLGc1ok
-         NdhHg41+5wXDndB7eo0D7kVuyxErNEPi7H8t0dl8mxD6gk76o1A+WPn6JKkFVbM+CbfS
-         LpiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=WzWAOyb37YVIPQY/jrStfLvNf80Mdk98IjVbiE7i7jw=;
-        b=IjIRcriQgWr2ctayG1/e/fBH3/TTkE7YdXmHhO1wHN3218JFr0fK6/IoC321eUQ6BS
-         CToKyECY5dr1qZbxSPh4+fF8L5X4oDv7H3Dxv9PCHOM/UM2CeBsv0pXpg5g0JVJ+XuvF
-         MzkYDqa0YPIVEgfSaouU5skP6xeZQHq1QxnfkIxhkPak5AWtXhqJQSNQDQnBIRflHjTK
-         jT2bUCuEqltibEjvqsic4FMzoQ1si5FhCjWF7A9UwGiQTRnK8JrCf+QPaDmhaxCC8FIa
-         6UMcMMyFDMeuEoLmwDpLqdhUFn1Ixyr5u0UyOAkVLe/jYsurAH5f/QBilwPTUyIcnneZ
-         /8Jw==
-X-Gm-Message-State: AGi0PuaR29vAj0VW8X98BkWtvwm3j/oYOC4jP7BpunZajezcc2PB2T1v
-        dTcmBQj9TbqOkcAbwZjPG4qpyTKh
-X-Google-Smtp-Source: APiQypKlVoNom+zZOMGGUrhzQnzQftQBmTWSvjlgqrcjPZ75C0Kwhrls3VdBTJbuaF2W/RrOqgmVVA==
-X-Received: by 2002:a05:651c:549:: with SMTP id q9mr8385748ljp.236.1588853840353;
-        Thu, 07 May 2020 05:17:20 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id y9sm3208562ljy.31.2020.05.07.05.17.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 05:17:19 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Solomon Ucko <solly.ucko@gmail.com>, git@vger.kernel.org
-Subject: Re: rebase -i: quick/inline reword
-References: <CANtMP6oKN6Ueu=fqFYv2VhUP5S-ifbSzPTARvbEg4eV0pcRcHw@mail.gmail.com>
-        <xmqqzhak4a9o.fsf@gitster.c.googlers.com>
-        <20200507114630.GC3027470@coredump.intra.peff.net>
-Date:   Thu, 07 May 2020 15:17:18 +0300
-In-Reply-To: <20200507114630.GC3027470@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 7 May 2020 07:46:30 -0400")
-Message-ID: <87zhakgcs1.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1726519AbgEGMR2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 08:17:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40060 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725879AbgEGMR2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 08:17:28 -0400
+Received: (qmail 31163 invoked by uid 109); 7 May 2020 12:17:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 May 2020 12:17:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16364 invoked by uid 111); 7 May 2020 12:17:30 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 May 2020 08:17:30 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 7 May 2020 08:17:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 1/2] CI: limit GitHub Actions to designated branches
+Message-ID: <20200507121727.GA3057274@coredump.intra.peff.net>
+References: <20200504215824.GC45250@syl.local>
+ <20200504233634.GB39798@coredump.intra.peff.net>
+ <20200505002055.GC64230@syl.local>
+ <20200505164326.GA64077@coredump.intra.peff.net>
+ <xmqqo8r2b6y4.fsf@gitster.c.googlers.com>
+ <20200505182418.GA66702@coredump.intra.peff.net>
+ <20200505210451.GA645290@coredump.intra.peff.net>
+ <xmqqlfm69il6.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2005061623520.56@tvgsbejvaqbjf.bet>
+ <xmqqeerx81wy.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqeerx81wy.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, May 06, 2020 at 09:26:53AM -0700, Junio C Hamano wrote:
 
-> On Wed, May 06, 2020 at 09:52:19PM -0700, Junio C Hamano wrote:
->
->> Solomon Ucko <solly.ucko@gmail.com> writes:
->> 
->> > ... It would be much easier
->> > if there were a mode where any changes to the commit titles in the list
->> > modified the commits' titles. Maybe `git rebase -i --reword`?
->> >
->> > Any thoughts, suggestions, questions, etc.?
->> 
->> It is probably a bad idea, as it encourages a single-liner commit
->> message without any body.
->
-> There is another legitimate use (or at least one I have wished for many
-> times): when manipulating the todo list in my editor to choose patches
-> for editing, I sometimes notice a typo in the title and correct it. And
-> of course that does no good, and I get annoyed. You'd think I would have
-> learned after all these years, but I continue to make the same mistake.
-> ;)
->
-> I've often wished that changes there would be quietly persisted.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > The idea is indeed very neat. I think we can do a bit better with resource
+> > usage by not even bothering to check this branch out. Something along
+> > those lines (sorry, I really would love to have the time to test this...):
+> 
+> Nice.  I view the latest round of Peff's idea "allow-ref" as
+> "because we are spinning a VM anyway, why not just run an end-user
+> supplied script and let it decide?" and not as "we must have a
+> Turing complete flexibility so let's run a script in a VM".  In
+> other words, it may be overkill and we may strike a better tradeoff
+> by living with reduced flexibility if there is a way to avoid the
+> associated cost.
 
-That's exactly my case as well.
+The script is just javascript, which has an eval(). We could probably
+let refs/ci/config:allow-ref be a snippet of javascript that we run.
 
--- Sergey
+I do prefer the VM environment to snippets of javascript for a few
+reasons:
+
+  - shell scripts match the rest of our Git toolbox (though that's a
+    personal preference, and for the amount of code we're talking about
+    even _I_ can do a little javascript)
+
+  - it's easy to test your code locally by running "./allow-ref foo".
+    Whereas emulating the environment in which those scriptlets are run
+    is much trickier (e.g., you need a working github-api object)
+
+That said, if this is more lightweight, I think it's worth exploring.
+
+> But doesn't this (i.e. uses: actions/github-script) still pay the
+> cost of spinning up a VM?  How expensive is it to check out a small
+> tree with a single file, whether it is ref-whitelist or allow-ref?
+
+I suspect this script mechanism may be much cheaper. I don't know the
+implementation details, but spinning up a nodejs container to run a
+javascript snippet should be much cheaper than a full ubuntu VM running
+"git clone" (the clone itself should be super cheap because it's a
+shallow single-branch clone of a tree with one file in it, but getting
+there is relatively heavy-weight).
+
+But I could be wrong.  It's clear that they're not spinning up a full
+ubuntu vm from scratch to serve the requests (since it happens in 3s).
+I'll see if I can get something working and do some timings.
+
+The latency isn't incredibly important. This is all happening async, and
+either we'll skip CI (in which case you don't care how long it takes,
+since you're not waiting on the result) or CI will take many minutes, in
+which case 3s is nothing. But I would like to be respectful of the CPU
+spent running Actions and be as lightweight as possible.
+
+-Peff
