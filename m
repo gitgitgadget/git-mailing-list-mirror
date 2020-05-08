@@ -2,100 +2,86 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C2D7C38A2A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 16:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1B6DC38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 17:12:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 299912192A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 16:57:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epnXoLo5"
+	by mail.kernel.org (Postfix) with ESMTP id 995D7218AC
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 17:12:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727824AbgEHQ54 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 12:57:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42878 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726750AbgEHQ54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 12:57:56 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DB50C061A0C
-        for <git@vger.kernel.org>; Fri,  8 May 2020 09:57:55 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id f11so2418612ljp.1
-        for <git@vger.kernel.org>; Fri, 08 May 2020 09:57:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=tlkeAjG5dwR+i+XW+i3AkoS2BOkkWHCNbkAYtoS0bWg=;
-        b=epnXoLo5XV4s+03xbmmJLHDWFIhBzv9HQoH7yBP/3EdP3RWEDHZ1tmQyjHmhZi/n9Z
-         3dkkFowItldxikH0PqbHqU1RlC9gwVUm/3/qGWkX6sdWhu3S9u3sAug66z0drorvytmD
-         Zk+YGZSr6kdNZF9557OYKO2YhQMYFPqnHXS7QYMhKH6pr6OyNSvsWM6V3dypJndj/Vs/
-         zrbVvPmbIoQIQIelLtu1SKFfY8/c9EjMKrBhK12vmx0RQfyv7oenKsGuGp3GOUYtwV4L
-         D/1VnTfh8e6OCO0IIlKlt+q8OL5pzwAHe0egokqo2RVYn2yiCV3RL2ccySAv0Z/LEWCc
-         mZWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=tlkeAjG5dwR+i+XW+i3AkoS2BOkkWHCNbkAYtoS0bWg=;
-        b=e/zPKhmJUcgIvb99uuxYXwxHCRIgjIC6kI9HstnbQxb8vK8U79EgnZHAiZF9+TPeO/
-         gH+TFTWh5/BRS1xDSRSlVfEVN8CHxJPhLbKtzoFYAi7KCCbQTX+SCf9CPoLRONBZJ8ns
-         5kHEPF+ZBDOJhemRGdbNC9QawcvauNeUpoADF3w40R98y+DR6FSk9p21jlnLxfZLWCF2
-         EPdOLZoguXPrcWE0A2jLSarYpdCuKRstudEPcivTyRYnHxsZlj91E3emvgD0r7doxKpH
-         RqQ6L8NRhntjrAPNN7kwfPuNRHxOJwd0PgixTN1LqcP13XF8S6kixkQ68q6tsYqpBpEo
-         2nZw==
-X-Gm-Message-State: AOAM532tc2iICRCYRPBCyFvggkeHomUcIF5jw9+PkDC6/aEA2YKRXE4k
-        qQgdgop6NfDR5dpojSM9ujdkJADJh+3hk2tk
-X-Google-Smtp-Source: ABdhPJwjiNmac74+ZPmrcgeOMGFx8Az4X5SJBBrjHsGNBi6n4/ezHz5PL4lRgqdRKKqo8UvURJ1/gw==
-X-Received: by 2002:a2e:90c9:: with SMTP id o9mr2204545ljg.187.1588957074064;
-        Fri, 08 May 2020 09:57:54 -0700 (PDT)
-Received: from [192.168.178.23] (aftr-62-216-206-147.dynamic.mnet-online.de. [62.216.206.147])
-        by smtp.gmail.com with ESMTPSA id g6sm1583299ljj.78.2020.05.08.09.57.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 May 2020 09:57:53 -0700 (PDT)
-Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
-To:     Philip Oakley <philipoakley@iee.email>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>,
-        Jeff King <peff@peff.net>
-References: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
- <2367cf9d-2e37-b8c2-6881-f3e6c951a460@gmail.com>
- <nycvar.QRO.7.76.6.2005071626340.56@tvgsbejvaqbjf.bet>
- <1a03a7b4-f436-83c5-f825-3b68c07785e9@iee.email>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <4f2ddbba-a9ba-a96a-36c1-b233ea861575@gmail.com>
-Date:   Fri, 8 May 2020 18:57:51 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1727107AbgEHRMd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 13:12:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41812 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726750AbgEHRMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 13:12:33 -0400
+Received: (qmail 10465 invoked by uid 109); 8 May 2020 17:12:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 May 2020 17:12:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30183 invoked by uid 111); 8 May 2020 17:12:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 May 2020 13:12:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 8 May 2020 13:12:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christopher Warrington via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Christopher Warrington <chwarr@microsoft.com>
+Subject: Re: [PATCH] bisect: fix replay of CRLF logs
+Message-ID: <20200508171232.GA637136@coredump.intra.peff.net>
+References: <pull.629.git.1588886980377.gitgitgadget@gmail.com>
+ <20200507222510.GA42822@coredump.intra.peff.net>
+ <xmqq5zd72vjp.fsf@gitster.c.googlers.com>
+ <20200508130831.GB631018@coredump.intra.peff.net>
+ <xmqqh7wq1n52.fsf@gitster.c.googlers.com>
+ <xmqq8si2z8zb.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <1a03a7b4-f436-83c5-f825-3b68c07785e9@iee.email>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Disposition: inline
+In-Reply-To: <xmqq8si2z8zb.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-05-08 18:43, Philip Oakley wrote:
-> On 07/05/2020 15:27, Johannes Schindelin wrote:
-> Is this ability to have a commit message `fixup! <commit-hash>` documented?
-> I've looked a few times in the past and didn't find it. The docs for
-> `git commit --fixup=` doesn't put the oid in the commit's subject line,
-> rather it puts the subject of the referent commit after the "fixup! ".
->
-> Searching from a different direction I've just seen it is mentioned in
-> the v1.7.4 release notes.
->
-> Would a doc fix to clarify this be appropriate or have I missed something?
->
-> Philip
+On Fri, May 08, 2020 at 09:28:56AM -0700, Junio C Hamano wrote:
 
-Yes, it's documented in description of --autosquash: "A commit matches the `...`
-if the commit subject matches, or if the `...` refers to the commit's hash."
+> -- >8 --
+> From: Christopher Warrington <chwarr@microsoft.com>
+> Subject: [PATCH] bisect: allow CRLF line endings in "git bisect replay" input
+> 
+> We advertise that the bisect log can be corrected in your editor
+> before being fed to "git bisect replay", but some editors may
+> turn the line endings to CRLF.
+> 
+> Update the parser of the input lines so that the CR at the end of
+> the line gets ignored.
+
+I'm a little surprised that bash "read" on Windows doesn't eat CRLFs
+already. But I often find myself confused by line ending decisions in
+general, as well as the difference between cygwin versus msys versus
+pure windows binaries, etc.
+
+At any rate, munging IFS seems much nicer than having an extra call to
+tr.
+
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index efee12b8b1..56548d4be7 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -209,6 +209,7 @@ bisect_replay () {
+>  	test "$#" -eq 1 || die "$(gettext "No logfile given")"
+>  	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
+>  	git bisect--helper --bisect-reset || exit
+> +	oIFS="$IFS" IFS="$IFS:$(printf '\015')"
+
+There's no ":" separator in IFS, so here you're treating colon as
+end-of-line. I think you just want:
+
+  IFS="$IFS$(printf '\015')"
+
+-Peff
