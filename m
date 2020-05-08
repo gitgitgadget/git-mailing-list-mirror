@@ -2,162 +2,131 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54EF2C38A2A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 12:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 539F3C47254
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 12:16:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D5AE208DB
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 12:07:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 327B8208D6
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 12:16:07 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kOtM4RQL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbgEHMHy convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 8 May 2020 08:07:54 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:27838 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726701AbgEHMHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 08:07:54 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 048C7n4s063839
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 8 May 2020 08:07:50 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Alexander Mills'" <alexander.d.mills@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <CA+KyZp7TELrswPjNgB99BXXHEXi5pRr5bO3g_wy7zBvv1R4Kww@mail.gmail.com> <06da01d624c7$acb17090$061451b0$@nexbridge.com> <CA+KyZp7Ur3kW3qrCe3hOz16gA9y_B7rSGin62=eKMjCCqLsR4w@mail.gmail.com> <CA+KyZp7emY12sy6QdGBJ5T9e135VCfjeqTy9u_FWh+FA1d-uFg@mail.gmail.com>
-In-Reply-To: <CA+KyZp7emY12sy6QdGBJ5T9e135VCfjeqTy9u_FWh+FA1d-uFg@mail.gmail.com>
-Subject: RE: check if one branch contains another branch
-Date:   Fri, 8 May 2020 08:07:43 -0400
-Message-ID: <070601d62531$4a95ba00$dfc12e00$@nexbridge.com>
+        id S1726885AbgEHMQD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 08:16:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55248 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726616AbgEHMQC (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 May 2020 08:16:02 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE750C05BD09
+        for <git@vger.kernel.org>; Fri,  8 May 2020 05:16:02 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id t3so1277701otp.3
+        for <git@vger.kernel.org>; Fri, 08 May 2020 05:16:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Si97PSnTI3M9pWpV04l3WlzvAnLocIJDNNQ5BgG23PA=;
+        b=kOtM4RQLTi0M18SLf7wHJLDsWsCAc0i8Y87ygZQN4WyxzFKLsxJM/ZhmTCu61C5Dkv
+         6I1UBIk0SK+xsTDgz64QgqfMvQxssBgn3I5n4+x5WX/PzU8ex7Jx8Xr5RZ0T41qYFtRD
+         2QMu4H4oXAY5tJpVPB62xHjXXzhS1gFUNbW+B64WUcUItAYLcPxKNV6HT2O7TNj31R2Z
+         vXmALyhZYKtYgBuVbwvoVofAqfiSMr1cXg/XWfIquxCbfIBPlMRAvlCDAUiVX/2SORgh
+         7Y4z2Dsj73vrB/SCxPFpa2uRnh+i1G0Yg+Aqk9uW97h5Nk+89Dn+OlNOGDUr5MRtrvgV
+         yYzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Si97PSnTI3M9pWpV04l3WlzvAnLocIJDNNQ5BgG23PA=;
+        b=Ls4pys5KYL/3gk/buwt+nSnRaXnxv3b4EIZx0E2k+CRw1L+g7Yss4WAUdAtI8TgLgN
+         +TE4yrJKP8LlNJpRxN2WCNtTq/hIsdKgZx7CEhIg29cbv7JAAZa7uoMVvL586efRrQX4
+         5VCpqMZVq/NsFK3M6RCs3cqf9ZvBiTaDrEnTFpsRJSXF7mkq3voEoUtXXQGY1Zf+sQN0
+         JbA3447LnlR+NBhOSUWaZR0QOOd3gSYYHSR6ClsLoxbVW5vVWXRn7KblDH8FIwBXwIKl
+         9SK/Po4nMXXSm76litJZFwsetyS0rIM8X0agjHR0Ue3+1KMAeofRVHSYm1OZf9MnsSUz
+         CVBw==
+X-Gm-Message-State: AGi0PubY2pm1/EWAI6IIIvabZNTn7ns2eVAHosPbafjjJKcTHhFpnHza
+        YDvawOytvjnyX/LYb7rhBLvbK5v85YA=
+X-Google-Smtp-Source: APiQypJnp7pDsgMQo478w+yTytlxpjD7BzEZ9MUdujvSwu75FToYCxt6bNLRBeKlOBpa2TprsPu7DA==
+X-Received: by 2002:a9d:6d12:: with SMTP id o18mr1892294otp.370.1588940161791;
+        Fri, 08 May 2020 05:16:01 -0700 (PDT)
+Received: from [192.168.1.76] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id f20sm338129otp.61.2020.05.08.05.15.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 May 2020 05:16:01 -0700 (PDT)
+Subject: Re: Subject: [PATCH] bloom: fix `make sparse` warning
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <01ff8217-bd38-e7e4-58b1-81645ba9282a@ramsayjones.plus.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e0594ef1-d471-877b-81d1-980ba47966dc@gmail.com>
+Date:   Fri, 8 May 2020 08:15:48 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101
+ Thunderbird/76.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKqYtZUUutFRLKWsEN64q/0APyDsgG7hWW/AwdtWaUCkya79Ka661sg
-Content-Language: en-ca
+In-Reply-To: <01ff8217-bd38-e7e4-58b1-81645ba9282a@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 7, 2020 9:01 PM, Alexander Mills Wrote:
-> git branch -d foo   # safe delete
-> 
-> the above doesn't seem to work if you squash commits into an integration
-> branch, I will get something like:
-> 
-> ========================================================
->  git branch -d CP-10-master
-> warning: deleting branch 'CP-10-master' that has been merged to
->          'refs/remotes/origin/CP-10-master', but not yet merged to HEAD.
-> Deleted branch CP-10-master (was faeb801).
-> ==========================================================
-> 
-> 
-> If a branch gets squashed into another, how does merge-base do it's thing,
-> since it's not a fast-forward merge etc?
-> I assume that it's not possible, for example this script shows that if  git merge
-> --squash is used, git doesn't know that the unsquashed branch is already
-> merged:
-> 
 
-Correct. That is what I pointed out in my first response.
 
-> ==========================================================
+On 5/7/2020 7:51 PM, Ramsay Jones wrote:
+> From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
+>  <congdanhqx@gmail.com>
 > 
-> #!/bin/bash
+> * We need a `final_new_line` to make our source code as text file, per
+>   POSIX and C specification.
+> * `bloom_filters` should be limited to interal linkage only
 > 
-> set -e
+> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
 > 
-> git checkout master
-> git branch -D delete-me-1 || echo
-> git branch -D delete-me-2 || echo
+> Hi Junio,
 > 
-> git checkout -b delete-me-1
-> git checkout -b delete-me-2
-> git commit --allow-empty -am "first new one"
-> git commit --allow-empty -am "second new one"
-> git commit --allow-empty -am "third new one"
-> git checkout delete-me-1
-> git merge --squash delete-me-2  ### compare without squash
+> This patch by Danh seems to have slipped through the cracks, so I decided
+> to pass it along. The original version of this patch (which I don't seem
+> to be able to find) clashed with one of Jeff's series [1], because they
+> both fixed up a 'No newline at end of file' issue with test-bloom.c.
+> Also as Danh points out [2], the original patch didn't fix up the test
+> files.
 > 
-> if git merge-base --is-ancestor delete-me-2 delete-me-1; then
->   echo 'delete-me-1 is an ancestor of delete-me-2'
-> else
->   echo 'not an ancestor'
-> fi
-> ========================================================
+> Anyway, this fixes up some 8 sparse warnings on 'master' and 'next':
 > 
-> that will print "not an ancestor" if  --squash is used..
+>   $ diff sp-out sp-out1
+>   17d16
+>   < bloom.h:90:6: warning: no newline at end of file
+>   20,22d18
+>   < bloom.c:276:1: warning: no newline at end of file
+>   < bloom.h:90:6: warning: no newline at end of file
+>   < bloom.c:12:26: warning: symbol 'bloom_filters' was not declared. Should it be static?
+>   33d28
+>   < bloom.h:90:6: warning: no newline at end of file
+>   163d157
+>   < bloom.h:90:6: warning: no newline at end of file
+>   366,367d359
+>   < ./bloom.h:90:6: warning: no newline at end of file
+>   < t/helper/test-bloom.c:6:30: warning: symbol 'settings' was not declared. Should it be static?
+>   $ 
+>   
+> ... along with a further warning on 'pu', due to the 'ds/line-log-on-bloom'
+> branch adding another '#include "bloom.h"'.
 
-Also correct.
+Thanks for being careful and making sure this gets in.
 
-> 
-> -alex
-> 
-> 
-> 
-> 
-> On Thu, May 7, 2020 at 4:37 PM Alexander Mills
-> <alexander.d.mills@gmail.com> wrote:
-> >
-> > I assume that:
-> >
-> > git branch -d  xxx
-> >
-> > will prevent a delete if the current branch doesn't contain xxx..
-> > I don't want to have to checkout  origin/dev in order to run that
-> > command, that's one part of the problem
-> >
-> >
-> > On Thu, May 7, 2020 at 4:31 PM Randall S. Becker
-> <rsbecker@nexbridge.com> wrote:
-> > >
-> > > On May 7, 2020 6:59 PM Alexander Mills, Wrote:
-> > > > To: git@vger.kernel.org
-> > > > Subject: check if one branch contains another branch
-> > > >
-> > > > I am looking for a command:
-> > > >
-> > > > 1>  if branch x contains branch y
-> > > >
-> > > > right now all I can find is
-> > > >
-> > > > 2> if current branch contains commit y
-> > > >
-> > > > can someone please accomplish #1 ?
-> > > > Crazy hard to find an answer to #1 online.
-> > > > The user case is to delete old local branches by comparing them
-> > > > with the remote integration branch.
-> > > >
-> > > > more info if needed:
-> > > > https://stackoverflow.com/questions/61669056/how-to-determine-if-
-> > > > integration-branch-contains-feature-branch
-> > >
-> > > Looking at this slightly differently, if you try to delete a branch, git branch
-> -d feature-branch, and the branch has not been merged, then the delete will
-> fail. A simple way of looking at it is if the HEAD of the branch has no
-> successor commits then it is not merged (not 100% decisive, but git branch -d
-> is). It is not really that a branch has been merged, but that a commit has
-> successors, meaning that it has been merged. However, unless you are using
-> GitLab, a git merge --squash will not answer your question even if the branch
-> was merged.
-> > >
-> > > A better way of looking at this is in terms of Pull (GitHub, BitBucket) or
-> Merge (GitLab) requests. Has there been a Pull Request for a branch and has
-> the branch been closed? Meaning that when you do a git fetch --prune, your
-> merged/deleted branches go away unless you are on that branch. Looking at
-> the Pull Request history is much more useful in determining whether a branch
-> has been integrated into a main development branch or production branch in
-> a GitFlow process.
-> > >
-> > > It is a different way of looking at the problem, but IMHO, a more
-> representative way when taking developers and deployment into account.
+The patch looks good to me.
 
-As I indicated, this may be more appropriate to do what you want to do on the upstream enterprise git server rather than on your local clone.
-
+-Stolee
