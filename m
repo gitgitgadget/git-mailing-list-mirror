@@ -2,139 +2,198 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A80CC47254
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 22:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA055C38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 23:45:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09866206B9
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 22:59:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9CBD2173E
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 23:45:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="FluaAbrc"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="IqgJvzZH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728333AbgEHW7c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 18:59:32 -0400
-Received: from mail-eopbgr650137.outbound.protection.outlook.com ([40.107.65.137]:14755
-        "EHLO NAM06-BL2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726843AbgEHW7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 18:59:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MBNZyRfhWJyVMEVMO3axxIEZlBUJWa1KKyzr24Pd/E7IwbdroElsfCP4oCqkKZwO4zm5nGu/xvaQXM8tRBig2bkZyD2uKDG8ykiyLGZTXDVBeZZnh7wAaXktTBm9RKMWjGBjQgs4eUAXTuxxeD4E5VzxmwocOf6r0BCErgRArookBxBFdYYl8FlS1GVjGmUy1tHe+fCw9B+GM6/c4D1OLDyIYhP9k+XJCULyOIDcibbjrB+PPus2O9EPpmU9jjJ5Ncu1Baa5aPpeFZ1lvceLrocIWgzIyjumUOVFa3h7xsNILPHGk4UUSUepU3L1zPMfzdBkI2ss5egCYHzCt8MhfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZhmK/gd4509p3gBORF1haWxMHzFsrbDgHeSRDKMH/YU=;
- b=kZXJ0PiLhiCvNn/glwpEbsxa2dR/uPnkk9xtVeSxGE+4XM99sSoHg1K6MXAMjw3qzeYxNPhVQOEtVPvfAqZ/ad2UDdNCAekGtNqVWAdnxNkkTPJVfuOsRtwY35xUDl3RWSvbSPe5JJwbWdkMZeXT7rnfnjOkIPtE82fjYs+INKjMYWOe27yd/jcMdizJOKtItkFJMbwrSFskpEqkCVawGpNwxp5efFSR41uagDo1ghLXvVqsgBEUSTDW9fcQwDc3SF2cZfnZOh6PnT75iqyZCUu2h1fpV070cMYCNAiv6VaJLQDGHaavAp720Dn39eFUMhR7DKTHFEQWV0BrK9tfmg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZhmK/gd4509p3gBORF1haWxMHzFsrbDgHeSRDKMH/YU=;
- b=FluaAbrcC7bJ3XQ2Xz0JX/NwNylJOy8aBQAB/87OXIxMbVPiXsqPJSTtGP0mGVpQ+NwY9FkSB/a55KKgG+9jQrS+jghTDD0dWrkZoh1mQEB516DF2iK3TlSiWqNIQc1MCQ4unZGH7JKC7jNdsGJyeFZdYahv/eJh61dOhJXPaq4=
-Received: from SN6PR00MB0446.namprd00.prod.outlook.com (2603:10b6:805:d::17)
- by SN2PR00MB0110.namprd00.prod.outlook.com (2603:10b6:804:18::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3020.0; Fri, 8 May
- 2020 22:59:19 +0000
-Received: from SN6PR00MB0446.namprd00.prod.outlook.com
- ([fe80::88d1:96c:98af:1ed7]) by SN6PR00MB0446.namprd00.prod.outlook.com
- ([fe80::88d1:96c:98af:1ed7%8]) with mapi id 15.20.3024.000; Fri, 8 May 2020
- 22:59:19 +0000
-From:   "Christopher Warrington (CHRISTOPHER)" 
-        <Christopher.Warrington@microsoft.com>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christopher Warrington via GitGitGadget 
-        <gitgitgadget@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: RE: [EXTERNAL] Re: [PATCH] bisect: fix replay of CRLF logs
-Thread-Topic: [EXTERNAL] Re: [PATCH] bisect: fix replay of CRLF logs
-Thread-Index: AQHWJL5hjntdnA4Rs0uuMph/8j0SWKidPzfegADq14CAACEx74AAFt85gABnQlA=
-Date:   Fri, 8 May 2020 22:59:19 +0000
-Message-ID: <SN6PR00MB044634979E0EA55CCAAF8B469BA20@SN6PR00MB0446.namprd00.prod.outlook.com>
-References: <pull.629.git.1588886980377.gitgitgadget@gmail.com>
-        <20200507222510.GA42822@coredump.intra.peff.net>
-        <xmqq5zd72vjp.fsf@gitster.c.googlers.com>
-        <20200508130831.GB631018@coredump.intra.peff.net>
-        <xmqqh7wq1n52.fsf@gitster.c.googlers.com>
- <xmqq8si2z8zb.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq8si2z8zb.fsf@gitster.c.googlers.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=chwarr@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2020-05-08T22:59:17.0847280Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=62abc066-e4bb-4f62-8e74-902c8535157d;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-authentication-results: pobox.com; dkim=none (message not signed)
- header.d=none;pobox.com; dmarc=none action=none header.from=microsoft.com;
-x-originating-ip: [2601:602:8300:2f1f:44fc:c0eb:1d42:1ba7]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 0ec66672-fd7c-4c99-027a-08d7f3a37113
-x-ms-traffictypediagnostic: SN2PR00MB0110:
-x-microsoft-antispam-prvs: <SN2PR00MB011033E39E2B76DD2381DC029BA20@SN2PR00MB0110.namprd00.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 039735BC4E
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: m+x7RTdgWFtUOCvPK8R8Ejd6p+ajrkz9Gx89GZ4/mM3F6u+t4Zz/C3E2XZ/oo8rCtMVAgIKEuyxKy6oUwldgRY52ipnIbGTVKzOj2j3gqC+s+eatME/qZNwezdl43kOLZcBJSwIM2632V4Ga+h94u8yUDxUQLs9D6vH6OGXabEcA6+si9s/DFUd+0b5vUe6oBcG+gnlXEVO7usi6zMjIwlZeC2UtQNN2AFdfmI4f8n2stF4rhEHV88Hd/aB40xQNftY0T72PSdjleDwgtIBBo4MCwYf2JMrO6xkKDzWMs7fO0yMWokWSZkDIp/FKrB1O8FlPDsJtNvh9AO3Ny1Qc9spAyx59tZMRmMtRaJnBaFPAirS4SjZdyJ9i4kk+IZWuE+0YjQDgZQlp8gGyzLhIhIwuMnd+fL3wd9B+n38DqQ8=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR00MB0446.namprd00.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(39860400002)(136003)(396003)(346002)(366004)(376002)(33430700001)(8990500004)(76116006)(478600001)(7696005)(52536014)(86362001)(4744005)(82950400001)(33440700001)(82960400001)(9686003)(5660300002)(54906003)(8676002)(6506007)(316002)(55016002)(186003)(110136005)(64756008)(4326008)(10290500003)(71200400001)(8936002)(66946007)(66446008)(2906002)(66556008)(66476007)(33656002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: d5erQelTVRE5hI9x+pyX7YKpBP+1n15Cbd77/sxck7LtndDKUHaNdOaPjfzm5LUgKZgtrXVMKaFswHLbwv7eDVra9vhGc9s5fz3ChjP/PLSayxCdfQ8AHRAtlJ+sHkezCP7W/UBUoOve/DoBrD+P1LsS1bkPuph4WVv/4eZyjssQcEYHo8x+tqMZrhtNJszus5hg17LID/3Qi0GlFguYz1nr/ZrVk7F4pIPMdExRM1HxtRJihGiVfszYHuvygfg5Ea2s/R2cV9tgTYgQr500dkTm0OCFy2qLwq43gCJnpysA9EKiq5RLl1ivdewqfsA5IAhiTDlT8duINqkb2V13YS3pLgQdaJ1G1xV+gobwODe7LruzW17zNO60ZyQR8J402fUloS12SF3PgLS5gNTAzKwlbeI9gx01BsY9CZQH9D5dSowolWXOmt5rcJSjc3rqHBg4iF3qBDivGDUTxExiKHKmLRWrXjmAhl+HjelvvWmeL96f53ZtJuo83mkJmCCJIXBeA5gOmG7SXzHNR2ftK0BSdde5sbd4XCvIGeDOFHc6HqxYeaX2j4emuKSRTrvU
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1728215AbgEHXpT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 19:45:19 -0400
+Received: from mout.gmx.net ([212.227.15.19]:45389 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727849AbgEHXpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 19:45:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1588981502;
+        bh=Kkjru1qhe3Jl2mD/t6RloeAZDqZ9YEkY+uwOeeXRpOI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=IqgJvzZHkG57hzj11IZG4PsrApeYoAAz5VxAY7yaKNvydl1zGqLT1JBK7N/lcK21t
+         FVVRJIttxWD8wEuGi1pYMdD7l3Y+Y5FWAPtntCg+jFI0V6FIFKaV03LkLXDw7XVcLU
+         QE2sqExlSj+bdttjaVJlYOjZFtXQTC2//tYVnEPA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.84.97] ([213.196.212.13]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N49lD-1j6I1P1qXR-0106yg; Sat, 09
+ May 2020 01:45:02 +0200
+Date:   Sat, 9 May 2020 01:45:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>
+Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
+In-Reply-To: <20200507191714.GA25306@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2005090112530.56@tvgsbejvaqbjf.bet>
+References: <pull.625.git.1588624804554.gitgitgadget@gmail.com> <20200504213326.GA31037@coredump.intra.peff.net> <20200504220916.GF45250@syl.local> <xmqqv9la9lbn.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2005062334170.56@tvgsbejvaqbjf.bet>
+ <20200507191714.GA25306@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SN6PR00MB0446.namprd00.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0ec66672-fd7c-4c99-027a-08d7f3a37113
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2020 22:59:19.6685
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Owq9iFLEF95Y4+i0R0qcH8GGQXDrh8S7rF7PFRFvnYeTOSuCk8gHn2Nnw5G4DAyMqiMnngbDtpO9aHEdpgHdxg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN2PR00MB0110
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:yQGK/rOJv5cP2CN4/dipC99t8lD5WG9HohyAu7IH+2yG7LWJ7GL
+ Hkm63D9GHL18IHUBR4lmYwi4cXNc440rPY1sPD2SDosOWuicJAnSWltkkbgID8zzcktqNpO
+ fnVLLBvxaePOpp9XM6y21V9v2Y3nKB4WOeVVFM5hC1es9XjCPdFZBMPISy64HQ72+ssT00t
+ lUKcY17LM+NtNVsueht8g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/BgHoNPYf2g=:CcYq6oZ6cMZlCxscl15wB7
+ UrDw6l7Q/kqNXDjKsB8fXBzb1v8M15eAfLtcAmscAakhkraBchC10/4QkKBTYVHKHr3AompsD
+ abFEquTqturSVQKZWkWDN9OAsA5fJgedm0Ks/uUTtXNeQ1mRYoknDmNt7PGi9kdsmK9y+b8f/
+ Ueo+6clwlhBSt69fphfUUKB3Z/I76fGgmfWaYhwolxzHcsuOd8L9GyYmj8R5FRSB7+BjE6lMg
+ /yQ4h/5LhYMIkm4+EpsGoQHbhcnUfC6X5VRqVjRXFvzJZOF0i4aS8dDygPQ+D0j6cOfuxomyS
+ 4pKV+X5gjE1mVAAHAAS1ZBekTGI6PxWcJbLsBXlt8Z3QLc7dyAWkgL0S2x5FSNqn7EOcYl2Dj
+ sVstyVC59IUPPSBiuMq9ymJZfEHNNzghYPkNt/W6Fp/FUfNDVt5VOWLRVlqnWtmpiaWHkm5c9
+ y09yOgSFOnOpYSj4mh784UaLWmLfuh16zYXxAgeb1eRrOKK6V5W34NCxhx7f6dk4O5vBPGSzY
+ QIaov45OjwefMG1Xmp1l7sj0JR8LHr7pVtzzzrDLXg1s/fMc4wXHzbI45ZJHSFZMW5QFEvHLE
+ FiUKAqugfkT8ODB+iYQ9857ylzOW1vFKTo+eXBH9XSFeIipe0j0Bnfj0nI1PvkcpXBL38W45y
+ 9KkG1a+E8SAcFnE2aPpxrXH/2MY0ePESBz5hPy9H0eDuIJmT9zWNgmQAA1X+KyM3Dwa2B/AYT
+ FPJWIVCceSKvKS8pOF/rZ0zI+GgjRDAn9fXGxy6/ctnE0n156tuzg1gXlvDMS/bknQH9YBRaN
+ Ngfs3bWTkLkR7YqDFthyR531DXL7tbJlfsCSzNImXoNcgNj09tVo1Y3jml2EhFMQ5T9LL7u+4
+ NLvvPg9SOdj9NtpFOpmO/a7YeEtFEIY6mdnZ257490swYQWPiHGmqsRobQ+Bh9PE6+vuI889W
+ 2e+meO4kdLANaZxODkNdVAX+Xi79rUL0MMkEaTBfWIcPh9BIeJbOt2/6Pm/hAK9k6h1Obu9sQ
+ qtrFw9TvBkjRKS9ZTqdyAlWOkczw3Cw9x62KOMLN8NDTi1VXk0YCjfHdcIPXZHfatvrIbMP6c
+ M/SymsPMzdRWHTEl+wmqiuf85WhSI43dl5Gxzwz20HEBmupk9wT3yFBzjGNKihK3MiycHiOV4
+ NChkd//EygcM2wLJVro2KDFqHkqjKCMRXo1JviI90FoLrkkMSfRhDPdyDCXHhmR/AbEtzPTvR
+ 2Uwp5IyzOaBNLzU97
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-05-08 09:31-07:00, Junio C Hamano wrote:
+Hi Peff,
 
->> I wonder if we can add a CR to IFS so that the parsing logic of each lin=
-e
->> would not even see it?
 
-> So I got curious and tried this; it seems to pass Christopher's test
-> (corrected with Eric's suggestion).
+On Thu, 7 May 2020, Jeff King wrote:
 
-> As the implementation changed, I ended up rewriting some parts of the log
-> message originally proposed and here is what I tentatively queued.
+> On Wed, May 06, 2020 at 11:35:48PM +0200, Johannes Schindelin wrote:
+>
+> > > >> > +				next[i] =3D next[i2];
+> > > >> > +				next[i2] =3D i;
+> > > >> > +				continue;
+> > > >> > +			}
+> > > >>
+> > > >> I do have one question, though. What happens if we add a second
+> > > >> fixup-of-a-fixup?
+> > > >
+> > > > Thanks for asking this question, I was a little curious about it, =
+too.
+> > >
+> > > Interesting that three people looked at the same patch and asked the
+> > > same question in different ways ;-)
+> >
+> > Indeed!
+> >
+> > I am very grateful, as I had missed that, and it helped me figure out =
+a
+> > better way to do it, and v2 looks a lot nicer, too.
+>
+> OK, so your v2 addresses that. Does that mean it was broken in v1?
 
-This approach is much cleaner. Thank you, Eric, Junio, and Peff.
+Yes.
 
-I can confirm 6c722cbe5a (bisect: allow CRLF line endings in "git bisect
-replay" input, 2020-05-07) works on a CRLFed bisect log when I apply it to
-git version 2.26.2.windows.1.
+> If so, then why didn't my test reveal it?
 
---=20
-Christopher Warrington <chwarr@microsoft.com>
-Microsoft Corp.
+Let's disect this:
 
-(Apologies about the [EXTERNAL] in the subject. It gets added on the way in=
-,
-and if I remove it, the References: and In-Reply-To: headers get "helpfully=
-"
-stripped out.)
+ i  hash oneline
+#0  1234 foo
+#1  5678 !fixup foo
+#2  abcd !fixup 5678
+#3  dbaf !fixup 5678
+
+Let's follow the original code, i.e. before my v1:
+
+When #1 is processed, i.e. when `i =3D=3D 1`, it finds `i2 =3D=3D 0` as ta=
+rget. So
+it sets `next[0]` as well as `tail[0]` to 1.
+
+Then #2 is processed, i.e. `i =3D=3D 2`, and it finds `i2 =3D=3D 1` as tar=
+get. It
+sets `next[1]` as well as `tail[1]` to 2.
+
+Now #3 is processed, i.e. it also finds `i2 =3D=3D 1` as target, so it loo=
+ks
+at next[1], sees that it is already non-negative, so it sets
+`next[tail[1]]`, i.e. `next[2]` to 3. It also sets `tail[1]` to 3, but
+nobody cares about that because there is no further todo command.
+
+Now, let's follow the code with my v1:
+
+It actually does the same as before! Why, you ask? Because at no stage is
+there any non-negative `next[j]` whose corresponding `tail[j]` is
+negative. (Except after #3 was processed, at that stage, `next[2]` is
+non-negative but `tail[2]` still is negative, but as I said, noone cares
+because there are no remaining todo commands.)
+
+So the crucial part to trigger this bug is to have a regular `fixup!
+<oneline>` _between_ the `fixup! <oneline>` and the `fixup! <hash>`
+targeting the latter. So I think I can modify your example accordingly:
+
+	1234 foo
+	5678 fixup! foo
+	90ab fixup! foo
+	abcd fixup! 5678
+	dbaf fixup! 5678
+
+Or using your actual shell commands:
+
+  git commit -m base --allow-empty
+  git commit --squash HEAD -m 'this is the first squash' --allow-empty
+  s=3D$(git rev-parse HEAD)
+  git commit --fixup HEAD^ --allow-empty # This is the crucial command
+  git commit -m "squash! $s" -m 'this is the second squash' --allow-empty
+  git commit -m "squash! $s" -m 'this is the third squash' --allow-empty
+  git rebase -ki --autosquash --root
+
+Note the cricual command `git commit --fixup HEAD^`. When processing that,
+`i =3D=3D 2` and `i2 =3D=3D 0` (as for `i =3D=3D 1`), and before v1, this =
+would have
+set `next[1]` but `tail[0]`! With v1, this would have led to #4 and #5
+being exchanged. With v2, the role of `tail` would have been extended to
+not only talk about the beginning of a fixup/squash chain, but about _any_
+target of a fixup/squash, even if it is in the middle of a chain.
+
+So why does this work? Why does it still do the right thing _even after_
+inserting a fixup in the middle of a chain?
+
+That's the beauty: if I insert anything in the middle of it, the `tail` of
+the actual beginning of the fixup/squash chain won't need to be changed.
+It still points to the end of that chain.
+
+All I need to ensure is that item `i` is not just appended to the "chain"
+starting at `i2`, but that it is _inserted_ at the end of that chain in
+case that it is actually part of a larger chain, i.e. that its `next[i]`
+is set correctly before making it the immediate successor of the target
+commit. Since all of the elements in `next` and `tail` are initialized to
+`-1` (i.e. "no next fixup/squash item after this"), it will even do the
+right thing when it should actually append: it will set `next[i]` to `-1`
+in that case.
+
+> I'm not really doubting that your v2 works so much as trying to
+> un-confuse myself about the whole situation (which in turn might lead to
+> a more intelligent review).
+
+I wish I was quicker in my responses because I think that this is really
+helpful a conversation. By "forcing my hand" on a thorough explanation,
+you really help me get clarity for myself about the actual underlying
+issues. So even if I still think that v2 is correct after writing up the
+above explanation, the degree of my confidence increased substantially.
+
+Thanks,
+Dscho
