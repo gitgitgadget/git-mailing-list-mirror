@@ -2,131 +2,102 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA8DC38A2A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B660C38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:36:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 669B620736
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:18:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 365A521841
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:36:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZL0MPjxB"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OWkqEVTS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbgEHPSg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 11:18:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53653 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726627AbgEHPSg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 11:18:36 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E24225AEA4;
-        Fri,  8 May 2020 11:18:33 -0400 (EDT)
+        id S1728018AbgEHPgo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 11:36:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51915 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727833AbgEHPgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 11:36:43 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7AE7ED76F1;
+        Fri,  8 May 2020 11:36:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6H167by21ItFjQbIJMQ60HJJpD8=; b=ZL0MPj
-        xB+WU+TP4IkBxaAcnnRXe6TcyfGHYpIQqcBuT3Z0eEtP4TrrN49IZlZpLJS3K+gH
-        wvxMpHwNBZsiOUdcPkwfCBKSi7O3G8iewWlWEeKi5E0QeLE/GQ/zkXQiU8QDDcOB
-        EQqELHPu3GRoEDqN//e4+lTkJFhRV0+We1lIM=
+        :content-type:content-transfer-encoding; s=sasl; bh=poq9UGJXCI9S
+        25lvQDgSmFCP868=; b=OWkqEVTSQ6WRcsyrYYE8BdyYKF/QYjEOomZekVDnlCg3
+        s7APqI/lfmZIz6/agk806jxo6V1+fo3Up6jBgo9a9YL+ohJxzW25H9VLmpfO7WXE
+        eXJOx6Ad4uHbFXxSGOpAQGtfXOFYBIX4nkH2nWGR2qd4DcIgLcsg2QTgaR21Ym4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HetAT8omAlTov2PeactmEKH7NrW97JWv
-        ZdxQsCd0ew9DB15Q/t/mVpJb5jweuOeZGdq8JhistuZXIupG861G0iE0B/Xhxh80
-        iOrVswvmFjf9dvhC9EfabAqxxdAjhcZ5lugnYrghzkccOBq8BAWbaunh4ejRI5SB
-        eYyn9LV82Z8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D86F95AEA3;
-        Fri,  8 May 2020 11:18:33 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WImqOP
+        YIVTMTEWl3EUs2IF/seACF/IM381/0tQEfWNCu0kCrVYPF9WWyOT/+mFAJVg/ggr
+        fvY08KmZEGlN56n/2weIOK54FS5Fyru8tJqsKHsC67bc9C3XPoRWPvTKSW6+wDQW
+        2851mDupAuPXm//lmEqfYVDJgL7Npme9jdunY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 73296D76F0;
+        Fri,  8 May 2020 11:36:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AF505AEA1;
-        Fri,  8 May 2020 11:18:33 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 66AB6D76EE;
+        Fri,  8 May 2020 11:36:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
-        chrisitan.couder@gmail.com, Denton Liu <liu.denton@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re* [PATCH v4] submodule: port subcommand 'set-url' from shell to C
-References: <20200506073717.9789-1-shouryashukla.oo@gmail.com>
-        <xmqqtv0t6l84.fsf@gitster.c.googlers.com>
-        <20200506181239.GA5683@konoha>
-        <xmqqwo5o6hzp.fsf@gitster.c.googlers.com>
-        <20200507044028.GA5168@konoha>
-        <xmqqv9l849i4.fsf@gitster.c.googlers.com>
-        <20200508054728.GA8615@konoha>
-        <CAP8UFD0=_8D8hkT5VVPV_F++dr131bkjby357fA+QfhQxktcMg@mail.gmail.com>
-Date:   Fri, 08 May 2020 08:18:32 -0700
-In-Reply-To: <CAP8UFD0=_8D8hkT5VVPV_F++dr131bkjby357fA+QfhQxktcMg@mail.gmail.com>
-        (Christian Couder's message of "Fri, 8 May 2020 08:18:57 +0200")
-Message-ID: <xmqq8si21mlz.fsf_-_@gitster.c.googlers.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     Force Charlie via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Force Charlie <charlieio@outlook.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Correctly initialize 'installed_handlers'
+References: <pull.630.git.1588921514146.gitgitgadget@gmail.com>
+        <20200508083340.GA36538@Carlos-MBP>
+Date:   Fri, 08 May 2020 08:36:36 -0700
+In-Reply-To: <20200508083340.GA36538@Carlos-MBP> ("Carlo Marcelo Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Fri, 8 May 2020 01:33:40 -0700")
+Message-ID: <xmqqy2q2zbej.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2E421496-913F-11EA-91AE-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B508B85C-9141-11EA-8A77-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
 
-> On Fri, May 8, 2020 at 7:51 AM Shourya Shukla
-> <shouryashukla.oo@gmail.com> wrote:
->>
->> On 06/05 10:08, Junio C Hamano wrote:
+> the way this is handled would seem to indicate otherwise
 >
->> > Specifically, I would write "!path", not "path == NULL".  I thought
->> > a rule for that is in the CodingGuidelines (I didn't double check,
->> > though).
->>
->> I could not find a rule like that in the CodingGuidelines.
->> Should I add it?
->> https://github.com/git/git/blob/master/Documentation/CodingGuidelines
->
-> Sure.
+> if (!installed_handlers) {
+>                 atexit(remove_tmp_objdir);
+>                 sigchain_push_common(remove_tmp_objdir_on_signal);
+>                 installed_handlers++;
+> }
 
-I'd rather not see too many unrelated things piled up on Shourya's
-plate.  Without guidance, the new entry we'll see would be only
-about comparing with NULL, and we'd need to spend review cycles
-correcting that, too.
+It is a curious piece of code. =20
 
-How about something like this, perhaps?
+The "prepare a file-scope static and do something and increment it
+when it is 0" pattern expects the function to be called many times
+and do the guarded thing only once.  However, there is this code:
 
--- >8 --
-CodingGuidelines: do not ==/!= compare with 0/NULL
+	if (the_tmp_objdir)
+		BUG(...);
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/CodingGuidelines | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+before we do anything else, and then before that "arrange to clean
+up, but do so just once" block, there is
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 390ceece52..41a89dd845 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -236,6 +236,19 @@ For C programs:
-         while( condition )
- 		func (bar+1);
- 
-+ - Do not explicitly compare an integral value with constant 0 or a
-+   pointer value with constant NULL for equality; just say !value
-+   instead.  To validate a counted array at ptr that has cnt elements
-+   in it, write:
-+
-+	if (!ptr || !cnt)
-+		BUG("array should not be empty at this point");
-+
-+   and not:
-+
-+	if (ptr == NULL || cnt == 0);
-+		BUG("array should not be empty at this point");
-+
-  - We avoid using braces unnecessarily.  I.e.
- 
- 	if (bla) {
+	the_tmp_objdir =3D t;
+
+where t is the pointer to a "struct tmp_objdir" instance.  So one
+part of the function expects to be called at most once, while
+another part is prepared to be called more than once.
+
+Almost all of this function is attributed to 2564d994 (tmp-objdir:
+introduce API for temporary object directories, 2016-10-03), so
+let's see if Peff remembers anything about this curiosity.
+
+Thanks.
