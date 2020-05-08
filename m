@@ -2,97 +2,99 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15452C35280
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4990AC35280
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:20:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B956D208DB
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:17:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7AC22082E
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:20:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g0NptN4r"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XbHwDUWC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726948AbgEHBR3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 21:17:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64871 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbgEHBR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 21:17:28 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 787A0459FF;
-        Thu,  7 May 2020 21:17:26 -0400 (EDT)
+        id S1726542AbgEHBU5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 21:20:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55406 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726495AbgEHBU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 May 2020 21:20:56 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EA0F55D0F;
+        Thu,  7 May 2020 21:20:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZJWchw7s+b1U
-        FuGA1eEhlTrGudw=; b=g0NptN4ri3srgCcyvSkIa4SvHLXugBtysebFwmO4og/x
-        zNEhyoW10e85yMibCRzB6cO3J0LXL9t7HZf4BCUGNa5eAc2MwS8914LpEwFlkv4H
-        0hWITmsbzzAkNPv95gm1g528RYZe5XvkVew/FzyXkSgr6EcBC0rANvpFZzLnfvk=
+        :content-type; s=sasl; bh=0qlXXbugdpFM9sB0KlezhPRfuNM=; b=XbHwDU
+        WCWbBEcURk4WDxLYo+wq38AJgW52gVri2UX11/VeUB2Kgb9o1FFcM/dsksI9mFyV
+        YnDS5g4OwNdkibF6ckxaMrDAHJaDAQJG/u1c8iZekT3XCxYLol3cgbbC8147xTVn
+        dji8stlYAoseqfxEaVodeJ9Qk6juBzd+xLcn0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=e+8+so
-        3ZtIaiUL9RrR3xD/CcU9fDcvR4Nb7SJeHq2/+bLOInTh5SOqC3LT8HPPYjeJKZ3j
-        PxuYdRv33JT4GCI/zy2dMBG7Cl1HaZeKECxEm7O9GgUMKLbHP/0S9mgDMkrMUdy2
-        zTvszEPutXdeKCvriDSD1YqrEcmSMuouG0cb8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70490459FE;
-        Thu,  7 May 2020 21:17:26 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=FR8QIuDB6cAjdigVvlFQjls9FaC1Josw
+        krYJtMC+siKAIh+qbvIMRHbIVzyWx6c9UgDeXyrL98bxsV+bZClGrZdoJfzpRF8W
+        RqNOGGRImRk0ydhjzGIbpSWhmbWIVV82kZjRGHzvkYh6+DVgnbAFovX28tI17He2
+        4ChvLrG6prg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9719255D0E;
+        Thu,  7 May 2020 21:20:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED3D8459FC;
-        Thu,  7 May 2020 21:17:25 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14EEF55D0D;
+        Thu,  7 May 2020 21:20:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, congdanhqx@gmail.com
-Subject: Re: [PATCH] t/test_lib: avoid naked bash arrays in file_lineno
-References: <20200507055118.69971-1-carenas@gmail.com>
-        <nycvar.QRO.7.76.6.2005072139300.56@tvgsbejvaqbjf.bet>
-        <20200508005817.GA24664@Carlos-MBP>
-Date:   Thu, 07 May 2020 18:17:25 -0700
-In-Reply-To: <20200508005817.GA24664@Carlos-MBP> ("Carlo Marcelo Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 7 May 2020 17:58:17 -0700")
-Message-ID: <xmqqpnbf1aze.fsf@gitster.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v4] bugreport: collect list of populated hooks
+References: <20200508005357.223058-1-emilyshaffer@google.com>
+Date:   Thu, 07 May 2020 18:20:53 -0700
+In-Reply-To: <20200508005357.223058-1-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Thu, 7 May 2020 17:53:57 -0700")
+Message-ID: <xmqqlfm31atm.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AD61F8CA-90C9-11EA-AAD8-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 296D8CFE-90CA-11EA-8205-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> On Thu, May 07, 2020 at 09:52:12PM +0200, Johannes Schindelin wrote:
->> On Wed, 6 May 2020, Carlo Marcelo Arenas Bel=C3=B3n wrote:
->> >
->> > Enclose the bash specific code inside an eval to avoid parsing error=
-s
->> > and while at it, simplify the logic so that instead of traversing th=
-e
->> > callstack just pop the two topmost entries that are required.
->>=20
->> I would be okay with that, but that's not what the patch does:
->
-> FWIW that was the intention, but luckily Junio quickly predicted it was
-> most likely buggy and so has been since made obsolete by:
->
->   https://lore.kernel.org/git/20200507175706.19986-1-carenas@gmail.com/
+> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+> index 2e73658a5c..ff317cce68 100755
+> --- a/t/t0091-bugreport.sh
+> +++ b/t/t0091-bugreport.sh
+> @@ -57,5 +57,20 @@ test_expect_success 'can create leading directories outside of a git dir' '
+>  	nongit git bugreport -o foo/bar/baz
+>  '
+>  
+> +test_expect_success 'indicates populated hooks' '
+> +	test_when_finished rm git-bugreport-hooks.txt &&
+> +	test_when_finished rm -fr .git/hooks &&
+> +	rm -fr .git/hooks &&
+> +	mkdir .git/hooks &&
+> +	for hook in applypatch-msg prepare-commit-msg.sample
+> +	do
+> +		write_script ".git/hooks/$hook" <<-\EOF || return 1
+> +		echo "hook $hook exists"
+> +		EOF
 
-Heh, don't give me too much credit.  I just noticed that they cannot
-be implementing the same thing, but I couldn't tell if the new
-behaviour was something you two agreed to be better, and asked for a
-clarification.
+Probably our mails crossed, but as I said in my response, this will
+make the hook say "hook  exists" because $hook will be literally in
+the script file.  EOF needs to be left unquoted, i.e.
 
-In any case, the "just protect with eval '' block to avoid hurting
-other shells" version should be the first step.  Improving it
-further is a separate topic.
+		write_script ".git/hooks/$hook" <<-EOF || return 1
+		...
+
+> +	done &&
+> +	...
 
 Thanks.
+
+
