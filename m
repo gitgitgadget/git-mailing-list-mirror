@@ -6,117 +6,134 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDB6DC47247
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CA19C38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A5E32173E
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:47:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68E1120CC7
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:57:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iX58+raQ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Op+5ojgt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728179AbgEHPrE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 11:47:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53465 "EHLO
+        id S1726891AbgEHP5N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 11:57:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59318 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727096AbgEHPrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 11:47:03 -0400
+        with ESMTP id S1726817AbgEHP5N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 11:57:13 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CD805B127;
-        Fri,  8 May 2020 11:46:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F098F5B367;
+        Fri,  8 May 2020 11:57:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8w+qX2fmGZHU1GjOiw0cQ7RT0To=; b=iX58+r
-        aQrnxpfoDu+3446RsvhnIpIzU9t/Y5TTcFZKusE0jdpotFB1ESYrtx7qNRba5IeO
-        BqrGvoV4YDEWlAtY/htg9E7cz+UIdehadm+FduJJ5cWahau3lF8TLeIgjibPEt79
-        t+lLdFXfSSCVXwF+nTaI/JjdBasWIVqYaVSNk=
+        :content-type; s=sasl; bh=OpUGY4rne+fr+StqfJpH9oRkYGI=; b=Op+5oj
+        gtcFre2yFJNzFePRttaDviOgd+GmylBKI1vRFfR/NQ8PZI+pyJHTBONtJz/volWr
+        HbAx2/401yK78mXmcCtQJado6ustBP0x9hOA0DUukmbWyFsrQ0RxG+mL02z3HZ85
+        lamYskuoUYlXMm5yFPecNqq0r1ZcEorDWzcGk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aWjLQLnDJVEzp5Uk0W5QgwCb7N/hfWcL
-        8kF/elQcYqXkyqrOn8q8PM8mlruUEL/ZM1ZIJqwvdOOiLUoDfu2howfUGiFvrQqC
-        e1f70UbyYWAdPTjui7jIsvESGPt3V3aeB1rtpUq326y6yLxR0Mrvc1AqIU7bTzHa
-        nvsn4OHSMjc=
+        :content-type; q=dns; s=sasl; b=tHx46yTf1tRPhuM8iIwhejUIBRdLNfMn
+        9lpwaVXZ1VdsMiyYvkQfNw+bSlmf0ozjclEUyEy9sKv+u7+Bhs4VoRT9L2XI1k7l
+        Kj3BpMuLBoZNgVDdGFrEO47VED5Kef2ELWCDBAU2sUxFp9sye1kBXPbOcXQKAncP
+        ff9IScM7I1I=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6144F5B126;
-        Fri,  8 May 2020 11:46:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E59185B366;
+        Fri,  8 May 2020 11:57:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C54EB5B125;
-        Fri,  8 May 2020 11:46:58 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 024845B365;
+        Fri,  8 May 2020 11:57:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] upload-pack: fix filter options scope
-References: <20200507095829.16894-1-chriscool@tuxfamily.org>
-        <20200508080115.15616-1-chriscool@tuxfamily.org>
-        <20200508130616.GA631018@coredump.intra.peff.net>
-Date:   Fri, 08 May 2020 08:46:58 -0700
-In-Reply-To: <20200508130616.GA631018@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 8 May 2020 09:06:16 -0400")
-Message-ID: <xmqqtv0qzax9.fsf@gitster.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        chrisitan.couder@gmail.com, Denton Liu <liu.denton@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: Re* [PATCH v4] submodule: port subcommand 'set-url' from shell to C
+References: <20200506073717.9789-1-shouryashukla.oo@gmail.com>
+        <xmqqtv0t6l84.fsf@gitster.c.googlers.com>
+        <20200506181239.GA5683@konoha>
+        <xmqqwo5o6hzp.fsf@gitster.c.googlers.com>
+        <20200507044028.GA5168@konoha>
+        <xmqqv9l849i4.fsf@gitster.c.googlers.com>
+        <20200508054728.GA8615@konoha>
+        <CAP8UFD0=_8D8hkT5VVPV_F++dr131bkjby357fA+QfhQxktcMg@mail.gmail.com>
+        <xmqq8si21mlz.fsf_-_@gitster.c.googlers.com>
+        <CAPig+cQP_9onrq-z5db1GhXSSHaeKJ+UhNewWP25wLCsMRzSrA@mail.gmail.com>
+Date:   Fri, 08 May 2020 08:57:09 -0700
+In-Reply-To: <CAPig+cQP_9onrq-z5db1GhXSSHaeKJ+UhNewWP25wLCsMRzSrA@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 8 May 2020 11:38:34 -0400")
+Message-ID: <xmqqpnbezaga.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 26D148F4-9143-11EA-AB40-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 931F10BC-9144-11EA-9698-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On Fri, May 08, 2020 at 10:01:15AM +0200, Christian Couder wrote:
+> On Fri, May 8, 2020 at 11:18 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> + - Do not explicitly compare an integral value with constant 0 or a
+>> +   pointer value with constant NULL for equality; just say !value
+>> +   instead.  To validate a counted array at ptr that has cnt elements
+>> +   in it, write:
+>> +
+>> +       if (!ptr || !cnt)
+>> +               BUG("array should not be empty at this point");
+>> +
+>> +   and not:
+>> +
+>> +       if (ptr == NULL || cnt == 0);
+>> +               BUG("array should not be empty at this point");
 >
->> The changes since the previous RFC version are the following:
->> 
->>   - now filter_options is part of struct upload_pack_data as
->>     suggested by Peff and Taylor
->>   - improved commit message
->>   - updated comment before the test that used to fail
+> This talks only about '=='.
+
+Yup.  The text would need a matching change, though.
+
+> People might still use 0 or NULL with
+> '!='. I wonder if the example can include '!=', as well. Perhaps:
 >
-> Thanks, this version looks good to me.
+>     if (!ptr)
+>         BUG("...");
+>     if (cnt)
+>         foo(ptr, cnt);
 >
->>  static void create_pack_file(const struct object_array *have_obj,
->> -			     const struct object_array *want_obj)
->> +			     const struct object_array *want_obj,
->> +			     struct list_objects_filter_options *filter_options)
+> instead of:
 >
-> I had hoped that stuffing it into upload_pack_data would require fewer
-> changes passing it around, but I guess many of these functions don't
-> know about upload_pack_data in the first place. Oh well. I think this is
-> the best we can do for now. In the long run we'd perhaps want to take
-> upload_pack_data there, but it wouldn't help until the v0 path also uses
-> that struct.
+>     if (ptr == NULL)
+>         BUG("...");
+>     if (cnt != 0)
+>         foo(ptr, cnt);
+>
+> or something.
 
-Yup, I agree that this v2-only fix is a good first step.
+Or more succinctly:
 
-Even though the log message itself got a lot better explaining the
-nature of the issue, I do not think the title of the patch does a
-good job explaining what it is about to the readers of shortlog.
+	if (!ptr || cnt)
+		BUG("we must have an empty array at this point");
 
-"fix" is a meaningless word in a bugfix patch, and it does not make
-it clear what bad effect of the original code had by not giving a
-clean-slate "options" variable to the second invocation of the
-callchain.
+perhaps?
 
-Is it that the server side was incapable of serving a follow-up
-fetch request in the same process when protocol v2 was in use?
-Perhaps
+> Also, would you want to talk about not comparing against NUL character?
+>
+>     if (*s)
+>         foo(s);
+>
+> instead of:
+>
+>     if (*s != '\0')
+>         foo(s);
+>
+> Maybe that's overkill since NUL is an integral value which is already
+> covered by your earlier statement (but perhaps some people would
+> overlook that).
 
-    upload-pack: allow follow-up fetch in protocol v2
+Yeah, it might be worth saying it explicitly.  I dunno.
 
-or something?
 
-I care about singling out protocol v2 because then we would
-immediately know that backporting this to older maintenance track is
-of lower priority as the plan is to flip the default back to v0.
-
-Thanks.
