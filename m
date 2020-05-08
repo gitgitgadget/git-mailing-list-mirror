@@ -2,198 +2,159 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA055C38A2A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 23:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B28C9C38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 23:54:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9CBD2173E
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 23:45:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 905C1206D3
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 23:54:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="IqgJvzZH"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="b+jVkRpp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728215AbgEHXpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 19:45:19 -0400
-Received: from mout.gmx.net ([212.227.15.19]:45389 "EHLO mout.gmx.net"
+        id S1728454AbgEHXyC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 19:54:02 -0400
+Received: from mout.gmx.net ([212.227.17.20]:38227 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727849AbgEHXpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 19:45:18 -0400
+        id S1728424AbgEHXx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 19:53:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1588981502;
-        bh=Kkjru1qhe3Jl2mD/t6RloeAZDqZ9YEkY+uwOeeXRpOI=;
+        s=badeba3b8450; t=1588982030;
+        bh=skDnAreOHdgM6XGcgpcCuU9n55fseejteblyL/n/KTc=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IqgJvzZHkG57hzj11IZG4PsrApeYoAAz5VxAY7yaKNvydl1zGqLT1JBK7N/lcK21t
-         FVVRJIttxWD8wEuGi1pYMdD7l3Y+Y5FWAPtntCg+jFI0V6FIFKaV03LkLXDw7XVcLU
-         QE2sqExlSj+bdttjaVJlYOjZFtXQTC2//tYVnEPA=
+        b=b+jVkRpp8DLxK+kf/mjelqydKvdop/OwOyIm2FLFEKDVeGWWrGlTj21qgok1RARNE
+         2nyJtedl1/RV2LAX1FP25l/eOb7mVRo1hcv+PL1IqesUjE9tdzUuilOAE4fltwzW9U
+         StJIRNyJIv1v95WkRQ0m9Jo3iaeugKX8SZ1mzeEI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.84.97] ([213.196.212.13]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N49lD-1j6I1P1qXR-0106yg; Sat, 09
- May 2020 01:45:02 +0200
-Date:   Sat, 9 May 2020 01:45:03 +0200 (CEST)
+Received: from [172.30.84.97] ([213.196.212.13]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mdvqg-1ixKMS0126-00b4kK; Sat, 09
+ May 2020 01:53:50 +0200
+Date:   Sat, 9 May 2020 01:53:51 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>
-Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
-In-Reply-To: <20200507191714.GA25306@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2005090112530.56@tvgsbejvaqbjf.bet>
-References: <pull.625.git.1588624804554.gitgitgadget@gmail.com> <20200504213326.GA31037@coredump.intra.peff.net> <20200504220916.GF45250@syl.local> <xmqqv9la9lbn.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2005062334170.56@tvgsbejvaqbjf.bet>
- <20200507191714.GA25306@coredump.intra.peff.net>
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] t/test_lib: avoid naked bash arrays in file_lineno
+In-Reply-To: <20200507175706.19986-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2005090151350.56@tvgsbejvaqbjf.bet>
+References: <20200507055118.69971-1-carenas@gmail.com> <20200507175706.19986-1-carenas@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:yQGK/rOJv5cP2CN4/dipC99t8lD5WG9HohyAu7IH+2yG7LWJ7GL
- Hkm63D9GHL18IHUBR4lmYwi4cXNc440rPY1sPD2SDosOWuicJAnSWltkkbgID8zzcktqNpO
- fnVLLBvxaePOpp9XM6y21V9v2Y3nKB4WOeVVFM5hC1es9XjCPdFZBMPISy64HQ72+ssT00t
- lUKcY17LM+NtNVsueht8g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/BgHoNPYf2g=:CcYq6oZ6cMZlCxscl15wB7
- UrDw6l7Q/kqNXDjKsB8fXBzb1v8M15eAfLtcAmscAakhkraBchC10/4QkKBTYVHKHr3AompsD
- abFEquTqturSVQKZWkWDN9OAsA5fJgedm0Ks/uUTtXNeQ1mRYoknDmNt7PGi9kdsmK9y+b8f/
- Ueo+6clwlhBSt69fphfUUKB3Z/I76fGgmfWaYhwolxzHcsuOd8L9GyYmj8R5FRSB7+BjE6lMg
- /yQ4h/5LhYMIkm4+EpsGoQHbhcnUfC6X5VRqVjRXFvzJZOF0i4aS8dDygPQ+D0j6cOfuxomyS
- 4pKV+X5gjE1mVAAHAAS1ZBekTGI6PxWcJbLsBXlt8Z3QLc7dyAWkgL0S2x5FSNqn7EOcYl2Dj
- sVstyVC59IUPPSBiuMq9ymJZfEHNNzghYPkNt/W6Fp/FUfNDVt5VOWLRVlqnWtmpiaWHkm5c9
- y09yOgSFOnOpYSj4mh784UaLWmLfuh16zYXxAgeb1eRrOKK6V5W34NCxhx7f6dk4O5vBPGSzY
- QIaov45OjwefMG1Xmp1l7sj0JR8LHr7pVtzzzrDLXg1s/fMc4wXHzbI45ZJHSFZMW5QFEvHLE
- FiUKAqugfkT8ODB+iYQ9857ylzOW1vFKTo+eXBH9XSFeIipe0j0Bnfj0nI1PvkcpXBL38W45y
- 9KkG1a+E8SAcFnE2aPpxrXH/2MY0ePESBz5hPy9H0eDuIJmT9zWNgmQAA1X+KyM3Dwa2B/AYT
- FPJWIVCceSKvKS8pOF/rZ0zI+GgjRDAn9fXGxy6/ctnE0n156tuzg1gXlvDMS/bknQH9YBRaN
- Ngfs3bWTkLkR7YqDFthyR531DXL7tbJlfsCSzNImXoNcgNj09tVo1Y3jml2EhFMQ5T9LL7u+4
- NLvvPg9SOdj9NtpFOpmO/a7YeEtFEIY6mdnZ257490swYQWPiHGmqsRobQ+Bh9PE6+vuI889W
- 2e+meO4kdLANaZxODkNdVAX+Xi79rUL0MMkEaTBfWIcPh9BIeJbOt2/6Pm/hAK9k6h1Obu9sQ
- qtrFw9TvBkjRKS9ZTqdyAlWOkczw3Cw9x62KOMLN8NDTi1VXk0YCjfHdcIPXZHfatvrIbMP6c
- M/SymsPMzdRWHTEl+wmqiuf85WhSI43dl5Gxzwz20HEBmupk9wT3yFBzjGNKihK3MiycHiOV4
- NChkd//EygcM2wLJVro2KDFqHkqjKCMRXo1JviI90FoLrkkMSfRhDPdyDCXHhmR/AbEtzPTvR
- 2Uwp5IyzOaBNLzU97
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-664812106-1588982033=:56"
+X-Provags-ID: V03:K1:gzyM4M0cJ0qsguf4x/WvvYGjKtnyxv3ym5CGhtAqU/dLJz+yI35
+ 5IUHXOkh3GSHQvG8BLs9gJrf/gg0vJ2HDffJcDFYt/arM1/9b8k0Q14AmruWHYc7G35+lIN
+ Lyiowmdlie5a2Aaa7h104bWkILnFnDKingRpqC6JdSxoAIy3QSPZcHmuH8yeq5f/IzZfpbs
+ TXqw1PlJd9dW1fRuHr5mA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tJJcwtwaW3g=:I159PnDLlu9k9QQ+dWDFAI
+ yuTkoHrsn++lrkPzPzZt3bNeEeczUkiBG2pERokJrCipfFKIt58IPL06M8GfwpgYxzdAf+UqH
+ 7reXfT63Ee2PzV5AZ0kmw51uN62Iu3hN0zEaGU7JIEV/OiiUOZ+xHswiWSrYiDLxL63JyhWj0
+ epluwVH1QPZ93N/aNszBj6C7x+uif3Dbez0PmUXcnsk+Qsd9111ft5+vvZJ1Zhv7DKLFkDGZh
+ +3uFG4UX4Z+wILEAKRHZ/4aEQl7ppQR1rY/4m5v39X+5+igqaFCW4XO8vTIVZ5NYVSwCUuW2X
+ 5HAIv5dYj8cxSNUz4QP9PL3eDSX7ELnvIwsIhz8VGF/IPK7B9TFTPhNEt7FQF/FKEyLvcC+35
+ IrAjNw2Rp0DI1/a3iLXUb9iiE4A165ovd7m41lThJmTCPr+KpacIOhfYspkyEO3H1zGAfKiAB
+ emoW2/NFju6qMon6Rjlm11U5jiYUmcQmIOiI7l4r2zdKAWypbZkzrpoTzf7wiVE/XR+zAjW4m
+ qcQvOc8ognyrL+inqOtSdMg3a/8rw7yiaYbdTJAPLym+2LhC+4QsZagGxdJLKjbyYqlOvD1eD
+ l1k0u20vqGn5sUZBsYcBV4ZJ82Sm1IYjbf5fug4XbkSDq8RfZpBuD9CNsGp0FCPUgVY5IkEI7
+ QNF5554nA3g44I1c0V7weSKL47abFS0cFHE/Qz6OIbTsO6wiVp5PzFLk8Pq5rV+JtUVzHcLAp
+ sqRgVBLqJz+eczAXVGMpJ1VoCYm1KqNIdiwxrcXCo5hkj6VWZyow80YToF2hqFugVyKz8Mw20
+ ngZ23ugUHBFwP2liNYU9tgvLvGodwQSuF4W2ljdRilxjY8HBLkZC5Camch7oA8PQ78HyNaccI
+ OGuD4a3Y5vax7BFCnCoS7b2rrv/M4dyREm8hmwp/WhOZwdoahD02GTWGVxZSk2l+i1xz+3ufD
+ G7iXADBrW4Ql5Tt51L5eb6vj9CPbqkG5rHigw7M2uBHFHKgCBM628fkhRpwqbcS+zRZX2/7pA
+ uflojXwSPmcaGSzktONdoaast1eyoXOk4TLw7MX5W52N+BiNIqJHQu77kb5COaW36Pu+iB6VD
+ 4Azomf7CPmEHDudmhg4tqH2JBF59NvbPGyImufqKr1dhRtt5hnh8SzTcK5JVioqqBFZletnM9
+ J17xwVe+qghwlYwpwinojW9+u7ns/L6OfIJc2UiYwnFcfjuN5o2cBLvg8aids+sPYgwOIoofj
+ PrXJDYvNyieOVjp9j
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323328-664812106-1588982033=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 7 May 2020, Jeff King wrote:
+Hi Carlo,
 
-> On Wed, May 06, 2020 at 11:35:48PM +0200, Johannes Schindelin wrote:
+this is v2, right? The subject says `[PATCH]`, not `[PATCH v2]`, so I am
+just trying to make sure.
+
+It's things like this why I never use `git send-email` manually anymore.
+Yes, sure, GitGitGadget helps others, too, but its initial primary goal
+was to help me not botch my patch submissions.
+
+On Thu, 7 May 2020, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+
+> 662f9cf154 (tests: when run in Bash, annotate test failures with file
+> name/line number, 2020-04-11), introduces a way to report the location
+> (file:lineno) of a failed test case by traversing the bash callstack.
 >
-> > > >> > +				next[i] =3D next[i2];
-> > > >> > +				next[i2] =3D i;
-> > > >> > +				continue;
-> > > >> > +			}
-> > > >>
-> > > >> I do have one question, though. What happens if we add a second
-> > > >> fixup-of-a-fixup?
-> > > >
-> > > > Thanks for asking this question, I was a little curious about it, =
-too.
-> > >
-> > > Interesting that three people looked at the same patch and asked the
-> > > same question in different ways ;-)
-> >
-> > Indeed!
-> >
-> > I am very grateful, as I had missed that, and it helped me figure out =
-a
-> > better way to do it, and v2 looks a lot nicer, too.
+> The implementation requires bash and uses shell arrays and is therefore
+> protected by a guard but NetBSD sh will still have to parse the function
+> and therefore will result in:
 >
-> OK, so your v2 addresses that. Does that mean it was broken in v1?
+>   ** t0000-basic.sh ***
+>   ./test-lib.sh: 681: Syntax error: Bad substitution
+>
+> Enclose the bash specific code inside an eval to avoid parsing errors in
+> the same way than 5826b7b595 (test-lib: check Bash version for '-x'
+> without using shell arrays, 2019-01-03)
+>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 
-Yes.
+I still provided help, I hope?
 
-> If so, then why didn't my test reveal it?
+> ---
+>  t/test-lib.sh | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 1b221951a8..baf94546da 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -677,14 +677,16 @@ die () {
+>
+>  file_lineno () {
+>  	test -z "$GIT_TEST_FRAMEWORK_SELFTEST" && test -n "$BASH" || return 0
+> -	local i
+> -	for i in ${!BASH_SOURCE[*]}
+> -	do
+> -		case $i,"${BASH_SOURCE[$i]##*/}" in
+> -		0,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:$LINENO: ${1+$1: }"; return;=
+;
+> -		*,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:${BASH_LINENO[$(($i-1))]}: $=
+{1+$1: }"; return;;
+> -		esac
+> -	done
+> +	eval '
+> +		local i
+> +		for i in ${!BASH_SOURCE[*]}
+> +		do
+> +			case $i,"${BASH_SOURCE[$i]##*/}" in
+> +			0,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:$LINENO: ${1+$1: }"; return=
+;;
+> +			*,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:${BASH_LINENO[$(($i-1))]}: =
+${1+$1: }"; return;;
+> +			esac
+> +		done
+> +	'
 
-Let's disect this:
+This one looks correct to me.
 
- i  hash oneline
-#0  1234 foo
-#1  5678 !fixup foo
-#2  abcd !fixup 5678
-#3  dbaf !fixup 5678
-
-Let's follow the original code, i.e. before my v1:
-
-When #1 is processed, i.e. when `i =3D=3D 1`, it finds `i2 =3D=3D 0` as ta=
-rget. So
-it sets `next[0]` as well as `tail[0]` to 1.
-
-Then #2 is processed, i.e. `i =3D=3D 2`, and it finds `i2 =3D=3D 1` as tar=
-get. It
-sets `next[1]` as well as `tail[1]` to 2.
-
-Now #3 is processed, i.e. it also finds `i2 =3D=3D 1` as target, so it loo=
-ks
-at next[1], sees that it is already non-negative, so it sets
-`next[tail[1]]`, i.e. `next[2]` to 3. It also sets `tail[1]` to 3, but
-nobody cares about that because there is no further todo command.
-
-Now, let's follow the code with my v1:
-
-It actually does the same as before! Why, you ask? Because at no stage is
-there any non-negative `next[j]` whose corresponding `tail[j]` is
-negative. (Except after #3 was processed, at that stage, `next[2]` is
-non-negative but `tail[2]` still is negative, but as I said, noone cares
-because there are no remaining todo commands.)
-
-So the crucial part to trigger this bug is to have a regular `fixup!
-<oneline>` _between_ the `fixup! <oneline>` and the `fixup! <hash>`
-targeting the latter. So I think I can modify your example accordingly:
-
-	1234 foo
-	5678 fixup! foo
-	90ab fixup! foo
-	abcd fixup! 5678
-	dbaf fixup! 5678
-
-Or using your actual shell commands:
-
-  git commit -m base --allow-empty
-  git commit --squash HEAD -m 'this is the first squash' --allow-empty
-  s=3D$(git rev-parse HEAD)
-  git commit --fixup HEAD^ --allow-empty # This is the crucial command
-  git commit -m "squash! $s" -m 'this is the second squash' --allow-empty
-  git commit -m "squash! $s" -m 'this is the third squash' --allow-empty
-  git rebase -ki --autosquash --root
-
-Note the cricual command `git commit --fixup HEAD^`. When processing that,
-`i =3D=3D 2` and `i2 =3D=3D 0` (as for `i =3D=3D 1`), and before v1, this =
-would have
-set `next[1]` but `tail[0]`! With v1, this would have led to #4 and #5
-being exchanged. With v2, the role of `tail` would have been extended to
-not only talk about the beginning of a fixup/squash chain, but about _any_
-target of a fixup/squash, even if it is in the middle of a chain.
-
-So why does this work? Why does it still do the right thing _even after_
-inserting a fixup in the middle of a chain?
-
-That's the beauty: if I insert anything in the middle of it, the `tail` of
-the actual beginning of the fixup/squash chain won't need to be changed.
-It still points to the end of that chain.
-
-All I need to ensure is that item `i` is not just appended to the "chain"
-starting at `i2`, but that it is _inserted_ at the end of that chain in
-case that it is actually part of a larger chain, i.e. that its `next[i]`
-is set correctly before making it the immediate successor of the target
-commit. Since all of the elements in `next` and `tail` are initialized to
-`-1` (i.e. "no next fixup/squash item after this"), it will even do the
-right thing when it should actually append: it will set `next[i]` to `-1`
-in that case.
-
-> I'm not really doubting that your v2 works so much as trying to
-> un-confuse myself about the whole situation (which in turn might lead to
-> a more intelligent review).
-
-I wish I was quicker in my responses because I think that this is really
-helpful a conversation. By "forcing my hand" on a thorough explanation,
-you really help me get clarity for myself about the actual underlying
-issues. So even if I still think that v2 is correct after writing up the
-above explanation, the degree of my confidence increased substantially.
-
-Thanks,
+Ciao,
 Dscho
+
+>  }
+>
+>  GIT_EXIT_OK=3D
+> --
+> 2.26.2.717.g5cccb0e1a8
+>
+>
+
+--8323328-664812106-1588982033=:56--
