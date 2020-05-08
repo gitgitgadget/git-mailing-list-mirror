@@ -2,150 +2,126 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F190FC38A2A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 16:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78AFAC38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 16:13:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA6EB21473
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 16:13:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E991216FD
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 16:13:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ebpIhieT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KpVD2ZaC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbgEHQNY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 12:13:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35988 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726771AbgEHQNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 12:13:24 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD2B8C061A0C
-        for <git@vger.kernel.org>; Fri,  8 May 2020 09:13:23 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id s9so1169415qkm.6
-        for <git@vger.kernel.org>; Fri, 08 May 2020 09:13:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GdoMKIycEy5M+YUfaHXq0GVTlJN4AVPAKDbECYEL1+g=;
-        b=ebpIhieTDsWEG8qwJ4qNh+X2n6VNLCpAmWisr3Mn5uRkl4bPaTyuF2tLnaxaCqQHQb
-         cXAIOrIdzmcrtABj5XUWm5CW1JqOvR2g8a+nTdT03zhD4sdabJLc6TM9xzbW6MVwBSfQ
-         SndcrwfZ6O32rRHWAWa9cGgV7lQCtxtPDTGeRljFn1tPY+BosUtIyJKTlHp10ICNNFhZ
-         mMW9J+8K7tGoFxALGlTZ8W/8t70E/QbeKKdd03ygM+PIqv81Pu9Xo71YuSXJmFnqCqhF
-         fmwNJAEXdU8np+qUv7GGPxJ99sz54G183XKVANY8AKRFGgIJZVkVJ4DKi5rmZ9308CGe
-         zJyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=GdoMKIycEy5M+YUfaHXq0GVTlJN4AVPAKDbECYEL1+g=;
-        b=TtnXi+XdNfQUGHG7LrwcE9AaJwhHCqVHZ4CcfNRvQ6s8wmGC02fRm3KvhWucGOyitp
-         EpvXXsDNzdIqtmoRKhRIOKxZUwY/6hrT4OrXPxzKcaDC7FvWM6KZermU+2hLyxYVmeG/
-         GW5bG79yixLt+tAQInnqe90r5nKSkRu+FZzdq/LYgBKbhve0yWysrKFtmMUXe0cLY0mG
-         PErpSu7Us03JqxY3x4xPYmu14ncY036UBdDlIdSBt/01hF6M2kRbSCNGiEuYakczrHZb
-         XawRhKwh643oC+Z6gnRI6c7zBvDogenZLu6bLHQYAgCSQq9ZBJbQPMEYLlwLV6TakZ2P
-         hspQ==
-X-Gm-Message-State: AGi0PuaYSkEVj3jBW0H1nVcmcLny5T/jpI8F9rM3TnOFPIPKgi8QlDEW
-        wLOAFvkSw++7xy7WQxshIxVxKeQQ
-X-Google-Smtp-Source: APiQypKR4qkcbo0G5S8B64GTekZj1Ox9aTR+47qq1KuRGnFvB85pscVOHUjsJ1UX/wXhw8aPRJGx/w==
-X-Received: by 2002:a05:620a:13a7:: with SMTP id m7mr1480881qki.498.1588954402821;
-        Fri, 08 May 2020 09:13:22 -0700 (PDT)
-Received: from flurp.local (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id d4sm1814422qtc.48.2020.05.08.09.13.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2020 09:13:21 -0700 (PDT)
-Date:   Fri, 8 May 2020 12:13:15 -0400
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        chrisitan.couder@gmail.com, Denton Liu <liu.denton@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: Re* [PATCH v4] submodule: port subcommand 'set-url' from shell
- to C
-Message-ID: <20200508161315.GA3504@flurp.local>
-References: <xmqqtv0t6l84.fsf@gitster.c.googlers.com>
- <20200506181239.GA5683@konoha>
- <xmqqwo5o6hzp.fsf@gitster.c.googlers.com>
- <20200507044028.GA5168@konoha>
- <xmqqv9l849i4.fsf@gitster.c.googlers.com>
- <20200508054728.GA8615@konoha>
- <CAP8UFD0=_8D8hkT5VVPV_F++dr131bkjby357fA+QfhQxktcMg@mail.gmail.com>
- <xmqq8si21mlz.fsf_-_@gitster.c.googlers.com>
- <CAPig+cQP_9onrq-z5db1GhXSSHaeKJ+UhNewWP25wLCsMRzSrA@mail.gmail.com>
- <xmqqpnbezaga.fsf@gitster.c.googlers.com>
+        id S1726883AbgEHQNz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 12:13:55 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60739 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726767AbgEHQNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 12:13:55 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C3A19D7A77;
+        Fri,  8 May 2020 12:13:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gIB5IToJWkfRpq4Qu95qGQtYdX8=; b=KpVD2Z
+        aCRonpNiy5m2YEFYnaEzU1aO2P6CTGUW/L7hINajfD5ydJ3wsrEL5qSo1XVUwG+R
+        dNz2G6eVExaAbAjEOhiTPRWOXUdFXwU5SEsrfJjIkou3egxNB4R4ze+xpgn+DNHq
+        E6XYR1GHVUnbd9AlONzC/Nzkf01gH7lW9cllc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yY79T2i7HV8nSKxECldB6ELMX1E5ZGTF
+        KiZDV/gRvhpxGM0qZfBDyO0xXWp8pXr3Wm0eaEP/40GKsBFgGtQL8RFxiBEXUmts
+        Yoa8G+SqrJTm32L1HnJgWyf7HvhK51ZGlrmXix6VGwrHUvNFEUikiPg8Nq8pFss1
+        DVwr/Kv5z/o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BB394D7A76;
+        Fri,  8 May 2020 12:13:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 080EAD7A73;
+        Fri,  8 May 2020 12:13:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v5] submodule: port subcommand 'set-url' from shell to C
+References: <20200506073717.9789-1-shouryashukla.oo@gmail.com>
+        <20200508062136.15257-1-shouryashukla.oo@gmail.com>
+        <20200508063022.GA18557@generichostname>
+Date:   Fri, 08 May 2020 09:13:50 -0700
+In-Reply-To: <20200508063022.GA18557@generichostname> (Denton Liu's message of
+        "Fri, 8 May 2020 02:30:22 -0400")
+Message-ID: <xmqqlfm2z9oh.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpnbezaga.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E85EA43C-9146-11EA-BEA8-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 08, 2020 at 08:57:09AM -0700, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > This talks only about '=='.
-> 
-> Yup.  The text would need a matching change, though.
+Denton Liu <liu.denton@gmail.com> writes:
 
-Here's a re-roll with the necessary changes.
+> Hi Shourya,
+>
+> It looks good to me except for one tiny nit:
+>
+> On Fri, May 08, 2020 at 11:51:36AM +0530, Shourya Shukla wrote:
+>> Convert submodule subcommand 'set-url' to a builtin. Port 'set-url' to
+>> 'submodule--helper.c' and call the latter via 'git-submodule.sh'.
+>> 
+>> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+>> ---
+>>  builtin/submodule--helper.c | 37 +++++++++++++++++++++++++++++++++++++
+>>  git-submodule.sh            | 22 +---------------------
+>>  2 files changed, 38 insertions(+), 21 deletions(-)
+>> 
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> index 1a4b391c88..8bc7b4cfa6 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -2246,6 +2246,42 @@ static int module_config(int argc, const char **argv, const char *prefix)
+>>  	usage_with_options(git_submodule_helper_usage, module_config_options);
+>>  }
+>>  
+>> +static int module_set_url(int argc, const char **argv, const char *prefix)
+>> +{
+>> +	int quiet = 0;
+>> +	const char *newurl;
+>> +	const char *path;
+>> +	char* config_name;
+>
+> The asterisk should be stuck with the name, not the type, similar to how
+> you wrote it above.
 
-> >     if (!ptr)
-> >         BUG("...");
-> >     if (cnt)
-> >         foo(ptr, cnt);
-> 
-> Or more succinctly:
-> 
-> 	if (!ptr || cnt)
-> 		BUG("we must have an empty array at this point");
+Right.
 
-I considered that but thought it might be too "cute", however, seeing
-it written out, it looks fine, so I used it in the re-roll.
+>> +
+>> +	struct option options[] = {
+>> +		OPT__QUIET(&quiet, N_("Suppress output for setting url of a submodule")),
+>> +		OPT_END()
+>> +	};
+>> +	const char *const usage[] = {
+>> +		N_("git submodule--helper set-url [--quiet] <path> <newurl>"),
+>> +		NULL
+>> +	};
+>> +
+>> +	argc = parse_options(argc, argv, prefix, options, usage, 0);
+>> +
+>> +	path = argv[0];
+>> +	newurl = argv[1];
+>> +
+>> +	if (argc != 2 || !path || !newurl) {
 
-> > Also, would you want to talk about not comparing against NUL character?
-> 
-> Yeah, it might be worth saying it explicitly.  I dunno.
-
-Rather than giving this a separate example in the re-roll, I just
-mentioned '\0' in the text.
-
---- >8 ---
-
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] CodingGuidelines: do not ==/!= compare with 0 or '\0' or NULL
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- Documentation/CodingGuidelines | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 390ceece52..6dfc47ed7d 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -236,6 +236,18 @@ For C programs:
-         while( condition )
- 		func (bar+1);
- 
-+ - Do not explicitly compare an integral value with constant 0 or '\0',
-+   or a pointer value with constant NULL.  For instance, to validate a
-+   counted array ptr that has cnt elements, write:
-+
-+	if (!ptr || cnt)
-+		BUG("empty array expected");
-+
-+   and not:
-+
-+	if (ptr == NULL || cnt != 0);
-+		BUG("empty array expected");
-+
-  - We avoid using braces unnecessarily.  I.e.
- 
- 	if (bla) {
--- 
-2.26.2.717.g5cccb0e1a8
+Checking argc at this point is too late to protect against the
+potential out-of-bounds access we have already made to argv[0]
+and argv[1].
