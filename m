@@ -2,265 +2,103 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B138C47247
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 08:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 975B5C38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 08:33:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54E9E206B8
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 08:01:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73DC6208CA
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 08:33:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t9NK3btC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UYlXuBBP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727849AbgEHIBi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 04:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43998 "EHLO
+        id S1727803AbgEHIdn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 04:33:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727837AbgEHIBh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 04:01:37 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FECC05BD43
-        for <git@vger.kernel.org>; Fri,  8 May 2020 01:01:36 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id v8so9299237wma.0
-        for <git@vger.kernel.org>; Fri, 08 May 2020 01:01:36 -0700 (PDT)
+        with ESMTP id S1726616AbgEHIdn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 04:33:43 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E09AC05BD43
+        for <git@vger.kernel.org>; Fri,  8 May 2020 01:33:43 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id js4so1908643pjb.5
+        for <git@vger.kernel.org>; Fri, 08 May 2020 01:33:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7DDi9FPY72xw19gcDY3je9HWJ0pID7O6PC/WmJ4ijM8=;
-        b=t9NK3btCd3j6xE4MDar+XLsYdtYJGGGlPQmMGO/f/IrrP1+Eg9jPJnD0nC/CBq/viO
-         QruaEtPllX7GQC3teloLH8lFYaa5Vf+/9Wz2osUFYe8wLNu/qv5gorTwwf3JII1cnoIb
-         V6nkG4s4HdawMJYl49aIktG7pf8rfJQmNvfClxcNMRk+/I663eF4IX8LoAzt3TN27vvq
-         vZY89BMnCB4THNocAc01H3D34JfggMU1YjC0cnM65FtD+DNGVydjElmi0EPdvQTDKfJ6
-         Ek5TRI8N0hLCLtcJHmezKnGaWCP18fjUShzwVieVPStLpwNBP1rrYi+JzyiN3s+NMJ4j
-         lOEw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5FVLS5k0x+vL75K7xLAZWoRnvNeal1sdhuxel+JOjd4=;
+        b=UYlXuBBP+sC69ivZks+Y8Z2LwXueNtgj5H4ImrE55igFuo6M6RdnT/jx/iYcQ3tfe2
+         OkuOIbF4Ak71pBkjUyBt+OVLfx4gZOZb/YDriHwLK3gkpVz3S8Mun70IObuiQzSYUYss
+         22nueRZ7AUAbEHHXAl3wUVKPsh2RqJZ8wiMjbT48Jr2/viADVT9wQ4ng/Z3F+PkT20Xm
+         kXnNszkwqYiuV2sWayYV33MUo6EyxCfXM2ckaX4455ryi+jlTjj7TSoR0SDTSK3xjpbL
+         EEQl9Kf0hWTpzSkudn/xbo5QDRWWO4rF9csPnx0x3Kb3xcYKaIIRXjWxA3Uau7miYMDs
+         uTYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7DDi9FPY72xw19gcDY3je9HWJ0pID7O6PC/WmJ4ijM8=;
-        b=HbIX43Hp2cfwllLqVsZkVQ+AruzYmwX70GJ/bo1lTh7Ubr39qtHKvg3wfkmL25bcYi
-         ZctweH91x26Ih9C/LxkUrpwjFf3LIrr2cNt2a48p8GfT/XAPvHZYSs1SVSw/dyIQV3cH
-         AkHUpny/YO/eLLjJIhNLk3OUG9g1dTtEwiNV9myBbvAaruyTnFLGUy4SgGNRjnn9QCiv
-         JuWDqYlLSKOZebv2gaAWIV1AKneVtfjCjtVPp47yczVSnlawSHC5YcMLFd+qu8yfB7RV
-         Q6c5lGchB+lmPNRkAHkmrFV6quyxvGPJEGeYbqAFlPTUlpuLlqUTJintxtDBGLPW2nxV
-         ODVA==
-X-Gm-Message-State: AGi0PubE/3e+6HQpMkwucZxkyzXrN3N2aYzTTIfJKB9MxjpNQVbJlbxw
-        fi/GXpyD7nKf2GyatDh5bN0TewwZ5qA=
-X-Google-Smtp-Source: APiQypIit4m5dlElfKLTERWKRCXTjEa1X7u7ktf2/hjUEa0unNYc/iDkzGb/RyEjEiu22+Wx2xx0ew==
-X-Received: by 2002:a1c:cc06:: with SMTP id h6mr13208423wmb.166.1588924894609;
-        Fri, 08 May 2020 01:01:34 -0700 (PDT)
-Received: from localhost.localdomain ([185.228.229.233])
-        by smtp.gmail.com with ESMTPSA id u127sm11944982wme.8.2020.05.08.01.01.32
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5FVLS5k0x+vL75K7xLAZWoRnvNeal1sdhuxel+JOjd4=;
+        b=txtCeR/pHAkvZGQ2+Ah/rLESvMQHuT1ulofTDRwCJVOO+KDW+0ouiQIWs7A99veFmC
+         Zmtlfdy/eBAUrsQByCgpGXy2sAoBjSBGJpHNtfhwPFnyKHua7VGbleDaZZ1Bji280oUK
+         RyLHxYTjvOQyK2+xJQvGfVXWTddgSZOB+rq4Bd5uudY/TjZguccFfkrBpkSqI1vIG/n2
+         HqYthDXStstBGdJtI1KEM3zaY+Fdc3PY3SxHmoTqThA5gie9iG3XJM33In7fRUhQHivq
+         852+WHKMp0r+cMnNmj7a+s/m1+UIce83+CaFj8QE8b0zGE7ZmQSW3lGxcASvQE4uVilv
+         GrrQ==
+X-Gm-Message-State: AGi0PubOG+RMWCSK7uhEfCP2sjRrlRdEfPmS4nQezgtxy8hEr8AUV91Q
+        M2jsR9yhIkfQSIRPNEBn5gw=
+X-Google-Smtp-Source: APiQypKOM1NnmmVgQCVHY2hEkNyd1+br40J/Ifut3ZKJza4OKGXl3IDiy1SbrLzjacXcq5mY6TVVyA==
+X-Received: by 2002:a17:90a:fe07:: with SMTP id ck7mr5137682pjb.216.1588926822503;
+        Fri, 08 May 2020 01:33:42 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id gz14sm1840061pjb.42.2020.05.08.01.33.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2020 01:01:33 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] upload-pack: fix filter options scope
-Date:   Fri,  8 May 2020 10:01:15 +0200
-Message-Id: <20200508080115.15616-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.26.2.561.g07d8ea56f2.dirty
-In-Reply-To: <20200507095829.16894-1-chriscool@tuxfamily.org>
-References: <20200507095829.16894-1-chriscool@tuxfamily.org>
+        Fri, 08 May 2020 01:33:42 -0700 (PDT)
+Date:   Fri, 8 May 2020 01:33:40 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Force Charlie via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Force Charlie <charlieio@outlook.com>
+Subject: Re: [PATCH] Correctly initialize 'installed_handlers'
+Message-ID: <20200508083340.GA36538@Carlos-MBP>
+References: <pull.630.git.1588921514146.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.630.git.1588921514146.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Because of the request/response model of protocol v2, the
-upload_pack_v2() function is sometimes called twice in the same
-process, while 'struct list_objects_filter_options filter_options'
-was declared as static at the beginning of 'upload-pack.c'.
+On Fri, May 08, 2020 at 07:05:13AM +0000, Force Charlie via GitGitGadget wrote:
+> From: Force Charlie <charlieio@outlook.com>
+> 
+> Because static variables are not initialized properly,
 
-This made the check in list_objects_filter_die_if_populated(), which
-is called by process_args(), fail the second time upload_pack_v2() is
-called, as filter_options had already been populated the first time.
+what do you mean by "properly"?, all static variables are set to 0;
+that is a warranty of the language (all the way to K&R) and any C compiler
+should enforce that as part of the standard.
 
-To fix that, filter_options is not static any more. It's now owned
-directly by upload_pack(). It's now also part of 'struct
-upload_pack_data', so that it's owned indirectly by upload_pack_v2().
+> temporary files may not be deleted when receive-pack receives a signal.
 
-In the long term, the goal is to also have upload_pack() use
-'struct upload_pack_data', so adding filter_options to this struct
-makes more sense than to have it owned directly by upload_pack_v2().
+the way this is handled would seem to indicate otherwise
 
-This fixes the first of the 2 bugs documented by d0badf8797
-(partial-clone: demonstrate bugs in partial fetch, 2020-02-21).
+if (!installed_handlers) {
+                atexit(remove_tmp_objdir);
+                sigchain_push_common(remove_tmp_objdir_on_signal);
+                installed_handlers++;
+}
 
-Helped-by: Derrick Stolee <dstolee@microsoft.com>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-The changes since the previous RFC version are the following:
+there is no explicit locking and so there might be a thread race
+condition, but the code below wouldn't make a difference in that
+case.
 
-  - now filter_options is part of struct upload_pack_data as
-    suggested by Peff and Taylor
-  - improved commit message
-  - updated comment before the test that used to fail
+could you elaborate more on how to reproduce the problem?, I suspect
+that if there was a problem then suppressing whatever signal that
+was triggered before sigchain_push_common might help, but the window
+is too short to be a likely issue.
 
- t/t5616-partial-clone.sh |  7 +++----
- upload-pack.c            | 34 ++++++++++++++++++++++------------
- 2 files changed, 25 insertions(+), 16 deletions(-)
-
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 88002b24af..8a27452a51 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -384,12 +384,11 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas, protocol v2' '
- 	grep "want $(cat hash)" trace
- '
- 
--# The following two tests must be in this order, or else
--# the first will not fail. It is important that the srv.bare
--# repository did not have tags during clone, but has tags
-+# The following two tests must be in this order. It is important that
-+# the srv.bare repository did not have tags during clone, but has tags
- # in the fetch.
- 
--test_expect_failure 'verify fetch succeeds when asking for new tags' '
-+test_expect_success 'verify fetch succeeds when asking for new tags' '
- 	git clone --filter=blob:none "file://$(pwd)/srv.bare" tag-test &&
- 	for i in I J K
- 	do
-diff --git a/upload-pack.c b/upload-pack.c
-index 902d0ad5e1..4d4dd7cd41 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -68,7 +68,6 @@ static const char *pack_objects_hook;
- static int filter_capability_requested;
- static int allow_filter;
- static int allow_ref_in_want;
--static struct list_objects_filter_options filter_options;
- 
- static int allow_sideband_all;
- 
-@@ -103,7 +102,8 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
- }
- 
- static void create_pack_file(const struct object_array *have_obj,
--			     const struct object_array *want_obj)
-+			     const struct object_array *want_obj,
-+			     struct list_objects_filter_options *filter_options)
- {
- 	struct child_process pack_objects = CHILD_PROCESS_INIT;
- 	char data[8193], progress[128];
-@@ -140,9 +140,9 @@ static void create_pack_file(const struct object_array *have_obj,
- 		argv_array_push(&pack_objects.args, "--delta-base-offset");
- 	if (use_include_tag)
- 		argv_array_push(&pack_objects.args, "--include-tag");
--	if (filter_options.choice) {
-+	if (filter_options->choice) {
- 		const char *spec =
--			expand_list_objects_filter_spec(&filter_options);
-+			expand_list_objects_filter_spec(filter_options);
- 		if (pack_objects.use_shell) {
- 			struct strbuf buf = STRBUF_INIT;
- 			sq_quote_buf(&buf, spec);
-@@ -848,7 +848,9 @@ static int process_deepen_not(const char *line, struct string_list *deepen_not,
- 	return 0;
- }
- 
--static void receive_needs(struct packet_reader *reader, struct object_array *want_obj)
-+static void receive_needs(struct packet_reader *reader,
-+			  struct object_array *want_obj,
-+			  struct list_objects_filter_options *filter_options)
- {
- 	struct object_array shallows = OBJECT_ARRAY_INIT;
- 	struct string_list deepen_not = STRING_LIST_INIT_DUP;
-@@ -883,8 +885,8 @@ static void receive_needs(struct packet_reader *reader, struct object_array *wan
- 		if (skip_prefix(reader->line, "filter ", &arg)) {
- 			if (!filter_capability_requested)
- 				die("git upload-pack: filtering capability not negotiated");
--			list_objects_filter_die_if_populated(&filter_options);
--			parse_list_objects_filter(&filter_options, arg);
-+			list_objects_filter_die_if_populated(filter_options);
-+			parse_list_objects_filter(filter_options, arg);
- 			continue;
- 		}
- 
-@@ -1087,11 +1089,14 @@ void upload_pack(struct upload_pack_options *options)
- 	struct string_list symref = STRING_LIST_INIT_DUP;
- 	struct object_array want_obj = OBJECT_ARRAY_INIT;
- 	struct packet_reader reader;
-+	struct list_objects_filter_options filter_options;
- 
- 	stateless_rpc = options->stateless_rpc;
- 	timeout = options->timeout;
- 	daemon_mode = options->daemon_mode;
- 
-+	memset(&filter_options, 0, sizeof(filter_options));
-+
- 	git_config(upload_pack_config, NULL);
- 
- 	head_ref_namespaced(find_symref, &symref);
-@@ -1114,12 +1119,14 @@ void upload_pack(struct upload_pack_options *options)
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_DIE_ON_ERR_PACKET);
- 
--	receive_needs(&reader, &want_obj);
-+	receive_needs(&reader, &want_obj, &filter_options);
- 	if (want_obj.nr) {
- 		struct object_array have_obj = OBJECT_ARRAY_INIT;
- 		get_common_commits(&reader, &have_obj, &want_obj);
--		create_pack_file(&have_obj, &want_obj);
-+		create_pack_file(&have_obj, &want_obj, &filter_options);
- 	}
-+
-+	list_objects_filter_release(&filter_options);
- }
- 
- struct upload_pack_data {
-@@ -1134,6 +1141,8 @@ struct upload_pack_data {
- 	int deepen_rev_list;
- 	int deepen_relative;
- 
-+	struct list_objects_filter_options filter_options;
-+
- 	struct packet_writer writer;
- 
- 	unsigned stateless_rpc : 1;
-@@ -1169,6 +1178,7 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
- 	oid_array_clear(&data->haves);
- 	object_array_clear(&data->shallows);
- 	string_list_clear(&data->deepen_not, 0);
-+	list_objects_filter_release(&data->filter_options);
- }
- 
- static int parse_want(struct packet_writer *writer, const char *line,
-@@ -1306,8 +1316,8 @@ static void process_args(struct packet_reader *request,
- 		}
- 
- 		if (allow_filter && skip_prefix(arg, "filter ", &p)) {
--			list_objects_filter_die_if_populated(&filter_options);
--			parse_list_objects_filter(&filter_options, p);
-+			list_objects_filter_die_if_populated(&data->filter_options);
-+			parse_list_objects_filter(&data->filter_options, p);
- 			continue;
- 		}
- 
-@@ -1514,7 +1524,7 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
- 			send_shallow_info(&data, &want_obj);
- 
- 			packet_writer_write(&data.writer, "packfile\n");
--			create_pack_file(&have_obj, &want_obj);
-+			create_pack_file(&have_obj, &want_obj, &data.filter_options);
- 			state = FETCH_DONE;
- 			break;
- 		case FETCH_DONE:
--- 
-2.26.2.561.g07d8ea56f2.dirty
-
+Carlo
