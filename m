@@ -2,103 +2,105 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 975B5C38A2A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 08:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12115C54E49
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 09:51:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73DC6208CA
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 08:33:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E514A208CA
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 09:51:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UYlXuBBP"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="i/Ue81zo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbgEHIdn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 04:33:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48984 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726616AbgEHIdn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 04:33:43 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E09AC05BD43
-        for <git@vger.kernel.org>; Fri,  8 May 2020 01:33:43 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id js4so1908643pjb.5
-        for <git@vger.kernel.org>; Fri, 08 May 2020 01:33:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5FVLS5k0x+vL75K7xLAZWoRnvNeal1sdhuxel+JOjd4=;
-        b=UYlXuBBP+sC69ivZks+Y8Z2LwXueNtgj5H4ImrE55igFuo6M6RdnT/jx/iYcQ3tfe2
-         OkuOIbF4Ak71pBkjUyBt+OVLfx4gZOZb/YDriHwLK3gkpVz3S8Mun70IObuiQzSYUYss
-         22nueRZ7AUAbEHHXAl3wUVKPsh2RqJZ8wiMjbT48Jr2/viADVT9wQ4ng/Z3F+PkT20Xm
-         kXnNszkwqYiuV2sWayYV33MUo6EyxCfXM2ckaX4455ryi+jlTjj7TSoR0SDTSK3xjpbL
-         EEQl9Kf0hWTpzSkudn/xbo5QDRWWO4rF9csPnx0x3Kb3xcYKaIIRXjWxA3Uau7miYMDs
-         uTYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5FVLS5k0x+vL75K7xLAZWoRnvNeal1sdhuxel+JOjd4=;
-        b=txtCeR/pHAkvZGQ2+Ah/rLESvMQHuT1ulofTDRwCJVOO+KDW+0ouiQIWs7A99veFmC
-         Zmtlfdy/eBAUrsQByCgpGXy2sAoBjSBGJpHNtfhwPFnyKHua7VGbleDaZZ1Bji280oUK
-         RyLHxYTjvOQyK2+xJQvGfVXWTddgSZOB+rq4Bd5uudY/TjZguccFfkrBpkSqI1vIG/n2
-         HqYthDXStstBGdJtI1KEM3zaY+Fdc3PY3SxHmoTqThA5gie9iG3XJM33In7fRUhQHivq
-         852+WHKMp0r+cMnNmj7a+s/m1+UIce83+CaFj8QE8b0zGE7ZmQSW3lGxcASvQE4uVilv
-         GrrQ==
-X-Gm-Message-State: AGi0PubOG+RMWCSK7uhEfCP2sjRrlRdEfPmS4nQezgtxy8hEr8AUV91Q
-        M2jsR9yhIkfQSIRPNEBn5gw=
-X-Google-Smtp-Source: APiQypKOM1NnmmVgQCVHY2hEkNyd1+br40J/Ifut3ZKJza4OKGXl3IDiy1SbrLzjacXcq5mY6TVVyA==
-X-Received: by 2002:a17:90a:fe07:: with SMTP id ck7mr5137682pjb.216.1588926822503;
-        Fri, 08 May 2020 01:33:42 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id gz14sm1840061pjb.42.2020.05.08.01.33.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2020 01:33:42 -0700 (PDT)
-Date:   Fri, 8 May 2020 01:33:40 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Force Charlie via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Force Charlie <charlieio@outlook.com>
-Subject: Re: [PATCH] Correctly initialize 'installed_handlers'
-Message-ID: <20200508083340.GA36538@Carlos-MBP>
-References: <pull.630.git.1588921514146.gitgitgadget@gmail.com>
+        id S1726897AbgEHJu7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 05:50:59 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:46193 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726083AbgEHJu5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 05:50:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1588931456;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=SlGBFtePSvOigRWa+jRg8eydrJPsjDLiI33nb9ee2x8=;
+        b=i/Ue81zo9dm7+ZVKu7m0uOlMr3+5yuRnLzZ6Ul8DpGqCxSXI5yvvdjMY7xm2tgBjQdaeMb
+        PuxIugtJPcxNUL+F4eWT842Ii+PxJMXC1ACUczbRPqcOxTY5J0HZOoGuaRnXGEHx4rVfrv
+        aNOYEhlpxMO3UNOLEmowgzklvK65nMI=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-378-eEupif1DO1uhPtTo3IqjMg-1; Fri, 08 May 2020 05:50:54 -0400
+X-MC-Unique: eEupif1DO1uhPtTo3IqjMg-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 68441107ACCA;
+        Fri,  8 May 2020 09:50:53 +0000 (UTC)
+Received: from lacos-laptop-7.usersys.redhat.com (ovpn-114-60.ams2.redhat.com [10.36.114.60])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id B23396E71F;
+        Fri,  8 May 2020 09:50:52 +0000 (UTC)
+Subject: Re: "--quiet" for git-push does not suppress remote hook output
+To:     Jeff King <peff@peff.net>
+Cc:     public git mailing list <git@vger.kernel.org>
+References: <ba70b25b-906c-0117-2594-c606595c6816@redhat.com>
+ <3cb011a9-ce3d-df38-01c6-062062f1c9c2@redhat.com>
+ <20200507210210.GB38308@coredump.intra.peff.net>
+From:   Laszlo Ersek <lersek@redhat.com>
+Message-ID: <a9593a71-e1d0-54cc-d974-7cfb60deafc6@redhat.com>
+Date:   Fri, 8 May 2020 11:50:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.630.git.1588921514146.gitgitgadget@gmail.com>
+In-Reply-To: <20200507210210.GB38308@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 08, 2020 at 07:05:13AM +0000, Force Charlie via GitGitGadget wrote:
-> From: Force Charlie <charlieio@outlook.com>
+On 05/07/20 23:02, Jeff King wrote:
+> On Thu, May 07, 2020 at 02:16:36PM +0200, Laszlo Ersek wrote:
 > 
-> Because static variables are not initialized properly,
+>> On 05/07/20 14:05, Laszlo Ersek wrote:
+>>> Hi,
+>>>
+>>> being a total novice in git internals, it seems like
+>>> "builtin/receive-pack.c" (on the server) forwards any receive hook
+>>> output with copy_to_sideband() back to git-push (on the client), even if
+>>> git-push was invoked with "--quiet".
+>>>
+>>> And "case 2" in demultiplex_sideband() seems to print that "band" to
+>>> stderr (on the client), despite "--quiet".
+>>>
+>>> Is this intentional? I'd prefer "git push --quiet" to suppress remote
+>>> hook output (unless the remote hook fails).
+> 
+> I think the client has to propagate sideband 2 from the server, since it
+> doesn't know whether the messages are informational or errors (and even
+> with --quiet, we'd want to show errors).
+> 
+> There is a "quiet" protocol capability; when you run "git push --quiet"
+> on the client, it tells the server to use "quiet", and then it passes
+> options to index-pack, etc, to suppress progress. But that never makes
+> it to hooks.
+> 
+>> Or else:
+>>
+>> would it be the job of the particular receive hooks to observe and obey
+>> the "--quiet" option in the GIT_PUSH_OPTION_* environment variables?
+> 
+> That would work, but push options require the client to send them. We
+> should probably be passing knowledge of the "quiet" capability from
+> receive-pack down to the hooks, probably via an environment variable
+> (but not GIT_PUSH_OPTION_*, because that already has meaning).
 
-what do you mean by "properly"?, all static variables are set to 0;
-that is a warranty of the language (all the way to K&R) and any C compiler
-should enforce that as part of the standard.
+Thank you for explaining!
+Laszlo
 
-> temporary files may not be deleted when receive-pack receives a signal.
-
-the way this is handled would seem to indicate otherwise
-
-if (!installed_handlers) {
-                atexit(remove_tmp_objdir);
-                sigchain_push_common(remove_tmp_objdir_on_signal);
-                installed_handlers++;
-}
-
-there is no explicit locking and so there might be a thread race
-condition, but the code below wouldn't make a difference in that
-case.
-
-could you elaborate more on how to reproduce the problem?, I suspect
-that if there was a problem then suppressing whatever signal that
-was triggered before sigchain_push_common might help, but the window
-is too short to be a likely issue.
-
-Carlo
