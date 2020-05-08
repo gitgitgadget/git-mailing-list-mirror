@@ -2,94 +2,82 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B92CAC38A2A
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 13:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5606C38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 14:35:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38CFC20A8B
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 13:59:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 970A02083B
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 14:35:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="IQIhdHcx"
+	dkim=pass (1024-bit key) header.d=jetbrains.com header.i=@jetbrains.com header.b="cQnareTd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbgEHN7N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 09:59:13 -0400
-Received: from forward102j.mail.yandex.net ([5.45.198.243]:33907 "EHLO
-        forward102j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726767AbgEHN7M (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 May 2020 09:59:12 -0400
-X-Greylist: delayed 385 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 May 2020 09:59:11 EDT
-Received: from mxback18o.mail.yandex.net (mxback18o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::69])
-        by forward102j.mail.yandex.net (Yandex) with ESMTP id 68C74F200E4;
-        Fri,  8 May 2020 16:52:45 +0300 (MSK)
-Received: from iva1-bc1861525829.qloud-c.yandex.net (iva1-bc1861525829.qloud-c.yandex.net [2a02:6b8:c0c:a0e:0:640:bc18:6152])
-        by mxback18o.mail.yandex.net (mxback/Yandex) with ESMTP id UTG8M8804R-qjvuZrIP;
-        Fri, 08 May 2020 16:52:45 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1588945965;
-        bh=zoZB7UXw+xUFOskXqmHh7IFmntSQWblXOCDf1JW2ECI=;
-        h=In-Reply-To:From:Date:References:To:Subject:Message-ID;
-        b=IQIhdHcxihdPU/FtyaCBSRNsTPxqiwm31l9/n058zFo4BY02gbOiPtbgltHD1gOa1
-         tDk5YHfRTL4yqnRdK7upqLpiTq2fvG/aVMODV/6No334MoC+xkHT9EB8LgqMA6cyvi
-         b95vFsUPgk5vqrkOrgTUTtw8+qwPYAlZQlu2EG2c=
-Authentication-Results: mxback18o.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by iva1-bc1861525829.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id BOlyjVW2PE-qiQWU9PM;
-        Fri, 08 May 2020 16:52:44 +0300
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client certificate not present)
-Subject: Re: git apply -3 doesn't work
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <d9d549eb-e888-c930-1aeb-38cd3aad1b3b@yandex.ru>
- <bf5fab9b-78f0-8c8c-dcf6-e6672014412f@gmail.com>
-From:   Konstantin Kharlamov <hi-angel@yandex.ru>
-Message-ID: <f5e4a133-8cfc-0f6f-bfeb-b62acca5d110@yandex.ru>
-Date:   Fri, 8 May 2020 16:52:44 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726815AbgEHOfP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 10:35:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48790 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726689AbgEHOfP (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 May 2020 10:35:15 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22F58C05BD43
+        for <git@vger.kernel.org>; Fri,  8 May 2020 07:35:15 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id o10so1386388ejn.10
+        for <git@vger.kernel.org>; Fri, 08 May 2020 07:35:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jetbrains.com; s=googleapps;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=5lIwUdxC9LDLCWmJ/mnWss84wKsP1g1adNA3wPjuvZk=;
+        b=cQnareTdfzghqaxtMV1d4nOaZdfx3DnYlNTOgXdFrSTuGpsAP0+tp87hYxE7MCdIko
+         4rUkczjGWTGnACz2Dc4VkGdzZ1RUOAtAUvwNTQcau8hRUdKGkdQ3s7nIPJTVIrF6s7hM
+         AooCszQYnFHGmh6hOOMzlwd+d0NLriRvv+XLE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=5lIwUdxC9LDLCWmJ/mnWss84wKsP1g1adNA3wPjuvZk=;
+        b=E/BfMsTOX3QAVgFmJJ7LZNf8iLyo9GtmRE6WmyKdbGl8HJ5+oc/gExrneU2zwHztTO
+         e4ef78e2HVJJfO+rGETzfUNR5ZulnmxH6gtmOuDYBXYmQyzPoMnmuOzT74UlEe9pD9Sy
+         cPooUNxbcr1jqmPCoGKzcP3jDP//Qz1rrmwhUpjwadLE48uqPJg0K1yf4zHlV9DPQulu
+         FQYtHZe8X2dV6snD0pyeTG7LVCP8A9jCMUmBvr10Ub9WJg/Lhf21TEOUJBThg0ej4ZUr
+         9KMkBjovxegE6daHPGAR6j2rxgCdKsxE1aluihts3A6WC9JOTgmoloEIGGmjD0DJr+yB
+         5PAA==
+X-Gm-Message-State: AGi0Pub+R6oDQ9DFzl+RMKHNXlTx8D9lDKML6W+Pn9+Xp+940UQf8Mp8
+        m7GA8Gbswhf6Xqf4wMZFF+DROx7uOxEc1W0J0rGPXFxmtQPKlQ==
+X-Google-Smtp-Source: APiQypLdIFJrIT4Mizbb91MHLMzKfncUtaxbEoWzCBTuautIvN/SIa3Iez88mOvp1mz65HYyDXEFrudycNMbdTAAVtI=
+X-Received: by 2002:a17:906:4a94:: with SMTP id x20mr2078434eju.306.1588948512312;
+ Fri, 08 May 2020 07:35:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <bf5fab9b-78f0-8c8c-dcf6-e6672014412f@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+From:   Nikolay Rykunov <nikolay.rykunov@jetbrains.com>
+Date:   Fri, 8 May 2020 17:35:00 +0300
+Message-ID: <CAES10x8wG_tBYZLrdyRAo=kU8B+gg65007Afs9jGdUUxL7kUBQ@mail.gmail.com>
+Subject: Rebase merge backend
+To:     git@vger.kernel.org
+Cc:     Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/8/20 4:47 PM, Phillip Wood wrote:
-> Hi Konstantin
-> 
-> On 08/05/2020 11:35, Konstantin Kharlamov wrote:
->> As description says. To check that the 3-way merge should actually work subsitute `git apply -3` with `git am -3` in the following steps. This way it works.
->>
->> # Steps to reproduce
->>
->>      $ git init
->>      Initialized empty Git repository in /tmp/foo/.git/
->>      $ echo hello > file1 && git add file1 && git commit -m "initial commit"
->>      [master (root-commit) 8334093] initial commit
->>       1 file changed, 1 insertion(+)
->>       create mode 100644 file1
->>      $ git checkout -b mybranch
->>      Switched to a new branch 'mybranch'
->>      $ echo bye > file1 && git add file1 && git commit -m "change file1 text"
->>      [mybranch 1807900] change file1 text
->>       1 file changed, 1 insertion(+), 1 deletion(-)
->>      $ git format-patch -1 --stdout > 1.patch
->>      $ git checkout master
->>      Switched to branch 'master'
->>      $ mv file1 file2
->>      $ git add -u && git add file2 && git commit -m "renamed file1 to file2"
->>      $ git apply -3 1.patch
->>      error: file1: does not exist in index
-> 
-> Judging from the error message it never gets as far as trying the 3 way merge because it first tries to apply the patch which modifies file1 but file1 does not exist in the index. If it were to try a 3 way merge in this case then on one side of the merge you've modified file1 and on the other side it has been deleted so there would be a merge conflict. The reason 'git am' succeeds is that the rename detection kicks in and so it applies the patch to file2 rather than file1
-> 
-> Best Wishes
-> 
-> Phillip
-> 
+Dear Git community,
+Since git rebase was moved to merge backend I can=E2=80=99t find the way ho=
+w
+to get information that branch was fast-forwarded or it was up-to-date
+(it was provided by the apply backend). And a similar issue: I can=E2=80=99=
+t
+get information about commits skipped during rebase because they
+became empty. Using apply backend I could check that because `No
+changes =E2=80=94 did you forget to use =E2=80=98git add=E2=80=99 ` line wa=
+s printed. Can you
+please help with these issues? Are there any ways to get such info?
 
-Thank you. I wonder if it would make sense to `git aplly -3 1.patch` to behave similarly to `git am -3 1.patch && git reset HEAD^` (except without modifying reflog). I.e. so all heuristics `git am` makes use of would also apply to `git apply`
+Thank you!
+Nikolay Rykunov
+Software Developer in VCS
+JetBrains
+http://www.jetbrains.com
+The Drive to Develop
