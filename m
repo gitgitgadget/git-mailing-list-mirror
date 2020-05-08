@@ -2,99 +2,119 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4990AC35280
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB4D1C35280
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:25:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7AC22082E
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:20:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA6392082E
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:25:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XbHwDUWC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K/roRq6V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726542AbgEHBU5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 21:20:57 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55406 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726495AbgEHBU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 May 2020 21:20:56 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EA0F55D0F;
-        Thu,  7 May 2020 21:20:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0qlXXbugdpFM9sB0KlezhPRfuNM=; b=XbHwDU
-        WCWbBEcURk4WDxLYo+wq38AJgW52gVri2UX11/VeUB2Kgb9o1FFcM/dsksI9mFyV
-        YnDS5g4OwNdkibF6ckxaMrDAHJaDAQJG/u1c8iZekT3XCxYLol3cgbbC8147xTVn
-        dji8stlYAoseqfxEaVodeJ9Qk6juBzd+xLcn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FR8QIuDB6cAjdigVvlFQjls9FaC1Josw
-        krYJtMC+siKAIh+qbvIMRHbIVzyWx6c9UgDeXyrL98bxsV+bZClGrZdoJfzpRF8W
-        RqNOGGRImRk0ydhjzGIbpSWhmbWIVV82kZjRGHzvkYh6+DVgnbAFovX28tI17He2
-        4ChvLrG6prg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9719255D0E;
-        Thu,  7 May 2020 21:20:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14EEF55D0D;
-        Thu,  7 May 2020 21:20:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4] bugreport: collect list of populated hooks
-References: <20200508005357.223058-1-emilyshaffer@google.com>
-Date:   Thu, 07 May 2020 18:20:53 -0700
-In-Reply-To: <20200508005357.223058-1-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Thu, 7 May 2020 17:53:57 -0700")
-Message-ID: <xmqqlfm31atm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726518AbgEHBZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 May 2020 21:25:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38598 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726514AbgEHBZ1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 21:25:27 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD1CBC05BD43
+        for <git@vger.kernel.org>; Thu,  7 May 2020 18:25:26 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id y4so8631217wrm.11
+        for <git@vger.kernel.org>; Thu, 07 May 2020 18:25:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=6yMUny4ZCOtXsEhV6ifUFaV2NHNtZgITaDqOQ/Cz3Ok=;
+        b=K/roRq6VwZa8IS2aK1u08DgmCzRZ4otEg4+ep9/3z3NenWrdjYcKeIt/BHppzZl9mM
+         v8qOIqdMAltF4paRZzIhwUAfhDhseTjlnPLlBxxQ2fTa98WA7b3ysrFzX45TSZwlmgP4
+         +Zx38r6XNsGi3d3PZ4kUEB5R+20ISGoBmSj3PSF7EhdWM/WMe8WOJ7kpHsmfy4rzLNP3
+         oFrPg9VtZZHlCat/y5FcV8vUVr8HJy82HOEdOKDvs/F+Lj+o51q4C6jQWW+oKLfO3+Hu
+         ZukYmhRWtv3H4lyEWOGu3L3650e7dw+P+CMgn8xxd4VATzXHCYlXYE8UrPHjLySwDMwI
+         fTig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6yMUny4ZCOtXsEhV6ifUFaV2NHNtZgITaDqOQ/Cz3Ok=;
+        b=JrojwTXfWqJ7pjm0Pcs8VOxdD06x4dC7/kpidT5StXdzOrTU9FU7yEgWGrhSluu0gF
+         YyeQFH3+JxH5ti3rXyszwYYDupUkE9As/OW6XZ83J+mhfMNqUSJQ9nTyDR4rt8wjdeT6
+         KaCW0EZovTCS2NzsZ7qbF1Wk8JQRMpstyNaZNBM+FMQYPNR+djfzYMBEFihtvnb8ixnd
+         SsT47KMDdq4k1/kmv6nWQkdP104gXmSvIP7MZH3jcZH61ANFyIBdXlp4BYcw+SrV3DCK
+         f5bhKmqrzv3fpgB5DjWc9lZMmBIreTmO2Y7yfGpseCZvq2rvhKNNYN/U4UxfGbwpORt4
+         6UPQ==
+X-Gm-Message-State: AGi0PuaBYnIQ8kbxJz/45IvcKcr0RcBENKF5e1Gzt3T81CYujd+GtR+t
+        q3wK7eJHUwJjGLm4mGWxE/LIZl6c
+X-Google-Smtp-Source: APiQypJAjsLi4SK5OAQkKw9+M6hPnj2VBPpLi9+A1yciLgpUqvfqZiJ0bBX/N+uwXW6n5Np/Ac0dAA==
+X-Received: by 2002:adf:f845:: with SMTP id d5mr17508568wrq.239.1588901125199;
+        Thu, 07 May 2020 18:25:25 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f62sm10442205wmf.3.2020.05.07.18.25.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2020 18:25:24 -0700 (PDT)
+Message-Id: <pull.781.git.git.1588901124066.gitgitgadget@gmail.com>
+From:   "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 08 May 2020 01:25:23 +0000
+Subject: [PATCH] Enable auto-merge for meld to follow the vim-diff beharior
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 296D8CFE-90CA-11EA-8205-C28CBED8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     sunlin <sunlin7@yahoo.com>, "lin.sun" <lin.sun@zoom.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+From: "lin.sun" <lin.sun@zoom.us>
 
-> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-> index 2e73658a5c..ff317cce68 100755
-> --- a/t/t0091-bugreport.sh
-> +++ b/t/t0091-bugreport.sh
-> @@ -57,5 +57,20 @@ test_expect_success 'can create leading directories outside of a git dir' '
->  	nongit git bugreport -o foo/bar/baz
->  '
->  
-> +test_expect_success 'indicates populated hooks' '
-> +	test_when_finished rm git-bugreport-hooks.txt &&
-> +	test_when_finished rm -fr .git/hooks &&
-> +	rm -fr .git/hooks &&
-> +	mkdir .git/hooks &&
-> +	for hook in applypatch-msg prepare-commit-msg.sample
-> +	do
-> +		write_script ".git/hooks/$hook" <<-\EOF || return 1
-> +		echo "hook $hook exists"
-> +		EOF
+The mergetool "meld" does NOT merge the no-conflict changes, while the
+mergetool "vimdiff" will merge the no-conflict parts and highlight the
+conflict parts.
+This patch will make the mergetool "meld" similar to "vimdiff",
+auto-merge the no-conflict parts, highlight conflict parts.
 
-Probably our mails crossed, but as I said in my response, this will
-make the hook say "hook  exists" because $hook will be literally in
-the script file.  EOF needs to be left unquoted, i.e.
+Signed-off-by: Lin Sun <sunlin7@yahoo.com>
+---
+    Enable auto-merge for meld to follow the vimdiff beharior
+    
+    Hi, the mergetool "meld" does NOT merge the no-conflict changes, while
+    the mergetool "vimdiff" will merge the no-conflict changes and highlight
+    the conflict parts. This patch will make the mergetool "meld" similar to
+    "vimdiff", auto-merge the no-conflict changes, highlight conflict parts.
 
-		write_script ".git/hooks/$hook" <<-EOF || return 1
-		...
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-781%2Fsunlin7%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-781/sunlin7/master-v1
+Pull-Request: https://github.com/git/git/pull/781
 
-> +	done &&
-> +	...
+ mergetools/meld | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/mergetools/meld b/mergetools/meld
+index 7a08470f883..318653cc9f7 100644
+--- a/mergetools/meld
++++ b/mergetools/meld
+@@ -10,10 +10,10 @@ merge_cmd () {
+ 
+ 	if test "$meld_has_output_option" = true
+ 	then
+-		"$merge_tool_path" --output="$MERGED" \
++		"$merge_tool_path" --auto-merge --output="$MERGED" \
+ 			"$LOCAL" "$BASE" "$REMOTE"
+ 	else
+-		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
++		"$merge_tool_path" --auto-merge "$LOCAL" "$MERGED" "$REMOTE"
+ 	fi
+ }
+ 
 
-
+base-commit: 07d8ea56f2ecb64b75b92264770c0a664231ce17
+-- 
+gitgitgadget
