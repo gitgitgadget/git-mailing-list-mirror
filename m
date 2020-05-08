@@ -2,83 +2,131 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3241FC47247
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA8DC38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:18:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FFA2206B8
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:09:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 669B620736
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 15:18:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uTpRPNAi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZL0MPjxB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727907AbgEHPJM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 May 2020 11:09:12 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57591 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726767AbgEHPJL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 May 2020 11:09:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 96C64DF7F1;
-        Fri,  8 May 2020 11:09:09 -0400 (EDT)
+        id S1726770AbgEHPSg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 11:18:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53653 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726627AbgEHPSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 11:18:36 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E24225AEA4;
+        Fri,  8 May 2020 11:18:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WKJmpanbm2XR6CZKXsjDQYYPyQw=; b=uTpRPN
-        Ai657nTgIvnEfdRxCOUcPfJPR9U3xFOgurYfdPY2JHkZvvNy532W6XCCVIx6R9tK
-        LTG8Vllr86/QANhZ7qN88eCrmgWDHSq8cDYP+DAkMNBVxmcnmPyqN2R75twuEbk2
-        oJcvVeECZvgfGbWOyU8FqYzDfQOLQx550H5vs=
+        :content-type; s=sasl; bh=6H167by21ItFjQbIJMQ60HJJpD8=; b=ZL0MPj
+        xB+WU+TP4IkBxaAcnnRXe6TcyfGHYpIQqcBuT3Z0eEtP4TrrN49IZlZpLJS3K+gH
+        wvxMpHwNBZsiOUdcPkwfCBKSi7O3G8iewWlWEeKi5E0QeLE/GQ/zkXQiU8QDDcOB
+        EQqELHPu3GRoEDqN//e4+lTkJFhRV0+We1lIM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=H9GY+rtsAkbk2ygmledGiOMnfwBCrUKH
-        Fv25pHrjsiAx+nQEN4XI5c4iv0Qyt68jz6htHefuLMeikmZT4tGjO63rooKX5a0U
-        dSnewHXJxVWpCQ/Pqz/KlsVizjO1fasx49e6MRiDC7k9GaMDyhonxUcQKGTXi1LI
-        0x4HpgczdqY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E304DF7F0;
-        Fri,  8 May 2020 11:09:09 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=HetAT8omAlTov2PeactmEKH7NrW97JWv
+        ZdxQsCd0ew9DB15Q/t/mVpJb5jweuOeZGdq8JhistuZXIupG861G0iE0B/Xhxh80
+        iOrVswvmFjf9dvhC9EfabAqxxdAjhcZ5lugnYrghzkccOBq8BAWbaunh4ejRI5SB
+        eYyn9LV82Z8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D86F95AEA3;
+        Fri,  8 May 2020 11:18:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 362F8DF7EE;
-        Fri,  8 May 2020 11:09:06 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AF505AEA1;
+        Fri,  8 May 2020 11:18:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmaill.com, peff@peff.net,
-        me@ttaylorr.com, jrnieder@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 01/10] unpack-trees: avoid array out-of-bounds error
-References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
-        <5bfe3f3fc8a99b3d4fdd4286da17cd935090c614.1588857462.git.gitgitgadget@gmail.com>
-        <xmqqk11n2xf3.fsf@gitster.c.googlers.com>
-        <63dce1f7-3dbd-1540-c6e5-547962555f57@gmail.com>
-Date:   Fri, 08 May 2020 08:09:04 -0700
-In-Reply-To: <63dce1f7-3dbd-1540-c6e5-547962555f57@gmail.com> (Derrick
-        Stolee's message of "Fri, 8 May 2020 08:19:35 -0400")
-Message-ID: <xmqqd07e1n1r.fsf@gitster.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        chrisitan.couder@gmail.com, Denton Liu <liu.denton@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re* [PATCH v4] submodule: port subcommand 'set-url' from shell to C
+References: <20200506073717.9789-1-shouryashukla.oo@gmail.com>
+        <xmqqtv0t6l84.fsf@gitster.c.googlers.com>
+        <20200506181239.GA5683@konoha>
+        <xmqqwo5o6hzp.fsf@gitster.c.googlers.com>
+        <20200507044028.GA5168@konoha>
+        <xmqqv9l849i4.fsf@gitster.c.googlers.com>
+        <20200508054728.GA8615@konoha>
+        <CAP8UFD0=_8D8hkT5VVPV_F++dr131bkjby357fA+QfhQxktcMg@mail.gmail.com>
+Date:   Fri, 08 May 2020 08:18:32 -0700
+In-Reply-To: <CAP8UFD0=_8D8hkT5VVPV_F++dr131bkjby357fA+QfhQxktcMg@mail.gmail.com>
+        (Christian Couder's message of "Fri, 8 May 2020 08:18:57 +0200")
+Message-ID: <xmqq8si21mlz.fsf_-_@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DC3F723E-913D-11EA-8E77-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2E421496-913F-11EA-91AE-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> As I mentioned in the cover letter, this is worth taking on its own. Could
-> you queue the collaborative patch? I'll eject it from the next version of
-> this series. 
+> On Fri, May 8, 2020 at 7:51 AM Shourya Shukla
+> <shouryashukla.oo@gmail.com> wrote:
+>>
+>> On 06/05 10:08, Junio C Hamano wrote:
+>
+>> > Specifically, I would write "!path", not "path == NULL".  I thought
+>> > a rule for that is in the CodingGuidelines (I didn't double check,
+>> > though).
+>>
+>> I could not find a rule like that in the CodingGuidelines.
+>> Should I add it?
+>> https://github.com/git/git/blob/master/Documentation/CodingGuidelines
+>
+> Sure.
 
-Yes, I think this is worth taking independently.
+I'd rather not see too many unrelated things piled up on Shourya's
+plate.  Without guidance, the new entry we'll see would be only
+about comparing with NULL, and we'd need to spend review cycles
+correcting that, too.
 
-I do not think people would find the updated version "much better",
-but it made it readable at least to me.
+How about something like this, perhaps?
 
-Thanks.
+-- >8 --
+CodingGuidelines: do not ==/!= compare with 0/NULL
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/CodingGuidelines | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 390ceece52..41a89dd845 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -236,6 +236,19 @@ For C programs:
+         while( condition )
+ 		func (bar+1);
+ 
++ - Do not explicitly compare an integral value with constant 0 or a
++   pointer value with constant NULL for equality; just say !value
++   instead.  To validate a counted array at ptr that has cnt elements
++   in it, write:
++
++	if (!ptr || !cnt)
++		BUG("array should not be empty at this point");
++
++   and not:
++
++	if (ptr == NULL || cnt == 0);
++		BUG("array should not be empty at this point");
++
+  - We avoid using braces unnecessarily.  I.e.
+ 
+ 	if (bla) {
