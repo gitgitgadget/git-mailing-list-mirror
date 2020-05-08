@@ -2,140 +2,109 @@ Return-Path: <SRS0=7OUv=6W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19E39C35280
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B583C38A2A
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 05:47:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF38A208DB
-	for <git@archiver.kernel.org>; Fri,  8 May 2020 01:34:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17F9020870
+	for <git@archiver.kernel.org>; Fri,  8 May 2020 05:47:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XFV0RP2Q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X1LWxDRx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726907AbgEHBeJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 May 2020 21:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726797AbgEHBeI (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 May 2020 21:34:08 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90CAEC05BD09
-        for <git@vger.kernel.org>; Thu,  7 May 2020 18:34:08 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id f6so113361pgm.1
-        for <git@vger.kernel.org>; Thu, 07 May 2020 18:34:08 -0700 (PDT)
+        id S1726906AbgEHFrg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 May 2020 01:47:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51070 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbgEHFrf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 May 2020 01:47:35 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49F6C05BD43
+        for <git@vger.kernel.org>; Thu,  7 May 2020 22:47:35 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id b8so357782pgi.11
+        for <git@vger.kernel.org>; Thu, 07 May 2020 22:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=LDQRZLKg8TBCKjk0/4YHQzcdArs/myIYsvQCNp1Bzi0=;
-        b=XFV0RP2QHsuJtYpV4sXM0pcITcX2NScj9Y+urSJs5N3n+OqqoJW7zMg1G7eGL6mHVM
-         mLrV+mluwDAtdx9vJpXoPAuN/U0mJcOFX6aCEYeVGwKrpnKGiuwvc6PkJqOYbVnTWLT7
-         0kZlp+knRG0XvP4ccNWq3cpVcOdLhng9O0aHMqu7AWuYfaX6bM8d+76ji+g3i2nCGsqM
-         8lkwLISawiHSxJXxSVYsMG5fuMTvWIiDkC9H5iwM4l5CHXz1vQZkoTGw2X28s61IuslY
-         bLt41wRZXnqtjOrxPrwILe61fAGMkl02wgFk1nU9qVOoGG3nTZ1J2nBhmkNC4lF/2FSR
-         ZoFg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=oHgNCGZVOf77I3czFSSGL4ViB7u1R10YuLnk50NpgcY=;
+        b=X1LWxDRxdoxRBa7tKpJYU7rSeLFuuArojoT3GmRVdiNbE2gcNNHQHQfqXO1gcRyOtB
+         fyA4G2vXnjAqdq8CfrdhA7Ms9zvSvG5ud1/NQw842yEVw0bqM7gOhHanv94rWEqIDKR3
+         Ia0rejeLkFjRddQtUhF4F34ubJ/NPgVd6ZmZhaJxHTxZAHGCyKEhvF0odPZ8g8R6ahrj
+         rq16GdelaOfHAYY8N/PqWUa6xxUhAsCNcRcA81FbsXivYje1FpjWMO01U+frqeWRwyAe
+         HnsbjgM6ASKGAC4RY4kyQkuSKQWGWVDNyjm81cNNo7FSWZfUW9r7KMG1BKdnhNz9ru6r
+         fwiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=LDQRZLKg8TBCKjk0/4YHQzcdArs/myIYsvQCNp1Bzi0=;
-        b=EJxBixw1Cw7I7MY0ZtVIwTmI/hxD9Rfti4Hq4N5r+hVGOQwV2YcbsBHFNdVv8A7THB
-         JJtU4pgs0F6TRWIn/k4WgD9nRAWIJu3dDkV/EupsW2n1y6oEJ/lHUhE9R/WFTUVnIiKY
-         /txu696hEmJoTtfbb+OFTcmTYZZc42Dbrce4Wq+IyGoy83zVrUWWLpSBKQNQXxIGkKLS
-         xudM8qbB24yhP0dN37drCEKUlJgbwPrFnmwSyAmgGYT0ft1JW5dXZMvZI2bixdoLbkqv
-         KMDwo0/c1ba0CKxSRhLfF4vatwyo93V3+wFYYRh4rAqVmXGmLBvAdY0wCOnq9VU69ANo
-         GwhA==
-X-Gm-Message-State: AGi0PubY2HdFuCX3TFJFB+IvJhL9LueRUHxohNGVYaXCBxv6iggQFjJl
-        /ieaHK35i1TO7z7H2nMzgXc=
-X-Google-Smtp-Source: APiQypKMDXs0f4JkzPx61He0mKeJKZN5cpI6W0YDp5Zks51irEvxP86LVu38/bxHuFofn3w6Ebl5JA==
-X-Received: by 2002:a65:63d1:: with SMTP id n17mr91967pgv.109.1588901648041;
-        Thu, 07 May 2020 18:34:08 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
-        by smtp.gmail.com with ESMTPSA id w75sm32352pfc.156.2020.05.07.18.34.07
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=oHgNCGZVOf77I3czFSSGL4ViB7u1R10YuLnk50NpgcY=;
+        b=eSb9O+jGrXN2sjeuQPlbPfXzEoMzFshqzW3p1KkH0GUR03RG3VX2ZXkAZIDBWoLurZ
+         l7uxo9wNpzdXbAu5wxEsZasOeiRVUXGuNKM8Hb4OsQAWcjpYGcMnxV37depy5336NcCN
+         D8EZ6NiVpdOZIdn/7CcQSRFHUwaA0nzTKOM65f2fGHQ7eItrLu0CdXvLKH2gOAj5APf1
+         1b9MI8AwpcuFw2JJ4ZU2Vx8vSnDlh72G60tjbXbi4Q6U1yKVREvpBEZw2zVymyzIvkvk
+         ARG5PdO4l25HQlQc47CZ5uw79AKb3H30QjLky63nAF9o6fiyZtiPDck++UQQkl2LjhD8
+         C9/Q==
+X-Gm-Message-State: AGi0PubhxUGFsHhFjCOfeKNRMGtHxcoglhupQtvMi5H8guSDxwdewmgl
+        8GmNReHL3SaCa9G3fjLVvvuJuh/je365zg==
+X-Google-Smtp-Source: APiQypJmqIICHRAhvSeiCfr7RicLwrYTkd2rZ1I5zBG6ABqgLArscpbxZAHG0u2q+9s4RS1022T6Qg==
+X-Received: by 2002:a63:82c1:: with SMTP id w184mr815053pgd.268.1588916855301;
+        Thu, 07 May 2020 22:47:35 -0700 (PDT)
+Received: from konoha ([103.37.201.176])
+        by smtp.gmail.com with ESMTPSA id b1sm563854pfi.140.2020.05.07.22.47.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2020 18:34:07 -0700 (PDT)
-Date:   Fri, 8 May 2020 08:34:05 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4] bugreport: collect list of populated hooks
-Message-ID: <20200508013405.GA2111@danh.dev>
-References: <20200430012425.209122-1-emilyshaffer@google.com>
- <20200508005357.223058-1-emilyshaffer@google.com>
+        Thu, 07 May 2020 22:47:34 -0700 (PDT)
+Date:   Fri, 8 May 2020 11:17:28 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     chrisitan.couder@gmail.com, liu.denton@gmail.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v4] submodule: port subcommand 'set-url' from shell to C
+Message-ID: <20200508054728.GA8615@konoha>
+References: <20200506073717.9789-1-shouryashukla.oo@gmail.com>
+ <xmqqtv0t6l84.fsf@gitster.c.googlers.com>
+ <20200506181239.GA5683@konoha>
+ <xmqqwo5o6hzp.fsf@gitster.c.googlers.com>
+ <20200507044028.GA5168@konoha>
+ <xmqqv9l849i4.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200508005357.223058-1-emilyshaffer@google.com>
+In-Reply-To: <xmqqv9l849i4.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-05-07 17:53:57-0700, Emily Shaffer <emilyshaffer@google.com> wrote:
-> +test_expect_success 'indicates populated hooks' '
-> +	test_when_finished rm git-bugreport-hooks.txt &&
-> +	test_when_finished rm -fr .git/hooks &&
-> +	rm -fr .git/hooks &&
-> +	mkdir .git/hooks &&
-> +	for hook in applypatch-msg prepare-commit-msg.sample
-> +	do
-> +		write_script ".git/hooks/$hook" <<-\EOF || return 1
-> +		echo "hook $hook exists"
-> +		EOF
-> +	done &&
-> +	git bugreport -s hooks &&
-> +	grep applypatch-msg git-bugreport-hooks.txt &&
-> +	! grep prepare-commit-msg git-bugreport-hooks.txt
+On 06/05 10:08, Junio C Hamano wrote:
+> Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+> 
+> > No worries. BTW, should I include the `path == NULL` check in the
+> > if-statement?
+> 
+> If I were writing this code, I would probably write it like so:
+> 
+> 	if (!path || !newurl)
+> 		oops;
+> 
+> Specifically, I would write "!path", not "path == NULL".  I thought
+> a rule for that is in the CodingGuidelines (I didn't double check,
+> though).
 
-Hi Emily,
+I could not find a rule like that in the CodingGuidelines.
+Should I add it?
+https://github.com/git/git/blob/master/Documentation/CodingGuidelines
 
-I think this is a bit more correct test.
----------8<----------
-From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
- <congdanhqx@gmail.com>
-Date: Fri, 8 May 2020 08:26:53 +0700
-Subject: [PATCH] fixup! bugreport: collect list of populated hooks
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+> The comparison on argc is to see if we are even allowed to access
+> argv[0] and/or argv[1].  In practice, if what main() got from the
+> outside world in argv[] is passed directly to you, argv[n] would
+> never be NULL as long as n < argc, but there are a few levels of
+> callchain between main() and you (i.e. module_set_url()), so not
+> counting on that would be sensible.
 
-Use an exact match to check for populated hooks
-
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
- t/t0091-bugreport.sh | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index 9450cc02e3..789e8f1ac7 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -67,8 +67,13 @@ test_expect_success 'indicates populated hooks' '
- 		EOF
- 	done &&
- 	git bugreport -s hooks &&
--	grep applypatch-msg git-bugreport-hooks.txt &&
--	! grep prepare-commit-msg git-bugreport-hooks.txt
-+	cat <<-\EOF >expected &&
-+	applypatch-msg
-+
-+	EOF
-+	awk -F "]\\n" -v RS="[" "/applypatch-msg/{print \$2}" \
-+		git-bugreport-hooks.txt >actual &&
-+	test_cmp expected actual
- '
- 
- test_done
--- 
-2.26.2.672.g232c24e857
-
-
--- 
-Danh
+Understood. I will add the NULL check as well.
