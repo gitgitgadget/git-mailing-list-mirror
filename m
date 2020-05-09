@@ -2,121 +2,92 @@ Return-Path: <SRS0=Fs4s=6X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BD2BC28CBC
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 18:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2BDCC28CBC
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 19:01:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 696EF208CA
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 18:00:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACA5F21582
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 19:01:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TV/2Ppzo"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KMW33G7Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728877AbgEISAl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 May 2020 14:00:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50436 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727863AbgEISAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 May 2020 14:00:40 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ACE6C061A0C
-        for <git@vger.kernel.org>; Sat,  9 May 2020 11:00:40 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id e20so4177849otk.12
-        for <git@vger.kernel.org>; Sat, 09 May 2020 11:00:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a8K5yEgqLCTNd3t5juVzIqSs0x+eyTYWtbcsKWl+zDQ=;
-        b=TV/2Ppzo+kg0urL0LeYYUQBEZGqaML4A4112oOiXRbhk3ZVaazWV/AGt96kEHlNPgp
-         XxJzfpL1+kk6bailsxBWGuO2FzdsAi9/2RRpIUEJ1TrujtNoBTJWe2R9Mo/cIxUDAC24
-         wARxnUJXsCukoUcxfcYSSm6vd5Uhlcd+0hLvlpRMqbXsowE9NGaWd6NzycqgStxMStJ/
-         JoJo9fDY22bY2KLe4zMlAf/GwP+UxdxkfFa6V3NzSRhi9k//WLJpuzC/KT1bdtXWo36a
-         PD/YqOkVetk6TdNmVY7UNoJfUGev+xbajbkHWlOyzuy3Vg2bNv+O2dQrCpVofsMdGUHA
-         +W8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a8K5yEgqLCTNd3t5juVzIqSs0x+eyTYWtbcsKWl+zDQ=;
-        b=k8GQ9sZyFjicLW8m4gvnJbqWAxL+LUTT0lmu3l8Cj6G/I1auVj+OVnePGKYRv7+N+2
-         mrreh6K/UiLREzU0YJ6Pnuz+XJaQ+AkYhO5hZrdMUdlqWVS7po4V7FtmuwUS9mjBGbs0
-         38t4oascXJ5Xk3FWQfdEgxIq0ZbKJwr6w2vzwCl76n/jre/reU/fmgzp/UkIUEmHthVR
-         ZlH5pM261L8TSZK9+X5x3/V6UsUCz5mClGu20cxnEHyODFjCcl6ShGwN16/Q5ehOHSzu
-         x6SE3SJ7wB1NDvrgMIvgz/cW5I1Ps0RZnTXrIAE9ZpKIzCZWqFyVloLPBO1mlCkJwJ/W
-         352A==
-X-Gm-Message-State: AGi0PuYTH+bXue5G8d+2EjPMkETJ6+oQuw/Rjoj/PgghBxp8t/2h+CG1
-        nEoi3VApMULUOL5YmEcHgucIyGPA9KO7qvxUje06jgN7
-X-Google-Smtp-Source: APiQypJGJ3yGLPAirJeULzAJzEHSe9NorqM6EZeX/lshc2M4Ypcor9VGxJHU6HAYbSHP29Ech7VVp7u6n748XJm88Bs=
-X-Received: by 2002:a9d:7c92:: with SMTP id q18mr6998689otn.281.1589047239536;
- Sat, 09 May 2020 11:00:39 -0700 (PDT)
+        id S1728123AbgEITBR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 May 2020 15:01:17 -0400
+Received: from mout.gmx.net ([212.227.17.20]:51247 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727995AbgEITBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 May 2020 15:01:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1589050873;
+        bh=kwoYEiB7rtyumKcGyYa+Wuci/D7J7K8jovTMNGk2bgo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KMW33G7Zw6zWQNsx9/7eZyrD9UjPIZ8LzW8ceRp/ngMLyXXzb5Vpw1lPy6OrUzAzY
+         7uR7Lmy8eCHvS6Y/BUBfxFs8StPMv+yWx5/0FdqkyNbrnuseNBeR7vIRuDpeSsbSGZ
+         Ozck7eE3uHP2/tH1D48gHrK6K9i9rIBbpBpbvROY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.84.97] ([213.196.213.48]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mwwdf-1jDBmE2Cuh-00yQ3q; Sat, 09
+ May 2020 21:01:13 +0200
+Date:   Sat, 9 May 2020 16:41:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/rebase-autosquash-double-fixup-fix, was Re: What's cooking in
+ git.git (May 2020, #03; Fri, 8)
+In-Reply-To: <xmqqftcavz79.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2005091640550.56@tvgsbejvaqbjf.bet>
+References: <xmqqftcavz79.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <eb0cbeeeed080596c130f657186894999ae6121b.1587412477.git.gitgitgadget@gmail.com>
- <20200507194354.33347-1-jonathantanmy@google.com>
-In-Reply-To: <20200507194354.33347-1-jonathantanmy@google.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Sat, 9 May 2020 23:30:28 +0530
-Message-ID: <CA+CkUQ8fa=osCunE2Nj1ezzci_qEkv7mRwX=9Cg-kkMYcDHx=w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] fetch-pack: remove fetch_if_missing=0
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:uUyZFxwyMld5Oh0taPKExkRejQwhsVxLSU1I1JUrlx4Q3bnw8oM
+ PsDOpdBV77mC+pRDqbCSWH41uNbjTxQmKS6KF/fIleuExAGUe7sKla2FqmifCDglPM/SdDq
+ Q47RfmvGtekUf27pU4R3XHSX0UOJ1B1IDeaPMdb8OcFBcbn3YMqa6u3cu5RV1W7xLCv/wAX
+ fDX8pHQ4oI1V9PGoRDWnA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qf6YV6jxO+s=:WkceFl2J1OvDve0/fxMMHt
+ jwiszr4j/QRY+R04ivn8ETBHtFwgxhRtczK5F863Ab0wtGd0rUe6zNDv35RrZlNE0RrP1o/1A
+ 6WxIWh3da5MR6Mv4bbqPI1AJ7gFVtuUHwGAWTF1lpVjfkICKijL8aD1fT8wUckSJCK96J0zqs
+ TVExzBRZtYV6mt1oci+UxEX6OArMqCLVGkEgxNhPNOj5rd4w6PJPBI7jX7M7JdJJThjwC1DW+
+ 7RwQRpqk4GV9YiNQY9F9emfFJOsatWDG2M8vg9peMYThpF0tBtaC82d/6u5gFvCgv3swiiwnj
+ ONiACqs8dVNcig7VrTKLGqSR0WZbruK++rwOXfJVYXiVbMcboQlwIwudnvuwh4XvhRf5W0Rtr
+ G5+lf7z+02yQ+wmSTX7nnlAtesMcz4jbWvSSgHzpoAacHB2WmhgTPc48tg/tuQkgRGihhYEEI
+ ARmRn09rxfjd2WFLTPsXW4uMGqybEWLmoKvydq8aDfB8zygkRNxT+lCdH2wVgtMJyYyR7O9Js
+ FcQMgGoHvBsS2IWiPTiCDqGWNG7+mMKj3baKsQel1EidAO3vBj7jo6+n3Eqz3RZvfUu2iAc76
+ FQRmZ1vYOOrrRZzEvHYXIAInGBL7plW8iUG+gls4S9ZOIJkWmraRrIDxp7TKD87X0oueqxf9G
+ yZGFUU7Z4k/Zd3UuB3s1cz7XYaIsYQ3FVxyok62cVaq/YHMzpZRN+qGd7t3cMuudmTOSgGc64
+ Z1jy/x0ntQz/sZvcgoTNgb7qQFxf1QQy1Z4XVGEFe289a0+Vx8ZUcd6EqGRO9l9drfbjUKHti
+ AaX800h3x234STUSM7OPHclkpqGCF8q9XwpRgXhU1Kt7q88nHjAqXc8bUHpWntxsRhjeeC9iU
+ gJ3vcV/40g9IWN0RtHeaf1cT3E+IpM60zJ1ZEhCw3W1Z6t+LD/FjYWIA1JoXWpryUgeZt4Qcg
+ wJzTfzTD/FemUHZ4AyHIqelA/bBW0zypWM3x47nGEX24UZbw6jynpPISbE+K99bqZR7sGIG68
+ Dj6eoesFU+fLxaOKHaP9hi91IsGdF4tVqFDqSaNoLRo+yhOCxsABQE0qDfP3Il8jOWM5VkJDP
+ VnSxsgb+trt/baCrY5mbxlh9T5mJ2xWzT/iut/Bmf52dr07o4p3wUm5665i20JMXGOrNjs5dE
+ bvvrHFddbDjRkOZQLv0x3ExZ9N/2ENEiy+GiH53N/uG9t1TOgHrNJhLLLTKDWVg5oehfh7bc1
+ dRLXhK0HIHaA/moZt
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 8, 2020 at 1:13 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+Hi Junio,
+
+On Fri, 8 May 2020, Junio C Hamano wrote:
+
+> * js/rebase-autosquash-double-fixup-fix (2020-05-05) 1 commit
+>  - rebase --autosquash: fix a potential segfault
 >
-> As Christian said [1], please include tests like in the commit you
-> mentioned. For a change like this, I think that the test is the most
-> important part.
+>  "rebase -i" segfaulted when rearranging a sequence that has a
+>  fix-up that applies another fix-up (which may or may not be a
+>  fix-up of yet another step).
 >
+>  Expecting a bit more explanation in the log message.
 
-I will definitely add tests.
+Will work on this and send out a v3.
 
-> Also include a justification for why it's safe to remove
-> fetch_if_missing=0. You can probably cite the aforementioned commit to
-> say that it covers the fetch_pack() method, and then go through the rest
-> of the code to see if any may inadvertently fetch an object.
->
-> Also, the fetch-pack and index-pack parts can be sent in separate patch
-> sets, so you might want to concentrate on one command first.
->
-
-Thanks, Will split and concentrate on one at a time.
-
->
-> > diff --git a/fetch-pack.c b/fetch-pack.c
-> > index 1734a573b01..1ca643f6491 100644
-> > --- a/fetch-pack.c
-> > +++ b/fetch-pack.c
-> > @@ -1649,7 +1649,7 @@ static void update_shallow(struct fetch_pack_args *args,
-> >               struct oid_array extra = OID_ARRAY_INIT;
-> >               struct object_id *oid = si->shallow->oid;
-> >               for (i = 0; i < si->shallow->nr; i++)
-> > -                     if (has_object_file(&oid[i]))
-> > +                     if (has_object_file_with_flags(&oid[i], OBJECT_INFO_SKIP_FETCH_OBJECT))
-> >                               oid_array_append(&extra, &oid[i]);
-> >               if (extra.nr) {
-> >                       setup_alternate_shallow(&shallow_lock,
->
-> Hmm...this triggers when the user requests a clone that is both partial
-> and shallow, and the server reports a shallow object that it didn't send
-> back as a packfile; and it causes another fetch to be sent. This is a
-> separate issue, but Hariom, if you'd like to take a look at this, that
-> would work out too. You'll need to figure out how to make the server
-> send back shallow lines referencing objects that are not in the packfile
-> - one way to do it is to use one-time-perl. (Search the codebase to see
-> how it is used.) This is probably more complex, though.
-
-I'm clueless about "one-time-perl" thing(till now!). Will surely going
-to learn about that.
-
-Thanks for the nice explanation.
-
-Regards,
-Hariom
+Ciao,
+Dscho
