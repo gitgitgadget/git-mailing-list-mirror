@@ -6,103 +6,103 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 736C0C28CBC
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 17:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2E3EC28CBC
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 17:29:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D0CA2184D
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 17:12:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 703FA21775
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 17:29:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vR7i9nj0"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PyZk58Qq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbgEIRMD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 May 2020 13:12:03 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54513 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726013AbgEIRMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 May 2020 13:12:03 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 52391C1750;
-        Sat,  9 May 2020 13:12:01 -0400 (EDT)
+        id S1728301AbgEIR3F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 May 2020 13:29:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53776 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728210AbgEIR3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 May 2020 13:29:05 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0388A55909;
+        Sat,  9 May 2020 13:29:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IdTjl78JwX09lIcroTG5iXzCzbg=; b=vR7i9n
-        j0eAqSnq100hpe5vRxOH9Z2HeQxlA/8Itlbe1TYbtzbeO5ydlFDqEX5XBwUpfYqA
-        tUoC3bwo0jAsV8Ma8oSsaWbpn7x21P+YZ697sNHQ3AFDIi4MslrVJ4l59CPwyNy0
-        coUPiJeNk2p9pdO5GoCLVZ658xwMR49Md+PKE=
+        :content-type:content-transfer-encoding; s=sasl; bh=XzeWcMzQY4+n
+        rAZ9wDuyfbigeg0=; b=PyZk58QqkfvJPiZqat4HmG0RgEcuKnwt69XRmYHq1Nbn
+        ZCBQUquCOzHRE7IV63euP3JXH3cRP8jnh2s6t/V5SpgiN0uwuObWSYOC9TlHdJSC
+        4q0XMtqVqz5srubsWqbtP7jZxr0EuP2AKOMT9NCC9K9bxv4+MGSxXbN6ZSqe7zs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uZ9Tm9shPRXmFrVLzw2yNJlu0EoBLEYs
-        N5Jf+we53VV3EB8yyPzNm4T6o5dmP3dRPjzOsvSUOkgV7/LK+U6W9hGCFCTGu3gY
-        4pE48hfR3TPFfo2nVoJEXbuFbfVq8GG8A1ivFBc8fOIwq27udRIOnHZloWsIPFcz
-        AJ/6ZzPq/nw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4905DC174F;
-        Sat,  9 May 2020 13:12:01 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MB7Frh
+        hlAlO1mx558zFx+odSSc0m6ZZPBl2Qkw9GH1DwyTyZvRa+1xPKvo64POTa80EBpc
+        8Rpbhvc8wUWoTLTLGveki0IkztxV1Pl/4Ns8wsDNB0fyaqLSq8wOTI+a3i636dj9
+        eiC42jj3UckxuJx6/D68AIPYgSHciozEyDvLU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E173E55908;
+        Sat,  9 May 2020 13:29:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 85B0EC174D;
-        Sat,  9 May 2020 13:11:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 05A7055907;
+        Sat,  9 May 2020 13:29:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: Preparing for a Git 2.26.3 release
-References: <20200428055514.GB201501@google.com>
-        <xmqqk11mvzb4.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2005090903560.56@tvgsbejvaqbjf.bet>
-Date:   Sat, 09 May 2020 10:11:56 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2005090903560.56@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Sat, 9 May 2020 09:07:55 +0200 (CEST)")
-Message-ID: <xmqqwo5luj6r.fsf@gitster.c.googlers.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Brandon Williams <bwilliamseng@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: invalid tree and commit object
+References: <CALN-EhTpiLERuB16-WPZaLub6GdaRHJW8xDeaOEqSFtKe0kCYw@mail.gmail.com>
+        <d963242a-72f3-7f42-7c95-ea5148f74804@web.de>
+Date:   Sat, 09 May 2020 10:28:59 -0700
+In-Reply-To: <d963242a-72f3-7f42-7c95-ea5148f74804@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 9 May 2020 12:16:08 +0200")
+Message-ID: <xmqqpnbduiec.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 30E81EBE-9218-11EA-AFFB-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 91C1E20E-921A-11EA-914F-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> On Fri, 8 May 2020, Junio C Hamano wrote:
+> So I got curious if such trees might be in popular repos, wrote the pat=
+ch
+> below and checked around a bit, but couldn't find any.
 >
->>  * Recent updates broke parsing of "credential.<url>.<key>" where
->>    <url> is not a full URL (e.g. [credential "https://"] helper = ...)
->>    stopped working, which has been corrected.
->>    (merge 9a121b0d22 js/partial-urlmatch-2.17 later to maint).
->>    (merge cd93e6c029 js/partial-urlmatch later to maint).
->
-> Are you planning on also releasing, say, v2.23.4, with this fix?
+> Is there a smarter way to check for duplicates?  One that doesn't need
+> allocations?  Perhaps by having a version of tree_entry_extract() that
+> seeks backwards somehow?
 
-Yes, some subset of the changes we will apply to 2.26.3 probably can
-be backported down to older maintenance releases.  
+I've never looked into seeking backwards in a tree object, but in
+unpack-trees, I had to deal with this exact problem that a blob
+'hello' sorts before 'hello.c' which in turn sorts after a tree
+'hello' because of the "implicit slash after the name for an entry
+for a tree object" rule by introducing the "cache_bottom" hack in
+the traversal logic to limit how far we must scan back.
 
-Our usual policy is not to backport beyond two or three maintenance
-tracks unless it is a security fix, and because the current maint
-track is 2.26.x, which means 2.25.x and possibly 2.24.x series are
-the oldest candidates.
+We may be able to limit the list of "seen recently" names in a
+similar way.
 
-If you think it makes sense to start the discussion to choose that
-absolute minimum set, I am fine with that approach, too.  The
-partial-urlmatch topic was designed to be usable with tracks as old
-as 2.17.x series, so I am OK to go a bit further back but if we are
-to do so, how far back should we as the upstream go back?  I am OK
-to say we make the 2.23 series as the oldest for this round.
+If the tree we are scanning has 'hello' (blob), 'hello.c' and
+'hellp', the bottom pointer initially would be at 'hello' (blob),
+then stay there when we see 'hello.c' (because the next entry might
+be 'hello' (tree) that would crash with 'hello'), and when we see
+the entry 'hellp', we know that the entry at the bottom pointer
+'hello' (blob) cannot crash with any entry that comes later in the
+tree object we are scanning, so we can advance the bottom pointer
+forward.  To decide if we can advance the bottom pointer beyond
+'hello.c' (blob), we see if 'hello.c' (tree) can appear after the
+current entry we are looking at (i.e. 'hellp'), and we know it
+cannot without violating the sort order.  So the bottom would move
+to point at 'hellp' we just saw.
 
-And then if we were to draw the line there, what other changes in
-the set do we want to include the 2.{23,24,25,26}.x maintenance
-releases?  That would certainly be a narrower subset than the list 
-in the message you are responding to.
-
-Thanks.
-
-
-
+If we had 'hello' (tree) instead of 'hellp', when we look at it
+after looking at 'hello' (blob) and 'hello.c', we scan from the
+bottom pointer up to the previous entry, which is still pointing at
+'hello' (blob), and notice the crash.
 
