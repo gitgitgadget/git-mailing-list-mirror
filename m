@@ -2,260 +2,142 @@ Return-Path: <SRS0=Fs4s=6X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A7BAC28CBC
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 19:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62A07C28CBC
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 19:24:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C0A020644
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 19:23:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F7F5206B8
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 19:24:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1/8mTvl"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="mQ1vkJ4l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728021AbgEITXn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 May 2020 15:23:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35064 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727938AbgEITXm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 May 2020 15:23:42 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916B9C061A0C
-        for <git@vger.kernel.org>; Sat,  9 May 2020 12:23:42 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id u16so14273500wmc.5
-        for <git@vger.kernel.org>; Sat, 09 May 2020 12:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lBt+cOXO4xTBLFqCQVCUOVZomNPsyxyO9m+vwA1+2CE=;
-        b=I1/8mTvlLV4uyEcAv/+FZu8b3yrAMkfYXI3PDhJqrbqeM2XRSjI2CDiLOtuSWeglnh
-         GivGEbMbtjPhOnO+IDIGnVDlmM05nkR+QAq5ewKs0/KCCCRzi+feMkbFA64aF4KhQnXn
-         aBR+PIfpXly1NUFqP/rSg5es16yp1optFCRrwuNYnGJk9BrBHvCEHd/j5eYGnv5wB9h2
-         PMuVd3mR+/qtfz5RzZHeoPlnVlhJ2NLcOP4Qup0aCjMmmuKQS5oc1eVQuL6f+CRogcV2
-         0WGB6ZH3U8cwQ7TcEtyJyfu1h1OIIrMdBR1UVHsx2q5QZkI0rGV5UE8kIy4H/qVNWTK9
-         5MwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lBt+cOXO4xTBLFqCQVCUOVZomNPsyxyO9m+vwA1+2CE=;
-        b=F23ezuClZD7y1GhuKGuMjoKZ0u3UORkPRp/7kwXKOnc9jW3fibzS6Rp51SO+nI43im
-         fLleYESDjcrSKNHu+5ceoc7jf5kf1gL1wSllSF+FcLxzZ11MvMzy9sn6ZjvahPl9ojyn
-         VE4zKg88fRVezkttiLDm7cilHb6LqNbhdcTj++zLeDtnNeBgXsxGybmKonrfSvq/e+dh
-         HKRasfLQuh+37n34gd1rYE3XI70vSLYOstd0AgzEr7bf4C5mp4soObsbhHUNeD39XVbQ
-         Q9sazzyHUh6NPo9QY0yeeAoyocpnTwPGzGiCL0hZ0ve6+tI5EXdZdJhOzl4RzBjS/LBR
-         eixQ==
-X-Gm-Message-State: AGi0PuYuIwNKkM5qnZ0dwCswH9ahL67j2OdarxS0UGdkP1ndlB1rXCmh
-        P9AZE6HmMMz2+KnTmWYNpEGSHzF+
-X-Google-Smtp-Source: APiQypKqorVHPkxT+VVPso3W4z+IiO5qcWtKD7Lf/Sszg+Ii8BIUaP0ql69mejNxXOZA3mCz1jHFGA==
-X-Received: by 2002:a1c:2289:: with SMTP id i131mr9036439wmi.111.1589052220776;
-        Sat, 09 May 2020 12:23:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u74sm19225585wmu.13.2020.05.09.12.23.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 May 2020 12:23:40 -0700 (PDT)
-Message-Id: <pull.625.v3.git.1589052219528.gitgitgadget@gmail.com>
-In-Reply-To: <pull.625.v2.git.1588717980225.gitgitgadget@gmail.com>
-References: <pull.625.v2.git.1588717980225.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 09 May 2020 19:23:39 +0000
-Subject: [PATCH v3] rebase --autosquash: fix a potential segfault
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728210AbgEITYx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 May 2020 15:24:53 -0400
+Received: from mout.web.de ([217.72.192.78]:51955 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727938AbgEITYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 May 2020 15:24:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1589052284;
+        bh=3LHuKCBXf6mr5nCBezTS7xLNhrkgBkmWsSBn7FleDlQ=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=mQ1vkJ4luI8rx5PmU8JthrsEyKWessjNOX+mb9Dw/2Uavdnpy1I219sd1pUZZqOSo
+         JT5+Eu0lHV3bITw9lXC6cYR2HZ2KWL4yO4eXj8KyUTskhUaMkvnAGQ2OiPQbnfbNMV
+         tTFLDL1KzLJIqrkRsq/+MuiMjqG1CAB0Nu2JqP+o=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.188]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lu4q2-1j5h9u2fos-011PGx; Sat, 09
+ May 2020 21:24:44 +0200
+Subject: Re: invalid tree and commit object
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bwilliamseng@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+References: <CALN-EhTpiLERuB16-WPZaLub6GdaRHJW8xDeaOEqSFtKe0kCYw@mail.gmail.com>
+ <d963242a-72f3-7f42-7c95-ea5148f74804@web.de>
+ <xmqqpnbduiec.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <938f0818-7e57-b883-009f-01db88ef8f65@web.de>
+Date:   Sat, 9 May 2020 21:24:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Paul Ganssle <paul@ganssle.io>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <xmqqpnbduiec.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lvjM3FIHDX20YaoCSQxfoEwjgtc/Q8VhuWi7nok/L/k5kM9XhJn
+ WWz4YkT4NGbCGMjGDVePB/aju8JtY3Jr7cOS32MLUXku+wkEzqDQE8NciwXUt9Z6QIGOYve
+ 2USfx+QgIAOsy9DdY46cPS3fO+ptxJksc9MjgxBi6v+902KSrR2/nJwTd5ETl61n710zl/v
+ lOLO755IrqstIlPxtwFQg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Rww9VkuMwS4=:6FBuOrYp3UsS3Q8u1SP/EJ
+ cV9OJ7ll1jvjkS3TkqmKTCOjv+wHD4lkU2xJKVcnoXn+ijFl5H34G1MC44dkMLqgXDySeW/52
+ kZbSAOQOsHFbTcL1NKXHk9FjCufyIyMKCOuoTIxNB56OnMI64RQbTASNrwACj7C6yMeNZ79bp
+ fp9drS+C+U4VUeL7bgQwvl1ugDhcUnIsgkpMryNX6VmV4xClOlKNtWS7K0BMGn1W8PmA+cBqO
+ 1JOOPlxgs6rHn5HPbWoDZ3OT3dp6b/b914Lqd8FJR//WEEu0nrUPedZiN0aG/6uR26S8VSr35
+ nMh/w861FnZCDiK8Jcb6oPqlmYCuIWAogFXVUl8MjhQNceJzLKKcV+x505wYTMO1Zd8pwIWIy
+ UpPunk60L+vCwi0HB0g3+ETAv6OlMg8MOXjSaOAU4YLaKbcyOWdwJ2THL4XeWwPiYGTcAx+AM
+ qK2en7VZxo/WpLmc4MzeUzWRx01HCp9tX0JbT96ma/ONWx9EnE2/wfb8x6Bznfk8TNpTSNyPs
+ joVa8PuRwCRlWs/qG6kIh7dUXySkf7zt6jLwhIyLvipvEi6havMVnnh9d6lfCO07VlGHcQwsh
+ 603JGMjgKg9NbeyiwOgvV2R1cskCkdYP+8cYw+BPhA8GlvIv434SzduT1lGkcHwZSzhiOMks4
+ lUzNsT+9EHWqWqkur6BJWuOwJeX9GxJNM3aOVyY5hSoqCrNnEhzyG5xAdN4fO08eXNqQ7kyc+
+ TsehMKAQ+bYeI5QrK11IKKHtH+BLFShhbnSnkopPJWYwC+uW40Sbd3/Uax878TRpLrnEMelgL
+ 8VNCF8WdbB8njMMwPXKLTOXiCjmNLSkBbRKjZI45BYPZIMnzdsk93Sauwl/iAcZelO2FLaKH+
+ vAm+GVgdtPNKkDA4CckxgS3KOxDzX1LW64b6pbUAeidCz07xE7moF0P9puEiAUbHfsmFSXikc
+ h2qXJvtkjOCTzELzigL/YRVwJcbUuoyvJ/DTf1QTYH3yQv3tgpkZ2v3GkdlO64joCW1EiteJu
+ JOdc8V0+sJuV9uzb7/7YyeB4BNnvRH+ub3sfEVJ3hqaygU97SIjSkD5CBhfxykXm+CW3tfD1X
+ 0J8QeC3oxpgGSTybEx7+dSa///PgdESl8LjPbShW/yjklIOc2DV/sUnxYH3L3sbb4TBZVLCUv
+ XPj5tzpHfcQdpWW0ARM36ini6jSbRf2pj4VQVSvxTUACBW8UDuXKXYlnhOyPWRdvzZcnl+c4h
+ uzUsfQHFbgUBMfrld
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Am 09.05.20 um 19:28 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> So I got curious if such trees might be in popular repos, wrote the pat=
+ch
+>> below and checked around a bit, but couldn't find any.
+>>
+>> Is there a smarter way to check for duplicates?  One that doesn't need
+>> allocations?  Perhaps by having a version of tree_entry_extract() that
+>> seeks backwards somehow?
+>
+> I've never looked into seeking backwards in a tree object, but in
+> unpack-trees, I had to deal with this exact problem that a blob
+> 'hello' sorts before 'hello.c' which in turn sorts after a tree
+> 'hello' because of the "implicit slash after the name for an entry
+> for a tree object" rule by introducing the "cache_bottom" hack in
+> the traversal logic to limit how far we must scan back.
+>
+> We may be able to limit the list of "seen recently" names in a
+> similar way.
+>
+> If the tree we are scanning has 'hello' (blob), 'hello.c' and
+> 'hellp', the bottom pointer initially would be at 'hello' (blob),
+> then stay there when we see 'hello.c' (because the next entry might
+> be 'hello' (tree) that would crash with 'hello'), and when we see
+> the entry 'hellp', we know that the entry at the bottom pointer
+> 'hello' (blob) cannot crash with any entry that comes later in the
+> tree object we are scanning, so we can advance the bottom pointer
+> forward.  To decide if we can advance the bottom pointer beyond
+> 'hello.c' (blob), we see if 'hello.c' (tree) can appear after the
+> current entry we are looking at (i.e. 'hellp'), and we know it
+> cannot without violating the sort order.  So the bottom would move
+> to point at 'hellp' we just saw.
+>
+> If we had 'hello' (tree) instead of 'hellp', when we look at it
+> after looking at 'hello' (blob) and 'hello.c', we scan from the
+> bottom pointer up to the previous entry, which is still pointing at
+> 'hello' (blob), and notice the crash.
+>
 
-When rearranging the todo list so that the fixups/squashes are reordered
-just after the commits they intend to fix up, we use two arrays to
-maintain that list: `next` and `tail`.
+Hmm, this could lead to quadratic behavior in the worst case, can't it?
+Imagine you have:
 
-The idea is that `next[i]`, if set to a non-negative value, contains the
-index of the item that should be rearranged just after the `i`th item.
+  a
+  a.b
+  a.b.c
+  ...
+  a.b.c/
+  a.b/
+  a/
 
-To avoid having to walk the entire `next` chain when appending another
-fixup/squash, we also store the end of the `next` chain in `tail[i]`.
+If you have a single bottom pointer, it needs to stay at "a" the whole
+time, so that you can detect the d/f conflict with "a/" at the end.
+And for all entries in between you need to scan from "a" on and compare
+each entry -- quadratic.  The blobs "a.b" and "a.b.c" don't need to
+actually be present, but we need to scan all entries to determine
+"a.b/" and "a.b.c/" are not conflicting anyway.  Right?
 
-The logic we currently use to update these array items is based on the
-assumption that given a fixup/squash item at index `i`, we just found
-the index `i2` indicating the first item in that fixup chain.
+We could, however, reduce the names we add to the string_list to
+those that are possible candidates for conflict -- blobs followed by an
+entry whose name starts with the blob name followed by a dot and trees
+that follow an entry whose name matches in the same way.
 
-However, as reported by Paul Ganssle, that need not be true: the special
-form `fixup! <commit-hash>` is allowed to point to _another_ fixup
-commit in the middle of the fixup chain.
-
-Example:
-
-	* 0192a To fixup
-	* 02f12 fixup! To fixup
-	* 03763 fixup! To fixup
-	* 04ecb fixup! 02f12
-
-Note how the fourth commit targets the second commit, which is already a
-fixup that targets the first commit.
-
-Previously, we would update `next` and `tail` under our assumption that
-every `fixup!` commit would find the start of the `fixup!`/`squash!`
-chain. This would lead to a segmentation fault because we would actually
-end up with a `next[i]` pointing to a `fixup!` but the corresponding
-`tail[i]` pointing nowhere, which would the lead to a segmentation
-fault.
-
-Let's fix this by _inserting_, rather than _appending_, the item. In
-other words, if we make a given line successor of another line, we do
-not simply forget any previously set successor of the latter, but make
-it a successor of the former.
-
-In the above example, at the point when we insert 04ecb just after
-02f12, 03763 would already be recorded as a successor of 04ecb, and we
-now "squeeze in" 04ecb.
-
-To complete the idea, we now no longer assume that `next[i]` pointing to
-a line means that `last[i]` points to a line, too. Instead, we extend
-the concept of `last` to cover also partial `fixup!`/`squash!` chains,
-i.e. chains starting in the middle of a larger such chain.
-
-In the above example, after processing all lines, `last[0]`
-(corresponding to 0192a) would point to 03763, which indeed is the end
-of the overall `fixup!` chain, and `last[1]` (corresponding to 02f12)
-would point to 04ecb (which is the last `fixup!` targeting 02f12, but it
-has 03763 as successor, i.e. it is not the end of overall `fixup!`
-chain).
-
-Reported-by: Paul Ganssle <paul@ganssle.io>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    rebase --autosquash: fix a potential segfault
-    
-    This patch is in response to 
-    https://lore.kernel.org/git/017dbc40-8d21-00fb-7b0e-6708d2dcb366@ganssle.io/
-    .
-    
-    Changes since v2:
-    
-     * Explained the fix more verbosely in the commit message.
-    
-    Changes since v1:
-    
-     * Fixed the order of two or more fixups-of-fixups (oddly enough, this
-       simplified the patch...)
-     * Extended the test to have two fixups-of-fixups, ensuring their order
-       is preserved.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-625%2Fdscho%2Fautosquash-segfault-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-625/dscho/autosquash-segfault-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/625
-
-Range-diff vs v2:
-
- 1:  de029422324 ! 1:  c1c4607da0e rebase --autosquash: fix a potential segfault
-     @@ Commit message
-          Note how the fourth commit targets the second commit, which is already a
-          fixup that targets the first commit.
-      
-     -    The good news is that it is easy to fix this: we use the correct
-     -    condition (we now possibly set `tail[i2]` even for fixups in the middle)
-     -    and we _also_ have to ensure that we _insert_ the item rather than
-     -    _append_ it, i.e. we need to set `next[i2]` accordingly (it might still
-     -    be set to `-1` if it was actually appended).
-     +    Previously, we would update `next` and `tail` under our assumption that
-     +    every `fixup!` commit would find the start of the `fixup!`/`squash!`
-     +    chain. This would lead to a segmentation fault because we would actually
-     +    end up with a `next[i]` pointing to a `fixup!` but the corresponding
-     +    `tail[i]` pointing nowhere, which would the lead to a segmentation
-     +    fault.
-     +
-     +    Let's fix this by _inserting_, rather than _appending_, the item. In
-     +    other words, if we make a given line successor of another line, we do
-     +    not simply forget any previously set successor of the latter, but make
-     +    it a successor of the former.
-     +
-     +    In the above example, at the point when we insert 04ecb just after
-     +    02f12, 03763 would already be recorded as a successor of 04ecb, and we
-     +    now "squeeze in" 04ecb.
-     +
-     +    To complete the idea, we now no longer assume that `next[i]` pointing to
-     +    a line means that `last[i]` points to a line, too. Instead, we extend
-     +    the concept of `last` to cover also partial `fixup!`/`squash!` chains,
-     +    i.e. chains starting in the middle of a larger such chain.
-     +
-     +    In the above example, after processing all lines, `last[0]`
-     +    (corresponding to 0192a) would point to 03763, which indeed is the end
-     +    of the overall `fixup!` chain, and `last[1]` (corresponding to 02f12)
-     +    would point to 04ecb (which is the last `fixup!` targeting 02f12, but it
-     +    has 03763 as successor, i.e. it is not the end of overall `fixup!`
-     +    chain).
-      
-          Reported-by: Paul Ganssle <paul@ganssle.io>
-          Helped-by: Jeff King <peff@peff.net>
-
-
- sequencer.c                  |  7 +++++--
- t/t3415-rebase-autosquash.sh | 16 ++++++++++++++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index e528225e787..d579f6d6c06 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5264,10 +5264,13 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 			todo_list->items[i].command =
- 				starts_with(subject, "fixup!") ?
- 				TODO_FIXUP : TODO_SQUASH;
--			if (next[i2] < 0)
-+			if (tail[i2] < 0) {
-+				next[i] = next[i2];
- 				next[i2] = i;
--			else
-+			} else {
-+				next[i] = next[tail[i2]];
- 				next[tail[i2]] = i;
-+			}
- 			tail[i2] = i;
- 		} else if (!hashmap_get_from_hash(&subject2item,
- 						strhash(subject), subject)) {
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 093de9005b7..7bab6000dc7 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -424,4 +424,20 @@ test_expect_success 'abort last squash' '
- 	! grep first actual
- '
- 
-+test_expect_success 'fixup a fixup' '
-+	echo 0to-fixup >file0 &&
-+	test_tick &&
-+	git commit -m "to-fixup" file0 &&
-+	test_tick &&
-+	git commit --squash HEAD -m X --allow-empty &&
-+	test_tick &&
-+	git commit --squash HEAD^ -m Y --allow-empty &&
-+	test_tick &&
-+	git commit -m "squash! $(git rev-parse HEAD^)" -m Z --allow-empty &&
-+	test_tick &&
-+	git commit -m "squash! $(git rev-parse HEAD^^)" -m W --allow-empty &&
-+	git rebase -ki --autosquash HEAD~5 &&
-+	test XZWY = $(git show | tr -cd W-Z)
-+'
-+
- test_done
-
-base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
--- 
-gitgitgadget
+Ren=C3=A9
