@@ -2,122 +2,184 @@ Return-Path: <SRS0=Fs4s=6X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8178FC28CBC
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 11:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44FBDC28CBC
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 14:24:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51D1B21655
-	for <git@archiver.kernel.org>; Sat,  9 May 2020 11:52:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0551421473
+	for <git@archiver.kernel.org>; Sat,  9 May 2020 14:24:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="mMQiyjqP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f7GD+src"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727980AbgEILv7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 May 2020 07:51:59 -0400
-Received: from mout.web.de ([217.72.192.78]:42601 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726063AbgEILv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 May 2020 07:51:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1589025107;
-        bh=TfXEBMPUgt50XYeBcnKNrGTJFp4Kv2Iipz2JSasgeo0=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=mMQiyjqPLXlcF8kytuNB6/0Vm0oQxoo4OktO9mCSqRhniJmkgaXHcFVldHB52VgFA
-         zWB6/YZX0DzKLM1i4zcOJE+4n7f4Ye5MK4VVubK79bhjJLcZMB8e96slNNJjP1mjVd
-         RhnXpzb83JD2yC7k2xWlJvUyibuPGg5qbUJi8Nf0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.188]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MC1fA-1jOcap3Dnc-008orI; Sat, 09
- May 2020 13:51:47 +0200
-Subject: Re: invalid tree and commit object
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Brandon Williams <bwilliamseng@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-References: <CALN-EhTpiLERuB16-WPZaLub6GdaRHJW8xDeaOEqSFtKe0kCYw@mail.gmail.com>
- <d963242a-72f3-7f42-7c95-ea5148f74804@web.de>
- <nycvar.QRO.7.76.6.2005090915020.56@tvgsbejvaqbjf.bet>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <142b7944-e151-2160-2fbe-e277f16033c9@web.de>
-Date:   Sat, 9 May 2020 13:51:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1727810AbgEIOYd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 May 2020 10:24:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1727105AbgEIOYd (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 May 2020 10:24:33 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C1EDC061A0C
+        for <git@vger.kernel.org>; Sat,  9 May 2020 07:24:33 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id h9so5301865wrt.0
+        for <git@vger.kernel.org>; Sat, 09 May 2020 07:24:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=9GLYG4ZdkMCoRL9DoJIwYxvsiKwrmbfgdtJlJZXYsO8=;
+        b=f7GD+srcgXJD+TR8E/lMcEmVGesAPFQ/yeWeU0WcKiLX6id8YP5oEDLxsJbH4DTYwA
+         owf/TzXrLTOZv19xdBfVNLLGiTkVMu2K1Gj46u1QDnbMlNh09mi5U8Ngq2n0LS4Umhev
+         PIs8k4O2q2GOpsGwEzeMgPdpfqyzhPPUlL6OvfPvIqZuaYLKaqgoFDfqbHYY3jnfMlgW
+         8isW7q2gE114H9znFWePnKTmNrY2hbkcsXKRSzyI5VBSuhcVIDQiixUQLj8B+jVApgI0
+         PksPGPtiBlHHL0iPpaP23Fyh9LnQzCXU4RbnZxb1XZ6avOJD5vC2qPn3en/HkAFYMjAg
+         R9iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=9GLYG4ZdkMCoRL9DoJIwYxvsiKwrmbfgdtJlJZXYsO8=;
+        b=ZxSm8+JF/S7paIjrO68epD7ThA+VRgkwLKgNUN655juidU1Tg9ObXwkVM6yV+3+UG9
+         UzYVaqTmShAlX5RDNxvW1Mxl0IJhrR6BHSoDBmcxT5xc9VfAxIg/51cLK6evTtL0SRSX
+         97U6Je7juNgLRAoSQf321rdxdyBcUnbZRH4zgNRXLW0S7daP10rOs8qTKkA+Vc77NqNm
+         68LcoUVmJK9ZCYzrxmTqnUvKZLXakwObTfcbpiMS/8hVceceYXTV2+Bx+KvfhPj+kLOB
+         vXi/p4YOmWJSx4pXqHwJtM/qexJ/nd0tSJL0ChuiUNYP3MEbvc44LoK7qjfryNSiBUCa
+         J3Aw==
+X-Gm-Message-State: AGi0PuYGy4mcWpCwDoYWltRqraHbGnws5GAtaIjA42bAdiJm2/Qg1mXm
+        WZyyHGlXOSwC80nl6iFamOMFg043
+X-Google-Smtp-Source: APiQypKLn1OI0y/DjbW7y1Wyy806HdsAaX35IbNugA+I2a1bMfNmSrnZ8MQeYiwHdmE5OFasehBtNQ==
+X-Received: by 2002:a5d:6284:: with SMTP id k4mr9213848wru.40.1589034271417;
+        Sat, 09 May 2020 07:24:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o66sm7261828wma.2.2020.05.09.07.24.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 09 May 2020 07:24:30 -0700 (PDT)
+Message-Id: <pull.626.v3.git.1589034270.gitgitgadget@gmail.com>
+In-Reply-To: <pull.626.v2.git.1588758194.gitgitgadget@gmail.com>
+References: <pull.626.v2.git.1588758194.gitgitgadget@gmail.com>
+From:   "Son Luong Ngoc via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 09 May 2020 14:24:27 +0000
+Subject: [PATCH v3 0/3] midx: apply gitconfig to midx repack
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2005090915020.56@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:DMdT7eDmY+B2ib2wrvQPywmiNp4v/rYmw8Z+j+vMrwcoP1priRC
- 5EnFDuXlerm/BdOrQpmIsBI//BGz4U8dqi6Rpzugk2V3CBKZ+t+l32JWX++13KbSyGTKcEQ
- tqsgwfW8EQc666LMMu00bqugKnilMMxTNmJlNet0Cb6zYI+c7F10ItNu6cMt+pK9i7/UqRi
- y0e7z/CrJDvFq/OuPjlMQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EDH65E4TDdI=:bBBpufskXrhNxddcqOSe2y
- que1RwAeYfglJDiE5NFo/B2EYSHFhw15HBfixcTpxsMx3h3DmKcXiQBBMd3qxgyCCoYrSFL5S
- O9B4HAa7DG+EqaY8Nn7fb1Q68u8VE+ySMTB0Jw6mfp7aEgaICKa/CTs5F+a5B60MDpjsIbMPW
- pdRBgPAZN2BDbG/8tqe8QxWI6aqh+JAaxqDBne3xUIugfeVNxVZqCYtKkyoO/dVeYEBB0mA80
- XiSLMbx+dODi7ObfzDVuLYOCzMjNJ2PldFC41wjIefWNJaMaua0NEmd9xT0lpz4FA0tDUTQww
- k4fyI0IbkWgRfqAzsAeJ7jhin0KaEzl+hisZmq24q5KwCvmd9aVl5eKNeDl+rUE27BIp0cXfa
- wSlTpfIbK+YnR+9W1biD9VcjR8J0JI3PI0fEV4O6MY4eh0Pl1XQ9+LMLB71hR4afjAVW86xQ4
- TQ4CPq/J8C/AGCfIwvmNloTkog3iFLMMc/EX/zeG1veM+6BeRQ5vazYvhjqwzw4a92C5Dn4OB
- R34b1eu3qq/0RlmQFFnwP4qxCbIlXQrW6apOxn2VOiUtwF5j7+HcM02So0Ut0bJVeqLDJ31ld
- I5hyuhYQ8mE9XYX/OVztkLCyC/Qd5EB1yCZcOGEW/2E0ONc59/GB+CxiMh1shwstdVkr0KQam
- WvM9xCdqtvZUMPolj/OxWAI6kRRn3GsBYv8ZbtcRo8GeQbLAQ5axGS4QLyQ1bmBNSp63L9mS4
- 5GexKCfBR62jNTi6bpCokCzuYawgd3nS/q96POlRwJfCLk1m+odukP0K00+XFDiz5P7ZoSbgl
- sLh6BbyKmVmmLqW2k2Q1SLrpzc15ule7f/3iAD2+uMJYT5Sf8l8hi9T8ON/l+OS7nDgN2W6YD
- UWH06hF8uBriXty8+MSOtSs9+OHYAf4Xp7NKdtmEZhXBvTkBSFKamhnBD/0T8c7MtXT+O/NzI
- 36MlLxsNBmOZW469MWnbX+9od4mLGeGV5SJdbV50KW8vFdj/byHxFXmoAFmZ/jqDy8PAiRTSL
- LOpeUM1lo5YmD72ZiTEH6iOI9kmzmfRIcHsIiHLEezi3J9ob3qHcc7Jbt+7OV0IGT+57HOK2V
- 1jPChMtH1nKegV50X6dL1VU2w0Pxdxvfc5LrOJyJ1AApXmluX0J+3lndPFLD+kNCKSvYQB7Xg
- qP4SXHNwi6zS5Mw9OA1GShUKm+oLtnugHNbhIdbsaMKB+hiMLRrkRitIB+OewG/D9vBErQsFf
- qBN2FLraOEWhQXiYv
+To:     git@vger.kernel.org
+Cc:     Son Luong Ngoc <sluongng@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.05.20 um 09:16 schrieb Johannes Schindelin:
-> Hi,
->
-> On Sat, 9 May 2020, Ren=C3=A9 Scharfe wrote:
->
->> Am 09.05.20 um 08:19 schrieb Brandon Williams:
->>> Here's the setup:
->>>     tree c63d067eaeed0cbc68b7e4fdf40d267c6b152fe8
->>>     tree 6241ab2a5314798183b5c4ee8a7b0ccd12c651e6
->>>     blob 5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689
->>>
->>>     $ git ls-tree c63d067eaeed0cbc68b7e4fdf40d267c6b152fe8
->>>     100644 blob 5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689    hello
->>>     100644 blob 5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689    hello.c
->>>     040000 tree 6241ab2a5314798183b5c4ee8a7b0ccd12c651e6    hello
->>
->>> Am I correct in assuming that this object is indeed invalid and should=
- be
->>> rejected by fsck?
->>
->> I'd say yes twice -- what good is a tree that you can't check out becau=
-se
->> it contains a d/f conflict?
->>
->> So I got curious if such trees might be in popular repos, wrote the pat=
-ch
->> below and checked around a bit, but couldn't find any.
->>
->> Is there a smarter way to check for duplicates?  One that doesn't need
->> allocations?  Perhaps by having a version of tree_entry_extract() that
->> seeks backwards somehow?
->
-> Maybe we should verify that the entries are sorted? That would not need
-> any allocation, and it could even use the return value of the same
-> comparison we already perform to check for duplicates.
+Midx repack has largely been used in Microsoft Scalar on the client side to
+optimize the repository multiple packs state. However when I tried to apply
+this onto the server-side, I realized that there are certain features that
+were lacking compare to git repack. Most of these features are highly
+desirable on the server-side to create the most optimized pack possible.
 
-Yes, but the key question is: Sorted by what?  Tree entries are sorted
-by name, only that a slash is appended implicitly to the name of entries
-of type tree.  The current code already checks for duplicates by
-comparing neighboring entries' names.  That's not sufficient to find
-duplicates that differ in type, as Brandon's example above shows (which
-is sorted correctly).
+One of the example is delta_base_offset, comparing an midx repack
+with/without delta_base_offset, we can observe significant size differences.
 
-Ren=C3=A9
+> du objects/pack/*pack
+14536   objects/pack/pack-08a017b424534c88191addda1aa5dd6f24bf7a29.pack
+9435280 objects/pack/pack-8829c53ad1dca02e7311f8e5b404962ab242e8f1.pack
+
+Latest 2.26.2 (without delta_base_offset)
+> git multi-pack-index write
+> git multi-pack-index repack
+> git multi-pack-index expire
+> du objects/pack/*pack
+9446096 objects/pack/pack-366c75e2c2f987b9836d3bf0bf5e4a54b6975036.pack
+
+With delta_base_offset
+> git version
+git version 2.26.2.672.g232c24e857.dirty
+> git multi-pack-index write
+> git multi-pack-index repack
+> git multi-pack-index expire
+> du objects/pack/*pack
+9152512 objects/pack/pack-3bc8c1ec496ab95d26875f8367ff6807081e9e7d.pack
+
+Note that repack.writeBitmaps configuration is ignored, as the pack bitmap
+facility is useful only with a single packfile.
+
+Derrick Stolee's following patch will address repack.packKeptObjects 
+support.
+
+Derrick Stolee (1):
+  multi-pack-index: respect repack.packKeptObjects=false
+
+Son Luong Ngoc (2):
+  midx: teach "git multi-pack-index repack" honor "git repack"
+    configurations
+  Ensured t5319 follows arith expansion guideline
+
+ Documentation/git-multi-pack-index.txt |  3 ++
+ midx.c                                 | 36 ++++++++++++---
+ t/t5319-multi-pack-index.sh            | 62 ++++++++++++++++++--------
+ 3 files changed, 78 insertions(+), 23 deletions(-)
+
+
+base-commit: b994622632154fc3b17fb40a38819ad954a5fb88
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-626%2Fsluongng%2Fsluongngoc%2Fmidx-config-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-626/sluongng/sluongngoc/midx-config-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/626
+
+Range-diff vs v2:
+
+ 1:  21c648cc486 ! 1:  a925307d4c5 midx: apply gitconfig to midx repack
+     @@ Metadata
+      Author: Son Luong Ngoc <sluongng@gmail.com>
+      
+       ## Commit message ##
+     -    midx: apply gitconfig to midx repack
+     +    midx: teach "git multi-pack-index repack" honor "git repack" configurations
+      
+     -    Multi-Pack-Index repack is an incremental, repack solutions
+     -    that allows user to consolidate multiple packfiles in a non-disruptive
+     -    way. However the new packfile could be created without some of the
+     -    capabilities of a packfile that is created by calling `git repack`.
+     +    Previously, when the "repack" subcommand of "git multi-pack-index" command
+     +    creates new packfile(s), it does not call the "git repack" command but
+     +    instead directly calls the "git pack-objects" command, and the
+     +    configuration variables meant for the "git repack" command, like
+     +    "repack.usedaeltabaseoffset", are ignored.
+      
+     -    This is because with `git repack`, there are configuration that would
+     -    enable different flags to be passed down to `git pack-objects` plumbing.
+     +    This patch ensured "git multi-pack-index" checks the configuration
+     +    variables used by "git repack" and passes the corresponding options to
+     +    the underlying "git pack-objects" command.
+      
+     -    In this patch, I applies those flags into `git multi-pack-index repack`
+     -    so that it respect the `repack.*` config series.
+     -
+     -    Note:
+     -    - `repack.packKeptObjects` will be addressed by Derrick Stolee in
+     -    the following patch
+     -    - `repack.writeBitmaps` when `--batch-size=0` was NOT adopted here as it
+     -    requires `--all` to be passed onto `git pack-objects`, which is very
+     -    slow. I think it would be nice to have this in a future patch.
+     +    Note that `repack.writeBitmaps` configuration is ignored, as the
+     +    pack bitmap facility is useful only with a single packfile.
+      
+          Signed-off-by: Son Luong Ngoc <sluongng@gmail.com>
+      
+     @@ midx.c: int midx_repack(struct repository *r, const char *object_dir, size_t bat
+       	struct strbuf base_name = STRBUF_INIT;
+       	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+      +	int delta_base_offset = 1;
+     -+	int use_delta_islands;
+     ++	int use_delta_islands = 0;
+       
+       	if (!m)
+       		return 0;
+ 2:  3d7b334f5c6 = 2:  988697dd512 multi-pack-index: respect repack.packKeptObjects=false
+ -:  ----------- > 3:  efeb3d7d132 Ensured t5319 follows arith expansion guideline
+
+-- 
+gitgitgadget
