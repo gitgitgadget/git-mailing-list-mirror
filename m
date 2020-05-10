@@ -2,131 +2,91 @@ Return-Path: <SRS0=RpNG=6Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34687C38A2A
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 19:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4211BC54E8A
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 19:26:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD80820801
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 19:10:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 251DC208DB
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 19:26:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y5gbR7z8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="igeOEqhw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729224AbgEJTK4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 May 2020 15:10:56 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59392 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729113AbgEJTK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 May 2020 15:10:56 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 118C8CA947;
-        Sun, 10 May 2020 15:10:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=L30Wv71dxr9b1oWNQnAIo6NdzFI=; b=Y5gbR7
-        z8G23XDgl8MrrMnA+LMo7AOHXVwGETUUTws4dD2MJVwDW0jDB0I1lTBrl8SnRV8o
-        h6ekcfX8oqfZVmURFiURQisBFBA2QW5sI2T1w/PU2FQLbn17MIDpDP6VuiP+MD3T
-        Yov7etzwbi1Ybr8FwUPx3lcsjoM0eVJM12TkI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q1xgBwC6v6ta9T8hU8bc4NQ8lchOqNwn
-        p6r83Wd080TAGQQ7oZ4fefJYvFN5pfD24uIjqiZjhMdN/Jy6hNYvtKDwm91xLlFO
-        SYZqZQvphY9923ehxTCeH4EwS5BMOGautWwj6LJr2WihIHE5m8Iq0gShtEVFwt9K
-        lktCa8ma3kk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0A456CA946;
-        Sun, 10 May 2020 15:10:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 53196CA945;
-        Sun, 10 May 2020 15:10:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     George Brown <321.george@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH] contrib/git-jump: cat output when not a terminal
-References: <CAFKec1W0-OOQYypP-3VC=dJnuNDrykdQ2xibc=u4D=Zo6if-+Q@mail.gmail.com>
-        <xmqqd07cvl9b.fsf@gitster.c.googlers.com>
-        <CAFKec1Wj_uK-moVfin3XrTEmmBaAzaJKsh1f8q-3+RBs2-3Jdg@mail.gmail.com>
-        <xmqq8si0vfp3.fsf@gitster.c.googlers.com>
-        <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
-        <xmqqwo5ju47t.fsf@gitster.c.googlers.com>
-        <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
-        <xmqqo8qvu0ao.fsf@gitster.c.googlers.com>
-        <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
-Date:   Sun, 10 May 2020 12:10:48 -0700
-In-Reply-To: <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
-        (George Brown's message of "Sun, 10 May 2020 19:34:09 +0100")
-Message-ID: <xmqqk11jtxl3.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729205AbgEJT0M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 15:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59958 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728763AbgEJT0M (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 May 2020 15:26:12 -0400
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631FEC061A0C
+        for <git@vger.kernel.org>; Sun, 10 May 2020 12:26:12 -0700 (PDT)
+Received: by mail-oo1-xc41.google.com with SMTP id r1so1491938oog.7
+        for <git@vger.kernel.org>; Sun, 10 May 2020 12:26:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IWZT9J/AMOgLUkalsdG2dC1M2EnulZZZTsAywblrLUQ=;
+        b=igeOEqhwmcR/OyCw+x3Hbp69AxZEXCYS4yWKeUHOF9GpvlPQ6pFWxd3TUHv3E3QpBY
+         NkiP+bY4TqyYYQa9Trwu6fkraT9wZPP1QOaQtP1tsRF3BWLm1nbbfuI9Th1ha7SamzPk
+         Hl9A9C5yTcgIGaFbxImjmVHspwlvm/4dvKMFY8ODwsE5E95Dxi9DwUBvCe1MukEaeFoA
+         ezzSJkKboZUh3gFodAXqbVvd5nTj9o+NSMalPJKX/c0TF2+xj5XbjlvtFqkuQfGs9y74
+         +B6yffl6WbxukMZ0W1KamNnp2EF9KWu391SU0XC4jL7IdIhDHcWxZgvq5kFyUY7kIlX8
+         bnuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IWZT9J/AMOgLUkalsdG2dC1M2EnulZZZTsAywblrLUQ=;
+        b=Uhgw9bkQWHA/cb7GvmVnQD7IwbP0+o1NDv3QI9FS7fdEhTByU9y7HDvI5uVVACizqy
+         C387xQajfyHLswtRk28Gs76ZHn9dWo3NoKRaJdKzUvgroMu5fY0fH1n2ILoQfOPAClwQ
+         dEXK0uAOP4TueAdh/dMiHHRS05yOgpiiDhL9z6uyG+Udhozmg2L/QSzcCObN63Y5L5sL
+         ZM3uhqBEakJPyAr9Y8eMtHXyvk7QObswYhGZw4jjBZ6ffVz0sPXzSknN+eOMHZPFrEQ/
+         JpBVOt9ov0npiw1GogBBWFm2thX/WpTSWpAL2IOkLCh+xWCC3NOvnuG1hei3M8x1M9BU
+         PVVA==
+X-Gm-Message-State: AGi0PuYwGyWquqwig+rsYrOMlxOFemHw9RN8SUEsPe0fZXyIQFWZJ5u5
+        TCFz73UKwtwK4NTOsv7rj9wuIHhrTgCr/AQuLeY=
+X-Google-Smtp-Source: APiQypKmZWrPNRfC1syKxNGlpQWE5NYufcbqIUmf1vhNXjFu58YzqlNtPFgLaN/FL7JL06vEoeRcdEhe3vJgIfg4j20=
+X-Received: by 2002:a4a:2fd3:: with SMTP id p202mr11022038oop.33.1589138770209;
+ Sun, 10 May 2020 12:26:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F633449E-92F1-11EA-B637-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <CAFKec1W0-OOQYypP-3VC=dJnuNDrykdQ2xibc=u4D=Zo6if-+Q@mail.gmail.com>
+ <xmqqd07cvl9b.fsf@gitster.c.googlers.com> <CAFKec1Wj_uK-moVfin3XrTEmmBaAzaJKsh1f8q-3+RBs2-3Jdg@mail.gmail.com>
+ <xmqq8si0vfp3.fsf@gitster.c.googlers.com> <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
+ <xmqqwo5ju47t.fsf@gitster.c.googlers.com> <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
+ <xmqqo8qvu0ao.fsf@gitster.c.googlers.com> <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
+ <xmqqk11jtxl3.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqk11jtxl3.fsf@gitster.c.googlers.com>
+From:   George Brown <321.george@gmail.com>
+Date:   Sun, 10 May 2020 20:25:59 +0100
+Message-ID: <CAFKec1Uya31withxzAqwFSVxqgxj_RbU1B6NrMYQ4U8WzLOs6g@mail.gmail.com>
+Subject: Re: [PATCH] contrib/git-jump: cat output when not a terminal
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-George Brown <321.george@gmail.com> writes:
+> Imagine a user wanted to spawn a graphical editor via git-jump from within
+> a GUI script (probably launched from a window manager menu and has no
+> gqipterminal).  With git-jump with this patch, such a use will be broken, no?
 
-> I think with this change all editors can benefit.
+Aha OK that's an example that I didn't grok from your earlier mails,
+I had only been thinking in the context of editors. The reasoning behind
+the "escape hatch" you describe makes sense.
 
-I am worried not only about the editors that are launched by
-git-jump that runs GIT_EDITOR, or the use case where you run
-git-jump from within your editor.  "git jump" that is launched from
-a process, whose standard output steam is not connected to a
-terminal, used to spawn the specified editor just fine.  Imagine a
-user wanted to spawn a graphical editor via git-jump from within a
-GUI script (probably launched from a window manager menu and has no
-terminal).  With git-jump with this patch, such a use will be
-broken, no?  The GIT_EDITOR the user set is totally ignored.
+> Unilaterally breaking, and ignoring when you are told you are
+> breaking, possible existing users, without giving them any escape
+> hatch, is simply irresponsible, and not something done in this
+> project.  But I am sensing that you are not listening to and
+> thinking about what you hear before you respond, so I will stop
+> spending time on this topic for now, and wait until others chime in.
 
-At the very least, we should have an escape hatch to help those this
-patch is hurting, perhaps like
-
-        open_editor() {
-                if ! test -t 1 && test -z "$GIT_JUMP_IGNORE_STDOUT_CHECK"
-                then
-                        cat "$1"
-                else
-                        editor=`git var GIT_EDITOR`
-                        eval "$editor -q \$1"
-                fi
-        }
-
-so that at least they can spawn their chosen editor, not "cat", from
-the tool they have been using.  
-
-Because this is a new feature, instead of breaking existing users
-and forcing them to do something different they did not have to
-(namely, set and export the GIT_JUMP_IGNORE_STDOUT_CHECK environment
-variable), we should instead make this a non-default behaviour and
-those who want it should explicitly opt-in to trigger it, perhaps
-like:
-
-        open_editor() {
-                if ! test -t 1 && test -n "$GIT_JUMP_AUTO_CAT"
-                then
-                        cat "$1"
-                else
-                        editor=`git var GIT_EDITOR`
-                        eval "$editor -q \$1"
-                fi
-        }
-
-so that existing users won't get affected by this change at all,
-while allowing you and other vim users to set and export the
-environment variable just once.  
-
-Unilaterally breaking, and ignoring when you are told you are
-breaking, possible existing users, without giving them any escape
-hatch, is simply irresponsible, and not something done in this
-project.  But I am sensing that you are not listening to and
-thinking about what you hear before you respond, so I will stop
-spending time on this topic for now, and wait until others chime in.
-
+I apologise for not understanding, it was not my intention to be
+willfully ignorant.
