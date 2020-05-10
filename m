@@ -2,101 +2,93 @@ Return-Path: <SRS0=RpNG=6Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 105F0C38A2A
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 20:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5004C38A2A
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 20:26:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D73A9206F5
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 20:20:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B585206F5
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 20:26:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WauyXREG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a6vjyMN8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729225AbgEJUUM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 May 2020 16:20:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40146 "EHLO
+        id S1729258AbgEJU0g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 16:26:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728468AbgEJUUM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 10 May 2020 16:20:12 -0400
-Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 606FAC061A0C
-        for <git@vger.kernel.org>; Sun, 10 May 2020 13:20:12 -0700 (PDT)
-Received: by mail-oo1-xc42.google.com with SMTP id p67so1502931ooa.11
-        for <git@vger.kernel.org>; Sun, 10 May 2020 13:20:12 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1729124AbgEJU0g (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 10 May 2020 16:26:36 -0400
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A4C7C061A0C
+        for <git@vger.kernel.org>; Sun, 10 May 2020 13:26:36 -0700 (PDT)
+Received: by mail-qt1-x844.google.com with SMTP id q13so6285379qtp.7
+        for <git@vger.kernel.org>; Sun, 10 May 2020 13:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=s5VU5EYsWZ3+D9OpKkDiFVw8hxuFucSoefXZwLHBm/0=;
-        b=WauyXREG01sHj7U0b2YwqXvXd4xGvJ/PlmA2jxghQJY59cKPEGyJGpT95jX0YY8zoA
-         OgMJ2y4rVag1SjxcSsjG/nOCA8nAINhIII7Ijm8Oc3Yt3uV/wCEasjn2VWyx1S45aW1d
-         bXx9RDdi9UJ37Kdez4WcRj1HQ5KGjlZNvNCeYjBQj75i1O24mhZTwDQe5UJMyXI/Td6B
-         efm7dX2r4n7no+U36AXNS1+Y64qtICBYYKuIC0TttPCB3X2+eqvLkKf/5BWcnUaomJR4
-         0YW4Bw170UZ78z+GeiHQM5EsL9m4vQugjzH2A4/Lwg3Gel+yriIvwDn3Z37MRYrpGiqd
-         e8dg==
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :cc:to;
+        bh=Tdl3rEF0VG+QdYSTLLmSIYJsE3A8KnXoLrW4C1lJg20=;
+        b=a6vjyMN87JKJXuvNc1kEHua9qEPZKClXh66+AtL8r96weFAJZsHSx9Wl8zDNjgejSP
+         l0fv7jWyGrarsCcWvptrSjdKgae074GGZdFprhbpdTLUq+4CZA0PX+Yp75zSHpaWunT7
+         1xVWDSokOLf3/yzmrQ9wc4rROY6TD+XmWj6Wd56RMwwWhvPds9oYEDfZinwSa5u0qT7u
+         8AOVaR1aQwCRh5JgVAsWYZqQwAn/79BW14Mm03gGUnX6D/cdHZAyiC37+ZhvW8/ZGPxD
+         A4VrjUlOKvM7P8Ad9jSJ1D1M32SAZdVtxgZOkCwmIiscBDQ40GTYfHLVsAF0EUU9kFFl
+         GHyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=s5VU5EYsWZ3+D9OpKkDiFVw8hxuFucSoefXZwLHBm/0=;
-        b=mEwrIvYmWyLTm9HZguHWWDd5LrG/Dehu3sl0gIvfxjaGQf+4J3+xTnyjrfz75f6aUD
-         SimW6CmJkkhG+3qkIGls/JbtFuUWu3c3aF/1apDfsfVolK0DXYlTiBPvpmErpeTpjeNh
-         YdBYCXDXTvltR3hx7D1kalYg/t9V53V3SahG4whT3TvP9A/hxDt6Ii9X6bv5i6nTTTZY
-         NkqEkdng7R1KHKipimps2QgIY+0HtyuBAQqDl0lPa9/aSbDhPqcMZ6uzz6TR0AYDyqQh
-         f5EB2PYFZzETj5oWVJes3wksNgvL/2qhFD0DMU7iU8IF/iXqYU6Nxq9LOpID1FkZxCVI
-         /tBQ==
-X-Gm-Message-State: AGi0PuYzcILNh6hG1XJh4CjTcSbf41Avi3jjCQdBLStNe9jXI2o764i8
-        m65rsKBvqgLKkhS9gxiwK9er4CV1RDdD6SsvkdExb1iQ
-X-Google-Smtp-Source: APiQypKk+R5B6tQ7DEEeBbD8SqcegJ+R2Ie7TduZffzWsDtyeRmw7bih9WMsDC6SOsk+Im/ikhsFZRLCT4/C+QZpxGg=
-X-Received: by 2002:a4a:d64f:: with SMTP id y15mr1457159oos.90.1589142011784;
- Sun, 10 May 2020 13:20:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFKec1W0-OOQYypP-3VC=dJnuNDrykdQ2xibc=u4D=Zo6if-+Q@mail.gmail.com>
- <xmqqd07cvl9b.fsf@gitster.c.googlers.com> <CAFKec1Wj_uK-moVfin3XrTEmmBaAzaJKsh1f8q-3+RBs2-3Jdg@mail.gmail.com>
- <xmqq8si0vfp3.fsf@gitster.c.googlers.com> <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
- <xmqqwo5ju47t.fsf@gitster.c.googlers.com> <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
- <xmqqo8qvu0ao.fsf@gitster.c.googlers.com> <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
- <xmqqk11jtxl3.fsf@gitster.c.googlers.com> <xmqqftc7twaa.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqftc7twaa.fsf@gitster.c.googlers.com>
-From:   George Brown <321.george@gmail.com>
-Date:   Sun, 10 May 2020 21:20:00 +0100
-Message-ID: <CAFKec1VGMwn3_4AEuY8Vrs60UQbX-fvqCkzKd8VARAUScbA=rA@mail.gmail.com>
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:cc:to;
+        bh=Tdl3rEF0VG+QdYSTLLmSIYJsE3A8KnXoLrW4C1lJg20=;
+        b=oRR2RKid31hpLm7Haomp2+I7l3Rc3Q3k1RN11gYDT5EqRwKhUpetvx4MpgvjXl4z0F
+         2a616n1FwflCZ+YWOYZXHydW7SNCrW2SRIaMO08A9jvByA+QWq8hwrhYYyQiFB3CEef0
+         /vuykiAw7quexdnU5Znpe3ci7Ea83cEnA/2KBbAhbuDVndhnRIo0Z87QtC7hWEnQINOw
+         tTNVfRSJlNlmL2KMw5plVypEXFIpsb4kv5SxGcpO+aaOctR/L9rmokVqRBtzozIVrnIy
+         nSw/yOeWI1X9EvkyzOwpK5znEGFJc+nYpBLNWO/uWsSX8PfgdKqdswquknr3lGWviXc0
+         sXlQ==
+X-Gm-Message-State: AGi0PuaLJsvGzS0qfKyqSNc5HGvdvGaBRClcYfDn1blTJEoGycbE9Lu/
+        7RplhgzibLN1MkquWDbmsZ+NVXzOcCk=
+X-Google-Smtp-Source: APiQypKNa//QQjMGnDTAXaK7XPlLNI9ZarjbhwESrBr4VrTjpTo4rHpug6Mu4SSICxU7bLJekNL5Wg==
+X-Received: by 2002:ac8:1757:: with SMTP id u23mr13263768qtk.138.1589142395247;
+        Sun, 10 May 2020 13:26:35 -0700 (PDT)
+Received: from ?IPv6:2601:741:8000:12fa:e9c2:7999:c59c:2067? ([2601:741:8000:12fa:e9c2:7999:c59c:2067])
+        by smtp.gmail.com with ESMTPSA id j90sm7355470qte.20.2020.05.10.13.26.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 10 May 2020 13:26:34 -0700 (PDT)
+From:   Benjamin <ben.knoble@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
 Subject: Re: [PATCH] contrib/git-jump: cat output when not a terminal
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <4CFBC77A-6518-4BEE-A210-6A7C818B9738@gmail.com>
+Date:   Sun, 10 May 2020 16:26:33 -0400
+Cc:     321.george@gmail.com, git@vger.kernel.org, peff@peff.net
+To:     gitster@pobox.com
+X-Mailer: Apple Mail (2.3445.104.14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio writes:
+
 > I somehow doubt that users of vim types "!git jump diff" (or
 > whichever submode they want) from within vim's command prompt;
 > wouldn't they typically wrap the invocation in a vim macro?
 
-Correct, in Vim parlance we'd create a command for this.
+Vim-user here. I run "git jump (options)" from a shell quite a bit, but =
+when I'm
+in vim I tend to use ":Ggrep" and similar commands from the fugitive =
+plugin [1].
+I don't *think* I'm alone in this.
 
-> If my suspicion is correct, with an opt-in feature like the above
-> (which is designed not to hurt existing users), the vim users can
-> change their macro definition to not just invoke "git jump
-> <whatever>", but invoke "GIT_JUMP_AUTO_CAT=yes git jump <whatever>",
-> i.e. tell "git jump" that you are opting into the "cat the file,
-> instead of launching GIT_EDITOR".  So with just a one-time setting,
-> vim (and other similar editor) users would benefit without hurting
-> others.
->
-> For that matter, instead of introducing GIT_JUMP_AUTO_CAT, the same
-> mechanism can be used to run "GIT_EDITOR=cat git jump <whatever>",
-> i.e. tell "git jump" that it is expected to run "cat" as its
-> editor, from such a vim macro ;-)
+I'm not really arguing either side, just pointing out that other =
+workflows exist
+(and indeed, I'm unlikely to run ":!git jump diff").
 
-Yes. Another version that someone else implemented used similar method
-by unsetting "$GIT_EDITOR" when invoked from Vim and modified "git jump"
-to use cat when "$GIT_EDITOR" was empty.
+[1]: https://github.com/tpope/vim-fugitive
 
-https://gist.github.com/romainl/a3ddb1d08764b93183260f8cdf0f524f/e1f548f6d96cd6ee97c3daadb4a1546fab7814ad
-
-I can request the author submit that as a patch if it is of interest.
+D. Ben Knoble=
