@@ -2,216 +2,274 @@ Return-Path: <SRS0=RpNG=6Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35AACC54E4B
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 16:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E69AEC38A2A
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 16:12:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EB3F2080C
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 16:07:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B116720801
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 16:12:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTAixRLM"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="oitOOWwA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729103AbgEJQHl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 May 2020 12:07:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57526 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728849AbgEJQHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 May 2020 12:07:40 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3296FC061A0C
-        for <git@vger.kernel.org>; Sun, 10 May 2020 09:07:39 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id s8so7823998wrt.9
-        for <git@vger.kernel.org>; Sun, 10 May 2020 09:07:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BkNVlqrcMQOdDBxOOa2+sJ7tkIqvaDD9KCbiNFKfzNE=;
-        b=BTAixRLMXN4wxL3BO7x72yIpmiiPdlRmtRfs6l+JzAqV9YrQSUqidjbh26WzFkzJjh
-         I+YO3zAReOSxF+T48xjiaeWKLurQqmzU1hn+gj0P0dOZACy/y/muhRBuhVnMJp8pFmoV
-         iX4RC1msWRsqFokS/mnWhVgqZ4Zhvfc0mvssx44XSCauBmsF+04Hx4hp0nebRAPUBS2v
-         GUxLybirxbi1ryUHhYSBT6G1KV9FaLe5P15b1iBNSBbKU5GWsai4NVwTLUFWIPDCPX7d
-         XHs9hFLaohxKvGyxuhnoFmQcwYg9dgslJJyJBrmJI6ALGDWu3AsEAxnpdNZYRcWVdckc
-         PmBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BkNVlqrcMQOdDBxOOa2+sJ7tkIqvaDD9KCbiNFKfzNE=;
-        b=lD3dQaspjMyeyZZkIR8qE8JFn4SS/D4JHNbYtEyHwt6AlKCgIHy/kKRzOReTB8RWyK
-         9phot9xdUVkZeHSrqwEOvTFaU5e5pZ5MmbrpQ1RkpxfdRjVsRBoq7yqQ3rQXcbxWowC6
-         F0UOzQSEZRj7arSzpSgWo3DM3zTU49NBJ/k9x8UM/APf1l7g8tnsWQ8k4M66d9UZtjOB
-         OZWAK7OnAMUUaxSFTFLCyR/K56uyDKEV7aar/juTKs4ewdz3+FSyYfH+rYEufIbZrTzg
-         T2UvweK9TZVEAyFecjLEnu7GVGBRGe33SXDqqtnGSDUBxbvezF6dPrsmz8LhXAzY5m4L
-         NQDg==
-X-Gm-Message-State: AGi0PubF0nNxQ8DX+cesaajs+SgNak1nbyX8VS5+OiifpS3DJBWMnZca
-        ArMxoHdOZfqmQttNuEnd239qgLbg
-X-Google-Smtp-Source: APiQypKndunGczO4a9Lwb4inPvn9/jZwQ2yFqXT/qEF/Z9RIvWmH8kcoXq0bbSp8LrUFFhjycAkCDg==
-X-Received: by 2002:adf:e4cc:: with SMTP id v12mr14319618wrm.106.1589126857744;
-        Sun, 10 May 2020 09:07:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 77sm13925708wrc.6.2020.05.10.09.07.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 May 2020 09:07:37 -0700 (PDT)
-Message-Id: <192fc7853825013250552eda75957a290a9928eb.1589126855.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.626.v4.git.1589126855.gitgitgadget@gmail.com>
-References: <pull.626.v3.git.1589034270.gitgitgadget@gmail.com>
-        <pull.626.v4.git.1589126855.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 10 May 2020 16:07:34 +0000
-Subject: [PATCH v4 2/2] multi-pack-index: respect repack.packKeptObjects=false
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729131AbgEJQM0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 12:12:26 -0400
+Received: from mout.web.de ([212.227.15.4]:51001 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728762AbgEJQM0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 May 2020 12:12:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1589127137;
+        bh=DgcG5MO5qU5MZtrYnwdBWk4krUKnBxhtpGpbmvY1RWI=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=oitOOWwAGfCanfzHsBuhNmlkcKz8CG7NCuu8ypwcRNwOKXq+XsLOc8UmRoZcu6mqU
+         qSF9sU6JhROFYd+C970i/bcKRnWXd7mAynbfOyjE1GTrfAh3PDbeYvBQEleh1jSYUs
+         D7xMj3fd8UhNQbNzwuruleKAp2Wxeyog3EK/4400=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.188]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LdVty-1iqT3L2lve-00inXs; Sun, 10
+ May 2020 18:12:17 +0200
+Subject: Re: invalid tree and commit object
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bwilliamseng@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+References: <CALN-EhTpiLERuB16-WPZaLub6GdaRHJW8xDeaOEqSFtKe0kCYw@mail.gmail.com>
+ <d963242a-72f3-7f42-7c95-ea5148f74804@web.de>
+ <xmqqpnbduiec.fsf@gitster.c.googlers.com>
+ <938f0818-7e57-b883-009f-01db88ef8f65@web.de>
+ <xmqqh7wovoop.fsf@gitster.c.googlers.com>
+ <aab9512b-a70a-0f5b-5cdc-5d40acd343d0@web.de>
+Message-ID: <2937d635-52a9-5e69-b3d2-fbde415b7315@web.de>
+Date:   Sun, 10 May 2020 18:12:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Son Luong Ngoc <sluongng@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <aab9512b-a70a-0f5b-5cdc-5d40acd343d0@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:BVO3UaBl+GwWYnowV/Qw8v6iN3YkSL4sdnj36VOWBdSbe0d5OKZ
+ liSQhBNybe9U28rHg+o40F6hkApT4BGIt+LPvHqUlFmbPC29Xu1R2CO/et0upttR14lxzux
+ bLuirQ+B4lfO28x2otTwlVPIuZfZHhvcbt63Cd1CHyOpptwrJquokdtnF0z1L77jpapWSE3
+ yxfedJAGmsvEOq/siXxVw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vt0SWOT6TFk=:71iDT8DVmzX7DyMdHBaYXJ
+ foyNEwKm+vfSaNnSPlb2Vb37nvFIJ4tjSzgGz84xxSyi51RDXhy79R2h8xYZYAXB+hhHW/eAq
+ TIuLOJs17+1MxWu+0jojzIhkJ7PNkJClzYQupjzl0ZVgvH1HMpJqkPxkGiVS+V+6ZinBtvawV
+ xTHt45wHqAALWsPXA+0Y1JnTU4yFD7SaYBoRkdipQ1eb1IbtGF9AnV44WccMtUAGPqROko/Wj
+ f5QQBp7qM40TgO1xyy35GCW3CWToQwK4XVSVCc8yLxhmG0QVhR/LfGgBnQCxOP9f0ETuaCRrg
+ zQkRhTedoZg3bk2uZzhH0N/gf+8uGMecpRebWEcupw6Z7hSc/Pcv7QJTJdK/wa6f0vPy3Mcm6
+ QhKLR8qFybjvA4ZqcQu6rSUYszxDbYA+jI4N24aydbLPLWDXcyTK0SIcYrc6phfdeoKEWSlTU
+ WFPk5xXBE2Ojp1pvj2y9c+favRCyTvPNincWfV72ODw8rzlH1rVA07ehS1dlpdq22GF0CJpPU
+ ggN1EQfQwaVL1IRz+XLg+idhgdjpqpr/WGoo1SuXfSdEUTafEVVqEI/QWZSp2PXHtm086IiSI
+ g0jIOoeBHHXqd/WmKP1DL47A2eEadzMffnFc8prw0/KzJNH5Zj6eb7smPgiTRxmBOrie2dDI1
+ 6dVMfkznu/HqnqZC/x3MTKrgLQLwG3Nn/8Drkdwk2XIEfPhpf41fZkKTCo7r/8IKW7bPhVXKn
+ 8Wu9hv0xnUqCyAPgvJGDnWEptmsqJ3fjwLLSSZYZcmBMEuO2hmACmvY6YxxSuTHBS9mJC3ROm
+ HEtH2m1y6PsMWl2OOnp9/JtgHT0snApZmbFxYDpRffPH5/ruWrfMUqz6jyJ/Stxxx4ZChp7Cx
+ cXD6LLvVxt339Bdk+rh3AKhSKYeZTNp8jTpeBCfKNsfqAQyZ8a77yiAWlTmnvPiyjCTPzexjp
+ YxRrdxGP/YMVJAVC7wK1ZTiQCFH3zCDY8GJiMqExQxnVPg7+GX1GR37icPOnDknkNTvlZ5Ajs
+ fQec6ux2SJy9TjPo0Ps1C3X4HzME1goWylpZqqH58XaMZTnJdOG/SclZ00D9JjiagdOnzTuPf
+ 1UC3BeFApB/64ES1AI865fa8kw/O3oQhyrI1iPsOjhREvj+MAy8B5Bsz4PIulKXVQ3HKCZ174
+ VIbMq3Km93a32vtc6XZqo6bEHn4VIctw8ZqWCs0tqs/F4jY3uIzbQwaRkQsAEH84sUXPI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Am 10.05.20 um 11:07 schrieb Ren=C3=A9 Scharfe:
+> Would a stack work?  When we see a candidate non-directory, we put
+> it on the stack.  When we see a candidate directory, we compare it
+> to the entry at the top of the stack using strcmp().  Equality
+> indicates a duplicate and we are done.  If the directory name is
+> less then we can pop the entry from the stack and check again, as
+> we're past the point where a duplicate would be.  Makes sense?
+>
+> The candidate stack solution would have linear complexity and
+> require less memory than a full list of candidates.
+>
+> It would rely on the entries to be in the correct order (same as
+> the patch below, come to think of it), but that's probably OK.
+> We may miss DUPLICATE_ENTRIES (just like today :), but
+> TREE_NOT_SORTED would still be reported.
 
-When selecting a batch of pack-files to repack in the "git
-multi-pack-index repack" command, Git should respect the
-repack.packKeptObjects config option. When false, this option says that
-the pack-files with an associated ".keep" file should not be repacked.
-This config value is "false" by default.
+Here's what I mean.  It seems to work, but could use some critical
+thought and testing.
 
-There are two cases for selecting a batch of objects. The first is the
-case where the input batch-size is zero, which specifies "repack
-everything". The second is with a non-zero batch size, which selects
-pack-files using a greedy selection criteria. Both of these cases are
-updated and tested.
+=2D- >8 --
+Subject: [PATCH] fsck: report non-consecutive duplicate names in trees
 
-Reported-by: Son Luong Ngoc <sluongng@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/git-multi-pack-index.txt |  3 +++
- midx.c                                 | 26 ++++++++++++++++++++-----
- t/t5319-multi-pack-index.sh            | 27 ++++++++++++++++++++++++++
- 3 files changed, 51 insertions(+), 5 deletions(-)
+Tree entries are sorted in path order, meaning that directory names get
+a slash ('/') appended implicitly.  Git fsck checks if trees contains
+consecutive duplicates, but due to that ordering there can be
+non-consecutive duplicates as well if one of them is a directory and the
+other one isn't.  Such a tree cannot be fully checked out.
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 642d9ac5b72..0c6619493c1 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -56,6 +56,9 @@ repack::
- 	file is created, rewrite the multi-pack-index to reference the
- 	new pack-file. A later run of 'git multi-pack-index expire' will
- 	delete the pack-files that were part of this batch.
-++
-+If `repack.packKeptObjects` is `false`, then any pack-files with an
-+associated `.keep` file will not be selected for the batch to repack.
- 
- 
- EXAMPLES
-diff --git a/midx.c b/midx.c
-index d2a43bd1a38..6d1584ca51d 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1293,15 +1293,26 @@ static int compare_by_mtime(const void *a_, const void *b_)
- 	return 0;
+Find these duplicates by recording candidate file names on a stack and
+check candidate directory names against that stack to find matches.
+
+Suggested-by: Brandon Williams <bwilliamseng@gmail.com>
+Original-test-by: Brandon Williams <bwilliamseng@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ fsck.c          | 72 +++++++++++++++++++++++++++++++++++++++++++++++--
+ t/t1450-fsck.sh | 16 +++++++++++
+ 2 files changed, 86 insertions(+), 2 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index 087a7f1ffc..8bb3ecf282 100644
+=2D-- a/fsck.c
++++ b/fsck.c
+@@ -523,6 +523,28 @@ int fsck_walk(struct object *obj, void *data, struct =
+fsck_options *options)
+ 	}
  }
- 
--static int fill_included_packs_all(struct multi_pack_index *m,
-+static int fill_included_packs_all(struct repository *r,
-+				   struct multi_pack_index *m,
- 				   unsigned char *include_pack)
+
++struct name_stack {
++	const char **names;
++	size_t nr, alloc;
++};
++
++static void name_stack_push(struct name_stack *stack, const char *name)
++{
++	ALLOC_GROW(stack->names, stack->nr + 1, stack->alloc);
++	stack->names[stack->nr++] =3D name;
++}
++
++static const char *name_stack_pop(struct name_stack *stack)
++{
++	return stack->nr ? stack->names[--stack->nr] : NULL;
++}
++
++static void name_stack_clear(struct name_stack *stack)
++{
++	FREE_AND_NULL(stack->names);
++	stack->nr =3D stack->alloc =3D 0;
++}
++
+ /*
+  * The entries in a tree are ordered in the _path_ order,
+  * which means that a directory entry is ordered by adding
+@@ -534,7 +556,14 @@ int fsck_walk(struct object *obj, void *data, struct =
+fsck_options *options)
+ #define TREE_UNORDERED (-1)
+ #define TREE_HAS_DUPS  (-2)
+
+-static int verify_ordered(unsigned mode1, const char *name1, unsigned mod=
+e2, const char *name2)
++static int is_less_than_slash(unsigned char c)
++{
++	return '\0' < c && c < '/';
++}
++
++static int verify_ordered(unsigned mode1, const char *name1,
++			  unsigned mode2, const char *name2,
++			  struct name_stack *candidates)
  {
--	uint32_t i;
-+	uint32_t i, count = 0;
-+	int pack_kept_objects = 0;
+ 	int len1 =3D strlen(name1);
+ 	int len2 =3D strlen(name2);
+@@ -566,6 +595,41 @@ static int verify_ordered(unsigned mode1, const char =
+*name1, unsigned mode2, con
+ 		c1 =3D '/';
+ 	if (!c2 && S_ISDIR(mode2))
+ 		c2 =3D '/';
 +
-+	repo_config_get_bool(r, "repack.packkeptobjects", &pack_kept_objects);
++	/*
++	 * There can be non-consecutive duplicates due to the implicitly
++	 * add slash, e.g.:
++	 *
++	 *   foo
++	 *   foo.bar
++	 *   foo.bar.baz
++	 *   foo.bar/
++	 *   foo/
++	 *
++	 * Record non-directory candidates (like "foo" and "foo.bar" in
++	 * the example) on a stack and check directory candidates (like
++	 * foo/" and "foo.bar/") against that stack.
++	 */
++	if (!c1 && is_less_than_slash(c2)) {
++		name_stack_push(candidates, name1);
++	} else if (c2 =3D=3D '/' && is_less_than_slash(c1)) {
++		for (;;) {
++			const char *p;
++			const char *f_name =3D name_stack_pop(candidates);
 +
-+	for (i = 0; i < m->num_packs; i++) {
-+		if (prepare_midx_pack(r, m, i))
-+			continue;
-+		if (!pack_kept_objects && m->packs[i]->pack_keep)
-+			continue;
- 
--	for (i = 0; i < m->num_packs; i++)
- 		include_pack[i] = 1;
-+		count++;
++			if (!f_name)
++				break;
++			if (!skip_prefix(name2, f_name, &p))
++				break;
++			if (!*p)
++				return TREE_HAS_DUPS;
++			if (is_less_than_slash(*p)) {
++				name_stack_push(candidates, f_name);
++				break;
++			}
++		}
 +	}
- 
--	return m->num_packs < 2;
-+	return count < 2;
- }
- 
- static int fill_included_packs_batch(struct repository *r,
-@@ -1312,6 +1323,9 @@ static int fill_included_packs_batch(struct repository *r,
- 	uint32_t i, packs_to_repack;
- 	size_t total_size;
- 	struct repack_info *pack_info = xcalloc(m->num_packs, sizeof(struct repack_info));
-+	int pack_kept_objects = 0;
 +
-+	repo_config_get_bool(r, "repack.packkeptobjects", &pack_kept_objects);
- 
- 	for (i = 0; i < m->num_packs; i++) {
- 		pack_info[i].pack_int_id = i;
-@@ -1338,6 +1352,8 @@ static int fill_included_packs_batch(struct repository *r,
- 
- 		if (!p)
- 			continue;
-+		if (!pack_kept_objects && p->pack_keep)
-+			continue;
- 		if (open_pack_index(p) || !p->num_objects)
- 			continue;
- 
-@@ -1386,7 +1402,7 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	if (batch_size) {
- 		if (fill_included_packs_batch(r, m, include_pack, batch_size))
- 			goto cleanup;
--	} else if (fill_included_packs_all(m, include_pack))
-+	} else if (fill_included_packs_all(r, m, include_pack))
- 		goto cleanup;
- 
- 	repo_config_get_bool(r, "repack.usedeltabaseoffset", &delta_base_offset);
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 030a7222b2a..7214cab36c0 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -538,6 +538,33 @@ test_expect_success 'repack with minimum size does not alter existing packs' '
- 	)
+ 	return c1 < c2 ? 0 : TREE_UNORDERED;
+ }
+
+@@ -587,6 +651,7 @@ static int fsck_tree(const struct object_id *oid,
+ 	struct tree_desc desc;
+ 	unsigned o_mode;
+ 	const char *o_name;
++	struct name_stack df_dup_candidates =3D { NULL };
+
+ 	if (init_tree_desc_gently(&desc, buffer, size)) {
+ 		retval +=3D report(options, oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot b=
+e parsed as a tree");
+@@ -666,7 +731,8 @@ static int fsck_tree(const struct object_id *oid,
+ 		}
+
+ 		if (o_name) {
+-			switch (verify_ordered(o_mode, o_name, mode, name)) {
++			switch (verify_ordered(o_mode, o_name, mode, name,
++					       &df_dup_candidates)) {
+ 			case TREE_UNORDERED:
+ 				not_properly_sorted =3D 1;
+ 				break;
+@@ -682,6 +748,8 @@ static int fsck_tree(const struct object_id *oid,
+ 		o_name =3D name;
+ 	}
+
++	name_stack_clear(&df_dup_candidates);
++
+ 	if (has_null_sha1)
+ 		retval +=3D report(options, oid, OBJ_TREE, FSCK_MSG_NULL_SHA1, "contain=
+s entries pointing to null sha1");
+ 	if (has_full_path)
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 449ebc5657..91a6e34f38 100755
+=2D-- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -257,6 +257,22 @@ test_expect_success 'tree object with duplicate entri=
+es' '
+ 	test_i18ngrep "error in tree .*contains duplicate file entries" out
  '
- 
-+test_expect_success 'repack respects repack.packKeptObjects=false' '
-+	test_when_finished rm -f dup/.git/objects/pack/*keep &&
-+	(
-+		cd dup &&
-+		ls .git/objects/pack/*idx >idx-list &&
-+		test_line_count = 5 idx-list &&
-+		ls .git/objects/pack/*.pack | sed "s/\.pack/.keep/" >keep-list &&
-+		test_line_count = 5 keep-list &&
-+		for keep in $(cat keep-list)
-+		do
-+			touch $keep || return 1
-+		done &&
-+		git multi-pack-index repack --batch-size=0 &&
-+		ls .git/objects/pack/*idx >idx-list &&
-+		test_line_count = 5 idx-list &&
-+		test-tool read-midx .git/objects | grep idx >midx-list &&
-+		test_line_count = 5 midx-list &&
-+		THIRD_SMALLEST_SIZE=$(test-tool path-utils file-size .git/objects/pack/*pack | sort -n | sed -n 3p) &&
-+		BATCH_SIZE=$((THIRD_SMALLEST_SIZE + 1)) &&
-+		git multi-pack-index repack --batch-size=$BATCH_SIZE &&
-+		ls .git/objects/pack/*idx >idx-list &&
-+		test_line_count = 5 idx-list &&
-+		test-tool read-midx .git/objects | grep idx >midx-list &&
-+		test_line_count = 5 midx-list
-+	)
+
++test_expect_success 'tree object with dublicate names' '
++	test_when_finished "remove_object \$blob" &&
++	test_when_finished "remove_object \$tree" &&
++	test_when_finished "remove_object \$badtree" &&
++	blob=3D$(echo blob | git hash-object -w --stdin) &&
++	printf "100644 blob %s\t%s\n" $blob x.2 >tree &&
++	tree=3D$(git mktree <tree) &&
++	printf "100644 blob %s\t%s\n" $blob x.1 >badtree &&
++	printf "100644 blob %s\t%s\n" $blob x >>badtree &&
++	printf "040000 tree %s\t%s\n" $tree x >>badtree &&
++	badtree=3D$(git mktree <badtree) &&
++	test_must_fail git fsck 2>out &&
++	test_i18ngrep "$badtree" out &&
++	test_i18ngrep "error in tree .*contains duplicate file entries" out
 +'
 +
- test_expect_success 'repack creates a new pack' '
- 	(
- 		cd dup &&
--- 
-gitgitgadget
+ test_expect_success 'unparseable tree object' '
+ 	test_oid_cache <<-\EOF &&
+ 	junk sha1:twenty-bytes-of-junk
+=2D-
+2.26.2
