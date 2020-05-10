@@ -7,81 +7,133 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06492C35280
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 06:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EA4BC35280
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 06:38:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCA96208DB
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 06:35:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 322592064A
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 06:38:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="piprgwc0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CyxZ9Abu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726104AbgEJGf4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 May 2020 02:35:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54106 "EHLO
+        id S1726195AbgEJGis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 02:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725779AbgEJGf4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 10 May 2020 02:35:56 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE67C061A0C
-        for <git@vger.kernel.org>; Sat,  9 May 2020 23:35:54 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id r10so2464844pgv.8
-        for <git@vger.kernel.org>; Sat, 09 May 2020 23:35:54 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725779AbgEJGis (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 10 May 2020 02:38:48 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5E36C061A0C
+        for <git@vger.kernel.org>; Sat,  9 May 2020 23:38:47 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id t16so2535064plo.7
+        for <git@vger.kernel.org>; Sat, 09 May 2020 23:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=bbRFbFYMdG0g8KvpmvfFCGojchotlzC91SlFfBT7iXw=;
-        b=piprgwc0J7xV6qpJyxWXVgbaOyqafMP+DZbDDxCQuF5Kc+blKremgbWaPFgTX3uk3v
-         2he1HrMqmjvbCDIxVb8bvbix886efwz9Wl/BRKvQLbgjChXbsS4ckPafiMdHg18ZTrH7
-         Iuop9b5vJLBkyAZe9i93mOzfGpkhQonFfBEkwMG0OLzSjZIKlXymh2WlYdvdKNfVuwF2
-         GZuG/6LV7N7fYNfe0oerA+REMkBRxcMH7omhmxdfBuH+ieMWhe2yi8L4o6hZ5rnpGGj9
-         EdaCR2DecA/3sYlyWTW7g9w24tbDNBX3BTTDHblb4O1+h7jEsPz2ke9wPL+3Sw3C0DrW
-         l8DA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=2q9GZedIrg2KUPKtDKmIEUWyoJ/IdYxDoKP8sF4lD18=;
+        b=CyxZ9AbunD7QrzfBvP5SgvKUOXJAohe8NUfu/vuNaL/Wt3UKzw3gGKnQJr540RYek0
+         ncbMGoiJ8JRMWuaF7m+MGQzaF3OFjSogm6+6c2edlmWLDSdYCJL7+OP5S/xMZrJJcbdr
+         C+9bmCxJQ88SDLue0GhBCgxviMazwS5asv63QhQgP+KGhIMpmtjGVHhJv5CX5bk8NbXw
+         m+3q/HN83DNpqyd9JC2p0kNpzpDWQMrNy5dkAI3OtUD4VVEoJCCpF/2RwaZcTlIy/vfk
+         KGpGEmTVh8gGgDvBmlO+290CscNu9Vque9hjEu0PAqH5T2MKFfFql+L4LVAEJ2yOk0vC
+         8yhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=bbRFbFYMdG0g8KvpmvfFCGojchotlzC91SlFfBT7iXw=;
-        b=ehzShnzyBnzOJnnAMtTzgoocR/9m/6084idZFPQU2bkiWIZnHI1o5WRsmelFJIUbhv
-         LTVbRWKrIohwL6MZzXB3GlXXspHU9GqCCgXhrzPVKTp+5rp5anmMEY70JIxYAzbUbkBJ
-         h+a/zXsaxKWqFNWtaAh3SLruoQle1xNbHumk1CG5r8riytjlT3yEGNymnEv2qVxgLH/Q
-         cOhxuwBndA0GVix8XOcd8vf/ul7qAA0eypH4/K709JfpyMQZCv8ylI+9FVLh+7YWiqDP
-         pa4FV8Lfj/kBDDblhC8FhXHcmawGS6ZMy7VHf/JQMAzfsqbNm/2dF9dKV5oB/qRFLZgK
-         5qkw==
-X-Gm-Message-State: AGi0PuYPWY6hOPrnHV+3ytjKqfUbj5wdwc9sSpkzGb5EIXMvyuXkwL1v
-        w5ghWWGzdgoPGBBfrwjUhn36s79zE1rV9D2N
-X-Google-Smtp-Source: APiQypJdAq2q8WbOvgbmnnSSftABk7IBIXUrr6leV/XcYwrVzZIqv2sMXYey70m7jWRr69H0Ca6d+g==
-X-Received: by 2002:a63:6c41:: with SMTP id h62mr9123778pgc.303.1589092553602;
-        Sat, 09 May 2020 23:35:53 -0700 (PDT)
-Received: from konoha ([103.37.201.175])
-        by smtp.gmail.com with ESMTPSA id i4sm5159911pgd.9.2020.05.09.23.35.49
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=2q9GZedIrg2KUPKtDKmIEUWyoJ/IdYxDoKP8sF4lD18=;
+        b=LPk6UZbKJkDixTPO2liRisZHzYsE8mUFnozz1QhPzIdvr1RibdJCrL/4mVJPFmml2t
+         wHk8Q3QCR1OWGqPSkvs6u41PPEYNjUQZfKt9fYOvqiSE/Xe32xQ/S9Zyfy3HNaofwC7R
+         OKLsK0c4LXJIQ58Vbb2OzSr2VYD00toFaTwncM4HfR7aXg4P9CWeBxVHjczhdwbou+0h
+         DB4ykvzWCuaTDntrL9i9Gn87jzouRvhVJFAVOzAFnodluC3cnU8ErJOQ3HrqIbGnSe/K
+         mA/aOpMr0JEY1CNug3BkMeVxWzYrEtZELQkIN9YTuuH9txvPJu77n6rBJFANqc744Y5A
+         DuNg==
+X-Gm-Message-State: AGi0PuZDc1qgfUF6fCg0hm1DOPnGZAfz5PJZtHsZUEEFBaYDWDbu4agI
+        +gBV38SookF/3cfAAlutPPXVKZ4E
+X-Google-Smtp-Source: APiQypJJm5gmnOwLk4pE+ILfu076FhmPhIOZLygbdRlnQ0XJ0GuwJ4qbqrzd3JCFwSAv7twtcilA8A==
+X-Received: by 2002:a17:90b:f13:: with SMTP id br19mr15864477pjb.153.1589092727296;
+        Sat, 09 May 2020 23:38:47 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
+        by smtp.gmail.com with ESMTPSA id 9sm5002809pgr.17.2020.05.09.23.38.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 May 2020 23:35:52 -0700 (PDT)
-Date:   Sun, 10 May 2020 12:05:44 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, kaartic.sivaraam@gmail.com,
-        heba.waly@gmail.com, stolee@gmail.com, jnareb@gmail.com,
-        gitster@pobox.com, Johannes.Schindelin@gmx.de, peff@peff.net
-Subject: [GSoC] Shourya's blogs
-Message-ID: <20200510063544.GA3561@konoha>
+        Sat, 09 May 2020 23:38:46 -0700 (PDT)
+Date:   Sun, 10 May 2020 13:38:44 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Son Luong Ngoc <sluongng@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 2/3] multi-pack-index: respect
+ repack.packKeptObjects=false
+Message-ID: <20200510063844.GA14311@danh.dev>
+References: <pull.626.v2.git.1588758194.gitgitgadget@gmail.com>
+ <pull.626.v3.git.1589034270.gitgitgadget@gmail.com>
+ <988697dd5121430cd3ddfa60b1ebcf26027566ef.1589034270.git.gitgitgadget@gmail.com>
+ <20200509161159.GA15146@danh.dev>
+ <xmqqlfm1ui6t.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqlfm1ui6t.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all!
+On 2020-05-09 10:33:30-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
+> 
+> > On 2020-05-09 14:24:29+0000, Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> >> From: Derrick Stolee <dstolee@microsoft.com>
+> >> 
+> >> +test_expect_success 'repack respects repack.packKeptObjects=false' '
+> >> +	test_when_finished rm -f dup/.git/objects/pack/*keep &&
+> >> +	(
+> >> +		cd dup &&
+> >> +		ls .git/objects/pack/*idx >idx-list &&
+> >
+> > I think ls(1) is an overkill.
+> > I think:
+> >
+> > 	echo .git/objects/pack/*idx
+> >
+> > is more efficient.
+> 
+> When there is no file whose name ends with idx, what happens?
+> 
+>     $ ls *idx && echo OK
+>     ls: cannot access '*idx': No such file or directory
+>     $ echo *idx && echo OK
+>     *idx
+>     OK
 
-I post blogs as well as my GSoC progress on
-https://shouryashukla.blogspot.com/
-I will try posting the GSoC blogs every saturday night (around 2300h
-IST). Other blogs will come randomly. Feel free to leave a comment on
-any of the blogs (there are 2 as of now but more are on the way ;)
+Yes, but I think the next line is checking for the number of lines.
+This is better to fail faster.
 
-This is my latest post about the first week of GSoC:
-https://shouryashukla.blogspot.com/2020/05/gsoc-week-1.html
+(My suggestion was wrong anyway, it should be "printf "%s\\n" *idx)
 
-Thanks a lot,
-Shourya Shukla
+> >> +		test_line_count = 5 idx-list &&
+> >> +		for keep in $(cat keep-list)
+> >> +		do
+> >> +			touch $keep || return 1
+> >
+> > Is this intended?
+> > Since touch(1) accepts multiple files as argument.
+> 
+> Good suggestion, but doesn't .keep file record why the pack is kept
+> in real life (i.e. not an empty file)?
+
+Yes, in real life, we usually provide a reason in this .keep file.
+But, we also allow empty file with git-index-pack --keep
+I think simple touch is fine for this test.
+
+Missing piece for my previous command:
+if `keep-list` is empty, we may want to fail fast,
+touch with empty list will error out (at least in my system).
+
+
+-- 
+Danh
