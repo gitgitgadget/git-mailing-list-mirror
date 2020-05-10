@@ -2,116 +2,87 @@ Return-Path: <SRS0=RpNG=6Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F63BC38A2A
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 17:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08B22C38A2A
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 17:33:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 328E620736
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 17:02:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D283620731
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 17:33:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RbwnmnE0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oVtFpd40"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728683AbgEJRCE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 May 2020 13:02:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64565 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728360AbgEJRCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 May 2020 13:02:03 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D6B9446D9;
-        Sun, 10 May 2020 13:02:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XCZSn2585bLxobVJuYnHGsFn7JM=; b=Rbwnmn
-        E0Zxd3hs4ZjwOKqapkIvjaFwVBTM/lnX32aIv9/oZGj+KMbBgQ8bTlhHT5xx0P4T
-        EmDBlchE3sgtjnxxFqhjhwdjuNuP3QkgL+WUevt+cvD93bi05sGs6AunRP5ys55G
-        rykSzkRT2knaQ030EansLx8LiRk7gwMev2vBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xUBm3IIKAdxGDr8WGoAjRFxMJ4lUv4y3
-        Ca4jjd4OPWEpxyJWtZ/zZuelJZSqdLTGtd8vPFUWEeqHb6jEojggozSM1FGWJAlr
-        MzHMSZNC2AUiKBrqW6/uUsEcRPwhaSS/se63NPhXCT+wy6Zi22ifotM/W7anbs67
-        V7aZuDP0Kfg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 542B7446D8;
-        Sun, 10 May 2020 13:02:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B2DC9446D6;
-        Sun, 10 May 2020 13:01:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Andrew Oakley <andrew@adoakley.name>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH v3] git-p4: recover from inconsistent perforce history
-References: <20200510101650.50583-1-andrew@adoakley.name>
-        <CAE5ih793qKyOSE-hkOw7+nFmM3XTRxxrXv0FD2+WWXjGbVHkoQ@mail.gmail.com>
-Date:   Sun, 10 May 2020 10:01:59 -0700
-In-Reply-To: <CAE5ih793qKyOSE-hkOw7+nFmM3XTRxxrXv0FD2+WWXjGbVHkoQ@mail.gmail.com>
-        (Luke Diamand's message of "Sun, 10 May 2020 13:03:11 +0100")
-Message-ID: <xmqqsgg7u3js.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729124AbgEJRdY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 13:33:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42522 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1729113AbgEJRdY (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 10 May 2020 13:33:24 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A69FC061A0C
+        for <git@vger.kernel.org>; Sun, 10 May 2020 10:33:24 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id k110so5708733otc.2
+        for <git@vger.kernel.org>; Sun, 10 May 2020 10:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4DxOKrJ6b53b9K0VvxlBHsoJZnkp7tUh0fjZYo4zHn8=;
+        b=oVtFpd40s07MF2ikAPGLiC7ThkwiTmD76emeo9hiS+TGwbpoN1fBwjvj2XGLD6PVFI
+         nX/lrS2jgeClOQmsgK6g7IB7yPSW/FhkDhzWakXfaOHju9obQDTp4XfPY9BrImB/XX+q
+         DyjieUnzQsMAZt3I9RpldKRkiewJDGLQENif9Qd3zWl5cKoi2HKUqwoOzcR6bEFrlP4B
+         z27hAu0A8ehLKD5hQ5P8YQc3Zwj0L9HEX5P353vxkio0A6T/b7XFdQShX1Ji4jKcSdCr
+         GkuGTTErh2tyVqSe3sQR0VxQThlREgqjLz/xQFM5bzrGAiyio4QoCJgOSzb7CDVbyoUx
+         EMWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4DxOKrJ6b53b9K0VvxlBHsoJZnkp7tUh0fjZYo4zHn8=;
+        b=S0DJig1Bsfj02m1alQAdYFl3JKZzQGYvvulpVCMhjvLIEnnBh5bbKavw8mdgeUzF0s
+         7jzuwOprBD3zIsFUPjP5IvNpTkTc6H9XZcNuy8qAB9Z4flKFNbP67pcVhnQag622hjMq
+         abquxgHAyhrIF3pUGtDDENSCA/RJ5VvsPOz2yZb4iEoToLfj7wo6c56hN5d1C6B174WI
+         E3fx3+NNoykztRT6s9Si+Xl3a37VX0gIEcBGeJ0tT8j+8/xpvXZRLtFv6p5+b9+PFVKh
+         TIUlZ26V/Sp0BoAiUCpy/Q91Sb0eEXUEjfIxOYtlMCwigMVBISxf0ttqvgv6fQrPqIXm
+         jVfQ==
+X-Gm-Message-State: AGi0PuZHkEj20EFb94ycYr3htYMgUGemV9ucv3mdFGIfQRaGXibxGP5P
+        yvYOQUV7kXQ1bMYET/qg1NC6ea2mpldq1B8M2thZR0/c
+X-Google-Smtp-Source: APiQypI75ScGGtBrEvJPFbnEPe6mp4xr0TdFKB8QMSS6defVDJ48GlfbJBJSgvE7J0Z+YMF6wRYtAVGZAL4CDMc63Hs=
+X-Received: by 2002:a9d:1eaa:: with SMTP id n39mr10249536otn.238.1589132003493;
+ Sun, 10 May 2020 10:33:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F6665CF6-92DF-11EA-9EC5-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <CAFKec1W0-OOQYypP-3VC=dJnuNDrykdQ2xibc=u4D=Zo6if-+Q@mail.gmail.com>
+ <xmqqd07cvl9b.fsf@gitster.c.googlers.com> <CAFKec1Wj_uK-moVfin3XrTEmmBaAzaJKsh1f8q-3+RBs2-3Jdg@mail.gmail.com>
+ <xmqq8si0vfp3.fsf@gitster.c.googlers.com> <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
+ <xmqqwo5ju47t.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqwo5ju47t.fsf@gitster.c.googlers.com>
+From:   George Brown <321.george@gmail.com>
+Date:   Sun, 10 May 2020 18:33:12 +0100
+Message-ID: <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
+Subject: Re: [PATCH] contrib/git-jump: cat output when not a terminal
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
+> As long as such a regression for existing users use is impossible, I
+> think the patch is probably OK, but doing a hardcoded "cat" smells
+> like a very bad hack, compared to a solution on the program's side
+> that *wants* to read the prepared file to arrange that to happen
+> (e.g. via setting the GIT_EDITOR environment to "cat" within that
+> program).
 
-> On Sun, 10 May 2020 at 11:17, Andrew Oakley <andrew@adoakley.name> wrote:
->>
->> Perforce allows you commit files and directories with the same name, so
->> you could have files //depot/foo and //depot/foo/bar both checked in.  A
->> p4 sync of a repository in this state fails.  Deleting one of the files
->> recovers the repository.
->>
->> When this happens we want git-p4 to recover in the same way as perforce.
->
-> Looks good to me.
->
-> Perforce changed their server to reject this kind of thing in the
-> 2017.1 version:
->
->     Bugs fixed in 2017.1
->     #1489051 (Job #2170) **
->        Submitting a file with the same name as an existing depot
->        directory path (or vice versa) will now be rejected.
->
-> (Of course people will still have damaged repos even today).
+I think this change only enhances "git jump".
 
-Perhaps it is worth describing the above in the log message?  E.g.
+> In any case, I am not a "git jump" user, so...
 
-    Perforce allows you commit files and directories with the same name,
-    so you could have files //depot/foo and //depot/foo/bar both checked
-    in.  A p4 sync of a repository in this state fails.  Deleting one of
-    the files recovers the repository.
+I looked into this as other Vim users were talking about it and wanted
+this behavior.
 
-    When this happens we want git-p4 to recover in the same way as
-    perforce.
-
-    Note that Perforce has this change in their 2017.1 version:
-
-         Bugs fixed in 2017.1
-         #1489051 (Job #2170) **
-            Submitting a file with the same name as an existing depot
-            directory path (or vice versa) will now be rejected.
-
-    so people hopefully will not creating damaged Perforce repos
-    anymore, but "git p4" needs to be able to interact with already
-    corrupt ones.
-
-    Signed-off-by: Andrew Oakley <andrew@adoakley.name>
-    Reviewed-by: Luke Diamand <luke@diamand.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Thanks.
+https://www.reddit.com/r/vim/comments/gf2he2/what_is_the_simplest_way_to_get_all_git_changes/fprlxtk/?context=3
