@@ -2,93 +2,122 @@ Return-Path: <SRS0=RpNG=6Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93D53C38A2A
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 18:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61DEAC38A2A
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 18:51:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E42D2080C
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 18:34:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3900B2082E
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 18:51:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mmd4Ljmc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qwPtarAb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728823AbgEJSeX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 May 2020 14:34:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51968 "EHLO
+        id S1729102AbgEJSvR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 14:51:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728123AbgEJSeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 May 2020 14:34:23 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF74CC061A0C
-        for <git@vger.kernel.org>; Sun, 10 May 2020 11:34:21 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id 72so5804897otu.1
-        for <git@vger.kernel.org>; Sun, 10 May 2020 11:34:21 -0700 (PDT)
+        with ESMTP id S1728823AbgEJSvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 May 2020 14:51:16 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF606C061A0C
+        for <git@vger.kernel.org>; Sun, 10 May 2020 11:51:16 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id f15so2967619plr.3
+        for <git@vger.kernel.org>; Sun, 10 May 2020 11:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Buvn+xWygdq8WTon7RL+ciwaLjt70YUf16P2XgqZWZ8=;
-        b=mmd4LjmcUEPat0zv7msCQ5p4MHlGcngyqlaEipRH0mdHM7iW3my/gD3Ck4dZqZWjpK
-         0LSyvd0RZeq1T2uGKpzCT4Zfoptub8zF/RkDCWtfaIR3p4xjYPguLYh3ocFixwod7ScA
-         V+OLL9ao+vCg6mtqTlnOWHTQcBCj8IB0ePYL6ZfQHsCwTdcP7vZQXmvBmHpopzRC7r6j
-         drc4n7iONsZR8Inog6T0NyJn4EwXxoqn8ltE6cC+Udp9wytlHUsV/zYBJinB0kpp5scN
-         SFX9tFblF6FMnqQ9tus0hx/gx9i0jLK0RpQ2zNticl1QZjbuer3yZe8rQGzszlpocJIU
-         kTfw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ufeL4Lc6xtGtq3WjOu+rVUjgnFJaBFfuoqDFUihKS7A=;
+        b=qwPtarAb7VWj0ZgEA7v2IThBnl4vKrjbmZQlmj9Uq+7x0JSlJN3P2/GtyySzRoKahe
+         6Madq/qjQbbBHGPm2pRa/m7KhIrpTsRUAlSuj/2Q1Iu5AgsfYy5Va69F1YeQQnr24u4o
+         2ys9r1gk3XeFHTS1Yjhp9WLk72O6ZVusH2mccYIuw2NvmlwUVLyP4RgJEonMizzP+/kV
+         MJRFHjZ4WaNv1DrIDyzZENgZ1sBYc0BOwbe+yJ9sSS5IIqv7P+wQ8/Ga3CVyQqfjRQfG
+         N5RzOVvN93iYowzD8gh8P9KGjVxxIk/mPSIEYvvl8wzNEzncSE2HTRct2IsJM5z7Ki8W
+         LkaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Buvn+xWygdq8WTon7RL+ciwaLjt70YUf16P2XgqZWZ8=;
-        b=QVD5F0SsU0gpnv8XQm9rn8ZwbbubmEezHaPA5FtYiHS+Yb8cy42ngBLSLmpZkOHg3V
-         +rdgkn7t0uAAodLKki4goKqhAdHt3r4W2TSQXFOYsEjGtN0ujsQklF480BEdRPNpjs/3
-         26NHusCY53XdLTsISyylpnTJiLQnmi8ORqRikmLhQ925mA3WbwfgwbDRnDdU0ZRixgmI
-         k/LOhV4BxM87gkzpqMbdEjgL8OtyCZJ7tmxqGga87wErCRAaQ2+HQ+ebeh0Yoad0hB4k
-         qhTX04aUzFnmQicaJR2Dy6rnt0ImQunDkhUMAryoH7Y1hskGYZmX3zf0Zn161ckH60XE
-         xkOQ==
-X-Gm-Message-State: AGi0PuYz3ALKWkQ713x7LPUpK+3gPJgPpjuf0gdaZLEwjUfdde3XK0+U
-        sA/8JaA1BuDmtk6Oz6ubNB7YIzMTyxpWsj5BSNWZ+1Sp
-X-Google-Smtp-Source: APiQypJSGjrNN3BzMpbGaKhU018Q3FTKvLfg7nwKqfJqg9NLMVg4hAMHIXlyUeGATTEKG4ATTLtUUvJzG+b36b2OI4g=
-X-Received: by 2002:a9d:1eaa:: with SMTP id n39mr10388920otn.238.1589135660950;
- Sun, 10 May 2020 11:34:20 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ufeL4Lc6xtGtq3WjOu+rVUjgnFJaBFfuoqDFUihKS7A=;
+        b=RfPfv+za1ZlCZU2RvE9DtQyqDj5+FXC6+ZoXojeN3TE1GxRHWBYeshUExmB0vUQtR0
+         Xfvm+pZArol5nr4TMxyKSXLs47lbKpraam9+pOXuRrPUAmSk+g0ni3U8zOqD7pMR1kUp
+         UctWtnt12LiNmbz1hxckwEXjEUT5ShRe0JDyMGtBU55D5mUp8YasBrd2SS4Q1VrWtI0m
+         64K2LfOeIv1kCJ3zmgKCEbxYJXYARfk4VIuJ1ZSM8atEcfqko7y62kWW/M8zLkiKIzhr
+         xETRDXN8TxNmIcLoz+5UewEzrGMTzFe0aGlwS2psMkGwK458ovojcj2G+dHdJ5MbcWz9
+         Xs5w==
+X-Gm-Message-State: AGi0PuaDeRXjrP+DyW5PZJfHAZI1wWSR+eMBckSx2sKnRGmCZyaSLHuR
+        GQ01oKlZBC1WAkh4DcVn9kg=
+X-Google-Smtp-Source: APiQypIowc1KPWvdE/jkhrIZ4Nv2/GrSe0FHYUOWwS9G9nQK78KhRAv3ZGeMh6TCkpdIWXjNclLlUg==
+X-Received: by 2002:a17:90a:3f8e:: with SMTP id m14mr18691290pjc.92.1589136676286;
+        Sun, 10 May 2020 11:51:16 -0700 (PDT)
+Received: from [192.168.206.103] ([117.209.235.186])
+        by smtp.gmail.com with ESMTPSA id f99sm8313677pjg.22.2020.05.10.11.51.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 May 2020 11:51:15 -0700 (PDT)
+Subject: Re: [ANNOUNCE] GSoC 2020 Students and Projects
+To:     philipoakley@iee.email
+Cc:     =?UTF-8?Q?Matthias_A=c3=9fhauer?= <mha1993@live.de>,
+        Johannes.Schindelin@gmx.de, abhishekkumar8222@gmail.com,
+        christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+        hariom18599@gmail.com, heba.waly@gmail.com, jnareb@gmail.com,
+        peff@peff.net, shouryashukla.oo@gmail.com, stolee@gmail.com,
+        sttaylor@google.com
+References: <AM0PR04MB47710F0BED399BA85C5DEC89A5A00@AM0PR04MB4771.eurprd04.prod.outlook.com>
+ <AM0PR04MB477183F214CD69F0A510BED9A5A00@AM0PR04MB4771.eurprd04.prod.outlook.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <999d4480-7d72-3ca1-f3ba-e3b08c5089a6@gmail.com>
+Date:   Mon, 11 May 2020 00:21:08 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <CAFKec1W0-OOQYypP-3VC=dJnuNDrykdQ2xibc=u4D=Zo6if-+Q@mail.gmail.com>
- <xmqqd07cvl9b.fsf@gitster.c.googlers.com> <CAFKec1Wj_uK-moVfin3XrTEmmBaAzaJKsh1f8q-3+RBs2-3Jdg@mail.gmail.com>
- <xmqq8si0vfp3.fsf@gitster.c.googlers.com> <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
- <xmqqwo5ju47t.fsf@gitster.c.googlers.com> <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
- <xmqqo8qvu0ao.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqo8qvu0ao.fsf@gitster.c.googlers.com>
-From:   George Brown <321.george@gmail.com>
-Date:   Sun, 10 May 2020 19:34:09 +0100
-Message-ID: <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
-Subject: Re: [PATCH] contrib/git-jump: cat output when not a terminal
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <AM0PR04MB477183F214CD69F0A510BED9A5A00@AM0PR04MB4771.eurprd04.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think with this change all editors can benefit. The format "git jump"
-is producing is something easily consumed. I think consumption of output
-from tools is far more common in editors than communication between
-multiple instances.
+Hi Philip,
 
-As an aside the fact that as is "git jump" invokes "$GIT_EDITOR" with
-the "-q" option makes an implicit assumption the editor will be Vim or
-something very much like it. To be very clear I don't mean to say this
-means only Vim should be considered. However it's also making the
-implicit assumption that passing the "-q" option is valid for any
-"$GIT_EDITOR" and does not cause an error like that seen when trying to
-override "$GIT_EDITOR" with cat. This change means other editors can
-invoke "git jump" without fear of such a situation, increasing
-usability.
+You can find more details about the proposals in the the final draft 
+which were sent to the mailing list. You can find the links to 
+corresponding mailing list e-mails, inline.
 
-Arguably the most interoperable way for "git jump" to work would be to
-output the formatted lines and do nothing else, leaving it to users to
-choose how to operate upon the output/invoke editors. Of course such
-a change would break the workflow of anyone who uses "git jump" today
-and isn't a valid option.
+On 10-05-2020 15:39, Matthias Aßhauer wrote:
+> Since my mail client mangled the previous mail badly I'm sending
+> it again with slight changes to hopefully prevent the mangling.
+> 
+> These modified links should be accessible without any login.
+> 
+> "Implement Generation Number v2" from Abhishek Kumar will be
+> co-mentored by Jakub Narebski and Derrick Stolee.
+> 
+> https://summerofcode.withgoogle.com/projects/#6140278689234944
+>
+
+https://lore.kernel.org/git/20200326101520.GA19326@Abhishek-Arch/
+
+> "Unify ref-filter formats with other --pretty formats"
+> from Hariom Verma will be co-mentored by Heba Waly and
+> Christian Couder.
+> 
+> https://summerofcode.withgoogle.com/projects/#4593212745842688
+>
+https://lore.kernel.org/git/CA+CkUQ966swTrR7D2vxgQ2ZA3E=Le=u8yvEAopOsphoCWGgDeg@mail.gmail.com/
+
+> "Convert submodule to builtin" from Shourya Shukla will be
+> co-mentored by Kaartic Sivaraam and Christian Couder.
+> 
+> https://summerofcode.withgoogle.com/projects/#6451304047575040
+>
+
+https://lore.kernel.org/git/20200325185053.10274-1-shouryashukla.oo@gmail.com/
+
+-- 
+Sivaraam
