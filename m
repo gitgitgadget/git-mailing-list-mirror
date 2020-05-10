@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 223DAC47257
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 00:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7D08C54E7E
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 00:42:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01E7221775
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 00:42:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A561220CC7
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 00:42:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="ClQTdxnl"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="sQuMNPeq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728924AbgEJAmC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 May 2020 20:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56128 "EHLO
+        id S1728936AbgEJAmD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 May 2020 20:42:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726778AbgEJAmA (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 May 2020 20:42:00 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B966C061A0C
-        for <git@vger.kernel.org>; Sat,  9 May 2020 17:42:00 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id b6so4931128qkh.11
-        for <git@vger.kernel.org>; Sat, 09 May 2020 17:42:00 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728932AbgEJAmD (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 May 2020 20:42:03 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3E7C061A0C
+        for <git@vger.kernel.org>; Sat,  9 May 2020 17:42:03 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id fb4so2658530qvb.7
+        for <git@vger.kernel.org>; Sat, 09 May 2020 17:42:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gUU3kG2njJdwu6kxo7ucxWl6Z9P+M9pcu/vz3EAnCTc=;
-        b=ClQTdxnliutVXQ4Glow/loeGohDv8BhX816LxUjBabh9J1gMq1YR3E5TNCrutG4QCN
-         YE3EttmQGYn89WrC6kZ+rMB5GC4m+4QNxqH6kjqteeOa5zjuu+A7QGQuVdcKwxMOLwo/
-         3p6T9gFUQ9D4Lqfm1qy6Iqcn9MNRdpmJ4JZ3/ZxGraAc73H0SyGGrTE0cqj1V8Tpsh/O
-         fYUFYB703T5A1qcZ+UB89kJmKCl3CbDr4Cjg8YAbJQk5X9XCgY8UVtuw429J5tiRcCyn
-         w0CgeRGOyPxxXVuXooADSsiWsubkvJ7+XzaTlZSga4aK7cFLO8fc+7K6rYmaUmyCXq7r
-         ZzPw==
+        bh=O1u5R8ggOzlkUTvyNzWaw6inkG2dnrZ9hao4+t/gpAQ=;
+        b=sQuMNPeqkRd8srMkhGIRuS7zcB8x7rz0BVK5xxDmfnpu58T6EvVhwjRk4f/oHaDnPB
+         OvnyqoqkFwGR2rCiGLat4ZbGXpMKfGmB6PqXwLxPL2loWcJq+TSY+RvirOV5x7nz1mNu
+         4lnIDmZGU17awOEKR4B3IFVlcodZfTJRc9Z/pxlUnUNHUhyyklfGq4k4Q1eALZg36Tzg
+         dOD3xskzyVlEGMmxrQfXebTWqlVwbWZos0MBb+Rlb6VE9tdR/9s8ZvThaGkMjfwcT4Fu
+         TO1o4cfBqcbY12vyrSUCHuWblmA64/Uz4sYQQ2TSgHZCFkV9RHMpynczOcw2qB8ZF+n9
+         s/ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gUU3kG2njJdwu6kxo7ucxWl6Z9P+M9pcu/vz3EAnCTc=;
-        b=PIT4d1lEj0eusw0oPCj0Wnx7QIw0zrw6psa9dyGtXA9ipqBXaEKSmgbmLxjh6cC9NX
-         4bfxdoIkotLadqt/Lr6Gvoc+oKd7jO3gkZ1iTPsAT92WJA5ZlLvrqfa6elVLI8kKwmRF
-         IOvg0EKr0XsX/2drIn5bndaZu+TiYRVYxUPVQxZQgu3xp8L7xTlTHoyiP18ar+ydjcsD
-         NKaH+IOX5ZYhkSlXeYDKL7n6RHaWqkFb63iDqY9/y3YKIcC7pjEFXdANW9b9QR46nwfr
-         92450zG8WjSy8ihvCY5JavgImb0T56y7eje87zZ96wQZFote0Kd39LP475Nco/YXKHVF
-         mI+A==
-X-Gm-Message-State: AGi0PuZcpg4Dvd15IUu8dHrsy2DmEfSrAHoVSHa/E3lGF2AfZkCFzxLS
-        DuqW//LbU2FOYQ+kqcm0i8llu803WP8=
-X-Google-Smtp-Source: APiQypLv6fmrwXv5qvLgo9kjNPxDrXCu2yVq9Hw2+88zrpuanxu6tP/C82bmRx1ol5uZ23g+4WCCbg==
-X-Received: by 2002:a37:9d4f:: with SMTP id g76mr264872qke.235.1589071319389;
-        Sat, 09 May 2020 17:41:59 -0700 (PDT)
+        bh=O1u5R8ggOzlkUTvyNzWaw6inkG2dnrZ9hao4+t/gpAQ=;
+        b=Tv5DfwAWz1VwQOoASLv4Z9pKzqrivMSCqJBgWUi7cl0JkPL0MR0xFMn1WBB8O+pA/u
+         0ruNnew6ondpqIBMsuBmPSZNzzuQ5ZwM0KC3pG0sI4cTNM64vkMQvHBc4wNs2hsTlXNr
+         Xb1viLsL1gcMSBtAyHlnwgyagrWEPgoE8N5Sy2idAr/o1EdW9xcitCqoinPUR5xNTQcp
+         pW/npqZXTFbJn1hO0J6JX2p9lPxVdwbDFvLT++Xz50i0XAIrjTAmpe6QP74+xsGv1mRh
+         830+UdNtnMQSlou5/ESnBs7tjtq4PGajIcCgp7RMMTWqC59O8aBwhgWZL5364hRykmDH
+         WH0Q==
+X-Gm-Message-State: AGi0Pub3zZaoIy1O3USUqzRbzFuVyFzWEuGrVn/h1qEy6ls6Fr8bE+lW
+        KY94YRdfYxAt7M48tHdcP9M2iCzWWRM=
+X-Google-Smtp-Source: APiQypIVeTxWvPbi3+6iwtc40gpVwJgP3EaBpJzF7qGSzP3M1utZi7ryR/iKIsf1kTZzez7aVCL31A==
+X-Received: by 2002:ad4:4a27:: with SMTP id n7mr9710028qvz.80.1589071321834;
+        Sat, 09 May 2020 17:42:01 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:9a16::1])
-        by smtp.gmail.com with ESMTPSA id s8sm5615974qtb.0.2020.05.09.17.41.57
+        by smtp.gmail.com with ESMTPSA id s8sm5615974qtb.0.2020.05.09.17.41.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 May 2020 17:41:58 -0700 (PDT)
+        Sat, 09 May 2020 17:42:01 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, stolee@gmail.com, newren@gmail.com,
         jonathantanmy@google.com
-Subject: [RFC PATCH v2 1/4] doc: grep: unify info on configuration variables
-Date:   Sat,  9 May 2020 21:41:27 -0300
-Message-Id: <c344d22313265709fc6b5ab67621122390f33d14.1589058209.git.matheus.bernardino@usp.br>
+Subject: [RFC PATCH v2 2/4] config: load the correct config.worktree file
+Date:   Sat,  9 May 2020 21:41:28 -0300
+Message-Id: <882310b69fd3df0acc6823a2c73bbe1801d9f6c4.1589058209.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <cover.1589058209.git.matheus.bernardino@usp.br>
 References: <cover.1589058209.git.matheus.bernardino@usp.br>
@@ -74,94 +74,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Explanations about the configuration variables for git-grep are
-duplicated in "Documentation/git-grep.txt" and
-"Documentation/config/grep.txt", which can make maintenance difficult.
-The first also contains a definition not present in the latter
-(grep.fullName). To avoid problems like this, let's unify the
-information in the second file and include it in the first.
+One of the steps in do_git_config_sequence() is to load the
+worktree-specific config file. Although the function receives a git_dir
+string, it relies on git_pathdup(), which uses the_repository->git_dir,
+to make the path to the file. Thus, when a submodule has a worktree
+setting, a command executed in the superproject that recurses into the
+submodule won't find the said setting. Such a scenario might not be
+needed now, but it will be in the following patch. git-grep will learn
+to honor sparse checkouts and, when running with --recurse-submodules,
+the submodule's sparse checkout settings must be loaded. As these
+settings are stored in the config.worktree file, they would be ignored
+without this patch.
+
+The fix is simple, we replace git_pathdup() with mkpathdup(), to format
+the path with the given git_dir. This is the same idea used to make the
+config.worktree path in setup.c:check_repository_format_gently().
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- Documentation/config/grep.txt | 10 ++++++++--
- Documentation/git-grep.txt    | 36 ++++++-----------------------------
- 2 files changed, 14 insertions(+), 32 deletions(-)
+ config.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
-index 44abe45a7c..dd51db38e1 100644
---- a/Documentation/config/grep.txt
-+++ b/Documentation/config/grep.txt
-@@ -16,8 +16,14 @@ grep.extendedRegexp::
- 	other than 'default'.
+diff --git a/config.c b/config.c
+index 8db9c77098..a3d0a0d266 100644
+--- a/config.c
++++ b/config.c
+@@ -1747,8 +1747,9 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 		ret += git_config_from_file(fn, repo_config, data);
  
- grep.threads::
--	Number of grep worker threads to use.
--	See `grep.threads` in linkgit:git-grep[1] for more information.
-+	Number of grep worker threads to use. See `--threads`
-+ifndef::git-grep[]
-+	in linkgit:git-grep[1]
-+endif::git-grep[]
-+	for more information.
-+
-+grep.fullName::
-+	If set to true, enable `--full-name` option by default.
- 
- grep.fallbackToNoIndex::
- 	If set to true, fall back to git grep --no-index if git grep
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index a7f9bc99ea..9bdf807584 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -41,34 +41,8 @@ characters.  An empty string as search expression matches all lines.
- CONFIGURATION
- -------------
- 
--grep.lineNumber::
--	If set to true, enable `-n` option by default.
--
--grep.column::
--	If set to true, enable the `--column` option by default.
--
--grep.patternType::
--	Set the default matching behavior. Using a value of 'basic', 'extended',
--	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
--	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
--	value 'default' will return to the default matching behavior.
--
--grep.extendedRegexp::
--	If set to true, enable `--extended-regexp` option by default. This
--	option is ignored when the `grep.patternType` option is set to a value
--	other than 'default'.
--
--grep.threads::
--	Number of grep worker threads to use. If unset (or set to 0), Git will
--	use as many threads as the number of logical cores available.
--
--grep.fullName::
--	If set to true, enable `--full-name` option by default.
--
--grep.fallbackToNoIndex::
--	If set to true, fall back to git grep --no-index if git grep
--	is executed outside of a git repository.  Defaults to false.
--
-+:git-grep: 1
-+include::config/grep.txt[]
- 
- OPTIONS
- -------
-@@ -269,8 +243,10 @@ providing this option will cause it to die.
- 	found.
- 
- --threads <num>::
--	Number of grep worker threads to use.
--	See `grep.threads` in 'CONFIGURATION' for more information.
-+	Number of grep worker threads to use. If not provided (or set to
-+	0), Git will use as many worker threads as the number of logical
-+	cores available. The default value can also be set with the
-+	`grep.threads` configuration.
- 
- -f <file>::
- 	Read patterns from <file>, one per line.
+ 	current_parsing_scope = CONFIG_SCOPE_WORKTREE;
+-	if (!opts->ignore_worktree && repository_format_worktree_config) {
+-		char *path = git_pathdup("config.worktree");
++	if (!opts->ignore_worktree && repository_format_worktree_config &&
++	    opts->git_dir) {
++		char *path = mkpathdup("%s/config.worktree", opts->git_dir);
+ 		if (!access_or_die(path, R_OK, 0))
+ 			ret += git_config_from_file(fn, path, data);
+ 		free(path);
 -- 
 2.26.2
 
