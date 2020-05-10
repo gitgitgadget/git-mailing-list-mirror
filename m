@@ -2,116 +2,97 @@ Return-Path: <SRS0=RpNG=6Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CE32C35280
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 03:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6E05C35280
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 04:23:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFB1B20776
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 03:55:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AA12206D6
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 04:23:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHLUSvu1"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="cz1jY9Fi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbgEJDzy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 May 2020 23:55:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57696 "EHLO
+        id S1725786AbgEJEXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 00:23:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726067AbgEJDzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 May 2020 23:55:54 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54D0C061A0C
-        for <git@vger.kernel.org>; Sat,  9 May 2020 20:55:52 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id r16so4913170edw.5
-        for <git@vger.kernel.org>; Sat, 09 May 2020 20:55:52 -0700 (PDT)
+        with ESMTP id S1725308AbgEJEXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 May 2020 00:23:43 -0400
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E17BFC061A0C
+        for <git@vger.kernel.org>; Sat,  9 May 2020 21:23:42 -0700 (PDT)
+Received: by mail-lf1-x142.google.com with SMTP id r17so1559899lff.9
+        for <git@vger.kernel.org>; Sat, 09 May 2020 21:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=sN+Ahpv268aiGvLOaE9jvcidtQMD87sxgIJeuy54ZC0=;
-        b=VHLUSvu1wobhZapco1EsjGMcke09r2JmLjrJFmH6UvIi51UAdvQ4ZhfhsmHAXcEm0K
-         YCf5TlOAEXlthOeEqzaZ2Q6xEm2bRwVsmWx6VOJPin1t+5iCvaQzLWFRwDQClIutg/gk
-         J7jD7U8DK2GFM3y+NPvE8OM+l8cBWT1xdPP2r22AU/lmIpc2bOwmhoMgp1BqSq3ekKHY
-         cbO4gyEwznHUvpSphFy2iM0qU5c3IjNFvjaNctomqI/EMHJItuUYqvVmWkr7uGL/IjQJ
-         VeRTFX2UWmT1MdvttPmabQuqgDxrJE9Ki04Keg1sdrSeOdChK/S/MTDsL8OTyiIulE/d
-         9n3A==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3El9CIiRzzL+P9bsEnyV7BaCaoZ8qa5fcp8RimM4iqA=;
+        b=cz1jY9FijHIshev/3+s8PJr8t5mpw2Q7UbFYbEQCk1bXB6df7FTd+etTWx4rbZUYTI
+         ByS6x8LZzUNAQ3W04wN9t0waksYh604KK7UghufwHn13uIFx7wLWiPY8A11gxr5scwGW
+         h7WbXxeKDhzRPBk6W3nGJZMVgHazJSB+ujhub7OskSc35zYzJyl9bKCsvMNBXRYoed/U
+         EPdgjxNFwedBb9Ah4+Q0bXWZ+xSCxkGDzANYWOj8+AcqV4Emp8hQZYzSvAlL2fkvmI9+
+         gBW4JOr/J8+f8zr1eLz6FtuJMvqpHwMhabprpRNJ3tKaXpHJ5mpIAZzlzXD62OqTWuuo
+         98Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=sN+Ahpv268aiGvLOaE9jvcidtQMD87sxgIJeuy54ZC0=;
-        b=mkXVM3KytYawcuH8GZnnwL0bVcPHXorIR+I85sSCpQoFuCMC79EK9Raynihs7bxu2m
-         Rd8Enxp0xz/WBF6aOIFReylQBzEceFKuyb+ySD9IL0o1gwKDiDjDEYFY3rn/b8NgGDu+
-         bmarCi/Yj3Z04QOVg8jcK5AsunKfiVzl1a+60KEg/KNhQ0J7TE0aEKnfVRTsh68taf+f
-         R56xJBSi2qZo0yUFzxcxJq2uHA32JvmTGsTWjrCcsmzNgWMK98FdQfVFVhpau1uSiaSA
-         EJxyU+4H0dlK9rq0A9R979rZH3bAGL9AV7/82NODtT1dVyHrhhXZc6O6gTpNUlw2mtHg
-         /s7w==
-X-Gm-Message-State: AGi0PubjDLJ273c7wj9C+j6Ip0NVVLAmVd6lejHr/LWBeTy9uSXduKWy
-        0x+Dca/kGh2Pw5D/4iFSlbk/rz86OIDblyVVUmi4qW9REkk=
-X-Google-Smtp-Source: APiQypIW0OeKYiL0Hwsuh5Qpot4e0NGf/D9O+adGVgt60xGk/ASZWBHDrLvJHhXHWOOuS5/3lqQ7VrXUCz0/b4H4Wnk=
-X-Received: by 2002:aa7:db44:: with SMTP id n4mr4957641edt.387.1589082949217;
- Sat, 09 May 2020 20:55:49 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3El9CIiRzzL+P9bsEnyV7BaCaoZ8qa5fcp8RimM4iqA=;
+        b=pFWBNGt27TmwsQCn63askBWw9P95czg1gIf+OBgiv16FGiwOAccNVrAEhoZJW+Z0n4
+         IZuQFcL+2jnQEh00+bNtpDASmWSalAimRODAznS/2G7feDkadHInJ+Z8jd5YVIEjGVPM
+         iF2rlabkbUwI2znrnxop9Ozod0LEzC+cvOeyMKpMCaREZhTToTYKiPPfa2BuIAE6VMXm
+         uH7zKsxExqjX52HMeCJKAiLcl187OdS7v/sFNF5PkJFqXR9ntoVsXK/hjgft8vYtgqta
+         9ErHEir94IA+FBQT0Ij5gB1bTZqN53ydzwYC/8PmJxA30EyZqBmPp8k2OpfmT/lxK3OL
+         3Y1Q==
+X-Gm-Message-State: AOAM530L4W0+gKWvxEXAhfjPGaLxG/EhAdOuwFoDTJR9NAQIhgT3A0o8
+        05lCcbQNTqEu8S+Urflsxg7Oew+BBN1HDAQ1Ar9060dZgVo=
+X-Google-Smtp-Source: ABdhPJwEHDQYmh2Og2XyIlljHGOeNDZUXtL1iXm/uCShitfgmq6JwM06Uex2tvC8PFHIsvVExCj621ZuEwASfK92XT0=
+X-Received: by 2002:ac2:4213:: with SMTP id y19mr6357561lfh.99.1589084620998;
+ Sat, 09 May 2020 21:23:40 -0700 (PDT)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 10 May 2020 05:55:36 +0200
-Message-ID: <CAP8UFD1iBxiOZ_OA4DbMF9Kx2UHL15TPygoX6x-JrDGuReG1Vw@mail.gmail.com>
-Subject: [ANNOUNCE] GSoC 2020 Students and Projects
+References: <cover.1589058209.git.matheus.bernardino@usp.br> <3e9e90624901113fd5c5670c0c2023c709f71d6d.1589058209.git.matheus.bernardino@usp.br>
+In-Reply-To: <3e9e90624901113fd5c5670c0c2023c709f71d6d.1589058209.git.matheus.bernardino@usp.br>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Sun, 10 May 2020 01:23:29 -0300
+Message-ID: <CAHd-oW6-A6_3FTskMWHvD5=23SLRFU19s2JrYMx3f94i-uB27Q@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 4/4] config: add setting to ignore sparsity
+ patterns in some cmds
 To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Stephanie Taylor <sttaylor@google.com>
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On Sat, May 9, 2020 at 9:42 PM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
+>
+> diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
+> index 3bd67082eb..8509694bf1 100755
+> --- a/t/t7817-grep-sparse-checkout.sh
+> +++ b/t/t7817-grep-sparse-checkout.sh
+> @@ -63,12 +63,28 @@ test_expect_success 'setup' '
+>         test_path_is_file sub/B/b
+>  '
+>
+> +# The two tests bellow check a special case: the sparsity patterns exclude '/b'
+> +# and sparse checkout is enable, but the path exists on the working tree (e.g.
+> +# manually created after `git sparse-checkout init`). In this case, grep should
+> +# honor --restrict-to-sparse-paths.
 
-As you might already know, the following proposals and students have
-been officially accepted to be part of Google Summer of Code 2020:
-
-- "Implement Generation Number v2"
-(https://summerofcode.withgoogle.com/dashboard/project/6140278689234944/overview/)
-from Abhishek
-Kumar will be co-mentored by Jakub Narebski and Derrick Stolee.
-
-- "Unify ref-filter formats with other --pretty formats"
-(https://summerofcode.withgoogle.com/dashboard/project/4593212745842688/overview/)
-from Hariom Verma will be co-mentored by Heba Waly and Christian
-Couder.
-
-- "Convert submodule to builtin"
-(https://summerofcode.withgoogle.com/dashboard/project/6451304047575040/overview/)
-from Shourya Shukla will be co-mentored by Kaartic Sivaraam and
-Christian Couder.
-
-Congratulations to Shourya, Hariom and Abhishek for their work and
-dedication so far!
-
-We had many more proposals and students working on micro-projects this
-year compared to previous years.
-
-Thanks to everyone who worked on micro-projects and on proposals with
-the goal of being selected! Unfortunately it was not possible to
-accept more than 3 students and proposals this year.
-
-Thanks to the mentors who accepted to dedicate time and effort to
-allow the above proposals and students to be selected!
-
-Thanks also to everyone who helped review the micro-projects and the
-proposals, and guide the students!
-
-Thanks Google for organizing and sponsoring this event!
-
-Looking forward to another great Google Summer of Code!
-
-Best,
-Christian.
+I just want to highlight a small thing that I forgot to comment on:
+Elijah and I had already discussed about --restrict-to-sparse-paths
+being relevant in grep only with --cached or when a commit-ish is
+given. But it had not occurred to me, before, the possibility of the
+special case mentioned above. I.e. when searching in the working tree
+and a path that should be excluded by the sparsity patterns is
+present. In this patch, I let --restrict-to-sparse-paths control the
+desired behavior for grep in this case too. But please, let me know if
+that doesn't seem like a good idea.
