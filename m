@@ -2,97 +2,141 @@ Return-Path: <SRS0=RpNG=6Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95BD4C38A2A
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 15:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAEFEC54E8A
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 16:07:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7180D20735
-	for <git@archiver.kernel.org>; Sun, 10 May 2020 15:52:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B15AF208DB
+	for <git@archiver.kernel.org>; Sun, 10 May 2020 16:07:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uUU9G6+r"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GAojF/YX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728683AbgEJPwc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 May 2020 11:52:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55170 "EHLO
+        id S1729067AbgEJQHj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 May 2020 12:07:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728238AbgEJPwb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 May 2020 11:52:31 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90169C061A0C
-        for <git@vger.kernel.org>; Sun, 10 May 2020 08:52:31 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id j5so7809900wrq.2
-        for <git@vger.kernel.org>; Sun, 10 May 2020 08:52:31 -0700 (PDT)
+        with ESMTP id S1728849AbgEJQHi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 May 2020 12:07:38 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B554C061A0C
+        for <git@vger.kernel.org>; Sun, 10 May 2020 09:07:38 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id v12so7799703wrp.12
+        for <git@vger.kernel.org>; Sun, 10 May 2020 09:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ztFCUeGfFSawqq0UfBgOPHOUim82kIhSwXT/9BJk7h4=;
-        b=uUU9G6+rOFQmqAbISIVoprIatWbX4fNniGkpXQ7CFD/USEr/VZXGlUtKfUrY4Ax5Mv
-         eBA9ls/bhO3VfIHkSNhSuy1XJk78ANAA/6RfvWrw71jyqZKphGspJ52vYlfN+pvKy+cp
-         rzzyibH2oQX3voJYp0oyWG24c+R42OVEx5tliEDUMckTbGS/IsdEtjqHKcuWOcTgS8Er
-         YUuORm4vrYMcrqXiOsbhi+pReKfimLxShrPfIQo59SPaNho7txmXjdBtjYzwe3RuNzKk
-         dxFTz07IQPbPWgvw5DFaYyXCcCRERt0JUxDc3JZ4GmN3254tEbICoVfvl2olUsmyPSIV
-         TjAA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=acVe+6SyQT3x2nmkcEeZhi6wrrlWrMNm7dCAND/Vc9A=;
+        b=GAojF/YXR3CO0ra6WAVGhOyINDQ/s02sxZno6GP18rbHTcypXc0Rxs1Y/jzLjaMMly
+         wKfPnb8BtLA7TC2DyP9Vu31FJeMXYWJqLtGvOaOgP2HejF/GfiYsrA6fcSNRN+IpEsU+
+         eKC8CHzJ74YiqNZeceWNcZIxLD1DwOX8JoftEGxEccsnXeL1X5D1CiD3WmSwItiLV+n/
+         bvjJbf2a18Gz6npy5j30w+2oah5VdW4kbdjpH87CwtkGQBz30qPVd5pucG5QBFpdajo8
+         tt+xh51HNzPqvAyX4ma4YGEx0duZDqdv83MNGPsfEVV8UP0kcc304gWYhloocjYt+Cp1
+         1Tgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ztFCUeGfFSawqq0UfBgOPHOUim82kIhSwXT/9BJk7h4=;
-        b=q3HHSIj74QYunJJwR85Vg07qvKIqxai6kogPORzCqfkzbfBqOnIwwgLyKxoTDT4UUW
-         dAbFn8VBjSKc0Hkn1bXJoQ2wFi6sInwNtntS+RXZgZcoaBsMozTCiLk0HQt+oLvyCiiD
-         aIy+iEfTeEZm2fBH6Fd2smXPoV4YmPqF/f6IiUPDrQGhZjGZ+VaioA5Ar5g7s73jex27
-         BWzYEGDuH5m1kKgcFx6NbcWIG7WuRLY8Q5/nbS1L0zSTYXVcOu009AWioPAVrFYVP2QK
-         K3LTgNpWXB37WXlUg/OaH3WVQ9Q7eIwymx2i5BRXceNkXMdKEa3ruO04i6o1ON85ss1D
-         sx3A==
-X-Gm-Message-State: AGi0PubgJsYQDtsbT7I1QDFtmvZWgKaMIxtU8tAIeb+Pt+/7enDDmqyZ
-        QpGApnRQzIc8fzCmm6StldI=
-X-Google-Smtp-Source: APiQypK+dYYJtuR/ZtwB1ZnEyTbC3ckbUniruJT8mb0IdIsvP+WUcpxbLC25wo5OXBhINTUBVX717Q==
-X-Received: by 2002:a5d:4745:: with SMTP id o5mr12792189wrs.128.1589125950347;
-        Sun, 10 May 2020 08:52:30 -0700 (PDT)
-Received: from C02YX140LVDN ([2a02:a210:ca2:9c00:24fa:5ec6:f137:aace])
-        by smtp.gmail.com with ESMTPSA id q2sm11577914wrx.60.2020.05.10.08.52.29
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=acVe+6SyQT3x2nmkcEeZhi6wrrlWrMNm7dCAND/Vc9A=;
+        b=J9QWMrM2KtJdcXBVDQZKt/ufCSVUsxnAjxVa0558af/0Gau/i/KlKZNLPyaTFCT7vS
+         LE76aKQ80v9GX0EgkdWeBHpr2K1BkX/nH18sj1a8M6ioi5jezpOcSuacYuR7FMVgk7Hy
+         OQnsjWTBmmx9pp3USo6yAwdlMna2i4ymXOcmrnhY52F6jMGvXJcFZrHMNvkTGTA8jRi+
+         aelPmg4i1Tag2W1OUDSEbZWeUJhCqxfT0qNsNDbXL5x0p8kj2BJ47xZ/UVx/KFzPYfxw
+         yfqx3YDgmcVxeiOS0JMScKjufuT/feIPiwueBPE9WB7OVcCe/NGGq/OYJVtIQFkyT36M
+         DTRg==
+X-Gm-Message-State: AGi0PuY9Acoik/Td/NFdSBo8FxzPdgK8owqG5dGPMqLxwAZly3Jln4aw
+        Cmdzo0qqr/kzTbrqDeqI6PGctLvN
+X-Google-Smtp-Source: APiQypJQvBznBuRHLp/mjuAdj+EYS7Pol38//yRdCP4LjlC9WpHszDpagIWWKmBW3rjbnOnkyiHN8A==
+X-Received: by 2002:a5d:4447:: with SMTP id x7mr13975027wrr.299.1589126856928;
+        Sun, 10 May 2020 09:07:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u16sm13542117wrq.17.2020.05.10.09.07.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 May 2020 08:52:29 -0700 (PDT)
-Date:   Sun, 10 May 2020 17:52:28 +0200
-From:   Son Luong Ngoc <sluongng@gmail.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 2/3] multi-pack-index: respect
- repack.packKeptObjects=false
-Message-ID: <20200510155228.GB27407@C02YX140LVDN>
-References: <pull.626.v2.git.1588758194.gitgitgadget@gmail.com>
- <pull.626.v3.git.1589034270.gitgitgadget@gmail.com>
- <988697dd5121430cd3ddfa60b1ebcf26027566ef.1589034270.git.gitgitgadget@gmail.com>
- <20200509161159.GA15146@danh.dev>
- <xmqqlfm1ui6t.fsf@gitster.c.googlers.com>
- <20200510063844.GA14311@danh.dev>
+        Sun, 10 May 2020 09:07:36 -0700 (PDT)
+Message-Id: <a8f75e34e5b3f3ffba9d6a3852f77d03d3352d95.1589126855.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.626.v4.git.1589126855.gitgitgadget@gmail.com>
+References: <pull.626.v3.git.1589034270.gitgitgadget@gmail.com>
+        <pull.626.v4.git.1589126855.gitgitgadget@gmail.com>
+From:   "Son Luong Ngoc via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 10 May 2020 16:07:33 +0000
+Subject: [PATCH v4 1/2] midx: teach "git multi-pack-index repack" honor "git
+ repack" configurations
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200510063844.GA14311@danh.dev>
+To:     git@vger.kernel.org
+Cc:     Son Luong Ngoc <sluongng@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Son Luong Ngoc <sluongng@gmail.com>
 
-Thanks Danh and Junio for the testing improvement suggestions.
-I think these are the points I will adopt into next version:
+When the "repack" subcommand of "git multi-pack-index" command
+creates new packfile(s), it does not call the "git repack"
+command but instead directly calls the "git pack-objects"
+command, and the configuration variables meant for the "git
+repack" command, like "repack.usedaeltabaseoffset", are ignored.
 
-- Remove the 3rd patch and keep the removal of dollar sign locally
-  inside `repack respects repack.packKeptObjects=false`.
+Check the configuration variables used by "git repack" ourselves
+in "git multi-index-pack" and pass the corresponding options to
+underlying "git pack-objects".
 
-- Change `head -n -3 | tail -n -1` to `sed -n 3p`
+Note that `repack.writeBitmaps` configuration is ignored, as the
+pack bitmap facility is useful only with a single packfile.
 
-- Apply test_line_count on keep-list for failing fast (before touch)
+Signed-off-by: Son Luong Ngoc <sluongng@gmail.com>
+---
+ midx.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-Cheers,
-Son Luong.
+diff --git a/midx.c b/midx.c
+index 9a61d3b37d9..d2a43bd1a38 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1370,6 +1370,14 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
+ 	struct strbuf base_name = STRBUF_INIT;
+ 	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+ 
++	/*
++	 * When updating the default for these configuration
++	 * variables in builtin/repack.c, these must be adjusted
++	 * to match.
++	 */
++	int delta_base_offset = 1;
++	int use_delta_islands = 0;
++
+ 	if (!m)
+ 		return 0;
+ 
+@@ -1381,12 +1389,20 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
+ 	} else if (fill_included_packs_all(m, include_pack))
+ 		goto cleanup;
+ 
++	repo_config_get_bool(r, "repack.usedeltabaseoffset", &delta_base_offset);
++	repo_config_get_bool(r, "repack.usedeltaislands", &use_delta_islands);
++
+ 	argv_array_push(&cmd.args, "pack-objects");
+ 
+ 	strbuf_addstr(&base_name, object_dir);
+ 	strbuf_addstr(&base_name, "/pack/pack");
+ 	argv_array_push(&cmd.args, base_name.buf);
+ 
++	if (delta_base_offset)
++		argv_array_push(&cmd.args, "--delta-base-offset");
++	if (use_delta_islands)
++		argv_array_push(&cmd.args, "--delta-islands");
++
+ 	if (flags & MIDX_PROGRESS)
+ 		argv_array_push(&cmd.args, "--progress");
+ 	else
+-- 
+gitgitgadget
+
