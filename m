@@ -2,131 +2,88 @@ Return-Path: <SRS0=tgTL=6Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 487E6C54E4B
-	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F14A7C47255
+	for <git@archiver.kernel.org>; Mon, 11 May 2020 14:31:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22829206F5
-	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC73220736
+	for <git@archiver.kernel.org>; Mon, 11 May 2020 14:31:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PdEMXV2y"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LeugX0hK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729739AbgEKL4s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 May 2020 07:56:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43640 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728531AbgEKL40 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 May 2020 07:56:26 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFEB9C05BD09
-        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:25 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id g12so18869369wmh.3
-        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=kkT1mID5+IML20nKK0y2PulT3nfJQNhS9TLz8gftUAQ=;
-        b=PdEMXV2ykzuo67GUC9ddFkb5EPDwhLnAC8ZCEJLc+boqdCobbHTOP4vk2FUS1Gjh31
-         zTAYygOQ5tpkporfw/n4bqL9gr5EoACXxEojjS4t9jmbOAzJb4TACJgJrtLJouitxySS
-         DfVXabq11zYYTE27OY/0/MayggOQFWBDQFZpkwv8hXBcdhFuN1f88B2AJwhtrFxESEwN
-         frPW8LR4ShZI3D8QjDxhJ3plX5GUZRXYf951jvW7conPhFtjZu9eBQInneExwOouLmH4
-         iCzxv3BKro8HU3jHmlddOSzM5xNmReAEFPmGN/il2s4XtVw+cON82z1csHEZ8pupbr6s
-         Memw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kkT1mID5+IML20nKK0y2PulT3nfJQNhS9TLz8gftUAQ=;
-        b=izV1VbMD585Bbb3mhFMaqgntmQ3y0SSvTck+Pk4JDBmIdOsD88UTPSjID+6FGyFq86
-         3JDakPgwGb+q/Qzm76przqj5OoZd1n7tmh+9lvcbBGPZFm2XeHy2jkIdkYQtk70CVZvi
-         2ttjcjFZRG8LSvqfG8TwYKM5xtEyhRakCAU3CVRM9GgBWEYEs8UtcPV3y6tVmRirQawS
-         hqxPh8nbq16foa1Il9jGuwsPR8a+mNlx0ht8J5NFUUklhZv2LfFRt9WVOP4+jWQJXTeB
-         K+llBGPvVAq093xNg27lebvrjMCj6bWDlAgOjpvLUieOibBxbXIOD1Wa5lRdXwbQgkzE
-         CJPA==
-X-Gm-Message-State: AGi0Pua9xoItOWNwHgFVfQgj7aFFa6I62bNPdY+ho8QaBbXxElNjbC0t
-        CXfiteTWrtX1yu6YxnrVKxqX+89E
-X-Google-Smtp-Source: APiQypKGx0Ckg2165xvRSlEHZUSokqvuvmPcAq70hbIAO1EbN+I5Al5zhriem4m0NLGKxpO0j4QbZw==
-X-Received: by 2002:a05:600c:2614:: with SMTP id h20mr7056008wma.155.1589198184596;
-        Mon, 11 May 2020 04:56:24 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a14sm173332wme.21.2020.05.11.04.56.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 04:56:24 -0700 (PDT)
-Message-Id: <61f78a2b0dd7d8e8ca04ce2e1681bd14ba81c1b9.1589198180.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.622.v2.git.1589198180.gitgitgadget@gmail.com>
-References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
-        <pull.622.v2.git.1589198180.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 May 2020 11:56:11 +0000
-Subject: [PATCH v2 04/12] Documentation: changed-path Bloom filters use byte
- words
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729304AbgEKObP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 May 2020 10:31:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57569 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726173AbgEKObP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 May 2020 10:31:15 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6438BC814C;
+        Mon, 11 May 2020 10:31:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AHmYN57sezoYAbGuiu4z3Wlwv1w=; b=LeugX0
+        hKTPkZFkf7wZQEMF65DkkIgP267TjcNlC+RW6XTcMzk/MVCLLyG+HdqRCnqfFb1z
+        xkEjomL+eBvTit2eKbBszMm17SdRQnQUy9GsU49OXROXCbjVNawjs6IR1+553kE2
+        jshK95L7vN/cwxAJ6wQIdXNHAUOa0iWyBHdzw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cD+jPttRE0o9CHX7SzSHbb3kgvqv3Z6L
+        WViqopVizHKGvYSGJriyYdUK1SolrG45NXraVXSIMhlB1UsCOTcbXeFpoFi8JOql
+        9RDQXbqgNXR0V3k7U9mpVAv10SnGjILB/Yanr0AKViEkYr8iOq/JvRAd5cqrzA6/
+        miTy8APreTA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5BDC9C814B;
+        Mon, 11 May 2020 10:31:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9B11FC814A;
+        Mon, 11 May 2020 10:31:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     George Brown <321.george@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH] contrib/git-jump: cat output when not a terminal
+References: <CAFKec1W0-OOQYypP-3VC=dJnuNDrykdQ2xibc=u4D=Zo6if-+Q@mail.gmail.com>
+        <xmqqd07cvl9b.fsf@gitster.c.googlers.com>
+        <CAFKec1Wj_uK-moVfin3XrTEmmBaAzaJKsh1f8q-3+RBs2-3Jdg@mail.gmail.com>
+        <xmqq8si0vfp3.fsf@gitster.c.googlers.com>
+        <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
+        <xmqqwo5ju47t.fsf@gitster.c.googlers.com>
+        <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
+        <xmqqo8qvu0ao.fsf@gitster.c.googlers.com>
+        <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
+        <xmqqk11jtxl3.fsf@gitster.c.googlers.com>
+        <xmqqftc7twaa.fsf@gitster.c.googlers.com>
+        <CAFKec1VGMwn3_4AEuY8Vrs60UQbX-fvqCkzKd8VARAUScbA=rA@mail.gmail.com>
+Date:   Mon, 11 May 2020 07:31:08 -0700
+In-Reply-To: <CAFKec1VGMwn3_4AEuY8Vrs60UQbX-fvqCkzKd8VARAUScbA=rA@mail.gmail.com>
+        (George Brown's message of "Sun, 10 May 2020 21:20:00 +0100")
+Message-ID: <xmqq5zd2tufn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, me@ttaylorr.com, garimasigit@gmail.com,
-        szeder.dev@gmail.com, jnareb@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0F210156-9394-11EA-A36C-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+George Brown <321.george@gmail.com> writes:
 
-In Documentation/technical/commit-graph-format.txt, the definition
-of the BIDX chunk specifies the length is a number of 8-byte words.
-During development we discovered that using 8-byte words in the
-Murmur3 hash algorithm causes issues with big-endian versus little-
-endian machines. Thus, the hash algorithm was adapted to work on a
-byte-by-byte basis. However, this caused a change in the definition
-of a "word" in bloom.h. Now, a "word" is a single byte, which allows
-filters to be as small as two bytes. These length-two filters are
-demonstrated in t0095-bloom.sh, and a larger filter of length 25 is
-demonstrated as well.
+> Yes. Another version that someone else implemented used similar method
+> by unsetting "$GIT_EDITOR" when invoked from Vim and modified "git jump"
+> to use cat when "$GIT_EDITOR" was empty.
 
-The original point of using 8-byte words was for alignment reasons.
-It also presented opportunities for extremely sparse Bloom filters
-when there were a small number of changes at a commit, creating a
-very low false-positive rate. However, modifying the format at this
-point is unlikely to be a valuable exercise. Also, this use of
-single-byte granularity does present opportunities to save space.
-It is unclear if 8-byte alignment of the filters would present any
-meaningful performance benefits.
-
-Modify the format document to reflect reality.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/technical/commit-graph-format.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
-index de56f9f1efd..1beef171822 100644
---- a/Documentation/technical/commit-graph-format.txt
-+++ b/Documentation/technical/commit-graph-format.txt
-@@ -97,10 +97,10 @@ CHUNK DATA:
-       bit on. The other bits correspond to the position of the last parent.
- 
-   Bloom Filter Index (ID: {'B', 'I', 'D', 'X'}) (N * 4 bytes) [Optional]
--    * The ith entry, BIDX[i], stores the number of 8-byte word blocks in all
--      Bloom filters from commit 0 to commit i (inclusive) in lexicographic
--      order. The Bloom filter for the i-th commit spans from BIDX[i-1] to
--      BIDX[i] (plus header length), where BIDX[-1] is 0.
-+    * The ith entry, BIDX[i], stores the number of bytes in all Bloom filters
-+      from commit 0 to commit i (inclusive) in lexicographic order. The Bloom
-+      filter for the i-th commit spans from BIDX[i-1] to BIDX[i] (plus header
-+      length), where BIDX[-1] is 0.
-     * The BIDX chunk is ignored if the BDAT chunk is not present.
- 
-   Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
--- 
-gitgitgadget
-
+That's curious, because with the same approach, that someone else
+could have gone one step further to set GIT_EDITOR to 'cat' when vim
+invokes via a macro and then there is no need to modify git-jump at
+all.  "Curious" because I would intuitively think that unsetting
+GIT_EDITOR and setting it to a specific value, 'cat', would require
+about the same amount of effort.
