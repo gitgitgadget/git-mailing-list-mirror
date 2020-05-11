@@ -2,159 +2,101 @@ Return-Path: <SRS0=tgTL=6Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A63AC47255
-	for <git@archiver.kernel.org>; Mon, 11 May 2020 16:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C7B7C47255
+	for <git@archiver.kernel.org>; Mon, 11 May 2020 17:43:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E85E20708
-	for <git@archiver.kernel.org>; Mon, 11 May 2020 16:46:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 215EF206D6
+	for <git@archiver.kernel.org>; Mon, 11 May 2020 17:43:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sAeZwREv"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OP2vvOcz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729550AbgEKQqp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 May 2020 12:46:45 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60753 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728556AbgEKQqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 May 2020 12:46:45 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA20AC9355;
-        Mon, 11 May 2020 12:46:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PGGOWX3hfRPaTns/wFLO7HN0UUQ=; b=sAeZwR
-        EvtClmuBb+pkWz6otgVq6TiDafDJ09FrMFFyE9xP22WqfbiwZSk9g/LzwKoYJr0x
-        46ti98IXIJ45zjwQFVK8kM2jo8gmzkSxOKc/yQ4/RQhMACSG1hYIc4K6cDEFBoMA
-        cZeKG8ZlcEun6CyOYrjZThe9bKFe5ETpv7y0E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wr2AOi+Dutu4cL52Q6djSX/xvoz8RobU
-        SkPizNkUgmww42A/vhqY/It/SAK4Ae+RKL8vSEUaQfNug/fmoai+NJLs2UyGFkaH
-        4eG2wmVC7kqN34WoAtjNISDVGWOl46B9ih1ZBr88PRGsKIJgHXAI6osPy8qC4+BF
-        YI0hIE42AQw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B1C8DC9353;
-        Mon, 11 May 2020 12:46:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 88F5FC9352;
-        Mon, 11 May 2020 12:46:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     George Brown <321.george@gmail.com>, git@vger.kernel.org
-Subject: Re* [PATCH] contrib/git-jump: cat output when not a terminal
-References: <xmqqd07cvl9b.fsf@gitster.c.googlers.com>
-        <CAFKec1Wj_uK-moVfin3XrTEmmBaAzaJKsh1f8q-3+RBs2-3Jdg@mail.gmail.com>
-        <xmqq8si0vfp3.fsf@gitster.c.googlers.com>
-        <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
-        <xmqqwo5ju47t.fsf@gitster.c.googlers.com>
-        <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
-        <xmqqo8qvu0ao.fsf@gitster.c.googlers.com>
-        <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
-        <20200511143157.GA1415@coredump.intra.peff.net>
-        <xmqqr1vqscuy.fsf@gitster.c.googlers.com>
-        <20200511154226.GC1415@coredump.intra.peff.net>
-Date:   Mon, 11 May 2020 09:46:34 -0700
-In-Reply-To: <20200511154226.GC1415@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 11 May 2020 11:42:26 -0400")
-Message-ID: <xmqqy2pyqv11.fsf_-_@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA8F0770-93A6-11EA-B59D-B0405B776F7B-77302942!pb-smtp20.pobox.com
+        id S1730629AbgEKRnQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 May 2020 13:43:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726310AbgEKRnP (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 May 2020 13:43:15 -0400
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10D1BC061A0C
+        for <git@vger.kernel.org>; Mon, 11 May 2020 10:43:14 -0700 (PDT)
+Received: by mail-qv1-xf4a.google.com with SMTP id c89so10393867qva.2
+        for <git@vger.kernel.org>; Mon, 11 May 2020 10:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=M3hYHtHzpl/3zjcaTjTw7TtwRfOuMh+4yR4PN+5B22M=;
+        b=OP2vvOczx9mV2cRJHLbMiwsvmZgw0KLWLwNOxU1YRg4RL6ebvPvE1ldxnyyWxktnH5
+         jYTwqo75pkzpCMAekjcXcap9wHWRkAn+2TC5JHI3Kv0T2OySpxZAIBF0jJlHwDVdxtbF
+         LnDRqscdv6UN5gxslZ03zgpqhoGm5EcXezMr6FvguUbi99M8Eii764QZDPLTgxrt1ZOq
+         u3pT+YceDaP4dACnp9kTqh3XhlvbBDZN5suJfElZcYLM9LIPUVlRnsJZ+RquqKuWDddj
+         ggzowXwQA33bKCBotXTXRWo9cbWb2MnBsfLLheIYTDOdy5Y4dtT6MQb4j6Rs41eei6uO
+         9DPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=M3hYHtHzpl/3zjcaTjTw7TtwRfOuMh+4yR4PN+5B22M=;
+        b=J/HNSVzXo+/ouuHSkpwFjwfuXprcvfWHxMw6whbrplYRw5p8jSbHo6dsl14f28B9zS
+         nKhQOksFrBwwGB8AusajqRE1nvx1zHU3ApMLpPjNKe23oAgOZofj2zeTNGQMscP0vm/Q
+         r5G5P8lHgOmXIVugywV03IcYOdZ5GAzTBfMIlMV98ZcgBRRfGUyjo1TlN6zkDVNMQES5
+         ercKxLuw1Hm+tHFeeNR7BRBlnm24PT0B26oYM36BkeIAREIpu4XRU1veHpLYMoMGQnBV
+         COyI94mPDMZkGk7TdZTGqlv2E0NN45R87CmQG9MIQXyeVbl1ZqzYJs1Vyz0mReQU89Ax
+         LPYA==
+X-Gm-Message-State: AGi0PuaUDAAUmqv2V1lQOMuDBqrKsChKrf4dQlROq5BP9N3vuFk7hu5Z
+        0knKkgj1szJoa5NXPGApifwaPwgDXiiH+VJfSaKucuMW6VpYeIM9wjNTf8SeWYIkvpdip1YuQTY
+        A5lHZB3SvyCJ/UJVM640NXGowxYkWxyJ376neUTKXKKDj4n++lAu4P8IwYMrds2pFxgEC8wSa0r
+        0P
+X-Google-Smtp-Source: APiQypIDdTD+Ys2HDEZ1irsXm1yVHjgWwcX097N3S6bDkigjCAXDg5G1hL9WY9J/HIcu/Dnxkc+2MDHm/423cxUgOaEr
+X-Received: by 2002:ad4:46e7:: with SMTP id h7mr6865630qvw.221.1589218993150;
+ Mon, 11 May 2020 10:43:13 -0700 (PDT)
+Date:   Mon, 11 May 2020 10:43:08 -0700
+Message-Id: <cover.1589218693.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
+Subject: [PATCH 0/2] Safer GIT_CURL_VERBOSE
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+These are patches that unify GIT_CURL_VERBOSE and GIT_TRACE_CURL. This
+helps avoid GIT_CURL_VERBOSE being a source of confusion, especially
+with the presence of GIT_REDACT_COOKIES. The motivation is further
+explained in the commit message of patch 2.
 
-> On Mon, May 11, 2020 at 08:36:05AM -0700, Junio C Hamano wrote:
->
->> > So I'm OK to leave the status quo and let people use the GIT_EDITOR
->> > solution in this instance. But I'd also be happy to take a patch for
->> > "--no-editor" or similar if somebody wants to work it up.
->> 
->> I actually would support --no-editor.  One thing nobody noticed so
->> far is that "git-jump" is only compatible with editors that support
->> the "-q" option from the command line, and "cat" is not among them.
->
-> Oh, good point. GIT_EDITOR='cat -- 2>/dev/null' works, but is rather
-> obscure. :)
+I noticed some commits that refer to GIT_CURL_VERBOSE as deprecated
+(see what 930b67ebd7 ("Merge branch 'ep/use-git-trace-curl-in-tests'",
+2016-09-12) merged in), although it seems that they are just referring
+to the fact that GIT_TRACE_CURL has more features than GIT_CURL_VERBOSE
+and should be preferred (74c682d3c6 ("http.c: implement the
+GIT_TRACE_CURL environment variable", 2016-05-24)). I haven't made any
+references to deprecating anything in any of the commit messages, but
+deprecating GIT_CURL_VERBOSE (so that we have only one way of doing
+things) seems good to me - but this is a matter for another patch, I
+think.
 
-Lest we all forget...
+Jonathan Tan (2):
+  t5551: test that GIT_TRACE_CURL redacts password
+  http, imap-send: stop using CURLOPT_VERBOSE
 
--- >8 --
-Subject: git-jump: just show the list with the "--no-editor" option
+ Documentation/git.txt        |  2 --
+ http.c                       |  8 +++++++-
+ http.h                       |  7 +++++++
+ imap-send.c                  |  2 +-
+ t/t5551-http-fetch-smart.sh  | 36 ++++++++++++++++++++++++++++++++++++
+ t/t5581-http-curl-verbose.sh |  2 +-
+ trace.c                      | 20 ++++++++++++++++----
+ trace.h                      |  6 ++++++
+ 8 files changed, 74 insertions(+), 9 deletions(-)
 
-The "git jump" script (in contrib/) creates a list of interesting
-places to be visited in an editor, and then open the editor to visit
-the place.  Some editors, however, can read the list directly and
-use it to visit these places (e.g. vim's quickfix list, or emacs's
-find-grep/compilation buffer) and do not want "git jump" to invoke
-a separate editor.
+-- 
+2.26.2.645.ge9eca65c58-goog
 
-Users can _almost_ do this already by setting GIT_EDITOR to "cat",
-except that "git jump" assumes that the editor it spawns support a
-"-q" option from the command line, and unfortunately "cat" is not
-among such editors.
-
-Teach it the "--no-editor" option, which tells the command to show
-the list it generated to its standard output.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/git-jump/git-jump | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 931b0fe3a9..26a7159053 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -2,7 +2,7 @@
- 
- usage() {
- 	cat <<\EOF
--usage: git jump <mode> [<args>]
-+usage: git jump [--no-editor] <mode> [<args>]
- 
- Jump to interesting elements in an editor.
- The <mode> parameter is one of:
-@@ -64,6 +64,18 @@ mode_ws() {
- 	git diff --check "$@"
- }
- 
-+edit=yes
-+
-+while	case "$#,$1" in
-+	0,*) break ;;
-+	*,--no-editor) edit=no ;;
-+	*,--*) usage >&2; exit 1 ;;
-+	*) break ;;
-+	esac
-+do
-+	shift
-+done
-+
- if test $# -lt 1; then
- 	usage >&2
- 	exit 1
-@@ -75,4 +87,9 @@ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
- type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
- "mode_$mode" "$@" >"$tmp"
- test -s "$tmp" || exit 0
--open_editor "$tmp"
-+
-+case "$edit" in
-+yes)	open_editor "$tmp" ;;
-+no)	cat "$tmp" ;;
-+esac
-+
