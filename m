@@ -7,218 +7,131 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AACCDC47255
-	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ED43C54E8D
+	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 860362082E
-	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6771C206F5
+	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Da1APGCg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OzQ/1uaQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729928AbgEKL4n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 May 2020 07:56:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43668 "EHLO
+        id S1729874AbgEKL4a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 May 2020 07:56:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729891AbgEKL4d (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 May 2020 07:56:33 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0764EC061A0C
-        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:32 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id h17so1691019wrc.8
-        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:31 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1729365AbgEKL42 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 May 2020 07:56:28 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F15C061A0C
+        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:27 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id u16so18866628wmc.5
+        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=FgvcaVTszUVZMTOf5bL5lAVJV+PTV072MNXPI+8C/wQ=;
-        b=Da1APGCg9FT5QcoV35hoivwO11LgrqOjFr0+ZpPE1V8zghIUQtAlwJW8477LNRNNcM
-         sn0o5O8Iyf9AkRhPxlY8z+8YtQLrV+VwRylzR1bCvYBhb6QrVQT/nCSeWXorc+fUY5vq
-         BO3ynMRvrdG9KhiUYBG9a41CwvyqbhmXtbMmNNyuJkdwdbIk8wWFrhVMMJAaE89ULsle
-         G7OFFPhLOPRMAm4u003n9YAWKXhPLoXbCRLf1pqI1bnG+lJPJ1VrylrzJ+0B6aHtR91y
-         wwAE+tVgaY5cO7z/OP5dPvYWEwm6yJXkElh+wXDOOnWoIvHaoDOIoxyO6G0ZP53vxej5
-         6uUg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LlANYpI+XJd+L6Xx5De89OPDRmiEWMcOo2uuNgbEz8U=;
+        b=OzQ/1uaQCZ6DWL7ZgMUy6VUzKT+OIN3KIm7QC2VqhcPF1SIDUx7c6btIdRAqbDM97D
+         Gu/4IEHF02gNwCzQsDme7Sb6KNSQArSe06fJ5c73LxoRsg/bqu4agL0evyrtq5IpCgs4
+         YNc3i+Ha2Umm6DoMzrUtS5snubDGAVlEm4iHUr2PsETXaK5belU20kp5wFRrfFXV90pk
+         SAHBNSgU+8wFCOsnhC+sVKNQiEqj1ZMKlLiYiCepm1zhQnDxt+o8pp2YWQoaOwfJWmXE
+         cVza0nlFT2PpJvKECHMA5YwPrx7h0inrfCFDeDPa54PX3iGgOgtx2FgNwbvQkW5X4FPa
+         /3Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=FgvcaVTszUVZMTOf5bL5lAVJV+PTV072MNXPI+8C/wQ=;
-        b=YWJOLx5/suDKQUi3caIy3bnTKhNHCPbFKj2RkNQXltwyR9+9KY0rTZtDqB2dIB9y/b
-         43Ex2J9kchr8Yr1isS7tTKB/VmFYLFw1a6k/g0sCedvDQReHFio/xC3CWF+0neWYdbgv
-         BEI7dWOYdd5zUVqKK/iG5Ha8xr/E+PHbnWznoF/rXfolt8EHGIX3sjyTpv44gsRes/UF
-         ZpfJxqqMKGO3v/3hppX2vVlcYcnQmfwxhl/W+kyTqKdP6AV8qUjombjtAqyP2tpTIG1M
-         DeHSny5CgI1Fr0ym9xuDP8y4hw9NBxIIJp73+37hCy6Jeft30KddBEa7N/A1wy7Ezb9H
-         PeKw==
-X-Gm-Message-State: AGi0PuZwBgxb06apU+zbLd2OQO7VFxPG7DL4Iqn1eGLsj4zDSrEHNFWp
-        ze5cw0glrB+jWXTqSZiaXGk0Hf68
-X-Google-Smtp-Source: APiQypJW7xzeV0RZh8hxNtW8DNnf9MKez/0/bkvE2BFSaV3LL0mPk4rhxFh01y18UNb1YcYRcnjiKg==
-X-Received: by 2002:adf:f8cf:: with SMTP id f15mr14805176wrq.205.1589198190515;
-        Mon, 11 May 2020 04:56:30 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=LlANYpI+XJd+L6Xx5De89OPDRmiEWMcOo2uuNgbEz8U=;
+        b=UtCMABdcdRTrlQhJwvF7ev316F9xJt8OPJTsTxQtZdy7HLFg4vsZklGj6H78lYwbIr
+         TboZv0rpYH0juwf8f6XJTF6kw0fi6/CYi6irolOpoTquNYIVD53IYEgpGvk2XT08d9mo
+         6FvnJDxPxrIfeKm8DjTo1+CTLv5WwUGU4uuepoWY036DUgPp7ddIEqw/5iYYZ1egZbu2
+         QCLrXPCDQMqmIC9UzeaLDh11DJPNWPC1qIqchNgQkB1SGr4nD6xKUGkmbOirFFWtnqA4
+         8VxPeLVvQyTmaBep7Txat4BYD6VczW4cQr8AP/XBB+uGQIWAgqHw4EhUyiXgmZ+E0UsZ
+         35EA==
+X-Gm-Message-State: AGi0PuZvyovEFGHqxMo6o1YPziKjL9XGPsrIX/1eWQYJ9HKNbwlylnkg
+        nnxseLMNA07S2e/IMMcWAhPMPQm1
+X-Google-Smtp-Source: APiQypKJSxHzgFC1kOwPU4uzDVbOCFzPli5GnPCrtHYysyQ19bXBbdjz5zAi7dKE7pXx936lGBkVgg==
+X-Received: by 2002:a1c:7213:: with SMTP id n19mr5496869wmc.88.1589198186176;
+        Mon, 11 May 2020 04:56:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n17sm3613378wrr.42.2020.05.11.04.56.29
+        by smtp.gmail.com with ESMTPSA id 89sm16795052wrj.37.2020.05.11.04.56.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 04:56:30 -0700 (PDT)
-Message-Id: <da087d2acbb83a7056427d237627188744bbd3a2.1589198180.git.gitgitgadget@gmail.com>
+        Mon, 11 May 2020 04:56:25 -0700 (PDT)
+Message-Id: <8278b5c0918c6b357e1f1ab3ee65ed2091ec3f61.1589198180.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.622.v2.git.1589198180.gitgitgadget@gmail.com>
 References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
         <pull.622.v2.git.1589198180.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Mon, 11 May 2020 11:56:18 +0000
-Subject: [PATCH v2 11/12] line-log: try to use generation number-based
- topo-ordering
-MIME-Version: 1.0
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 11 May 2020 11:56:13 +0000
+Subject: [PATCH v2 06/12] bloom: use num_changes not nr for limit detection
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, me@ttaylorr.com, garimasigit@gmail.com,
         szeder.dev@gmail.com, jnareb@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-The previous patch made it possible to perform line-level filtering
-during history traversal instead of in an expensive preprocessing
-step, but it still requires some simpler preprocessing steps, notably
-topo-ordering.  However, nowadays we have commit-graphs storing
-generation numbers, which make it possible to incrementally traverse
-the history in topological order, without the preparatory limit_list()
-and sort_in_topological_order() steps; see b45424181e (revision.c:
-generation-based topo-order algorithm, 2018-11-01).
+As diff_tree_oid() computes a diff, it will terminate early if the
+total number of changed paths is strictly larger than max_changes.
+This includes the directories that changed, not just the file paths.
+However, only the file paths are reflected in the resulting diff
+queue's "nr" value.
 
-This patch combines the two, so we can do both the topo-ordering and
-the line-level filtering during history traversal, eliminating even
-those simpler preprocessing steps, and thus further reducing the delay
-before showing the first commit modifying the given line range.
+Use the "num_changes" from diffopt to check if the diff terminated
+early. This is incredibly important, as it can result in incorrect
+filters! For example, the first commit in the Linux kernel repo
+reports only 471 changes, but since these are nested inside several
+directories they expand to 513 "real" changes, and in fact the
+total list of changes is not reported. Thus, the computed filter
+for this commit is incorrect.
 
-The 'revs->limited' flag plays the central role in this, because, due
-to limitations of the current implementation, the generation
-number-based topo-ordering is only enabled when this flag remains
-unset.  Line-level log, however, always sets this flag in
-setup_revisions() ever since the feature was introduced in 12da1d1f6f
-(Implement line-history search (git log -L), 2013-03-28).  The reason
-for setting 'limited' is unclear, though, because the line-level log
-itself doesn't directly depend on it, and it doesn't affect how the
-limit_list() function limits the revision range.  However, there is an
-indirect dependency: the line-level log requires topo-ordering, and
-the "traditional" sort_in_topological_order() requires an already
-limited commit list since e6c3505b44 (Make sure we generate the whole
-commit list before trying to sort it topologically, 2005-07-06).  The
-new, generation numbers-based topo-ordering doesn't require a limited
-commit list anymore.
+Demonstrate the subtle difference by using one fewer file change
+in the 'get bloom filter for commit with 513 changes' test. Before,
+this edited 513 files inside "bigDir" which hit this inequality.
+However, dropping the file count by one demonstrates how the
+previous inequality was incorrect but the new one is correct.
 
-So don't set 'revs->limited' for line-level log, unless it is really
-necessary, namely:
-
-  - The user explicitly requested parent rewriting, because that is
-    still done in the line_log_filter() preprocessing step (see
-    previous patch), which requires sort_in_topological_order() and in
-    turn limit_list() as well.
-
-  - A commit-graph file is not available or it doesn't yet contain
-    generation numbers.  In these cases we had to fall back on
-    sort_in_topological_order() and in turn limit_list().  The
-    existing condition with generation_numbers_enabled() has already
-    ensured that the 'limited' flag is set in these cases; this patch
-    just makes sure that the line-level log sets 'revs->topo_order'
-    before that condition.
-
-While the reduced delay before showing the first commit is measurable
-in git.git, it takes a bigger repository to make it clearly noticable.
-In both cases below the line ranges were chosen so that they were
-modified rather close to the starting revisions, so the effect of this
-change is most noticable.
-
-  # git.git
-  $ time git --no-pager log -L:read_alternate_refs:sha1-file.c -1 v2.23.0
-
-  Before:
-
-    real    0m0.107s
-    user    0m0.091s
-    sys     0m0.013s
-
-  After:
-
-    real    0m0.058s
-    user    0m0.050s
-    sys     0m0.005s
-
-  # linux.git
-  $ time git --no-pager log \
-    -L:build_restore_work_registers:arch/mips/mm/tlbex.c -1 v5.2
-
-  Before:
-
-    real   0m1.129s
-    user   0m1.061s
-    sys    0m0.069s
-
-  After:
-
-    real   0m0.096s
-    user   0m0.087s
-    sys    0m0.009s
-
-Additional testing by Derrick Stolee: Since this patch improves
-the performance for the first result, I repeated the experiment
-from the previous patch on the Linux kernel repository, reporting
-real time here:
-
-    Command: git log -L 100,200:MAINTAINERS -n 1 >/dev/null
-     Before: 0.71 s
-      After: 0.05 s
-
-Now, we have dropped the full topo-order of all ~910,000 commits
-before reporting the first result. The remaining performance
-improvements then are:
-
- 1. Update the parent-rewriting logic to be incremental similar to
-    how "git log --graph" behaves.
-
- 2. Use changed-path Bloom filters to reduce the time spend in the
-    tree-diff to see if the path(s) changed.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- revision.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ bloom.c          | 2 +-
+ t/t0095-bloom.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 3228db9af6d..3356ede9a20 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2790,6 +2790,12 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	if (revs->diffopt.objfind)
- 		revs->simplify_history = 0;
+diff --git a/bloom.c b/bloom.c
+index 196cda0a1bd..e2ede44126c 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -215,7 +215,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+ 		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
+ 	diffcore_std(&diffopt);
  
-+	if (revs->line_level_traverse) {
-+		if (want_ancestry(revs))
-+			revs->limited = 1;
-+		revs->topo_order = 1;
-+	}
-+
- 	if (revs->topo_order && !generation_numbers_enabled(the_repository))
- 		revs->limited = 1;
- 
-@@ -2809,11 +2815,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 
- 	revs->diffopt.abbrev = revs->abbrev;
- 
--	if (revs->line_level_traverse) {
--		revs->limited = 1;
--		revs->topo_order = 1;
--	}
--
- 	diff_setup_done(&revs->diffopt);
- 
- 	grep_commit_pattern_type(GREP_PATTERN_TYPE_UNSPECIFIED,
+-	if (diff_queued_diff.nr <= max_changes) {
++	if (diffopt.num_changes <= max_changes) {
+ 		struct hashmap pathmap;
+ 		struct pathmap_hash_entry *e;
+ 		struct hashmap_iter iter;
+diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
+index 6defeb544f1..48a90625596 100755
+--- a/t/t0095-bloom.sh
++++ b/t/t0095-bloom.sh
+@@ -100,7 +100,7 @@ test_expect_success EXPENSIVE 'get bloom filter for commit with 513 changes' '
+ 	rm actual &&
+ 	rm expect &&
+ 	mkdir bigDir &&
+-	for i in $(test_seq 0 512)
++	for i in $(test_seq 0 511)
+ 	do
+ 		echo $i >bigDir/$i
+ 	done &&
 -- 
 gitgitgadget
 
