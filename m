@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ED43C54E8D
-	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E55FC54E8E
+	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6771C206F5
+	by mail.kernel.org (Postfix) with ESMTP id D9608206F5
 	for <git@archiver.kernel.org>; Mon, 11 May 2020 11:56:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OzQ/1uaQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VdODCwC8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729874AbgEKL4a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 May 2020 07:56:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43646 "EHLO
+        id S1729688AbgEKL40 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 May 2020 07:56:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1729365AbgEKL42 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 May 2020 07:56:28 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F15C061A0C
-        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:27 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id u16so18866628wmc.5
-        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:27 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728531AbgEKL4Y (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 May 2020 07:56:24 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89BA2C05BD09
+        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:23 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id s8so10576148wrt.9
+        for <git@vger.kernel.org>; Mon, 11 May 2020 04:56:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LlANYpI+XJd+L6Xx5De89OPDRmiEWMcOo2uuNgbEz8U=;
-        b=OzQ/1uaQCZ6DWL7ZgMUy6VUzKT+OIN3KIm7QC2VqhcPF1SIDUx7c6btIdRAqbDM97D
-         Gu/4IEHF02gNwCzQsDme7Sb6KNSQArSe06fJ5c73LxoRsg/bqu4agL0evyrtq5IpCgs4
-         YNc3i+Ha2Umm6DoMzrUtS5snubDGAVlEm4iHUr2PsETXaK5belU20kp5wFRrfFXV90pk
-         SAHBNSgU+8wFCOsnhC+sVKNQiEqj1ZMKlLiYiCepm1zhQnDxt+o8pp2YWQoaOwfJWmXE
-         cVza0nlFT2PpJvKECHMA5YwPrx7h0inrfCFDeDPa54PX3iGgOgtx2FgNwbvQkW5X4FPa
-         /3Jg==
+        bh=RmgF5TDTH2YI6FYM/8ilYhDL1HN/g5InUDNye3oVdUQ=;
+        b=VdODCwC8xsoCO6csJqi/BEYaG68DV0R9O/vNFIlhiutFOHmNpDKnMXRrHry0R8yeeD
+         kwrVaDuqgWVwbyjdEH3MopZL7U1Z0zl6TZrjOTaK2H0BPOn0rbjdUx9NaaqCk2XdD8Fe
+         Vy1If7G8hVcnIyUbM7saAqNjJW5/HVX2h9+2VirysvH5/9LIpdMsml5fOQv66nRyLxMi
+         oVIks2YkRKyWj9dck3EhYzaAgYlNYHkC1jHHVKnXjPy/Bkn650/1zxc0bjyLnbj0Y46J
+         OYKp4+5hMjo/x/I2Xsm0Y3PGLwIjokh2srF4OIYiymxfvJQ0Wjv/DEzu7G4PRsqlqT/9
+         MGog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LlANYpI+XJd+L6Xx5De89OPDRmiEWMcOo2uuNgbEz8U=;
-        b=UtCMABdcdRTrlQhJwvF7ev316F9xJt8OPJTsTxQtZdy7HLFg4vsZklGj6H78lYwbIr
-         TboZv0rpYH0juwf8f6XJTF6kw0fi6/CYi6irolOpoTquNYIVD53IYEgpGvk2XT08d9mo
-         6FvnJDxPxrIfeKm8DjTo1+CTLv5WwUGU4uuepoWY036DUgPp7ddIEqw/5iYYZ1egZbu2
-         QCLrXPCDQMqmIC9UzeaLDh11DJPNWPC1qIqchNgQkB1SGr4nD6xKUGkmbOirFFWtnqA4
-         8VxPeLVvQyTmaBep7Txat4BYD6VczW4cQr8AP/XBB+uGQIWAgqHw4EhUyiXgmZ+E0UsZ
-         35EA==
-X-Gm-Message-State: AGi0PuZvyovEFGHqxMo6o1YPziKjL9XGPsrIX/1eWQYJ9HKNbwlylnkg
-        nnxseLMNA07S2e/IMMcWAhPMPQm1
-X-Google-Smtp-Source: APiQypKJSxHzgFC1kOwPU4uzDVbOCFzPli5GnPCrtHYysyQ19bXBbdjz5zAi7dKE7pXx936lGBkVgg==
-X-Received: by 2002:a1c:7213:: with SMTP id n19mr5496869wmc.88.1589198186176;
-        Mon, 11 May 2020 04:56:26 -0700 (PDT)
+        bh=RmgF5TDTH2YI6FYM/8ilYhDL1HN/g5InUDNye3oVdUQ=;
+        b=iXT6xsusQ/cRYvBPKiCzAZW5p02kOtSJhxaNZsnbG7bZqs3BExAECH6Iz4DIGob9iW
+         mczva3aZK9hMmMaSXwGZSWIBvz+76pbh8bxe2sv8EMdj/fzq+5PmRm466XcUoRvoZzKO
+         n0IjweA3DrJVfjI8H93H8UEeWXHwfeCFb0fqmd3ZDr9w7jphBO84UBX+QvdV/zMvCRwe
+         MX6Dc70KWsLYUENKNqSkGLjE4Qc3SS/eiMc3iRXgFN7V4VuCShOLGneaNnimCWixI7YW
+         A70W6RLYjXL9xCEBLtP1cVJDVdFzWBQ7/EZ+WqEnEj9WjjuuVCIvy3ovF+/cWAXmWXk5
+         k7tg==
+X-Gm-Message-State: AGi0Puby7Bt9Neofx2jSEtbQPJU/ZcA/TM7WL0NBdirdQ1lCxrlohWiZ
+        brDbvfkX+kmtRcxUn7sr7mMR5x7C
+X-Google-Smtp-Source: APiQypIOclK0u/8tX/7phSTiSN9FUmdWg/MhuEYZ3aJmTCFRPTbXzjICH7V5w6pkP380SnBgK0GGIA==
+X-Received: by 2002:a5d:6692:: with SMTP id l18mr19434213wru.423.1589198182181;
+        Mon, 11 May 2020 04:56:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 89sm16795052wrj.37.2020.05.11.04.56.25
+        by smtp.gmail.com with ESMTPSA id a9sm25685065wmm.38.2020.05.11.04.56.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2020 04:56:25 -0700 (PDT)
-Message-Id: <8278b5c0918c6b357e1f1ab3ee65ed2091ec3f61.1589198180.git.gitgitgadget@gmail.com>
+        Mon, 11 May 2020 04:56:21 -0700 (PDT)
+Message-Id: <89625b0efae43c8cb0d444a843d389d6cb9f6772.1589198180.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.622.v2.git.1589198180.gitgitgadget@gmail.com>
 References: <pull.622.git.1588347029.gitgitgadget@gmail.com>
         <pull.622.v2.git.1589198180.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 May 2020 11:56:13 +0000
-Subject: [PATCH v2 06/12] bloom: use num_changes not nr for limit detection
+Date:   Mon, 11 May 2020 11:56:08 +0000
+Subject: [PATCH v2 01/12] bloom: fix whitespace around tab length
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,58 +80,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-As diff_tree_oid() computes a diff, it will terminate early if the
-total number of changed paths is strictly larger than max_changes.
-This includes the directories that changed, not just the file paths.
-However, only the file paths are reflected in the resulting diff
-queue's "nr" value.
-
-Use the "num_changes" from diffopt to check if the diff terminated
-early. This is incredibly important, as it can result in incorrect
-filters! For example, the first commit in the Linux kernel repo
-reports only 471 changes, but since these are nested inside several
-directories they expand to 513 "real" changes, and in fact the
-total list of changes is not reported. Thus, the computed filter
-for this commit is incorrect.
-
-Demonstrate the subtle difference by using one fewer file change
-in the 'get bloom filter for commit with 513 changes' test. Before,
-this edited 513 files inside "bigDir" which hit this inequality.
-However, dropping the file count by one demonstrates how the
-previous inequality was incorrect but the new one is correct.
+Fix alignment issues that were likely introduced due to an editor
+using tab lengths of 4 instead of 8.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- bloom.c          | 2 +-
- t/t0095-bloom.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ bloom.c | 16 ++++++++--------
+ bloom.h |  4 ++--
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/bloom.c b/bloom.c
-index 196cda0a1bd..e2ede44126c 100644
+index dd9bab9bbd6..2e3e0f5037b 100644
 --- a/bloom.c
 +++ b/bloom.c
-@@ -215,7 +215,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 		diff_tree_oid(NULL, &c->object.oid, "", &diffopt);
- 	diffcore_std(&diffopt);
+@@ -29,8 +29,8 @@ static inline unsigned char get_bitmask(uint32_t pos)
+ }
  
--	if (diff_queued_diff.nr <= max_changes) {
-+	if (diffopt.num_changes <= max_changes) {
- 		struct hashmap pathmap;
- 		struct pathmap_hash_entry *e;
- 		struct hashmap_iter iter;
-diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
-index 6defeb544f1..48a90625596 100755
---- a/t/t0095-bloom.sh
-+++ b/t/t0095-bloom.sh
-@@ -100,7 +100,7 @@ test_expect_success EXPENSIVE 'get bloom filter for commit with 513 changes' '
- 	rm actual &&
- 	rm expect &&
- 	mkdir bigDir &&
--	for i in $(test_seq 0 512)
-+	for i in $(test_seq 0 511)
- 	do
- 		echo $i >bigDir/$i
- 	done &&
+ static int load_bloom_filter_from_graph(struct commit_graph *g,
+-				   struct bloom_filter *filter,
+-				   struct commit *c)
++					struct bloom_filter *filter,
++					struct commit *c)
+ {
+ 	uint32_t lex_pos, start_index, end_index;
+ 
+@@ -123,9 +123,9 @@ uint32_t murmur3_seeded(uint32_t seed, const char *data, size_t len)
+ }
+ 
+ void fill_bloom_key(const char *data,
+-					size_t len,
+-					struct bloom_key *key,
+-					const struct bloom_filter_settings *settings)
++		    size_t len,
++		    struct bloom_key *key,
++		    const struct bloom_filter_settings *settings)
+ {
+ 	int i;
+ 	const uint32_t seed0 = 0x293ae76f;
+@@ -139,8 +139,8 @@ void fill_bloom_key(const char *data,
+ }
+ 
+ void add_key_to_filter(const struct bloom_key *key,
+-					   struct bloom_filter *filter,
+-					   const struct bloom_filter_settings *settings)
++		       struct bloom_filter *filter,
++		       const struct bloom_filter_settings *settings)
+ {
+ 	int i;
+ 	uint64_t mod = filter->len * BITS_PER_WORD;
+@@ -160,7 +160,7 @@ void init_bloom_filters(void)
+ 
+ struct bloom_filter *get_bloom_filter(struct repository *r,
+ 				      struct commit *c,
+-					  int compute_if_not_present)
++				      int compute_if_not_present)
+ {
+ 	struct bloom_filter *filter;
+ 	struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+diff --git a/bloom.h b/bloom.h
+index b935186425d..a51e3715296 100644
+--- a/bloom.h
++++ b/bloom.h
+@@ -74,8 +74,8 @@ void fill_bloom_key(const char *data,
+ 		    const struct bloom_filter_settings *settings);
+ 
+ void add_key_to_filter(const struct bloom_key *key,
+-					   struct bloom_filter *filter,
+-					   const struct bloom_filter_settings *settings);
++		       struct bloom_filter *filter,
++		       const struct bloom_filter_settings *settings);
+ 
+ void init_bloom_filters(void);
+ 
 -- 
 gitgitgadget
 
