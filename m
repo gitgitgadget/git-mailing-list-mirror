@@ -2,92 +2,93 @@ Return-Path: <SRS0=6g9E=62=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42734C2D0F8
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 23:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 243C6C2D0F8
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 23:42:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF050206F5
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 23:39:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E797420769
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 23:42:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pEpKwTMW"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jLfyZK4W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731648AbgELXj3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 19:39:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63492 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725938AbgELXj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 May 2020 19:39:29 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 297845BB83;
-        Tue, 12 May 2020 19:39:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+jQoNYdB/1v2Aki8f7WbqJ177Sc=; b=pEpKwT
-        MWtU/aH3mYRWNUjERwFDKf97uOapWmUwJpI3zFvedS7lQFYwmse5YztPIJbVVBYl
-        ftkumS0n5VSQo0YlFN40mTKadVfMiwgM1t8nVqi9gkuN8A5cDAVr6QK8zwteeWaX
-        3bYNymH5VkYNxApmeZPIyKkvTKBUaRsVWr2PU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Z94McvI0jxGTHmO96ANN8IAXbQiekPd1
-        X5CliUPn1EBtdR7bJzd1oZ52A3FkATQtxjW06NYuF0Z68rYIaCcsGqvpDMOvwFj6
-        UpO9naDF9YGtDdA6TdmVLNz/yzOxSdEn0pUSTiTcifN5BEJKNe3sz0wYrQ1KQCMA
-        8xmE+phOTW0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 203E95BB82;
-        Tue, 12 May 2020 19:39:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.99.68])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6EF85BB81;
-        Tue, 12 May 2020 19:39:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: avoid pounding on the poor ci-artifacts container
-References: <pull.632.git.1589316430595.gitgitgadget@gmail.com>
-Date:   Tue, 12 May 2020 16:39:26 -0700
-In-Reply-To: <pull.632.git.1589316430595.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Tue, 12 May 2020 20:47:10
-        +0000")
-Message-ID: <xmqqimh0afkh.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D11E43E8-94A9-11EA-8A22-C28CBED8090B-77302942!pb-smtp1.pobox.com
+        id S1727899AbgELXmU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 19:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39660 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725938AbgELXmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 19:42:19 -0400
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98517C061A0C
+        for <git@vger.kernel.org>; Tue, 12 May 2020 16:42:19 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id z14so14797430qvv.6
+        for <git@vger.kernel.org>; Tue, 12 May 2020 16:42:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=WyHtyNLSONeu/oNIdTcJupywiCy28BYBxN5wrR4Zrtg=;
+        b=jLfyZK4WzLyGmQur57fuUXZuYbcpJquPNtOQL6hREjxRWffGrLQktfFq1HsshGKG6J
+         Qh7W9y4t9baQur9ZhjOyFB83hmCZoQmbG4duzxBh6gw14mGavNukSVO+OH9VIa37X2GB
+         HiAehpvNSXSA1rnNYRfTw5j7B70S1XennIJVr/Y5zjb+9sS824sN7gfsZUSri9zFk+4z
+         Wc2A0si/JKJJpuFHcz3UIkQIpVpZhh/0wSn5a9vgy1XmRQPox9hqv/L0pkxYpZJGxYH9
+         M/1r2DC4mKVVWO01ccpGCOD/FT6LIxg6xrC6+KzUGi7v+I5ahnhbAFAJKuxidvx6eb0A
+         6Wjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=WyHtyNLSONeu/oNIdTcJupywiCy28BYBxN5wrR4Zrtg=;
+        b=BqpTpN2QkJ2UnLB3lFKhYWyGPngWCdLw8z+7iLhaG2TSXlcz/MPVSAIBn750bA3wjq
+         voKGf6vxBZVg+KmfNC1owBjpmHIHx1n2HBL0XepAAqPVBCkchQl+Rr13H+6CeUdkwCDo
+         UuUr6vHSCf3CA01uLlmagO0bTewdfyj7X5eZvI3iyV1KvLA6EoZgodzVlCCEyuoLIXcH
+         XmCztXb9mbZaMo+to+ApjappTGgDRD5kGH6l/It9+vhaeljxNAGRWAqCvQQDa89rP69K
+         Xce//xFUnsO40kt+ELnZ7065YNOXg1xDm0J/qiNi+Ms6L2aJcIryrag1fWatkSfsUau7
+         cJjg==
+X-Gm-Message-State: AOAM533pMrYuk7k/mrWVZCL8/pB3K8KkyO2xHfOp+IAuCgpBkL4KzyTc
+        F3HcBMBaiH/2HR7/vUrEmmIYfGUiwu4e4G3lUulLM0eLJxY/ZpDKT+6HDOkKN1m6hojp91+r6aT
+        7rKwPg7eGHfbRBGGy02pfOgvDM5ibPiCwIEqL7uA4Gc1yyD2TGdBQda6UlgLah2xv9f60HOmz4Q
+        ==
+X-Google-Smtp-Source: ABdhPJxh3muxh8gikcjzUYqbRj9AMmgbI0XJzNhsHzCUNhp6krvSB6NQ7SpZRAxL/GMD5DwDpHF/e70Hzn4RYRaT3dU=
+X-Received: by 2002:a0c:f4c1:: with SMTP id o1mr10575831qvm.189.1589326938627;
+ Tue, 12 May 2020 16:42:18 -0700 (PDT)
+Date:   Tue, 12 May 2020 16:42:11 -0700
+Message-Id: <20200512234213.63651-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
+Subject: [PATCH 0/2] bugreport: collect shell settings
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Note: To avoid merge conflicts, this is based on
+es/bugreport-with-hooks. It doesn't rely on any of the content in that
+patch and the conflicts would be straightforward to resolve, but they
+would be annoying. (If that's not the right way to go about something
+like this, let me know - I've got a handful more bugreport topics to go
+after this one.)
 
-> Let's switch back to using the Build Artifacts of our trusty Azure
-> Pipeline for the time being.
->
-> To avoid unnecessary hammering of the Azure Pipeline artifacts, we use
-> the GitHub Action `actions/upload-artifact` in the `windows-build` job
-> and the GitHub Action `actions/download-artifact` in the `windows-test`
-> and `vs-test` jobs (the latter now depends on `windows-build` for that
-> reason, too).
+The first patch in the series captures the shell we use during build
+(e.g. to run GIT-VERSION-GEN) and the second patch captures the user
+shell at runtime.
 
-I guess this answers a question I sent earlier to the list (our
-mails almost crossed, I guess, as two of us were looking at the same
-problem at around the same time?).
+ - Emily
 
-Hopefully when cmake-for-windows-build topic lands, this can go away
-altogether, but that is probably at least 8 weeks away (3 weeks
-remaining before the next cycle opens, plus a half of 10 week per
-cycle for a typical major release).
+Emily Shaffer (2):
+  help: add shell-path to --build-options
+  bugreport: include user interactive shell
 
-Today's final integration (these days I'm pushing out twice or three
-times a day) contains this one, and it seems to have passed ;-)
+ Documentation/git-bugreport.txt | 1 +
+ bugreport.c                     | 6 ++++++
+ help.c                          | 1 +
+ 3 files changed, 8 insertions(+)
 
-Thanks.
+-- 
+2.26.2.645.ge9eca65c58-goog
+
