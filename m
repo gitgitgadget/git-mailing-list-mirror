@@ -5,66 +5,67 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC5F6C2D0FB
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52679CA90AF
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0C7B206B9
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28F9820720
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PhIPN1PV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DS653kLa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729188AbgELQvO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 12:51:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60242 "EHLO
+        id S1729116AbgELQvJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 12:51:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728208AbgELQvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 May 2020 12:51:07 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1BBC061A0C
-        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:06 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id k12so22565655wmj.3
-        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:06 -0700 (PDT)
+        with ESMTP id S1728212AbgELQvE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 12:51:04 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA7D5C061A0F
+        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:03 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id w19so9489760wmc.1
+        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=S/BoZwLwjeJa1zmOnvNR/jiUEVrNHFPIbwPD6ZVhlVU=;
-        b=PhIPN1PVpjTsybU33KrWYtFZZpJX33rkAXZlGEShSCE6fFtrXl8NiY2p/6C/v+AAbB
-         9f8NCavx9/1VADJ+KfzeBTPQlIGWrIZSL4dcZvTFxipfhKFd2yQGRLFUGnYIjKKtkgLD
-         Gp4ai+f7p2LyjXmV2ZUZ2Tnr2nyxX0yRMX3NauKE2Q1DbFJ7YBJkP7q/yFhlz+683jeR
-         DnwQV4aQxM9a8y8Z39tIiGGc9iMfqmQ4sF4ywlU1xoSLpUzwo9a2uj6srcIJMWu0ZFQJ
-         Cj+AOAhKIr0z/KXIoJZgGCazEQY7YGQiXwFJpbSWIN/Ua+4RvVeUVTwYoFZWZMx39aq0
-         JjZg==
+        bh=4iKZYsq4YTDcYvnqHIsAb+eqjsQE3UwvEBogppE4+18=;
+        b=DS653kLanQ+UlinJxPNJXLNU8q4KNAQwGh2x99kBA4M/SSpK1GldTfmuqxBqkHaQCE
+         wEOXYo2bqHx1SQEu7gjK0AyyzYs28DK7XXoG69Gd9qPZu88UZ9d+DQ9ZPkyD4/jxhwUX
+         XNmJroY8+YwW7fsSEn5NkeBYqXLbqB0OymRYFM2PVL7waP6hAQeKsC2GtbJV+4TFluos
+         T9MnbBohH07vKRqEoWshKq0k4+R4pJma+U78jWf9XgePfYcYZ68HV5TeFHnKw+wH7eLH
+         b1F4SWPUAX/034kJaUzfOkbo7OTFqt9V3jYnFBcC6eoDdDBKVnZ/OGXFlAIGxJo0+7F8
+         KbYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=S/BoZwLwjeJa1zmOnvNR/jiUEVrNHFPIbwPD6ZVhlVU=;
-        b=TVVVbiGljHiw/Hr+JSsQkg/ohCLreUiCYEYCh94sg0qGvjTyqOtUTaQhozrOFxoTrd
-         HkbWZIPBo8utwVuzjMwH7igVFVzQ0kJ5OoM2f0CJX1V0fCXlOxB9qyrTcbgX52VR+sLQ
-         PWaav3f/vZ4cthTwtuMICi9hzP9d6BTEzvDuMShTsWE5r2nkyb4etsFdpKi9C3Si+YF0
-         wUWEjSQaJzNEHAUUVHr9akigUk1YzxnX+RZS89s90JPcRYnmte1dQED5oGiJRdbPSZzX
-         1jd0eXxFD/OMIwMDKBXCRbrC29/uXUSHpncxcS+W2hFoIWmmGRbRLVZskDqlspwCi5Cg
-         2nyg==
-X-Gm-Message-State: AOAM533knirMe+MfeYa6rNo5VFOWTzhExFuqp41kcowRgXbYECNdVRwT
-        qGhPxiUnOAA7RrMNJrIe+wjqLdoL
-X-Google-Smtp-Source: ABdhPJx2+Km57dn6y5oIk8GrPQ1WM/6rKQqvD/S9x3l0LmLtHQ5eAUwKetEnUrbwmAa+ptkpT3DHqw==
-X-Received: by 2002:a05:600c:247:: with SMTP id 7mr5137401wmj.76.1589302265288;
-        Tue, 12 May 2020 09:51:05 -0700 (PDT)
+        bh=4iKZYsq4YTDcYvnqHIsAb+eqjsQE3UwvEBogppE4+18=;
+        b=HiVYzI/bwoaTW+yUHIYLsBiUA8ghSpNkCCAzXescOYD4csTmbBUebeIEHk/1jAHhze
+         QZFuwYK6TlSOMCu6eSakmGCpVNztq3Hlf7c7EU2mTc7C+0W7GyZYd8b3+dc1k840gFu8
+         mvqLJrX5ggYwWSJ3IzGpilKAEBxF9K22uJPf68OksYmJCpG2SjDkv1xupwq1eRIBv9ZP
+         I6mD+HYJ3j0JDyhOWz3BXJigeTzPZ+su3rw3aECqjB6Q8/XiYYM1PsUfwmU2Gm6VB+i5
+         M4FKDK8/Rc6+g7/tEi4FAGBOaQtgX+T9JVSaZtulHHXOJh9WuPj+Tvd/qptNBtT3Lwod
+         UJKg==
+X-Gm-Message-State: AGi0PuYv3RPcb4/lxpD2AH74IU4a8+TwTah8HRteio2un3o2xpBZbMUb
+        uY9EtrIRViMOcTpZsn2tzVzvXdcb
+X-Google-Smtp-Source: APiQypLyaZCn/50BHlsYcXpmmJcN8BBBq8Qk0gveSy5E2pHHnvDt6u9dFx3xIs3gnPI0Ll23xQL1kQ==
+X-Received: by 2002:a1c:3bc5:: with SMTP id i188mr27575990wma.90.1589302262416;
+        Tue, 12 May 2020 09:51:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n17sm9721613wrr.42.2020.05.12.09.51.04
+        by smtp.gmail.com with ESMTPSA id t7sm20869180wrq.39.2020.05.12.09.51.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 09:51:04 -0700 (PDT)
-Message-Id: <fa1b8032906c6042a0e5851f803ec0427922a1a5.1589302255.git.gitgitgadget@gmail.com>
+        Tue, 12 May 2020 09:51:01 -0700 (PDT)
+Message-Id: <af6c606881d73cac2cf10f165327462e75efb9d8.1589302254.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
 References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
         <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 12 May 2020 16:50:54 +0000
-Subject: [PATCH v2 11/11] ci: modification of main.yml to use cmake for
- vs-build job
+Date:   Tue, 12 May 2020 16:50:50 +0000
+Subject: [PATCH v2 07/11] cmake: support for building git on windows with msvc
+ and clang.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,135 +80,164 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 
-This patch modifies .github/workflows/main.yml to use CMake for
-Visual Studio builds.
+This patch adds support for Visual Studio and Clang builds
 
-Modified the vs-test step to match windows-test step. This speeds
-up the vs-test. Calling git-cmd from powershell and then calling git-bash
-to perform the tests slows things down(factor of about 6). So git-bash
-is directly called from powershell to perform the tests using prove.
+The minimum required version of CMake is upgraded to 3.15 because
+this version offers proper support for Clang builds on Windows.
 
-NOTE: Since GitHub keeps the same directory for each job
-(with respect to path) absolute paths are used in the bin-wrapper
-scripts.
+Libintl is not searched for when building with Visual Studio or Clang
+because there is no binary compatible version available yet.
 
-GitHub has switched to CMake 3.17.1 which changed the behaviour of
-FindCURL module. An extra definition (-DCURL_NO_CURL_CMAKE=ON) has been
-added to revert to the old behaviour.
+NOTE: In the link options invalidcontinue.obj has to be included.
+The reason for this is because by default, Windows calls abort()'s
+instead of setting errno=EINVAL when invalid arguments are passed to
+standard functions.
+This commit explains it in detail:
+4b623d80f73528a632576990ca51e34c333d5dd6
 
-Edit(Explanation for the reordering of build steps):
-In the configuration phase CMake looks for the required libraries for
-building git (eg zlib,libiconv). So we extract the libraries before we
-configure.
+On Windows the default generator is Visual Studio,so for Visual Studio
+builds do this:
 
-Changes:
-The CMake script has been relocated to contib/buildsystems, so point
-to the CMakeLists.txt in the invocation commands.
+cmake `relative-path-to-srcdir`
 
-The generation command now uses the absolute paths for the generation
-step.
+NOTE: Visual Studio generator is a multi config generator, which means
+that Debug and Release builds can be done on the same build directory.
 
-To check for ICONV_OMITS_BOM libiconv.dll needs to be in the working
-directory of script or path. So we copy the dlls before we configure.
+For Clang builds do this:
+
+On bash
+CC=Clang cmake `relative-path-to-srcdir` -G Ninja
+		-DCMAKE_BUILD_TYPE=[Debug or Release]
+
+On cmd
+set CC=Clang
+cmake `relative-path-to-srcdir` -G Ninja
+		-DCMAKE_BUILD_TYPE=[Debug or Release]
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- .github/workflows/main.yml | 46 +++++++++++++++++++++-----------------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ CMakeLists.txt | 57 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 46 insertions(+), 11 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index fd4df939b50..7a65cc0764f 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -80,13 +80,6 @@ jobs:
-     - name: download git-sdk-64-minimal
-       shell: bash
-       run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
--    - name: generate Visual Studio solution
--      shell: powershell
--      run: |
--        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
--          make NDEBUG=1 DEVELOPER=1 vcxproj
--        "@
--        if (!$?) { exit(1) }
-     - name: download vcpkg artifacts
-       shell: powershell
-       run: |
-@@ -98,6 +91,14 @@ jobs:
-         Remove-Item compat.zip
-     - name: add msbuild to PATH
-       uses: microsoft/setup-msbuild@v1.0.0
-+    - name: copy dlls to root
-+      shell: powershell
-+      run: |
-+        & compat\vcbuild\vcpkg_copy_dlls.bat release
-+        if (!$?) { exit(1) }
-+    - name: generate Visual Studio solution
-+      shell: bash
-+      run: cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows -DMSGFMT_EXE=`pwd`/git-sdk-64-minimal/mingw64/bin/msgfmt.exe -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
-     - name: MSBuild
-       run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
-     - name: bundle artifact tar
-@@ -106,8 +107,6 @@ jobs:
-         MSVC: 1
-         VCPKG_ROOT: ${{github.workspace}}\compat\vcbuild\vcpkg
-       run: |
--        & compat\vcbuild\vcpkg_copy_dlls.bat release
--        if (!$?) { exit(1) }
-         & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-           mkdir -p artifacts &&
-           eval \"`$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts 2>&1 | grep ^tar)\"
-@@ -125,9 +124,9 @@ jobs:
-         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-     steps:
-     - uses: actions/checkout@v1
--    - name: download git-64-portable
-+    - name: download git-sdk-64-minimal
-       shell: bash
--      run: a=git-64-portable && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-+      run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
-     - name: download build artifacts
-       uses: actions/download-artifact@v1
-       with:
-@@ -136,23 +135,30 @@ jobs:
-     - name: extract build artifacts
-       shell: bash
-       run: tar xf artifacts.tar.gz
--    - name: test (parallel)
-+    - name: test
-       shell: powershell
-       env:
-         MSYSTEM: MINGW64
-         NO_SVN_TESTS: 1
-         GIT_TEST_SKIP_REBASE_P: 1
-       run: |
--        & git-64-portable\git-cmd.exe --command=usr\bin\bash.exe -lc @"
--          # Let Git ignore the SDK and the test-cache
--          printf '%s\n' /git-64-portable/ /test-cache/ >>.git/info/exclude
-+        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-+          # Let Git ignore the SDK
-+          printf '%s\n' /git-sdk-64-minimal/ >>.git/info/exclude
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9625e41886f..4353080b708 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,7 +2,7 @@
+ #	Copyright (c) 2020 Sibi Siddharthan
+ #
  
--          cd t &&
--          PATH=\"`$PWD/helper:`$PATH\" &&
--          test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
--                  `$(test-tool.exe path-utils slice-tests \
--                          ${{matrix.nr}} 10 t[0-9]*.sh)
-+          ci/run-test-slice.sh ${{matrix.nr}} 10
-         "@
-+    - name: ci/print-test-failures.sh
-+      if: failure()
-+      shell: powershell
-+      run: |
-+        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc ci/print-test-failures.sh
-+    - name: Upload failed tests' directories
-+      if: failure() && env.FAILED_TEST_ARTIFACTS != ''
-+      uses: actions/upload-artifact@v1
-+      with:
-+        name: failed-tests-windows
-+        path: ${{env.FAILED_TEST_ARTIFACTS}}
-   regular:
-     strategy:
-       matrix:
+-cmake_minimum_required(VERSION 3.14)
++cmake_minimum_required(VERSION 3.15)
+ 
+ #Parse GIT-VERSION-GEN to get the version
+ file(STRINGS ${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN git_version REGEX "DEF_VER=v(.*)")
+@@ -32,8 +32,11 @@ find_package(ZLIB REQUIRED)
+ find_package(CURL)
+ find_package(EXPAT)
+ find_package(Iconv)
+-find_package(Intl)
+ 
++#Don't use libintl on Windows Visual Studio and Clang builds
++if(NOT (WIN32 AND (CMAKE_C_COMPILER_ID STREQUAL "MSVC" OR CMAKE_C_COMPILER_ID STREQUAL "Clang")))
++	find_package(Intl)
++endif()
+ 
+ if(NOT Intl_FOUND)
+ 	add_compile_definitions(NO_GETTEXT)
+@@ -62,7 +65,7 @@ if(NOT SH_EXE)
+ 			"On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
+ endif()
+ 
+-if(WIN32)
++if(WIN32 AND NOT MSVC)#not required for visual studio builds
+ 	find_program(WINDRES_EXE windres)
+ 	if(NOT WINDRES_EXE)
+ 		message(FATAL_ERROR "Install windres on Windows for resource files")
+@@ -74,6 +77,13 @@ if(NOT MSGFMT_EXE)
+ 	message(WARNING "Text Translations won't be build")
+ endif()
+ 
++#Force all visual studio outputs to CMAKE_BINARY_DIR
++if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
++	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR})
++	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR})
++	add_compile_options(/MP)
++endif()
++
+ #default behaviour
+ include_directories(${CMAKE_SOURCE_DIR})
+ add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
+@@ -111,6 +121,10 @@ endif()
+ 
+ #Platform Specific
+ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
++	if(CMAKE_C_COMPILER_ID STREQUAL "MSVC" OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
++		include_directories(compat/vcbuild/include)
++		add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE)
++	endif()
+ 	include_directories(compat/win32)
+ 	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_UNIX_SOCKETS WIN32
+ 				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
+@@ -464,14 +478,22 @@ set(libvcs-svn_SOURCES
+ 	vcs-svn/svndiff.c vcs-svn/svndump.c)
+ add_library(vcs-svn STATIC ${libvcs-svn_SOURCES})
+ 
+-#add git.rc for gcc
+ if(WIN32)
+-	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
+-			COMMAND ${WINDRES_EXE} -O coff -DMAJOR=${PROJECT_VERSION_MAJOR} -DMINOR=${PROJECT_VERSION_MINOR}
+-				-DMICRO=${PROJECT_VERSION_PATCH} -DPATCHLEVEL=0 -DGIT_VERSION="\\\"${PROJECT_VERSION}.GIT\\\""
+-				-i ${CMAKE_SOURCE_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
+-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+-			VERBATIM)
++	if(NOT MSVC)#use windres when compiling with gcc and clang
++		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
++				COMMAND ${WINDRES_EXE} -O coff -DMAJOR=${PROJECT_VERSION_MAJOR} -DMINOR=${PROJECT_VERSION_MINOR}
++					-DMICRO=${PROJECT_VERSION_PATCH} -DPATCHLEVEL=0 -DGIT_VERSION="\\\"${PROJECT_VERSION}.GIT\\\""
++					-i ${CMAKE_SOURCE_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
++				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
++				VERBATIM)
++	else()#MSVC use rc
++		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
++				COMMAND ${CMAKE_RC_COMPILER} /d MAJOR=${PROJECT_VERSION_MAJOR} /d MINOR=${PROJECT_VERSION_MINOR}
++					/d MICRO=${PROJECT_VERSION_PATCH} /d PATCHLEVEL=0 /d GIT_VERSION="${PROJECT_VERSION}.GIT"
++					/fo ${CMAKE_BINARY_DIR}/git.res ${CMAKE_SOURCE_DIR}/git.rc
++				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
++				VERBATIM)
++	endif()
+ 	add_custom_target(git-rc DEPENDS ${CMAKE_BINARY_DIR}/git.res)
+ endif()
+ 
+@@ -488,7 +510,13 @@ endif()
+ if(WIN32)
+ 	target_link_libraries(common-main ws2_32 ntdll ${CMAKE_BINARY_DIR}/git.res)
+ 	add_dependencies(common-main git-rc)
+-	target_link_options(common-main PUBLIC -municode -Wl,--nxcompat -Wl,--dynamicbase -Wl,--pic-executable,-e,mainCRTStartup)
++	if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
++		target_link_options(common-main PUBLIC -municode -Wl,--nxcompat -Wl,--dynamicbase -Wl,--pic-executable,-e,mainCRTStartup)
++	elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang")
++		target_link_options(common-main PUBLIC -municode -Wl,-nxcompat -Wl,-dynamicbase -Wl,-entry:wmainCRTStartup -Wl,invalidcontinue.obj)
++	elseif(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
++		target_link_options(common-main PUBLIC /IGNORE:4217 /IGNORE:4049 /NOLOGO /ENTRY:wmainCRTStartup /SUBSYSTEM:CONSOLE invalidcontinue.obj)
++	endif()
+ elseif(UNIX)
+ 	target_link_libraries(common-main pthread rt)
+ endif()
+@@ -798,6 +826,13 @@ target_link_libraries(test-tool common-main)
+ set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
+ 			PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/helper)
+ 
++if(MSVC)
++	set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
++				PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/t/helper)
++	set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
++				PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/t/helper)
++endif()
++
+ #wrapper scripts
+ set(wrapper_scripts
+ 	git git-upload-pack git-receive-pack git-upload-archive git-shell git-remote-ext)
 -- 
 gitgitgadget
+
