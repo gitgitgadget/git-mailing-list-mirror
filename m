@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09D50C2D0F7
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73867C2D0F6
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6E4120720
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C0E7206B9
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A4CXXhb5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MypHufB3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729214AbgELQvQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 12:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60256 "EHLO
+        id S1729177AbgELQvM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 12:51:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728403AbgELQvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 May 2020 12:51:06 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECAAC05BD0A
-        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:05 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id l11so10449816wru.0
-        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:05 -0700 (PDT)
+        with ESMTP id S1728754AbgELQvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 12:51:07 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5265CC05BD0B
+        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:06 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id y16so9191637wrs.3
+        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZN/3phHujoltkVy6Vug9RWuCYu+ocbOn2U7qyoOzjsM=;
-        b=A4CXXhb5XT6l5M+zV77M5Ynq19fPESAXl0j6MPkbPz1ndWoV0wMc3iy0S5aheAuy2b
-         ir2F8GBqtuIa9ztXNs2I3zCQa1J0GyyJYgVnyY4h3z4Wnql74XT6WqBfOYsfAHtE9tuD
-         U4whGFpSJ3NwSXOohfd460xD/j0pGC71IpjKBH0OoEhnP2BuoVj1LTXXqcNkoX5+Xoqk
-         kXinJfBY3KWgZmRfu5qE0W754vuRaidan/2EKeIdZpC7+uz7cLd62yS+naCOiVyubLcE
-         T40xe/G/ayETwc7c2bDS/tzwTNDYYRqjk8+8EdmHRJSWMLP5IQdnbWsHdHRtKmkyq1Xw
-         jlbg==
+        bh=Hp5yG9+CquHsWuYFgdMYdUyuDymbEde0E+KmMyLc9r8=;
+        b=MypHufB37t9SxybSa2Phjt/iOsjTzaoFKCAbqvmYYRp+SWsuLnG15HToa9UZIfoifW
+         16TrVEvxq5B8/plhoZqHDe/R6CtgRQY/EeRGCFTeQzflKFnDuJo4NccVkzqUJ5W9Ta15
+         TaUU+0tAivrmAzNRE/f543Z4FaybdUqfZloMmJzJ+gIwOIlI2HWr5SJpdq9k5re369dM
+         gqH34WD1hUylwAFDOhCHujqqER6ThFmbfTDokn7IHpen2KbOfviARcfQSdVtrnB2Xpvj
+         9N/Xqpjc6Owhd6qjYALX6kQ8uHgiKLsyZp47xovISKg+Qlb6rorSACGACGBh2dukgp2b
+         pmFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZN/3phHujoltkVy6Vug9RWuCYu+ocbOn2U7qyoOzjsM=;
-        b=FM3KO1ZnY/0K6y5zXfOvCf+3kyH/o83K3aji8ZHAJ+i6aBwsk/8Qp8FFFs28t0KeD3
-         IPzzrUbGcwaggzBaOnU9Q0KeNY5lOMrBDmAYHAE6ZvCjTuODEcHCVed2Uyk8o/c3FtnT
-         hqyuPrhzzd3bmCRcGPM+MV7iZk47Kym+4IhYPmZq3BknPT0nCLgUdfGe/NTu5wi0Fnvh
-         wn1rv+k/IUjCWsulQY/4nX7u/Fz5FCoKfXZjeT2lDHzVaE9iCqsI7NxXjBfugmeenlVN
-         QZwxQBsB1PlogtzOxqRwywmwlYwHQlmWtha7LYIijJN/CSTxl9caqB68GyTRslu21ovT
-         3VzA==
-X-Gm-Message-State: AGi0PuY5IDEdhVmoX6L1zFm2YYV2041wl6e1I4E/qDW+O8I7mJ19iBGa
-        fCFgvuuQMViLMkXMv0oIf5OzRGqG
-X-Google-Smtp-Source: APiQypIu9aAAdBkDCjKYn/Z1MEYUpNU5LC4dL1ZUnVoRnOqfboG4Eds7/Q5iwTXdlmJYkUfr5mYFXw==
-X-Received: by 2002:a5d:4702:: with SMTP id y2mr24657717wrq.136.1589302263961;
-        Tue, 12 May 2020 09:51:03 -0700 (PDT)
+        bh=Hp5yG9+CquHsWuYFgdMYdUyuDymbEde0E+KmMyLc9r8=;
+        b=BiINjxLO5GmLemg/pGYoSv5HGClDNEX4gx6WpCU+fQPrIYRCt3FBeCMmOTwx3E43W/
+         8vADFxTz83P3pY/o/j0ESUEk1iwyhHWaymBMFuyQ43KorZX86KYy9LCK9ZmUm2nbDmvP
+         cLTNZ7d+rMLFmCYFo5tkER7HvJXoFwSAbAR5XtYN78IVMfRv2Hts67ET5jjeWoZ3HwUR
+         i5b52EoJkNb43WCR67PlScFTnls/9oxXLwNv80BV6l86Zoy9Dk+Nj+WpbSO8BXGH0hUe
+         3P8RvkKLAD8o+WVcmbfdFkeWGYHXywW7alHfypic8nMD4HtdgdhMmuKQASyQyquHN8Ac
+         2M2A==
+X-Gm-Message-State: AGi0Pub//OxjsR0REU99hM/AuLPm5op8aiaRPpbccqzUiruJ0ZgalGeN
+        0unxtSVv42TJh29IURYnoxn4teEZ
+X-Google-Smtp-Source: APiQypKMC6MgDYB6VTdf6QQMlYY/11rFGyhxHMCR2wvzGp1KJ5srwks5dC+ScEj2adCSXAXEdm56eg==
+X-Received: by 2002:adf:aacb:: with SMTP id i11mr26121863wrc.6.1589302264612;
+        Tue, 12 May 2020 09:51:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x5sm24827356wro.12.2020.05.12.09.51.03
+        by smtp.gmail.com with ESMTPSA id c83sm33940468wmd.23.2020.05.12.09.51.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 09:51:03 -0700 (PDT)
-Message-Id: <9c674372fb58aa42e339c0a96c432283c4b0a894.1589302255.git.gitgitgadget@gmail.com>
+        Tue, 12 May 2020 09:51:04 -0700 (PDT)
+Message-Id: <b0a321a714a766962456e2a9e8dd7d2be349e34d.1589302255.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
 References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
         <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 12 May 2020 16:50:52 +0000
-Subject: [PATCH v2 09/11] cmake: relocated script file contrib/buildsystems
+Date:   Tue, 12 May 2020 16:50:53 +0000
+Subject: [PATCH v2 10/11] cmake: parse the makefile for the sources.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,251 +78,216 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 
-The CMake script has been relocated to contrib/buildsystems.
-The changes made to the script involves pointing to correct location
-of the source files.
+The CMake script parses the Makefile for:
+SCRIPT_SH
+SCRIPT_PERL
+TEST_BUILTINS_OBJS
+LIB_OBJS
+BUILTIN_OBJS
+XDIFF_OBJS
+VCSSVN_OBJS
+
+By doing this we avoid duplication of text between the Makefile and
+the CMake script.
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- .../buildsystems/CMakeLists.txt               | 76 +++++++++++--------
- 1 file changed, 45 insertions(+), 31 deletions(-)
- rename CMakeLists.txt => contrib/buildsystems/CMakeLists.txt (92%)
+ contrib/buildsystems/CMakeLists.txt | 137 ++++++----------------------
+ 1 file changed, 30 insertions(+), 107 deletions(-)
 
-diff --git a/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-similarity index 92%
-rename from CMakeLists.txt
-rename to contrib/buildsystems/CMakeLists.txt
-index 975791c8b89..e0ce069dc2a 100644
---- a/CMakeLists.txt
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index e0ce069dc2a..4592ce614cf 100644
+--- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -4,6 +4,9 @@
+@@ -21,6 +21,25 @@ project(git
+ #TODO Enable NLS on windows natively
+ #TODO Add pcre support
  
- cmake_minimum_required(VERSION 3.15)
- 
-+#set the source directory to root of git
-+set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
++#macros for parsing the Makefile for sources and scripts
++macro(parse_makefile_for_sources list_var regex)
++	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
++	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
++	string(REPLACE "$(COMPAT_OBJS)" "" ${list_var} ${${list_var}}) #remove "$(COMPAT_OBJS)" This is only for libgit.
++	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
++	string(REPLACE ".o" ".c;" ${list_var} ${${list_var}}) #change .o to .c, ; is for converting the string into a list
++	list(TRANSFORM ${list_var} STRIP) #remove trailing/leading whitespaces for each element in list
++	list(REMOVE_ITEM ${list_var} "") #remove empty list elements
++endmacro()
 +
- #Parse GIT-VERSION-GEN to get the version
- file(STRINGS ${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN git_version REGEX "DEF_VER=v(.*)")
- string(REPLACE "DEF_VER=v" "" git_version ${git_version})
-@@ -123,10 +126,10 @@ endif()
- #Platform Specific
- if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
- 	if(CMAKE_C_COMPILER_ID STREQUAL "MSVC" OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
--		include_directories(compat/vcbuild/include)
-+		include_directories(${CMAKE_SOURCE_DIR}/compat/vcbuild/include)
- 		add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE)
- 	endif()
--	include_directories(compat/win32)
-+	include_directories(${CMAKE_SOURCE_DIR}/compat/win32)
- 	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_UNIX_SOCKETS WIN32
- 				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
- 				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
-@@ -224,7 +227,7 @@ foreach(f ${function_checks})
- endforeach()
- 
- if(NOT HAVE_POLL_H OR NOT HAVE_SYS_POLL_H OR NOT HAVE_POLL)
--	include_directories(compat/poll)
-+	include_directories(${CMAKE_SOURCE_DIR}/compat/poll)
- 	add_compile_definitions(NO_POLL)
- 	list(APPEND compat_SOURCES compat/poll/poll.c)
- endif()
-@@ -345,7 +348,7 @@ check_c_source_compiles("
- int main(){return 0;}"
- HAVE_REGEX)
- if(NOT HAVE_REGEX)
--	include_directories(compat/regex )
-+	include_directories(${CMAKE_SOURCE_DIR}/compat/regex)
- 	list(APPEND compat_SOURCES compat/regex/regex.c )
- 	add_compile_definitions(NO_REGEX NO_MBSUPPORT GAWK)
- endif()
-@@ -467,21 +470,23 @@ endforeach()
- list(APPEND EXCLUSION_PROGS empty)
- set(EXCLUSION_PROGS_CACHE ${EXCLUSION_PROGS} CACHE STRING "Programs not built" FORCE)
- 
--if(NOT EXISTS ${CMAKE_SOURCE_DIR}/command-list.h OR NOT EXCLUSION_PROGS_CACHE STREQUAL EXCLUSION_PROGS)
-+if(NOT EXISTS ${CMAKE_BINARY_DIR}/command-list.h OR NOT EXCLUSION_PROGS_CACHE STREQUAL EXCLUSION_PROGS)
- 	list(REMOVE_ITEM EXCLUSION_PROGS empty)
- 	message("Generating command-list.h")
- 	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-cmdlist.sh ${EXCLUSION_PROGS} command-list.txt
- 			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_SOURCE_DIR}/command-list.h)
-+			OUTPUT_FILE ${CMAKE_BINARY_DIR}/command-list.h)
- endif()
- 
--if(NOT EXISTS ${CMAKE_SOURCE_DIR}/config-list.h)
-+if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-list.h)
- 	message("Generating config-list.h")
- 	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-configlist.sh
- 			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_SOURCE_DIR}/config-list.h)
-+			OUTPUT_FILE ${CMAKE_BINARY_DIR}/config-list.h)
- endif()
- 
-+include_directories(${CMAKE_BINARY_DIR})
++macro(parse_makefile_for_scripts list_var regex lang)
++	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
++	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
++	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
++	string(REPLACE " " ";" ${list_var} ${${list_var}}) #convert string to a list
++	list(TRANSFORM ${list_var} REPLACE "${lang}" "") #do the replacement
++endmacro()
 +
+ 
+ include(CheckTypeSize)
+ include(CheckCSourceRuns)
+@@ -489,57 +508,18 @@ include_directories(${CMAKE_BINARY_DIR})
+ 
  
  #build
- set(libgit_SOURCES
-@@ -521,16 +526,22 @@ set(libgit_SOURCES
- 	worktree.c wrapper.c write-or-die.c ws.c wt-status.c xdiff-interface.c
- 	zlib.c)
+-set(libgit_SOURCES
+-	abspath.c add-interactive.c add-patch.c advice.c alias.c
+-	alloc.c apply.c archive.c archive-tar.c archive-zip.c argv-array.c
+-	attr.c base85.c bisect.c blame.c blob.c bloom.c branch.c bulk-checkin.c
+-	bundle.c cache-tree.c chdir-notify.c checkout.c color.c column.c
+-	combine-diff.c commit.c commit-graph.c commit-reach.c compat/obstack.c
+-	compat/terminal.c config.c connect.c connected.c convert.c copy.c credential.c
+-	csum-file.c ctype.c date.c decorate.c delta-islands.c diffcore-break.c
+-	diffcore-delta.c diffcore-order.c diffcore-pickaxe.c diffcore-rename.c
+-	diff-delta.c diff-lib.c diff-no-index.c diff.c dir.c dir-iterator.c editor.c
+-	entry.c environment.c ewah/bitmap.c ewah/ewah_bitmap.c ewah/ewah_io.c
+-	ewah/ewah_rlw.c exec-cmd.c fetch-negotiator.c fetch-pack.c fmt-merge-msg.c fsck.c fsmonitor.c
+-	gettext.c gpg-interface.c graph.c grep.c hashmap.c linear-assignment.c help.c hex.c
+-	ident.c interdiff.c json-writer.c kwset.c levenshtein.c line-log.c line-range.c list-objects.c
+-	list-objects-filter.c list-objects-filter-options.c ll-merge.c lockfile.c
+-	log-tree.c ls-refs.c mailinfo.c mailmap.c match-trees.c mem-pool.c merge.c merge-blobs.c
+-	merge-recursive.c mergesort.c midx.c name-hash.c negotiator/default.c
+-	negotiator/skipping.c notes.c notes-cache.c notes-merge.c notes-utils.c object.c oidmap.c
+-	oidset.c oid-array.c packfile.c pack-bitmap.c pack-bitmap-write.c pack-check.c pack-objects.c
+-	pack-revindex.c pack-write.c pager.c parse-options.c parse-options-cb.c patch-delta.c
+-	patch-ids.c path.c pathspec.c pkt-line.c preload-index.c pretty.c prio-queue.c progress.c
+-	promisor-remote.c prompt.c protocol.c prune-packed.c quote.c range-diff.c reachable.c read-cache.c rebase.c
+-	rebase-interactive.c reflog-walk.c refs.c refs/files-backend.c refs/iterator.c
+-	refs/packed-backend.c refs/ref-cache.c refspec.c ref-filter.c remote.c replace-object.c
+-	repo-settings.c repository.c rerere.c reset.c resolve-undo.c revision.c run-command.c
+-	send-pack.c sequencer.c serve.c server-info.c setup.c sha1-lookup.c
+-	sha1-file.c sha1-name.c shallow.c sideband.c sigchain.c split-index.c
+-	stable-qsort.c strbuf.c streaming.c string-list.c submodule.c submodule-config.c
+-	sub-process.c symlinks.c tag.c tempfile.c thread-utils.c tmp-objdir.c
+-	trace.c trace2.c trace2/tr2_cfg.c trace2/tr2_cmd_name.c trace2/tr2_dst.c
+-	trace2/tr2_sid.c trace2/tr2_sysenv.c trace2/tr2_tbuf.c trace2/tr2_tgt_event.c
+-	trace2/tr2_tgt_normal.c trace2/tr2_tgt_perf.c trace2/tr2_tls.c trailer.c transport.c
+-	transport-helper.c tree-diff.c tree.c tree-walk.c unpack-trees.c upload-pack.c url.c
+-	urlmatch.c usage.c userdiff.c utf8.c varint.c version.c versioncmp.c walker.c wildmatch.c
+-	worktree.c wrapper.c write-or-die.c ws.c wt-status.c xdiff-interface.c
+-	zlib.c)
++parse_makefile_for_sources(libgit_SOURCES "LIB_OBJS")
  
-+list(TRANSFORM libgit_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
-+list(TRANSFORM compat_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+ list(TRANSFORM libgit_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+ list(TRANSFORM compat_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
  add_library(libgit ${libgit_SOURCES} ${compat_SOURCES})
  
- set(libxdiff_SOURCES
- 	xdiff/xdiffi.c xdiff/xprepare.c xdiff/xutils.c xdiff/xemit.c
- 	xdiff/xmerge.c xdiff/xpatience.c xdiff/xhistogram.c)
-+
-+list(TRANSFORM libxdiff_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+-set(libxdiff_SOURCES
+-	xdiff/xdiffi.c xdiff/xprepare.c xdiff/xutils.c xdiff/xemit.c
+-	xdiff/xmerge.c xdiff/xpatience.c xdiff/xhistogram.c)
++parse_makefile_for_sources(libxdiff_SOURCES "XDIFF_OBJS")
+ 
+ list(TRANSFORM libxdiff_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
  add_library(xdiff STATIC ${libxdiff_SOURCES})
  
- set(libvcs-svn_SOURCES
- 	vcs-svn/line_buffer.c vcs-svn/sliding_window.c vcs-svn/fast_export.c
- 	vcs-svn/svndiff.c vcs-svn/svndump.c)
-+
-+list(TRANSFORM libvcs-svn_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+-set(libvcs-svn_SOURCES
+-	vcs-svn/line_buffer.c vcs-svn/sliding_window.c vcs-svn/fast_export.c
+-	vcs-svn/svndiff.c vcs-svn/svndump.c)
++parse_makefile_for_sources(libvcs-svn_SOURCES "VCSSVN_OBJS")
+ 
+ list(TRANSFORM libvcs-svn_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
  add_library(vcs-svn STATIC ${libvcs-svn_SOURCES})
- 
- if(WIN32)
-@@ -553,7 +564,7 @@ if(WIN32)
+@@ -588,40 +568,7 @@ elseif(UNIX)
  endif()
  
- #link all required libraries to common-main
--add_library(common-main OBJECT common-main.c)
-+add_library(common-main OBJECT ${CMAKE_SOURCE_DIR}/common-main.c)
  
- target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES})
- if(Intl_FOUND)
-@@ -612,56 +623,57 @@ set(git_SOURCES
- 	builtin/upload-pack.c builtin/var.c builtin/verify-commit.c builtin/verify-pack.c
- 	builtin/verify-tag.c builtin/worktree.c builtin/write-tree.c)
+-set(git_SOURCES
+-	builtin/add.c builtin/am.c builtin/annotate.c builtin/apply.c
+-	builtin/archive.c builtin/bisect--helper.c builtin/blame.c
+-	builtin/branch.c builtin/bundle.c builtin/cat-file.c builtin/check-attr.c
+-	builtin/check-ignore.c builtin/check-mailmap.c builtin/check-ref-format.c
+-	builtin/checkout-index.c builtin/checkout.c builtin/clean.c
+-	builtin/clone.c builtin/column.c builtin/commit-tree.c
+-	builtin/commit.c builtin/commit-graph.c builtin/config.c
+-	builtin/count-objects.c builtin/credential.c builtin/describe.c
+-	builtin/diff-files.c builtin/diff-index.c builtin/diff-tree.c
+-	builtin/diff.c builtin/difftool.c builtin/env--helper.c
+-	builtin/fast-export.c builtin/fetch-pack.c builtin/fetch.c builtin/fmt-merge-msg.c
+-	builtin/for-each-ref.c builtin/fsck.c builtin/gc.c
+-	builtin/get-tar-commit-id.c builtin/grep.c builtin/hash-object.c
+-	builtin/help.c builtin/index-pack.c builtin/init-db.c
+-	builtin/interpret-trailers.c builtin/log.c builtin/ls-files.c
+-	builtin/ls-remote.c builtin/ls-tree.c builtin/mailinfo.c builtin/mailsplit.c
+-	builtin/merge.c builtin/merge-base.c builtin/merge-file.c builtin/merge-index.c
+-	builtin/merge-ours.c builtin/merge-recursive.c builtin/merge-tree.c
+-	builtin/mktag.c builtin/mktree.c builtin/multi-pack-index.c builtin/mv.c
+-	builtin/name-rev.c builtin/notes.c builtin/pack-objects.c builtin/pack-redundant.c
+-	builtin/pack-refs.c builtin/patch-id.c builtin/prune-packed.c builtin/prune.c
+-	builtin/pull.c builtin/push.c builtin/range-diff.c builtin/read-tree.c
+-	builtin/rebase.c builtin/receive-pack.c builtin/reflog.c builtin/remote.c
+-	builtin/remote-ext.c builtin/remote-fd.c builtin/repack.c builtin/replace.c
+-	builtin/rerere.c builtin/reset.c builtin/rev-list.c builtin/rev-parse.c
+-	builtin/revert.c builtin/rm.c builtin/send-pack.c builtin/shortlog.c
+-	builtin/show-branch.c builtin/show-index.c builtin/show-ref.c
+-	builtin/sparse-checkout.c builtin/stash.c builtin/stripspace.c
+-	builtin/submodule--helper.c builtin/symbolic-ref.c builtin/tag.c
+-	builtin/unpack-file.c builtin/unpack-objects.c builtin/update-index.c
+-	builtin/update-ref.c builtin/update-server-info.c builtin/upload-archive.c
+-	builtin/upload-pack.c builtin/var.c builtin/verify-commit.c builtin/verify-pack.c
+-	builtin/verify-tag.c builtin/worktree.c builtin/write-tree.c)
++parse_makefile_for_sources(git_SOURCES "BUILTIN_OBJS")
  
--add_executable(git git.c ${git_SOURCES})
-+list(TRANSFORM git_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
-+add_executable(git ${CMAKE_SOURCE_DIR}/git.c ${git_SOURCES})
- target_link_libraries(git common-main )
+ list(TRANSFORM git_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+ add_executable(git ${CMAKE_SOURCE_DIR}/git.c ${git_SOURCES})
+@@ -714,11 +661,9 @@ set(GITWEBDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
+ set(INSTLIBDIR ${FALLBACK_RUNTIME_PREFIX}/share/perl5)
  
--add_executable(git-bugreport bugreport.c)
-+add_executable(git-bugreport ${CMAKE_SOURCE_DIR}/bugreport.c)
- target_link_libraries(git-bugreport common-main)
+ #shell scripts
++parse_makefile_for_scripts(git_sh_scripts "SCRIPT_SH" ".sh")
+ set(git_shell_scripts
+-	git-bisect git-difftool--helper git-filter-branch
+-	git-merge-octopus git-merge-one-file git-merge-resolve
+-	git-mergetool git-quiltimport
+-	git-request-pull git-submodule git-web--browse
++	${git_sh_scripts}
+ 	git-mergetool--lib git-parse-remote git-rebase--preserve-merges
+ 	git-sh-setup git-sh-i18n git-instaweb)
  
--add_executable(git-credential-store credential-store.c)
-+add_executable(git-credential-store ${CMAKE_SOURCE_DIR}/credential-store.c)
- target_link_libraries(git-credential-store common-main)
+@@ -738,9 +683,7 @@ foreach(script ${git_shell_scripts})
+ endforeach()
  
--add_executable(git-daemon daemon.c)
-+add_executable(git-daemon ${CMAKE_SOURCE_DIR}/daemon.c)
- target_link_libraries(git-daemon common-main)
+ #perl scripts
+-set(git_perl_scripts
+-	git-add--interactive git-archimport git-cvsexportcommit
+-	git-cvsimport git-cvsserver git-send-email git-svn)
++parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
  
--add_executable(git-fast-import fast-import.c)
-+add_executable(git-fast-import ${CMAKE_SOURCE_DIR}/fast-import.c)
- target_link_libraries(git-fast-import common-main)
- 
--add_executable(git-http-backend http-backend.c)
-+add_executable(git-http-backend ${CMAKE_SOURCE_DIR}/http-backend.c)
- target_link_libraries(git-http-backend common-main)
- 
--add_executable(git-sh-i18n--envsubst sh-i18n--envsubst.c)
-+add_executable(git-sh-i18n--envsubst ${CMAKE_SOURCE_DIR}/sh-i18n--envsubst.c)
- target_link_libraries(git-sh-i18n--envsubst common-main)
- 
--add_executable(git-shell shell.c)
-+add_executable(git-shell ${CMAKE_SOURCE_DIR}/shell.c)
- target_link_libraries(git-shell common-main)
- 
- if(CURL_FOUND)
--	add_library(http_obj OBJECT http.c)
-+	add_library(http_obj OBJECT ${CMAKE_SOURCE_DIR}/http.c)
- 
--	add_executable(git-imap-send imap-send.c)
-+	add_executable(git-imap-send ${CMAKE_SOURCE_DIR}/imap-send.c)
- 	target_link_libraries(git-imap-send http_obj common-main ${CURL_LIBRARIES})
- 
--	add_executable(git-http-fetch http-walker.c http-fetch.c)
-+	add_executable(git-http-fetch ${CMAKE_SOURCE_DIR}/http-walker.c ${CMAKE_SOURCE_DIR}/http-fetch.c)
- 	target_link_libraries(git-http-fetch http_obj common-main ${CURL_LIBRARIES})
- 
--	add_executable(git-remote-http http-walker.c remote-curl.c)
-+	add_executable(git-remote-http ${CMAKE_SOURCE_DIR}/http-walker.c ${CMAKE_SOURCE_DIR}/remote-curl.c)
- 	target_link_libraries(git-remote-http http_obj common-main ${CURL_LIBRARIES} )
- 
- 	if(EXPAT_FOUND)
--		add_executable(git-http-push http-push.c)
-+		add_executable(git-http-push ${CMAKE_SOURCE_DIR}/http-push.c)
- 		target_link_libraries(git-http-push http_obj common-main ${CURL_LIBRARIES} ${EXPAT_LIBRARIES})
- 	endif()
- endif()
- 
--add_executable(git-remote-testsvn remote-testsvn.c)
-+add_executable(git-remote-testsvn ${CMAKE_SOURCE_DIR}/remote-testsvn.c)
- target_link_libraries(git-remote-testsvn common-main vcs-svn)
- 
- if(NOT NO_UNIX_SOCKETS)
--	add_executable(git-credential-cache credential-cache.c)
-+	add_executable(git-credential-cache ${CMAKE_SOURCE_DIR}/credential-cache.c)
- 	target_link_libraries(git-credential-cache common-main)
- 
--	add_executable(git-credential-cache--daemon credential-cache--daemon.c)
-+	add_executable(git-credential-cache--daemon ${CMAKE_SOURCE_DIR}/credential-cache--daemon.c)
- 	target_link_libraries(git-credential-cache--daemon common-main)
- endif()
- 
-@@ -673,7 +685,7 @@ set(git_builtin_extra
- 
- #Creating hardlinks
- foreach(s ${git_SOURCES} ${git_builtin_extra})
--	string(REPLACE "builtin/" "" s ${s})
-+	string(REPLACE "${CMAKE_SOURCE_DIR}/builtin/" "" s ${s})
- 	string(REPLACE ".c" "" s ${s})
- 	file(APPEND ${CMAKE_BINARY_DIR}/CreateLinks.cmake "file(CREATE_LINK git${EXE_EXTENSION} git-${s}${EXE_EXTENSION})\n")
- 	list(APPEND git_links ${CMAKE_BINARY_DIR}/git-${s}${EXE_EXTENSION})
-@@ -831,7 +843,7 @@ endforeach()
- install(PROGRAMS ${git_shell_scripts} ${git_perl_scripts} ${CMAKE_BINARY_DIR}/git-p4
- 	DESTINATION libexec/git-core)
- 
--install(DIRECTORY mergetools DESTINATION libexec/git-core)
-+install(DIRECTORY ${CMAKE_SOURCE_DIR}/mergetools DESTINATION libexec/git-core)
- install(DIRECTORY ${CMAKE_BINARY_DIR}/perl/build/lib/ DESTINATION share/perl5
- 	FILES_MATCHING PATTERN "*.pm")
- install(DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/ DESTINATION share/git-core/templates)
-@@ -844,13 +856,13 @@ endif()
- if(BUILD_TESTING)
- 
- #tests-helpers
--add_executable(test-fake-ssh t/helper/test-fake-ssh.c)
-+add_executable(test-fake-ssh ${CMAKE_SOURCE_DIR}/t/helper/test-fake-ssh.c)
- target_link_libraries(test-fake-ssh common-main)
- 
--add_executable(test-line-buffer t/helper/test-line-buffer.c)
-+add_executable(test-line-buffer ${CMAKE_SOURCE_DIR}/t/helper/test-line-buffer.c)
- target_link_libraries(test-line-buffer common-main vcs-svn)
- 
--add_executable(test-svn-fe t/helper/test-svn-fe.c)
-+add_executable(test-svn-fe ${CMAKE_SOURCE_DIR}/t/helper/test-svn-fe.c)
+ #create perl header
+ file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
+@@ -865,30 +808,10 @@ target_link_libraries(test-line-buffer common-main vcs-svn)
+ add_executable(test-svn-fe ${CMAKE_SOURCE_DIR}/t/helper/test-svn-fe.c)
  target_link_libraries(test-svn-fe common-main vcs-svn)
  
- set(test-tool_SOURCES
-@@ -875,6 +887,7 @@ set(test-tool_SOURCES
- 	t/helper/test-trace2.c t/helper/test-urlmatch-normalization.c t/helper/test-xml-encode.c
- 	t/helper/test-wildmatch.c t/helper/test-windows-named-pipe.c t/helper/test-write-cache.c)
- 
-+list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
- add_executable(test-tool ${test-tool_SOURCES})
+-set(test-tool_SOURCES
+-	t/helper/test-tool.c t/helper/test-advise.c t/helper/test-bloom.c t/helper/test-chmtime.c
+-	t/helper/test-config.c t/helper/test-ctype.c t/helper/test-date.c t/helper/test-delta.c
+-	t/helper/test-dir-iterator.c t/helper/test-drop-caches.c t/helper/test-dump-cache-tree.c
+-	t/helper/test-dump-fsmonitor.c t/helper/test-dump-split-index.c
+-	t/helper/test-dump-untracked-cache.c t/helper/test-example-decorate.c
+-	t/helper/test-genrandom.c t/helper/test-genzeros.c t/helper/test-hash.c
+-	t/helper/test-hashmap.c t/helper/test-hash-speed.c t/helper/test-index-version.c
+-	t/helper/test-json-writer.c t/helper/test-lazy-init-name-hash.c
+-	t/helper/test-match-trees.c t/helper/test-mergesort.c t/helper/test-mktemp.c
+-	t/helper/test-oidmap.c t/helper/test-online-cpus.c t/helper/test-parse-options.c
+-	t/helper/test-parse-pathspec-file.c t/helper/test-path-utils.c t/helper/test-pkt-line.c
+-	t/helper/test-prio-queue.c t/helper/test-progress.c t/helper/test-reach.c
+-	t/helper/test-read-cache.c t/helper/test-read-graph.c t/helper/test-read-midx.c
+-	t/helper/test-ref-store.c t/helper/test-regex.c t/helper/test-repository.c
+-	t/helper/test-revision-walking.c t/helper/test-run-command.c t/helper/test-scrap-cache-tree.c
+-	t/helper/test-serve-v2.c t/helper/test-sha1.c t/helper/test-oid-array.c t/helper/test-sha256.c
+-	t/helper/test-sigchain.c t/helper/test-strcmp-offset.c t/helper/test-string-list.c
+-	t/helper/test-submodule-config.c t/helper/test-submodule-nested-repo-config.c t/helper/test-subprocess.c
+-	t/helper/test-trace2.c t/helper/test-urlmatch-normalization.c t/helper/test-xml-encode.c
+-	t/helper/test-wildmatch.c t/helper/test-windows-named-pipe.c t/helper/test-write-cache.c)
+-
+-list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+-add_executable(test-tool ${test-tool_SOURCES})
++parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
++
++list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/t/helper/")
++add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES})
  target_link_libraries(test-tool common-main)
  
-@@ -978,7 +991,8 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PRE
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
- 
- #Make the tests work when building out of the source tree
--if(NOT ${CMAKE_BINARY_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
-+get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
-+if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
- 	file(RELATIVE_PATH BUILD_DIR_RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/CMakeCache.txt)
- 	string(REPLACE "/CMakeCache.txt" "" BUILD_DIR_RELATIVE ${BUILD_DIR_RELATIVE})
- 	#Setting the build directory in test-lib.sh before running tests
+ set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
 -- 
 gitgitgadget
 
