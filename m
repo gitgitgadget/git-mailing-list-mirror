@@ -6,110 +6,72 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0183ACA90AF
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 19:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8409BCA90AF
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 19:27:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAB9C20753
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 19:23:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D43C206A5
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 19:27:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728190AbgELTXZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 15:23:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44560 "HELO cloud.peff.net"
+        id S1726465AbgELT1H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 15:27:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44578 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725554AbgELTXY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 May 2020 15:23:24 -0400
-Received: (qmail 30901 invoked by uid 109); 12 May 2020 19:23:24 -0000
+        id S1725554AbgELT1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 15:27:07 -0400
+Received: (qmail 30944 invoked by uid 109); 12 May 2020 19:27:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 May 2020 19:23:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 May 2020 19:27:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10229 invoked by uid 111); 12 May 2020 19:23:24 -0000
+Received: (qmail 10352 invoked by uid 111); 12 May 2020 19:27:07 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 May 2020 15:23:24 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 May 2020 15:27:07 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 12 May 2020 15:23:23 -0400
+Date:   Tue, 12 May 2020 15:27:06 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     George Brown <321.george@gmail.com>, git@vger.kernel.org
-Subject: Re: Re* [PATCH] contrib/git-jump: cat output when not a terminal
-Message-ID: <20200512192323.GC54565@coredump.intra.peff.net>
-References: <xmqq8si0vfp3.fsf@gitster.c.googlers.com>
- <CAFKec1UGKbaV7wC78i8+uSEizjGkj2bDSfOeucvJORhORvc5KA@mail.gmail.com>
- <xmqqwo5ju47t.fsf@gitster.c.googlers.com>
- <CAFKec1Wy1iT8Z=gNDBn++XLxzGWr0UUiu3AKMU-qaR+jj2yoKQ@mail.gmail.com>
- <xmqqo8qvu0ao.fsf@gitster.c.googlers.com>
- <CAFKec1VGzpxVJV4zak46r_p2gGcw4UanFr7U4U4MSsG7t2A23w@mail.gmail.com>
- <20200511143157.GA1415@coredump.intra.peff.net>
- <xmqqr1vqscuy.fsf@gitster.c.googlers.com>
- <20200511154226.GC1415@coredump.intra.peff.net>
- <xmqqy2pyqv11.fsf_-_@gitster.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] http, imap-send: stop using CURLOPT_VERBOSE
+Message-ID: <20200512192706.GD54565@coredump.intra.peff.net>
+References: <20200512191610.GB54565@coredump.intra.peff.net>
+ <20200512192300.203201-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy2pyqv11.fsf_-_@gitster.c.googlers.com>
+In-Reply-To: <20200512192300.203201-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 11, 2020 at 09:46:34AM -0700, Junio C Hamano wrote:
+On Tue, May 12, 2020 at 12:23:00PM -0700, Jonathan Tan wrote:
 
-> Lest we all forget...
+> > PS I sometimes find the normal trace a bit verbose, but I do still want
+> >    to see data. Do others feel the same? Particularly I find the "SSL"
+> >    lines totally worthless (I guess maybe you could be debugging ssl
+> >    stuff, but that would be the exception, I'd think). Ditto the split
+> >    of data into two lines: one with the size and one with the actual
+> >    data.
+> > 
+> >    I dunno. I haven't been debugging any git-over-http stuff lately, so
+> >    it hasn't been bothering me. But I definitely have written perl
+> >    scripts to extract the data to a more readable format. Maybe it would
+> >    be easier if it had a few more knobs.
 > 
-> -- >8 --
-> Subject: git-jump: just show the list with the "--no-editor" option
+> Data can be turned on using GIT_TRACE_CURL=1 and refraining from setting
+> GIT_TRACE_CURL_NO_DATA. What knobs were you thinking of?
 
-Thanks for tying this up. It seems to work as advertised. A few nits:
+I still want to see data, but less cruft. I.e., something like
+"GIT_TRACE_CURL_SSL" (which I'd default to "off"), and probably just
+reducing:
 
-> +edit=yes
-> +
-> +while	case "$#,$1" in
+  15:24:01.169101 [pid=55191] http.c:702            <= Recv data, 0000000004 bytes (0x00000004)
+  15:24:01.169104 [pid=55191] http.c:717            <= Recv data: 3e..
 
-Tab between "while" and "case"?
-
-> +	0,*) break ;;
-> +	*,--no-editor) edit=no ;;
-> +	*,--*) usage >&2; exit 1 ;;
-> +	*) break ;;
-> +	esac
-> +do
-> +	shift
-> +done
-
-I found the use of "case" in the loop conditional a little unusual. I'd
-have probably written:
-
-  while test $# -gt 0
-  do
-	case "$1" in
-	--no-editor) edit=no ;;
-	--*) usage >&2; exit 1 ;;
-	*) break ;;
-	esac
-	shift
-  done
-
-> @@ -75,4 +87,9 @@ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
->  type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
->  "mode_$mode" "$@" >"$tmp"
->  test -s "$tmp" || exit 0
-> -open_editor "$tmp"
-> +
-> +case "$edit" in
-> +yes)	open_editor "$tmp" ;;
-> +no)	cat "$tmp" ;;
-> +esac
-> +
-
-"diff --check" complains about the empty line.
-
-It probably doesn't matter much, but we could skip the tempfile entirely
-in no-editor mode. I.e.:
-
-  if test "$edit" = "no"
-  then
-    "mode_$mode" "$@"
-  fi
-
-  # otherwise set up trap, mktemp, etc
+to just the second line. Actually, we might not need a knob at all for
+SSL data. I was thinking that people might actually be debugging SSL
+problems with it, but since all of the non-printable characters are
+munged to "." anyway, it's basically useless (you can often pick out a
+few strings from the cert during handshake, but you'd be much better off
+to just connect with "openssl s_client" and ask it to dump the cert).
 
 -Peff
