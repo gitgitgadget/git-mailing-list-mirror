@@ -5,66 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E9ABC2D0F9
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC5F6C2D0FB
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0724E206B9
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0C7B206B9
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 16:51:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mSHr2r2O"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PhIPN1PV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729082AbgELQvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 12:51:08 -0400
+        id S1729188AbgELQvO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 12:51:14 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728188AbgELQvD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 May 2020 12:51:03 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7F09C05BD09
-        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:01 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id n5so9345429wmd.0
-        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:01 -0700 (PDT)
+        with ESMTP id S1728208AbgELQvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 12:51:07 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1BBC061A0C
+        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:06 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id k12so22565655wmj.3
+        for <git@vger.kernel.org>; Tue, 12 May 2020 09:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kttkqlVYNcry8k3gDCD/wP9gF/WIzWs8BbeiQqCRuEc=;
-        b=mSHr2r2OBB3sucBaJwxWO6u0vATtWL/47R+4AZmE3aE8wPFl2TJzLdWZNatMKnWNDa
-         0EgVlYDPiz9BkDQM59K5Bx1UixYvnd2aOsLAEBqbc398Cjf1nh95M08w+XkV/oeFObId
-         awP7fhsKdb2ptGMxJb3Yqzf1fg1IGaNAvVdJqJ3KdI+yJgNo1EXgN6gergXGzRURvsXE
-         CsFJLxix3yCJN1fK1ZNi4ztkCBzZ9184PVu0FI9CBFr6UbmpZJu0wDXikLtxJQiBTJFt
-         ibW3PJtrjMtAR6i6Dh5ELDq2wRIaUwQGQlb2u69ilB1FEOQAbAr9XlIgrqFjZWdRMQsb
-         ARaQ==
+        bh=S/BoZwLwjeJa1zmOnvNR/jiUEVrNHFPIbwPD6ZVhlVU=;
+        b=PhIPN1PVpjTsybU33KrWYtFZZpJX33rkAXZlGEShSCE6fFtrXl8NiY2p/6C/v+AAbB
+         9f8NCavx9/1VADJ+KfzeBTPQlIGWrIZSL4dcZvTFxipfhKFd2yQGRLFUGnYIjKKtkgLD
+         Gp4ai+f7p2LyjXmV2ZUZ2Tnr2nyxX0yRMX3NauKE2Q1DbFJ7YBJkP7q/yFhlz+683jeR
+         DnwQV4aQxM9a8y8Z39tIiGGc9iMfqmQ4sF4ywlU1xoSLpUzwo9a2uj6srcIJMWu0ZFQJ
+         Cj+AOAhKIr0z/KXIoJZgGCazEQY7YGQiXwFJpbSWIN/Ua+4RvVeUVTwYoFZWZMx39aq0
+         JjZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kttkqlVYNcry8k3gDCD/wP9gF/WIzWs8BbeiQqCRuEc=;
-        b=dgcWvtXUbo3VTXWoZkpzM69RGnBS+4M+SWud8MA5PVZENmIeIMupv1YqDQpTitKrU7
-         nDPzb6Q0YWAuyuGwPS7dltAmw0g2iJ7WieasPxOdAL38CKajYKsJAIMoi6bDaGxv/Y+J
-         kmoeGVu/DlXiLVdVh+ZQoH6BzMW+yoCyMiumSKOJKr5diCZyzZrZWItDs1wA2I7fnH4e
-         eJE4L55QW9hZRqUlkpMBWHzqjdzb/s+XIA5gJ3QhiBabVRKnEN6e7kus/S81LU4PXO3f
-         eaZ24sQw3kDEkqhxO0C1W9IWll0qUV6sxFUW7MvJGOpIdlEphHLMDx1T4zQQFlXcOEAk
-         BNNQ==
-X-Gm-Message-State: AGi0PuYiV/GA8dNPhFC0QoG9r2ayc+RgpBhvikMu/81TF59Sb+LZ9S+5
-        CxFUnDp3tFTkw4y0j+YHAkc8NG9s
-X-Google-Smtp-Source: APiQypKd1xxljLnbj/oSQ+VSlpjXXSPqj96BZvDnjpZMO2kpjjOkaEQRsnRLW8A88vKlyF/wKfr2aA==
-X-Received: by 2002:a1c:4c13:: with SMTP id z19mr10864339wmf.8.1589302260005;
-        Tue, 12 May 2020 09:51:00 -0700 (PDT)
+        bh=S/BoZwLwjeJa1zmOnvNR/jiUEVrNHFPIbwPD6ZVhlVU=;
+        b=TVVVbiGljHiw/Hr+JSsQkg/ohCLreUiCYEYCh94sg0qGvjTyqOtUTaQhozrOFxoTrd
+         HkbWZIPBo8utwVuzjMwH7igVFVzQ0kJ5OoM2f0CJX1V0fCXlOxB9qyrTcbgX52VR+sLQ
+         PWaav3f/vZ4cthTwtuMICi9hzP9d6BTEzvDuMShTsWE5r2nkyb4etsFdpKi9C3Si+YF0
+         wUWEjSQaJzNEHAUUVHr9akigUk1YzxnX+RZS89s90JPcRYnmte1dQED5oGiJRdbPSZzX
+         1jd0eXxFD/OMIwMDKBXCRbrC29/uXUSHpncxcS+W2hFoIWmmGRbRLVZskDqlspwCi5Cg
+         2nyg==
+X-Gm-Message-State: AOAM533knirMe+MfeYa6rNo5VFOWTzhExFuqp41kcowRgXbYECNdVRwT
+        qGhPxiUnOAA7RrMNJrIe+wjqLdoL
+X-Google-Smtp-Source: ABdhPJx2+Km57dn6y5oIk8GrPQ1WM/6rKQqvD/S9x3l0LmLtHQ5eAUwKetEnUrbwmAa+ptkpT3DHqw==
+X-Received: by 2002:a05:600c:247:: with SMTP id 7mr5137401wmj.76.1589302265288;
+        Tue, 12 May 2020 09:51:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 1sm32556135wmz.13.2020.05.12.09.50.59
+        by smtp.gmail.com with ESMTPSA id n17sm9721613wrr.42.2020.05.12.09.51.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 09:50:59 -0700 (PDT)
-Message-Id: <2bd8870fb96a5c032108c84db2f8a79c69053644.1589302254.git.gitgitgadget@gmail.com>
+        Tue, 12 May 2020 09:51:04 -0700 (PDT)
+Message-Id: <fa1b8032906c6042a0e5851f803ec0427922a1a5.1589302255.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
 References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
         <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 12 May 2020 16:50:47 +0000
-Subject: [PATCH v2 04/11] cmake: support for testing git with ctest
+Date:   Tue, 12 May 2020 16:50:54 +0000
+Subject: [PATCH v2 11/11] ci: modification of main.yml to use cmake for
+ vs-build job
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,222 +79,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 
-This patch provides an alternate way to test git using ctest.
-CTest ships with CMake, so there is no additional dependency being
-introduced.
+This patch modifies .github/workflows/main.yml to use CMake for
+Visual Studio builds.
 
-To perform the tests with ctest do this after building:
-ctest -j[number of jobs]
+Modified the vs-test step to match windows-test step. This speeds
+up the vs-test. Calling git-cmd from powershell and then calling git-bash
+to perform the tests slows things down(factor of about 6). So git-bash
+is directly called from powershell to perform the tests using prove.
 
-NOTE: -j is optional, the default number of jobs is 1
+NOTE: Since GitHub keeps the same directory for each job
+(with respect to path) absolute paths are used in the bin-wrapper
+scripts.
 
-Each of the jobs does this:
-cd t/ && sh t[something].sh
+GitHub has switched to CMake 3.17.1 which changed the behaviour of
+FindCURL module. An extra definition (-DCURL_NO_CURL_CMAKE=ON) has been
+added to revert to the old behaviour.
 
-The reason for using CTest is that it logs the output of the tests
-in a neat way, which can be helpful during diagnosis of failures.
-
-After the tests have run ctest generates three log files located in
-`build-directory`/Testing/Temporary/
-
-These log files are:
-
-CTestCostData.txt:
-This file contains the time taken to complete each test.
-
-LastTestsFailed.log:
-This log file contains the names of the tests that have failed in the
-run.
-
-LastTest.log:
-This log file contains the log of all the tests that have run.
-A snippet of the file is given below.
-
-10/901 Testing: D:/my/git-master/t/t0009-prio-queue.sh
-10/901 Test: D:/my/git-master/t/t0009-prio-queue.sh
-Command: "sh.exe" "D:/my/git-master/t/t0009-prio-queue.sh"
-Directory: D:/my/git-master/t
-"D:/my/git-master/t/t0009-prio-queue.sh"
-Output:
-----------------------------------------------------------
-ok 1 - basic ordering
-ok 2 - mixed put and get
-ok 3 - notice empty queue
-ok 4 - stack order
-passed all 4 test(s)
-1..4
-<end of output>
-Test time =   1.11 sec
-
-NOTE: Testing only works when building in source for now.
+Edit(Explanation for the reordering of build steps):
+In the configuration phase CMake looks for the required libraries for
+building git (eg zlib,libiconv). So we extract the libraries before we
+configure.
 
 Changes:
-Renamed the variable test_helper_sources to test-tool_SOURCES
-to be consistent with the naming of source variables.
+The CMake script has been relocated to contib/buildsystems, so point
+to the CMakeLists.txt in the invocation commands.
+
+The generation command now uses the absolute paths for the generation
+step.
+
+To check for ICONV_OMITS_BOM libiconv.dll needs to be in the working
+directory of script or path. So we copy the dlls before we configure.
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- CMakeLists.txt | 142 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 142 insertions(+)
+ .github/workflows/main.yml | 46 +++++++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1e9f2fe8ff6..05fbb05c6ad 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -23,6 +23,7 @@ include(CheckIncludeFile)
- include(CheckFunctionExists)
- include(CheckSymbolExists)
- include(CheckStructHasMember)
-+include(CTest)
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index fd4df939b50..7a65cc0764f 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -80,13 +80,6 @@ jobs:
+     - name: download git-sdk-64-minimal
+       shell: bash
+       run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
+-    - name: generate Visual Studio solution
+-      shell: powershell
+-      run: |
+-        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+-          make NDEBUG=1 DEVELOPER=1 vcxproj
+-        "@
+-        if (!$?) { exit(1) }
+     - name: download vcpkg artifacts
+       shell: powershell
+       run: |
+@@ -98,6 +91,14 @@ jobs:
+         Remove-Item compat.zip
+     - name: add msbuild to PATH
+       uses: microsoft/setup-msbuild@v1.0.0
++    - name: copy dlls to root
++      shell: powershell
++      run: |
++        & compat\vcbuild\vcpkg_copy_dlls.bat release
++        if (!$?) { exit(1) }
++    - name: generate Visual Studio solution
++      shell: bash
++      run: cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows -DMSGFMT_EXE=`pwd`/git-sdk-64-minimal/mingw64/bin/msgfmt.exe -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
+     - name: MSBuild
+       run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
+     - name: bundle artifact tar
+@@ -106,8 +107,6 @@ jobs:
+         MSVC: 1
+         VCPKG_ROOT: ${{github.workspace}}\compat\vcbuild\vcpkg
+       run: |
+-        & compat\vcbuild\vcpkg_copy_dlls.bat release
+-        if (!$?) { exit(1) }
+         & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+           mkdir -p artifacts &&
+           eval \"`$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts 2>&1 | grep ^tar)\"
+@@ -125,9 +124,9 @@ jobs:
+         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+     steps:
+     - uses: actions/checkout@v1
+-    - name: download git-64-portable
++    - name: download git-sdk-64-minimal
+       shell: bash
+-      run: a=git-64-portable && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
++      run: a=git-sdk-64-minimal && mkdir -p $a && curl -# https://wingit.blob.core.windows.net/ci-artifacts/$a.tar.xz | tar -C $a -xJf -
+     - name: download build artifacts
+       uses: actions/download-artifact@v1
+       with:
+@@ -136,23 +135,30 @@ jobs:
+     - name: extract build artifacts
+       shell: bash
+       run: tar xf artifacts.tar.gz
+-    - name: test (parallel)
++    - name: test
+       shell: powershell
+       env:
+         MSYSTEM: MINGW64
+         NO_SVN_TESTS: 1
+         GIT_TEST_SKIP_REBASE_P: 1
+       run: |
+-        & git-64-portable\git-cmd.exe --command=usr\bin\bash.exe -lc @"
+-          # Let Git ignore the SDK and the test-cache
+-          printf '%s\n' /git-64-portable/ /test-cache/ >>.git/info/exclude
++        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
++          # Let Git ignore the SDK
++          printf '%s\n' /git-sdk-64-minimal/ >>.git/info/exclude
  
- find_package(ZLIB REQUIRED)
- find_package(CURL)
-@@ -680,3 +681,144 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/ DESTINATION share/git-core/
- if(MSGFMT_EXE)
- 	install(DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale DESTINATION share)
- endif()
-+
-+
-+if(BUILD_TESTING)
-+
-+#tests-helpers
-+add_executable(test-fake-ssh t/helper/test-fake-ssh.c)
-+target_link_libraries(test-fake-ssh common-main)
-+
-+add_executable(test-line-buffer t/helper/test-line-buffer.c)
-+target_link_libraries(test-line-buffer common-main vcs-svn)
-+
-+add_executable(test-svn-fe t/helper/test-svn-fe.c)
-+target_link_libraries(test-svn-fe common-main vcs-svn)
-+
-+set(test-tool_SOURCES
-+	t/helper/test-tool.c t/helper/test-advise.c t/helper/test-bloom.c t/helper/test-chmtime.c
-+	t/helper/test-config.c t/helper/test-ctype.c t/helper/test-date.c t/helper/test-delta.c
-+	t/helper/test-dir-iterator.c t/helper/test-drop-caches.c t/helper/test-dump-cache-tree.c
-+	t/helper/test-dump-fsmonitor.c t/helper/test-dump-split-index.c
-+	t/helper/test-dump-untracked-cache.c t/helper/test-example-decorate.c
-+	t/helper/test-genrandom.c t/helper/test-genzeros.c t/helper/test-hash.c
-+	t/helper/test-hashmap.c t/helper/test-hash-speed.c t/helper/test-index-version.c
-+	t/helper/test-json-writer.c t/helper/test-lazy-init-name-hash.c
-+	t/helper/test-match-trees.c t/helper/test-mergesort.c t/helper/test-mktemp.c
-+	t/helper/test-oidmap.c t/helper/test-online-cpus.c t/helper/test-parse-options.c
-+	t/helper/test-parse-pathspec-file.c t/helper/test-path-utils.c t/helper/test-pkt-line.c
-+	t/helper/test-prio-queue.c t/helper/test-progress.c t/helper/test-reach.c
-+	t/helper/test-read-cache.c t/helper/test-read-graph.c t/helper/test-read-midx.c
-+	t/helper/test-ref-store.c t/helper/test-regex.c t/helper/test-repository.c
-+	t/helper/test-revision-walking.c t/helper/test-run-command.c t/helper/test-scrap-cache-tree.c
-+	t/helper/test-serve-v2.c t/helper/test-sha1.c t/helper/test-oid-array.c t/helper/test-sha256.c
-+	t/helper/test-sigchain.c t/helper/test-strcmp-offset.c t/helper/test-string-list.c
-+	t/helper/test-submodule-config.c t/helper/test-submodule-nested-repo-config.c t/helper/test-subprocess.c
-+	t/helper/test-trace2.c t/helper/test-urlmatch-normalization.c t/helper/test-xml-encode.c
-+	t/helper/test-wildmatch.c t/helper/test-windows-named-pipe.c t/helper/test-write-cache.c)
-+
-+add_executable(test-tool ${test-tool_SOURCES})
-+target_link_libraries(test-tool common-main)
-+
-+set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
-+			PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/helper)
-+
-+#wrapper scripts
-+set(wrapper_scripts
-+	git git-upload-pack git-receive-pack git-upload-archive git-shell git-remote-ext)
-+
-+set(wrapper_test_scripts
-+	test-fake-ssh test-line-buffer test-svn-fe test-tool)
-+
-+
-+foreach(script ${wrapper_scripts})
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
-+	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
-+	string(REPLACE "@@PROG@@" "${script}" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
-+endforeach()
-+
-+foreach(script ${wrapper_test_scripts})
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
-+	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
-+	string(REPLACE "@@PROG@@" "t/helper/${script}" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
-+endforeach()
-+
-+file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
-+string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
-+string(REPLACE "@@PROG@@" "git-cvsserver" content "${content}")
-+file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
-+
-+#options for configuring test options
-+option(PERL_TESTS "Perform tests that use perl" ON)
-+option(PYTHON_TESTS "Perform tests that use python" ON)
-+
-+#GIT-BUILD-OPTIONS
-+set(TEST_SHELL_PATH ${SHELL_PATH})
-+set(DIFF diff)
-+set(PYTHON_PATH /usr/bin/python)
-+set(TAR tar)
-+set(NO_CURL )
-+set(NO_EXPAT )
-+set(USE_LIBPCRE1 )
-+set(USE_LIBPCRE2 )
-+set(NO_LIBPCRE1_JIT )
-+set(NO_PERL )
-+set(NO_PTHREADS )
-+set(NO_PYTHON )
-+set(PAGER_ENV "LESS=FRX LV=-c")
-+set(DC_SHA1 YesPlease)
-+set(RUNTIME_PREFIX true)
-+set(NO_GETTEXT )
-+
-+if(NOT CURL_FOUND)
-+	set(NO_CURL 1)
-+endif()
-+
-+if(NOT EXPAT_FOUND)
-+	set(NO_EXPAT 1)
-+endif()
-+
-+if(NOT Intl_FOUND)
-+	set(NO_GETTEXT 1)
-+endif()
-+
-+if(NOT PERL_TESTS)
-+	set(NO_PERL 1)
-+endif()
-+
-+if(NOT PYTHON_TESTS)
-+	set(NO_PYTHON 1)
-+endif()
-+
-+file(WRITE ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SHELL_PATH='${SHELL_PATH}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TEST_SHELL_PATH='${TEST_SHELL_PATH}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PERL_PATH='${PERL_PATH}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DIFF='${DIFF}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PYTHON_PATH='${PYTHON_PATH}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TAR='${TAR}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_CURL='${NO_CURL}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_EXPAT='${NO_EXPAT}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "USE_LIBPCRE1='${USE_LIBPCRE1}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_LIBPCRE1_JIT='${NO_LIBPCRE1_JIT}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PERL='${NO_PERL}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PTHREADS='${NO_PTHREADS}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_UNIX_SOCKETS='${NO_UNIX_SOCKETS}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PAGER_ENV='${PAGER_ENV}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DC_SHA1='${DC_SHA1}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X=''\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
-+
-+file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
-+
-+#test
-+foreach(tsh ${test_scipts})
-+	add_test(NAME ${tsh}
-+		COMMAND ${SH_EXE} ${tsh}
-+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
-+endforeach()
-+
-+endif()#BUILD_TESTING
-\ No newline at end of file
+-          cd t &&
+-          PATH=\"`$PWD/helper:`$PATH\" &&
+-          test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
+-                  `$(test-tool.exe path-utils slice-tests \
+-                          ${{matrix.nr}} 10 t[0-9]*.sh)
++          ci/run-test-slice.sh ${{matrix.nr}} 10
+         "@
++    - name: ci/print-test-failures.sh
++      if: failure()
++      shell: powershell
++      run: |
++        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc ci/print-test-failures.sh
++    - name: Upload failed tests' directories
++      if: failure() && env.FAILED_TEST_ARTIFACTS != ''
++      uses: actions/upload-artifact@v1
++      with:
++        name: failed-tests-windows
++        path: ${{env.FAILED_TEST_ARTIFACTS}}
+   regular:
+     strategy:
+       matrix:
 -- 
 gitgitgadget
-
