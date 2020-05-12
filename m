@@ -2,115 +2,100 @@ Return-Path: <SRS0=6g9E=62=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 976B9C47255
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 01:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D031C54E4B
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 05:43:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BD85206DD
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 01:07:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=sigkill.com header.i=@sigkill.com header.b="Pf5dwdBO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qSLljtXO"
+	by mail.kernel.org (Postfix) with ESMTP id 47C1520736
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 05:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728280AbgELBHz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 May 2020 21:07:55 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:46021 "EHLO
-        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726106AbgELBHy (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 May 2020 21:07:54 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id E3CEA646
-        for <git@vger.kernel.org>; Mon, 11 May 2020 21:07:53 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 11 May 2020 21:07:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sigkill.com; h=
-        date:from:to:subject:message-id:mime-version:content-type; s=
-        fm2; bh=nyaJ9eSG5Q8mBt30+fjpI8W94T1vyVOMu8lS/SE2+vs=; b=Pf5dwdBO
-        nzAhNiayp5Dy7aer4aJhmVf+e7y1E9Is3XlC+7OkQeW4GDx4J8KrHw0rsOdEqk0R
-        9JgV57OjCG8QhYrXkGmwFPwmlIllzymeGeOhYJt/0X0cem3g6BWxOloq1XFdxADx
-        2JTuaxXFkePaYOYwzc/qucds3Aw38oCcSpceSNrXTsv9UUq8dokPxSlFXAfgla0I
-        bVCnmlcc2EvSSJmCnSA19H8GVsnN1awntKmgtergLTFPBicj+WZAwTS8N9QdZKdF
-        HmhhHylobG9+rcjN60f+KCSBQ6pOrwJB3Whxud2xu8iwzZC9YD+5ykTtc3lNhlYl
-        Gn3K65QVgUpybA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm2; bh=nyaJ9eSG5Q8mBt30+fjpI8W94T1vy
-        VOMu8lS/SE2+vs=; b=qSLljtXO+mpcE+5y6NihhFqVseqzAR5ez81RJ82g+/E4X
-        pOt/pBZ/BnihFqlhNiYbuFD0DzDv516aFTtcvxlSg6rxTcfjKsmCbDqc1D5jQqb7
-        E9TBwJuPBnAy3YaiSWQjH45Y5GY0JAGIFKpnS/S29zBFkVFuX5356E4owP3Flutq
-        cPQykYmseUN/FgSRK/G/wefGv2SOqpO3kx2RcOFTQslXbGMc9TfqudhxRIShaNiF
-        /q/Aj0yz3VYGx38fkLNlQO4Kh8RtQ6Qk0CP4osd7o5z1LtDGBmMzsEnkGCw9C7Lb
-        W6B+FjmIPc0r/TFSeu861O+OybG8LDX/5PmtgOpyw==
-X-ME-Sender: <xms:6Pa5Xp_Qc1dhamn6JIW1G3zUdvt1VeJEVwK6saf-IxgkYI_cfadEEw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrledugdegfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggufgesthdtredttd
-    ervdenucfhrhhomhepfdflrdcurfgruhhlucftvggvugdfuceophhrvggvugesshhighhk
-    ihhllhdrtghomheqnecuggftrfgrthhtvghrnhepffetjefftdeiveeihfdvfeevfefhje
-    ffleffgfetfefgieefheekudduveetveffnecuffhomhgrihhnpehgihhthhhusgdrtgho
-    mhdpjhhprghulhhrvggvugdrtghomhenucfkphepieelrddukedurdefgedrvdefgeenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprhgvvggu
-    sehsihhgkhhilhhlrdgtohhm
-X-ME-Proxy: <xmx:6Pa5Xq7iAlJpBKFGSoqrgRZuUUjz7J9bQKXh6WincLzImC-HSTv4Xg>
-    <xmx:6Pa5XvklTvRkpux7Kpv9sycvj3-ofsj4m4fz4-tVgesvCrZCgHmv0g>
-    <xmx:6Pa5XtF-K-XUFUbYWmemoS3FK_UzQ7UC37HZJcnSKYlLuJ1OEBh2Rg>
-    <xmx:6fa5XrLEokECK7yB3pMZqKidYUGeLfjV3RQNKnGP6DYI-amcVQmENQ>
-Received: from sigkill.com (c-69-181-34-234.hsd1.ca.comcast.net [69.181.34.234])
-        by mail.messagingengine.com (Postfix) with ESMTPA id A3EFB3066266
-        for <git@vger.kernel.org>; Mon, 11 May 2020 21:07:52 -0400 (EDT)
-Date:   Mon, 11 May 2020 18:07:50 -0700
-From:   "J. Paul Reed" <preed@sigkill.com>
-To:     git@vger.kernel.org
-Subject: git-gui patch staging errors
-Message-ID: <20200512010750.GA7127@sigkill.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+        id S1728111AbgELFnE convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 12 May 2020 01:43:04 -0400
+Received: from mx1.uni-regensburg.de ([194.94.157.146]:43352 "EHLO
+        mx1.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725892AbgELFnE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 01:43:04 -0400
+X-Greylist: delayed 54194 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 May 2020 01:43:03 EDT
+Received: from mx1.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id 7C78D600004E
+        for <git@vger.kernel.org>; Tue, 12 May 2020 07:43:01 +0200 (CEST)
+Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by mx1.uni-regensburg.de (Postfix) with ESMTP id 5B94F600004D
+        for <git@vger.kernel.org>; Tue, 12 May 2020 07:43:01 +0200 (CEST)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
+        with Novell_GroupWise; Tue, 12 May 2020 07:43:01 +0200
+Message-Id: <5EBA3763020000A100038EED@gwsmtp.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 18.2.1 
+Date:   Tue, 12 May 2020 07:42:59 +0200
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     <peff@peff.net>
+Cc:     <git@vger.kernel.org>
+Subject: Antw: [EXT] Re: Improving git's password prompt
+References: <5EB963AF020000A100038ECE@gwsmtp.uni-regensburg.de>
+ <14266_1589211256_5EB97078_14266_88_1_20200511153416.GB1415@coredump.intra.peff.net>
+In-Reply-To: <14266_1589211256_5EB97078_14266_88_1_20200511153416.GB1415@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
 Content-Disposition: inline
-User-Agent: Mutt/1.13.5 (2020-03-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+>>> Jeff King <peff@peff.net> schrieb am 11.05.2020 um 17:34 in Nachricht
+<14266_1589211256_5EB97078_14266_88_1_20200511153416.GB1415@coredump.intra.peff.
+et>:
+> On Mon, May 11, 2020 at 04:39:43PM +0200, Ulrich Windl wrote:
+> 
+>> I'm aware that most repositories use "open HTTP" or SSH public key
+>> authentication, but for the few cases where SSH with password is being
+>> used, there is a minor probem like this:
+>> ---
+>> tester@host:~/iredir> git fetch
+>> Password:
+>> ---
+>> 
+>> Now if you are working busily with the project you probably know where
+>> the repository came from, what the username and password is, but if
+>> you haven't worked with the repository for a while, it might be
+>> helpful to see the username and host (the part up to ':' in the
+>> display of "git remote -v", e.g.: "windl@server") with the password
+>> prompt to select the correct password.
+>> 
+>> So my proposal would be "Password for user@host:" instead of just
+>> "Password:".
+>> 
+>> Problem seen in git 2.26.1...
+> 
+> That prompt is generated by ssh, not by git. Any git prompts do say
+> "Password for user@host" or similar (e.g., what you see for http
+> authentication).
+> 
+> The best we can do is print "Connecting via ssh to host..." or similar
+> before running ssh, which would give more context to the "Password"
+> prompt. But would probably be annoying for people using key
+> authentication (and we can't know which, because that decision is made
+> internally by ssh).
+> 
+> There might be a way to convince ssh to give a more descriptive prompt,
+> but it looks like it may depend on the auth system used by the server.
+> Some quick googling turns up:
+> 
+>   
+> https://serverfault.com/questions/849906/how-to-display-userhostname-in-sshd- 
+> password-prompt
+> 
 
-Hey all,
+Hi Jeff,
 
-I ran into an interesting problem this week where git gui was erroring out
-on staging partial patches in a particular file I was working on.
+thanks for explaining that! I'm sorry thinking the prompt was from Git.
 
-I worked around it with "git add -i," which worked like a champ.
+Regards,
+Ulrich
 
-I later realized the source file has some special characters (Unicode,
-probably) in it to print emojis (or colors or whatever fun animations the
-kids want on their terminals these days).
 
-Interestingly, lines/hunks before the first Unicode character will
-partial-stage appropriately, but attempting to stage any hunks/lines after
-the characters produces a "Failed to stage selected line. error: patch
-failed ... error: ... patch does not apply" error dialog.
-
-This can be reproduced by cloning
-https://github.com/debek/aws-glacier-multipart-upload.git and editing
-glacierupload.sh; the special characters are in echo statements on lines
-60, 74, and 97.
-
-Removing these control characters seems to calm git gui's indigestion on
-this file.
-
-[preed@underworld ~]$ git --version
-git version 2.26.2
-[preed@underworld ~]$ git gui --version
-git-gui version 0.21.0.66.ga5728
-
-best,
-preed
--- 
-J. Paul Reed
-https://jpaulreed.com
-PGP: 0xDF8708F8
 
