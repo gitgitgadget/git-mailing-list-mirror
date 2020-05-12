@@ -7,98 +7,91 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBD80C54E4A
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 11:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49EF5C54E4A
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 11:46:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2798206F5
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 11:22:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CE25206CC
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 11:46:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NjghBpVk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cPTzDl3V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728990AbgELLWE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 07:22:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37128 "EHLO
+        id S1729528AbgELLqR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 07:46:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbgELLWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 May 2020 07:22:04 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC21C061A0C
-        for <git@vger.kernel.org>; Tue, 12 May 2020 04:22:04 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id q24so9224943pjd.1
-        for <git@vger.kernel.org>; Tue, 12 May 2020 04:22:04 -0700 (PDT)
+        with ESMTP id S1726187AbgELLqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 07:46:17 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39483C061A0C
+        for <git@vger.kernel.org>; Tue, 12 May 2020 04:46:17 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id x15so4608870ybr.10
+        for <git@vger.kernel.org>; Tue, 12 May 2020 04:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Yao4VkzVGX/qRpbK9zCJ8Ds7QH9wA0UWpTcYWH8cQJQ=;
-        b=NjghBpVk6KhslCJSd9N3nUX2AGIiGkVKkuLvIQ7L88U40e1HER58fcC85vcsJ0Th+F
-         qss0KrqvH7iSsk3ulWWSKdfnhYcLvCf2lG8Uis5bKlrbff/Yg2mjBZg0qwAh+G1rCCEi
-         z59jTBKcZWuEswEZQ1by/KU/CW575mr0EUjM7VgEG4WC7qwpQc3eNqOFfmrqxR/oIcuF
-         h4njlnMsPAAgnZ0ThJ5n5hrXyYIsYnEGQWO2fexK1y7quE3sF6mV3fSGwrlztOFbNPDS
-         fs7aDis74xGm4cb6P+zdFjyPKjQKJU5Xc+5sM+i9O5xWhjmNCwMDLs6gayh8s33eXb8J
-         LYYA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FFULXSKKXezW1KWGE+ZLUKs1rUyf1IBlZDCBTtDWBc4=;
+        b=cPTzDl3Vsg+tTF7OHnaNb6bcyHI9TMyINCQgO4EjHTB4e0hS6J8P1sa0z2ADwKUlm3
+         0v4YwrZvXbM71wPvZvQKbWsVkAqCn1qjkxKonHZkTAkWnooBJdWn4NVnmsDCEHxwNC6m
+         i5kTKsRHQ2fv4PB7wxzZFamM+6QIPNR5gJnwAmJvO1RNr9K4tCIJiRm/ObWvqC9Z2KJ5
+         KK4eP/+7l+lh37RmbsN6ej8uYoKMSH+A2fhO/UTLEaaL1P9rUgG7zFPrxVwKatwrhqbq
+         M4lMxUQ7aS36hvPavxGvbCTew5p6Kjf98F9YhYplZ5BpQekv+nxvux3vQToSqpgf3deJ
+         4T1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Yao4VkzVGX/qRpbK9zCJ8Ds7QH9wA0UWpTcYWH8cQJQ=;
-        b=Sdl59LVHkz0ONrj4UJji7nra7fC2J7YBJg5kOaQvceyA1SKqE4xffwyiGnqdMkkROh
-         tBAkPTOKk7vo7SG7p5lVdbjNV2CTQ26CPhFFZkPS3mKQe1EXnYlrrh5E8cltHmmppt8N
-         79JzYSMoNaNHQBVpsyX0d6hr3+/ObpH+TQogxBf+5SiXUFUtGs2ZvqPJUq+HejyD8GY2
-         NLtaOXjiGCIWEV+VnHB2dc6VmLli/UqvnzrU58Lb1RrMv3fnRLfoiAONzOzxE0WeeC1v
-         V2QQ9mknLrx/h7t1b/16g173eP65B0tHijh4UQtbXv6MSXxu7A6at6Ez3LAKphXHyJgH
-         QVBA==
-X-Gm-Message-State: AGi0PuYH1iy0odGfYSUOpye3unIEcP5bpNT/0tpltgTldB90IZ/14EOe
-        M9TRaJTOoMk56iZIpy48Jco=
-X-Google-Smtp-Source: APiQypIodD016XEyT0JXwmoDNrF1eZbA0ckSRjs+SpF9xm26Fr68vKv8dA3IPz649AKETbCUVOBZEw==
-X-Received: by 2002:a17:902:c282:: with SMTP id i2mr19450506pld.20.1589282523858;
-        Tue, 12 May 2020 04:22:03 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id a33sm7352228pgl.92.2020.05.12.04.22.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2020 04:22:03 -0700 (PDT)
-Date:   Tue, 12 May 2020 04:22:01 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     David Moseler <davidmoseler@protonmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git-credential-store does not work with a file
-Message-ID: <20200512112201.GA10049@Carlos-MBP>
-References: <Wc7NKqbl9k45DWha23OG_TvVA4Ftq3sOCiHScVXhmAbCPOaz8pkEqQrPXw_JBC8G7g9CrIKxwfE8pv8Nr9Dcw5J0zA7fNCAi9Mq1OnxhpMg=@protonmail.com>
- <56HlWgfQEg1t99VKZaFZqhdcjAs279HXXP1gQ9YzZGOGcR9jEzSVYgl3flvbTiqSet2HB0gc6jotcDmYbtDipE7k0-QbdrzjgxiKZBnIK_4=@protonmail.com>
- <uBc-Htk5XJFPF28aiZsQUIowfd66Ay2NiCyVbxkWpD77ugn3k4LBLse-jm0Jf4HpAKMWt4chuRAbxskeczZpj_pEnUaX_XOrmhfYksCeVLw=@protonmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FFULXSKKXezW1KWGE+ZLUKs1rUyf1IBlZDCBTtDWBc4=;
+        b=ltwiKX24g+Y8KvRg9vVY6kAvipcrtaPoZuOB2Qy1nbCOZtDJIPiFg1uqJkGXx8voBt
+         gvJ9tVEV+CTm6X/DclUsv8aseP9UDbbkqBgnE3PN6jZtY1fHNtWyqVFnAJ00K3fKtTdW
+         pVEs2wHPoxNA8qBqJD0eavMpnnPYHDjDwlWXUte+3Sz9aa4Y/UCduEISP+tVcPRxcD/r
+         KoyODZ0tjC9WMUkwNv6shVRVx712jsG7J+T5oHit2yorwGJar5T5zV10lwY2z/jRjAij
+         edQ8WR/36Zv3Do85yV7p1E06eYHbbVTE9zIvWilrokEQdCIprtjNX9ea8nO/W/uIaA2Z
+         iI/Q==
+X-Gm-Message-State: AGi0PuZ1tpeTIYIijR/PxIPJ4Pzqg4WDcqdv4C2uHalRu6cTF5ZNt2QN
+        hu3QwToyrubxs72Um0Yq4s025J+sEw3mMb+JLyg4U7C5
+X-Google-Smtp-Source: APiQypLxKumc3WbCurTA/5C0G9PvtYrgRIlWZzr9G+mZuNM9JHMfXoH5w3At/E45rZ5jjIPQi5+vg/qmtyQIM81m0Yg=
+X-Received: by 2002:a25:c402:: with SMTP id u2mr33059330ybf.82.1589283976188;
+ Tue, 12 May 2020 04:46:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <uBc-Htk5XJFPF28aiZsQUIowfd66Ay2NiCyVbxkWpD77ugn3k4LBLse-jm0Jf4HpAKMWt4chuRAbxskeczZpj_pEnUaX_XOrmhfYksCeVLw=@protonmail.com>
+From:   =?UTF-8?B?SmFrdWIgRMSFYmVr?= <jakub.dabek@gmail.com>
+Date:   Tue, 12 May 2020 13:45:54 +0200
+Message-ID: <CAAop36+Qg1vEsOoJehNBDDAvxYQO4cba9g2j9-sKbrxsuoJk5A@mail.gmail.com>
+Subject: stash pop results in conflict after stash --keep-index with the same
+ file in index and working directory
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 12, 2020 at 12:40:10AM +0000, David Moseler wrote:
-> Hi,
-> 
-> I'm using git version 2.17.1. Providing a file to git-credential-store, such as in
-> 
-> git config credential.helper store --file='./git-credentials'
+I was trying to write a pre-commit hook for testing using stash to
+keep irrelevant changes, but pop couldn't apply changes automatically
+when the same file with different changes was in index and working
+directory at the same time.
 
-your quoting is off, so you are passing to config only the value 'store' while
-the rest is ignored.
+Reproduction:
 
-what you really meant to use is probably :
+  mkdir git-stash-test && cd git-stash-test
+  git init
+  echo foo > foo.txt
+  git add . && git commit -m 'init'
+  echo foo2 > foo.txt
+  git add foo.txt
+  echo foo3 > foo.txt
+  git status # (*)
+  git stash push --keep-index
+  git status
+  # do testing
+  git stash pop
 
-  git config credential.helper "store --file=$PWD/git-credentials"
+Expected result: same state as before push (*); actual result:
 
-note that using a relative path might not be what you really want, as the
-context for when that is run will not be what you expected most likely (ex:
-the root of your repository)
+  Auto-merging foo.txt
+  CONFLICT (content): Merge conflict in foo.txt
+  The stash entry is kept in case you need it again.
 
-> is not working. When using this command, git writes to ~/.git-credentials in the home folder anyway.
+--index option doesn't help when used with pop.
 
-note that credential.helper is a multi value setting, so you probably also want
-to clear the list first, if your intention was to only use that file and not the
-one in ~/.git-credentials.
-
-see `git help gitcredentials` for details
-
-Carlo
+My assumption is that pop should be the reverse of push when nothing
+has changed in between, but I don't know if this is a bug or
+unexpected behaviour. (git version 2.26.2)
