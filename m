@@ -2,107 +2,120 @@ Return-Path: <SRS0=6g9E=62=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.7 required=3.0
+	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F20C54E4A
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 12:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8572EC54E4A
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 13:02:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3682E206A5
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 12:15:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6080B206CC
+	for <git@archiver.kernel.org>; Tue, 12 May 2020 13:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728371AbgELMPW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 08:15:22 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:54835 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbgELMPW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 May 2020 08:15:22 -0400
-X-Originating-IP: 106.76.68.114
+        id S1729645AbgELNCr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 09:02:47 -0400
+Received: from relay11.mail.gandi.net ([217.70.178.231]:34111 "EHLO
+        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725923AbgELNCr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 09:02:47 -0400
 Received: from localhost (unknown [106.76.68.114])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 4298F60002;
-        Tue, 12 May 2020 12:15:18 +0000 (UTC)
-Date:   Tue, 12 May 2020 17:45:11 +0530
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 6F913100017;
+        Tue, 12 May 2020 13:02:42 +0000 (UTC)
+Date:   Tue, 12 May 2020 18:32:35 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     "J. Paul Reed" <preed@sigkill.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-gui patch staging errors
-Message-ID: <20200512121511.dyyd6n5gdfbesy2j@yadavpratyush.com>
-References: <20200512010750.GA7127@sigkill.com>
+To:     Ismael Luceno <ismael@iodev.co.uk>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] git-gui: Handle Ctrl + BS/Del in the commit msg
+Message-ID: <20200512130235.2vimhqmmzbib3k2s@yadavpratyush.com>
+References: <20200512102806.GA20813@abuya.home>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200512010750.GA7127@sigkill.com>
+In-Reply-To: <20200512102806.GA20813@abuya.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Ismael,
 
-On 11/05/20 06:07PM, J. Paul Reed wrote:
+On 12/05/20 12:28PM, Ismael Luceno wrote:
+> From: Ismael Luceno <ismael.luceno@tttech-auto.com>
 > 
-> Hey all,
+> - Control+BackSpace: Delete word to the left of the cursor.
+> - Control+Delete   : Delete word to the right of the cursor.
 > 
-> I ran into an interesting problem this week where git gui was erroring out
-> on staging partial patches in a particular file I was working on.
+> Originally introduced by BRIEF and Turbo Vision between 1985 and 1992,
+> they were adopted by most CUA-Compliant UIs, including those of: OS/2,
+> Windows, Mac OS, Qt, GTK, Open/Libre Office, Gecko, and GNU Emacs.
 > 
-> I worked around it with "git add -i," which worked like a champ.
+> In both cases Tk already implements the functionality bound to other key
+> combination, so we use that.
 > 
-> I later realized the source file has some special characters (Unicode,
-> probably) in it to print emojis (or colors or whatever fun animations the
-> kids want on their terminals these days).
+> Graphical examples:
 > 
-> Interestingly, lines/hunks before the first Unicode character will
-> partial-stage appropriately, but attempting to stage any hunks/lines after
-> the characters produces a "Failed to stage selected line. error: patch
-> failed ... error: ... patch does not apply" error dialog.
+> Deleting to the left:
+>         v------ pointer
+> X_WORD____X
+>   ^-----^------ selection
 > 
-> This can be reproduced by cloning
-> https://github.com/debek/aws-glacier-multipart-upload.git and editing
-> glacierupload.sh; the special characters are in echo statements on lines
-> 60, 74, and 97.
+> Deleting to the right:
+>   v--------- pointer
+> X_WORD_X
+>   ^--^------ selection
+> 
+> Signed-off-by: Ismael Luceno <ismael.luceno@tttech-auto.com>
+> 
+> ---
+> I'm re-submitting the patch after >1 year.
+> 
+> CC: Junio C Hamano <gitster@pobox.com>
+> CC: "brian m. carlson" <sandals@crustytoothpaste.net>
+> CC: Pat Thoyts <patthoyts@users.sourceforge.net>
+> CC: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> 
+> Notes:
+>     Changes since v2:
+>     - Reimplemented via existing events, which correctly delete spaces.
+>     - Further improved commit message.
+>     
+>     Changes since v1:
+>     - Improved commit message.
+> 
+>  git-gui/git-gui.sh | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 6de74ce639..c4e0270626 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
 
-I can't reproduce it. I cloned the repo and then edited the file at line 
-60 with a diff that looks something like:
+You based the patch on top of the Git tree. Since Git Gui is maintained 
+separate from Git, patches are expected to be based on top of the Git 
+Gui tree [0]. I fixed it up and applied the patch on my tree.
 
-  diff --git a/glacierupload.sh b/glacierupload.sh
-  index 3b956c7..265349b 100755
-  --- a/glacierupload.sh
-  +++ b/glacierupload.sh
-  @@ -57,7 +57,9 @@ fi
-   
-   # count the number of files that begin with "$prefix"
-   fileCount=$(ls -1 | grep "^$prefix" | wc -l)
-  -echo "📦 Glacier Upload with $AWS_PROFILE"
-  +bar
-  +echo "📦 Glacier s Upload with $AWS_PROFILE"
-  +foo
-   echo "Total parts to upload: " $fileCount
-   
-   # get the list of part files to upload.  Edit this if you chose a different prefix in the split command
+> @@ -3812,6 +3812,8 @@ bind $ui_comm <$M1B-Key-KP_Subtract> {show_less_context;break}
+>  bind $ui_comm <$M1B-Key-equal> {show_more_context;break}
+>  bind $ui_comm <$M1B-Key-plus> {show_more_context;break}
+>  bind $ui_comm <$M1B-Key-KP_Add> {show_more_context;break}
+> +bind $ui_comm <Control-Key-BackSpace> {event generate %W <Meta-Delete>;break}
+> +bind $ui_comm <Control-Key-Delete> {event generate %W <Meta-d>;break}
 
-I tried a bunch of combinations if partially staging parts of this diff, 
-but everything worked fine without any error message. The emoji didn't 
-render properly (though that might be my font's problem), but there were 
-no problems in partial staging or unstaging.
+Don't use "Control" directly to maintain compatibility with MacOS. Use 
+$M1B like the surrounding code does. I fixed it up locally, so no need 
+to send in a new version. You can find the fixed up version here [1]. 
+Test it if you'd like.
 
-Does this example work fine on your system or does it error out? Could 
-you give an example diff where git-gui has problems while staging? Maybe 
-something in your config is different?
- 
-> Removing these control characters seems to calm git gui's indigestion on
-> this file.
-> 
-> [preed@underworld ~]$ git --version
-> git version 2.26.2
-> [preed@underworld ~]$ git gui --version
-> git-gui version 0.21.0.66.ga5728
-> 
-> best,
-> preed
+Will merge it in. Thanks.
+  
+[0] https://github.com/prati0100/git-gui/
+[1] https://github.com/prati0100/git-gui/tree/il/ctrl-bs-del
 
 -- 
 Regards,
