@@ -2,70 +2,153 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFEE8C433DF
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 23:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8872CC433E0
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 23:44:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDA8D20659
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 23:24:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D7012054F
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 23:44:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ISdC8s6h"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732629AbgEMXYG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 19:24:06 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42270 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732374AbgEMXYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 May 2020 19:24:05 -0400
-Received: by mail-wr1-f67.google.com with SMTP id s8so1528572wrt.9
-        for <git@vger.kernel.org>; Wed, 13 May 2020 16:24:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lkNrPMguP1X/y7GoLBEnSMtZHdl2kzxyneNnO9ToXIQ=;
-        b=Zaw1mk/A6PpK4+7JGp9dNScmjKfes8WJO0q8BUNhhMheXd6JJ2+RbJacJtoOC7fDBy
-         yas/HxepdZ14ZOhBHyOyXr35T3XVWsfjnnzOH1Qh4PFMwfcHl8pZJGdCArxk2L73MYL9
-         Axew7coJ+xL9vZJfklT6YqncS5gfmwLxXMBl/bZjDlPpHLwS2YhqE4lEDkv2DVxrDiH0
-         2CxxEre7ayJ8RLWBpgjkSoXN+Yk7swo0oqqIkRaxD6HoSY/J9g+1ZjF30f2v8YXlvlSj
-         zrov580y474IsIA+y3Gwm9nEllw81Bmsq2osw3NrIaEE+DkQvP5vsesxm8aSqalhUpxL
-         7GOg==
-X-Gm-Message-State: AOAM532hKqnwGVOiu7KW4kY1As6C2gaW1opw2AQ4bQ6bYcaijyyr+l5z
-        ELYI4DOXpixJ2hSyokFx8byWf2hYyxgZLdEeYZc=
-X-Google-Smtp-Source: ABdhPJwVWYHT+U+N99SOzo37okqV7+bdf/WbYB+J2SO1QPEhibp42dABjU+GKAQjeDxZyJQAmTSCIVYKkCtTDlVfMoE=
-X-Received: by 2002:a5d:4ccd:: with SMTP id c13mr1918038wrt.415.1589412243990;
- Wed, 13 May 2020 16:24:03 -0700 (PDT)
+        id S1732758AbgEMXom (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 19:44:42 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38342 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732456AbgEMXol (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 19:44:41 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 60CCC6044D;
+        Wed, 13 May 2020 23:44:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1589413480;
+        bh=uaI2lysmAGVOxDq/LpTfkuj6YJ1TZGy90oY/eUvkUAY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ISdC8s6h+p+uJcLXFyNK31hYvULfol5w5W6pTpV7f4lihyPiGB+A3qRnTcy2LT1iw
+         3fd21c111d1ZcB7X3XDuODibj/iHgx8E2Xma+Xs/4STs+SNkmXPhUbe2jotOCKgAKi
+         H6BUkcnPx6CkUCmwaMNX0bT1/P0Oo8/gy+9vRXMbPWBv/oQNSdPdMEO8iXTX0Uy7lh
+         ON2XxOyF565Tnrg527IivvotbZ8fksSr3FZLrP8X/OtUtuTiyMzuKT8FLJazLix2ms
+         SFStNmQ11R/mY1R8OaVF6gBe8i+iYHBAa4ppRs4DwwcDMfIIe35lRetqVmDRUBUZiZ
+         /7I2K3XzCmGaMxPi1FdxL5A4EAUJO2pYDwHpNf3uts61M6iX8uPMyVXoCP6NVwoYQq
+         C+FGXM62gEjUKbDkmevRReK+DKYRJnUcINKFX3OW/7sKbO/zaUmNBoUlJc3eBSeGN1
+         phqooIIw6oJKMLoCC3+XvWjf8jOFWzGnmGU66JJTlBrwpYloexO
+Date:   Wed, 13 May 2020 23:44:35 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Xin Li <delphij@google.com>
+Cc:     git@vger.kernel.org, jrn@google.com
+Subject: Re: [PATCH] fetch: allow adding a filter after initial clone.
+Message-ID: <20200513234435.GG6605@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Xin Li <delphij@google.com>, git@vger.kernel.org, jrn@google.com
+References: <20200513200040.68968-1-delphij@google.com>
 MIME-Version: 1.0
-References: <cover.1589393036.git.liu.denton@gmail.com> <891a39c853ce3669b6167dc9ad8a2328e4321a9e.1589393036.git.liu.denton@gmail.com>
-In-Reply-To: <891a39c853ce3669b6167dc9ad8a2328e4321a9e.1589393036.git.liu.denton@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 13 May 2020 19:23:52 -0400
-Message-ID: <CAPig+cQpQsoCg4ujASek3RP7HhHVpgprXbekGQJKseX=tbYYfw@mail.gmail.com>
-Subject: Re: [PATCH 4/6] pkt-line: extern packet_length()
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3607uds81ZQvwCD0"
+Content-Disposition: inline
+In-Reply-To: <20200513200040.68968-1-delphij@google.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-1-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 13, 2020 at 2:07 PM Denton Liu <liu.denton@gmail.com> wrote:
-> In a future commit, we will be manually processing packets and we will
-> need to access the length header. In order to simplify this, extern
-> packet_length() so that the logic can be reused.
->
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> diff --git a/pkt-line.c b/pkt-line.c
-> @@ -306,7 +306,7 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
-> +/*
-> + * Reads a packetized line and returns the length header of the packet.
-> + */
-> +int packet_length(const char *linelen);
 
-The function comment seems rather gobbledy-gooky to me. Perhaps it
-could be clearer by saying something along the lines of the input
-being a hexadecimal 2-digit representation of a packet length and that
-the function converts it to a numeric value (between 0 and 255).
+--3607uds81ZQvwCD0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2020-05-13 at 20:00:40, Xin Li wrote:
+> Signed-off-by: Xin Li <delphij@google.com>
+> ---
+>  builtin/fetch.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 3ae52c015d..e5faa17ecd 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1790,8 +1790,16 @@ int cmd_fetch(int argc, const char **argv, const c=
+har *prefix)
+>  	if (depth || deepen_since || deepen_not.nr)
+>  		deepen =3D 1;
+> =20
+> -	if (filter_options.choice && !has_promisor_remote())
+> -		die("--filter can only be used when extensions.partialClone is set");
+> +	if (filter_options.choice && !has_promisor_remote()) {
+> +		char repo_version_string[10];
+> +
+> +		xsnprintf(repo_version_string, sizeof(repo_version_string),
+> +			  "%d", (int)GIT_REPO_VERSION);
+> +		git_config_set("core.repositoryformatversion",
+> +			repo_version_string);
+> +		git_config_set("extensions.partialclone", "origin");
+
+Some things stood out to me here.  One, is this setting up the
+repository if it's not already created?  If so, we'd probably want to
+use one of the appropriate functions in setup.c.  Even if we're just
+changing it, we should probably use a helper function.
+
+Two, it isn't necessarily safe to automatically change the repository
+version.  Keys that start with "extensions." are not special in format
+version 0, but they are in format version 1.  I can technically have an
+"extensions.tomatoSalad" in version 0 without any special meaning or
+negative consequences, but as soon as we change to version 1, Git will
+refuse to read it, since it doesn't know about the tomatoSalad extension
+and in v1 unknown extensions are fatal.
+
+My example may sound silly, but since extensions can be set in the
+global config, users could well rely on v0 repositories ignoring them
+and having them automatically turned on for their v1 repositories.  (I'm
+thinking of the future extensions.objectFormat as something somebody
+might try to do here, as dangerous as it may be.)
+
+These aren't insurmountable problems, but they are things we'd need to
+check for before just changing the repository version, so we'd want to
+stuff some code in setup.c to handle this case.
+
+Third, I'm not sure that "origin" is always the value we want to use
+here.  At a previous employer, the upstream remote was called
+"upstream", and your personal fork was called "origin", so I'd have
+wanted upstream here..  We'd probably want to use whatever remote the
+user is already using in this case, and gracefully handle the URL case
+if that isn't allowed here (which it may be; I'm not that familiar with
+partial clone).
+
+I also agree with Junio's assessment that you'd probably want to explain
+more about this feature in the commit message.  For example, I'd want to
+know what this patch does and have some idea of how I might invoke this
+feature, why it's safe to change the repository version, how one sets
+the remote for fetch, and pretty much answers to all the other things I
+asked here.  Even if I understand these things now, that doesn't mean a
+future developer will in six months' time, and mentioning these things
+in the commit message helps leave a note to them that you considered (or
+did not consider, as the case may be) certain issues and helps them
+understand the code as you saw and wrote it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--3607uds81ZQvwCD0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXryGYwAKCRB8DEliiIei
+gUIsAQCQo3MSHk9y91MC1I+43MxJLLyIIhLnJTH9Y4cbVtWJigEAxYBFpG9gFp17
+KkmwOgYxyMlIa21EOeN5OtC5fgDVSgI=
+=lVqj
+-----END PGP SIGNATURE-----
+
+--3607uds81ZQvwCD0--
