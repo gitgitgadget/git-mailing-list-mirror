@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94142C433DF
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1205C433E0
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:39:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FE2F20659
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:37:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4948D2065C
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:39:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkBvogk/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZqcJH+R0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390522AbgEMTh3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 15:37:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56458 "EHLO
+        id S2390480AbgEMTjx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 15:39:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2390185AbgEMTh3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 15:37:29 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16310C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:37:29 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id y10so239526uao.8
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:37:29 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1732218AbgEMTjx (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 15:39:53 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDD4C061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 12:39:53 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id y10so242544uao.8
+        for <git@vger.kernel.org>; Wed, 13 May 2020 12:39:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=uf2MoBnraJzNinuYdHRmD3rAZmo+cca8grY1eBCt6vQ=;
-        b=nkBvogk/NwK+X1wRe4vGeHBSdmY/nVn3pkmdSEnR7o7ojmb9YzUNaxdXUkfXH5jNCx
-         yIxjueO/8HjPIxGr4pgYVkRujEJV0dJlHfkFgFjmn6LlA1bgwJTKupmL39wKoRHWVj7u
-         UePGUFgNNPKZpwnAw/r7Sa1jDrdfp1mx5LvD867Me3dhdtJop84uPSHGHyBmIedtnOCY
-         6mnn13OGoGilHai4CgBmflV6uSZNSHbpyN3FrEkyKt5IMfTELHszLG3LdWljRGP+vWg2
-         SdiyuHqJii1bl08IUMi3tNmO5Kgyiey8K7RaFA++Fp9y93c2IZI6aEs5QAcvSE3cTAP8
-         0a2Q==
+        bh=E403TGj40EJkXN6khFrfiirjl8TXUYwwNRsGgr+S8SQ=;
+        b=ZqcJH+R0qlDogUO/Js+1BLioDvJA17XFa2K7KDI2OWFf3+GARq/KC5lGh5UJ/dGU1F
+         CXa/YBOuWY9rs1gkAEbgjcmMPVr5L2hOkNA1CYA7gKA7oW+jjTDqcFsIQla+TZ0dxTIZ
+         ueAeM0nccyOgydlAVCa5hMydkaWvFcW/WyNaOfGMLcE1RhbrYKszIWNUfF6isEu2M8Im
+         Jk3TI8j3LPuZCLJmRPoA1WCcVQTYIa1HR1YYNtHI4rtjoGzwboK1D2+7/2/G5fcj4Whj
+         uNyegL0OwTFHfJBkCO3OAyNfOU00PvTLn9OjZGSsoSpKy6pEEppRuVlxxrAcM61oHgaX
+         WkiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=uf2MoBnraJzNinuYdHRmD3rAZmo+cca8grY1eBCt6vQ=;
-        b=YAWh3Bpo6affKIcgg2w+sMd2gZJFX2rSA5c5wInB14tsO3uHjqBnTRsB3cKv9htQEv
-         IBFhUfe0zVItsl4F3CGWSE6vwJzJWaTdk/8/BXLzBYH6BipDs1ricRJ+bVIZGfFDqhD8
-         1Xn3uR0TD6/bL3Gl5mEJuIVrI3NvacsVRIBXnMeqHGtRn1UMCzWrq09TPSQ0SGqR4XuQ
-         vI411R/1ckJftGiyhualuQJX5/Er5j4JKOtClvQShpQJPCu2hLKFmv3isdjP/zy7+7TJ
-         IP0qfAaN0JyrBwaYsyeFk8mlfTi3PGJNYKHFEk4HQUkWejiICaiTh8luiB/30bqVvhL6
-         /iVQ==
-X-Gm-Message-State: AOAM531x1JTjLvzXUHEv4q1jzKUGLBjQ4LiB4D3VDqn+o1AuQLe/hV2Y
-        ZNXOy5Vk8QexI+LiH05/X/uvEMzmBGqkIUFJROR/stM3
-X-Google-Smtp-Source: ABdhPJzEwa8xBd6Zp4oQP3m1B1mXOEti1x0tjwUulzrRzY3d56V2Tysxzo7DkWGhI4lwtFmaqNhG2D9ZKH5cWw5USTc=
-X-Received: by 2002:a9f:21eb:: with SMTP id 98mr1145950uac.62.1589398648182;
- Wed, 13 May 2020 12:37:28 -0700 (PDT)
+        bh=E403TGj40EJkXN6khFrfiirjl8TXUYwwNRsGgr+S8SQ=;
+        b=ta6a9R0XUAXp/zPeBCW4g1E1S/liu+KMZ9D3Vr8B3C2OUP4TzT5eS7W5wuD3qNx2ME
+         HYBHkIflB83gPmRdDmuaujtLLT1Y/71JkcR1bF9a51J6uE7I0sutnvEyUcPlvmVtjZZW
+         Qv54PO8C9jFPMn2YAwYzoxR29B/7COLGvbNHYXvPx5SIsc8S2tQ5ToqMA6pbP+rs+S0J
+         oUdlH/LwzxgTcRZklIyc2RnldbmCckRiGiCEWEnlPhtcayl2TqSqnJTS+pZCihAzliPr
+         T7Wo7fahcwpgLwDyzbriocK3KZR4bR4EHK9RbbNj7/q0xe5ZYuAbYpPudmcKw0a84ES6
+         lr9Q==
+X-Gm-Message-State: AOAM531gG7e4p8MJag6c0+5dAJNPXK/SE6+6tIsc0v5OPiqoxwiRVKmN
+        XZA0TKE4Lp3iGpMVKRKLssGzGZGp9gh8+pbW53k=
+X-Google-Smtp-Source: ABdhPJy8L6KXAOj5hvOxqAWsIgtpbuNdoHCA4UpEahX5BCFzyYQ9ATigmGegTEqpc6cR/v7d7wnrlYdFLu5oWOVbGrw=
+X-Received: by 2002:a9f:2508:: with SMTP id 8mr1123030uaz.115.1589398792399;
+ Wed, 13 May 2020 12:39:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-8-sandals@crustytoothpaste.net>
-In-Reply-To: <20200513005424.81369-8-sandals@crustytoothpaste.net>
+References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-11-sandals@crustytoothpaste.net>
+In-Reply-To: <20200513005424.81369-11-sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 13 May 2020 21:37:17 +0200
-Message-ID: <CAN0heSq1ULyJE6FLsNMc-V+J1ke8ZqyVF-MghK_d+0i7SSfTDA@mail.gmail.com>
-Subject: Re: [PATCH 07/44] connect: add function to fetch value of a v2 server capability
+Date:   Wed, 13 May 2020 21:39:41 +0200
+Message-ID: <CAN0heSosiP=vCcd1QBmWNsVUuHTmRJbjGrWV9tU0=BSU1ENmDQ@mail.gmail.com>
+Subject: Re: [PATCH 10/44] connect: add function to detect supported v1 hash functions
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Jonathan Tan <jonathantanmy@google.com>
@@ -69,41 +69,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 13 May 2020 at 02:58, brian m. carlson
+On Wed, 13 May 2020 at 02:56, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> +int server_feature_v2(const char *c, const char **v)
+> Add a function, server_supports_hash, to see if the remote server
+> supports a particular hash algorithm when speaking protocol v1.
+
+> +int server_supports_hash(const char *desired, int *feature_supported)
 > +{
-> +       int i;
+> +       int offset = 0;
+> +       int len, found = 0;
+> +       const char *hash;
 > +
-> +       for (i = 0; i < server_capabilities_v2.argc; i++) {
-> +               const char *out;
-> +               if (skip_prefix(server_capabilities_v2.argv[i], c, &out) &&
-> +                   (*out == '=')) {
-> +                       *v = out + 1;
+> +       hash = next_server_feature_value("object-format", &len, &offset);
+> +       if (feature_supported)
+> +               *feature_supported = !!hash;
+
+If we got something, anything, the server supports this feature. It just
+remains to see if it supports the exact algorithm we're after.
+
+> +       if (!hash) {
+> +               hash = hash_algos[GIT_HASH_SHA1].name;
+> +               len = strlen(hash);
+> +       }
+
+OK, if the server doesn't say anything, we fall back to SHA-1. If it's
+the desired one, we'll return 1 accordingly below.
+
+> +       while (hash) {
+> +               if (!xstrncmpz(desired, hash, len))
+> +                       found = 1;
+> +
+> +               if (found)
 > +                       return 1;
-> +               }
+
+I first thought this structure was because this loop body would learn to
+do something else later in the series. But this is it. This looks like
+it could just be "if (!xstrncmpz(...)) return 1;" and drop "found".
+
+
+
+> +               hash = next_server_feature_value("object-format", &len, &offset);
 > +       }
 > +       return 0;
 > +}
-> +
-
-This looks like it was based on `server_supports_feature()`, which
-explains the "1 means yup got it, 0 means no match". The name of
-`server_supports_feature()` does suggest the boolean nature of return
-value. For this new function, I would perhaps have expected "0 means
-success, negative means error". That said, I'm not familiar with
-connect.c. Let's see how this is used...
-
->  int server_supports_feature(const char *c, const char *feature,
->                             int die_on_error)
->  {
-
-Just a thought:
-
-Maybe this existing function could learn to take a pointer (or NULL) and
-assign to it if we have a '=' (possibly even requiring a '=' if this new
-pointer is non-NULL). I dunno, maybe two similar functions are better
-after all than having one with modes like that.
-
 
 Martin
