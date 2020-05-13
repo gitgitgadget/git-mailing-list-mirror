@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25D0BC2D0FA
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43DE2C2D0FC
 	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05E8C20675
+	by mail.kernel.org (Postfix) with ESMTP id 23DE020753
 	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dYCTq259"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Uc1YZH98"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731619AbgEMAyk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 20:54:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38096 "EHLO
+        id S1731656AbgEMAyl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 20:54:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38104 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729215AbgEMAyj (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:39 -0400
+        by vger.kernel.org with ESMTP id S1726031AbgEMAyk (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:40 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7243F60892;
-        Wed, 13 May 2020 00:54:38 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4CD62609D3;
+        Wed, 13 May 2020 00:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1589331278;
-        bh=XnY1hBbXCVrgcS1UHcgKuO6fcYFCkpQ6glUvbqDZkr4=;
+        s=default; t=1589331279;
+        bh=OLURWUEYz9+b3/c+Xf6DUH98Mfh15gzkrC5937mfdYo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=dYCTq259dXN4jkLpSbv/4Mwnp2CQt/Vre8QGYoA5+77xAmSlKVJtWfIYQ2w91l+7G
-         i+MW9GbwaFe24d+KITVkE/jBCT/IZIeukpISWRDbJvAo3Amg6wtVoZbvBGG0cRlFTO
-         qMHwBX0mFacs3KzLGmWpz3LHL2XQPS80W80IQ/rXawgdBdy4V+1/dR2RXfnxH0hs15
-         1FcLj2m69Ghq8NUm71/aKyDMuFfdKpbSQ85/ntoL6cgF2/yx0OTTfIRS9tWcrTYAKX
-         +GHI9gFG/YaT8MhYeKn7HuKg6dgAdpKab8d917qyRw7zQrPZJ8uxkm1b1mQZDoJSFV
-         vufQdes7xssQSc5qmkUJwiaA0/Mv80n4yjhpUBd6ZaZud4XxvS1disbIRiMuAr3NxR
-         DLVFmSFD8LBhwoLXmtuuASbLWllXIqU5fteeesOMKUwa6JC6P8o74Zn9GIkWQfNwd+
-         6UlR3J31znXByiBsn4fNfypn6IOwYZOqJCVerS6/wehmIytVg7k
+        b=Uc1YZH98UMifDUuPvWZTTKkO1LIaywXF0u4Qam/n+cpvcs4AajqtoatqtuaWXtNlH
+         TvCPWsz8JVzJzd3QyyYulpn6AiQ7MoWgZ+Hu0VfkSwoYh0Jm5ly2Rc1w+lcnIBStZY
+         KQlr4ooycjgzJuiYl2phc7NLnoeklSXihVC8cg2di1VXcQy1qBnEkJ18vszs4Ownqy
+         YBDlGuNjgV29ibOQhA4twrfLjotpUmicqsjq7sj5ZL+8w15H9ur2pIUEDpifUeQyFD
+         q8Gc2zHZOi2YXOT+o82nGfoNsVqcF4aqit1wSjCtHNduBKsx/kpyZdi3b+Qs/khQ7S
+         px6ESfxkIdDREWQNzx7Uu1L/EJEziZ9q1f5XQTKEHQbtHHKu0OOesULXMIikbulnPk
+         7Hpv91dyFG/dyY603Awq0Y3BHePUedbocEqehnO10kdnWmQv5hAiRD9k/eJlpkuixy
+         U3tEW8hZzJJR5sVLkt8yfm6wGDTUd8XebuXVWeE/Qb2DiiKMljh
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 02/44] Documentation: document v1 protocol object-format capability
-Date:   Wed, 13 May 2020 00:53:42 +0000
-Message-Id: <20200513005424.81369-3-sandals@crustytoothpaste.net>
+Subject: [PATCH 04/44] wrapper: add function to compare strings with different NUL termination
+Date:   Wed, 13 May 2020 00:53:44 +0000
+Message-Id: <20200513005424.81369-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be
 In-Reply-To: <20200513005424.81369-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -56,46 +56,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document a capability that indicates which hash algorithms are in use by
-both sides of a remote connection.  Use the term "object-format", since
-this is the term used for the repository extension as well.
+When parsing capabilities for the pack protocol, there are times we'll
+want to compare the value of a capability to a NUL-terminated string.
+Since the data we're reading will be space-terminated, not
+NUL-terminated, we need a function that compares the two strings, but
+also checks that they're the same length.  Otherwise, if we used strncmp
+to compare these strings, we might accidentally accept a parameter that
+was a prefix of the expected value.
+
+Add a function, xstrncmpz, that takes a NUL-terminated string and a
+non-NUL-terminated string, plus a length, and compares them, ensuring
+that they are the same length.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- .../technical/protocol-capabilities.txt          | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ git-compat-util.h |  2 ++
+ wrapper.c         | 12 ++++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
-index 2b267c0da6..026c42f86a 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/technical/protocol-capabilities.txt
-@@ -176,6 +176,21 @@ agent strings are purely informative for statistics and debugging
- purposes, and MUST NOT be used to programmatically assume the presence
- or absence of particular features.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8ba576e81e..6503deb171 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -868,6 +868,8 @@ char *xgetcwd(void);
+ FILE *fopen_for_writing(const char *path);
+ FILE *fopen_or_warn(const char *path, const char *mode);
  
-+object-format
-+-------------
++int xstrncmpz(const char *s, const char *t, size_t len);
 +
-+This capability, which takes a hash algorithm as an argument, indicates
-+that the server supports the given hash algorithms.  It may be sent
-+multiple times; if so, the first one given is the one used in the ref
-+advertisement.
-+
-+When provided by the client, this indicates that it intends to use the
-+given hash algorithm to communicate.  The algorithm provided must be one
-+that the server supports.
-+
-+If this capability is not provided, it is assumed that the only
-+supported algorithm is SHA-1.
-+
- symref
- ------
+ /*
+  * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
+  * that ptr is used twice, so don't pass e.g. ptr++.
+diff --git a/wrapper.c b/wrapper.c
+index 3a1c0e0526..15a09740e7 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -430,6 +430,18 @@ int xmkstemp(char *filename_template)
+ 	return fd;
+ }
  
-@@ -189,7 +204,6 @@ refs being sent.
++/*
++ * Like strncmp, but only return zero if s is NUL-terminated and exactly len
++ * characters long.  If it is not, consider it greater than t.
++ */
++int xstrncmpz(const char *s, const char *t, size_t len)
++{
++	int res = strncmp(s, t, len);
++	if (res)
++		return res;
++	return s[len] == '\0' ? 0 : 1;
++}
++
+ /* Adapted from libiberty's mkstemp.c. */
  
- Clients MAY use the parameters from this capability to select the proper initial
- branch when cloning a repository.
--
- shallow
- -------
- 
+ #undef TMP_MAX
