@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B15DC433E1
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CC5C433E6
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:59:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 489B22078C
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:59:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DAFB20659
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:59:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="DuqsjAYt"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Yod5hT22"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730530AbgEMV7e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 17:59:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
+        id S1730575AbgEMV7l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 17:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730473AbgEMV7d (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 17:59:33 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2DC6C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 14:59:32 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id a5so11671409pjh.2
-        for <git@vger.kernel.org>; Wed, 13 May 2020 14:59:32 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1730414AbgEMV7k (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 17:59:40 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F32C061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 14:59:40 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id t40so11567018pjb.3
+        for <git@vger.kernel.org>; Wed, 13 May 2020 14:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=eQNjWXDcmdmmvlLsOQoH51OuqOA+rAiLBr5p07EW9vI=;
-        b=DuqsjAYtFa3r/jzuMG7R6+/xRXzKu1slRWCSNvlJlfG/OgkXq0iPFx6TC5JWUZ/GAH
-         dwDqqt6aCgdppWg2KJIcDtvqhcmcMnBZRF7yVWbyKhtUDYpwVUmEfmhjHu9SSuD5n988
-         sKRqoUbhMP9LQQgl6SHNGdkUYfvog3ykPuHlvYiHQUxwf6YFglHfG5erGo0jHzlhtC3/
-         q76nNnVMLJLDfXkAvhdo3m0oXKlj5vJFkw0nPMBAIvczJOpSbeB9qo5y1rEYpHIEny2b
-         bNswJxW/cqeX0EjKitc4nl/9DLXLlRp52K67b2yb7BVHxFY+NE4x6hluKB+rhVDGim2w
-         M8bA==
+        bh=Sf1HBH3Ck8IGRfflAMUNqcEFPomuAfRvMrpebeZSgpM=;
+        b=Yod5hT22WVBxfLDaXagw/8Z6sbqEoesMsovsRV9L4AGCLkbT5lzIWkQLmKT/ysP4/S
+         93w2oXByZYoDeldHZW2Vza5rDz4SrTyVNhuXUrVTuOrWkmaGmeR5rLX23Kn3un577SeB
+         q0yFHD/WELJJ5x1nZWJOUD7MGUGyIawc1Xs3Qh2bJ05/BdbFUIDW0teayKgBw5MS6zQj
+         jVjX25pMSFfyZ5Kn6/DyMaGCGg5YkAVDvqPRl9xfUCDgWjagObq1oiyStKsj4Yvg/o1C
+         VTNoeBP5I59XGJ5wvAFvHHNnfYxhwiCCchM8jpCmuR9G+rhKxyI4UCjQR51zTiUuOqU6
+         lzmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=eQNjWXDcmdmmvlLsOQoH51OuqOA+rAiLBr5p07EW9vI=;
-        b=fNzEF/dCTj34AdDWoQ/LeGyLKeixyn/XTBJh9gF5VK4pu/RDUpJmCcufAnxwPN4cwQ
-         R5RwvmWaOWoUgBxbojM5easJjV1HUkW4hexhKWJGMOkEnTvYy2M3tkfjYQhubZKbpBwn
-         0my4b+xpedqViETlkADtONqS1ZXrv2yZyvO9Pt7+Ip0dreC8meILvdTofF6Hf9xOP825
-         2y1I+Sr1YMr+rxDddUkTFqzbTXA0Yi5h0R1+KTbyCmbhSZoEHtMgFIi+2VE0dWcawIj0
-         QwlpBgDeaVKvPsuH9ZFVPQ28vBzP2NNBRgBw9JYmFrRkfFbR3U3FxZaE8Dg1mIpO6+7q
-         qE5A==
-X-Gm-Message-State: AGi0PuarZSXGpZ9jxsFalWxq6kaLz4pp3MgX8B/Jrh9JiAk/ZoHlxshL
-        cW3/op69H6sDOjtetmQx6D4++/lCXgQ=
-X-Google-Smtp-Source: APiQypJiuIwAZAr8o2AEYtTX+hwrZ8WFe6/jldC275RFGGtRWIuWexmpj8Wv49TGE5KWAn5hCQxAqw==
-X-Received: by 2002:a17:90a:fc89:: with SMTP id ci9mr36299330pjb.140.1589407172109;
-        Wed, 13 May 2020 14:59:32 -0700 (PDT)
+        bh=Sf1HBH3Ck8IGRfflAMUNqcEFPomuAfRvMrpebeZSgpM=;
+        b=Pdlj01LYaeM+lJYRhMbY8adkjVyIAg7SYmdbbVGHHN2qfob7hS6FcrSOBn+KRkN6YI
+         W0bcBYtg9aqDKMBxV2t9AnLb0xGsv5S7RR9kPBeGV7s4XfCQGKhFBdg9nVMrRpgpG6yA
+         rRJx00PsL7INIau8tsFGyZmUyrwfiG6b+Mj6RIXyZt9vM2p66rIyIk4Y84dBRKAamZ5D
+         p6KgK7iAj6Bu0ADkyDvIMLc00hPDZAnocvKEnSpKcWsjPoTdsiWCJ5XTrYPDKMcbBKhy
+         e1nhrrNZUsPIgjCLeLbH8+VjS6SwkdM6RBGhpBoIa24xiPnyKAGOs0OhQlg9HxKE6zY6
+         hUlw==
+X-Gm-Message-State: AOAM5302Yjj7emM4Ju26TtUsq2kVPjeBSJrwdwlfGzKe5ju2eHxO0MdX
+        4W6iyAue2FdkjyyOd96Ci6z8aNNiHs4=
+X-Google-Smtp-Source: ABdhPJxeUjAlET1pHAs1+9T1XBj5y6yMkFLqij/Z62aTDfRHhrpBwac50DwL8GcL5KLMbGs85agi6g==
+X-Received: by 2002:a17:90b:887:: with SMTP id bj7mr4633130pjb.186.1589407179454;
+        Wed, 13 May 2020 14:59:39 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id t7sm5924982pjf.30.2020.05.13.14.59.30
+        by smtp.gmail.com with ESMTPSA id y10sm456643pfb.53.2020.05.13.14.59.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 14:59:31 -0700 (PDT)
-Date:   Wed, 13 May 2020 15:59:30 -0600
+        Wed, 13 May 2020 14:59:38 -0700 (PDT)
+Date:   Wed, 13 May 2020 15:59:37 -0600
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         szeder.dev@gmail.com
-Subject: [PATCH v3 1/8] commit-graph.c: extract 'refs_cb_data'
-Message-ID: <0efbcfcf3af36d1a3dbef3762d6fee604c20f538.1589407014.git.me@ttaylorr.com>
+Subject: [PATCH v3 3/8] commit-graph.c: peel refs in 'add_ref_to_set'
+Message-ID: <74b424f1ac8168f599c73364e42581961ab2c6fd.1589407014.git.me@ttaylorr.com>
 References: <cover.1588641176.git.me@ttaylorr.com>
  <cover.1589407014.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,57 +75,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In subsequent patches, we are going to update a progress meter when
-'add_ref_to_set()' is called, and need a convenient way to pass a
-'struct progress *' in from the caller.
+While iterating references (to discover the set of commits to write to
+the commit-graph with 'git commit-graph write --reachable'),
+'add_ref_to_set' can save 'fill_oids_from_commits()' some time by
+peeling the references beforehand.
 
-Introduce 'refs_cb_data' as a catch-all for parameters that
-'add_ref_to_set' may need, and wrap the existing single parameter in
-that struct.
+Move peeling out of 'fill_oids_from_commits()' and into
+'add_ref_to_set()' to use 'peel_ref()' instead of 'deref_tag()'. Doing
+so allows the commit-graph machinery to use the peeled value from
+'$GIT_DIR/packed-refs' instead of having to load and parse tags.
 
+While we're at it, discard non-commit objects reachable from ref tips.
+This would be done automatically by 'fill_oids_from_commits()', but such
+functionality will be removed in a subsequent patch after the call to
+'lookup_commit_reference_gently' is dropped (at which point a non-commit
+object in the commits oidset will become an error).
+
+Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ commit-graph.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index e3420ddcbf..9693112063 100644
+index f855911320..e7de91f0f1 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1319,13 +1319,17 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 	stop_progress(&progress);
- }
- 
-+struct refs_cb_data {
-+	struct oidset *commits;
-+};
-+
- static int add_ref_to_set(const char *refname,
+@@ -1328,9 +1328,13 @@ static int add_ref_to_set(const char *refname,
  			  const struct object_id *oid,
  			  int flags, void *cb_data)
  {
--	struct oidset *commits = (struct oidset *)cb_data;
-+	struct refs_cb_data *data = (struct refs_cb_data *)cb_data;
++	struct object_id peeled;
+ 	struct refs_cb_data *data = (struct refs_cb_data *)cb_data;
  
--	oidset_insert(commits, oid);
-+	oidset_insert(data->commits, oid);
- 	return 0;
- }
+-	oidset_insert(data->commits, oid);
++	if (!peel_ref(refname, &peeled))
++		oid = &peeled;
++	if (oid_object_info(the_repository, oid, NULL) == OBJ_COMMIT)
++		oidset_insert(data->commits, oid);
  
-@@ -1334,9 +1338,13 @@ int write_commit_graph_reachable(struct object_directory *odb,
- 				 const struct split_commit_graph_opts *split_opts)
- {
- 	struct oidset commits = OIDSET_INIT;
-+	struct refs_cb_data data;
- 	int result;
- 
--	for_each_ref(add_ref_to_set, &commits);
-+	memset(&data, 0, sizeof(data));
-+	data.commits = &commits;
-+
-+	for_each_ref(add_ref_to_set, &data);
- 	result = write_commit_graph(odb, NULL, &commits,
- 				    flags, split_opts);
+ 	display_progress(data->progress, oidset_size(data->commits));
  
 -- 
 2.26.0.113.ge9739cdccc
