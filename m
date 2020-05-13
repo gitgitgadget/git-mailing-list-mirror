@@ -1,134 +1,176 @@
-Return-Path: <SRS0=6g9E=62=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86AE5C2D0F8
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 23:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 843F6C2D0F8
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:05:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6329220784
-	for <git@archiver.kernel.org>; Tue, 12 May 2020 23:59:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5AD1920740
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:05:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Ip8xGg0F"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="Wdgb0CC7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731887AbgELX7c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 19:59:32 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38080 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731873AbgELX7b (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 19:59:31 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AFFE260427;
-        Tue, 12 May 2020 23:59:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1589327969;
-        bh=shpp1dm+i5caQUR38KjrQcH3gTsvwJAkxP3DpVt1RSM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Ip8xGg0FYSwYE0XQQOc2SY+T84UtfXns0GPb4xNQc5dQip8WDhoSzDlOgbVmOzccW
-         6fzObYPoefrDMEQiCEWBqotT7tCdpxDrI0hOvpncyfubA1zW31k9LCy7I8A6kG+pdJ
-         cMXOcTJ2BB2lZf8wNfYJ86I1fBpt/2uRmbg8CP9IoJDqPkM5KyUUzr/suyQSR3HYTu
-         6xzDcVn0z/7Gt8gK38HrSfDZze8Cboxv0gb2fQfAlrzl/HXCDE5aHy5JjqYdkFwtre
-         Lz9jYz5nYPYoUhizVc9vt2ig20NT5KMKIE2UGMdqX+3Zj4vtS519Ez126RBxg1CLq6
-         5Gc4Jiwd/YzvH0y1p4Fr4jJwqAhl3vNZREQFOzNrTAtC+IqnXCxmuR1iEXbmY/Sf/U
-         GxkbmW7yY8lSj7HIKNVlFOw5KEqkl7TeAOkqIMBYkol8D1zHBIi2Q7yXIqyOE6ECc2
-         cBCkNAbbE0liHZU1LZQpaqQ2D+PLYW6wn05jAl407J5CIVMdZty
-Date:   Tue, 12 May 2020 23:59:24 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] help: add shell-path to --build-options
-Message-ID: <20200512235924.GC6605@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-References: <20200512234213.63651-1-emilyshaffer@google.com>
- <20200512234213.63651-2-emilyshaffer@google.com>
+        id S1731703AbgEMAFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 20:05:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43280 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726031AbgEMAFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 May 2020 20:05:32 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A9C0C061A0C
+        for <git@vger.kernel.org>; Tue, 12 May 2020 17:05:31 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id g4so15731384ljl.2
+        for <git@vger.kernel.org>; Tue, 12 May 2020 17:05:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZaCz6+riharYwiRZjy+ZCYr0uAVopQotyPZJAHV9ya8=;
+        b=Wdgb0CC7LAuJS/zVWbWbxBqscG8WMpyfmM5sgP+733j6TmH9vLnoffzX939WxRkJPE
+         QZxcqXZ01cDUs9NOL041tvuIQk1VGLqSeL8zh1nO/wBuKmY+xQCEiR1pOUVr+wstrvsF
+         BORXzetywW30qeFa5d4Z1ioE37JCHpkgUxG/hONg3uJkZ7EKSi550DcMD280jqWx4kkE
+         wnjQ9XoQp5CWoY8HWB8NQfTbn5d1y4/2vAby7I6JxuBLDX0zPT/l6PAmf3aEQrNO2jEb
+         Jj0oIHDfjTCABd7tptb4RRZlTORqk/ImuCgjlN6S1ZkX5sFgf4/k0dGttMYxZ7Q7HtXP
+         lIeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZaCz6+riharYwiRZjy+ZCYr0uAVopQotyPZJAHV9ya8=;
+        b=mFZZ4AwX1iqdVe3hCkGvJQAYBiqS0w1uQbjx6igcXe7g8OFXZJ7k5F/RG6PIYVVDRC
+         NUPaB/OI7q4xMo4l5T+lyN0ur/bl250xBLbVhEnWmJxDN0YtIXLtifkgKQimKrjwUCbl
+         54VAw0MX0VsJlpHJPn86JPbX18040RA3Duxi/Ut0yJXTe8UQcPfc2FqPd7XdeMvI1PzB
+         1VsQDn4zYqGw45boLBDgC88oXahLf3tKHCF7u7v8InSD/OfcwKtyX+NIeviwS7g4EsDp
+         7gCflbRR42h7bJw5XNSvB4MPXATcwktNPp4+cXIwEM+O9jB++98vh1ifB9mNIOpIPypu
+         8ziQ==
+X-Gm-Message-State: AOAM530gvoU01GBjn9HD50mpOfdnM5waDwjwoI+gK7nVBD0/PbHO85+3
+        X0MA87+YldwpAxWeGOPxDIEiHRs/AAiJPf4PjT998A==
+X-Google-Smtp-Source: ABdhPJyo9uIc9/TRPcLirY09ODD9UoZGWXe9jlBM9BR6DnMWR56gMOtCbVBn8ym5wonc71buqfm+2fI1NA+SMO9yxOA=
+X-Received: by 2002:a2e:8999:: with SMTP id c25mr15546509lji.73.1589328329712;
+ Tue, 12 May 2020 17:05:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lMM8JwqTlfDpEaS6"
-Content-Disposition: inline
-In-Reply-To: <20200512234213.63651-2-emilyshaffer@google.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-1-amd64)
+References: <cover.1589058209.git.matheus.bernardino@usp.br>
+ <e00674c7278b032b826110f33e25a5dee176c7ba.1589058209.git.matheus.bernardino@usp.br>
+ <xmqqh7wmqn7k.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqh7wmqn7k.fsf@gitster.c.googlers.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 12 May 2020 21:05:18 -0300
+Message-ID: <CAHd-oW4k-9ZHQJcqEUqzxw0YShPWCaG61=v4wyBvXte2sSTV5g@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/4] grep: honor sparse checkout patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, May 11, 2020 at 4:35 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Matheus Tavares <matheus.bernardino@usp.br> writes:
+>
+> > One of the main uses for a sparse checkout is to allow users to focus on
+> > the subset of files in a repository in which they are interested. But
+> > git-grep currently ignores the sparsity patterns and report all matches
+> > found outside this subset, which kind of goes in the opposite direction.
+> > Let's fix that, making it honor the sparsity boundaries for every
+> > grepping case:
+> >
+> > - git grep in worktree
+> > - git grep --cached
+> > - git grep $REVISION
+>
+> It makes sense for these to be limited within the "sparse" area.
+>
+> > - git grep --untracked and git grep --no-index (which already respect
+> >   sparse checkout boundaries)
+>
+> I can understand the former; those untracked files are what _could_
+> be brought into attention by "git add", so limiting to the same
+> "sparse" area may make sense.
+>
+> I am not sure about the latter, though, as "--no-index" is an
+> explicit request to pretend that we are dealing with a random
+> collection of files, not managed in a git repository.  But perhaps
+> there is a similar justification like how "--untracked" is
+> unjustifiable.  I dunno.
 
---lMM8JwqTlfDpEaS6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yeah, I think there was no need to mention those two cases here. My
+intention was to say that, in these cases, we should stick to the
+files that are present in the working tree (which should match the
+sparsity patterns + untracked {and ignored, in --no-index}), as
+opposed to how the worktree grep used to behave until now, falling
+back to the cache on files excluded by the sparse checkout.
 
-On 2020-05-12 at 23:42:12, Emily Shaffer wrote:
-> It may be useful to know which shell Git was built to try to point to,
-> in the event that shell-based Git commands are failing. $SHELL_PATH is
-> set during the build and used to launch the manpage viewer, as well as
-> by git-compat-util.h, and it's used during tests. 'git version
-> --build-options' is encouraged for use in bug reports, so it makes sense
-> to include this information there.
->=20
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  help.c | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/help.c b/help.c
-> index 1de9c0d589..44cee69c11 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -641,6 +641,7 @@ void get_version_info(struct strbuf *buf, int show_bu=
-ild_options)
->  			strbuf_addstr(buf, "no commit associated with this build\n");
->  		strbuf_addf(buf, "sizeof-long: %d\n", (int)sizeof(long));
->  		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
-> +		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
->  		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
->  	}
->  }
+> > diff --git a/builtin/grep.c b/builtin/grep.c
+> > index a5056f395a..91ee0b2734 100644
+> > --- a/builtin/grep.c
+> > +++ b/builtin/grep.c
+> > @@ -410,7 +410,7 @@ static int grep_cache(struct grep_opt *opt,
+> >                     const struct pathspec *pathspec, int cached);
+> >  static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+> >                    struct tree_desc *tree, struct strbuf *base, int tn_len,
+> > -                  int check_attr);
+> > +                  int is_root_tree);
+> >
+> >  static int grep_submodule(struct grep_opt *opt,
+> >                         const struct pathspec *pathspec,
+> > @@ -508,6 +508,10 @@ static int grep_cache(struct grep_opt *opt,
+> >
+> >       for (nr = 0; nr < repo->index->cache_nr; nr++) {
+> >               const struct cache_entry *ce = repo->index->cache[nr];
+> > +
+> > +             if (ce_skip_worktree(ce) && !S_ISGITLINK(ce->ce_mode))
+> > +                     continue;
+>
+> Hmph.  Why exclude gitlink from this rule?  If a submodule sits at a
+> path that is excluded by the sparse pattern, should we still recurse
+> into it?
 
-This seems straightforward and logical (as does the rest of the series),
-but I wondered if it might be a good idea to try to interrogate the
-shell for more information.  The reason I mention it is that Debian
-permits any shell that meets certain standards to be /bin/sh, and all
-programs that invoke /bin/sh must depend on only those features.  The
-default is dash, but people could use bash, which is more featureful, or
-posh, which is intentionally designed to provide the bare minimum
-/bin/sh experience[0], among others.  A value of "/bin/sh" doesn't
-necessarily tell us very much on Debian (or on macOS, for that matter).
+The idea behind not skipping gitlinks here was to be compliant with
+what we have in the working tree. In 4fd683b ("sparse-checkout:
+document interactions with submodules"), we decided that, if the
+sparse-checkout patterns exclude a submodule, the submodule would
+still appear in the working tree. The purpose was to keep these
+features (submodules and sparse-checkout) independent. Along the same
+lines, I think we should always recurse into initialized submodules in
+grep, and then load their own sparsity patterns, to decide what should
+be grepped within.
 
-Now, that of course does mean that we have to have some way to
-distinguish between shells, and that is the hard part, so I'm completely
-fine with us leaving it out until we have a good way to do it (or until
-we decide we need it, which may be never).  I just wanted to mention it
-as a potential approach for the future.  I'm happy with this series as
-it stands right now.
+[...]
+> > +static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+> > +                  struct tree_desc *tree, struct strbuf *base, int tn_len,
+> > +                  int is_root_tree)
+> > +{
+> > +     struct pattern_list *patterns = NULL;
+> > +     int ret;
+> > +
+> > +     if (is_root_tree)
+> > +             patterns = get_sparsity_patterns(opt->repo);
+> > +
+> > +     ret = do_grep_tree(opt, pathspec, tree, base, tn_len, is_root_tree,
+> > +                        patterns, 0);
+> > +
+> > +     if (patterns) {
+> > +             clear_pattern_list(patterns);
+> > +             free(patterns);
+> > +     }
+>
+> OK, it is not like this codepath is driven by "git log" to grep from
+> top-level tree objects of many commits, so it is OK to grab the
+> sparsity patterns once before do_grep_tree() and discard it when we
+> are done.
 
-[0] Quite literally, in that it's supposed to be a tool for testing
-compatibility with the policy requirements.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Yeah. A possible performance problem here would be when users pass
+many trees to git-grep (since we are reloading the pattern lists, from
+both the_repository and submodules, for each tree). But, as Elijah
+pointed out [1], the cases where this overhead might be somewhat
+noticeable should be very rare.
 
---lMM8JwqTlfDpEaS6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXrs4XAAKCRB8DEliiIei
-gYppAQDvtg+xtYNkk1wpBUJzQXOAJwEUjY5wB12ihw6AUbsjiAEA/4NpVRnJp+Ou
-PM8cZC+HZcwcVhXCvV6ra9wDghI9wAM=
-=XPse
------END PGP SIGNATURE-----
-
---lMM8JwqTlfDpEaS6--
+[1]: https://lore.kernel.org/git/CABPp-BGUf-4exGW23xka1twf2D=nFOz1CkD_f-rDX_AGdVEeDA@mail.gmail.com/
