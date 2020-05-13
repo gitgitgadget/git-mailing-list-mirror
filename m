@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 201EEC2D0FB
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46482C2D0FA
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ECB0623129
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C7E320675
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VbsNlKMg"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Uv4aKmLx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731878AbgEMAys (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 20:54:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38118 "EHLO
+        id S1731900AbgEMAyu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 20:54:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38132 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731807AbgEMAyo (ORCPT
+        by vger.kernel.org with ESMTP id S1731826AbgEMAyo (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:44 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A981A60CFF;
-        Wed, 13 May 2020 00:54:42 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1D2B960D00;
+        Wed, 13 May 2020 00:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1589331282;
-        bh=W+hJvQuxy2ekMVK7JOUcC5uq+ZOoIQrZE58qJIsEcVQ=;
+        s=default; t=1589331283;
+        bh=zpnT9fWOaLV9mwawdgB5SvkQ6uw0gD9jYk+wL9jjyZo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=VbsNlKMgoDNUQR94OO460ZWqAeVzULLL90kDSTkYtHraKxaMHipoHbtZeXtLtR4BY
-         ZIEOsaFYDvCwarbGOJf97AGQDYgdkGiU3lu9nN9quXVY/kODhi+ixVxJCHdz9e6CiI
-         kGxPWf3lg6AEMadIfEy137xT8n2rmOgllzuLMu7heGyuM33NtvdE4iEnpnEKu5PAdi
-         ljb1QR+6fskbzEmRpO5nEfUkiChbAC+VEhjddXRydKO/CzvJxOTGJt42znMaJBZiMO
-         XO+J5YqPGFKGJUiXkLFkYZgfw21IVGpHX3KlHq5x4g87tdJLcj4upGpQXCwfKiWcPm
-         XcRwEl77jbAMtLg5wEr9um3aOon766o8Bm0Bs/j7PcJg9KEMxuDKkGG90vKNXgo+tZ
-         k7KOFOv137FWyOFQZ93egnSlaewNLUXogLJ0S+Q2KZ9vq3yTSoDfTT0IbJaeRrHgwm
-         lfVtgblTjpARfpsr/LFE5Z2o0Fg7Ohk1zQsZ6/mLFAamlFxuBEF
+        b=Uv4aKmLxHrl8sYwPSebcpzDc1MIRsJWyzcjNiVJ4sAlDiQf0Ir2akvl5x7A91BYh6
+         jbPHiWusKz0pyav6gCx9rbO1ddgM1nZrDwDIK26DuzntFJWjc9j68zBv1K69tDesLG
+         8diKvg+dSXadshk4msUAXeHxzsxoTsPTDLBTfRLwAchW/FvmcDTPsCyQHVm2V5FY3X
+         5PsmYV6y4HIrY+LP1ZHCEi+KCm0+oaVE37fd0OmK0ccyboRe8gEGhOfRAp+qtMiHz/
+         GPd5T2lWgWoEBCzfobyyJ+9fHJ+RXVPGt54EnEQUtr1DNPgshtl3PV5UpT1iavItJT
+         L1zFdGFHfZq6tq29dkaNazqNWo8eRUhFsaExO3XYCijG62LcgMn3AaW1dxsObP6IkN
+         BTFF6SC3rJEk4+Z4sB/fHk4TiXjH2DJ4/IM6CcFoszPtGGpjCnCxp5l+N8bU3s0tzz
+         hv69dVnou9DG3hWXTYuXXqECJ5zFLKAASxVwOIDmPUQQcyfVhjy
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 12/44] connect: make parse_feature_value extern
-Date:   Wed, 13 May 2020 00:53:52 +0000
-Message-Id: <20200513005424.81369-13-sandals@crustytoothpaste.net>
+Subject: [PATCH 13/44] fetch-pack: detect when the server doesn't support our hash
+Date:   Wed, 13 May 2020 00:53:53 +0000
+Message-Id: <20200513005424.81369-14-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be
 In-Reply-To: <20200513005424.81369-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -56,45 +56,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We're going to be using this function in other files, so no longer mark
-this function static.
+Detect when the server doesn't support our hash algorithm and abort.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- connect.c | 3 +--
- connect.h | 1 +
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fetch-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index cb69aafe2c..511a069304 100644
---- a/connect.c
-+++ b/connect.c
-@@ -18,7 +18,6 @@
+diff --git a/fetch-pack.c b/fetch-pack.c
+index f73a2ce6cb..1d277190e7 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1039,6 +1039,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		print_verbose(args, _("Server supports %s"), "deepen-relative");
+ 	else if (args->deepen_relative)
+ 		die(_("Server does not support --deepen"));
++	if (!server_supports_hash(the_hash_algo->name, NULL))
++		die(_("Server does not support this repository's object format"));
  
- static char *server_capabilities_v1;
- static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
--static const char *parse_feature_value(const char *, const char *, int *, int *);
- static const char *next_server_feature_value(const char *feature, int *len, int *offset);
- 
- static int check_ref(const char *name, unsigned int flags)
-@@ -467,7 +466,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	return list;
- }
- 
--static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
-+const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
- {
- 	int len;
- 
-diff --git a/connect.h b/connect.h
-index fc75d6a457..81935a0f2a 100644
---- a/connect.h
-+++ b/connect.h
-@@ -19,6 +19,7 @@ struct packet_reader;
- enum protocol_version discover_version(struct packet_reader *reader);
- 
- int server_supports_hash(const char *desired, int *feature_supported);
-+const char *parse_feature_value(const char *, const char *, int *, int *);
- int server_supports_v2(const char *c, int die_on_error);
- int server_feature_v2(const char *c, const char **v);
- int server_supports_feature(const char *c, const char *feature,
+ 	if (!args->no_dependents) {
+ 		mark_complete_and_common_ref(negotiator, args, &ref);
