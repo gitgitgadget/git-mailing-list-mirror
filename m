@@ -2,202 +2,183 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 789E1C433DF
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40FE4C433DF
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:10:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B01220659
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:05:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB14020659
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:10:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b/BRjWOy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="trpC1Z/J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390037AbgEMSFT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 14:05:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41856 "EHLO
+        id S1733144AbgEMSKt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 14:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732488AbgEMSFS (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 14:05:18 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB00C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 11:05:18 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id a136so170836qkg.6
-        for <git@vger.kernel.org>; Wed, 13 May 2020 11:05:18 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1732488AbgEMSKs (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 14:10:48 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A039C061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 11:10:48 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id j5so632707wrq.2
+        for <git@vger.kernel.org>; Wed, 13 May 2020 11:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Sv+JB8nSV1OKpS92HJl6Z+1itiAJ4oONZNBTcd1fzXk=;
-        b=b/BRjWOyFXccIHcd2Az1JKCUHPjB7rZ0BmZYLfuIO5XULNgRD8kGyKwmWV1lDrTTh/
-         52aQbWvyFNxwGufB6ym9tWa8uIWRXSUXc7PykiA/Y8TJptjG6HDdafvyv6LwY8atnhoo
-         R1qUh0aIa5m3Bz0/IInib/kh6+/wnzvaGzF5W4UomLO9tC76ojckZDGNsN07Ikh2ibys
-         xkNPRTpXzoi0kPRjThj+VSbKIpT8mH+3o4mjD7PHVqxD1zgO57xYTDYWbftsIPWzF7fe
-         SvBlgDv+9T43vvxP7ZW4rCseP4Q0rMoq/Yh7p1Wh68REPHmYy3+rt3Y1nZCgmH8CZKyA
-         bEjA==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=epUOpZssMyRk8dZIoqUwicMQRiQwpMPISsw/0lq5QAI=;
+        b=trpC1Z/J/99A6wQel82NiEyzZp55bA9pFq417822u7umGYu+AbkUQm6fLz2UjxworO
+         HSR/E/UawVn8fi9Vvu5a+YBQya9v3xyMDNHQbEA+5Dadzxlxhlw5OVbDqv/MOwbidEU5
+         0XH0dXKlIssTQ0zVaSKhTjS8aaXnx7aO4Ly8f40rMpkUTxrgfI6573LDBBJLdHfTI15q
+         ekGz+tLl7VdLQhu1uk6315xegRG9N2fseADc1gG/QvcGcwTwhpCw2dSbRk4ohfb/P71s
+         a3ikQ3fU0sBzDbsqYj740sqbD6MP5fIZPCVu6O/xo1QwUWTSocN8+flkNNA3LR+YMoMH
+         elxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Sv+JB8nSV1OKpS92HJl6Z+1itiAJ4oONZNBTcd1fzXk=;
-        b=ArBGtB2HNMdpOStWvka+AqIx7XZLwhUzousgCnQ02rEICv8HbBUcd5GG7+vIFI11xl
-         gjIqXn2OT8snDO6BCasiqLqrZoI/iNQxgqyW7c12I5Akh+vX6vp0rKe456O+inCOVA57
-         D8DGamPNmcysJbuBerfHXVpjeDWuHak3szNI9UC3BQqMvCNcwM4fGrWfLv7asz06gTaI
-         PSJDbQA591PWn96eFBB+GylwQZZ+BYnUHTqcXlp+hM0UgfxheBU9R6auWFU59g3dQpJi
-         Y3n79yFIzRA2ZPSolhNfqeNmleI2Gtad6qneDzkZqMvUhw48Qr1uMgo6jsr4J5hx1qYw
-         HyvQ==
-X-Gm-Message-State: AOAM531TYDEr1cINz+x4XJ0EMm0kf54xAxL9iqMWbUlseOZY9hByMG1v
-        yBN4/nTgGuZhEMLBIB9V8zrHZx3X
-X-Google-Smtp-Source: ABdhPJxD4b1Yu9sCyrRSckEIqL/Y/TK/K5m8Ij4YE1HPwS4bX8DFH2Ll+UTzrvXRMT7sWZ8G4rDHBA==
-X-Received: by 2002:a37:bc7:: with SMTP id 190mr948104qkl.286.1589393117596;
-        Wed, 13 May 2020 11:05:17 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id z60sm301153qtc.30.2020.05.13.11.05.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 11:05:17 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Force Charlie <charlieio@outlook.com>
-Subject: [PATCH 6/6] remote-curl: ensure last packet is a flush
-Date:   Wed, 13 May 2020 14:04:58 -0400
-Message-Id: <7a689da2bb820f70d9e668d656b088af2297d456.1589393036.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.26.2.706.g87896c9627
-In-Reply-To: <cover.1589393036.git.liu.denton@gmail.com>
-References: <cover.1589393036.git.liu.denton@gmail.com>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=epUOpZssMyRk8dZIoqUwicMQRiQwpMPISsw/0lq5QAI=;
+        b=oPY1fiatUabMQdYB4PxGkmLte3sZCUcu6xD/hsPoozuDavbblsMORirPoBZEeik1eH
+         sNmPNYKgQcTpJNvTEBNe5wKZ0iA/ddTDhY17dxhfUey5DDMVqaukJAhlN/ZRefhkyvRj
+         GeprnO0WZ3RQPamBw1LXozPvA+yaEAyjYqWlWXZHSI6OG2zac1URA1+cedmfVuV8Edki
+         T1gmSb7ODJq/SQNepBhVHJ1xRRKrRlgEX2l7Qdkf+tPUh+rFbPMHf4Fq9Js5ppa5bCZJ
+         sPjskS2Ps37SR4DC4RA3nGQFNmF/wgeVDcDJW6NxKsvl7jQflZyPvfAbLT7m8W6bxqe2
+         Pjgw==
+X-Gm-Message-State: AOAM533NV58R/l83QJhHCNl5o2Ygp6Ywx8sFnE5K35Ae1IhucqojjLCU
+        JKavf7onIa0U1RngOGSd/DtTK6UF
+X-Google-Smtp-Source: ABdhPJxW6Sq4ZMiLYDyats57ayBik6sgJdD0EFEw6q6GPms37fJjs+8Vn9h2ELmLV/YUATIFOiNl+w==
+X-Received: by 2002:adf:b30f:: with SMTP id j15mr645119wrd.394.1589393446966;
+        Wed, 13 May 2020 11:10:46 -0700 (PDT)
+Received: from [192.168.1.201] (155.20.198.146.dyn.plus.net. [146.198.20.155])
+        by smtp.googlemail.com with ESMTPSA id r14sm12852298wmb.2.2020.05.13.11.10.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2020 11:10:46 -0700 (PDT)
+Subject: Re: [PATCH v13 07/13] Write pseudorefs through ref backends.
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
+ <pull.539.v13.git.1589226388.gitgitgadget@gmail.com>
+ <2c2f94ddc0e77c8c70041a2a736e3a56698f058c.1589226388.git.gitgitgadget@gmail.com>
+ <cd06245f-4717-3695-9550-0d8c4244725a@gmail.com>
+ <CAFQ2z_Ptuu14G-UOVfDnGsG6-EwUH-XdBp8HTw_zuHML5aMsQA@mail.gmail.com>
+ <c78e3022-0145-74e7-99b2-614fa422835b@gmail.com>
+Message-ID: <b7bab271-be96-f52e-5512-b836f3632ff8@gmail.com>
+Date:   Wed, 13 May 2020 19:10:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <c78e3022-0145-74e7-99b2-614fa422835b@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, remote-curl acts as a proxy and blindly forwards packets
-between an HTTP server and fetch-pack. In the case of a stateless RPC
-connection where the connection is terminated before the transaction is
-complete, remote-curl will blindly forward the packets before waiting on
-more input from fetch-pack. Meanwhile, fetch-pack will read the
-transaction and continue reading, expecting more input to continue the
-transaction. This results in a deadlock between the two processes.
+On 13/05/2020 11:06, Phillip Wood wrote:
+> On 12/05/2020 17:48, Han-Wen Nienhuys wrote:
+[...]
+>>>> -struct ref_storage_be refs_be_files = {
+>>>> -     NULL,
+>>>> -     "files",
+>>>> +struct ref_storage_be refs_be_files = { NULL,
+>>>> +                                     "files",
+>>>> +                                     files_ref_store_create,
+>>
+>>> The formatting has gone haywire
+>>
+>> This was clang-format's automatic reformatting. I've looked a bit
+>> closer, and it was reformatting because the initializer list was
+>> missing the ',' on the final entry. I've added that now.
+> 
+> It sounds like we need to look at the clang format rules we use, I think
+> the original code is correctly formatted in this case (we've only
+> allowed trailing commas relatively recently), it shouldn't need changing
+> (which clutters up the patch with unrelated changes) just to satisfy
+> clang-format.
 
-This can be seen in the following command which does not terminate:
+I spent some time trying to fix the clang-format rules this afternoon
+and got nowhere. Searching the web revealed plenty of questions but no
+useful answers beyond "add a trailing comma" and it's not even clear to
+me if that works all time. It is a shame clang-format does not seem to
+support a fairly common way of formatting structure initializers. That
+the formatting changes so much based on the presence or absence of the
+trailing comma is really confusing and unhelpful.
 
-	$ git -c protocol.version=2 clone https://github.com/git/git.git --shallow-since=20151012
-	Cloning into 'git'...
+Best Wishes
 
-whereas the v1 version does terminate as expected:
+Phillip
 
-	$ git -c protocol.version=1 clone https://github.com/git/git.git --shallow-since=20151012
-	Cloning into 'git'...
-	fatal: the remote end hung up unexpectedly
-
-Instead of blindly forwarding packets, raise a flag when a flush packet
-is encountered. Ensure that the last packet sent is a flush packet
-otherwise error out, breaking the deadlock.
-
-This is not a complete solution to the problem, however. It is possible
-that a flush packet could be sent in the middle of a message and the
-connection could die immediately after. Then, remote-curl would not
-error out and fetch-pack would still be in the middle of a transaction
-and they would enter deadlock. A complete solution would involve
-reframing the stateless-connect protocol, possibly by introducing
-another control packet ("0002"?) as a stateless request separator
-packet which is always sent at the end of post_rpc().
-
-Although this is not a complete solution, it is better than nothing and
-it resolves the reported issue for now.
-
-Reported-by: Force Charlie <charlieio@outlook.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-
-Notes:
-    I wish there were some way to insert a timeout on the test case so that
-    we don't block forever in case we regress.
-
- remote-curl.c          |  9 +++++++++
- t/t5702-protocol-v2.sh | 17 +++++++++++++++++
- 2 files changed, 26 insertions(+)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index 8b740354e5..aab17851be 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -684,6 +684,7 @@ struct rpc_in_data {
- 	struct active_request_slot *slot;
- 	struct strbuf len_buf;
- 	int remaining;
-+	int last_flush;
- };
- 
- /*
-@@ -707,6 +708,8 @@ static size_t rpc_in(char *ptr, size_t eltsize,
- 		data->rpc->any_written = 1;
- 
- 	while (unwritten) {
-+		data->last_flush = 0;
-+
- 		if (!data->remaining) {
- 			int digits_remaining = 4 - data->len_buf.len;
- 			if (digits_remaining > unwritten)
-@@ -720,6 +723,8 @@ static size_t rpc_in(char *ptr, size_t eltsize,
- 				if (data->remaining < 0) {
- 					die(_("remote-curl: bad line length character: %.4s"), data->len_buf.buf);
- 				} else if (data->remaining <= 1) {
-+					if (!data->remaining)
-+						data->last_flush = 1;
- 					data->remaining = 0;
- 				} else if (data->remaining < 4) {
- 					die(_("remote-curl: bad line length %d"), data->remaining);
-@@ -960,6 +965,7 @@ static int post_rpc(struct rpc_state *rpc, int flush_received)
- 	rpc_in_data.slot = slot;
- 	strbuf_init(&rpc_in_data.len_buf, 4);
- 	rpc_in_data.remaining = 0;
-+	rpc_in_data.last_flush = 0;
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &rpc_in_data);
- 	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0);
- 
-@@ -979,6 +985,9 @@ static int post_rpc(struct rpc_state *rpc, int flush_received)
- 	if (rpc_in_data.remaining)
- 		err = error(_("%d bytes are still expected"), rpc_in_data.remaining);
- 
-+	if (!rpc_in_data.last_flush)
-+		err = error(_("last packet was not a flush"));
-+
- 	curl_slist_free_all(headers);
- 	free(gzip_body);
- 	return err;
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 5039e66dc4..4570d0746c 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -586,6 +586,23 @@ test_expect_success 'clone with http:// using protocol v2' '
- 	! grep "Send header: Transfer-Encoding: chunked" log
- '
- 
-+test_expect_success 'clone with http:// using protocol v2 and invalid parameters' '
-+	test_when_finished "rm -f log" &&
-+
-+	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" GIT_TRACE_CURL="$(pwd)/log" \
-+		git -c protocol.version=2 \
-+		clone --shallow-since=20151012 "$HTTPD_URL/smart/http_parent" http_child_invalid 2>err &&
-+
-+	# Client requested to use protocol v2
-+	grep "Git-Protocol: version=2" log &&
-+	# Server responded using protocol v2
-+	grep "git< version 2" log &&
-+	# Verify that we errored out in the expected way
-+	test_i18ngrep "last packet was not a flush" err &&
-+	# Verify that the chunked encoding sending codepath is NOT exercised
-+	! grep "Send header: Transfer-Encoding: chunked" log
-+'
-+
- test_expect_success 'clone big repository with http:// using protocol v2' '
- 	test_when_finished "rm -f log" &&
- 
--- 
-2.26.2.706.g87896c9627
+> 
+>>>> +     NULL, NULL,
+>>>
+>>> Should the wrappers above that invoke these virtual functions check they
+>>> are non-null before dereferencing them? It would be better to die with
+>>> BUG() than segfault.
+>>
+>> Done.
+> 
+> Great, I did wonder after I had sent the email if it would be better to
+> implement the BUG() in the virtual functions in the packed-refs backend
+> to avoid the check overhead in the other backends but it's probably not
+> worth worrying about.
+> 
+>>
+>>> I think this patch basically works but I'm concerned by the potential
+>>> NULL pointer dereference. While it's unfair to judge a patch by it's
+>>> formatting the changes to the formatting of existing code and the
+>>> dropped assertion rightly or wrongly gave me the impression lack of
+>>> attention which does make me concerned that there are other more serious
+>>> unintentional changes in the rest of the series.
+>>
+>> I prefer leaving formatting up to automated tooling. They're better at
+>> following mechanical rules precisely.
+> 
+> Right but in this case the changes completely obscured the important
+> changes. What really raised a flag for we was that two definitions of
+> the same structure where reformatted in completely different ways - I do
+> use clang format but I also sanity check the results before submitting a
+> patch.
+> 
+> I was looking at our use of git_path_cherry_pick_head() in sequencer.c
+> (I mostly work on rebase) the other day, there are quite a few places we
+> rely on CHERRY_PICK_HEAD/REVERT being a file, I suspect we probably do
+> the same in wt-status.c and builtin/commit.c. The uses are generally
+>     file_exists(git_path_cherry_pick_head())
+> which I think we could just change to use get_oid()
+> We also unlink() it in several places which we could replace with
+> delete_ref() but we blindly call unlink() in some places so the ref
+> might not exist.
+> 
+> In the sequencer we always use the refs api when handling REBASE_HEAD, I
+> haven't got round to checking builtin/rebase.c and builtin/am.c for that
+> yet.
+> 
+> Is there a plan to handle FETCH_HEAD with reftable? git rev-parse will
+> parse the first oid in the file which is handy if you've only fetched a
+> single ref, but the file itself contains several lines like
+> 
+> 2407200be2a37bfca57ea1a9474318822fec49b0		branch 'git-alias' of
+> ssh://pi/home/pi/git
+> 
+> It might be special cased in the refs code already I haven't checked
+> 
+> MERGE_HEAD also contains multiple lines for octopus merges but I'm not
+> sure if people really need to run rev-parse on that.
+> 
+> Apologies if the FETCH_HEAD and MERGE_HEAD points have already been
+> covered elsewhere, this thread has got quite long.
+> 
+> Best Wishes
+> 
+> Phillip
+> 
 
