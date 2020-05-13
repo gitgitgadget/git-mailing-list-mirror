@@ -2,109 +2,141 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAABAC433DF
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16ABEC433E0
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:48:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 869A020659
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:48:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9A2720671
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:48:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BHqgGYgj"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="l0RdBBU/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390640AbgEMTsd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 15:48:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58214 "EHLO
+        id S2390725AbgEMTsw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 15:48:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732218AbgEMTsd (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 15:48:33 -0400
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06DE5C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:48:31 -0700 (PDT)
-Received: by mail-vk1-xa41.google.com with SMTP id s85so150384vks.11
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:48:31 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1732218AbgEMTsv (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 15:48:51 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C52C061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 12:48:51 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id fu13so11438757pjb.5
+        for <git@vger.kernel.org>; Wed, 13 May 2020 12:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FHNMhwptvNzSZBuXX8x/wcTssZX6fmJ4K1dLg0I/Jow=;
-        b=BHqgGYgja8IWEY80tp7JKDYhgRuyKgS23is74blQNb5LNCLwTJJjOuqDHEbe0WFTOu
-         mg76WsK98q2+S4YKFc756k1g21c8DH24TH13kqfYf6q8J8Ws/lcH6WeLsBUb2FHJTBsk
-         hzqaE5bSGL6PyVnCWZVbK7Uwx3kDQvPDWSJ6dOdT4FfQZqgH9xMxj0NbEDrBcvH0KglD
-         oWkWYARq9KmIZvGXXhBD9rD62pphtKFVshd9ryBNfVvg7UazINY78OGUdt8WwdnEmDNZ
-         h2C1PkKQB0fQb0nXkmIHlqOjp4dkd3KvsaLxXDpnhp2ogVW+MsOOqNxqW2IHOso0p66j
-         kwOg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=fg4kmI10wEnBojZ0TieuL7FIHIoEfS4HAVRo3QVasEM=;
+        b=l0RdBBU/St2LHQiUU5ZyMn4E/vyU0E0iqp+pQuqp/jTtMRvbmNbgZgMTRXCRc8l+Nv
+         +BcwIrOkZni+rQxC5jU5uJDbMCFBTxjupjHWfbmUDaZzQIMY7mf2BiDgdUNhqf15jS5d
+         UZ1VTdzvPie3hvdXJmq40YdfSIYtlfjcOImpiT6wkyMUppidSvrFjpmxkF2nLnOlOXPI
+         99HGyFMuZT41AtNnhpIOgPOWo5wwAYH+LJdn/fWlOJDU5bKN6qPsd/PLu/Co8vGvbrEo
+         eR2JYK+uovBQsXUDXZ5vjnpQ76EQrBHVFNjqi8647vSG+tcJ2iWjyBqLQm21bEdTMaOF
+         Oevw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FHNMhwptvNzSZBuXX8x/wcTssZX6fmJ4K1dLg0I/Jow=;
-        b=bIr4ZwxKk36pyZFNeReZLyl97BbDHS4duQQV0d32O02xFaD4fzP+bLoulH9cZko7xs
-         wdP6eFWCJU/kBUnrngk+q/Oai8p/X6duK+05scXf9co5FudUpnNwG14N10YYobkGQWAK
-         7CKrpXCDOO3TjOMYk8HC9ONa7ApMlcFeQkMoksMOhVgLh+go3Af/wMu4PzaGnUtbRnzP
-         RkXaHW74uVQHO+ha1PCjfpAlGrZXa7OkSF1RS4J1wYQfkpdJ8KsM9rUTE2Nun3ljTm6t
-         um5HU230S0uqZExOCsn0rfm1HkjLPbbR7JmCcg0GWjY+6fDg7cj7FRIXGRm9uRVwvCIV
-         ssKQ==
-X-Gm-Message-State: AOAM531izAaiSfvTHAio+ggYRO5sEj/169dSqA+XQNlOwK49tPp12BgH
-        ANzdLiE54UG2wOeqKWFWpYGf/PtbOIQQMn8eOKk=
-X-Google-Smtp-Source: ABdhPJyC/7b3eEps7FqQC+pkGRmBzu70CqRdMpOc0DzkILCLcwWybxgzdEtQs3RIeYGZL0ch1NCWJc8ZkeLlaTz12qI=
-X-Received: by 2002:a1f:9e17:: with SMTP id h23mr785572vke.57.1589399310951;
- Wed, 13 May 2020 12:48:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=fg4kmI10wEnBojZ0TieuL7FIHIoEfS4HAVRo3QVasEM=;
+        b=Ugy/LOY+ZsEx9A3LXrgaRLUEjitZGm5usbwDofWCKvyN4gNuvDxbvv2eHkPY5N2uQO
+         jh9eYnGXB+G+RqtzQDB8a1Qgx8HHCbdSzGnFKgm3zwsV3PcoH0LUZ+Mog/MSPaz9Z8q2
+         K2cHcp1OaEajzKHhOyQTchiOtB3p2FtjaTwh8Lk0UL2xA1MDtxwa4I4DLDY0yB92P6zW
+         eRdSxZIQ0gmcC0xGWZBjFfqgxb6M9YZSc8EcejToqnD53sPMHKu04He+XnYrCc/p1X3J
+         5rrhQDJ006vyy73D1GbVmXCScEA7IM09EP+HDjH62hNaiBOrlmstmBvP0EX3YPDv37/I
+         voEg==
+X-Gm-Message-State: AOAM530+3VP111HOzpv7F8xKwtutXXgpHwGw6jgjx+71t6ty+KIs0VE6
+        rjV95F556II3P4NYxkNobT76Qg==
+X-Google-Smtp-Source: ABdhPJzn7gZVivu8OyeQwkj7UHC7t5X+JdVuFkwTSiaHB/tVT6wvuTV88sOSZhdFGz8+VZR7SqyzKw==
+X-Received: by 2002:a17:90a:be09:: with SMTP id a9mr3094682pjs.165.1589399330954;
+        Wed, 13 May 2020 12:48:50 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id c2sm408140pgj.93.2020.05.13.12.48.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2020 12:48:50 -0700 (PDT)
+Date:   Wed, 13 May 2020 13:48:48 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, gitster@pobox.com, szeder.dev@gmail.com
+Subject: Re: [PATCH 3/8] commit-graph.c: peel refs in 'add_ref_to_set'
+Message-ID: <20200513194848.GA24173@syl.local>
+References: <cover.1588641176.git.me@ttaylorr.com>
+ <5ff56feab55b005b4a4d9559909ce7a08e5fa81e.1588641176.git.me@ttaylorr.com>
+ <20200507195441.GA29683@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-13-sandals@crustytoothpaste.net>
-In-Reply-To: <20200513005424.81369-13-sandals@crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 13 May 2020 21:48:20 +0200
-Message-ID: <CAN0heSrS+xMqhcUTZjhzq_EX0Zwm-PO9Yu6ue3q9dc_Z1VF3tQ@mail.gmail.com>
-Subject: Re: [PATCH 12/44] connect: make parse_feature_value extern
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200507195441.GA29683@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 13 May 2020 at 02:56, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+On Thu, May 07, 2020 at 03:54:41PM -0400, Jeff King wrote:
+> On Mon, May 04, 2020 at 07:13:43PM -0600, Taylor Blau wrote:
 >
-> We're going to be using this function in other files, so no longer mark
-> this function static.
+> > While iterating references (to discover the set of commits to write to
+> > the commit-graph with 'git commit-graph write --reachable'),
+> > 'add_ref_to_set' can save 'fill_oids_from_commits()' some time by
+> > peeling the references beforehand.
+> >
+> > Move peeling out of 'fill_oids_from_commits()' and into
+> > 'add_ref_to_set()' to use 'peel_ref()' instead of 'deref_tag()'. Doing
+> > so allows the commit-graph machinery to use the peeled value from
+> > '$GIT_DIR/packed-refs' instead of having to load and parse tags.
 >
->  static char *server_capabilities_v1;
->  static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
-> -static const char *parse_feature_value(const char *, const char *, int *, int *);
->  static const char *next_server_feature_value(const char *feature, int *len, int *offset);
+> Or having to load and parse commits only to find out that they're not
+> tags. :)
+>
+> > diff --git a/commit-graph.c b/commit-graph.c
+> > index 8f61256b0a..5c3fad0dd7 100644
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+> > @@ -1327,11 +1327,15 @@ static int add_ref_to_set(const char *refname,
+> >  			  const struct object_id *oid,
+> >  			  int flags, void *cb_data)
+> >  {
+> > +	struct object_id peeled;
+> >  	struct refs_cb_data *data = (struct refs_cb_data *)cb_data;
+> >
+> >  	display_progress(data->progress, oidset_size(data->commits) + 1);
+> >
+> > -	oidset_insert(data->commits, oid);
+> > +	if (peel_ref(refname, &peeled))
+> > +		peeled = *oid;
+>
+> It may be the old-timer C programmer in me, but I always look slightly
+> suspicious at struct assignments. We know that object_id doesn't need a
+> deep copy, so it's obviously OK here. But should we use oidcpy() as a
+> style thing?
+>
+> Alternatively, you could do this without a struct copy at all with:
+>
+>   if (!peel_ref(...))
+>          oid = peeled;
+>   oidset_insert(..., oid);
+>
+> which is actually a bit cheaper.
 
-> -static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
-> +const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
->  {
+Makes sense, I think this version is the better of the two that you
+suggested here. I noticed one small thing which is that since peeled is
+only on the stack, I think we actually want 'oid = &peeled', but
+otherwise I took this as-is.
 
-> --- a/connect.h
-> +++ b/connect.h
-> +const char *parse_feature_value(const char *, const char *, int *, int *);
+> > +	if (oid_object_info(the_repository, &peeled, NULL) == OBJ_COMMIT)
+> > +		oidset_insert(data->commits, &peeled);
+>
+> I probably would have left adding this "if" until a later step, but I
+> think it's OK here.
 
-This "char *, int *" comes from the forward-declaration above, which is
-now dropped. Now that this is a header file for everyone to use, I think
-these parameters should be named, at least, but even better would be
-some documentation. ;-)
+Yeah, I did it here to avoid having to add a seemingly-unrelated change
+later on. I agree it doesn't matter much, so in the interest of leaving
+the series alone, I'll leave it where it is here.
 
-I'll stop reading here. I'm not familiar with the technical details here
-(i.e., where you'd be most interested in review), so I've just left some
-more or less superficial comments.
+> -Peff
 
-One thing I've noticed is that there are relatively few tests so far. I
-suppose it could be hard to trigger things before everything is properly
-plugged through. But maybe at least various error paths could be
-exercised already at this point, such as in the previous patch I
-commented on.
-
-So far I feel like I'm following along ok and I have a feeling I know
-where this is leading up to. Nicely done so far.
-
-
-Martin
+Thanks,
+Taylor
