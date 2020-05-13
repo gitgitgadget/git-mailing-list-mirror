@@ -2,92 +2,108 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E27C433E1
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31A3DC433DF
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:43:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A64320659
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:40:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CBED205ED
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:43:19 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bRIpCCcJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbgEMUkW convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 13 May 2020 16:40:22 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36258 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726168AbgEMUkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 May 2020 16:40:22 -0400
-Received: by mail-wr1-f68.google.com with SMTP id y16so1162219wrs.3
-        for <git@vger.kernel.org>; Wed, 13 May 2020 13:40:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=B9tVpeCMZuQ3iEl1CN4fNwQRPov9hEI6F/Xj69MUXWg=;
-        b=OEnAT73bPeDzigYTagZTdftKgenQsLcmqfs2p3+NS6Rd+d8CVg0n9wplT3BdW0dssN
-         WefBZ1v2eGRkvvk8RS4pUCB6JhJof9PFi5kiQ3GsYBr7nRjUeb23S0/922bExwERB21O
-         CIyy6aUcv6p7aEiPnLpe5h++J9i921weXrMZWqUCoSgEC6vy+60h/YU5DqxGxFVVnOF0
-         bTCg23HOsQoUlj/edVuVZm0GaC0X9c/VOmcSl2BO6ptkMjqrgfeFkDe1AX/G3plwQXrD
-         4ynREDqdOEGvG8Pi0lxySup6+52jn1WMYql278j4N9/m7se2yavA7JSIv7lKxqBolFdn
-         kPZQ==
-X-Gm-Message-State: AOAM531Mq+REtTd42+EPVO2bbsJbH5QQYeTmr8UqNcwLvF9DgVYp/HxO
-        /i4McvRrcuYv1Vd68ILGJgZX0paG82XIGeWZ3bMWBA==
-X-Google-Smtp-Source: ABdhPJwZcjWEuz61aNx6pF8wFelEUBrj7u+xpkFkRVZ4kC1kAuPq1OxHylzhNKZ5wREg5mkAu/imbcXbXCW9WWRsC3I=
-X-Received: by 2002:adf:f651:: with SMTP id x17mr1296546wrp.277.1589402420119;
- Wed, 13 May 2020 13:40:20 -0700 (PDT)
+        id S1726168AbgEMUnS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 16:43:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65055 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbgEMUnR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 May 2020 16:43:17 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 469D3550A5;
+        Wed, 13 May 2020 16:43:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OmgguVIf9ffHqn0Ucpm5ruGfRJU=; b=bRIpCC
+        cJEciECWS57e6OX9HHT5/WQq0+ZdUNgy6aBTkT9i/nN0/izb+Q2AwETy2f+q+Reg
+        lbuJO5/aHjpvFgXF8dcirVjLT33haCV4m45Qvd3b9o4/GsgyDr0As6hTABXvdAoL
+        RIzp998VMmi6GwXS89Kb6RH6JSadnYFQ8k9rs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pnfFwoFK3ZTndj2e/uULxjt8XJHV5nm2
+        bgd8EqyvTV1LYOljkWM59AiZLeOVW5Q4hflHZZ9352mUArOiRI/LioCALB6pQK4f
+        oWTntOlIvr43F8BUYskyrAy4Q4wBIxSsQHWJnQ/IbXP14Sw+AODcJSxgTz0kzmYW
+        6OItnKzA7ZI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E62C550A4;
+        Wed, 13 May 2020 16:43:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B70A0550A3;
+        Wed, 13 May 2020 16:43:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Xin Li <delphij@google.com>
+Cc:     git@vger.kernel.org, jrn@google.com
+Subject: Re: [PATCH] fetch: allow adding a filter after initial clone.
+References: <20200513200040.68968-1-delphij@google.com>
+Date:   Wed, 13 May 2020 13:43:14 -0700
+In-Reply-To: <20200513200040.68968-1-delphij@google.com> (Xin Li's message of
+        "Wed, 13 May 2020 13:00:40 -0700")
+Message-ID: <xmqqo8qrsh0d.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200513111636.30818-1-carenas@gmail.com> <20200513180213.45866-1-carenas@gmail.com>
-In-Reply-To: <20200513180213.45866-1-carenas@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 13 May 2020 16:40:08 -0400
-Message-ID: <CAPig+cTeUh6MP4LLvgx1BEr7csWG_o+1H_RZS=Curx4pGLSAcA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2] t4210: detect REG_ILLSEQ dynamically
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Ed Maste <emaste@freebsd.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5EC31574-955A-11EA-848A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 13, 2020 at 2:02 PM Carlo Marcelo Arenas Belón
-<carenas@gmail.com> wrote:
-> [...]
-> The description of the first test which wasn't accurate has been corrected,
-> and unlike the original fix from 7187c7bbb8, all added entries to test-lib
-> are no longer needed and only the 2 affected engines will have their tests
-> suppressed.
+Xin Li <delphij@google.com> writes:
 
-I see this paragraph was updated in response to my question about why
-those additional test-lib.sh variable assignments were being dropped
-by the patch. However, this explanation gives no actual detail about
-why those assignments are unneeded, thus their removal is just as much
-of a head-scratcher as was v1 in which the commit message did not talk
-about them at all.
+(nothnig).
 
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Can you help readers by describing what this change is about?
+
+This space is reserved for the patch author to describe why this
+change is a good idea (if this patch is adding a new feature), what
+is already broken without this patch (if this patch is a bugfix),
+and why this change is a safe thing to do (if this patch lifts a
+limitation we had before that has been protecting us from getting
+into a bad state).
+
+
+> Signed-off-by: Xin Li <delphij@google.com>
 > ---
-> @@ -41,16 +41,21 @@ int cmd__regex(int argc, const char **argv)
-> +       ret = regcomp(&r, pat, flags);
-> +       if (ret) {
-> +               if (!silent) {
-> +                       regerror(ret, &r, errbuf, sizeof(errbuf));
-> +                       die("failed regcomp() for pattern '%s' (%s)",
-> +                               pat, errbuf);
-> +               } else
-> +                       return 1;
-> +       }
-
-This is pure nit, and I wouldn't necessarily want to see a re-roll
-just for this, but you could lose an indentation level and make the
-code a bit easier to grok by structuring it like this:
-
-    if (ret) {
-        if (silent)
-            return 1;
-        regerror(...);
-        die(...);
-    }
+>  builtin/fetch.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 3ae52c015d..e5faa17ecd 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1790,8 +1790,16 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  	if (depth || deepen_since || deepen_not.nr)
+>  		deepen = 1;
+>  
+> -	if (filter_options.choice && !has_promisor_remote())
+> -		die("--filter can only be used when extensions.partialClone is set");
+> +	if (filter_options.choice && !has_promisor_remote()) {
+> +		char repo_version_string[10];
+> +
+> +		xsnprintf(repo_version_string, sizeof(repo_version_string),
+> +			  "%d", (int)GIT_REPO_VERSION);
+> +		git_config_set("core.repositoryformatversion",
+> +			repo_version_string);
+> +		git_config_set("extensions.partialclone", "origin");
+> +		promisor_remote_reinit();
+> +	}
+>  
+>  	if (all) {
+>  		if (argc == 1)
