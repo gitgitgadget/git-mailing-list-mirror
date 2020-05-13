@@ -2,108 +2,576 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBFA3C433E0
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 220EFC433DF
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:05:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0D6E2054F
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:04:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1375620575
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 21:05:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mpfVOMRY"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dF/LD+kV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727891AbgEMVEg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 17:04:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725952AbgEMVEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 May 2020 17:04:36 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79BC0C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 14:04:36 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id 23so278338pfy.8
-        for <git@vger.kernel.org>; Wed, 13 May 2020 14:04:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=hnY0yuLUlgf0eOz4DRt4dJNaDn8jwTW/Xa32nY2jt4Y=;
-        b=mpfVOMRYi3uIRvBsMAyxuz4vvtbMpSlQIEFmSuCyeunQAX3fCsr3r+9dQFtze0nBa3
-         kcMZYbTsiwmw3vX33x+bBb6J7oNfGDNDS81zkyzuQjxEQ2In2b9LtfTouepQoVXf+Cpf
-         Ji+mu0OP6o9PQd8v07znDIeh8SkAWv+oehriPQX8ltgwMZXHl5FvBMKyL6FVJboyZS1+
-         nLW+4F7S1Rl47bK5vnpiTkzouWHgSHCS47Z+p9J01j+Rxff7hJD5tOiBBjLzVEt//iK8
-         rDFKUdWlR21TwWvr0xbYlya+AOPE3+IdgTbxIEbykAlzweBxqVeM1f7N2SJl0kyFwtbY
-         6BfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=hnY0yuLUlgf0eOz4DRt4dJNaDn8jwTW/Xa32nY2jt4Y=;
-        b=cqoRZCqVp8FXD1vGA5GdFymfCzEbSuGAQWZ/qV3vtnkiKgWpFrIBQTS1yuVvGY+Lve
-         bPxqD97wM0QiZcWrbTXwAhDWhQ0drcBKAJbA7MLdqeWSCWPlr4beBORwOLvSMzcIQsPP
-         eQYfdVJaPxHqcBoJSE9yTSCYy9oDCI4hDmTvESGIMXjmeZj3ABShNtXWvRdlTYNoQy9F
-         vFaP3HFRpSrW0aLN40ElXYK7Cf5FbNBGPCBPwQirVgv3yTEH3O2k7hXGMJ40ICIDI8Ah
-         ns9hICnlfib7LTnceI7wa2NtW6i0IeygRm8VY89I+dRkQRaXhnsPr/0mE7OdUP7rMiGF
-         RHVQ==
-X-Gm-Message-State: AOAM531RbgJoFwX3ZwygSAoGuHgtU73SYypMLXhL4/TGczBEkCuPtaaj
-        cTOmDXCaGcHj6LxC27YCacAx8SZC
-X-Google-Smtp-Source: ABdhPJwWhVEbmfxYNPPN20aWUa5AiZsigygp1RUcICCHGOn1jloWUojIzBPtkaGeXYIIAfkUzDN9+A==
-X-Received: by 2002:a65:6854:: with SMTP id q20mr1072345pgt.448.1589403875739;
-        Wed, 13 May 2020 14:04:35 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id v1sm489228pgl.11.2020.05.13.14.04.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 14:04:35 -0700 (PDT)
-Date:   Wed, 13 May 2020 14:04:33 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Ed Maste <emaste@freebsd.org>
-Subject: Re: [PATCH] t4210: detect REG_ILLSEQ dynamically
-Message-ID: <20200513210433.GA38566@Carlos-MBP>
-References: <20200513111636.30818-1-carenas@gmail.com>
- <CAPig+cTUc2-ddWQ+oww5Ez7_N9qKgCuErk8OuOgPkXNrACdppw@mail.gmail.com>
- <20200513201851.GA30804@Carlos-MBP>
- <xmqqsgg3sh9v.fsf@gitster.c.googlers.com>
+        id S1727124AbgEMVFk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 17:05:40 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57118 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbgEMVFj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 May 2020 17:05:39 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D597BD4DF;
+        Wed, 13 May 2020 17:05:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=J
+        D2MadUp9XI721cuUYeS9b3N/CU=; b=dF/LD+kVtzek1q3ZRsm/6IZGIUmvnKwdc
+        NZDuh+wmdvbgP5oZ42ywyJ16ISNnR0LKlsLhclE9l0jd+vCW+YBZ6ikrP7nfr6LI
+        8vZNBeWxynrZV2akJCz+GHNw2dSGRcsEBK5p+3WokGp0iZhTxm9vmrWVAHlEMY7a
+        rR9rvKmqbM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=uTk
+        3JGewmYLNe6Pg3wWgX1q9ceTqOz3VfngJOGYNHm7+LxEn1Tmghkc8XGoY24dpXKz
+        ZBw/Sy8xzmhxiOZoG+iXO/upQivE5DtFeud7cjpZaxhkaVxv4iTE+H8echO10Ij7
+        DteeNG+NnFoIBQuBtpPCgvkx7V2LhT5X1zIiRvzY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 222F1BD4DE;
+        Wed, 13 May 2020 17:05:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4E14ABD4D9;
+        Wed, 13 May 2020 17:05:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (May 2020, #04; Wed, 13)
+X-master-at: 172e8ff696ea0ebe002bdd1f61a3544fc7f71a61
+X-next-at: e517b1a6695bd6c33127de6780ca7c4351647a1b
+Date:   Wed, 13 May 2020 14:05:28 -0700
+Message-ID: <xmqqk11fsfzb.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqsgg3sh9v.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7A3A0E4A-955D-11EA-9D35-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 13, 2020 at 01:37:32PM -0700, Junio C Hamano wrote:
-> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
-> 
-> > indeed, I would rather go away with the whole prereq and set a variable
-> > with a nice sounding name and use it below to `if test` the right tests,
-> > would that be ok?
-> 
-> In a sense, a prerequisite is an overkill if the tests that need to
-> be guarded are very well isolated and in a single place.  Do we
-> expect other tests outside the context of this script may have to be
-> guarded by REG_ILLSEQ?
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-IMHO in the long term we probably should get rid of those tests (including
-the need to look for REG_ILLSEQ), because the root cause of this failure is
-that the test is really relying in undefined behaviour which happen to be
-common to both glibc and our own compat regex, but that was relevant at that
-time, because of a bug on the way UTF-8 was being detected.
+You can find the changes described here in the integration branches
+of the repositories listed at
 
-POSIX regcomp[1], specifically mentions that returned and error is a valid
-response to a badly encoded pattern, but the test cases were created to
-specifically ensure no error is ever generated, and to make sure the response
-(which is undefined, as per POSIX) was consistent for all engines:
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-"The regcomp() and regexec() functions are required to accept any null-terminated string as the pattern argument. If the meaning of the string is "undefined", the behavior of the function is "unspecified". IEEE Std 1003.1-2001 does not specify how the functions will interpret the pattern; they might return error codes, or they might do pattern matching in some completely unexpected way, but they should not do something like abort the process."
+--------------------------------------------------
+[Graduated to "master"]
 
-Carlo
+* cb/credential-doc-fixes (2020-05-07) 4 commits
+  (merged to 'next' on 2020-05-07 at 993b36071e)
+ + credential: document protocol updates
+ + credential: update gitcredentials documentation
+ + credential: correct order of parameters for credential_match
+ + credential: update description for credential_from_url_gently
 
-[1] https://pubs.opengroup.org/onlinepubs/009695399/functions/regcomp.html
+ Minor in-code comments and documentation updates around credential
+ API.
+
+
+* cc/upload-pack-v2-fetch-fix (2020-05-08) 1 commit
+  (merged to 'next' on 2020-05-08 at d26b87d06d)
+ + upload-pack: clear filter_options for each v2 fetch command
+
+ Serving a "git fetch" client over "git://" and "ssh://" protocols
+ using the on-wire protocol version 2 was buggy on the server end
+ when the client needs to make a follow-up request to
+ e.g. auto-follow tags.
+
+
+* dd/bloom-sparse-fix (2020-05-07) 1 commit
+  (merged to 'next' on 2020-05-08 at 1067403c01)
+ + bloom: fix `make sparse` warning
+
+ Code clean-up.
+
+
+* ds/sparse-updates-oob-access-fix (2020-05-08) 1 commit
+  (merged to 'next' on 2020-05-08 at fd007758ea)
+ + unpack-trees: avoid array out-of-bounds error
+
+ The code to skip unmerged paths in the index when sparse checkout
+ is in use would have made out-of-bound access of the in-core index
+ when the last path was unmerged, which has been corrected.
+
+
+* jc/auto-gc-quiet (2020-05-07) 2 commits
+  (merged to 'next' on 2020-05-07 at 6cc69513c3)
+ + auto-gc: pass --quiet down from am, commit, merge and rebase
+ + auto-gc: extract a reusable helper from "git fetch"
+
+ Teach "am", "commit", "merge" and "rebase", when they are run with
+ the "--quiet" option, to pass "--quiet" down to "gc --auto".
+
+
+* jk/ci-only-on-selected-branches (2020-05-07) 1 commit
+  (merged to 'next' on 2020-05-07 at f3227dd3d3)
+ + ci: allow per-branch config for GitHub Actions
+
+ Instead of always building all branches at GitHub via Actions,
+ users can specify which branches to build.
+
+
+* ss/faq-fetch-pull (2020-05-06) 1 commit
+  (merged to 'next' on 2020-05-07 at d57224374e)
+ + gitfaq: fetching and pulling a repository
+
+ Random bits of FAQ.
+
+
+* ss/faq-ignore (2020-05-06) 1 commit
+  (merged to 'next' on 2020-05-07 at 6273caaf77)
+ + gitfaq: files in .gitignore are tracked
+
+ Random bits of FAQ.
+
+
+* ss/submodule-set-url-in-c (2020-05-08) 1 commit
+  (merged to 'next' on 2020-05-08 at 93e390eb33)
+ + submodule: port subcommand 'set-url' from shell to C
+
+ Rewriting various parts of "git submodule" in C continues.
+
+
+* tb/bitmap-walk-with-tree-zero-filter (2020-05-04) 4 commits
+  (merged to 'next' on 2020-05-06 at fbb3fbbb85)
+ + pack-bitmap: pass object filter to fill-in traversal
+ + pack-bitmap.c: support 'tree:0' filtering
+ + pack-bitmap.c: make object filtering functions generic
+ + list-objects-filter: treat NULL filter_options as "disabled"
+
+ The object walk with object filter "--filter=tree:0" can now take
+ advantage of the pack bitmap when available.
+
+
+* tb/shallow-cleanup (2020-04-30) 4 commits
+  (merged to 'next' on 2020-05-05 at 647588a8bd)
+ + shallow: use struct 'shallow_lock' for additional safety
+ + shallow.h: document '{commit,rollback}_shallow_file'
+ + shallow: extract a header file for shallow-related functions
+ + commit: make 'commit_graft_pos' non-static
+
+ Code cleanup.
+
+--------------------------------------------------
+[New Topics]
+
+* ao/p4-d-f-conflict-recover (2020-05-10) 1 commit
+  (merged to 'next' on 2020-05-11 at a83a2f6178)
+ + git-p4: recover from inconsistent perforce history
+
+ "git p4" learned to recover from a (broken) state where a directory
+ and a file are recorded at the same path in the Perforce repository
+ the same way as their clients do.
+
+ Will merge to 'master'.
+
+
+* bk/p4-prepare-p4-only-fix (2020-05-12) 1 commit
+ - git-p4.py: fix --prepare-p4-only error with multiple commits
+
+ The "--prepare-p4-only" option is supposed to stop after replaying
+ one changeset, but kept going (by mistake?)
+
+ Needs review by some p4 folks.
+
+
+* jt/curl-verbose-on-trace-curl (2020-05-11) 2 commits
+  (merged to 'next' on 2020-05-11 at 814e31b9d4)
+ + http, imap-send: stop using CURLOPT_VERBOSE
+ + t5551: test that GIT_TRACE_CURL redacts password
+
+ Rewrite support for GIT_CURL_VERBOSE in terms of GIT_TRACE_CURL.
+
+ Expecting further work on optionally disabling reacting authinfo
+
+
+* mt/grep-sparse-checkout (2020-05-11) 4 commits
+ - config: add setting to ignore sparsity patterns in some cmds
+ - grep: honor sparse checkout patterns
+ - config: load the correct config.worktree file
+ - doc: grep: unify info on configuration variables
+
+ "git grep" has been tweaked to be limited to the sparse checkout
+ paths.
+
+
+* rs/fsck-duplicate-names-in-trees (2020-05-11) 1 commit
+  (merged to 'next' on 2020-05-11 at f603ca2528)
+ + fsck: report non-consecutive duplicate names in trees
+
+ "git fsck" ensures that the paths recorded in tree objects are
+ sorted and without duplicates, but it failed to notice a case where
+ a blob is followed by entries that sort before a tree with the same
+ name.  This has been corrected.
+
+ Will merge to 'master'.
+
+
+* sn/midx-repack-with-config (2020-05-10) 2 commits
+  (merged to 'next' on 2020-05-11 at d73f8f51d6)
+ + multi-pack-index: respect repack.packKeptObjects=false
+ + midx: teach "git multi-pack-index repack" honor "git repack" configurations
+
+ "git multi-pack-index repack" has been taught to honor some
+ repack.* configuration variables.
+
+ Will merge to 'master'.
+
+
+* es/trace-log-progress (2020-05-12) 1 commit
+  (merged to 'next' on 2020-05-13 at a127540258)
+ + trace2: log progress time and throughput
+
+ Teach codepaths that show progress meter to also use the
+ start_progress() and the stop_progress() calls as a "region" to be
+ traced.
+
+ Will merge to 'master'.
+
+
+* js/ci-sdk-download-fix (2020-05-12) 1 commit
+ - ci: avoid pounding on the poor ci-artifacts container
+
+ Instead of downloading Windows SDK for CI jobs for windows builds
+ from an external site (wingit.blob.core.windows.net), use the one
+ created in the windows-build job, to work around quota issues at
+ the external site.
+
+ Will merge to 'next'.
+ Hopefully this can go away once cmake-for-windows-build topic lands?
+
+
+* bc/sha-256-part-2 (2020-05-12) 44 commits
+ - remote-testgit: adapt for object-format
+ - bundle: detect hash algorithm when reading refs
+ - t5300: pass --object-format to git index-pack
+ - t5703: use object-format serve option
+ - t5702: offer an object-format capability in the test
+ - t/helper: initialize the repository for test-sha1-array
+ - remote-curl: avoid truncating refs with ls-remote
+ - t1050: pass algorithm to index-pack when outside repo
+ - builtin/index-pack: add option to specify hash algorithm
+ - remote-curl: detect algorithm for dumb HTTP by size
+ - builtin/ls-remote: initialize repository based on fetch
+ - t5500: make hash independent
+ - serve: advertise object-format capability for protocol v2
+ - connect: parse v2 refs with correct hash algorithm
+ - connect: pass full packet reader when parsing v2 refs
+ - Documentation/technical: document object-format for protocol v2
+ - t1302: expect repo format version 1 for SHA-256
+ - builtin/show-index: provide options to determine hash algo
+ - t5302: modernize test formatting
+ - packfile: compute and use the index CRC offset
+ - t3200: mark assertion with SHA1 prerequisite
+ - setup: set the_repository's hash algo when checking format
+ - fetch-pack: parse and advertise the object-format capability
+ - t5704: send object-format capability with SHA-256
+ - t5562: pass object-format in synthesized test data
+ - builtin/clone: initialize hash algorithm properly
+ - remote-curl: implement object-format extensions
+ - transport-helper: implement object-format extensions
+ - docs: update remote helper docs for object-format extensions
+ - builtin/receive-pack: detect when the server doesn't support our hash
+ - connect: detect algorithm when fetching refs
+ - fetch-pack: detect when the server doesn't support our hash
+ - connect: make parse_feature_value extern
+ - send-pack: detect when the server doesn't support our hash
+ - connect: add function to detect supported v1 hash functions
+ - transport: add a hash algorithm member
+ - pkt-line: add a member for hash algorithm
+ - connect: add function to fetch value of a v2 server capability
+ - connect: add function to parse multiple v1 capability values
+ - remote: advertise the object-format capability on the server side
+ - wrapper: add function to compare strings with different NUL termination
+ - connect: have ref processing code take struct packet_reader
+ - Documentation: document v1 protocol object-format capability
+ - t1050: match object ID paths in a hash-insensitive way
+
+ SHA-256 migration work continues.
+
+
+* dd/t1509-i18n-fix (2020-05-13) 1 commit
+ - t1509: correct i18n test
+
+ A few tests were not i18n clean.
+
+ Will merge to 'next'.
+
+
+* es/bugreport-shell (2020-05-12) 2 commits
+ - bugreport: include user interactive shell
+ - help: add shell-path to --build-options
+ (this branch uses es/bugreport-with-hooks.)
+
+ "git bugreport" learns to report what shell is in use.
+
+--------------------------------------------------
+[Stalled]
+
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
+
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
+
+--------------------------------------------------
+[Cooking]
+
+* jt/t5500-unflake (2020-05-06) 1 commit
+  (merged to 'next' on 2020-05-13 at 11450265ec)
+ + t5500: count objects through stderr, not trace
+
+ Test fix for a topic already in 'master' and meant for 'maint'.
+
+ Will merge to 'master'.
+
+
+* cw/bisect-replay-with-dos (2020-05-08) 1 commit
+  (merged to 'next' on 2020-05-11 at 2eb0edf56d)
+ + bisect: allow CRLF line endings in "git bisect replay" input
+
+ "git bisect replay" had trouble with input files when they used
+ CRLF line ending, which has been corrected.
+
+ Will merge to 'master'.
+
+
+* jc/codingstyle-compare-with-null (2020-05-08) 1 commit
+  (merged to 'next' on 2020-05-11 at d18f0d930e)
+ + CodingGuidelines: do not ==/!= compare with 0 or '\0' or NULL
+
+ Doc update.
+
+ Will merge to 'master'.
+
+
+* ds/line-log-on-bloom (2020-05-11) 12 commits
+  (merged to 'next' on 2020-05-11 at 046d49d455)
+ + line-log: integrate with changed-path Bloom filters
+ + line-log: try to use generation number-based topo-ordering
+ + line-log: more responsive, incremental 'git log -L'
+ + t4211-line-log: add tests for parent oids
+ + line-log: remove unused fields from 'struct line_log_data'
+ + completion: offer '--(no-)patch' among 'git log' options
+ + bloom: use num_changes not nr for limit detection
+ + bloom: de-duplicate directory entries
+ + Documentation: changed-path Bloom filters use byte words
+ + bloom: parse commit before computing filters
+ + test-bloom: fix usage typo
+ + bloom: fix whitespace around tab length
+
+ "git log -L..." now takes advantage of the "which paths are touched
+ by this commit?" info stored in the commit-graph system.
+
+ Will merge to 'master'.
+
+
+* js/rebase-autosquash-double-fixup-fix (2020-05-09) 1 commit
+  (merged to 'next' on 2020-05-11 at 3cdf7f7ece)
+ + rebase --autosquash: fix a potential segfault
+
+ "rebase -i" segfaulted when rearranging a sequence that has a
+ fix-up that applies another fix-up (which may or may not be a
+ fix-up of yet another step).
+
+ Will merge to 'master'.
+
+
+* tb/commit-graph-no-check-oids (2020-05-05) 8 commits
+ - commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
+ - t5318: reorder test below 'graph_read_expect'
+ - commit-graph.c: simplify 'fill_oids_from_commits'
+ - builtin/commit-graph.c: dereference tags in builtin
+ - builtin/commit-graph.c: extract 'read_one_commit()'
+ - commit-graph.c: peel refs in 'add_ref_to_set'
+ - commit-graph.c: show progress of finding reachable commits
+ - commit-graph.c: extract 'refs_cb_data'
+
+ Clean-up the commit-graph codepath.
+
+ Expecting a reroll.
+ cf. <20200507204204.GF29683@coredump.intra.peff.net>
+ cf. <20200507200305.GB29683@coredump.intra.peff.net>
+
+
+* dl/test-must-fail-fixes-5 (2020-05-05) 4 commits
+ - lib-submodule-update: pass OVERWRITING_FAIL
+ - lib-submodule-update: prepend "git" to $command
+ - lib-submodule-update: consolidate --recurse-submodules
+ - lib-submodule-update: add space after function name
+
+ The effort to avoid using test_must_fail on non-git command continues.
+
+ Needs review.
+ cf. <cover.1588162842.git.liu.denton@gmail.com>
+
+
+* es/bugreport-with-hooks (2020-05-07) 1 commit
+  (merged to 'next' on 2020-05-11 at 2dd5d90a34)
+ + bugreport: collect list of populated hooks
+ (this branch is used by es/bugreport-shell.)
+
+ "git bugreport" learned to report enabled hooks in the repository.
+
+ Will merge to 'master'.
+
+
+* mr/bisect-in-c-2 (2020-04-23) 12 commits
+ - bisect--helper: retire `--bisect-autostart` subcommand
+ - bisect--helper: retire `--write-terms` subcommand
+ - bisect--helper: retire `--check-expected-revs` subcommand
+ - bisect--helper: reimplement `bisect_state` & `bisect_head` shell functions in C
+ - bisect--helper: retire `--next-all` subcommand
+ - bisect--helper: retire `--bisect-clean-state` subcommand
+ - bisect--helper: finish porting `bisect_start()` to C
+ - bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell functions in C
+ - bisect--helper: reimplement `bisect_autostart` shell function in C
+ - bisect--helper: introduce new `write_in_file()` function
+ - bisect--helper: use '-res' in 'cmd_bisect__helper' return
+ - bisect--helper: fix `cmd_*()` function switch default return
+
+ Rewrite of the remainder of "git bisect" script in C continues.
+
+ Needs review.
+
+
+* jk/complete-git-switch (2020-04-28) 11 commits
+ - completion: complete remote branches for git switch --track
+ - completion: recognize -c/-C when completing for git switch
+ - completion: fix completion for git switch with no options
+ - completion: perform DWIM logic directly in __git_complete_refs
+ - completion: extract function __git_dwim_remote_heads
+ - completion: rename --track option of __git_complete_refs
+ - completion: stop completing refs for git switch --orphan
+ - completion: add tests showing lack of support for git switch -c/-C
+ - completion: add test highlighting subpar git switch --track completion
+ - completion: add test showing subpar git switch completion
+ - completion: add some simple test cases for git switch completion
+
+ The command line completion (in contrib/) learned to complete
+ options that the "git switch" command takes.
+
+ Needs review.
+
+
+* dr/push-remoteref-fix (2020-04-23) 1 commit
+ - remote.c: fix handling of %(push:remoteref)
+
+ The "%(push:remoteref)" placeholder in the "--format=" argument of
+ "git format-patch" (and friends) only showed what got explicitly
+ configured, not what ref at the receiving end would be updated when
+ "git push" was used, as it ignored the default behaviour (e.g. update
+ the same ref as the source).
+
+ Expecting a reroll.
+ cf. <20200416152145.wp2zeibxmuyas6y6@feanor>
+
+
+* pw/rebase-i-more-options (2020-04-29) 5 commits
+ - rebase: add --reset-author-date
+ - rebase -i: support --ignore-date
+ - sequencer: rename amend_author to author_to_free
+ - rebase -i: support --committer-date-is-author-date
+ - rebase -i: add --ignore-whitespace flag
+
+ "git rebase -i" learns a bit more options.
+
+ Needs review.
+
+
+* jx/proc-receive-hook (2020-05-07) 7 commits
+ - doc: add documentation for the proc-receive hook
+ - receive-pack: new config receive.procReceiveRefs
+ - refs.c: refactor to reuse ref_is_hidden()
+ - receive-pack: feed report options to post-receive
+ - New capability "report-status-v2" for git-push
+ - receive-pack: add new proc-receive hook
+ - transport: not report a non-head push as a branch
+
+ "git receive-pack" that accepts requests by "git push" learned to
+ outsource most of the ref updates to the new "proc-receive" hook.
+
+ Needs review.
+
+
+* hn/refs-cleanup (2020-05-11) 6 commits
+ - reftable: define version 2 of the spec to accomodate SHA256
+ - reftable: clarify how empty tables should be written
+ - reftable: file format documentation
+ - refs: document how ref_iterator_advance_fn should handle symrefs
+ - t: use update-ref and show-ref to reading/writing refs
+ - refs.h: clarify reflog iteration order
+ (this branch is used by hn/reftable.)
+
+ Preliminary clean-ups around refs API, plus file format
+ specification documentation for the reftable backend.
+
+ I splitted these out of the hn/reftable topic, hoping that these
+ should be easier to polish and merge quickly than the rest of the
+ series.
+
+
+* hn/reftable (2020-05-11) 7 commits
+ - Add some reftable testing infrastructure
+ - vcxproj: adjust for the reftable changes
+ - Reftable support for git-core
+ - Add reftable library
+ - Add .gitattributes for the reftable/ directory
+ - Iterate over the "refs/" namespace in for_each_[raw]ref
+ - Write pseudorefs through ref backends.
+ (this branch uses hn/refs-cleanup.)
+
+ A new refs backend "reftable" to replace the traditional
+ combination of packed-refs files and one-file-per-ref loose refs
+ has been implemented and integrated for improved performance and
+ atomicity.
+
+ Needs review.
+
+--------------------------------------------------
+[Discarded]
+
+* jc/credential-store-file-format-doc (2020-04-27) 1 commit
+ . credential-store: document the file format a bit more
+
+ Now has become a part of Carlo's credential-store fix patches.
+
+
+* js/ci-skip-on-github-workflow (2020-05-02) 1 commit
+ . ci: respect the [skip ci] convention in our GitHub workflow "CI/PR"
+
+ Allow contributors to mark a branch/push that it does not have to
+ be built via GitHub actions, in a way similar to how Travis lets
+ them mark the commits with an embedded "[skip ci]" string.
+
+ Superseded by dd/ci-only-on-selective-branches topic.
+
+
+* dd/ci-only-on-selective-branches (2020-05-05) 2 commits
+ - CI: limit GitHub Actions to designated branches
+ - SubmittingPatches: advertise GitHub Actions CI
+
+ Instead of always building all branches of all forks of our project
+ at GitHub via GitHub Actions, only build when branches with known
+ and specific names are updated, and also a pull request.
+
+ Superseded by jk/ci-only-on-selected-branches
