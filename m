@@ -2,141 +2,89 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16ABEC433E0
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95770C433E0
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:55:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9A2720671
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:48:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2178D205ED
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:55:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="l0RdBBU/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PRrNUS8C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390725AbgEMTsw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 15:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58260 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732218AbgEMTsv (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 15:48:51 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C52C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:48:51 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id fu13so11438757pjb.5
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:48:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fg4kmI10wEnBojZ0TieuL7FIHIoEfS4HAVRo3QVasEM=;
-        b=l0RdBBU/St2LHQiUU5ZyMn4E/vyU0E0iqp+pQuqp/jTtMRvbmNbgZgMTRXCRc8l+Nv
-         +BcwIrOkZni+rQxC5jU5uJDbMCFBTxjupjHWfbmUDaZzQIMY7mf2BiDgdUNhqf15jS5d
-         UZ1VTdzvPie3hvdXJmq40YdfSIYtlfjcOImpiT6wkyMUppidSvrFjpmxkF2nLnOlOXPI
-         99HGyFMuZT41AtNnhpIOgPOWo5wwAYH+LJdn/fWlOJDU5bKN6qPsd/PLu/Co8vGvbrEo
-         eR2JYK+uovBQsXUDXZ5vjnpQ76EQrBHVFNjqi8647vSG+tcJ2iWjyBqLQm21bEdTMaOF
-         Oevw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fg4kmI10wEnBojZ0TieuL7FIHIoEfS4HAVRo3QVasEM=;
-        b=Ugy/LOY+ZsEx9A3LXrgaRLUEjitZGm5usbwDofWCKvyN4gNuvDxbvv2eHkPY5N2uQO
-         jh9eYnGXB+G+RqtzQDB8a1Qgx8HHCbdSzGnFKgm3zwsV3PcoH0LUZ+Mog/MSPaz9Z8q2
-         K2cHcp1OaEajzKHhOyQTchiOtB3p2FtjaTwh8Lk0UL2xA1MDtxwa4I4DLDY0yB92P6zW
-         eRdSxZIQ0gmcC0xGWZBjFfqgxb6M9YZSc8EcejToqnD53sPMHKu04He+XnYrCc/p1X3J
-         5rrhQDJ006vyy73D1GbVmXCScEA7IM09EP+HDjH62hNaiBOrlmstmBvP0EX3YPDv37/I
-         voEg==
-X-Gm-Message-State: AOAM530+3VP111HOzpv7F8xKwtutXXgpHwGw6jgjx+71t6ty+KIs0VE6
-        rjV95F556II3P4NYxkNobT76Qg==
-X-Google-Smtp-Source: ABdhPJzn7gZVivu8OyeQwkj7UHC7t5X+JdVuFkwTSiaHB/tVT6wvuTV88sOSZhdFGz8+VZR7SqyzKw==
-X-Received: by 2002:a17:90a:be09:: with SMTP id a9mr3094682pjs.165.1589399330954;
-        Wed, 13 May 2020 12:48:50 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id c2sm408140pgj.93.2020.05.13.12.48.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 12:48:50 -0700 (PDT)
-Date:   Wed, 13 May 2020 13:48:48 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, gitster@pobox.com, szeder.dev@gmail.com
-Subject: Re: [PATCH 3/8] commit-graph.c: peel refs in 'add_ref_to_set'
-Message-ID: <20200513194848.GA24173@syl.local>
-References: <cover.1588641176.git.me@ttaylorr.com>
- <5ff56feab55b005b4a4d9559909ce7a08e5fa81e.1588641176.git.me@ttaylorr.com>
- <20200507195441.GA29683@coredump.intra.peff.net>
+        id S2390806AbgEMTzi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 15:55:38 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64230 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732218AbgEMTzi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 May 2020 15:55:38 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C6D7C610B;
+        Wed, 13 May 2020 15:55:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yhYMVSLxemfLBPTFZ8CzwdgZO8o=; b=PRrNUS
+        8CeTo34ptBsJtWThqvYdrV/sT+u1Ww7BKa6epbjs8wsK42SaqdKLX22jyMNsk4Jp
+        c/jD+BAsqV/SCgRl3lyPC0DsXfq39kFDRJ3SLOf3+v0XES3gfegZpkZIogmjxTzc
+        uvfZZECnM/iKoSc0Mcn8lvhsv6L1mK/P9XkVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=obJ3Rninuwkh3uFRLw27HZTOz9cHQrfy
+        onLPhjgn8TQ22NIdULytjWwiOSYhwFSVGWxILwVjD04xEM3hPuCPodxvdyOBPDhW
+        yg7MiZJ/M+JPVx3DEjsrx0xYPVIMpYVNR/HBpmqcXEANTKnekW0o0vJak8/sxep1
+        MBg1y+rE6uU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 44383C610A;
+        Wed, 13 May 2020 15:55:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 753DFC6109;
+        Wed, 13 May 2020 15:55:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v13 11/13] Reftable support for git-core
+References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
+        <pull.539.v13.git.1589226388.gitgitgadget@gmail.com>
+        <ace95b6cd88e3344abfb01f7f11da4a8f7c155dd.1589226388.git.gitgitgadget@gmail.com>
+Date:   Wed, 13 May 2020 12:55:31 -0700
+In-Reply-To: <ace95b6cd88e3344abfb01f7f11da4a8f7c155dd.1589226388.git.gitgitgadget@gmail.com>
+        (Han-Wen Nienhuys via GitGitGadget's message of "Mon, 11 May 2020
+        19:46:26 +0000")
+Message-ID: <xmqqd077txsc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200507195441.GA29683@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B4B8287C-9553-11EA-A734-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 07, 2020 at 03:54:41PM -0400, Jeff King wrote:
-> On Mon, May 04, 2020 at 07:13:43PM -0600, Taylor Blau wrote:
->
-> > While iterating references (to discover the set of commits to write to
-> > the commit-graph with 'git commit-graph write --reachable'),
-> > 'add_ref_to_set' can save 'fill_oids_from_commits()' some time by
-> > peeling the references beforehand.
-> >
-> > Move peeling out of 'fill_oids_from_commits()' and into
-> > 'add_ref_to_set()' to use 'peel_ref()' instead of 'deref_tag()'. Doing
-> > so allows the commit-graph machinery to use the peeled value from
-> > '$GIT_DIR/packed-refs' instead of having to load and parse tags.
->
-> Or having to load and parse commits only to find out that they're not
-> tags. :)
->
-> > diff --git a/commit-graph.c b/commit-graph.c
-> > index 8f61256b0a..5c3fad0dd7 100644
-> > --- a/commit-graph.c
-> > +++ b/commit-graph.c
-> > @@ -1327,11 +1327,15 @@ static int add_ref_to_set(const char *refname,
-> >  			  const struct object_id *oid,
-> >  			  int flags, void *cb_data)
-> >  {
-> > +	struct object_id peeled;
-> >  	struct refs_cb_data *data = (struct refs_cb_data *)cb_data;
-> >
-> >  	display_progress(data->progress, oidset_size(data->commits) + 1);
-> >
-> > -	oidset_insert(data->commits, oid);
-> > +	if (peel_ref(refname, &peeled))
-> > +		peeled = *oid;
->
-> It may be the old-timer C programmer in me, but I always look slightly
-> suspicious at struct assignments. We know that object_id doesn't need a
-> deep copy, so it's obviously OK here. But should we use oidcpy() as a
-> style thing?
->
-> Alternatively, you could do this without a struct copy at all with:
->
->   if (!peel_ref(...))
->          oid = peeled;
->   oidset_insert(..., oid);
->
-> which is actually a bit cheaper.
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Makes sense, I think this version is the better of the two that you
-suggested here. I noticed one small thing which is that since peeled is
-only on the stack, I think we actually want 'oid = &peeled', but
-otherwise I took this as-is.
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index cb48a291caf..4d0cf065e4a 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1108,7 +1108,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  		}
+>  	}
+>  
+> -	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, INIT_DB_QUIET);
+> +	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN,
+> +		DEFAULT_REF_STORAGE, INIT_DB_QUIET);
 
-> > +	if (oid_object_info(the_repository, &peeled, NULL) == OBJ_COMMIT)
-> > +		oidset_insert(data->commits, &peeled);
->
-> I probably would have left adding this "if" until a later step, but I
-> think it's OK here.
+Where does this symbol come from?
 
-Yeah, I did it here to avoid having to add a seemingly-unrelated change
-later on. I agree it doesn't matter much, so in the interest of leaving
-the series alone, I'll leave it where it is here.
+In addition, this will be overwritten in a later step to
+default_ref_storage(); perhaps in this step we should use that
+instead from the beginning?
 
-> -Peff
-
-Thanks,
-Taylor
