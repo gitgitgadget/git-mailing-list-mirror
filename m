@@ -2,116 +2,97 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BECB6C433E0
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49A6BC433E0
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:08:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A20B2065C
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:08:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD20D2065C
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:08:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i4n+CI/x"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sH+cncxI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390473AbgEMUH7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 16:07:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33070 "EHLO
+        id S2390758AbgEMUI1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 16:08:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S2387445AbgEMUH7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 16:07:59 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48ABC061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 13:07:58 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id y24so30023844wma.4
-        for <git@vger.kernel.org>; Wed, 13 May 2020 13:07:58 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2387445AbgEMUI1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 16:08:27 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88C89C061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 13:08:25 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id f83so622879qke.13
+        for <git@vger.kernel.org>; Wed, 13 May 2020 13:08:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=VKozT7j6t7R/1Lv8b+F9Axx2UdMh9K24C/YqZJ0/l4s=;
-        b=i4n+CI/xSle0MVNJzewvHgk5nUkBHtOTPz2fpmfwnIt6NRpfTo4r6s8nuekqKsAJVt
-         j2tjSlyWEzdSck1/oeIDlBxvuVBwkdUBL3KBx8dKACrvxCAiDGoG2LZondfadgqQxiPc
-         xFkSf2k4bJOChap/XQAWIAUoZEWPvAE/6Ru70w1oVvPOK0Tpb9Oz7DLaH6rbIvv3TPoQ
-         u6abI7HOBQKDxh+q/koI38zXNabumersFMb4Jn7mgAdtWd2QZxEUseEddPGgu8A1w0Gg
-         2m0MzJO33JHDKVA3WhdFDYtMAHF4fJZS8PekDKC3gcRQqS0wJ/ed/ICtKWDGVo4RVjLr
-         W1xA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dsdJwVfyQFGQ+UlTf87byM5AKBj0qpXhTmL6uD8x+NU=;
+        b=sH+cncxIaekiY14sjLDZULYcB28ODKPxFKdbackZ3MuCSKZwJWUohGfcfgCSMGTs+l
+         lSkkUtBJ2FzsfxucPSVLX++ptBC3bv1JdBPF1pFPOB+xpLK5aqq08e9GNEu+tEyxvc9j
+         mlNWU5Z1cYTkCzx8kXqdgAXd5qsvbG9hDGeZzeYL6uJvPyGjDZg7Iz8C78a9xW5Vzqyq
+         ybfGCXuZTnXd+SAd4t8OcEvCPerq67U5lagXqPhTlOTSDUvFVA6Sb8eN3j32gJkUfCWO
+         +IUhhrD/8f10m7ONFTQ+uKALmxY+7YM12U4Z3vVCMQ7cQc+lhtoNVZtzbVVpZd449oM6
+         tn7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VKozT7j6t7R/1Lv8b+F9Axx2UdMh9K24C/YqZJ0/l4s=;
-        b=JAl2DDsJR8tIEgthvElxnxEwnR2dz0fVMegvIBr3ZzaqbwLamZ2OZLrsSL8feBOox9
-         C/MEWc86nVx0IRfWM7YCT7o24URi3nCCvu/0rXZ90uQMRLRzA7lqdCndlCEM7t2KGNZF
-         Q8QrexI00o/ldwZrpCjJ5UlhDr03Sx1GR7cfHGlRE4WfIH0rRgReOJyhwiq7vU/SsYv7
-         TO8bDfCXqLwreU174DGoND6+cFjxi4vpfbO4Zd3+mfpDrESfbdUSaoZXxjJOueyLtIua
-         HOrWLX/yCiWGUOmoXgS22GPhS4ycP4bN2rDWaJ6GVuFNLO2jvKWIUx21LFmta5XRoGuV
-         JUJA==
-X-Gm-Message-State: AGi0PuZbRh+ySd4tmNZ+UfkXAtUVd/LElC3DcTCKEEGZkVv72aiu/gOq
-        CnxBZEYPHNLO9KRPOQn4rwatvkBNwCGh7A==
-X-Google-Smtp-Source: APiQypLMbqBD0mPwoVETWYkAn31W0zG3zAdAeE7ZF7AP+MxgEwTc7mQKjztGLjldyov5Ts/stafRpQ==
-X-Received: by 2002:a1c:1fc8:: with SMTP id f191mr18709274wmf.97.1589400477229;
-        Wed, 13 May 2020 13:07:57 -0700 (PDT)
-Received: from [192.168.1.21] (xdsl-31-164-191-108.adslplus.ch. [31.164.191.108])
-        by smtp.gmail.com with ESMTPSA id v20sm901923wrd.9.2020.05.13.13.07.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 May 2020 13:07:56 -0700 (PDT)
-Subject: Re: [PATCH] submodule--helper.c: add only-active to foreach
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Guillaume G. via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.631.git.1589099162707.gitgitgadget@gmail.com>
- <xmqq8shxc7ct.fsf@gitster.c.googlers.com>
- <cf25c55e-e0c8-6374-3adf-84f4314869e9@gmail.com>
- <xmqqwo5fvoe1.fsf@gitster.c.googlers.com>
-From:   Guillaume Galeazzi <guillaume.galeazzi@gmail.com>
-Message-ID: <83b37142-f6f0-2f5d-e92c-de3891e8fe18@gmail.com>
-Date:   Wed, 13 May 2020 22:07:54 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dsdJwVfyQFGQ+UlTf87byM5AKBj0qpXhTmL6uD8x+NU=;
+        b=CBbrIHv+A6HUoeO4YwKAtoMcO7AbaKMNf9lOiQ5EUvWsaYmgrFjnd3muxBpLroDeW2
+         aI9d4fmXpTgSEjIoKhpCA/DBNY+oap+JxbbQotPHf/bTMSneed6pA4nXaHVr9Luz7Qtw
+         rKQpfEaVqNNMyPEtNILdnhL4sYYT4O+Mnvz16Fgs4FRHVaBOXXlKBLypHAL+XFWRJoYZ
+         XgfPXH2pq4uOGCYkxoYKRhMMGdc2Umy6SkyWHFBTHRAWfwQ8wDO2X2Kr3iQi8H9Ncqkp
+         XIUnm4ok81bxuqhjcbdplWfpwPCHkyc0rg7j2ppSg6rGUDTgd75mmKn0Kv0CCl7Nh7iy
+         afbQ==
+X-Gm-Message-State: AOAM530OdcQFt/CM+NqGgIDN5qgP2k550EJrLdUsV7lRT6nrKS9gneWH
+        kmrL2pWcX9+MwQ1Y4KRDAYM2J/ybWnYdftuhE4s=
+X-Google-Smtp-Source: ABdhPJzCu3ZON9qrrAZxKnR18uXJG2oGAWCpA14L7/LswTlsDiFPWlPheBKhF0E95HFwhC6A42/PD/UMYpu9kDmDrg8=
+X-Received: by 2002:a37:49cb:: with SMTP id w194mr1390790qka.77.1589400504823;
+ Wed, 13 May 2020 13:08:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqwo5fvoe1.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <pull.614.v2.git.1589302254.gitgitgadget@gmail.com> <9c674372fb58aa42e339c0a96c432283c4b0a894.1589302255.git.gitgitgadget@gmail.com>
+ <xmqqftc4c123.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqftc4c123.fsf@gitster.c.googlers.com>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Thu, 14 May 2020 01:38:15 +0530
+Message-ID: <CAKiG+9U04p9KbjrAc-g=yS-O_h8Jd8zvPoUjKG1L=-OybSUgrQ@mail.gmail.com>
+Subject: Re: [PATCH v2 09/11] cmake: relocated script file contrib/buildsystems
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> 	git submodule foreach --trait=is-active ...
->>> 	git submodule foreach --trait=!is-active ...
->>> 	git submodule foreach --trait=is-populated ...
->>>
->>> to allow iterating only on submodules with/without given trait (I am
->>> not suggesting the actual option name, but merely making sure that
->>> 'is-active' is not anything special but one of the possibilities
->>> that can be used to limit the iteration using the same mechanism).
->>
->> The idea that other candidate are possible seem good. But then users
->> will need combination like is-active && !is-populated. ...
->> ... this would allow combination with the is active filter and the
->> previous example would be
->>
->>          git submodule--helper --is-active --is-populated=false <cmd>
-> 
-> There is no difference between that and
-> 
-> 	git submodule--helper --trait=is-active --trait=is-populated
-> 
-> so I fail to see what new you are proposing, sorry.
-> 
+On Wed, May 13, 2020 at 2:40 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+> >
+> > The CMake script has been relocated to contrib/buildsystems.
+> > The changes made to the script involves pointing to correct location
+> > of the source files.
+>
+> This does match what the list agreed to do.  Why isn't this done as
+> part of [01/11]?  If there is no technical reason not to, I'd
+> strongly prefer to see it done from the very beginning.  The same
+> comment applies to the next step.
 
-The difference is that you repeat twice the same flag. Sometime 
-repeating a flag overwrite the previous value, but it depend how it is 
-implemented. In current case it should be possible to implement it this 
-way, if this is required.
+Okay
 
-Regarding previous example, it use '!' to negate the value. Not all 
-people know the meaning of it. A new proposal would be:
-
-         git submodule--helper foreach [--trait=[not-](active|populated)]
-
-What do you think?
+>
+> Thanks.
+>
+> > Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+> > ---
+> >  .../buildsystems/CMakeLists.txt               | 76 +++++++++++--------
+> >  1 file changed, 45 insertions(+), 31 deletions(-)
+> >  rename CMakeLists.txt => contrib/buildsystems/CMakeLists.txt (92%)
