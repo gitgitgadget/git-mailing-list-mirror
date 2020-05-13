@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02D50C433E0
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 16:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44C6EC433DF
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 16:52:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42E0720671
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 16:43:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97B0120671
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 16:52:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="K5Z3d+oy"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YOCzJERP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732552AbgEMQnS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 12:43:18 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56408 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728780AbgEMQnR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 May 2020 12:43:17 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B82BAC4953;
-        Wed, 13 May 2020 12:43:15 -0400 (EDT)
+        id S1732574AbgEMQwB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 12:52:01 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56054 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727120AbgEMQwA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 May 2020 12:52:00 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9BDF6531BE;
+        Wed, 13 May 2020 12:51:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rU/m1zZFtYdT
-        H/pvvttXmIe5QXs=; b=K5Z3d+oybZYMR2N2fkPXwk2UTqiOvmwvi9t6mhjB8DYN
-        fEC1kAx05ix2SF2AGD9LM1eiTZm2haLfXxS/mR6FDgNQVgruu/2tf8LSGELwA7wC
-        SIFI4X2zOZSb14L9W6iDdp7RxWDL2GqXjc2lwBS/M+2wEwKpHWP3PTTMaaq83ek=
+        :content-type:content-transfer-encoding; s=sasl; bh=wrzn65hv3apc
+        QiDKR7ugjkUvYKw=; b=YOCzJERPBtTjidr9PSyzsPr80xlfkM+lYSWr9aVmSJKx
+        bxMtCUPMsyygTg5Q0YDRjxkAmzymFO3QRlCWw3IjMhcuWte+g3CDsPZXj0+dF7Ys
+        RMiM+KEBZbiizmO9+wD/ffgVXeQCcKTXaSUc77IBgTglGsRt/2/cw7ATm6cU840=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VQCZbb
-        44/yA1Hd4AyZH+MsVtBhBOynt0rMkEsFWXg7gTrfox0RlWakWhxBFkm0s2iS0ZQb
-        5jN1A+VpDB+MGQW7pZwjbJ6aU+BSnXfdzd5aqF1dGNm+hVfTcmbvRhwTpOKPWS9h
-        HW7C2zSYmfnIJztNjFPrDwS06A8Fde24VRZuE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AFFE3C4952;
-        Wed, 13 May 2020 12:43:15 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=BGNkgv
+        OWKNYovWlDzEjNVY/TSYqFjwonaSUDAH+gch6twKG5sMBvUaX9K/tzXUxtStdcCZ
+        k7q29ifLdlCEKofRLTqeWYuCBfcdqfgNRl/bZIV8Zc7nKNZFBVhcy2YxgdtuOwmb
+        f6mnhyJZKLnbMvkEwBV7snzERbv41fanSxD5A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 90F29531BD;
+        Wed, 13 May 2020 12:51:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0165CC4951;
-        Wed, 13 May 2020 12:43:12 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0BD75531BA;
+        Wed, 13 May 2020 12:51:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] t1509: correct i18n test
+Subject: Re: [PATCH 2/2] CI: enable t1509 in Travis and GitHub Actions
 References: <cover.1589375923.git.congdanhqx@gmail.com>
-        <6675cb952771a48a50b46bcf577e363fcf5d7b3b.1589375923.git.congdanhqx@gmail.com>
-Date:   Wed, 13 May 2020 09:43:11 -0700
-In-Reply-To: <6675cb952771a48a50b46bcf577e363fcf5d7b3b.1589375923.git.congdanhqx@gmail.com>
+        <fa2e1f7b44262eac1fa26161fc5d3f3b9b6bdb47.1589375923.git.congdanhqx@gmail.com>
+Date:   Wed, 13 May 2020 09:51:56 -0700
+In-Reply-To: <fa2e1f7b44262eac1fa26161fc5d3f3b9b6bdb47.1589375923.git.congdanhqx@gmail.com>
         (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Wed, 13 May
- 2020 20:23:06 +0700")
-Message-ID: <xmqqd077vl9c.fsf@gitster.c.googlers.com>
+ 2020 20:23:07 +0700")
+Message-ID: <xmqq8shvvkur.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D60EA250-9538-11EA-ABEB-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 0E69298A-953A-11EA-8489-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -72,41 +72,81 @@ X-Mailing-List: git@vger.kernel.org
 =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
 :
 
-> git-init(1)'s messages is subjected to i18n.
-> They should be tested by test_i18n* family.
->
-> Fix them.
->
 > Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@g=
 mail.com>
 > ---
->  t/t1509-root-work-tree.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  ci/lib.sh              | 13 +++++++++++++
+>  ci/run-docker-build.sh |  3 +++
+>  2 files changed, 16 insertions(+)
 >
-> diff --git a/t/t1509-root-work-tree.sh b/t/t1509-root-work-tree.sh
-> index 553a3f601b..fd2f7abf1c 100755
-> --- a/t/t1509-root-work-tree.sh
-> +++ b/t/t1509-root-work-tree.sh
-> @@ -221,7 +221,7 @@ test_expect_success 'setup' '
->  	rm -rf /.git &&
->  	echo "Initialized empty Git repository in /.git/" > expected &&
->  	git init > result &&
-> -	test_cmp expected result
-> +	test_i18ncmp expected result
->  '
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index dac36886e3..e9c22ae718 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -113,6 +113,7 @@ then
+>  	export GIT_PROVE_OPTS=3D"--timer --jobs 3 --state=3Dfailed,slow,save"
+>  	export GIT_TEST_OPTS=3D"--verbose-log -x --immediate"
+>  	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D2"
+> +	t1509_allowed=3DYES
+>  elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIO=
+NSURI"
+>  then
+>  	CI_TYPE=3Dazure-pipelines
+> @@ -162,6 +163,7 @@ then
+>  	echo "::add-matcher::ci/git-problem-matcher.json"
+>  	test linux-musl =3D "$jobname" ||
+>  	MAKEFLAGS=3D"$MAKEFLAGS TEST_SHELL_PATH=3D/bin/sh"
+> +	t1509_allowed=3DYES
+>  else
+>  	echo "Could not identify CI type" >&2
+>  	env >&2
+> @@ -184,6 +186,17 @@ export DEVELOPER=3D1
+>  export DEFAULT_TEST_TARGET=3Dprove
+>  export GIT_TEST_CLONE_2GB=3Dtrue
 > =20
->  test_vars 'auto gitdir, root' ".git" "/" ""
-> @@ -246,7 +246,7 @@ test_expect_success 'setup' '
->  	cd / &&
->  	echo "Initialized empty Git repository in /" > expected &&
->  	git init --bare > result &&
-> -	test_cmp expected result
-> +	test_i18ncmp expected result
->  '
+> +if test "$t1509_allowed" =3D YES
+> +then
+> +	case "$jobname" in
+> +	osx-*) ;;
+> +	*)
+> +		chmod a+w / || sudo chmod a+w / || true
+> +		export IKNOWWHATIAMDOING=3DYES
+
+Eeeww ;-)  This makes readers wonder where we did not enable the
+test and why.  Perhaps throw in a matching
+
+	t1509_allowed=3DNO
+
+in the azure thing for completeness?
+
+Also, do we want to give a more descriptive name than t1509 to the
+variable, say, ROOT_WORK_TREE_TEST_ALLOWED?
+
+> diff --git a/ci/run-docker-build.sh b/ci/run-docker-build.sh
+> index 8d47a5fda3..026afe275a 100755
+> --- a/ci/run-docker-build.sh
+> +++ b/ci/run-docker-build.sh
+> @@ -58,6 +58,8 @@ else
+>  	test -n "$cache_dir" && chown -R $HOST_UID:$HOST_UID "$cache_dir"
+>  fi
 > =20
->  test_vars 'auto gitdir, root' "." "" ""
+> +chmod a+w /
+> +
+>  # Build and test
+>  command $switch_cmd su -m -l $CI_USER -c "
+>  	set -ex
+> @@ -68,6 +70,7 @@ command $switch_cmd su -m -l $CI_USER -c "
+>  	export GIT_TEST_CLONE_2GB=3D'$GIT_TEST_CLONE_2GB'
+>  	export MAKEFLAGS=3D'$MAKEFLAGS'
+>  	export cache_dir=3D'$cache_dir'
+> +	export IKNOWWHATIAMDOING=3DYES
+>  	cd /usr/src/git
+>  	test -n '$cache_dir' && ln -s '$cache_dir/.prove' t/.prove
+>  	make
 
-OK.  It shows how rarely (if ever) this test script is actually
-exercised that we need fixes like these.  Well done.
-
-Thanks.
+Big EWWWWWWwwww.  Do we need to do this for _all_ tests, not
+selectively only while running t1509?  This makes me worried as a
+test by mistake can easily corrupt the VM and invalidating the
+tests; I know we get a fresh one every time, so there is no
+permanent harm done by corrupting it, but having one fewer thing we
+have to worry about is always better than having one more thing.
