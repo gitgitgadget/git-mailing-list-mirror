@@ -2,110 +2,98 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA02C433DF
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C70EC433DF
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:01:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D785205ED
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 19:58:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D774206A5
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:01:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YtWniCwo"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IdwPXwCm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387907AbgEMT6A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 15:58:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59708 "EHLO
+        id S2390828AbgEMUBA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 16:01:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1733135AbgEMT6A (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 15:58:00 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F6EC061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:58:00 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id 59so516495qva.13
-        for <git@vger.kernel.org>; Wed, 13 May 2020 12:58:00 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1733135AbgEMUA7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 16:00:59 -0400
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1249EC061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 13:00:58 -0700 (PDT)
+Received: by mail-qt1-x849.google.com with SMTP id z5so854449qtz.16
+        for <git@vger.kernel.org>; Wed, 13 May 2020 13:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sxbMndxFZThByosgbFHYDuDZAkCwsBH31gx/lvjHWrw=;
-        b=YtWniCwofVM90YOKRiKgx/VkNPu7XlbuKvztjDfEYfeoKcyf58Q8iseNF1FP70p5PQ
-         f29SgV1LssOImWGtHFQ9zkyidXlakIO5OznrZ09EkOAuvSgMZWABkWl0ImsdFTXh7MBz
-         ayh+Z6elRnAOhEvk1LKssyqg8sl+sZ3BkzQOZoSrD+ck5HR849zfhgKBBouhTMARaBFP
-         cLczw9Y8OrhYicMRUcRcYHug9OCnhD6+VZIgmRktc9+8j90ccdhNAgwtpZJaBQnOTEkM
-         cH7vFLo1z5LgPdp7rGiZyHIye0P9Hnbb9C7Y5nINnYkCg+PytwWuLp9V4hN4WQ0tTMal
-         5aFA==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=xhsB0228uItu25Nwvfd5rZqyLi2pb4NT6RIzLYL1nP4=;
+        b=IdwPXwCmWHHzciNJ6aw5x7mHN02HAzJtSUFzAECGZSubRvNcnB/PuVIeM3pxJiKY8B
+         5DtuFB465ZaQ/4xPqj6Yd7QKq/1BoPvWpYNU8E8h7+JqADBHffUwswpWQ8mwVA2owrww
+         HnqFaaVSDTqJGgEUS7yhxCveve+W+kf8FkhSJD5v1Kwbb3EyMbqL5149zylZL1j9f76J
+         aDbniobmfLDvc1G4pWzULexg6SkY0gNPw5ccl9tEvnfPbV8VDpqahfEc/lMTtKHBXD2U
+         XdKfPJ95c4ydu8aYXDkaXL4iGsai8EIkiogl3diYZ3oDsqWdhw1GJG3cDmUom9/IlIuz
+         558A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sxbMndxFZThByosgbFHYDuDZAkCwsBH31gx/lvjHWrw=;
-        b=UuqDjRsOn8MJk6vKET/BR+winG97QDo7q/BjQnCJ7qiN/y1RBrv0zdcQFGxRxamwYL
-         rogFVXaITucvO3aAwqT0keHCcaTKSHrhqEFwuVt2h6OXCvGJn3US/aXQtsk08XCN3wRN
-         OdB0GC39LoAJ63OF5fA/L0BjznPSWEba+P6Y9fmhEQ01p3he11cwmltYoiZh8v5UPIoD
-         nlGjFU/G0efbHl+INFkTD3FJsRjpGH8/0c8XW6++ymo3oKBrJgKEyHB65Mnt+NaADNl1
-         +HI4XVE2HCoobLsrd7FwMqOEcZdmAzwALs9oYnCjqLZls9wLZPajy9lAH9WUw3m/hKZJ
-         tcOA==
-X-Gm-Message-State: AOAM532APAkTm7Y7GDxiUK2Tb1J/2neBO37EWrf0LEF/ltno//Sp9bmw
-        42G0M0YyO3gpAm/fQvm+9/lEdmTxpAYbniF+ry4=
-X-Google-Smtp-Source: ABdhPJzhh4Li2SA+LDgassWesIKPfkhwyAmnVnz3KaBOvk29R/Z8UQZ8ZF8hfDOgo1BhE0H6QnzFo8TFb9CADq5TzpE=
-X-Received: by 2002:a0c:a692:: with SMTP id t18mr1363983qva.56.1589399879545;
- Wed, 13 May 2020 12:57:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <pull.614.v2.git.1589302254.gitgitgadget@gmail.com> <b0a321a714a766962456e2a9e8dd7d2be349e34d.1589302255.git.gitgitgadget@gmail.com>
- <xmqqk11gc1d5.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk11gc1d5.fsf@gitster.c.googlers.com>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Thu, 14 May 2020 01:27:50 +0530
-Message-ID: <CAKiG+9Uc8Kc1F3wN7AoLkBR8Uk1up5sZXpgUperhQO6NVmBRxw@mail.gmail.com>
-Subject: Re: [PATCH v2 10/11] cmake: parse the makefile for the sources.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=xhsB0228uItu25Nwvfd5rZqyLi2pb4NT6RIzLYL1nP4=;
+        b=mkxVm57sDQnNbtyMGKp7u71Bt9tVq+WEd+XZLpy9IvS+W9EFO3ZdhEeLcOoxG/0p10
+         2eXoFNd3YrpznQLbbFwdor9y2Dr2UChCYjHi+F/R2ashHSPySmMabT0uByJix7ktfokm
+         LeNpgHyfvXXUXT9+J17FRgZgxWfERJYNWDGUkANNNeAp0sE0uwsVTQTqaSrV2vzP/lfJ
+         +pEnVMsNxx0ZZLKR3ltiDBTmh79EdUWFZnG90y8fjZqVhZsur3juheo2EEuhkWNioHGQ
+         fQOdeSskxb3a1mQ1gWlYcWamzLBjkyqhLHZq84SU0qMsFU2xV3NpMcrTJffLrHmW/sJm
+         gZcw==
+X-Gm-Message-State: AOAM532kuPPQRp05/eauVJBHaAQJHJAIbEKJl4LvQrD97mgaiSbDSMcl
+        WLdEokQI55DhGeDUeFBQFr/6QxgW1/6/hWWP/1tKZZd0kOENW9/3kemOyxRgtRBs2liTX9raLW6
+        URcclKjVgTv6fNEKZDdAtSUbcIgiIHaPkKg+XCba6LYKyr9rAoF7xYcHqYupa
+X-Google-Smtp-Source: ABdhPJw2ve/qCtBFlW9OnU1w6+vHPOZX35oPvK8Fld9Ck8Yxo5FiXkIQmzScJ2Quoygw0msDPkoLbOFGO/0S
+X-Received: by 2002:a25:8808:: with SMTP id c8mr1226389ybl.159.1589400057099;
+ Wed, 13 May 2020 13:00:57 -0700 (PDT)
+Date:   Wed, 13 May 2020 13:00:40 -0700
+Message-Id: <20200513200040.68968-1-delphij@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.26.2.645.ge9eca65c58-goog
+Subject: [PATCH] fetch: allow adding a filter after initial clone.
+From:   Xin Li <delphij@google.com>
+To:     git@vger.kernel.org
+Cc:     Xin Li <delphij@google.com>, jrn@google.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 13, 2020 at 2:33 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-> >
-> > The CMake script parses the Makefile for:
-> > SCRIPT_SH
-> > SCRIPT_PERL
-> > TEST_BUILTINS_OBJS
-> > LIB_OBJS
-> > BUILTIN_OBJS
-> > XDIFF_OBJS
-> > VCSSVN_OBJS
-> >
-> > By doing this we avoid duplication of text between the Makefile and
-> > the CMake script.
->
-> Thanks, this makes perfect sense, but it probably should have been
-> done from the very beginning, without copying the huge list manually
-> in the step [01/11].
->
-> How robust is the "parser"?  Do we need to leave an instruction to
-> Makefile writers to conform to certain style to help CMake users as
-> an additional comment in the Makefile, or is any reasonable textual
-> drift still accepted?
->
+Signed-off-by: Xin Li <delphij@google.com>
+---
+ builtin/fetch.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-The parser just uses a regex capture like this "SCRIPT_SH += (.*)".
-If the current source/script definition in the Makefile is continued
-things will be fine.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 3ae52c015d..e5faa17ecd 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1790,8 +1790,16 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	if (depth || deepen_since || deepen_not.nr)
+ 		deepen = 1;
+ 
+-	if (filter_options.choice && !has_promisor_remote())
+-		die("--filter can only be used when extensions.partialClone is set");
++	if (filter_options.choice && !has_promisor_remote()) {
++		char repo_version_string[10];
++
++		xsnprintf(repo_version_string, sizeof(repo_version_string),
++			  "%d", (int)GIT_REPO_VERSION);
++		git_config_set("core.repositoryformatversion",
++			repo_version_string);
++		git_config_set("extensions.partialclone", "origin");
++		promisor_remote_reinit();
++	}
+ 
+ 	if (all) {
+ 		if (argc == 1)
+-- 
+2.26.2.645.ge9eca65c58-goog
 
-On a side note, why are we using SCRIPT_SH and SCRIPT_LIB separately?
-Can't we combine them into one? If we can then I can also add it to
-the list above.
-
-Thank You,
-Sibi Siddharthan
