@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1BE5C2D0FA
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99307C2D0F8
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78DAD20753
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FC5A20675
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kbb6rto2"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lEYGdzei"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731918AbgEMAyx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 20:54:53 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38158 "EHLO
+        id S1731926AbgEMAyz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 20:54:55 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38132 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731882AbgEMAyt (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:49 -0400
+        by vger.kernel.org with ESMTP id S1731857AbgEMAys (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:48 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E1C3660D09;
-        Wed, 13 May 2020 00:54:47 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 00A7360D00;
+        Wed, 13 May 2020 00:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1589331288;
-        bh=MMfJEd2BJ7WjAZeGiNm4voySOTAFCGpDlJvsq+dHUZY=;
+        s=default; t=1589331287;
+        bh=H2xDoXKjs7NgXARqu+L/reTeQW0Z4AxMrSZY7HFrlT8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=kbb6rto2m9vTit12xDHRzkqNRzYtHtxeMCjk1UF76REQWpt/lWxWXjtYH2dHHXGEW
-         vWO8CBliEKve0HvAu6jg9beKxA52MKC5aeVfu6+GbM+lXAsraWkoRBHlk2MHIxwtHE
-         l79bRrfAW3VriojOXdjjsBR61dFkD0YatAdXIJ3noRRp9Ih3hSUZMy3cr3WdybhA3I
-         WaeOQDXvfiZia9ybzdky9KAuuzBxW7AfrN+XUZEGEp5MzovKi6xP53rNYr3XZ686tP
-         YGi4GAC6ECeYQ5QoX0jG2P3z2Mx8spUXtbNCGy+tb+BD5q9SWTDnnMUhPrqhznW8jv
-         3qo4JCNl5TLNEAbZXWblPL1thDupHeJlfzMKa+rPicD/8R1VZzEcwVR/jRiyWoLs7X
-         GBeNzkmnYarEpjeUaQ0w1VWneOeeeWWap6SGOvO4jJ64Pg8Vns50/tlgXjdKZgIAkC
-         0dPl6e9wt5b34gGuWnRHiGZtQMhb9or77VFd+iy29I+31/4obL7
+        b=lEYGdzeiRYX5tNECTxlE9Tz2yTI5uulSStvvQ+g26HqG9XhZpAhY99Q/qFyRuRPEs
+         Ut30/tqi+yBiWKJw6QiYzPtcIbVAJYZu/Cs1QKcgzbBe72oEhJWqCMKmWEd7f0KjlJ
+         7yNYxUBC0mcanfAEObb0hKTGQ4VoJ1qUeGqusbT2K7QRHRStj62WD8Z95RrDNUd1PO
+         XfsRwiaYsl66Gk/ia0X8WXS7bpOOv0vR2eFLwRatSRcR1+CcwBR62OPqKvSBvyU7y0
+         5oRNDSo0Wd/6u6MOss2FmbBOVPdLY0rnAfcOuhOQcVa2KKZrojHQp/D1khcI0H66+Y
+         Wh4TdcHwSYZkbxsfvOlnOrzo695SFFaZ0V1eaew0wQMGdaCclLHstiYQvIA2bnrtNd
+         5c01IXzV/DiI+FFQNBuo68vdSeib3Q4avFSPdhFP69v2I3PxD/YIaRXoGgrqjiWEQA
+         gd2Ffaa2gjs+a8G7yOx9iz0hp3/MMuBameVuJYnjGDpnX7eccin
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 24/44] t3200: mark assertion with SHA1 prerequisite
-Date:   Wed, 13 May 2020 00:54:04 +0000
-Message-Id: <20200513005424.81369-25-sandals@crustytoothpaste.net>
+Subject: [PATCH 22/44] fetch-pack: parse and advertise the object-format capability
+Date:   Wed, 13 May 2020 00:54:02 +0000
+Message-Id: <20200513005424.81369-23-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be
 In-Reply-To: <20200513005424.81369-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -56,26 +56,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the test assertions in this test checks that git branch -m works
-even without a .git/config file.  However, if the repository requires
-configuration extensions, such as because it uses a non-SHA-1 algorithm,
-this assertion will fail.  Mark the assertion as requiring SHA-1.
+Parse the server's object-format capability and respond accordingly,
+dying if there is a mismatch.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3200-branch.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fetch-pack.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 411a70b0ce..2a3fedc6b0 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -402,7 +402,7 @@ EOF
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 1d277190e7..3a48ed4b13 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1179,6 +1179,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 			      int sideband_all, int seen_ack)
+ {
+ 	int ret = 0;
++	const char *hash_name;
+ 	struct strbuf req_buf = STRBUF_INIT;
  
- mv .git/config .git/config-saved
+ 	if (server_supports_v2("fetch", 1))
+@@ -1193,6 +1194,17 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 					 args->server_options->items[i].string);
+ 	}
  
--test_expect_success 'git branch -m q q2 without config should succeed' '
-+test_expect_success SHA1 'git branch -m q q2 without config should succeed' '
- 	git branch -m q q2 &&
- 	git branch -m q2 q
- '
++	if (server_feature_v2("object-format", &hash_name)) {
++		int hash_algo = hash_algo_by_name(hash_name);
++		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
++			die(_("mismatched algorithms: client %s; server %s"),
++			    the_hash_algo->name, hash_name);
++		packet_write_fmt(fd_out, "object-format=%s", the_hash_algo->name);
++	}
++	else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1)
++		die(_("the server does not support algorithm '%s'"),
++		    the_hash_algo->name);
++
+ 	packet_buf_delim(&req_buf);
+ 	if (args->use_thin_pack)
+ 		packet_buf_write(&req_buf, "thin-pack");
