@@ -2,151 +2,118 @@ Return-Path: <SRS0=6HsL=63=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FA19C433E0
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0046C433E2
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:06:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E0B2206A5
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:01:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 777ED2065C
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 20:06:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="rXCEa2Qx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dh+QEdya"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390733AbgEMUBH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 16:01:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60230 "EHLO
+        id S2390803AbgEMUGK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 16:06:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1733135AbgEMUBG (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 16:01:06 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B891C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 13:01:06 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id ms17so11461493pjb.0
-        for <git@vger.kernel.org>; Wed, 13 May 2020 13:01:06 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S2388012AbgEMUGH (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 16:06:07 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 127DFC061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 13:06:07 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id z80so712138qka.0
+        for <git@vger.kernel.org>; Wed, 13 May 2020 13:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RrErtsbZ5Sii24sv2NUAPpMyxeXAH9UL9BinlU9Onqg=;
-        b=rXCEa2QxPYxJUAIqhgeNTLtNQa3EKWTud31IEvRREBtxY4OBTTXyIwp78M+BdCm8NX
-         TyrgMW6Kh5qUxmrJtMewwuG3bQW3dH6HAHcIpWoq5M3pGjVCf8ewprW5iZdD41JdMm3x
-         ifL9foa+QwJSPtE/vx3B1lc/ZxyiQ/WsdJ0/APtoUpYGG7HFNOdIU6UuHB2qtMv5BQiB
-         fWuLO/6eiA2xY7Su60orVUaifw/YvK+krH6dwA3is/td/tIP6eiw9FavoY+4agV43UF8
-         zzDvUzhn6ZQLtwCv1MjB1uqsmMshQww+Zc1Kf/gpZUrAdgGEu6f5Og73lsfyPwtzUUyo
-         M0sA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3LCAhc1B9STU2Tma8D54li74+C+mRZyUyo6xDaafiIo=;
+        b=dh+QEdyaZGSbivTDkM9VIIpxwGKjW4okN6OBzZ/pY/o2g5EjMvSoVo2j+mCr1GZLig
+         o9SRF44llT3om5LOR3QqosLNlABoIYcSfYbV/rYlQOyfqIWLa6Fe4IW4rfL8pC9Cy5Q+
+         V6VgXz6GqOCbdRP9Ud7vfjJNZlc8elE9tuqLWvWKcSfyQ0IYM04gLJg2h3PD4v3oI8/C
+         nCKvIpZzJ3/ll7456O5J40uDKNWGyZ/L2+Xf7JadghYmWORCeWXsZhjhyuWk+jTqC2z9
+         DgI4d8Pcg3svc/BK6tQ57HD3p33EcMy7+K2TjM5AVQ5jSBZ0pzgjVUYpoNK7vwPJojEo
+         nO4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RrErtsbZ5Sii24sv2NUAPpMyxeXAH9UL9BinlU9Onqg=;
-        b=CzM/BhoW33LFwjvbbD1NsfCRsVJzxBKWK76/KojJIhGOQjJzWPvzbiI3rscvFzUJfc
-         wvklQ4cVGXCbwI92QaNhTiYMXPWaBIFW6DmhV9RKKYbDvr7Ee1N8OdbXS5d+gxpTTUDq
-         fRNNistYFyXunm6QWO0weCJHbH9PdqOFgYsP9P2J9PYxl3XGtZUfPzkG9vhKdQ2l+PRC
-         TRAkZXg7Phlvy3/reR51X7FbX3QfUxpeJ7IheT0LFsbSGD9lgucQRlw4lDwm59ZUkVj2
-         rOJ8T1hW/HMNGua1vrp9eQdlOAVqdA8tQrgvOLu34NA1j/RZYMKjhYaogGEf+xZesQvF
-         BjKw==
-X-Gm-Message-State: AOAM531fmkpYiUT4gtjVxRwlDgfmwB2Vy7KTKJmbY9dYQCwZclUTnFbv
-        yIEiHpOKK7uHscp1dQZxALPeyQ==
-X-Google-Smtp-Source: ABdhPJwIjhTImCmlrolZaEK+yngsiYdJO+edAtRx4RRbFU1JewIOdUW5Y4vcqNNXX9I/dQXLkZ98rw==
-X-Received: by 2002:a17:902:eb54:: with SMTP id i20mr746934pli.179.1589400066020;
-        Wed, 13 May 2020 13:01:06 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id l11sm2449825pjj.33.2020.05.13.13.01.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 13:01:05 -0700 (PDT)
-Date:   Wed, 13 May 2020 14:01:03 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, gitster@pobox.com, szeder.dev@gmail.com
-Subject: Re: [PATCH 4/8] builtin/commit-graph.c: extract 'read_one_commit()'
-Message-ID: <20200513200103.GB24173@syl.local>
-References: <cover.1588641176.git.me@ttaylorr.com>
- <9ae8745dc090de37af0475ab12b79d541a52713d.1588641176.git.me@ttaylorr.com>
- <20200507200305.GB29683@coredump.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3LCAhc1B9STU2Tma8D54li74+C+mRZyUyo6xDaafiIo=;
+        b=EVb3v/iomUJ+7u6ZQq7haohv9jYLZlwOOmc8m9WBjA1teLS3Uq1mfuED4dGVMuRMuF
+         H0rmiq0uW+EGZyKWm0sXU6ZR0+r7fGipwjPucIudNCpAF2AqOdxdxZTkRb6w4H6/KkUZ
+         UnIFplP0jVDD+9zKxQgA+7X5LkHLqQLEO6J60u6CUBq2WL2kSCQpRj7pt0TuhWeGcH0X
+         X2iyWx0FcbyX05Frmh56DU4T8uUk6x8AGVMJtXQ4FoD/E+xS9prZJdi5YRLlZjzS5mBa
+         Q/KrsqzO0ShMCky0gXbriV8h8q4+sM0f1ZPwrp7aDRYWmxgcqLhL8JgsJwIu+cS47zBU
+         A1PQ==
+X-Gm-Message-State: AOAM531oyx9meXQ3tUP+d2XZuAW8TiF9Q6969jImRYU9qMBigbuOvcKH
+        b1l1KdPA8l08B0aaOHw3VilIIhbEPgkjj0sfCG8A2A/t
+X-Google-Smtp-Source: ABdhPJwB58Aa+iAog286NrY85OYoizbxDABZIiH9hGr1sAvvgds6NZJBOHNi7QXz8IV+DZLPg2r3f+zIcwZlIZdjjHA=
+X-Received: by 2002:a37:b847:: with SMTP id i68mr1410549qkf.431.1589400366339;
+ Wed, 13 May 2020 13:06:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200507200305.GB29683@coredump.intra.peff.net>
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <pull.614.v2.git.1589302254.gitgitgadget@gmail.com> <f496cd7d8aa12047db7f6c0212fbcb2497469785.1589302255.git.gitgitgadget@gmail.com>
+ <xmqqblmsc0r1.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqblmsc0r1.fsf@gitster.c.googlers.com>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Thu, 14 May 2020 01:35:57 +0530
+Message-ID: <CAKiG+9VrKsckfnJiaf1xMYnOtJ6wvnbtZv4-3sz6H7h3aZH3Cg@mail.gmail.com>
+Subject: Re: [PATCH v2 08/11] cmake: added checks for struct stat and libiconv
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 07, 2020 at 04:03:05PM -0400, Jeff King wrote:
-> On Mon, May 04, 2020 at 07:13:46PM -0600, Taylor Blau wrote:
+On Wed, May 13, 2020 at 2:46 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> > In the case of '--stdin-commits', feed each line to a new
-> > 'read_one_commit' helper, which (for now) will merely call
-> > 'parse_oid_hex'.
+> "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Makes sense.
+> > From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+> > Subject: Re: [PATCH v2 08/11] cmake: added checks for struct stat and libiconv
 >
-> > +static int read_one_commit(struct oidset *commits, char *hash)
+> s/added/add/; give a command to the codebase to "be like so", or a
+> command to whoever is typing changes to the editor to "make this
+> happen".
 >
-> This could be "const char *hash", couldn't it?
-
-Yep, thanks.
-
-> > +	struct object_id oid;
-> > +	const char *end;
-> > +
-> > +	if (parse_oid_hex(hash, &oid, &end)) {
-> > +		error(_("unexpected non-hex object ID: %s"), hash);
-> > +		return 1;
-> > +	}
+> > The CMake script now checks whether st_blocks is a member of struct stat
+> > and set the compile definition NO_ST_BLOCKS_IN_STRUCT_STAT accordingly.
 >
-> Returning "-1" for error is more idiomatic in our code base (though I
-> know some of the commit-graph code doesn't follow that, I think we
-> should slowly try to move it back in the other direction.
-
-Yeah, I know the -1 is more idiomatic than what I had written here. This
-was done so that I could use the return value from 'read_one_commit' as
-an exit code from 'graph_write()', but I don't mind switching this to
-'return error(...)' and then checking at the caller for a non-zero
-return value and returning 1 there instead.
-
-> > +		while (strbuf_getline(&buf, stdin) != EOF) {
-> > +			char *line = strbuf_detach(&buf, NULL);
-> > +			if (opts.stdin_commits) {
-> > +				int result = read_one_commit(&commits, line);
-> > +				if (result)
-> > +					return result;
-> > +			} else
-> > +				string_list_append(&pack_indexes, line);
-> > +		}
+>         Teach the CMake script to check ...
 >
-> This leaks "line" for each commit in stdin_commits mode (it used to get
-> added to a string list). I think you want:
+> > diff --git a/CMakeLists.txt b/CMakeLists.txt
+> > index 4353080b708..975791c8b89 100644
+> > --- a/CMakeLists.txt
+> > +++ b/CMakeLists.txt
+> > @@ -22,6 +22,7 @@ project(git
+> >  include(CheckTypeSize)
+> >  include(CheckCSourceRuns)
+> >  include(CheckCSourceCompiles)
+> > +include(CheckCSourceRuns)
+> > ...
+> > +#check for st_blocks in struct stat
+> > +check_struct_has_member("struct stat" st_blocks "sys/stat.h" STRUCT_STAT_HAS_ST_BLOCKS)
+> > +if(NOT STRUCT_STAT_HAS_ST_BLOCKS)
+> > +     add_compile_definitions(NO_ST_BLOCKS_IN_STRUCT_STAT)
+> > +endif()
 >
->   while (strbuf_getline(&buf, stdin) != EOF) {
->         if (opts.stdin_commits) {
-> 	        if (read_one_commit(&commits, buf.buf)) {
-> 			strbuf_release(&buf);
-> 			return 1;
-> 		}
-> 	} else {
-> 	        string_list_append(&pack_indexes, strbuf_detach(&buf));
-> 	}
->   }
+> All of these compatibility stuff makes sense, but how do we decide
+> where to draw the line between the checks we saw added in [01/11]
+> and the checks added here?  It feels pretty arbitrary to me and if
+> that is the case, perhaps we want to move all the "add checks" to a
+> commit separate from [01/11] (whose primary purpose is to add the
+> basic rules without these build tweaks in the file at the final
+> place)?
 >
-> Though I think it might be easier to follow if each mode simply has its
-> own while loop.
 
-Yeah, it's much clearer as two separate cases. I'll send something like
-that shortly once I get to the rest of your review.
+The checks are added on a "demand" based the target platform.
+In the future, if apple support is needed, we need to add ST_TIMESPEC checks.
 
-> > +
-> >  		UNLEAK(buf);
->
-> Not new in your patch, but this UNLEAK() has always bugged me. ;) Why
-> not just strbuf_release() it?
-
-I snuck it in! ;)
-
-> -Peff
-
-Thanks,
-Taylor
+Thank You,
+Sibi Siddharthan
