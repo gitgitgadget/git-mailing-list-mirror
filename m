@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05C8AC433E1
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FD44C433DF
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:05:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EA1E20659
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:05:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC6F92065D
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 18:05:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p7DdTy50"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RAB8CjF1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390017AbgEMSFO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 May 2020 14:05:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41834 "EHLO
+        id S2390020AbgEMSFQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 May 2020 14:05:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1732488AbgEMSFN (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 14:05:13 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E559C061A0C
-        for <git@vger.kernel.org>; Wed, 13 May 2020 11:05:12 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id b6so132164qkh.11
-        for <git@vger.kernel.org>; Wed, 13 May 2020 11:05:12 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1732488AbgEMSFP (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 May 2020 14:05:15 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32DE2C061A0C
+        for <git@vger.kernel.org>; Wed, 13 May 2020 11:05:15 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id 59so324353qva.13
+        for <git@vger.kernel.org>; Wed, 13 May 2020 11:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Y19IbOuhZIRTyyoU2VZixeM0uKga7ZpB7g+fevshc14=;
-        b=p7DdTy50zBynwwGBtH9/zHVy1mQhf/mY8w2wF08Jb19lIClsmA3SJIaVkMjsrGn6pf
-         bKQdClr1nYZwF6Zd9h03XaIEWV5JM1xrXGQU3a3VF9Mvw5HlVH/2OEl6fMpRwF18RqG1
-         QTUaxSi1d0RhGFBn1YMuiSVTtFxtJmnSFFdibaOuMA48r22dqFyphmNDK/LAYzmkdyMC
-         e2gb5fXezLJ2X570CCCiACykm6Vg9+vetSvwA9TzO0nzAr1CHJbAWYAqxFvOHKWKXX7C
-         cT8ZxCeRhIBoGPy84pDdWiN4rLJh8Fw2S4LtXnTNc6ZJi70FPQl7aRh8la0ow4OCNRyx
-         7cNg==
+        bh=ZYo/5DpGKwvgnCq4IIcE5/0TPlCiDxKXWx5hvmTizTA=;
+        b=RAB8CjF1Yk62j/okyJGZhBxxEM5juQbMZwljp+zF49zfkDdkyO/m3hkrweksWSNxDp
+         /k40gnnpoMARNpWL4FZffv08L+fv6FRbglPBxneDj1pgtM9NujzW0BUEzsA33PzUC/6e
+         4GAntqpDn6AEmRDuPERnatGd2B/vSSILTozM8B85tpoBHcbWzELRsAAldE80ejFbAi6v
+         iqtBDApJPloOTl8+dhjUocZSRp4wsvobJY4ica32QqNZRx5vsuf3YCttTFc8+rE3CJnD
+         AS+A4uhm4nylDiZsNwKG6HSsJ8aq6hoicpUBoKXHTzF+Y4ROrB8773Y02kT5ebzB5nKt
+         og1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Y19IbOuhZIRTyyoU2VZixeM0uKga7ZpB7g+fevshc14=;
-        b=cUwdpziy48vq09pznFAmd1dnnHFNyJShyHvLcHIFZuDV5Sxws8Hr+VwbAmc9QZjN3H
-         J7UKS0+t+Tajznwx8YsV2KiRizNyth84HewphT9Zdhgcpt51QKaOMstwqGDC1RY/qxLI
-         hweSIw17HYulcVxkWcVnwA5hZtQhWvnnfiC6r8KPJ8uf/93wcylVab6ygomifGGDakrS
-         yK/YIPosNobPuKsQSLl9rz01eUv9gXcpAatq3iLK8A/ecuYKpJ8NVC4JecWWfuXChkzF
-         mqExLml1UTq5VYC7eXHNwjSjga7TZbsIXG+ajKku2umvg60JWbGLl/mwTaI2xU2ITGlS
-         /mGg==
-X-Gm-Message-State: AOAM533jpdNumdN14PGQPYIpuqxwV4NrGLwV/tI2SGIHi/OQWHDAMv0u
-        T7I6Osmc3nL4qlfgqhiduBYU/y86
-X-Google-Smtp-Source: ABdhPJzmB16CpbAbhXVhditc23XSudV6/jt6d3EmypNpeJU2IceW61+XsYCrcXlDG+INcYM1CiVifA==
-X-Received: by 2002:a37:7dc4:: with SMTP id y187mr934271qkc.412.1589393111726;
-        Wed, 13 May 2020 11:05:11 -0700 (PDT)
+        bh=ZYo/5DpGKwvgnCq4IIcE5/0TPlCiDxKXWx5hvmTizTA=;
+        b=ueXeXqDqEP+uKSLZMvW8D9JsYRrtr4iVhTF/3yoFMuGnkTdyB5SDUqSFgGDg2tJ+r/
+         UZXBDp2kpee97TGtw5piTAs9rT3YWqtQmp7aTEondS57dAXEDoVGaPOvCp/3ItKVKDww
+         6T3ErQ9QwRKJC5vJEGQJC7DObxewsYPJ7TO46H4wvOmCwPgHpVLYso9wQ1fMuYFKLH1W
+         RQpXZTG5REtUfIVgzz2otBA7J14XH4vlupuw/dO6zdK6nT2Q9bw5Xksg4ISwyCo/HPVL
+         VjO0u9EfKxvcq+z6J7PHxuhumYZhqDFUKPP7nl9K1ecaXUVk+FbCvDYyXsuovLb/5Yh7
+         KiGg==
+X-Gm-Message-State: AOAM5324SHwSLGozEsKTmI59sZHG/5A+fR+GKHgogAMyGG9ufUGDau4Y
+        WNwqHNU+jVl3MK6sEJiVSWU+4hHj
+X-Google-Smtp-Source: ABdhPJxY8vLmzlUFOU48u33cQgk3pnZRG+WhsB48zTaVW0GRJN8bcJNDWGtUwP7H04jYzMfgbqeCfw==
+X-Received: by 2002:a05:6214:cf:: with SMTP id f15mr834598qvs.59.1589393113409;
+        Wed, 13 May 2020 11:05:13 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id z60sm301153qtc.30.2020.05.13.11.05.10
+        by smtp.gmail.com with ESMTPSA id z60sm301153qtc.30.2020.05.13.11.05.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2020 11:05:11 -0700 (PDT)
+        Wed, 13 May 2020 11:05:12 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH 3/6] transport: combine common cases with a fallthrough
-Date:   Wed, 13 May 2020 14:04:55 -0400
-Message-Id: <c89c1841008dfc2d111369fb682b946a0c33b7be.1589393036.git.liu.denton@gmail.com>
+Subject: [PATCH 4/6] pkt-line: extern packet_length()
+Date:   Wed, 13 May 2020 14:04:56 -0400
+Message-Id: <891a39c853ce3669b6167dc9ad8a2328e4321a9e.1589393036.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.26.2.706.g87896c9627
 In-Reply-To: <cover.1589393036.git.liu.denton@gmail.com>
 References: <cover.1589393036.git.liu.denton@gmail.com>
@@ -74,44 +74,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the switch statement, the difference between the `protocol_v2` and
-`protocol_v{1,0}` arms is a prepatory call to die_if_server_options() in
-the latter. The fetch_pack() call is identical in both arms. However,
-since this fetch_pack() call has so many parameters, it is not
-immediately obvious that the call is identical in both cases.
-
-Rewrite the switch statement to fallthrough from the v{1,0} case to v2
-so that they share a common fetch_pack() call. This reduces duplication
-and makes the logic more clear for future readers.
+In a future commit, we will be manually processing packets and we will
+need to access the length header. In order to simplify this, extern
+packet_length() so that the logic can be reused.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- transport.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ pkt-line.c | 2 +-
+ pkt-line.h | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/transport.c b/transport.c
-index 15f5ba4e8f..475f94564a 100644
---- a/transport.c
-+++ b/transport.c
-@@ -370,15 +370,11 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	}
+diff --git a/pkt-line.c b/pkt-line.c
+index a0e87b1e81..6b60886770 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -306,7 +306,7 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
+ 	return ret;
+ }
  
- 	switch (data->version) {
--	case protocol_v2:
--		refs = fetch_pack(&args, data->fd,
--				  refs_tmp ? refs_tmp : transport->remote_refs,
--				  to_fetch, nr_heads, &data->shallow,
--				  &transport->pack_lockfile, data->version);
--		break;
--	case protocol_v1:
- 	case protocol_v0:
-+	case protocol_v1:
- 		die_if_server_options(transport);
-+		/* fallthrough */
-+	case protocol_v2:
- 		refs = fetch_pack(&args, data->fd,
- 				  refs_tmp ? refs_tmp : transport->remote_refs,
- 				  to_fetch, nr_heads, &data->shallow,
+-static int packet_length(const char *linelen)
++int packet_length(const char *linelen)
+ {
+ 	int val = hex2chr(linelen);
+ 	return (val < 0) ? val : (val << 8) | hex2chr(linelen + 2);
+diff --git a/pkt-line.h b/pkt-line.h
+index fef3a0d792..f443185f8f 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -74,6 +74,11 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+ int packet_read(int fd, char **src_buffer, size_t *src_len, char
+ 		*buffer, unsigned size, int options);
+ 
++/*
++ * Reads a packetized line and returns the length header of the packet.
++ */
++int packet_length(const char *linelen);
++
+ /*
+  * Read a packetized line into a buffer like the 'packet_read()' function but
+  * returns an 'enum packet_read_status' which indicates the status of the read.
 -- 
 2.26.2.706.g87896c9627
 
