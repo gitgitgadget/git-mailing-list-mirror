@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46482C2D0FA
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C0B4C2D0F8
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C7E320675
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DCC320675
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:54:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Uv4aKmLx"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="l9+cl7fw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731900AbgEMAyu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 20:54:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38132 "EHLO
+        id S1731914AbgEMAyw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 20:54:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38160 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731826AbgEMAyo (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:44 -0400
+        by vger.kernel.org with ESMTP id S1731885AbgEMAyu (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:50 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1D2B960D00;
-        Wed, 13 May 2020 00:54:43 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6A2B360D0A;
+        Wed, 13 May 2020 00:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1589331283;
-        bh=zpnT9fWOaLV9mwawdgB5SvkQ6uw0gD9jYk+wL9jjyZo=;
+        s=default; t=1589331288;
+        bh=+4Z4pf0T9fzuVPGr+GKKdEY7iEgxxGa0MzEFtugw7Z8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Uv4aKmLxHrl8sYwPSebcpzDc1MIRsJWyzcjNiVJ4sAlDiQf0Ir2akvl5x7A91BYh6
-         jbPHiWusKz0pyav6gCx9rbO1ddgM1nZrDwDIK26DuzntFJWjc9j68zBv1K69tDesLG
-         8diKvg+dSXadshk4msUAXeHxzsxoTsPTDLBTfRLwAchW/FvmcDTPsCyQHVm2V5FY3X
-         5PsmYV6y4HIrY+LP1ZHCEi+KCm0+oaVE37fd0OmK0ccyboRe8gEGhOfRAp+qtMiHz/
-         GPd5T2lWgWoEBCzfobyyJ+9fHJ+RXVPGt54EnEQUtr1DNPgshtl3PV5UpT1iavItJT
-         L1zFdGFHfZq6tq29dkaNazqNWo8eRUhFsaExO3XYCijG62LcgMn3AaW1dxsObP6IkN
-         BTFF6SC3rJEk4+Z4sB/fHk4TiXjH2DJ4/IM6CcFoszPtGGpjCnCxp5l+N8bU3s0tzz
-         hv69dVnou9DG3hWXTYuXXqECJ5zFLKAASxVwOIDmPUQQcyfVhjy
+        b=l9+cl7fwO7Pu2ns8X476W3uM0sVd+2NSCPqudlWFGl2Asja27jyGrgH81qEK8ndYb
+         1dpTp2iJZBqqoMeWKdOVjkaG7tnJ6yhya5YqgaRuMpa6Us9eLLsZ9KClOpJzVEKCR1
+         fWUJSWeaR+htLaULVVy5ApZ4IoPz8TG8o+o+C5BnBgctuBmq6xhrFRvi14fytc8eSo
+         p2uaM0tdS2sQ8Hs10WB+P8ijgZV9Pp9OZUCWMTm5WlQLZ3oGwJ73VpYF8cShnKWvxW
+         Q3E2Fi4tpRwjpE3gilx5wB4GkqFOqryBY6ERywgiULR+5Vza87tstWZN8Oz0aHlPwz
+         cig0QC13ZXdmQZv1AQP7SPGR+NqdESyC7J1qrYI4jNjYZPC4CKi3Q9UwR6LGYuiS/Z
+         CZOpV/yVf4GymD0RoEvGBq+4Bdn4Y23eeAg9OTn4Rfa8uWtddaChswXymQAorwwzDz
+         pBbfyNXlXvNnYUL+AT1CFmDVlIr10Nrq0vObA6zuIkeTV4AiSab
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 13/44] fetch-pack: detect when the server doesn't support our hash
-Date:   Wed, 13 May 2020 00:53:53 +0000
-Message-Id: <20200513005424.81369-14-sandals@crustytoothpaste.net>
+Subject: [PATCH 25/44] packfile: compute and use the index CRC offset
+Date:   Wed, 13 May 2020 00:54:05 +0000
+Message-Id: <20200513005424.81369-26-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be
 In-Reply-To: <20200513005424.81369-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -56,23 +56,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Detect when the server doesn't support our hash algorithm and abort.
+Both v2 pack index files and the v3 format specified as part of the
+NewHash work have similar data starting at the CRC table.  Much of the
+existing code wants to read either this table or the offset entries
+following it, and in doing so computes the offset each time.
+
+In order to share as much code between v2 and v3, compute the offset of
+the CRC table and store it when the pack is opened.  Use this value to
+compute offsets to not only the CRC table, but to the offset entries
+beyond it.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fetch-pack.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/index-pack.c | 6 +-----
+ object-store.h       | 1 +
+ packfile.c           | 1 +
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index f73a2ce6cb..1d277190e7 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1039,6 +1039,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 		print_verbose(args, _("Server supports %s"), "deepen-relative");
- 	else if (args->deepen_relative)
- 		die(_("Server does not support --deepen"));
-+	if (!server_supports_hash(the_hash_algo->name, NULL))
-+		die(_("Server does not support this repository's object format"));
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index f176dd28c8..7bea1fba52 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1555,13 +1555,9 @@ static void read_v2_anomalous_offsets(struct packed_git *p,
+ {
+ 	const uint32_t *idx1, *idx2;
+ 	uint32_t i;
+-	const uint32_t hashwords = the_hash_algo->rawsz / sizeof(uint32_t);
  
- 	if (!args->no_dependents) {
- 		mark_complete_and_common_ref(negotiator, args, &ref);
+ 	/* The address of the 4-byte offset table */
+-	idx1 = (((const uint32_t *)p->index_data)
+-		+ 2 /* 8-byte header */
+-		+ 256 /* fan out */
+-		+ hashwords * p->num_objects /* object ID table */
++	idx1 = (((const uint32_t *)((const uint8_t *)p->index_data + p->crc_offset))
+ 		+ p->num_objects /* CRC32 table */
+ 		);
+ 
+diff --git a/object-store.h b/object-store.h
+index d1e490f203..f439d47af8 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -70,6 +70,7 @@ struct packed_git {
+ 	size_t index_size;
+ 	uint32_t num_objects;
+ 	uint32_t num_bad_objects;
++	uint32_t crc_offset;
+ 	unsigned char *bad_object_sha1;
+ 	int index_version;
+ 	time_t mtime;
+diff --git a/packfile.c b/packfile.c
+index f4e752996d..6ab5233613 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -178,6 +178,7 @@ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
+ 		     */
+ 		    (sizeof(off_t) <= 4))
+ 			return error("pack too large for current definition of off_t in %s", path);
++		p->crc_offset = 8 + 4 * 256 + nr * hashsz;
+ 	}
+ 
+ 	p->index_version = version;
