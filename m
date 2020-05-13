@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40937C2D0FA
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0CD1C2D0FA
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:56:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2192D20675
-	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:55:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68E6020675
+	for <git@archiver.kernel.org>; Wed, 13 May 2020 00:56:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="tL/0oXLP"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cP8edmyU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732053AbgEMAzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 May 2020 20:55:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38118 "EHLO
+        id S1731868AbgEMAyr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 May 2020 20:54:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38104 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731908AbgEMAyw (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:52 -0400
+        by vger.kernel.org with ESMTP id S1731760AbgEMAyn (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 May 2020 20:54:43 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0DCA660D0F;
-        Wed, 13 May 2020 00:54:50 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4240D609D3;
+        Wed, 13 May 2020 00:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1589331291;
-        bh=JSgB3nukR2NV7duJV991p0Ltx9V/rSGJxeO51RyxAVw=;
+        s=default; t=1589331282;
+        bh=vC3yULAhTXszSyPeUhFmr4d2WyU9ajPycevd18cAwS4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=tL/0oXLPk/J5f/m8sroDrv+YddXjo8WDpN6Jc8yVcMuCGHOzuazrj+q/N7Eq9/CUp
-         JeJsZV3x6W0A4+afOc7E8LH0yw0Cx6b+pCpzW0xdX9v0DJRyjZPLq5KvHlwW7DVISC
-         jdmhFfHC43sRlXeosdYWyS+KuAd86KA8GWuJV1FjVt9c+hPcuDcch9pysMT1RDbIS4
-         lxEdq4GDqjJjyOyNG/VgFkTqxye25ru8pV/B7oujwFrB6EiuAlS+gvHFb7h8EoyOTj
-         w+0eCCpiioyUx+R4U8f8cktd0BhRP/uhFthVZtBMkJ9LlNGeumGHt44kcq457tYJ8i
-         Yerd1z1dBjsfQeRpiV7e2pQSF+ZAlSKF1cSndP+vMk4GJwlMMGSLBk5Edob2nhJQmW
-         RIu7sQEyvrazv9CHhXSk0ZG20AkN5kPpg6U5AlowXhgJBtsGpU9diOIJoCqoubKK/W
-         WHGYYSvYQPgVhsV7YJsx/xj9yeHkdTlyefYLldC3U69LW2rxH8X
+        b=cP8edmyU4SnO4mbI6AAFB7Qcqz/I3lMlEUqfLhu1+qlbQ15e+vUbtzsTS3QxcgzFU
+         yIBwyDXxf1FZcVCkw9WFqysknhi7lULiIGailvUcdEI7DXmPHPad/adCGY9qodgMdF
+         PfOOpZuo0+7vvWlS/F4O4dwdKWYi1U270YbQTHAgDMqHSFZC6/qAVVBACl7ZauOJhe
+         0i29MaGmrKC+bc1qAS7H76spzmuI0qlbKQmEIiq0NE4+M3oExOWoPHOshFT82CJxiD
+         /NTwGlyp4TXY+nv9o5rblzzs+2kT69rwP9tZH86xZ5/KhmV9Z746s9B434z4kxisMP
+         lXKJKE9RB+spqMxGlBTH72PHK+jPebcx3sh8iWVsom4DIg0SdTIb65T+vUcuaVNWqM
+         9azQFo3ZRonherxpnhJFIQdWm7z40erExasdMqQORQl0OJ87Zk3pWKDcDeGEydk3Fv
+         WFrWQZQalA7PZF0001VJ5CjQtNRWXFYGlqXKvdpJwSUmB/eVTAZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH 31/44] connect: parse v2 refs with correct hash algorithm
-Date:   Wed, 13 May 2020 00:54:11 +0000
-Message-Id: <20200513005424.81369-32-sandals@crustytoothpaste.net>
+Subject: [PATCH 11/44] send-pack: detect when the server doesn't support our hash
+Date:   Wed, 13 May 2020 00:53:51 +0000
+Message-Id: <20200513005424.81369-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be
 In-Reply-To: <20200513005424.81369-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -56,85 +56,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using protocol v2, we need to know what hash algorithm is used by
-the remote end.  See if the server has sent us an object-format
-capability, and if so, use it to determine the hash algorithm in use and
-set that value in the packet reader.  Parse the refs using this
-algorithm.
-
-Note that we use memcpy instead of oidcpy for copying values, since
-oidcpy is intentionally limited to the current hash algorithm length,
-and the copy will be too short if the server side uses SHA-256 but the
-client side has not had a repository set up (and therefore defaults to
-SHA-1).
+Detect when the server doesn't support our hash algorithm and abort.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- connect.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ send-pack.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index bb4bc4ab7f..4e6462e52f 100644
---- a/connect.c
-+++ b/connect.c
-@@ -394,7 +394,7 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
- 		goto out;
- 	}
+diff --git a/send-pack.c b/send-pack.c
+index d1b7edc995..fb037568a9 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -362,6 +362,7 @@ int send_pack(struct send_pack_args *args,
+ 	int atomic_supported = 0;
+ 	int use_push_options = 0;
+ 	int push_options_supported = 0;
++	int object_format_supported = 0;
+ 	unsigned cmds_sent = 0;
+ 	int ret;
+ 	struct async demux;
+@@ -388,6 +389,9 @@ int send_pack(struct send_pack_args *args,
+ 	if (server_supports("push-options"))
+ 		push_options_supported = 1;
  
--	if (parse_oid_hex(line_sections.items[i++].string, &old_oid, &end) ||
-+	if (parse_oid_hex_algop(line_sections.items[i++].string, &old_oid, &end, reader->hash_algo) ||
- 	    *end) {
- 		ret = 0;
- 		goto out;
-@@ -402,7 +402,7 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
- 
- 	ref = alloc_ref(line_sections.items[i++].string);
- 
--	oidcpy(&ref->old_oid, &old_oid);
-+	memcpy(ref->old_oid.hash, old_oid.hash, reader->hash_algo->rawsz);
- 	**list = ref;
- 	*list = &ref->next;
- 
-@@ -415,7 +415,8 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
- 			struct object_id peeled_oid;
- 			char *peeled_name;
- 			struct ref *peeled;
--			if (parse_oid_hex(arg, &peeled_oid, &end) || *end) {
-+			if (parse_oid_hex_algop(arg, &peeled_oid, &end,
-+						reader->hash_algo) || *end) {
- 				ret = 0;
- 				goto out;
- 			}
-@@ -423,7 +424,8 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
- 			peeled_name = xstrfmt("%s^{}", ref->name);
- 			peeled = alloc_ref(peeled_name);
- 
--			oidcpy(&peeled->old_oid, &peeled_oid);
-+			memcpy(peeled->old_oid.hash, peeled_oid.hash,
-+			       reader->hash_algo->rawsz);
- 			**list = peeled;
- 			*list = &peeled->next;
- 
-@@ -442,6 +444,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 			     const struct string_list *server_options)
- {
- 	int i;
-+	const char *hash_name;
- 	*list = NULL;
- 
- 	if (server_supports_v2("ls-refs", 1))
-@@ -450,6 +453,14 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	if (server_supports_v2("agent", 0))
- 		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
- 
-+	if (server_feature_v2("object-format", &hash_name)) {
-+		int hash_algo = hash_algo_by_name(hash_name);
-+		if (hash_algo == GIT_HASH_UNKNOWN)
-+			die(_("unknown object format '%s' specified by server"), hash_name);
-+		reader->hash_algo = &hash_algos[hash_algo];
-+		packet_write_fmt(fd_out, "object-format=%s", reader->hash_algo->name);
-+	}
++	if (!server_supports_hash(the_hash_algo->name, &object_format_supported))
++		die(_("the receiving end does not support this repository's hash algorithm"));
 +
- 	if (server_options && server_options->nr &&
- 	    server_supports_v2("server-option", 1))
- 		for (i = 0; i < server_options->nr; i++)
+ 	if (args->push_cert != SEND_PACK_PUSH_CERT_NEVER) {
+ 		int len;
+ 		push_cert_nonce = server_feature_value("push-cert", &len);
+@@ -428,6 +432,8 @@ int send_pack(struct send_pack_args *args,
+ 		strbuf_addstr(&cap_buf, " atomic");
+ 	if (use_push_options)
+ 		strbuf_addstr(&cap_buf, " push-options");
++	if (object_format_supported)
++		strbuf_addf(&cap_buf, " object-format=%s", the_hash_algo->name);
+ 	if (agent_supported)
+ 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+ 
