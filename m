@@ -2,195 +2,130 @@ Return-Path: <SRS0=p0jH=64=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2C19C433E0
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 19:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65C68C433E0
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 19:53:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B158620675
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 19:19:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 363BF206D8
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 19:53:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hEfl/uVb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cTla+EH9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728300AbgENTTJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 May 2020 15:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52570 "EHLO
+        id S1727837AbgENTx2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 May 2020 15:53:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728286AbgENTTI (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 14 May 2020 15:19:08 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D55DAC061A0C
-        for <git@vger.kernel.org>; Thu, 14 May 2020 12:19:08 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id mq3so12991422pjb.1
-        for <git@vger.kernel.org>; Thu, 14 May 2020 12:19:08 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1727815AbgENTx2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 May 2020 15:53:28 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48E8C061A0C
+        for <git@vger.kernel.org>; Thu, 14 May 2020 12:53:26 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id h17so205912wrc.8
+        for <git@vger.kernel.org>; Thu, 14 May 2020 12:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=edHYoLrzozt7VWPr8lKcpkP2B8WxliLQhvA2ZfvGJ8A=;
-        b=hEfl/uVbJ3VcGjp4n/uSd9pY6EmnCh7XxmtjxYl9p3TtQpvtIwmW16BddZNHHRi7xi
-         TFjXBwLXYBoZDZK+Dn5e13RNgR6p0zbwXXOa2rlG/O3oNze4xiJzA6a3QOfqmeEcrPte
-         /t1uchw7pDbDg94mTvylrCyUnKzdLdoSeRoiayNhVrEUZZaP2OeHvL6cpI1bRG9pTS97
-         cul+K6f4cCFUgvWr2vHLPuJIQqA/ftoO3KTbjGSmkuFel+Mi/PKwvgojHnkVE1Kuns/E
-         JccgzdqSIK8QQJxhcYxGJOmgaakeNKWf4tryNRm1c5k3CuzJ14dHl5q1mEe7+BqJ6jRd
-         hTkA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=6DqoDlifF1LX9xj9jnP13sXE8xfQ8TFax0IlVs92p2E=;
+        b=cTla+EH9Y7ly9iq9gNbJoWjUCk9gdcs7GjedtMbSuGjFB+EUBMoZNywdXcSqRGWQ3V
+         7K5ucyKWA0UNFtOWLfqeccPMbRN3hQx+xUZqncRZzLWGg+qPY4aAizUzGe6kC3IvEcIR
+         P94QQ+YUM7R42jfZdTllnh0eDnyDVtCqOTB1bNfSyeVen6aOFuwZsPfX7vhFjeK7yiUt
+         zbqyx02AnMsUBH1fPwZiTUxq6JaZcB7DphzqiOZubwvXHHsQAwhZQhWVd5ZPE6tEECcd
+         2YYFFbQERDM5WODfdqsLCeGxX/nVCzRv3ZP8zj7ZtFhEScgys27sD6b8xIvoxoZRkgiW
+         ucHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=edHYoLrzozt7VWPr8lKcpkP2B8WxliLQhvA2ZfvGJ8A=;
-        b=pOu74WhWzCwxesfNA/qeOxsZ9JqXAmw5o48jtJjFxJkjaq85m7ldt1bkc5pPiwEJYT
-         gG/cPSOZ20NOX+LkwYXc9HT7FpVyHqNz6WPsqEw3lHbHbOXxZ1i3o9pg5wnZ4DGmmp6w
-         lAbACFqFlGYCicRsnLcPs7c5hENg4EeUNGJ2/X7kNQtVypd3hn2pYkrCrIsTb3Z4RvCx
-         LAZk69ZZPJUIhsjqxu8Wr6CaVfnfJlCzFZ/Qw6nu850/ypgXCwU/j3npwmLiijjhdBqn
-         aC3b6FAWM/JVcODG3yVnPB/DVyooIFsjXA+klEaQ+CPJb1O9VT/PR4T40Rr588HVnDm8
-         7P8w==
-X-Gm-Message-State: AOAM533L/uNTyjA7B917dQ/rRmegEcXWKDzaqCKktvgfEwjH3NODA4hf
-        INHmsaqUP/cq3VPOcVhE9aoiHGlN
-X-Google-Smtp-Source: ABdhPJzaAw+QncVb4rmLWsOkSMjsNdgyK5C+KdYLNpx2dcb0rDvOJ2WNla/TYfKR6w/SCLAVu7GmMA==
-X-Received: by 2002:a17:90a:e147:: with SMTP id ez7mr4816183pjb.25.1589483947901;
-        Thu, 14 May 2020 12:19:07 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id d10sm15212pgo.10.2020.05.14.12.19.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 May 2020 12:19:07 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     congdanhqx@gmail.com, peff@peff.net, cbailey32@bloomberg.net,
-        l.s.r@web.de,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] compat: remove gmtime
-Date:   Thu, 14 May 2020 12:18:54 -0700
-Message-Id: <20200514191854.55231-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.26.2.812.g046d49d455
-MIME-Version: 1.0
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6DqoDlifF1LX9xj9jnP13sXE8xfQ8TFax0IlVs92p2E=;
+        b=l1JJ/ubiAa6syKRPBDAmx0/BSc5yLNmZLJIaEFo4/XCgebARTfb7R0mLpLS5Yga7iG
+         AF3dUPA3bazPQ+WlmR/NcFyM3GNUkQq0wFH+vdOSkTbofkHiexWqpcxgXnboVXUB1IRk
+         BcZiT0YKxiVPf2n4JtV69gYXpo2crt7WUcjtG7UvW0AwX3CyMgglZAd6NnhxwNMxL+SV
+         ZBA/5wZ12nvQL/j2b1tNvG/n5y5XhgWVOKTs731ttHicZ4B4Sk3Qt0RVQdkGrHuwEmUL
+         6fvNspHFW9Rj5yo2Qfb4tsbe2z7q6jSj6kLgbhwaGZEtNCufSwSPTyrc2FxpUy+rRoNT
+         dTCg==
+X-Gm-Message-State: AOAM531rPp6/Ps4fcfNxHbj1fMtkociSBsNTXmefYv6S+25N4iNT3wn/
+        BMK7OpeLJIHaI8HWJf7Aq6nXrI0V
+X-Google-Smtp-Source: ABdhPJzqwq11D2Fq8sZS16yDM90rf/VVbNDoh8/j5vuMNtTtXy2D5EdC8gucrfP5aeexuWOhhV7aVA==
+X-Received: by 2002:a5d:4389:: with SMTP id i9mr90615wrq.374.1589486004873;
+        Thu, 14 May 2020 12:53:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y3sm5393952wrt.87.2020.05.14.12.53.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2020 12:53:23 -0700 (PDT)
+Message-Id: <pull.785.git.git.1589486002453.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 14 May 2020 19:53:22 +0000
+Subject: [PATCH] unpack-trees: also allow get_progress() to work on a
+ different index
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     jeffhost@microsoft.com, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ccd469450a (date.c: switch to reentrant {gm,local}time_r, 2019-11-28)
-removes the only gmtime() call we had and moves to gmtime_r() which
-doesn't have the same portability problems.
+From: Elijah Newren <newren@gmail.com>
 
-Remove the compat gmtime code since it is no longer needed, and confirm
-by successfull running t4212 in FreeBSD 9.3 amd64 (the oldest I could
-get a hold off).
+commit b0a5a12a60 ("unpack-trees: allow check_updates() to work on a
+different index", 2020-03-27) allowed check_updates() to work on a
+different index, but it called get_progress() which was hardcoded to
+work on o->result much like check_updates() had been.  Update it to also
+accept an index parameter and have check_updates() pass that parameter
+along so that both are working on the same index.
 
-Further work might be needed to ensure 32bit time_t systems (like FreeBSD
-i386) will handle correctly the overflows tested in t4212, but that is
-orthogonal to this change, and it doesn't change the current behaviour
-as neither gmtime() or gmtime_r() will ever return NULL on those systems
-because time_t is unsigned.
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Noticed-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Makefile          |  8 --------
- compat/gmtime.c   | 29 -----------------------------
- config.mak.uname  |  1 -
- git-compat-util.h |  7 -------
- 4 files changed, 45 deletions(-)
- delete mode 100644 compat/gmtime.c
+    unpack-trees: also allow get_progress() to work on a different index
+    
+    This is a fix to a minor 2.27 regression, from the en/sparse-checkout
+    series.
 
-diff --git a/Makefile b/Makefile
-index 9804a0758b..12c650f259 100644
---- a/Makefile
-+++ b/Makefile
-@@ -405,9 +405,6 @@ all::
- # with a different indexfile format version.  If it isn't set the index
- # file format used is index-v[23].
- #
--# Define GMTIME_UNRELIABLE_ERRORS if your gmtime() function does not
--# return NULL when it receives a bogus time_t.
--#
- # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime.
- #
- # Define HAVE_CLOCK_MONOTONIC if your platform has CLOCK_MONOTONIC.
-@@ -1803,11 +1800,6 @@ ifndef NO_MSGFMT_EXTENDED_OPTIONS
- 	MSGFMT += --check --statistics
- endif
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-785%2Fnewren%2Frecent-sparse-checkout-bugfix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-785/newren/recent-sparse-checkout-bugfix-v1
+Pull-Request: https://github.com/git/git/pull/785
+
+ unpack-trees.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 1fe3764f2b2..2e6e9d5eeb8 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -333,10 +333,10 @@ static void load_gitmodules_file(struct index_state *index,
+ 	}
+ }
  
--ifdef GMTIME_UNRELIABLE_ERRORS
--	COMPAT_OBJS += compat/gmtime.o
--	BASIC_CFLAGS += -DGMTIME_UNRELIABLE_ERRORS
--endif
--
- ifdef HAVE_CLOCK_GETTIME
- 	BASIC_CFLAGS += -DHAVE_CLOCK_GETTIME
- endif
-diff --git a/compat/gmtime.c b/compat/gmtime.c
-deleted file mode 100644
-index e8362dd2b9..0000000000
---- a/compat/gmtime.c
-+++ /dev/null
-@@ -1,29 +0,0 @@
--#include "../git-compat-util.h"
--#undef gmtime
--#undef gmtime_r
--
--struct tm *git_gmtime(const time_t *timep)
--{
--	static struct tm result;
--	return git_gmtime_r(timep, &result);
--}
--
--struct tm *git_gmtime_r(const time_t *timep, struct tm *result)
--{
--	struct tm *ret;
--
--	memset(result, 0, sizeof(*result));
--	ret = gmtime_r(timep, result);
--
--	/*
--	 * Rather than NULL, FreeBSD gmtime simply leaves the "struct tm"
--	 * untouched when it encounters overflow. Since "mday" cannot otherwise
--	 * be zero, we can test this very quickly.
--	 */
--	if (ret && !ret->tm_mday) {
--		ret = NULL;
--		errno = EOVERFLOW;
--	}
--
--	return ret;
--}
-diff --git a/config.mak.uname b/config.mak.uname
-index 2bff8b3466..c0852b37a5 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -244,7 +244,6 @@ ifeq ($(uname_S),FreeBSD)
- 	PYTHON_PATH = /usr/local/bin/python
- 	PERL_PATH = /usr/local/bin/perl
- 	HAVE_PATHS_H = YesPlease
--	GMTIME_UNRELIABLE_ERRORS = UnfortunatelyYes
- 	HAVE_BSD_SYSCTL = YesPlease
- 	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
- 	PAGER_ENV = LESS=FRX LV=-c MORE=FRX
-diff --git a/git-compat-util.h b/git-compat-util.h
-index aed0b5d4f9..f1b0a5aa0a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1208,13 +1208,6 @@ int access_or_die(const char *path, int mode, unsigned flag);
- /* Warn on an inaccessible file if errno indicates this is an error */
- int warn_on_fopen_errors(const char *path);
+-static struct progress *get_progress(struct unpack_trees_options *o)
++static struct progress *get_progress(struct unpack_trees_options *o,
++				     struct index_state *index)
+ {
+ 	unsigned cnt = 0, total = 0;
+-	struct index_state *index = &o->result;
  
--#ifdef GMTIME_UNRELIABLE_ERRORS
--struct tm *git_gmtime(const time_t *);
--struct tm *git_gmtime_r(const time_t *, struct tm *);
--#define gmtime git_gmtime
--#define gmtime_r git_gmtime_r
--#endif
--
- #if !defined(USE_PARENS_AROUND_GETTEXT_N) && defined(__GNUC__)
- #define USE_PARENS_AROUND_GETTEXT_N 1
- #endif
+ 	if (!o->update || !o->verbose_update)
+ 		return NULL;
+@@ -415,7 +415,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 	if (o->clone)
+ 		setup_collided_checkout_detection(&state, index);
+ 
+-	progress = get_progress(o);
++	progress = get_progress(o, index);
+ 
+ 	git_attr_set_direction(GIT_ATTR_CHECKOUT);
+ 
+
+base-commit: b994622632154fc3b17fb40a38819ad954a5fb88
 -- 
-2.26.2.812.g046d49d455
-
+gitgitgadget
