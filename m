@@ -2,101 +2,95 @@ Return-Path: <SRS0=p0jH=64=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B938C433DF
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 22:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9611C433DF
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 22:55:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A5B820709
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 22:45:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 780B02065C
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 22:55:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=atlassian-com.20150623.gappssmtp.com header.i=@atlassian-com.20150623.gappssmtp.com header.b="1gwnVF2b"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fqPUfnUv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728822AbgENWpM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 May 2020 18:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56612 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728229AbgENWpL (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 14 May 2020 18:45:11 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B65C061A0C
-        for <git@vger.kernel.org>; Thu, 14 May 2020 15:45:11 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id k18so662435ion.0
-        for <git@vger.kernel.org>; Thu, 14 May 2020 15:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=updI4Oi+IY6X96qXaXL6/Wnt3GSMnNrXi9jUojhD6yk=;
-        b=1gwnVF2besGjwviOyUOw74RQbt504qmsDGoC903Z9+lksVVzAeZXZzOfHicC8j7VON
-         5GzZcSRjONR+4TUYr2KNERY9LeLQvXsNwOevei7a2vk8uiieEVSBsSWmJl1x1aHgDowQ
-         FpO5ganW8iMe/WgFdycS99dLb6WucdKJRUZGnD64oRXwV8q9OU1EGvj4yIqg3S8OOrP3
-         iui4nSshXiIcVJSFR+vxW+WQCIPR41nks1EH77v1AM/M59hLhFvIGlcM06cDGeAF4FjD
-         QlcRLLhZoHvwCeX+59exhESIkjvtpWrcKgr3C1zgq444yqwfXXK+D0f/UdukUCsJzcIB
-         Lzvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=updI4Oi+IY6X96qXaXL6/Wnt3GSMnNrXi9jUojhD6yk=;
-        b=GWSe7keOg5Kv32UOx0IyUO9/0pM97Pjboow7fLWA2l1ce1FU6J5SLMIdQOtUFp1AgD
-         kvFqsUKYVv3coUpSgQnYGtbySqMKHh32RA+sSsWRLf4fJg3Qzj+kJeSbw6qd1nf+Ouwl
-         LlpgqkVGAhLaOrOGzC9z2SxrlHCyjA9CKtjJbT4c7oXPHror9PRFsMbn+wyxVjjnP9Jx
-         /vxla5HQXB6D/hZERjZj99F4hYi0x7H0TwGLJ2CH6LzQz80e1KhmlqLrKWE8bw36dlWM
-         SFjKl32C0R/5SPhJiwLLxm/Cs2utw2y53nPRzz0JEv3IRJKwoQG+hHew6Ijk1xs97Or1
-         KH3g==
-X-Gm-Message-State: AOAM533muFPkhV/EG7vCvl6JXD3Ep4cR3u0YLHnc46tD/aLsFgW/FJeF
-        CTzwU2KDuwM4OOFSBtiwbdJJFQtnlmeOff4qaDp2I3m+Rvc=
-X-Google-Smtp-Source: ABdhPJwOxbl80KMER8DmlsCE3t8w8Pi0huhIHJJC5m1WIS+wxDwN/+OatW2SWbZ7TuWTzhPQzOrx7YEN70rIqL4roRs=
-X-Received: by 2002:a5d:8b8e:: with SMTP id p14mr374266iol.110.1589496310914;
- Thu, 14 May 2020 15:45:10 -0700 (PDT)
+        id S1728888AbgENWzU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 May 2020 18:55:20 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38356 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728229AbgENWzU (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 May 2020 18:55:20 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A879360443;
+        Thu, 14 May 2020 22:55:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1589496919;
+        bh=PxQmwKWYIiFk2JdrSuaRnmObhhKbW2yMB6vYKJNuqE0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=fqPUfnUvV3ULIHlIhe2eepj4C/qF8MYWJmgdSrGkacRzJoxkRRSRhI4UCRowOHCUX
+         6g/vNcQK/yiGL38P6I1h3qnFoFHIqfa3p7xMjB6LmWiY5cE3tfVI3+bbyJDOHAYdo3
+         rWSdUOZquMD1/3Y5rMYUiKP8wfi7oCQQgGWrwk+vn98PkgdoAlFG4sCbhubkXtkCpy
+         /L4x7SRtqrZCHZIBVZgORP7TPjmBLwKkF0Jfe41/4xOD32e+gz3ssELXpjloUjP9WK
+         54VMbKKqwefLYoedxY6F4w2m3fqvdA1tHwetVNR0BwTOCtywSXvIPjLC2fZMGO5fxG
+         UqDD6FiDkY3g5DUrAt4wgJ23T+XVe9kbY+cKZ+GGwFYL7c+KDik0pbm906jWd0v2uN
+         k2NjnGVQzxFOEu0bS4UbWT9Ka2jOLB4AiN3zmpf5st5uk7puL6/Y9wgjGUTklcKW7g
+         wp4kzHsCycfHJzQsssyxiYBofXUyu4rKir3k9ryFiwpedjkVRe5
+Date:   Thu, 14 May 2020 22:55:14 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH] t0300: workaround bug in FreeBSD < 10 sh
+Message-ID: <20200514225514.GA6362@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        git@vger.kernel.org, peff@peff.net
+References: <20200514210518.56101-1-carenas@gmail.com>
 MIME-Version: 1.0
-References: <CAGjfG9a-MSg7v6+wynR1gL0zoe+Kv8HZfR8oxe+a3r59cGhEeg@mail.gmail.com>
- <20200514203326.2aqxolq5u75jx64q@chatter.i7.local> <20200514210501.GY1596452@mit.edu>
- <CAGjfG9bsQh2C6WP242v4LoiaSdghZDPuqns0VO82Txe-V54_KA@mail.gmail.com>
- <xmqqmu6ap4dw.fsf@gitster.c.googlers.com> <CAGjfG9akT+KG-tttRWEX_ZqxrqPoY_4Ed7Pymt4DkV5Rgc1CEA@mail.gmail.com>
-In-Reply-To: <CAGjfG9akT+KG-tttRWEX_ZqxrqPoY_4Ed7Pymt4DkV5Rgc1CEA@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Thu, 14 May 2020 15:44:59 -0700
-Message-ID: <CAGyf7-Fvyes2AwPhqAz=GhpDb=P664DLpK+4o3-ChKyR5KmJQw@mail.gmail.com>
-Subject: Re: Add a "Flattened Cache" to `git --clone`?
-To:     Caleb Gray <hey@calebgray.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Content-Disposition: inline
+In-Reply-To: <20200514210518.56101-1-carenas@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-1-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 14, 2020 at 3:05 PM Caleb Gray <hey@calebgray.com> wrote:
->
-> Actually those are the steps that I'm explicitly hoping can be
-> skipped, both on server and client, after the first successful clone
-> request transaction. The cache itself would be of the end resulting
-> `.git` directory (client side)... unless I have misconceptions about
-> the complexity of reproducing what ends up on the client side from the
-> server side... I figured the shared library probably offers endpoints
-> for the information I'd need to achieve that.
 
-I don't know that such an approach would ever get accepted. At most it
-could only be a partial replica of a `.get` directory. For example,
-including `.git/config` or `.git/hooks` carries some heavy security
-considerations that make it very unlikely such a change would get
-accepted. When you pare down the things from the `.git` directory that
-can reasonably be included, I suspect you're pretty much going to be
-left with `.git/objects/pack/pack-<something>.pack`, and perhaps
-`.git/packed-refs` (although the ref negotiations the client needs to
-do in order to even request a pack means you're unlikely to actually
-_benefit_ from including `packed-refs`).
+--AhhlLboLdkugWU4S
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-For such client-side caching, really you may be better of not trying
-to reinvent the wheel and instead, as others have suggested, simply
-use `git clone --reference` (possibly plus `--dissociate` if you don't
-want any long-term connection between clones) to allow `git clone` to
-reference all the objects you have available locally to skip most of
-the pack transfer. If you do this, then `git clone` can _already_ make
-use of local `idx` files, in addition to packs, to save work.
+On 2020-05-14 at 21:05:18, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> 4c5971e18a (credential: treat "?" and "#" in URLs as end of host,
+> 2020-04-14) introduces check_host_and_path to t0300 and some tests that
+> use it, but fail in at least FreeBSD 9.3.
 
-Bryan Turner
+=46rom FreeBSD's website, it looks like the production releases are 11.3
+and 12.1.  9.3 is EOL and has been since 2019.  Since FreeBSD is not
+supporting this release with security updates, nobody should be using
+it.  In light of that, do we need this patch?
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--AhhlLboLdkugWU4S
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXr3MUQAKCRB8DEliiIei
+gWCyAP99ytDLGyEiq6Lasehv+llM53Et+x8eSLZTaywByFDWIQEA/jZ81ZBWONTu
+GRCYcGcB/IQ9LcIWZ75GfgrIWnKzNA0=
+=IR6j
+-----END PGP SIGNATURE-----
+
+--AhhlLboLdkugWU4S--
