@@ -6,60 +6,63 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52951C433DF
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 21:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 210DBC433DF
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 21:23:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E87A2065C
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 21:19:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0D4E2065D
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 21:23:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="q8abhH5Y"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bDvwrEB/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbgENVT3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 May 2020 17:19:29 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61014 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726027AbgENVT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 May 2020 17:19:29 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D0B9CF34F;
-        Thu, 14 May 2020 17:19:27 -0400 (EDT)
+        id S1727847AbgENVXv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 May 2020 17:23:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56642 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726073AbgENVXs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 May 2020 17:23:48 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D59735E8FB;
+        Thu, 14 May 2020 17:23:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ifGH16hzYdmphZxxNmD58U72hFk=; b=q8abhH
-        5YSu9XnKsfNhkHSfpvHDn3ryaIjBJclKMa3NQgMKu4eeEBWUt1i6dwVL3V7MhIbx
-        ZI7G5VWnNA4ROdW3gdVQpgox8NEdvYh2yk+GpPsv4EQ+/93bEKxxeUrRXj5iwJ8X
-        X8MX+aV6w41Yxdn0I5QjvTjUENRxjTyMe06QQ=
+        :content-type; s=sasl; bh=8ut1N2dLS9Dym4zvR3jIW7JSWyc=; b=bDvwrE
+        B/sQep4YI3ePKsrLSmqkej/ZVHaKTvVU+nrapwLJOAyr58+4KwUPgBYmlqMN1+H3
+        Q8u2a6YbRbQlIQ6GoWzH8BMY8+aOZAFqIuXeXN3nSRAgJPNQdBk8JvqETuyi9sSZ
+        1sJ9IrsS4WG2uxkMg8U+UI272+S1sIUl/IbcY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=J0Y3j0Kg8Ol3bCyS63YQY8s22AQsoLGB
-        /QTFxBwJl/rej5C+JyJNdVHTHMF85OGXHWdgbBAbjy/m+h43H17oxCYemLjVmWOt
-        stpTvLAbKvsD9a60BdlM18n0CFtRTR6m3MamJdQakdRH3QFJLOrjN/ai8vqfUazR
-        TCCKug28O0c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 259F6CF34D;
-        Thu, 14 May 2020 17:19:27 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ViCCmicpfgtFGl1rRyEEDKyt52iaLmP8
+        LWKUO/1gzed+sPhufOCZ3qjGqHNphqcjynX5ecD4uwDiV0MiTyt5x4lw5sKXZbI4
+        rneEFNbpXO+z4Hoar418nLUcrpUeUF8AfZeilh8LIy4bnO1s5HXPpSoANbaJVmWc
+        GLYIfPV9t+o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD1BB5E8FA;
+        Thu, 14 May 2020 17:23:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6F5E5CF34C;
-        Thu, 14 May 2020 17:19:24 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4D1295E8F7;
+        Thu, 14 May 2020 17:23:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Caleb Gray <hey@calebgray.com>, git@vger.kernel.org
+Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>, Caleb Gray <hey@calebgray.com>,
+        git@vger.kernel.org
 Subject: Re: Add a "Flattened Cache" to `git --clone`?
 References: <CAGjfG9a-MSg7v6+wynR1gL0zoe+Kv8HZfR8oxe+a3r59cGhEeg@mail.gmail.com>
         <20200514203326.2aqxolq5u75jx64q@chatter.i7.local>
-Date:   Thu, 14 May 2020 14:19:22 -0700
-In-Reply-To: <20200514203326.2aqxolq5u75jx64q@chatter.i7.local> (Konstantin
-        Ryabitsev's message of "Thu, 14 May 2020 16:33:26 -0400")
-Message-ID: <xmqqv9kyp63p.fsf@gitster.c.googlers.com>
+        <20200514210501.GY1596452@mit.edu>
+        <20200514211040.a7hrirdzgkphx3la@chatter.i7.local>
+Date:   Thu, 14 May 2020 14:23:44 -0700
+In-Reply-To: <20200514211040.a7hrirdzgkphx3la@chatter.i7.local> (Konstantin
+        Ryabitsev's message of "Thu, 14 May 2020 17:10:40 -0400")
+Message-ID: <xmqqr1vmp5wf.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 95D2FAE2-9628-11EA-9FF5-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 314FE566-9629-11EA-B02F-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,31 +70,15 @@ X-Mailing-List: git@vger.kernel.org
 
 Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-> On Thu, May 14, 2020 at 07:34:08AM -0700, Caleb Gray wrote:
->> ...
->> To subsequent clones (until cache invalidated) using the "flattened
->> cache" version (presumably built while fulfilling the first clone
->> request above):
->> 
->>  Cloning into 'linux'...
->>  Receiving cache: 100% (7344127/7344127), 1.22 GiB | 8.51 MiB/s, done.
->
-> I don't think it's a common workflow for someone to repeatedly clone 
-> linux.git. Automated processes like CI would be doing it, but they tend 
-> to blow away the local disk between jobs, so they are unlikely to 
-> benefit from any native git local cache for something like this (in 
-> fact, we recommend that people use clone.bundle files for their CI 
-> needs, as described here: 
-> https://www.kernel.org/best-way-to-do-linux-clones-for-your-ci.html).
+> I think something like git-caching-proxy would be a neat project, 
+> because it would significantly improve mirroring for CI deployments 
+> without requiring that each individual job implements clone.bundle 
+> prefetching.
 
-I have a feeling that the use case you are talking about is
-different from what the original message assumes what use case needs
-to be helped (even though the original message lacks substance and
-it is hard to guess what idea is being proposed).  
+What are we improving with such a proxy, though?
 
-Given the phrase like "while fulfilling the first clone request", I
-took it to mean that a cache would sit on the source side, not on
-the client side.  You seem to be talking about keeping a copy of
-what you earlier cloned to save incoming bandwidth on the client
-side.
-
+Not bandwidth to the client, apparently.  I thought that with the
+reachability bitmap on the server side with reusing packed object,
+it was more or less a solved problem that the server end spends way
+too much time enumerating, deltifying and compressing the object
+data?
