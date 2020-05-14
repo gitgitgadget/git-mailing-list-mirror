@@ -2,153 +2,123 @@ Return-Path: <SRS0=p0jH=64=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A7B8C433E0
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 18:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24A8AC433E0
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 18:27:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F53B2054F
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 18:27:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F08482054F
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 18:27:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n3fazigw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HohcimjY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbgENS1J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 May 2020 14:27:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57261 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726075AbgENS1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 May 2020 14:27:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 892C7CDD10;
-        Thu, 14 May 2020 14:27:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cLdGcx6dolRLtw8pBzVI/aqT5Bg=; b=n3fazi
-        gwX6rtvKk1FoMegE/IVU0AaR6GZBJ9fHpBelzdqKLGoQiB7mFLouiJW5dAIqIkRK
-        i23naqA+MfuCclSAoxta3Z8128tKFxgwlbHvhpZv0LGKntYI+TB981v2C1yC9JRs
-        3SgZqzJaxwWIvYegBHXfTjQKi2kx7/zhTkT60=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ucUjOtZYooqVMFc6RAWxezCEXyFdpsIB
-        CnDjO5D/6+edBQJGiOM/A8Ht8zZ9T2zi9O2s4aSLQ9bwYPJod8J2pdudZEodIWXT
-        9gGb79L/7bkUey+AJd3tdyIOthAPWPRb8ZSTRnl8DdMmuKVpU7DrvV3spDnVucLA
-        pIEJ6ybYgPQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 821F8CDD0F;
-        Thu, 14 May 2020 14:27:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B8B53CDD0C;
-        Thu, 14 May 2020 14:27:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        dstolee@microsoft.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v3 4/8] builtin/commit-graph.c: extract 'read_one_commit()'
-References: <cover.1588641176.git.me@ttaylorr.com>
-        <cover.1589407014.git.me@ttaylorr.com>
-        <c37e94907b140f3d2e5a44293f2c1faa6d473712.1589407014.git.me@ttaylorr.com>
-        <20200514175646.GA2430834@coredump.intra.peff.net>
-        <20200514180200.GA86181@syl.local>
-Date:   Thu, 14 May 2020 11:27:00 -0700
-In-Reply-To: <20200514180200.GA86181@syl.local> (Taylor Blau's message of
-        "Thu, 14 May 2020 12:02:00 -0600")
-Message-ID: <xmqq8shuqsnf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726374AbgENS10 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 May 2020 14:27:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44472 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726075AbgENS1Z (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 May 2020 14:27:25 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92DA8C061A0C
+        for <git@vger.kernel.org>; Thu, 14 May 2020 11:27:25 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id a136so4008670qkg.6
+        for <git@vger.kernel.org>; Thu, 14 May 2020 11:27:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/w9iCsvK/5/tD1Id/UFcJUzu6YWjNIvHIigSeqNU2M4=;
+        b=HohcimjY8mKQ9wcV+qKC689Crtm2SZZRsgG48jEfI63EmtDi8Gv3GarBaa0o4GaYVn
+         IJMnDPwlmairGXkgBGBd4MDxtjiCjC/opYuPozao4luG19JTsgfoogQUkNV13I1zaWtv
+         bjPm82raEZ43CjL2TUojSMXAulKGHXio6T4dig4dU0cYgN0kbzeQVAj1LGh0h9x/THMe
+         5vH2J00FVkkHo9VvHnkT1g9bsNad9N9G0ekEkVf4flbhi1MhtZCJeVOf4EIfbyRXEUef
+         PDjHSB1fn0a+eG+yV6pbUz8w00heh5SO9s+U7Ly14XJucgJEya3/B9ZgmTCVK2D7StwE
+         H5dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/w9iCsvK/5/tD1Id/UFcJUzu6YWjNIvHIigSeqNU2M4=;
+        b=CGiZm+rLvtxDhB7y3CGeehFPBq9xWFuhy/1jedft8+99lEbpVjZJJUwiAmEo9fvNNX
+         PWqQGCL6F+QsnpmX4jdajS+eCK9CPqqCLS+iqUXqJvNlnrkiQ8iR08ztHEOwcfbZwWo3
+         PTXOmB7R+0Dj7Vz81DE+sj6j6zN3ncxQ0f/2KvwsIxj247oB/lnuY98IKEus9BFfdukN
+         /mQrnu/lVDW6m8GhxhGVP+HId0dKvBptPnOAi1lAZ+HBOcUofxn1ZYwS+do0h9kRzmMl
+         Vlx5Qu+gdQgLSC/z0butHB94xJZVoxIykh5ryVi0Gz7V7xxM4xSApfYPFb0dFvjmTYCr
+         ujwA==
+X-Gm-Message-State: AOAM530n1mTOKUJksj8O3vlncUkHL+0U93cFWLr1/c6oRqrstVtpdVOP
+        BE4t2Cyefr0Kxg3kHPixuuq534TGj6FUAtSAnj4=
+X-Google-Smtp-Source: ABdhPJy1RyKl3t47DHA0/pCfjGOKPzN/flbWbagTJW6gi7XTdzkZcn3oGG2xSJ4EY+YJ2HaJzbM0n8o4l7lRdO3FK1I=
+X-Received: by 2002:a37:49cb:: with SMTP id w194mr5874729qka.77.1589480844687;
+ Thu, 14 May 2020 11:27:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 81B110A2-9610-11EA-9BA8-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <pull.614.v2.git.1589302254.gitgitgadget@gmail.com> <00cae10bbb7870b27202642d6e1e284a97a3c5b7.1589302254.git.gitgitgadget@gmail.com>
+ <20200514152559.GA1939@danh.dev>
+In-Reply-To: <20200514152559.GA1939@danh.dev>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Thu, 14 May 2020 23:57:14 +0530
+Message-ID: <CAKiG+9Uozz0q_Jk2dPhrh7nKCoObeJWZ-zyX5cr0Zc4Q_0YVsA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/11] cmake: support for building git on windows with mingw
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
->  static int graph_write(int argc, const char **argv)
->  {
-> -	struct string_list *pack_indexes = NULL;
-> +	struct strbuf buf = STRBUF_INIT;
-> +	struct string_list pack_indexes;
-
-I would strongly prefer this to be initialized here, not ...
-
->  	struct oidset commits = OIDSET_INIT;
->  	struct object_directory *odb = NULL;
-> -	struct string_list lines;
->  	int result = 0;
->  	enum commit_graph_write_flags flags = 0;
+On Thu, May 14, 2020 at 8:56 PM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh
+<congdanhqx@gmail.com> wrote:
 >
-> @@ -209,44 +221,34 @@ static int graph_write(int argc, const char **argv)
->  		return 0;
->  	}
+> Hi Sibi,
 >
-> -	string_list_init(&lines, 0);
-> -	if (opts.stdin_packs || opts.stdin_commits) {
-> -		struct strbuf buf = STRBUF_INIT;
-> +	if (opts.stdin_packs) {
-> +		string_list_init(&pack_indexes, 0);
+> On 2020-05-12 16:50:49+0000, Sibi Siddharthan via GitGitGadget <gitgitgad=
+get@gmail.com> wrote:
+> > From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+> > diff --git a/CMakeLists.txt b/CMakeLists.txt
+> > index 47d3f3c2866..9625e41886f 100644
+> > --- a/CMakeLists.txt
+> > +++ b/CMakeLists.txt
+> > @@ -13,9 +13,12 @@ project(git
+> >       VERSION ${git_version}
+> >       LANGUAGES C)
+> >
+> > +
+>
+> This newline maybe left from debugging. (and other new newline below).
+>
+> > +#Platform Specific
+> > +if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+>
+> Please drop ${} around CMAKE_SYSTEM_NAME, here (and other if)
+> Or user may accidental messed up.
+> ------------8<----------------
+> $ cat CMakeLists.txt
+> project(test)
+> message("This is ${CMAKE_SYSTEM_NAME}")
+> if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+>         message("Yes, STREQUAL Windows")
+> endif()
+> $ cmake . -DLinux=3DWindows
+> This is Linux
+> Yes, STREQUAL Windows
+> -- Configuring done
+> -- Generating done
+> -- Build files have been written to: /tmp
+> ---------------->8--------------
+>
 
-... down here.  I know that the use of it is guarded with a ternary
-(opts.stdin_packs ? &pack_indexes : NULL), but that is why you need
-to UNLEAK() it, intead of unconditionally releasing the strbuf, at
-the end of this function, no?
+Thanks for pointing it out, will fix it ASAP.
 
->  		while (strbuf_getline(&buf, stdin) != EOF)
-> -			string_list_append(&lines, strbuf_detach(&buf, NULL));
-> +			string_list_append(&pack_indexes,
-> +					   strbuf_detach(&buf, NULL));
-> +	} else if (opts.stdin_commits) {
-> +		oidset_init(&commits, 0);
-> +		flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
->
-> -		if (opts.stdin_packs)
-> -			pack_indexes = &lines;
-> -		if (opts.stdin_commits) {
-> -			struct string_list_item *item;
-> -			oidset_init(&commits, lines.nr);
-> -			for_each_string_list_item(item, &lines) {
-> -				struct object_id oid;
-> -				const char *end;
-> -
-> -				if (parse_oid_hex(item->string, &oid, &end)) {
-> -					error(_("unexpected non-hex object ID: "
-> -						"%s"), item->string);
-> -					return 1;
-> -				}
-> -
-> -				oidset_insert(&commits, &oid);
-> +		while (strbuf_getline(&buf, stdin) != EOF) {
-> +			if (read_one_commit(&commits, buf.buf)) {
-> +				result = 1;
-> +				goto cleanup;
->  			}
-> -			flags |= COMMIT_GRAPH_WRITE_CHECK_OIDS;
->  		}
-> -
-> -		UNLEAK(buf);
->  	}
->
->  	if (write_commit_graph(odb,
-> -			       pack_indexes,
-> +			       opts.stdin_packs ? &pack_indexes : NULL,
->  			       opts.stdin_commits ? &commits : NULL,
->  			       flags,
->  			       &split_opts))
->  		result = 1;
->
-> -	UNLEAK(lines);
-> +cleanup:
-> +	UNLEAK(pack_indexes);
-> +	strbuf_release(&buf);
->  	return result;
->  }
+Thank You,
+Sibi Siddharthan
+
+
 >
 > --
-> 2.26.0.113.ge9739cdccc
+> Danh
