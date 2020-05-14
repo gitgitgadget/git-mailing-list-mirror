@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1F0AC433E1
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 23:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5822DC433E0
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 23:28:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6887D20734
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 23:28:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16D8A2065D
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 23:28:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UYGMNb4o"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bo9PSdZV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728133AbgENX2D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 May 2020 19:28:03 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54274 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbgENX2B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 May 2020 19:28:01 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5248EC6FC6;
-        Thu, 14 May 2020 19:27:53 -0400 (EDT)
+        id S1728208AbgENX2U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 May 2020 19:28:20 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59843 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726265AbgENX2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 May 2020 19:28:20 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 502C8D00EF;
+        Thu, 14 May 2020 19:28:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:date:message-id:mime-version:content-type
         :content-transfer-encoding; s=sasl; bh=CtCoInnlGxlqWQ4ckqo0Da9TI
-        +o=; b=UYGMNb4oXCpRC2fAtssVTTrdKNW7gw6fiuRhuEtdACeI0uWYMMM1i7hrU
-        owkst0VH0myy+m0Hn2yictJlwrO+aj0tvsgYmSNczi4dUceR4alAiuBOQEEa1Uvn
-        AyzXDAsz9NawPLP2fWF29t73Yo9PjkIrph5Dh4Xxq1FX9bOY2w=
+        +o=; b=Bo9PSdZV44Heq0OsAgMeUJ/vP1MvZ6B/4j+52CJCwTRDNYk9t+X0cwH7V
+        yCH6RPuOZxzfdZdHjQqJM38sopLsjOVFqd+bU7a9aEbdQ+H8cUBXv4B1APSa1uYl
+        LegMQI2O9aLsenHXIgZ5XZtf3izhbEjC+UWddTI7ZIB/zPFPdI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=YqPw4LO04oE5HtlyOoz
-        3G6HHFG3zFOuqf5YSWXHPc26E2R0tc3m4DLCjDB37y2H5J1UeZrCxUUd68FOqO6M
-        bbl9mAA/JLDuTNe8kq1UtwKHHQdtVkqt60WWFc6ZO5kQCPrJfVemfa5QQaUrvCWK
-        YBoKc5bQtTRASKbCvWaiGt+c=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 48942C6FC5;
-        Thu, 14 May 2020 19:27:53 -0400 (EDT)
+        :content-transfer-encoding; q=dns; s=sasl; b=giyfWwN3VRXHa7XT1VX
+        TDsDVjKPi0d0oBJbgzUxW3uyMr1Grx9Lt1f3Cp5dgZ4gMvHXdniCsOq8kMzYMryy
+        6/HOSbABtP59ttomqCmQ+RUCIbA8QBJuf6LFfsbnHHhiccOREVi2UnS90r3OIBkf
+        OfKYW54IyM7roFu+XtV2psbI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 47662D00EE;
+        Thu, 14 May 2020 19:28:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55DB6C6FC2;
-        Thu, 14 May 2020 19:27:50 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5EAC4D00ED;
+        Thu, 14 May 2020 19:28:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
 Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
         git-packagers@googlegroups.com
 Subject: [ANNOUNCE] Git v2.27.0-rc0
-Date:   Thu, 14 May 2020 16:27:48 -0700
-Message-ID: <xmqqy2punll7.fsf@gitster.c.googlers.com>
+Date:   Thu, 14 May 2020 16:28:03 -0700
+Message-ID: <xmqqwo5enlks.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 86E557E8-963A-11EA-8586-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 8FDBC79C-963A-11EA-AD5C-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
