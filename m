@@ -2,209 +2,195 @@ Return-Path: <SRS0=p0jH=64=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F840C433E0
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 18:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2C19C433E0
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 19:19:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0867B2054F
-	for <git@archiver.kernel.org>; Thu, 14 May 2020 18:31:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B158620675
+	for <git@archiver.kernel.org>; Thu, 14 May 2020 19:19:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pBfZkqsy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hEfl/uVb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbgENSbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 May 2020 14:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45106 "EHLO
+        id S1728300AbgENTTJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 May 2020 15:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726119AbgENSbd (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 14 May 2020 14:31:33 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C85CC061A0C
-        for <git@vger.kernel.org>; Thu, 14 May 2020 11:31:32 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id i5so3969561qkl.12
-        for <git@vger.kernel.org>; Thu, 14 May 2020 11:31:32 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1728286AbgENTTI (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 May 2020 15:19:08 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D55DAC061A0C
+        for <git@vger.kernel.org>; Thu, 14 May 2020 12:19:08 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id mq3so12991422pjb.1
+        for <git@vger.kernel.org>; Thu, 14 May 2020 12:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GGb1tKRws+HUzp18n/vZtkUImh+/vkkT7bidWgjRq5E=;
-        b=pBfZkqsyiNPsjYI+wDxEbIQv2+zPVG4Iw5pTq+AwZj8nIvhFYyqMQuO249b8HA5JEJ
-         RaN2tRCoC8af4hi+j506hWfaOfFKEcZl5gFSgtKf76eb8+enXezLNPj3B1oV0crTJszF
-         q/YQs4dXhHWr+4Djj4P3r+hMiGmZpuu4Gq6eW1EIJ6Tb3KejQJx7W+rWWc0uzmnQ6akJ
-         7xep8QcOeu+AFiRrLZkFU16GzaeVu+cA1vwqYD55iWCKfSQAWLeZe6GJe07vNByuloJ0
-         3oFx5qidI0jR9zpPaEVhfbrbs+kX8zxqwYkEMKjRgm6asMPtvuMheLmZRtySC30zw+In
-         rpow==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=edHYoLrzozt7VWPr8lKcpkP2B8WxliLQhvA2ZfvGJ8A=;
+        b=hEfl/uVbJ3VcGjp4n/uSd9pY6EmnCh7XxmtjxYl9p3TtQpvtIwmW16BddZNHHRi7xi
+         TFjXBwLXYBoZDZK+Dn5e13RNgR6p0zbwXXOa2rlG/O3oNze4xiJzA6a3QOfqmeEcrPte
+         /t1uchw7pDbDg94mTvylrCyUnKzdLdoSeRoiayNhVrEUZZaP2OeHvL6cpI1bRG9pTS97
+         cul+K6f4cCFUgvWr2vHLPuJIQqA/ftoO3KTbjGSmkuFel+Mi/PKwvgojHnkVE1Kuns/E
+         JccgzdqSIK8QQJxhcYxGJOmgaakeNKWf4tryNRm1c5k3CuzJ14dHl5q1mEe7+BqJ6jRd
+         hTkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GGb1tKRws+HUzp18n/vZtkUImh+/vkkT7bidWgjRq5E=;
-        b=hk69qTTsabePolluTsxJpnJyFN/pyNYBl112k9AvKbs5hfYe8zAvQ/BdCug/z6OdXg
-         VZOHOe0sLJz7y1HKfB44zarTT9irUGQR+3TYl6f/DzTR3mgNWOVYFq2MMNLtIQPH9zP0
-         OCY6sTq7PQS5pFfKMk+b5IqGs3cIykEL7k4dwSUoDDWI1B4zLPRM87saGT94cnNWolIc
-         Q0CTS4fxwV6LW2urOnvpo+CthpvmNfQNBjKuLju2JIir3XszqinZQBXQ0afxkmLC7mDm
-         tE4dbJ74B2A1dqhnkL4o6dwyjjqpsli5qfxQXQSu+eHxxTDCQlom5636cWVqsTAyLIrO
-         mpTA==
-X-Gm-Message-State: AOAM530quuGKSYtqvTnvHM6kyZ7sVsKfNw3FAG0zNnXCtcjxDk1sUYuG
-        Re+DivgYakH84W15dFYz2kHnk/PVDVSbk+aH8uxF9TzP
-X-Google-Smtp-Source: ABdhPJxfx3GVeN1apR5HnRW//9I1NkD2eKlCVWk6E68eH4wiOw8nm6LWuYgHTufHsLV1Pz3dgItr/37K1AX1eLN7igY=
-X-Received: by 2002:a37:7702:: with SMTP id s2mr6145757qkc.125.1589481090270;
- Thu, 14 May 2020 11:31:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=edHYoLrzozt7VWPr8lKcpkP2B8WxliLQhvA2ZfvGJ8A=;
+        b=pOu74WhWzCwxesfNA/qeOxsZ9JqXAmw5o48jtJjFxJkjaq85m7ldt1bkc5pPiwEJYT
+         gG/cPSOZ20NOX+LkwYXc9HT7FpVyHqNz6WPsqEw3lHbHbOXxZ1i3o9pg5wnZ4DGmmp6w
+         lAbACFqFlGYCicRsnLcPs7c5hENg4EeUNGJ2/X7kNQtVypd3hn2pYkrCrIsTb3Z4RvCx
+         LAZk69ZZPJUIhsjqxu8Wr6CaVfnfJlCzFZ/Qw6nu850/ypgXCwU/j3npwmLiijjhdBqn
+         aC3b6FAWM/JVcODG3yVnPB/DVyooIFsjXA+klEaQ+CPJb1O9VT/PR4T40Rr588HVnDm8
+         7P8w==
+X-Gm-Message-State: AOAM533L/uNTyjA7B917dQ/rRmegEcXWKDzaqCKktvgfEwjH3NODA4hf
+        INHmsaqUP/cq3VPOcVhE9aoiHGlN
+X-Google-Smtp-Source: ABdhPJzaAw+QncVb4rmLWsOkSMjsNdgyK5C+KdYLNpx2dcb0rDvOJ2WNla/TYfKR6w/SCLAVu7GmMA==
+X-Received: by 2002:a17:90a:e147:: with SMTP id ez7mr4816183pjb.25.1589483947901;
+        Thu, 14 May 2020 12:19:07 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id d10sm15212pgo.10.2020.05.14.12.19.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 May 2020 12:19:07 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     congdanhqx@gmail.com, peff@peff.net, cbailey32@bloomberg.net,
+        l.s.r@web.de,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH] compat: remove gmtime
+Date:   Thu, 14 May 2020 12:18:54 -0700
+Message-Id: <20200514191854.55231-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.26.2.812.g046d49d455
 MIME-Version: 1.0
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <pull.614.v2.git.1589302254.gitgitgadget@gmail.com> <f496cd7d8aa12047db7f6c0212fbcb2497469785.1589302255.git.gitgitgadget@gmail.com>
- <20200514153140.GB1939@danh.dev>
-In-Reply-To: <20200514153140.GB1939@danh.dev>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Fri, 15 May 2020 00:01:20 +0530
-Message-ID: <CAKiG+9Xu2OMnj9JghEbzD358ZdcR6vw5XdswAqimrZWWXLHvJA@mail.gmail.com>
-Subject: Re: [PATCH v2 08/11] cmake: added checks for struct stat and libiconv
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 14, 2020 at 9:01 PM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh
-<congdanhqx@gmail.com> wrote:
->
-> On 2020-05-12 16:50:51+0000, Sibi Siddharthan via GitGitGadget <gitgitgad=
-get@gmail.com> wrote:
-> > From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-> >
-> > The CMake script now checks whether st_blocks is a member of struct sta=
-t
-> > and set the compile definition NO_ST_BLOCKS_IN_STRUCT_STAT accordingly.
-> >
-> > The check for whether ICONV_OMITS_BOM is also added as requested by Dan=
-h.
->
-> Please don't write my name in the commit message like this.
-> This maybe rephased to:
->
->         While we're as it, add the check for ICONV_OMITS_BOM.
+ccd469450a (date.c: switch to reentrant {gm,local}time_r, 2019-11-28)
+removes the only gmtime() call we had and moves to gmtime_r() which
+doesn't have the same portability problems.
 
-Sure, will remove your name from the message.
-I added it because gitgitgadget PR bot suggested it as a good practice.
+Remove the compat gmtime code since it is no longer needed, and confirm
+by successfull running t4212 in FreeBSD 9.3 amd64 (the oldest I could
+get a hold off).
 
->
-> > Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-> > ---
-> >  CMakeLists.txt | 59 ++++++++++++++++++++++++++++++++++++++++++++++++--
-> >  1 file changed, 57 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/CMakeLists.txt b/CMakeLists.txt
-> > index 4353080b708..975791c8b89 100644
-> > --- a/CMakeLists.txt
-> > +++ b/CMakeLists.txt
-> > @@ -22,6 +22,7 @@ project(git
-> >  include(CheckTypeSize)
-> >  include(CheckCSourceRuns)
-> >  include(CheckCSourceCompiles)
-> > +include(CheckCSourceRuns)
-> >  include(CheckIncludeFile)
-> >  include(CheckFunctionExists)
-> >  include(CheckSymbolExists)
-> > @@ -128,7 +129,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-> >       include_directories(compat/win32)
-> >       add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRL=
-F NO_UNIX_SOCKETS WIN32
-> >                               _CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=
-=3D".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
-> > -                             NOGDI OBJECT_CREATION_MODE=3D1 __USE_MING=
-W_ANSI_STDIO=3D0 NO_ST_BLOCKS_IN_STRUCT_STAT
-> > +                             NOGDI OBJECT_CREATION_MODE=3D1 __USE_MING=
-W_ANSI_STDIO=3D0
-> >                               USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PR=
-EVENTS_DELETE USE_WIN32_MMAP
-> >                               UNICODE _UNICODE HAVE_WPGMPTR ENSURE_MSYS=
-TEM_IS_SET)
-> >       list(APPEND compat_SOURCES compat/mingw.c compat/winansi.c compat=
-/win32/path-utils.c
-> > @@ -280,6 +281,11 @@ if(HAVE_CLOCK_MONOTONIC)
-> >       add_compile_definitions(HAVE_CLOCK_MONOTONIC)
-> >  endif()
-> >
-> > +#check for st_blocks in struct stat
-> > +check_struct_has_member("struct stat" st_blocks "sys/stat.h" STRUCT_ST=
-AT_HAS_ST_BLOCKS)
-> > +if(NOT STRUCT_STAT_HAS_ST_BLOCKS)
-> > +     add_compile_definitions(NO_ST_BLOCKS_IN_STRUCT_STAT)
-> > +endif()
-> >
-> >  #compile checks
-> >  check_c_source_runs("
-> > @@ -344,7 +350,6 @@ if(NOT HAVE_REGEX)
-> >       add_compile_definitions(NO_REGEX NO_MBSUPPORT GAWK)
-> >  endif()
-> >
-> > -
-> >  check_c_source_compiles("
-> >  #include <stddef.h>
-> >  #include <sys/types.h>
-> > @@ -368,6 +373,56 @@ if(HAVE_BSD_SYSCTL)
-> >       add_compile_definitions(HAVE_BSD_SYSCTL)
-> >  endif()
-> >
-> > +set(CMAKE_REQUIRED_LIBRARIES ${Iconv_LIBRARIES})
-> > +set(CMAKE_REQUIRED_INCLUDES ${Iconv_INCLUDE_DIRS})
-> > +
-> > +check_c_source_compiles("
-> > +#include <iconv.h>
-> > +
-> > +extern size_t iconv(iconv_t cd,
-> > +             char **inbuf, size_t *inbytesleft,
-> > +             char **outbuf, size_t *outbytesleft);
-> > +
-> > +int main(){return 0;}"
-> > +HAVE_NEW_ICONV)
-> > +if(HAVE_NEW_ICONV)
-> > +     set(HAVE_OLD_ICONV 0)
-> > +else()
-> > +     set(HAVE_OLD_ICONV 1)
-> > +endif()
-> > +
-> > +check_c_source_runs("
-> > +#include <iconv.h>
-> > +#if ${HAVE_OLD_ICONV}
-> > +typedef const char *iconv_ibp;
-> > +#else
-> > +typedef char *iconv_ibp;
-> > +#endif
-> > +
-> > +int main()
-> > +{
-> > +     int v;
-> > +     iconv_t conv;
-> > +     char in[] =3D \"a\"; iconv_ibp pin =3D in;
-> > +     char out[20] =3D \"\"; char *pout =3D out;
-> > +     size_t isz =3D sizeof in;
-> > +     size_t osz =3D sizeof out;
-> > +
-> > +     conv =3D iconv_open(\"UTF-16\", \"UTF-8\");
-> > +     iconv(conv, &pin, &isz, &pout, &osz);
-> > +     iconv_close(conv);
-> > +     v =3D (unsigned char)(out[0]) + (unsigned char)(out[1]);
-> > +     return v !=3D 0xfe + 0xff;
-> > +}"
->
-> I think the closing double-quote should be placed in a newline,
-> in order to make sure the source file ended with newline,
-> old C standard requires final newline.
->
+Further work might be needed to ensure 32bit time_t systems (like FreeBSD
+i386) will handle correctly the overflows tested in t4212, but that is
+orthogonal to this change, and it doesn't change the current behaviour
+as neither gmtime() or gmtime_r() will ever return NULL on those systems
+because time_t is unsigned.
 
-Okay
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ Makefile          |  8 --------
+ compat/gmtime.c   | 29 -----------------------------
+ config.mak.uname  |  1 -
+ git-compat-util.h |  7 -------
+ 4 files changed, 45 deletions(-)
+ delete mode 100644 compat/gmtime.c
 
-Thank You,
-Sibi Siddharthan
+diff --git a/Makefile b/Makefile
+index 9804a0758b..12c650f259 100644
+--- a/Makefile
++++ b/Makefile
+@@ -405,9 +405,6 @@ all::
+ # with a different indexfile format version.  If it isn't set the index
+ # file format used is index-v[23].
+ #
+-# Define GMTIME_UNRELIABLE_ERRORS if your gmtime() function does not
+-# return NULL when it receives a bogus time_t.
+-#
+ # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime.
+ #
+ # Define HAVE_CLOCK_MONOTONIC if your platform has CLOCK_MONOTONIC.
+@@ -1803,11 +1800,6 @@ ifndef NO_MSGFMT_EXTENDED_OPTIONS
+ 	MSGFMT += --check --statistics
+ endif
+ 
+-ifdef GMTIME_UNRELIABLE_ERRORS
+-	COMPAT_OBJS += compat/gmtime.o
+-	BASIC_CFLAGS += -DGMTIME_UNRELIABLE_ERRORS
+-endif
+-
+ ifdef HAVE_CLOCK_GETTIME
+ 	BASIC_CFLAGS += -DHAVE_CLOCK_GETTIME
+ endif
+diff --git a/compat/gmtime.c b/compat/gmtime.c
+deleted file mode 100644
+index e8362dd2b9..0000000000
+--- a/compat/gmtime.c
++++ /dev/null
+@@ -1,29 +0,0 @@
+-#include "../git-compat-util.h"
+-#undef gmtime
+-#undef gmtime_r
+-
+-struct tm *git_gmtime(const time_t *timep)
+-{
+-	static struct tm result;
+-	return git_gmtime_r(timep, &result);
+-}
+-
+-struct tm *git_gmtime_r(const time_t *timep, struct tm *result)
+-{
+-	struct tm *ret;
+-
+-	memset(result, 0, sizeof(*result));
+-	ret = gmtime_r(timep, result);
+-
+-	/*
+-	 * Rather than NULL, FreeBSD gmtime simply leaves the "struct tm"
+-	 * untouched when it encounters overflow. Since "mday" cannot otherwise
+-	 * be zero, we can test this very quickly.
+-	 */
+-	if (ret && !ret->tm_mday) {
+-		ret = NULL;
+-		errno = EOVERFLOW;
+-	}
+-
+-	return ret;
+-}
+diff --git a/config.mak.uname b/config.mak.uname
+index 2bff8b3466..c0852b37a5 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -244,7 +244,6 @@ ifeq ($(uname_S),FreeBSD)
+ 	PYTHON_PATH = /usr/local/bin/python
+ 	PERL_PATH = /usr/local/bin/perl
+ 	HAVE_PATHS_H = YesPlease
+-	GMTIME_UNRELIABLE_ERRORS = UnfortunatelyYes
+ 	HAVE_BSD_SYSCTL = YesPlease
+ 	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
+ 	PAGER_ENV = LESS=FRX LV=-c MORE=FRX
+diff --git a/git-compat-util.h b/git-compat-util.h
+index aed0b5d4f9..f1b0a5aa0a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1208,13 +1208,6 @@ int access_or_die(const char *path, int mode, unsigned flag);
+ /* Warn on an inaccessible file if errno indicates this is an error */
+ int warn_on_fopen_errors(const char *path);
+ 
+-#ifdef GMTIME_UNRELIABLE_ERRORS
+-struct tm *git_gmtime(const time_t *);
+-struct tm *git_gmtime_r(const time_t *, struct tm *);
+-#define gmtime git_gmtime
+-#define gmtime_r git_gmtime_r
+-#endif
+-
+ #if !defined(USE_PARENS_AROUND_GETTEXT_N) && defined(__GNUC__)
+ #define USE_PARENS_AROUND_GETTEXT_N 1
+ #endif
+-- 
+2.26.2.812.g046d49d455
 
->
-> --
-> Danh
