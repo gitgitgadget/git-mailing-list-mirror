@@ -2,142 +2,97 @@ Return-Path: <SRS0=YoUm=65=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2626BC433DF
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 16:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD9E7C433DF
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 16:29:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAFE62076A
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 16:09:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 973F4206D8
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 16:29:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vePonoyq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lP6tDfL6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726438AbgEOQJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 12:09:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63661 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbgEOQJd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 12:09:33 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E34EC4D26D;
-        Fri, 15 May 2020 12:09:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=u3JXuyd+uVF5sV2RJtFYNbHunKM=; b=vePono
-        yqV1Gvj9PG61mkaXNG9yUKMObiFor9tDivrBiOXnXCzy0qML3J4hv4wpvhZvmW/h
-        XquIXmGxJn+UIt1bTFCq3gzccpeZFTGnCf4EgDcbAkLVPEHif6XII7gcb4+eVNG3
-        3WXZa99aflpNtpjE2LQxYzCn0FEeiFzOXyq50=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j3oh3A1SDoslDbRwRtbUzXb3lJ50uzsA
-        dpr2kntKQxQsQPdfQXtyAPgdUfm19Mc7EZxhmOqOFdDzE362PP8mSS7izks6BoyW
-        FRg/ROesomqjph3g0VlcnTJ/s0TQKO5RcuQN5uBLYnly3aA3rWuwUS3Jq6DjyeJC
-        4iqgJ+NJPrM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA1124D26C;
-        Fri, 15 May 2020 12:09:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 62B374D26A;
-        Fri, 15 May 2020 12:09:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH] trace2: log progress time and throughput
-References: <20200512214420.36329-1-emilyshaffer@google.com>
-        <8f159f13-ed61-61ea-8e9a-c1ffbc5fddb3@gmail.com>
-        <xmqqzha9md5d.fsf@gitster.c.googlers.com>
-Date:   Fri, 15 May 2020 09:09:28 -0700
-In-Reply-To: <xmqqzha9md5d.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 15 May 2020 08:27:42 -0700")
-Message-ID: <xmqqtv0hmb7r.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726188AbgEOQ36 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 12:29:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726162AbgEOQ36 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 May 2020 12:29:58 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B997C061A0C
+        for <git@vger.kernel.org>; Fri, 15 May 2020 09:29:58 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id f13so2913049wmc.5
+        for <git@vger.kernel.org>; Fri, 15 May 2020 09:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tAb7xFumjuOcFg4NHSV8DorYfbZyHN4MRrYXJha+8pI=;
+        b=lP6tDfL6UyDyC8bY8eB4XOD90FcLgKQj6BvIWNjTOr9DnC0thIGYyUFM6PbLCGfamZ
+         WIngR7Jg9LpLA1V80xph4abkkbG3c4CyPujVpIxv5Zs+QwUn/tArON9LVni0Mm9vkZ74
+         hJa0g6nCMqMQ0Cyj9Wd+uIyELSt6QmrkeX2vbnNugHL9GTS+hdDmzNO3AnJt4JTjtQzO
+         0xjgWfqucYG61Irgia2XWrZeYOLwsqZYLCpI7iDmry7JUPUwW0o+0dQ6eSGSb4cJYN84
+         BdYrS16QMSSvbWbdKK3gWETUNIYK2WXy0bNHZolwvKoS6DpoiRe3YMuSfIgOZcmjYE6t
+         ZBBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tAb7xFumjuOcFg4NHSV8DorYfbZyHN4MRrYXJha+8pI=;
+        b=YlZetAYSrRnJID9gzUb0XBdHjB7O1jQNR4UzRnRIEJGpwwKcixkHEwShEr+Yta0DIT
+         O4kKjxR9EIJxn0rm3fY7BlUEhfz8Lu+sA470rmTi32BjJuq/I/gmQd1NnCH1edax6qhf
+         mt/7zzPOxH0TXvXLI6/Fjaxsh/q3YJM9qo9ToAaT0MdwHiZoef+QLiZ0JkkeVZDpI2zF
+         NBMxrAfdth3gDZ5/SsIg9Z00y3omf6RaEIMXxukh06crq1r1DN73Z/9u+l3PWKeCVqe1
+         UwCRembOqKn4xbM5fwDyu/ALatJfbffhVXC/MInXcUZi9yjzTQ/7/k/wxtAfXfGA9Wl0
+         nePw==
+X-Gm-Message-State: AOAM532d2FOx8oj6+CbiYuzCY6nRjLj6FEzL0GFr6kHVp4t8CGHbHANm
+        pJwY78EIOu7ds8Tg/akGGL1TaJq/EJc=
+X-Google-Smtp-Source: ABdhPJxPd9BM8zBMc4naKY/KspYuNQy9+JnovU3RtATdDwNq0kb1pgXK+2MvBmPBo0Qti1Anqtgh8g==
+X-Received: by 2002:a7b:c8c1:: with SMTP id f1mr5124374wml.66.1589560196546;
+        Fri, 15 May 2020 09:29:56 -0700 (PDT)
+Received: from [192.168.1.21] (xdsl-31-164-191-108.adslplus.ch. [31.164.191.108])
+        by smtp.gmail.com with ESMTPSA id a15sm4257566wrw.56.2020.05.15.09.29.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 May 2020 09:29:55 -0700 (PDT)
+Subject: Re: [PATCH] submodule--helper.c: add only-active to foreach
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <pull.631.git.1589099162707.gitgitgadget@gmail.com>
+ <20200510164424.GA11784@konoha>
+ <CAOEXN9yyL8T8kDmpHKTjjaG9tVS1kh34B-=PuH1hRaA7jF_K6A@mail.gmail.com>
+ <CAPig+cRX+M5qhCuKtsCpw8ySdW358utNOiMR7dwYwR4S4aMT7A@mail.gmail.com>
+From:   Guillaume Galeazzi <guillaume.galeazzi@gmail.com>
+Message-ID: <037991cd-d6ed-e55a-72ed-f49041460ea2@gmail.com>
+Date:   Fri, 15 May 2020 18:29:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 74B98B5C-96C6-11EA-A8BB-C28CBED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CAPig+cRX+M5qhCuKtsCpw8ySdW358utNOiMR7dwYwR4S4aMT7A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Le 11.05.2020 à 00:42, Eric Sunshine a écrit :
+> On Sun, May 10, 2020 at 5:53 PM Guillaume Galeazzi
+> <guillaume.galeazzi@gmail.com> wrote:
+>>> Yes, maybe renaming the flag to `--is-active` would make it a tad bit
+>>> simpler?
+>> is-active sound more like a question to me but I can change it.
+> 
+> I'm not a submodule user nor have I been following this discussion,
+> but perhaps the name --active-only would be better?
+> 
 
-> Derrick Stolee <stolee@gmail.com> writes:
-> ...
->> This trace2_region_leave() needs to be conditional on the progress
->> being non-null. The pattern used by consumers of the progress API is:
->>
->> 	if (my_progress_condition)
->> 		start_progress(&progress);
->>
->> 	do {
->> 		display_progress(&progress, count);
->> 	} while (condition);
->>
->> 	stop_progress(&progress);
->>
->> The condition to show progress or not is conditional on an option that
->> is external to the progress API.
->>
->> The fix for this patch is simple: make the trace2_region_leave() be
->> conditional on "p_progress && *p_progress".
-
-Oops.  That means that we need to apply the fix before -rc1 to
-'master' X-<.
-
-Something like this?
-
--- >8 --
-Subject: progress: call trace2_region_leave() only after calling _enter()
-From: Derrick Stolee <dstolee@microsoft.com>
-
-A user of progress API calls start_progress() conditionally and
-depends on the display_progress() and stop_progress() functions to
-become no-op when start_progress() hasn't been called.
-
-As we added a call to trace2_region_enter() to start_progress(), the
-calls to other trace2 API calls from the progress API functions must
-make sure that these trace2 calls are skipped when start_progress()
-hasn't been called on the progress struct.  Specifically, do not
-call trace2_region_leave() from stop_progress() when we haven't
-called start_progress(), which would have called the matching
-trace2_region_enter().
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- progress.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/progress.c b/progress.c
-index 6d2dcff0b6..3eda914518 100644
---- a/progress.c
-+++ b/progress.c
-@@ -329,13 +329,9 @@ void stop_progress(struct progress **p_progress)
- 			trace2_data_intmax("progress", the_repository,
- 					   "total_bytes",
- 					   (*p_progress)->throughput->curr_total);
--	}
- 
--	trace2_region_leave("progress",
--			    p_progress && *p_progress
--				? (*p_progress)->title
--				: NULL,
--			    the_repository);
-+		trace2_region_leave("progress", (*p_progress)->title, the_repository);
-+	}
- 
- 	stop_progress_msg(p_progress, _("done"));
- }
-
-
-
-
+To flow up on that topic, the flag can be `--[no-]active`. It simplify 
+code and allow the optional negation. On the source, the variable will 
+be renamed active_only.
