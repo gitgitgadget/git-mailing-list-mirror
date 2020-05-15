@@ -2,107 +2,84 @@ Return-Path: <SRS0=YoUm=65=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15EEAC433E4
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F7BEC433DF
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:25:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA29C207C3
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:11:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C50120671
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:25:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IrNNhqKv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hnWUCOMK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727811AbgEOPJn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 11:09:43 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53445 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726216AbgEOPJm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 11:09:42 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3DF78CC61F;
-        Fri, 15 May 2020 11:09:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=26gvHWlRNELc
-        a39rRV6GkGqsS/I=; b=IrNNhqKvTZgDvfWhcyGiv1iydqdRhl9Y6Kg5FI4mNnoZ
-        wRLopgyKut6xu+BbXDZIhiwBjlABE3+y09rrH3zqlgIqMc/e9j2EJHFv0LoJ4yfR
-        JK16cKffgDaRgGypEQzmLIYeUbzbtFR0Al5ATXXpttVi7gcTNG0Rr11O2velwaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uIelhj
-        WJv+GPWMhk5ExxUY5IqBW7oLNFQFY5E+5onTGIzKHQlJYcA6TgjM66te9OOeD9+J
-        BBE/lBq0u9xgGrqbJCnQdSOvbHtinfA+1aqvv7qG9g3Td/mtVrwDZgB1Xq9oNm2q
-        knf4/SAfsTEHdJyXI7+O6Hms+sV0mKwA0Lweg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 362C2CC61E;
-        Fri, 15 May 2020 11:09:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 794AFCC61D;
-        Fri, 15 May 2020 11:09:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] ci: avoid pounding on the poor ci-artifacts container
-References: <pull.632.git.1589316430595.gitgitgadget@gmail.com>
-        <pull.632.v2.git.1589529318969.gitgitgadget@gmail.com>
-Date:   Fri, 15 May 2020 08:09:36 -0700
-In-Reply-To: <pull.632.v2.git.1589529318969.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Fri, 15 May 2020 07:55:18
-        +0000")
-Message-ID: <xmqq4kshnsjz.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726717AbgEOPZy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 11:25:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43280 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726241AbgEOPZx (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 May 2020 11:25:53 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 595D4C061A0C
+        for <git@vger.kernel.org>; Fri, 15 May 2020 08:25:53 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id j145so2544435oib.5
+        for <git@vger.kernel.org>; Fri, 15 May 2020 08:25:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mqbqTcczSoAOScJcjiaz87sNogj9utuPyA+OJBLTHgA=;
+        b=hnWUCOMKKtn9d0x4tExhd9iHl8hEJKO8bPRBK/L3JgpdxxsCFFKklF51n3s5c9hSRj
+         4CEJBIdlw+yU5xfCe5pxNdppZynrwOhBzjlkCAkShokOfrFElSdBQNVPxfLr9WIADWtk
+         F/GpVx02JcMMptsdtB7l3hQlJJSofjk74WwCAA8jisTbF4ZFLK10J9gImOV5bBoZJ8mB
+         1HfVKeyNAP1UNEfVDB5XIMZMH+3fjaLpOUCZqw3x19yPYl8ppGlHkzSE4f9Zvr2lle5v
+         S6wW4Pqh1Z4V7bTPeOwzqsfQuPGGqpzqd9e+gSnZKEBPVN23XFDdoFjC/aRG431qhOvW
+         n3Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mqbqTcczSoAOScJcjiaz87sNogj9utuPyA+OJBLTHgA=;
+        b=NVqEkAb6MGotOkzMry2SATTTmKfSARfQ45VXRk70TX5gU1jY8+lkoLWYELFdx6mF3d
+         In2K4a6BbQPN6xt4N4rE/hJNDzUjiqlMK4d+SvanCCO0q+dH9jjJTdTDfdYeAlzrCR49
+         H61i58tRPp+F9+BQuiEEs/rpHP533HYDHCgcJtidbZbccrW9ZkFnjHJ2c5W5h4gujBYk
+         xDzJg5jyd/hlGoHyPyNuRjKiug4rirChUz+I56m1iVABtOqtxNAkYehDbZXSKAD2/dWS
+         akg4S8KOva+syqf1ohI0K/SvDIdxuyetTaX6cyz991+hjC3VEfmALba+G3DlSL+LDBk0
+         GOww==
+X-Gm-Message-State: AOAM532DTD2KkZdKTkYaA8wxjRFDL2Qqk0oHthvoG7i9DSAePWxrGX+D
+        4aPkIO0lfPHRn6WX+oTLfrjh4tfp77APDzQ/SO1HIHWi
+X-Google-Smtp-Source: ABdhPJwJvaVgCMHCSomUnH+jCTBQk5bAn6RsRLiqQ7/DSu8lUVnQigchbwjLn+DXshsUZOM5IxJIrXtVbGFSMtRO0Q0=
+X-Received: by 2002:aca:40d4:: with SMTP id n203mr2589761oia.39.1589556352582;
+ Fri, 15 May 2020 08:25:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 185FA588-96BE-11EA-8651-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <xmqqpnb6nk7x.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqpnb6nk7x.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 15 May 2020 08:25:41 -0700
+Message-ID: <CABPp-BF2Nh8LntDfw7-zSry00QKWg68qKOFW9QHvtqrSvU=Utw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2020, #05; Thu, 14)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, May 14, 2020 at 6:33 PM Junio C Hamano <gitster@pobox.com> wrote:
+> * en/merge-rename-rename-worktree-fix (2020-05-14) 1 commit
+>  - merge-recursive: fix rename/rename(1to2) for working tree with a binary
+>
+>  When a binary file gets renamed and then merged with a minor
+>  change, the copy on the working tree while conflict resolution
+>  sometimes got "their" version and not "ours".
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> When this developer tested how the git-sdk-64-minimal artifact could be
-> served to all the GitHub workflow runs that need it, Azure Blobs looked
-> like a pretty good choice: it is reliable, fast and we already use it i=
-n
-> Git for Windows to serve components like OpenSSL, cURL, etc
->
-> It came as an unpleasant surprise just _how many_ times this artifact
-> was downloaded. It exploded the bandwidth to a point where the free tie=
-r
-> would no longer be enough, threatening to block other, essential Git fo=
-r
-> Windows services.
->
-> Let's switch back to using the Build Artifacts of our trusty Azure
-> Pipeline for the time being.
->
-> To avoid unnecessary hammering of the Azure Pipeline artifacts, we use
-> the GitHub Action `actions/upload-artifact` in the `windows-build` job
-> and the GitHub Action `actions/download-artifact` in the `windows-test`
-> and `vs-test` jobs (the latter now depends on `windows-build` for that
-> reason, too).
->
-> Helped-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail=
-.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->    =20
->     Change since v1:
->    =20
->      * Simplifying the scripted code by using jq (thanks, Danh!)
+This summary feels misleading; it's not simple rename + content merge,
+it's double rename + content merge.  Perhaps:
 
-Thanks, both.  Will replace and let's merge it down before -rc1.
-
+When a binary file gets modified and renamed on both sides of history
+to different locations, both files would be written to the working
+tree but both would have the contents from "ours".  This has been
+corrected so that the path from each side gets their original content.
