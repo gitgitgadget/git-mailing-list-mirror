@@ -2,128 +2,115 @@ Return-Path: <SRS0=YoUm=65=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C20C433E1
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5F1EC433E0
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:32:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 847D020756
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:32:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9869A20727
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:32:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMsXRkmW"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ZWiZsVjF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbgEORcT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 13:32:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726168AbgEORcT (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 15 May 2020 13:32:19 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E0BC061A0C
-        for <git@vger.kernel.org>; Fri, 15 May 2020 10:32:18 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id d7so2306374eja.7
-        for <git@vger.kernel.org>; Fri, 15 May 2020 10:32:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=dcB3gQp2t/f/ncunTTVOuOfoIzqjnYsBe3AhID3VgWA=;
-        b=CMsXRkmWSzImINeowVYIvbQzaKm/tKo908EbWh45rgC7ICfSOuFBwg/9H3iS5bIckB
-         Yzxi9OaPBVxyAWkSGKW/mlRJRB2Wr7k9fksODjucJPJTNexJSPb/DhZRG6puG6m2ljSS
-         9mCYSC9/6+Bpq8r3WRHczNxTs4G3n0iaDlW5S8cm1M7xRgdzmwOpfYfH5OM1RBsl/PZq
-         crKzMUadTDsBu6uTnJdeRcLtCTCzNQuP/sgbLNAtopeF9xicSvpTQIaic1ZJGSdSpLsx
-         w8Zkby0V8gCZzqeZDLPx8988aPI0RFIh10ppSSXYkN218+zbP6S+RGXuOY7FYpl7DMrk
-         YEJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=dcB3gQp2t/f/ncunTTVOuOfoIzqjnYsBe3AhID3VgWA=;
-        b=aVvnqkYiLGJkwL4hzOoMFwcBs1C24BcmnQs5STR7Vf2U278ZgbYnQVWXpHqRVUENdF
-         7Igp6F8XhAOSZYFPmrFj9Wp1fh9HfZ87zzuQhXQRSIl9AWshbBkJioqI43TnH0RnCTas
-         8xuss/ne2k/vmAmduOlWBMzphan5Ys3WDpCk86T8BjofqJ+l5eGAu00WgCjso1UVGOny
-         jnMLvBAvqLlwHqLyvCp9+XsxWM0UgK7LYwDEJ9wmoVAHfnqb/6e/m12afdjg2uluRlc3
-         Mb6hY8yd8QyPQTkeWLlSWjU+MC7WMsH5b8rMVgTvNmx6UWT8wESFTQJf6gnr6IVKei/e
-         Wrhg==
-X-Gm-Message-State: AOAM533ehTfeqwIsi1Hrw10GfMjkLQfRegse3+YdU2zzwVSzLMqrScjk
-        C/otoDGb6E3+1JYqVrlcDjFV7ZN2dJyPehnnesQ=
-X-Google-Smtp-Source: ABdhPJyBIoTAVAGN/GVgmp135V4opJQnDz3M1krQvhaih2wKT7dytenwvwuYRRFpzttb0prT8FGLSe0Nz4X99rkeXCs=
-X-Received: by 2002:a17:907:948d:: with SMTP id dm13mr4060459ejc.138.1589563936791;
- Fri, 15 May 2020 10:32:16 -0700 (PDT)
+        id S1726298AbgEORcq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 13:32:46 -0400
+Received: from mout.gmx.net ([212.227.17.21]:42823 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726168AbgEORcq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 13:32:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1589563964;
+        bh=/gCZQ6La9EjFOKqH0v8b45nP7c/VTNahbTs8akt6CqY=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=ZWiZsVjF6X0jQny0AYXBkqqz7JQHoyP+MeSC0ZGr4EluJJsQuIpssFg+qP/Q+jMsi
+         ubQFYcs7SHsCfvdJt2+IwXNHPW3vfdBBu5ra9LtwkTS1qUh8p0brPN6UVnu/s4sRHy
+         soiBWdk4iXhTAElLW7upSKuXlo4iV6rk69JbPrrM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az767.ypeuddkxwkxebentlcud2u5bld.bx.internal.cloudapp.net
+ ([52.226.64.24]) by mail.gmx.com (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MA7KU-1jO8fO19P0-00BgBL; Fri, 15 May 2020 19:32:44 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.27.0-rc0
+Date:   Fri, 15 May 2020 17:32:42 +0000
+Message-Id: <20200515173242.6154-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.26.2
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-From:   Son Luong Ngoc <sluongng@gmail.com>
-Date:   Fri, 15 May 2020 19:32:05 +0200
-Message-ID: <CAL3xRKdwOASiGys+7Uu_OA5kBPrTdAURfEw3UQ+rguTXT+C6JQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/4] gitfaq: files in .gitignore are tracked
-To:     shouryashukla.oo@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
-        sandals@crustytoothpaste.net
-Content-Type: text/plain; charset="UTF-8"
+Fcc:    Sent
+X-Provags-ID: V03:K1:ZacoQl1CSfqkr0H56dPfuYuAdE1hj9dmaEmE1jzSuubPwmdx2OH
+ cSIbCM3ghsLtbSXA7ragJZm3ELlKSSpbFfPAOsGhzinsm0gZv1+qQu5CNmHcfDZC4bCuZBD
+ 3NOxYLscIJqdvH690vv3fNc8mcsVJEub639FPGArAPXD91xi93NiQRnS7jtOKy3juhle7+W
+ rMQAnaGeGxo9PS3AgHX5A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SBiawaxxP0s=:IXTBCQRyBs4vrQY7R68IJf
+ nvetG1wlEMyYDlHNEy60WWMJjYWQe6Wa9/q8F+10czQHokKxku6suSPq+gfJ5zhko/I+bhrT9
+ hHiDbNFPFlw/5Y4u6wvzMggw8UdCY9pYBqL6of5V5GpYTbdvtHzr4JXMJ3vHmpCW6P+YNaLwl
+ KIqoyWKuNd49peZjFJE6n5430AX3nZPH9SWHb2R1ekUJ8EZCz2G8ES7ib5lfX2IP1LMfXZrEP
+ INwFVYFrxYbbfldABYqFbzRgQfXEHAfO6vOLuUguaBqSMIJp2LpUYZcOm3p6cbVmSEBJdfx+i
+ yTsyeJv9NQVkNRn2dBbow0Dr02mYXMir3DCOYuqAo3ybc+zmqQkp+Z13qM5pXPy/mpP6dtEYr
+ qkJ6GPw+deh8uF7Tss1cXd01RGLwNs+p/G8xJlhl/KAeZdyF2vMVJqbAPCQUMhx+ar6bZpNQp
+ pz133z+QZrIY9vhdXCE0Hv9WNPpEBKhqCvXUVtPugb7NVF7DwqbaRp5pfm8ldYTLe8FodXaQc
+ NUnuE6paIAQlCNzPCh7kcsYHpkUbBP1sI/HmKw2ACLkCSQeJz8GDoqetiUiXpgaWHv0fihO7y
+ TIVI+CTW9FdvlwqunqvvvNBlmM6dehQJEK8u2NOil0yEVu2oTmDHxuNvMdpBA8jl8nX2ng7e1
+ KASIwAMRaQW19i2gQVq+88wsfeb65nGddV5S9ErRdtXc32nNQEdLp+O3eGQNtO1g0tlXUAZyB
+ nIe1DSDROuGlbi3woAguVReKuED04TO85PToPwD1ldpqAfRKrbjSpGfZlmwFn2QrGaK+5ivGr
+ Bfqaq7P5WvPg/hSfjZpw20hyZRM4d3X9GYzF0sPTOEvbA6YLCWE8wkDYwIj0EYKBrDIUF4IzG
+ Qv/zGYjjH3KYT/qMnWR7AW+Sc9tYisncJCd2z7/0jOiWhcRBf+Pn9dHPPMgWM9caByk0zJivg
+ Pabgj5mlS2YubvlOnp6la9aeTmbzhS46MLewpj0MntSrBXhAZIfd8JRVPQy4A26H0hMfmlZvF
+ 29quisHAONAisRFp758ptGBnaeyx4VB8kJtK9nBxdqDY+0UfaNZBleFggiNQJL/cdb4RvhMQ4
+ IGxnF1P7iL/ddjYa8xktEPzZu/UQq9vSj2fHZ4GpWouXPWY2wp32ClrVN3rZ4eYyBb8wx8IVX
+ Qk33ah8CIvPFTeRCuwSTFWXxqK4S/S/aXNILAJ3k+c8oPHfI7PQ/jZYL0Mp1SWsptzZL4+rvI
+ ELAoPGpOqMakioAUb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey folks,
+Dear Git users,
 
-> Add issue in 'Common Issues' section which addresses the problem of
-> Git tracking files/paths mentioned in '.gitignore'.
->
-> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-> ---
->  Documentation/gitfaq.txt | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index 1cf83df118..11d9bac859 100644
-> --- a/Documentation/gitfaq.txt
-> +++ b/Documentation/gitfaq.txt
-> @@ -223,6 +223,16 @@ a file checked into the repository which is a template or set of defaults which
->  can then be copied alongside and modified as appropriate.  This second, modified
->  file is usually ignored to prevent accidentally committing it.
->
-> +[[files-in-.gitignore-are-tracked]]
+I hereby announce that Git for Windows 2.27.0-rc0 is available from:
 
-This does not work for older xmlto(centos6) for whatever reason.
-```
-# make doc
-...
-# xmlto -m manpage-normal.xsl  -m manpage-bold-literal.xsl -m
-manpage-base-url.xsl man gitfaq.xml
-xmlto: /<git-dir>/Documentation/gitfaq.xml does not validate (status 3)
-xmlto: Fix document syntax or use --skip-validation option
-/<git-dir>/Documentation/gitfaq.xml:3: element refentry: validity
-error : Element refentry content does not follow the DTD, expecting
-(beginpage? , indexterm* , refentryinfo? , refmeta? , (remark | link |
-olink | ulink)* , refnamediv+ , refsynopsisdiv? , (refsect1+ |
-refsection+)), got (refmeta refnamediv refsynopsisdiv refsect1
-refsect1 refsect1 refsect1 variablelist refsect1 refsect1 )
-```
+    https://github.com/git-for-windows/git/releases/tag/v2.27.0-rc0.windows.1
 
-Build went fine on Centos7 and Centos8 though.
+Changes since Git for Windows v2.26.2 (April 20th 2020)
 
-I ran a quick sed to temporarily fix the problem
-```
-sed -i 's/files-in-\.gitignore/files-in-gitignore/g' Documentation/gitfaq.txt
-```
+New Features
 
-But I suggest to just remove the period from this heading.
+  * Comes with Git v2.27.0-rc0.
+  * Comes with OpenSSL v1.1.1g.
+  * Comes with perl-YAML-Syck v1.32.
+  * Comes with perl-HTML-Parser v3.72.
+  * Comes with cURL v7.70.0.
+  * Comes with subversion v1.13.0.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.1.4.
+  * The release notes have been made a bit more readable and are now
+    linked from the Start Menu group.
+  * The Frequently Asked Questions (FAQ) are now linked in a Start Menu
+    item.
+  * Comes with perl-Locale-Gettext v1.07.
+  * Comes with Git LFS v2.11.0.
 
-> +I asked Git to ignore various files, yet they are still tracked::
-> + A `gitignore` file ensures that certain file(s) which are not
-> + tracked by Git remain untracked.  However, sometimes particular
-> + file(s) may have been tracked before adding them into the
-> + `.gitignore`, hence they still remain tracked.  To untrack and
-> + ignore files/patterns, use `git rm --cached <file/pattern>`
-> + and add a pattern to `.gitignore` that matches the <file>.
-> + See linkgit:gitignore[5] for details.
-> +
->  Hooks
->  -----
->
-> --
-> 2.26.2
+Bug Fixes
 
-Cheers,
-Son Luong.
+  * Some Perl packages (e.g. Net::SSLeay) that had been broken recently
+    have been fixed.
+
+Git-2.27.0-rc0-64-bit.exe | 14ce81a30c383caab6e31387a4aac1b4b738b63ae33461aac1858f9b878cf530
+Git-2.27.0-rc0-32-bit.exe | f38d76a6dc241c3a1d06c15dac79773eee1dcbf9d19bed3ab3fba18c5a08e58d
+PortableGit-2.27.0-rc0-64-bit.7z.exe | 90536da1847926b91017736753661c52f01e23842f8fca2a06a4fafeeddac22a
+PortableGit-2.27.0-rc0-32-bit.7z.exe | 91a47f140e23e511bb89971760de6a2510ce399177873352e31efcc972abc0d5
+MinGit-2.27.0-rc0-64-bit.zip | 5b3e9447c3ec2dce971b3f4ce02f1f06fe4f2097a753e2282306a885a16f3373
+MinGit-2.27.0-rc0-32-bit.zip | 631603b87409e735f0e3fde53d46a53d4f191ba40045a049b9f6363a692ca18e
+MinGit-2.27.0-rc0-busybox-64-bit.zip | cfe168171ece1b0f8b3df04be3a6e955943d9be0ef9b6f75f042710cf379b642
+MinGit-2.27.0-rc0-busybox-32-bit.zip | 1de6b0896fb813ff2f921e34a84d9b44e0ba9b44ee68fad85de09c415d834b24
+Git-2.27.0-rc0-64-bit.tar.bz2 | d62ab1326de35486ad78ac9b85c8af448bbb3745f0388820e87534ead48b6869
+Git-2.27.0-rc0-32-bit.tar.bz2 | 3e0b27f0f46b59b052fe02c0b0e4ca0cd01586e82ef30da093844b2aae53d4a0
+
+Ciao,
+Johannes
