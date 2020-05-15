@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 086B8C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55755C433E1
 	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D953120709
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31E8C20709
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A0iSZVDm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aVDIezmM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728258AbgEOKFa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 06:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49580 "EHLO
+        id S1728255AbgEOKF3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 06:05:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728228AbgEOKF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 06:05:27 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4550C061A0C
-        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:26 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id z72so2000080wmc.2
-        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:26 -0700 (PDT)
+        with ESMTP id S1728151AbgEOKF0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 06:05:26 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C96C05BD09
+        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:24 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id f13so1689809wmc.5
+        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HfUC+WdGxe2JbHaPxGDUlL77vYVbSqjVQzMoGehgWOg=;
-        b=A0iSZVDmUIshforVvKKKtI1bvv3MiPut72aTR8/SYegoWr3fI1XgZGIQ4lpI5XwY9o
-         AIeDJWfUpx6vzlReH5yJ7FZhQpyCzgAPlb+DaCTIfEA9IcAFePoRxIAkH/kidE7i2VYb
-         bith3jRpOwUcFOOJk9uRY/60jghPjp17J5ttajn2hkH+ZjtvbuzzL9kC9yBV+SNXyh6l
-         rwFdxfoknavrnqR+rI6jDlVtinYNG1B92QJBz2+HTYlXDLlCv30O3helWsTAVRfMPh8I
-         uUBiRlmGIUsNo1fT9olC/zL43Y/zcnjjJzYumtlzu2IEy+HycFOblGQoKvvUArjllc6b
-         S7mw==
+        bh=friTYmnGhW5bqnhTppOnCfdbrBVFGESA+3rhTEdSCEk=;
+        b=aVDIezmMXrcVCdsvxBX6PnQU7r2FP2YGSVeGxGpws6qScxEsvR1TumEFvChZ1X6j/S
+         XV2O9ZM8KmsgdntD+Azhnmv/JcR2INq1DFQVjUD8R/K8PdPAfxSO0Jba8PF+Q7PPfn8/
+         YGLgtIrix7U+1S8IS7onzkp9AgSu+VK535lKX8WUjOmMn7dCxDFKgzSxpAxpECSjKhSx
+         1geEss3y7xCnuSr90cLDPkgktp/E428LRz+4fa/EqJgcj8bkEWsKAwK3of6r/chXBm0r
+         fCSuhPUh7TbggPTAUNy6gxLgKqcNUY6v/T0t1bKQ7BRV76HrZriPtDGUbqeZbYws4ZB+
+         5q8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HfUC+WdGxe2JbHaPxGDUlL77vYVbSqjVQzMoGehgWOg=;
-        b=G//YQSDAJLJqT4q7iQ044pvFtpjWfjgs40prgRZHL1Pi+g/StqL2tikmNPg8EonxiH
-         EAVyAhsps+LlxpZhn4bjq/qbxjDuFzhgw5haJcHsUeB2tDVQSJ5VIi87z+LonkGedinH
-         CVacvYM0zsH11gQRjc4jVAZHWIIQwE8g7VcX9Y75XQ/fIW5IAu9lAG4q6cnZlvqmwqUE
-         vJ+6jXlenRjReWBipJiMA7jiUexHYwtyPNduUuY9Uk5pMJTLNECkm5qaiwTkTkvPjcc0
-         h6aBN0MvUnTJar/+R6R8bOGleo7jDJ25kuDVZpSReEivytQ5RIeWpQ6FmvEcDOjOhgLC
-         pH0Q==
-X-Gm-Message-State: AOAM530wMUcFWEZFQQ4R+CAioQ4DXLLYCdWD9QJGt60ZnNaJO5MV1wRU
-        FHHovlfq5j9a/4F5gtIQitKwfIhy4+k=
-X-Google-Smtp-Source: ABdhPJw6cCxmRm2/6MoxaAQ5ju27aYtHNu1mz1MU2ZEet1nMqyBwvvShaYTtqCv6aM/7qtvaz86DOw==
-X-Received: by 2002:a1c:dc05:: with SMTP id t5mr3352590wmg.112.1589537125270;
-        Fri, 15 May 2020 03:05:25 -0700 (PDT)
+        bh=friTYmnGhW5bqnhTppOnCfdbrBVFGESA+3rhTEdSCEk=;
+        b=CnBOXKlNu+l+CSP4IHwoI3NsXYFkjIsMjQx7u9ebrvqgUg/Fnfg+bA9z019r/zTHWH
+         m+k5OOtb22MIzT8KSApqjzzrM0nD4YAX1aaJWRy62JHs27AoNZL3qJi116oiNu97vYpC
+         e/WiGaaIA2RGx1zNC54W5e9itSpxMUvilrmq9oRR9OAleIlOJE0+QtACD+cFSwUSwNUV
+         blQ2KmYqdsV/sXC6PuzQu318eXE2nr+62uXGuwH0PXpTe1IElwG4NuOL1Ml0D6fMB+nA
+         HxTdJM+tNAuZsyd/63oKzpCIcwQjXvjZZzmG3oz7NSgMuC0A4Zg2ZtCyNuDrszOGgJOx
+         6LBA==
+X-Gm-Message-State: AOAM530pui9920Hc/P6/Llsy7FK4tqWqFSfqG2hJfgmhoeoAdNtpptGx
+        SoUQD5MT+f4prI66Juitq6rSXVNAcEE=
+X-Google-Smtp-Source: ABdhPJyO1kVvQ8QADmqjfBpahBfK5cL1irTx5554SPBRGdcbbXB1JmaCDDuuDsOe9M9HAyAkF8YO4A==
+X-Received: by 2002:a1c:bbc4:: with SMTP id l187mr3312547wmf.183.1589537122709;
+        Fri, 15 May 2020 03:05:22 -0700 (PDT)
 Received: from localhost.localdomain ([193.57.121.171])
-        by smtp.gmail.com with ESMTPSA id m3sm2792326wrn.96.2020.05.15.03.05.24
+        by smtp.gmail.com with ESMTPSA id m3sm2792326wrn.96.2020.05.15.03.05.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2020 03:05:24 -0700 (PDT)
+        Fri, 15 May 2020 03:05:22 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 13/13] upload-pack: use upload_pack_data fields in receive_needs()
-Date:   Fri, 15 May 2020 12:04:54 +0200
-Message-Id: <20200515100454.14486-14-chriscool@tuxfamily.org>
+Subject: [PATCH 11/13] upload-pack: remove static variable 'stateless_rpc'
+Date:   Fri, 15 May 2020 12:04:52 +0200
+Message-Id: <20200515100454.14486-12-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.26.2.639.gb7dde20fdf
 In-Reply-To: <20200515100454.14486-1-chriscool@tuxfamily.org>
 References: <20200515100454.14486-1-chriscool@tuxfamily.org>
@@ -81,83 +81,76 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-more thoroughly, let's use fields from this struct in
-receive_needs(), instead of local variables with the same name
-and purpose.
+more thoroughly, let's remove the 'stateless_rpc' static
+variable, as we can now use the field of 'struct upload_pack_data'
+with the same name instead.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- upload-pack.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ upload-pack.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 93cf4b1fe5..401c9e6c4b 100644
+index 680c38cc13..4ac40c5b04 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -911,13 +911,7 @@ static int process_deepen_not(const char *line, struct string_list *deepen_not,
- static void receive_needs(struct upload_pack_data *data,
- 			  struct packet_reader *reader)
- {
--	struct object_array shallows = OBJECT_ARRAY_INIT;
--	struct string_list deepen_not = STRING_LIST_INIT_DUP;
--	int depth = 0;
- 	int has_non_tip = 0;
--	timestamp_t deepen_since = 0;
--	int deepen_rev_list = 0;
--	int deepen_relative = 0;
+@@ -63,7 +63,6 @@ static int keepalive = 5;
+  * otherwise maximum packet size (up to 65520 bytes).
+  */
+ static int use_sideband;
+-static int stateless_rpc;
+ static const char *pack_objects_hook;
  
- 	shallow_nr = 0;
- 	for (;;) {
-@@ -930,13 +924,13 @@ static void receive_needs(struct upload_pack_data *data,
- 		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
- 			break;
+ static int filter_capability_requested;
+@@ -449,7 +448,7 @@ static int get_common_commits(struct upload_pack_data *data,
+ 				packet_write_fmt(1, "ACK %s\n", last_hex);
+ 				return 0;
+ 			}
+-			if (stateless_rpc)
++			if (data->stateless_rpc)
+ 				exit(0);
+ 			got_common = 0;
+ 			got_other = 0;
+@@ -663,7 +662,8 @@ static void check_non_tip(struct upload_pack_data *data)
+ 	 * uploadpack.allowReachableSHA1InWant,
+ 	 * non-tip requests can never happen.
+ 	 */
+-	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REACHABLE_SHA1))
++	if (!data->stateless_rpc
++	    && !(allow_unadvertised_object_request & ALLOW_REACHABLE_SHA1))
+ 		goto error;
+ 	if (!has_unreachable(&data->want_obj))
+ 		/* All the non-tip ones are ancestors of what we advertised */
+@@ -1074,7 +1074,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 				     " allow-tip-sha1-in-want" : "",
+ 			     (allow_unadvertised_object_request & ALLOW_REACHABLE_SHA1) ?
+ 				     " allow-reachable-sha1-in-want" : "",
+-			     stateless_rpc ? " no-done" : "",
++			     data->stateless_rpc ? " no-done" : "",
+ 			     symref_info.buf,
+ 			     allow_filter ? " filter" : "",
+ 			     git_user_agent_sanitized());
+@@ -1149,7 +1149,6 @@ void upload_pack(struct upload_pack_options *options)
+ 	struct packet_reader reader;
+ 	struct upload_pack_data data;
  
--		if (process_shallow(reader->line, &shallows))
-+		if (process_shallow(reader->line, &data->shallows))
- 			continue;
--		if (process_deepen(reader->line, &depth))
-+		if (process_deepen(reader->line, &data->depth))
- 			continue;
--		if (process_deepen_since(reader->line, &deepen_since, &deepen_rev_list))
-+		if (process_deepen_since(reader->line, &data->deepen_since, &data->deepen_rev_list))
- 			continue;
--		if (process_deepen_not(reader->line, &deepen_not, &deepen_rev_list))
-+		if (process_deepen_not(reader->line, &data->deepen_not, &data->deepen_rev_list))
- 			continue;
+-	stateless_rpc = options->stateless_rpc;
+ 	timeout = options->timeout;
+ 	daemon_mode = options->daemon_mode;
  
- 		if (skip_prefix(reader->line, "filter ", &arg)) {
-@@ -953,7 +947,7 @@ static void receive_needs(struct upload_pack_data *data,
- 			    "expected to get object ID, not '%s'", reader->line);
+@@ -1157,9 +1156,11 @@ void upload_pack(struct upload_pack_options *options)
  
- 		if (parse_feature_request(features, "deepen-relative"))
--			deepen_relative = 1;
-+			data->deepen_relative = 1;
- 		if (parse_feature_request(features, "multi_ack_detailed"))
- 			multi_ack = 2;
- 		else if (parse_feature_request(features, "multi_ack"))
-@@ -1005,14 +999,18 @@ static void receive_needs(struct upload_pack_data *data,
- 	if (!use_sideband && daemon_mode)
- 		no_progress = 1;
+ 	upload_pack_data_init(&data);
  
--	if (depth == 0 && !deepen_rev_list && shallows.nr == 0)
-+	if (data->depth == 0 && !data->deepen_rev_list && data->shallows.nr == 0)
- 		return;
++	data.stateless_rpc = options->stateless_rpc;
++
+ 	head_ref_namespaced(find_symref, &data.symref);
  
--	if (send_shallow_list(&data->writer, depth, deepen_rev_list, deepen_since,
--			      &deepen_not, deepen_relative, &shallows,
-+	if (send_shallow_list(&data->writer,
-+			      data->depth,
-+			      data->deepen_rev_list,
-+			      data->deepen_since,
-+			      &data->deepen_not,
-+			      data->deepen_relative,
-+			      &data->shallows,
- 			      &data->want_obj))
- 		packet_flush(1);
--	object_array_clear(&shallows);
- }
- 
- /* return non-zero if the ref is hidden, otherwise 0 */
+-	if (options->advertise_refs || !stateless_rpc) {
++	if (options->advertise_refs || !data.stateless_rpc) {
+ 		reset_timeout();
+ 		head_ref_namespaced(send_ref, &data);
+ 		for_each_namespaced_ref(send_ref, &data);
 -- 
 2.26.2.638.gb2c16ea67b.dirty
 
