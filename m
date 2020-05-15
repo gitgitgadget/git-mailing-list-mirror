@@ -6,74 +6,77 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41590C433E0
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F686C433E0
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:03:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11B26206C0
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:00:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 122CC2073E
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:03:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S+JVIGuc"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JtwIRd1f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbgEORAK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 13:00:10 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64272 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbgEORAJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 13:00:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 14089D58C5;
-        Fri, 15 May 2020 13:00:09 -0400 (EDT)
+        id S1726204AbgEORDF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 13:03:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50979 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbgEORDE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 13:03:04 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0916656DD;
+        Fri, 15 May 2020 13:03:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BJU+6jWKHO+/LV9VCSiEB4E2OSI=; b=S+JVIG
-        ucm/Cmycix3OY6n+O8xHCL/roc4Us7PCA5RN3rXOzrSIONUKcrarVuY/jdA3FSc2
-        Dkz1SqIrsnTc2kBedeD+alQehFpG3hTIkRNHwBfMRSStIfBKRoLIva6wajJyg2n+
-        i46rqNkqDJrrokqHUNMU42DvnyA/JydJ9vnfs=
+        :content-type; s=sasl; bh=7IOIm09Z/+pY+57Og2zOWbcU0K0=; b=JtwIRd
+        1fow41sFEwBvqAqorOcdMOeRDWma3Hok2VMzwUPpSCBs9hWDp+X1gA4UxUyKZX+S
+        8G/1o9YiM/YtT5P9SYPT2KUKdu7QZgLmLh+xVEU73HH2qf8HbbAo3I+OLAc+1ie9
+        qh+ItS6lvHjee4pcMEHU4N7wz1Y9RYhEI8nAI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kjs66yJrLcO6AktrH05dVz4r3W/fvN69
-        eX5CdEowlDDMJMeeXcAQluI9ywb13duWPsNmk884xnvxTMT8W1g0Uq6sMMvP2VcY
-        dCjIN4xo+t0QO+i9Rv5OzfcJJs4lpzkH65IEJCA96pN37QIlLnVMKQdE5Z5lbl4Z
-        KCEnq+k1Euk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0BBC3D58C4;
-        Fri, 15 May 2020 13:00:09 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=qyRbfnDWjyQztmM+9aphylpXknD+/a4Q
+        CptszbiK+TQbx1dJtyZw5aotVuUxLZPugc3O2INLn2rq6q5N0QodO6q5adVIMoYF
+        058iMd0ZyPAlXceR4/EmMlABs1XLfMqhN//ATNYb/dwqMbeUvzx2LSzo0oUMiJOG
+        if28wsxQtTM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7D87656DC;
+        Fri, 15 May 2020 13:03:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B8FC0D58BB;
-        Fri, 15 May 2020 13:00:05 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2D566656DB;
+        Fri, 15 May 2020 13:03:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH] trace2: log progress time and throughput
-References: <20200512214420.36329-1-emilyshaffer@google.com>
-        <8f159f13-ed61-61ea-8e9a-c1ffbc5fddb3@gmail.com>
-        <xmqqzha9md5d.fsf@gitster.c.googlers.com>
-        <xmqqtv0hmb7r.fsf@gitster.c.googlers.com>
-        <3e7b0eaf-3deb-31e4-6927-45429c6deed4@gmail.com>
-Date:   Fri, 15 May 2020 10:00:03 -0700
-In-Reply-To: <3e7b0eaf-3deb-31e4-6927-45429c6deed4@gmail.com> (Derrick
-        Stolee's message of "Fri, 15 May 2020 12:49:47 -0400")
-Message-ID: <xmqqblmpm8vg.fsf@gitster.c.googlers.com>
+To:     Guillaume Galeazzi <guillaume.galeazzi@gmail.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, liu.denton@gmail.com
+Subject: Re: [PATCH] submodule--helper.c: add only-active to foreach
+References: <pull.631.git.1589099162707.gitgitgadget@gmail.com>
+        <20200510164424.GA11784@konoha>
+        <CAOEXN9yyL8T8kDmpHKTjjaG9tVS1kh34B-=PuH1hRaA7jF_K6A@mail.gmail.com>
+        <20200512141520.GA8133@konoha>
+        <b45268b1-de5f-051c-f956-8a17c067f4c6@gmail.com>
+Date:   Fri, 15 May 2020 10:03:01 -0700
+In-Reply-To: <b45268b1-de5f-051c-f956-8a17c067f4c6@gmail.com> (Guillaume
+        Galeazzi's message of "Fri, 15 May 2020 18:51:57 +0200")
+Message-ID: <xmqq7dxdm8qi.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8687B528-96CD-11EA-932A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: EFB5A474-96CD-11EA-87A7-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Guillaume Galeazzi <guillaume.galeazzi@gmail.com> writes:
 
->> Something like this?
+> Goal here was to avoid magic number, but after looking to the code it
+> seem accepted that true is 1 and false is 0. To comply with that, in
+> next version it will be replace it with:
 >
-> The patch below is exactly what I would have recommended. It looks like
-> I wrote it, too! ;)
+> 	if (FOREACH_BOOL_FILTER_NOT_SET != info->active_only) {
 
-Thanks, will queue.
+It still is unusual to have a constant on the left hand side of the
+"!=" or "==" operator, though.  Having a constant on the left hand
+side of "<" and "<=" is justifiable, but not for "!=" and "==".
