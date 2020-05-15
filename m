@@ -2,139 +2,163 @@ Return-Path: <SRS0=YoUm=65=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16989C433DF
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 21:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F19F3C433DF
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 22:22:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B93162070A
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 21:48:29 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h1m+qcpA"
+	by mail.kernel.org (Postfix) with ESMTP id D6FA020643
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 22:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727119AbgEOVs2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 17:48:28 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63498 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726266AbgEOVs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 17:48:28 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A0720D73F5;
-        Fri, 15 May 2020 17:48:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oNdoW4IT1mIO3oRlOziA6AqDPoA=; b=h1m+qc
-        pAgmJ5EYPnsWyPE/Z/bTSevm2VFnsijV+8L3xXiWj0wyHK7zW6Xma2qSc1y26ssF
-        HIW33xTfm8Re9TAUnRhUiVvRYk+TTJaoeSN17tnngOmTiB/9+N6Q6s4mLl5UDUi2
-        aFAWU62qtXkC7wU3SL0qSPqH2N6WOqDfiZ4Mk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xvrzOFkKHilHt3FRNxvmWjt+/3CGT3l5
-        rCdt44aE+GRGBM1G2qMdMxAJn9Noswghr3ArP33IhRlx9sJ5Bzsrn/SCI3WEP68m
-        ZeIXAX93t1Q/LxZ33mf0r+IF/rhoySh4MB2lkN6VZ+dALYCTGTVd3qyT8MKVy53G
-        7L4AVaWOQjE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97CA7D73F0;
-        Fri, 15 May 2020 17:48:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D8D6AD73ED;
-        Fri, 15 May 2020 17:48:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, emaste@freebsd.org, sunshine@sunshineco.com
-Subject: Re: [PATCH v2] t4210: detect REG_ILLSEQ dynamically
-References: <20200513111636.30818-1-carenas@gmail.com>
-        <20200515195157.41217-1-carenas@gmail.com>
-        <xmqqmu69kktq.fsf@gitster.c.googlers.com>
-Date:   Fri, 15 May 2020 14:48:23 -0700
-In-Reply-To: <xmqqmu69kktq.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 15 May 2020 13:24:49 -0700")
-Message-ID: <xmqqblmolviw.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726504AbgEOWW4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 18:22:56 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:19967 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726228AbgEOWW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 18:22:56 -0400
+Received: from [89.243.191.101] (helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1jZijG-0003ug-BE; Fri, 15 May 2020 23:22:54 +0100
+Subject: Re: [PATCH] diff: add config option relative
+To:     Laurent Arnoud <laurent@spkdev.net>, git@vger.kernel.org
+References: <20200515155706.GA1165062@spk-laptop>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <baa06609-11fe-28e7-2b8b-8590b9e37104@iee.email>
+Date:   Fri, 15 May 2020 23:22:53 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CD9DCAA6-96F5-11EA-A865-8D86F504CC47-77302942!pb-smtp21.pobox.com
+In-Reply-To: <20200515155706.GA1165062@spk-laptop>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Laurent,
 
->>  	else if (argc < 3)
->>  		usage("test-tool regex --bug\n"
->> -		      "test-tool regex <pattern> <string> [<options>]");
->> +		      "test-tool regex [--silent] <pattern> <string> [<options>]");
->>
->> +	if (!strcmp(argv[1], "--silent")) {
->> +		silent = 1;
->> +		argv++;
->> +	}
+On 15/05/2020 16:57, Laurent Arnoud wrote:
+> The `diff.relative` boolean option set to `true` to show only changes on the
+> current directory and show relative pathnames.
 >
-> This looks fishy---if argc==3 and the first one is "--silent", only
-> the <pattern> is left in argv and before taking <string> out of the
-> argv, we need to ensure argc is still large enough, but I do not
-> think that is done below:
-> ...
-> Not that it matters _too_ much as this is merely a test helper and
-> it would not hurt anybody as long as our callers are careful.
+> Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
+> ---
+>  Documentation/config/diff.txt   |  4 +++
+>  diff.c                          |  7 +++++
+>  t/t9904-diff-relative-config.sh | 48 +++++++++++++++++++++++++++++++++
+>  3 files changed, 59 insertions(+)
+>  create mode 100755 t/t9904-diff-relative-config.sh
+>
+> diff --git Documentation/config/diff.txt Documentation/config/diff.txt
+> index ff09f1cf73..1d311358d8 100644
+> --- Documentation/config/diff.txt
+> +++ Documentation/config/diff.txt
+> @@ -105,6 +105,10 @@ diff.mnemonicPrefix::
+>  diff.noprefix::
+>  	If set, 'git diff' does not show any source or destination prefix.
+>  
+> +diff.relative::
+> +	If set to "true", 'git diff' does not show changes outside of the directory
+> +	and show pathnames relative.
 
-But it still bothers me.  Perhaps like this?  
+This last part sounded stilted. Maybe "and shows pathnames relative to
+the current directory", assuming I've understood what it was meant to
+say (and possible the same change in the commit message)
 
-If I were writing this from scratch, I would probably increment
-argv++ once as early as possible and consistently access argv[0]
-or *argv++, but that would make the patch even noisier.
+Philip
+> +
+>  diff.orderFile::
+>  	File indicating how to order files within a diff.
+>  	See the '-O' option to linkgit:git-diff[1] for details.
+> diff --git diff.c diff.c
+> index d1ad6a3c4a..24b7a0ae08 100644
+> --- diff.c
+> +++ diff.c
+> @@ -48,6 +48,7 @@ static const char *diff_order_file_cfg;
+>  int diff_auto_refresh_index = 1;
+>  static int diff_mnemonic_prefix;
+>  static int diff_no_prefix;
+> +static int diff_relative;
+>  static int diff_stat_graph_width;
+>  static int diff_dirstat_permille_default = 30;
+>  static struct diff_options default_diff_options;
+> @@ -386,6 +387,10 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+>  		diff_no_prefix = git_config_bool(var, value);
+>  		return 0;
+>  	}
+> +	if (!strcmp(var, "diff.relative")) {
+> +		diff_relative = git_config_bool(var, value);
+> +		return 0;
+> +	}
+>  	if (!strcmp(var, "diff.statgraphwidth")) {
+>  		diff_stat_graph_width = git_config_int(var, value);
+>  		return 0;
+> @@ -4558,6 +4563,8 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
+>  		options->b_prefix = "b/";
+>  	}
+>  
+> +	options->flags.relative_name = diff_relative;
+> +
+>  	options->color_moved = diff_color_moved_default;
+>  	options->color_moved_ws_handling = diff_color_moved_ws_default;
+>  
+> diff --git t/t9904-diff-relative-config.sh t/t9904-diff-relative-config.sh
+> new file mode 100755
+> index 0000000000..a92d53ca25
+> --- /dev/null
+> +++ t/t9904-diff-relative-config.sh
+> @@ -0,0 +1,48 @@
+> +#!/bin/sh
+> +
+> +test_description='config diff.relative'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	git commit --allow-empty -m empty &&
+> +	echo content >file1 &&
+> +	mkdir subdir &&
+> +	echo other content >subdir/file2 &&
+> +	git add . &&
+> +	git commit -m one
+> +'
+> +
+> +check_diff () {
+> +	dir=$1
+> +	shift
+> +	expect=$1
+> +	shift
+> +	relative_opt=$1
+> +	shift
+> +	short_blob=$(git rev-parse --short "$(git hash-object subdir/file2)")
+> +	cat >expected <<-EOF
+> +	diff --git a/$expect b/$expect
+> +	new file mode 100644
+> +	index 0000000..$short_blob
+> +	--- /dev/null
+> +	+++ b/$expect
+> +	@@ -0,0 +1 @@
+> +	+other content
+> +	EOF
+> +	test_expect_success "-p $*" "
+> +		test_config -C $dir diff.relative $relative_opt &&
+> +		git -C '$dir' diff -p $* HEAD^ >actual &&
+> +		test_cmp expected actual
+> +	"
+> +}
+> +
+> +check_diff . file2 false --relative=subdir/
+> +check_diff . file2 false --relative=subdir
+> +check_diff . file2 true --relative=subdir/
+> +check_diff . file2 true --relative=subdir
+> +check_diff subdir file2 false --relative
+> +check_diff subdir file2 true --relative
+> +check_diff subdir file2 true
+> +
+> +test_done
 
- t/helper/test-regex.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/t/helper/test-regex.c b/t/helper/test-regex.c
-index 7a8ddce45b..e68b4f6a73 100644
---- a/t/helper/test-regex.c
-+++ b/t/helper/test-regex.c
-@@ -46,16 +46,23 @@ int cmd__regex(int argc, const char **argv)
- 	regmatch_t m[1];
- 	char errbuf[64];
- 
--	if (argc == 2 && !strcmp(argv[1], "--bug"))
--		return test_regex_bug();
--	else if (argc < 3)
--		usage("test-tool regex --bug\n"
--		      "test-tool regex [--silent] <pattern> <string> [<options>]");
-+	if (argc < 2)
-+		goto usage;
- 
-+	if (!strcmp(argv[1], "--bug")) {
-+		if (argc == 2)
-+			return test_regex_bug();
-+		else
-+			goto usage;
-+	}
- 	if (!strcmp(argv[1], "--silent")) {
--		silent = 1;
-+		silent = 0;
- 		argv++;
-+		argc--;
- 	}
-+	if (argc < 3)
-+		goto usage;
-+
- 	argv++;
- 	pat = *argv++;
- 	str = *argv++;
-@@ -84,4 +91,8 @@ int cmd__regex(int argc, const char **argv)
- 		return 1;
- 
- 	return 0;
-+
-+usage:
-+	usage("test-tool regex --bug\n"
-+	      "test-tool regex [--silent] <pattern> <string> [<options>]");
- }
