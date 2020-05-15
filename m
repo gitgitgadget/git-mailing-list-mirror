@@ -2,164 +2,102 @@ Return-Path: <SRS0=YoUm=65=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A6C4C433E0
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 086FFC433DF
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:28:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 671C120671
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:27:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCFFA20671
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 15:28:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cTfUkj1y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OP7MR4jZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbgEOP1r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 11:27:47 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61383 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726188AbgEOP1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 11:27:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 98C78CC8CF;
-        Fri, 15 May 2020 11:27:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+MJAJln3ZqNYcdzfNP+7GcWSTpI=; b=cTfUkj
-        1yn9fj0Mu0HBvRMeKtD2ZyRm5Kg0yGaTY8m+6qGw+zaG9HeHOPXkoy/aT/FI2fvS
-        DbWZ8tnDGTMHCpICiovXUYaOZIcJAMyruIYQc+V/ww6hwyHpVH5QhINFfBu1ksJ9
-        SDaX6vAMjofEXEdRgk0vJrcKTYntMgVUsLKjE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=O5AVNUFfwSyIDp1BaDCRR59s9FdoC/rF
-        8ETs70gyZn5XCtE8b9Y7oFZdWErB0qt6olwAsd84Gy/cOz8AMBiF6/Xqqv1RhfyT
-        hQoeFfoog0U53ME7f3OZ2Vjr75y1yJsGor7K+GBZzrIRr7Jt/17KIlEw9mpOMzxa
-        Q/PkrPxr4JM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 91285CC8CE;
-        Fri, 15 May 2020 11:27:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D49D2CC8CB;
-        Fri, 15 May 2020 11:27:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH] trace2: log progress time and throughput
-References: <20200512214420.36329-1-emilyshaffer@google.com>
-        <8f159f13-ed61-61ea-8e9a-c1ffbc5fddb3@gmail.com>
-Date:   Fri, 15 May 2020 08:27:42 -0700
-In-Reply-To: <8f159f13-ed61-61ea-8e9a-c1ffbc5fddb3@gmail.com> (Derrick
-        Stolee's message of "Fri, 15 May 2020 06:59:33 -0400")
-Message-ID: <xmqqzha9md5d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726460AbgEOP22 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 11:28:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43700 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726945AbgEOP20 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 May 2020 11:28:26 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09ED7C061A0C
+        for <git@vger.kernel.org>; Fri, 15 May 2020 08:28:26 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id z15so4213176pjb.0
+        for <git@vger.kernel.org>; Fri, 15 May 2020 08:28:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WI62PQ3tcJMhh4Aq4N9NWbWtbMu2Xl7mE0uizmSGxjA=;
+        b=OP7MR4jZsapPQf60sZPd7I5F7SVPg5mPTBqjrB4nLCqrjvo66ZQK7NkShQocPy3UPI
+         LGWqhUMWCg9TihqtK6gLf83MRVR5+/Yb62zVLWe2rZgQK3FlbpU8jgzyrd400UEB/f/V
+         +4EK1U/QSKcWPLJFlVznLiVirtyk/46w3RGuxpAtE80eyRAmaLUOsnB2QlTD3m4UWlej
+         vELAus5PMTdwAUy6QOw2Pe1cQXHN8nKhnUSghUx2LMrpsF0EnEaeceG7P1EpbAuGsv7+
+         MXAeoOc9URM7XXtjdy2DxJCXFz0w/TRgulSludLxvk+Ta/o2ECD/yR1QTCR8JLILU2Yg
+         9C8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WI62PQ3tcJMhh4Aq4N9NWbWtbMu2Xl7mE0uizmSGxjA=;
+        b=r/AigHv44Rr0/v8xctSPsGArx8k3pmHbcbusCeU52rCWgSrZ1PuKLKt02AQGDWywYZ
+         Y8UZglpcNWi9aerEa2QJ8uvGrozdLEHCaF2ciz55av/YML4aXxNIoJMdUxohIpSsD2jm
+         SRH5jV6dz0k4BC7UyQ7kzbIYnrskbJOWOh8jrn94uszf8KOJhcbwSjNr5uPHO8rU6dni
+         FNMDaKw2IKkRTjHN0l9IbizUYBOdT2yBcDPNJLYajL7BQ4lHjzLxAHU4LFTpX+V8BB+z
+         jQZ8JgKXQP+N0Zs6wVvMk7cJ510EjPNdfSCuoBS3nan2sbsOiWJMCLdw4bVAzJ3v9ORU
+         Cpmg==
+X-Gm-Message-State: AOAM533vfgBJZ4Fcr3WDxzv1/NzsHmz4TK181kAR+4wni+gHt2vNJ8Kq
+        ZqSgs/ZibgfxNf2/JYBoGNY=
+X-Google-Smtp-Source: ABdhPJzGFYD9LumjP6YhFcfmfiThd6dWpxOsUo+reymQpY/R5mZcp1I618nort6KqGKNpkgZ2A5dJg==
+X-Received: by 2002:a17:90a:17ed:: with SMTP id q100mr3797105pja.80.1589556505426;
+        Fri, 15 May 2020 08:28:25 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id d13sm2018331pga.64.2020.05.15.08.28.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 May 2020 08:28:24 -0700 (PDT)
+Date:   Fri, 15 May 2020 08:28:23 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v5 10/12] tests: when run in Bash, annotate test failures
+ with file name/line number
+Message-ID: <20200515152823.GA61200@Carlos-MBP>
+References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
+ <cover.1586538752.git.congdanhqx@gmail.com>
+ <ce0038598704e03becc65731a71abf596bdfbe98.1586538752.git.congdanhqx@gmail.com>
+ <5b373748-d986-1aec-670f-7ac1502e7052@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F4F2C9C-96C0-11EA-8F96-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5b373748-d986-1aec-670f-7ac1502e7052@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Fri, May 15, 2020 at 03:16:38PM +0200, Alban Gruin wrote:
+> 
+> This happens on my machine, as well as on github.
 
->> +	if (p_progress && *p_progress) {
->> +		trace2_data_intmax("progress", the_repository, "total_objects",
->> +				   (*p_progress)->total);
->
-> Should this be "total_objects"? Progress can iterate over lots of things,
-> such as cache entries. Perhaps leave it as "total"?
+could you point me to a failed github report?, also would the patch I posted
+earlier (better with the following on top) help?
 
-Good point.  
-
-I think the literal strings like "total_objects" we see in this
-patch can later be customized in the same future change that lets us
-give a more useful output than "Receiving objects" by having a
-handful of customizable strings in the progress struct as hinted by
-Emily under the three-dash line.  So I do not mind leaving it as-is.
-If a reroll has to come without making these strings customizable,
-it may be an improvement to change it to "total" if we do not forget,
-but as long as we know where we are going in the longer term, I do
-not think it is a big deal.
-
->> +
->> +		if ((*p_progress)->throughput)
->> +			trace2_data_intmax("progress", the_repository,
->> +					   "total_bytes",
->> +					   (*p_progress)->throughput->curr_total);
->
-> I like the extra detail here for the specific kind of progress used in
-> network transfer.
-
-The curr_total field must be counted in bytes, by the fact that
-strbuf_humanise_bytes() is called by throughput_string() to show it,
-so "total_bytes" does make perfect sense.  The field might want to
-get renamed to reflect this but obviously that's the kind of change
-that we would not want in the middle of a more meaningful change
-like this one.
-
->> +	}
->> +
->> +	trace2_region_leave("progress",
->> +			    p_progress && *p_progress
->> +				? (*p_progress)->title
->> +				: NULL,
->> +			    the_repository);
->> +
->>  	stop_progress_msg(p_progress, _("done"));
->>  }
->
-> This trace2_region_leave() needs to be conditional on the progress
-> being non-null. The pattern used by consumers of the progress API is:
->
-> 	if (my_progress_condition)
-> 		start_progress(&progress);
->
-> 	do {
-> 		display_progress(&progress, count);
-> 	} while (condition);
->
-> 	stop_progress(&progress);
->
-> The condition to show progress or not is conditional on an option that
-> is external to the progress API.
->
-> The fix for this patch is simple: make the trace2_region_leave() be
-> conditional on "p_progress && *p_progress".
-
-Makes sense.
-
-> This leads to an extra problem: if a user uses an option such as "--quiet",
-> then the trace2 regions won't appear at all. This becomes even more important
-> when thinking about scripts or tools that have stderr as a non-TTY, which
-> disables progress most of the time.
->
-> It's best to have trace2 data be consistent across commands. I think this can
-> be accomplished, but it is a more invasive change to the rest of the codebase.
-
-True, because "--quiet" means we cannot piggyback on the progress code.
-
-> It requires invoking the progress API in all cases, and having the progress
-> API conditionally initialize the progress struct. The new pattern would look
-> like this:
->
-> 	start_progress(&progress, my_progress_condition);
->
-> 	do {
-> 		display_progress(&progress, count);
-> 	} while (condition);
->
-> 	stop_progress(&progress);
->
-> Then, start_progress() (and variants) could always start the trace2 region,
-> and stop_progress() could always end the trace2 region.
-
-OK.  Good analysis.
-
-Thanks.
-
+Carlo
+-- >8 --
+diff --git a/ci/git-problem-matcher.json b/ci/git-problem-matcher.json
+index e10e88bba1..6d7424441b 100644
+--- a/ci/git-problem-matcher.json
++++ b/ci/git-problem-matcher.json
+@@ -4,7 +4,7 @@
+             "owner": "git-test-suite",
+             "pattern": [
+                 {
+-                    "regexp": "^(.*)(error|warning|info):\\([^ :]+\\.sh):(\\d+)\\)$",
++                    "regexp": "^(.*)\\((error|warning|info):([^ :]+\\.sh):(\\d+)\\)$",
+                     "file": 3,
+                     "line": 4,
+                     "severity": 2,
