@@ -2,96 +2,128 @@ Return-Path: <SRS0=YoUm=65=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA8B2C433DF
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C20C433E1
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:32:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6DB62073E
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:23:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 847D020756
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 17:32:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bw8FR3SN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMsXRkmW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbgEORXm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 13:23:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55366 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbgEORXm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 13:23:42 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E9A86599E;
-        Fri, 15 May 2020 13:23:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=+CrQcav+kOlh
-        D0RjAlCmDcyFmYg=; b=bw8FR3SNs4rxlETXZ3uXKI/3HB54ZwmpsIOjqb41J0ST
-        E79NTs6OiJF1bm2SFuVY7hHDzUi3AmGz+5mvlHTtDYNyzlvBPSxPcKw+b6+IjbQj
-        cK/SgVE4FzxkQRupxcN8QOwTOr0r2aDQVONjJS/tlp+rwfbf8PpUXcv4uubO9lY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rkm8+a
-        KGH2/r8oIWOpnSZo7K1hAFlo5o0G5+yX+bg6xHEUD4Unyi+zNbZSPPhY/6/ScRMH
-        UdELfOTK9SrbVYgGneXbEw3Lg8DnACaYhvLQ74Q1Iqly9W4T1DP1AiHmfEnSGU4h
-        hqbTCZLncxNcKvD33xp+hFQDvCY9FGyiaiAOc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 962716599D;
-        Fri, 15 May 2020 13:23:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 17F536599C;
-        Fri, 15 May 2020 13:23:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        congdanhqx@gmail.com, johannes.schindelin@gmx.de
-Subject: Re: [RFC PATCH] t: move metadata into TAP test description
-References: <5b373748-d986-1aec-670f-7ac1502e7052@gmail.com>
-        <20200515150041.22873-1-carenas@gmail.com>
-        <880ded78-21c6-9310-6c5e-422f6a63ad47@gmail.com>
-        <20200515154539.GB61200@Carlos-MBP>
-        <xmqqlfltm9b5.fsf@gitster.c.googlers.com>
-        <20200515171428.GC61200@Carlos-MBP>
-Date:   Fri, 15 May 2020 10:23:39 -0700
-In-Reply-To: <20200515171428.GC61200@Carlos-MBP> ("Carlo Marcelo Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Fri, 15 May 2020 10:14:28 -0700")
-Message-ID: <xmqq3681m7s4.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726551AbgEORcT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 13:32:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726168AbgEORcT (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 May 2020 13:32:19 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E0BC061A0C
+        for <git@vger.kernel.org>; Fri, 15 May 2020 10:32:18 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id d7so2306374eja.7
+        for <git@vger.kernel.org>; Fri, 15 May 2020 10:32:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=dcB3gQp2t/f/ncunTTVOuOfoIzqjnYsBe3AhID3VgWA=;
+        b=CMsXRkmWSzImINeowVYIvbQzaKm/tKo908EbWh45rgC7ICfSOuFBwg/9H3iS5bIckB
+         Yzxi9OaPBVxyAWkSGKW/mlRJRB2Wr7k9fksODjucJPJTNexJSPb/DhZRG6puG6m2ljSS
+         9mCYSC9/6+Bpq8r3WRHczNxTs4G3n0iaDlW5S8cm1M7xRgdzmwOpfYfH5OM1RBsl/PZq
+         crKzMUadTDsBu6uTnJdeRcLtCTCzNQuP/sgbLNAtopeF9xicSvpTQIaic1ZJGSdSpLsx
+         w8Zkby0V8gCZzqeZDLPx8988aPI0RFIh10ppSSXYkN218+zbP6S+RGXuOY7FYpl7DMrk
+         YEJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=dcB3gQp2t/f/ncunTTVOuOfoIzqjnYsBe3AhID3VgWA=;
+        b=aVvnqkYiLGJkwL4hzOoMFwcBs1C24BcmnQs5STR7Vf2U278ZgbYnQVWXpHqRVUENdF
+         7Igp6F8XhAOSZYFPmrFj9Wp1fh9HfZ87zzuQhXQRSIl9AWshbBkJioqI43TnH0RnCTas
+         8xuss/ne2k/vmAmduOlWBMzphan5Ys3WDpCk86T8BjofqJ+l5eGAu00WgCjso1UVGOny
+         jnMLvBAvqLlwHqLyvCp9+XsxWM0UgK7LYwDEJ9wmoVAHfnqb/6e/m12afdjg2uluRlc3
+         Mb6hY8yd8QyPQTkeWLlSWjU+MC7WMsH5b8rMVgTvNmx6UWT8wESFTQJf6gnr6IVKei/e
+         Wrhg==
+X-Gm-Message-State: AOAM533ehTfeqwIsi1Hrw10GfMjkLQfRegse3+YdU2zzwVSzLMqrScjk
+        C/otoDGb6E3+1JYqVrlcDjFV7ZN2dJyPehnnesQ=
+X-Google-Smtp-Source: ABdhPJyBIoTAVAGN/GVgmp135V4opJQnDz3M1krQvhaih2wKT7dytenwvwuYRRFpzttb0prT8FGLSe0Nz4X99rkeXCs=
+X-Received: by 2002:a17:907:948d:: with SMTP id dm13mr4060459ejc.138.1589563936791;
+ Fri, 15 May 2020 10:32:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D18BE668-96D0-11EA-8CC2-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Son Luong Ngoc <sluongng@gmail.com>
+Date:   Fri, 15 May 2020 19:32:05 +0200
+Message-ID: <CAL3xRKdwOASiGys+7Uu_OA5kBPrTdAURfEw3UQ+rguTXT+C6JQ@mail.gmail.com>
+Subject: Re: [PATCH v7 1/4] gitfaq: files in .gitignore are tracked
+To:     shouryashukla.oo@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
+        sandals@crustytoothpaste.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+Hey folks,
 
-> On Fri, May 15, 2020 at 09:50:38AM -0700, Junio C Hamano wrote:
->>=20
->> At this late stage in the cycle, would it be a safer change to
->> revert the whole thing, I wonder, rather than piling fixes on top of
->> fixes to the initial breakage?
->>=20
->> 303775a2 (t/test_lib: avoid naked bash arrays in file_lineno, 2020-05-=
-07)
->> 662f9cf1 (tests: when run in Bash, annotate test failures with file na=
-me/line number, 2020-04-11)
+> Add issue in 'Common Issues' section which addresses the problem of
+> Git tracking files/paths mentioned in '.gitignore'.
 >
-> will also need:
+> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+> ---
+>  Documentation/gitfaq.txt | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 >
->   676eb0c1ce (ci: add a problem matcher for GitHub Actions, 2020-04-11)
+> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+> index 1cf83df118..11d9bac859 100644
+> --- a/Documentation/gitfaq.txt
+> +++ b/Documentation/gitfaq.txt
+> @@ -223,6 +223,16 @@ a file checked into the repository which is a template or set of defaults which
+>  can then be copied alongside and modified as appropriate.  This second, modified
+>  file is usually ignored to prevent accidentally committing it.
+>
+> +[[files-in-.gitignore-are-tracked]]
 
-Yeah, I think that is a good idea.  I suspect that leaving it there
-won't cause problems, though---it would be just nothing is found to
-be clicked and that's the end of it, no?
+This does not work for older xmlto(centos6) for whatever reason.
+```
+# make doc
+...
+# xmlto -m manpage-normal.xsl  -m manpage-bold-literal.xsl -m
+manpage-base-url.xsl man gitfaq.xml
+xmlto: /<git-dir>/Documentation/gitfaq.xml does not validate (status 3)
+xmlto: Fix document syntax or use --skip-validation option
+/<git-dir>/Documentation/gitfaq.xml:3: element refentry: validity
+error : Element refentry content does not follow the DTD, expecting
+(beginpage? , indexterm* , refentryinfo? , refmeta? , (remark | link |
+olink | ulink)* , refnamediv+ , refsynopsisdiv? , (refsect1+ |
+refsection+)), got (refmeta refnamediv refsynopsisdiv refsect1
+refsect1 refsect1 refsect1 variablelist refsect1 refsect1 )
+```
 
-Will add a revert to the series anyway.
+Build went fine on Centos7 and Centos8 though.
 
-Thanks.
+I ran a quick sed to temporarily fix the problem
+```
+sed -i 's/files-in-\.gitignore/files-in-gitignore/g' Documentation/gitfaq.txt
+```
+
+But I suggest to just remove the period from this heading.
+
+> +I asked Git to ignore various files, yet they are still tracked::
+> + A `gitignore` file ensures that certain file(s) which are not
+> + tracked by Git remain untracked.  However, sometimes particular
+> + file(s) may have been tracked before adding them into the
+> + `.gitignore`, hence they still remain tracked.  To untrack and
+> + ignore files/patterns, use `git rm --cached <file/pattern>`
+> + and add a pattern to `.gitignore` that matches the <file>.
+> + See linkgit:gitignore[5] for details.
+> +
+>  Hooks
+>  -----
+>
+> --
+> 2.26.2
+
+Cheers,
+Son Luong.
