@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 593A7C433E3
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 086B8C433E0
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35D422074D
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D953120709
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DpSAfcwX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A0iSZVDm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728230AbgEOKF1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 06:05:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49578 "EHLO
+        id S1728258AbgEOKFa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 06:05:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728050AbgEOKF0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 06:05:26 -0400
+        with ESMTP id S1728228AbgEOKF1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 06:05:27 -0400
 Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B55F4C061A0C
-        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:25 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id f13so1689884wmc.5
-        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4550C061A0C
+        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:26 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id z72so2000080wmc.2
+        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6J+bvf2W1Bq5ralxG1MCJLMyYI7YmjMRNa40bnF0DiI=;
-        b=DpSAfcwX7odvJSIDReop3IG1ckLI/WMmvF5fvNFluIPXMNR810mI962bqcCxkNSWat
-         MSR1cEDlAIwwd8zsKHGwC9dTA/kIh1BWYP9QlsHU48fEDV895iaijysNplKCqOzpKlqf
-         6vgteqMCs0JAjx1XWuOqY2GZIss4JIpXvS4KvgAeiYewJFF3Y/Bjp8Xug8EIlXA/O7T6
-         6Li/LnGEqFbO7UITZ3Jir2ZEJJTqHowehWevyGpXJOhrWOf/6uHFKjHeK/07+GPXGOsG
-         t+IuwvQGYY1Af9TwxvrC9MbJeXpZIco7QY2RdmqXgAY3df/aIUkELRo5PPjgNiUrulom
-         TrRA==
+        bh=HfUC+WdGxe2JbHaPxGDUlL77vYVbSqjVQzMoGehgWOg=;
+        b=A0iSZVDmUIshforVvKKKtI1bvv3MiPut72aTR8/SYegoWr3fI1XgZGIQ4lpI5XwY9o
+         AIeDJWfUpx6vzlReH5yJ7FZhQpyCzgAPlb+DaCTIfEA9IcAFePoRxIAkH/kidE7i2VYb
+         bith3jRpOwUcFOOJk9uRY/60jghPjp17J5ttajn2hkH+ZjtvbuzzL9kC9yBV+SNXyh6l
+         rwFdxfoknavrnqR+rI6jDlVtinYNG1B92QJBz2+HTYlXDLlCv30O3helWsTAVRfMPh8I
+         uUBiRlmGIUsNo1fT9olC/zL43Y/zcnjjJzYumtlzu2IEy+HycFOblGQoKvvUArjllc6b
+         S7mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6J+bvf2W1Bq5ralxG1MCJLMyYI7YmjMRNa40bnF0DiI=;
-        b=LVpqqn3Zso5IsvKx1xYO54cC9kHAxna0GEN6xS07xRRYZ6OvQi2Z7jP6p7s2HH7ujI
-         ASNKCiC3IYeaxPVq9mYOeKJ3dbbkdhu5fQr6X3g7fZsVkasu3d2I66ecU0RPTiLyANHm
-         Tv+CtihsWvoSLUxZ++OsiaoFg4k3/hQZl7lrHRGp1qBidRlDePQo0gi8c5LZFcq/TeTU
-         uXkZgJJy918UrP+eDjQ9UuArZmfocgxCkFSiU/hqYWZ8VB6DPnRGKjNLEuVPF8A5pPB7
-         gnXwnaHJNlkR7ktGGiEbEOcwzUvQrpN3xKpbd9cmsDtpnbATccOM+uszaJjOCljTmPox
-         27Pg==
-X-Gm-Message-State: AOAM53372np6okUL6U5YaU2Iel4cdozlV7f9Yu62FInDKt15wqqoLify
-        qCrvVRDhlRyplIHIaWSwb/HwitdWLB4=
-X-Google-Smtp-Source: ABdhPJz8jP+ljFkDD2iPfrtpei4ABLLQxElhLLisdrrX5yaqCP/Dk6zLwwLQIiKLpYkTrBzZ3D68Ng==
-X-Received: by 2002:a7b:cf15:: with SMTP id l21mr3188205wmg.172.1589537124012;
-        Fri, 15 May 2020 03:05:24 -0700 (PDT)
+        bh=HfUC+WdGxe2JbHaPxGDUlL77vYVbSqjVQzMoGehgWOg=;
+        b=G//YQSDAJLJqT4q7iQ044pvFtpjWfjgs40prgRZHL1Pi+g/StqL2tikmNPg8EonxiH
+         EAVyAhsps+LlxpZhn4bjq/qbxjDuFzhgw5haJcHsUeB2tDVQSJ5VIi87z+LonkGedinH
+         CVacvYM0zsH11gQRjc4jVAZHWIIQwE8g7VcX9Y75XQ/fIW5IAu9lAG4q6cnZlvqmwqUE
+         vJ+6jXlenRjReWBipJiMA7jiUexHYwtyPNduUuY9Uk5pMJTLNECkm5qaiwTkTkvPjcc0
+         h6aBN0MvUnTJar/+R6R8bOGleo7jDJ25kuDVZpSReEivytQ5RIeWpQ6FmvEcDOjOhgLC
+         pH0Q==
+X-Gm-Message-State: AOAM530wMUcFWEZFQQ4R+CAioQ4DXLLYCdWD9QJGt60ZnNaJO5MV1wRU
+        FHHovlfq5j9a/4F5gtIQitKwfIhy4+k=
+X-Google-Smtp-Source: ABdhPJw6cCxmRm2/6MoxaAQ5ju27aYtHNu1mz1MU2ZEet1nMqyBwvvShaYTtqCv6aM/7qtvaz86DOw==
+X-Received: by 2002:a1c:dc05:: with SMTP id t5mr3352590wmg.112.1589537125270;
+        Fri, 15 May 2020 03:05:25 -0700 (PDT)
 Received: from localhost.localdomain ([193.57.121.171])
-        by smtp.gmail.com with ESMTPSA id m3sm2792326wrn.96.2020.05.15.03.05.22
+        by smtp.gmail.com with ESMTPSA id m3sm2792326wrn.96.2020.05.15.03.05.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2020 03:05:23 -0700 (PDT)
+        Fri, 15 May 2020 03:05:24 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 12/13] upload-pack: pass upload_pack_data to create_pack_file()
-Date:   Fri, 15 May 2020 12:04:53 +0200
-Message-Id: <20200515100454.14486-13-chriscool@tuxfamily.org>
+Subject: [PATCH 13/13] upload-pack: use upload_pack_data fields in receive_needs()
+Date:   Fri, 15 May 2020 12:04:54 +0200
+Message-Id: <20200515100454.14486-14-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.26.2.639.gb7dde20fdf
 In-Reply-To: <20200515100454.14486-1-chriscool@tuxfamily.org>
 References: <20200515100454.14486-1-chriscool@tuxfamily.org>
@@ -81,82 +81,83 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-more thoroughly, let's pass that struct to create_pack_file(),
-so that this function, and the function it calls, can use all
-the fields of the struct.
+more thoroughly, let's use fields from this struct in
+receive_needs(), instead of local variables with the same name
+and purpose.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- upload-pack.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ upload-pack.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 4ac40c5b04..93cf4b1fe5 100644
+index 93cf4b1fe5..401c9e6c4b 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -161,9 +161,7 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
- 	return 0;
+@@ -911,13 +911,7 @@ static int process_deepen_not(const char *line, struct string_list *deepen_not,
+ static void receive_needs(struct upload_pack_data *data,
+ 			  struct packet_reader *reader)
+ {
+-	struct object_array shallows = OBJECT_ARRAY_INIT;
+-	struct string_list deepen_not = STRING_LIST_INIT_DUP;
+-	int depth = 0;
+ 	int has_non_tip = 0;
+-	timestamp_t deepen_since = 0;
+-	int deepen_rev_list = 0;
+-	int deepen_relative = 0;
+ 
+ 	shallow_nr = 0;
+ 	for (;;) {
+@@ -930,13 +924,13 @@ static void receive_needs(struct upload_pack_data *data,
+ 		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 			break;
+ 
+-		if (process_shallow(reader->line, &shallows))
++		if (process_shallow(reader->line, &data->shallows))
+ 			continue;
+-		if (process_deepen(reader->line, &depth))
++		if (process_deepen(reader->line, &data->depth))
+ 			continue;
+-		if (process_deepen_since(reader->line, &deepen_since, &deepen_rev_list))
++		if (process_deepen_since(reader->line, &data->deepen_since, &data->deepen_rev_list))
+ 			continue;
+-		if (process_deepen_not(reader->line, &deepen_not, &deepen_rev_list))
++		if (process_deepen_not(reader->line, &data->deepen_not, &data->deepen_rev_list))
+ 			continue;
+ 
+ 		if (skip_prefix(reader->line, "filter ", &arg)) {
+@@ -953,7 +947,7 @@ static void receive_needs(struct upload_pack_data *data,
+ 			    "expected to get object ID, not '%s'", reader->line);
+ 
+ 		if (parse_feature_request(features, "deepen-relative"))
+-			deepen_relative = 1;
++			data->deepen_relative = 1;
+ 		if (parse_feature_request(features, "multi_ack_detailed"))
+ 			multi_ack = 2;
+ 		else if (parse_feature_request(features, "multi_ack"))
+@@ -1005,14 +999,18 @@ static void receive_needs(struct upload_pack_data *data,
+ 	if (!use_sideband && daemon_mode)
+ 		no_progress = 1;
+ 
+-	if (depth == 0 && !deepen_rev_list && shallows.nr == 0)
++	if (data->depth == 0 && !data->deepen_rev_list && data->shallows.nr == 0)
+ 		return;
+ 
+-	if (send_shallow_list(&data->writer, depth, deepen_rev_list, deepen_since,
+-			      &deepen_not, deepen_relative, &shallows,
++	if (send_shallow_list(&data->writer,
++			      data->depth,
++			      data->deepen_rev_list,
++			      data->deepen_since,
++			      &data->deepen_not,
++			      data->deepen_relative,
++			      &data->shallows,
+ 			      &data->want_obj))
+ 		packet_flush(1);
+-	object_array_clear(&shallows);
  }
  
--static void create_pack_file(const struct object_array *have_obj,
--			     const struct object_array *want_obj,
--			     struct list_objects_filter_options *filter_options)
-+static void create_pack_file(struct upload_pack_data *pack_data)
- {
- 	struct child_process pack_objects = CHILD_PROCESS_INIT;
- 	char data[8193], progress[128];
-@@ -200,9 +198,9 @@ static void create_pack_file(const struct object_array *have_obj,
- 		argv_array_push(&pack_objects.args, "--delta-base-offset");
- 	if (use_include_tag)
- 		argv_array_push(&pack_objects.args, "--include-tag");
--	if (filter_options->choice) {
-+	if (pack_data->filter_options.choice) {
- 		const char *spec =
--			expand_list_objects_filter_spec(filter_options);
-+			expand_list_objects_filter_spec(&pack_data->filter_options);
- 		if (pack_objects.use_shell) {
- 			struct strbuf buf = STRBUF_INIT;
- 			sq_quote_buf(&buf, spec);
-@@ -226,13 +224,13 @@ static void create_pack_file(const struct object_array *have_obj,
- 	if (shallow_nr)
- 		for_each_commit_graft(write_one_shallow, pipe_fd);
- 
--	for (i = 0; i < want_obj->nr; i++)
-+	for (i = 0; i < pack_data->want_obj.nr; i++)
- 		fprintf(pipe_fd, "%s\n",
--			oid_to_hex(&want_obj->objects[i].item->oid));
-+			oid_to_hex(&pack_data->want_obj.objects[i].item->oid));
- 	fprintf(pipe_fd, "--not\n");
--	for (i = 0; i < have_obj->nr; i++)
-+	for (i = 0; i < pack_data->have_obj.nr; i++)
- 		fprintf(pipe_fd, "%s\n",
--			oid_to_hex(&have_obj->objects[i].item->oid));
-+			oid_to_hex(&pack_data->have_obj.objects[i].item->oid));
- 	for (i = 0; i < extra_edge_obj.nr; i++)
- 		fprintf(pipe_fd, "%s\n",
- 			oid_to_hex(&extra_edge_obj.objects[i].item->oid));
-@@ -1179,9 +1177,7 @@ void upload_pack(struct upload_pack_options *options)
- 		receive_needs(&data, &reader);
- 		if (data.want_obj.nr) {
- 			get_common_commits(&data, &reader);
--			create_pack_file(&data.have_obj,
--					 &data.want_obj,
--					 &data.filter_options);
-+			create_pack_file(&data);
- 		}
- 	}
- 
-@@ -1525,9 +1521,7 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
- 			send_shallow_info(&data);
- 
- 			packet_writer_write(&data.writer, "packfile\n");
--			create_pack_file(&data.have_obj,
--					 &data.want_obj,
--					 &data.filter_options);
-+			create_pack_file(&data);
- 			state = FETCH_DONE;
- 			break;
- 		case FETCH_DONE:
+ /* return non-zero if the ref is hidden, otherwise 0 */
 -- 
 2.26.2.638.gb2c16ea67b.dirty
 
