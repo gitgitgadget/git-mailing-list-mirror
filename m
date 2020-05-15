@@ -2,169 +2,119 @@ Return-Path: <SRS0=YoUm=65=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76DECC433DF
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 13:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 536D1C433DF
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 13:59:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4936720759
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 13:16:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2563D2075F
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 13:59:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="StgrDCgX"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="P5AZe0Ap"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbgEONQv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 09:16:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726140AbgEONQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 09:16:50 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24FE4C061A0C
-        for <git@vger.kernel.org>; Fri, 15 May 2020 06:16:49 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id 50so3473915wrc.11
-        for <git@vger.kernel.org>; Fri, 15 May 2020 06:16:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3f8c44DzbvZ74ItFb7MkRs5EMnhPCQmPCRkWtfWZ+5g=;
-        b=StgrDCgXU+lQkw/JD04u5ubBIGenmTpB/HU2RGXGJNpuf4Mc6yagxf6T7VZFroUWsA
-         8wr5HTHNArXrpTEXB67PrxuV0oLm8/8z9XBTK9XapifncS1D249cULFwUFY3Fhg3Qvvg
-         gu0guggbghfMArLDjBU5xy3Q69shWti2ZUJ73mM1Hcb4Aoca6AS9JoFbOu5YECU5Ht1i
-         J6cKhDvhcM4iQTZbuLO8siAra2ieTTNGkqC44XZ2TcSvj7tJF3aEwUGITNOnJul506u0
-         mhlvDcQ1eaccvPYCXDdWuvb5Ak00eXHi64CgQZPEwXxJfc0VXZVrEvIrIx1yKKMan5PS
-         f7fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3f8c44DzbvZ74ItFb7MkRs5EMnhPCQmPCRkWtfWZ+5g=;
-        b=ek5deeoYKlQ7OCJWvn+ZXsX+NhECgzVhSU9gy+32UL7n/ctBL2PMuiCsxWR0lw2k6Q
-         puumOsALzOlENGPN0r74VTRDQULmh6o9e/7Njl4f1OJPw80wJ4AbPGUmh4a6kB0/PtVI
-         SW6iBkIbj16Pw4q3z2WLmb6EuVC8WPD41yEoMLjBJQsAlu7JRei6umRBhs9OrJ1ftoEz
-         fa37WGhBQpEtKNS1luTCfdvP5ZFilDnw7OI3NjuQgb8dibaHH74MTOVZ5ts9pzhgoY0G
-         n5nhgdL4Xg+kgfR8iBuNQhsLpXnFfExgedvApXJGySi4tlZGrmcjDhUhucs5h2K0o4z9
-         fKdg==
-X-Gm-Message-State: AOAM531Gmuiq/NtrUzqmKpu7I9WrHqEs6JF+vDfNhwRnxj3qxX8/lwPH
-        R4Z5yS4obosKlCNnMYdDrZU5ta8s
-X-Google-Smtp-Source: ABdhPJzO2WjgejhDaWbQDTi4oPNcMmsNyTRpxCxSJa0pXQuz9O+Zy7J306czXHR4q/tC3DKt33xbgg==
-X-Received: by 2002:a05:6000:8:: with SMTP id h8mr4466067wrx.372.1589548607896;
-        Fri, 15 May 2020 06:16:47 -0700 (PDT)
-Received: from [192.168.0.104] (atoulouse-654-1-314-129.w86-199.abo.wanadoo.fr. [86.199.201.129])
-        by smtp.gmail.com with ESMTPSA id o205sm3562427wmo.32.2020.05.15.06.16.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 May 2020 06:16:47 -0700 (PDT)
-Subject: Re: [PATCH v5 10/12] tests: when run in Bash, annotate test failures
- with file name/line number
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        id S1726242AbgEON74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 09:59:56 -0400
+Received: from mout.gmx.net ([212.227.17.20]:54481 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726140AbgEON7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 09:59:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1589551185;
+        bh=KyR2CDJHGzZIGNe78lCILK8PmvVnY3WxavK4eFIOh2M=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=P5AZe0ApSW/Wuo9sdGZyitSJb/e2Fazsu/1iGNZLTBR/daqHT7BzXAdsEU8YROo2w
+         3FyrI6EHekKLNRP+CMHBJBp7hjHB3ywDCoOtZCrHI4iGkhuwRl0Bp9SSKPMc1tIlWn
+         Pbl2r5LWX/apuASCG3IpbdBVNM6Q8D6hwguLEJfY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.131.160] ([89.1.214.237]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mxm3K-1j9i1v1PdG-00zByO; Fri, 15
+ May 2020 15:59:45 +0200
+Date:   Fri, 15 May 2020 15:59:42 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.743.git.git.1585658913.gitgitgadget@gmail.com>
- <cover.1586538752.git.congdanhqx@gmail.com>
- <ce0038598704e03becc65731a71abf596bdfbe98.1586538752.git.congdanhqx@gmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <5b373748-d986-1aec-670f-7ac1502e7052@gmail.com>
-Date:   Fri, 15 May 2020 15:16:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+Subject: Re: [PATCH] ci: avoid pounding on the poor ci-artifacts container
+In-Reply-To: <xmqqimh0afkh.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2005151557130.55@tvgsbejvaqbjf.bet>
+References: <pull.632.git.1589316430595.gitgitgadget@gmail.com> <xmqqimh0afkh.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <ce0038598704e03becc65731a71abf596bdfbe98.1586538752.git.congdanhqx@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jTcQcqqkTdQBD9x43Jdh04nuJLgbYI8GRvNhM6dfAE9TlsVjjwP
+ thw8UIX4gLBQKDrKwMoE6drx/GzeJk4QntAUa7wDN+T8pLkTEuRn5ha7ankTqKcxBAP0kcA
+ 1RbrNBJWEf3RGjg3+DjSmAEwWFzGdnOvm6J6zBXDzP0VCjjrTcNcIH/Z4jhQGDo1oCgaCNG
+ gKzFYVkc5KW7KcTBqTPOw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5eXBU1cCo9o=:wFTmSEF8aBYtSRVPSeB31s
+ vBj6M37wmInezjUsjJtJ6RqKzPaObjNHw7JM5VgkIzuCu+m2oF0PApZX7WSdAJ89mrGM3633z
+ nChnUlZBrMJ8of7n0w6ulr9KTinZXnKRQgYdKUjQe9djqHGIZRL8CyPTYUwQbhD8HMRoBmKNI
+ bq1lB6ZtUQ/S5v3QoJyiZQ6DqvOG+xVO8cB1r+eFPouPCOm1x0YXXoosqB0k4WfUycMqy1qiA
+ wNJWmkiVisRYg1AUxkd+9VDBDIVNY0Ymxs4CB1beZ9wR9WJXN0C4vUZ8D7+zzcV16lU1S5+XQ
+ Xfvmy9Azp3VdjDDQSZ5McwgDb9q/n32OM4FS4zmIfnaiOZaCb7mdgl/acfZsMmBtSnvBXO/af
+ Y98Qg3YuLdchdwBUfVwV7uTyRAq2C+y7ZGroFp9MB6E7zogobgClNzjY6j43dZcBWGbzv5vO2
+ ovUoJYzyCZHK4o39Id0/DedGmIq6utIk71+6jqMFO/tF+mWllkSIY/i54vMMeIVEe/QxKPDVH
+ kVjgT+oeBAf/XmpsybE4DcS3rdITsR/uzCj0WtsN/hpRcloc3kV7drs9lekcG0sZQJcvuT1pY
+ vTA3ocAxQAwxUBqXE13lyqAMPQsw0v9DHTRMZQAb9HNklW9Vm5mNB9qh+2ujC2x8d6pTiC6cS
+ KjtepjJOPnkvctxxtCCivDNoYdCj5gw6W9ktCPawwj+/zLvGgFEJXTHnRafo+3ChXBO2Scl8P
+ STFuL9ZSQ/Q2Lb1MecmelMFFHejK+OPAqYtQ/fdOHOfucEDkdDrtkDOyDLnOGs9RTb/DLipzf
+ +YO+vfqv8dgkDkGKUOMmcFajAM69t/aD9IVFBSyGeeZRn++wUlT6NcG3I8FFfNT5dvK09q8/C
+ MI3e/3M5Iw2esQ54FSqcnO/3wfXxwXhC/LKlho9oDAli2DdSlkMop06qXt/PxtLrsyPQ1aZ6O
+ UIw/9TktmeJfAEtSS4G+8rSaFz/C4AC2KsJEeYy51ttpPadn1KS8nNnncpQY4AdIZ9X8AoIpj
+ kAvrtwzaoxesZ/0qfOXHzWvVSQnfILeigXyrwjkD1JtUu6TjRqb3TR+aLA0pQ23vLhC365IpM
+ /RdFUXLGWElce3qgMHY98TeXgoFKiUPCIlyKyLUs0Zvt0utBD430D2BmOObWXz62zKSgJq0Ez
+ 1PCEu3naHgpmU2dZSLlhu59cVtJFq0HMZzr+Lvz683GDPmUpAx/0tpav9H5CuwWyeZOfGdIc8
+ yZQLvGfuhzmgl8Va/
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-Le 10/04/2020 à 19:18, Đoàn Trần Công Danh a écrit :
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> When a test fails, it is nice to see where the corresponding code lives
-> in the worktree. Sadly, it seems that only Bash allows us to infer this
-> information. Let's do it when we detect that we're running in a Bash.
-> 
-> This will come in handy in the next commit, where we teach the GitHub
-> Actions workflow to annotate failed test runs with this information.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-> ---
->  t/test-lib.sh | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 0ea1e5a05e..40a00983f7 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -657,6 +657,18 @@ die () {
->  	fi
->  }
->  
-> +file_lineno () {
-> +	test -z "$GIT_TEST_FRAMEWORK_SELFTEST" && test -n "$BASH" || return 0
-> +	local i
-> +	for i in ${!BASH_SOURCE[*]}
-> +	do
-> +		case $i,"${BASH_SOURCE[$i]##*/}" in
-> +		0,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:$LINENO: ${1+$1: }"; return;;
-> +		*,t[0-9]*.sh) echo "t/${BASH_SOURCE[$i]}:${BASH_LINENO[$(($i-1))]}: ${1+$1: }"; return;;
-> +		esac
-> +	done
-> +}
-> +
->  GIT_EXIT_OK=
->  trap 'die' EXIT
->  # Disable '-x' tracing, because with some shells, notably dash, it
-> @@ -702,7 +714,7 @@ test_failure_ () {
->  		write_junit_xml_testcase "$1" "      $junit_insert"
->  	fi
->  	test_failure=$(($test_failure + 1))
-> -	say_color error "not ok $test_count - $1"
-> +	say_color error "$(file_lineno error)not ok $test_count - $1"
->  	shift
->  	printf '%s\n' "$*" | sed -e 's/^/#	/'
->  	test "$immediate" = "" || { finalize_junit_xml; GIT_EXIT_OK=t; exit 1; }
-> 
+On Tue, 12 May 2020, Junio C Hamano wrote:
 
-This violates the TAP specification, it seems.  Without this patch, when
-a test fails, `prove' shows clearly which test(s) broke, and how many
-failed:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > Let's switch back to using the Build Artifacts of our trusty Azure
+> > Pipeline for the time being.
+> >
+> > To avoid unnecessary hammering of the Azure Pipeline artifacts, we use
+> > the GitHub Action `actions/upload-artifact` in the `windows-build` job
+> > and the GitHub Action `actions/download-artifact` in the `windows-test=
+`
+> > and `vs-test` jobs (the latter now depends on `windows-build` for that
+> > reason, too).
+>
+> I guess this answers a question I sent earlier to the list (our
+> mails almost crossed, I guess, as two of us were looking at the same
+> problem at around the same time?).
 
-> Test Summary Report
-> -------------------
-> t0001-init.sh (Wstat: 256 Tests: 45 Failed: 1)
->   Failed test:  2
->   Non-zero exit status: 1
+I am terribly sorry, but I did not get to read the Git mailing list at all
+this week (or for that matter, my private mail). So I would not even have
+seen your message... :-(
 
-With this patch, it shows this:
+> Hopefully when cmake-for-windows-build topic lands, this can go away
+> altogether, but that is probably at least 8 weeks away (3 weeks
+> remaining before the next cycle opens, plus a half of 10 week per
+> cycle for a typical major release).
 
-> Test Summary Report
-> -------------------
-> t0001-init.sh (Wstat: 256 Tests: 44 Failed: 0)
->   Non-zero exit status: 1
->   Parse errors: Tests out of sequence.  Found (3) but expected (2)
->                 Tests out of sequence.  Found (4) but expected (3)
->                 Tests out of sequence.  Found (5) but expected (4)
->                 Tests out of sequence.  Found (6) but expected (5)
->                 Tests out of sequence.  Found (7) but expected (6)
-> Displayed the first 5 of 44 TAP syntax errors.
-> Re-run prove with the -p option to see them all.
+The `cmake-for-windows-build` would address only the build part for Visual
+Studio. The regular Windows build, as well as the parallelized tests
+_still_ need the `git-sdk-64-minimal` artifact. With or without CMake.
+That's because neither CMake nor Visual Studio can accommodate the fact
+that our test suite is implemented in shell script _and_ requires a
+working Perl interpreter.
 
-Not nice to see clearly which tests failed: we do not see all failed
-tests (what if a test failed after the 7th test?), and the counter
-displays 0.
+> Today's final integration (these days I'm pushing out twice or three
+> times a day) contains this one, and it seems to have passed ;-)
 
-This happens on my machine, as well as on github.
+Excellent!
 
-Cheers,
-Alban
-
+Thanks,
+Dscho
