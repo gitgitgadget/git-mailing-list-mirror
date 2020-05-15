@@ -5,59 +5,59 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55755C433E1
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE263C433DF
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31E8C20709
-	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83A9320709
+	for <git@archiver.kernel.org>; Fri, 15 May 2020 10:05:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aVDIezmM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVgQs6rv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728255AbgEOKF3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 06:05:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49570 "EHLO
+        id S1728215AbgEOKFZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 06:05:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728151AbgEOKF0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 06:05:26 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C96C05BD09
-        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:24 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id f13so1689809wmc.5
-        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:24 -0700 (PDT)
+        with ESMTP id S1728151AbgEOKFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 06:05:23 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8AFCC05BD0A
+        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:22 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id h4so1701936wmb.4
+        for <git@vger.kernel.org>; Fri, 15 May 2020 03:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=friTYmnGhW5bqnhTppOnCfdbrBVFGESA+3rhTEdSCEk=;
-        b=aVDIezmMXrcVCdsvxBX6PnQU7r2FP2YGSVeGxGpws6qScxEsvR1TumEFvChZ1X6j/S
-         XV2O9ZM8KmsgdntD+Azhnmv/JcR2INq1DFQVjUD8R/K8PdPAfxSO0Jba8PF+Q7PPfn8/
-         YGLgtIrix7U+1S8IS7onzkp9AgSu+VK535lKX8WUjOmMn7dCxDFKgzSxpAxpECSjKhSx
-         1geEss3y7xCnuSr90cLDPkgktp/E428LRz+4fa/EqJgcj8bkEWsKAwK3of6r/chXBm0r
-         fCSuhPUh7TbggPTAUNy6gxLgKqcNUY6v/T0t1bKQ7BRV76HrZriPtDGUbqeZbYws4ZB+
-         5q8A==
+        bh=OmRY5N7KfrpjN5YWGcwt+7y/AoCt5pYfFpCIUp6pr9s=;
+        b=fVgQs6rvaYWeVwfMkb3pvKLfuTQNnclwUedGYcLmjbookCb9AEqwmAKWLxjm52J9Qt
+         KpVdl9wTeNoxqJxqRFp7rlnrDHs3adoZjaYEx5Qn4So1MiiYj8DaCI8P1C9gkyjWqi6P
+         jYY616RqLyMopsVaDNSYuMUY01FREw6Jy9B3gbB6j+m4gcHpdmeAO6vS5XhMgvuiN4jS
+         b+pkDBymTCptOI0ZKhdmBWfND4Iib4SCbwudfUJRuUudmDwor7S7xzZ3qNV88WgFpqaY
+         J0cXprHF2yVWV045nHxdn4Rdb7PMt0iBrja7Bc/UO0q5s2ftjcDv18/Zufo8vE6TCSov
+         reYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=friTYmnGhW5bqnhTppOnCfdbrBVFGESA+3rhTEdSCEk=;
-        b=CnBOXKlNu+l+CSP4IHwoI3NsXYFkjIsMjQx7u9ebrvqgUg/Fnfg+bA9z019r/zTHWH
-         m+k5OOtb22MIzT8KSApqjzzrM0nD4YAX1aaJWRy62JHs27AoNZL3qJi116oiNu97vYpC
-         e/WiGaaIA2RGx1zNC54W5e9itSpxMUvilrmq9oRR9OAleIlOJE0+QtACD+cFSwUSwNUV
-         blQ2KmYqdsV/sXC6PuzQu318eXE2nr+62uXGuwH0PXpTe1IElwG4NuOL1Ml0D6fMB+nA
-         HxTdJM+tNAuZsyd/63oKzpCIcwQjXvjZZzmG3oz7NSgMuC0A4Zg2ZtCyNuDrszOGgJOx
-         6LBA==
-X-Gm-Message-State: AOAM530pui9920Hc/P6/Llsy7FK4tqWqFSfqG2hJfgmhoeoAdNtpptGx
-        SoUQD5MT+f4prI66Juitq6rSXVNAcEE=
-X-Google-Smtp-Source: ABdhPJyO1kVvQ8QADmqjfBpahBfK5cL1irTx5554SPBRGdcbbXB1JmaCDDuuDsOe9M9HAyAkF8YO4A==
-X-Received: by 2002:a1c:bbc4:: with SMTP id l187mr3312547wmf.183.1589537122709;
-        Fri, 15 May 2020 03:05:22 -0700 (PDT)
+        bh=OmRY5N7KfrpjN5YWGcwt+7y/AoCt5pYfFpCIUp6pr9s=;
+        b=G3H6yvDOxLlsf3wHYEJceReETzbzJm/Gv/dD/74nv+n99zzqJTXDx/r889J787hakv
+         /DKC8Zd4rjLI9jDzMn7R+OghKiB9TrqeGWeT1Z7mPvEK4ZepGr2G0dEXhfm+08H9cikm
+         mw58FPq3E9f3twgWgBc6s0cWrDE7ebLy4KzIo00584ufdyig8Ips80sThQhCt2kbJzQg
+         cmliXE22Sl9/U7nQughwvgXDfVlqiM8S1kQM3B51hxE7syhNqUElXaTCAJBnio7tymtb
+         bnwvYEwjs5pvnd/N6ywDM10QnQam86MebC1+YlZmygJV7SxTazunQAmkdDRTTDrdEbWK
+         pWFA==
+X-Gm-Message-State: AOAM530Cc1LPmrjQUvM+MgplM9KsixnfWfjaBwpitV4OdkVIStoBolng
+        dPDoLS96C9DGQD/VrmYL3TznNkdrtPg=
+X-Google-Smtp-Source: ABdhPJzTZ093PEsnRadfQezOZ/OpMlXc9RmRJn31AIuIG8KTdQ1x7aIynx1f0WSjgyrJse7FujrkjA==
+X-Received: by 2002:a1c:9cd4:: with SMTP id f203mr3378622wme.26.1589537118085;
+        Fri, 15 May 2020 03:05:18 -0700 (PDT)
 Received: from localhost.localdomain ([193.57.121.171])
-        by smtp.gmail.com with ESMTPSA id m3sm2792326wrn.96.2020.05.15.03.05.21
+        by smtp.gmail.com with ESMTPSA id m3sm2792326wrn.96.2020.05.15.03.05.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2020 03:05:22 -0700 (PDT)
+        Fri, 15 May 2020 03:05:17 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 11/13] upload-pack: remove static variable 'stateless_rpc'
-Date:   Fri, 15 May 2020 12:04:52 +0200
-Message-Id: <20200515100454.14486-12-chriscool@tuxfamily.org>
+Subject: [PATCH 07/13] upload-pack: use upload_pack_data writer in receive_needs()
+Date:   Fri, 15 May 2020 12:04:48 +0200
+Message-Id: <20200515100454.14486-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.26.2.639.gb7dde20fdf
 In-Reply-To: <20200515100454.14486-1-chriscool@tuxfamily.org>
 References: <20200515100454.14486-1-chriscool@tuxfamily.org>
@@ -81,76 +81,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-more thoroughly, let's remove the 'stateless_rpc' static
-variable, as we can now use the field of 'struct upload_pack_data'
-with the same name instead.
+more thoroughly, let's use the 'struct packet_writer writer'
+field from 'struct upload_pack_data' in receive_needs(),
+instead of a local 'struct packet_writer writer' variable.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- upload-pack.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ upload-pack.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 680c38cc13..4ac40c5b04 100644
+index 94bf9cd088..399ec60ade 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -63,7 +63,6 @@ static int keepalive = 5;
-  * otherwise maximum packet size (up to 65520 bytes).
-  */
- static int use_sideband;
--static int stateless_rpc;
- static const char *pack_objects_hook;
+@@ -917,10 +917,8 @@ static void receive_needs(struct upload_pack_data *data,
+ 	timestamp_t deepen_since = 0;
+ 	int deepen_rev_list = 0;
+ 	int deepen_relative = 0;
+-	struct packet_writer writer;
  
- static int filter_capability_requested;
-@@ -449,7 +448,7 @@ static int get_common_commits(struct upload_pack_data *data,
- 				packet_write_fmt(1, "ACK %s\n", last_hex);
- 				return 0;
- 			}
--			if (stateless_rpc)
-+			if (data->stateless_rpc)
- 				exit(0);
- 			got_common = 0;
- 			got_other = 0;
-@@ -663,7 +662,8 @@ static void check_non_tip(struct upload_pack_data *data)
- 	 * uploadpack.allowReachableSHA1InWant,
- 	 * non-tip requests can never happen.
+ 	shallow_nr = 0;
+-	packet_writer_init(&writer, 1);
+ 	for (;;) {
+ 		struct object *o;
+ 		const char *features;
+@@ -978,7 +976,7 @@ static void receive_needs(struct upload_pack_data *data,
+ 
+ 		o = parse_object(the_repository, &oid_buf);
+ 		if (!o) {
+-			packet_writer_error(&writer,
++			packet_writer_error(&data->writer,
+ 					    "upload-pack: not our ref %s",
+ 					    oid_to_hex(&oid_buf));
+ 			die("git upload-pack: not our ref %s",
+@@ -1001,7 +999,7 @@ static void receive_needs(struct upload_pack_data *data,
+ 	 * by another process that handled the initial request.
  	 */
--	if (!stateless_rpc && !(allow_unadvertised_object_request & ALLOW_REACHABLE_SHA1))
-+	if (!data->stateless_rpc
-+	    && !(allow_unadvertised_object_request & ALLOW_REACHABLE_SHA1))
- 		goto error;
- 	if (!has_unreachable(&data->want_obj))
- 		/* All the non-tip ones are ancestors of what we advertised */
-@@ -1074,7 +1074,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 				     " allow-tip-sha1-in-want" : "",
- 			     (allow_unadvertised_object_request & ALLOW_REACHABLE_SHA1) ?
- 				     " allow-reachable-sha1-in-want" : "",
--			     stateless_rpc ? " no-done" : "",
-+			     data->stateless_rpc ? " no-done" : "",
- 			     symref_info.buf,
- 			     allow_filter ? " filter" : "",
- 			     git_user_agent_sanitized());
-@@ -1149,7 +1149,6 @@ void upload_pack(struct upload_pack_options *options)
- 	struct packet_reader reader;
- 	struct upload_pack_data data;
+ 	if (has_non_tip)
+-		check_non_tip(&data->want_obj, &writer);
++		check_non_tip(&data->want_obj, &data->writer);
  
--	stateless_rpc = options->stateless_rpc;
- 	timeout = options->timeout;
- 	daemon_mode = options->daemon_mode;
+ 	if (!use_sideband && daemon_mode)
+ 		no_progress = 1;
+@@ -1009,7 +1007,7 @@ static void receive_needs(struct upload_pack_data *data,
+ 	if (depth == 0 && !deepen_rev_list && shallows.nr == 0)
+ 		return;
  
-@@ -1157,9 +1156,11 @@ void upload_pack(struct upload_pack_options *options)
- 
- 	upload_pack_data_init(&data);
- 
-+	data.stateless_rpc = options->stateless_rpc;
-+
- 	head_ref_namespaced(find_symref, &data.symref);
- 
--	if (options->advertise_refs || !stateless_rpc) {
-+	if (options->advertise_refs || !data.stateless_rpc) {
- 		reset_timeout();
- 		head_ref_namespaced(send_ref, &data);
- 		for_each_namespaced_ref(send_ref, &data);
+-	if (send_shallow_list(&writer, depth, deepen_rev_list, deepen_since,
++	if (send_shallow_list(&data->writer, depth, deepen_rev_list, deepen_since,
+ 			      &deepen_not, deepen_relative, &shallows,
+ 			      &data->want_obj))
+ 		packet_flush(1);
 -- 
 2.26.2.638.gb2c16ea67b.dirty
 
