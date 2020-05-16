@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A9C6C433DF
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D671C433DF
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:15:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5492F20727
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:14:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2779D2065C
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:15:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SlUTZ7Om"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B5HOwTEc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbgEPLO2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 May 2020 07:14:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60980 "EHLO
+        id S1726229AbgEPLPi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 May 2020 07:15:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726227AbgEPLO2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 07:14:28 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD4B3C061A0C
-        for <git@vger.kernel.org>; Sat, 16 May 2020 04:14:27 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id g2so2801178vsb.4
-        for <git@vger.kernel.org>; Sat, 16 May 2020 04:14:27 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726206AbgEPLPh (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 07:15:37 -0400
+Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB41C061A0C
+        for <git@vger.kernel.org>; Sat, 16 May 2020 04:15:37 -0700 (PDT)
+Received: by mail-ua1-x932.google.com with SMTP id k4so1753064uaq.10
+        for <git@vger.kernel.org>; Sat, 16 May 2020 04:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=98Z5OHl2l8HODkB/mh9hgCU0DqdJP76m6PJB80oaQjs=;
-        b=SlUTZ7Omi8H6e+5tXPwOlIvrui+ncVBmhOvsaaTuYQdOxYLgZXTj+ePdizG0TPMtXl
-         QDjqAlC2/CErV61NWuzRYFRh2Zij3Cyvlo6TQx6NnaM7mXJEKkxSAQeRPZi2bivej5Tu
-         Qmfj0lmLjEeo59J5rU21rkgcD7XgfngSlV6f212ed9NWCDR8FMyW6M4tpqZuIhDQ18Jp
-         9Dtc91g61fAS0cA1u1+PzsajpNdWtu97eGgxU9eD/ClZnG4emXwZv3JupLaLDI0V7eIX
-         UkcHHc+Z0krE0shf9HlY98XuvAR+H3UUaaEP6imkJ+Z6fZxRdGwGAFtlccRkb+NDk+/D
-         WBvw==
+        bh=d+pkwki9XKqdLKa6JrYGjUEDWR/PRagR/tuucA2fapk=;
+        b=B5HOwTEcnHB5E2HHPSdxjgFH+29fER7J8vxdmXrVDvWYc348QmDYASIFNrLvh22G09
+         t9rIs55N+XQExcTenFQuHBVouDxDwTMy/Ij5ElvcQeYJ7+3vqirRCxk41oeHHaPbcSGb
+         Te/Yvef0wJMlXQtoHN9wg950lubHmogp4AUS+gBJl/ubCBiVxFf4x3oRqWQQujHyLLiG
+         xoXIhGDuo3kI1fIx3Wg8dOL5re1bzfFmmacbXEAGYOePBBeU4jjpws+Ad/tNCeKZ64Sq
+         dmSIVdGWmCD9M0uKlUh8GZfHoscb85a3atudd+A9rhR7UJlYUs9iA2SjSfTYjQBJLMzj
+         Gspw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=98Z5OHl2l8HODkB/mh9hgCU0DqdJP76m6PJB80oaQjs=;
-        b=RwWoeRr8h0TRwtOOP+p4DNAqBSTyySEvGWgp9MeChffxy17ZyF4TxzU4gcdP1P7s30
-         K41prncgEW8cTq+pHowLU1cxKuPdMtmEkuQuL3mziBdfPcdmInQX+4vv1PhkTqwmUOJV
-         ZXFVE3B7WBZREyJHi3GyIMO4/DZMm48BtCaT2ZfRgki8REkh47+FOirD4FVHuzxpe0I5
-         KxlLA1gbYwwBWuHj6/woSDazPDSvr0lb+T8OsSkB2vXlF3UVdgK1JTrTdHfGbnygEGF2
-         ol+A9I5EEAw7gf7jC+LF+AvfFWL/MCgKeWzFAjGuvxB21tNjUH5xqpX1ddELEYvJwTkG
-         ZgyQ==
-X-Gm-Message-State: AOAM5317sSMFVuPdH21qJhAyO+485UYyzOS7rntd/FOkyhN1n+ildTiq
-        xnDQahtrOixsxrGhHR4agth1Kaayi7PydC0ExuUZUA==
-X-Google-Smtp-Source: ABdhPJzRXz7nX5Ur7fYKeDUw4u0V6YYkOhOIksqkyn96UP01ouZuFWYFjl7aK1TtVjNWvPPr0XhcuO9KT8LiC2ICd7o=
-X-Received: by 2002:a67:ecc2:: with SMTP id i2mr5339605vsp.85.1589627667086;
- Sat, 16 May 2020 04:14:27 -0700 (PDT)
+        bh=d+pkwki9XKqdLKa6JrYGjUEDWR/PRagR/tuucA2fapk=;
+        b=Vj3sbqOUzIyJ4U4+RlmRQAmLAy3q1keAOj5t+gUVM5k816ZqNysi3ST7oXvIGLFbfk
+         nk24+Ux3i7EiNZq6XcoN3Xu95dXlLkrmteZGD1QKxQl358XNEqQ1c2nJeD+vD6r5NoD5
+         cYqomIGUdnaW+Kgr5labFQTA0/Hf1objNTOp9zP1eh0s/OjVH74ac8FVZ3EFiVPJ7eca
+         ODc+aLR+xSblLiV5JxP1fxR4MRT6L5rSHtmm/PM3Z/PMqPSywio0ykYB1nYg1mzQMVuO
+         TfuUmCbFWv3yYfFBCBubjYlsl9owMo6rQ+onwclppgEDAo2f6puSKfVL0KtlF96GtSE3
+         ydvg==
+X-Gm-Message-State: AOAM5332lT6uyTqFI1ldVZfaJ249sy9YsHcPnX4SRh1gmfkJ2oQwBd+3
+        Y8yJ1zu+60sVqDdAeJ1O+QzGFG29vSee6ODsb6Q=
+X-Google-Smtp-Source: ABdhPJxgxFnz11Cf1nZQtL9ge1ZR0c3p3OIpeSjDrRV8nc0hM8gY+dTDhnDbElwD3X/0YFY5xlQXygqoDQJeroDb0mU=
+X-Received: by 2002:ab0:6ed0:: with SMTP id c16mr2455410uav.62.1589627736868;
+ Sat, 16 May 2020 04:15:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-32-sandals@crustytoothpaste.net>
-In-Reply-To: <20200513005424.81369-32-sandals@crustytoothpaste.net>
+References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-33-sandals@crustytoothpaste.net>
+In-Reply-To: <20200513005424.81369-33-sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 16 May 2020 13:14:16 +0200
-Message-ID: <CAN0heSpq-t1E6CBsLiVDUE8NYB2ES916MR=d99eug9U=vdOLHQ@mail.gmail.com>
-Subject: Re: [PATCH 31/44] connect: parse v2 refs with correct hash algorithm
+Date:   Sat, 16 May 2020 13:15:25 +0200
+Message-ID: <CAN0heSpNp1f=3p_ef-13547Sf6qkDXG1-i+0tDDX3VBhP72dgQ@mail.gmail.com>
+Subject: Re: [PATCH 32/44] serve: advertise object-format capability for
+ protocol v2
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Jonathan Tan <jonathantanmy@google.com>
@@ -69,54 +70,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 13 May 2020 at 02:58, brian m. carlson
+On Wed, 13 May 2020 at 02:56, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
 >
-> When using protocol v2, we need to know what hash algorithm is used by
-> the remote end.  See if the server has sent us an object-format
-> capability, and if so, use it to determine the hash algorithm in use and
-> set that value in the packet reader.  Parse the refs using this
-> algorithm.
+> In order to communicate the protocol supported by the server side, add
+> support for advertising the object-format capability.  We check that the
+> client side sends us an identical algorithm if it sends us its own
+> object-format capability, and assume it speaks SHA-1 if not.
 >
-> Note that we use memcpy instead of oidcpy for copying values, since
-> oidcpy is intentionally limited to the current hash algorithm length,
-> and the copy will be too short if the server side uses SHA-256 but the
-> client side has not had a repository set up (and therefore defaults to
-> SHA-1).
+> In the test, when we're using an algorithm other than SHA-1, we need to
+> specify the algorithm in use so we don't get a failure with an "unknown
+> format" message. Add a wrapper function that specifies this header if
+> required.  Skip specifying this header for SHA-1 to test that it works
+> both with and without this header.
 
-> -       oidcpy(&ref->old_oid, &old_oid);
-> +       memcpy(ref->old_oid.hash, old_oid.hash, reader->hash_algo->rawsz);
+This last sentence sort of answers an earlier question I made: should we
+stop special-casing in the test and just always write the capability? I
+can see your point here, but it only applies if you actually go to the
+trouble of running the tests both with SHA-1 and SHA-256, right?
 
-Might an `oidcpy_algop()` prove useful over time?
+That is, I wonder if we shouldn't always pass the "object-format"
+capability in the tests and, if we have the SHA-1 prereq, execute a
+dedicated test where we do not pass it and verify that we default
+correctly. Hmm?
 
-  oidcpy_algop(&ref->old_oid, &old_oid, reader->hash_algo);
-
-> @@ -442,6 +444,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
->                              const struct string_list *server_options)
->  {
->         int i;
-> +       const char *hash_name;
->         *list = NULL;
->
->         if (server_supports_v2("ls-refs", 1))
-> @@ -450,6 +453,14 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
->         if (server_supports_v2("agent", 0))
->                 packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
->
-> +       if (server_feature_v2("object-format", &hash_name)) {
-> +               int hash_algo = hash_algo_by_name(hash_name);
-> +               if (hash_algo == GIT_HASH_UNKNOWN)
-> +                       die(_("unknown object format '%s' specified by server"), hash_name);
-> +               reader->hash_algo = &hash_algos[hash_algo];
-> +               packet_write_fmt(fd_out, "object-format=%s", reader->hash_algo->name);
-> +       }
+> +write_command () {
+> +       echo "command=$1"
 > +
+> +       if test "$(test_oid algo)" != sha1
+> +       then
+> +               echo "object-format=$(test_oid algo)"
+> +       fi
+> +}
+> +
+>  test_expect_success 'test capability advertisement' '
+> +       test_oid_init &&
+>         cat >expect <<-EOF &&
+>         version 2
+>         agent=git/$(git version | cut -d" " -f3)
+>         ls-refs
+>         fetch=shallow
+>         server-option
+> +       object-format=$(test_oid algo)
+>         0000
+>         EOF
+>
+> @@ -45,6 +56,7 @@ test_expect_success 'request invalid capability' '
+>  test_expect_success 'request with no command' '
+>         test-tool pkt-line pack >in <<-EOF &&
+>         agent=git/test
+> +       object-format=$(test_oid algo)
+>         0000
+>         EOF
+>         test_must_fail test-tool serve-v2 --stateless-rpc 2>err <in &&
 
-(Similar to an earlier comment I made, if we don't see any
-"object-format", we rely on `reader->hash_algo` to have been properly
-set up (which it has) and to not have been modified since (which we
-could probably rely on, hmm?).)
+In these two tests, we give "object-format" unconditionally, meaning
+that in a SHA-1 run, we don't *always* skip passing in the capability.
+So that's good. Should we verify that the implementation acts on the
+"object-format=sha1" capability? Can we? The server should behave as
+if it wasn't passed in at all, so I'm not sure how we could do that.
 
+But that brings me to another point: Shouldn't we try to test the whole
+"mismatched object format" detection by passing in "sha1" in a SHA-256
+build and "sha256" with SHA-1. I suppose a `test_oid wrong_algo` could
+come in handy in lots of negative tests that we'll want to add
+throughout. Or maybe that doesn't quite fit the long-term goal.
 
 
 Martin
