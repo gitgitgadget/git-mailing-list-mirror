@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CC25C433E0
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 10:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB154C433DF
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 10:41:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04F9E207C3
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 10:40:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D4B6206D4
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 10:41:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gH6rpPFo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W8WMI2DA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726212AbgEPKk3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 May 2020 06:40:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55730 "EHLO
+        id S1726212AbgEPKlO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 May 2020 06:41:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725792AbgEPKkZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 06:40:25 -0400
+        by vger.kernel.org with ESMTP id S1726188AbgEPKlO (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 06:41:14 -0400
 Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F8A1C061A0C
-        for <git@vger.kernel.org>; Sat, 16 May 2020 03:40:24 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id e20so2190413vsb.5
-        for <git@vger.kernel.org>; Sat, 16 May 2020 03:40:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006DAC061A0C
+        for <git@vger.kernel.org>; Sat, 16 May 2020 03:41:13 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id l15so890289vsr.3
+        for <git@vger.kernel.org>; Sat, 16 May 2020 03:41:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pPK9H7o3oPcWUPfHrtkx9GrjIr5u8wtCK7GZkJ0RXjA=;
-        b=gH6rpPForSx7MJyWVOpTBB6Ryf1BKBbmeNcZcTaWuQAHwW3Yg4UmvlrT3N4K6ePIO4
-         t+yEAM3Euep1WOO0DfiW74EvlwP5GUg0e3pBM4eWscxXi99fSfnk1je3JEjp0Kw7OkVi
-         HypLJzv7wRNYA7XhM4kOPOLw5is7Ir8+or/Tgol0E/STWAiya/U7zIojBftJ02/du4//
-         ktd8lrsbcjK5DLrGZfo8373j1j5IxUcbtOzbsvUlmHaZt3HdxFcenPWmaweMbQLaWW0B
-         8MiPmd3dr9/bEFBlqxFJEfWFMDRJSPdABEthM+ngG5W+DHdmKE5/Mp3MMxWsOKHEtSp4
-         98kQ==
+        bh=mgNDPu7vp/sg6+5+JrjM2pIW42Ml89mmQcDgjc13sd0=;
+        b=W8WMI2DA9HnU6F0BpAbgnzLVZNbKfO25qpTPlFwgSRSNsy3UMDaSEF0iHM/4P9RKoU
+         wX5yhpFTAKGFG23HKKGOyOgDbWVzesMKOepL0sCIy9BX+eealOSDvZD2ydwPO49ly/db
+         lEPFIFoypKjEhmSyQMbdDiAPB4XutA12Ley+Wwb0Zb0qOPW3QJaNN3Tg9bxj7vvuETqa
+         u2u5M1JBULRE3+IgDq/OjxCOR+pvXfmx8BanpF0YSnra1E7L4K7VVwI2FFEi8oi3CI2H
+         DXN8PV/yHXHp2X9PO+1eME8kdHQFZMthYH2AsYoB8FlZv0ysWTDB+cDg8sx67vgKzyeW
+         g0/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pPK9H7o3oPcWUPfHrtkx9GrjIr5u8wtCK7GZkJ0RXjA=;
-        b=SMsgoQT+TuteQxLViH7Q1wLlUBb7No6sTPNZbRGMnvuGLEB3mv62WQcqKI7VAkyqsb
-         8Mx1q27G1QEXUIM+Ciw5kq62QUa1Z8E4OZPneYkKnQzGQEj2MieJ8s8ySWXzPaXfrFPu
-         n9JsRChVvXKPBpmUwRYyu/W1FjhWxTvItJ5A8o850qy/JQk3HXQYLXFxeL/ZyBgGgyKD
-         pxX6qYCHsAGIa2uoGRs3J313JLImV7V2AEbjJhZX/fIAP2+s5k3OiCoTyyP0C3c22EC3
-         /IWV9cRlAuyEmowtR+on6l6HSv8muoU9IG2Os2eWxyH6aa+3qpdAWcRKjV8ao7t9MvpK
-         w+4w==
-X-Gm-Message-State: AOAM530m8dU1mhtsAhOo0ysilMpfwn3jhr+VO887MWMTHRYboAu5m1DO
-        9dBEF70tE7mElR0Fn4FHGKgyybBf4Kr4yII9rc8=
-X-Google-Smtp-Source: ABdhPJwhIN840MZ0GFOrckrt7jFY4junjbeI1r4Kkx/gfuRdVUYNy/qJz36VhYrd0IuPnRkwY1N5bFzGlrZ6bmqvgFA=
-X-Received: by 2002:a67:f4c6:: with SMTP id s6mr5282134vsn.46.1589625623366;
- Sat, 16 May 2020 03:40:23 -0700 (PDT)
+        bh=mgNDPu7vp/sg6+5+JrjM2pIW42Ml89mmQcDgjc13sd0=;
+        b=Q5YGhlVKnwNbC8GNqZVaBIkiYV/K8xF4h78atEvXkB9e3m0wXuoa8iNzCGp3939MIL
+         eC9uS7fwhEFYs4nYDD2MKcKd2x8JtzWn98QqRRoatxO8jg/o+pqWnCVR8EkDtT3SFTaK
+         MqAdosY74+WxOdq1mce0PxFsOSytapE/Qn8yCSxFewJFwnvoAH5Ale6dSv4ZHEHAfKTo
+         7iGGOFRAzjIIusmg+ZV51dzlbVZsZXuPMYC0Ieo7+tKLoktOnr7L55xKXayS5SkgIPvY
+         wBHJaX+LOxHn7mIHHYdrOwGXRr6zjCO4jcF4Tw83ZunDhyqKAQFB1XtuDzbUHGyGjdAL
+         Lbbg==
+X-Gm-Message-State: AOAM531FBautjr1jquGRds+dnv/f9Siz8za/tfIJ6JZtXPUHasbFwLX0
+        4B+gNcYWsqUsiwcARuBYi5L07xi6OePvek+dg06Vtw==
+X-Google-Smtp-Source: ABdhPJxr8gZcr5Ic/x2zYKhhls9kptXHi2XQ5r3sz1RaJoYa0IytW87fSmAi0jLkqBJBFCr4WEbIWiXzNiAbtZJrcjs=
+X-Received: by 2002:a67:ff14:: with SMTP id v20mr1163072vsp.118.1589625673216;
+ Sat, 16 May 2020 03:41:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-15-sandals@crustytoothpaste.net>
-In-Reply-To: <20200513005424.81369-15-sandals@crustytoothpaste.net>
+References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-16-sandals@crustytoothpaste.net>
+In-Reply-To: <20200513005424.81369-16-sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 16 May 2020 12:40:11 +0200
-Message-ID: <CAN0heSo=xUGwb8FLXYpcFXO+e9dqvpzR=h2Bs+HC_ubQdTQuWw@mail.gmail.com>
-Subject: Re: [PATCH 14/44] connect: detect algorithm when fetching refs
+Date:   Sat, 16 May 2020 12:41:02 +0200
+Message-ID: <CAN0heSr3eAZrXnp8OoA6m1Hmfcgno7Dr2VK8m4jQqGHmgYySLA@mail.gmail.com>
+Subject: Re: [PATCH 15/44] builtin/receive-pack: detect when the server
+ doesn't support our hash
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Jonathan Tan <jonathantanmy@google.com>
@@ -69,69 +70,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 13 May 2020 at 02:57, brian m. carlson
+On Wed, 13 May 2020 at 02:56, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
->
-> If we're fetching refs, detect the hash algorithm and parse the refs
-> using that algorithm.
+> +                       const char *hash;
+> +                       int len = 0;
 
-As the added documentation from patch 2 says, if there are multiple
-"object-format" capabilities, "the first one given is the one used in
-the ref advertisement". And that's what you implement below.
+Micronit: These new variables are used in tandem. I could see these as
+"NULL, 0" or both uninitialized, but this is a mixture. That's a really
+small nit, of course. (Maybe you needed to fight a compiler warning?)
 
-Explaining that in this commit message and/or referring to "a recent
-commit" (patch 2) and/or adding that documentation here, not back then,
-would have avoided some confusion on my part, and perhaps also for
-future readers.
+> +                       hash = parse_feature_value(feature_list, "object-format", &len, NULL);
+> +                       if (!hash) {
+> +                               hash = hash_algos[GIT_HASH_SHA1].name;
+> +                               len = strlen(hash);
+> +                       }
+> +                       if (xstrncmpz(the_hash_algo->name, hash, len))
+> +                               die("error: unsupported object format '%s'", hash);
 
-I don't have a strong opinion on which of those is better, I just think
-you could somehow make that a bit clearer here.
-
->  static void process_capabilities(struct packet_reader *reader, int *len)
->  {
-> +       const char *feat_val;
-> +       int feat_len;
-> +       int hash_algo;
-
-You could reduce the scope of `hash_algo`.
-
->         const char *line = reader->line;
->         int nul_location = strlen(line);
->         if (nul_location == *len)
->                 return;
->         server_capabilities_v1 = xstrdup(line + nul_location + 1);
->         *len = nul_location;
-> +
-> +       feat_val = server_feature_value("object-format", &feat_len);
-> +       if (feat_val) {
-> +               char *hash_name = xstrndup(feat_val, feat_len);
-> +               hash_algo = hash_algo_by_name(hash_name);
-> +               if (hash_algo != GIT_HASH_UNKNOWN)
-> +                       reader->hash_algo = &hash_algos[hash_algo];
-> +               free(hash_name);
-> +       }
->  }
-
-xstrndup is needed because we're not guaranteed a terminating NUL. You
-remember to call free afterwards. Ok.
-
-If we don't get any "object-format", we do basically nothing here and
-`reader->hash_algo` will remain as whatever it already is. The docs from
-patch 2 promise that this will be handled as "SHA-1" -- would it be more
-robust if we did a similar fallback dance as you do elsewhere?
-
-  feat_val = ...;
-  if (!feat_val) {
-          feat_val = hash_algos[GIT_HASH_SHA1].name;
-          feat_len = strlen(feat_val);
-  }
-  char *hash_name = ...
-  ...
-
-You do initialize `reader->hash_algo` in patch 8, so I don't think this
-changes anything now. Maybe it's just premature future-proofing (if such
-a thing exists).
-
+Ok, this is a familiar pattern by now: if we get nothing, behave as if
+we got SHA-1.
 
 
 Martin
