@@ -2,127 +2,113 @@ Return-Path: <SRS0=AWh0=66=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 418BFC433DF
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 05:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E7F3C433E1
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 05:50:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1996A20709
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 05:35:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 554402075F
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 05:50:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cFPsMpNH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DU8GbQFw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725917AbgEPFeV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 May 2020 01:34:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36632 "EHLO
+        id S1726042AbgEPFu1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 May 2020 01:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1725275AbgEPFeU (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 01:34:20 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D90C061A0C
-        for <git@vger.kernel.org>; Fri, 15 May 2020 22:34:20 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id l73so4699980pjb.1
-        for <git@vger.kernel.org>; Fri, 15 May 2020 22:34:20 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1725807AbgEPFu1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 01:50:27 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED0A7C061A0C
+        for <git@vger.kernel.org>; Fri, 15 May 2020 22:50:26 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id t7so1822215plr.0
+        for <git@vger.kernel.org>; Fri, 15 May 2020 22:50:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=P34tLToD6G6G/OOtyWuj1gjt0ljAyIZIscKt/g8rzfs=;
-        b=cFPsMpNH+8PS0wkd1L+xCHSs6ZT5ebz3XSThUeponEAV+PLj/4Naxw+p6EdWI6kkBN
-         feedAFF8014bSmjP84ua/iU2Gx808b1Ke3XBl1zTN2v4oDz+VnM9xs8tz8xZk0pBYxH4
-         2vDJe/9+B8umXApzJwF5DHmgTvgxAfkABMt4/OGiRmWMZ6TjQnhEKsLClsgNa0Sltu3f
-         P5U34X9TUnbLKMOcDn/w6qVbCiHqVQRb6SdcOFI7Mdy2OZm1h6ovwAwMWLVsp7JgeheP
-         Y+EvXaWxE8/rU07ek2iNzev+6S4OEhp3aQWcOvBRSuPM93ciLfg8yvvP6f1WInE04pGw
-         9DFA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1dUlISOBeIfAeZGzN2EGomlQFHDU1eUaL/WE3u9rO8E=;
+        b=DU8GbQFwaX8k+kqyE5pNBUxxINxQnPpxVdlwlqL3MjOUVuELHyGhZ2SmIzTsCdXceW
+         j7YDwytvibeTVARgyOK3DG8TKHOs9pSr58IfyqJkRAl/HakvCpyPzuGdstCbcDlSCojs
+         WI47xR/SHKNV2beoGOXwzOQLJzrf+HVYDZrVMFfS1u+WiMAvI+xWC8fw+jAGnX+O144a
+         MI3Ws8TssF1/la0eYxKrN4Q77BeAj5QnuiQwciROx0NBVuCo4lwvEbTFR3NRBIQ7Bi9s
+         +i+x1LqjWQf0Pp865t47z4wXfo43eI14HrnYh24qfQizN6z6WOay4RG++dJS5HiaqDUc
+         X0aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=P34tLToD6G6G/OOtyWuj1gjt0ljAyIZIscKt/g8rzfs=;
-        b=TYFe9xzXao6/5qeakESmzKh/jZUeOR11KrDbEF4Cd7s6OSB9zcNvvwcaRyyqshj9NF
-         21ugAfcfi5yB6GpiOtuRxux7k/X9FVVzY/iuQiol4PiuvggrtCaJotqHp85StkyBUXMI
-         FjAiYAZZGuLvNiC1Jqp0zfuMWErQi1lyLTdYSOLls/60FpZ/cRIkO7bZGBDAkzyl54Jw
-         QqTls5ONwooKp+fOBoC3kPl9eYfST5qTUYSOKV+j79Ps6+eton/wzscg+xeu5iIvRWgJ
-         qNS3kohde+JFxD04tdE8hNNGpBBE0gLKncrFtl2CMGHOp/OObiK7LcYGzbMYnmrX7rKk
-         wesw==
-X-Gm-Message-State: AOAM532PEwtkLOp8Ldm51ziye9vuGWccVkFM5WzntaivhSB/sSzXl/0T
-        RuQkdam5NnDK6zKWQNgFF3gd8Pe9WGk=
-X-Google-Smtp-Source: ABdhPJzNU4Fgg66b50DFsolW9a9qt7zLWu+3lnVHDjdvPR8dAejw3s0rffMPPeGETLU/XCt6eB4vcA==
-X-Received: by 2002:a17:90b:1482:: with SMTP id js2mr3467940pjb.54.1589607259347;
-        Fri, 15 May 2020 22:34:19 -0700 (PDT)
-Received: from localhost.localdomain (157-131-202-152.fiber.dynamic.sonic.net. [157.131.202.152])
-        by smtp.gmail.com with ESMTPSA id 25sm2885763pjk.50.2020.05.15.22.34.18
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1dUlISOBeIfAeZGzN2EGomlQFHDU1eUaL/WE3u9rO8E=;
+        b=JmzbIaety+1wP/DmkEe3gp+jrKLawavLdJVtpTa7h4To1O22f1sU37/Vp+q3Ayb4lk
+         I5b1eOiQPu67nSEopbV+eDElGBysSshPD1XoPRFb1sZesOLtW5D+yKpMQs6Nf3gGbKMc
+         Mps/pGEXbxcz0XjetZq7TSE5526ME9/QH0X4obBKnpOr/flbM0dF8K0zaBuViF83HDkh
+         O6IUKMSOBUAh39EXnhJKkYoCmsPix/od39USxH5OXViXU6TULRRmt2S2vxqRWUjdPAma
+         Krg4hmcdo/G+j2gGAUBzyR9DhcLEVWf+q4Jbqhdaq1a995rstPvj+NPrSWrx+CKHNkgJ
+         FxPg==
+X-Gm-Message-State: AOAM533TcsoFsk4sqmeXs4uaSuEYCQqER1ryRgofxSQVSnoncjXrYMm5
+        h2bZYBuM7M6GsFEREDef1Eh4Pz8uIdjrng==
+X-Google-Smtp-Source: ABdhPJytC0iYo/Oast7XCeO7raI0RcNG1fRn5N58yqqjCE2RhKHX+n9D4iWyegACDxpJMggYH1sCEQ==
+X-Received: by 2002:a17:90b:1482:: with SMTP id js2mr3523165pjb.54.1589608226202;
+        Fri, 15 May 2020 22:50:26 -0700 (PDT)
+Received: from konoha ([103.37.201.175])
+        by smtp.gmail.com with ESMTPSA id 25sm2927266pjk.50.2020.05.15.22.50.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2020 22:34:18 -0700 (PDT)
-From:   Greg Price <gnprice@gmail.com>
-To:     git@vger.kernel.org
-Cc:     757402@bugs.debian.org, debian-hppa@lists.debian.org,
-        John David Anglin <dave.anglin@bell.net>
-Subject: [PATCH] tests: skip small-stack tests on hppa architecture
-Date:   Fri, 15 May 2020 22:33:38 -0700
-Message-Id: <619484ae49dc71d8e9885390f78cdc25a87d8cc4.1589607218.git.gnprice@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        Fri, 15 May 2020 22:50:25 -0700 (PDT)
+Date:   Sat, 16 May 2020 11:20:16 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH 2/2] submodule: Add 'quiet' option in subcommand
+ 'set-branch'
+Message-ID: <20200516055016.GB3296@konoha>
+References: <20200513201737.55778-1-shouryashukla.oo@gmail.com>
+ <20200513201737.55778-2-shouryashukla.oo@gmail.com>
+ <20200514101534.GB28018@generichostname>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200514101534.GB28018@generichostname>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On hppa these tests crash because the allocated stack space is too
-small, even after it was doubled in b9a190789 (and the data size
-doubled to match) to make it work on powerpc.  For this arch just
-skip these tests, which is enough to make the whole suite pass.
+On 14/05 06:15, Denton Liu wrote:
+> Hi Shourya,
+> 
+> I'm not really sure if we should have this patch at all since I don't
+> think that set-branch should be printing anything at all.
 
-Fixes: https://bugs.debian.org/757402
-Based-on-patch-by: John David Anglin <dave.anglin@bell.net>
-Signed-off-by: Greg Price <gnprice@gmail.com>
----
- t/test-lib.sh | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+I thought that the Documentation has the mention of the `quiet` and it
+wouldn't harm printing something when the branch is set. Is this not the
+right way to tackle this?
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0ea1e5a05..c62961a3e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1467,6 +1467,14 @@ FreeBSD)
- 	;;
- esac
- 
-+# Detect arches where a few things don't work
-+uname_m=$(uname -m)
-+case $uname_m in
-+parisc* | hppa*)
-+	test_set_prereq HPPA
-+	;;
-+esac
-+
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
-@@ -1606,16 +1614,16 @@ run_with_limited_cmdline () {
- }
- 
- test_lazy_prereq CMDLINE_LIMIT '
--	test_have_prereq !MINGW,!CYGWIN &&
-+	test_have_prereq !HPPA,!MINGW,!CYGWIN &&
- 	run_with_limited_cmdline true
- '
- 
- run_with_limited_stack () {
- 	(ulimit -s 128 && "$@")
- }
- 
- test_lazy_prereq ULIMIT_STACK_SIZE '
--	test_have_prereq !MINGW,!CYGWIN &&
-+	test_have_prereq !HPPA,!MINGW,!CYGWIN &&
- 	run_with_limited_stack true
- '
- 
--- 
-2.26.2
+> But I'll give some comments anyway. Hopefully they'll be enlightening.
+> 
+> On Thu, May 14, 2020 at 01:47:37AM +0530, Shourya Shukla wrote:
+> > The subcommand 'set-branch' had the 'quiet' option which was
+> > introduced in b57e8119e6 by Denton Liu but was never utilised due to
+> 
+> We typically refer to commits by the "reference" format. You can get
+> that as follows:
+> 
+> 	$ git show --pretty=ref -s b57e8119e6
+> 	b57e8119e6 (submodule: teach set-branch subcommand, 2019-02-08)
+> 
+> In addition, I don't think it's necessary to mention me by name in this
+> case.
 
+Okay, I did not know that, will change in the next version.
+
+> > -		printf(_("Default tracking branch set to '%s' successfully\n"), newbranch);
+> > +		if (!(quiet ? OPT_QUIET : 0))
+> 
+> This is needlessly complicated... Can't this just be written as
+> 
+> 	if (!quiet)
+
+Okay, will do.
