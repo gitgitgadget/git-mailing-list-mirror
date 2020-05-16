@@ -2,112 +2,109 @@ Return-Path: <SRS0=AWh0=66=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71B36C433E0
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06527C433E0
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 14:10:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EA2D206D8
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:18:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2FBB20671
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 14:10:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExWB9UXc"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="MfuXrVvY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbgEPLS0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 May 2020 07:18:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33366 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726191AbgEPLS0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 07:18:26 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82471C061A0C
-        for <git@vger.kernel.org>; Sat, 16 May 2020 04:18:24 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id g35so1763926uad.0
-        for <git@vger.kernel.org>; Sat, 16 May 2020 04:18:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=s4VnSoTE+Dn1mTXMetY+cp42F8jL84HRI5LZeU/ExhE=;
-        b=ExWB9UXcW42lq2VrHePXjS7rPkqvEea7YseZC6gQrcBbsZH8tuBUCnbw53agRz3+x5
-         k1NDD7gajnOzIi/nsaItoQc44ezyDUeKyAQLaXWw4GuvyNFMi8DncNiHBeZchp8dxetS
-         1g71rmDSKYo5nzHGYS5nW5kPk66yiZqD5jhWkVGfGDb1SR17VwfAR0F7LAUeIW1OnaM/
-         RTdut34rD+GNyGiQshTEU8YCnEklt55ioSq4Ytc4SkBrqZCmJESLxLNJucw6ETjZcvHf
-         uUdEsMJwbWhoZulcSJCfhmvdoQwNndCR1bCyFWHrRZ+cECXfzFbQyOGhr0teqJwIMO8K
-         9P0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=s4VnSoTE+Dn1mTXMetY+cp42F8jL84HRI5LZeU/ExhE=;
-        b=DDF/p9XG2Zj8kXWS8UFCL3zJRuHeYF5fKYdgYasyNXt8pQk9Ykpn+ZRUkivT9LR9kU
-         V+ewIyoT+hnvnD5AzkRm2eTxOpwCSjC9gE/ZCAvLup4+q0kypXQWgzgSHK9wq8jmbX14
-         9fV9sJY5ERu/IImeH66HVYom/OpX5w5O7LkLh3SGhco+J2aYppeSCE9rMiIQUG/h8XB8
-         EhjXwiXvZhdX4+hHLDh2zkpU++MgIzr8esZfwMWRSZof7ftgqBUUPLK9lsQgTMLHndcl
-         uPwFWzPNQAlaJmBjoBjx2CXXu2IWUtSiY+omIHdjeaQEPB7MuTE7wT64MPqYGaGz6jFJ
-         VMng==
-X-Gm-Message-State: AOAM531WNiI8YBxAMqxmj52oNXWXLOpBdBIjXaoDGvZTKoW00G5du+/B
-        tIwaULEs3J3lqPhpoznVtmBpMt5zVoFP3wxfr0eGWQ==
-X-Google-Smtp-Source: ABdhPJwCE3WbZBKSoGystz9AxDVC66F7oPOmKLf7/ojMCSdE3yPMK/TRcacQKO4LP8h23O4LHu5zCg0E6BIHUsTSzU4=
-X-Received: by 2002:ab0:544a:: with SMTP id o10mr5741318uaa.15.1589627903712;
- Sat, 16 May 2020 04:18:23 -0700 (PDT)
+        id S1726663AbgEPOKo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 May 2020 10:10:44 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50365 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726597AbgEPOKo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 May 2020 10:10:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1589638240;
+        bh=rxPpLqqSnt9Cm4jZe2QKLjvxPqPQKcVBLo5awneuNv8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=MfuXrVvYj7ZhM36p17d0BzlvS/24WEMjqGPfeSjU5ZMB0tV5jVdZfhKFwU5hFZ2AD
+         t8gQeH0y+Es6wV2Nb0mRrv1IE99bQQwSRrWEOYADDHBb7pol0WbMo5srEbqjCT6k/z
+         kmqVHX+EcGcDXAgnaubkVsIdG8qoK5E69XijRbZY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.17.131.160] ([89.1.215.229]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mq2jC-1impG610a2-00nAyw; Sat, 16
+ May 2020 16:10:40 +0200
+Date:   Sat, 16 May 2020 10:46:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Bryan Turner <bturner@atlassian.com>
+cc:     git-for-windows <git-for-windows@googlegroups.com>,
+        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git for Windows 2.27.0-rc0
+In-Reply-To: <CAGyf7-HbnCip8WZ9vtc_KW1kXMBUoPZQ8GD7H=1DOAk45Wbjxw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2005161044580.55@tvgsbejvaqbjf.bet>
+References: <20200515173242.6154-1-johannes.schindelin@gmx.de> <CAGyf7-HbnCip8WZ9vtc_KW1kXMBUoPZQ8GD7H=1DOAk45Wbjxw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-37-sandals@crustytoothpaste.net>
-In-Reply-To: <20200513005424.81369-37-sandals@crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 16 May 2020 13:18:12 +0200
-Message-ID: <CAN0heSqpqAyKyaz+Er-SppR8k5W=zfw31rLR=Z8yZzqu=BCnTA@mail.gmail.com>
-Subject: Re: [PATCH 36/44] builtin/index-pack: add option to specify hash algorithm
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:VZPhE72JoyW/y1C7udRuOh72RUEOSr4IlW5Q71c9vc3Hl2Y0mjc
+ o7Bqozc4nC9s1LdabUxscLnnVMCXl/FUE66KF/XExf+gXMIpZe41Aq90y5QntSvUIYIxSFe
+ JPXGrZ0QiRXgpM2EXGUEMe4vSl2S2nMMkEewyl7+wMdybrZLmNwf9ZRII5ySW79pmms8+bn
+ oUUpJc5l0y9jIEXLmSxJg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:r+RmPAzwz4o=:AxjLWLRr478ydBtg1bI62L
+ BEGy6iXrTsw79m+REhZMTH/c3/6P+eJ9rPPQUgDAdcqBsq76m4W81qQkca7azA6WyXOoHS3sP
+ ctxz4Fd3wExxlBflJloymrjg/UM4eLlB2r3f+PY4mf11AXZEAOv5K5mdciwCi5SHh+SBU0qK9
+ aKxLYNQPnBOOfCmK5cJ7a6zegR9kOd+zGoipogiG+SmWuj+raMBqKk9jaKPIJP/WGkJ5voRc6
+ 5Ej4yUT0qxJ2ChKLok99emJ4/75XOTvfNEe8pOEfdu53hH6VWkY5KwBqLBBjNG7LhLMfplQXd
+ 4QLX73ZivwUCWaemeiFRJCEFZLPNLFeGDVSRwV6YeIVL23KCbVEeQBUDJ1opirwBoNRtxFT2d
+ JWJXVPorwTNj6LDgkV3R164f1cccJBy7WBZMy0vOLYhSbjVGFi7g3efYhG3DiBISdZhCG3o0n
+ i8tJmK/O4W7izqoHfQXae8q7iTrDY2lZ4WNO8uhbDy1UnD1fcXL25HPmB4KvJagrRMokWO/AM
+ hlutrHrg2vpn4ogVBQU1Sigk4c4B4VwZfa3BJQBakrZQ8jLzxBRXMZT+eVYsvG2cxThPOdioR
+ HdApDVSqAc2WyQLRFDAf28Or8NwbbJbO+QPrf7nMZI6b7S+gXEIy6wLuXo+S/tekJkrJIeN5V
+ 6RMX3urJ66YCKLtMyPgId0BkKUeW22o3HmmhR7VLRZCws9qVp/2AmIArsibABEWQ3YYO2kwnR
+ Clubrm1WbBMOpnS1HMpF/Asapj3yIiCB4S9VJR+KvdtF+JDq4jU99RAwdZjBI+NssXdEDzHM8
+ eaL4/chVsZ3mwy83K108wpMol0AkaoZZl8QSrHpGY/Xk1/UP0FnZgrtxa77giXHWbnqNJ4Rde
+ QZTRk4gpIHskqMzOp5+4+8OI5E4LjIq2w14Sa4ozHy85WvM8A6+8Xlt2kSZ33XuQyq/qYYks2
+ d1lKtxqoH/q8TCdSmCN4K4YNQofqd/cJTb28LC3g6+7SYvyLkrV+dIQxQAdS2cnZK29/ddZ+M
+ AmvLbACP2XK2M2R96qKFaB0JL+E+vtN4ybcNnrEOIwlaACpRmi64KUkqATasEd+rj4FdRGQjm
+ 5DFVfGr37gkrtjOLK4czL9pwqqu4FakqXBqHdYfqQbm2I9LUyLlFlsLxybYYGizL28kl8IRla
+ sq3r7ZkMxbPN4QpUE4y8OZSk9SGwWjvgSNRcVj/J888lk1ho+PeXkrqxiEhP1PajSt3pYCiW/
+ /uvOmg8kmO/H97lYr
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 13 May 2020 at 02:56, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Hi Bryan,
+
+On Fri, 15 May 2020, Bryan Turner wrote:
+
+> On Fri, May 15, 2020 at 10:32 AM Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> >
+> > Dear Git users,
+> >
+> > I hereby announce that Git for Windows 2.27.0-rc0 is available from:
+> >
+> >     https://github.com/git-for-windows/git/releases/tag/v2.27.0-rc0.wi=
+ndows.1
 >
-> git index-pack is usually run in a repository, but need not be. Since
-> packs don't contains information on the algorithm in use, instead
-> relying on context, add an option to index-pack to tell it which one
-> we're using in case someone runs it outside of a repository.
+> I've added the 2.27.0-rc0 release candidates for Git and Git for
+> Windows to Bitbucket Server's test matrix. No failures to report.
 >
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/index-pack.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 7bea1fba52..89f4962a00 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -1760,6 +1760,11 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
->                                         die(_("bad %s"), arg);
->                         } else if (skip_prefix(arg, "--max-input-size=", &arg)) {
->                                 max_input_size = strtoumax(arg, NULL, 10);
-> +                       } else if (skip_prefix(arg, "--object-format=", &arg)) {
-> +                               int hash_algo = hash_algo_by_name(arg);
-> +                               if (hash_algo == GIT_HASH_UNKNOWN)
-> +                                       die(_("unknown hash algorithm '%s'"), arg);
-> +                               repo_set_hash_algo(the_repository, hash_algo);
->                         } else
+> Thanks as always for these early release candidates!
 
-Patch 27 added `--hash` to `git show-index` and I almost commented on
-"hash" vs "object-format". In the end I figured the object format was a
-more technical (protocol) term. But now I wonder. Should we try to align
-such options from the start? Or is there perhaps a reason for those
-different approaches?
+Thank you so much!
 
-Similar to an earlier patch where we modify `the_hash_algo` like this, I
-feel a bit nervous. What happens if you pass in a "wrong" algo here,
-i.e., SHA-1 in a SHA-256 repo? Or, given the motivation in the commit
-message, should this only be allowed if we really *are* outside a repo?
+To be honest, this time round I would _really_ like to ask for some manual
+testing. I upgraded the MSYS2 runtime from being based on Cygwin v3.0.7 to
+v3.1.4, and the biggest new feature is support for those new-fangled
+pseudo terminals that Windows 10 now supports. I did find a couple of
+rough edges in my use cases, but I am not exactly a typical Git for
+Windows user...
 
+Could I ask for some manual testing in particular of anything run inside
+the Git Bash?
 
-Martin
+Thanks,
+Dscho
