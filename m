@@ -2,64 +2,65 @@ Return-Path: <SRS0=AWh0=66=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AD9CC433E0
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71B36C433E0
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:18:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D038206D8
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:17:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EA2D206D8
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 11:18:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jJeu3ha4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExWB9UXc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbgEPLRS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 May 2020 07:17:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33194 "EHLO
+        id S1726236AbgEPLS0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 May 2020 07:18:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726191AbgEPLRS (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 07:17:18 -0400
-Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com [IPv6:2607:f8b0:4864:20::a2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC8ADC061A0C
-        for <git@vger.kernel.org>; Sat, 16 May 2020 04:17:17 -0700 (PDT)
-Received: by mail-vk1-xa2c.google.com with SMTP id p7so1257021vkf.5
-        for <git@vger.kernel.org>; Sat, 16 May 2020 04:17:17 -0700 (PDT)
+        by vger.kernel.org with ESMTP id S1726191AbgEPLS0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 07:18:26 -0400
+Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82471C061A0C
+        for <git@vger.kernel.org>; Sat, 16 May 2020 04:18:24 -0700 (PDT)
+Received: by mail-ua1-x941.google.com with SMTP id g35so1763926uad.0
+        for <git@vger.kernel.org>; Sat, 16 May 2020 04:18:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=A6IuDcA5+NGZD6ce8BUnewyH2Qah1I36o2+TRMZGg14=;
-        b=jJeu3ha4g6jNW9lfqkL8UjTHLixe1BaMBpLSy29rI4LdKpS7bssewyBiBLBLwljNEE
-         iNWo04h8r2HnwDuORvjcVHWe2aSYAV/NqVhDW901M6tVKgpMBew0h4xZCntBl9tyTTWs
-         lokzcI+U2w0dFLTtU3adpoNIuZLE5eBDApNwA36KoMPWfTVpKVIrewHXwCT8In9PmJ+v
-         TfJ/wiwphrO74lfPbkalAfh8dFIZ5AI2PW4efWEweTiGE2ZtAvThtEnfRESNmIvjGmhA
-         ZohVx2l/DuGzf5AyEEPEoxxJ63PlRzCHSC1WpobZ+ds7k02hkYPiW/F7GCwNRnJVmyes
-         OojA==
+        bh=s4VnSoTE+Dn1mTXMetY+cp42F8jL84HRI5LZeU/ExhE=;
+        b=ExWB9UXcW42lq2VrHePXjS7rPkqvEea7YseZC6gQrcBbsZH8tuBUCnbw53agRz3+x5
+         k1NDD7gajnOzIi/nsaItoQc44ezyDUeKyAQLaXWw4GuvyNFMi8DncNiHBeZchp8dxetS
+         1g71rmDSKYo5nzHGYS5nW5kPk66yiZqD5jhWkVGfGDb1SR17VwfAR0F7LAUeIW1OnaM/
+         RTdut34rD+GNyGiQshTEU8YCnEklt55ioSq4Ytc4SkBrqZCmJESLxLNJucw6ETjZcvHf
+         uUdEsMJwbWhoZulcSJCfhmvdoQwNndCR1bCyFWHrRZ+cECXfzFbQyOGhr0teqJwIMO8K
+         9P0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=A6IuDcA5+NGZD6ce8BUnewyH2Qah1I36o2+TRMZGg14=;
-        b=UpYo7Uo56Qt0KJWvfOj4eSy2I5aYkkXq3hQFQLGYXxleHa2i94RXBHUr9x9TQ3QfUS
-         q7Pan6sAm/rOM/KiUCVVXLraX1zHcUtfWPOjQhzJNRfUreEbwOOg8wijGnVlbTVghaZy
-         he9MCJmi2jJ+H5NHiB/+H2Dp1fRXeTuLC7xarszXyMqq3kj0deR+EY3kqdZKkHUjwPI5
-         XJlvzqp1FoxfnvMbseyuiorIXh/g/IKonCLSkeaxvyuaMk2j0jagUi0yTKp4Hbm9diKA
-         5L4zjh74lhdcsPz4P6Yfg0BUBjUmUj5hn+1GXk4rMO6vd+e8Y2j2KxiZOnzhyiOM4sGW
-         SeYA==
-X-Gm-Message-State: AOAM5330GrHtMIP2aZQ5nU8g9lpVKm2dy9lplr7pT4g5pk/Y4ZYcLhf/
-        jvh9b+2UnHQYpkrAmEHuQnSyThKojfBrvhCgSUU=
-X-Google-Smtp-Source: ABdhPJwDbW3D6L10zKKkaKPD2UXuj1cYr6jjM+IYfCmmiA0dY+TyZKI1B7eW89Yjr/RjwzhuUUIrea/XocBll7jNGtU=
-X-Received: by 2002:a1f:a150:: with SMTP id k77mr5876236vke.88.1589627836963;
- Sat, 16 May 2020 04:17:16 -0700 (PDT)
+        bh=s4VnSoTE+Dn1mTXMetY+cp42F8jL84HRI5LZeU/ExhE=;
+        b=DDF/p9XG2Zj8kXWS8UFCL3zJRuHeYF5fKYdgYasyNXt8pQk9Ykpn+ZRUkivT9LR9kU
+         V+ewIyoT+hnvnD5AzkRm2eTxOpwCSjC9gE/ZCAvLup4+q0kypXQWgzgSHK9wq8jmbX14
+         9fV9sJY5ERu/IImeH66HVYom/OpX5w5O7LkLh3SGhco+J2aYppeSCE9rMiIQUG/h8XB8
+         EhjXwiXvZhdX4+hHLDh2zkpU++MgIzr8esZfwMWRSZof7ftgqBUUPLK9lsQgTMLHndcl
+         uPwFWzPNQAlaJmBjoBjx2CXXu2IWUtSiY+omIHdjeaQEPB7MuTE7wT64MPqYGaGz6jFJ
+         VMng==
+X-Gm-Message-State: AOAM531WNiI8YBxAMqxmj52oNXWXLOpBdBIjXaoDGvZTKoW00G5du+/B
+        tIwaULEs3J3lqPhpoznVtmBpMt5zVoFP3wxfr0eGWQ==
+X-Google-Smtp-Source: ABdhPJwCE3WbZBKSoGystz9AxDVC66F7oPOmKLf7/ojMCSdE3yPMK/TRcacQKO4LP8h23O4LHu5zCg0E6BIHUsTSzU4=
+X-Received: by 2002:ab0:544a:: with SMTP id o10mr5741318uaa.15.1589627903712;
+ Sat, 16 May 2020 04:18:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-36-sandals@crustytoothpaste.net>
-In-Reply-To: <20200513005424.81369-36-sandals@crustytoothpaste.net>
+References: <20200513005424.81369-1-sandals@crustytoothpaste.net> <20200513005424.81369-37-sandals@crustytoothpaste.net>
+In-Reply-To: <20200513005424.81369-37-sandals@crustytoothpaste.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 16 May 2020 13:17:06 +0200
-Message-ID: <CAN0heSqcv6cTJcptOo=BgTwxcTkdL+mm-HKgX4UBnTscECJJTg@mail.gmail.com>
-Subject: Re: [PATCH 35/44] remote-curl: detect algorithm for dumb HTTP by size
+Date:   Sat, 16 May 2020 13:18:12 +0200
+Message-ID: <CAN0heSqpqAyKyaz+Er-SppR8k5W=zfw31rLR=Z8yZzqu=BCnTA@mail.gmail.com>
+Subject: Re: [PATCH 36/44] builtin/index-pack: add option to specify hash algorithm
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Jonathan Tan <jonathantanmy@google.com>
@@ -69,33 +70,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 13 May 2020 at 02:57, brian m. carlson
+On Wed, 13 May 2020 at 02:56, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
+>
+> git index-pack is usually run in a repository, but need not be. Since
+> packs don't contains information on the algorithm in use, instead
+> relying on context, add an option to index-pack to tell it which one
+> we're using in case someone runs it outside of a repository.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/index-pack.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 7bea1fba52..89f4962a00 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1760,6 +1760,11 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+>                                         die(_("bad %s"), arg);
+>                         } else if (skip_prefix(arg, "--max-input-size=", &arg)) {
+>                                 max_input_size = strtoumax(arg, NULL, 10);
+> +                       } else if (skip_prefix(arg, "--object-format=", &arg)) {
+> +                               int hash_algo = hash_algo_by_name(arg);
+> +                               if (hash_algo == GIT_HASH_UNKNOWN)
+> +                                       die(_("unknown hash algorithm '%s'"), arg);
+> +                               repo_set_hash_algo(the_repository, hash_algo);
+>                         } else
 
-> +       options.hash_algo = detect_hash_algo(heads);
-> +       if (!options.hash_algo)
-> +               die("%sinfo/refs not valid: could not determine hash algorithm; "
-> +                   "is this a git repository?",
-> +                   url.buf);
+Patch 27 added `--hash` to `git show-index` and I almost commented on
+"hash" vs "object-format". In the end I figured the object format was a
+more technical (protocol) term. But now I wonder. Should we try to align
+such options from the start? Or is there perhaps a reason for those
+different approaches?
 
-Should this use `transport_anonymize_url()`?
-
->                 if (data[i] == '\n') {
-> -                       if (mid - start != the_hash_algo->hexsz)
-> +                       if (mid - start != options.hash_algo->hexsz)
->                                 die(_("%sinfo/refs not valid: is this a git repository?"),
->                                     transport_anonymize_url(url.buf));
-
-Like here and elsewhere.
-
->                         data[i] = 0;
->                         ref_name = mid + 1;
->                         ref = alloc_ref(ref_name);
-> -                       get_oid_hex(start, &ref->old_oid);
-> +                       get_oid_hex_algop(start, &ref->old_oid, options.hash_algo);
-
-Other than that, looks ok.
-
+Similar to an earlier patch where we modify `the_hash_algo` like this, I
+feel a bit nervous. What happens if you pass in a "wrong" algo here,
+i.e., SHA-1 in a SHA-256 repo? Or, given the motivation in the commit
+message, should this only be allowed if we really *are* outside a repo?
 
 
 Martin
