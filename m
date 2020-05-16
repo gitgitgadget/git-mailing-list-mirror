@@ -2,109 +2,104 @@ Return-Path: <SRS0=AWh0=66=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DATE_IN_PAST_03_06,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06527C433E0
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 14:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1115EC433E0
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 17:30:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2FBB20671
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 14:10:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE6582065C
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 17:30:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="MfuXrVvY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iJBnoRGm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726663AbgEPOKo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 May 2020 10:10:44 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50365 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726597AbgEPOKo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 May 2020 10:10:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1589638240;
-        bh=rxPpLqqSnt9Cm4jZe2QKLjvxPqPQKcVBLo5awneuNv8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=MfuXrVvYj7ZhM36p17d0BzlvS/24WEMjqGPfeSjU5ZMB0tV5jVdZfhKFwU5hFZ2AD
-         t8gQeH0y+Es6wV2Nb0mRrv1IE99bQQwSRrWEOYADDHBb7pol0WbMo5srEbqjCT6k/z
-         kmqVHX+EcGcDXAgnaubkVsIdG8qoK5E69XijRbZY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.17.131.160] ([89.1.215.229]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mq2jC-1impG610a2-00nAyw; Sat, 16
- May 2020 16:10:40 +0200
-Date:   Sat, 16 May 2020 10:46:46 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Bryan Turner <bturner@atlassian.com>
-cc:     git-for-windows <git-for-windows@googlegroups.com>,
-        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.27.0-rc0
-In-Reply-To: <CAGyf7-HbnCip8WZ9vtc_KW1kXMBUoPZQ8GD7H=1DOAk45Wbjxw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2005161044580.55@tvgsbejvaqbjf.bet>
-References: <20200515173242.6154-1-johannes.schindelin@gmx.de> <CAGyf7-HbnCip8WZ9vtc_KW1kXMBUoPZQ8GD7H=1DOAk45Wbjxw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726298AbgEPRaI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 May 2020 13:30:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726257AbgEPRaI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 May 2020 13:30:08 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2DEC061A0C
+        for <git@vger.kernel.org>; Sat, 16 May 2020 10:30:08 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id s69so2450299pjb.4
+        for <git@vger.kernel.org>; Sat, 16 May 2020 10:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=889H89M7vyTDOTOTGB+Z+fJwEasAUT1D8YBXtryecbA=;
+        b=iJBnoRGmds1DVEV76tz6mcVLHYHE5DA5PKGex6jJmlPP33qulZ5lj0q1ubusi5FUK9
+         xNIxEOquaXE1uJHL12oArgIoApZ0lOytn/2mYuszHy8APLtryVJkTotaeSr7/VBXXdD1
+         1wKTyM+HvkgtmMByUGj7VrHkcvWHAjQWhmVjHdc403BN5LWOGnLKIWGuaDM/CJl3pJ2s
+         UD5J6rXPizVdLDX0L+BzgYWQlyDLXDPMaRm8rrpV2Mi36ejjQhN4wXgKRY24LFULf7Eh
+         +AuE2YHZTUzJV1Etu4p1dor406WQgpEGoZBGb3CctdIVgSVI0foEH9zIYih3aMOb/73M
+         ALDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=889H89M7vyTDOTOTGB+Z+fJwEasAUT1D8YBXtryecbA=;
+        b=E3HtjiS3bGbQ6al32rXAgT/F0TcY8iqGwjm8Em/rsJ92l9CZ3o0nF5EzP+84Xd6/Kx
+         ca2hceOlTFGVPQHQTxIYFb8DGzVbk2IfHmXpZYgVxF8oHaG2Im+Gz+8ZQXjx2tghTXzv
+         2ahM4n6m6o4WSV/d8QvYr2bstiGS1Tmi2YeyFhzDcAtPnePDIdOAMo7vMnylC0uarBDQ
+         vfdEns6yWLxDaqx96njM3XDJpfwdRydz52I57TD3SygIkJRlIVnFW22oF4T1w5P4I1JA
+         UTt8ZZwRj2StVIvIdJREGWA4WFFJdzr8sOMv1ke3hkaTo++mNPWOsjFAEviEQaMIDmqv
+         njag==
+X-Gm-Message-State: AOAM533wTiSXyuig93bagaNammP8h1W2CvtB0g+xANFazKV2QfsKKbzW
+        80FGqO3da8UkKzCN9d6Rxuc+qEgPHJI=
+X-Google-Smtp-Source: ABdhPJzAMFGKpxaZCM0e7uybgCgiiGO5jEX6j40kQA/yGss5ltuatMz7AYE2tp5Pt5wW5Y5BBC/SCQ==
+X-Received: by 2002:a17:90a:6782:: with SMTP id o2mr10545681pjj.122.1589650207330;
+        Sat, 16 May 2020 10:30:07 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4064:1c:9c42:c40:e2b6:f2aa:f55d])
+        by smtp.gmail.com with ESMTPSA id o21sm4264681pjr.37.2020.05.16.10.30.03
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 May 2020 10:30:06 -0700 (PDT)
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] commit-slab-decl.h: fix define gaurds
+Date:   Sat, 16 May 2020 22:58:37 +0530
+Message-Id: <20200516172837.2872-1-abhishekkumar8222@gmail.com>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VZPhE72JoyW/y1C7udRuOh72RUEOSr4IlW5Q71c9vc3Hl2Y0mjc
- o7Bqozc4nC9s1LdabUxscLnnVMCXl/FUE66KF/XExf+gXMIpZe41Aq90y5QntSvUIYIxSFe
- JPXGrZ0QiRXgpM2EXGUEMe4vSl2S2nMMkEewyl7+wMdybrZLmNwf9ZRII5ySW79pmms8+bn
- oUUpJc5l0y9jIEXLmSxJg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:r+RmPAzwz4o=:AxjLWLRr478ydBtg1bI62L
- BEGy6iXrTsw79m+REhZMTH/c3/6P+eJ9rPPQUgDAdcqBsq76m4W81qQkca7azA6WyXOoHS3sP
- ctxz4Fd3wExxlBflJloymrjg/UM4eLlB2r3f+PY4mf11AXZEAOv5K5mdciwCi5SHh+SBU0qK9
- aKxLYNQPnBOOfCmK5cJ7a6zegR9kOd+zGoipogiG+SmWuj+raMBqKk9jaKPIJP/WGkJ5voRc6
- 5Ej4yUT0qxJ2ChKLok99emJ4/75XOTvfNEe8pOEfdu53hH6VWkY5KwBqLBBjNG7LhLMfplQXd
- 4QLX73ZivwUCWaemeiFRJCEFZLPNLFeGDVSRwV6YeIVL23KCbVEeQBUDJ1opirwBoNRtxFT2d
- JWJXVPorwTNj6LDgkV3R164f1cccJBy7WBZMy0vOLYhSbjVGFi7g3efYhG3DiBISdZhCG3o0n
- i8tJmK/O4W7izqoHfQXae8q7iTrDY2lZ4WNO8uhbDy1UnD1fcXL25HPmB4KvJagrRMokWO/AM
- hlutrHrg2vpn4ogVBQU1Sigk4c4B4VwZfa3BJQBakrZQ8jLzxBRXMZT+eVYsvG2cxThPOdioR
- HdApDVSqAc2WyQLRFDAf28Or8NwbbJbO+QPrf7nMZI6b7S+gXEIy6wLuXo+S/tekJkrJIeN5V
- 6RMX3urJ66YCKLtMyPgId0BkKUeW22o3HmmhR7VLRZCws9qVp/2AmIArsibABEWQ3YYO2kwnR
- Clubrm1WbBMOpnS1HMpF/Asapj3yIiCB4S9VJR+KvdtF+JDq4jU99RAwdZjBI+NssXdEDzHM8
- eaL4/chVsZ3mwy83K108wpMol0AkaoZZl8QSrHpGY/Xk1/UP0FnZgrtxa77giXHWbnqNJ4Rde
- QZTRk4gpIHskqMzOp5+4+8OI5E4LjIq2w14Sa4ozHy85WvM8A6+8Xlt2kSZ33XuQyq/qYYks2
- d1lKtxqoH/q8TCdSmCN4K4YNQofqd/cJTb28LC3g6+7SYvyLkrV+dIQxQAdS2cnZK29/ddZ+M
- AmvLbACP2XK2M2R96qKFaB0JL+E+vtN4ybcNnrEOIwlaACpRmi64KUkqATasEd+rj4FdRGQjm
- 5DFVfGr37gkrtjOLK4czL9pwqqu4FakqXBqHdYfqQbm2I9LUyLlFlsLxybYYGizL28kl8IRla
- sq3r7ZkMxbPN4QpUE4y8OZSk9SGwWjvgSNRcVj/J888lk1ho+PeXkrqxiEhP1PajSt3pYCiW/
- /uvOmg8kmO/H97lYr
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bryan,
+commit-slab was split into commit-slab-decl and commit-slab-impl header
+files by a9f1f1f9f8 ("commit-slab.h: code split", 2018-05-19). The
+define guards for commit-slab-decl stll use "COMMIT_SLAB_HDR_H", which
+no longer matches the file name. Let's fix this.
 
-On Fri, 15 May 2020, Bryan Turner wrote:
+Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+---
+ commit-slab-decl.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-> On Fri, May 15, 2020 at 10:32 AM Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> >
-> > Dear Git users,
-> >
-> > I hereby announce that Git for Windows 2.27.0-rc0 is available from:
-> >
-> >     https://github.com/git-for-windows/git/releases/tag/v2.27.0-rc0.wi=
-ndows.1
->
-> I've added the 2.27.0-rc0 release candidates for Git and Git for
-> Windows to Bitbucket Server's test matrix. No failures to report.
->
-> Thanks as always for these early release candidates!
+diff --git a/commit-slab-decl.h b/commit-slab-decl.h
+index adc7b46c83..bfbed1516a 100644
+--- a/commit-slab-decl.h
++++ b/commit-slab-decl.h
+@@ -1,5 +1,5 @@
+-#ifndef COMMIT_SLAB_HDR_H
+-#define COMMIT_SLAB_HDR_H
++#ifndef COMMIT_SLAB_DECL_H
++#define COMMIT_SLAB_DECL_H
+ 
+ /* allocate ~512kB at once, allowing for malloc overhead */
+ #ifndef COMMIT_SLAB_SIZE
+@@ -40,4 +40,4 @@ elemtype *slabname## _peek(struct slabname *s, const struct commit *c)
+ 	declare_commit_slab(slabname, elemtype); \
+ 	declare_commit_slab_prototypes(slabname, elemtype)
+ 
+-#endif /* COMMIT_SLAB_HDR_H */
++#endif /* COMMIT_SLAB_DECL_H */
+-- 
+2.26.0
 
-Thank you so much!
-
-To be honest, this time round I would _really_ like to ask for some manual
-testing. I upgraded the MSYS2 runtime from being based on Cygwin v3.0.7 to
-v3.1.4, and the biggest new feature is support for those new-fangled
-pseudo terminals that Windows 10 now supports. I did find a couple of
-rough edges in my use cases, but I am not exactly a typical Git for
-Windows user...
-
-Could I ask for some manual testing in particular of anything run inside
-the Git Bash?
-
-Thanks,
-Dscho
