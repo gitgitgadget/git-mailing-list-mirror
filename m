@@ -6,66 +6,60 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4DE1C433DF
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 00:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1E54C433DF
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 00:04:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AC7620756
-	for <git@archiver.kernel.org>; Sat, 16 May 2020 00:02:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DB7420756
+	for <git@archiver.kernel.org>; Sat, 16 May 2020 00:04:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cqxtp5/n"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HMZMlP4N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726301AbgEPACo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 May 2020 20:02:44 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52992 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726247AbgEPACn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 May 2020 20:02:43 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CF0D4D8187;
-        Fri, 15 May 2020 20:02:42 -0400 (EDT)
+        id S1726374AbgEPAEt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 May 2020 20:04:49 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65226 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726198AbgEPAEt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 May 2020 20:04:49 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 53469CFE9C;
+        Fri, 15 May 2020 20:04:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=mFwkQzKyTp0U
-        GqeBgoDFsugALYo=; b=Cqxtp5/nuegjw0TVweLvH9ROUJuYJuiofvzl6tZlKU/C
-        wmo2mLrbZ0p1DKV+6GGqGcZzpoWESliSe7MlTXOwcDu4g7n/QkTi58xVnSCM94Xu
-        e5/z7uzskevPuHb5s+AApd2m188Z1TDln7fvyqSmfR+hJ/mL3c/hFgDj/g2+QPU=
+        :content-type; s=sasl; bh=TwarCLd2VRCkdY0kSfWKJGJ/jR4=; b=HMZMlP
+        4NAAf7c47X1O1YFiEJgT63Zl9q8JgpuLCg+s9sRltPmm9zWKpGD+tY9tbwjWGTGa
+        VzIQ7TJE0PtO1bHzZVNGGRAerlqVKNLpwiDgQ4V+BrysHsXCP2r+YWrVnxAsw3qF
+        CFOG485Ojnm9sxoJNfJhHevQ0o/vN4UQGxS5s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ExckXx
-        CrMlXDFVbzXN8cfZBJJ3/KGUpRmDuJSVmmxXsknEK05Zk6fbH3br+HzfeYsSfnFn
-        7gydRtNPxUzWxSgUfzlWj5oD5cBTJQrtPRqRmn2GzSIREIMurBQzrjWk7dPLem3z
-        oOnNEQBLB8yo2mAHx5Mzm3aosNFRrGvKWNnR8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C67A5D8186;
-        Fri, 15 May 2020 20:02:42 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=sp8nprAun+EBtFiYmVp6NzefD7H+AKG3
+        EdlagoRzy4d2bIIBh88RDxVTzzQw44REUs+ZVaHZd4KZm9q71suIS88OuJuz0rqt
+        4p5OQEShu41MHPUHY/DBxk+AXK58wdfjcnsFytASEO3A6oEBcL0KZ0RUhfrIBKYK
+        8/tKQgVJBoA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4B238CFE9B;
+        Fri, 15 May 2020 20:04:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C2D2D8185;
-        Fri, 15 May 2020 20:02:39 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 95748CFE9A;
+        Fri, 15 May 2020 20:04:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 02/44] Documentation: document v1 protocol object-format capability
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
-        <20200513005424.81369-3-sandals@crustytoothpaste.net>
-        <CAN0heSqYsTZDnTG+roZ9pydUcEXJBayWXnijOcAZqb3-Rqegjg@mail.gmail.com>
-        <xmqqh7wjqpzg.fsf@gitster.c.googlers.com>
-        <20200515232212.GB6362@camp.crustytoothpaste.net>
-Date:   Fri, 15 May 2020 17:02:38 -0700
-In-Reply-To: <20200515232212.GB6362@camp.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 15 May 2020 23:22:12 +0000")
-Message-ID: <xmqq5zcw9275.fsf@gitster.c.googlers.com>
+Cc:     Laurent Arnoud <laurent@spkdev.net>, git@vger.kernel.org
+Subject: Re: [PATCH] diff: add config option relative
+References: <20200515155706.GA1165062@spk-laptop>
+        <20200515233130.GC6362@camp.crustytoothpaste.net>
+Date:   Fri, 15 May 2020 17:04:43 -0700
+In-Reply-To: <20200515233130.GC6362@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 15 May 2020 23:31:30 +0000")
+Message-ID: <xmqq1rnk923o.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8EDE148E-9708-11EA-987E-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D91C8896-9708-11EA-9541-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,28 +67,18 @@ X-Mailing-List: git@vger.kernel.org
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 2020-05-14 at 01:12:19, Junio C Hamano wrote:
->> Martin =C3=85gren <martin.agren@gmail.com> writes:
->>=20
->> > On Wed, 13 May 2020 at 02:56, brian m. carlson
->> > <sandals@crustytoothpaste.net> wrote:
->> >
->> >> @@ -189,7 +204,6 @@ refs being sent.
->> >>
->> >>  Clients MAY use the parameters from this capability to select the =
-proper initial
->> >>  branch when cloning a repository.
->> >> -
->> >>  shallow
->> >>  -------
->> >
->> > Looks like a spurious line deletion snuck in.
->>=20
->> Indeed.  I wonder if that is why our documentation build fails near
->> the tip of 'pu'.
+> On 2020-05-15 at 15:57:06, Laurent Arnoud wrote:
+>> The `diff.relative` boolean option set to `true` to show only changes on the
+>> current directory and show relative pathnames.
 >
-> I'll definitely do a reroll this weekend and kick a basic doc build off
-> before I send it out.
+> Usually when we implement configuration settings like this, we implement
+> an option value, such as --no-relative, so that users or scripting tools
+> can disable this feature if they need to.  However, I don't see that in
+> this series.  Would adding such a feature be possible?
 
-FWIW, I've fixed it up on my end so the documentation build of 'pu'
-has been working OK.
+I think I saw a variant that does have --[no-]foobar support on the
+list, but I may be hallucinating.  You definitely would want it, or
+you've broken "format-patch" forever without a knob to countermand
+the configuration (well, you can still say "git -c diff.foobar=no"
+but that's kind of cheating).
+
