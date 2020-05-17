@@ -2,142 +2,110 @@ Return-Path: <SRS0=BhVQ=67=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FC0CC433DF
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8282C433DF
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:33:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6060D2065F
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:16:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83C2620709
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:33:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N6D7L26Y"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QQq7WOHc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726292AbgEQSQu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 May 2020 14:16:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38544 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726269AbgEQSQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 May 2020 14:16:49 -0400
-Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85F47C061A0C
-        for <git@vger.kernel.org>; Sun, 17 May 2020 11:16:49 -0700 (PDT)
-Received: by mail-ua1-x943.google.com with SMTP id k3so2656152ual.8
-        for <git@vger.kernel.org>; Sun, 17 May 2020 11:16:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=R3LG033r/ZTy6YAatm+KfmsVX+t38CKAB0paKLs0Yno=;
-        b=N6D7L26YE2xjKzmupBn6kAKpSbGopjhFemKa8YGQh1/PSVt7yKwhsuxHDEowl7TSYm
-         xUCGfAewbWFkKfOM2lFQqEddWMTCEbaIW6xTE8sIkEQOamgfo55fMDk28zBz0LvQajFr
-         7fADzHZySPWceb1jLxpBsViw3gfSQ9vj8p2PYkgPTHmU8+hxddCkGlXAdsE+bdACFB7I
-         mWM/oCBUTgTmyxXHWQ2KfHlTGMS9BUxeN+BqtFLhER5u1i1wKZmHuOJijYuIz9QE/+cl
-         BHvyYx2bxE6StrhFNguY+QHVslqViDY6CrUdtdJ8lRC6Vnqk7BqGm0t0zknzGWQnv35t
-         VYxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=R3LG033r/ZTy6YAatm+KfmsVX+t38CKAB0paKLs0Yno=;
-        b=gI1QVEhYB3WYwztBHfCL9PYWqNR/WFff7QVv7kvKZPbuJ6DypK0EO+lW5pbrCR56iE
-         iiiEF40EZSblwZxD4+8L3PwEQEFBqeaVzYNWms2di3jRkkSy9zfVHm7ay1OxPQdZXYnp
-         sKoRlYYsZoJIlyyzAMNj+C3xhmbmMwk38gJ6gZkNb0tAMA7HcnbwnNMjBm0WZICHoS4x
-         kgrApZfnh7dQ2X6Wnwd5gSkp4LK8ZcmbyXzzZ0RsMDDIzGErOT2HG/41DWMfxh0E2HCz
-         AlgTor+ucO7Sou8e0Zd3aDyocML8VRH1NAWVYZgsXwtaVsFGAe7CAaAN64E8o/cQ+evx
-         sCfQ==
-X-Gm-Message-State: AOAM533JwHxnh1M0MZtaH/SjqHeCe+KNjq1KJB/3x4ShnH4B0VnNFjnM
-        1R61xE3/GklQz5omLt0ysRFL7aYCXqXrhxjyPdo=
-X-Google-Smtp-Source: ABdhPJxhJsAXOEpc8u16MGCQvnWlhTzHF7LeoIcA0gZxXD1KZAj0Ap08AEp3wQXOkJiGWXxJ6HhCmKJMmpEHbCzu50Q=
-X-Received: by 2002:ab0:7845:: with SMTP id y5mr9321545uaq.34.1589739408481;
- Sun, 17 May 2020 11:16:48 -0700 (PDT)
+        id S1726274AbgEQSdZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 May 2020 14:33:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61842 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbgEQSdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 May 2020 14:33:25 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5376E58636;
+        Sun, 17 May 2020 14:33:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BIriGnYkmCu4Xpdz+Ogxh2TGKm0=; b=QQq7WO
+        HciY59sietKhhBHUu00trWAJR6dQhXwc7JTZu/eEXczUSE2+e+vxOZShG8lfibHc
+        uipGOz9LQ5NSm1h4v93MveudbeBpPVDAJF7at/LGR7lv9TOqyE3ZqLkA2KNv/k9T
+        j2zb88GH26CYXs7RMd/AhzivOfhK+dyh/L0/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=m6HqBWFKNeBLOQ6t6adzeDIvKwmPP69J
+        P2f5R4GbTjS1/5KatSr7MTQaKmODSw8D4h8fV7Vz61J/w4eLV14TvEEWNhAQu9P6
+        42AtHuZpWdU0l3j81ZPiCPiBJbIooulI9MzLawx7yFPkBTby/5KYExqUrAM+jrfy
+        FWIrKUaEQHs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C25A58635;
+        Sun, 17 May 2020 14:33:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C73E758633;
+        Sun, 17 May 2020 14:33:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kenneth Lorber <keni@hers.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/6] Tell the glossary about core.hooksPath
+References: <1589681624-36969-1-git-send-email-keni@hers.com>
+        <1589681624-36969-2-git-send-email-keni@hers.com>
+Date:   Sun, 17 May 2020 11:33:22 -0700
+In-Reply-To: <1589681624-36969-2-git-send-email-keni@hers.com> (Kenneth
+        Lorber's message of "Sat, 16 May 2020 22:13:39 -0400")
+Message-ID: <xmqq4kse76od.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
- <20200513005424.81369-37-sandals@crustytoothpaste.net> <CAN0heSqpqAyKyaz+Er-SppR8k5W=zfw31rLR=Z8yZzqu=BCnTA@mail.gmail.com>
- <20200516204710.GI6362@camp.crustytoothpaste.net>
-In-Reply-To: <20200516204710.GI6362@camp.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 17 May 2020 20:16:37 +0200
-Message-ID: <CAN0heSqXSPXG38aqQggxA6yjkg_+PVVdh3M01RQKJM0gO0wAPA@mail.gmail.com>
-Subject: Re: [PATCH 36/44] builtin/index-pack: add option to specify hash algorithm
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E3767B0C-986C-11EA-A762-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 May 2020 at 22:47, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Kenneth Lorber <keni@hers.com> writes:
+
+> From: Kenneth Lorber <keni@his.com>
 >
-> On 2020-05-16 at 11:18:12, Martin =C3=85gren wrote:
-> > On Wed, 13 May 2020 at 02:56, brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> > >
-> > > git index-pack is usually run in a repository, but need not be. Since
-> > > packs don't contains information on the algorithm in use, instead
-> > > relying on context, add an option to index-pack to tell it which one
-> > > we're using in case someone runs it outside of a repository.
+> The user manual glossary entry for hooks now knows about core.hooksPath.
 >
-> > Similar to an earlier patch where we modify `the_hash_algo` like this, =
-I
-> > feel a bit nervous. What happens if you pass in a "wrong" algo here,
-> > i.e., SHA-1 in a SHA-256 repo? Or, given the motivation in the commit
-> > message, should this only be allowed if we really *are* outside a repo?
->
-> Unfortunately, we can't prevent the user from being inside repository A,
-> which is SHA-1, while invoking git index-pack on repository B, which is
-> SHA-256.
+> Signed-off-by: Kenneth Lorber <keni@his.com>
+> ---
+>  Documentation/glossary-content.txt | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 
-Ah, I see.
+That's a gap worth filling.
 
->  That is valid without --stdin, if uncommon, and it needs to be
-> supported.  I can prevent it from being used with --stdin, though.
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index 090c888335..37147db1bc 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -206,10 +206,12 @@ for a more flexible and robust system to do the same thing.
+>  	to optional scripts that allow a developer to add functionality or
+>  	checking. Typically, the hooks allow for a command to be pre-verified
+>  	and potentially aborted, and allow for a post-notification after the
+> -	operation is done. The hook scripts are found in the
+> -	`$GIT_DIR/hooks/` directory, and are enabled by simply
+> -	removing the `.sample` suffix from the filename. In earlier versions
+> -	of Git you had to make them executable.
+> +	operation is done. The hook scripts are found in `$GIT_DIR/hooks/`
+> +	or in any directory specified by the `core.hooksPath` configuration
 
-Hmm, that might make sense. I suppose it could quickly get out of
-control with bug reports coming in along the lines of "if I do this
-really crazy git index-pack invocation, I manage to mess things up". The
-easiest way to address this might be through documentation, i.e., "don't
-use this option", "for internal use" or even "to be used by the test
-suite only" for which there is even precedence in git-index-pack(1).
+I expect "the", instead of "any", would make more sense to readers.
 
-On the other hand, if we need to detect such hash mismatch even once the
-SHA-256 work is 100% complete, then I suppose we really should try a
-bit to catch bad invocations.
+It is true that you can choose any directory of your liking and
+specify it via the variable, but once chosen that would be the only
+directory used for the purpose.
 
-As a tangent, I see that v2.27.0 will come with `git init
---object-format=3D<format>` and `GIT_DEFAULT_HASH_ALGORITHM`. The docs for
-the former mentions "(if enabled)". Should we add something more scary
-to those to make it clear that they shouldn't be used and that you
-basically shouldn't even try to figure out how to enable them? I can
-already see the tweets and blog posts a few weeks from now about how you
-can build Git from source setting a single switch, run
+> +	variable.  The sample scripts are enabled by simply
+> +	removing the `.sample` suffix from the filename.  In earlier versions
+> +	of Git you had to make the sample scripts executable manually.
+> +	Hook scripts must be executable.  See linkgit:githooks[5] for details.
+>  
+>  [[def_index]]index::
+>  	A collection of files with stat information, whose contents are stored
 
-  git init --object-format=3Dsha256
-
-and you're in the future! Which will just lead to pain some days or
-weeks later.... "I've done lots of work. How do I convert my repo to
-SHA-1 so I can share it?"...
-
-We've added "experimental" things before and tried to document the
-experimental nature. Maybe here we're not even "experimental" -- more
-like "if you use this in production, you *will* suffer"?
-
-> If you pass in a wrong algorithm, we usually blow up with an inflate
-> error because we consume more bytes than expected with our ref deltas.
-> I'm not aware of any cases where we segfault or access invalid memory;
-> we just blow up in a nonobvious way.  That's true, too, if you manually
-> tamper with the algorithm in extensions.objectformat; usually we blow up
-> (but not segfault) because the index is "corrupt".
-
-Ok, I see. I suppose "some time", we could tweak error messages to hint
-about an object-format mismatch, but I don't think that needs to block
-your work here now.
-
-Martin
+Thanks.
