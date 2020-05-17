@@ -2,111 +2,93 @@ Return-Path: <SRS0=BhVQ=67=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72831C433E0
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 02:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36BD0C433E0
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 02:48:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55E5A20671
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 02:29:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 03677206D4
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 02:48:13 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8SsJlqS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726983AbgEQC3S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 16 May 2020 22:29:18 -0400
-Received: from smtp-1.his.com ([216.194.195.13]:45483 "EHLO smtp-1.his.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726880AbgEQC3S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 May 2020 22:29:18 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by smtp-1.his.com (Postfix) with ESMTP id 12E1360A09
-        for <git@vger.kernel.org>; Sat, 16 May 2020 22:19:21 -0400 (EDT)
-X-Virus-Scanned: Debian amavisd-new at smtp-1.his.com
-Received: from smtp-1.his.com ([127.0.0.1])
-        by localhost (smtp-1.his.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id CP5Nkz-HwW7A for <git@vger.kernel.org>;
-        Sat, 16 May 2020 22:19:20 -0400 (EDT)
-Received: from smtp-nf-201.his.com (smtp-nf-201.his.com [216.194.196.93])
-        by smtp-1.his.com (Postfix) with ESMTP id C58B4609FF
-        for <git@vger.kernel.org>; Sat, 16 May 2020 22:19:20 -0400 (EDT)
-Received: from cuda201.his.com (cuda201.his.com [216.194.196.22])
-        by smtp-nf-201.his.com (Postfix) with ESMTPS id EACFE6042B
-        for <git@vger.kernel.org>; Sat, 16 May 2020 22:19:19 -0400 (EDT)
-X-ASG-Debug-ID: 1589681959-061c41045a25bdc0001-QuoKaX
-Received: from smtp-nf-202.his.com (smtp-nf-202.his.com [216.194.196.20]) by cuda201.his.com with ESMTP id 6zwj1l9KFYsc2xuH for <git@vger.kernel.org>; Sat, 16 May 2020 22:19:19 -0400 (EDT)
-X-Barracuda-Envelope-From: keni@his.com
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
-Received: from zproxy101.his.com (zproxy101.his.com [18.218.2.49])
-        by smtp-nf-202.his.com (Postfix) with ESMTPS id 8AFD360240
-        for <git@vger.kernel.org>; Sat, 16 May 2020 22:19:19 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by zproxy101.his.com (Postfix) with ESMTP id 53E0E177E99;
-        Sat, 16 May 2020 22:19:19 -0400 (EDT)
-X-Barracuda-RBL-IP: 18.218.2.49
-X-Barracuda-Effective-Source-IP: zproxy101.his.com[18.218.2.49]
-X-Barracuda-Apparent-Source-IP: 18.218.2.49
-Received: from zproxy101.his.com ([127.0.0.1])
-        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 20vGbA3Glxzu; Sat, 16 May 2020 22:19:19 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by zproxy101.his.com (Postfix) with ESMTP id 3D9EB177EA3;
-        Sat, 16 May 2020 22:19:19 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at zproxy101.his.com
-Received: from zproxy101.his.com ([127.0.0.1])
-        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id bUnnd6Zx5fZI; Sat, 16 May 2020 22:19:19 -0400 (EDT)
-Received: from kenilap.lorber.home (pool-74-96-209-77.washdc.fios.verizon.net [74.96.209.77])
-        by zproxy101.his.com (Postfix) with ESMTPSA id 174DA177E99;
-        Sat, 16 May 2020 22:19:19 -0400 (EDT)
-Received: (from keni@localhost)
-        by kenilap.lorber.home (8.14.5/8.14.1) id 04H2JImo037032;
-        Sat, 16 May 2020 22:19:18 -0400 (EDT)
-From:   Kenneth Lorber <keni@hers.com>
-To:     git@vger.kernel.org
-Cc:     keni@hers.com
-Subject: [RFC PATCH 6/6] Add NAMESPACE COLLISIONS reference to Hacking Git
-Date:   Sat, 16 May 2020 22:13:44 -0400
-X-ASG-Orig-Subj: [RFC PATCH 6/6] Add NAMESPACE COLLISIONS reference to Hacking Git
-Message-Id: <1589681624-36969-7-git-send-email-keni@hers.com>
-X-Mailer: git-send-email 2.7.1.287.g4943984.dirty
-In-Reply-To: <1589681624-36969-1-git-send-email-keni@hers.com>
-References: <1589681624-36969-1-git-send-email-keni@hers.com>
-X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
-X-Barracuda-Start-Time: 1589681959
-X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at his.com
-X-Barracuda-Scan-Msg-Size: 668
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=6.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.81903
-        Rule breakdown below
-         pts rule name              description
-        ---- ---------------------- --------------------------------------------------
+        id S1726967AbgEQCsM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 May 2020 22:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36220 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726880AbgEQCsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 May 2020 22:48:11 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76EA1C061A0C
+        for <git@vger.kernel.org>; Sat, 16 May 2020 19:48:10 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id q8so1247447pfu.5
+        for <git@vger.kernel.org>; Sat, 16 May 2020 19:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=content-transfer-encoding:from:mime-version:subject:date:message-id
+         :references:cc:in-reply-to:to;
+        bh=ZP9VjMR8yHhvcMk5os61bhqQ20DQHIjsrWvijN0mVxI=;
+        b=D8SsJlqSHw/xeveTkqoNMMZ1WOQaMD+aCpgN+O05I9ZrKyF/Zfdyl7q7Qa75C65jfZ
+         p5Dbg0oTyaXezhomzbbOQ9a0HUISWezDJDyhBGZXAfJRESeJl8VOXC0cbtrd7U8YrBLs
+         OJ6SGRd1HWLKrYTOYyITJVb8hEiJvXKtqAavfnqjGTj4Aaty0+m85vgDwsxlyRS77Djz
+         hM6pXNYHs6Jo6xaCJRdryoLGQKuBURXOSSBAxgtT8lbZp44wIcXGJOzFgxZTl3OCxQ6+
+         UVUzL9T75087+yvTSCEeQ6GiKSy0QWknGhwTyjs0ZSW92JAq8VpPT28+F8zJWNE8M/c0
+         QXyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:content-transfer-encoding:from:mime-version
+         :subject:date:message-id:references:cc:in-reply-to:to;
+        bh=ZP9VjMR8yHhvcMk5os61bhqQ20DQHIjsrWvijN0mVxI=;
+        b=SBJ5rKegjzQVbW5BGN60YnAPblVQsZph7tmLFOPXyIq+Nan/UQLGbi8cUZGbwxXOTs
+         5qPkXw/5I3dy+i60khIKy/EiTAqr9pZfFiLTW2IY7BY3uYT8AzqwmlMcVCFBnLc7i3QD
+         0k4fw563WwY58OzmjuRAIKiEjj21KYqvGfFsBg4cwqDIYj2L8j9F+m4lQ9Lci9iCEwnF
+         N4Psm+94GjWJuOMu3rIxhTDtyQVSfhZx9gk9yUMZmw8JcMFvMBUf5ywaExjbD+jt3tMV
+         CPXEnf9KPg3pYSTRwzjMsM8dDxyin6NQZcll5SGOOVnC3AINTnzavsfDuZ0yQ7KWuoKI
+         b+rQ==
+X-Gm-Message-State: AOAM530LE+upE0febNouF6TpfHstW1rkkXPb3lCgDcSbaAOi/IdrCZee
+        f0uUG9UzB0qXflvAbUeahXo=
+X-Google-Smtp-Source: ABdhPJzkPyPdCwh8sNmYGyWbdWSxEWMeehwmd7RkWoT+CPQWAhF70CVV4l2JmKufbcusxL3GPo+ylw==
+X-Received: by 2002:aa7:80d9:: with SMTP id a25mr11385806pfn.220.1589683689704;
+        Sat, 16 May 2020 19:48:09 -0700 (PDT)
+Received: from [192.168.1.61] ([171.244.97.49])
+        by smtp.gmail.com with ESMTPSA id ce21sm4931446pjb.51.2020.05.16.19.48.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 May 2020 19:48:08 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From:   Danh Doan <congdanhqx@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v4] diff: add config option relative
+Date:   Sun, 17 May 2020 09:48:03 +0700
+Message-Id: <67A0CBED-16A8-4DD1-9F79-1495FC242A0C@gmail.com>
+References: <20200517021452.GA2114@danh.dev>
+Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+In-Reply-To: <20200517021452.GA2114@danh.dev>
+To:     Laurent Arnoud <laurent@spkdev.net>
+X-Mailer: iPhone Mail (17E262)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kenneth Lorber <keni@his.com>
 
-Signed-off-by: Kenneth Lorber <keni@his.com>
----
- Documentation/user-manual.txt | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 2144246444..4ceba4a943 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -4056,6 +4056,7 @@ documents may be what you are really looking for:
- * hooks: linkgit:githooks[5]
- * attributes: linkgit:gitattributes[5]
- * new tools: linkgit:git-sh-setup[1]
-+* avoiding namespace collisions: linkgit:gitrepository-layout[5]
- 
- [[object-details]]
- === Object storage format
--- 
-2.17.1
+> On May 17, 2020, at 09:14, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <con=
+gdanhqx@gmail.com> wrote:
+>=20
+> =EF=BB=BFHi Laurent,
+>=20
+>> On 2020-05-16 21:40:33+0200, Laurent Arnoud <laurent@spkdev.net> wrote:
+>> Subject: Re: [PATCH v4] diff: add config option relative
+>=20
+> I think the subject should be changed to.
+>=20
+>    diff: allow overriding --relative
 
+I feel stupid about this now.
+Please disregard my comment about subject.=
