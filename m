@@ -2,110 +2,102 @@ Return-Path: <SRS0=BhVQ=67=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8300C433E0
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA9AC433E0
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:52:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98159207E8
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:40:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 549A7207F9
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:52:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cbHV0r6A"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Spq+4+aX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbgEQSkC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 May 2020 14:40:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53392 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726259AbgEQSkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 May 2020 14:40:02 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 376F9587EF;
-        Sun, 17 May 2020 14:40:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zdFaOrDmcdEt85uhL6PBUJiHW78=; b=cbHV0r
-        6AcKb7syXKR7GWz+WNOpiFStAD28+nqgUiph8KFLekixdGFEtT58Q7Ao6C0KUzyO
-        CAf0y0dHnQBvbTTdXedwOagQp8z7GhgdATPjVgtBxDYrl4Cr1DYSakxTuwmV3GkQ
-        qS01+Ih4lGevl2Hh/i3ixWbkQrU+o8xr2Yddo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EIfclxUNGMRuNzkoO6j702UgT4L1NKar
-        pU1jwIVx8Pjze+oSiXnpeslww5blBjzSxzU38x7Go/7BbkRTa+j1FJuoI+hviLVh
-        plS9IjnmfTGqOLFgTl6TJCFjUzp2a94x8sYQ9weExY5Z5KxaIVFeJIPC/Syg+MyK
-        A//SbQ7bOZI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13125587EC;
-        Sun, 17 May 2020 14:40:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1F38587EB;
-        Sun, 17 May 2020 14:39:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
-Cc:     Kenneth Lorber <keni@hers.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/6] various documentation bits
-References: <1589681624-36969-1-git-send-email-keni@hers.com>
-        <20200517074258.GA1381@Abhishek-Arch>
-Date:   Sun, 17 May 2020 11:39:59 -0700
-In-Reply-To: <20200517074258.GA1381@Abhishek-Arch> (Abhishek Kumar's message
-        of "Sun, 17 May 2020 13:12:58 +0530")
-Message-ID: <xmqqv9ku5rsw.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726283AbgEQSwd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 May 2020 14:52:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44044 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726269AbgEQSwd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 May 2020 14:52:33 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF644C061A0C
+        for <git@vger.kernel.org>; Sun, 17 May 2020 11:52:32 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id e125so5316459lfd.1
+        for <git@vger.kernel.org>; Sun, 17 May 2020 11:52:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IdOc17yN9FRNkLZ5J6ehXVK55yHo37eeEfE3sBfSmow=;
+        b=Spq+4+aXvyHMT4630Lwb/YsTJATkHb0DAxhz/Tss83UttG5FV49gcCZRpjLH50RzZw
+         WUuPwUgCRg5e9FSihSvwjXDurk6dgdiZ7uYOquh0Yq+x1JHXcuxDilai/WvaYpUVQdlx
+         pRANKFV086X/amkuBvCLYB1he6stQ4lwV/db/WC+/TtwApyo+eb2S+VCK3qqwREGj4sf
+         giZte08FSjJYYR7GoFkEEvXtWLI0Bu071wli/dz91mcW7uYAvkcs6Vjv/MsOHdFphmo+
+         3iMjHQXRbH1kxah/6xowRwgIaGILbnk4pV6V+7LNo6SzXCNVc5hqwGv2RvMjLQxhJuON
+         1gqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IdOc17yN9FRNkLZ5J6ehXVK55yHo37eeEfE3sBfSmow=;
+        b=rboJfdidB6hp6DxC66eAf5gahSIaEjDijuYACLecAHuVjRVUlf+a7jrWvw9r9aCnOI
+         XVDiypq1H9kiRdtu3YeFey1HrWI0M8jmyrAltGwM0oWP6rpBrN8QZUb35WRnV/Fawfiw
+         3pDjL3YO+xdE7fPuQr5FqJIVYK9kwG7cwpuD8ws1lDTvh2wEZ+y51T+YtkNmAMffwwE3
+         FEEujKP5yCFqTfFKmJ4LzPO8rTBY/LFuurkFGTt2RLKqw9gefNOdfdBLB6fqnwZys3nh
+         sQVG2Td/4eEVF62Fp9Pe51znulefjVicDkAGr4aLRFK4o/uJya40gejBM5XxKA2OV1d3
+         g99Q==
+X-Gm-Message-State: AOAM532lNDh1xrTaQ1Ga1Pc553A6Y0D3UN7EHii+Zx4b3YGwqWnel6p6
+        z1QD26LQHEb6knR7QQ0OuJTqnan5
+X-Google-Smtp-Source: ABdhPJxc0hSwG4OBNPRBkY7Q+qPXbWXckSefM2ZEg67BaJlsTMwZdzdAsmnZRSODlURFQw76u0ERDA==
+X-Received: by 2002:a05:6512:6ca:: with SMTP id u10mr9344084lff.184.1589741550282;
+        Sun, 17 May 2020 11:52:30 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id a12sm4513938ljj.64.2020.05.17.11.52.29
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 May 2020 11:52:29 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/7] Documentation fixes for v2.27.0-rc0
+Date:   Sun, 17 May 2020 20:52:15 +0200
+Message-Id: <cover.1589739920.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.27.0.rc0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D032A290-986D-11EA-8962-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+I've gone through
 
-> Some general notes about your patch series:
->
-> 1. Conventionally, we prefix the first line with "area: " where the area
-> is a filename or identifier for general area of the code being modified.
-> It's customary to start the remainder of the first line after "area: "
-> with a lower-case letter.
->
-> For example, your commit titles could have been:
-> - doc: tell the glossary about core.hooksPath
-> - doc: add bit on extending git to hacking Git
->
-> and so on.
->
-> Check out SubmittingPatches for more information.
+  doc-diff v2.26.0 v2.27.0-rc0
 
-Good suggestion.
+and identified a few misrenderings. Here's my attempt to address them.
 
-> 2. We generally don't have a line like in our patches:
->
->> From Kenneth Lorber <keni@his.com>
->
-> Between the author information and the signed-off-by, it's redundant.
+Working on this, I also got to look at the new features in the upcoming
+release from another angle -- looking good!
 
-Carefully inspect the e-mail header and in-body header ;-)  
+Martin Ågren (7):
+  date-formats.txt: fix list continuation
+  git-bugreport.txt: fix reference to strftime(3)
+  git-commit-graph.txt: fix grammo
+  git-commit-graph.txt: fix list rendering
+  git-credential.txt: use list continuation
+  git-sparse-checkout.txt: add missing '
+  rev-list-options.txt
 
-The author identity must match the identity written for the
-signed-off-by trailer, so the in-body header becomes needed
-when the From: e-mail header does not match the true author,
-like these patches.
+ Documentation/date-formats.txt        |  3 +--
+ Documentation/git-bugreport.txt       |  2 +-
+ Documentation/git-commit-graph.txt    |  3 ++-
+ Documentation/git-credential.txt      | 16 +++++------
+ Documentation/git-sparse-checkout.txt |  2 +-
+ Documentation/rev-list-options.txt    | 38 +++++++++++++--------------
+ 6 files changed, 32 insertions(+), 32 deletions(-)
 
-> 3. You could probably join the patches 3 to 6 together. Or maybe
-> introduce namespace-collisions.txt in third patch and add
-> references in all other files in a new, fourth patch.
-
-Perhaps, but I'd rather not to see a rule that hasn't been applied
-even once in the real situation written down like a law.  I'd prefer
-to see us gain experience by interacting tool authors on the list
-and learn what their concerns and pain-points are.
-
-Thansk.
-
+-- 
+2.27.0.rc0
 
