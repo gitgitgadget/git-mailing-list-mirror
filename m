@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8282C433DF
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5A07C433DF
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:35:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83C2620709
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:33:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D325205CB
+	for <git@archiver.kernel.org>; Sun, 17 May 2020 18:35:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QQq7WOHc"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="J6e1mRJQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726274AbgEQSdZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 May 2020 14:33:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61842 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726259AbgEQSdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 May 2020 14:33:25 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5376E58636;
-        Sun, 17 May 2020 14:33:23 -0400 (EDT)
+        id S1726280AbgEQSey (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 May 2020 14:34:54 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54712 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbgEQSex (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 May 2020 14:34:53 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0BA5EBDEC5;
+        Sun, 17 May 2020 14:34:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BIriGnYkmCu4Xpdz+Ogxh2TGKm0=; b=QQq7WO
-        HciY59sietKhhBHUu00trWAJR6dQhXwc7JTZu/eEXczUSE2+e+vxOZShG8lfibHc
-        uipGOz9LQ5NSm1h4v93MveudbeBpPVDAJF7at/LGR7lv9TOqyE3ZqLkA2KNv/k9T
-        j2zb88GH26CYXs7RMd/AhzivOfhK+dyh/L0/c=
+        :content-type; s=sasl; bh=97UDiI4wpfSNNmJGm4XVHLn6qqI=; b=J6e1mR
+        JQ5t/blgdWRJj7MO1W0tqpoFtonwXq3UavtGPBiwIDIfDI5MxEwu7Aebc7aG8+F0
+        Q3t2UINtl6sVHXQ+85ucW/f9LK7VmhzYu/ofWfD9Tt40a2JYK+freMl2//VW8QcF
+        FCZtmwk+Fa4L2LKgOn22Lzh1l25GjChsCf0HU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=m6HqBWFKNeBLOQ6t6adzeDIvKwmPP69J
-        P2f5R4GbTjS1/5KatSr7MTQaKmODSw8D4h8fV7Vz61J/w4eLV14TvEEWNhAQu9P6
-        42AtHuZpWdU0l3j81ZPiCPiBJbIooulI9MzLawx7yFPkBTby/5KYExqUrAM+jrfy
-        FWIrKUaEQHs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C25A58635;
-        Sun, 17 May 2020 14:33:23 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=jkZsnCFM+Fvo5g3mnwhdzgmTEC+glGNA
+        J8poXezJ0Hx7tIDUwwvDZu+b/OONiif2JIjsBEwfb+H2oOV6vpYZ2YqGIplCYMSD
+        LvsQLlDHw3ZjxWDb9xALO2c3Aa9xmQVhLx66REWDpg8/kB295h6wS3S0tQselPsE
+        4fKlAfFwJBA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03B6DBDEC2;
+        Sun, 17 May 2020 14:34:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C73E758633;
-        Sun, 17 May 2020 14:33:22 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BF555BDEC1;
+        Sun, 17 May 2020 14:34:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kenneth Lorber <keni@hers.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/6] Tell the glossary about core.hooksPath
+Subject: Re: [RFC PATCH 2/6] Add bit on extending git to Hacking Git
 References: <1589681624-36969-1-git-send-email-keni@hers.com>
-        <1589681624-36969-2-git-send-email-keni@hers.com>
-Date:   Sun, 17 May 2020 11:33:22 -0700
-In-Reply-To: <1589681624-36969-2-git-send-email-keni@hers.com> (Kenneth
-        Lorber's message of "Sat, 16 May 2020 22:13:39 -0400")
-Message-ID: <xmqq4kse76od.fsf@gitster.c.googlers.com>
+        <1589681624-36969-3-git-send-email-keni@hers.com>
+Date:   Sun, 17 May 2020 11:34:46 -0700
+In-Reply-To: <1589681624-36969-3-git-send-email-keni@hers.com> (Kenneth
+        Lorber's message of "Sat, 16 May 2020 22:13:40 -0400")
+Message-ID: <xmqqzha65s1l.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E3767B0C-986C-11EA-A762-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 16B44580-986D-11EA-B300-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,42 +70,30 @@ Kenneth Lorber <keni@hers.com> writes:
 
 > From: Kenneth Lorber <keni@his.com>
 >
-> The user manual glossary entry for hooks now knows about core.hooksPath.
+> The Hacking Git section of the user manual is the logical place to look
+> for information on extending Gut, so add a short section of links to
+> places where that information actually lives.
 >
 > Signed-off-by: Kenneth Lorber <keni@his.com>
 > ---
->  Documentation/glossary-content.txt | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-
-That's a gap worth filling.
-
-> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-> index 090c888335..37147db1bc 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -206,10 +206,12 @@ for a more flexible and robust system to do the same thing.
->  	to optional scripts that allow a developer to add functionality or
->  	checking. Typically, the hooks allow for a command to be pre-verified
->  	and potentially aborted, and allow for a post-notification after the
-> -	operation is done. The hook scripts are found in the
-> -	`$GIT_DIR/hooks/` directory, and are enabled by simply
-> -	removing the `.sample` suffix from the filename. In earlier versions
-> -	of Git you had to make them executable.
-> +	operation is done. The hook scripts are found in `$GIT_DIR/hooks/`
-> +	or in any directory specified by the `core.hooksPath` configuration
-
-I expect "the", instead of "any", would make more sense to readers.
-
-It is true that you can choose any directory of your liking and
-specify it via the variable, but once chosen that would be the only
-directory used for the purpose.
-
-> +	variable.  The sample scripts are enabled by simply
-> +	removing the `.sample` suffix from the filename.  In earlier versions
-> +	of Git you had to make the sample scripts executable manually.
-> +	Hook scripts must be executable.  See linkgit:githooks[5] for details.
+>  Documentation/user-manual.txt | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 833652983f..2144246444 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -4049,6 +4049,14 @@ and that is what higher level `git merge -s resolve` is implemented with.
+>  This chapter covers internal details of the Git implementation which
+>  probably only Git developers need to understand.
 >  
->  [[def_index]]index::
->  	A collection of files with stat information, whose contents are stored
+> +If you are extending Git using hooks, writing new tools, or otherwise
+> +looking for technical information but not hacking Git itself, the following
+> +documents may be what you are really looking for:
+> +
+> +* hooks: linkgit:githooks[5]
+> +* attributes: linkgit:gitattributes[5]
+> +* new tools: linkgit:git-sh-setup[1]
 
-Thanks.
+I am not sure if this fits here.  It is a distraction to the target
+audience of this section, no?
