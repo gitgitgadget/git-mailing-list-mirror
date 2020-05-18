@@ -2,198 +2,180 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D981C433E0
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 14:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5658C433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 15:30:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2AE7F207C4
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 14:57:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D0F120758
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 15:30:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SCk3GTf/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWKhTkdS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728193AbgERO5i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 10:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33880 "EHLO
+        id S1727942AbgERPa2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 11:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728177AbgERO5h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 10:57:37 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E5AC061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 07:57:37 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id z18so8306305qto.2
-        for <git@vger.kernel.org>; Mon, 18 May 2020 07:57:37 -0700 (PDT)
+        with ESMTP id S1726958AbgERPa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 11:30:28 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50713C061A0C
+        for <git@vger.kernel.org>; Mon, 18 May 2020 08:30:28 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id 5so2178998pjd.0
+        for <git@vger.kernel.org>; Mon, 18 May 2020 08:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=vbVn340Q3U+nYfyjc2Uh9c9JbeVnkywYrVi20Df1g88=;
-        b=SCk3GTf/NYJCt5jqPJPDDIMcEv+T9GF1BFxHTDBdVGgZO9U12awfpffxe0ITlM6c8z
-         3Yv0bj/IgT4Q4egLLC2Q0BARwxijmjXhoEiPgOeNGDzrqWNjvxzcE4Lx+2SMqvvXjRmN
-         Uo/6pNapXFvk08dj1oWKgjaL6UaByzXZPw0JIAtWqPUdP+3cPFdjVhQpLzrbr3kqb84u
-         jqcTn4H5ElvMvTSO6VFNFntZhwyMyzJ0GYt/2qXMymPzdXisILsq+yrcWV2dyi1Dqn1N
-         bbBjffyRLwdoSViEnutVS35h3Ozq+TT8OhurYJzw67y+lDJK5m11BSVyIZVNGzQ/5vF/
-         oSKw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=d8CYvW6MJuMr6Xo8hcM3mfYA7MmCayUI7I8Oi7kPjuA=;
+        b=CWKhTkdSAySICBI2A1jshldT1HsMnu+0IHAd6/ibaLXbRkcuvga68M/wF2BinwV0uZ
+         X2GM4UByA+5HFxaeretUst1L2WdmcCq0iZuuCXEzBPIgL5wOuhfES+CQwp3ki3sd93RM
+         myUIw5NMCbFURpEceW8C4i9/BBbcxi4sDKtTtsrOEGAcZ3JlkE01WI5AxHfosdU7s1LA
+         qyw50wkP1O2/lT77vIm7XIrlfvVOzF6OIp/YpnIdRngPsZi6d9cVmPHy0klj1n4gA+C2
+         sD9+BtHLrU+bAowss5u8z0i1qdKqWez8LX8SxAaqnB04XET2U9vuVfPW3J94OOBy6NVs
+         J4DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=vbVn340Q3U+nYfyjc2Uh9c9JbeVnkywYrVi20Df1g88=;
-        b=esi8tUD/WVCHOja+lJK8cTwdxxhYfZMi8QEeBc/G5j1yboYgSvmIE1OvdzW1ZxClCz
-         KqHd79yCfl8Tai2Ot59PRI+OeuiWuVdd4qLo4B0m4a5LKOoVNJSOpdXujAwLC4Y5KrQJ
-         5u3pPzz0q7s05HrJd5nhhFv5TFVHIEwF5dmT0vKDgd/TTDyUqD7yB/UuT8poPR9aqJDO
-         FChzQGWrMEFQ91KbMRmDzCBUmzFiugPnGDNwvrWA+pyvucqtsiIPYv1yE0hhOCJ62QW6
-         e7hjRcKYfLjRPA9kw/WEExcHlGyeDxqEV7omhMLzqtaesO5dZZn583UcwWGG78VMDY/c
-         KRgw==
-X-Gm-Message-State: AOAM5308RzkN1f1uJ+jZI8MkuWQ3EhzfXxNwHzHrLHoQEtqdfuoFXCs0
-        /gbkua/QyXo5Pe0vqsqaZ+numjE/T08=
-X-Google-Smtp-Source: ABdhPJzULqjRswa3WiUQPCUKVJLhBjq2xrhl9wjyFcBIdl8AljtYUg8O8u0x3PPdl+ca84Y7V9lg/Q==
-X-Received: by 2002:ac8:1090:: with SMTP id a16mr17130930qtj.181.1589813856261;
-        Mon, 18 May 2020 07:57:36 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id u20sm9576022qtj.97.2020.05.18.07.57.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2020 07:57:35 -0700 (PDT)
-Subject: Re: [PATCH 7/7] rev-list-options.txt
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-References: <cover.1589739920.git.martin.agren@gmail.com>
- <acfca5465e822eaa6f0ddf85a01f7855d3dfb7d1.1589739920.git.martin.agren@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <34870e5f-8e61-4af8-1050-43bfbe30d8f9@gmail.com>
-Date:   Mon, 18 May 2020 10:57:35 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
- Thunderbird/77.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=d8CYvW6MJuMr6Xo8hcM3mfYA7MmCayUI7I8Oi7kPjuA=;
+        b=J3nO0W0MJxiletxEAbG/+TNqrxL1UzH/6l53FUgCIMIVXS28oMapkmxABUy+BeUhJ6
+         f++sx96/ZoEzRA9SaotlFjNoHN1VIxCXVUjPb+Hgvu5T/eiJCfWAGWTsGfERlIe2aJFq
+         VeTQWQS4cp/M4HxxAoDakfXmqASTWu7wXuH4Dk2fFOvGegV3aZjfJqbPRiv01VqAXNpL
+         jll221oYh0agurqhGSToBRpaM0/DAqWr5fla2viPSmAQZIGApbr+HJaMUWB3Yg3aqTTg
+         BtT6gOaarW5KxNE/rAKpFxpYhXvhbf2Dv/zkkWnld/3IJ0WzihFAewl9ZQ3ckPDnA9w7
+         anHQ==
+X-Gm-Message-State: AOAM531jBMDcysUHVvwD1p9gYlAZAdaYLywVj26dADRYpPXEJ3ZYt9iX
+        sK7Om4oN6xYuMk4CXDg3L3E=
+X-Google-Smtp-Source: ABdhPJyklN1trE7KZCXFON9X/bFZ6M6pZyUx1XgcgDoNyXplnoDqlvKiknQIWBm9gIE0fIwzG+sE4g==
+X-Received: by 2002:a17:902:d886:: with SMTP id b6mr16886557plz.263.1589815827805;
+        Mon, 18 May 2020 08:30:27 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
+        by smtp.gmail.com with ESMTPSA id t10sm738230pjj.19.2020.05.18.08.30.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 08:30:26 -0700 (PDT)
+Date:   Mon, 18 May 2020 22:30:25 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Darren Tucker <dtucker@dtucker.net>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/7] Redirect grep's stderr top null too.
+Message-ID: <20200518153025.GD1980@danh.dev>
+References: <20200518100356.29292-1-dtucker@dtucker.net>
+ <20200518141311.GC1980@danh.dev>
+ <CALDDTe13_utn7E+QF1AgndX_6nPph=Gr1hesLwfV8e9LwgUPOQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <acfca5465e822eaa6f0ddf85a01f7855d3dfb7d1.1589739920.git.martin.agren@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALDDTe13_utn7E+QF1AgndX_6nPph=Gr1hesLwfV8e9LwgUPOQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/17/2020 2:52 PM, Martin Ågren wrote:
-> The explanation of the `--show-pulls` option added in commit 8d049e182e
-> ("revision: --show-pulls adds helpful merges", 2020-04-10) consists of
-> several paragraphs and we use "+" throughout to tie them together in one
-> long chain of list continuations. Only thing is, we're not in any kind
-> of list, so these pluses end up being rendered literally.
+On 2020-05-19 00:29:47+1000, Darren Tucker <dtucker@dtucker.net> wrote:
+> On Tue, 19 May 2020 at 00:13, Đoàn Trần Công Danh <congdanhqx@gmail.com> wrote:
+> >
+> > Hi Darren,
+> >
+> > On 2020-05-18 20:03:50+1000, Darren Tucker <dtucker@dtucker.net> wrote:
+> > > Prevents pollution of configure output on platforms that don't have
+> > > grep -a.
+> >
+> > From your other's patch, I think you're in HP-UX,
 > 
-> The preceding few paragraphs describe `--ancestry-path` and there we
-> *do* have a list, since we've started one with `--ancestry-path::`. But
-> we don't have a similar list running here. We could tie all our
-> paragraphs from 8d049e182e to that list, but that doesn't make much
-> sense: We aim to describe another option entirely.
+> Yes (it's not my usual platform but I had occasion to test something
+> on it so revived an old system).
 > 
-> We could start a new list item:
+> > would you mind also run the test.
+> >
+> > Since t5703 also uses "grep -a"
 > 
->  --show-pulls:
->     Before discussing another option, `--show-pulls`, we need to
->     create a new example history.
->  +
->     ...
-> 
-> That reads somewhat awkwardly to me. Not to mention that the chain of
-> paragraphs that follows is fairly long, introducing a new example
-> history and discussing it in quite some detail. Let's make this run
-> along without any kind of indentation. It effectively means that we're
-> treating "Before discussing..." as a paragraph on the same level as
-> "There is another simplification mode available:" which precedes the
-> `--ancestry-path::` list.
-> 
-> If we really want a `--show-pulls::` list somewhere, we could perhaps
-> let it begin around "The `--show-pulls` option helps with both of these
-> issues ..." further down. But for now, let's just focus on getting rid
-> of those literal pluses.
+> It fails with:
+> $ ./t5703-upload-pack-ref-in-want.sh
+> sed: There are too many commands for the s/\n// function.
 
-I think the way you adjusted the preamble is good. It matches this prior
-work before --ancestry-path:
+I think this was introduced at 878f988350 (t/test-lib: teach
+--chain-lint to detect broken &&-chains in subshells, 2018-07-11)
 
-	Finally, there is a fifth simplification mode available:
+The chainlint.sed is too complicated for a mortal like me to
+understand, I added Eric to Cc.
 
-	--ancestry-path::
-		(description)
-	+
-	(example)
-	+
-	...
+> ok 1 - setup repository
+> sed: There are too many commands for the s/\n// function.
+> not ok 2 - config controls ref-in-want advertisement
+> #
+> #               test-tool serve-v2 --advertise-capabilities >out &&
+> #               ! grep -a ref-in-want out &&
+> #
+> #               git config uploadpack.allowRefInWant false &&
+> #               test-tool serve-v2 --advertise-capabilities >out &&
+> #               ! grep -a ref-in-want out &&
+> #
+> #               git config uploadpack.allowRefInWant true &&
+> #               test-tool serve-v2 --advertise-capabilities >out &&
+> #               grep -a ref-in-want out
 
-And you're right, we do drop the "--show-pulls::" itemization. Will that
-make it hard to link to that exact option? Probably.
-
-What about the fixup below, to create this list item?
-
-Thanks,
--Stolee
-
--- >8 --
-
-From 6416bbc14fbdb21868c6f3b609f66e5fe5607265 Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Mon, 18 May 2020 10:55:59 -0400
-Subject: [PATCH] fixup! rev-list-options.txt
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/rev-list-options.txt | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 48e37e2456..b01b2b6773 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -672,25 +672,28 @@ into the important branch. This commit may have information about why
- the change `X` came to override the changes from `A` and `B` in its
- commit message.
+I'm thinking about:
+-----------8<------------
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index a34460f7d8..92ad5eeec0 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -49,15 +49,18 @@ test_expect_success 'setup repository' '
  
--The `--show-pulls` option helps with both of these issues by adding more
--merge commits to the history results. If a merge is not TREESAME to its
--first parent but is TREESAME to a later parent, then that merge is
-+--show-pulls::
-+	In addition to the commits shown in the default history, show
-+	each merge commit that is not TREESAME to its first parent but
-+	is TREESAME to a later parent.
-++
-+When a merge commit is included by `--show-pulls`, the merge is
- treated as if it "pulled" the change from another branch. When using
- `--show-pulls` on this example (and no other options) the resulting
- graph is:
--
-++
- -----------------------------------------------------------------------
- 	I---X---R---N
- -----------------------------------------------------------------------
--
-++
- Here, the merge commits `R` and `N` are included because they pulled
- the commits `X` and `R` into the base branch, respectively. These
- merges are the reason the commits `A` and `B` do not appear in the
- default history.
--
-++
- When `--show-pulls` is paired with `--simplify-merges`, the
- graph includes all of the necessary information:
--
-++
- -----------------------------------------------------------------------
- 	  .-A---M--.   N
- 	 /     /    \ /
-@@ -699,7 +702,7 @@ graph includes all of the necessary information:
- 	  \ /      /
- 	   `---X--'
- -----------------------------------------------------------------------
--
-++
- Notice that since `M` is reachable from `R`, the edge from `N` to `M`
- was simplified away. However, `N` still appears in the history as an
- important commit because it "pulled" the change `R` into the main
--- 
-2.27.0.rc0
+ test_expect_success 'config controls ref-in-want advertisement' '
+ 	test-tool serve-v2 --advertise-capabilities >out &&
+-	! grep -a ref-in-want out &&
++	perl -ne "/ref-in-want/ and print" out >out.filter &&
++	test_must_be_empty out.filter &&
+ 
+ 	git config uploadpack.allowRefInWant false &&
+ 	test-tool serve-v2 --advertise-capabilities >out &&
+-	! grep -a ref-in-want out &&
++	perl -ne "/ref-in-want/ and print" out >out.filter &&
++	test_must_be_empty out.filter &&
+ 
+ 	git config uploadpack.allowRefInWant true &&
+ 	test-tool serve-v2 --advertise-capabilities >out &&
+-	grep -a ref-in-want out
++	perl -ne "/ref-in-want/ and print" out >out.filter &&
++	test_file_not_empty out.filter
+ '
+ 
+ test_expect_success 'invalid want-ref line' '
+------------------->8-----------
 
+> #
+> sed: There are too many commands for the s/\n// function.
+> ok 3 - invalid want-ref line
+> sed: There are too many commands for the s/\n// function.
+> ok 4 - basic want-ref
+> sed: There are too many commands for the s/\n// function.
+> ok 5 - multiple want-ref lines
+> sed: There are too many commands for the s/\n// function.
+> ok 6 - mix want and want-ref
+> sed: There are too many commands for the s/\n// function.
+> ok 7 - want-ref with ref we already have commit for
+> sed: There are too many commands for the s/\n// function.
+> FATAL: Unexpected exit with code 0
+> 
+> If I use gnu sed and native grep, only #2 fails as above.  If I use
+> gnu grep and gnu sed it passes with a warning from (gnu) printf:
+> $ ./t5703-upload-pack-ref-in-want.sh
+> printf: \3: invalid escape
+
+Look like HP-UX's printf doesn't understand octal escape.
+This may be a problem, since we've a patch to fix git-bisect's replace
+for Windows, which is using "printf \015"
+Cc-ing Junio for checking.
+
+
+-- 
+Danh
