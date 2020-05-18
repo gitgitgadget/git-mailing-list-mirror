@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A4EC433E1
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BF52C433E2
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C12782070A
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 732B82067D
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GrTCN3nE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UeDRKA7U"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727046AbgERJlD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 05:41:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40784 "EHLO
+        id S1727050AbgERJlH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 05:41:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727012AbgERJlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 05:41:00 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207A5C061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 02:41:00 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id k7so4899170pjs.5
-        for <git@vger.kernel.org>; Mon, 18 May 2020 02:41:00 -0700 (PDT)
+        with ESMTP id S1727030AbgERJlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 05:41:01 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7FB0C061A0C
+        for <git@vger.kernel.org>; Mon, 18 May 2020 02:41:01 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id a5so4905539pjh.2
+        for <git@vger.kernel.org>; Mon, 18 May 2020 02:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=28PbK5WFm6kOZCpJfE1+mG2fweQk8EJ1Ar4rsBxXJOE=;
-        b=GrTCN3nEvimz6GjNCVjY8jUrEBSoTWfqLzPhPQEE9KOUzl5ehOPSj8sv60lDjwmV9g
-         ErwRBhXrC5RCytQBZmwOvTNqg0Yg2LKmulLB8kck1oT7cjDua6KrbLOnmsthW9020BA8
-         T+H/JgSif80wGhz9DYiqFw0riMFYL1Ajlkg+0PdyE1tJhFGXl6z4pj0zq1sVRizEB1K4
-         v5pcSUlK85NcTnBGayo6Nuybw9vtzy0YOt/tm2iswD4nHK8srdiLksqLMF/p1zcFOSI1
-         3GnZM66zs3nTS5GYG79l6QCXy5WOmFUAAKDl41Dej1/tPQh11eqrZWQvAwcZFzZ2kvC6
-         ZRPg==
+        bh=CRuk1Se/vLAyVWxhzg2evxF63NLF6zG2/1wnu1HXRe4=;
+        b=UeDRKA7Ut9ChC0MBayxavDBocWSMp8xhi3Kh2AhIJpM7tYGCNlBwzLJwZuqCUIEfjX
+         jg88C66qGNwlxdYC4WHkgFsvekCnN7q2PP0MSfdFWlSoEcDafalVivQXBG3LuKqaTc4v
+         FEMwkWgHNv4BphlyCZyx9w3eX68MZBhsDk7kE9jKLyIZOmvPnlpsrePnnw9JFA+edTgV
+         s69aIH5DnMzyhC91qWZJu9a9QsS7CxvCQAb+lEvN2Df5ricZYGWt6pUpEF5NWpKuwUSh
+         YTVgNocqmZg3ia7wj/b6ZI7YSyeQfTiPVv435Cxlg9DGAzxl7tYX7D4x2H7YjgLptHyS
+         rBfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=28PbK5WFm6kOZCpJfE1+mG2fweQk8EJ1Ar4rsBxXJOE=;
-        b=FXIAarTJg5m83rOFLoVwqyJUGOaieA4Jh7EdyCqDlwRkqK3XGqfs5EfjyVoiR0Oqyk
-         wg2Sw7S0kx9Mm1T7zQU+A3UJSMAlqvv28hfMGzqz2ONYsCpeBi78Gg6ennFmKn8V9NEl
-         12tzxlnj2VzJ7VdyYc+GlH/N49n6Fh4yRqsSQWBCqeGz26EA6eW3lvSLz76+ebxSun56
-         XDU1GnEV0HOmYqje3nSvGaTucc9VKHSMlJOO6uLR00fBA/7QHY1NUHmGL77EKPOszu1/
-         ZmxGBtotlHh39hHRoMotNhNhhNc03KcEma06JxO0SMgsg7UxAzgckNmOBmQ98nFSSLI0
-         ZmQA==
-X-Gm-Message-State: AOAM533EVIZx9VL/qg0AMh3ePCadcYesx7xwfbyyoCYZhXsMRioDnede
-        YOWYvVJAJhW+B00wOmfwR8A=
-X-Google-Smtp-Source: ABdhPJxEucvfu69Vi8JQ7qYzhHWE+97OYISGsVno3F7Db9mnFqc2ZlVNK5858yHsNaYSeMTdpuOpZw==
-X-Received: by 2002:a17:90b:4d0d:: with SMTP id mw13mr17504545pjb.218.1589794859741;
-        Mon, 18 May 2020 02:40:59 -0700 (PDT)
+        bh=CRuk1Se/vLAyVWxhzg2evxF63NLF6zG2/1wnu1HXRe4=;
+        b=qD5QkT9HgvoF4+vK6mk0U3lar+6nqTia7K9GSSmL7dipKsK3M/i9KR1JQNJezBFH8i
+         bcAKYfVm3DWTZ9I31xBWueVtnYGod7cfdMS9JL8prVieCyoXUuI4Vbo/FuPtqdJl4Odd
+         0XtABhPNi5O4WXfdpWpKU+CG3hyYFNQ+nhV+2yqwuzJJbdqDo2Y0tPI79L5vCZc5Te7p
+         ZYKtYdoUZLPb1UYsgCZTUAORsyV7tBbBbYZPHgW6ozyEAcY4oky2qQK0DRi2fVypRXXi
+         oS02jiYKZfVBrVP+wVU/oRIFFlZ3MYdpwxeiNJRq1c9G/H7CvEsRYYjMY5f1iXVWE7V9
+         rM7A==
+X-Gm-Message-State: AOAM5320mtvd8K+9ZTMkstMO2NQZHDPXgAKwnu/Um591qBdV/7C5xcMx
+        qw6K/5c1/bug/ltJoXI6gBA=
+X-Google-Smtp-Source: ABdhPJxVAbWn1xV2H+HRJM7oUN6BR40WTrpMMHR+H1xbU4OTtuOsXRKcgC+McjvPkphKkx1iVSYADA==
+X-Received: by 2002:a17:902:326:: with SMTP id 35mr14226618pld.188.1589794861288;
+        Mon, 18 May 2020 02:41:01 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id e1sm8119867pjv.54.2020.05.18.02.40.58
+        by smtp.gmail.com with ESMTPSA id e1sm8119867pjv.54.2020.05.18.02.40.59
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 May 2020 02:40:59 -0700 (PDT)
+        Mon, 18 May 2020 02:41:00 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v16 10/11] transport: parse report options for tracking refs
-Date:   Mon, 18 May 2020 05:40:38 -0400
-Message-Id: <20200518094039.757-11-worldhello.net@gmail.com>
+Subject: [PATCH v16 11/11] doc: add documentation for the proc-receive hook
+Date:   Mon, 18 May 2020 05:40:39 -0400
+Message-Id: <20200518094039.757-12-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200507161057.12690-1-worldhello.net@gmail.com>
 References: <20200507161057.12690-1-worldhello.net@gmail.com>
@@ -77,131 +77,87 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When pushing a pseudo reference (such as "refs/for/master/topic"), may
-create or update one or more references.  The real names of the
-references will be stored in the report options.  Parse report options
-to create or update remote-tracking branches properly.
+"git receive-pack" that accepts requests by "git push" learned to
+outsource some of the ref updates to the new "proc-receive" hook.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- ...t-0036-report-multi-rewrite-for-one-ref.sh | 22 +++++++---
- transport.c                                   | 40 ++++++++++++++-----
- 2 files changed, 46 insertions(+), 16 deletions(-)
+ Documentation/githooks.txt | 62 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-index 8eec3a1ed8..73283d81e8 100644
---- a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-+++ b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
-@@ -78,10 +78,14 @@ test_expect_success "proc-receive: check remote-tracking #1 ($PROTOCOL)" '
- 		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
- 	make_user_friendly_and_stable_output <out >actual &&
- 	cat >expect <<-EOF &&
--	<COMMIT-A> refs/t/for/master/topic
-+	<COMMIT-A> refs/t/changes/24/124/1
-+	<COMMIT-B> refs/t/changes/25/125/1
-+	<COMMIT-B> refs/t/for/master/topic
- 	EOF
- 	test_cmp expect actual &&
--	git -C workbench update-ref -d refs/t/for/master/topic
-+	git -C workbench update-ref -d refs/t/for/master/topic &&
-+	git -C workbench update-ref -d refs/t/changes/24/124/1 &&
-+	git -C workbench update-ref -d refs/t/changes/25/125/1
- '
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 81f2a87e88..d66154f606 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -333,6 +333,68 @@ The default 'update' hook, when enabled--and with
+ `hooks.allowunannotated` config option unset or set to false--prevents
+ unannotated tags to be pushed.
  
- test_expect_success "setup proc-receive hook (multiple rewrites for one ref, no refname for the 2nd rewrite, $PROTOCOL)" '
-@@ -151,10 +155,14 @@ test_expect_success "proc-receive: check remote-tracking #2 ($PROTOCOL)" '
- 		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
- 	make_user_friendly_and_stable_output <out >actual &&
- 	cat >expect <<-EOF &&
--	<COMMIT-A> refs/t/for/master/topic
-+	<COMMIT-A> refs/t/changes/24/124/1
-+	<COMMIT-A> refs/t/changes/25/125/1
-+	<COMMIT-B> refs/t/for/master/topic
- 	EOF
- 	test_cmp expect actual &&
--	git -C workbench update-ref -d refs/t/for/master/topic
-+	git -C workbench update-ref -d refs/t/for/master/topic &&
-+	git -C workbench update-ref -d refs/t/changes/24/124/1 &&
-+	git -C workbench update-ref -d refs/t/changes/25/125/1
- '
- 
- test_expect_success "setup proc-receive hook (multiple rewrites for one ref, $PROTOCOL)" '
-@@ -210,8 +218,10 @@ test_expect_success "proc-receive: check remote-tracking #3 ($PROTOCOL)" '
- 		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
- 	make_user_friendly_and_stable_output <out >actual &&
- 	cat >expect <<-EOF &&
--	<COMMIT-A> refs/t/for/master/topic
-+	<COMMIT-A> refs/t/changes/23/123/1
-+	<COMMIT-B> refs/t/changes/24/124/2
- 	EOF
- 	test_cmp expect actual &&
--	git -C workbench update-ref -d refs/t/for/master/topic
-+	git -C workbench update-ref -d refs/t/changes/24/124/1 &&
-+	git -C workbench update-ref -d refs/t/changes/25/125/2
- '
-diff --git a/transport.c b/transport.c
-index 5baa30dd74..cd01f82f5c 100644
---- a/transport.c
-+++ b/transport.c
-@@ -437,28 +437,48 @@ int transport_refs_pushed(struct ref *ref)
- 	return 0;
- }
- 
--void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int verbose)
-+static void update_tracking_ref(struct remote *remote, char *refname,
-+				struct object_id *new_oid, int deletion,
-+				int verbose)
- {
- 	struct refspec_item rs;
- 
--	if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
--		return;
--
--	rs.src = ref->name;
-+	rs.src = refname;
- 	rs.dst = NULL;
--
- 	if (!remote_find_tracking(remote, &rs)) {
- 		if (verbose)
- 			fprintf(stderr, "updating local tracking ref '%s'\n", rs.dst);
--		if (ref->deletion) {
-+		if (deletion)
- 			delete_ref(NULL, rs.dst, NULL, 0);
--		} else
--			update_ref("update by push", rs.dst, &ref->new_oid,
--				   NULL, 0, 0);
-+		else
-+			update_ref("update by push", rs.dst, new_oid,
-+				NULL, 0, 0);
- 		free(rs.dst);
- 	}
- }
- 
-+void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int verbose)
-+{
-+	char *refname;
-+	struct object_id *new_oid;
-+	struct ref_push_report_options *options;
++[[proc-receive]]
++proc-receive
++~~~~~~~~~~~~
 +
-+	if (ref->status != REF_STATUS_OK && ref->status != REF_STATUS_UPTODATE)
-+		return;
++This hook is invoked by linkgit:git-receive-pack[1].  If the server has
++set the multi-valued config variable `receive.procReceiveRefs`, and the
++commands sent to 'receive-pack' have matching reference names, these
++commands will be executed by this hook, instead of by the internal
++`execute_commands()` function.  This hook is responsible for updating
++the relevant references and reporting the results back to 'receive-pack'.
 +
-+	options = ref->report.options;
-+	if (!options)
-+		update_tracking_ref(remote, ref->name, &ref->new_oid,
-+				    ref->deletion, verbose);
-+	else
-+		for (; options; options = options->next) {
-+			refname = options->ref_name ? (char *)options->ref_name : ref->name;
-+			new_oid = options->new_oid ? options->new_oid : &ref->new_oid;
-+			update_tracking_ref(remote, refname, new_oid,
-+					    is_null_oid(new_oid), verbose);
-+		}
-+}
++This hook executes once for the receive operation.  It takes no
++arguments, but uses a pkt-line format protocol to communicate with
++'receive-pack' to read commands, push-options and send results.  In the
++following example for the protocol, the letter 'S' stands for
++'receive-pack' and the letter 'H' stands for this hook.
 +
- static void print_ref_status(char flag, const char *summary,
- 			     struct ref *to, struct ref *from, const char *msg,
- 			     struct ref_push_report_options *options,
++    # Version and features negotiation.
++    S: PKT-LINE(version=1\0push-options atomic...)
++    S: flush-pkt
++    H: PKT-LINE(version=1\0push-options...)
++    H: flush-pkt
++
++    # Send commands from server to the hook.
++    S: PKT-LINE(<old-oid> <new-oid> <ref>)
++    S: ... ...
++    S: flush-pkt
++    # Send push-options only if the 'push-options' feature is enabled.
++    S: PKT-LINE(push-option)
++    S: ... ...
++    S: flush-pkt
++
++    # Receive result from the hook.
++    # OK, run this command successfully.
++    H: PKT-LINE(ok <ref>)
++    # NO, I reject it.
++    H: PKT-LINE(ng <ref> <reason>)
++    # Fall through, let 'receive-pack' to execute it.
++    H: PKT-LINE(ok <ref>)
++    H: PKT-LINE(option fall-through)
++    # OK, but has an alternate reference.  The alternate reference name
++    # and other status can be given in options
++    H: PKT-LINE(ok <ref>)
++    H: PKT-LINE(option refname <refname>)
++    H: PKT-LINE(option old-oid <old-oid>)
++    H: PKT-LINE(option new-oid <new-oid>)
++    H: PKT-LINE(option forced-update)
++    H: ... ...
++    H: flush-pkt
++
++Each command for the 'proc-receive' hook may point to a pseudo-reference
++and always has a zero-old as its old-oid, while the 'proc-receive' hook
++may update an alternate reference and the alternate reference may exist
++already with a non-zero old-oid.  For this case, this hook will use
++"option" directives to report extended attributes for the reference given
++by the above "ok/ng" directive.
++
++The report of the commands of this hook should have the same order as
++the input.  The exit status of the 'proc-receive' hook only determines
++the success or failure of the group of commands sent to it, unless
++atomic push is in use.
++
+ [[post-receive]]
+ post-receive
+ ~~~~~~~~~~~~
 -- 
 2.26.1.120.g98702cf3e9
 
