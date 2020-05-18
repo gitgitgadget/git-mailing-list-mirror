@@ -1,117 +1,107 @@
-Return-Path: <SRS0=BhVQ=67=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8674C433E0
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 22:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80FB2C433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 00:26:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 853FF207C4
-	for <git@archiver.kernel.org>; Sun, 17 May 2020 22:37:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C58E20657
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 00:26:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dvj2NbfN"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fb19+78k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726671AbgEQWh4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 May 2020 18:37:56 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38474 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726458AbgEQWh4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 17 May 2020 18:37:56 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726786AbgERA03 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 May 2020 20:26:29 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55997 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726246AbgERA02 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 May 2020 20:26:28 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0FEACDF221;
+        Sun, 17 May 2020 20:26:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wX9yafCp/ddqMt+jpVAtRZZR7Zo=; b=fb19+7
+        8kw9Ilz+9A402oJG9UgWyKgrGwRtIPboP8clGuw7/hx7gD26AOrmp10aucUxNH6e
+        Xvhw9nOpsyv8w+cPIQfIAKdRg7m4wvcrfaqXJoQ8RhFgghA74oRsAqv9lNx4Inc/
+        WrARE5EYqpU3/5GMxA98Z+CmfOXNye/0GTMCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=J5TK0ZIuGm48aYutuw4NNdWLtZK+8xv4
+        KFvEC2T3Wvz0h3uPL1b5PSTz0e6isltNtgUfJh6z36nlTc67MIkO9Bb6ussCe0TL
+        yP/N8Pt/VaYYuWXT4nrXvkjvh3lJkAAFGuAe3uI+8z20OndEGwhMato3CODBLzHt
+        nm9IrlF8mKg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 081BBDF220;
+        Sun, 17 May 2020 20:26:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B3AA16045A;
-        Sun, 17 May 2020 22:37:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1589755045;
-        bh=uoZbsWN13xUKIw24f5p7KwKJQJLctiGEjuVYlxVfsLQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dvj2NbfNngjFLlwCu2+fMNWSTjS9EGJ+HDtA0o6iCfw5vwV9U5HRfDecw7k+dv3UA
-         YGBH6EYwrYOPxV3J0HqrxR+l6K8l0b+WqusyFRujTKDYstjMw6F2uYvAJcDn+JZez6
-         0W85YmKnws+cmekG4Y9/KLgeMIEZ5BCXQqSkq9FTVFqxw91d6o7vFJdFnXpZuJ/Sgp
-         ZvCdSknD4zfvuSNLYORGTX2XMpZwTzB6IsIDxiejGAcpZUAj5CH6lrPGppyqJANgYv
-         ZABpuLzqeywtzibwwBHPJxQpRqdDtH8CsaoK/TrbDpnNrvjFZLTkBfEpaadvG2NXv8
-         4h2lE7vrThmeddjy34dsjr4jr4eJndmBRJdkYBNOrHj7dwzF2gIv48OQVFqpQiru4Z
-         NqPPZmkhcFo9sISXRKivy18lSyas9n7B/Wv/yJfuLSRL1H4Rg0xt4fO9Qt+vRCSyrx
-         046o6KU7EVbDFoUMwEtQjW2c4AOygh6QeployGiKTYttkBGBbkZ
-Date:   Sun, 17 May 2020 22:37:17 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 31/44] connect: parse v2 refs with correct hash algorithm
-Message-ID: <20200517223717.GL6362@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
- <20200513005424.81369-32-sandals@crustytoothpaste.net>
- <CAN0heSpq-t1E6CBsLiVDUE8NYB2ES916MR=d99eug9U=vdOLHQ@mail.gmail.com>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BF6B3DF21D;
+        Sun, 17 May 2020 20:26:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kenneth Lorber <keni@hers.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 4/6] Include NAMESPACE COLLISIONS doc into gitrepository-layout.txt
+References: <1589681624-36969-1-git-send-email-keni@hers.com>
+        <1589681624-36969-5-git-send-email-keni@hers.com>
+Date:   Sun, 17 May 2020 17:26:21 -0700
+In-Reply-To: <1589681624-36969-5-git-send-email-keni@hers.com> (Kenneth
+        Lorber's message of "Sat, 16 May 2020 22:13:42 -0400")
+Message-ID: <xmqqr1vi5brm.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="DXIF1lRUlMsbZ3S1"
-Content-Disposition: inline
-In-Reply-To: <CAN0heSpq-t1E6CBsLiVDUE8NYB2ES916MR=d99eug9U=vdOLHQ@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-1-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 344DE0DE-989E-11EA-AD2B-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Kenneth Lorber <keni@hers.com> writes:
 
---DXIF1lRUlMsbZ3S1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: Kenneth Lorber <keni@his.com>
+>
+> Signed-off-by: Kenneth Lorber <keni@his.com>
+> ---
+>  Documentation/gitrepository-layout.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-On 2020-05-16 at 11:14:16, Martin =C3=85gren wrote:
-> On Wed, 13 May 2020 at 02:58, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> >
-> > When using protocol v2, we need to know what hash algorithm is used by
-> > the remote end.  See if the server has sent us an object-format
-> > capability, and if so, use it to determine the hash algorithm in use and
-> > set that value in the packet reader.  Parse the refs using this
-> > algorithm.
-> >
-> > Note that we use memcpy instead of oidcpy for copying values, since
-> > oidcpy is intentionally limited to the current hash algorithm length,
-> > and the copy will be too short if the server side uses SHA-256 but the
-> > client side has not had a repository set up (and therefore defaults to
-> > SHA-1).
->=20
-> > -       oidcpy(&ref->old_oid, &old_oid);
-> > +       memcpy(ref->old_oid.hash, old_oid.hash, reader->hash_algo->raws=
-z);
->=20
-> Might an `oidcpy_algop()` prove useful over time?
->=20
->   oidcpy_algop(&ref->old_oid, &old_oid, reader->hash_algo);
+As I said elsewhere, I am not sure if we want to even let
+third-party tools direct access at the filesystem level to
+$GIT_DIR/.  We do want to say things like where the ref namespace
+that are taken as "per worktree" are located, so that a third-party
+tool wants to carve out a hierarchy out of the per-worktree part of
+the ref namespace, that may indirectly influence where on the
+filesystem under $GIT_DIR/ their stuff is stored, but how we decide
+to store refs inside $GIT_DIR/ should still be blackbox to these
+third-party tools (e.g. we may not be using loose or packed refs,
+but using a chain of reftable files).  
 
-I think I can just omit this chunk, because oidcpy now copies the entire
-struct for speed.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+So from that point of view, we shouldn't have to touch the
+repository layout document, I would think.
 
---DXIF1lRUlMsbZ3S1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXsG8nQAKCRB8DEliiIei
-gWKCAP9AMZKbKxOCdCsnCAxF9JqmAVgrLVpKVy+x3oxZ9gZIvgD8DJ0/RFiEhegV
-b+MGoSb3nvcTUUsdBfo8yx9qaaWgPgI=
-=nJ4F
------END PGP SIGNATURE-----
-
---DXIF1lRUlMsbZ3S1--
+> diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
+> index a84a4df513..8050e8cc1f 100644
+> --- a/Documentation/gitrepository-layout.txt
+> +++ b/Documentation/gitrepository-layout.txt
+> @@ -290,9 +290,10 @@ worktrees/<id>/locked::
+>  worktrees/<id>/config.worktree::
+>  	Working directory specific configuration file.
+>  
+> -include::technical/namespace-collisions.txt[]
+>  include::technical/repository-version.txt[]
+>  
+> +include::technical/namespace-collisions.txt[]
+> +
+>  SEE ALSO
+>  --------
+>  linkgit:git-init[1],
