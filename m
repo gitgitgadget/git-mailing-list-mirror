@@ -6,102 +6,87 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1B2DC433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F9AEC433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:18:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DCFB20758
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:15:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38ED82075F
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:18:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iiLbsOIW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iFj3UsL4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbgERUPw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 16:15:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59775 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726270AbgERUPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 16:15:52 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26A4863D05;
-        Mon, 18 May 2020 16:15:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dBw5qJmJ0vYB
-        iTbr/7hAbDBWXhM=; b=iiLbsOIWywemR490Yc/IDPhZOvFXyBIKQ6G0QIUeiKk4
-        dSK006FdzfiRuCH96hYnLCf7XpvLjy4gOfMpf7TyDWyh8C6fzVUPQlKMAkbGmddu
-        zanbgJz4hNhZGLiQ4S5aDxF/rUnEh2dhzaJzyuRpkIzCRREDGSMgjDuOqBljgCU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=P6Z6OW
-        kftdwIQEyDSPSoP+lYowM8C48LjRuFVLi1pGkFbwW/g3SEH4GyiBnnMObG/x9yyS
-        PQoFE8hcHQPX4BfynrLdoHl+8bDlODESCPamhDBooG1m/fsy0oU1fSvXPmmfRPQC
-        S51pGWdZ/58yVT4m0dQDtuYrgw/e1jSHH8Be4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BC5A63D04;
-        Mon, 18 May 2020 16:15:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727822AbgERUSg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 16:18:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53294 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726367AbgERUSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 16:18:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 28F8CC992E;
+        Mon, 18 May 2020 16:18:34 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=SOgP6dhnoxrsZ
+        3tj8vuoMHIXMEo=; b=iFj3UsL4HeViBoZVsitW98+jfL4VaTkFGrjvtWzr7PDr3
+        EX/a8y0W+8g++gIdaPEak/igzIMrzgRm+HPWBU4f9n7AFt2S6WHPSyO/umBydH2r
+        3DZdNaI/lUi6HTdI1Be6lZJhT0HLNpqc8fPR01xyN+R4+Xe3ffWcnSCr6bCo/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=Av6zOI6
+        Z2CUMHKzBB5qO4w54T3MIJNY5xbbUivwmvZuR5eyr4H5nNkzbM33+o6LE92jPVPb
+        kcsWqMNSNf2cn8zuUbAPRMcecc/fLLT1cNxjikMY3WsGDjo5lKn3y+PGi1dGkSJ4
+        oDErwzBr2mu2T+l/QEPEWzzwygrZqGKWSSp8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 20C0FC992D;
+        Mon, 18 May 2020 16:18:34 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [71.254.198.10])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A0ADB63D03;
-        Mon, 18 May 2020 16:15:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, emaste@freebsd.org, sunshine@sunshineco.com
-Subject: Re: [PATCH v3 1/2] t/helper: teach test-regex to report pattern errors (like REG_ILLSEQ)
-References: <20200515195157.41217-1-carenas@gmail.com>
-        <20200518184416.13882-1-carenas@gmail.com>
-        <20200518184416.13882-2-carenas@gmail.com>
-Date:   Mon, 18 May 2020 13:15:49 -0700
-In-Reply-To: <20200518184416.13882-2-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Mon, 18 May 2020 11:44:15 -0700")
-Message-ID: <xmqqwo590zka.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ED6ACC992C;
+        Mon, 18 May 2020 16:18:30 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Mon, 18 May 2020 16:18:28 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH] git-bugreport.txt: adjust reference to strftime(3)
+Message-ID: <20200518201828.GW24220@pobox.com>
+References: <20200518193736.19320-1-tmz@pobox.com>
+ <xmqqa7252f5t.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5DADED92-9944-11EA-BC32-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <xmqqa7252f5t.fsf@gitster.c.googlers.com>
+X-Pobox-Relay-ID: BDF348BE-9944-11EA-96B5-8D86F504CC47-09356542!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+Junio C Hamano wrote:
+> Todd Zullinger <tmz@pobox.com> writes:
+>=20
+>> The strftime(3) man page is outside of the Git suite.  Refererence it =
+as
+>> we do other external man pages and avoid creating a broken link when
+>> generating the HTML documentation.
+>>
+[...]
+> Thanks.  This was noticed elsewhere in a different thread but let's
+> take this as a patch independent from the other documentation topic.
 
-> Based-on-patch-by: Junio C Hamano <gitster@pobox.com>
+Ahh, I have gotten behind on my reading (and only just got
+to testing rc0=B9).  I'm glad this unintended redundancy
+worked out well, by chance.
 
-This is sufficiently different from what I suggested that I do not
-deserve the above line, I would think.
+Thank you.
 
-> +	ret =3D regcomp(&r, pat, flags);
-> +	if (ret) {
-> +		if (silent)
-> +			return ret;
-> +
-> +		regerror(ret, &r, errbuf, sizeof(errbuf));
-> +		die("failed regcomp() for pattern '%s' (%s)", pat, errbuf);
+=B9 FWIW, this was the only issue I found in building for the
+  various architectures Fedora supports: aarch64, armv7hl,
+  ppc64le, x86, x86_64, and, last -- but by far the most
+  likely to turn up issues -- s390x.
 
-Nice.
-
-> +	}
-> +	if (!str)
-> +		return 0;
-> +
-> +	ret =3D regexec(&r, str, 1, m, 0);
-> +	if (ret) {
-> +		if (silent || ret =3D=3D REG_NOMATCH)
-> +			return ret;
-> +
-> +		regerror(ret, &r, errbuf, sizeof(errbuf));
-> +		die("failed regexec() for subject '%s' (%s)", str, errbuf);
-> +	}
-> =20
->  	return 0;
-> +usage:
-> +	usage("\ttest-tool regex --bug\n"
-> +	      "\ttest-tool regex [--silent] <pattern>\n"
-> +	      "\ttest-tool regex [--silent] <pattern> <string> [<options>]");
-> +	return -1;
->  }
+--=20
+Todd
