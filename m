@@ -7,74 +7,74 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38C5CC433E1
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 10:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23DD0C433DF
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 10:04:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FC2C20825
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 10:04:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 038D62081A
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 10:04:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=dtucker-net.20150623.gappssmtp.com header.i=@dtucker-net.20150623.gappssmtp.com header.b="sMSYa8hL"
+	dkim=pass (2048-bit key) header.d=dtucker-net.20150623.gappssmtp.com header.i=@dtucker-net.20150623.gappssmtp.com header.b="CEMMd23N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726693AbgERKEN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 06:04:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44378 "EHLO
+        id S1726709AbgERKEO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 06:04:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgERKEM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 06:04:12 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C44C061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 03:04:11 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id t11so4591771pgg.2
-        for <git@vger.kernel.org>; Mon, 18 May 2020 03:04:11 -0700 (PDT)
+        with ESMTP id S1726676AbgERKEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 06:04:13 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7056C05BD09
+        for <git@vger.kernel.org>; Mon, 18 May 2020 03:04:12 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id 5so1703475pjd.0
+        for <git@vger.kernel.org>; Mon, 18 May 2020 03:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dtucker-net.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lYYyBshx07KEO/WLv1t4JupuYBVvauhB8mdz6AGsw6w=;
-        b=sMSYa8hLqjQmfrvzSk3R8hlzQ5ikZcgBwgEhGEuwqiXJd3lgOLLTIM2zL59fjlnuNs
-         T0xuAk7naa20fn9lXKawaJF2++LgkmbgeUkrdzdSFbd0c6Dhya8c1k+qbHeA/taCiRS0
-         1ZCZQWAjlRlLsHRH+XViVoobPQeP397xX3WM7eJqHEhwRWRVQHAkLd9CD2FjwsrJhliq
-         kouXe1vQ9/LMbg7On3H9Zf1T8nrz/3yMOOF4PMG63xX2lHCNjJHqi3J+K7R7soFnBVQV
-         iyejy+J5yW61AY3cS3Ky1vuQ47+JQrdd3FzbbaRUpxgConVsx4CRfA/DB0g+iGn9+mTf
-         mIMg==
+        bh=J0vUfOdbd0WspuKYL+x/DNmSVCpT4NTQ/1rV7n59hWc=;
+        b=CEMMd23NF0oWwu7ZQtyKVfXtv8NArnZTXdNPD43NTkQuZHkX2En/6ACjJ8/5pgCoLi
+         hlP7cAp6Ff/jkSj85xG8HWyXpkUCcRfU4smK5AoYCHLtHvzaGgmLkbyitH5kfqQKKDRc
+         OgW8dcJ+oTrP8U/Dx2hB5DILP6QuVeSzzlHvK7rzQjqY5FeEg2XaeC0nF8thRK9yOhgY
+         zOUaHIJwJJXcTR+e98z8wj/edB94xKxxaPDA69quv/m9UEFX5GdMDczUUiRHeD3seQOl
+         HqYhZkysudPel5gR+8SmgK75mXnYDs5jSp4cVjWlSZelweZ9mGrZbWnKtphz0mVfSGv1
+         o2fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lYYyBshx07KEO/WLv1t4JupuYBVvauhB8mdz6AGsw6w=;
-        b=R9lbGkpn3mf7D2rIR1Mq2Gkz8HizJ6NPXie6bJt9AZpaT1tGLuV+zK3X5h4xohwJKQ
-         LFpwKNdsZTugrg4yDk/mCrqR6xJ6UY0h835EKQx3BcBskrZpse8cXnkdQ+9BNmgo1xis
-         I+unYa+R1eGtiu+1PXVzFYM9mmXRviAMmOk+sfVG/EIUNyUuBquvFo+go7Oe/uyoDfcZ
-         L6zxzk9IKiqNrNeQlDBgw8AXjsE3n5jS7WrHeygEOEBCrWqHTxN9BVLp9Nc9QkSnP5WS
-         4NJUn+xd6/OpBEFamig6lprCc7K7NJhukAW1aqqOFFDPQfazMXYaHhFWmN5biJCXNhjJ
-         kDUQ==
-X-Gm-Message-State: AOAM533DNqgk28Cir9uetzsgsos2LLUGuvKcEAKWyRiZv7O9NQUqHv2d
-        YgDhby0mgoKVLA70Kr72p1Jw8lEs/61POdq3qTiYK9ZEljWIQT1xUPIOrpwA2wbPVW52/ys4Rob
-        zojn4oC9o7+DrZROBiaKJQEXTfjHp9DyQXWWWo3FUvfTXWi+i8T/lNLqw6VpTFzk=
-X-Google-Smtp-Source: ABdhPJz/RF/Ko80LYJjyNXdO+sN8DEsqfvxXL5IsA6Qt3DdhW1UEoDK8k7RHFh7GtNKDwGCwu+ZvRQ==
-X-Received: by 2002:a62:e117:: with SMTP id q23mr17161362pfh.188.1589796251072;
+        bh=J0vUfOdbd0WspuKYL+x/DNmSVCpT4NTQ/1rV7n59hWc=;
+        b=TYgIbguoIviDN67uIjILpEJRHgChIop6kkwyarhu00ZOaZT1J/buk1SuVpf5E0bizP
+         d2NP8fTBcmZiuQP1kQZFOgnHklunc1CFz1pCn6VQ7TbrqBvfrFAejcgrAGjlTXVEodpF
+         aSE0qwc77fZYAXCTd4L5cm8sCPT77cAF6SMMTAxJmDOl9zXnRguQ9WbP2N22y4tWjBMe
+         OaAgHxEJuRBSns+iZUcjgPRUkNpDD5IBYanS1VwaqUN0t1X60VUzyeVo/56X3Uthr+1+
+         aZzCfMJ//0VNa4dhVUX/o6yMXUpWSUSkrurENwzbL3S4NkCZ0V8CBgaNX+8a2mEBksDV
+         ECZQ==
+X-Gm-Message-State: AOAM533qFmdC6NQhBRtf/BRaAIzT23HyvUEQwSInzq72eIa9zM9A5Tqu
+        n6osZwp2WxneSsY2A5nL1ktij4TITVBXl25DTytQdptCJoXlE3UI6xTxEz19TtLbYyWIzwdQKDr
+        WDQFeX+cQdhRwo2/99lt/oYxccuvmMsPin7cF3YaX9S6B0LytMLqfkrAit1gW7HE=
+X-Google-Smtp-Source: ABdhPJyMu0mknLqfnE2Ut0uJAc9NK3KrMnixvgn/5G282RkxZAU3VA3KDAQStvyvgGtpItUMwkG08w==
+X-Received: by 2002:a17:90b:238d:: with SMTP id mr13mr10975230pjb.236.1589796251764;
         Mon, 18 May 2020 03:04:11 -0700 (PDT)
-Received: from fw.dtucker.net (ppp59-167-129-32.static.internode.on.net. [59.167.129.32])
-        by smtp.gmail.com with ESMTPSA id cc8sm8094167pjb.11.2020.05.18.03.04.09
+Received: from fw.dtucker.net (2001-44b8-3110-fb00-0000-0000-0000-0248.static.ipv6.internode.on.net. [2001:44b8:3110:fb00::248])
+        by smtp.gmail.com with ESMTPSA id k24sm8331507pfk.134.2020.05.18.03.04.10
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 May 2020 03:04:10 -0700 (PDT)
+        Mon, 18 May 2020 03:04:11 -0700 (PDT)
 Received: from gate.dtucker.net (2001-44b8-3110-fb01-0000-0000-0000-0001.static.ipv6.internode.on.net [2001:44b8:3110:fb01::1])
-        by fw.dtucker.net (OpenSMTPD) with ESMTP id 56b53342
+        by fw.dtucker.net (OpenSMTPD) with ESMTP id 5d6de44d
         for <git@vger.kernel.org>;
         Mon, 18 May 2020 20:04:02 +1000 (AEST)
 Received: from gate.dtucker.net (localhost.localdomain [127.0.0.1])
-        by gate.dtucker.net (8.15.2/8.15.2) with ESMTP id 04IA41YN029454;
+        by gate.dtucker.net (8.15.2/8.15.2) with ESMTP id 04IA413X029489;
         Mon, 18 May 2020 20:04:01 +1000
 Received: (from dtucker@localhost)
-        by gate.dtucker.net (8.15.2/8.15.2/Submit) id 04IA41t5029447;
+        by gate.dtucker.net (8.15.2/8.15.2/Submit) id 04IA412Y029483;
         Mon, 18 May 2020 20:04:01 +1000
 From:   Darren Tucker <dtucker@dtucker.net>
 To:     git@vger.kernel.org
 Cc:     Darren Tucker <dtucker@dtucker.net>
-Subject: [PATCH 2/7] Define NO_PREAD for HPUX 11.11 and 11.00.
-Date:   Mon, 18 May 2020 20:03:51 +1000
-Message-Id: <20200518100356.29292-2-dtucker@dtucker.net>
+Subject: [PATCH 6/7] Check if strtoumax is a macro (eg HP-UX 11.11).
+Date:   Mon, 18 May 2020 20:03:55 +1000
+Message-Id: <20200518100356.29292-6-dtucker@dtucker.net>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20200518100356.29292-1-dtucker@dtucker.net>
 References: <20200518100356.29292-1-dtucker@dtucker.net>
@@ -85,32 +85,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tested on 11.11 but probably needed for 11.00 too.
-
 Signed-off-by: Darren Tucker <dtucker@dtucker.net>
 ---
- config.mak.uname | 5 +++++
- 1 file changed, 5 insertions(+)
+ configure.ac | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 5ad43c80b1..e864e04346 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -368,9 +368,14 @@ ifeq ($(uname_S),HP-UX)
- 	NO_SYS_SELECT_H = YesPlease
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
- 	NO_NSEC = YesPlease
-+	ifeq ($(uname_R),B.11.11)
-+		NO_PREAD = YesPlease
-+		CFLAGS = -D_REENTRANT
-+	endif
- 	ifeq ($(uname_R),B.11.00)
- 		NO_INET_NTOP = YesPlease
- 		NO_INET_PTON = YesPlease
-+		NO_PREAD = YesPlease
- 	endif
- 	ifeq ($(uname_R),B.10.20)
- 		# Override HP-UX 11.x setting:
+diff --git a/configure.ac b/configure.ac
+index 14e09b04b6..87a39c5ae0 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1164,10 +1164,16 @@ GIT_CHECK_FUNC(strtoull,
+ [NO_STRTOULL=YesPlease])
+ GIT_CONF_SUBST([NO_STRTOULL])
+ #
+-# Define NO_STRTOUMAX if you don't have strtoumax in the C library.
++# Define NO_STRTOUMAX if you don't have strtoumax in the C library
++# or as a macro in inttypes.h.
+ GIT_CHECK_FUNC(strtoumax,
+ [NO_STRTOUMAX=],
+-[NO_STRTOUMAX=YesPlease])
++[
++	AC_CHECK_DECL(strtoumax,
++	[NO_STRTOUMAX=],
++	[NO_STRTOUMAX=YesPlease],
++	[#include <inttypes.h>])
++])
+ GIT_CONF_SUBST([NO_STRTOUMAX])
+ #
+ # Define NO_SETENV if you don't have setenv in the C library.
 -- 
 2.21.3
 
