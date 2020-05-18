@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7092C433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D77EAC433E1
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F9052067D
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B08DA2067D
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:41:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GizxVO8v"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r1o1vehs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727008AbgERJlA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 05:41:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40774 "EHLO
+        id S1727039AbgERJlD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 05:41:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726976AbgERJk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 05:40:57 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29F71C05BD0B
-        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:57 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id t40so4785857pjb.3
-        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:57 -0700 (PDT)
+        with ESMTP id S1726945AbgERJk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 05:40:59 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45097C061A0C
+        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:59 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id k19so4006902pll.9
+        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gYoUHSIeeTaF/kr+/sv87o+NKKI5PPTy3kEsV2YXYQ4=;
-        b=GizxVO8vOb9yI/UxqRQqMhRBYvN/YVgvBeVBK8G0GnA9niSSk/AtpAny/Vk7bQKt1s
-         GXnTO0v9XKkkOYwJEy7Qsp9WCzfkuCksdukFbFm+S9QggSUDi22g/l9LnX/iH8S3bPcN
-         Ceyvk5bw5CSdCRIell53QfTGwERMfnRNoTin6tSVAaZxUiEV/Raq3UOA+iRBmReYZ066
-         R5NbS5yoYvgT0jO7YJ4rv8cXb1fxtqWz8RKfBh3DUR82e4S4A7koPlUI4PE5znxIdk1s
-         QUvJ/Igfti3wmalN7768a4xq6BgaJyD7remLIeNTtPlfQwDaUp+W4JjHmuNS1DDPDPlX
-         VvKA==
+        bh=VcMJW9Ij2XJfpfNxyw6YxAYf3X+xPooVJqFKD1+f/p0=;
+        b=r1o1vehsNlX+/H5WL+/l/bpQYhBt1lCNhdOtr4dBD/w6LzhRO+UeSbNRNfRz70/vev
+         +PJSNay1wQicxmkxaVEr9TeMxwMufZ+e35/USK95K+9Mp9lui32Fadn9AlfRyYfEbWR/
+         g2eIEwzwKJPvBYkDAVgOvIt4TrST9k/21hygu/WU9tLlWAgTkuNYclQ/i3RIB8pgTO9x
+         ROdqQ8SkX2VdzJIDQhikg9leuH3NAYEpbyz3UvHpEOjje7+ezd19LJztTtxXmxqbxVjN
+         c/h/X8F2neKO8sqVsKVc0u6VEoFaxI8es9JkJd+b4yHsgVxQUFUL3T/ACQNjOS3dO4LK
+         TpDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gYoUHSIeeTaF/kr+/sv87o+NKKI5PPTy3kEsV2YXYQ4=;
-        b=W2FqD/CudF1lA/3SSyqqeXjBFPWMZfO503rWXElAKu6Rw917FzXH5hkQEIEOshETX2
-         ByCxZNJQJuB2b+kckOFEcsQFEYwsaA/HjVRlCaQZS3bA97fpa3e4kGB+BpcuFTewhFfj
-         6rRNdjvsTAkTbr0Xb9w6jthKsGHNT35sn5O3/ZSky7rb/nfzAVhUFQ+CMkmnnQ+3DF5l
-         M1Vp+XbSh8oTZFeVT+GJqA2AaCHmnfO8je61Aef96t/oBBgySAxrrVA3z8bkk0Sp+P3K
-         L7w2+Be5k5HYSi5T8rDch1Am9mF00qcwY0MEm423p2RXzd4MU5ltWY30xhnBhC41DfZ0
-         M6sw==
-X-Gm-Message-State: AOAM533hhqB2295tDiLkykXglL4WUrGvBE7QctInL/ouGN5Dmv99pqQz
-        /MGvewG5U5K0Dvuf2l2HG1jpa1fe
-X-Google-Smtp-Source: ABdhPJwd0kBtRNh4BcmFembw1e6sDTPcwGeTDtkJyzXaUP3PVhJ++9H6G/iQgihC6//O3lczpOlvdw==
-X-Received: by 2002:a17:90b:d8a:: with SMTP id bg10mr5069671pjb.103.1589794856795;
-        Mon, 18 May 2020 02:40:56 -0700 (PDT)
+        bh=VcMJW9Ij2XJfpfNxyw6YxAYf3X+xPooVJqFKD1+f/p0=;
+        b=mOSF9HXtxdQNf4DBoEIevo7XkG0qy402rVS/N8xCnDjTcpdHp0LfaQCm9r3g7fEsze
+         aBClo65Hw703uGOvkeK2zytvb8rJVXD58MkjLZpnLH02FdZvbQq00atH0eSteO3gCVLn
+         j6ovj+afKjKXcRuTecTCSybPBrKCJcu9xGTNbMLqL4WiCfYNrEwF2QvgGNUqDD301vgH
+         DpQvZUUGxUKIqv6YanJcLAvnjrjf1oNOuIv5j3wXUYPo44oEzhSpsbPHuva9HmO07eJ6
+         /qagOLNc0xav0/FMjSurfqlpWcd8fxnle+cxoUYJp1dYx/XoCaC1R8pqYtwY8V1nfc4s
+         czqA==
+X-Gm-Message-State: AOAM531Bxyx+b19QUAPOxN/I4/Qstaw2lGf9p9KYQRD94A1Jbmg6r/ys
+        iM0BrzKp4QvuztBvpvNaQS0h65m7
+X-Google-Smtp-Source: ABdhPJzaI2lq+FFziSF7dR+aOWDLOGDmmogQEykuM52Oe7x4M+SggNRaIOkc6Gk6MYvMLBodT9m/2Q==
+X-Received: by 2002:a17:90a:7105:: with SMTP id h5mr19170295pjk.3.1589794858842;
+        Mon, 18 May 2020 02:40:58 -0700 (PDT)
 Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id e1sm8119867pjv.54.2020.05.18.02.40.55
+        by smtp.gmail.com with ESMTPSA id e1sm8119867pjv.54.2020.05.18.02.40.58
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 May 2020 02:40:56 -0700 (PDT)
+        Mon, 18 May 2020 02:40:58 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v16 07/11] refs.c: refactor to reuse ref_is_hidden()
-Date:   Mon, 18 May 2020 05:40:35 -0400
-Message-Id: <20200518094039.757-8-worldhello.net@gmail.com>
+Subject: [PATCH v16 09/11] t5411: test updates of remote-tracking branches
+Date:   Mon, 18 May 2020 05:40:37 -0400
+Message-Id: <20200518094039.757-10-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <20200507161057.12690-1-worldhello.net@gmail.com>
 References: <20200507161057.12690-1-worldhello.net@gmail.com>
@@ -77,65 +77,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add new function `ref_is_matched()` to reuse `ref_is_hidden()`. Will use
-this function for `receive-pack` to check commands with specific
-prefixes.
-
-Test case t5512 covered this change.
+In order to test update of remote-tracking branches for special refs,
+add new "remote.origin.fetch" settings and test cases.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- refs.c | 13 +++++++++----
- refs.h |  1 +
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ ...t-0036-report-multi-rewrite-for-one-ref.sh | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index 224ff66c7b..76a91ac0f6 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1344,14 +1344,14 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
- 	return 0;
- }
- 
--int ref_is_hidden(const char *refname, const char *refname_full)
-+int ref_matches(struct string_list *match_refs, const char *refname, const char *refname_full)
- {
- 	int i;
- 
--	if (!hide_refs)
-+	if (!match_refs)
- 		return 0;
--	for (i = hide_refs->nr - 1; i >= 0; i--) {
--		const char *match = hide_refs->items[i].string;
-+	for (i = match_refs->nr - 1; i >= 0; i--) {
-+		const char *match = match_refs->items[i].string;
- 		const char *subject;
- 		int neg = 0;
- 		const char *p;
-@@ -1377,6 +1377,11 @@ int ref_is_hidden(const char *refname, const char *refname_full)
- 	return 0;
- }
- 
-+int ref_is_hidden(const char *refname, const char *refname_full)
-+{
-+	return ref_matches(hide_refs, refname, refname_full);
-+}
+diff --git a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
+index 27d58edd14..8eec3a1ed8 100644
+--- a/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
++++ b/t/t5411/test-0036-report-multi-rewrite-for-one-ref.sh
+@@ -1,3 +1,18 @@
++test_expect_success "setup git config for remote-tracking of special refs" '
++	(
++		cd workbench &&
++		if ! git config --get-all remote.origin.fetch | grep refs/for/
++		then
++			git config --add remote.origin.fetch \
++				"+refs/for/*:refs/t/for/*" &&
++			git config --add remote.origin.fetch \
++				"+refs/pull/*:refs/t/pull/*" &&
++			git config --add remote.origin.fetch \
++				"+refs/changes/*:refs/t/changes/*"
++		fi
++	)
++'
 +
- const char *find_descendant_ref(const char *dirname,
- 				const struct string_list *extras,
- 				const struct string_list *skip)
-diff --git a/refs.h b/refs.h
-index a92d2c74c8..9907dd12b0 100644
---- a/refs.h
-+++ b/refs.h
-@@ -727,6 +727,7 @@ int parse_hide_refs_config(const char *var, const char *value, const char *);
-  * parameter always points to the full ref name.
-  */
- int ref_is_hidden(const char *, const char *);
-+int ref_matches(struct string_list *, const char *, const char *);
+ test_expect_success "setup proc-receive hook (multiple rewrites for one ref, no refname for the 1st rewrite, $PROTOCOL)" '
+ 	write_script "$upstream/hooks/proc-receive" <<-EOF
+ 	printf >&2 "# proc-receive hook\n"
+@@ -58,6 +73,17 @@ test_expect_success "proc-receive: multiple rewrite for one ref, no refname for
+ 	test_cmp expect actual
+ '
  
- enum ref_type {
- 	REF_TYPE_PER_WORKTREE,	  /* refs inside refs/ but not shared       */
++test_expect_success "proc-receive: check remote-tracking #1 ($PROTOCOL)" '
++	git -C workbench show-ref |
++		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/t/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C workbench update-ref -d refs/t/for/master/topic
++'
++
+ test_expect_success "setup proc-receive hook (multiple rewrites for one ref, no refname for the 2nd rewrite, $PROTOCOL)" '
+ 	write_script "$upstream/hooks/proc-receive" <<-EOF
+ 	printf >&2 "# proc-receive hook\n"
+@@ -120,6 +146,17 @@ test_expect_success "proc-receive: multiple rewrites for one ref, no refname for
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success "proc-receive: check remote-tracking #2 ($PROTOCOL)" '
++	git -C workbench show-ref |
++		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/t/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C workbench update-ref -d refs/t/for/master/topic
++'
++
+ test_expect_success "setup proc-receive hook (multiple rewrites for one ref, $PROTOCOL)" '
+ 	write_script "$upstream/hooks/proc-receive" <<-EOF
+ 	printf >&2 "# proc-receive hook\n"
+@@ -167,3 +204,14 @@ test_expect_success "proc-receive: multiple rewrites for one ref ($PROTOCOL)" '
+ 	EOF
+ 	test_cmp expect actual
+ '
++
++test_expect_success "proc-receive: check remote-tracking #3 ($PROTOCOL)" '
++	git -C workbench show-ref |
++		grep -v -e refs/remotes -e refs/heads -e refs/tags >out &&
++	make_user_friendly_and_stable_output <out >actual &&
++	cat >expect <<-EOF &&
++	<COMMIT-A> refs/t/for/master/topic
++	EOF
++	test_cmp expect actual &&
++	git -C workbench update-ref -d refs/t/for/master/topic
++'
 -- 
 2.26.1.120.g98702cf3e9
 
