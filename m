@@ -2,189 +2,119 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31041C433E0
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39362C433DF
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:13:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03781207ED
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:12:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12E5B207ED
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:13:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mIK9qgns"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EA8sVljq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728142AbgERRMy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 13:12:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55266 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727006AbgERRMx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 13:12:53 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA00BC061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 10:12:53 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id f13so10936982qkh.2
-        for <git@vger.kernel.org>; Mon, 18 May 2020 10:12:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=A+Gh2QzO0GvXTIn5mzvvTS/bg690HKNt2dAJfmg3q6M=;
-        b=mIK9qgns5PZE+6mtC9pXZjW1mll4eJXtoSKxaHFJdupprpffzoS9vX4PS4VhKf9y6P
-         HdIblftOXEbpclQ7pPTWUfg1enS8lej2+vCJ4xJjRxGjlSBvxroRWnWY8tLpW4PYcJr8
-         oS0gjJRQbvLoz+KueuY0V0dy6tBNj5K2/SSx68Fo+Z1josMOQV4uEU2anqae6wF8G+um
-         BSS/OQVM+iKV6kHdFB/fSmWU++Gw8h9jmwe9hB52s6b0uFNlL/GtN2FKZHi7dweIfPTX
-         cTFUSiq77KbXp4sBQE4O9v0vfFmNJCIjuzWp7afX6Gp6eYfPhbWhLFs4cv0WvdKh6C45
-         wd+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=A+Gh2QzO0GvXTIn5mzvvTS/bg690HKNt2dAJfmg3q6M=;
-        b=nPZMrQZMlp6R8L0kBPxPDuawGrswKY5LrZgKu/HzgqGITeNELBVDgHExrs2A7eibL3
-         nXYEppO9O8CqX3QUsRAhXwoFC4vVMyBqjDSx+CNUiiOXbTHcDv6mPJYMS8YEt9plxx7m
-         sJ2oFEPWZqksSBoThfZ6ACpcnybCgGKFtmRT4+Pi45SZmzqShbAKHQCkQ23LS/XY/4Ha
-         HZLzV48JHksVma9GcKKfZ5Rf9Bd/2Q9n7LKzpsUv+hPncPJOlE3fREoI92W5qFV85VmH
-         FYsMo4IRAPiDaDwnikGiAz91SAOC4VRqaRtg4DvbS+FhYoHNPTgbizvhICScdRzwWiUg
-         FRfw==
-X-Gm-Message-State: AOAM531u4aP/HK6vwS2xuE8/t6YsVswywvitPu0Y6CjnF9OOCxsifQWR
-        ELC5VndPfA/KJYNHNozb9C0=
-X-Google-Smtp-Source: ABdhPJz6h72s0vs28zhh0rK2JKgYvMDRBKPnMjKn+yHh1EV0JGyu4HRWOeUs+g40URIdld5Xw5Lgbw==
-X-Received: by 2002:a05:620a:634:: with SMTP id 20mr15884176qkv.15.1589821972924;
-        Mon, 18 May 2020 10:12:52 -0700 (PDT)
-Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id t12sm8482249qkt.77.2020.05.18.10.12.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 10:12:51 -0700 (PDT)
-Date:   Mon, 18 May 2020 13:12:49 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Force Charlie <charlieio@outlook.com>
-Subject: Re: [PATCH v2 7/7] stateless-connect: send response end packet
-Message-ID: <20200518171249.GA2462058@generichostname>
-References: <cover.1589393036.git.liu.denton@gmail.com>
- <cover.1589816718.git.liu.denton@gmail.com>
- <4b079bcd83ea80b8a0e81b0c1e3d5e083efeb9c6.1589816719.git.liu.denton@gmail.com>
- <20200518164308.GC42240@coredump.intra.peff.net>
+        id S1728264AbgERRNA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 13:13:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61427 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbgERRNA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 13:13:00 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB0DC49C0F;
+        Mon, 18 May 2020 13:12:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MLjXNV1Kt4JUaesReROcBRYD3vc=; b=EA8sVl
+        jqdSD46nBeToPu95MJIue2vXtKayYQOZB+E6AXPyZ0SZdkf/fQH0Q5pi/Fia+eKE
+        JIxbu1QnyFg9+PSHADtX4oH+Xk2o2wzrSy3SyfFw+LDQR1+pqd4unHJMWB6liBMh
+        BUMSGjvxrqi3mNeAbCr1l94fJqcDi3EFLhC8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TxlPs4xRehL/wSUIevWXdIyo6kurbHpY
+        osfA8IResWFdXdXxdi4w6TLpeBN+j59zTShDGekekDMmfo7L5YOXfxNUz6M0+djM
+        2Bx1jlahymgODaW+1MgMmoFLXtqEAE5BVV3qtZY0/M+Vtrp7/Alee2Djl6ZAprqG
+        6cKV+InH2sE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D23D249C0D;
+        Mon, 18 May 2020 13:12:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5614849C0C;
+        Mon, 18 May 2020 13:12:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] commit-slab-decl.h: fix define guards
+References: <20200516172837.2872-1-abhishekkumar8222@gmail.com>
+        <20200518143023.14217-1-abhishekkumar8222@gmail.com>
+Date:   Mon, 18 May 2020 10:12:56 -0700
+In-Reply-To: <20200518143023.14217-1-abhishekkumar8222@gmail.com> (Abhishek
+        Kumar's message of "Mon, 18 May 2020 20:00:23 +0530")
+Message-ID: <xmqqsgfx415z.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200518164308.GC42240@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D1AD3438-992A-11EA-B2E3-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
 
-On Mon, May 18, 2020 at 12:43:08PM -0400, Jeff King wrote:
-> On Mon, May 18, 2020 at 11:47:24AM -0400, Denton Liu wrote:
+> a9f1f1f9f8 ("commit-slab.h: code split", 2018-05-19) split commit-slab
+> ...
 
-[...]
+I've rephrased the log message a bit more before queuing, since I
+did not find many hits for "define guards" but the search engine
+found quite a common use of "include guard".
 
-> > @@ -446,6 +447,13 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
-> >  	if (reader->status != PACKET_READ_FLUSH)
-> >  		die(_("expected flush after ref listing"));
-> >  
-> > +	if (stateless_rpc) {
-> > +		if (packet_reader_read(reader) != PACKET_READ_RESPONSE_END)
-> > +			die(_("expected response end packet after ref listing"));
-> > +		if (packet_reader_read(reader) != PACKET_READ_FLUSH)
-> > +			die(_("expected flush packet after response end"));
-> > +	}
-> 
-> Having two packets here surprised me. We'd have already received the
-> actual flush from the server (as you can see in the context above).
-> Wouldn't a single RESPONSE_END be enough to signal the reader?
+Thanks.
 
-Yes, having a single RESPONSE_END is enough. I sent a flush packet
-because it seemed appropriate when I was writing the patch to end all
-messages with a flush but I suppose that's just cargo culting. I'll
-remove it in the next iteration.
 
-> > diff --git a/fetch-pack.c b/fetch-pack.c
-> > index f73a2ce6cb..bcbbb7e2fb 100644
-> > --- a/fetch-pack.c
-> > +++ b/fetch-pack.c
-> > @@ -1468,6 +1468,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
-> >  	struct fetch_negotiator negotiator_alloc;
-> >  	struct fetch_negotiator *negotiator;
-> >  	int seen_ack = 0;
-> > +	int check_http_delimiter;
-> 
-> This flag was more complicated than I expected, and I'm not sure how we
-> can easily be certain that all necessary paths are covered.
+-- >8 --
+From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+Subject: [PATCH] commit-slab-decl.h: update include guard
 
-Essentially, any time we're in a path where state is set to
-FETCH_SEND_REQUEST or FETCH_DONE, we know that we've finished processing
-the current request and we can check for response end packets. Of course,
-the one exception to this is the first iteration of the loop when we're
-transitioning from FETCH_CHECK_LOCAL to FETCH_SEND_REQUEST where we
-can't check for response end packets since nothing has been requested
-yet.
+When a9f1f1f9f8 ("commit-slab.h: code split", 2018-05-19) split
+commit-slab.h into commit-slab-decl.h and commit-slab-impl.h header
+files, commit-slab-decl.h were left use "COMMIT_SLAB_HDR_H", while
+commit-slab-impl.h gained its own macro, "COMMIT_SLAB_IMPL_H".
 
-> E.g., in FETCH_PROCESS_ACKS, we'll always be reading a response via
-> process_acks(). Why do COMMON_FOUND and NO_COMMON_FOUND check for
-> end-of-response, but READY doesn't? I think the answer is that we'd
-> continue to read the same response via FETCH_GET_PACK in this instance.
-> 
-> I just wonder if there is a better place to put this logic that would be
-> more certain to catch every place we'd expect to read to the end of a
-> response. But I suppose not. We could push it down into process_acks(),
-> but it would have the same READY logic that's here. I'll admit part of
-> my complaint is that the existing do_fetch_pack_v2 state-machine switch
-> is kind of hard to follow, but that's not your fault.
+As these two files use different include guards, there is nothing
+broken, but let's update commit-slab-decl.h to match the convention
+to name the include guard after the filename.
 
-I debated between the current implementation and doing something like
+Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ commit-slab-decl.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-	int first_iteration = 1;
+diff --git a/commit-slab-decl.h b/commit-slab-decl.h
+index adc7b46c83..bfbed1516a 100644
+--- a/commit-slab-decl.h
++++ b/commit-slab-decl.h
+@@ -1,5 +1,5 @@
+-#ifndef COMMIT_SLAB_HDR_H
+-#define COMMIT_SLAB_HDR_H
++#ifndef COMMIT_SLAB_DECL_H
++#define COMMIT_SLAB_DECL_H
+ 
+ /* allocate ~512kB at once, allowing for malloc overhead */
+ #ifndef COMMIT_SLAB_SIZE
+@@ -40,4 +40,4 @@ elemtype *slabname## _peek(struct slabname *s, const struct commit *c)
+ 	declare_commit_slab(slabname, elemtype); \
+ 	declare_commit_slab_prototypes(slabname, elemtype)
+ 
+-#endif /* COMMIT_SLAB_HDR_H */
++#endif /* COMMIT_SLAB_DECL_H */
+-- 
+2.27.0-rc0
 
-	...
-
-	while (state != FETCH_DONE) {
-		switch (...) {
-			...
-		}
-
-		if (args->stateless_rpc && !first_iteration && (state == FETCH_SEND_REQUEST || state == FETCH_DONE)) {
-			if (packet_reader_read(&reader) != PACKET_READ_RESPONSE_END)
-				die(_("git fetch-pack: expected response end packet"));
-			if (packet_reader_read(&reader) != PACKET_READ_FLUSH)
-				die(_("git fetch-pack: expected flush packet"));
-		}
-		first_iteration = 0;
-	}
-
-I think that this catches _all_ the cases without fiddling with any of
-the state machine logic.
-
-[...]
-
-> Also, it probably should be check_stateless_delimiter() or something.
-> There could be other helpers that support stateless-connect besides
-> http.
-
-Yeah... I forgot to change the check_http_delimiter name when I was
-doing cleanup. Whoops.
-
-> Speaking of which: this is a change to the remote-helper protocol, since
-> we're now expecting stateless-connect helpers to produce these delim
-> packets (and failing if they don't). I kind of doubt that anybody but
-> remote-curl has implemented v2 stateless-connect, but should we be
-> marking this with an extra capability to be on the safe side?
-
-I think that we're probably safe from breaking anything external.
-According to the gitremote-helpers documentation, 
-
-	'stateless-connect'::
-		Experimental; for internal use only.
-
-so I think that gives us a bit of leeway in terms of the changes we can
-make to the stateless-connect protocol. They've been warned ;)
-
-Thanks,
-
-Denton
