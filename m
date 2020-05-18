@@ -2,123 +2,107 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96762C433E0
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FECFC433DF
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:24:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7552E206D4
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:10:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08B6920674
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:24:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ppnDyGyo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727024AbgERWKC convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 18 May 2020 18:10:02 -0400
-Received: from smtp-nf-201.his.com ([216.194.196.93]:59566 "EHLO
-        smtp-nf-201.his.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726386AbgERWKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 18:10:02 -0400
-Received: from cuda201.his.com (cuda201.his.com [216.194.196.22])
-        by smtp-nf-201.his.com (Postfix) with ESMTPS id B35B262AE5
-        for <git@vger.kernel.org>; Mon, 18 May 2020 18:10:01 -0400 (EDT)
-X-ASG-Debug-ID: 1589839801-061c4114ba8b360001-QuoKaX
-Received: from smtp-nf-202.his.com (smtp-nf-202.his.com [216.194.196.20]) by cuda201.his.com with ESMTP id AXgmZaYIUNeZkVeD; Mon, 18 May 2020 18:10:01 -0400 (EDT)
-X-Barracuda-Envelope-From: keni@his.com
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
-Received: from zproxy101.his.com (zproxy101.his.com [18.218.2.49])
-        by smtp-nf-202.his.com (Postfix) with ESMTPS id 431E56017A;
-        Mon, 18 May 2020 18:10:01 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by zproxy101.his.com (Postfix) with ESMTP id 0C949177F18;
-        Mon, 18 May 2020 18:10:01 -0400 (EDT)
-X-Barracuda-RBL-IP: 18.218.2.49
-X-Barracuda-Effective-Source-IP: zproxy101.his.com[18.218.2.49]
-X-Barracuda-Apparent-Source-IP: 18.218.2.49
-Received: from zproxy101.his.com ([127.0.0.1])
-        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id QYILXD7_binu; Mon, 18 May 2020 18:10:00 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by zproxy101.his.com (Postfix) with ESMTP id E7957177F1B;
-        Mon, 18 May 2020 18:10:00 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at zproxy101.his.com
-Received: from zproxy101.his.com ([127.0.0.1])
-        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id V2-lTzI_tqkx; Mon, 18 May 2020 18:10:00 -0400 (EDT)
-Received: from [192.168.1.168] (pool-74-96-209-77.washdc.fios.verizon.net [74.96.209.77])
-        by zproxy101.his.com (Postfix) with ESMTPSA id C0571177F18;
-        Mon, 18 May 2020 18:10:00 -0400 (EDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [RFC PATCH 2/6] Add bit on extending git to Hacking Git
-From:   Kenneth Lorber <keni@his.com>
-X-ASG-Orig-Subj: Re: [RFC PATCH 2/6] Add bit on extending git to Hacking Git
-In-Reply-To: <xmqqzha65s1l.fsf@gitster.c.googlers.com>
-Date:   Mon, 18 May 2020 18:10:00 -0400
-Cc:     Kenneth Lorber <keni@hers.com>, git@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <07D99191-664E-475C-A9B1-7FE4DB5C2165@his.com>
-References: <1589681624-36969-1-git-send-email-keni@hers.com>
- <1589681624-36969-3-git-send-email-keni@hers.com>
- <xmqqzha65s1l.fsf@gitster.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
-X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
-X-Barracuda-Start-Time: 1589839801
-X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at his.com
-X-Barracuda-Scan-Msg-Size: 1840
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=6.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.81942
-        Rule breakdown below
-         pts rule name              description
-        ---- ---------------------- --------------------------------------------------
+        id S1728419AbgERWYw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 18:24:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47596 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728135AbgERWYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 18:24:51 -0400
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 967B5C061A0C
+        for <git@vger.kernel.org>; Mon, 18 May 2020 15:24:51 -0700 (PDT)
+Received: by mail-qv1-xf4a.google.com with SMTP id dm14so12745619qvb.7
+        for <git@vger.kernel.org>; Mon, 18 May 2020 15:24:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=0bErl2rN0wa0rc5GnQtOQjA4i209u/42dLW0O/cdDVg=;
+        b=ppnDyGyoWqir3cUA56I3RGD5NDsdJQ3AvsEN9f5LfFtgtTStVtOvmuXBJ8UFx15A8c
+         1rWv5U2KJOeLc4BBAlRnCTtqlu02IL0z0Kj/DJwkoKWsjidmP39cb06utZijkxJjMp4P
+         2WdmJO1yDx8FUNJ8+FhRj9isTY8Ps4NCOKy8krKI9inNZptV902vRuwh8pQ7OO9M0gv2
+         /piWhIJjwO+xx3PbRj3HfLaj5CKPSJPMb2E6ZkvzFiNF+ODK0ehakFRGPIfxgjJ7mxOu
+         7g//Cb0hJjW8yUCmUEKpbZkYPFiD0gNXKR6Zhjb+pnfcedxPCx2hPBH4yuvisJ9RhPYt
+         +U3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=0bErl2rN0wa0rc5GnQtOQjA4i209u/42dLW0O/cdDVg=;
+        b=q4M2CEKbUEW2n22nT8BM4As+8YbdjZRibg2VsEaMkDdm68CXtX7CbghpaS1i5Z43nJ
+         0EAlaXnVvBFqB3QZe0dmZe8wL6q6oQWWAejgC+VYPi9B5Ts/sTJBmOBIhpG0DZhHgdVB
+         nL3FJJJBA7zZPQb2XEPMu0sMfKPTIBvtC65FzBth/Syb5IOQhwlKitKxVpe3KNUGkNin
+         XgYfKLfeSUWgd+brmqUjVHCF6f1kon7U7QJ9Rgd4nRvH51P2+BzpIhtt5fnEwSeA3yB6
+         DmWopVIQdewQqYdTayva0QSF569jRUJlVm6bczFS38UOca4CJuc8BUrVe+cM8f0wygEb
+         /DWw==
+X-Gm-Message-State: AOAM530i8pzNxbywAerFNhBX8IRrFya+YEYutYiqDWlt+Y7szsjRDMB4
+        cMBdSQu53YkgJXZpfqN7WBRLWzeAqplcse/Wc87J
+X-Google-Smtp-Source: ABdhPJwanx3gCe2rEKNpQJY0PIoXbxM0bjDF0wHs+GRJ5Veyx7sZtta0iWRnIxoNf5KaabGilRqDd5Lwv6MwMunlwWa6
+X-Received: by 2002:ad4:4141:: with SMTP id z1mr4094327qvp.227.1589840690709;
+ Mon, 18 May 2020 15:24:50 -0700 (PDT)
+Date:   Mon, 18 May 2020 15:24:47 -0700
+In-Reply-To: <xmqq5zczx4mn.fsf@gitster.c.googlers.com>
+Message-Id: <20200518222447.15967-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq5zczx4mn.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be-goog
+Subject: Re: [PATCH] wt-status: expand, not dwim, a "detached from" ref
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+>  (1) record not @{<stuff>} (or <branch>@{<stuff>} for that matter),
+>      but the actual starting point in the reflog (e.g. in the
+>      example this patch would have introduced a regression,
+>      i.e. next@{u}, we should record 'origin/next'.  In the example
+>      this patch would have used degraded output to prevent dying,
+>      i.e. @{u}, we should also record 'origin/next')---this also
+>      will fix the "the branch's upstream may be different now"
+>      problem.
 
+This sounds reasonable. I took a look at this.
 
-> On May 17, 2020, at 2:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Kenneth Lorber <keni@hers.com> writes:
-> 
->> From: Kenneth Lorber <keni@his.com>
->> 
->> The Hacking Git section of the user manual is the logical place to look
->> for information on extending Gut, so add a short section of links to
->> places where that information actually lives.
->> 
->> Signed-off-by: Kenneth Lorber <keni@his.com>
->> ---
->> Documentation/user-manual.txt | 8 ++++++++
->> 1 file changed, 8 insertions(+)
->> 
->> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
->> index 833652983f..2144246444 100644
->> --- a/Documentation/user-manual.txt
->> +++ b/Documentation/user-manual.txt
->> @@ -4049,6 +4049,14 @@ and that is what higher level `git merge -s resolve` is implemented with.
->> This chapter covers internal details of the Git implementation which
->> probably only Git developers need to understand.
->> 
->> +If you are extending Git using hooks, writing new tools, or otherwise
->> +looking for technical information but not hacking Git itself, the following
->> +documents may be what you are really looking for:
->> +
->> +* hooks: linkgit:githooks[5]
->> +* attributes: linkgit:gitattributes[5]
->> +* new tools: linkgit:git-sh-setup[1]
-> 
-> I am not sure if this fits here.  It is a distraction to the target
-> audience of this section, no?
+The part that converts the user-given refname (e.g. "@{u}") into an OID
+is the invocation of get_oid_mb() in parse_branchname_arg() in
+builtin/checkout.c, and get_oid_mb() eventually calls repo_dwim_ref()
+which has access to the absolute branch name ("origin/master"). I did
+not try plumbing it all the way, but I tried overriding "arg" with
+"refs/remotes/origin/master" after the call to get_oid_mb() and it
+worked.
 
-I agree and still think this is where it goes (unless we start a new chapter on hacking FOR git, which is more than I can handle at the moment).
+For reference, the stack between get_oid_mb() and repo_dwim_ref() is as
+follows (the line numbers may not be accurate because of some debug
+statements I added):
 
-My reasoning is that from the available chapters, this is my best bet (as a new user) for finding this information; pointing them elsewhere isn't that big a distraction (it's at the top and short) and would be a great help for people looking for that kind of info.
+  repo_dwim_ref (refs.c:597)                                                                                
+  get_oid_basic (sha1-name.c:875)                                                                           
+  get_oid_1 (sha1-name.c:1195)                                                                              
+  get_oid_with_context_1 (sha1-name.c:1812)                                                         
+  get_oid_with_context (sha1-name.c:1959)
+  repo_get_oid (sha1-name.c:1610)
+  repo_get_oid_mb (sha1-name.c:1382)
 
-My two cents anyway.
-
+Besides the increase in complicatedness of all the listed functions that
+we would need in order to plumb the absolute branch name through, I
+haven't checked if the absolute branch name is the one that we should
+use whenever we write to the reflog, or if there are some times that we
+still want to use the user-specified name. I'll take a further look, but
+any ideas are welcome.
