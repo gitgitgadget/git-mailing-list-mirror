@@ -2,111 +2,147 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BB87C433E0
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 14:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F3AC433DF
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 14:30:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E94AA207D8
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 14:13:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5D6520671
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 14:30:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nbZZlkJY"
+	dkim=pass (2048-bit key) header.d=dtucker-net.20150623.gappssmtp.com header.i=@dtucker-net.20150623.gappssmtp.com header.b="soFNPho3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbgERONP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 10:13:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55094 "EHLO
+        id S1726998AbgEROaB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 10:30:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726907AbgERONO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 10:13:14 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFE40C061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 07:13:13 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id m7so4272115plt.5
-        for <git@vger.kernel.org>; Mon, 18 May 2020 07:13:13 -0700 (PDT)
+        with ESMTP id S1726918AbgEROaA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 10:30:00 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B4DEC061A0C
+        for <git@vger.kernel.org>; Mon, 18 May 2020 07:29:59 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id 63so8175563oto.8
+        for <git@vger.kernel.org>; Mon, 18 May 2020 07:29:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ciIfOZqTThYltbNMXzTuRzR9iv7Dlzdh54ZiR0QPGgM=;
-        b=nbZZlkJYhXTtKNBZESfQpWjQ4u3ax0yaBJq+oKF81JCEf914wG4DmpsooWuaUdc3LV
-         s2WHh6gOiwS2uYBSaylbV7QutUuz4KHW1cEldgzNzmxn1ZHYnltAUkBQQUz69j3z5owT
-         Hjr0oD+cbt+o3gKUpewInVB/WMygTpiCaLUeChS3VBoHG44F7+653sj7BsBLESvaz42S
-         w+/q4IBp0jMkx3yo2ZvD2Ik17D7VmFIHHRzFnYJYUViNH5oTnXpELbJjuRmlwUA4jOS9
-         /AEMnXjgBPNG310M0Dhh53S1/CBwez0e28CKSdxkMW1W3wesazSnkveQoY9ZrInM9IOx
-         zBYA==
+        d=dtucker-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7FmEzSBZgMwFAdz3VEaHTxhcIiMQspjJoYD2WgnK3Ps=;
+        b=soFNPho3LYOG2rRYA5GGaNz7owlmaZM6L2wK1tAxSbRx8ebC8tiPTfnPlr3zpSGNnU
+         +7hPC7Bc9T7kqZPJRdrhbN4BCXGf+yyzaX/m5bGQSsoymt6r0hvip7YZrzlTHufYWPdl
+         u/z/JmHy7CVK+G9CX8X6Y6zuPD4BPcwSkXyGJsvnREhh/+O/ZgGAPXw5BZH6uxn/Y8/d
+         PMfenR5rSDuzb/9WnkZFjCnUXWjoVEiqg22AN5BgMv4XXbOV7xenu0+xdq0XWUcTkj1G
+         opsrUpxt/EwR7k85LMmmiYysYXRSApp1SqTK++I7XnG5sO52l8NrD2mK+Zehu99YTnUu
+         JLww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ciIfOZqTThYltbNMXzTuRzR9iv7Dlzdh54ZiR0QPGgM=;
-        b=YKGYysVWrbZN9YLCceHRsfRXYcv5Y3XSkUpEwH7NKaWcocRWW77QyW+uGD9WfaQWPy
-         XVnuPTjqP+m7ZUHNmw+debPuEDntkgtbK6x4HHmOsZ+4adASPXSHRx5qdqda38EhqbZl
-         dCgfBFq+O62FaqH/epZy9jnIdKpnHhUrnRCXpjOJ1Qss65+dCqAwXQaTGSuYbL9ec4Kg
-         +gtuFqQrUV9AjXGpqqB0eaAwkwkQZKdkjl0j3+ci+wXYi+AmqDGlz2yZo2h7dtbRysGK
-         gVFmDOLU88oBwRj5oIigLQMjFi8Abp4ZewYZ2Wpdg2bkgkiOaSQyZKQrT4LEggkt4OGc
-         IIog==
-X-Gm-Message-State: AOAM532v6Kh536uEKrstiDleE5np/XCoNGuhJUG1IwDRPjJ5D0kMToZk
-        +ARVoahVVvvuq6XyV7iBg/8N1uTQ
-X-Google-Smtp-Source: ABdhPJySOv7oJMU7A96X1cK615gHAuM7lI7KuuhSHjS1HkTDw42kKZjhjv5eMTdSoXAf+Yt7PKqfxA==
-X-Received: by 2002:a17:90b:3444:: with SMTP id lj4mr19429294pjb.37.1589811193375;
-        Mon, 18 May 2020 07:13:13 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
-        by smtp.gmail.com with ESMTPSA id 28sm8857767pjh.43.2020.05.18.07.13.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 07:13:12 -0700 (PDT)
-Date:   Mon, 18 May 2020 21:13:11 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Darren Tucker <dtucker@dtucker.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/7] Redirect grep's stderr top null too.
-Message-ID: <20200518141311.GC1980@danh.dev>
-References: <20200518100356.29292-1-dtucker@dtucker.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7FmEzSBZgMwFAdz3VEaHTxhcIiMQspjJoYD2WgnK3Ps=;
+        b=EZIc3Q7z40UcZMmN517P5/SrlmR3JrmyWQyXtJXAXrdeDfePuzA/9WczcmqFBqnxGq
+         q6e4XLDaZ28VhtmVusVZ4qoBZR3zjCMcPqXKHASSL1mS7oQJzyjDijd9VFWUCNopZfdj
+         ngbPzcSVgGMWaIecYRXHoJkcpTbCB+GJNrqLw3qzbIKqoO499aX0I1H6wBRNDcQTkGGH
+         NnmXy72zHldNFPzPD7AeySk+VTT4VORPd+sdrHNYC94+AjS3xqe/G8yXESCUKkP21a5b
+         INB85Mc04u78F80pXRbE9c35WkIuMLDVCTdkzoRbv/kphH+E4d72HTCJvSbdPoyrgaFt
+         LQ8A==
+X-Gm-Message-State: AOAM533IN521Jaz4h+FyrunVe5dPybmzf8z5zmq/ml1f7ra16P+Envr7
+        bNQ/4smhk3PH4KP0awWgAJFOh71OhDB/x6o9pAzMkA==
+X-Google-Smtp-Source: ABdhPJxIkQ45hDDqJgkBMftLKb1fn45sl9gEFa2wKqw7KWR7rueI92M2HjOBBa+UKmzt3Wm1V7qRotSueDA2uWVTdng=
+X-Received: by 2002:a05:6830:1d99:: with SMTP id y25mr11113425oti.235.1589812198632;
+ Mon, 18 May 2020 07:29:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200518100356.29292-1-dtucker@dtucker.net>
+References: <20200518100356.29292-1-dtucker@dtucker.net> <20200518141311.GC1980@danh.dev>
+In-Reply-To: <20200518141311.GC1980@danh.dev>
+From:   Darren Tucker <dtucker@dtucker.net>
+Date:   Tue, 19 May 2020 00:29:47 +1000
+Message-ID: <CALDDTe13_utn7E+QF1AgndX_6nPph=Gr1hesLwfV8e9LwgUPOQ@mail.gmail.com>
+Subject: Re: [PATCH 1/7] Redirect grep's stderr top null too.
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Darren,
+On Tue, 19 May 2020 at 00:13, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <c=
+ongdanhqx@gmail.com> wrote:
+>
+> Hi Darren,
+>
+> On 2020-05-18 20:03:50+1000, Darren Tucker <dtucker@dtucker.net> wrote:
+> > Prevents pollution of configure output on platforms that don't have
+> > grep -a.
+>
+> From your other's patch, I think you're in HP-UX,
 
-On 2020-05-18 20:03:50+1000, Darren Tucker <dtucker@dtucker.net> wrote:
-> Prevents pollution of configure output on platforms that don't have
-> grep -a.
+Yes (it's not my usual platform but I had occasion to test something
+on it so revived an old system).
 
-From your other's patch, I think you're in HP-UX,
-would you mind also run the test.
+> would you mind also run the test.
+>
+> Since t5703 also uses "grep -a"
 
-Since t5703 also uses "grep -a"
+It fails with:
+$ ./t5703-upload-pack-ref-in-want.sh
+sed: There are too many commands for the s/\n// function.
+ok 1 - setup repository
+sed: There are too many commands for the s/\n// function.
+not ok 2 - config controls ref-in-want advertisement
+#
+#               test-tool serve-v2 --advertise-capabilities >out &&
+#               ! grep -a ref-in-want out &&
+#
+#               git config uploadpack.allowRefInWant false &&
+#               test-tool serve-v2 --advertise-capabilities >out &&
+#               ! grep -a ref-in-want out &&
+#
+#               git config uploadpack.allowRefInWant true &&
+#               test-tool serve-v2 --advertise-capabilities >out &&
+#               grep -a ref-in-want out
+#
+sed: There are too many commands for the s/\n// function.
+ok 3 - invalid want-ref line
+sed: There are too many commands for the s/\n// function.
+ok 4 - basic want-ref
+sed: There are too many commands for the s/\n// function.
+ok 5 - multiple want-ref lines
+sed: There are too many commands for the s/\n// function.
+ok 6 - mix want and want-ref
+sed: There are too many commands for the s/\n// function.
+ok 7 - want-ref with ref we already have commit for
+sed: There are too many commands for the s/\n// function.
+FATAL: Unexpected exit with code 0
 
-> 
-> Signed-off-by: Darren Tucker <dtucker@dtucker.net>
-> ---
->  configure.ac | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/configure.ac b/configure.ac
-> index 66aedb9288..4effc82b76 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -526,7 +526,7 @@ if test -n "$ASCIIDOC"; then
->  	esac
->  fi
->  
-> -if grep -a ascii configure.ac >/dev/null; then
-> +if grep -a ascii configure.ac >/dev/null 2>&1; then
->    AC_MSG_RESULT([Using 'grep -a' for sane_grep])
->    SANE_TEXT_GREP=-a
->  else
-> -- 
-> 2.21.3
-> 
+If I use gnu sed and native grep, only #2 fails as above.  If I use
+gnu grep and gnu sed it passes with a warning from (gnu) printf:
+$ ./t5703-upload-pack-ref-in-want.sh
+printf: \3: invalid escape
+ok 1 - setup repository
+ok 2 - config controls ref-in-want advertisement
+ok 3 - invalid want-ref line
+ok 4 - basic want-ref
+ok 5 - multiple want-ref lines
+ok 6 - mix want and want-ref
+ok 7 - want-ref with ref we already have commit for
+ok 8 - setup repos for fetching with ref-in-want tests
+ok 9 - fetching with exact OID
+ok 10 - fetching multiple refs
+ok 11 - fetching ref and exact OID
+ok 12 - fetching with wildcard that does not match any refs
+ok 13 - fetching with wildcard that matches multiple refs
+# passed all 13 test(s)
+# SKIP skipping test, git built without http support
+1..13
 
--- 
-Danh
+Maybe you want AC_PROG_GREP?  That picks the gnu grep in /usr/local,
+but plumbing it in is more involved.
+
+--=20
+Darren Tucker (dtucker at dtucker.net)
+GPG key 11EAA6FA / A86E 3E07 5B19 5880 E860  37F4 9357 ECEF 11EA A6FA (new)
+    Good judgement comes with experience. Unfortunately, the experience
+usually comes from bad judgement.
