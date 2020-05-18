@@ -2,97 +2,116 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AC3CC433E0
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 19:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0C7BC433E2
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:02:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED23C20758
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 19:57:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79BF1206D4
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:02:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="RmV69lVz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a+ii9ZR2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728653AbgERT5r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 15:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52880 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726478AbgERT5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 15:57:46 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96375C061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 12:57:46 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id s20so4672310plp.6
-        for <git@vger.kernel.org>; Mon, 18 May 2020 12:57:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=u07zX7CUslIdDQwJHrk/tscY64udjdkWjE7oq3A/HWw=;
-        b=RmV69lVzujuJ7p2qJGLL+nG6PfrTJ0ambZHPTjdqqoQxb6aerHagssRUYcIr/CuDu5
-         0Jfiz8oN/qEnmTvnGVOjuGafnTpWvBaMYP5pKeoNYQFmZgB3OOgX8PLcBEmApIuu6cUI
-         9yMYD7F4b78dX4ew9CupGVzX1Su+vyvZXhjeexq9VTOXLOnfUmjl0+UTbSolai5O3TSL
-         QynsPFAQRhp4TutoG/xuoaKZqnKeeaISybEzbjPViS659U4TfxoRql8cG33IdnbW8r4x
-         xcry2wRDICSs9lOlGClyNuBISGX9rwemMWY4NuOKd1dqBNt3wf+bazPmBWGbYhympXe9
-         z1hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=u07zX7CUslIdDQwJHrk/tscY64udjdkWjE7oq3A/HWw=;
-        b=mdzt+dt4X0VOGelf7/oLuQP6ZN9ZARtRDubopkXG6oRL5IMnhb/CiIy7cwPG/63xoj
-         PdnvvAybsPkUDeeDHTtTfkoloHhN+bK647PhQK6Y7wvTP/FKYgJLxVVNxxB4wsuywsmC
-         WdRIl9lUrr+J91O/oopi+kj8/r277/DIjsN3FAp/CFXYNyLYpwINKu8iToM/Wiv43wN2
-         EKr91c7wg4Co7LjD8w+qjvC5O3z3e4cB/9hAviwjRMsZm4ifDM3O2ULlpa7YFqjKLIQB
-         YynfbuqpY8tAP0QqDp03lYV2iLkVmDXIAqaMTmvJOfLShRfNwbJDjEbXk2ihW8pq/tME
-         yzFQ==
-X-Gm-Message-State: AOAM532l121+GPJLk3FemEP4JVFrdUzNzH+c0biek+tEapzfbHE4HYC8
-        b8ziFHPQNVLwyl/8hSgVm0XxzFAG+Gw=
-X-Google-Smtp-Source: ABdhPJyHKuF9CX/8LfpO2cTAILexRHfyq89UxsWQVGVRJCfzBtTgIaroKbx1FbHwXrcghNVsmCdpkA==
-X-Received: by 2002:a17:902:ea8b:: with SMTP id x11mr17552206plb.205.1589831866003;
-        Mon, 18 May 2020 12:57:46 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id f21sm9476773pfn.71.2020.05.18.12.57.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 12:57:45 -0700 (PDT)
-Date:   Mon, 18 May 2020 13:57:43 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2020, #05; Thu, 14)
-Message-ID: <20200518195743.GB3906@syl.local>
-References: <xmqqpnb6nk7x.fsf@gitster.c.googlers.com>
+        id S1726680AbgERUC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 16:02:58 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58041 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726250AbgERUC6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 16:02:58 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD569C97E5;
+        Mon, 18 May 2020 16:02:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=nOIFDFsx5LT8
+        lG4T8+onK34CyqM=; b=a+ii9ZR20AgGZz9Tt4JVSyP+S4mW8bx1sz5o0LosQ9bT
+        vj+Q57oXKBs3h1YoY/j5LN7ldi7FLo2YiHvxnounHgNL6KXN4PEj2CW5c6d30DpB
+        2aYZ2uWfaIk49tn+8Hc9j6frx8UR9Z3+K4gVqZI6nfbQU0iJZ6WvZ1SXVRQ5lCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Zuxh+x
+        NYXil5N9lstIzdnQ0LMnBEkJfIV+Nnc8GBEYAvrv8y4ZMV4Uwp3tlPcSHWM46BQG
+        p1L+c6TqVw5+s6H5HEza/FqbCH9jHJVWkzTWcI2VJ4L9Pi+LM3BGUdiQpGFhFu0z
+        c2vGGAotmMuY7IbyLNxlKFp0r/AvY00Hi3Nro=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C6101C97E4;
+        Mon, 18 May 2020 16:02:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 11D68C97E2;
+        Mon, 18 May 2020 16:02:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Laurent Arnoud <laurent@spkdev.net>, phillip.wood@dunelm.org.uk,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v6] diff: add config option relative
+References: <xmqq1rnk923o.fsf@gitster.c.googlers.com>
+        <20200516173828.GB34961@spk-laptop>
+        <92cb6302-09a8-6780-9398-890b1e766680@gmail.com>
+        <20200516194033.GA2252@spk-laptop> <20200517021452.GA2114@danh.dev>
+        <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
+        <20200518094021.GA2069@spk-laptop> <20200518135656.GB1980@danh.dev>
+        <xmqqzha541la.fsf@gitster.c.googlers.com>
+        <20200518172103.GA2110@spk-laptop> <20200518191954.GB1999@danh.dev>
+Date:   Mon, 18 May 2020 13:02:50 -0700
+In-Reply-To: <20200518191954.GB1999@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
+ =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s message
+        of "Tue, 19 May 2020 02:19:54 +0700")
+Message-ID: <xmqq5zct2eqd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpnb6nk7x.fsf@gitster.c.googlers.com>
+X-Pobox-Relay-ID: 8E34403A-9942-11EA-980E-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-On Thu, May 14, 2020 at 04:57:22PM -0700, Junio C Hamano wrote:
-> * tb/commit-graph-no-check-oids (2020-05-14) 9 commits
->  - fixup! builtin/commit-graph.c: extract 'read_one_commit()'
-
-I just sent one more fixup on top of this in [1], and otherwise the
-series should be ready to go. Thanks.
-
->  - commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
->  - t5318: reorder test below 'graph_read_expect'
->  - commit-graph.c: simplify 'fill_oids_from_commits'
->  - builtin/commit-graph.c: dereference tags in builtin
->  - builtin/commit-graph.c: extract 'read_one_commit()'
->  - commit-graph.c: peel refs in 'add_ref_to_set'
->  - commit-graph.c: show progress of finding reachable commits
->  - commit-graph.c: extract 'refs_cb_data'
+> On 2020-05-18 19:21:03+0200, Laurent Arnoud <laurent@spkdev.net> wrote:
+>> diff --git a/Documentation/diff-options.txt b/Documentation/diff-optio=
+ns.txt
+>> index bb31f0c42b..167b451b89 100644
+>> --- a/Documentation/diff-options.txt
+>> +++ b/Documentation/diff-options.txt
+>> @@ -651,6 +651,8 @@ ifndef::git-format-patch[]
+>>  	not in a subdirectory (e.g. in a bare repository), you
+>>  	can name which subdirectory to make the output relative
+>>  	to by giving a <path> as an argument.
+>> +	`--no-relative` can be used to countermand both `diff.relative` conf=
+ig
+>> +	option and previous `--relative`.
 >
->  Clean-up the commit-graph codepath.
+> Nitpick:
+> Please mentions --no-relative in option list:
+>
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
+s.txt
+> index 167b451b89..8761c04bc2 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -645,6 +645,7 @@ ifndef::git-format-patch[]
+>  	on-disk file to tree contents.
+> =20
+>  --relative[=3D<path>]::
+> +--no-relative::
+>  	When run from a subdirectory of the project, it can be
+>  	told to exclude changes outside the directory and show
+>  	pathnames relative to it with this option.  When you are
+>
+> Together with Eric suggesstion, this patch looks good to me.
 
-Thanks,
-Taylor
+Yeah, good suggestions all.
 
-[1]: https://lore.kernel.org/git/20200518192709.GA3906@syl.local/
+Thanks.
