@@ -2,112 +2,199 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1451BC433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB826C433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:26:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5DAD2070A
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:26:10 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="dmFxQ7FA";
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="dmFxQ7FA"
+	by mail.kernel.org (Postfix) with ESMTP id B1730207FB
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:26:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728376AbgERR0J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 13:26:09 -0400
-Received: from ns3309586.ip-5-135-160.eu ([5.135.160.121]:53692 "EHLO
-        mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726958AbgERR0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 13:26:09 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        by mail.spkdev.net (Postfix) with ESMTP id 25CCF4034B;
-        Mon, 18 May 2020 17:26:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1589822768;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=L3YQT6n1zWd2qvYe29ELtHA0k53zX7vJV2h0yd4U4+8=;
-        b=dmFxQ7FAssztjGE6sNXkG3xHhvigvhCdcGkQpvPUDsr/wdvlZ/SvIqDcKcSDToi4LZRlyP
-        uilhr58Lz+YDlq2NbPtdHtqh3WdR6etkNFDwCdu0O0AujUOr44z9FYNb3RSzTxVMKEV0Zy
-        +I7sR0ziA2ud34MUBamQhaJCy4XXdsg=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.spkdev.net (Postfix) with ESMTPSA id CCA1C3FFDA;
-        Mon, 18 May 2020 17:26:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1589822768;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=L3YQT6n1zWd2qvYe29ELtHA0k53zX7vJV2h0yd4U4+8=;
-        b=dmFxQ7FAssztjGE6sNXkG3xHhvigvhCdcGkQpvPUDsr/wdvlZ/SvIqDcKcSDToi4LZRlyP
-        uilhr58Lz+YDlq2NbPtdHtqh3WdR6etkNFDwCdu0O0AujUOr44z9FYNb3RSzTxVMKEV0Zy
-        +I7sR0ziA2ud34MUBamQhaJCy4XXdsg=
-Date:   Mon, 18 May 2020 19:26:07 +0200
-From:   Laurent Arnoud <laurent@spkdev.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v5] diff: add config option relative
-Message-ID: <20200518172607.GC2110@spk-laptop>
-References: <20200515155706.GA1165062@spk-laptop>
- <20200515233130.GC6362@camp.crustytoothpaste.net>
- <xmqq1rnk923o.fsf@gitster.c.googlers.com>
- <20200516173828.GB34961@spk-laptop>
- <92cb6302-09a8-6780-9398-890b1e766680@gmail.com>
- <20200516194033.GA2252@spk-laptop>
- <20200517021452.GA2114@danh.dev>
- <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
- <20200518094021.GA2069@spk-laptop>
- <CAPig+cRNCdtK9SSMSXj83tTCV1n+YW3-a0EnfM_VVVCry8rXCg@mail.gmail.com>
+        id S1728403AbgERR0R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 13:26:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49908 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726958AbgERR0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 13:26:17 -0400
+Received: (qmail 20681 invoked by uid 109); 18 May 2020 17:26:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 May 2020 17:26:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4280 invoked by uid 111); 18 May 2020 17:26:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 May 2020 13:26:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 18 May 2020 13:26:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Force Charlie <charlieio@outlook.com>
+Subject: Re: [PATCH v2 7/7] stateless-connect: send response end packet
+Message-ID: <20200518172605.GA52384@coredump.intra.peff.net>
+References: <cover.1589393036.git.liu.denton@gmail.com>
+ <cover.1589816718.git.liu.denton@gmail.com>
+ <4b079bcd83ea80b8a0e81b0c1e3d5e083efeb9c6.1589816719.git.liu.denton@gmail.com>
+ <20200518164308.GC42240@coredump.intra.peff.net>
+ <20200518171249.GA2462058@generichostname>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cRNCdtK9SSMSXj83tTCV1n+YW3-a0EnfM_VVVCry8rXCg@mail.gmail.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+In-Reply-To: <20200518171249.GA2462058@generichostname>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 18, 2020 at 12:19:20PM -0400, Eric Sunshine wrote:
-> Let's move all the setup code into the test itself so that a failure
-> of git-rev-parse will be caught. For instance:
-> 
-> check_diff_relative_option () {
->    dir=$1
->    shift
->    expect=$1
->    shift
->    relative_opt=$1
->    shift
->    test_expect_success "config diff.relative $relative_opt -p $*" "
->        short_blob=$(git rev-parse --short $blob_file2) &&
->        cat >expected <<-EOF &&
->        diff --git a/$expect b/$expect
->        new file mode 100644
->        index 0000000..$short_blob
->        --- /dev/null
->        +++ b/$expect
->        @@ -0,0 +1 @@
->        +other content
->        EOF
->        test_config -C $dir diff.relative $relative_opt &&
->        git -C '$dir' diff -p $* HEAD^ >actual &&
->        test_cmp expected actual
->    "
-> }
-> 
-> Same comment applies to the other new function added by this patch.
+On Mon, May 18, 2020 at 01:12:49PM -0400, Denton Liu wrote:
 
-Thanks its applied on the v6 patch
+> > I just wonder if there is a better place to put this logic that would be
+> > more certain to catch every place we'd expect to read to the end of a
+> > response. But I suppose not. We could push it down into process_acks(),
+> > but it would have the same READY logic that's here. I'll admit part of
+> > my complaint is that the existing do_fetch_pack_v2 state-machine switch
+> > is kind of hard to follow, but that's not your fault.
+> 
+> I debated between the current implementation and doing something like
+> 
+> 	int first_iteration = 1;
+> 
+> 	...
+> 
+> 	while (state != FETCH_DONE) {
+> 		switch (...) {
+> 			...
+> 		}
+> 
+> 		if (args->stateless_rpc && !first_iteration && (state == FETCH_SEND_REQUEST || state == FETCH_DONE)) {
+> 			if (packet_reader_read(&reader) != PACKET_READ_RESPONSE_END)
+> 				die(_("git fetch-pack: expected response end packet"));
+> 			if (packet_reader_read(&reader) != PACKET_READ_FLUSH)
+> 				die(_("git fetch-pack: expected flush packet"));
+> 		}
+> 		first_iteration = 0;
+> 	}
+> 
+> I think that this catches _all_ the cases without fiddling with any of
+> the state machine logic.
 
--- 
-Laurent
+I think you're right that it does, but TBH I find it harder to follow,
+because now we're even further away from the actual response reads. What
+I most want to verify is:
+
+  - there is no response-reading code path that does not check the
+    delimiters
+
+  - there is no code path where we check delimiters but did not actually
+    read a response
+
+So to me, putting the check as close to the response-reads as possible
+makes sense. I think the patch below is equivalent and easier to verify,
+but I admit it's somewhat subjective:
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 5325649eda..0bf1e5760c 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1443,6 +1443,17 @@ static void receive_wanted_refs(struct packet_reader *reader,
+ 		die(_("error processing wanted refs: %d"), reader->status);
+ }
+ 
++static void check_stateless_delimiter(struct fetch_pack_args *args,
++				      struct packet_reader *reader)
++{
++	if (!args->stateless_rpc)
++		return; /* not in stateless mode, no delimiter expected */
++	if (packet_reader_read(reader) != PACKET_READ_RESPONSE_END)
++		die(_("git fetch-pack: expected response end packet"));
++	if (packet_reader_read(reader) != PACKET_READ_FLUSH)
++		die(_("git fetch-pack: expected flush packet"));
++}
++
+ enum fetch_state {
+ 	FETCH_CHECK_LOCAL = 0,
+ 	FETCH_SEND_REQUEST,
+@@ -1469,7 +1480,6 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	struct fetch_negotiator negotiator_alloc;
+ 	struct fetch_negotiator *negotiator;
+ 	int seen_ack = 0;
+-	int check_http_delimiter;
+ 
+ 	if (args->no_dependents) {
+ 		negotiator = NULL;
+@@ -1488,8 +1498,6 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	}
+ 
+ 	while (state != FETCH_DONE) {
+-		check_http_delimiter = 0;
+-
+ 		switch (state) {
+ 		case FETCH_CHECK_LOCAL:
+ 			sort_ref_list(&ref, ref_compare_name);
+@@ -1538,15 +1546,19 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			/* Process ACKs/NAKs */
+ 			switch (process_acks(negotiator, &reader, &common)) {
+ 			case READY:
++				/*
++				 * Don't check for response delimiter; get_pack() will
++				 * read the rest of this response.
++				 */
+ 				state = FETCH_GET_PACK;
+ 				break;
+ 			case COMMON_FOUND:
+ 				in_vain = 0;
+ 				seen_ack = 1;
+ 				/* fallthrough */
+ 			case NO_COMMON_FOUND:
+ 				state = FETCH_SEND_REQUEST;
+-				check_http_delimiter = 1;
++				check_stateless_delimiter(args, &reader);
+ 				break;
+ 			}
+ 			break;
+@@ -1565,20 +1577,13 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			process_section_header(&reader, "packfile", 0);
+ 			if (get_pack(args, fd, pack_lockfile, sought, nr_sought))
+ 				die(_("git fetch-pack: fetch failed."));
++			check_stateless_delimiter(args, &reader);
+ 
+ 			state = FETCH_DONE;
+-			check_http_delimiter = 1;
+ 			break;
+ 		case FETCH_DONE:
+ 			continue;
+ 		}
+-
+-		if (args->stateless_rpc && check_http_delimiter) {
+-			if (packet_reader_read(&reader) != PACKET_READ_RESPONSE_END)
+-				die(_("git fetch-pack: expected response end packet"));
+-			if (packet_reader_read(&reader) != PACKET_READ_FLUSH)
+-				die(_("git fetch-pack: expected flush packet"));
+-		}
+ 	}
+ 
+ 	if (negotiator)
+
+> > Speaking of which: this is a change to the remote-helper protocol, since
+> > we're now expecting stateless-connect helpers to produce these delim
+> > packets (and failing if they don't). I kind of doubt that anybody but
+> > remote-curl has implemented v2 stateless-connect, but should we be
+> > marking this with an extra capability to be on the safe side?
+> 
+> I think that we're probably safe from breaking anything external.
+> According to the gitremote-helpers documentation, 
+> 
+> 	'stateless-connect'::
+> 		Experimental; for internal use only.
+> 
+> so I think that gives us a bit of leeway in terms of the changes we can
+> make to the stateless-connect protocol. They've been warned ;)
+
+OK, I didn't realize we had explicitly marked it as experimental. I
+agree we're probably fine here, then (now that v2 is starting to settle
+a bit more, we might think about lifting that warning, but this patch
+series shows we're not quite there yet :) ).
+
+-Peff
