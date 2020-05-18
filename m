@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A838C433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 16:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65EE5C433DF
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:03:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E12D620758
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 16:57:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4360C20758
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:03:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cv6MMnWa"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WTSQ4URJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728362AbgERQ5S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 12:57:18 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64351 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727020AbgERQ5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 12:57:17 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 60638BE8BD;
-        Mon, 18 May 2020 12:57:14 -0400 (EDT)
+        id S1728045AbgERRDu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 13:03:50 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62095 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726958AbgERRDt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 13:03:49 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A306949B3C;
+        Mon, 18 May 2020 13:03:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MQGBOq5oDnTe
-        jCFyYx2+Pm+Zz/U=; b=cv6MMnWaNumgi+KC7lHVhw16nTbbwnK/ypI4mRcccMuE
-        Ew189JvY2YILj1r733TmviUEQwIPkFsSte6TYuev5WYvAWIOklgk6yS0/vg4HVTB
-        yLmmu/IZwiCkWLQtLjPwIhf9ri9fc3Tf5aE5qWMpdsEsAuHDZIkwW6J0DjyF6a0=
+        :content-type:content-transfer-encoding; s=sasl; bh=HbPr5E5hKjBg
+        HGzUyj/plcuGzOg=; b=WTSQ4URJNA1iWYPZA4XHJfwPDSwQsOAPBh/9dzyeNXYv
+        7rlV5dAobeMXLfxQ8/HmU6uOrz9yMR3XPQzYWZw/JXIGBGdENt3t+pH1EWRuOmpE
+        lSHgwy2OMskJvmTN0eBuP41DJBdw3IuzVozy5LondLmb9JvLlEumOoh+BAgzVr0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=aInEhS
-        XCA4VhH4/NpW2h5aQiADOm2qMumLRNZk0ml3qhZWcxDIZ8tB+ClzZH+4p2J5l2y/
-        lXzwA2E/83iPtMX5VzmU9ShMc1pdP7+PhBGYtrwguxxu+mVK8koswsWchPk4t1Lx
-        mo1Nd+402NWi+bamoGwiTNp0/53Y4+2isCz5E=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58106BE8BC;
-        Mon, 18 May 2020 12:57:14 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=miFdbJ
+        hhtMoLCRg1RM3ITOywgVzctcqjZKWleaHPjD6j69Q4kesb4vg90MpxldjrfW3QAZ
+        iqTq2nklPpjeB+flApvRmQwGREVmuHkXDLxqPndnDrf1POYYfuQicsnufztOWoPh
+        +xNO/DbjXHqMTJBzqzlVN6c8aJtjrXobRmdjI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 98FD949B3B;
+        Mon, 18 May 2020 13:03:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A177CBE8BA;
-        Mon, 18 May 2020 12:57:11 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 20CD549B39;
+        Mon, 18 May 2020 13:03:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
@@ -61,15 +61,15 @@ References: <20200515155706.GA1165062@spk-laptop>
         <20200516194033.GA2252@spk-laptop> <20200517021452.GA2114@danh.dev>
         <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
         <20200518094021.GA2069@spk-laptop> <20200518135656.GB1980@danh.dev>
-Date:   Mon, 18 May 2020 09:57:09 -0700
+Date:   Mon, 18 May 2020 10:03:45 -0700
 In-Reply-To: <20200518135656.GB1980@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
  =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s message
         of "Mon, 18 May 2020 20:56:56 +0700")
-Message-ID: <xmqq4ksd5ggq.fsf@gitster.c.googlers.com>
+Message-ID: <xmqqzha541la.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9E00081A-9928-11EA-803B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 89B8A9E2-9929-11EA-BE4D-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -79,47 +79,82 @@ X-Mailing-List: git@vger.kernel.org
 =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
 :
 
-> I've written some test and concluded that we'll need this fix-up
-> to make sure git-format-patch(1) doesn't generate broken patch:
+>> @@ -4558,6 +4563,8 @@ void repo_diff_setup(struct repository *r, struc=
+t diff_options *options)
+>>  		options->b_prefix =3D "b/";
+>>  	}
+>>=20
+>> +	options->flags.relative_name =3D diff_relative;
+>> +
 >
-> ----------------8<----------------
->  builtin/log.c            |  1 +
->  t/t4045-diff-relative.sh | 11 ++++++++---
->  2 files changed, 9 insertions(+), 3 deletions(-)
+> Nitpick:
 >
-> diff --git a/builtin/log.c b/builtin/log.c
-> index d104d5c688..5949a4883e 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1744,6 +1744,7 @@ int cmd_format_patch(int argc, const char **argv,=
- const char *prefix)
->  	rev.diff =3D 1;
->  	rev.max_parents =3D 1;
->  	rev.diffopt.flags.recursive =3D 1;
-> +	rev.diffopt.flags.relative_name =3D 0;
->  	rev.subject_prefix =3D fmt_patch_subject_prefix;
->  	memset(&s_r_opt, 0, sizeof(s_r_opt));
->  	s_r_opt.def =3D "HEAD";
+> I don't think this option is too special to add a newline to separate
+> it from the rest :)
+>
+> Sorry about not seeing this earlier, I'm a very careless person.
+>
+> Anyway, I think (just a matter of my _personal_ preference),
+> it's better to move it up 21 lines, together with:
+>
+> 	options->flags.rename_empty =3D 1;
 
-Hmph, what do you exactly mean by "broken patch"?
+Sounds like a reasonable improvement of readability.
 
-I actually do not mind people who set "diff.relative" to do
+>> diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+>> index 258808708e..ac264ccc2a 100755
+>> --- a/t/t4045-diff-relative.sh
+>> +++ b/t/t4045-diff-relative.sh
+>> @@ -8,7 +8,8 @@ test_expect_success 'setup' '
+>>  	echo content >file1 &&
+>>  	mkdir subdir &&
+>>  	echo other content >subdir/file2 &&
+>> -	blob=3D$(git hash-object subdir/file2) &&
+>> +	blob_file1=3D$(git hash-object file1) &&
+>> +	blob_file2=3D$(git hash-object subdir/file2) &&
+>
+> This rename from blob to blob_file2 is a noise to this patch.
+>
+> Not sure if we should make a preparatory patch to rename, though.
 
-    $ git config diff.relative true
-    $ cd t && git format-patch -1 --stdout
+I personally do not mind this one.  It is crystal clear from the
+patch text: "We used to use only one and managed to get away without
+blob1/blob2 but now we use more than 1, so let's use names with
+number suffix".  On the other hand, a "preparatory patch" that
+renames blob to blob_file1 before we need the second one is a noise.
 
-to get an incomplete patch that covers only the t/ subdirectory, as
-long as they can ask Git to optionally get the full view with
+> *I* would say yes, and another patch to move all git-related code
+> into test_expect_* family. Then, all new testing code for git in this
+> patch should be placed inside test_expect_*, too.
 
-    $ cd t && git format-patch -1 --stdout --no-relative
+The latter clean-up to make sure we won't notice Git failure outside
+test_expect_* block may make sense, but I do not know if we want to
+make it a preparatory clean-up or "remember to do so later when the
+dust settles".  If this single-patch topic needs to touch only a
+small part of the existing test to do its job, and such a clean-up
+ends up touching far wider parts of the script, then I would say we
+can do so as a post-patch clean-up, not as a part of the topic.
 
-Note: this is not limited to format-patch but all the commands in
-the diff family like "log --stat", "show", etc.
+>
+> I think it's better to wait for other's opinions :)
+>
+>> @@ -86,4 +87,80 @@ do
+>>  	check_$type . dir/file2 --relative=3Dsub
+>>  done
+>>=20
+>> +	diff --git a/$expect b/$expect
+>> +	new file mode 100644
+>> +	index 0000000..$short_blob_file2
+>> +	--- /dev/null
+>> +	+++ b/$expect
+>> +	@@ -0,0 +1 @@
+>> +	+other content
+>> +	EOF
+>> +	test_expect_success "config diff.relative $relative_opt -p $*" "
+>> +		test_config -C $dir diff.relative $relative_opt &&
+>> +		git -C '$dir' diff -p $* HEAD^ >actual &&
+>> +		git -C '$dir' diff -p $* HEAD^ >/tmp/actual &&
+>
+> Please this leftover from debugging.
 
-Of course, diff.relative configuration would have no use for me
-personally and I suspect it would be useless for many people, but
-those who work inside a deeply nested project (java perhaps?) it
-would be handy and it makes sense to match the default behaviour
-between "diff", "show" and "format-patch" when the configuration is
-active, as long as they have a way to contermand from the command
-line.
+Thanks for a careful review, again.
