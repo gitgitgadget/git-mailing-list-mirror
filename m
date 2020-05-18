@@ -2,132 +2,287 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4468BC433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4B4AC433E1
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:40:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1192C207ED
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:29:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BC3C207F5
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:40:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivaldi.com header.i=@vivaldi.com header.b="R502seKd"
+	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="dSaQlLCu";
+	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="Pz5Xp/Jw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726412AbgERJ3Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 05:29:25 -0400
-Received: from mail.vivaldi.com ([31.209.137.20]:36034 "EHLO mail.vivaldi.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726270AbgERJ3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 05:29:24 -0400
-X-Greylist: delayed 504 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 May 2020 05:29:24 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.vivaldi.com (Postfix) with ESMTP id 4E0941F93D5
-        for <git@vger.kernel.org>; Mon, 18 May 2020 09:20:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=vivaldi.com; h=
-        user-agent:message-id:organization:from:from
-        :content-transfer-encoding:mime-version:subject:subject:date
-        :date:content-type:content-type:received:received; s=2019; t=
-        1589793658; bh=qmPtrJxYmfHu4nPfTkz5LlIQMWP2VfTE892WHbdn+Zg=; b=R
-        502seKdyvb3corTQvaiAW6Cwd4cS3hPeUVjtYvhtCxzNY8+DSlc3r25rOI8WhaBT
-        o0TLO5LsptqfvrieiROB+jLz3POlte9zWXsyw6ElprQphsVBO3hFu2tiOp41hQol
-        mn/SHof6fwUE1hH01QpZgB+OJ2StVLJZhBOZWxiEEPDgZSQ4AS+lmaCMoWDmUNVy
-        JJPhG9jbj0ST3vhQ5RK8G+yuehGULhjWqc8nKfAee2v6W5JcucbGspuoYEac+txl
-        EthietaQaWUERsEoxkHg2DCZ86qSpury8dVOF5nkVl/Q/7vUgijhgNXnO6lWfyc6
-        wLi1BW3F4/k05otvMoVTg==
-X-Virus-Scanned: Debian amavisd-new at vivaldi.com
-Received: from mail.vivaldi.com ([127.0.0.1])
-        by localhost (staffmail.viv.dc01 [127.0.0.1]) (amavisd-new, port 10023)
-        with ESMTP id It1ueQ3QePRd for <git@vger.kernel.org>;
-        Mon, 18 May 2020 09:20:58 +0000 (UTC)
-Received: from rowan.vivaldi (195-159-146-211.customer.powertech.no [195.159.146.211])
-        by mail.vivaldi.com (Postfix) with ESMTPSA id DD9F11F8B98
-        for <git@vger.kernel.org>; Mon, 18 May 2020 09:20:57 +0000 (UTC)
-Content-Type: text/plain; charset=iso-8859-15; format=flowed; delsp=yes
-Date:   Mon, 18 May 2020 11:20:57 +0200
-To:     git@vger.kernel.org
-Subject: Git error message "Server does not allow request for unadvertised
- object"  
+        id S1726399AbgERJk1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 05:40:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40676 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726040AbgERJk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 05:40:27 -0400
+Received: from mail.spkdev.net (unknown [IPv6:2001:41d0:8:e379::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C7DC061A0C
+        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:26 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        by mail.spkdev.net (Postfix) with ESMTP id 052864034B;
+        Mon, 18 May 2020 09:40:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
+        t=1589794823;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=0Cc8Q0c3zOfLGeX3+AJfsNHxPFwezSt4bFB9uWaPoMk=;
+        b=dSaQlLCupR5EY9fH61oi3ZQM+NmvKHLdBc5XLiU7kAzrn+lSSEV/srUNsk0hlfifXwNM1o
+        rdumyQ6FLDcASuiuuE52i+FsUThx4LWyYxe8wpgScugd30xlwYIMy5GjRaZrDYIbxvqVG4
+        GWN0//n9KyRm7GOIHV2yM6roCqrQvEU=
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.spkdev.net (Postfix) with ESMTPSA id 24F413FFDA;
+        Mon, 18 May 2020 09:40:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
+        t=1589794822;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=0Cc8Q0c3zOfLGeX3+AJfsNHxPFwezSt4bFB9uWaPoMk=;
+        b=Pz5Xp/Jw8FwITt/eg9Sc6OUlp3Oi+jrjP8D/q/5J0YtNXpqimMKHWzu4RkSBpJzF6MTTRr
+        0eXd/gVoDo6s94rtBDQlAUrfi2kpEPRR/oRH32t09mtD6LQOxkUdV6GRtF61mwrZF7eFP9
+        oT4xOsf6CBJzXPkG//sV45DUqWrRTEc=
+Date:   Mon, 18 May 2020 11:40:21 +0200
+From:   Laurent Arnoud <laurent@spkdev.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, phillip.wood@dunelm.org.uk,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5] diff: add config option relative
+Message-ID: <20200518094021.GA2069@spk-laptop>
+References: <20200515155706.GA1165062@spk-laptop>
+ <20200515233130.GC6362@camp.crustytoothpaste.net>
+ <xmqq1rnk923o.fsf@gitster.c.googlers.com>
+ <20200516173828.GB34961@spk-laptop>
+ <92cb6302-09a8-6780-9398-890b1e766680@gmail.com>
+ <20200516194033.GA2252@spk-laptop>
+ <20200517021452.GA2114@danh.dev>
+ <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-From:   "Yngve N. Pettersen" <yngve@vivaldi.com>
-Organization: Vivaldi Technologies AS
-Message-ID: <op.0ks2w7r1pvqxoc@rowan.vivaldi>
-User-Agent: Opera Mail/1.0 (Win32)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+The `diff.relative` boolean option set to `true` show only changes on
+the current directory and show relative pathnames to the current
+directory.
 
-A while back I reported an issue to the Windows Git project  
-<https://github.com/git-for-windows/git/issues/2218> that I observed in  
-Git for Windows 2.21.
+Teach --no-relative to override earlier --relative
 
-The error message "Server does not allow request for unadvertised object"  
-is reported when a commit updating a submodule pointer points to a commit  
-that does not exist in the repository for that submodule, even if later  
-commits in the branch points to a commit that do exist in the submodule  
-repo.
+Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
+---
+ Documentation/config/diff.txt  |  4 ++
+ Documentation/diff-options.txt |  2 +
+ diff.c                         | 12 +++--
+ t/t4045-diff-relative.sh       | 83 ++++++++++++++++++++++++++++++++--
+ 4 files changed, 95 insertions(+), 6 deletions(-)
 
-This circumstance can easily occur if a developer (e.g)
+diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+index ff09f1cf73..c3ae136eba 100644
+--- a/Documentation/config/diff.txt
++++ b/Documentation/config/diff.txt
+@@ -105,6 +105,10 @@ diff.mnemonicPrefix::
+ diff.noprefix::
+ 	If set, 'git diff' does not show any source or destination prefix.
 
-  * interactively rebases a branch "foo" in the submodule (e.g to integrate  
-commits from another branch before a larger rebase)
-  * commits the resulting submodule pointer "A" in the branch to the parent  
-repo
-  * then do further rebasing in the submodule, e.g to move up on top of the  
-"bar" branch
-  * commits that pointer "B" to the parent repo
-  * forgets to squash the history in the parent repo
-  * pushes the updated submodule "foo" branch to the online repo. (NOTE:  
-"B" is pushed, not "A")
-  * pushes the parent module branch to its online repo
++diff.relative::
++	If set to 'true', 'git diff' does not show changes outside of the directory
++	and show pathnames relative to the current directory.
++
+ diff.orderFile::
+ 	File indicating how to order files within a diff.
+ 	See the '-O' option to linkgit:git-diff[1] for details.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index bb31f0c42b..167b451b89 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -651,6 +651,8 @@ ifndef::git-format-patch[]
+ 	not in a subdirectory (e.g. in a bare repository), you
+ 	can name which subdirectory to make the output relative
+ 	to by giving a <path> as an argument.
++	`--no-relative` can be used to countermand both `diff.relative` config
++	option and previous `--relative`.
+ endif::git-format-patch[]
 
-When the parent repo is pulled by another developer, or an autobuild  
-system, the fetch operation fails with the message "Server does not allow  
-request for unadvertised object". A second fetch will complete  
-successfully.
+ -a::
+diff --git a/diff.c b/diff.c
+index d1ad6a3c4a..e3f98334e9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -48,6 +48,7 @@ static const char *diff_order_file_cfg;
+ int diff_auto_refresh_index = 1;
+ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
++static int diff_relative;
+ static int diff_stat_graph_width;
+ static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
+@@ -386,6 +387,10 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		diff_no_prefix = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "diff.relative")) {
++		diff_relative = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "diff.statgraphwidth")) {
+ 		diff_stat_graph_width = git_config_int(var, value);
+ 		return 0;
+@@ -4558,6 +4563,8 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
+ 		options->b_prefix = "b/";
+ 	}
 
-IMO this kind of check should only happen if a commit with pointer to a  
-missing submodule is actively checked out. At most the above message  
-should be a warning, not a fatal error.
++	options->flags.relative_name = diff_relative;
++
+ 	options->color_moved = diff_color_moved_default;
+ 	options->color_moved_ws_handling = diff_color_moved_ws_default;
 
-For manual fetch operations this is mostly a nuisance, but for  
-autobuilders this breaks the update operation, and the entire build  
-operation fails. That is unacceptable behavior in an automatic system  
-(errors if it breaks the checkout, yes; issues that are not relevant to  
-the actual checkout, no).
+@@ -5195,8 +5202,7 @@ static int diff_opt_relative(const struct option *opt,
+ {
+ 	struct diff_options *options = opt->value;
 
-This issue prevents upgrading past 2.17 (since 2.18 and 2.19 had other  
-blocking issues, and 2.20 apparently introduced this issue). I have not  
-tested 2.22+ since I have not noticed any changelog messages that seem  
-related.
+-	BUG_ON_OPT_NEG(unset);
+-	options->flags.relative_name = 1;
++	options->flags.relative_name = !unset;
+ 	if (arg)
+ 		options->prefix = arg;
+ 	return 0;
+@@ -5492,7 +5498,7 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_GROUP(N_("Other diff options")),
+ 		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
+ 			       N_("when run from subdir, exclude changes outside and show relative paths"),
+-			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
++			       PARSE_OPT_OPTARG,
+ 			       diff_opt_relative),
+ 		OPT_BOOL('a', "text", &options->flags.text,
+ 			 N_("treat all files as text")),
+diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+index 258808708e..ac264ccc2a 100755
+--- a/t/t4045-diff-relative.sh
++++ b/t/t4045-diff-relative.sh
+@@ -8,7 +8,8 @@ test_expect_success 'setup' '
+ 	echo content >file1 &&
+ 	mkdir subdir &&
+ 	echo other content >subdir/file2 &&
+-	blob=$(git hash-object subdir/file2) &&
++	blob_file1=$(git hash-object file1) &&
++	blob_file2=$(git hash-object subdir/file2) &&
+ 	git add . &&
+ 	git commit -m one
+ '
+@@ -18,7 +19,7 @@ check_diff () {
+ 	shift
+ 	expect=$1
+ 	shift
+-	short_blob=$(git rev-parse --short $blob)
++	short_blob=$(git rev-parse --short $blob_file2)
+ 	cat >expected <<-EOF
+ 	diff --git a/$expect b/$expect
+ 	new file mode 100644
+@@ -70,7 +71,7 @@ check_raw () {
+ 	expect=$1
+ 	shift
+ 	cat >expected <<-EOF
+-	:000000 100644 $ZERO_OID $blob A	$expect
++	:000000 100644 $ZERO_OID $blob_file2 A	$expect
+ 	EOF
+ 	test_expect_success "--raw $*" "
+ 		git -C '$dir' diff --no-abbrev --raw $* HEAD^ >actual &&
+@@ -86,4 +87,80 @@ do
+ 	check_$type . dir/file2 --relative=sub
+ done
 
-A test case can be found in issue 2218, linked above.
-
-For reference, we do have a server-side git hook that verifies that  
-submodule pointers for the production branch is correct and exists in the  
-submodule's repo, and also is on branches that follows certain naming  
-conventions.
-
-
-As an aside, I think this kind of error message would be have been better  
-suited as either a client-side push check, to prevent pushes of references  
-to such missing commits (Smartgit seems to have something like it, but I  
-think it only checks for the current branch in the submodule, not all  
-submodule reference commits). Alternatively, there could be a check of  
-this server-side.
-
-
-Related to this, but not as problematic, just irritating, and also seen in  
-2.17, is a message "warning: Submodule in commit deadbee at path: '(NULL)'  
-collides with a submodule named the same. Skipping it." I think it is  
-related to recreating a git modules file on a different branch.
-
--- 
-Sincerely,
-Yngve N. Pettersen
-Vivaldi Technologies AS
++check_diff_relative_option () {
++	dir=$1
++	shift
++	expect=$1
++	shift
++	relative_opt=$1
++	shift
++	short_blob=$(git rev-parse --short "$blob_file2")
++	cat >expected <<-EOF
++	diff --git a/$expect b/$expect
++	new file mode 100644
++	index 0000000..$short_blob
++	--- /dev/null
++	+++ b/$expect
++	@@ -0,0 +1 @@
++	+other content
++	EOF
++	test_expect_success "config diff.relative $relative_opt -p $*" "
++		test_config -C $dir diff.relative $relative_opt &&
++		git -C '$dir' diff -p $* HEAD^ >actual &&
++		test_cmp expected actual
++	"
++}
++
++check_diff_no_relative_option () {
++	dir=$1
++	shift
++	expect=$1
++	shift
++	relative_opt=$1
++	shift
++	short_blob_file1=$(git rev-parse --short "$blob_file1")
++	short_blob_file2=$(git rev-parse --short "$blob_file2")
++	cat >expected <<-EOF
++	diff --git a/file1 b/file1
++	new file mode 100644
++	index 0000000..$short_blob_file1
++	--- /dev/null
++	+++ b/file1
++	@@ -0,0 +1 @@
++	+content
++	diff --git a/$expect b/$expect
++	new file mode 100644
++	index 0000000..$short_blob_file2
++	--- /dev/null
++	+++ b/$expect
++	@@ -0,0 +1 @@
++	+other content
++	EOF
++	test_expect_success "config diff.relative $relative_opt -p $*" "
++		test_config -C $dir diff.relative $relative_opt &&
++		git -C '$dir' diff -p $* HEAD^ >actual &&
++		git -C '$dir' diff -p $* HEAD^ >/tmp/actual &&
++		test_cmp expected actual
++	"
++}
++
++check_diff_no_relative_option . subdir/file2 false
++check_diff_no_relative_option . subdir/file2 true --no-relative
++check_diff_no_relative_option . subdir/file2 false --no-relative
++check_diff_no_relative_option subdir subdir/file2 false
++check_diff_no_relative_option subdir subdir/file2 true --no-relative
++check_diff_no_relative_option subdir subdir/file2 false --no-relative
++
++check_diff_relative_option . file2 false --relative=subdir/
++check_diff_relative_option . file2 false --relative=subdir
++check_diff_relative_option . file2 true --relative=subdir/
++check_diff_relative_option . file2 true --relative=subdir
++check_diff_relative_option subdir file2 false --relative
++check_diff_relative_option subdir file2 true --relative
++check_diff_relative_option subdir file2 true
++check_diff_relative_option subdir file2 false --no-relative --relative
++check_diff_relative_option subdir file2 true --no-relative --relative
++check_diff_relative_option . file2 false --no-relative --relative=subdir
++check_diff_relative_option . file2 true --no-relative --relative=subdir
++
+ test_done
+--
+2.26.2
