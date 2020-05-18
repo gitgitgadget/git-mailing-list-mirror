@@ -2,194 +2,179 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62B4AC433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 16:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45879C433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 16:22:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16EF020657
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 16:20:29 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tnCt5K3Q"
+	by mail.kernel.org (Postfix) with ESMTP id 2EBB3207D8
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 16:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728209AbgERQU2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 12:20:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64530 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727005AbgERQU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 12:20:28 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BCBA861FD9;
-        Mon, 18 May 2020 12:20:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+dsfzNUTV18hvkLCIyRrOkaz9UA=; b=tnCt5K
-        3QDgiA0z9b7FyH7LY6XSwhtXalmQUw5Jyy47zZ774c7ZO6SUUOnWFnRyeB3E7xBn
-        Sr00pZydVCkvKp/WQe/uFDj+4VR63OfXxmeGiZPj0brsjmWaypRE6KrBC9GOSBfU
-        kEhb9tbG6imOtQzz35m3nqAtPS7ztnRqHzTp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VPGfZsnIv1Goy/X8t+eIDaevZBqbilib
-        1wznZGEc/fOAeckCcCZFPXmbSdkmmEep70Cuxov3GaLO1zfp6HXzXLC7Wi4ppGp3
-        js3FoO5iDAELufDBKBKh5kaS9o9S7QuLtbCvy1Pz5n8FpPyvJpw1dDQPDHp4BPzt
-        TSDn0DuPHC8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B3FC461FD8;
-        Mon, 18 May 2020 12:20:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 37AAD61FD7;
-        Mon, 18 May 2020 12:20:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 27/44] builtin/show-index: provide options to determine hash algo
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
-        <20200513005424.81369-28-sandals@crustytoothpaste.net>
-Date:   Mon, 18 May 2020 09:20:22 -0700
-In-Reply-To: <20200513005424.81369-28-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Wed, 13 May 2020 00:54:07 +0000")
-Message-ID: <xmqqimgt5i61.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728142AbgERQW1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 12:22:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49718 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728043AbgERQW1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 12:22:27 -0400
+Received: (qmail 20380 invoked by uid 109); 18 May 2020 16:22:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 May 2020 16:22:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3581 invoked by uid 111); 18 May 2020 16:22:26 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 May 2020 12:22:26 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 18 May 2020 12:22:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 5/7] remote-curl: error on incomplete packet
+Message-ID: <20200518162225.GB42240@coredump.intra.peff.net>
+References: <cover.1589393036.git.liu.denton@gmail.com>
+ <cover.1589816718.git.liu.denton@gmail.com>
+ <52ce5fdffd6741eeee8d69b804403383da0d879d.1589816719.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 79ABF7B2-9923-11EA-B0EA-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <52ce5fdffd6741eeee8d69b804403383da0d879d.1589816719.git.liu.denton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Mon, May 18, 2020 at 11:47:22AM -0400, Denton Liu wrote:
 
-> It's possible to use a variety of index formats with show-index, and we
-> need a way to indicate the hash algorithm which is in use for a
-> particular index we'd like to show.  Default to using the value for the
-> repository we're in by calling setup_git_directory_gently, and allow
-> overriding it by using a --hash argument.
-
-I think you meant to say that "show-index" does not autodetect what
-hash algorithm is used from its input, and the new argument is a way
-for the user to help the command when the hash algorithm is
-different from what is used in the current repository?
-
-I ask because I found that your version can be read to say that
-"show-index" can show the contents of a given pack index using any
-hash algorithm we support, and the user can specify --hash=SHA-256
-when running the command on a pack .idx that uses SHA-1 object names
-to auto-convert it, and readers wouldn't be able to guess which was
-meant with only the above five lines.
-
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/show-index.c | 29 ++++++++++++++++++++++++-----
->  git.c                |  2 +-
->  2 files changed, 25 insertions(+), 6 deletions(-)
->
-> diff --git a/builtin/show-index.c b/builtin/show-index.c
-> index 0826f6a5a2..ebfa2e9abd 100644
-> --- a/builtin/show-index.c
-> +++ b/builtin/show-index.c
-> @@ -1,9 +1,12 @@
->  #include "builtin.h"
->  #include "cache.h"
->  #include "pack.h"
-> +#include "parse-options.h"
->  
-> -static const char show_index_usage[] =
-> -"git show-index";
-> +static const char *const show_index_usage[] = {
-> +	"git show-index [--hash=HASH]",
-> +	NULL
+> +struct check_pktline_state {
+> +	char len_buf[4];
+> +	int len_filled;
+> +	int remaining;
 > +};
-
-Do we say --hash=SHA-1 etc. or --hash-algo=SHA-256 in other places?
-Would the word "hash" alone clear enough that it does not refer to
-a specific "hash" value but the name of an algorithm?
-
-The generating side seems to use "index-pack --object-format=<algo>"
-and the transport seems to use a capability "object-format=<algo>",
-neither of which is directly visible to the end users, but I think
-they follow "git init --object-format=<algo>", so we are consistent
-there.
-
-Perhaps we should follow suit here, too?
-
->  int cmd_show_index(int argc, const char **argv, const char *prefix)
->  {
-> @@ -11,10 +14,26 @@ int cmd_show_index(int argc, const char **argv, const char *prefix)
->  	unsigned nr;
->  	unsigned int version;
->  	static unsigned int top_index[256];
-> -	const unsigned hashsz = the_hash_algo->rawsz;
-> +	unsigned hashsz;
-> +	const char *hash_name = NULL;
-> +	int hash_algo;
-> +	const struct option show_index_options[] = {
-> +		OPT_STRING(0, "hash", &hash_name, N_("hash"),
-> +			   N_("specify the hash algorithm to use")),
-
-init-db has an entry identical to this except for the second token
-given to the macro is "object-format" instead of "hash".  Both may
-want to change what's inside N_() to "hash algorithm".
-
-> +		OPT_END()
-> +	};
 > +
-> +	argc = parse_options(argc, argv, prefix, show_index_options, show_index_usage, 0);
-> +
-> +	if (hash_name) {
-> +		hash_algo = hash_algo_by_name(hash_name);
-> +		if (hash_algo == GIT_HASH_UNKNOWN)
-> +			die(_("Unknown hash algorithm"));
-> +		repo_set_hash_algo(the_repository, hash_algo);
+> +static void check_pktline(struct check_pktline_state *state, const char *ptr, size_t size)
+
+Thanks for converting this. I think having this broken out makes it a
+bit easier to reason about, and it should be much easier to reuse if we
+need it elsewhere.
+
+> +{
+> +	while (size) {
+> +		if (!state->remaining) {
+> +			int digits_remaining = 4 - state->len_filled;
+> +			if (digits_remaining > size)
+> +				digits_remaining = size;
+> +			memcpy(&state->len_buf[state->len_filled], ptr, digits_remaining);
+> +			state->len_filled += digits_remaining;
+> +			ptr += digits_remaining;
+> +			size -= digits_remaining;
+
+Having personally written and screwed up this kind of parsing state
+machine before, I read over this logic quite carefully. ;) I believe
+it's correct.
+
+Another way would be to loop by single characters:
+
+  while (state->len_filled < 4 && size) {
+          state->len_buf[state->len_filled++] = *ptr;
+	  ptr++;
+	  size--;
+  }
+
+which I _think_ is equivalent, and is a bit shorter. I'm OK with either
+(see below, especially).
+
+I'm not sure if it's worth replacing "4" with ARRAY_SIZE(state->len_buf).
+I generally try to avoid magic numbers, but it's certainly not like one
+could change the size of len_buf and this code would still be useful. :)
+
+> +			if (state->len_filled == 4) {
+> +				state->remaining = packet_length(state->len_buf);
+> +				if (state->remaining < 0) {
+> +					die(_("remote-curl: bad line length character: %.4s"), state->len_buf);
+> +				} else if (state->remaining < 4) {
+> +					state->remaining = 0;
+> +				} else {
+> +					state->remaining -= 4;
+> +				}
+> +				state->len_filled = 0;
+> +			}
+> +		}
+
+This part makes sense. We'll either leave len_filled as 1-3 (incomplete),
+or we'll read a whole packet (for a flush), or we'll be waiting to read
+the rest of the packet.
+
+> +		if (state->remaining) {
+> +			int remaining = state->remaining;
+> +			if (remaining > size)
+> +				remaining = size;
+> +			ptr += remaining;
+> +			size -= remaining;
+> +			state->remaining -= remaining;
+> +		}
 > +	}
-> +
-> +	hashsz = the_hash_algo->rawsz;
+> +}
+
+And here we most certainly don't want to read character-by-character,
+because we're not doing anything with each one, and we expect there to be
+a lot more of them. Having the earlier loop match the form of this one is
+perhaps a good reason to leave it alone.
+
+> [...]
+> @@ -936,6 +984,11 @@ static int post_rpc(struct rpc_state *rpc, int flush_received)
+>  	if (!rpc->any_written)
+>  		err = -1;
 >  
-> -	if (argc != 1)
-> -		usage(show_index_usage);
->  	if (fread(top_index, 2 * 4, 1, stdin) != 1)
->  		die("unable to read header");
->  	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
-> diff --git a/git.c b/git.c
-> index 2e4efb4ff0..e53e8159a2 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -573,7 +573,7 @@ static struct cmd_struct commands[] = {
->  	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
->  	{ "show", cmd_show, RUN_SETUP },
->  	{ "show-branch", cmd_show_branch, RUN_SETUP },
-> -	{ "show-index", cmd_show_index },
-> +	{ "show-index", cmd_show_index, RUN_SETUP_GENTLY },
+> +	if (rpc_in_data.pktline_state.len_filled)
+> +		err = error(_("%d bytes of length header were received"), rpc_in_data.pktline_state.len_filled);
+> +	if (rpc_in_data.pktline_state.remaining)
+> +		err = error(_("%d bytes of body are still expected"), rpc_in_data.pktline_state.remaining);
 
-Hmph, this is not necessary to support peeking an .idx file in
-another repository that uses a different hash algorithm than ours
-(we do need the --hash=<algo> override to tell that the algo is
-different from what we read from our repository settings).  Is this
-absolutely necessary?
+And here's the payoff for all of the state machine checks. Makes sense.
 
-Ah, I am misreading the patch.  We didn't even do setup but we now
-optionally do, in order to see if we are in a repository and what
-object format it uses to give the default value to --hash=<algo>
-when the argument is not given.  The need for RUN_SETUP_GENTLY
-is understandable.
+> @@ -702,6 +746,8 @@ static size_t rpc_in(char *ptr, size_t eltsize,
+>  		return size;
+>  	if (size)
+>  		data->rpc->any_written = 1;
+> +	if (data->check_pktline)
+> +		check_pktline(&data->pktline_state, ptr, size);
+>  	write_or_die(data->rpc->in, ptr, size);
+>  	return size;
+>  }
 
-As we do not take any path argument on the command line, the other
-side effect of setup_git_directory() that takes us up to the top
-level of the working tree does not hurt us, either, so this is a
-good change, I think.
+And this is now conditional. Good...
 
-Thanks.
+> @@ -920,6 +966,8 @@ static int post_rpc(struct rpc_state *rpc, int flush_received)
+>  	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, rpc_in);
+>  	rpc_in_data.rpc = rpc;
+>  	rpc_in_data.slot = slot;
+> +	rpc_in_data.check_pktline = stateless_connect;
+> +	memset(&rpc_in_data.pktline_state, 0, sizeof(rpc_in_data.pktline_state));
 
+And we enable it only for stateless-connect. Makes perfect sense.
 
+> --- /dev/null
+> +++ b/t/lib-httpd/incomplete-body-upload-pack-v2-http.sh
+> @@ -0,0 +1,3 @@
+> +printf "Content-Type: text/%s\n" "application/x-git-upload-pack-result"
+> +echo
+> +printf "%s%s\n" "0079" "45"
 
->  	{ "show-ref", cmd_show_ref, RUN_SETUP },
->  	{ "sparse-checkout", cmd_sparse_checkout, RUN_SETUP | NEED_WORK_TREE },
->  	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+Nice. Just having a deterministic half-written packet is way easier to
+reason about than my "truncating proxy" suggestion.
+
+> --- /dev/null
+> +++ b/t/lib-httpd/incomplete-length-upload-pack-v2-http.sh
+> @@ -0,0 +1,3 @@
+> +printf "Content-Type: text/%s\n" "application/x-git-upload-pack-result"
+> +echo
+> +printf "%s\n" "00"
+
+Thanks for covering this case, too.
+
+I confirmed (as I'm sure you did) they both cause git-remote-http to hang
+without the fix in this patch.
+
+-Peff
