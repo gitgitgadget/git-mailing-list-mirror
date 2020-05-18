@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80FB2C433E0
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 00:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AA58C433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 00:32:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C58E20657
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 00:26:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2C492070A
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 00:32:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fb19+78k"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mtdWIJAe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726786AbgERA03 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 May 2020 20:26:29 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55997 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726246AbgERA02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 May 2020 20:26:28 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0FEACDF221;
-        Sun, 17 May 2020 20:26:27 -0400 (EDT)
+        id S1726700AbgERAcl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 May 2020 20:32:41 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63265 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726675AbgERAck (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 May 2020 20:32:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CF65AC0B30;
+        Sun, 17 May 2020 20:32:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wX9yafCp/ddqMt+jpVAtRZZR7Zo=; b=fb19+7
-        8kw9Ilz+9A402oJG9UgWyKgrGwRtIPboP8clGuw7/hx7gD26AOrmp10aucUxNH6e
-        Xvhw9nOpsyv8w+cPIQfIAKdRg7m4wvcrfaqXJoQ8RhFgghA74oRsAqv9lNx4Inc/
-        WrARE5EYqpU3/5GMxA98Z+CmfOXNye/0GTMCg=
+        :content-type; s=sasl; bh=AmFOPrxeUQFEs3DjvERuje3K60s=; b=mtdWIJ
+        Aew6rNgrZMOBqcf/qE3XVQ9KnTaih77Qj9EqKdSlgbbWT/BiLN0g7oI/dpKoxqb/
+        +NZ41VJIpJnHtOFuCTHmagtKeeQrNCOIMrmov3c0MnurxnLah6NPwOSZqSEoJnYq
+        UcL4++LWapXX6Gi1UQAv1j8VWENjD0h5HOO6Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=J5TK0ZIuGm48aYutuw4NNdWLtZK+8xv4
-        KFvEC2T3Wvz0h3uPL1b5PSTz0e6isltNtgUfJh6z36nlTc67MIkO9Bb6ussCe0TL
-        yP/N8Pt/VaYYuWXT4nrXvkjvh3lJkAAFGuAe3uI+8z20OndEGwhMato3CODBLzHt
-        nm9IrlF8mKg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 081BBDF220;
-        Sun, 17 May 2020 20:26:27 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=cMhhk5NVW45WWkLUpcjvnIiZT20ZAYI4
+        un9vg0nbn8N9OYbGLHIP87kn64TPpQG5B8DW2EA9ArZ1DR10i6x1ePVzBVyP8cp3
+        zYnWKxjTHc/OQeQ0E4nVF7zaSvjXk1Y2yL/0E2Xd7SgGnvRW+PAElljhrYg+71rv
+        o46LV0sKrSE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C6106C0B2F;
+        Sun, 17 May 2020 20:32:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BF6B3DF21D;
-        Sun, 17 May 2020 20:26:23 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8CE35C0B2D;
+        Sun, 17 May 2020 20:32:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kenneth Lorber <keni@hers.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 4/6] Include NAMESPACE COLLISIONS doc into gitrepository-layout.txt
+Subject: Re: [RFC PATCH 5/6] Tell config.txt about NAMESPACE COLLISIONS
 References: <1589681624-36969-1-git-send-email-keni@hers.com>
-        <1589681624-36969-5-git-send-email-keni@hers.com>
-Date:   Sun, 17 May 2020 17:26:21 -0700
-In-Reply-To: <1589681624-36969-5-git-send-email-keni@hers.com> (Kenneth
-        Lorber's message of "Sat, 16 May 2020 22:13:42 -0400")
-Message-ID: <xmqqr1vi5brm.fsf@gitster.c.googlers.com>
+        <1589681624-36969-6-git-send-email-keni@hers.com>
+Date:   Sun, 17 May 2020 17:32:33 -0700
+In-Reply-To: <1589681624-36969-6-git-send-email-keni@hers.com> (Kenneth
+        Lorber's message of "Sat, 16 May 2020 22:13:43 -0400")
+Message-ID: <xmqqmu665bha.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 344DE0DE-989E-11EA-AD2B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 11E8EC4A-989F-11EA-BD12-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,38 +70,42 @@ Kenneth Lorber <keni@hers.com> writes:
 
 > From: Kenneth Lorber <keni@his.com>
 >
+> Add a link to the NAMESPACE COLLISIONS information where git help config
+> only mentioned the issue without supplying any guidance for how to do that.
+>
 > Signed-off-by: Kenneth Lorber <keni@his.com>
 > ---
->  Documentation/gitrepository-layout.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  Documentation/config.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index ef0768b91a..1e819c26f0 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -310,7 +310,9 @@ in the appropriate manual page.
+>  Other git-related tools may and do use their own variables.  When
+>  inventing new variables for use in your own tool, make sure their
+>  names do not conflict with those that are used by Git itself and
+> -other popular tools, and describe them in your documentation.
+> +other popular tools, and describe them in your documentation.  See
+> +'NAMESPACE COLLISIONS' in linkgit:gitrepository-layout[5] for guidelines
+> +to prevent such conflicts.
 
-As I said elsewhere, I am not sure if we want to even let
-third-party tools direct access at the filesystem level to
-$GIT_DIR/.  We do want to say things like where the ref namespace
-that are taken as "per worktree" are located, so that a third-party
-tool wants to carve out a hierarchy out of the per-worktree part of
-the ref namespace, that may indirectly influence where on the
-filesystem under $GIT_DIR/ their stuff is stored, but how we decide
-to store refs inside $GIT_DIR/ should still be blackbox to these
-third-party tools (e.g. we may not be using loose or packed refs,
-but using a chain of reftable files).  
+The configuration variable namespace is a shared resource, and it
+does make sense to give a provision for third-party tools to
+coordinate to avoid stepping on each others' toes.
 
-So from that point of view, we shouldn't have to touch the
-repository layout document, I would think.
+The repository-layout document is about a physical on-filesystem
+structure that ought to be blackbox to third-party tools, so the
+link target may have to be different from what this patch wants to
+add, though.  
 
-> diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-> index a84a4df513..8050e8cc1f 100644
-> --- a/Documentation/gitrepository-layout.txt
-> +++ b/Documentation/gitrepository-layout.txt
-> @@ -290,9 +290,10 @@ worktrees/<id>/locked::
->  worktrees/<id>/config.worktree::
->  	Working directory specific configuration file.
->  
-> -include::technical/namespace-collisions.txt[]
->  include::technical/repository-version.txt[]
->  
-> +include::technical/namespace-collisions.txt[]
-> +
->  SEE ALSO
->  --------
->  linkgit:git-init[1],
+I'd rather not to have such a document prematurely; if we were to
+add something to this paragraph (and I do think it is a good idea to
+say a bit more than "you're on your own but make sure you do not
+conflict with Git and other people" which is what we have there in
+the original), I'd just stop at telling readers to come here to the
+list to discuss and solicit input from other Git stakeholders.
+
+Thanks.
+
