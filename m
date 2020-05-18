@@ -2,287 +2,123 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4B4AC433E1
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 671BFC433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:40:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BC3C207F5
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:40:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 21DFA2067D
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:40:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="dSaQlLCu";
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="Pz5Xp/Jw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nHQ1L8NU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726399AbgERJk1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 05:40:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40676 "EHLO
+        id S1726724AbgERJkv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 05:40:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726040AbgERJk1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 05:40:27 -0400
-Received: from mail.spkdev.net (unknown [IPv6:2001:41d0:8:e379::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C7DC061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:26 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        by mail.spkdev.net (Postfix) with ESMTP id 052864034B;
-        Mon, 18 May 2020 09:40:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1589794823;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=0Cc8Q0c3zOfLGeX3+AJfsNHxPFwezSt4bFB9uWaPoMk=;
-        b=dSaQlLCupR5EY9fH61oi3ZQM+NmvKHLdBc5XLiU7kAzrn+lSSEV/srUNsk0hlfifXwNM1o
-        rdumyQ6FLDcASuiuuE52i+FsUThx4LWyYxe8wpgScugd30xlwYIMy5GjRaZrDYIbxvqVG4
-        GWN0//n9KyRm7GOIHV2yM6roCqrQvEU=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.spkdev.net (Postfix) with ESMTPSA id 24F413FFDA;
-        Mon, 18 May 2020 09:40:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1589794822;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=0Cc8Q0c3zOfLGeX3+AJfsNHxPFwezSt4bFB9uWaPoMk=;
-        b=Pz5Xp/Jw8FwITt/eg9Sc6OUlp3Oi+jrjP8D/q/5J0YtNXpqimMKHWzu4RkSBpJzF6MTTRr
-        0eXd/gVoDo6s94rtBDQlAUrfi2kpEPRR/oRH32t09mtD6LQOxkUdV6GRtF61mwrZF7eFP9
-        oT4xOsf6CBJzXPkG//sV45DUqWrRTEc=
-Date:   Mon, 18 May 2020 11:40:21 +0200
-From:   Laurent Arnoud <laurent@spkdev.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, phillip.wood@dunelm.org.uk,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v5] diff: add config option relative
-Message-ID: <20200518094021.GA2069@spk-laptop>
-References: <20200515155706.GA1165062@spk-laptop>
- <20200515233130.GC6362@camp.crustytoothpaste.net>
- <xmqq1rnk923o.fsf@gitster.c.googlers.com>
- <20200516173828.GB34961@spk-laptop>
- <92cb6302-09a8-6780-9398-890b1e766680@gmail.com>
- <20200516194033.GA2252@spk-laptop>
- <20200517021452.GA2114@danh.dev>
- <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
+        with ESMTP id S1726040AbgERJku (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 05:40:50 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E032CC05BD09
+        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:50 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id r22so4555637pga.12
+        for <git@vger.kernel.org>; Mon, 18 May 2020 02:40:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JFHJOZA82sJ+9MWbERxNEjcNb3NdFVhnyAGLOj19aYM=;
+        b=nHQ1L8NU2IqOb8D9gSsvyvAg8aj/XauoCSg3hViaxCYCjycYMoJCqFuRjc//ztwlDg
+         p1zMZQPiYMwkKnt4rDz7k36OHIsnK4uiCso7rXeNCj3+8tZ1OPH2tAPTqSp5G8xPAiRG
+         xbhQQSipWMK99xkcWq01DrLL3CkA/WUUwt0v5uE+mReqDbCklH3iuFZDQ0GvEEhbBo2w
+         bGsQfkYNZjyeWG5ad/VpK4PyYRc2rRhPziDpI7pQ3dTImsLnIfzMLPxYJAoW4LIRZTsg
+         EbVw/sRwEAeFBX1u3QuQUKCMSJ1t8fw+bFrN2sHyvmw0sljyeCt0rFzH8co8k2NhLKbc
+         c/lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JFHJOZA82sJ+9MWbERxNEjcNb3NdFVhnyAGLOj19aYM=;
+        b=SpAQD1cbaWleI4sNjIpw6r/I1d2geuApNb7N35S0NC1HMh+4tZNfksdjPejAxab//N
+         eCgZHJ6NW0c0YNV8/qY07zUC577YK4kzdaNi6QTHxmPcQYBoOtriCSWKbchqrrhR8q/R
+         Dl0iw4L9+z1bh6GV7w82XIlbzjqjMB8psw7MnPNuWF/2q67R1klxdBKtui7O/jnV45AI
+         MHV6g+oNQTBzumFDrFQACrH+C5oBD+h75BGaAMcOJK1oNNDuKdiJN5fIrsn17Sssr2rH
+         vQ/t1OZXFbCj1eEUQpCqXU8kFDj0AynIZC8bbjey7VeM4iUu+RK6pBRlWZM8bn+DkF+8
+         iR3Q==
+X-Gm-Message-State: AOAM531duGIev8HQj9i9eoKotieTmAmiQir+9HHcDRSLaf9jvey16gon
+        e+Rd8cvmqJNKRHhAnaR82+x7lDmf
+X-Google-Smtp-Source: ABdhPJxpJ5M5qW4vKXnWYLNcpuIIS0M6cP9IXOxWYaRYpVw0J9vD5hni8/v72UDX8MF/BRuaUMlEfg==
+X-Received: by 2002:a63:514:: with SMTP id 20mr14116285pgf.150.1589794850470;
+        Mon, 18 May 2020 02:40:50 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain ([144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id e1sm8119867pjv.54.2020.05.18.02.40.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 May 2020 02:40:49 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git List <git@vger.kernel.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v16 01/11] transport: not report a non-head push as a branch
+Date:   Mon, 18 May 2020 05:40:29 -0400
+Message-Id: <20200518094039.757-2-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
+In-Reply-To: <20200507161057.12690-1-worldhello.net@gmail.com>
+References: <20200507161057.12690-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `diff.relative` boolean option set to `true` show only changes on
-the current directory and show relative pathnames to the current
-directory.
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Teach --no-relative to override earlier --relative
+When pushing a new reference (not a head or tag), report it as a new
+reference instead of a new branch.
 
-Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- Documentation/config/diff.txt  |  4 ++
- Documentation/diff-options.txt |  2 +
- diff.c                         | 12 +++--
- t/t4045-diff-relative.sh       | 83 ++++++++++++++++++++++++++++++++--
- 4 files changed, 95 insertions(+), 6 deletions(-)
+ t/t5516-fetch-push.sh | 2 +-
+ transport.c           | 9 ++++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index ff09f1cf73..c3ae136eba 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -105,6 +105,10 @@ diff.mnemonicPrefix::
- diff.noprefix::
- 	If set, 'git diff' does not show any source or destination prefix.
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 9c6218f568..77938db77f 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1039,7 +1039,7 @@ test_force_fetch_tag "annotated tag" "-f -a -m'tag message'"
+ test_expect_success 'push --porcelain' '
+ 	mk_empty testrepo &&
+ 	echo >.git/foo  "To testrepo" &&
+-	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new branch]"  &&
++	echo >>.git/foo "*	refs/heads/master:refs/remotes/origin/master	[new reference]"  &&
+ 	echo >>.git/foo "Done" &&
+ 	git push >.git/bar --porcelain  testrepo refs/heads/master:refs/remotes/origin/master &&
+ 	(
+diff --git a/transport.c b/transport.c
+index 15f5ba4e8f..26fefd13c1 100644
+--- a/transport.c
++++ b/transport.c
+@@ -500,9 +500,12 @@ static void print_ok_ref_status(struct ref *ref, int porcelain, int summary_widt
+ 				 porcelain, summary_width);
+ 	else if (is_null_oid(&ref->old_oid))
+ 		print_ref_status('*',
+-			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
+-			"[new branch]"),
+-			ref, ref->peer_ref, NULL, porcelain, summary_width);
++				 (starts_with(ref->name, "refs/tags/")
++				  ? "[new tag]"
++				  : (starts_with(ref->name, "refs/heads/")
++				     ? "[new branch]"
++				     : "[new reference]")),
++				 ref, ref->peer_ref, NULL, porcelain, summary_width);
+ 	else {
+ 		struct strbuf quickref = STRBUF_INIT;
+ 		char type;
+-- 
+2.26.1.120.g98702cf3e9
 
-+diff.relative::
-+	If set to 'true', 'git diff' does not show changes outside of the directory
-+	and show pathnames relative to the current directory.
-+
- diff.orderFile::
- 	File indicating how to order files within a diff.
- 	See the '-O' option to linkgit:git-diff[1] for details.
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index bb31f0c42b..167b451b89 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -651,6 +651,8 @@ ifndef::git-format-patch[]
- 	not in a subdirectory (e.g. in a bare repository), you
- 	can name which subdirectory to make the output relative
- 	to by giving a <path> as an argument.
-+	`--no-relative` can be used to countermand both `diff.relative` config
-+	option and previous `--relative`.
- endif::git-format-patch[]
-
- -a::
-diff --git a/diff.c b/diff.c
-index d1ad6a3c4a..e3f98334e9 100644
---- a/diff.c
-+++ b/diff.c
-@@ -48,6 +48,7 @@ static const char *diff_order_file_cfg;
- int diff_auto_refresh_index = 1;
- static int diff_mnemonic_prefix;
- static int diff_no_prefix;
-+static int diff_relative;
- static int diff_stat_graph_width;
- static int diff_dirstat_permille_default = 30;
- static struct diff_options default_diff_options;
-@@ -386,6 +387,10 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 		diff_no_prefix = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.relative")) {
-+		diff_relative = git_config_bool(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "diff.statgraphwidth")) {
- 		diff_stat_graph_width = git_config_int(var, value);
- 		return 0;
-@@ -4558,6 +4563,8 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
- 		options->b_prefix = "b/";
- 	}
-
-+	options->flags.relative_name = diff_relative;
-+
- 	options->color_moved = diff_color_moved_default;
- 	options->color_moved_ws_handling = diff_color_moved_ws_default;
-
-@@ -5195,8 +5202,7 @@ static int diff_opt_relative(const struct option *opt,
- {
- 	struct diff_options *options = opt->value;
-
--	BUG_ON_OPT_NEG(unset);
--	options->flags.relative_name = 1;
-+	options->flags.relative_name = !unset;
- 	if (arg)
- 		options->prefix = arg;
- 	return 0;
-@@ -5492,7 +5498,7 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_GROUP(N_("Other diff options")),
- 		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
- 			       N_("when run from subdir, exclude changes outside and show relative paths"),
--			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
-+			       PARSE_OPT_OPTARG,
- 			       diff_opt_relative),
- 		OPT_BOOL('a', "text", &options->flags.text,
- 			 N_("treat all files as text")),
-diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
-index 258808708e..ac264ccc2a 100755
---- a/t/t4045-diff-relative.sh
-+++ b/t/t4045-diff-relative.sh
-@@ -8,7 +8,8 @@ test_expect_success 'setup' '
- 	echo content >file1 &&
- 	mkdir subdir &&
- 	echo other content >subdir/file2 &&
--	blob=$(git hash-object subdir/file2) &&
-+	blob_file1=$(git hash-object file1) &&
-+	blob_file2=$(git hash-object subdir/file2) &&
- 	git add . &&
- 	git commit -m one
- '
-@@ -18,7 +19,7 @@ check_diff () {
- 	shift
- 	expect=$1
- 	shift
--	short_blob=$(git rev-parse --short $blob)
-+	short_blob=$(git rev-parse --short $blob_file2)
- 	cat >expected <<-EOF
- 	diff --git a/$expect b/$expect
- 	new file mode 100644
-@@ -70,7 +71,7 @@ check_raw () {
- 	expect=$1
- 	shift
- 	cat >expected <<-EOF
--	:000000 100644 $ZERO_OID $blob A	$expect
-+	:000000 100644 $ZERO_OID $blob_file2 A	$expect
- 	EOF
- 	test_expect_success "--raw $*" "
- 		git -C '$dir' diff --no-abbrev --raw $* HEAD^ >actual &&
-@@ -86,4 +87,80 @@ do
- 	check_$type . dir/file2 --relative=sub
- done
-
-+check_diff_relative_option () {
-+	dir=$1
-+	shift
-+	expect=$1
-+	shift
-+	relative_opt=$1
-+	shift
-+	short_blob=$(git rev-parse --short "$blob_file2")
-+	cat >expected <<-EOF
-+	diff --git a/$expect b/$expect
-+	new file mode 100644
-+	index 0000000..$short_blob
-+	--- /dev/null
-+	+++ b/$expect
-+	@@ -0,0 +1 @@
-+	+other content
-+	EOF
-+	test_expect_success "config diff.relative $relative_opt -p $*" "
-+		test_config -C $dir diff.relative $relative_opt &&
-+		git -C '$dir' diff -p $* HEAD^ >actual &&
-+		test_cmp expected actual
-+	"
-+}
-+
-+check_diff_no_relative_option () {
-+	dir=$1
-+	shift
-+	expect=$1
-+	shift
-+	relative_opt=$1
-+	shift
-+	short_blob_file1=$(git rev-parse --short "$blob_file1")
-+	short_blob_file2=$(git rev-parse --short "$blob_file2")
-+	cat >expected <<-EOF
-+	diff --git a/file1 b/file1
-+	new file mode 100644
-+	index 0000000..$short_blob_file1
-+	--- /dev/null
-+	+++ b/file1
-+	@@ -0,0 +1 @@
-+	+content
-+	diff --git a/$expect b/$expect
-+	new file mode 100644
-+	index 0000000..$short_blob_file2
-+	--- /dev/null
-+	+++ b/$expect
-+	@@ -0,0 +1 @@
-+	+other content
-+	EOF
-+	test_expect_success "config diff.relative $relative_opt -p $*" "
-+		test_config -C $dir diff.relative $relative_opt &&
-+		git -C '$dir' diff -p $* HEAD^ >actual &&
-+		git -C '$dir' diff -p $* HEAD^ >/tmp/actual &&
-+		test_cmp expected actual
-+	"
-+}
-+
-+check_diff_no_relative_option . subdir/file2 false
-+check_diff_no_relative_option . subdir/file2 true --no-relative
-+check_diff_no_relative_option . subdir/file2 false --no-relative
-+check_diff_no_relative_option subdir subdir/file2 false
-+check_diff_no_relative_option subdir subdir/file2 true --no-relative
-+check_diff_no_relative_option subdir subdir/file2 false --no-relative
-+
-+check_diff_relative_option . file2 false --relative=subdir/
-+check_diff_relative_option . file2 false --relative=subdir
-+check_diff_relative_option . file2 true --relative=subdir/
-+check_diff_relative_option . file2 true --relative=subdir
-+check_diff_relative_option subdir file2 false --relative
-+check_diff_relative_option subdir file2 true --relative
-+check_diff_relative_option subdir file2 true
-+check_diff_relative_option subdir file2 false --no-relative --relative
-+check_diff_relative_option subdir file2 true --no-relative --relative
-+check_diff_relative_option . file2 false --no-relative --relative=subdir
-+check_diff_relative_option . file2 true --no-relative --relative=subdir
-+
- test_done
---
-2.26.2
