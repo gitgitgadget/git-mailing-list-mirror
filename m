@@ -2,94 +2,101 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C041CC433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F6C5C433DF
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:34:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B26C20826
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:33:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A+msMn4K"
+	by mail.kernel.org (Postfix) with ESMTP id 383FC20826
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 17:34:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728150AbgERRdn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 13:33:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62647 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727777AbgERRdn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 13:33:43 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 94EF6C84E2;
-        Mon, 18 May 2020 13:33:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Yj+SZ6Iz9n7bM1DzxicR5Z/QFFk=; b=A+msMn
-        4KMhqCDqtVAvCY68A7jzEN/A7awV4mCvNI7pH10Pk+higKFfltfkZG+WidOtHt0Z
-        qUFQ1B10YT3XSLUl6fOZwQ3kcg72PgfgIb6lTL89rLdZArqG5ytLOlijrZbPJulM
-        Mu9yqsRcWSFRaEpWYvQQYbIGkwLEiHmZZMan8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qwf7k4VpCC/XmsIuYWSfAZpZrfu+fq4z
-        /RZ/S31yM6PYG/mD475duEpsufPeRJ7e2RTTan3XkSFJog89RAdJhGNG+Fcbg0UW
-        PErIsf+dbizP/78jtyxCtz0lNGL5doyPbKNamK+VsJcuBld8EtrQ+jLYv0WvhRIU
-        EdjOwqfjrX8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8C3BDC84E1;
-        Mon, 18 May 2020 13:33:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D4081C84E0;
-        Mon, 18 May 2020 13:33:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Laurent Arnoud <laurent@spkdev.net>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, phillip.wood@dunelm.org.uk,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v6] diff: add config option relative
-References: <20200515233130.GC6362@camp.crustytoothpaste.net>
-        <xmqq1rnk923o.fsf@gitster.c.googlers.com>
-        <20200516173828.GB34961@spk-laptop>
-        <92cb6302-09a8-6780-9398-890b1e766680@gmail.com>
-        <20200516194033.GA2252@spk-laptop> <20200517021452.GA2114@danh.dev>
-        <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
-        <20200518094021.GA2069@spk-laptop> <20200518135656.GB1980@danh.dev>
-        <xmqqzha541la.fsf@gitster.c.googlers.com>
-        <20200518172103.GA2110@spk-laptop>
-        <xmqqftbx40br.fsf@gitster.c.googlers.com>
-Date:   Mon, 18 May 2020 10:33:37 -0700
-In-Reply-To: <xmqqftbx40br.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 18 May 2020 10:31:04 -0700")
-Message-ID: <xmqq7dx9407i.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728362AbgERRe5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 13:34:57 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39316 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727006AbgERRe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 13:34:56 -0400
+Received: by mail-wm1-f68.google.com with SMTP id w64so406042wmg.4
+        for <git@vger.kernel.org>; Mon, 18 May 2020 10:34:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LYFvDQri9FIC5vsqkA1VKAqXMmTDuTbpVFxMPRWqXLA=;
+        b=RWkPneTyr8fPho0AgBCBiMhDFaQbT1Z+KVAiNyB/kIiAvo8NfVoNICw8r5jTLXJgpL
+         V9EXUsd2y4+VHeMVZRiw/8zOzUAYvGoqS5tmZoz1ZQps96sBEYCvCDqzqNszRnxc4ib7
+         b0kO3HP9aZAIiNofZtHSzBvEBadJMHkHv+IJM1L4nfRARhHf7Z7OuewSXCuZstjofN4O
+         kpk2agbaHwqkEbqixD4WiUjSz+7p0VD2FD4unn5IFUfJrfZAMz37sPPij0dEdJZCKRHA
+         jUsDX/zEBvXSvMD78IIdGDLkorGKgomxyXwcCTq1pvhyLfXLcbv+/I0TvCagQo5NvWu0
+         mK1Q==
+X-Gm-Message-State: AOAM5302AJ4BXdw2yL8T7UvcXv2dGDSSa+QNEBbSUGyKGX/eTY4IHPJV
+        ROmpK1waACvwfHLrCF9A0yIJzY1fBHK2uC9P0aA=
+X-Google-Smtp-Source: ABdhPJxkgKul0g+L91+YxnfPLv4kzsy7Mw/1FPIZyWoaCOLa6N9HkBWAAVbV8I1ZTDpazyou2ea7XebmCklHCZnLYgM=
+X-Received: by 2002:a1c:7e4f:: with SMTP id z76mr426500wmc.177.1589823294984;
+ Mon, 18 May 2020 10:34:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B5AD7BF0-992D-11EA-B880-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20200515233130.GC6362@camp.crustytoothpaste.net>
+ <xmqq1rnk923o.fsf@gitster.c.googlers.com> <20200516173828.GB34961@spk-laptop>
+ <92cb6302-09a8-6780-9398-890b1e766680@gmail.com> <20200516194033.GA2252@spk-laptop>
+ <20200517021452.GA2114@danh.dev> <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
+ <20200518094021.GA2069@spk-laptop> <20200518135656.GB1980@danh.dev>
+ <xmqqzha541la.fsf@gitster.c.googlers.com> <20200518172103.GA2110@spk-laptop>
+In-Reply-To: <20200518172103.GA2110@spk-laptop>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 18 May 2020 13:34:43 -0400
+Message-ID: <CAPig+cQqx1GckiMqGXgzwyLHZzx-Q1ayst8boaJ0X6GDPirbHQ@mail.gmail.com>
+Subject: Re: [PATCH v6] diff: add config option relative
+To:     Laurent Arnoud <laurent@spkdev.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, May 18, 2020 at 1:22 PM Laurent Arnoud <laurent@spkdev.net> wrote:
+> The `diff.relative` boolean option set to `true` shows only changes in
+> the current directory/value specified by the `path` argument of the
+> `relative` option and shows pathnames relative to the aforementioned
+> directory.
+>
+> Teach --no-relative to override earlier --relative
+>
+> Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
+> ---
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> @@ -86,4 +87,79 @@ do
+> +check_diff_relative_option () {
+> +       dir=$1
+> +       shift
+> +       expect=$1
+> +       shift
+> +       relative_opt=$1
+> +       shift
+> +       test_expect_success "config diff.relative $relative_opt -p $*" "
+> +               short_blob=$(git rev-parse --short "$blob_file2") &&
 
-> Laurent Arnoud <laurent@spkdev.net> writes:
->
->> Subject: Re: [PATCH v6] diff: add config option relative
->
-> This is not a new problem with this round, but can you stop starting
-> a new iteration that is v6 with "Subject: Re: [PATCH v6]"? 
->
-> It is good to make v6 a reply to v6, but this is the *first* message
+You're using double quotes inside a double-quote context. (Note that I
+dropped the quotes around $blob_file2 in the example I gave in order
+to avoid this problem.)
 
-Sorry, "make v6 a reply to v5" is what I meant X-<.
-
-> that begins v6 iteration, so it is easier to find it without "Re:"
-> prefix.
->
-> Thanks.
+> +               cat >expected <<-EOF &&
+> +               diff --git a/$expect b/$expect
+> +               new file mode 100644
+> +               index 0000000..\$short_blob
+> +               --- /dev/null
+> +               +++ b/$expect
+> +               @@ -0,0 +1 @@
+> +               +other content
+> +               EOF
+> +               test_config -C $dir diff.relative $relative_opt &&
+> +               git -C '$dir' diff -p $* HEAD^ >actual &&
+> +               test_cmp expected actual
+> +       "
+> +}
