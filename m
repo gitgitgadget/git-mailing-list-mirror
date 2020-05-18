@@ -2,88 +2,123 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47590C433E0
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C35BC433DF
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 10:04:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 144652067D
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 09:44:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5DB582081A
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 10:04:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="Iclv2IZM";
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="VL91MTxu"
+	dkim=pass (2048-bit key) header.d=dtucker-net.20150623.gappssmtp.com header.i=@dtucker-net.20150623.gappssmtp.com header.b="HAYU0IjF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbgERJoC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 05:44:02 -0400
-Received: from ns3309586.ip-5-135-160.eu ([5.135.160.121]:34552 "EHLO
-        mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbgERJoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 05:44:01 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        by mail.spkdev.net (Postfix) with ESMTP id E9D454034B;
-        Mon, 18 May 2020 09:43:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1589795040;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=sxl9SZT5yfsDpuxDDjyR9jo4QQR/CWlhw4Ek647yjfA=;
-        b=Iclv2IZMkWyAv9ZXJHHX21iV3TeG9zcKQEpYu9QDmAnSKrWmVxlnGJodzM8VLdXd6Lwcfu
-        rMpvFV211WiL8Gob7pY3p3gb6elvgAcZuhYyB0dcGej6vpyjLHljWTQOvMIpL3aZCXRDTJ
-        AQ1gUaP7oPBqj/kvqbIuGWdW9o5anmA=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.spkdev.net (Postfix) with ESMTPSA id A46CF3FFDA;
-        Mon, 18 May 2020 09:43:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1589795039;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=sxl9SZT5yfsDpuxDDjyR9jo4QQR/CWlhw4Ek647yjfA=;
-        b=VL91MTxu/EXF8cAgMF2BjywFt+Gc/+Js+QqyBMMw4GoxIyTlMPclyHIp+gVXZy8ZijQ8Zs
-        B4Xtm8hkM5y6VgXYcRtsgYqo+eLHeV9TQFBicKZIpzMIAgAi933s3pp+Z/W+Ar+dx8VwOD
-        0dEaqMR8mjpp/ROthYfldtR3II5fLIg=
-Date:   Mon, 18 May 2020 11:43:59 +0200
-From:   Laurent Arnoud <laurent@spkdev.net>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4] diff: add config option relative
-Message-ID: <20200518094359.GB2069@spk-laptop>
-References: <20200515155706.GA1165062@spk-laptop>
- <20200515233130.GC6362@camp.crustytoothpaste.net>
- <xmqq1rnk923o.fsf@gitster.c.googlers.com>
- <20200516173828.GB34961@spk-laptop>
- <92cb6302-09a8-6780-9398-890b1e766680@gmail.com>
- <20200516194033.GA2252@spk-laptop>
- <20200517021452.GA2114@danh.dev>
+        id S1726610AbgERKEK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 06:04:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44364 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726130AbgERKEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 06:04:08 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A254C061A0C
+        for <git@vger.kernel.org>; Mon, 18 May 2020 03:04:08 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id u35so4585930pgk.6
+        for <git@vger.kernel.org>; Mon, 18 May 2020 03:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dtucker-net.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fAjg/Yp0mAZPWl24JjXXSq+zcbC9DZHqTmFs2u+lT+w=;
+        b=HAYU0IjFZSOnS22tD38nZxN0p5kRJfsBX5skyslX7VX72IcsPJHd/Y/r5EhoELoNEk
+         TaTsPninKK24SneP5f9xUV3Dvp2m8diJzBX3LBB4GnXGgsUvALm5MLDcC1oHN9WDft6o
+         NfokWm39QXQqQDO1Py0fJ096pql38FspUtb3eQkX5OAFx72cSAbUnBQ2dU0IG++zK3G3
+         L/r8c7AfEm6eOt/miQrlR7oTHpBrFlf0eQ0nYuA/bNDWMT5Eq/yj1U6BHRw7YrZxLDEW
+         qWbqIl84XEqJ9v6mJvHUX4AuPI1QJFiar1PANvAxOsJYzAi2sgheyBoqvZn28BD5ZJex
+         6zPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fAjg/Yp0mAZPWl24JjXXSq+zcbC9DZHqTmFs2u+lT+w=;
+        b=Ht3DOWlZm+/54T+I3M7jbjH/lJReRHEdUmCYKZOFeT3ahOV6PgUTyct2YjkZhFOLPr
+         J+Szd5C92VB/hcp8x7Rfnfe7tNkJbdkJeYbVRFqC9esukxqPasOKPgQUzRIrbhLR8BYz
+         Z3iuHB67V8QzAbmYmUa8FuT4DLq1TWreXDgRf+uvk7+u9bXHQeF9I7S8ymXEf9ROSjz8
+         6Hun2GiA6iyKj+C1zapCwRmhVcINdtytxgmKu8zYT77r3GYnHTa0AhnfgijmslgBq0fw
+         A8riFdPmk6L/YbBJo1wQdCoLUDZerQ6pVojRAO9TrFVNXS0oM5yBhXLp2ByNIKNUZuN7
+         +deQ==
+X-Gm-Message-State: AOAM532LrVPgrsTb5JaIJWy2WazPPYWTOZb3PH9RYoW7dxUcEdcinhky
+        zkUsvmy3cKqsgTsJZ5ze1M0gvF0xA7NBKvAZwSpiPcuEWyZT8nvSUVRpKZKF/6ykt7DYYlVM7zH
+        cppNDCzbbCoCD9n2hfZsoHXwevR93BfnfJgUPNvyNbONhYg27Vwg032L1sXhVQwc=
+X-Google-Smtp-Source: ABdhPJyZ8OE3ErFvkoU3rN/THy1/Yy7dX2nf/dKM2OaloVrL5f0kQ2qU6XJAOfxMyzJwA+i0ZagQVQ==
+X-Received: by 2002:a65:66d5:: with SMTP id c21mr13843886pgw.155.1589796247391;
+        Mon, 18 May 2020 03:04:07 -0700 (PDT)
+Received: from fw.dtucker.net (ppp59-167-129-32.static.internode.on.net. [59.167.129.32])
+        by smtp.gmail.com with ESMTPSA id cc8sm8094167pjb.11.2020.05.18.03.04.05
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 18 May 2020 03:04:06 -0700 (PDT)
+Received: from gate.dtucker.net (2001-44b8-3110-fb01-0000-0000-0000-0001.static.ipv6.internode.on.net [2001:44b8:3110:fb01::1])
+        by fw.dtucker.net (OpenSMTPD) with ESMTP id 3a372151
+        for <git@vger.kernel.org>;
+        Mon, 18 May 2020 20:04:02 +1000 (AEST)
+Received: from gate.dtucker.net (localhost.localdomain [127.0.0.1])
+        by gate.dtucker.net (8.15.2/8.15.2) with ESMTP id 04IA41hA029473;
+        Mon, 18 May 2020 20:04:01 +1000
+Received: (from dtucker@localhost)
+        by gate.dtucker.net (8.15.2/8.15.2/Submit) id 04IA4116029466;
+        Mon, 18 May 2020 20:04:01 +1000
+From:   Darren Tucker <dtucker@dtucker.net>
+To:     git@vger.kernel.org
+Cc:     Darren Tucker <dtucker@dtucker.net>
+Subject: [PATCH 4/7] Use strtoumax instead of strtoull.
+Date:   Mon, 18 May 2020 20:03:53 +1000
+Message-Id: <20200518100356.29292-4-dtucker@dtucker.net>
+X-Mailer: git-send-email 2.21.3
+In-Reply-To: <20200518100356.29292-1-dtucker@dtucker.net>
+References: <20200518100356.29292-1-dtucker@dtucker.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200517021452.GA2114@danh.dev>
-X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Danh,
+strtoumax is in the compat library so this works on platforms that don't
+have a native strtoull.
 
-On Sun, May 17, 2020 at 09:14:52AM +0700, Đoàn Trần Công Danh wrote:
-> Above comment also applied here.
-> And remove this debug cat.
+Signed-off-by: Darren Tucker <dtucker@dtucker.net>
+---
+ t/helper/test-progress.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Oops thanks for the review I've submitted a v5 for review let me know if I
-responded to all your feedbacks
-
+diff --git a/t/helper/test-progress.c b/t/helper/test-progress.c
+index 5d05cbe789..3e9eb2abe3 100644
+--- a/t/helper/test-progress.c
++++ b/t/helper/test-progress.c
+@@ -47,7 +47,7 @@ int cmd__progress(int argc, const char **argv)
+ 		char *end;
+ 
+ 		if (skip_prefix(line.buf, "progress ", (const char **) &end)) {
+-			uint64_t item_count = strtoull(end, &end, 10);
++			uint64_t item_count = strtoumax(end, &end, 10);
+ 			if (*end != '\0')
+ 				die("invalid input: '%s'\n", line.buf);
+ 			display_progress(progress, item_count);
+@@ -55,10 +55,10 @@ int cmd__progress(int argc, const char **argv)
+ 				       (const char **) &end)) {
+ 			uint64_t byte_count, test_ms;
+ 
+-			byte_count = strtoull(end, &end, 10);
++			byte_count = strtoumax(end, &end, 10);
+ 			if (*end != ' ')
+ 				die("invalid input: '%s'\n", line.buf);
+-			test_ms = strtoull(end + 1, &end, 10);
++			test_ms = strtoumax(end + 1, &end, 10);
+ 			if (*end != '\0')
+ 				die("invalid input: '%s'\n", line.buf);
+ 			progress_test_ns = test_ms * 1000 * 1000;
 -- 
-Laurent
+2.21.3
+
