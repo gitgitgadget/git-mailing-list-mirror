@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84354C433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB57C433DF
 	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:31:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CF5620829
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:31:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEBB82081A
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 20:31:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rEsK5f1H"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u8TRIdMg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726545AbgERUba (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 16:31:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58194 "EHLO
+        id S1726504AbgERUb3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 16:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726227AbgERUba (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 16:31:30 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAB02C05BD09
+        with ESMTP id S1726227AbgERUb3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 16:31:29 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A8AFC061A0C
         for <git@vger.kernel.org>; Mon, 18 May 2020 13:31:29 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id h4so802833wmb.4
+Received: by mail-wm1-x32f.google.com with SMTP id f13so797502wmc.5
         for <git@vger.kernel.org>; Mon, 18 May 2020 13:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TFpFDxlBb1OSM2D+QSBk1Pp9T9Cuq+rovqf6Inwe0Qc=;
-        b=rEsK5f1HjCexoYchPF4d8YoYVsx554YxwlABWYAqg60M5Ue7IktmT6mbc7wRFoBWq8
-         QYgeEmarJi0MbbWoI62OQE5Ie3qCMK3g0Bk4K+uhvKYm/DhW0EB2Vkq/x6VPhHARoHfy
-         VZYxOXWhhs0YSW5Q/M5O73edPTWglFIiyRs2LtYTU++rBTRVhu+awch8+aQt3wVKsBzK
-         6FWm3hUR73itEhDKhB7PzvOLOLbgymjqdhfJmfWWGTR8QbUoQFtx2yUIk0D8pBVbv3G7
-         Ndflc8x9LcQc2R0IgHk0S0h9sPS4YJiUC0le2gVQDje00bN/0XTSIOT/G/snAmX+R++4
-         Yo3w==
+        bh=52r6GOi4esQrwaK7fB49N4Lj/9j52h+KAqtmmANsiMc=;
+        b=u8TRIdMgdLR+eTHeYJ2fj11ZTHJid0rm6zBPeJZeLx0q+mkjS/aWGgZgb/Hci/dEYv
+         sbWjRe1qF0xxzE6JyPKlSQCuLXzggmCUSmKL3w23dBzxJmt7QK5ZYIar9CszUzjYP5SY
+         2EX35Uq0qhDfKlqcJrVzpUcwjyf0wTagAF2sNXc5n6gIYSCrAiuX2GtyUDsWiUGNNFUr
+         XN/SHS2GT0xRIRRIKGrkxGE3Fp/Sms2uouIORFfOxEylTkIHfCpYnu374TS4AEuCIJhT
+         zrxfdlRh4fzY3Fw5n1akOdpMOCX9o7StiZ4lJ7kziZNrRFfCrE6F9lTcIm21R7+zcbWi
+         EBqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TFpFDxlBb1OSM2D+QSBk1Pp9T9Cuq+rovqf6Inwe0Qc=;
-        b=hcq7A/ZxmaCck2bJqzcztH0CnzLjugqFjwFCFXDxtebXgSgo7oMrfz2UMUDkKB4S8B
-         Gu7lXulW9J2DkXSd4TnT+pHzze9NykDTqS5aiucxJf1Zr3AVlO/f4wvI64SIAwDdRJda
-         1bO21tX4Ms3gtzRDZoYliePr1+0q3a40pnA8dJ7UMdlsB310ao6ub7OujiNzq/qr+Qix
-         XPcsw7Of+mF8VM7+PrsjOqRlQJX2lJWj0+e6eSkiO689HTgr7grrG1NBplk+TjAGftc6
-         xP9VzjSx9i5BjKjkPaeuE/+pMQyUdY1xh1KGRgGhJYjXpXA2kvDA/p4/94Z3DKgKfoyk
-         rYFg==
-X-Gm-Message-State: AOAM5339U2mPeGiTz80dW1K0bt+ChaOPBuWjHqjuhuth+Bf2fpph/nq7
-        /tsmTIj+8WYZNMt2ZMU5MHeNvSL9
-X-Google-Smtp-Source: ABdhPJwuG6I5PG5PvSHr+bLom+vT7ugE5Ea08U+rid6m5sQbYUeqreMLztDTya1iyUGnRWJFhjxDjQ==
-X-Received: by 2002:a1c:bad6:: with SMTP id k205mr31453wmf.53.1589833888054;
-        Mon, 18 May 2020 13:31:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j1sm17782540wrm.40.2020.05.18.13.31.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=52r6GOi4esQrwaK7fB49N4Lj/9j52h+KAqtmmANsiMc=;
+        b=Y039gwH8nwDJ2M9pLTD3gfiL2+fdzAd8usN1I4K7fpMqguKbxNCucPow/V0rUpRn74
+         eZgZxDkynUpbRgqQoBdGllZvMmFTdxCibWKI/Bn8k+gx+uiDCN00pKC/yAB+G9JtX4JZ
+         7OKebnAL4nrbblWdLbG3wNc9TeUtxGsxu2qMDijnafVI9uePMnCIx2QTccqlp9F+VsQd
+         GnBJnIKtXZtv3BXiPk+zAZfbhwL8jKEwy9JMttrh+/60il0b8a23Ju06DufJS9WbvOgu
+         YTbHcrbLuGDto+UZNoyy0sXhimC03oLjbZSVfKWo9Q1IOy2BhiNClhbzv+ZUhA7SB0M5
+         /T3A==
+X-Gm-Message-State: AOAM531q1rl2f6L7NCS8VD6KqVZQgWSlujTbauIGZeQXC91uQjghHf8n
+        9k9o5ZnMNy89ZA+0t8TEVaWZp0Y8
+X-Google-Smtp-Source: ABdhPJy9WT2q2El3qYKxNfSOyKHqA8Tg3s2LscswkAWSK5mbHFoPu6CHcldEgUYnkgDxLCeLDUvZig==
+X-Received: by 2002:a1c:2843:: with SMTP id o64mr1207761wmo.158.1589833887355;
         Mon, 18 May 2020 13:31:27 -0700 (PDT)
-Message-Id: <c650f7e4345aa58b5710310acea2193f0fd8cfc3.1589833884.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a13sm17458715wrv.67.2020.05.18.13.31.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2020 13:31:26 -0700 (PDT)
+Message-Id: <46d04f6740ebd9cfe4f9127942d5ac6482c57550.1589833884.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v14.git.1589833884.gitgitgadget@gmail.com>
 References: <pull.539.v13.git.1589226388.gitgitgadget@gmail.com>
         <pull.539.v14.git.1589833884.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 18 May 2020 20:31:17 +0000
-Subject: [PATCH v14 2/9] Move REF_LOG_ONLY to refs-internal.h
+Date:   Mon, 18 May 2020 20:31:16 +0000
+Subject: [PATCH v14 1/9] Write pseudorefs through ref backends.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,53 +78,405 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-REF_LOG_ONLY is used in the transaction preparation: if a symref is involved in
-a transaction, the referent of the symref should be updated, and the symref
-itself should only be updated in the reflog. Other ref backends will need to
-duplicate this logic.
+Pseudorefs store transient data in in the repository. Examples are HEAD,
+CHERRY_PICK_HEAD, etc.
+
+These refs have always been read through the ref backends, but they were written
+in a one-off routine that wrote a object ID or symref directly wrote into
+.git/<pseudo_ref_name>.
+
+This causes problems when introducing a new ref storage backend. To remedy this,
+extend the ref backend implementation with a write_pseudoref_fn and
+update_pseudoref_fn.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs/files-backend.c | 7 -------
- refs/refs-internal.h | 7 +++++++
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ refs.c                | 114 +++++++-----------------------------------
+ refs.h                |  11 ++++
+ refs/files-backend.c  | 114 +++++++++++++++++++++++++++++++++++++++++-
+ refs/packed-backend.c |  21 +++++++-
+ refs/refs-internal.h  |  12 +++++
+ 5 files changed, 173 insertions(+), 99 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 224ff66c7bb..4acc22373e4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -739,101 +739,6 @@ long get_files_ref_lock_timeout_ms(void)
+ 	return timeout_ms;
+ }
+ 
+-static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
+-			   const struct object_id *old_oid, struct strbuf *err)
+-{
+-	const char *filename;
+-	int fd;
+-	struct lock_file lock = LOCK_INIT;
+-	struct strbuf buf = STRBUF_INIT;
+-	int ret = -1;
+-
+-	if (!oid)
+-		return 0;
+-
+-	strbuf_addf(&buf, "%s\n", oid_to_hex(oid));
+-
+-	filename = git_path("%s", pseudoref);
+-	fd = hold_lock_file_for_update_timeout(&lock, filename, 0,
+-					       get_files_ref_lock_timeout_ms());
+-	if (fd < 0) {
+-		strbuf_addf(err, _("could not open '%s' for writing: %s"),
+-			    filename, strerror(errno));
+-		goto done;
+-	}
+-
+-	if (old_oid) {
+-		struct object_id actual_old_oid;
+-
+-		if (read_ref(pseudoref, &actual_old_oid)) {
+-			if (!is_null_oid(old_oid)) {
+-				strbuf_addf(err, _("could not read ref '%s'"),
+-					    pseudoref);
+-				rollback_lock_file(&lock);
+-				goto done;
+-			}
+-		} else if (is_null_oid(old_oid)) {
+-			strbuf_addf(err, _("ref '%s' already exists"),
+-				    pseudoref);
+-			rollback_lock_file(&lock);
+-			goto done;
+-		} else if (!oideq(&actual_old_oid, old_oid)) {
+-			strbuf_addf(err, _("unexpected object ID when writing '%s'"),
+-				    pseudoref);
+-			rollback_lock_file(&lock);
+-			goto done;
+-		}
+-	}
+-
+-	if (write_in_full(fd, buf.buf, buf.len) < 0) {
+-		strbuf_addf(err, _("could not write to '%s'"), filename);
+-		rollback_lock_file(&lock);
+-		goto done;
+-	}
+-
+-	commit_lock_file(&lock);
+-	ret = 0;
+-done:
+-	strbuf_release(&buf);
+-	return ret;
+-}
+-
+-static int delete_pseudoref(const char *pseudoref, const struct object_id *old_oid)
+-{
+-	const char *filename;
+-
+-	filename = git_path("%s", pseudoref);
+-
+-	if (old_oid && !is_null_oid(old_oid)) {
+-		struct lock_file lock = LOCK_INIT;
+-		int fd;
+-		struct object_id actual_old_oid;
+-
+-		fd = hold_lock_file_for_update_timeout(
+-				&lock, filename, 0,
+-				get_files_ref_lock_timeout_ms());
+-		if (fd < 0) {
+-			error_errno(_("could not open '%s' for writing"),
+-				    filename);
+-			return -1;
+-		}
+-		if (read_ref(pseudoref, &actual_old_oid))
+-			die(_("could not read ref '%s'"), pseudoref);
+-		if (!oideq(&actual_old_oid, old_oid)) {
+-			error(_("unexpected object ID when deleting '%s'"),
+-			      pseudoref);
+-			rollback_lock_file(&lock);
+-			return -1;
+-		}
+-
+-		unlink(filename);
+-		rollback_lock_file(&lock);
+-	} else {
+-		unlink(filename);
+-	}
+-
+-	return 0;
+-}
+ 
+ int refs_delete_ref(struct ref_store *refs, const char *msg,
+ 		    const char *refname,
+@@ -845,7 +750,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
+ 
+ 	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
+ 		assert(refs == get_main_ref_store(the_repository));
+-		return delete_pseudoref(refname, old_oid);
++		return ref_store_delete_pseudoref(refs, refname, old_oid);
+ 	}
+ 
+ 	transaction = ref_store_transaction_begin(refs, &err);
+@@ -1172,7 +1077,8 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
+ 
+ 	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
+ 		assert(refs == get_main_ref_store(the_repository));
+-		ret = write_pseudoref(refname, new_oid, old_oid, &err);
++		ret = ref_store_write_pseudoref(refs, refname, new_oid, old_oid,
++						&err);
+ 	} else {
+ 		t = ref_store_transaction_begin(refs, &err);
+ 		if (!t ||
+@@ -1441,6 +1347,20 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 	return refs_head_ref(get_main_ref_store(the_repository), fn, cb_data);
+ }
+ 
++int ref_store_write_pseudoref(struct ref_store *refs, const char *pseudoref,
++			      const struct object_id *oid,
++			      const struct object_id *old_oid,
++			      struct strbuf *err)
++{
++	return refs->be->write_pseudoref(refs, pseudoref, oid, old_oid, err);
++}
++
++int ref_store_delete_pseudoref(struct ref_store *refs, const char *pseudoref,
++			       const struct object_id *old_oid)
++{
++	return refs->be->delete_pseudoref(refs, pseudoref, old_oid);
++}
++
+ struct ref_iterator *refs_ref_iterator_begin(
+ 		struct ref_store *refs,
+ 		const char *prefix, int trim, int flags)
+diff --git a/refs.h b/refs.h
+index 99ba9e331e5..d1d9361441b 100644
+--- a/refs.h
++++ b/refs.h
+@@ -728,6 +728,17 @@ int update_ref(const char *msg, const char *refname,
+ 	       const struct object_id *new_oid, const struct object_id *old_oid,
+ 	       unsigned int flags, enum action_on_err onerr);
+ 
++/* Pseudorefs (eg. HEAD, CHERRY_PICK_HEAD) have a separate routines for updating
++   and deletion as they cannot take part in normal transactional updates.
++   Pseudorefs should only be written for the main repository.
++*/
++int ref_store_write_pseudoref(struct ref_store *refs, const char *pseudoref,
++			      const struct object_id *oid,
++			      const struct object_id *old_oid,
++			      struct strbuf *err);
++int ref_store_delete_pseudoref(struct ref_store *refs, const char *pseudoref,
++			       const struct object_id *old_oid);
++
+ int parse_hide_refs_config(const char *var, const char *value, const char *);
+ 
+ /*
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index df7553f4cc3..141b6b08816 100644
+index 6516c7bc8c8..df7553f4cc3 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -38,13 +38,6 @@
-  */
- #define REF_NEEDS_COMMIT (1 << 6)
+@@ -731,6 +731,115 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 	return ret;
+ }
  
--/*
-- * Used as a flag in ref_update::flags when we want to log a ref
-- * update but not actually perform it.  This is used when a symbolic
-- * ref update is split up.
-- */
--#define REF_LOG_ONLY (1 << 7)
--
- /*
-  * Used as a flag in ref_update::flags when the ref_update was via an
-  * update to HEAD.
++static int files_write_pseudoref(struct ref_store *ref_store,
++				 const char *pseudoref,
++				 const struct object_id *oid,
++				 const struct object_id *old_oid,
++				 struct strbuf *err)
++{
++	struct files_ref_store *refs =
++		files_downcast(ref_store, REF_STORE_READ, "write_pseudoref");
++	int fd;
++	struct lock_file lock = LOCK_INIT;
++	struct strbuf filename = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
++	int ret = -1;
++
++	if (!oid)
++		return 0;
++
++	strbuf_addf(&filename, "%s/%s", refs->gitdir, pseudoref);
++	fd = hold_lock_file_for_update_timeout(&lock, filename.buf, 0,
++					       get_files_ref_lock_timeout_ms());
++	if (fd < 0) {
++		strbuf_addf(err, _("could not open '%s' for writing: %s"),
++			    buf.buf, strerror(errno));
++		goto done;
++	}
++
++	if (old_oid) {
++		struct object_id actual_old_oid;
++
++		if (read_ref(pseudoref, &actual_old_oid)) {
++			if (!is_null_oid(old_oid)) {
++				strbuf_addf(err, _("could not read ref '%s'"),
++					    pseudoref);
++				rollback_lock_file(&lock);
++				goto done;
++			}
++		} else if (is_null_oid(old_oid)) {
++			strbuf_addf(err, _("ref '%s' already exists"),
++				    pseudoref);
++			rollback_lock_file(&lock);
++			goto done;
++		} else if (!oideq(&actual_old_oid, old_oid)) {
++			strbuf_addf(err,
++				    _("unexpected object ID when writing '%s'"),
++				    pseudoref);
++			rollback_lock_file(&lock);
++			goto done;
++		}
++	}
++
++	strbuf_addf(&buf, "%s\n", oid_to_hex(oid));
++	if (write_in_full(fd, buf.buf, buf.len) < 0) {
++		strbuf_addf(err, _("could not write to '%s'"), filename.buf);
++		rollback_lock_file(&lock);
++		goto done;
++	}
++
++	commit_lock_file(&lock);
++	ret = 0;
++done:
++	strbuf_release(&buf);
++	strbuf_release(&filename);
++	return ret;
++}
++
++static int files_delete_pseudoref(struct ref_store *ref_store,
++				  const char *pseudoref,
++				  const struct object_id *old_oid)
++{
++	struct files_ref_store *refs =
++		files_downcast(ref_store, REF_STORE_READ, "delete_pseudoref");
++	struct strbuf filename = STRBUF_INIT;
++	int ret = -1;
++
++	strbuf_addf(&filename, "%s/%s", refs->gitdir, pseudoref);
++
++	if (old_oid && !is_null_oid(old_oid)) {
++		struct lock_file lock = LOCK_INIT;
++		int fd;
++		struct object_id actual_old_oid;
++
++		fd = hold_lock_file_for_update_timeout(
++			&lock, filename.buf, 0,
++			get_files_ref_lock_timeout_ms());
++		if (fd < 0) {
++			error_errno(_("could not open '%s' for writing"),
++				    filename.buf);
++			goto done;
++		}
++		if (read_ref(pseudoref, &actual_old_oid))
++			die(_("could not read ref '%s'"), pseudoref);
++		if (!oideq(&actual_old_oid, old_oid)) {
++			error(_("unexpected object ID when deleting '%s'"),
++			      pseudoref);
++			rollback_lock_file(&lock);
++			goto done;
++		}
++
++		unlink(filename.buf);
++		rollback_lock_file(&lock);
++	} else {
++		unlink(filename.buf);
++	}
++	ret = 0;
++done:
++	strbuf_release(&filename);
++	return ret;
++}
++
+ struct files_ref_iterator {
+ 	struct ref_iterator base;
+ 
+@@ -3189,6 +3298,9 @@ struct ref_storage_be refs_be_files = {
+ 	files_rename_ref,
+ 	files_copy_ref,
+ 
++	files_write_pseudoref,
++	files_delete_pseudoref,
++
+ 	files_ref_iterator_begin,
+ 	files_read_raw_ref,
+ 
+@@ -3198,5 +3310,5 @@ struct ref_storage_be refs_be_files = {
+ 	files_reflog_exists,
+ 	files_create_reflog,
+ 	files_delete_reflog,
+-	files_reflog_expire
++	files_reflog_expire,
+ };
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 4458a0f69cc..08e8253a893 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1590,6 +1590,22 @@ static int packed_copy_ref(struct ref_store *ref_store,
+ 	BUG("packed reference store does not support copying references");
+ }
+ 
++static int packed_write_pseudoref(struct ref_store *ref_store,
++				  const char *pseudoref,
++				  const struct object_id *oid,
++				  const struct object_id *old_oid,
++				  struct strbuf *err)
++{
++	BUG("packed reference store does not support writing pseudo-references");
++}
++
++static int packed_delete_pseudoref(struct ref_store *ref_store,
++				   const char *pseudoref,
++				   const struct object_id *old_oid)
++{
++	BUG("packed reference store does not support deleting pseudo-references");
++}
++
+ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_store)
+ {
+ 	return empty_ref_iterator_begin();
+@@ -1656,6 +1672,9 @@ struct ref_storage_be refs_be_packed = {
+ 	packed_rename_ref,
+ 	packed_copy_ref,
+ 
++	packed_write_pseudoref,
++	packed_delete_pseudoref,
++
+ 	packed_ref_iterator_begin,
+ 	packed_read_raw_ref,
+ 
+@@ -1665,5 +1684,5 @@ struct ref_storage_be refs_be_packed = {
+ 	packed_reflog_exists,
+ 	packed_create_reflog,
+ 	packed_delete_reflog,
+-	packed_reflog_expire
++	packed_reflog_expire,
+ };
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index dabe18baea1..51c96ebd485 100644
+index 3490aac3a40..dabe18baea1 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -31,6 +31,13 @@ struct ref_transaction;
-  */
- #define REF_HAVE_OLD (1 << 3)
+@@ -549,6 +549,15 @@ typedef int copy_ref_fn(struct ref_store *ref_store,
+ 			  const char *oldref, const char *newref,
+ 			  const char *logmsg);
  
-+/*
-+ * Used as a flag in ref_update::flags when we want to log a ref
-+ * update but not actually perform it.  This is used when a symbolic
-+ * ref update is split up.
-+ */
-+#define REF_LOG_ONLY (1 << 7)
++typedef int write_pseudoref_fn(struct ref_store *ref_store,
++			       const char *pseudoref,
++			       const struct object_id *oid,
++			       const struct object_id *old_oid,
++			       struct strbuf *err);
++typedef int delete_pseudoref_fn(struct ref_store *ref_store,
++				const char *pseudoref,
++				const struct object_id *old_oid);
 +
  /*
-  * Return the length of time to retry acquiring a loose reference lock
-  * before giving up, in milliseconds:
+  * Iterate over the references in `ref_store` whose names start with
+  * `prefix`. `prefix` is matched as a literal string, without regard
+@@ -648,6 +657,9 @@ struct ref_storage_be {
+ 	rename_ref_fn *rename_ref;
+ 	copy_ref_fn *copy_ref;
+ 
++	write_pseudoref_fn *write_pseudoref;
++	delete_pseudoref_fn *delete_pseudoref;
++
+ 	ref_iterator_begin_fn *iterator_begin;
+ 	read_raw_ref_fn *read_raw_ref;
+ 
 -- 
 gitgitgadget
 
