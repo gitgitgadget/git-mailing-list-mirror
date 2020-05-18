@@ -2,107 +2,104 @@ Return-Path: <SRS0=mA98=7A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FECFC433DF
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A770C433E0
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:52:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08B6920674
-	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:24:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00649207F9
+	for <git@archiver.kernel.org>; Mon, 18 May 2020 22:52:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ppnDyGyo"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NAu+zPSN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728419AbgERWYw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 18:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728135AbgERWYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 18:24:51 -0400
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 967B5C061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 15:24:51 -0700 (PDT)
-Received: by mail-qv1-xf4a.google.com with SMTP id dm14so12745619qvb.7
-        for <git@vger.kernel.org>; Mon, 18 May 2020 15:24:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=0bErl2rN0wa0rc5GnQtOQjA4i209u/42dLW0O/cdDVg=;
-        b=ppnDyGyoWqir3cUA56I3RGD5NDsdJQ3AvsEN9f5LfFtgtTStVtOvmuXBJ8UFx15A8c
-         1rWv5U2KJOeLc4BBAlRnCTtqlu02IL0z0Kj/DJwkoKWsjidmP39cb06utZijkxJjMp4P
-         2WdmJO1yDx8FUNJ8+FhRj9isTY8Ps4NCOKy8krKI9inNZptV902vRuwh8pQ7OO9M0gv2
-         /piWhIJjwO+xx3PbRj3HfLaj5CKPSJPMb2E6ZkvzFiNF+ODK0ehakFRGPIfxgjJ7mxOu
-         7g//Cb0hJjW8yUCmUEKpbZkYPFiD0gNXKR6Zhjb+pnfcedxPCx2hPBH4yuvisJ9RhPYt
-         +U3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=0bErl2rN0wa0rc5GnQtOQjA4i209u/42dLW0O/cdDVg=;
-        b=q4M2CEKbUEW2n22nT8BM4As+8YbdjZRibg2VsEaMkDdm68CXtX7CbghpaS1i5Z43nJ
-         0EAlaXnVvBFqB3QZe0dmZe8wL6q6oQWWAejgC+VYPi9B5Ts/sTJBmOBIhpG0DZhHgdVB
-         nL3FJJJBA7zZPQb2XEPMu0sMfKPTIBvtC65FzBth/Syb5IOQhwlKitKxVpe3KNUGkNin
-         XgYfKLfeSUWgd+brmqUjVHCF6f1kon7U7QJ9Rgd4nRvH51P2+BzpIhtt5fnEwSeA3yB6
-         DmWopVIQdewQqYdTayva0QSF569jRUJlVm6bczFS38UOca4CJuc8BUrVe+cM8f0wygEb
-         /DWw==
-X-Gm-Message-State: AOAM530i8pzNxbywAerFNhBX8IRrFya+YEYutYiqDWlt+Y7szsjRDMB4
-        cMBdSQu53YkgJXZpfqN7WBRLWzeAqplcse/Wc87J
-X-Google-Smtp-Source: ABdhPJwanx3gCe2rEKNpQJY0PIoXbxM0bjDF0wHs+GRJ5Veyx7sZtta0iWRnIxoNf5KaabGilRqDd5Lwv6MwMunlwWa6
-X-Received: by 2002:ad4:4141:: with SMTP id z1mr4094327qvp.227.1589840690709;
- Mon, 18 May 2020 15:24:50 -0700 (PDT)
-Date:   Mon, 18 May 2020 15:24:47 -0700
-In-Reply-To: <xmqq5zczx4mn.fsf@gitster.c.googlers.com>
-Message-Id: <20200518222447.15967-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq5zczx4mn.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be-goog
-Subject: Re: [PATCH] wt-status: expand, not dwim, a "detached from" ref
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1726959AbgERWwq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 May 2020 18:52:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52325 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726359AbgERWwp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 May 2020 18:52:45 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC47F64E7D;
+        Mon, 18 May 2020 18:52:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jYy7UXO9J/012nENIydcHlPQiyU=; b=NAu+zP
+        SN96ErxdN2y5jo0G1lO1Jx8WyISixEQLpwleGCu5VqatkixKGuiGSWyANkAoBsGY
+        czn6rOFp5HUf2YCkeyvgV9G8dBXlAWW3NbaKWIfGem7reWW5jgUK9yQZKKYlVPZJ
+        veVQQ22mpFbaT/4eVSlNfuftLcFV/3VnL2nMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qda/ipaxioDM9hCDi69Uwqd2HoaLfjcv
+        GeQPZkmMO2d/QmQQUZ9u7SKaMPKuP4oNKjErk6AW0ywtXZNKinzkklzwtWbY9W/v
+        8yyLichuCkvM2OA5SweUzzMGBz0k13ucSGM/Jt4REEYDe0C+rhj5it49PuafaCfZ
+        Ixmk5nR029g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A4C8D64E7C;
+        Mon, 18 May 2020 18:52:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2CC4A64E7B;
+        Mon, 18 May 2020 18:52:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/7] remote-curl: fix deadlocks when remote server disconnects
+References: <cover.1589393036.git.liu.denton@gmail.com>
+        <cover.1589816718.git.liu.denton@gmail.com>
+        <20200518165056.GD42240@coredump.intra.peff.net>
+        <20200518173652.GB2462058@generichostname>
+        <20200518205854.GB63978@coredump.intra.peff.net>
+Date:   Mon, 18 May 2020 15:52:42 -0700
+In-Reply-To: <20200518205854.GB63978@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 18 May 2020 16:58:54 -0400")
+Message-ID: <xmqqh7wc26v9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4894639E-995A-11EA-8072-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  (1) record not @{<stuff>} (or <branch>@{<stuff>} for that matter),
->      but the actual starting point in the reflog (e.g. in the
->      example this patch would have introduced a regression,
->      i.e. next@{u}, we should record 'origin/next'.  In the example
->      this patch would have used degraded output to prevent dying,
->      i.e. @{u}, we should also record 'origin/next')---this also
->      will fix the "the branch's upstream may be different now"
->      problem.
+Jeff King <peff@peff.net> writes:
 
-This sounds reasonable. I took a look at this.
+> So I think our options are probably:
+>
+>   1. detect flush packets in remote-curl, and either:
+>
+>      a. don't print an error, just hang up. That prevents a hang in the
+> 	caller and produces no extra message on a real error. It may be
+> 	less informative than it could be if the connection hangs up
+> 	(though we may print a curl error message, and the caller will
+> 	at least say "the helper hung up")
+>
+>      b. like (a), but always print an error; this is your original
+> 	patch, but I _suspect_ (but didn't test) that it would produce
+> 	extra useless messages for errors the server reports
+>
+>      c. between the two: inspect the final packet data for evidence of
+>         ERR/sideband 3 and suppress any message if found
+>
+>   2. helper signals end-of-response to caller (then it never produces a
+>      message itself; only the caller does, and it would abort on an ERR
+>      packet before then)
+>
+>      a. using a special pktline (your "0002" patch)
+>
+>      b. some other out-of-band mechanism (e.g., could be another fd)
+>
+> I think this is pushing me towards 2a, your "0002" patch. It sidesteps
+> the error-message questions entirely (and I think 2b is too convoluted
+> to be worth pursuing, especially on Windows where setting up extra pipes
+> is tricky). But I'd also be OK with 1a or 1c.
 
-The part that converts the user-given refname (e.g. "@{u}") into an OID
-is the invocation of get_oid_mb() in parse_branchname_arg() in
-builtin/checkout.c, and get_oid_mb() eventually calls repo_dwim_ref()
-which has access to the absolute branch name ("origin/master"). I did
-not try plumbing it all the way, but I tried overriding "arg" with
-"refs/remotes/origin/master" after the call to get_oid_mb() and it
-worked.
-
-For reference, the stack between get_oid_mb() and repo_dwim_ref() is as
-follows (the line numbers may not be accurate because of some debug
-statements I added):
-
-  repo_dwim_ref (refs.c:597)                                                                                
-  get_oid_basic (sha1-name.c:875)                                                                           
-  get_oid_1 (sha1-name.c:1195)                                                                              
-  get_oid_with_context_1 (sha1-name.c:1812)                                                         
-  get_oid_with_context (sha1-name.c:1959)
-  repo_get_oid (sha1-name.c:1610)
-  repo_get_oid_mb (sha1-name.c:1382)
-
-Besides the increase in complicatedness of all the listed functions that
-we would need in order to plumb the absolute branch name through, I
-haven't checked if the absolute branch name is the one that we should
-use whenever we write to the reflog, or if there are some times that we
-still want to use the user-specified name. I'll take a further look, but
-any ideas are welcome.
+Thanks for a detailed analysis.  I guess we'd take 0002, then?
