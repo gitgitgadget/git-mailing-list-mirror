@@ -2,97 +2,113 @@ Return-Path: <SRS0=xHKm=7B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C369AC433DF
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 20:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CA4CC433E0
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 21:15:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89C7E207D4
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 20:52:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7BE320758
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 21:15:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RTAlABjz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5s5NfQU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726318AbgESUwL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 May 2020 16:52:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60472 "EHLO
+        id S1726333AbgESVPB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 17:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725998AbgESUwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 16:52:11 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFB84C08C5C0
-        for <git@vger.kernel.org>; Tue, 19 May 2020 13:52:10 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id b6so1209846qkh.11
-        for <git@vger.kernel.org>; Tue, 19 May 2020 13:52:10 -0700 (PDT)
+        with ESMTP id S1726290AbgESVPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 17:15:00 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9EBC08C5C0
+        for <git@vger.kernel.org>; Tue, 19 May 2020 14:15:00 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id g185so1345222qke.7
+        for <git@vger.kernel.org>; Tue, 19 May 2020 14:15:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8D5jAaFU7Z237U4f3jH24xnqJKCSTDe2XfokLYbwxCA=;
-        b=RTAlABjzm44WTNIKTgknnD+3rcwOyl5HE9x+sgP1ECiUb9HbJCFr6adNfiUFvcLgL1
-         /TuBScHvSo2gab3h78gpphYrdd7CDcM+4Ub+1eHNH3N8c2RjK7glywcAFtu/ALQAkNyT
-         2BvYjXgrwoUzRwmNWlogYZESJlGNmUwzo4Bu5aAmH4oOiN/X3qT5j0Tkq+FdSilY8gcC
-         NAfdSUBBAZlfH6IBv7JKOBYzBG5/p56uz1MK3G4ILYiBXaMJNqIpqGFYrCfU2B7b0wyK
-         1M0NoH7+EdtiqaYMqBd3kyjRGVcek4ykr8MGsjP/Nd7E7/JAMjAucKUFm0411LiuzLaZ
-         BtmQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IQwtoK2BimauRqNnJTNdyd8PmMycpzWnoCKFNBSAYnc=;
+        b=k5s5NfQUzEHP9SJb5wNFjiB3dUelOMEukmE4v+2MNgGU0Rxrn67NIMoULerG+Jyl0g
+         Xd6tMIKWIz+FN6xz01NR0S3CaWsXPfhEgeeg52w3Olbg78y6IQ4qwMYDTP0y6YVQJZdu
+         rSD3qCazFq8MFRAid4/6chEziXbnT3ognPYr/BivfamNT9wxGugMXqlZcflrYZt0i05J
+         UWWQ7XVWNDP46sWeAU/gFjk47u8r6VHH99yDQPkjrSHNGzfso04zXTFFT+bQmTQMl4Oa
+         v4JZesKUgHgGOGYmWLeAGrm34v7HCXbcYW0CndTBL8qPRadrRN9naYxEZuebFfiG5rfI
+         9KMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8D5jAaFU7Z237U4f3jH24xnqJKCSTDe2XfokLYbwxCA=;
-        b=afbOdwGO4gM3y9RmK9Donleddm3TiGqB5YFJDApG1PHt1sCXluvx5hsjjnQN+5mm4F
-         CVeb3f9NP0iSm1pyB0m5b9vmdba9uByMQjKihiXTmIDSiW3b7R9UK2scw5uNXTWCRnVQ
-         u//iJz6N2dw4hcdVYYcDwbggDwYN7bG+iMQxazg4/xP6Fq9hwb1xYCEQESiYPyrjnebb
-         jtCRQ78vNSxVOnif4K2TgSdchL7aZtEUeJ3ODp6gyAGc0EcQo5UXn2ghZyqehf2BIHMt
-         mZne2v6dEyVEOe7RYNuzZq3XeRVVoYOZMgs1vVbzm/5dOSR2EZ1fEf5lGrd3+mCpBeeV
-         SBJQ==
-X-Gm-Message-State: AOAM532bTsqGOxntLsCBiFLwduSZ4L4P7h6Eg1rxf6u1eFdAE0TpvwFl
-        7NRJyGqK7VgA8oh+INk+Ux2OdZ2+
-X-Google-Smtp-Source: ABdhPJwkzVT838suikdE869At4txkFk7Xh2KX0UbvwstOlHRYTF8ua3dY1ISWDYz/EWWCDrQpvUEpg==
-X-Received: by 2002:a37:a642:: with SMTP id p63mr1427052qke.113.1589921529875;
-        Tue, 19 May 2020 13:52:09 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id f33sm812722qta.44.2020.05.19.13.52.08
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IQwtoK2BimauRqNnJTNdyd8PmMycpzWnoCKFNBSAYnc=;
+        b=O0kjC3CpMDxWFbcYolLjPL3rGKP0ZG4/51VPwkrLPsOuoH7QDhwGIjbkJ+in6i4a3R
+         rQ8IRf2j25hh0yjgifXfjYUMMRBarW69PjZpCfmNSRpxpSa991ntHLiLcVxbyDBJvMey
+         EvUGMLb3h93nR9XcDIl/F9oW0Cqs8kwjL1md50k6ZXulXyAiHfnUERvp287GXSoJAi1G
+         z0mkcLZWFdjPLMvw/hNJhkefrpZf7RImoR4Zql5PnJUUsckMVasfouHwZvjACXnq5fiR
+         8E8pQtIA6Qm5q6LDef4QJASSnMXWwlD2u3Jq1CC3dLyGXKOG3uMCOQUWMipeINeIlBoP
+         rgLQ==
+X-Gm-Message-State: AOAM531upzJpd1l+p8HgdBhXP3flJhry5O78sIBuWd9k551vBSzV1RxX
+        e1vDhRoqfQ0gfY+KelpM7b0=
+X-Google-Smtp-Source: ABdhPJzip/FbHIMk6d6pW1tMT3a9hon2tr4lm+Xjes4eV2csVxxrLnSbDZC6WptvvgT8/H6966VNBw==
+X-Received: by 2002:a37:72c7:: with SMTP id n190mr1469374qkc.270.1589922899799;
+        Tue, 19 May 2020 14:14:59 -0700 (PDT)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id k43sm895277qtk.67.2020.05.19.14.14.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2020 13:52:09 -0700 (PDT)
+        Tue, 19 May 2020 14:14:58 -0700 (PDT)
+Date:   Tue, 19 May 2020 17:14:56 -0400
 From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 8/7] fixup! pkt-line: extern packet_length()
-Date:   Tue, 19 May 2020 16:51:57 -0400
-Message-Id: <04fbb741689d5f25b176c8d9709bfc6d19b2dbb5.1589921435.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.rc0.114.g141fe7d276
-In-Reply-To: <cover.1589885479.git.liu.denton@gmail.com>
-References: <cover.1589885479.git.liu.denton@gmail.com>
+Subject: Re: [PATCH v3 0/7] remote-curl: fix deadlocks when remote server
+ disconnects
+Message-ID: <20200519211456.GA5091@generichostname>
+References: <cover.1589816718.git.liu.denton@gmail.com>
+ <cover.1589885479.git.liu.denton@gmail.com>
+ <20200519184004.GA88536@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200519184004.GA88536@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- pkt-line.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Peff,
 
-diff --git a/pkt-line.h b/pkt-line.h
-index 6cb92d7a5d..5b373fe4cd 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -79,7 +79,7 @@ int packet_read(int fd, char **src_buffer, size_t *src_len, char
-  * Convert a four hex digit packet line length header into its numeric
-  * representation.
-  *
-- * If linelen contains non-hex characters, return -1. Otherwise, return the
-+ * If lenbuf_hex contains non-hex characters, return -1. Otherwise, return the
-  * numeric value of the length header.
-  */
- int packet_length(const char lenbuf_hex[4]);
--- 
-2.27.0.rc0.114.g141fe7d276
+On Tue, May 19, 2020 at 02:40:04PM -0400, Jeff King wrote:
+> It _seems_ to work, because that's the case your invalid-shallow test is
+> covering. I'm just not sure if it works consistently, or what error we
+> might produce in some cases (e.g., saying "woah, what's the weird 0002
+> packet" instead of "the server response ended unexpectedly" or
+> something).
+> 
+> I suspect any remaining issues there are cosmetic, and it might be OK to
+> just discover them organically through use. But if you happen to have
+> done some poking around there, it would be nice to hear it.
 
+From what I can tell, every time a packet is read using the reader in
+do_fetch_pack_v2(), we're careful about checking the packet type so we
+should be safe there. Also, when piping stuff over to index-pack and
+unpack-objects, it looks like the resulting call to recv_sideband()
+treats any control packets as flush packets so it should handle the 0002
+fine.
+
+I could have missed checking some spots, though. But as far as I can
+tell, if it can't handle the 0002 properly, it was already buggy to
+begin with. I agree that we can let any remaining issues be shaken out
+through use.
+
+> Thanks for working on this. When we had the initial discussion, I was
+> really worried the solution was going to be quite nasty, but I think it
+> turned out to be reasonably nice.
+
+Thanks,
+
+Denton
+
+> -Peff
