@@ -2,156 +2,204 @@ Return-Path: <SRS0=xHKm=7B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69254C433E0
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 20:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04B67C433E0
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 20:10:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 23E25207E8
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 20:07:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4785207E8
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 20:10:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="A42E/3O1"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="E68Py4iV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726436AbgESUHa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 May 2020 16:07:30 -0400
-Received: from mout.web.de ([212.227.17.11]:57727 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726369AbgESUH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 16:07:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1589918838;
-        bh=xXMWoxA0eFWOZ7veI0TLCYuRRfN8cmBkSmDlhRxTm6s=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=A42E/3O1NNl1DeJldjH/9awkb/i944ELLcGukWM+JcImhJKtqz9WpSBecp6rhAMS2
-         NIBm+viEj04WhxIJGBa4oEG4Wxtv7O9yHLMGRwci7VeDAcscB9emkIsgJYR7y2BXB0
-         sYN0qKK4+kclwGIBraJHvr+RIDbwV7AxY8ZZkZws=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.24.188]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Myezn-1iqI9r0aHl-00ytZH; Tue, 19
- May 2020 22:07:18 +0200
-Subject: Re: Git Test Coverage Report (v2.27.0-rc0)
-To:     Derrick Stolee <stolee@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <ef72aedf-4264-e386-9563-050c54483c93@gmail.com>
- <853759d3-97c3-241f-98e1-990883cd204e@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <e0a0fc10-7141-f456-a6db-8d2b8c7dc6b9@web.de>
-Date:   Tue, 19 May 2020 22:07:00 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        id S1726436AbgESUKm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 16:10:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53968 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726348AbgESUKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 16:10:41 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78DF7C08C5C0
+        for <git@vger.kernel.org>; Tue, 19 May 2020 13:10:40 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id j21so331533pgb.7
+        for <git@vger.kernel.org>; Tue, 19 May 2020 13:10:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RS0GgpYUaX3c1C/NTwGb843pQ5nGeiWoOXk/5cX0kO8=;
+        b=E68Py4iVavTjKheqM6rnJuuKBFASRcV0I6U3y+05Y/38lpE3PmK77t4jablR0ENfk0
+         +lg07CWeVBD6WjoSZZ8AX6Ybifxf/LQufR0k+vfJXCc09Lx7JLEVvlvOIiSX1G3SLXeM
+         2g2fcP21yMXa4CmZULIPTqAQmOmEEaINVjm7lWHfb+rtqS45MttXl9qbw9UubUQyCwf2
+         18TYVX2yZ3L1OFhcSppn7wYN92KOYn3f+xM8w7JKaYdUNsiu+UbnBfHnG4uAMzIGdND9
+         sO9WG9QS9f/yeU5tKjKMMS+2seifD1sW5U/D8A1DYtq1HXqhJcN4c45PXAMMs9p5QVAL
+         98wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RS0GgpYUaX3c1C/NTwGb843pQ5nGeiWoOXk/5cX0kO8=;
+        b=C5eCovFdS1cTH5joDxoNRWl6Yj0tX+oYHiZOxNamJUacNwwRmVoxCCk2PJINx+HwKH
+         ZfiwxtggvReoZWnZGB+Naf0TvAoFL8yuaU0hjsYhFHIeimt+VbGqtzinjEAV972Qnyzj
+         5T0uI27SywAPIE3EJdfnu/IYfAZsTLVrL5/hhmDUp01QEzVZtQo7js2dwNjKCNzkFUwz
+         U/eQJJwvT5C2xv5d/fjdESIePhdteVWT4sRm5jgj840PX2+FHpQHPw9uY6hRYRdlfjiq
+         QG6hJkO92owzi5XOt0xML25UYrqapJChVJ5NkGJQR4vMw1ilhCZRfq+tfZmyNMZ8Fgoa
+         ke4Q==
+X-Gm-Message-State: AOAM531YHRf7jgWpN8UhrkcD2fgdUeJSCCI3ZXf+Wh+fmOdXdUow4dAu
+        Vq01yTIOARR6fP9yV1IJ4m0PWA==
+X-Google-Smtp-Source: ABdhPJyOKZzwCkJHtljHX9Q/A8PXu1tWTVVy1b5vIdBDqz+ChLxRu6H+Fysog07/sI0eA4tDyq7Uhw==
+X-Received: by 2002:a62:140d:: with SMTP id 13mr790319pfu.31.1589919039606;
+        Tue, 19 May 2020 13:10:39 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id y13sm277337pfq.107.2020.05.19.13.10.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2020 13:10:38 -0700 (PDT)
+Date:   Tue, 19 May 2020 13:10:34 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH] doc: propose hooks managed by the config
+Message-ID: <20200519201034.GB196295@google.com>
+References: <20191210023335.49987-1-emilyshaffer@google.com>
+ <20200420235310.94493-1-emilyshaffer@google.com>
+ <20200425205727.GB6421@camp.crustytoothpaste.net>
+ <20200506213354.GG77802@google.com>
 MIME-Version: 1.0
-In-Reply-To: <853759d3-97c3-241f-98e1-990883cd204e@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zV7A3f0vA6HqJ54YuIMjFgehiheUbb6f7uF1H4b9AfQ90WJgr5C
- FQ9kfEKY2ncM+dEkufRNCOSCHLFr4kWw0uX8sjpUx/Q4DWR/X4/oyXzLljvilrSUhqXM8wQ
- STQe6s/+9v3iVgX/aozc+mlydNAD5NXlyanRNcEyCrAC1EUXyNmCSTq8P7k4fAaRp34C/Q+
- sBlDWM7M095U5xXIuL3Hw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AiEy6ppGPiw=:+qPw4kfj8uB8DPBXrjuIBE
- 4D3fZ/KSam512Lci2Myx0mbkWXIlGde+FwrCho40TAp+hIRQ0ssAGIuwIJO7iabD6PiJZFoNZ
- oY8AHabHlrkx0XwHVwUX8MHhWQamOhOanmuM587s198njUzkR7bnEjMV9AQ/orOZyTPeBeXiV
- iD6HYYDAXHFmu2jg2X3oWk3YyPvmIVuLRgVba6kHVvLOuMmXx+LwO1kvU8YmsU/qq7fZeAtSe
- ZDT1AsHtG51l767kNjkqGrHUB9Hp0Elrn4IlSsDSflKBlmaq7k3ESGxxZAh7K9Dl3hHyR0SdI
- ZK5zK7ee+KlmKraHM89m8cOoYfoIdsyDECcbISzbF9MsfJRUX55D2FXZUiE7ny5Mhaoqd3RG0
- y+JjZabWKo8z6MelHGQN/4bDAvcV8InH7VdejCmZHkPbL3qREna3j4YygQ2KODO9eBUx6d5lb
- /7Vmrp2BNsHioMi5lEDZ3GSGnPGZ3vC8aF0jIWYJiBpXnivfUblvk+DKUudY7cFk2pbuMr9u6
- cidlMBiEqc2gX/a1B4UN8HF9cqIhizPmg1u76eGLrRvcd4khOOzRWNecK3lVaTNm0dKNq0DEa
- VnS5Aj4BlV6pqRu3ijNWiAsVCQmj+5HGB/6DY+zwQpVsfzoqANzjCp6pl0qHabVlEMsfcetlV
- iIGeq6jSa7Ab+G6ZOyQWOf0d7VrU4tkC+l5WgOCmkv2hvkuaAXaCDgU9Xdxw3SdptxzeDD4lh
- B/BfihwqYwLXeT6sqVmTOJFaNiMj7SSzYbLYer+Iak4bi+HA+9TuXBQG9gsN9TxhQUYakjq+O
- hafp9AAlduAz62KvEM7qYTcIPVca6BsyP9vudLIV+SKI0v/iQy/iJvGckERcV8R8DeuHzJT96
- TvHZtL6mTQ7ZtE9vn+ALGFq44zqw+FLxsHnPfQj4tiUzX7t5iJWfXt9EiUvcjW0itAbwzf2vq
- /Bt+JnAfxl87rIET3HupNEccLnqSPQVcckxYJFh9lpFafFhmV3KZ3pgwX+qWe47AwOEja6zGk
- nLQNxwPxBImSxz2rXjfiYQTjY7lU4oyrEpHCQBBbLQRjy6/ITUd1xaxtVCBklJvYmCEduM6Y7
- zvyuySYC/M5vQXTAzugfXs4jFFasUGSh8dUKyKUKKqAzqGxkz0WIaZnSXIdrtDuOE8v+N6PoC
- u9UueWpJoB/eVC7d3NIkIAjy2qpUh5LtQ0Eyi3ZvrCU30btZ5zYoJDlYoqwKLIbwvcJ/2kV87
- UqDdQXpPC69+MxewJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200506213354.GG77802@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.05.20 um 14:11 schrieb Derrick Stolee:
-> On 5/15/2020 1:22 PM, Derrick Stolee wrote:
->> Ren=C3=A9 Scharfe	9068cfb2 fsck: report non-consecutive duplicate names=
- in trees
->> fsck.c
->> 9068cfb2 623) break;
->> 9068cfb2 626) if (is_less_than_slash(*p)) {
->> 9068cfb2 627) name_stack_push(candidates, f_name);
->> 9068cfb2 628) break;
->> 9068cfb2 630) }
->
-> These are different conditions in verify_ordered() to check the
-> special case of blobs and trees having the "same" name (but
-> sorted differently due to appending '/' to trees before sorting).
->
-> There is another name_stack_push() that _is_ covered. I wonder
-> what case would trigger this push?
+On Wed, May 06, 2020 at 02:33:54PM -0700, Emily Shaffer wrote:
+> 
+> On Sat, Apr 25, 2020 at 08:57:27PM +0000, brian m. carlson wrote:
+> > 
+> > On 2020-04-20 at 23:53:10, Emily Shaffer wrote:
+> > > +=== Config schema
+> > > +
+> > > +Hooks can be introduced by editing the configuration manually. There are two new
+> > > +sections added, `hook` and `hookcmd`.
+> > > +
+> > > +==== `hook`
+> > > +
+> > > +Primarily contains subsections for each hook event. These subsections define
+> > > +hook command execution order; hook commands can be specified by passing the
+> > > +command directly if no additional configuration is needed, or by passing the
+> > > +name of a `hookcmd`. If Git does not find a `hookcmd` whose subsection matches
+> > > +the value of the given command string, Git will try to execute the string
+> > > +directly. Hook event subsections can also contain per-hook-event settings.
+> > 
+> > Can we say explicitly that the commands are invoked by the shell?  Or is
+> > the plan to try to parse them without passing to the shell?
+> 
+> Sure. If I didn't make it clear it was by mistake, not by intent.
+> 
+> > 
+> > > +Also contains top-level hook execution settings, for example,
+> > > +`hook.warnHookDir`, `hook.runHookDir`, or `hook.disableAll`.
+> > > +
+> > > +----
+> > > +[hook "pre-commit"]
+> > > +  command = perl-linter
+> > > +  command = /usr/bin/git-secrets --pre-commit
+> > > +
+> > > +[hook "pre-applypatch"]
+> > > +  command = perl-linter
+> > > +  error = ignore
+> > > +
+> > > +[hook]
+> > > +  warnHookDir = true
+> > > +  runHookDir = prompt
+> > > +----
+> > > +
+> > > +==== `hookcmd`
+> > > +
+> > > +Defines a hook command and its attributes, which will be used when a hook event
+> > > +occurs. Unqualified attributes are assumed to apply to this hook during all hook
+> > > +events, but event-specific attributes can also be supplied. The example runs
+> > > +`/usr/bin/lint-it --language=perl <args passed by Git>`, but for repos which
+> > > +include this config, the hook command will be skipped for all events to which
+> > > +it's normally subscribed _except_ `pre-commit`.
+> > > +
+> > > +----
+> > > +[hookcmd "perl-linter"]
+> > > +  command = /usr/bin/lint-it --language=perl
+> > > +  skip = true
+> > > +  pre-commit-skip = false
+> > > +----
+> > 
+> > This seems fine to me.  I like this design and it seems sane.
+> > 
+> > > +== Implementation
+> > > +
+> > > +=== Library
+> > > +
+> > > +`hook.c` and `hook.h` are responsible for interacting with the config files. In
+> > > +the case when the code generating a hook event doesn't have special concerns
+> > > +about how to run the hooks, the hook library will provide a basic API to call
+> > > +all hooks in config order with an `argv_array` provided by the code which
+> > > +generates the hook event:
+> > > +
+> > > +*`int run_hooks(const char *hookname, struct argv_array *args)`*
+> > > +
+> > > +This call includes the hook command provided by `run-command.h:find_hook()`;
+> > > +eventually, this legacy hook will be gated by a config `hook.runHookDir`. The
+> > > +config is checked against a number of cases:
+> > > +
+> > > +- "no": the legacy hook will not be run
+> > > +- "interactive": Git will prompt the user before running the legacy hook
+> > > +- "warn": Git will print a warning to stderr before running the legacy hook
+> > > +- "yes" (default): Git will silently run the legacy hook
+> > > +
+> > > +If `hook.runHookDir` is provided more than once, Git will use the most
+> > > +restrictive setting provided, for security reasons.
+> > 
+> > I don't think this is consistent with the way the rest of our options
+> > work.  What if someone generally wants to disable legacy hooks but then
+> > works with a program in a repository that requires them?
+> 
+> Unfortunately this is something I think my end will want to hold firm
+> on. In general we disagree with your statement later about not wanting
+> to make the .git/config secure. I see your use case, and I anticipate
+> two possible workarounds I'd present:
+> 
+> 1) If working in that repo for the short term, run `git -c
+> hook.runHookDir=yes <command> <arg...>` (and therefore allow the config
+> from command line scope, which I'm happy with in general). Maybe
+> someone would want to use an alias, hookgit or hg? Just kidding.. ;P
+> 
+> 2) If you're stuck with that repo for the long term, add
+> `hook.<hookname>.command = /path/.git/hooks/<hookname>` lines to the local
+> config.
+> 
+> Yes, those are both somewhat user-unfriendly, and I think we can do
+> better... I'll have to think more and see what I can come up with.
+> Suggestions welcome.
 
-Our test has one entry between the conflicting two:
+I thought more about this and today I'm revisiting this work (and
+starting on patches!) so I figured I'd close the loop, since it'll be
+buried in the next round of the design doc.
 
-	x
-	x.1
-	x/
+Refusing to trust the local config is actually contrary to one of the
+tenets I was trying to use when designing this - that we should assume
+the .git/config is safe, so that we don't end up with bloat later if
+.git/config does become safe. The suggestion I made here to disallow
+overrides doesn't fit, so I'll drop it. The implementation will allow a
+more local config to turn hookdir hooks back on.
 
-The branch is necessary if the check of a candidate tree consumes
-a candidate file from the stack that we need to check against later
-candidate trees, e.g.:
+Thanks, all. By way of status update, I think I'll be able to start
+working on this more actively starting this week.
 
-	x
-	x.1.2
-	x.1/
-	x/
-
-Let's check each in sequence:
-
-  1. "x" is a candidate file because the next entry starts with "x" +
-     less-than-slash, so "x/" can still follow.  We push it onto the
-     stack.
-  2. "x.1.2" is not a candidate.  A hypothetical "x.1.2/" would come
-     before "x.1/", so we can be sure we don't have it.
-  3. "x.1/" is a candidate tree because it follows an entry that starts
-     with "x.1" + less-than-slash, so we could have seen a file named
-     "x.1"  earlier.  We pop "x" from the stack and see that it doesn't
-     match, but is a prefix.  "x.1/" is "x" + less-than-slash, so "x/"
-     can still follow.  We push it back onto the stack.  And that's
-     the branch in question.
-  4. "x/" is a candidate tree because it follows an entry that starts
-     with "x" + less-than-slash, so we could have seen a file named "x"
-     earlier.  We pop "x" from the stack, and have a match.
-
-But here's one that slips by fsck and the test coverage check:
-
-	x
-	x.1
-	x.1.2
-	x/
-
-This duplicate is not caught by the current code.  Both "x" and "x.1"
-are candidate files.  "x.1.2" is not a candidate.  "x/" is checked
-against "x.1" from the top of the stack, found not to be a prefix and
-the search ends at that point, unsuccessfully.  I think we need this to
-fix it:
-
-diff --git a/fsck.c b/fsck.c
-index 8bb3ecf282..594e800015 100644
-=2D-- a/fsck.c
-+++ b/fsck.c
-@@ -620,7 +620,7 @@ static int verify_ordered(unsigned mode1, const char *=
-name1,
- 			if (!f_name)
- 				break;
- 			if (!skip_prefix(name2, f_name, &p))
--				break;
-+				continue;
- 			if (!*p)
- 				return TREE_HAS_DUPS;
- 			if (is_less_than_slash(*p)) {
-
+ - Emily
