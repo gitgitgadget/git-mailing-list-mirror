@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 903A4C433E1
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10EB3C433E0
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64BBD206D4
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBBE9207D3
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hw8pHbIv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q0gI0XgY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728738AbgESKyP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 May 2020 06:54:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51306 "EHLO
+        id S1728740AbgESKyR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 06:54:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728686AbgESKyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 06:54:13 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A806AC05BD09
-        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:13 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id y22so14315791qki.3
-        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:13 -0700 (PDT)
+        with ESMTP id S1728728AbgESKyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 06:54:15 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB70C05BD0A
+        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:15 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id i14so14257764qka.10
+        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RFan4SxK9IYM8JwqCj6zEhODFuYsjYeefwOc2HlU8gU=;
-        b=Hw8pHbIvar+sKphWTUB0L8AWUvPE5ye8aKnf32nmfd4ETUDnHEn+t5BQERc1Jp0ACD
-         k0xxmrhAQhlt65lyVKHNWNZKZq0juO7Mde2xc3JwQC7N2dtyEbglWnJNCbSwLfMmsMe+
-         SGetzbLoBSdGcsSQVo5Uwu+uhYjCIhRtuRTsK+aZ5gPkI/YvGOsIGhaDLmSOXR3ycnkp
-         mj2NQIzG59bv+Dbjpbz2r/3CpdOezvwGOVam9117BSBmpcy5KbOtq98Y27kvez8egTW2
-         EygpFcoDhi9YVVXUkNLtTOMpF2bdf3VEH6IF/AnADO+ETHysb+wBEMwuwYLPpeH84Dhh
-         XSpA==
+        bh=YBnhe/GsDhR26I4VumrbqZP6HIDql2w1szyn7XtSRyc=;
+        b=Q0gI0XgYGz+wfBexko8lTJyBd9XselxmlDqo1yuyq8ASC5LQlM1ZkwOUAeBpAsNUXa
+         NPOp9NR1Cb2cmrVpvBlPwiwzkvPLQdgI/9OWl7MBBhXlw966XnSZpbcaBHcOHyagnc5M
+         +nkSwwHJAZZGYf+2AbUwAmOZCstZ1OPGQQv6pxurr+NBMk45QT2nf6OP0uMEmL6KCV50
+         dwmSNrcaHqQW0pY9SJrR5sJRQ8pbc+gVp7wYUpu1dkjO+MQyB1izCVndyA+HgKILYKLK
+         ELjfZ3sDxBn7a/sq4yxGXHawPhyKEmWu2+dw9qeJbADdNliMKjCRHiWSG3hNm5rOqouG
+         EyDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RFan4SxK9IYM8JwqCj6zEhODFuYsjYeefwOc2HlU8gU=;
-        b=Y+hS0SRqkYZRI4dYhqmcVzkOS0B5f2rWpTsMgZ042UupkopiYWsb0X47VBYYAGvGqx
-         bYw3wAeC2oxVix9wXGs+PKSN/7lFrfKDSJHVm7AHohRR9LjLeIzX10ciHo9g7lDd5st+
-         SuP7Ictx/sqyiDBXleDz5KTwYKMFECs1aiBTyUPWc5X43SHTGkSxOK1dIDXBlycqj0ID
-         AmBPDVC2IzTsdTrXDs+GI6GNpWr8WI4Aq2DeBPOiRKlF6T1u/ICuoN7dtfsPISt9+veo
-         DOGRSx9kdTHWtZlTREM2OZErIFsv80aL+rslTBrUUlTk0oToXo4vi8CKbEwIHh/9QvMB
-         1dbw==
-X-Gm-Message-State: AOAM531fbBKOZvnrKxr2yBvYtTwT9o4PkkKGxbe2YmziocjCeki1TcNd
-        /8WSYBb1d1qH6m+75ZjXtLgI41Dx
-X-Google-Smtp-Source: ABdhPJxWofqHXFBrsJTpOB9uEcAm7lSaHjSB95RTtNx/3wSwIbQC5rP2VLhJkSxe8/k80cJk/aNRvQ==
-X-Received: by 2002:a05:620a:1524:: with SMTP id n4mr20737960qkk.490.1589885652778;
-        Tue, 19 May 2020 03:54:12 -0700 (PDT)
+        bh=YBnhe/GsDhR26I4VumrbqZP6HIDql2w1szyn7XtSRyc=;
+        b=rh+4jvT5rTvr7XG08RgkXgf/mrig4c6Mlg//iOQMPAuOBabkQb3WTxkSDU4llmWWFW
+         qkir8N1BRSklR/scAK+ab+3lqkrvedlYZJoAfSLx6WPNFIbU9BtP5QnIEVwFFB37SYsp
+         j1tXY27T7lTRZpSJQdzdC9/1on+VPIc5zJruzCs6mARBXhxqnC29Bks6kIgVEMLB+cyV
+         ELZ9vJVEKR/7DrHXuWzlBOtctWVjkE4s3wi3AbmTPOMD868fT5CcnciKIGQQKHyyUXf8
+         keewsh4Ngb+8pirQFx3Dfbi9y1gLSC2RgrOLcVExpL9Aq1nnVd9uUvTLSE3SvHxChMKV
+         vsIw==
+X-Gm-Message-State: AOAM533opGPMwN/wmbboNB53aeEjFfyU6y+znrku8rFwPRzXf5UEz1Id
+        FcoL1v2DVDjMEpsX/GnHNIQ+A51z
+X-Google-Smtp-Source: ABdhPJzDcyp0aMXnl90LB9Opni0NyY9wNnVD+gRNoZUhbblBf9v3DIPnOT3AsUKxAPpUxHALyabwoA==
+X-Received: by 2002:a37:6e42:: with SMTP id j63mr20014528qkc.495.1589885654142;
+        Tue, 19 May 2020 03:54:14 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id c63sm10177775qkf.131.2020.05.19.03.54.11
+        by smtp.gmail.com with ESMTPSA id c63sm10177775qkf.131.2020.05.19.03.54.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2020 03:54:12 -0700 (PDT)
+        Tue, 19 May 2020 03:54:13 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/7] remote-curl: remove label indentation
-Date:   Tue, 19 May 2020 06:53:55 -0400
-Message-Id: <a2b28c0b28bb972f164ff0a9e48ae6b623a2a125.1589885479.git.liu.denton@gmail.com>
+Subject: [PATCH v3 3/7] transport: extract common fetch_pack() call
+Date:   Tue, 19 May 2020 06:53:56 -0400
+Message-Id: <c118baa5a2e14e16b1f565e485fedcc7806dc505.1589885479.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.26.2.706.g87896c9627
 In-Reply-To: <cover.1589885479.git.liu.denton@gmail.com>
 References: <cover.1589816718.git.liu.denton@gmail.com> <cover.1589885479.git.liu.denton@gmail.com>
@@ -75,27 +75,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the codebase, labels are aligned to the leftmost column. Remove the
-space-indentation from `free_specs:` to conform to this.
+In the switch statement, the difference between the `protocol_v2` and
+`protocol_v{1,0}` arms is a preparatory call to die_if_server_options() in
+the latter. The fetch_pack() call is identical in both arms. However,
+since this fetch_pack() call has so many parameters, it is not
+immediately obvious that the call is identical in both cases.
+
+Extract the common fetch_pack() call out of the switch statement so that
+code duplication is reduced and the logic is more clear for future
+readers. While we're at it, rewrite the switch statement as an if-else
+tower for increased clarity.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- remote-curl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ transport.c | 25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 6844708f38..da3e07184a 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1276,7 +1276,7 @@ static void parse_push(struct strbuf *buf)
- 	if (ret)
- 		exit(128); /* error already reported */
+diff --git a/transport.c b/transport.c
+index 15f5ba4e8f..431a93caef 100644
+--- a/transport.c
++++ b/transport.c
+@@ -369,24 +369,15 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 		refs_tmp = handshake(transport, 0, NULL, must_list_refs);
+ 	}
  
-- free_specs:
-+free_specs:
- 	argv_array_clear(&specs);
- }
+-	switch (data->version) {
+-	case protocol_v2:
+-		refs = fetch_pack(&args, data->fd,
+-				  refs_tmp ? refs_tmp : transport->remote_refs,
+-				  to_fetch, nr_heads, &data->shallow,
+-				  &transport->pack_lockfile, data->version);
+-		break;
+-	case protocol_v1:
+-	case protocol_v0:
+-		die_if_server_options(transport);
+-		refs = fetch_pack(&args, data->fd,
+-				  refs_tmp ? refs_tmp : transport->remote_refs,
+-				  to_fetch, nr_heads, &data->shallow,
+-				  &transport->pack_lockfile, data->version);
+-		break;
+-	case protocol_unknown_version:
++	if (data->version == protocol_unknown_version)
+ 		BUG("unknown protocol version");
+-	}
++	else if (data->version <= protocol_v1)
++		die_if_server_options(transport);
++
++	refs = fetch_pack(&args, data->fd,
++			  refs_tmp ? refs_tmp : transport->remote_refs,
++			  to_fetch, nr_heads, &data->shallow,
++			  &transport->pack_lockfile, data->version);
  
+ 	close(data->fd[0]);
+ 	close(data->fd[1]);
 -- 
 2.26.2.706.g87896c9627
 
