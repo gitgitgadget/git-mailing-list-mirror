@@ -2,69 +2,70 @@ Return-Path: <SRS0=xHKm=7B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-14.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41DDBC433E1
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B1C7C433E0
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D1E5206D4
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F349206D4
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 10:54:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BKsdKa9G"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n1TzDpH2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728741AbgESKyV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 May 2020 06:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51322 "EHLO
+        id S1728745AbgESKyW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 06:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728183AbgESKyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 06:54:19 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0DA4C061A0C
-        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:17 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id b6so14274495qkh.11
-        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:17 -0700 (PDT)
+        with ESMTP id S1728625AbgESKyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 06:54:21 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F797C05BD09
+        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:20 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id p12so10660741qtn.13
+        for <git@vger.kernel.org>; Tue, 19 May 2020 03:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xDyfk99dSlNJzQcalya55W2esYP2M3wyh3LpAOsHX0w=;
-        b=BKsdKa9G1XR01u1fu6gATj+Ae8K6954jb55M4binX/XqIa0t/ZYCajsrmJlEsQsSwO
-         w7bLCE0BAJZtRlESyZcaWOMNu6lslpB48/hVFosC3b+WpRuWLThgUDtS0jsJ50EjgxTa
-         GQFmdYv90qOue4usM82VpztApczsRrOecoRTGe7VhZ6vuB8K4Xfl76Gn1i5NANoSTbdE
-         z6h/BbRIgCyk8vKpy0z1nEOhD9gDAgiqEPbTn0vlxido3Xi0nN1OXw+3ci8CjB9MHred
-         qHMycyxW4VR6kebQ9uBF1YSfwVFVwP1bcKchjT0S4D/QkKerDPJ6zXe2GDOGK0kwbiWH
-         srrg==
+        bh=99UkvxAYs9mF93dxO73Sz5GT3PvnfX6LAik4PfDQmcc=;
+        b=n1TzDpH2IcM0XmWdAvPdq+uOhXD/hJR8EEPCJ7A9PbdP1BbIhRMu88XlBMKTK1CPZl
+         X4vl9mZd+lGmxDqtIdo9bBwjrIVDqvS4o/qzrOnM8DGC8QN+w8RakPdFxdzJarEFGx1R
+         imluvHMxDxy0lJZUI9tOxTagwSrFcEZBgWc2k915CkZRldUC+aK3bk5fEBWJaDMNA3rP
+         SPG8OvagIP8BeXyLPMZVVdta4iCLWGCrUR9Q/wprwBQG2u2tkjpESlCAwZ/aNbuJ7pLt
+         ZEsgKg4UmE7IfrCdekamhS1nfmjM4rmiRc2LJ5wznN5RUkUXVzLQPSx4bjbXTMO9xNvi
+         Q3lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xDyfk99dSlNJzQcalya55W2esYP2M3wyh3LpAOsHX0w=;
-        b=DIunNhGTVheoULoz7vEFoABaIdHuu/iNjE8V6ShIPKmBR5R3q6e/o0KGUXDnTJmzus
-         RGLYxaOEmarXmH/Rb4GfKpNdTVdPSGws6zQS903ihYV6GoVfO+DvLJAJoN2km2uYBUxT
-         N/+8bcQvVVGkEJ0NFzjbNMjLYwUjyvyByqDoNXqUanw4zjRweceUS+P3QQsrCU+6RU5z
-         ROIHPV/Jc6qQQPtspoxnQkSxD81ux5G5275gxdTXvbTYU/3QgADJ5goXr8GTfnHMLj7n
-         D20NwaS9Kjl+rF6+uKdLIeRyA9DJvWqXvXz+zyuCZf+PPcmlExRjKSGYlLdzCvNgcKCg
-         wkjA==
-X-Gm-Message-State: AOAM533ANh6X192apjoJdFdWkQ3iLUIiJsqwAjznGuS+3lLs2gWKpqpK
-        WXr0R8Oq3f0fQDmLQfmxM2LWLiL7
-X-Google-Smtp-Source: ABdhPJyXWV7ha+uovhSfl9CO3ytv2ySNovArqPdpTQ9D+b6VP/wXjLyMh8P8iAuxJxEPSbh+1LLL7w==
-X-Received: by 2002:a37:7603:: with SMTP id r3mr16560846qkc.243.1589885656550;
-        Tue, 19 May 2020 03:54:16 -0700 (PDT)
+        bh=99UkvxAYs9mF93dxO73Sz5GT3PvnfX6LAik4PfDQmcc=;
+        b=stuIDaLXgsIA1bCQGuSaD73KMFqe8c2R92WNpVo1xMyNvTvq6yuvPzH9FmTMF+mqAP
+         NsM6EAn+KA/Kv2mm4I2QBur05kRYFQ8hDUh7R1c4n9HQpX4F1wTyFLiMwdbjjJBhu9AT
+         AX2aA8GitPivmPUuXBy6PVl/YC79KfsuhtGX+KP0xCVt1Vhz6cmImjajQGf7NZY6fwqS
+         hRWZfbR4O/SpYvQQ3RYGOtuyK3U/JpX4TQtsHplRgq0BuytWzpMinh6Oub2S5pllGIOG
+         tdJ6zBQyBEgOj8HA3Xpf0YAsyh0dVDSjaLXYFLpvUjcQQvpR/Zn6Q0C7a99SPJ6QKtHa
+         6P7Q==
+X-Gm-Message-State: AOAM5301Qcw0J3elwOis/lEXUIw4yC9z/dtMjRIqsJVv/spmAaGo/DHw
+        0jdzOdlCJxItWZ1EUMzADQKSx0PC
+X-Google-Smtp-Source: ABdhPJwxiD5R4PviiblHSXag0lPNHLM9+sEaIoJ7KyAWeuP7/PA1bPueDRAa4cLi5xMPrn/ubZId+w==
+X-Received: by 2002:aed:2ce4:: with SMTP id g91mr21896395qtd.22.1589885658970;
+        Tue, 19 May 2020 03:54:18 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id c63sm10177775qkf.131.2020.05.19.03.54.15
+        by smtp.gmail.com with ESMTPSA id c63sm10177775qkf.131.2020.05.19.03.54.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2020 03:54:15 -0700 (PDT)
+        Tue, 19 May 2020 03:54:18 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 5/7] remote-curl: error on incomplete packet
-Date:   Tue, 19 May 2020 06:53:58 -0400
-Message-Id: <91d330620a18e286ec112747ea2f3a9d39066018.1589885479.git.liu.denton@gmail.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Force Charlie <charlieio@outlook.com>
+Subject: [PATCH v3 7/7] stateless-connect: send response end packet
+Date:   Tue, 19 May 2020 06:54:00 -0400
+Message-Id: <c26e160fbc211f1fbb4e231a1c4a4b84fa347cf6.1589885479.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.26.2.706.g87896c9627
 In-Reply-To: <cover.1589885479.git.liu.denton@gmail.com>
 References: <cover.1589816718.git.liu.denton@gmail.com> <cover.1589885479.git.liu.denton@gmail.com>
@@ -77,245 +78,262 @@ X-Mailing-List: git@vger.kernel.org
 
 Currently, remote-curl acts as a proxy and blindly forwards packets
 between an HTTP server and fetch-pack. In the case of a stateless RPC
-connection where the connection is terminated with a partially written
-packet, remote-curl will blindly send the partially written packet
-before waiting on more input from fetch-pack. Meanwhile, fetch-pack will
-read the partial packet and continue reading, expecting more input. This
-results in a deadlock between the two processes.
+connection where the connection is terminated before the transaction is
+complete, remote-curl will blindly forward the packets before waiting on
+more input from fetch-pack. Meanwhile, fetch-pack will read the
+transaction and continue reading, expecting more input to continue the
+transaction. This results in a deadlock between the two processes.
 
-For a stateless connection, inspect packets before sending them and
-error out if a packet line packet is incomplete.
+This can be seen in the following command which does not terminate:
 
+	$ git -c protocol.version=2 clone https://github.com/git/git.git --shallow-since=20151012
+	Cloning into 'git'...
+
+whereas the v1 version does terminate as expected:
+
+	$ git -c protocol.version=1 clone https://github.com/git/git.git --shallow-since=20151012
+	Cloning into 'git'...
+	fatal: the remote end hung up unexpectedly
+
+Instead of blindly forwarding packets, make remote-curl insert a
+response end packet after proxying the responses from the remote server
+when using stateless_connect(). On the RPC client side, ensure that each
+response ends as described.
+
+A separate control packet is chosen because we need to be able to
+differentiate between what the remote server sends and remote-curl's
+control packets. By ensuring in the remote-curl code that a server
+cannot send response end packets, we prevent a malicious server from
+being able to perform a denial of service attack in which they spoof a
+response end packet and cause the described deadlock to happen.
+
+Reported-by: Force Charlie <charlieio@outlook.com>
 Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- remote-curl.c                                 | 59 ++++++++++++++++++-
- t/lib-httpd.sh                                |  2 +
- t/lib-httpd/apache.conf                       |  8 +++
- .../incomplete-body-upload-pack-v2-http.sh    |  3 +
- .../incomplete-length-upload-pack-v2-http.sh  |  3 +
- t/t5702-protocol-v2.sh                        | 34 +++++++++++
- 6 files changed, 106 insertions(+), 3 deletions(-)
- create mode 100644 t/lib-httpd/incomplete-body-upload-pack-v2-http.sh
- create mode 100644 t/lib-httpd/incomplete-length-upload-pack-v2-http.sh
+ Documentation/gitremote-helpers.txt     |  4 +++-
+ Documentation/technical/protocol-v2.txt |  2 ++
+ builtin/fetch-pack.c                    |  2 +-
+ connect.c                               | 16 +++++++++++++++-
+ connect.h                               |  4 ++++
+ fetch-pack.c                            | 13 +++++++++++++
+ remote-curl.c                           |  5 +++++
+ remote.h                                |  3 ++-
+ t/t5702-protocol-v2.sh                  | 13 +++++++++++++
+ transport.c                             |  3 ++-
+ 10 files changed, 60 insertions(+), 5 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index da3e07184a..e020140092 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -679,9 +679,53 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
- }
- #endif
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index f48a031dc3..93baeeb029 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -405,7 +405,9 @@ Supported if the helper has the "connect" capability.
+ 	trying to fall back).  After line feed terminating the positive
+ 	(empty) response, the output of the service starts.  Messages
+ 	(both request and response) must consist of zero or more
+-	PKT-LINEs, terminating in a flush packet. The client must not
++	PKT-LINEs, terminating in a flush packet. Response messages will
++	then have a response end packet after the flush packet to
++	indicate the end of a response.  The client must not
+ 	expect the server to store any state in between request-response
+ 	pairs.  After the connection ends, the remote helper exits.
+ +
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index 7e3766cafb..3996d70891 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -33,6 +33,8 @@ In protocol v2 these special packets will have the following semantics:
  
-+struct check_pktline_state {
-+	char len_buf[4];
-+	int len_filled;
-+	int remaining;
-+};
-+
-+static void check_pktline(struct check_pktline_state *state, const char *ptr, size_t size)
+   * '0000' Flush Packet (flush-pkt) - indicates the end of a message
+   * '0001' Delimiter Packet (delim-pkt) - separates sections of a message
++  * '0002' Message Packet (response-end-pkt) - indicates the end of a response
++    for stateless connections
+ 
+ Initial Client Request
+ ----------------------
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 4771100072..94b0c89b82 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -224,7 +224,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 	version = discover_version(&reader);
+ 	switch (version) {
+ 	case protocol_v2:
+-		get_remote_refs(fd[1], &reader, &ref, 0, NULL, NULL);
++		get_remote_refs(fd[1], &reader, &ref, 0, NULL, NULL, args.stateless_rpc);
+ 		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+diff --git a/connect.c b/connect.c
+index 11c6ec70a0..0df45a1108 100644
+--- a/connect.c
++++ b/connect.c
+@@ -406,10 +406,21 @@ static int process_ref_v2(const char *line, struct ref ***list)
+ 	return ret;
+ }
+ 
++void check_stateless_delimiter(int stateless_rpc,
++			      struct packet_reader *reader,
++			      const char *error)
 +{
-+	while (size) {
-+		if (!state->remaining) {
-+			int digits_remaining = 4 - state->len_filled;
-+			if (digits_remaining > size)
-+				digits_remaining = size;
-+			memcpy(&state->len_buf[state->len_filled], ptr, digits_remaining);
-+			state->len_filled += digits_remaining;
-+			ptr += digits_remaining;
-+			size -= digits_remaining;
-+
-+			if (state->len_filled == 4) {
-+				state->remaining = packet_length(state->len_buf);
-+				if (state->remaining < 0) {
-+					die(_("remote-curl: bad line length character: %.4s"), state->len_buf);
-+				} else if (state->remaining < 4) {
-+					state->remaining = 0;
-+				} else {
-+					state->remaining -= 4;
-+				}
-+				state->len_filled = 0;
-+			}
-+		}
-+
-+		if (state->remaining) {
-+			int remaining = state->remaining;
-+			if (remaining > size)
-+				remaining = size;
-+			ptr += remaining;
-+			size -= remaining;
-+			state->remaining -= remaining;
-+		}
-+	}
++	if (!stateless_rpc)
++		return; /* not in stateless mode, no delimiter expected */
++	if (packet_reader_read(reader) != PACKET_READ_RESPONSE_END)
++		die("%s", error);
 +}
 +
- struct rpc_in_data {
- 	struct rpc_state *rpc;
- 	struct active_request_slot *slot;
-+	int check_pktline;
-+	struct check_pktline_state pktline_state;
+ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 			     struct ref **list, int for_push,
+ 			     const struct argv_array *ref_prefixes,
+-			     const struct string_list *server_options)
++			     const struct string_list *server_options,
++			     int stateless_rpc)
+ {
+ 	int i;
+ 	*list = NULL;
+@@ -446,6 +457,9 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 	if (reader->status != PACKET_READ_FLUSH)
+ 		die(_("expected flush after ref listing"));
+ 
++	check_stateless_delimiter(stateless_rpc, reader,
++				  _("expected response end packet after ref listing"));
++
+ 	return list;
+ }
+ 
+diff --git a/connect.h b/connect.h
+index 5f2382e018..235bc66254 100644
+--- a/connect.h
++++ b/connect.h
+@@ -22,4 +22,8 @@ int server_supports_v2(const char *c, int die_on_error);
+ int server_supports_feature(const char *c, const char *feature,
+ 			    int die_on_error);
+ 
++void check_stateless_delimiter(int stateless_rpc,
++			       struct packet_reader *reader,
++			       const char *error);
++
+ #endif
+diff --git a/fetch-pack.c b/fetch-pack.c
+index f73a2ce6cb..f096442d4d 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1450,6 +1450,13 @@ enum fetch_state {
+ 	FETCH_DONE,
  };
  
- /*
-@@ -702,6 +746,8 @@ static size_t rpc_in(char *ptr, size_t eltsize,
- 		return size;
- 	if (size)
- 		data->rpc->any_written = 1;
-+	if (data->check_pktline)
-+		check_pktline(&data->pktline_state, ptr, size);
- 	write_or_die(data->rpc->in, ptr, size);
- 	return size;
- }
-@@ -778,7 +824,7 @@ static curl_off_t xcurl_off_t(size_t len)
-  * If flush_received is true, do not attempt to read any more; just use what's
-  * in rpc->buf.
-  */
--static int post_rpc(struct rpc_state *rpc, int flush_received)
-+static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_received)
- {
- 	struct active_request_slot *slot;
- 	struct curl_slist *headers = http_copy_default_headers();
-@@ -920,6 +966,8 @@ static int post_rpc(struct rpc_state *rpc, int flush_received)
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, rpc_in);
- 	rpc_in_data.rpc = rpc;
- 	rpc_in_data.slot = slot;
-+	rpc_in_data.check_pktline = stateless_connect;
-+	memset(&rpc_in_data.pktline_state, 0, sizeof(rpc_in_data.pktline_state));
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &rpc_in_data);
- 	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0);
++static void do_check_stateless_delimiter(const struct fetch_pack_args *args,
++					 struct packet_reader *reader)
++{
++	check_stateless_delimiter(args->stateless_rpc, reader,
++				  _("git fetch-pack: expected response end packet"));
++}
++
+ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 				    int fd[2],
+ 				    const struct ref *orig_ref,
+@@ -1534,6 +1541,10 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			/* Process ACKs/NAKs */
+ 			switch (process_acks(negotiator, &reader, &common)) {
+ 			case READY:
++				/*
++				 * Don't check for response delimiter; get_pack() will
++				 * read the rest of this response.
++				 */
+ 				state = FETCH_GET_PACK;
+ 				break;
+ 			case COMMON_FOUND:
+@@ -1541,6 +1552,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 				seen_ack = 1;
+ 				/* fallthrough */
+ 			case NO_COMMON_FOUND:
++				do_check_stateless_delimiter(args, &reader);
+ 				state = FETCH_SEND_REQUEST;
+ 				break;
+ 			}
+@@ -1560,6 +1572,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			process_section_header(&reader, "packfile", 0);
+ 			if (get_pack(args, fd, pack_lockfile, sought, nr_sought))
+ 				die(_("git fetch-pack: fetch failed."));
++			do_check_stateless_delimiter(args, &reader);
  
-@@ -936,6 +984,11 @@ static int post_rpc(struct rpc_state *rpc, int flush_received)
- 	if (!rpc->any_written)
- 		err = -1;
+ 			state = FETCH_DONE;
+ 			break;
+diff --git a/remote-curl.c b/remote-curl.c
+index d02cb547e9..75532a8bae 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -703,6 +703,8 @@ static void check_pktline(struct check_pktline_state *state, const char *ptr, si
+ 				state->remaining = packet_length(state->len_buf);
+ 				if (state->remaining < 0) {
+ 					die(_("remote-curl: bad line length character: %.4s"), state->len_buf);
++				} else if (state->remaining == 2) {
++					die(_("remote-curl: unexpected response end packet"));
+ 				} else if (state->remaining < 4) {
+ 					state->remaining = 0;
+ 				} else {
+@@ -991,6 +993,9 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
+ 	if (rpc_in_data.pktline_state.remaining)
+ 		err = error(_("%d bytes of body are still expected"), rpc_in_data.pktline_state.remaining);
  
-+	if (rpc_in_data.pktline_state.len_filled)
-+		err = error(_("%d bytes of length header were received"), rpc_in_data.pktline_state.len_filled);
-+	if (rpc_in_data.pktline_state.remaining)
-+		err = error(_("%d bytes of body are still expected"), rpc_in_data.pktline_state.remaining);
++	if (stateless_connect)
++		packet_response_end(rpc->in);
 +
  	curl_slist_free_all(headers);
  	free(gzip_body);
  	return err;
-@@ -985,7 +1038,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
- 			break;
- 		rpc->pos = 0;
- 		rpc->len = n;
--		err |= post_rpc(rpc, 0);
-+		err |= post_rpc(rpc, 0, 0);
- 	}
+diff --git a/remote.h b/remote.h
+index 11d8719b58..5cc26c1b3b 100644
+--- a/remote.h
++++ b/remote.h
+@@ -179,7 +179,8 @@ struct ref **get_remote_heads(struct packet_reader *reader,
+ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 			     struct ref **list, int for_push,
+ 			     const struct argv_array *ref_prefixes,
+-			     const struct string_list *server_options);
++			     const struct string_list *server_options,
++			     int stateless_rpc);
  
- 	close(client.in);
-@@ -1342,7 +1395,7 @@ static int stateless_connect(const char *service_name)
- 			BUG("The entire rpc->buf should be larger than LARGE_PACKET_MAX");
- 		if (status == PACKET_READ_EOF)
- 			break;
--		if (post_rpc(&rpc, status == PACKET_READ_FLUSH))
-+		if (post_rpc(&rpc, 1, status == PACKET_READ_FLUSH))
- 			/* We would have an err here */
- 			break;
- 		/* Reset the buffer for next request */
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 1449ee95e9..d2edfa4c50 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -129,6 +129,8 @@ install_script () {
- prepare_httpd() {
- 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
- 	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
-+	install_script incomplete-length-upload-pack-v2-http.sh
-+	install_script incomplete-body-upload-pack-v2-http.sh
- 	install_script broken-smart-http.sh
- 	install_script error-smart-http.sh
- 	install_script error.sh
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 994e5290d6..afa91e38b0 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -117,6 +117,8 @@ Alias /auth/dumb/ www/auth/dumb/
- 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
- 	SetEnv GIT_HTTP_EXPORT_ALL
- </LocationMatch>
-+ScriptAlias /smart/incomplete_length/git-upload-pack incomplete-length-upload-pack-v2-http.sh/
-+ScriptAlias /smart/incomplete_body/git-upload-pack incomplete-body-upload-pack-v2-http.sh/
- ScriptAliasMatch /error_git_upload_pack/(.*)/git-upload-pack error.sh/
- ScriptAliasMatch /smart_*[^/]*/(.*) ${GIT_EXEC_PATH}/git-http-backend/$1
- ScriptAlias /broken_smart/ broken-smart-http.sh/
-@@ -126,6 +128,12 @@ ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
- <Directory ${GIT_EXEC_PATH}>
- 	Options FollowSymlinks
- </Directory>
-+<Files incomplete-length-upload-pack-v2-http.sh>
-+	Options ExecCGI
-+</Files>
-+<Files incomplete-body-upload-pack-v2-http.sh>
-+	Options ExecCGI
-+</Files>
- <Files broken-smart-http.sh>
- 	Options ExecCGI
- </Files>
-diff --git a/t/lib-httpd/incomplete-body-upload-pack-v2-http.sh b/t/lib-httpd/incomplete-body-upload-pack-v2-http.sh
-new file mode 100644
-index 0000000000..2f5ed9fcf6
---- /dev/null
-+++ b/t/lib-httpd/incomplete-body-upload-pack-v2-http.sh
-@@ -0,0 +1,3 @@
-+printf "Content-Type: text/%s\n" "application/x-git-upload-pack-result"
-+echo
-+printf "%s%s\n" "0079" "45"
-diff --git a/t/lib-httpd/incomplete-length-upload-pack-v2-http.sh b/t/lib-httpd/incomplete-length-upload-pack-v2-http.sh
-new file mode 100644
-index 0000000000..86c6e648c9
---- /dev/null
-+++ b/t/lib-httpd/incomplete-length-upload-pack-v2-http.sh
-@@ -0,0 +1,3 @@
-+printf "Content-Type: text/%s\n" "application/x-git-upload-pack-result"
-+echo
-+printf "%s\n" "00"
+ int resolve_remote_symref(struct ref *ref, struct ref *list);
+ 
 diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 5039e66dc4..4eb81ba2d4 100755
+index 4eb81ba2d4..8da65e60de 100755
 --- a/t/t5702-protocol-v2.sh
 +++ b/t/t5702-protocol-v2.sh
-@@ -586,6 +586,40 @@ test_expect_success 'clone with http:// using protocol v2' '
- 	! grep "Send header: Transfer-Encoding: chunked" log
+@@ -620,6 +620,19 @@ test_expect_success 'clone repository with http:// using protocol v2 with incomp
+ 	test_i18ngrep "bytes of body are still expected" err
  '
  
-+test_expect_success 'clone repository with http:// using protocol v2 with incomplete pktline length' '
++test_expect_success 'clone with http:// using protocol v2 and invalid parameters' '
 +	test_when_finished "rm -f log" &&
 +
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/incomplete_length" &&
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/incomplete_length" file &&
-+
-+	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" GIT_TRACE_CURL="$(pwd)/log" git -c protocol.version=2 \
-+		clone "$HTTPD_URL/smart/incomplete_length" incomplete_length_child 2>err &&
++	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" GIT_TRACE_CURL="$(pwd)/log" \
++		git -c protocol.version=2 \
++		clone --shallow-since=20151012 "$HTTPD_URL/smart/http_parent" http_child_invalid &&
 +
 +	# Client requested to use protocol v2
 +	grep "Git-Protocol: version=2" log &&
 +	# Server responded using protocol v2
-+	grep "git< version 2" log &&
-+	# Client reported appropriate failure
-+	test_i18ngrep "bytes of length header were received" err
-+'
-+
-+test_expect_success 'clone repository with http:// using protocol v2 with incomplete pktline body' '
-+	test_when_finished "rm -f log" &&
-+
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/incomplete_body" &&
-+	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/incomplete_body" file &&
-+
-+	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" GIT_TRACE_CURL="$(pwd)/log" git -c protocol.version=2 \
-+		clone "$HTTPD_URL/smart/incomplete_body" incomplete_body_child 2>err &&
-+
-+	# Client requested to use protocol v2
-+	grep "Git-Protocol: version=2" log &&
-+	# Server responded using protocol v2
-+	grep "git< version 2" log &&
-+	# Client reported appropriate failure
-+	test_i18ngrep "bytes of body are still expected" err
++	grep "git< version 2" log
 +'
 +
  test_expect_success 'clone big repository with http:// using protocol v2' '
  	test_when_finished "rm -f log" &&
  
+diff --git a/transport.c b/transport.c
+index 431a93caef..7d50c502ad 100644
+--- a/transport.c
++++ b/transport.c
+@@ -297,7 +297,8 @@ static struct ref *handshake(struct transport *transport, int for_push,
+ 		if (must_list_refs)
+ 			get_remote_refs(data->fd[1], &reader, &refs, for_push,
+ 					ref_prefixes,
+-					transport->server_options);
++					transport->server_options,
++					transport->stateless_rpc);
+ 		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
 -- 
 2.26.2.706.g87896c9627
 
