@@ -2,85 +2,80 @@ Return-Path: <SRS0=xHKm=7B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCA3C433E0
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 16:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3E5DC433DF
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 16:23:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 974F3207D8
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 16:09:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B82A420756
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 16:23:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729260AbgESQJk convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 19 May 2020 12:09:40 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55916 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729001AbgESQJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 12:09:40 -0400
-Received: by mail-wm1-f67.google.com with SMTP id f13so3626170wmc.5
-        for <git@vger.kernel.org>; Tue, 19 May 2020 09:09:38 -0700 (PDT)
+        id S1729205AbgESQXz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 12:23:55 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35556 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728689AbgESQXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 12:23:55 -0400
+Received: by mail-wm1-f68.google.com with SMTP id n5so4346156wmd.0
+        for <git@vger.kernel.org>; Tue, 19 May 2020 09:23:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Jn7zUXhgq85KbPvrgu12TJxXn0UeHvDGcwfrDAl2tdc=;
-        b=oLIMYG7Q/t+rFpY/+tOvKi4BgjcysOR7OAjO9IXsFSOujkeX0W4s+vkaUZxWcC6Diw
-         VUdVQA8FfzSMDSxiQjwHLgxV4lrUVNPblAFvrkuiOeUvcPAcV13xmSrIK2CEznaejKEu
-         YG1gc2WZ8kXYuA5YT9twyw1V6XZaF7dh4f+w6owlOaqal4BgmxUNCammdLXGDBeTJv1m
-         TnQQ8zGrjLhqQOWh7LLAzKPyuqjxiRqJBSLD+kSUr4tYPSmwY9HOs3IHgZ3FYBqHPE5A
-         txI0C3Hci8JLZzQG3CfbweTilw4v0rb5Qj5JuBJzghqIif5JTHIeV0WlXk/NHn51kdaL
-         XrAA==
-X-Gm-Message-State: AOAM5337/KEB/9uQXadB/NDoiXVF+0VGtARZBkUzvww9i50nUX8P74sB
-        JM3SCJ+GrDh1vxBqgSp+GOSRjkt+JiS/zi6GRl4=
-X-Google-Smtp-Source: ABdhPJwopu6YJ9q07Xk39CEy/bVLvTTlqllzpvccVofDQO0Z1WlFFVePpHxcMFYtb9n1DxFlGXTqamb3UabjIHI4JGo=
-X-Received: by 2002:a1c:df46:: with SMTP id w67mr134494wmg.130.1589904578031;
- Tue, 19 May 2020 09:09:38 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=ybthD4DLMGuDCpSv4ZDU+luA7NWljd56TO5LX2rbgGg=;
+        b=BXGQ/p7iLOTTEdxXqqZdJKOMZWALWzIkbyxY7F3Zf5FqG06i9bGvhTwPlGX2g3PfWD
+         3x+pfMWx110geyVXrCRy5GULmgeUun0JrO7aO8I3QJHRzjcpPRFVGLWngQ5H1SLMs+pK
+         mmwarNW2dtHETagvr/0m/bexUyPWyglDYEQjGIKb6a1Jpmq42H+bvMGqAyFGmjYPbctY
+         Gmg7pdznNynnhb8/wlekDztrAOYvRSb2BYelPntsTh1Zf7EW3zh2Bvp2qR6c1X4bdhP1
+         RsAl5zOhwQTBmIoIQCNHGUkLwXVVTcE1cQyoCGLVY4+CRx35cNWuBKXOhcOfmV8jjbjA
+         mQ+g==
+X-Gm-Message-State: AOAM532dRHJXK5tRTCxKYCWJOvPCXfI6xG8GmqHsThMynhDgQk1KfPxS
+        fi3rMhIUd7JVqgcZUwwkwRs+6drWO1L8yOa657A=
+X-Google-Smtp-Source: ABdhPJyDnptxMhdY5slphud0IhFXt0R5lrEcLpVhX/hcpUULMmec0mDl0+6D5xsyyZulcjdf7ZSYIE9MlqyOkh/BveE=
+X-Received: by 2002:a1c:2702:: with SMTP id n2mr169878wmn.107.1589905433301;
+ Tue, 19 May 2020 09:23:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200518100356.29292-1-dtucker@dtucker.net> <20200518141311.GC1980@danh.dev>
- <CALDDTe13_utn7E+QF1AgndX_6nPph=Gr1hesLwfV8e9LwgUPOQ@mail.gmail.com> <20200518153025.GD1980@danh.dev>
-In-Reply-To: <20200518153025.GD1980@danh.dev>
+References: <cover.1589816718.git.liu.denton@gmail.com> <cover.1589885479.git.liu.denton@gmail.com>
+ <36885943b239807eda49e231d8a45e1991f7288e.1589885479.git.liu.denton@gmail.com>
+In-Reply-To: <36885943b239807eda49e231d8a45e1991f7288e.1589885479.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 19 May 2020 12:09:27 -0400
-Message-ID: <CAPig+cTCbBE4Xj7LGJDqz4pcRsR-ZAF-ekcMnZ_cDuzgmEnxcw@mail.gmail.com>
-Subject: Re: [PATCH 1/7] Redirect grep's stderr top null too.
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Darren Tucker <dtucker@dtucker.net>,
-        Git List <git@vger.kernel.org>,
+Date:   Tue, 19 May 2020 12:23:42 -0400
+Message-ID: <CAPig+cT1KfkszVW_Wvwz+r7Q0TsP+iTx-Cc3UvasS5ESBGdAAw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/7] pkt-line: extern packet_length()
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 18, 2020 at 11:30 AM Đoàn Trần Công Danh
-<congdanhqx@gmail.com> wrote:
-> On 2020-05-19 00:29:47+1000, Darren Tucker <dtucker@dtucker.net> wrote:
-> > $ ./t5703-upload-pack-ref-in-want.sh
-> > sed: There are too many commands for the s/\n// function.
+On Tue, May 19, 2020 at 6:54 AM Denton Liu <liu.denton@gmail.com> wrote:
+> [...]
+> Change the function parameter from `const char *linelen` to
+> `const char lenbuf_hex[4]`. Even though these two types behave
+> identically as function parameters, use the array notation to
+> semantically indicate exactly what this function is expecting as an
+> argument. Also, rename it from linelen to lenbuf_hex as the former
+> sounds like it should be an integral type which is misleading.
 >
-> I think this was introduced at 878f988350 (t/test-lib: teach
-> --chain-lint to detect broken &&-chains in subshells, 2018-07-11)
->
-> The chainlint.sed is too complicated for a mortal like me to
-> understand, I added Eric to Cc.
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> diff --git a/pkt-line.h b/pkt-line.h
+> @@ -74,6 +74,15 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+> +/*
+> + * Convert a four hex digit packet line length header into its numeric
+> + * representation.
+> + *
+> + * If linelen contains non-hex characters, return -1. Otherwise, return the
 
-That's a rather weird error message; seems like that 'sed' is somewhat broken.
+s/linelen/lenbuf_hex/
+...or...
+s/lenbuf_hex/input argument/
 
-Back when Ævar was trying to get chain-lint to work on some really old
-and broken platforms, it was ultimately decided (if I recall
-correctly) that it wasn't worth the effort, and that chain-lint should
-simply be disabled via GIT_TEST_CHAIN_LINT=0 or --no-chain-lint on
-those platforms.
-
-After all, chain-lint exists only to ferret out a specific problem in
-_newly-written_ tests (it's testing the tests), not to ferret out
-problems in Git functionality (that's what the test suite itself is
-for). So it's not a great loss to disable chain-lint on an old or
-broken platform on which it is unlikely someone will be developing
-_new_ tests. (And, even if someone does write a test on such a
-platform, &&-chain breakage will be discovered soon enough once the
-patch is posted to the mailing list and someone runs it on a
-non-broken platform.)
+> + * numeric value of the length header.
+> + */
+> +int packet_length(const char lenbuf_hex[4]);
