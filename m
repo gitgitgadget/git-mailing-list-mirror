@@ -2,113 +2,85 @@ Return-Path: <SRS0=xHKm=7B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2061DC433E0
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 15:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCA3C433E0
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 16:09:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA1C72075F
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 15:21:47 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cVZMBppt"
+	by mail.kernel.org (Postfix) with ESMTP id 974F3207D8
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 16:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728953AbgESPVr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 May 2020 11:21:47 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60105 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728725AbgESPVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 11:21:46 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61CE4D090C;
-        Tue, 19 May 2020 11:21:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iy9poON2BrjWRJpjk9r1FCCYfbM=; b=cVZMBp
-        ptW/g2ztfPzExD7ISu2L3oqKu0fzbM2NsQ3JY2Uk6asim5xWOk3qt9BjGMEDzQnk
-        E6jgbJIasfG29g7ZHZHEYRB/U5R0BwZBBaucoiZHRNv+652VQ0DCJ6Wwqqe8iTRD
-        0CFFGc9+B9Pj/cS1j1PI8ZbfAPCv2kZmHVqaE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Y+LUve6Jk8qWrZIygpiw9kfWOEEvi8qS
-        0ZlAr2jPLbD6P400/MIZP51XVP4cS3WcCbW3bLlDDjM+yz0SWQvsrqCBaeO3+HzP
-        ZjKX9E8i3qgok/I374zEZq3ot9quVMToIveFlCfM/FMIZ5wkZTdneMojKOZsxjqQ
-        /tmA/v5pd9w=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 594BAD090B;
-        Tue, 19 May 2020 11:21:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 45CBCD090A;
-        Tue, 19 May 2020 11:21:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v13 13/13] Add some reftable testing infrastructure
-References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
-        <pull.539.v13.git.1589226388.gitgitgadget@gmail.com>
-        <0e732d30b516855a7e91240a9055712b26905b2e.1589226388.git.gitgitgadget@gmail.com>
-        <xmqq8shvtxpm.fsf@gitster.c.googlers.com>
-        <CAFQ2z_O3hWEfdyQgH9PrkZcoQUQuaLZWRf0=LY2y93N8aOmEJg@mail.gmail.com>
-Date:   Tue, 19 May 2020 08:21:38 -0700
-In-Reply-To: <CAFQ2z_O3hWEfdyQgH9PrkZcoQUQuaLZWRf0=LY2y93N8aOmEJg@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Tue, 19 May 2020 15:54:14 +0200")
-Message-ID: <xmqqzha4ympp.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729260AbgESQJk convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 19 May 2020 12:09:40 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55916 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729001AbgESQJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 12:09:40 -0400
+Received: by mail-wm1-f67.google.com with SMTP id f13so3626170wmc.5
+        for <git@vger.kernel.org>; Tue, 19 May 2020 09:09:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Jn7zUXhgq85KbPvrgu12TJxXn0UeHvDGcwfrDAl2tdc=;
+        b=oLIMYG7Q/t+rFpY/+tOvKi4BgjcysOR7OAjO9IXsFSOujkeX0W4s+vkaUZxWcC6Diw
+         VUdVQA8FfzSMDSxiQjwHLgxV4lrUVNPblAFvrkuiOeUvcPAcV13xmSrIK2CEznaejKEu
+         YG1gc2WZ8kXYuA5YT9twyw1V6XZaF7dh4f+w6owlOaqal4BgmxUNCammdLXGDBeTJv1m
+         TnQQ8zGrjLhqQOWh7LLAzKPyuqjxiRqJBSLD+kSUr4tYPSmwY9HOs3IHgZ3FYBqHPE5A
+         txI0C3Hci8JLZzQG3CfbweTilw4v0rb5Qj5JuBJzghqIif5JTHIeV0WlXk/NHn51kdaL
+         XrAA==
+X-Gm-Message-State: AOAM5337/KEB/9uQXadB/NDoiXVF+0VGtARZBkUzvww9i50nUX8P74sB
+        JM3SCJ+GrDh1vxBqgSp+GOSRjkt+JiS/zi6GRl4=
+X-Google-Smtp-Source: ABdhPJwopu6YJ9q07Xk39CEy/bVLvTTlqllzpvccVofDQO0Z1WlFFVePpHxcMFYtb9n1DxFlGXTqamb3UabjIHI4JGo=
+X-Received: by 2002:a1c:df46:: with SMTP id w67mr134494wmg.130.1589904578031;
+ Tue, 19 May 2020 09:09:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 703F45A0-99E4-11EA-8DF2-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20200518100356.29292-1-dtucker@dtucker.net> <20200518141311.GC1980@danh.dev>
+ <CALDDTe13_utn7E+QF1AgndX_6nPph=Gr1hesLwfV8e9LwgUPOQ@mail.gmail.com> <20200518153025.GD1980@danh.dev>
+In-Reply-To: <20200518153025.GD1980@danh.dev>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 19 May 2020 12:09:27 -0400
+Message-ID: <CAPig+cTCbBE4Xj7LGJDqz4pcRsR-ZAF-ekcMnZ_cDuzgmEnxcw@mail.gmail.com>
+Subject: Re: [PATCH 1/7] Redirect grep's stderr top null too.
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     Darren Tucker <dtucker@dtucker.net>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
-
-> On Wed, May 13, 2020 at 9:57 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> > --- a/refs.c
->> > +++ b/refs.c
->> > @@ -1742,7 +1742,7 @@ struct ref_store *get_main_ref_store(struct repository *r)
->> >       r->refs_private = ref_store_init(r->gitdir,
->> >                                        r->ref_storage_format ?
->> >                                                r->ref_storage_format :
->> > -                                              DEFAULT_REF_STORAGE,
->> > +                                              default_ref_storage(),
->> >                                        REF_STORE_ALL_CAPS);
->> >       return r->refs_private;
->> >  }
->>
->> Would it make sense to let NULL stand for "we use the default,
->> whatever it is" so that anybody outside the implementation of the
->> refs API does not have to care what the default is, and make
->> ref_store_init() function the only thing that knows what it is?
+On Mon, May 18, 2020 at 11:30 AM Đoàn Trần Công Danh
+<congdanhqx@gmail.com> wrote:
+> On 2020-05-19 00:29:47+1000, Darren Tucker <dtucker@dtucker.net> wrote:
+> > $ ./t5703-upload-pack-ref-in-want.sh
+> > sed: There are too many commands for the s/\n// function.
 >
-> Is this your strong recommendation in the form of a question? :)
+> I think this was introduced at 878f988350 (t/test-lib: teach
+> --chain-lint to detect broken &&-chains in subshells, 2018-07-11)
 >
-> If it is just a question: maybe. I don't know enough of Git to say for sure.
+> The chainlint.sed is too complicated for a mortal like me to
+> understand, I added Eric to Cc.
 
-I try not to ask a rhetorical question without marking it explicitly
-as such.  The question "instead of having to sprinkle ?: all over
-the place on the callers' side, would it make it better or worse to
-give a 'not decided' default to the ref_storage_format field?" came
-to mind while reading the series.
+That's a rather weird error message; seems like that 'sed' is somewhat broken.
 
-> How do submodules decide on other settings, such as the hash ID?
+Back when Ævar was trying to get chain-lint to work on some really old
+and broken platforms, it was ultimately decided (if I recall
+correctly) that it wasn't worth the effort, and that chain-lint should
+simply be disabled via GIT_TEST_CHAIN_LINT=0 or --no-chain-lint on
+those platforms.
 
-I am not sure the issue of "what default to use" is limited to the
-submodule case (e.g. "git init" and "git clone" starts from having
-no "current repository" and they need to make the decision among
-available choices).  As I've seen this series and SHA-256 series
-conflict in the "init" area, it probably is time for me to introduce
-you to Brian (cc'ed) to pick his brain ;-).
-
-Thanks.
-
+After all, chain-lint exists only to ferret out a specific problem in
+_newly-written_ tests (it's testing the tests), not to ferret out
+problems in Git functionality (that's what the test suite itself is
+for). So it's not a great loss to disable chain-lint on an old or
+broken platform on which it is unlikely someone will be developing
+_new_ tests. (And, even if someone does write a test on such a
+platform, &&-chain breakage will be discovered soon enough once the
+patch is posted to the mailing list and someone runs it on a
+non-broken platform.)
