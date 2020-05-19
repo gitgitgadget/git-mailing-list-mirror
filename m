@@ -2,91 +2,152 @@ Return-Path: <SRS0=xHKm=7B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E7BC433DF
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 18:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DEDAC433DF
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 18:58:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9252207D3
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 18:40:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r6lJ1Nef"
+	by mail.kernel.org (Postfix) with ESMTP id 09078206C3
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 18:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727854AbgESSks (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 May 2020 14:40:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39614 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726489AbgESSks (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 14:40:48 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E01C08C5C0
-        for <git@vger.kernel.org>; Tue, 19 May 2020 11:40:47 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id x13so296070pfn.11
-        for <git@vger.kernel.org>; Tue, 19 May 2020 11:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=3UIUkFK5UG0bOogX1POZ1UAX7jc+YvXTKYkYLUvZsoE=;
-        b=r6lJ1NefMXg6Xd+KOUKQutzPNiXhXUrpPh+oBpRAHAS0moxFKnsBwjJ/pHX+BkRo+G
-         TSpOzwEDbYWy7EDvsxl7+107TACcWNWFSuaqYagA9h+RTYXUpQ6mp6I7UiOIuKuqMzl/
-         4vxEu44p5DfztIs8UP4UO5EpBnVYVNzPElLWQHvWT19gNwEIobRl0Lb8htHNOc9TN8ei
-         RAOJ+60Sr3xStvDobh5UXrJlD+6IDri+dQGx4k1ro+xy9e6VSHx5aTDy/3IiqUSdtLrC
-         VliW0oK2SIFh4Aaz7/afvJJxaJavYrFGATL66HJ0xkTSoO23YucDCgRoIZZ+HQCgiK3h
-         TLdA==
+        id S1726953AbgESS6M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 14:58:12 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54704 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726502AbgESS6L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 14:58:11 -0400
+Received: by mail-wm1-f67.google.com with SMTP id h4so319872wmb.4
+        for <git@vger.kernel.org>; Tue, 19 May 2020 11:58:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=3UIUkFK5UG0bOogX1POZ1UAX7jc+YvXTKYkYLUvZsoE=;
-        b=SwiTApGCAu/UCx4/RkRxOWoXLm93JW5DfD1rNVfGuhsrQao9ErvuHwm/T01BYAb0Cb
-         O55CmRUhKXyeFAJemkHArqWwiW8sRVP/A7BWTfiThNUKwx3QiJDUtmvroFPA/b+E4Gjt
-         5o7VwbEQwUwZ8pvpbOczIR+EJulA8c21bxWR8Z/N+AVPu3HMo8yAw19C3BbJO+wCDUqM
-         FAGEsLmCbbTxPkoZGhNPl7AE2TMhhT8VRKh4qjKGfB+/n5dQB8KDGdgu8AAq4OYoy/Y8
-         FquEO5ry6TaHSj+mz+StXIL1rzq1UAKj0c2AiA/PcI+4ocAj2xKJ9pzYFLa/yPY/+4FD
-         yTxQ==
-X-Gm-Message-State: AOAM531wHSEokUz0BnsYnO7nPfkNKPZVlhQDWrh/v6waPuSQtQFyCzJ2
-        bHYBNNPsW0W8QCA0S/hmhLjF
-X-Google-Smtp-Source: ABdhPJxkDSB+fxjW089mDp2VCOfTNmW912VNwSPfP3ZXJhGPrB8l+kv3nZ4vDDqJZ9Qy77A8zmYx6g==
-X-Received: by 2002:a62:1e84:: with SMTP id e126mr453204pfe.67.1589913646276;
-        Tue, 19 May 2020 11:40:46 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:908:98af:f00e:87b6:e4b4:50f0])
-        by smtp.gmail.com with ESMTPSA id gg8sm229239pjb.39.2020.05.19.11.40.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 May 2020 11:40:45 -0700 (PDT)
-Date:   Wed, 20 May 2020 00:10:41 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gitster@pobox.com
-Cc:     joe@perches.com, git@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: git-send-email: Ability to populate CC using more tags
-Message-ID: <20200519184041.GB4397@Mani-XPS-13-9360>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LIKDnaFpO5JcHKjU5PjNYgkUKc1GDfsZMdb0sGNQPxM=;
+        b=DuTtzwNYH5vQ8PCTVnJHNiuie+0FA4rGvDDLucnG4kNnymStFwgO/zrsZ8UzkdbT1w
+         3tjdSPa+/FAAU2Zk6B9GXiZMNWcC2xU8yM2qm1+YXDKdyo0wBI05Y783uRMeB1FnhNS6
+         KWsr6mc0YBVjbuMr+Kblz6Knk3ejpTmb0AeBBcUQ3cvB29zF1QqISxn05OPk6gniEB3A
+         eKx6fqNxTRBl98lPeKRryRdfdGqzpjj50AAK5glo7gAt3gL7Nl+gQPUK+agAdgulZl7k
+         W2fUTZZ12QAFf0roMVc8ouBjvgeIMyRHKsXdq6lXlZMVpDVMO7dmuuWPved4KqnRaTVA
+         yBTA==
+X-Gm-Message-State: AOAM530e1BQwBpDeULkdpngI9No97+BoHrHWyD22/qWT4OIT57Mj9Bq2
+        hwCFwyFNySXQv6Gkr/4/2r7oiy8mpK3v0E3mUaM=
+X-Google-Smtp-Source: ABdhPJxTJK+gbEGGJ6vpBEOSx4nIMupe6N0zZm6O6WJIKuT3iyyAhJ8H7LjAUeoAzpwe81coRYfCC+DKYYsfBsLABwE=
+X-Received: by 2002:a1c:df46:: with SMTP id w67mr828077wmg.130.1589914688482;
+ Tue, 19 May 2020 11:58:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20200519182654.33318-1-shouryashukla.oo@gmail.com>
+In-Reply-To: <20200519182654.33318-1-shouryashukla.oo@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 19 May 2020 14:57:57 -0400
+Message-ID: <CAPig+cSKFBFdNXA52f5f0q3SetA2btmkXeqyHNw-qwJ5ECq5mQ@mail.gmail.com>
+Subject: Re: [PATCH v2] submodule: port subcommand 'set-branch' from shell to C
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Doan Tran Cong Danh <congdanhqx@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Tue, May 19, 2020 at 2:27 PM Shourya Shukla
+<shouryashukla.oo@gmail.com> wrote:
+> Convert submodule subcommand 'set-branch' to a builtin. Port 'set-branch'
+> to 'submodule--helper.c' and call the latter via 'git-submodule.sh'.
 
-Currently 'git-send-email' lacks the ability to CC people described using
-tags such as Acked-by and Reported-by etc...
+You can reduce the redundancy by writing this as:
 
-While doing a bit of googling, I found a patch from Joe [1] but that doesn't
-look like made its way. And in that discussion I didn't see any real objections
-for the patch intention apart from the usage of the term 'trailers'.
+    Convert git-submodule subcommand 'set-branch' to a builtin and
+    call it via 'git-submodule.sh'.
 
-So I'm just curious if Joe or anyone has plan to resubmit it! If not I may
-do that.
+> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+> ---
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> @@ -2284,6 +2284,46 @@ static int module_set_url(int argc, const char **argv, const char *prefix)
+> +static int module_set_branch(int argc, const char **argv, const char *prefix)
+> +{
+> +       int quiet = 0, opt_default = 0;
+> +       char *opt_branch = NULL;
 
-PS: 'bylines' as mentioned by Joe seems reasonable to me.
+This can be 'const const *', can't it?
 
-Thanks,
-Mani
+> +       struct option options[] = {
+> +               OPT__QUIET(&quiet,
+> +                       N_("suppress output for setting default tracking branch of a submodule")),
 
-[1] https://lkml.org/lkml/2016/8/30/650
+This is unusually verbose for a _short_ description of the option.
+Other commands use simpler descriptions. Perhaps take a hint from the
+git-submodule man page:
+
+    N("only print error messages")),
+
+However, the bigger question is: Why is the --quiet option even here?
+None of the code in this function ever consults the 'quiet' variable,
+so its presence seems pointless.
+
+Looking at the git-submodule documentation, I see that it is already
+documented as accepted --quiet, so it may make some sense for you to
+accept the option here. However, it might be a good idea either to
+have an in-code comment or a blurb in the commit message explaining
+that this C rewrite accepts the option for backward-compatibility (and
+for future extension), not because it is actually used presently.
+
+> +               OPT_BOOL(0, "default", &opt_default,
+> +                       N_("set the default tracking branch to master")),
+
+We can make this and the next short description more precise and
+concise like this:
+
+    N_("reset the default tracking branch to master")),
+
+> +               OPT_STRING(0, "branch", &opt_branch, N_("branch"),
+> +                       N_("set the default tracking branch to the one specified")),
+
+Then:
+
+    N_("set the default tracking branch")),
+
+> +               OPT_END()
+> +       };
+> +       const char *const usage[] = {
+> +               N_("git submodule--helper set-branch [--quiet] (-d|--default) <path>"),
+> +               N_("git submodule--helper set-branch [--quiet] (-b|--branch) <branch> <path>"),
+> +               NULL
+> +       };
+> +
+> +       argc = parse_options(argc, argv, prefix, options, usage, 0);
+> +
+> +       if (!opt_branch && !opt_default)
+> +               die(_("at least one of --branch and --default required"));
+
+This wording makes no sense considering that --branch and --default
+are mutually exclusive. By writing "at least one of", you're saying
+that you can use _more than one_, which is clearly incorrect. Reword
+it like this:
+
+    die(_("--branch or --default required"));
+
+> +       if (opt_branch && opt_default)
+> +               die(_("--branch and --default do not make sense together"));
+
+A more precise way to say this is:
+
+    die(_("--branch and --default are mutually exclusive"));
+
+> +       if (argc != 1 || !(path = argv[0]))
+> +               usage_with_options(usage, options);
+> +
+> +       config_name = xstrfmt("submodule.%s.branch", path);
+> +       config_set_in_gitmodules_file_gently(config_name, opt_branch);
+
+Tracing through the config code, I see that
+config_set_in_gitmodules_file_gently() removes the key if 'opt_branch'
+is NULL, which mirrors the behavior of the shell code this is
+replacing. Good.
