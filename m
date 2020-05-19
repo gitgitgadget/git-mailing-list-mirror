@@ -2,96 +2,173 @@ Return-Path: <SRS0=xHKm=7B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A11C433E0
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 03:04:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93B02C433DF
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 04:22:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AAAA120674
-	for <git@archiver.kernel.org>; Tue, 19 May 2020 03:04:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6440620708
+	for <git@archiver.kernel.org>; Tue, 19 May 2020 04:22:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G+aX3qOC"
+	dkim=pass (2048-bit key) header.d=iskunk.org header.i=@iskunk.org header.b="Af26rmft";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fr7T9Lkz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726494AbgESDEo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 May 2020 23:04:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34720 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbgESDEo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 May 2020 23:04:44 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F875C061A0C
-        for <git@vger.kernel.org>; Mon, 18 May 2020 20:04:43 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id f6so5756510pgm.1
-        for <git@vger.kernel.org>; Mon, 18 May 2020 20:04:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fcshJqkqdPdGBzGN6QABva/0vS7NjSjoOUBhQqRsFog=;
-        b=G+aX3qOCzAErXVxAwbuv9dO4RnJAJMeRaYEc3vLPfVceVyZ4GIgRFgSytHZ++W/UIP
-         UNDlT9Sh8dL+zEUKNRc/Gi7fSJ/O38Dv37nKmltOtk0Yg7sDmhOq7f13DK063fbGDZ/C
-         6380+IGZAZgl4vpgTzt+OJnGZ8pJ5S8/CbUMtNp9xTuA7U8Dvt1p3pHq3tHedmHcWhFd
-         SqH8CT4Oytvfflzj+xq3Z1PiYXDuD/nkBViFpcVugLYJV+7uSqaSIsio/7lab++GaIm6
-         kTV79vJc0HkDkQgNUlGcligRsHZDTKeo4yzBv7IUcNTdFcRgb4TQDzpd7SF4xVmej2J0
-         BvFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fcshJqkqdPdGBzGN6QABva/0vS7NjSjoOUBhQqRsFog=;
-        b=Ueq2ie7DslTdOoQDWEQONS/hMkrWxx6vVPxOfbDmPp4Ae7k99siPrroKJ0wLDXoDP+
-         qZM5Osmf7m0Te6EMYiGe/2dq5kBLtOS42HPnPuv+HyqT1vxM55klmegEVZuEUJ8Pr9ih
-         s7MNlN9+8b1lsu67IfNhVltu00YC7/OUibyjhM25CeYR7ZbW5fHeVN2pFM/Q65ArUvhT
-         nsB8ei2cCGxX7p2kLDfXpElvzzadysl398HkUTM4VUA5wKjvSAHrrMw6afTTu5FdfxbP
-         CQLHMwRmVqp1rlIDgE1+vwj8KfCfrFK5rk1jXTDBS9hrlLG/Z71gTZfXgKelYXaPyLXc
-         oitg==
-X-Gm-Message-State: AOAM530PaYkNsHNuz2X6TVCAHS0ACWlxRS4cgY5/Qb9koUEzrgTiBJ4L
-        PUsPjCHk82rQ3GCX0hnxwPbIHgSD
-X-Google-Smtp-Source: ABdhPJycAULhcqLmmUNK9lrW2HGSutyxn2C7eZDHj4tTBrboTieOWQnXITxcunWTU3rRODuEd7OIBw==
-X-Received: by 2002:a65:4947:: with SMTP id q7mr17955624pgs.23.1589857482290;
-        Mon, 18 May 2020 20:04:42 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id r31sm741373pjg.2.2020.05.18.20.04.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2020 20:04:41 -0700 (PDT)
-Date:   Mon, 18 May 2020 20:04:40 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     "Daniel Richard G." <skunk@iSKUNK.ORG>
+        id S1726333AbgESEW4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 00:22:56 -0400
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:51773 "EHLO
+        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726045AbgESEWz (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 May 2020 00:22:55 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id F2C862BA;
+        Tue, 19 May 2020 00:22:54 -0400 (EDT)
+Received: from imap36 ([10.202.2.86])
+  by compute7.internal (MEProxy); Tue, 19 May 2020 00:22:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iskunk.org; h=
+        mime-version:message-id:in-reply-to:references:date:from:to:cc
+        :subject:content-type; s=fm3; bh=9EcWwNufyZ7ZwG3Zm29HmmYVCHNsMwX
+        pLXH4K7tUnSM=; b=Af26rmftEcu86gXatBzXFM4fB01lLhQ+cFl8aRFcjq69ke2
+        65tqF2eoKZ4+C4u9b+GE15yu6fvO+i5R0QFAgd5q2orHlzLqbw/3DPeUYCbVut/f
+        H/YjBNWAqjWtvRNhZFvm3b4Sx+wuadB6LUryTR2VGP2NxZ9vV4Sd1phGpn4nk/ep
+        DnFKfeRYuO8xtH0POL3fkmCmGUMlXfDUOr18EejjxxkpRPECqlQ0gaUzzjV/tdb2
+        y7DvggkGwv5WfoB2nneLivIcMbQDZkp/bAVYlWaSbxM/dAcdFXaXGjWL4y0fpP5l
+        7QWP5hlMumCf7bM7ihNQ+9b7FBFi52P014NuJ2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=9EcWwN
+        ufyZ7ZwG3Zm29HmmYVCHNsMwXpLXH4K7tUnSM=; b=fr7T9LkzH0Si1VVYvYXZMg
+        gSQf72FYooQFecyVrZG8r4NaJQ59TgOmYjzL3AhrdY4njBwAOhxcGPhpNQNQSuoJ
+        55Gwxtxx15FGGglkijI6GLmB+yfC6ZBuLvI+1cvKPwsocXMlrwLcyM0kWIAav8t/
+        yuxXTYO+1lkDJVIDfIunFKu7No623PqAYb7CVKUhLV955h3TlRbzn3iB8g6GHWBM
+        N8PJWHl8IuVFdr+z9egCYV2gC5kBMtQyhPltWhesHhcE6YhijDNB4iC8vLfduMqG
+        WexKpqYPBSyg2Nz8bl0tYTyM21FhtSd9RNqRFg5fmOV2Fr7oDHtQ1D1/wweMasOA
+        ==
+X-ME-Sender: <xms:Hl_DXmvs2NHtd6trwhAXM9i54PIGwzAJyVe4WW-KITwFxMblkeQHrg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedruddtiedgkeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
+    ertderredtnecuhfhrohhmpedfffgrnhhivghlucftihgthhgrrhguucfirddfuceoshhk
+    uhhnkhesihfumfgfpffmrdfqtffiqeenucggtffrrghtthgvrhhnpeekvdehgeegvedtje
+    egudelvdeghfejuddujeekhfethfdtfedvieekgfejgffhueenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehskhhunhhksehiuffmfgfpmfdrqf
+    ftif
+X-ME-Proxy: <xmx:Hl_DXrfnXkJaHYhJ0AOBEjc9-24nQ_J-ZnZ0E0zeq4y0ZYDSqhp_HA>
+    <xmx:Hl_DXhxrq8xAAiABFviRijMoXb_TkWNmbxS4ZO6K_yQ_ahLnIhpyIQ>
+    <xmx:Hl_DXhMv63G0RZLGTZE75xx26aMywiE7ksplIvLsUqRDAbFCJ3YNIQ>
+    <xmx:Hl_DXpJZlPS5FmcxPomxrUMgF8rKlSbOxOmLeqdYfcoEYxX9UHD65A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 253F51880067; Tue, 19 May 2020 00:22:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-464-g810d66a-fmstable-20200518v1
+Mime-Version: 1.0
+Message-Id: <40a42f1d-61bd-46fb-8946-5588df7b044b@www.fastmail.com>
+In-Reply-To: <20200519024945.GB70483@coredump.intra.peff.net>
+References: <7422404e-7fc8-4961-aae4-3f0adb71bb3a@www.fastmail.com>
+ <20200519024945.GB70483@coredump.intra.peff.net>
+Date:   Tue, 19 May 2020 00:22:00 -0400
+From:   "Daniel Richard G." <skunk@iSKUNK.ORG>
+To:     "Jeff King" <peff@peff.net>
 Cc:     git@vger.kernel.org
 Subject: Re: Minor portability issues + fixes
-Message-ID: <20200519030440.GB20332@Carlos-MBP>
-References: <7422404e-7fc8-4961-aae4-3f0adb71bb3a@www.fastmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7422404e-7fc8-4961-aae4-3f0adb71bb3a@www.fastmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 18, 2020 at 09:15:58PM -0400, Daniel Richard G. wrote:
+Hi Jeff,
+
+On Mon, 2020 May 18 22:49-04:00, Jeff King wrote:
 > 
-> I am building Git 2.26.2 on AIX. A few compilation errors arose, but
-> they are resolvable with a few minor changes that will improve overall
-> portability.
-
-which version of AIX is this?
-
-> There were a few errors of this form:
+> All system defines in Git should be pulled in via git-compat-util.h.
+> That does include stdint.h, but only if NO_INTTYPES_H is defined
+> (otherwise we prefer inttypes.h). And POSIX (2004) says:
 > 
->     sha1-file.c: In function 'mmap_limit_check':
->     sha1-file.c:940:12: error: 'SIZE_MAX' undeclared (first use in this function)
->     sha1-file.c:940:12: note: each undeclared identifier is reported only once for each function it appears in
+>   The <inttypes.h> header shall include the <stdint.h> header.
+> 
+> But perhaps that is not so on AIX (it wouldn't be the first time we've
+> seen a platform that does not strictly follow POSIX).
 
-we include inttypes.h which is supposed to include stdint.h per POSIX[1]
+On AIX 4.3, where I am building, inttypes.h does not #include stdint.h,
+and stdint.h is not present under /usr/include/. (This is an old system
+used for ABI compatibility-testing purposes.)
 
-could you take a look at that header and see if there is some macro definition
-preventing that to happen?
+This is not general to AIX, however, because on 5.3, both stdint.h and
+its #include are there.
 
-Carlo
+That said, my build is using GCC 4.7, which provides a modern stdint.h.
+The GCC tree contains a fixincluded version of inttypes.h, but this also
+lacks the <stdint.h> #include.
 
-[1] https://pubs.opengroup.org/onlinepubs/009696799/basedefs/inttypes.h.html
+> Does building with:
+> 
+>   make NO_INTTYPES_H=YesPlease
+> 
+> work?
+>
+> If so, then perhaps it should be added to the AIX defines in
+> config.mak.uname.
+
+I've confirmed that this works. But would it not be safe to #include
+both inttypes.h and stdint.h explicitly if both are present, rather than
+cater to AIX specifically? I could see this similarly arising in, say,
+an old version of Solaris.
+
+> > Setting that variable to an empty value causes a bare directory to be
+> > passed to the linker, which of course then errors out. I would suggest
+> > setting it to "-L" instead.
+> 
+> That would just be redundant with the earlier argument. That might be
+> the easiest way to turn it into a noop, but we can probably do better
+> with $(if) or similar, which would allow somebody to build with:
+> 
+>   make CC_LD_DYNPATH=
+> 
+> even without using the autoconf script.
+
+That is a fair point. CC_LD_DYNPATH is used only a handful of times, so
+this wouldn't be much more work.
+
+> I do wonder, though, if configure.ac could be extended for AIX to
+> support whatever syntax the system linker uses for setting the run-path.
+> I understand that you don't care either way about this feature, but this
+> might be a good opportunity to fix it.
+
+This could be a bit complicated, I'm afraid.
+
+The applicable value for CC_LD_DYNPATH on AIX is "-Wl,-blibpath:".
+However, have a look at the description for this option in the
+ld(1) man page:
+
+       libpath:Path
+            Uses Path as the library path when writing the loader
+            section of the output file. Path is neither checked for
+            validity nor used when searching for libraries specified by
+            the -l flag. Path overrides any library paths generated when
+            the -L flag is used.
+
+            If you do not specify any -L flags, or if you specify the
+            nolibpath option, the default library path information is
+            written in the loader section of the output file. The
+            default library path information is the value of the LIBPATH
+            environment variable if it is defined, and /usr/lib:/lib,
+            otherwise.
+
+(excerpted from an AIX 7.1 system)
+
+That implies that when you use this option, you must specify not only
+the path you're interested in, but also /usr/lib:/lib! And when I look
+at an existing AIX build of ours, that makes use of Libtool, I see that
+it is in fact passing in a rather lengthy path for -Wl,-blibpath:, that
+ends with ":/usr/lib:/lib".
+
+
+--Daniel
+
+
+-- 
+Daniel Richard G. || skunk@iSKUNK.ORG
+My ASCII-art .sig got a bad case of Times New Roman.
