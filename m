@@ -2,70 +2,66 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33417C433DF
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE21C433DF
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 18:10:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0849E206B6
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:52:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9037220709
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 18:10:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H1MkifCr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apbdPI+1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726806AbgETRwy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 13:52:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59948 "EHLO
+        id S1726871AbgETSKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 14:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726436AbgETRwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 13:52:53 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDFF9C061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 10:52:53 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id b18so3224519oti.1
-        for <git@vger.kernel.org>; Wed, 20 May 2020 10:52:53 -0700 (PDT)
+        with ESMTP id S1726548AbgETSKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 14:10:33 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B52C061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 11:10:32 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id a68so3241278otb.10
+        for <git@vger.kernel.org>; Wed, 20 May 2020 11:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=k1V5Zzf0k2sP+jw6Y6B0tv7LB07T4uEkwCIiTXIl70w=;
-        b=H1MkifCrJIxYGD/WCxeDhlFKUJLKo6CoJLh0qi6gewxmaXH6hjv0cz0o6KiC/3D3SF
-         d3nAvQM9QLqBz0q8csduCfiAG/dhd6cLPzStEPj6U+/Cyf9pXkpYBokE6p3jthZq6usa
-         IREUCqK7dnq+aoR9gd20hdFshBMKEbQzI+aX5LL6i/klq4j90CuWG8QN2ABoO4hRLLAm
-         IFALeuzkreS5WbZi79FcYsYUVIpMs0u9tbKpyHgzvR2BB29f9gCh391ZXdO0mzOMBDsr
-         3JXmtrVE7QBNWNbEfkyCSPuWKaHxdnwt4fD2ng1QzdD/As5WuGAvOzJRKiPWW8DR2D2Y
-         SZwA==
+        bh=xfdj/DlP9Ydhv/NZK6Tw9N20Off47S4h1ZRafPUIhh0=;
+        b=apbdPI+1+T/TsBBnntRGrLywrh5YUSfFTIRxZ+i5/yq5sT+8WPsmNYGBRsJ/OJtn7e
+         H1o5rvSp4FLHk+8guJ9buyYPmtEnx38Y3dJcoCynvthy7Z60WZ8qJ/sMqQs0Y/3iSeew
+         jLIcQRP6fZ/2Uyu5JaoOgdpZFoQ2UfDyeRlvme/l5evLj7wSBm6CidI6Vnk06iGP0tPh
+         wHs2IDgEwpRQpYP7pcmPpSql+bbWQ4dENgpZTw6f/Fx2XrW1Mq8JjyPsCetOkbH5RmFK
+         hYa2ewLOvwRNpe7zjFameu+CaROg7GbhS/fkQmvqOtytqZBvqMM4JM1rIQicYpfKgKu9
+         kjZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=k1V5Zzf0k2sP+jw6Y6B0tv7LB07T4uEkwCIiTXIl70w=;
-        b=j4Uklb+yspufoAkip22707tyT2A4Ul/xli5alPV+egAEcD5WlSxC9aySzjr3ZSU9Hw
-         x93DbhrJHP2LKMrmvRyNXKWuINrHQR04/uIGwaxrXmSU22JDvtwG/xjzeiO4kpNXNxQm
-         XCyZt/75RxD57fXyrw0/dyJJoJ+Jy95hbgaZwGXkmE/La08RGY+34GChUbsWTZj7Kgm9
-         AtYDTP5lGsOhRIWwoXG9fCLtDF6fWy+46k2IR19C1kabiLYnH7TS9pKpeOlDZdt8+dB2
-         Rk7hN19vqSbkRTpflYVArD1TnF6ULPk3bB4P8QN46+SKO+UdC/DOwfmRI0VDT6HP+7/y
-         0mww==
-X-Gm-Message-State: AOAM531KdbRy/SyZLU21PsqL/BqzVaKXMa+aTJMHa57eQKFe4zDblKkB
-        4iDhxtf7pqi8aMGtJXmPJRXh9q9XcdJbLEcTEm8=
-X-Google-Smtp-Source: ABdhPJykmfB0VYws8kEQThgsJncMsY/gxhoI4RjtZ6fXQ9g96x7nYA2bjpxvcG35RRLq5bwHHtTxgKlVM/XtefqhwbE=
-X-Received: by 2002:a9d:24e5:: with SMTP id z92mr4170353ota.345.1589997172924;
- Wed, 20 May 2020 10:52:52 -0700 (PDT)
+        bh=xfdj/DlP9Ydhv/NZK6Tw9N20Off47S4h1ZRafPUIhh0=;
+        b=NL1fk4lOM/XBS1LPIqKifgKY1ESAn4mHvFEVQ3RHAk9p1RQpcFgjGkrssa5TGtqBn8
+         UGi/cAsnlRo2AUDzojSifcOTO7MP3EdXP8b8dUp8bMKwGVqnRHzME4HnQIk34if8TEvg
+         tTExBLYmYiSpSEc/QlUGZ+Z+9Dk6K1KrlGCKH8XHp6Zjs+cu9m7vVgsXe0+HCYZj77kF
+         dsIUSDUdyJxWs+hoVjrpgZideSRj8tSQmOVrHy4A/l07ta7F4zb2owbGYLkSn2xNhiSH
+         UZ8XQctg9KK4+ZKB+mFEAA9F2DJ//OOtW+MxvVafiysgl93H0H7KWYuf4rnv4x9Yq17H
+         w53g==
+X-Gm-Message-State: AOAM532lOsSmioo64zx6CWCin6NkEh4tOmiEVYT/HpMKlLHyj09Ca3Ix
+        QJ04ma1kkk7bNwOlJtfvm+e4KY7Pk0ige7gMjeI=
+X-Google-Smtp-Source: ABdhPJx5S+7yhGK0L0VlcWryS77zlq8afaOpCzJO75Vp6+hhpJD4uewdBj9Pw4WshLz8WN+d/3o2Ck98aqCQ1bzGjM0=
+X-Received: by 2002:a9d:7998:: with SMTP id h24mr1127240otm.316.1589998231187;
+ Wed, 20 May 2020 11:10:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
- <2188577cd848d7cee77f06f1ad2b181864e5e36d.1588857462.git.gitgitgadget@gmail.com>
- <xmqqeerv2w01.fsf@gitster.c.googlers.com> <6d354901-9361-d8d1-539d-3b6c3edb2d9f@gmail.com>
-In-Reply-To: <6d354901-9361-d8d1-539d-3b6c3edb2d9f@gmail.com>
+References: <pull.627.git.1588857462.gitgitgadget@gmail.com> <f55cd0fb3897db9ca22156347293ca830cdf018c.1588857462.git.gitgitgadget@gmail.com>
+In-Reply-To: <f55cd0fb3897db9ca22156347293ca830cdf018c.1588857462.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 May 2020 10:52:41 -0700
-Message-ID: <CABPp-BH5p1VPXfMOyN_0SLnsFKkRU9R-ZpiAe4k5r=ZUbHeibQ@mail.gmail.com>
-Subject: Re: [PATCH 04/10] sparse-checkout: allow in-tree definitions
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, newren@gmaill.com,
+Date:   Wed, 20 May 2020 11:10:20 -0700
+Message-ID: <CABPp-BEz42zvT_Vsu2xxg9RnuhBZ2aF8b+KYEu-CW=bMGQOC=Q@mail.gmail.com>
+Subject: Re: [PATCH 07/10] sparse-checkout: define in-tree dependencies
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, newren@gmaill.com,
         Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
@@ -75,98 +71,230 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 8, 2020 at 8:42 AM Derrick Stolee <stolee@gmail.com> wrote:
+On Thu, May 7, 2020 at 6:22 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> On 5/7/2020 6:58 PM, Junio C Hamano wrote:
-> > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> >> One of the difficulties of using the sparse-checkout feature is not
-> >> knowing which directories are absolutely needed for working in a portion
-> >> of the repository. Some of this can be documented in README files or
-> >> included in a bootstrapping tool along with the repository. This is done
-> >> in an ad-hoc way by every project that wants to use it.
-> >>
-> >> Let's make this process easier for users by creating a way to define a
-> >> useful sparse-checkout definition inside the Git tree data. This has
-> >> several benefits. In particular, the data is available to anyone who has
-> >> a copy of the repository without needing a different data source.
-> >> Second, the needs of the repository can change over time and Git can
-> >> present a way to automatically update the working directory as these
-> >> sparse-checkout definitions change over time.
-> >
-> > And two lines of development can merge them together?
-> >
-> > Any time a new "feature" pops up that would eventually affect how
-> > "git clone" and "git checkout" work based on untrusted user data, we
-> > need to make sure there is no negative security implications.
-> >
-> > If it only boils down to "we have files that can record list of
-> > leading directory names and without offering extra 'flexibility'", I
-> > guess there aren't all that much that a malicious sparse definition
-> > can do and we would be safe, though.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> Yes. I hope that we can be extremely careful with this feature.
-> The RFC status of this series implicitly includes the question
-> "Should we do this at all?" I think the benefits outweigh the
-> risks, but we can minimize those risks with very careful design
-> and implementation.
+> As mentioned in the definition of the in-tree sparse-checkout
+> definitions, a large repository could have many different roles for the
+> users of that repository. That means that many different in-tree
+> sparse-checkout definitions need to exist. If a directory needs to be
+> added to many of these roles, then many of these files need to be
+> edited. This is too much work to scale properly.
 >
-> >> To use this feature, add the "--in-tree" option when setting or adding
-> >> directories to the sparse-checkout definition. For example:
-> >>
-> >>   $ git sparse-checkout set --in-tree .sparse/base
-> >>   $ git sparse-checkout add --in-tree .sparse/extra
-> >>
-> >> These commands add values to the multi-valued config setting
-> >> "sparse.inTree". When updating the sparse-checkout definition, these
-> >> values describe paths in the repository to find the sparse-checkout
-> >> data. After the commands listed earlier, we expect to see the following
-> >> in .git/config.worktree:
-> >>
-> >>      [sparse]
-> >>              intree = .sparse/base
-> >>              intree = .sparse/extra
-> >
-> > What does this say in human words?  "These two tracked files specify
-> > which paths should be in the working tree"?  Spelling it out here
-> > would help readers of this commit.
+> Instead, let's make these definitions easier to maintain by following
+> basic principles of build dependencies. Add simple links between these
+> in-tree files using the new "sparse.inherit" config key. This multi-
+> valued config setting specifies more files that are needed to define the
+> sparse-checkout for a role. By separating out the common directories
+> into a base file, the more specialized roles can focus their files on
+> the directories only needed by those roles and leave the common
+> directories to that base file.
 >
-> You got it. Sounds good.
+> For example, suppose that .sparse/base has the following data:
 >
-> >> When applying the sparse-checkout definitions from this config, the
-> >> blobs at HEAD:.sparse/base and HEAD:.sparse/extra are loaded.
-> >
-> > OK, so end-user edit to the working tree copy or what is added to
-> > the index does not count and only the committed version gets used.
-> >
-> > That makes it simple---I was wondering how we would operate when
-> > merging a branch with different contents in the .sparse/* files
-> > until the conflicts are resolved.
+>         [sparse]
+>                 dir = A
+>                 dir = B/C
+>                 dir = D/E/F
 >
-> It's worth testing this case so we can be sure what happens.
+> and .sparse/extra has the following data:
+>
+>         [sparse]
+>                 dir = D
+>                 dir = X
+>                 inherit = .sparse/base
+>
+> Now, a user can run "git sparse-checkout set --in-tree .sparse/extra"
+> and the resulting directories will define their cone-mode
+> sparse-checkout patterns:
+>
+>         A
+>         B/C
+>         D
+>         X
+>
+> Thus, the resulting sparse-checkout definition is the union of the
+> definitions from .sparse/base and .sparse/extra, but the user only has
+> one value of sparse.inTree of ".sparse/extra".
+>
+> It is simple to modify our existing logic to explore the directed graph
+> created by the sparse.inherit values. We simply need to append to the
+> string_list containing the list of in-tree files. Since we never repeat
+> parsing on the same blob oid, this will not lead to infinite loops or
+> exponential blowups in the parsing time.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/git-sparse-checkout.txt | 26 ++++++++++++++++++++++
+>  sparse-checkout.c                     | 27 ++++++++++++++++++-----
+>  sparse-checkout.h                     |  1 +
+>  t/t1091-sparse-checkout-builtin.sh    | 31 +++++++++++++++++++++++++++
+>  4 files changed, 80 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+> index c1713ebb1d2..941658e0011 100644
+> --- a/Documentation/git-sparse-checkout.txt
+> +++ b/Documentation/git-sparse-checkout.txt
+> @@ -238,6 +238,32 @@ definition according to the files available at the new commit. If any of
+>  the specified files do not exist at the new commit, then the sparse-checkout
+>  definition will not change.
+>
+> +In a very large repository, there may be need to have multiple of these
+> +in-tree sparse-checkout definitions to fit the roles of multiple types of
+> +users. As each definition grows and the number of user types grow, it can
+> +be difficult to manage updating all of the definitions when a common core
+> +is modified somehow. For this reason, the in-tree pattern sets can inherit
+> +the directories from other in-tree pattern sets. Use the `sparse.inherit`
+> +option to specify other files in the tree.
+> +
+> +For example, suppose the file listed earlier is at `.sparse/core`. Another
+> +file could be stored as `.sparse/extra` with contents
+> +
+> +----------------------------------
+> +[sparse]
+> +       dir = X
+> +       dir = Y/Z
+> +       inherit = .sparse/core
+> +----------------------------------
 
-During a merge or rebase or checkout -m, what happens if .sparse/extra
-has the following working tree content:
+So you apparently expect full path rather than a relative path.  This
+example does imply this, but it might be good to explicitly state it.
 
-[sparse]
-    dir = D
-    dir = X
-<<<<<< HEAD
-    dir = Y
-|||||| MERGE_BASE
-======
-    inherit = .sparse/tools
->>>>>>  MERGE_HEAD
-    inherit = .sparse/base
+What happens if the user specifies a non-existent path, or perhaps
+equivalently, didn't understand and specified the path using a
+relative path specification?  What if the user specifies a path that
+doesn't exist in the commit, but happens to exist in someones's
+working directory?  (And maybe even did it intentionally as a way to
+cheat and add user-defined additional paths to include?  Do we want to
+allow that, or do we want to enforce that extra includes use some kind
+of pre-defined path?)  What if they specify some path that is invalid
+to record in a git commit (.git/mydeps or
+../../../../../../../otherdeps) but happens to exist on some machines?
+ (Are there future security vulnerabilities of any sort going down
+this path?)
 
-and, of course, three different entries in the index?
+> +
+> +Then, if you run `git sparse-checkout set --in-tree .sparse/extra`, the
+> +sparse-checkout definition will include `X` and `Y/Z` from `.sparse/extra`
+> +as well as `A`, `B/C`, and `D/E/F` from `.sparse/core`. This is similar
+> +to specifying both `.sparse/core` and `.sparse/extra` in the `set`
+> +subcommand, but has a slight advantage. If the `.sparse/extra` file changes
+> +the set of `inherit` files, then your sparse-checkout definition will
+> +update accordingly as you switch between commits.
+> +
+>
+>  SUBMODULES
+>  ----------
+> diff --git a/sparse-checkout.c b/sparse-checkout.c
+> index d01f4d7b525..4edeab49a10 100644
+> --- a/sparse-checkout.c
+> +++ b/sparse-checkout.c
+> @@ -66,12 +66,29 @@ static int sparse_dir_cb(const char *var, const char *value, void *data)
+>         return 0;
+>  }
+>
+> +static int sparse_inherit_cb(const char *var, const char *value, void *data)
+> +{
+> +       struct string_list *sl = (struct string_list *)data;
+> +
+> +       if (!strcmp(var, SPARSE_CHECKOUT_INHERIT))
+> +               string_list_append(sl, value);
 
-Also, do we use the version of the --in-tree file from the latest
-commit, from the index, or from the working tree?  (This is a question
-not only for merge and rebase, but also checkout with dirty changes
-and even checkout -m.)  Which one "wins"?
+So anyone can record lots of additional items within these files, and
+we'll ignore them and only pay attention to certain fields.  That
+probably allows future versions of git to write new values and old
+versions of git to not choke on them.  Does it lead to entrepreneurial
+developers cramming random additional fields in these files that
+possibly conflict with fieldnames that we want to use in the future?
+Do we want to document what is allowed and what is not?
 
-And what if the user updates and commits an ill-formed version of the
-file -- is it equivalent to getting an empty cone with just the
-toplevel directory, equivalent to getting a complete checkout of
-everything, or something else?
+> +
+> +       return 0;
+> +}
+> +
+>  static int load_in_tree_from_blob(struct pattern_list *pl,
+> -                                 struct object_id *oid)
+> +                                 struct object_id *oid,
+> +                                 struct string_list *inherit)
+>  {
+> -       return git_config_from_blob_oid(sparse_dir_cb,
+> -                                       SPARSE_CHECKOUT_DIR,
+> -                                       oid, pl);
+> +       if (git_config_from_blob_oid(sparse_dir_cb,
+> +                                    SPARSE_CHECKOUT_DIR,
+> +                                    oid, pl))
+> +               return 1;
+> +       if (git_config_from_blob_oid(sparse_inherit_cb,
+> +                                    SPARSE_CHECKOUT_INHERIT,
+> +                                    oid, inherit))
+> +               return 1;
+> +       return 0;
+>  }
+>
+>  int load_in_tree_pattern_list(struct repository *r,
+> @@ -121,7 +138,7 @@ int load_in_tree_pattern_list(struct repository *r,
+>                         goto cleanup;
+>                 }
+>
+> -               load_in_tree_from_blob(pl, oid);
+> +               load_in_tree_from_blob(pl, oid, sl);
+>         }
+>
+>  cleanup:
+> diff --git a/sparse-checkout.h b/sparse-checkout.h
+> index fb0ba48524a..8b766ea38fb 100644
+> --- a/sparse-checkout.h
+> +++ b/sparse-checkout.h
+> @@ -5,6 +5,7 @@
+>  #include "repository.h"
+>
+>  #define SPARSE_CHECKOUT_DIR "sparse.dir"
+> +#define SPARSE_CHECKOUT_INHERIT "sparse.inherit"
+>  #define SPARSE_CHECKOUT_IN_TREE "sparse.intree"
+>
+>  struct pattern_list;
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index fdaafba5377..b2389e5b5e6 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -716,4 +716,35 @@ test_expect_success 'keep definition when in-tree file is missing' '
+>         test_path_is_dir repo/.sparse
+>  '
+>
+> +test_expect_success 'inherit definition from other files' '
+> +       cat >repo/.sparse/inherit <<-EOF &&
+> +       [sparse]
+> +               inherit = .sparse/sparse
+> +               inherit = .sparse/deep
+> +               inherit = .sparse/deeper1
+> +       EOF
+> +       git -C repo add .sparse &&
+> +       git -C repo commit -m "Add inherited file" &&
+> +       git -C repo sparse-checkout set --in-tree .sparse/inherit &&
+> +       check_files repo a deep folder1 &&
+> +       check_files repo/deep a deeper1 deeper2 &&
+> +       test_path_is_dir repo/.sparse &&
+> +       cat >repo/.sparse/sparse <<-EOF &&
+> +       [sparse]
+> +               dir = .sparse
+> +       EOF
+> +       git -C repo commit -a -m "drop folder1 from sparse" &&
+> +       check_files repo a deep &&
+> +       check_files repo/deep a deeper1 deeper2 &&
+> +       test_path_is_dir repo/.sparse
+> +'
+> +
+> +test_expect_success 'inherit files can have cycles' '
+> +       echo "\tinherit = .sparse/inherit" >>repo/.sparse/sparse &&
+> +       git -C repo commit -a -m "create inherit cycle" &&
+> +       check_files repo a deep &&
+> +       check_files repo/deep a deeper1 deeper2 &&
+> +       test_path_is_dir repo/.sparse
+> +'
+> +
+>  test_done
+> --
+> gitgitgadget
+>
