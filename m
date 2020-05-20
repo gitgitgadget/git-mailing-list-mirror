@@ -2,102 +2,131 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08722C433E0
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 15:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45748C433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 15:17:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B79352072C
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 15:04:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DF4A20671
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 15:17:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rBS7om5w"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WkDR+TKp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726525AbgETPE3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 11:04:29 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61667 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726436AbgETPE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 11:04:29 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D0CD4D91F8;
-        Wed, 20 May 2020 11:04:27 -0400 (EDT)
+        id S1726944AbgETPRu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 11:17:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62370 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726525AbgETPRt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 11:17:49 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD93D4339C;
+        Wed, 20 May 2020 11:17:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=W4uB142+oJJO
-        4woPuTkhJFq1f+s=; b=rBS7om5w0fC2uOAXa+RH/UFObj1hHS8yOf+5fsczOYsK
-        lu4dFhudhqZbXeFfyg17Q4Qfq49PsOpnwUqekm66cdVFxX3o7CI9HWJ8tyyx0zFf
-        v2I41angSnqSQgIkqBVJGxZzPR/oXjVap7Fdlxkcx6ivu8zq0DxTHA6AvQnX0Dk=
+        :content-type; s=sasl; bh=2NSeattfoabu8vHvTd9GZbBRFlo=; b=WkDR+T
+        KpKMVLWqV3A2BFUxXjo7uCMYa4jl9KBtB85+Xco5kapOblHJnYKTAvgCsyHWDQU4
+        UNM/OSD42oYwctV7J9ys5U0xrVqAeJYQrg3KqcjT8OTsrZiBSS1m02lWARo5DzEK
+        9iuH3L3mzseIF0aUk85zP2ABJSON0oOIMyf2o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=d5TQt4
-        MP8U59bXlSdQkTGZ4eirhVz9Nvr+VjuaURHRru0bE+GUfBBpOxkJY5Dwq4ntG/b2
-        qGaCLq7aOhoe9Lw+jePBDOJfYbT4l2/TDRIJyBo4B4yvwdXRBzX+9zOXAJqPZG7Z
-        +nIfduQSflliKBkNzNTs1t/AZQu6YYcvMKU0w=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C9C49D91F7;
-        Wed, 20 May 2020 11:04:27 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=AVJDKPHThI2RGsIutrINtA4blHiCZziH
+        45yu4vfVRW/54JHMl6F5iAQDIivpkq70jc0E/uQg3lKvthkykRNe6OrPDb6fbj6q
+        KctT7ZqtodBfH8Fc//BjC/lbSJKfZZ/52bIU12zEpIduHjLzm1oxGlsj9nw/KOs9
+        SvGehNyRUO0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ACB324339B;
+        Wed, 20 May 2020 11:17:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 047DBD91F6;
-        Wed, 20 May 2020 11:04:24 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 79EB64339A;
+        Wed, 20 May 2020 11:17:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, liu.denton@gmail.com, chwarr@microsoft.com,
-        garima.singh@microsoft.com
-Subject: Re: [PATCH 1/3] t4216: avoid unnecessary subshell in test_bloom_filters_not_used
-References: <20200520034444.47932-1-carenas@gmail.com>
-        <20200520034444.47932-2-carenas@gmail.com>
-Date:   Wed, 20 May 2020 08:04:23 -0700
-In-Reply-To: <20200520034444.47932-2-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 19 May 2020 20:44:42 -0700")
-Message-ID: <xmqqr1vewsug.fsf@gitster.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] builtin/checkout: simplify metadata initialization
+References: <ef72aedf-4264-e386-9563-050c54483c93@gmail.com>
+        <20200520014156.1570124-1-sandals@crustytoothpaste.net>
+Date:   Wed, 20 May 2020 08:17:43 -0700
+In-Reply-To: <20200520014156.1570124-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Wed, 20 May 2020 01:41:56 +0000")
+Message-ID: <xmqqmu62ws88.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3197FD20-9AAB-11EA-824C-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0E1F5F30-9AAD-11EA-9991-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Seems to trigger a bug in at least OpenBSD's 6.7 sh where it is
-> interpreted as a history lookup and therefore fails 125-126, 128,
-> 130.
+> When we call init_checkout_metadata in reset_tree, we want to pass the
+> object ID of the commit in question so that it can be passed to filters,
+> or if there is no commit, the tree.  We anticipated this latter case,
+> which can occur elsewhere in the checkout code, but it cannot occur
+> here, since reset_tree is called only (indirectly) via switch_branches,
+> which requires that we have a valid commit.  switch_branches dies if we
+> lack a name and cannot produce a commit from HEAD, and its caller dies
+> if we do have a branch name but still lack a commit pointer.
 >
-> Remove the subshell and get a space between ! and grep, so tests
-> pass successfully.
+> Since we know we must always have a valid commit structure in this case,
+> let's remove the dead code paths and just refer to the commit structure.
+> This simplifies the code and makes it easier for the reader.
 
-It's strange that somebody thinks of doing history lookup in
-non-interactive use.
+builtin/checkout.c::merge_working_tree() has these lines in its
+earlier part:
 
-But even more curious is why we have this in a subshell in the first
-place.  I do not see a reason why we need subshell, nor use of the
-double-quote in the outer layer that forces us to use backslashes.
+	if (opts->new_orphan_branch && opts->orphan_from_empty_tree) {
+		if (new_branch_info->commit)
+			BUG("'switch --orphan' should never acc...");
+		new_tree = parse_tree_indirect(the_hash_algo->empty_tree);
+	} else
+		new_tree = get_commit_tree(new_branch_info->commit);
+	if (opts->discard_changes) {
+		ret = reset_tree(new_tree, opts, 1, writeout_error, new_branch_info);
+		if (ret)
+			return ret;
+	...
 
->  test_bloom_filters_not_used () {
->  	log_args=3D$1
->  	setup "$log_args" &&
-> -	!(grep -q "statistics:{\"filter_not_present\":" "$TRASH_DIRECTORY/tra=
-ce.perf") &&
-> +	! grep -q "statistics:{\"filter_not_present\":" "$TRASH_DIRECTORY/tra=
-ce.perf" &&
+So, when orphan && orphan-from-empty are both set, we must not have
+commit, and then if discard is also there, we end up passing
+new_brnach_info that has NULL in its commit.
 
-This is obviously the minimum fix, so I'm willing to take the change
-as-is, but if we were writing it today, perhaps
+There are few more callers of reset_tree() in this function, which I
+did not trace.
 
-	! grep 'statistics:{"filter_not_present":' "$TRASH_DIRECTORY/trace.perf"=
- &&
+Perhaps the "orphan && orphan-from-empty" is a dead combination and
+we won't hit the codepath and that is why this change is safe?  I
+dunno.
 
-is how we write it.  I do not see any reason why we want to use the
-"-q" option either.
 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/checkout.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index e9d111bb83..e53bdab5b8 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -620,11 +620,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
+>  	opts.verbose_update = o->show_progress;
+>  	opts.src_index = &the_index;
+>  	opts.dst_index = &the_index;
+> -	init_checkout_metadata(&opts.meta, info->refname,
+> -			       info->commit ? &info->commit->object.oid :
+> -			       is_null_oid(&info->oid) ? &tree->object.oid :
+> -			       &info->oid,
+> -			       NULL);
+> +	init_checkout_metadata(&opts.meta, info->refname, &info->commit->object.oid, NULL);
+>  	parse_tree(tree);
+>  	init_tree_desc(&tree_desc, tree->buffer, tree->size);
+>  	switch (unpack_trees(1, &tree_desc, &opts)) {
