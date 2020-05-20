@@ -2,299 +2,275 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE21C433DF
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 18:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBDBBC433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 18:52:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9037220709
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 18:10:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA490206C3
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 18:52:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apbdPI+1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="os/AjTC4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726871AbgETSKd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 14:10:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34486 "EHLO
+        id S1726850AbgETSwG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 14:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726548AbgETSKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 14:10:33 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B52C061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 11:10:32 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id a68so3241278otb.10
-        for <git@vger.kernel.org>; Wed, 20 May 2020 11:10:32 -0700 (PDT)
+        with ESMTP id S1726775AbgETSwG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 14:52:06 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55182C061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 11:52:06 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id 145so1993794pfw.13
+        for <git@vger.kernel.org>; Wed, 20 May 2020 11:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xfdj/DlP9Ydhv/NZK6Tw9N20Off47S4h1ZRafPUIhh0=;
-        b=apbdPI+1+T/TsBBnntRGrLywrh5YUSfFTIRxZ+i5/yq5sT+8WPsmNYGBRsJ/OJtn7e
-         H1o5rvSp4FLHk+8guJ9buyYPmtEnx38Y3dJcoCynvthy7Z60WZ8qJ/sMqQs0Y/3iSeew
-         jLIcQRP6fZ/2Uyu5JaoOgdpZFoQ2UfDyeRlvme/l5evLj7wSBm6CidI6Vnk06iGP0tPh
-         wHs2IDgEwpRQpYP7pcmPpSql+bbWQ4dENgpZTw6f/Fx2XrW1Mq8JjyPsCetOkbH5RmFK
-         hYa2ewLOvwRNpe7zjFameu+CaROg7GbhS/fkQmvqOtytqZBvqMM4JM1rIQicYpfKgKu9
-         kjZw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=pFj1izBOpy2lNNeFdz/gqcwm+QSMTxlb6phuEGxsA4Y=;
+        b=os/AjTC4O9OFd6KQoAyqgFHneBcsJo6EjzOAD1fIxPWezLFOQ27BIcjmbiAmF2T/g5
+         uKQSOdRJfsb8rfPtPuEnXu1MuiZTFbGxXQlEaXF5QcDRVLK3zYGKCNiYBvnhK2QLrSBF
+         noOlE4W5gwM6ZWzj6uYxXpnH1cGmYmLgYQHr0OdgeRtkxfE6gKB/I808XdcAnoEzA+on
+         7mjLyUWNs1PDr0vf/Mh62h7J43aywDkAcADw1Q7rTPU3B0ToNTWbUoHfoLU0H72nfIMw
+         CEKQj7mme1eqis7+pNoTRaC5pGykMaxsjso1evjhjXa+2uNNLqW6A1Ywju8JZ6T/izL6
+         k2tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xfdj/DlP9Ydhv/NZK6Tw9N20Off47S4h1ZRafPUIhh0=;
-        b=NL1fk4lOM/XBS1LPIqKifgKY1ESAn4mHvFEVQ3RHAk9p1RQpcFgjGkrssa5TGtqBn8
-         UGi/cAsnlRo2AUDzojSifcOTO7MP3EdXP8b8dUp8bMKwGVqnRHzME4HnQIk34if8TEvg
-         tTExBLYmYiSpSEc/QlUGZ+Z+9Dk6K1KrlGCKH8XHp6Zjs+cu9m7vVgsXe0+HCYZj77kF
-         dsIUSDUdyJxWs+hoVjrpgZideSRj8tSQmOVrHy4A/l07ta7F4zb2owbGYLkSn2xNhiSH
-         UZ8XQctg9KK4+ZKB+mFEAA9F2DJ//OOtW+MxvVafiysgl93H0H7KWYuf4rnv4x9Yq17H
-         w53g==
-X-Gm-Message-State: AOAM532lOsSmioo64zx6CWCin6NkEh4tOmiEVYT/HpMKlLHyj09Ca3Ix
-        QJ04ma1kkk7bNwOlJtfvm+e4KY7Pk0ige7gMjeI=
-X-Google-Smtp-Source: ABdhPJx5S+7yhGK0L0VlcWryS77zlq8afaOpCzJO75Vp6+hhpJD4uewdBj9Pw4WshLz8WN+d/3o2Ck98aqCQ1bzGjM0=
-X-Received: by 2002:a9d:7998:: with SMTP id h24mr1127240otm.316.1589998231187;
- Wed, 20 May 2020 11:10:31 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=pFj1izBOpy2lNNeFdz/gqcwm+QSMTxlb6phuEGxsA4Y=;
+        b=AaVOA6Ec4gFkoHQrx64xWWV3T6rtKm/AW6/cmP0DTqSWc7KogmcXP4D4SmfjTijEgK
+         8VCK3C1qFlf5RmUtPdVutUh9EcbzpgmsLBPdfDc1O85nn1/KQUr8Qur4aN3QMqK9KPJY
+         zJ5gDjNRWTKyJKmt4dIkt2rRS8QZaU5MkqOjPdLBDxWupclBH9tw6GvqMwiqXhCRM0oV
+         YFC9yR2TDABQzWof0S+crhwMDH4kbwZKXdjujdE8aEqToHiwEuffYissRPWZE8mMOFfv
+         lJL5f8jl92GXgYa/9W5/p34KbVYpRIX7YTXfdbdWzAEkIWJEZoTL8rsjn/HkMijF2pwL
+         AZ+Q==
+X-Gm-Message-State: AOAM530Tieqz6cFZ7fLX9NvbyzExzH10SWt4wzhRQSfCd9O7W16JxyX6
+        T+olEtxF81oJk1TY7EhBuyA=
+X-Google-Smtp-Source: ABdhPJyNOWNdCP5jO8LmDjcauNczKQOXLqa0+6T2w274YKSRQfxIVKXXgWhUMfgerVnPuFK42ry0aw==
+X-Received: by 2002:a65:498f:: with SMTP id r15mr5331532pgs.345.1590000725580;
+        Wed, 20 May 2020 11:52:05 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id a85sm2685580pfd.181.2020.05.20.11.52.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 May 2020 11:52:04 -0700 (PDT)
+Date:   Wed, 20 May 2020 11:52:02 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v13 04/13] reftable: file format documentation
+Message-ID: <20200520185202.GA3648@google.com>
+References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
+ <pull.539.v13.git.1589226388.gitgitgadget@gmail.com>
+ <96fd9814a6753e87fb99c6f9d55a0728d3dba6cb.1589226388.git.gitgitgadget@gmail.com>
+ <xmqqeerfzitt.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.627.git.1588857462.gitgitgadget@gmail.com> <f55cd0fb3897db9ca22156347293ca830cdf018c.1588857462.git.gitgitgadget@gmail.com>
-In-Reply-To: <f55cd0fb3897db9ca22156347293ca830cdf018c.1588857462.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 May 2020 11:10:20 -0700
-Message-ID: <CABPp-BEz42zvT_Vsu2xxg9RnuhBZ2aF8b+KYEu-CW=bMGQOC=Q@mail.gmail.com>
-Subject: Re: [PATCH 07/10] sparse-checkout: define in-tree dependencies
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, newren@gmaill.com,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqeerfzitt.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 7, 2020 at 6:22 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> As mentioned in the definition of the in-tree sparse-checkout
-> definitions, a large repository could have many different roles for the
-> users of that repository. That means that many different in-tree
-> sparse-checkout definitions need to exist. If a directory needs to be
-> added to many of these roles, then many of these files need to be
-> edited. This is too much work to scale properly.
->
-> Instead, let's make these definitions easier to maintain by following
-> basic principles of build dependencies. Add simple links between these
-> in-tree files using the new "sparse.inherit" config key. This multi-
-> valued config setting specifies more files that are needed to define the
-> sparse-checkout for a role. By separating out the common directories
-> into a base file, the more specialized roles can focus their files on
-> the directories only needed by those roles and leave the common
-> directories to that base file.
->
-> For example, suppose that .sparse/base has the following data:
->
->         [sparse]
->                 dir = A
->                 dir = B/C
->                 dir = D/E/F
->
-> and .sparse/extra has the following data:
->
->         [sparse]
->                 dir = D
->                 dir = X
->                 inherit = .sparse/base
->
-> Now, a user can run "git sparse-checkout set --in-tree .sparse/extra"
-> and the resulting directories will define their cone-mode
-> sparse-checkout patterns:
->
->         A
->         B/C
->         D
->         X
->
-> Thus, the resulting sparse-checkout definition is the union of the
-> definitions from .sparse/base and .sparse/extra, but the user only has
-> one value of sparse.inTree of ".sparse/extra".
->
-> It is simple to modify our existing logic to explore the directed graph
-> created by the sparse.inherit values. We simply need to append to the
-> string_list containing the list of in-tree files. Since we never repeat
-> parsing on the same blob oid, this will not lead to infinite loops or
-> exponential blowups in the parsing time.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/git-sparse-checkout.txt | 26 ++++++++++++++++++++++
->  sparse-checkout.c                     | 27 ++++++++++++++++++-----
->  sparse-checkout.h                     |  1 +
->  t/t1091-sparse-checkout-builtin.sh    | 31 +++++++++++++++++++++++++++
->  4 files changed, 80 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-> index c1713ebb1d2..941658e0011 100644
-> --- a/Documentation/git-sparse-checkout.txt
-> +++ b/Documentation/git-sparse-checkout.txt
-> @@ -238,6 +238,32 @@ definition according to the files available at the new commit. If any of
->  the specified files do not exist at the new commit, then the sparse-checkout
->  definition will not change.
->
-> +In a very large repository, there may be need to have multiple of these
-> +in-tree sparse-checkout definitions to fit the roles of multiple types of
-> +users. As each definition grows and the number of user types grow, it can
-> +be difficult to manage updating all of the definitions when a common core
-> +is modified somehow. For this reason, the in-tree pattern sets can inherit
-> +the directories from other in-tree pattern sets. Use the `sparse.inherit`
-> +option to specify other files in the tree.
-> +
-> +For example, suppose the file listed earlier is at `.sparse/core`. Another
-> +file could be stored as `.sparse/extra` with contents
-> +
-> +----------------------------------
-> +[sparse]
-> +       dir = X
-> +       dir = Y/Z
-> +       inherit = .sparse/core
-> +----------------------------------
+Junio C Hamano wrote:
+> Han-wen wrote:
 
-So you apparently expect full path rather than a relative path.  This
-example does imply this, but it might be good to explicitly state it.
+>> From: Jonathan Nieder <jrnieder@gmail.com>
+>>
+>> Shawn Pearce explains:
+>>
+>> Some repositories contain a lot of references (e.g. android at 866k,
+>> rails at 31k). The reftable format provides:
+>>
+>> - Near constant time lookup for any single reference, even when the
+>>   repository is cold and not in process or kernel cache.
+>> - Near constant time verification a SHA-1 is referred to by at least
+>>   one reference (for allow-tip-sha1-in-want).
+>
+> Not quite grammatical sentence?  Perhaps "if" after "verification?
 
-What happens if the user specifies a non-existent path, or perhaps
-equivalently, didn't understand and specified the path using a
-relative path specification?  What if the user specifies a path that
-doesn't exist in the commit, but happens to exist in someones's
-working directory?  (And maybe even did it intentionally as a way to
-cheat and add user-defined additional paths to include?  Do we want to
-allow that, or do we want to enforce that extra includes use some kind
-of pre-defined path?)  What if they specify some path that is invalid
-to record in a git commit (.git/mydeps or
-../../../../../../../otherdeps) but happens to exist on some machines?
- (Are there future security vulnerabilities of any sort going down
-this path?)
+Good catch, thanks.
 
-> +
-> +Then, if you run `git sparse-checkout set --in-tree .sparse/extra`, the
-> +sparse-checkout definition will include `X` and `Y/Z` from `.sparse/extra`
-> +as well as `A`, `B/C`, and `D/E/F` from `.sparse/core`. This is similar
-> +to specifying both `.sparse/core` and `.sparse/extra` in the `set`
-> +subcommand, but has a slight advantage. If the `.sparse/extra` file changes
-> +the set of `inherit` files, then your sparse-checkout definition will
-> +update accordingly as you switch between commits.
-> +
+[...]
+>> using pandoc 2.2.1.  The result required the following additional
+>> minor changes:
+>>
+>> - removed the [TOC] directive to add a table of contents, since
+>>   asciidoc does not support it
+>> - replaced git-scm.com/docs links with linkgit: directives that link
+>>   to other pages within Git's documentation
 >
->  SUBMODULES
->  ----------
-> diff --git a/sparse-checkout.c b/sparse-checkout.c
-> index d01f4d7b525..4edeab49a10 100644
-> --- a/sparse-checkout.c
-> +++ b/sparse-checkout.c
-> @@ -66,12 +66,29 @@ static int sparse_dir_cb(const char *var, const char *value, void *data)
->         return 0;
->  }
+> There are many
 >
-> +static int sparse_inherit_cb(const char *var, const char *value, void *data)
-> +{
-> +       struct string_list *sl = (struct string_list *)data;
-> +
-> +       if (!strcmp(var, SPARSE_CHECKOUT_INHERIT))
-> +               string_list_append(sl, value);
+> 	’
+>
+> funny-quotes where we would prefer to place vanilla single quotes,
+> which may also need to be corrected in the conversion toolchain.
 
-So anyone can record lots of additional items within these files, and
-we'll ignore them and only pay attention to certain fields.  That
-probably allows future versions of git to write new values and old
-versions of git to not choke on them.  Does it lead to entrepreneurial
-developers cramming random additional fields in these files that
-possibly conflict with fieldnames that we want to use in the future?
-Do we want to document what is allowed and what is not?
+Looks like Han-Wen is taking care of this (thanks!).
 
-> +
-> +       return 0;
-> +}
-> +
->  static int load_in_tree_from_blob(struct pattern_list *pl,
-> -                                 struct object_id *oid)
-> +                                 struct object_id *oid,
-> +                                 struct string_list *inherit)
->  {
-> -       return git_config_from_blob_oid(sparse_dir_cb,
-> -                                       SPARSE_CHECKOUT_DIR,
-> -                                       oid, pl);
-> +       if (git_config_from_blob_oid(sparse_dir_cb,
-> +                                    SPARSE_CHECKOUT_DIR,
-> +                                    oid, pl))
-> +               return 1;
-> +       if (git_config_from_blob_oid(sparse_inherit_cb,
-> +                                    SPARSE_CHECKOUT_INHERIT,
-> +                                    oid, inherit))
-> +               return 1;
-> +       return 0;
->  }
+> Typoes pointed out below may probably be from the original where
+> they should be corrected.
+
+I'm happy to do one final update the doc in JGit to match what we end
+up with and then replace it with a pointer to Git's copy once that
+lands.
+
+[...]
+>> +Repositories with many loose references occupy a large number of disk
+>> +blocks from the local file system, as each reference is its own file
+>> +storing 41 bytes (and another file for the corresponding reflog). This
+>> +negatively affects the number of inodes available when a large number of
+>> +repositories are stored on the same filesystem. Readers can be penalized
+>> +due to the larger number of syscalls required to traverse and read the
+>> +`$GIT_DIR/refs` directory.
 >
->  int load_in_tree_pattern_list(struct repository *r,
-> @@ -121,7 +138,7 @@ int load_in_tree_pattern_list(struct repository *r,
->                         goto cleanup;
->                 }
+> Another downside is that we cannot arrange atomic updates to
+> multiple refs over loose refs, even though the "lookup of a single
+> reference does not require linear scan" unlike packed-refs, (as long
+> as the filesystem does its job).  Worth mentioning?
+
+Yes, this was another major part of the motivation (avoiding the
+complication of the "atomic" multi-ref updates to packed-refs that Git
+and JGit had to learn).
+
+[...]
+>> +References stored in a reftable are peeled, a record for an annotated
+>> +(or signed) tag records both the tag object, and the object it refers
+>> +to.
 >
-> -               load_in_tree_from_blob(pl, oid);
-> +               load_in_tree_from_blob(pl, oid, sl);
->         }
+> OK.  Peeled results are recorded in packed-refs file because quite
+> often when we use a tag object, what we actually want to access is
+> the commit object it points at.  We do so here for the same reason?
 >
->  cleanup:
-> diff --git a/sparse-checkout.h b/sparse-checkout.h
-> index fb0ba48524a..8b766ea38fb 100644
-> --- a/sparse-checkout.h
-> +++ b/sparse-checkout.h
-> @@ -5,6 +5,7 @@
->  #include "repository.h"
+> Not a rhetorical question, but if it invites a question from a
+> reader, it may deserve to be described before readers ask it.
+
+For a single tag ref, peeling to a commit is not very expensive.  But
+for batch lookups e.g. when serving a response to an ls-remote
+request, it adds up, and having the peeled results recorded helps.
+
+[...]
+>> +Directory/file conflicts
+>> +^^^^^^^^^^^^^^^^^^^^^^^^
+>> +
+>> +The reftable format accepts both `refs/heads/foo` and
+>> +`refs/heads/foo/bar` as distinct references.
+>> +
+>> +This property is useful for retaining log records in reftable, but may
+>> +confuse versions of Git using `$GIT_DIR/refs` directory tree to maintain
+>> +references. Users of reftable may choose to continue to reject `foo` and
+>> +`foo/bar` type conflicts to prevent problems for peers.
+[...]
+> "users ... may choose" implies that it is up to the implementation
+> of reftable user which one to show, so given a single repository,
+> "jgit" may show "refs/heads/foo" while "libgit2" may choose to show
+> the other one.
 >
->  #define SPARSE_CHECKOUT_DIR "sparse.dir"
-> +#define SPARSE_CHECKOUT_INHERIT "sparse.inherit"
->  #define SPARSE_CHECKOUT_IN_TREE "sparse.intree"
+> I am not sure if that is desirable---I suspect that we want to
+> record which one needs to be chosen so that these "D/F conflicts
+> disallowing" users can make consistent choices, but I dunno.
+
+Yes, I think it would be better to explicitly say that Git will continue
+to reject D/F conflicts for refs (*not* reflogs) even though the format
+can support them in principle.
+
+If we choose to permit them some day in the future, I believe that would
+be a separate repository format extension and protocol capability to
+avoid confusing old versions of Git.
+
+[...]
+>> +Symbolic references use `0x3`, followed by the complete name of the
+>> +reference target. No compression is applied to the target name.
 >
->  struct pattern_list;
-> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-> index fdaafba5377..b2389e5b5e6 100755
-> --- a/t/t1091-sparse-checkout-builtin.sh
-> +++ b/t/t1091-sparse-checkout-builtin.sh
-> @@ -716,4 +716,35 @@ test_expect_success 'keep definition when in-tree file is missing' '
->         test_path_is_dir repo/.sparse
->  '
+> Is there a place in the file format where an incomplete name can be
+> stored?  If not, I think it makes it easier to read if we drop
+> "complete" from the sentence.
+
+The sentence about "no compression" covers the lack of prefix encoding,
+so I suppose I agree.
+
+Might make sense to say "full name" to convey that we're talking about
+rev-parse --symbolic-full-name, not a relative path like symlinks
+support.
+
+[...]
+>> +Log block format
+>> +^^^^^^^^^^^^^^^^
+>> +
+>> +Unlike ref and obj blocks, log blocks are always unaligned.
+>> +
+>> +Log blocks are variable in size, and do not match the `block_size`
+>> +specified in the file header or footer. Writers should choose an
+>> +appropriate buffer size to prepare a log block for deflation, such as
+>> +`2 * block_size`.
 >
-> +test_expect_success 'inherit definition from other files' '
-> +       cat >repo/.sparse/inherit <<-EOF &&
-> +       [sparse]
-> +               inherit = .sparse/sparse
-> +               inherit = .sparse/deep
-> +               inherit = .sparse/deeper1
-> +       EOF
-> +       git -C repo add .sparse &&
-> +       git -C repo commit -m "Add inherited file" &&
-> +       git -C repo sparse-checkout set --in-tree .sparse/inherit &&
-> +       check_files repo a deep folder1 &&
-> +       check_files repo/deep a deeper1 deeper2 &&
-> +       test_path_is_dir repo/.sparse &&
-> +       cat >repo/.sparse/sparse <<-EOF &&
-> +       [sparse]
-> +               dir = .sparse
-> +       EOF
-> +       git -C repo commit -a -m "drop folder1 from sparse" &&
-> +       check_files repo a deep &&
-> +       check_files repo/deep a deeper1 deeper2 &&
-> +       test_path_is_dir repo/.sparse
-> +'
-> +
-> +test_expect_success 'inherit files can have cycles' '
-> +       echo "\tinherit = .sparse/inherit" >>repo/.sparse/sparse &&
-> +       git -C repo commit -a -m "create inherit cycle" &&
-> +       check_files repo a deep &&
-> +       check_files repo/deep a deeper1 deeper2 &&
-> +       test_path_is_dir repo/.sparse
-> +'
-> +
->  test_done
-> --
-> gitgitgadget
+> I can guess the reason behind this design decision, but the readers
+> may not be able to.  Should we write it down here, or would it make
+> too much irrelevant details?
+
+I don't have a strong opinion.  It sounds like Han-Wen sees something to
+explain there, so I suppose it would be nice to spell out.
+
+(My take: reflog lookups are not on the critical path for most
+operations; especially, random accesses do not need to be fast.  From a
+performance perspective, the best we can do is to compress them well to
+decrease I/O cost, hence there's not much value to alignment.)
+
+[...]
+> This is a tangent but in a repository at hosting provider, whose
+> primary (and often the only) source of updates are by end-user
+> pushing into it, if reflogs are enabled, whose name and email are
+> recorded in the logs?  The committer or tagger of the object that
+> sits at the tip of the ref after the update?  What happens when a
+> blob is pushed to update a ref?  Or would it be just a single "user"
+> that represents the "server operator"?
+
+The latter, "server operator" (GIT_COMMITTER_IDENT at the server).
+
+Committer in commit objects is forgeable, hence wouldn't be very
+useful here.
+
+> We know in a non-bare repository an individual contributor works on
+> typically records only one <name, email> in the reflog: the user who
+> works in it.
 >
+> What I am trying to get at is if it makes more sense to have a small
+> table of unique <name, email> pairs used in the file and have
+> log_data record a single varint that is the index into that
+> "committer ident" table.  I would suspect that it would give us
+> significantly more gain than mere <> two bytes per log_data entry.
+
+That's true, and a good idea for the next rev of the format.
+
+[...]
+>> +A 68-byte footer appears at the end:
+>> +
+>> +....
+>> +    'REFT'
+>> +    uint8( version_number = 1 )
+>> +    uint24( block_size )
+>> +    uint64( min_update_index )
+>> +    uint64( max_update_index )
+>> +
+>> +    uint64( ref_index_position )
+>> +    uint64( (obj_position << 5) | obj_id_len )
+[...]
+>> +* `obj_id_len`: number of bytes used to abbreviate object identifiers in
+>> +obj blocks.
+>
+> Should we write "this can be up to 31" somewhere?  It is more than
+> enough for SHA-1 and not quite sufficient for SHA-256 (unless we say
+> "we store obj_id_len-1 here")?
+
+Oh!  I'll take a closer look and then follow up.
+
+Thanks for looking it over,
+Jonathan
