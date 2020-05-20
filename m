@@ -2,126 +2,114 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E217C433DF
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 12:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFE48C433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 13:12:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 594AF2083E
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 12:38:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD89F2070A
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 13:12:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JaUK6qI4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKX1BbXp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbgETMik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 08:38:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38902 "EHLO
+        id S1726833AbgETNM4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 09:12:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726224AbgETMij (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 08:38:39 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3576FC061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 05:38:39 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id l11so3022354wru.0
-        for <git@vger.kernel.org>; Wed, 20 May 2020 05:38:39 -0700 (PDT)
+        with ESMTP id S1726435AbgETNMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 09:12:55 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2313C061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 06:12:54 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id r22so1395326pga.12
+        for <git@vger.kernel.org>; Wed, 20 May 2020 06:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/qm75h5zdBQmjVNvx3635wK2rtQ9zM+QpAK4JLX2xZs=;
-        b=JaUK6qI4/+Dmw8qcjsEQvE4pn6Sdt5WxOdii/Hj/8JQuyIi6jepdmZVCz0GnRdBBKJ
-         FutyPCN+XJ6BEGHBtaqX7WqhkF3xGIg9Eoj6K+ufjHqMIskRedvuTBeJLjNNd4TR3DCL
-         oBMx0Rw7/3vhwJriwDlClF7Fr70c6qnmCAtR0fCDGX/A9bYxz5+NCCQqhTJYYJ5X9r3N
-         +HVZKpIP9oCt0NIv69Y6M2+xOAzH6yOnUNdLR3XZYVwO/bwejOP4AAdLVCdL+HSE1pHJ
-         N0Z9KAU0fFq+KA+JSRN1ZzoiKNMfd/fjx14a4xnbNmErfxFGfJBS/t9xPzoemJu8TdT5
-         27Zw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ebUbqNaNGb2BWj7mnzTZKmLd0e599BDUa1Amy3O4rgQ=;
+        b=CKX1BbXpepEzlHrPmsQzooZ2AncOuIPQuEVtIzYUM5FdNk7T+zLcBsBaWvX6aZFzqZ
+         x6ehefXo5rOcIDiu9qHHQNeRbEYnKjz9qo+BJ4GFYY8AoA4WY3JJuPARBP5QRCAqdoky
+         PipvZlFkpY927LHZBtj3OgRurZasusRfx80TP2A1kpFcdLsMei3kDYQa1RMPBaJqgQxP
+         ilvVglwtBxvEbXNKW5yl8XToEowgKTtjJNx3+n165HMEW3duCPPyg7eq9WcltwNrxfj5
+         QglGFPQts30zKWrOme6zr+L3N9kODSoyBID6KUDh0+PfQeTYJ7JTmTpo3DuZO0H8/kRB
+         5HUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/qm75h5zdBQmjVNvx3635wK2rtQ9zM+QpAK4JLX2xZs=;
-        b=e4OrvDnKN8EnipzTod8I/8wtzp0coOcjrRnjO4kT9U5xoQQrUSV0PFVqzpaT12mubE
-         W0Gpi1aY5InXadJ5XKQONgwoPLMVivdYJFavriRytwdXCIgOAqCkPP4nz2+i+SERC/o2
-         Plgj6mFYfdLoeSvPl+vfB88flVaeoSpKJUW3fBWWF3Z/+zlzEMR70nJn4/sUrcSPUYUu
-         Hq4dMVbKQhcYIcIU6UPOtskZGDfbM4/GJTBKYBZKnCyuTHBSy+3MWcOXJobdMhXMHZcx
-         SaF55EaWiasLmRDyDvp580dBmc/Ei95FILkOifkNZ7oSPdSRS4YvyFT+J/KXa7lhRQ7k
-         pb3Q==
-X-Gm-Message-State: AOAM530IEriXchu+LVkMXO7puGv4SC0KDT97epGfjA3szuWq8J8+Rv6x
-        2zbKIrI4xi/cJwqiqBY6k4MGdsDZC/hVj6AQI2gbpw==
-X-Google-Smtp-Source: ABdhPJx1jeOcPCU3TsvTpidqLBbg1cy/no3iYerYo9Q7I5kmhdW4UBEaRMo3W3jeG9sMQfHG9zVvTciJrXsNEUYJ8zQ=
-X-Received: by 2002:a5d:6584:: with SMTP id q4mr4307655wru.12.1589978317635;
- Wed, 20 May 2020 05:38:37 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ebUbqNaNGb2BWj7mnzTZKmLd0e599BDUa1Amy3O4rgQ=;
+        b=jLf3ivVEGkfpWLMDUUzvqg6TG+rAL56hI3Fb8eUoEwFE9Exj762oRJlfiWQNUQxbZI
+         TwJ1vkHjZgZCjuHD8/dgdyyN1OacFpgNfcv3TqWtnfN7aDfsYGOm5VQnNoexyCy5xghl
+         E0k0w32v31bDvDp2Kebq4iXw0p4dCUmfS0GDtdzb7EMjyg+6HMbvAH06pkBHOhiP1K0I
+         YlN0u7iFRgbuZiv8W1cvTm5Rcb95cSUc+mCFiSc3ZYkcuJMbTgcfo3rZsHB1q439hXQr
+         fgeaN6QxcFpZtIKFOFAupK8CyroT1hmMw9/Sb2rnW1+96C2gxZu356EncrYFcNCTXgiq
+         FCVw==
+X-Gm-Message-State: AOAM530T5OhitxZoEaEi7ci0lSwAKFFs0wAYjwFyE3ktdVLet8ivsxae
+        czRf/eVCfobENST+aW7EMhU=
+X-Google-Smtp-Source: ABdhPJxm1GKiXbxdvXqmBlqz17QXg2vzDOK7+AAUub3f6ZZSMju9XfFC6RjffvVJ92EpYTmzBj2lag==
+X-Received: by 2002:a63:df42:: with SMTP id h2mr4236003pgj.216.1589980374230;
+        Wed, 20 May 2020 06:12:54 -0700 (PDT)
+Received: from [192.168.43.191] ([106.198.27.32])
+        by smtp.gmail.com with ESMTPSA id i12sm2122631pjk.37.2020.05.20.06.12.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2020 06:12:53 -0700 (PDT)
+Subject: Re: [PATCH v2] submodule: port subcommand 'set-branch' from shell to
+ C
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        christian.couder@gmail.com, gitster@pobox.com,
+        liu.denton@gmail.com, git@vger.kernel.org, congdanhqx@gmail.com
+References: <20200519182654.33318-1-shouryashukla.oo@gmail.com>
+ <CAPig+cSKFBFdNXA52f5f0q3SetA2btmkXeqyHNw-qwJ5ECq5mQ@mail.gmail.com>
+ <20200520121530.GA7992@konoha>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <b96324d4-04bd-8f64-e334-d3613dc3be6f@gmail.com>
+Date:   Wed, 20 May 2020 18:42:48 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
- <pull.539.v13.git.1589226388.gitgitgadget@gmail.com> <1e3c8f2d3e8c6c6db8460f29115d2fe898f85012.1589226388.git.gitgitgadget@gmail.com>
- <xmqq5zcrzhc7.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq5zcrzhc7.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 20 May 2020 14:38:24 +0200
-Message-ID: <CAFQ2z_PqiziTt-M+hCP4XOwgRMr2m4WEBTjwi6EPkyK6MbBoYg@mail.gmail.com>
-Subject: Re: [PATCH v13 06/13] reftable: define version 2 of the spec to
- accomodate SHA256
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200520121530.GA7992@konoha>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 20, 2020 at 12:32 AM Junio C Hamano <gitster@pobox.com> wrote:
-> > -* Near constant time verification if a SHA-1 is referred to by at leas=
-t
-> > +* Near constant time verification if an object ID is referred to by at=
- least
-> >  one reference (for allow-tip-sha1-in-want).
->
-> Good.  These are called "object names", though.
->
+Hi Shourya,
 
-Fixed throughout.
+On 20-05-2020 17:45, Shourya Shukla wrote:
+> On 19/05 02:57, Eric Sunshine wrote:
+>> On Tue, May 19, 2020 at 2:27 PM Shourya Shukla
+>> <shouryashukla.oo@gmail.com> wrote:
+>>> +       if (opt_branch && opt_default)
+>>> +               die(_("--branch and --default do not make sense together"));
+>>
+>> A more precise way to say this is:
+>>
+>>      die(_("--branch and --default are mutually exclusive"));
+> 
+> Will that be clear to everyone? What I mean is maybe a person from a
+> non-mathematical background (someone doing programming as a hobby maybe)
+> will not grasp at this at one go and will have to search it's meaning
+> online. Isn't it fine as-is?
+> 
 
-All of the source code (libgit2, Jgit, git itself) calls this object
-ID (git_oid, ObjectId, struct object_id respectively), so it's a bit
-surprising.
+While "mutually exclusive" might be prominently used in mathematics. I 
+don't think it is only understandable by people with a mathematical 
+background.
 
+Moreover, I see 183 results in 36 files for "mutually exclusive" in 
+git.git (including translation files). So, this isn't anything new.
 
-> >  * `0x3`: symbolic reference: `varint( target_len ) target`
->
-> > @@ -434,7 +455,7 @@ works the same as in reference blocks.
-> >
-> >  Because object identifiers are abbreviated by writers to the shortest
-> >  unique abbreviation within the reftable, obj key lengths are variable
-> > -between 2 and 20 bytes. Readers must compare only for common prefix
-> > +between 2 and 32 bytes. Readers must compare only for common prefix
->
-> Is it allowed for a reftable file whose hash_id field says "sha1" to
-> use more than 20 bytes of obj key?  Phrasing it like "unique prefix
-> of object name, no shorter than 2 bytes" would avoid the problem, I
-> would think.
+I agree with Eric's suggestion. It makes the error message concise which 
+is a nice side benefit.
 
-rephrased.
-
-> This version also adds more
->
->
->         =E2=80=99
-
-curious. I have no idea where they came from. Fixed now.
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+-- 
+Sivaraam
