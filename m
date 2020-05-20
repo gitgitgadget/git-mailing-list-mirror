@@ -2,85 +2,136 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D5A9C433E0
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE829C433DF
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:20:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22E6E2070A
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:14:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B48B920709
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:20:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OTQuWI/c"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UlRyXStj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726826AbgETROR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 13:14:17 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59379 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726619AbgETROQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 13:14:16 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 011C7DA768;
-        Wed, 20 May 2020 13:14:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=OHYSi0YkED13
-        Z2jHdQ0oP3gsfgY=; b=OTQuWI/c+Bmb9QorJ7el6DrFG/RNlV4RsApe9W2T3B5V
-        mnGGdud7B6fABz8PH+9ZvBtM3Ac/muHx5xXK6YfWyk0uURn3VSuTm5TK90gIXxL5
-        TqIgCPJI3a6mJjUaafxZk7z7fN7HpD/jdl+b9LPU9lZYkO+e5qmidjbpKOuMM+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Bk3X3W
-        CvmMAHY6OWu3NAl0r6sIp+sIm2vSGnGK2ZgeG01R1/drngj8fCyaamegp13YhUUA
-        rV9zTIc5xJLVjKEDXWf1+d1r2pZd1jAsiUwRAzT8FWCoB7jBPe/9P+9fnUKJGYMR
-        eP1UDq4HH5p77yhh/0Yf7eQIWeDSJE85Y0CJM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED06CDA767;
-        Wed, 20 May 2020 13:14:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 975B7DA766;
-        Wed, 20 May 2020 13:14:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, liu.denton@gmail.com, chwarr@microsoft.com,
-        garima.singh@microsoft.com
-Subject: Re: [PATCH 2/3] bisect: remove CR characters from revision in replay
-References: <20200520034444.47932-1-carenas@gmail.com>
-        <20200520034444.47932-3-carenas@gmail.com>
-        <xmqqzha2wt7t.fsf@gitster.c.googlers.com>
-        <20200520170843.GC20332@Carlos-MBP>
-Date:   Wed, 20 May 2020 10:14:09 -0700
-In-Reply-To: <20200520170843.GC20332@Carlos-MBP> ("Carlo Marcelo Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Wed, 20 May 2020 10:08:43 -0700")
-Message-ID: <xmqqeerewmu6.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727063AbgETRUc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 13:20:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54786 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726436AbgETRUc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 13:20:32 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28679C061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 10:20:32 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id f134so3251376wmf.1
+        for <git@vger.kernel.org>; Wed, 20 May 2020 10:20:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5UCgcTFXDA6kRRnHtytwyphY29GUI4aC7vtSe7k4uR4=;
+        b=UlRyXStjTXuiAJdOEKfxHTMmCPiFyFY3SVlqHKqh5LwPD2eygPCMJMRvBtyEnaMopD
+         LGl3w7qU5QSBShIjL8LST03SN6LM2w4Mo7IVpoa+7b0oUd2zYuW0vY+E56y/82HIqFdz
+         dqDRTWuNiPm8uD64OFYAyjbfuK5eGK+vujj47OteJikGBKFRJmB97g8JAEreH9Vpf00n
+         3YQWewEjl5Hm7KdhvCHiC7fsFBY20qPbT6tYF0RETX8QovLl+/lWu/KPfigbfd2IF5sN
+         jTmP5d8gGbD70qg11kPfAYf5SWoNjrfLefuIpMbHxN4vjW+N7fvNHkr1d3vQCnhha/js
+         AaWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5UCgcTFXDA6kRRnHtytwyphY29GUI4aC7vtSe7k4uR4=;
+        b=jVEbHT+0s4VRigAY0YPAOeSwsD8dhaz9y7hH9T4C64pz9ssqpCQTrcUf0teaBCatgT
+         X9ZhfNizj+mviQM1VQ5JxxSWl0PGpqHMeIo0EwZd51bYxclHFu1v7luy2IAxedS1Px6G
+         8rHVTJsIDqW5Vzy4yN0yYN00wrzi3HiheY4QDRUiifzZ4BbFt7QjC6QUUasFK4mgxSwB
+         8k4SdVoWn8p+yj80tdGHDDQjz/w4eakLziIhRGgDM6aWG5BTys1csChsKxRq5vXbMy97
+         fEs05m15bgyxmFhTRCsUqUJ29C6Evft72bQ5vyz4zGAn2eAkK1D7Bzh0MDwhHFKcVzWA
+         Ozaw==
+X-Gm-Message-State: AOAM530oeuuBH9GmdlgrmkQMIOxsIc6JPYxf4TWQLn9dUmfr2OEZKfib
+        8hRQHDgSrx/zuNsJYUp9Pr9BO7slbNdcdoDERAe0AJuDUgc=
+X-Google-Smtp-Source: ABdhPJzuXvuzRfk7ixfgJsiSyejTS6Am/qlyWdqtwjX6WB9lJvglHFoozGq/pNJngCUirHewuAgSFmM2/f3mPUSklFs=
+X-Received: by 2002:a7b:cd84:: with SMTP id y4mr5368214wmj.2.1589995229555;
+ Wed, 20 May 2020 10:20:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 52C4B102-9ABD-11EA-B3DA-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
+ <pull.539.v13.git.1589226388.gitgitgadget@gmail.com> <96fd9814a6753e87fb99c6f9d55a0728d3dba6cb.1589226388.git.gitgitgadget@gmail.com>
+ <xmqqeerfzitt.fsf@gitster.c.googlers.com> <CAFQ2z_OazuU32Nm3geLCbu_R2u_JKTqCXX0NF35C0=9xV7Ow0g@mail.gmail.com>
+In-Reply-To: <CAFQ2z_OazuU32Nm3geLCbu_R2u_JKTqCXX0NF35C0=9xV7Ow0g@mail.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 20 May 2020 19:20:17 +0200
+Message-ID: <CAFQ2z_P-cf38yR-VyvfDSgPUO_d38mgsi32UkRSPWMZKJOmjZg@mail.gmail.com>
+Subject: Re: [PATCH v13 04/13] reftable: file format documentation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
-
-> that works (kind of), but will cause test t6030.66 to fail, with a git
-> segfault nonetheless, because we can't handle anymore a line line:
+On Wed, May 20, 2020 at 6:06 PM Han-Wen Nienhuys <hanwen@google.com> wrote:
+> > > +The `message_length` may be 0, in which case there was no message
+> > > +supplied for the update.
+> > > +
+> > > +Contrary to traditional reflog (which is a file), renames are encode=
+d as
+> > > +a combination of ref deletion and ref creation.
+> >
+> > Yay?  How does the deletion record look like?  The new object name
+> > being 0*hashlength?  I didn't see it defined in the description (and
+> > I am guessing that log_type of 0x0 is *NOT* used for that purpose).
 >
-> git bisect start '--term-new' 'term1' '--term-old' 'term2' '32a594a3fda=
-c2d57cf6d02987e30eec68511498c' '88bcdc1839f0ad191ffdd65cae2a2a862d682151'
+> quoting the spec:
+>
+> "Log record entries use `log_type` to indicate what follows:
+>
+> * `0x0`: deletion; no log data."
+>
+> > So, NEEDSWORK: describe how "creation of a ref" and "deletion of a ref"
+> > appears in a log as a log record entry.
+>
+> the creation would be the appearance of a reflog record for the ref.
+> You'd have to search back in time to decide if a reflog record it was
+> an update to an existing record or a creation.
 
-Yuck.  Thanks for noticing.
+Correction. This is one of the things that confused me earlier: reflog
+entries for creating and deleting branches look like this
 
-> will follow up with a fix for the segfault, unless someone else beats m=
-e to
-> it.
+    000000000000 -> xxxxx      (create)
+    xxxxxx.. xx        -> 00000 .. (delete)
 
-Thanks.
+respectively. When the rename happens, we can signal that the deletion
+and addition are linked, because they occur at the same update_index.
+
+The deletion records for logs (type=3D0x0) remove a reflog entry at a
+specific (earlier used) update_index. So you could have the following
+situation:
+
+0x0001.ref : reflog "refs/heads/master" @ update_index=3D0x0001,
+new=3Dxxx, old=3Dyyy ...
+
+and then a subsequent table could specify
+
+0x0020.ref : reflog "refs/heads/master" @ update_index=3D0x0001 (type=3D0x0=
+)
+
+which would hide the earlier reflog entry.
+
+Jonathan Nieder said that this is used for git-stash, but I have never
+understood why this is necessary, and would love to clarify this
+better.
+
+I'll clarify the explanation to reflect this.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
