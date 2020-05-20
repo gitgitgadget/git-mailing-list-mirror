@@ -5,59 +5,59 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29337C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 521DFC433DF
 	for <git@archiver.kernel.org>; Wed, 20 May 2020 03:45:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E33A620748
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 03:45:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3080F2081A
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 03:45:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MoZG6MQZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RkQlVHA2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728601AbgETDpJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728615AbgETDpJ (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 19 May 2020 23:45:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40258 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728129AbgETDpI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 23:45:08 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7784BC061A0E
-        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:07 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id nu7so629974pjb.0
-        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:07 -0700 (PDT)
+        with ESMTP id S1728129AbgETDpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 23:45:09 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31B37C061A0E
+        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:09 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id q24so640956pjd.1
+        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=stCIMIQtDEbS0qJRJ8o9zPYiCRHfGRlEK97As9KUZnw=;
-        b=MoZG6MQZw/q0/Wij20PUSUhYBbMg7PVK8iu2VOSpwgjqf6RAwR73SCJQZX0ioN1Vm1
-         pyzARl69AqMS2vOU0Id5sBPqwCwfhMTBSCNHFEpTEnn7GlfyWmUhEyvXo/Fy5ODo+5pK
-         Er3YA/VBIQMc5f59cPDmi4J9eUEJ1U/uz14ZnVIljnIh3vAQrkpoj+dwqD0i0Hb8lGPu
-         u//jti2M4xE9TkiKswEOB2BFoUNDJJa1+gYSFRHlnrkkBKlJOi1sgeiKlU1+owT8nU0O
-         KoaRyg6Ml0rRvDwbDO0A+MNIxXiJFYWliHqoHmDVippVG2ExS6l6TaHHBYQjVkHLPVQF
-         /xOg==
+        bh=xMdLUne3XHENiU2rfcTZT69FVPManFDatvC6OhSlFEE=;
+        b=RkQlVHA26kG9dPZMMe/tDrg8fFy15okTmQIkyH0FpBUgI2voED0WhphFXUDvHwV/QQ
+         BDJZwm+g/8rEscxtwloOWQkRqIAW8xaSTGTweqwiE2//89HmfZIGLw6Cy18eg5r877Dt
+         chnu8BrnomgLPUMoE3HaHJ2oau6TDztvfwTxq6JHpQooOV6Ei5bMfMlU9z9der8cnuky
+         3d4mDiXMQr6po2DOEK5Nsr5ZfTuBxV9FNF2uJ3OUl7zyH3ZqXkBASSugs92MXlRO3B0B
+         NGtpN7Uu906MY4EGfLJ022bShYw6NFwgzpMuVuBMIL57drrVuYt2uH41ZV293YIOqBfu
+         VcgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=stCIMIQtDEbS0qJRJ8o9zPYiCRHfGRlEK97As9KUZnw=;
-        b=lLOGv4M7Mrt+81PxlfB40cOzUPc6K7/WBJFXAcTzUWhQoXPvofcmbPzhI/eNiOO7fn
-         82SHUIQ928nMxDUu9Y6whPm2vV0xlq8gR33KN+OHY9+vBPMth4KfHQiI8sLQJalu3K3p
-         dZ/G7W9Jo+H3rCvajYi4mh/eLKJhahyE6TAszLR2kvkOUa/rJDLPVLVt2n7knv3pgJ2O
-         NcP4p1yNN9SJXplE9y6sXoPMQ2psFEYEgGZ7ZtRF4ol3LnR9ISlYPKUuPUeeRMxWdLYs
-         ZzAVJ1KoR5UFYEVkZFIu1e3A0Cxlr2pnXM+fFdraazC31ublbtwH5oZIx1plHqQ60Psi
-         sE4w==
-X-Gm-Message-State: AOAM5315Rn0bZ5W7z+MRa7mQT22tzPd/JIp01jTPpeIVU0y12X8pLn/l
-        4DB+Qe09ve59fPNR9Kva6e7M0Bkg
-X-Google-Smtp-Source: ABdhPJy6eLGC8ScHJA8BnwYrkHn7APsHaXVBveA4qHRmCoE7xtNhhw7WIyqVjPGkojFaj9373dfouQ==
-X-Received: by 2002:a17:90b:897:: with SMTP id bj23mr3020165pjb.82.1589946306690;
-        Tue, 19 May 2020 20:45:06 -0700 (PDT)
+        bh=xMdLUne3XHENiU2rfcTZT69FVPManFDatvC6OhSlFEE=;
+        b=IzgiZXQHWYdljo0X4Co2jJGekVotp43j807O+TLji756Afx3Xf7WKon1VQHtWrB4f8
+         tx4/s8mZTA1TQ1NkJvf/OTnwzivsw/WffgWdpd2Go5gerMnxBZjrrcDxFoPm6kGcqtMC
+         fJ2mzIsqnRK2+MI1wn60cUFeV0rmrtzQPGeTuuCD+Xjc0TKkWnklyTDn5DAjHCnafzL3
+         9/3P7H7rhXhw0ja//sFXuHY9Zaa8++dRaCJ8acEko8OqQY1d0ZgkDxKdwAg6ZK01txyR
+         JgU31ktj5BUA9tHEGB9ZcV38spCszCwMXExipYjoX/WVVsxW/PmEtG98bDz2Rok2rfP4
+         4Dkw==
+X-Gm-Message-State: AOAM530u2GsyZ0XSuzD0X5284aYts4NANdInxooXNmkoVcNLfPJEw9cW
+        7GFcjjGAafpe97icDcx7bSPIgII2
+X-Google-Smtp-Source: ABdhPJyEjOdMrbiAnRmLOlz3Yz4mnO9kZ10GV52lhn0q0Xv71/PQ7DLNR6LhU94zDB/HEvIw99DGZg==
+X-Received: by 2002:a17:902:ab8b:: with SMTP id f11mr2713351plr.145.1589946308409;
+        Tue, 19 May 2020 20:45:08 -0700 (PDT)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id h4sm762820pfo.3.2020.05.19.20.45.05
+        by smtp.gmail.com with ESMTPSA id h4sm762820pfo.3.2020.05.19.20.45.07
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 May 2020 20:45:06 -0700 (PDT)
+        Tue, 19 May 2020 20:45:08 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     liu.denton@gmail.com, chwarr@microsoft.com,
         garima.singh@microsoft.com,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH 2/3] bisect: remove CR characters from revision in replay
-Date:   Tue, 19 May 2020 20:44:43 -0700
-Message-Id: <20200520034444.47932-3-carenas@gmail.com>
+Subject: [PATCH 3/3] t5520: avoid alternation in grep's BRE (not POSIX)
+Date:   Tue, 19 May 2020 20:44:44 -0700
+Message-Id: <20200520034444.47932-4-carenas@gmail.com>
 X-Mailer: git-send-email 2.27.0.rc0.187.gede8c892b8
 In-Reply-To: <20200520034444.47932-1-carenas@gmail.com>
 References: <20200520034444.47932-1-carenas@gmail.com>
@@ -79,41 +79,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-6c722cbe5a (bisect: allow CRLF line endings in "git bisect replay"
-input, 2020-05-07) includes CR as a field separator, but doesn't
-account for it being included in the last field, breaking when
-running at least under OpenBSD 6.7's sh.
+Instead of using a BRE, that broke tests 30-32, 37-39, 42 at least with
+OpenBSD 6.7; use a simpler ERE.
 
-Read the revision into a raw variable and strip it of any possible
-embeded CR characters, before use.
-
+Fixes: d9f15d37f1 (pull: pass --autostash to merge, 2020-04-07)
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- git-bisect.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ t/t5520-pull.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 71b367a944..8cd6095a71 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -210,14 +210,15 @@ bisect_replay () {
- 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
- 	git bisect--helper --bisect-reset || exit
- 	oIFS="$IFS" IFS="$IFS$(printf '\015')"
--	while read git bisect command rev
-+	while read git bisect command rawrev
- 	do
- 		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
- 		if test "$git" = "git-bisect"
- 		then
--			rev="$command"
-+			rawrev="$command"
- 			command="$bisect"
- 		fi
-+		rev=$(echo $rawrev | tr -d '\015')
- 		get_terms
- 		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
- 		get_terms
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 37535d63a9..9fae07cdfa 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -28,7 +28,7 @@ test_pull_autostash_fail () {
+ 	echo dirty >new_file &&
+ 	git add new_file &&
+ 	test_must_fail git pull "$@" . copy 2>err &&
+-	test_i18ngrep "\(uncommitted changes.\)\|\(overwritten by merge:\)" err
++	test_i18ngrep -E "uncommitted changes.|overwritten by merge:" err
+ }
+ 
+ test_expect_success setup '
 -- 
 2.27.0.rc0.187.gede8c892b8
 
