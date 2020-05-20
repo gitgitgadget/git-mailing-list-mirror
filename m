@@ -2,145 +2,106 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 435EAC433DF
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 16:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E15EC433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 16:38:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DD4B20759
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 16:32:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 758DB2065F
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 16:38:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fHkooo92"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDG9+mfp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbgETQcV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 12:32:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47162 "EHLO
+        id S1726959AbgETQiy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 12:38:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726436AbgETQcU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 12:32:20 -0400
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 209A3C061A0F
-        for <git@vger.kernel.org>; Wed, 20 May 2020 09:32:20 -0700 (PDT)
-Received: by mail-oi1-x244.google.com with SMTP id r25so3498129oij.4
-        for <git@vger.kernel.org>; Wed, 20 May 2020 09:32:20 -0700 (PDT)
+        with ESMTP id S1726545AbgETQiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 12:38:54 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F096AC061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 09:38:53 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id k7so1546873pjs.5
+        for <git@vger.kernel.org>; Wed, 20 May 2020 09:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vvHQTVlg4VF+53ai828MvybWgCb+oc+5Vjo+3BXo9Fg=;
-        b=fHkooo92ID4datweTpZ6zdTrHFNbGyKexO+m9MRFvBfAAu8llbbrzeHG/UV1bnMO8w
-         7thDhbKWompabhiY1eS15pM82yAsLqtAN519mWaDPLQY8kAXGeGUklRqfLc8N6cWp4LJ
-         l++mksLLJUSsbVmVKGxsdwtMoX4TxJ10zFyIaOgt8iON2sxOnyf8LazbjqX+N38mu44M
-         jaymLB6YlTfKfRBNgd7FoynQyce709G+u1b5Xp0QWTLsGZV4q21GLP/9PyklonWVgl7F
-         cGR8wvI91dc697TtE9NkBZd+nmN+ckMIiinnz/aX5jAA4daVdvhUb9CAI+iCZWT7zsT7
-         +PDg==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=dbmyRaX0B3lETX0AuaZ50PFMd4qRE35Pjb62ZYcNrZc=;
+        b=GDG9+mfpcZCd5NBp64DAenjucsRu3KY90gQp8WM+0uWmDO7ow41MCiPjh5czNwPfVW
+         lwV1ibzdhMVdkmqNkMEXwMf4MtB6VoFjYUse7cUIxzq6p1tyfNxLcS1JRLKqFUGGd1lA
+         cIWhVLdlHgPL8DyFCA8zc9LQSrfXDnUXZJXnYkPMoYS/4jKTOlbU/SmVZx/sgeXBn644
+         rgJbk+dCD/Ao9wn9WIjEci2h8TMOky1yisqA6wiaL8aMlH0W8qCgnLzPisI6+d98ZxDu
+         AwfY7WlUtWjRRRbH3Cd5QLMwCmlYno7RsMzRvBVPCWRWLj661WXsHg5HHUyBLm+roG6s
+         hEVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vvHQTVlg4VF+53ai828MvybWgCb+oc+5Vjo+3BXo9Fg=;
-        b=oA1w7cgfxB+1sM7X+8ZZf2zw+0Vgsv7biUD+XQYQ9+YCj6iGfmLFy/erA7dtm/nsup
-         9HDfHp6JTwWHROqSjZZ1vPkbSUp2aA/6Bj6FwtlFsaf28w0HUziF2FwwKjU1lMEi1D+5
-         ZpjCfyTfDSU9ImaBpUsvdCrpoQABD0ApxtgpSHQEfzeIdrCynJOCVobBRnupgm10pTv0
-         XFohmbpyCNOZ5SEQoPWonCtwb/hHtO1PT4UE+n+ZUHCkzJ6D87h0fCp2EBtAUzMiyBLv
-         8y9EbI8/FZgv3xkVGLlT5pNLaOeo/QwwrVmsAv847zsoZHbUJgAanA/oeGafriHz44DY
-         x+kA==
-X-Gm-Message-State: AOAM530BZYXv9OYlJQC0iBfJt0xreOLFTRJ6Q9KZwleEEbRm46dLeITt
-        rMXnl1JPCzoUiz3QJFKl4rfOEo0tyJwXtaiDlVO7p+9M
-X-Google-Smtp-Source: ABdhPJydSH9rsCKokhTTSZdzD9LIPtEE3LtYtAdshotoHzZISVDL7J7A9n1u8spo1x88ykZNKRlh6WvhtMeP9HEfnbw=
-X-Received: by 2002:aca:3f44:: with SMTP id m65mr3861583oia.167.1589992339397;
- Wed, 20 May 2020 09:32:19 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=dbmyRaX0B3lETX0AuaZ50PFMd4qRE35Pjb62ZYcNrZc=;
+        b=Obbf5icKENsSlEWH/YaDHjH+TqnGOuCV50toSyaA9RrPfvtu38L+5ucP7I9F+B45Bs
+         cx7oLfPIkVf4b2YbGTRAK4pZton8Rxqz9BZi+Cpul6Km1oWyVx8Ir/JdgHjjrcssVAo+
+         zfx16gWXhY1foUv4/rtXYXYhM9E5XZ7hVC9/+ucj0DqTYPFvct8ljES4MtE3Z36XOSqw
+         F9xxvT8k+L8VWmKfgfyt0XKnNLtiTCZcebB4USWPU+uOsM2LhbezuOdzlJPx6kYjQkHI
+         4MvfOsQ/RjVxorIAnZPC+8mgq2A4cwCEeOa1/PHM8slpzf990WHmoOxxmwVG6d3xLtzb
+         1vDA==
+X-Gm-Message-State: AOAM531iwADg4a5wgoMwFJkoCMHC3y/R9LAFErypbeC2AimrjcnPqNeU
+        +5Yt8MnPQQZJWFKTVeO5unn2l4JvR/8=
+X-Google-Smtp-Source: ABdhPJxiKERqS/ZWgHks4Z97B7mJtpTQXuBemh+xI6wpDMSCDfntVTtNnCQAVCAL9owD3PfaSc9WUQ==
+X-Received: by 2002:a17:90b:1288:: with SMTP id fw8mr6304373pjb.160.1589992732938;
+        Wed, 20 May 2020 09:38:52 -0700 (PDT)
+Received: from Abhishek-Arch ([2409:4064:316:d87b:8116:b1b3:f6a2:1f84])
+        by smtp.gmail.com with ESMTPSA id m7sm2788660pfk.36.2020.05.20.09.38.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 May 2020 09:38:51 -0700 (PDT)
+Date:   Wed, 20 May 2020 22:07:22 +0530
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     git@vger.kernel.org
+Cc:     stolee@gmail.com, jnareb@gmail.com
+Subject: [GSoC] Blog post on reachability queries
+Message-ID: <20200520163653.GA76552@Abhishek-Arch>
 MIME-Version: 1.0
-References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
- <5bfe3f3fc8a99b3d4fdd4286da17cd935090c614.1588857462.git.gitgitgadget@gmail.com>
- <xmqqk11n2xf3.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk11n2xf3.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 May 2020 09:32:08 -0700
-Message-ID: <CABPp-BH=DQr3cFvAvWoCOna-RV8MsWy+FNO0x4GN1QVMsYimeg@mail.gmail.com>
-Subject: Re: [PATCH 01/10] unpack-trees: avoid array out-of-bounds error
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, newren@gmaill.com,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 7, 2020 at 3:29 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Derrick Stolee <dstolee@microsoft.com>
-> >
-> > The loop in warn_conflicted_path() that checks for the count of entries
-> > with the same path uses "i+count" for the array entry. However, the loop
-> > only verifies that the value of count is below the array size. Fix this
-> > by adding i to the condition.
-> >
-> > I hit this condition during a test of the in-tree sparse-checkout
-> > feature, so it is exercised by the end of the series.
-> >
-> > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> > ---
-> >  unpack-trees.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/unpack-trees.c b/unpack-trees.c
-> > index 9a3ccd9d083..4f880f2da90 100644
-> > --- a/unpack-trees.c
-> > +++ b/unpack-trees.c
-> > @@ -563,10 +563,11 @@ static int warn_conflicted_path(struct index_state *istate,
-> >       add_rejected_path(o, WARNING_SPARSE_UNMERGED_FILE, conflicting_path);
-> >
-> >       /* Find out how many higher stage entries at same path */
-> > -     while (++count < istate->cache_nr &&
-> > +     while (i + ++count < istate->cache_nr &&
-> >              !strcmp(conflicting_path,
-> >                      istate->cache[i+count]->name))
-> >               /* do nothing */;
->
-> Eek.  Yes, it is obvious that the original is wrong once you point
-> it out.  But "i + ++count" looks like a line noise, and funny way
-> that lines are wrapped in the original does not help X-<.
+Greetings everyone!
 
-Eek, indeed.  :-(
+I am working on implementing Generation Number v2. I have written an
+article about reachability queries, which I feel is necessary background
+for understanding the project.
 
-> We may want to fix the style and the grammar while we are at it,
-> perhaps like the attached.
+Here's the summary of article:
+> Reachability refers to the ability to get from one vertex to another
+> within a graph.
 >
-> In any case, thanks for a fix.
+> Reachability queries are an interesting problem, improving performance
+> for many graph operations. Better and more sophisticated solutions are
+> being created as the size of working graphs keeps increasing.
 >
->  unpack-trees.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 6bbf58d28e..c38938d96c 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -562,11 +562,11 @@ static int warn_conflicted_path(struct index_state *istate,
->
->         add_rejected_path(o, WARNING_SPARSE_UNMERGED_FILE, conflicting_path);
->
-> -       /* Find out how many higher stage entries at same path */
-> -       while (++count < istate->cache_nr &&
-> -              !strcmp(conflicting_path,
-> -                      istate->cache[i+count]->name))
-> -               /* do nothing */;
-> +       /* Find out how many higher stage entries are at same path */
-> +       while ((++count) + i < istate->cache_nr &&
-> +              !strcmp(conflicting_path, istate->cache[count + i]->name))
-> +               ; /* do nothing */
-> +
->         return count;
->  }
+> Reachability for the undirected graph can be found in linear
+> preprocessing and constant query time with disjoint set unions. The
+> answer isn't as evident for a directed graph because of differing
+> performance on positive and negative queries, nature and size of graph
+> and other factors. Topological Levels, Post Order DFS Intervals and
+> Contraction Hierachies are some of the building blocks for such
+> algorithms.
 
-Thanks, both.
+In a later article, I will talk about the specifics of generation number
+for Git. In particular, how Git uses reachability queries, the need for
+Generation Number v2 i.e., _Correted Commit Date With Strictly Monotonic
+Offset_ and other interesting tidbits I come across.
+
+You can find the article here:
+
+https://abhishekkumar2718.github.io/programming/2020/05/20/reachability-queries.html
+
+I appreciate any suggestions or feedback.
+
+Thanks
+Abhishek
