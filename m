@@ -2,97 +2,96 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99C53C433DF
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36968C433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:33:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B57C207D8
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:25:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0265620709
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:33:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Tw4a+st7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kcxBvx3i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727812AbgETRZc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 13:25:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55646 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbgETRZc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 13:25:32 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7DE3C061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 10:25:31 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id j5so4014023wrq.2
-        for <git@vger.kernel.org>; Wed, 20 May 2020 10:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YYwrU8lJ4+mVYesm7Orz6+sKjW58w4ZA8sBE3VoyrKo=;
-        b=Tw4a+st7hPaxmTTlZClfT6GCKXKl4m8qJY9wbYorbPpnPzIiw/Z7HDNJFPs4RLFL2G
-         VEEXZuSVAcsvYb+qMh0NHOJPIy3AzNaQdn1lJaLg6TOheg4zI1kxSm5DG1+6wGQGWU6R
-         8Qqm4tw/ATPBRZ6D5tnc3abI7ANw9AI4/9oZVS1D063XRzsWQiXVmk54gvICwP5IsTl4
-         Qe22/zv4Pm93THtWzBQDxrnm6GUrf7Aij0OxxTa83wRgR+BPP7e84sxLSHCSMBI2m7ZE
-         r3zV+Uz/krS/4F1jENvEmND4VhqzzNfGpLmNeJF9WcBBtpacvaFjF1UDvo2tccqvPjBc
-         gqPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YYwrU8lJ4+mVYesm7Orz6+sKjW58w4ZA8sBE3VoyrKo=;
-        b=Aqc6nTIdhMSTfCZab8qedLoWrZZfC8BWiGrcTY8eK17opX34phTojbtIc+COSBYQ8L
-         YfQ7tnNWx4fJvhD0iLc4Lr7rayjbO45vdjQ5BmjYDblenUUUAK4M0NFYHCp5oXznWKfn
-         pUMLkJUSMlx9spGNXezFrGZ57B+fIgj9TYwrXj0yVNG23bcFfjYGxRFdIzhD7CzjHSyn
-         s+I/lJBt/swmUEIXkBooywUWeAgr3EVR36zuejzn4UunPobNcFa3145jSjBCTPbEkmhF
-         6ItDCEr0CEX/BinnOTGHuBUhDPTuowTx7aOCyy8QNHaN70Ci+udrVy3J4PF4chEe21bO
-         x6ow==
-X-Gm-Message-State: AOAM531j/6D1sPX/1pOD0Vud34vQXE5gaWQ7UvGPf7+2pSifOv17Bn+/
-        Vhw8zDqn4vmlNBQapWgHcQmCvH+wG2dlBeE/sIlgWw==
-X-Google-Smtp-Source: ABdhPJzUO+/e0DOzlIZo6jFnET7GsZQ/L0fBGv8nPlnA9/St3q9sCF/WrH6T8skaKiygeR5B50ZO59PGXMGCaUuHcCg=
-X-Received: by 2002:adf:df0e:: with SMTP id y14mr5014796wrl.6.1589995530474;
- Wed, 20 May 2020 10:25:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
- <pull.539.v13.git.1589226388.gitgitgadget@gmail.com> <96fd9814a6753e87fb99c6f9d55a0728d3dba6cb.1589226388.git.gitgitgadget@gmail.com>
- <xmqqeerfzitt.fsf@gitster.c.googlers.com> <CAFQ2z_OazuU32Nm3geLCbu_R2u_JKTqCXX0NF35C0=9xV7Ow0g@mail.gmail.com>
- <CAFQ2z_P-cf38yR-VyvfDSgPUO_d38mgsi32UkRSPWMZKJOmjZg@mail.gmail.com>
-In-Reply-To: <CAFQ2z_P-cf38yR-VyvfDSgPUO_d38mgsi32UkRSPWMZKJOmjZg@mail.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 20 May 2020 19:25:18 +0200
-Message-ID: <CAFQ2z_NWT+Xp0zGc0OfjDd-=js5v9M9nqb3fbDFAtx_r21Jp=w@mail.gmail.com>
-Subject: Re: [PATCH v13 04/13] reftable: file format documentation
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1726799AbgETRdb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 13:33:31 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62739 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726436AbgETRd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 13:33:28 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E0D624456F;
+        Wed, 20 May 2020 13:33:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Q4UoDtB5wKycDTvC0wPlpwREoMY=; b=kcxBvx
+        3iop6F11tyZnfZJD/45X76zLiJ3WUox8rDKQNZvCwZnwxNBbq9ufjSaphrVGHppN
+        rOoNiwxRS7IT+093DBX1P7/sfVwts68It/vvtKA8hb2GJ3f2TC4TwtUva+N+BLxi
+        TQg+LwC021b0aO/Z4maQav3JHYGQVxzjZV7bQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ebjvBSYB7lGujDse2l6ZPVNWUqCr7x+C
+        iqmia7GYd/LJb8ndlFV5iLLGKEBImQVfjvtaWvALKvM4nfdCljiEc0uAblWcmGKU
+        EvI20h+XiYpJD9Rtv2c+qtOgcoKp7u2kIFfYOg2/yfnmz+1cPBCgE7zlAdvgmiHT
+        FFiBb5rSXMM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D33C74456E;
+        Wed, 20 May 2020 13:33:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5316B4456D;
+        Wed, 20 May 2020 13:33:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
 Cc:     Jonathan Nieder via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v13 04/13] reftable: file format documentation
+References: <pull.539.v12.git.1588845585.gitgitgadget@gmail.com>
+        <pull.539.v13.git.1589226388.gitgitgadget@gmail.com>
+        <96fd9814a6753e87fb99c6f9d55a0728d3dba6cb.1589226388.git.gitgitgadget@gmail.com>
+        <xmqqeerfzitt.fsf@gitster.c.googlers.com>
+        <CAFQ2z_OazuU32Nm3geLCbu_R2u_JKTqCXX0NF35C0=9xV7Ow0g@mail.gmail.com>
+        <CAFQ2z_P-cf38yR-VyvfDSgPUO_d38mgsi32UkRSPWMZKJOmjZg@mail.gmail.com>
+        <CAFQ2z_NWT+Xp0zGc0OfjDd-=js5v9M9nqb3fbDFAtx_r21Jp=w@mail.gmail.com>
+Date:   Wed, 20 May 2020 10:33:25 -0700
+In-Reply-To: <CAFQ2z_NWT+Xp0zGc0OfjDd-=js5v9M9nqb3fbDFAtx_r21Jp=w@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Wed, 20 May 2020 19:25:18 +0200")
+Message-ID: <xmqqa722wly2.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0309E756-9AC0-11EA-841C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 20, 2020 at 7:20 PM Han-Wen Nienhuys <hanwen@google.com> wrote:
-> Jonathan Nieder said that this is used for git-stash, but I have never
-> understood why this is necessary, and would love to clarify this
-> better.
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-The doc says this:
+> On Wed, May 20, 2020 at 7:20 PM Han-Wen Nienhuys <hanwen@google.com> wrote:
+>> Jonathan Nieder said that this is used for git-stash, but I have never
+>> understood why this is necessary, and would love to clarify this
+>> better.
+>
+> The doc says this:
+>
+> "The `log_type = 0x0` is mostly useful for `git stash drop`, removing an
+> entry from the reflog of `refs/stash` in a transaction file (below),
+> without needing to rewrite larger files. Readers reading a stack of
+> reflogs must treat this as a deletion."
 
-"The `log_type =3D 0x0` is mostly useful for `git stash drop`, removing an
-entry from the reflog of `refs/stash` in a transaction file (below),
-without needing to rewrite larger files. Readers reading a stack of
-reflogs must treat this as a deletion."
+Yup, I saw that and that is where my "I am guessing that log_type of
+0x0 is *NOT* used for that purpose)." in my review comment came from.
 
-I should probably look at the code for git-stash to see how this plays out.
+The "git stash" itself is an abuse of the reflog mechanism, but its
+"drop" subcommand is probably the worst offender.  It wants to remove
+any arbitrary reflog entry in the middle of a reflog, not just topmost
+ones (pop) or bottommost ones (expire).
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+> I should probably look at the code for git-stash to see how this plays out.
