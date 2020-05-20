@@ -2,112 +2,129 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7175C433E0
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 14:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50480C433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 14:56:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7705207D4
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 14:46:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 265AA2072C
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 14:56:32 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nRt8uZoc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726805AbgETOqH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 10:46:07 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55178 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbgETOqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 10:46:07 -0400
-Received: by mail-wm1-f67.google.com with SMTP id h4so2768648wmb.4
-        for <git@vger.kernel.org>; Wed, 20 May 2020 07:46:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a1Y6xeModiH3BlTdB61seYkfWK9sq2iVhtjHJ4PNhFc=;
-        b=b02jlj+PAOu05DwU8jOWmAaj8gcg9rr4DBzlOVWxB1+AUQ9ysBXsgWwy93XlqIoUk1
-         eIe+lQwkUOlKE2brusZpxbQanwHt2AtOte+e8MWwJG33j7cFhjUi7BUZWQOyXtzOqqsm
-         FE7b/A3tAKMPDYcN6zTmBBKmVSkxu6ds4L8WjeHuyj3if16aQ6sodHPM/SzAqF7IqMzv
-         nl1a6rMQCTsso42ixJYToYy0j2HBwmU3dU83vpDZZBhCf3/RAvcCYXUJ9h3ByUA8G2Cg
-         HmWsxIZbhOlLc2a88/21Zt2xD4MBkLXchm/qL33KFPONG5ldPhbVSASJBMoNVPVzd/n/
-         GE6Q==
-X-Gm-Message-State: AOAM533ypfW/K9pE/HXpGabssEbIr46NHil0tlpcNde2u06ACO8zOON3
-        RBe9uPl6ZxmI3L9NljRdlHJGmtXxF3kBgs0tSp/mMXJY
-X-Google-Smtp-Source: ABdhPJyutAov8bY6WOwLkyf1iSUZHNpoB8O9FFlr3BQT22QHFpnzW97uBPVt77pIJCNJq4+t298bPg/KlxABXbJ/Ds8=
-X-Received: by 2002:a1c:bad6:: with SMTP id k205mr4794013wmf.53.1589985965263;
- Wed, 20 May 2020 07:46:05 -0700 (PDT)
+        id S1726899AbgETO4b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 10:56:31 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53325 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726436AbgETO4a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 10:56:30 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 594E5D9165;
+        Wed, 20 May 2020 10:56:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=BHVgCrsTJ+zx
+        gIFvWCmG+JmaeQs=; b=nRt8uZocOp4rndyyuywtSBQWW3DTjiV0rvxkb+xOMZhd
+        SGFoZorkCCjorLbw1PKusL5/5fyag6L32vfLU5ru9Rch2sth/zDeFjpm2pnumo65
+        6Zoa0yPS/+SXNkNoz+1iovhFwePSnLGD0ucodFdmRp0XPcl9LehmqhOxkQyIwsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=h2bBHr
+        pE6fT7Ue1fjn9U9XS3TEf/5LRXSoonJbeV2NpxTdaAFalnqLzeheBKkQ90aE6YT9
+        kms72eIaRJp0cL68g5fqUjzs7l8PVi8CTddJ5ZMHx46yE1/oJCz2mbAQHsWLNKPT
+        SeQFwYfJSlkwS/wuZMSjdm0+oBNFtvPA/K0ZU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 517C0D9164;
+        Wed, 20 May 2020 10:56:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 99824D9163;
+        Wed, 20 May 2020 10:56:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, liu.denton@gmail.com, chwarr@microsoft.com,
+        garima.singh@microsoft.com
+Subject: Re: [PATCH 2/3] bisect: remove CR characters from revision in replay
+References: <20200520034444.47932-1-carenas@gmail.com>
+        <20200520034444.47932-3-carenas@gmail.com>
+Date:   Wed, 20 May 2020 07:56:22 -0700
+In-Reply-To: <20200520034444.47932-3-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 19 May 2020 20:44:43 -0700")
+Message-ID: <xmqqzha2wt7t.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200519182654.33318-1-shouryashukla.oo@gmail.com>
- <CAPig+cSKFBFdNXA52f5f0q3SetA2btmkXeqyHNw-qwJ5ECq5mQ@mail.gmail.com> <20200520121530.GA7992@konoha>
-In-Reply-To: <20200520121530.GA7992@konoha>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 20 May 2020 10:45:53 -0400
-Message-ID: <CAPig+cSr0_eOOi6xiOLY0bzJ33ewpib+MiMjmtay_bi4J9D_=w@mail.gmail.com>
-Subject: Re: [PATCH v2] submodule: port subcommand 'set-branch' from shell to C
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Doan Tran Cong Danh <congdanhqx@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 13425448-9AAA-11EA-9CCA-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 20, 2020 at 8:23 AM Shourya Shukla
-<shouryashukla.oo@gmail.com> wrote:
-> On 19/05 02:57, Eric Sunshine wrote:
-> > On Tue, May 19, 2020 at 2:27 PM Shourya Shukla
-> > <shouryashukla.oo@gmail.com> wrote:
-> > > +        OPT__QUIET(&quiet,
-> >
-> > However, the bigger question is: Why is the --quiet option even here?
-> > None of the code in this function ever consults the 'quiet' variable,
-> > so its presence seems pointless.
+Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+
+> 6c722cbe5a (bisect: allow CRLF line endings in "git bisect replay"
+> input, 2020-05-07) includes CR as a field separator, but doesn't
+> account for it being included in the last field, breaking when
+> running at least under OpenBSD 6.7's sh.
 >
-> I actually wanted to have *some* use of the `quiet` option and delivered
-> it in the v1, but after some feedback had to scrap it. You may have a
-> look here:
-> https://lore.kernel.org/git/20200513201737.55778-2-shouryashukla.oo@gmail.com/
+> Read the revision into a raw variable and strip it of any possible
+> embeded CR characters, before use.
 
-I agree with Denton's conclusion about not introducing needless noise
-merely to give the --quiet option something to squelch. And, to answer
-your question about when and when not to print something, a good "Unix
-way" guideline is that "silence is golden"[1].
+That's quite unsatisfactory, as the whole point of adding CR to IFS
+was to avoid having to spawn extra processes for this kind of text
+processing.  If we were to do the preprocessing, we are better off
+just passing the whole input thru "tr -d '\015'".
 
-[1]: http://www.catb.org/esr/writings/taoup/html/ch01s06.html#id2878450
+>  	oIFS=3D"$IFS" IFS=3D"$IFS$(printf '\015')"
+> -	while read git bisect command rev
+> +	while read git bisect command rawrev
+>  	do
+>  		test "$git $bisect" =3D "git bisect" || test "$git" =3D "git-bisect"=
+ || continue
+>  		if test "$git" =3D "git-bisect"
+>  		then
+> -			rev=3D"$command"
+> +			rawrev=3D"$command"
+>  			command=3D"$bisect"
+>  		fi
+> +		rev=3D$(echo $rawrev | tr -d '\015')
 
-> > Looking at the git-submodule documentation, I see that it is already
-> > documented as accepted --quiet, so it may make some sense for you to
-> > accept the option here. However, it might be a good idea either to
-> > have an in-code comment or a blurb in the commit message explaining
-> > that this C rewrite accepts the option for backward-compatibility (and
-> > for future extension), not because it is actually used presently.
->
-> That seems like a better idea; should I add this comment just above the
-> `options` array? BTW, the shell version has a comment about this,
-> see:
-> https://github.com/git/git/blob/v2.26.2/git-submodule.sh#L727
+As we know that "rev" ought to consist of just hexadecimal and
+cannot be split into two at $IFS even if we don't tell "read" that
+"everything at the end of line is 'rev'", can we do
 
-It would be a good idea to attach a comment like that to the
-declaration of 'quiet' in the C code (rather than placing it above the
-'options' array). For instance:
+	while read git bisect command rev ignored
 
-    /* for backward compatibility but not presently used */
-    int quiet = 0;
+so that we'll get an empty string after CR in $ignored when reading
+CRLF input, and an empty string because we ran out of the tokens
+when reading LF input?
 
-> > > +        die(_("--branch and --default do not make sense together"));
-> >
-> > A more precise way to say this is:
-> >
-> >   die(_("--branch and --default are mutually exclusive"));
->
-> Will that be clear to everyone? What I mean is maybe a person from a
-> non-mathematical background (someone doing programming as a hobby maybe)
-> will not grasp at this at one go and will have to search it's meaning
-> online. Isn't it fine as-is?
+That is, ...
 
-Others have already responded to this up-thread...
+ git-bisect.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 71b367a944..2a7599b486 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -210,7 +210,7 @@ bisect_replay () {
+ 	test -r "$file" || die "$(eval_gettext "cannot read \$file for replayin=
+g")"
+ 	git bisect--helper --bisect-reset || exit
+ 	oIFS=3D"$IFS" IFS=3D"$IFS$(printf '\015')"
+-	while read git bisect command rev
++	while read git bisect command rev ignored
+ 	do
+ 		test "$git $bisect" =3D "git bisect" || test "$git" =3D "git-bisect" |=
+| continue
+ 		if test "$git" =3D "git-bisect"
