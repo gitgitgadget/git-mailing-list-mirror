@@ -2,61 +2,62 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2400C433DF
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 03:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86A2FC433DF
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 03:45:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9AD020829
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 03:45:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6611320748
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 03:45:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g5F0pjMq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eLbYsYb/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728522AbgETDpD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 May 2020 23:45:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40244 "EHLO
+        id S1728568AbgETDpG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 May 2020 23:45:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728129AbgETDpD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 May 2020 23:45:03 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D3E1C061A0E
-        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:03 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id t7so784471plr.0
-        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:03 -0700 (PDT)
+        with ESMTP id S1728129AbgETDpF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 May 2020 23:45:05 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72676C061A0E
+        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:05 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id s69so620742pjb.4
+        for <git@vger.kernel.org>; Tue, 19 May 2020 20:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VDmYA/0DSm05/5nXK94Xi2UfV5UKqKc7LZVONxsIMB0=;
-        b=g5F0pjMqqt2YnnHet/BG8LM+4ex2XHzySd1wOF1IRUizGwLse8Iz+udl1qTXP2/VyU
-         akVh7Vs4BmElEMAQNhPjBE394qij0JdJ3paHhF8zK08d7oTShtzMqYzwffjnhdym9kNH
-         EJL6TYs6k+YOeRsTLlANFlv9QsdVcQKxkGuBjvUPWvvKNqQ4bR8NXVzIoZhV1t7DOpoF
-         85AW3Qn7G+UsNfP/QmqJ2nAJUqC3yw2apxw+dk1Z9m+qynuCaB7NowuXd45DgS2w0s+k
-         Ub2EUIMTRb+rXQA1Oz2QknCIrb9wQqp3wZwhJ0T+86T2wCZ8kFib5sDhWZ0wI3Sk7KVz
-         xakA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=04/JYjKUKXaLwff96hkthUki9u9In6mW0M1dwuflJwk=;
+        b=eLbYsYb/3SDeL7g8pmJ11YO41DFEN8DrRaaoO29ksJnRU6z/RfgZFV/x4KdQxMAkpH
+         0gN9bJd5jw8ix4Zy8XDFFt0ODOLt0p2anJXFOsGis0d2JvwNXnWm5iAOssUA4FW0HFCc
+         vJvo9g/5uBtJfpSvLkYAXkKo9C4ebeAcXjVercBTM4Y7PMmRTiA6jULiQyE2Mdzt0s2W
+         B+viiyghKZhHSFHEMHqX9kHpiCK8cVrUNvQYd1AHsdToIWNzpzZ8BoLefiP5uisHSqIq
+         unyUSBgrfmO1jYeC/EpFVCHuPj6Yg53DsqVkB4oGySnk27iIp6coTbahJzhVeezrKI+P
+         Fswg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VDmYA/0DSm05/5nXK94Xi2UfV5UKqKc7LZVONxsIMB0=;
-        b=HI7Z8MfdJvfy1ka7TfKbgx23xMz1s3/r0y5O4sNbDawrzvCfvAaHGMkS4fDeLJCQQL
-         b0maqk8LzVgLbx0Two5Tke8aPWyEESQhwGhm15oSEGp7AA10XBI5pAQuhyzsGOMiUqNL
-         hI/OaIWwRBgawFrWw+ARY3vDyPqUBZjky7tC2WUCT1fBrf0hwQLpTpcdgvd1ckSSW7Fg
-         X6YTKa/Xid6akau3UOLjyrUZ1mTMrE9SHlx5YYJTH3iqSUY5IZcRgizLzB1O/ZFmZNdD
-         13NOmq2GKqo7OieZY/XL673gVOdcFGQUWff7dQ298H79NePNmjciYL6aSbJ1YAcmd1f9
-         9cSA==
-X-Gm-Message-State: AOAM531f9Uais4ilMk0hI3Una0elIP+w5TaXSLt/8CiKYv9+nUoxsiKT
-        iLeYE/nLb2jLKV0ypdrhnHLaC3Md
-X-Google-Smtp-Source: ABdhPJzR4EzTU9G7Ncbu4gPrwkW6F6rmh2Xx/G+FAEd90Q6Wxhqzbc0wqVccu9b/vMara5D1P45VGA==
-X-Received: by 2002:a17:90a:c393:: with SMTP id h19mr3092334pjt.125.1589946302453;
-        Tue, 19 May 2020 20:45:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=04/JYjKUKXaLwff96hkthUki9u9In6mW0M1dwuflJwk=;
+        b=DS5TeYGxG94aVgQ9IPVD1I/NjYdoIa1IE9E44hdMusPpfZncncYe0DRmkUnvuRmanR
+         hOmKL8sao8czzbyCFJfJhqCRm9mDMEd0s+cOJvr0JPO2RM1SZ4wIQogICjwpWn/TTBx6
+         6JoCSOtOfOR+zcob4nC/dfAnjLZXTVw7HXZqfhp4uGR3NID3d7gLDAigNlv8OxwCgwi4
+         jwgkX9h8SBqMwPJBdq3Z3H9fW7zr51c8ipJXicI6QksMSicu3ZXp38T9A+uOmtMQL0ZY
+         wdsH1R7vgH+xottJnt0yAeHfJrQWiiIyhor2uK4M2nOi9rjMXHzcpX5BkMCseOUPDELx
+         r8bA==
+X-Gm-Message-State: AOAM530juX+zr12kNBjLZX6huVF8gT35TF6nPq/Xh522xUrNtRE49ha9
+        nMMp1i81L7gJqW73qAZE0TdvUl/I
+X-Google-Smtp-Source: ABdhPJwkbIZFUG4QZ5f+XAhMzqlQ80/tQqTBgZmrIgns6eCWj8NtfqJKybFznQWxCXM+iFUX1CNfKA==
+X-Received: by 2002:a17:90a:3201:: with SMTP id k1mr2882404pjb.202.1589946304719;
+        Tue, 19 May 2020 20:45:04 -0700 (PDT)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id h4sm762820pfo.3.2020.05.19.20.45.01
+        by smtp.gmail.com with ESMTPSA id h4sm762820pfo.3.2020.05.19.20.45.03
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 May 2020 20:45:01 -0700 (PDT)
+        Tue, 19 May 2020 20:45:04 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
@@ -64,10 +65,12 @@ Cc:     liu.denton@gmail.com, chwarr@microsoft.com,
         garima.singh@microsoft.com,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH 0/3] openbsd: fixes for 2.27.0-RC0
-Date:   Tue, 19 May 2020 20:44:41 -0700
-Message-Id: <20200520034444.47932-1-carenas@gmail.com>
+Subject: [PATCH 1/3] t4216: avoid unnecessary subshell in test_bloom_filters_not_used
+Date:   Tue, 19 May 2020 20:44:42 -0700
+Message-Id: <20200520034444.47932-2-carenas@gmail.com>
 X-Mailer: git-send-email 2.27.0.rc0.187.gede8c892b8
+In-Reply-To: <20200520034444.47932-1-carenas@gmail.com>
+References: <20200520034444.47932-1-carenas@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,19 +79,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First one is the only one exclusive to OpenBSD (tested with 6.7)
-while the other 2 are likely also needed in other POSIX systems.
+Seems to trigger a bug in at least OpenBSD's 6.7 sh where it is
+interpreted as a history lookup and therefore fails 125-126, 128,
+130.
 
-Carlo Marcelo Arenas Belón (3):
-  t4216: avoid unnecessary subshell in test_bloom_filters_not_used
-  bisect: remove CR characters from revision in replay
-  t5520: avoid alternation in grep's BRE (not POSIX)
+Remove the subshell and get a space between ! and grep, so tests
+pass successfully.
 
- git-bisect.sh        | 5 +++--
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
  t/t4216-log-bloom.sh | 2 +-
- t/t5520-pull.sh      | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index 21b68dd6c8..c855bcd3e7 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -70,7 +70,7 @@ test_bloom_filters_used () {
+ test_bloom_filters_not_used () {
+ 	log_args=$1
+ 	setup "$log_args" &&
+-	!(grep -q "statistics:{\"filter_not_present\":" "$TRASH_DIRECTORY/trace.perf") &&
++	! grep -q "statistics:{\"filter_not_present\":" "$TRASH_DIRECTORY/trace.perf" &&
+ 	test_cmp log_wo_bloom log_w_bloom
+ }
+ 
 -- 
 2.27.0.rc0.187.gede8c892b8
 
