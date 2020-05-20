@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87312C433E0
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF5CCC433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:36:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65D7C20709
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:36:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A873020709
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 17:36:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CRb/vuUJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dBc4S/08"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726881AbgETRgQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 13:36:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57324 "EHLO
+        id S1726896AbgETRgS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 13:36:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726436AbgETRgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 13:36:16 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C267C061A0F
-        for <git@vger.kernel.org>; Wed, 20 May 2020 10:36:16 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id e16so3999269wra.7
-        for <git@vger.kernel.org>; Wed, 20 May 2020 10:36:16 -0700 (PDT)
+        with ESMTP id S1726436AbgETRgR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 13:36:17 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73375C061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 10:36:17 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id w64so3756239wmg.4
+        for <git@vger.kernel.org>; Wed, 20 May 2020 10:36:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lpzLWA6haZQ3c4ORdWtnBLobeJAY2qEE8+ghelo2V0Y=;
-        b=CRb/vuUJQxwLnMfaT8kOjqMaCQFghShNG+V6FuX1qLTpeXI05ngtFhbpswsqhoBByR
-         Zw1GyYIiZTzCNMnslQU1CAYnQLRd57esZJijdgS/dwJqVD4/JDEipRYzWmG94ZyzuYvv
-         jUjqqzoPU8N8YXYRqlCHQrpwjxs1kHMVtu80URaFb4i1Y48fPsDOr8k7qz08WHB8JKs6
-         UDNKFWDNokfUKtvWH75T4ONXg03Ncfim0a5HUKEAjOIedTra7TEqkmtuZavhMggfe6o4
-         uh4XYMyWKu0SKfIgpnF6P5Uyyxv4y3DY6UhsH0WiOLE++v8dq3Z56VUwV0xU8bmXiU+w
-         AnfQ==
+        bh=E3wQCJHorM0hJxQbaTJEi71HjkPDVlKdhmJhn7DA7d8=;
+        b=dBc4S/08xoQR3r0MkV+AchMxZ3JkY6yjrBiP/oEbSmUR5vdlHbpRwflDfRkvGlH8AY
+         iV5OOkL6zFb+VCjGiJCroCZVhmBPFJgLAZIfwpD0IYtvnzzpj/zLqwjDcAqbWxvBIOBv
+         MMeU8GZaYwpIyYo7qqb8m2k8QlDzHCIHebqt6YQ8B37ybSuMg4gaITtkx7U9MCo9GecL
+         wWqhpm21eW9TeU0ZlodK0CHdTDL7Am63ezFsNyMFUzAu+eQYhyhln0ZXbr6SUGpABJn4
+         C1sDMyvnT3SiHbZ7tDFAscQbrOheu4lYsudJ+YYPzaMfp2VVzDPQ8u+aC+0ft3sSsylH
+         +iHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lpzLWA6haZQ3c4ORdWtnBLobeJAY2qEE8+ghelo2V0Y=;
-        b=bY0fdaNA/e8pRfvohUryEA2PU5Xazu5twzzGDMLT0ojR/XKJZ3y7h0ZI5c13lDZMyn
-         xjTch3ukkzJdBq71JO+2lSIN/KhuGOGhbPcS0K7DTNsdK3wX9KfRsZznU5ZfaObEfies
-         trI09d/WqQXBs21wLcyQ1RAvCoSj7EJznt0j0qf+bBtjYtZOEkDh/j0fmtSkyiQIKw0j
-         gcvwsBd+GFCFpzUMg31wPeOwou9wVzQ9KGNjRVvlBG07QJaXOn0zuK1Htve8oVzGNbJH
-         GvAQ4JSvo09Y7LeKUlI5kUwxhbaB7IeS5Zr/bYn/vgVH/kgj4L0BNjxrIqZ/AANFlT4K
-         lyKQ==
-X-Gm-Message-State: AOAM5304yxkKJ9hB4d7vpW8Q0vzh+CSYpE61H14KwakY3lTq9X26T7EO
-        FXNzeYGXjjxiruGNyjr9ZCbN1AIo
-X-Google-Smtp-Source: ABdhPJyI2W0SkC3yDA3TSEv0K4JluW0EzQGn5ovHSVeGF292/RRfXw8lhRDwQMkiCrv69c/0trG7tA==
-X-Received: by 2002:adf:a153:: with SMTP id r19mr2789576wrr.285.1589996174790;
-        Wed, 20 May 2020 10:36:14 -0700 (PDT)
+        bh=E3wQCJHorM0hJxQbaTJEi71HjkPDVlKdhmJhn7DA7d8=;
+        b=cbXAjlL3upJLriiDric/e0Ga18Fn3ME0Mjv8eQnJ5399ak9ghtjAoPqA4DxR5LzOxL
+         n3YwOVpl9yunXNHuxczzpbmUYJzbS4JcMwk0ILjtzQmWUUazxAZeXMlXxeQU5+My9s9E
+         5xVjYkuHoZsGQs3QPKKaHxTWFcvDzMJbL3+CziGKpZocxH+vk+YqAWSPfRc2bFA1rNtP
+         sRr0BUqGfMj574fJS1YQEgYtHqwGXHRGT4rDZ07jOC7hYkOov4VZgYy6azXEce4TloUX
+         NhkMwBX6CHuiOTun2NReMPXdKRRw9kCvy3hd4UFGYEl9BC1g6xRb++SzpyacYSIkgHvm
+         OMVA==
+X-Gm-Message-State: AOAM530kSL6uFWxJn2fxuu194S3aoP3LIMbzATBxhFtIK/sCvFF9fGNH
+        EFy5Tx5h7PpuSfIY6URkwbHA5oL+
+X-Google-Smtp-Source: ABdhPJzCC5WZzK1hPdmyuhyUhhNUVUU1ZA0xqp870edmX9gLzVvBCv+QKA9nKOt9hxTa07GXhoft7w==
+X-Received: by 2002:a1c:a557:: with SMTP id o84mr5752983wme.165.1589996175554;
+        Wed, 20 May 2020 10:36:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r2sm3561829wrg.84.2020.05.20.10.36.14
+        by smtp.gmail.com with ESMTPSA id x24sm3741410wrd.51.2020.05.20.10.36.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2020 10:36:14 -0700 (PDT)
-Message-Id: <15ec202d79cc62dc0a026fbffc41bc6681a50985.1589996173.git.gitgitgadget@gmail.com>
+        Wed, 20 May 2020 10:36:15 -0700 (PDT)
+Message-Id: <3b363322b7dba8fc49c205bc9ac8717da1020350.1589996173.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.638.git.1589996173.gitgitgadget@gmail.com>
 References: <pull.638.git.1589996173.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 20 May 2020 17:36:07 +0000
-Subject: [PATCH 1/6] refs.h: clarify reflog iteration order
+Date:   Wed, 20 May 2020 17:36:08 +0000
+Subject: [PATCH 2/6] t: use update-ref and show-ref to reading/writing refs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,53 +78,196 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+Reading and writing .git/refs/* assumes that refs are stored in the 'files'
+ref backend.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs.h | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ t/t0002-gitfile.sh             |  2 +-
+ t/t1400-update-ref.sh          | 32 ++++++++++++++++----------------
+ t/t1506-rev-parse-diagnosis.sh |  2 +-
+ t/t6050-replace.sh             |  2 +-
+ t/t9020-remote-svn.sh          |  4 ++--
+ 5 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/refs.h b/refs.h
-index a92d2c74c83..e010f8aec28 100644
---- a/refs.h
-+++ b/refs.h
-@@ -432,19 +432,35 @@ int delete_refs(const char *msg, struct string_list *refnames,
- int refs_delete_reflog(struct ref_store *refs, const char *refname);
- int delete_reflog(const char *refname);
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index 0aa9908ea12..960ed150cb5 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -62,7 +62,7 @@ test_expect_success 'check commit-tree' '
+ '
  
--/* iterate over reflog entries */
-+/*
-+ * Callback to process a reflog entry found by the iteration functions (see
-+ * below)
-+ */
- typedef int each_reflog_ent_fn(
- 		struct object_id *old_oid, struct object_id *new_oid,
- 		const char *committer, timestamp_t timestamp,
- 		int tz, const char *msg, void *cb_data);
+ test_expect_success 'check rev-list' '
+-	echo $SHA >"$REAL/HEAD" &&
++	git update-ref "HEAD" "$SHA" &&
+ 	test "$SHA" = "$(git rev-list HEAD)"
+ '
  
-+/* Iterate over reflog entries in the log for `refname`. */
-+
-+/* oldest entry first */
- int refs_for_each_reflog_ent(struct ref_store *refs, const char *refname,
- 			     each_reflog_ent_fn fn, void *cb_data);
-+
-+/* youngest entry first */
- int refs_for_each_reflog_ent_reverse(struct ref_store *refs,
- 				     const char *refname,
- 				     each_reflog_ent_fn fn,
- 				     void *cb_data);
-+
-+/*
-+ * Iterate over reflog entries in the log for `refname` in the main ref store.
-+ */
-+
-+/* oldest entry first */
- int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data);
-+
-+/* youngest entry first */
- int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data);
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index e1197ac8189..27171f82612 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -37,15 +37,15 @@ test_expect_success setup '
  
- /*
+ test_expect_success "create $m" '
+ 	git update-ref $m $A &&
+-	test $A = $(cat .git/$m)
++	test $A = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "create $m with oldvalue verification" '
+ 	git update-ref $m $B $A &&
+-	test $B = $(cat .git/$m)
++	test $B = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "fail to delete $m with stale ref" '
+ 	test_must_fail git update-ref -d $m $A &&
+-	test $B = "$(cat .git/$m)"
++	test $B = "$(git show-ref -s --verify $m)"
+ '
+ test_expect_success "delete $m" '
+ 	test_when_finished "rm -f .git/$m" &&
+@@ -56,7 +56,7 @@ test_expect_success "delete $m" '
+ test_expect_success "delete $m without oldvalue verification" '
+ 	test_when_finished "rm -f .git/$m" &&
+ 	git update-ref $m $A &&
+-	test $A = $(cat .git/$m) &&
++	test $A = $(git show-ref -s --verify $m) &&
+ 	git update-ref -d $m &&
+ 	test_path_is_missing .git/$m
+ '
+@@ -69,15 +69,15 @@ test_expect_success "fail to create $n" '
+ 
+ test_expect_success "create $m (by HEAD)" '
+ 	git update-ref HEAD $A &&
+-	test $A = $(cat .git/$m)
++	test $A = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "create $m (by HEAD) with oldvalue verification" '
+ 	git update-ref HEAD $B $A &&
+-	test $B = $(cat .git/$m)
++	test $B = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "fail to delete $m (by HEAD) with stale ref" '
+ 	test_must_fail git update-ref -d HEAD $A &&
+-	test $B = $(cat .git/$m)
++	test $B = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "delete $m (by HEAD)" '
+ 	test_when_finished "rm -f .git/$m" &&
+@@ -178,14 +178,14 @@ test_expect_success '--no-create-reflog overrides core.logAllRefUpdates=always'
+ 
+ test_expect_success "create $m (by HEAD)" '
+ 	git update-ref HEAD $A &&
+-	test $A = $(cat .git/$m)
++	test $A = $(git show-ref -s --verify $m)
+ '
+ test_expect_success 'pack refs' '
+ 	git pack-refs --all
+ '
+ test_expect_success "move $m (by HEAD)" '
+ 	git update-ref HEAD $B $A &&
+-	test $B = $(cat .git/$m)
++	test $B = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "delete $m (by HEAD) should remove both packed and loose $m" '
+ 	test_when_finished "rm -f .git/$m" &&
+@@ -255,7 +255,7 @@ test_expect_success '(not) change HEAD with wrong SHA1' '
+ '
+ test_expect_success "(not) changed .git/$m" '
+ 	test_when_finished "rm -f .git/$m" &&
+-	! test $B = $(cat .git/$m)
++	! test $B = $(git show-ref -s --verify $m)
+ '
+ 
+ rm -f .git/logs/refs/heads/master
+@@ -263,19 +263,19 @@ test_expect_success "create $m (logged by touch)" '
+ 	test_config core.logAllRefUpdates false &&
+ 	GIT_COMMITTER_DATE="2005-05-26 23:30" \
+ 	git update-ref --create-reflog HEAD $A -m "Initial Creation" &&
+-	test $A = $(cat .git/$m)
++	test $A = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "update $m (logged by touch)" '
+ 	test_config core.logAllRefUpdates false &&
+ 	GIT_COMMITTER_DATE="2005-05-26 23:31" \
+ 	git update-ref HEAD $B $A -m "Switch" &&
+-	test $B = $(cat .git/$m)
++	test $B = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "set $m (logged by touch)" '
+ 	test_config core.logAllRefUpdates false &&
+ 	GIT_COMMITTER_DATE="2005-05-26 23:41" \
+ 	git update-ref HEAD $A &&
+-	test $A = $(cat .git/$m)
++	test $A = $(git show-ref -s --verify $m)
+ '
+ 
+ test_expect_success 'empty directory removal' '
+@@ -319,19 +319,19 @@ test_expect_success "create $m (logged by config)" '
+ 	test_config core.logAllRefUpdates true &&
+ 	GIT_COMMITTER_DATE="2005-05-26 23:32" \
+ 	git update-ref HEAD $A -m "Initial Creation" &&
+-	test $A = $(cat .git/$m)
++	test $A = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "update $m (logged by config)" '
+ 	test_config core.logAllRefUpdates true &&
+ 	GIT_COMMITTER_DATE="2005-05-26 23:33" \
+ 	git update-ref HEAD'" $B $A "'-m "Switch" &&
+-	test $B = $(cat .git/$m)
++	test $B = $(git show-ref -s --verify $m)
+ '
+ test_expect_success "set $m (logged by config)" '
+ 	test_config core.logAllRefUpdates true &&
+ 	GIT_COMMITTER_DATE="2005-05-26 23:43" \
+ 	git update-ref HEAD $A &&
+-	test $A = $(cat .git/$m)
++	test $A = $(git show-ref -s --verify $m)
+ '
+ 
+ cat >expect <<EOF
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+index 52edcbdcc32..dbf690b9c1b 100755
+--- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -207,7 +207,7 @@ test_expect_success 'arg before dashdash must be a revision (ambiguous)' '
+ 	{
+ 		# we do not want to use rev-parse here, because
+ 		# we are testing it
+-		cat .git/refs/heads/foobar &&
++		git show-ref -s refs/heads/foobar &&
+ 		printf "%s\n" --
+ 	} >expect &&
+ 	git rev-parse foobar -- >actual &&
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index e7e64e085dd..c80dc10b8f1 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -135,7 +135,7 @@ test_expect_success 'tag replaced commit' '
+ test_expect_success '"git fsck" works' '
+      git fsck master >fsck_master.out &&
+      test_i18ngrep "dangling commit $R" fsck_master.out &&
+-     test_i18ngrep "dangling tag $(cat .git/refs/tags/mytag)" fsck_master.out &&
++     test_i18ngrep "dangling tag $(git show-ref -s refs/tags/mytag)" fsck_master.out &&
+      test -z "$(git fsck)"
+ '
+ 
+diff --git a/t/t9020-remote-svn.sh b/t/t9020-remote-svn.sh
+index 6fca08e5e35..9fcfa969a9b 100755
+--- a/t/t9020-remote-svn.sh
++++ b/t/t9020-remote-svn.sh
+@@ -48,8 +48,8 @@ test_expect_success REMOTE_SVN 'simple fetch' '
+ '
+ 
+ test_debug '
+-	cat .git/refs/svn/svnsim/master
+-	cat .git/refs/remotes/svnsim/master
++	git show-ref -s refs/svn/svnsim/master
++	git show-ref -s refs/remotes/svnsim/master
+ '
+ 
+ test_expect_success REMOTE_SVN 'repeated fetch, nothing shall change' '
 -- 
 gitgitgadget
 
