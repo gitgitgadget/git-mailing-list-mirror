@@ -2,117 +2,117 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4E90C433E0
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 04:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D59C433E0
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 07:56:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 963E320756
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 04:28:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D1AA207ED
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 07:56:01 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w6Fqc5RU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726463AbgETE2j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 00:28:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51508 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725785AbgETE2j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 00:28:39 -0400
-Received: (qmail 30829 invoked by uid 109); 20 May 2020 04:28:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 May 2020 04:28:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17319 invoked by uid 111); 20 May 2020 04:28:40 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 20 May 2020 00:28:40 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 20 May 2020 00:28:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Daniel Richard G." <skunk@iSKUNK.ORG>
-Cc:     git@vger.kernel.org
-Subject: Re: Minor portability issues + fixes
-Message-ID: <20200520042838.GA102274@coredump.intra.peff.net>
-References: <7422404e-7fc8-4961-aae4-3f0adb71bb3a@www.fastmail.com>
- <20200519024945.GB70483@coredump.intra.peff.net>
- <40a42f1d-61bd-46fb-8946-5588df7b044b@www.fastmail.com>
+        id S1726827AbgETHz7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 03:55:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51066 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726224AbgETHz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 03:55:58 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA6FC061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 00:55:57 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id d10so1065211pgn.4
+        for <git@vger.kernel.org>; Wed, 20 May 2020 00:55:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/pJmK+O6ROVj4s7ndS7G+mQ5Ks/vgkYIiDJBpeL0ff0=;
+        b=w6Fqc5RUEXUV2gSxof7w6N67mrIBP7dEAcmoR1w9p9j1cXZw+Dd7Qe0kP8VDYqkvXK
+         gqVsBQAgODSjvKSC+pt5r1FW/CHCxHQNGu8Xb+9MGKJOxN/MbP/mx2Qb0CdNq4F8KpQp
+         MLmhb1Xk0MwjsixiwPCDBgJb3xl7Yjjh5mN8K1MlyTLGZFggKUeg46wmEsCwNvN61lfA
+         0xIMDgf6t8SipFl2kHt7a/opNAmi2MiFC4xtU49lQ+noZS6njIM7Jp//7jK+GEdogA2P
+         ZzQgx9obIWD2L4ALEI48FeIoe4KLAoHiEO7UPKzZUcAa6UIw3NwkHsb21N8nOQ9NBBIQ
+         zuGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/pJmK+O6ROVj4s7ndS7G+mQ5Ks/vgkYIiDJBpeL0ff0=;
+        b=WId4r6fSOuUTCZPiMpjff7Pt/QMSdCDpzFG1Ii9uop42YlauD9MuHUsECVZSSKyVAc
+         QaaNtwWyEmASaiYgpHsn2ZZshzxNaq/8ALiri9mianbfhgVFD5npAC6X9CxddyZJGEST
+         wHXP4lCX9D7yS6OrWoBWR3XbZuE++7S2iG+OSldTsjEClsTCg0tjLMINdSEaKNrizm4V
+         K1bQ3L+33IWTvTpElJdeW9CY18RyqcYcqHVSXTOPEGVfIZOQt+/ZNR0+ZypOLT736dIq
+         myfWupdnXlSRzafN8AxmiarybuUfYz6SoPq47unB3Km+ANrfq/kL7NHFvs/TBQ3g6HyL
+         xZpA==
+X-Gm-Message-State: AOAM533kVKN9BCbNQHPTy/lbAB5cNG/SMySE8lUomR4mpyRGWNmXms0Z
+        ZUUnrOwO0I8lLgfHlYHeoGz5
+X-Google-Smtp-Source: ABdhPJzRmkifkHMLualmWHNu7RrfLqoam8frQTSzmQcZG6pKy4ae+CjDqwD5hLoxFhW+PxS064rZiw==
+X-Received: by 2002:a63:cc12:: with SMTP id x18mr2910361pgf.140.1589961356846;
+        Wed, 20 May 2020 00:55:56 -0700 (PDT)
+Received: from Mani-XPS-13-9360 ([2409:4072:91e:dd0a:7c30:1f7e:ebdb:aa2a])
+        by smtp.gmail.com with ESMTPSA id w26sm196429pfj.20.2020.05.20.00.55.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 20 May 2020 00:55:56 -0700 (PDT)
+Date:   Wed, 20 May 2020 13:25:51 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Joe Perches <joe@perches.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Subject: Re: git-send-email: Ability to populate CC using more tags
+Message-ID: <20200520075551.GA3155@Mani-XPS-13-9360>
+References: <20200519184041.GB4397@Mani-XPS-13-9360>
+ <f723cce2bcbccbfdf6ebc80d1e68ba4fe10c2aee.camel@perches.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <40a42f1d-61bd-46fb-8946-5588df7b044b@www.fastmail.com>
+In-Reply-To: <f723cce2bcbccbfdf6ebc80d1e68ba4fe10c2aee.camel@perches.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 19, 2020 at 12:22:00AM -0400, Daniel Richard G. wrote:
-
-> > If so, then perhaps it should be added to the AIX defines in
-> > config.mak.uname.
+On Tue, May 19, 2020 at 12:06:45PM -0700, Joe Perches wrote:
+> On Wed, 2020-05-20 at 00:10 +0530, Manivannan Sadhasivam wrote:
+> > Hello,
+> > 
+> > Currently 'git-send-email' lacks the ability to CC people described using
+> > tags such as Acked-by and Reported-by etc...
+> > 
+> > While doing a bit of googling, I found a patch from Joe [1] but that doesn't
+> > look like made its way. And in that discussion I didn't see any real objections
+> > for the patch intention apart from the usage of the term 'trailers'.
+> > 
+> > So I'm just curious if Joe or anyone has plan to resubmit it! If not I may
+> > do that.
+> > 
+> > PS: 'bylines' as mentioned by Joe seems reasonable to me.
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > [1] https://lkml.org/lkml/2016/8/30/650
 > 
-> I've confirmed that this works. But would it not be safe to #include
-> both inttypes.h and stdint.h explicitly if both are present, rather than
-> cater to AIX specifically? I could see this similarly arising in, say,
-> an old version of Solaris.
-
-Yes, as long as we check that both are present, I think that would do
-the right thing. And the autoconf check could cover that. I don't think
-there's an easy way to have a general Makefile knob that can check which
-files are present, though (and we generally consider the Makefile and
-its knobs to be the primary mechanism; autoconf to turn those knobs is
-generally implemented on top).
-
-So probably we'd want something like (in this order):
-
-  - NEEDS_EXPLICIT_STDINT gets passed from the Makefile into the
-    compiler via -D, which then triggers stdint.h being included
-    unconditionally in git-compat-util.h
-
-  - optionally set that in config.mak.uname for AIX (checking uname_R
-    since it sounds like only old versions need it)
-
-  - add an autoconf rule that sets it, either strictly (when a
-    test-program decides it's needed) or loosely (when we see that it's
-    available at all)
-
-Even just the first one would let you build by setting the knob
-manually; the rest is gravy on top, if you or somebody else chooses to
-do it.
-
-> > I do wonder, though, if configure.ac could be extended for AIX to
-> > support whatever syntax the system linker uses for setting the run-path.
-> > I understand that you don't care either way about this feature, but this
-> > might be a good opportunity to fix it.
+> You need to use the "--misc-by" option.
 > 
-> This could be a bit complicated, I'm afraid.
+> Perhaps you need to update your git version
+> as that was added with:
 > 
-> The applicable value for CC_LD_DYNPATH on AIX is "-Wl,-blibpath:".
-> However, have a look at the description for this option in the
-> ld(1) man page:
+> commit ef0cc1df90f6b6c2987ab2db8e0ccf2cfc421edf
+> Author: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+> Date:   Tue Oct 16 09:39:23 2018 +0200
+> 
+> send-email: also pick up cc addresses from -by trailers
+> 
 
-OK, gross. :) I agree it's not worth going too far into this rabbit
-hole. I do wonder if you could just be using GNU ld along with gcc, but
-maybe that's not practical.
+Ah, yes. This does the job :) I didn't notice this earlier.
 
-You should be able to build with:
+Thanks,
+Mani
 
-  make CC_LD_DYNPATH=-L
-
-as a workaround, but it would be nice if the Makefile handled this
-correctly. It looks like CC_LD_DYNPATH gets used in a lot of places, so
-I suspect we'd want a Makefile function to help out. Something like:
-
-
-  # usage: $(call linker_lib,PATH)
-  # Create linker args for looking for libraries in PATH at both link-time
-  # and run-time.
-  linker_lib = -L$1 $(if $(CC_LD_DYNPATH),$(CC_LD_DYNPATH)$1)
-
-which would allow:
-
-  EXTLIBS += $(call linker_lib,$(LIBPCREDIR)/$(lib))
-
-etc. This would be our first foray into Makefile functions, but I think
-we've determined that most platforms have a recent enough GNU make for
-it to be OK (and we already require GNU make).
-
--Peff
+> 
