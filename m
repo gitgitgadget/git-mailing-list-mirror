@@ -2,117 +2,98 @@ Return-Path: <SRS0=RPsp=7C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D59C433E0
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 07:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FC36C433E1
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 08:53:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D1AA207ED
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 07:56:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w6Fqc5RU"
+	by mail.kernel.org (Postfix) with ESMTP id 647A5207FB
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 08:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726827AbgETHz7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 03:55:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726224AbgETHz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 03:55:58 -0400
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA6FC061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 00:55:57 -0700 (PDT)
-Received: by mail-pg1-x542.google.com with SMTP id d10so1065211pgn.4
-        for <git@vger.kernel.org>; Wed, 20 May 2020 00:55:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/pJmK+O6ROVj4s7ndS7G+mQ5Ks/vgkYIiDJBpeL0ff0=;
-        b=w6Fqc5RUEXUV2gSxof7w6N67mrIBP7dEAcmoR1w9p9j1cXZw+Dd7Qe0kP8VDYqkvXK
-         gqVsBQAgODSjvKSC+pt5r1FW/CHCxHQNGu8Xb+9MGKJOxN/MbP/mx2Qb0CdNq4F8KpQp
-         MLmhb1Xk0MwjsixiwPCDBgJb3xl7Yjjh5mN8K1MlyTLGZFggKUeg46wmEsCwNvN61lfA
-         0xIMDgf6t8SipFl2kHt7a/opNAmi2MiFC4xtU49lQ+noZS6njIM7Jp//7jK+GEdogA2P
-         ZzQgx9obIWD2L4ALEI48FeIoe4KLAoHiEO7UPKzZUcAa6UIw3NwkHsb21N8nOQ9NBBIQ
-         zuGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/pJmK+O6ROVj4s7ndS7G+mQ5Ks/vgkYIiDJBpeL0ff0=;
-        b=WId4r6fSOuUTCZPiMpjff7Pt/QMSdCDpzFG1Ii9uop42YlauD9MuHUsECVZSSKyVAc
-         QaaNtwWyEmASaiYgpHsn2ZZshzxNaq/8ALiri9mianbfhgVFD5npAC6X9CxddyZJGEST
-         wHXP4lCX9D7yS6OrWoBWR3XbZuE++7S2iG+OSldTsjEClsTCg0tjLMINdSEaKNrizm4V
-         K1bQ3L+33IWTvTpElJdeW9CY18RyqcYcqHVSXTOPEGVfIZOQt+/ZNR0+ZypOLT736dIq
-         myfWupdnXlSRzafN8AxmiarybuUfYz6SoPq47unB3Km+ANrfq/kL7NHFvs/TBQ3g6HyL
-         xZpA==
-X-Gm-Message-State: AOAM533kVKN9BCbNQHPTy/lbAB5cNG/SMySE8lUomR4mpyRGWNmXms0Z
-        ZUUnrOwO0I8lLgfHlYHeoGz5
-X-Google-Smtp-Source: ABdhPJzRmkifkHMLualmWHNu7RrfLqoam8frQTSzmQcZG6pKy4ae+CjDqwD5hLoxFhW+PxS064rZiw==
-X-Received: by 2002:a63:cc12:: with SMTP id x18mr2910361pgf.140.1589961356846;
-        Wed, 20 May 2020 00:55:56 -0700 (PDT)
-Received: from Mani-XPS-13-9360 ([2409:4072:91e:dd0a:7c30:1f7e:ebdb:aa2a])
-        by smtp.gmail.com with ESMTPSA id w26sm196429pfj.20.2020.05.20.00.55.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 May 2020 00:55:56 -0700 (PDT)
-Date:   Wed, 20 May 2020 13:25:51 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Joe Perches <joe@perches.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: Re: git-send-email: Ability to populate CC using more tags
-Message-ID: <20200520075551.GA3155@Mani-XPS-13-9360>
-References: <20200519184041.GB4397@Mani-XPS-13-9360>
- <f723cce2bcbccbfdf6ebc80d1e68ba4fe10c2aee.camel@perches.com>
+        id S1726510AbgETIxp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 04:53:45 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:39352 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726403AbgETIxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 04:53:45 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 49RmkT6lhTz1rvxj;
+        Wed, 20 May 2020 10:53:37 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 49RmkT6Kv7z1r3kv;
+        Wed, 20 May 2020 10:53:37 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id 5YKsHF4LH5SM; Wed, 20 May 2020 10:53:36 +0200 (CEST)
+X-Auth-Info: 6WsgKKpTr3bFwNYrB7tjhNHqaRp/ZZ2X/zw8BkX/RGsRHoj/CdxvTHzOJTnAjakx
+Received: from igel.home (ppp-46-244-161-158.dynamic.mnet-online.de [46.244.161.158])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Wed, 20 May 2020 10:53:36 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 5C4262C0B3F; Wed, 20 May 2020 10:53:36 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: Fetching 24 Linux commits = 1.2 GiB
+References: <b7f5bfb9-61fb-2552-4399-b744428728e4@suse.cz>
+        <20200415135627.vx75hsphbpmgrquv@chatter.i7.local>
+        <xmqq1roo947y.fsf@gitster.c.googlers.com>
+X-Yow:  My Aunt MAUREEN was a military advisor to IKE & TINA TURNER!!
+Date:   Wed, 20 May 2020 10:53:36 +0200
+In-Reply-To: <xmqq1roo947y.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 15 Apr 2020 08:08:17 -0700")
+Message-ID: <87sgfvq967.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.0.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f723cce2bcbccbfdf6ebc80d1e68ba4fe10c2aee.camel@perches.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 19, 2020 at 12:06:45PM -0700, Joe Perches wrote:
-> On Wed, 2020-05-20 at 00:10 +0530, Manivannan Sadhasivam wrote:
-> > Hello,
-> > 
-> > Currently 'git-send-email' lacks the ability to CC people described using
-> > tags such as Acked-by and Reported-by etc...
-> > 
-> > While doing a bit of googling, I found a patch from Joe [1] but that doesn't
-> > look like made its way. And in that discussion I didn't see any real objections
-> > for the patch intention apart from the usage of the term 'trailers'.
-> > 
-> > So I'm just curious if Joe or anyone has plan to resubmit it! If not I may
-> > do that.
-> > 
-> > PS: 'bylines' as mentioned by Joe seems reasonable to me.
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > [1] https://lkml.org/lkml/2016/8/30/650
-> 
-> You need to use the "--misc-by" option.
-> 
-> Perhaps you need to update your git version
-> as that was added with:
-> 
-> commit ef0cc1df90f6b6c2987ab2db8e0ccf2cfc421edf
-> Author: Rasmus Villemoes <rv@rasmusvillemoes.dk>
-> Date:   Tue Oct 16 09:39:23 2018 +0200
-> 
-> send-email: also pick up cc addresses from -by trailers
-> 
+On Apr 15 2020, Junio C Hamano wrote:
 
-Ah, yes. This does the job :) I didn't notice this earlier.
+> Do these (and I think we saw other reports) make us rethink the
+> status of protocol v2 as the default?  Are all of these fallouts 
+> we saw so far easy-to-fix bugs, or are there more fundamental issues
+> in the v2 protocol design?
 
-Thanks,
-Mani
+I'm now seeing the issue myself, and can provide a backup of the
+offending repository.
 
-> 
+$ git count-objects -v
+count: 17
+size: 76
+in-pack: 387240
+packs: 37
+size-pack: 203738
+prune-packable: 0
+garbage: 0
+size-garbage: 0
+alternate: /home/andreas/src/linux/git/torvalds/linux.git/objects
+alternate: /home/andreas/src/linux/git/stable/linux-stable.git/objects
+$ GIT_TRACE=1 git fetch
+10:40:32.829450 git.c:439               trace: built-in: git fetch
+10:40:33.133448 run-command.c:663       trace: run_command: unset GIT_DIR GIT_IMPLICIT_WORK_TREE GIT_PREFIX; git --git-dir=/daten/src/linux/git/torvalds/linux.git for-each-ref '--format=%(objectname)'
+10:40:33.135756 git.c:439               trace: built-in: git for-each-ref '--format=%(objectname)'
+10:40:33.143936 run-command.c:663       trace: run_command: unset GIT_DIR GIT_IMPLICIT_WORK_TREE GIT_PREFIX; git --git-dir=/daten/src/linux/git/stable/linux-stable.git for-each-ref '--format=%(objectname)'
+10:40:33.146087 git.c:439               trace: built-in: git for-each-ref '--format=%(objectname)'
+remote: Enumerating objects: 30796, done.
+remote: Counting objects: 100% (30796/30796), done.
+remote: Compressing objects: 100% (6965/6965), done.
+10:40:40.102198 run-command.c:663       trace: run_command: git index-pack --stdin -v --fix-thin '--keep=fetch-pack 12342 on igel.home' --pack_header=2,7350969
+10:40:40.104872 git.c:439               trace: built-in: git index-pack --stdin -v --fix-thin '--keep=fetch-pack 12342 on igel.home' --pack_header=2,7350969
+^Cceiving objects:   0% (3092/7350969), 1.32 MiB | 891.00 KiB/s  
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
