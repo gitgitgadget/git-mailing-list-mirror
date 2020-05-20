@@ -7,134 +7,146 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34CA0C433E0
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 13:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D39C433DF
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 14:04:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 083DC207D3
-	for <git@archiver.kernel.org>; Wed, 20 May 2020 13:38:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CBCD20756
+	for <git@archiver.kernel.org>; Wed, 20 May 2020 14:04:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRSOyfVm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LW+88hlf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726754AbgETNi1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 09:38:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48230 "EHLO
+        id S1726510AbgETOEH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 10:04:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726436AbgETNi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 09:38:26 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2548C061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 06:38:26 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id cx22so1301855pjb.1
-        for <git@vger.kernel.org>; Wed, 20 May 2020 06:38:26 -0700 (PDT)
+        with ESMTP id S1726439AbgETOEH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 10:04:07 -0400
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4408BC061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 07:04:07 -0700 (PDT)
+Received: by mail-pg1-x541.google.com with SMTP id c75so1486159pga.3
+        for <git@vger.kernel.org>; Wed, 20 May 2020 07:04:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :in-reply-to;
-        bh=BfLiFc2+gkO4h5OwoHadO28OBh7X+JjeiaX+C6H0Cks=;
-        b=VRSOyfVm7/WfXMtSCRfB4ggMsO85C3500Ec5/IJqmNvLQid6gsOmjEXBK4mKSiVAFO
-         MyflJVkY31yTAEzYChDiSHFM+wDneoNload/oyca71YPqIoer9sj/JiQ69ppIbMGyHMq
-         W0TBr0a9YSdFqhyqhofLT2B3HI7nlypAiecXBJn6lu9/noOFDjOIe6e9LPbApSd+IOCs
-         DHWB6ryyhgZ3+GJTwUGArSx5LRs/KGW8i5wRVo3t7kBmYfse/ypj4cVB1IQ07zON2pM1
-         DVlYNrc2lpZNGcn4Y2pOuupezd+oajZO6GVN1FWwY1I4K3oee65bmdlSZBExz6GbGTfS
-         S31w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=JBoxiavVSDpwpozKDKT6Pdhv1x/Ndr1bjCn2yQYXz9g=;
+        b=LW+88hlf/DSA1RwRE8eV61d04PfO8sRmDmvd0SFhqBxHTvUZPHRPrTq3A53fJ3fXds
+         de/TwWnNgt7d3iOyIzhky+ncZeARepx+uL6u61mTw55PPPlu2Ouw0BB9gsKuScuz/Esn
+         8bdC9xy3+7DfmFKHhIg77lB2UDKgw/++YmKdDu6H/NUMjnsAH67+h3mCIaGgf9011/tq
+         X//hUAvPDPDPZQRKE2UnpGb2elGNjm0YcAHfq18nGQHNiyx9h/ZxlrTw7lhsnorKbOQm
+         ieQADSadurEidmuYbeCQv6Jp5SHtKWxm5KJr6YX1l9gdgQoPXOd6RFFb2ZOUod5LFfNc
+         5w7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:in-reply-to;
-        bh=BfLiFc2+gkO4h5OwoHadO28OBh7X+JjeiaX+C6H0Cks=;
-        b=HzUsNTqKW0fEJWE2qq/AyP1Pr1xhycjyeLhZFUP8apTdea1pG+2HD/ZJ3vsRSWz/EF
-         gNEWUtWKnflrIQ5n/OybUVfkLmXi1gYPXAMkcWdhz2b0ilPBo/3XRtjQO9uVv1QpbbYs
-         GzTVkmjJxKRs/vNbauzMU+uVdXt5lp4mn/qf73iIWu4fE+Bx2LjfvtCU6KSM2YmaLCo9
-         DtAu4mcRh3bULvJP6/iqaY2NYtRHV4ywJD55XNIvwije2mmad5lohfiVPtz1pLJrSZWC
-         xpsgYPLEZDertmicgNJFKeCDM6IaJlQiXjxgXxgtuwsi42MhyJFpgWlxBu8NWhutYBng
-         0kww==
-X-Gm-Message-State: AOAM5322KWqYx3paMnSnUYVWqw46gTYQ9qVj0xVkxqJ8x1nyJZJhdCRI
-        RHhHZr9CzLS87sgxpS4dk0QtQqE42XersQ==
-X-Google-Smtp-Source: ABdhPJzKK66aIOuzJ4wZIF4vnikN95Z0n64a1tbI3h/85Rs934YTEZrYZFgkRrrQUIptmaBOM9wSNQ==
-X-Received: by 2002:a17:902:7488:: with SMTP id h8mr4771032pll.128.1589981905924;
-        Wed, 20 May 2020 06:38:25 -0700 (PDT)
-Received: from konoha ([103.37.201.172])
-        by smtp.gmail.com with ESMTPSA id x20sm2266294pfc.211.2020.05.20.06.38.23
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=JBoxiavVSDpwpozKDKT6Pdhv1x/Ndr1bjCn2yQYXz9g=;
+        b=FjEIQi+/HlPZ8CEJCbSHCdl23hKg19VAJobjkv5TMQhkgVKLNDW0o1Mr/ydEzKAHb8
+         1vR82WPWsTwyTkBQYTGGGGvSEr1NyVG9EKyT6M2Zzoent17jZ6juTNlg5UgxTdE5DDta
+         Kb31vFUPYsLspLNN43B1J86clyB3/jKYOWjCEHMdW+Cy92jX9lVyvT85oW23ynzNwYaL
+         nGamWM82B/CsxT/v+92BSZB8NCCKa9o0iv4R6/LEyjX0q7dnSFTfuZKX6nYbttwVLvOy
+         AZeeKla5IcY5XZsxOG6IrFLmevayVpDwKHjOKaBOr9TJTQyPanpa98YQ3LU84K4maH+e
+         3gzA==
+X-Gm-Message-State: AOAM533lfuA/n+VGw7hik4idazEYa+796ZBb2k79pwnLAHgUnRloSNMO
+        zK0CuGNaFLAKUKzeyVE8NpY=
+X-Google-Smtp-Source: ABdhPJzj7QyF47fp+g7LOo9/ctAa16e0kVr6sL/DYE+Pz/dHcgco5xhg9vJK1jUqVt6eT0HdmkWrdQ==
+X-Received: by 2002:a62:6d03:: with SMTP id i3mr4342639pfc.249.1589983446645;
+        Wed, 20 May 2020 07:04:06 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cedc:d509:3e82:1f34:e3c4])
+        by smtp.gmail.com with ESMTPSA id m63sm2360020pfb.101.2020.05.20.07.04.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2020 06:38:24 -0700 (PDT)
-Date:   Wed, 20 May 2020 19:08:20 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     jonathanmueller.dev@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: Bug: git worktree remove and overwritten directory
-Message-ID: <20200520133820.GA15133@konoha>
+        Wed, 20 May 2020 07:04:06 -0700 (PDT)
+Date:   Wed, 20 May 2020 21:04:04 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>,
+        git-for-windows <git-for-windows@googlegroups.com>,
+        git-packagers@googlegroups.com
+Subject: Re: pseudo terminal support, was Re: [git-for-windows] Re:
+ [ANNOUNCE] Git for Windows 2.27.0-rc0
+Message-ID: <20200520140404.GA2893@danh.dev>
+References: <20200515173242.6154-1-johannes.schindelin@gmx.de>
+ <CAGyf7-HbnCip8WZ9vtc_KW1kXMBUoPZQ8GD7H=1DOAk45Wbjxw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2005161044580.55@tvgsbejvaqbjf.bet>
+ <CAGyf7-Fkn2uHLCqM-4qfM0YQAXoMgiMwKEaxkGkOtz=pYYKQWg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2005180503440.55@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2005191311540.56@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <89526b3a-297d-591d-6e12-48580d697ed5@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2005191311540.56@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Jonathan!
+On 2020-05-19 13:16:40+0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > > To be honest, this time round I would _really_ like to ask for some manual
+> > > > testing. I upgraded the MSYS2 runtime from being based on Cygwin v3.0.7 to
+> > > > v3.1.4, and the biggest new feature is support for those new-fangled
+> > > > pseudo terminals that Windows 10 now supports. I did find a couple of
+> > > > rough edges in my use cases, but I am not exactly a typical Git for
+> > > > Windows user...
 
-> And both `git worktree remove .` and `git worktree remove ../test2`
-> report an error `fatal: '../test2' is a main working tree`. I had to
-> manually remove the corresponding folder from `.git/worktree` to get rid
-> of it. The issue is especially annoying, because you can't check out
-> `some-branch` anymore (as it's already checked out in the worktree).
+Hi Dscho,
 
-If you refer to the documentation of `git worktree` you may find this:
+I've installed Git for Windows 2.27.0 rc0 in my $work_machine today,
+I've run into this error during installation:
 
-    Multiple checkout in general is still experimental, and the support
-    for submodules is incomplete. It is NOT recommended to make multiple
-    checkouts of a superproject.
+	Cannot create file "<my %localappdata%>\Programs\Git\dev\fd".
+	Access is denied.
 
-Alright, so if you were to do a checkout to `some-branch` even if you
-never deleted anything, you won't be able to perform this action because
-it's not possible, therefore *this* thing is not a bug. Why can't you
-perform this you ask? Because this is the point of the whole command. If
-you were allowed to checkout, then you would be able to have two
-different copies of the same thing at one instant of time, which is
-something we don't want.
+I have GfW 2.19.0 installed (by IT policy) in "%programfiles%\Git", and
+GfW 2.26.2 installed in %localappdata%\Programs\Git. I don't have the
+right to install software in my $work_machine
 
-Moving on, one may say, "I am technically in the same repo only, its
-just that the folder names are changed, so I can technically do a
-checkout now because my worktree is gone right?". No, we cannot,
-because: technicalities. You see, that when you create a worktree,
-you add an entry in `$GIT_DIR/worktrees/` that `test2` is a registered
-worktree by you. Now if one does the mischief you did by renaming `test`
-to `test2`, you confuse the system as to what exactly is going on. It
-still thinks that we are on `test2`, but in fact we are on `test`.
-Hence, the dual nature we have here. Please refer to this for more detail:
-https://git-scm.com/docs/git-worktree#_details
+I can still use git-bash (by double-click git-bash.exe) after
+installation, though.
 
-Now, if you delete the `$GIT_DIR/worktrees/` folder (proceeding
-further), you will be able to checkout to `some-branch` because the
-confusion is gone now as Git is not aware of any worktrees you ever
-created.
+If you want more information, please tell me,
+I'll try to get it, tomorrow.
 
-Therefore the final set of commands to overcome this will be:
-    git init test
-    cd test
-    git commit --allow-empty -m"Initial commit"
-    git branch some-branch
-    git worktree add ../test2 some-branch
-    cd ../
-    rm -rf test2
-    mv test test2
-    rm -rf .git/worktrees
-    git checkout some-branch
-    ... we can checkout successfully now :)
+> > > > Could I ask for some manual testing in particular of anything run inside
+> > > > the Git Bash?
+> > >
+> > >
+> > > I’m happy to set it up and use it as my daily driver on one of my
+> > > workstations, but I don’t want to overpromise how much help I can really
+> > > offer for that sort of testing. I don’t do much of my full-time development
+> > > on Windows anymore for a variety of reasons, so even if I install it in my
+> > > Windows machines I won’t get that much active use in. And when I do use
+> > > Windows, I keep my workflow pretty simple, so aside from basic adds and
+> > > commits with an occasional checkout or very rare rebase, I just don’t cover
+> > > that much functionality.
+> 
+> Turns out that I ran into even more issues when trying to do a visual
+> selection in `vim`: it would frequently "lose" the selection when I moved
+> via the cursor keys.
 
-Now, I can be wrong in some places in my explanation, but this is what
-I could infer from the problem.
+My Windows machine is only used to run Ubuntu in a Virtual Box.
+My limited exposure to GfW doesn't have any trouble.
+My normal vim usage in GfW's git-bash works pretty well.
+FWIW, I don't use arrow keys with vim.
 
-So, coming to the ultimate question:
-    Is this a bug?
-I don't really think so. Why you ask? Because this is the way things
-should have functioned. It is more of a vulnerability.
-You may want to refer to this:
-https://stackoverflow.com/a/402944/10751129
+> So I've come to the conclusion that the pseudo console support code is
+> still too buggy to unleash onto Git for Windows' users, except as an
+> experimental option. I will patch it to make the pseudo console feature
+> opt-in instead of opt-out, and then also offer to configure it in Git for
+> Windows' installer via an experimental option.
+> 
+> Has anybody else run into issues with console programs (such as `vim`,
+> interactive Bash, etc)? Or is there anybody with a very different
+> experience than mine, i.e. _not_ having run into any issues despite using
+> (interactively) Git Bash extensively?
 
-But again, this doesn't mean that it can't be fixed.
-Thanks to you I got introduced to a new git command (git worktree) :)
+Is there anything that you would like to have a cross-check,
+I can check during my free time, I can't promise much since I mostly
+work inside my Ubuntu virtual machine.
 
-Regards,
-Shourya Shukla
+-- 
+Danh
