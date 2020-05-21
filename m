@@ -2,109 +2,132 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B062C433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78B85C433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:55:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFBFA20738
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:50:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KgvORqWK"
+	by mail.kernel.org (Postfix) with ESMTP id 4B27820823
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729754AbgEUTuU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 15:50:20 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56056 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728273AbgEUTuT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 15:50:19 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9661CBD391;
-        Thu, 21 May 2020 15:50:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DpZVszsunQdxDTqGZC6Azn20o8g=; b=KgvORq
-        WK7omkFtubl8UiaGQeN0CjLk437lGqHmSq7WUCFzIAawiezWSwF8/2GGp9Bhh4VX
-        lOejUw9oMndnen4VzpKQ7h4gVRTZCuUV2KFtGFSKMEU1G2nmx0m+BGZ2yoyXkczV
-        z1lpFTyYL55bl8UrTBiLeytAfdcmPRFgrHKSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hlSnAAxlv6L5Ltdk+vmIiSAJRpPW0joh
-        UdZb5gp8tI8q6P3cSpfQGVn3GeMmtCEFlg3tOfoBlBnkdMnL5h/Uo54J5eFHoRTW
-        +mpD8vcXO+imx2Cewb2IxTCcsj05TCmPf37hx+Oa/gSwavKzyeIfELVeT4+QcnRc
-        eDOKqpqh/Uw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8D6A8BD390;
-        Thu, 21 May 2020 15:50:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CC16FBD38F;
-        Thu, 21 May 2020 15:50:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, kaartic.sivaraam@gmail.com,
-        congdanhqx@gmail.com, sunshine@sunshineco.com,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3] submodule: port subcommand 'set-branch' from shell to C
-References: <20200521163819.12544-1-shouryashukla.oo@gmail.com>
-        <xmqqk115ruux.fsf@gitster.c.googlers.com>
-        <20200521190329.GB615266@generichostname>
-Date:   Thu, 21 May 2020 12:50:13 -0700
-In-Reply-To: <20200521190329.GB615266@generichostname> (Denton Liu's message
-        of "Thu, 21 May 2020 15:03:29 -0400")
-Message-ID: <xmqqftbtrrt6.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729964AbgEUTzP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 15:55:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53932 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728635AbgEUTzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 15:55:14 -0400
+Received: (qmail 15383 invoked by uid 109); 21 May 2020 19:55:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 May 2020 19:55:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1097 invoked by uid 111); 21 May 2020 19:55:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 May 2020 15:55:14 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 21 May 2020 15:55:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Anyone know what is creating commits with bogus dates?
+Message-ID: <20200521195513.GA1542632@coredump.intra.peff.net>
+References: <CABPp-BFfa6q96qMUN07Dq3di6d3WuUzhyktBytbX=FGgarXgjg@mail.gmail.com>
+ <20200521185753.GB1308489@coredump.intra.peff.net>
+ <CABPp-BG+XdbeOgaL1Th6U8g-gRON41DCwZ-RDnN7CEgk2fvwDg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4AB105DA-9B9C-11EA-BE2A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BG+XdbeOgaL1Th6U8g-gRON41DCwZ-RDnN7CEgk2fvwDg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Thu, May 21, 2020 at 12:31:36PM -0700, Elijah Newren wrote:
 
->> Sorry, I may have missed the previous rounds of discussion, but the
->> comment adds more puzzles than it helps readers.  "is currently not
->> used" can be seen from the code, but it is totally unclear why it is
->> not used.  Is that a design decision to always keep quiet or always
->> talkative (if so, "suppress output..." is not a good description)?
->> Is that that this is a WIP patch that the behaviour the option aims
->> to achieve hasn't been implemented?  Is it that no existing callers
->> pass "-q" to the scripted version, so there is no need to support
->> it (if so, why do we even accept it in the first place)?  Is it that
->> all existing callers pass "-q" so we need to accept it, but there is
->> nothing we need to make verbose so the variable is not passed around
->> in the codepath?
->
-> As the original author of the shell code, I had it accept -q because,
-> with the other subcommmands, you can pass -q either before or after the
-> subcommand such as
->
-> 	$ git submodule -q sync
->
-> or
-> 	$ git submodule sync -q
->
-> and I wanted set-branch to retain that behaviour even though -q
-> ultimately doesn't affect set-branch at all since it's already a quiet
-> command.
+> > I can't remember the source of the bug, but we've had a workaround in
+> > GitHub's incoming fsck checks to allow 6-digit zones like this since
+> > August 2011. I'm almost certain that it came up because of that
+> > rails/rails commit, but I don't remember the culprit implementation. I'm
+> > sure we would have dug it up and fixed it at the time.
+> 
+> What about 7- and 8- digit timezones (like the ones in the linked
+> filter-repo issue report)?  Do you currently prevent users from
+> pushing those to GitHub, or do you allow those too?
+> I'm curious about whether there is anything else out there that might
+> help flag these commits or if it's just filter-repo.
 
-OK, so "we accept -q for uniformity across subcommands, but there is
-nothing to make less verbose in this subcommand" is the answer to my
-question.
+Our loosening allows any size:
 
-That cannot be read from "... is currently not used"; especially
-with "currently", I expect that most readers would expect we would
-start using it in the (near) future, and some other readers would
-guess that something used to be talkative and we squelched it using
-the option but there no longer is such need because that something
-is now quiet by default and there is no option to make it talkative.
+--- a/fsck.c
++++ b/fsck.c
+[...]
+@@ -772,14 +778,16 @@ static int fsck_ident(const char **ident,
+        if ((end == p || *end != ' '))
+                return report(options, oid, type, FSCK_MSG_BAD_DATE, "invalid author/committer line - bad date");
+        p = end + 1;
+-       if ((*p != '+' && *p != '-') ||
+-           !isdigit(p[1]) ||
+-           !isdigit(p[2]) ||
+-           !isdigit(p[3]) ||
+-           !isdigit(p[4]) ||
+-           (p[5] != '\n'))
++       if (*p != '+' && *p != '-')
+                return report(options, oid, type, FSCK_MSG_BAD_TIMEZONE, "invalid author/committer line - bad time zone");
+-       p += 6;
++       p++;
++
++       do {
++               if (!isdigit(*p))
++                       return report(options, oid, type, FSCK_MSG_BAD_TIMEZONE, "invalid author/committer line - bad time zone");
++               p++;
++       } while (*p != '\n');
++
 
+I don't remember the nature of the bug well enough to know if the longer
+ones are likely to have the same cause.
+
+> > But I think it would be safe to assume the bug is long-since fixed, and
+> > it's nice if you can be a bit more lenient on the parsing for historical
+> > issues like this. Arguably fast-export ought to be normalizing it to
+> > something syntactically correct (just like we probably do with other
+> > unparsable dates), though I guess you could argue that a filter might
+> > want to see the broken form in order to fix it in a custom way.
+> 
+> If we're going to be more lenient on the parsing, does that suggest
+> fast-import shouldn't die on these?  Currently, fast-import is the
+> thing dying, not fast-export or filter-repo (though filter-repo of
+> course halts when it notices that fast-import has died under it).
+
+Ah, I thought filter-repo was noticing. I think it would be nice for
+either fast-export or fast-import to normalize syntactically invalid
+values to something sane (like just resetting a bogus timezone to
++0000). I could see arguments for putting it in either spot (putting it
+in fast-import has the downside that we wouldn't catch invalid output
+generated by a script; putting it in fast-export has the downside that
+you can't notice and fix it up yourself if you choose to).
+
+Probably it should be in fast-export, but with an option to turn it off
+for people who want more control (or leave it off by default, and let
+people who run into problems turn it on). We already have similar
+options for handling un-exportable cases like signed tags.
+
+> I put in special-case code in filter-repo to munge the +051800
+> timezone case to keep fast-import from dying, but these new cases seem
+> to suggest it's not just one bad timezone that I can check for and
+> correct, but rather that they are completely random 7- or 8- (or who
+> knows how many) digit timezones coupled with bogus
+> (century-into-the-future) unix epochs.  I'm a little less comfortable
+> working around all of these than the very specific +051800 issue.  On
+> the filter-repo side, I think the most I would want to do here is
+> provide cleaner warning or error messages than "fast-import died,
+> here's a traceback."  But I'm unusre if there are other steps we
+> should take as well, such as making the fast-import parser more
+> lenient.
+
+I think if filter-repo does anything, it would probably be to read any
+syntactically invalid timezone and normalize it. But again, I think it
+would be fine to push that into fast-export.
+
+-Peff
