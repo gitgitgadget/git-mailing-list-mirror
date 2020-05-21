@@ -2,150 +2,352 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A31F4C433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 10:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D55BFC433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 10:40:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D2F12072C
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 10:21:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HvukE+7V"
+	by mail.kernel.org (Postfix) with ESMTP id B09D2204EC
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 10:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728397AbgEUKVD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 06:21:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44404 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726871AbgEUKU6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 06:20:58 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C926DC061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 03:20:56 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id p4so2790203qvr.10
-        for <git@vger.kernel.org>; Thu, 21 May 2020 03:20:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=hdHNBcHREa7fGowvPR+4FWA8J0RGJBRTl0W5/CxtHEQ=;
-        b=HvukE+7VfFanC1vdL7S3sbavybTuHTNjAF7wjvAxi5Fa1BXna1meWxUqY7UAY4Z52P
-         0NgJEY3ICMiXN7NFyJ7CXuYDW6If2L17R9OEA6M8qPcNoJ7R0uofPoduURghw+5L61qQ
-         CJhGXFDtsQk6/WmUn5+imyLC/j/MplAJo9CdNVvfmXYx6KwgnS3VNRCdVDxlBz1dS4yM
-         zs/ICIj+XJT7mMsaInZ9YfQHLb8Zz4888QVhZxLTGuf4RjZrKY3ux9Yk61JH948SLviw
-         Zhw4nTaL6C8IfAkAQm6fzO+GRRy9c1XaZk8vW/YN2VRQLU44Cuql55nQiBx4d5m2jsNX
-         Eizw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=hdHNBcHREa7fGowvPR+4FWA8J0RGJBRTl0W5/CxtHEQ=;
-        b=H3M3eynVjtCl5gdVqse+9BgKv3Txb0faEDoiEspqZGlNFlU0GJHhA79cjJ1cStVU0G
-         bUrAvBs7p3PywJ4pThpUZTv+jzY5RmJF2wX22SeZBX1w+tv8LW9yYt3o6d4uOsKnswwC
-         3MJTvrmtbPk8xroXvxXbS6kOAc0GuGSbAdcypoamzV/jFETh8VUaYb9an7OG9zwIPTu6
-         GMM6g8vij2HjyAQmY+ykkh9uBwQrXMAsnJ7SGlpfaiMTXUjXrwtmTzAJT5qabPpdgLc9
-         tvIQrm1WtcUUihx1LRsMlcPTntZLzRZ8rxa2ZtyKT4wGbajGMytvDoWE6NeIZmfv0Yyt
-         sFhw==
-X-Gm-Message-State: AOAM533xM3QYT585BgB/ec8MRYK/wpB8dFwSRvXlcKq38/txHmjuYq2E
-        yzXIM77GNxnupDn/Of1/cFxQXMgq
-X-Google-Smtp-Source: ABdhPJxLHZ2lW2n22A5Tt1C03a/AT0kuWMpmWiU57m0+MXd52aB7YHpO76EbdVR1R92yiCx+LPV8Cg==
-X-Received: by 2002:ad4:580b:: with SMTP id dd11mr9315202qvb.145.1590056456016;
-        Thu, 21 May 2020 03:20:56 -0700 (PDT)
-Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id q10sm5241023qtk.54.2020.05.21.03.20.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2020 03:20:55 -0700 (PDT)
-Date:   Thu, 21 May 2020 06:20:53 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bwilliamseng@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/4] t1450: increase test coverage of in-tree d/f
- detection
-Message-ID: <20200521102053.GA578930@generichostname>
-References: <CALN-EhTpiLERuB16-WPZaLub6GdaRHJW8xDeaOEqSFtKe0kCYw@mail.gmail.com>
- <d963242a-72f3-7f42-7c95-ea5148f74804@web.de>
- <xmqqpnbduiec.fsf@gitster.c.googlers.com>
- <938f0818-7e57-b883-009f-01db88ef8f65@web.de>
- <xmqqh7wovoop.fsf@gitster.c.googlers.com>
- <aab9512b-a70a-0f5b-5cdc-5d40acd343d0@web.de>
- <2937d635-52a9-5e69-b3d2-fbde415b7315@web.de>
- <xmqq4ksmsaks.fsf@gitster.c.googlers.com>
- <106c58e1-9c74-46e3-c83a-88eee114d9d6@web.de>
+        id S1728604AbgEUKj7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 06:39:59 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:37542 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726871AbgEUKj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 06:39:59 -0400
+Received: from [89.243.191.101] (helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1jbicA-0001V4-5P; Thu, 21 May 2020 11:39:52 +0100
+Subject: Re: [PATCH v2 3/4] lib-submodule-update: prepend "git" to $command
+To:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1588162842.git.liu.denton@gmail.com>
+ <cover.1590019226.git.liu.denton@gmail.com>
+ <578bab6f1af351fd3721d56bea78abec6c9ae2f9.1590019226.git.liu.denton@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <1746f977-64cc-ede0-04f7-7cfd1afb1691@iee.email>
+Date:   Thu, 21 May 2020 11:39:48 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
+In-Reply-To: <578bab6f1af351fd3721d56bea78abec6c9ae2f9.1590019226.git.liu.denton@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <106c58e1-9c74-46e3-c83a-88eee114d9d6@web.de>
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi René,
+Hi Denton,
 
-On Thu, May 21, 2020 at 11:52:28AM +0200, René Scharfe wrote:
-> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-> index 91a6e34f38..9640ac8ff2 100755
-> --- a/t/t1450-fsck.sh
-> +++ b/t/t1450-fsck.sh
-> @@ -257,21 +257,33 @@ test_expect_success 'tree object with duplicate entries' '
->  	test_i18ngrep "error in tree .*contains duplicate file entries" out
->  '
-> 
-> -test_expect_success 'tree object with dublicate names' '
-> -	test_when_finished "remove_object \$blob" &&
-> -	test_when_finished "remove_object \$tree" &&
-> -	test_when_finished "remove_object \$badtree" &&
-> -	blob=$(echo blob | git hash-object -w --stdin) &&
-> -	printf "100644 blob %s\t%s\n" $blob x.2 >tree &&
-> -	tree=$(git mktree <tree) &&
-> -	printf "100644 blob %s\t%s\n" $blob x.1 >badtree &&
-> -	printf "100644 blob %s\t%s\n" $blob x >>badtree &&
-> -	printf "040000 tree %s\t%s\n" $tree x >>badtree &&
-> -	badtree=$(git mktree <badtree) &&
-> -	test_must_fail git fsck 2>out &&
-> -	test_i18ngrep "$badtree" out &&
-> -	test_i18ngrep "error in tree .*contains duplicate file entries" out
-> -'
-> +check_duplicate_names () {
-> +	expect=$1 &&
-> +	shift &&
-> +	names=$@ &&
-
-It doesn't really make sense to use $@ here since we're not using the
-argument list behaviour of $@; we're just expanding it normally. I would
-replace this with $* instead.
-
-> +	test_expect_$expect "tree object with duplicate names: $names" '
-> +		test_when_finished "remove_object \$blob" &&
-> +		test_when_finished "remove_object \$tree" &&
-> +		test_when_finished "remove_object \$badtree" &&
-> +		blob=$(echo blob | git hash-object -w --stdin) &&
-> +		printf "100644 blob %s\t%s\n" $blob x.2 >tree &&
-> +		tree=$(git mktree <tree) &&
-> +		for name in $names
-> +		do
-> +			case "$name" in
-> +			*/) printf "040000 tree %s\t%s\n" $tree "${name%/}" ;;
-> +			*)  printf "100644 blob %s\t%s\n" $blob "$name" ;;
-> +			esac
-> +		done >badtree &&
-> +		badtree=$(git mktree <badtree) &&
-> +		test_must_fail git fsck 2>out &&
-> +		test_i18ngrep "$badtree" out &&
-> +		test_i18ngrep "error in tree .*contains duplicate file entries" out
-> +	'
+On 21/05/2020 01:24, Denton Liu wrote:
+> Since all invocations of test_submodule_forced_switch() are git
+> commands, automatically prepend "git" before invoking
+> test_submodule_switch_common().
+>
+> Similarly, many invocations of test_submodule_switch() are also git
+> commands so automatically prepend "git" before invoking
+> test_submodule_switch_common() as well.
+>
+> Finally, for invocations of test_submodule_switch() that invoke a custom
+> function, rename the old function to test_submodule_switch_func().
+>
+> This is necessary because in a future commit, we will be adding some
+> logic that needs to distinguish between an invocation of a plain git
+> comamnd and an invocation of a test helper function.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  t/lib-submodule-update.sh        | 14 +++++++++-----
+>  t/t1013-read-tree-submodule.sh   |  4 ++--
+>  t/t2013-checkout-submodule.sh    |  4 ++--
+>  t/t3426-rebase-submodule.sh      |  4 ++--
+>  t/t3512-cherry-pick-submodule.sh |  2 +-
+>  t/t3513-revert-submodule.sh      |  2 +-
+>  t/t3906-stash-submodule.sh       |  2 +-
+>  t/t4137-apply-submodule.sh       |  4 ++--
+>  t/t4255-am-submodule.sh          |  4 ++--
+>  t/t5572-pull-submodule.sh        |  8 ++++----
+>  t/t6041-bisect-submodule.sh      |  2 +-
+>  t/t7112-reset-submodule.sh       |  6 +++---
+>  t/t7613-merge-submodule.sh       |  8 ++++----
+>  13 files changed, 34 insertions(+), 30 deletions(-)
+>
+> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+> index bb36287803..fb6c0f3d4f 100755
+> --- a/t/lib-submodule-update.sh
+> +++ b/t/lib-submodule-update.sh
+> @@ -307,8 +307,8 @@ test_submodule_content () {
+>  # to protect the history!
+>  #
+>  
+> -# Internal function; use test_submodule_switch() or
+> -# test_submodule_forced_switch() instead.
+> +# Internal function; use test_submodule_switch_func(), test_submodule_switch_func(),
+Is this an accidental duplication of  test_submodule_switch_func(),?
+(spotted in passing)
+--
+Philip
+> +# or test_submodule_forced_switch() instead.
+>  test_submodule_switch_common () {
+>  	command="$1"
+>  	######################### Appearing submodule #########################
+> @@ -566,8 +566,8 @@ test_submodule_switch_common () {
+>  #   # Do something here that updates the worktree and index to match target,
+>  #   # but not any submodule directories.
+>  # }
+> -# test_submodule_switch "my_func"
+> -test_submodule_switch () {
+> +# test_submodule_switch_func "my_func"
+> +test_submodule_switch_func () {
+>  	command="$1"
+>  	test_submodule_switch_common "$command"
+>  
+> @@ -587,12 +587,16 @@ test_submodule_switch () {
+>  	'
+>  }
+>  
+> +test_submodule_switch () {
+> +	test_submodule_switch_func "git $1"
 > +}
 > +
-> +check_duplicate_names success x x.1 x/
-> +check_duplicate_names success x x.1.2 x.1/ x/
-> 
->  test_expect_success 'unparseable tree object' '
->  	test_oid_cache <<-\EOF &&
-> --
-> 2.26.2
+>  # Same as test_submodule_switch(), except that throwing away local changes in
+>  # the superproject is allowed.
+>  test_submodule_forced_switch () {
+>  	command="$1"
+>  	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
+> -	test_submodule_switch_common "$command"
+> +	test_submodule_switch_common "git $command"
+>  
+>  	# When forced, a file in the superproject does not prevent creating a
+>  	# submodule of the same name.
+> diff --git a/t/t1013-read-tree-submodule.sh b/t/t1013-read-tree-submodule.sh
+> index 91a6fafcb4..b6df7444c0 100755
+> --- a/t/t1013-read-tree-submodule.sh
+> +++ b/t/t1013-read-tree-submodule.sh
+> @@ -12,8 +12,8 @@ test_submodule_switch_recursing_with_args "read-tree -u -m"
+>  
+>  test_submodule_forced_switch_recursing_with_args "read-tree -u --reset"
+>  
+> -test_submodule_switch "git read-tree -u -m"
+> +test_submodule_switch "read-tree -u -m"
+>  
+> -test_submodule_forced_switch "git read-tree -u --reset"
+> +test_submodule_forced_switch "read-tree -u --reset"
+>  
+>  test_done
+> diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
+> index 8f86b5f4b2..b2bdd1fcb4 100755
+> --- a/t/t2013-checkout-submodule.sh
+> +++ b/t/t2013-checkout-submodule.sh
+> @@ -68,8 +68,8 @@ test_submodule_switch_recursing_with_args "checkout"
+>  
+>  test_submodule_forced_switch_recursing_with_args "checkout -f"
+>  
+> -test_submodule_switch "git checkout"
+> +test_submodule_switch "checkout"
+>  
+> -test_submodule_forced_switch "git checkout -f"
+> +test_submodule_forced_switch "checkout -f"
+>  
+>  test_done
+> diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
+> index a2bba04ba9..788605ccc0 100755
+> --- a/t/t3426-rebase-submodule.sh
+> +++ b/t/t3426-rebase-submodule.sh
+> @@ -20,7 +20,7 @@ git_rebase () {
+>  	git rebase "$1"
+>  }
+>  
+> -test_submodule_switch "git_rebase"
+> +test_submodule_switch_func "git_rebase"
+>  
+>  git_rebase_interactive () {
+>  	git status -su >expect &&
+> @@ -38,7 +38,7 @@ git_rebase_interactive () {
+>  	git rebase -i "$1"
+>  }
+>  
+> -test_submodule_switch "git_rebase_interactive"
+> +test_submodule_switch_func "git_rebase_interactive"
+>  
+>  test_expect_success 'rebase interactive ignores modified submodules' '
+>  	test_when_finished "rm -rf super sub" &&
+> diff --git a/t/t3512-cherry-pick-submodule.sh b/t/t3512-cherry-pick-submodule.sh
+> index bd78287841..6ece1d8573 100755
+> --- a/t/t3512-cherry-pick-submodule.sh
+> +++ b/t/t3512-cherry-pick-submodule.sh
+> @@ -7,7 +7,7 @@ test_description='cherry-pick can handle submodules'
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+>  KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+> -test_submodule_switch "git cherry-pick"
+> +test_submodule_switch "cherry-pick"
+>  
+>  test_expect_success 'unrelated submodule/file conflict is ignored' '
+>  	test_create_repo sub &&
+> diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
+> index 5e39fcdb66..95a7f64471 100755
+> --- a/t/t3513-revert-submodule.sh
+> +++ b/t/t3513-revert-submodule.sh
+> @@ -26,6 +26,6 @@ git_revert () {
+>  }
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+> -test_submodule_switch "git_revert"
+> +test_submodule_switch_func "git_revert"
+>  
+>  test_done
+> diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
+> index b93d1d74da..6a7e801ca0 100755
+> --- a/t/t3906-stash-submodule.sh
+> +++ b/t/t3906-stash-submodule.sh
+> @@ -19,7 +19,7 @@ git_stash () {
+>  KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES=1
+>  KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+> -test_submodule_switch "git_stash"
+> +test_submodule_switch_func "git_stash"
+>  
+>  setup_basic () {
+>  	test_when_finished "rm -rf main sub" &&
+> diff --git a/t/t4137-apply-submodule.sh b/t/t4137-apply-submodule.sh
+> index a9bd40a6d0..b645e303a0 100755
+> --- a/t/t4137-apply-submodule.sh
+> +++ b/t/t4137-apply-submodule.sh
+> @@ -9,12 +9,12 @@ apply_index () {
+>  	git diff --ignore-submodules=dirty "..$1" | git apply --index -
+>  }
+>  
+> -test_submodule_switch "apply_index"
+> +test_submodule_switch_func "apply_index"
+>  
+>  apply_3way () {
+>  	git diff --ignore-submodules=dirty "..$1" | git apply --3way -
+>  }
+>  
+> -test_submodule_switch "apply_3way"
+> +test_submodule_switch_func "apply_3way"
+>  
+>  test_done
+> diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
+> index 0ba8194403..1b179d5f45 100755
+> --- a/t/t4255-am-submodule.sh
+> +++ b/t/t4255-am-submodule.sh
+> @@ -9,14 +9,14 @@ am () {
+>  	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am -
+>  }
+>  
+> -test_submodule_switch "am"
+> +test_submodule_switch_func "am"
+>  
+>  am_3way () {
+>  	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am --3way -
+>  }
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+> -test_submodule_switch "am_3way"
+> +test_submodule_switch_func "am_3way"
+>  
+>  test_expect_success 'setup diff.submodule' '
+>  	test_commit one &&
+> diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+> index f916729a12..f911bf631e 100755
+> --- a/t/t5572-pull-submodule.sh
+> +++ b/t/t5572-pull-submodule.sh
+> @@ -17,21 +17,21 @@ git_pull () {
+>  }
+>  
+>  # pulls without conflicts
+> -test_submodule_switch "git_pull"
+> +test_submodule_switch_func "git_pull"
+>  
+>  git_pull_ff () {
+>  	reset_branch_to_HEAD "$1" &&
+>  	git pull --ff
+>  }
+>  
+> -test_submodule_switch "git_pull_ff"
+> +test_submodule_switch_func "git_pull_ff"
+>  
+>  git_pull_ff_only () {
+>  	reset_branch_to_HEAD "$1" &&
+>  	git pull --ff-only
+>  }
+>  
+> -test_submodule_switch "git_pull_ff_only"
+> +test_submodule_switch_func "git_pull_ff_only"
+>  
+>  git_pull_noff () {
+>  	reset_branch_to_HEAD "$1" &&
+> @@ -40,7 +40,7 @@ git_pull_noff () {
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+>  KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+> -test_submodule_switch "git_pull_noff"
+> +test_submodule_switch_func "git_pull_noff"
+>  
+>  test_expect_success 'pull --recurse-submodule setup' '
+>  	test_create_repo child &&
+> diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
+> index 62b8a2e7bb..0e0cdf638d 100755
+> --- a/t/t6041-bisect-submodule.sh
+> +++ b/t/t6041-bisect-submodule.sh
+> @@ -27,6 +27,6 @@ git_bisect () {
+>  	git bisect bad $BAD
+>  }
+>  
+> -test_submodule_switch "git_bisect"
+> +test_submodule_switch_func "git_bisect"
+>  
+>  test_done
+> diff --git a/t/t7112-reset-submodule.sh b/t/t7112-reset-submodule.sh
+> index a1cb9ff858..8741b665c9 100755
+> --- a/t/t7112-reset-submodule.sh
+> +++ b/t/t7112-reset-submodule.sh
+> @@ -13,10 +13,10 @@ test_submodule_switch_recursing_with_args "reset --keep"
+>  
+>  test_submodule_forced_switch_recursing_with_args "reset --hard"
+>  
+> -test_submodule_switch "git reset --keep"
+> +test_submodule_switch "reset --keep"
+>  
+> -test_submodule_switch "git reset --merge"
+> +test_submodule_switch "reset --merge"
+>  
+> -test_submodule_forced_switch "git reset --hard"
+> +test_submodule_forced_switch "reset --hard"
+>  
+>  test_done
+> diff --git a/t/t7613-merge-submodule.sh b/t/t7613-merge-submodule.sh
+> index d1e9fcc781..04bf4be7d7 100755
+> --- a/t/t7613-merge-submodule.sh
+> +++ b/t/t7613-merge-submodule.sh
+> @@ -6,14 +6,14 @@ test_description='merge can handle submodules'
+>  . "$TEST_DIRECTORY"/lib-submodule-update.sh
+>  
+>  # merges without conflicts
+> -test_submodule_switch "git merge"
+> +test_submodule_switch "merge"
+>  
+> -test_submodule_switch "git merge --ff"
+> +test_submodule_switch "merge --ff"
+>  
+> -test_submodule_switch "git merge --ff-only"
+> +test_submodule_switch "merge --ff-only"
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+>  KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+> -test_submodule_switch "git merge --no-ff"
+> +test_submodule_switch "merge --no-ff"
+>  
+>  test_done
+
