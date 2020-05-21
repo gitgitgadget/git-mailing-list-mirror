@@ -2,125 +2,91 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE38C433E0
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 07:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07D70C433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 09:45:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B40492065F
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 07:56:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C04EA20721
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 09:44:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KFeIUsfe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D34L5B5x"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728487AbgEUH4v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 03:56:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50258 "EHLO
+        id S1728920AbgEUJo6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 05:44:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728485AbgEUH4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 03:56:51 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75924C061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 00:56:51 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id y198so2967812pfb.4
-        for <git@vger.kernel.org>; Thu, 21 May 2020 00:56:51 -0700 (PDT)
+        with ESMTP id S1728792AbgEUJo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 05:44:58 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D47AC061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 02:44:58 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id 190so6644989qki.1
+        for <git@vger.kernel.org>; Thu, 21 May 2020 02:44:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9fVVnH5h2MpThakG5zQ7whjxBxlNxECNjgqd20/LrW8=;
-        b=KFeIUsfePzPdaNwbne0uDU4AO9Xoh61MpBpFHxkvmJXgVLQpQFzAFu8QQbXi17j7jF
-         YyVzVtszZSKupf4EHWTxSbYWh+ZLeBz/hj5FjnFszRh5wfCfaRR4xgOG9j/0c0avbghV
-         NQfWpfxUEyXm2GTUrJbIFirCShS0U9GEH2qEdEOws5sq8E0t8er15h2qzTmch0uraLuE
-         HGvVq1SF214n73wYGRWQcQxf5delk0JHs6p76YhGIk3Qm26DLqP3Elkku5ZkG+IXUOfw
-         Aho7foBh6hXk4KN1vOw0khE2wp/rpshwTUPiDiNyaqav0/Q3yUoeAJDk6zwF/LsPlnTP
-         sBcQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=w8ueVWqBVWc8z8AvqoHX77YGzSwngMhxR13v0bXlw3E=;
+        b=D34L5B5xxtMHQEbbhyf1gh9pOfg11qEAYjha236c34jDgNvMZbClImTkx24HVVYuAs
+         /Nj6zaNcybLJWF1Rn3cFiTyLcV4fiWS/RrN7s6H5XwV3kYNzQbK1XwsBrsNw1Z+qgciD
+         IhYBhpWuJnmaVal8G4r/34FPV10tiGzFxHXEXxrbtyJm8Vyc+Km2so4GdyrJvi78yMdu
+         RGi/vsBhGR8D1WkW2BeXRc0OJunVwOvqgE3kzR075AyuwXuAxx4C22mYdbAdfzJ4EVmK
+         I2AutkZBqIZ1fD0GIsqALdqVE9er+OHrEDNOd1FlCZdolmn2EJywicfxdzolotzsv86Y
+         C+ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9fVVnH5h2MpThakG5zQ7whjxBxlNxECNjgqd20/LrW8=;
-        b=NmcJhPd4b8RfjPihUUh5n53ZsIH2G/Ff7dNtGe6BdVl7UKA7/lLNjwzsLcLYFDy/Hl
-         dkT5g3so8eXYVFiAWiAeKABawB43Qw111UoqVc/X8Y7jczZlgpLrBxrMp+e3l1PT1u8C
-         WAAcftIxEl8qS3rDQBB0i4eo9GzhRlmuu9b2PP8Z1WeAxyz55NmdGO4EN6XckZsLGwFD
-         jQPs7h09JsX97pTP3+M+BQ3p323CbkckH8CSb9nQoGDayOye7Oi/pNIMXI1FreDCcrZd
-         Mo5CYWBCoW/Pt1ZybdsIJm/mtUcX0UBysGbxyvcWgjh54vi6u0R+xc+ItvlEkTAArOm4
-         eJfQ==
-X-Gm-Message-State: AOAM530zNIg0rtfn2CZR01jg9JjUv8QQFXBXriQO+ZEZ0pjXflk10BtN
-        7klDLILCO6jLY3GyZhMm1u4=
-X-Google-Smtp-Source: ABdhPJxxWgXHo5021iRcE8vmWZjYppdUFseNt0tlz6KFBdT/utceCEe78QSRd9b1/ll4DecRm0b4vQ==
-X-Received: by 2002:a63:cd51:: with SMTP id a17mr6908690pgj.99.1590047810957;
-        Thu, 21 May 2020 00:56:50 -0700 (PDT)
-Received: from localhost.localdomain ([47.89.83.2])
-        by smtp.gmail.com with ESMTPSA id q4sm4146446pfu.42.2020.05.21.00.56.49
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 May 2020 00:56:50 -0700 (PDT)
-From:   Jiuyang Xie <jiuyangxie@gmail.com>
-X-Google-Original-From: Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Cc:     Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
-Subject: [PATCH] doc: fix wrong 4-byte length of pkt-line message
-Date:   Thu, 21 May 2020 15:56:43 +0800
-Message-Id: <20200521075643.35286-1-jiuyang.xjy@alibaba-inc.com>
-X-Mailer: git-send-email 2.25.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=w8ueVWqBVWc8z8AvqoHX77YGzSwngMhxR13v0bXlw3E=;
+        b=oYZS3vM/CLGT2/3zVqdFDlruuflXAk3ikrrpBeeOeNLpoTHBif7k3AEbQ+j08/qDeq
+         2p6Um+xFXPwr8cejVAyJjb/2YwX0HUnFKXQhb2P7sRKHlhJSyVKkugRYz2LwWOypKWjF
+         vrB3HK9n6fTnrUmplPSMP23JwqYziTlk0Hw3Y5pxPObXgK+PzB7rdqvcu+uTcUwhFNDu
+         67wTVycaA5DWW5AyHfqD2AODygOPbcJagGk1IhbbrMWSUSc/AoJMB7JIz68sN8GOLXXC
+         JM8fyelcGMSr3h4G+qsoYz+LzqVJVDZCbckmNB0PcESaRS1P012GsLiP1LNzXTWmc0er
+         QiRQ==
+X-Gm-Message-State: AOAM530T4ZxE/BApb6A+TcPYFNpQACqg997K4ZB6wKF/xuK5AyOHz+Zc
+        N1z4/yGhAEiWFYNnUZdy0/c=
+X-Google-Smtp-Source: ABdhPJw1p/D1up9wHEyrXGwLtF5xyBoQuvxr2f3ssO8WZwn2wYYQZ75RIHMOVxrziQ6ECs6D56lhEQ==
+X-Received: by 2002:a37:a292:: with SMTP id l140mr1644723qke.171.1590054297590;
+        Thu, 21 May 2020 02:44:57 -0700 (PDT)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id o3sm4601524qtt.56.2020.05.21.02.44.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 May 2020 02:44:56 -0700 (PDT)
+Date:   Thu, 21 May 2020 05:44:54 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Jiuyang Xie <jiuyangxie@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
+Subject: Re: [PATCH] doc: fix wrong 4-byte length of pkt-line message
+Message-ID: <20200521094454.GA577071@generichostname>
+References: <20200521075643.35286-1-jiuyang.xjy@alibaba-inc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200521075643.35286-1-jiuyang.xjy@alibaba-inc.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first four bytes of the line, the pkt-len, indicates the total
-length of the pkt-line in hexadecimal.  Fixed wrong pkt-len headers of
-some pkt-line messages in `http-protocol.txt` and `pack-protocol.txt`.
+Hi Jiuyang,
 
-Signed-off-by: Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
----
- Documentation/technical/http-protocol.txt | 2 +-
- Documentation/technical/pack-protocol.txt | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+On Thu, May 21, 2020 at 03:56:43PM +0800, Jiuyang Xie wrote:
+> The first four bytes of the line, the pkt-len, indicates the total
+> length of the pkt-line in hexadecimal.  Fixed wrong pkt-len headers of
 
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index 9c5b6f0fac..51a79e63de 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -216,7 +216,7 @@ smart server reply:
-    S: 001e# service=git-upload-pack\n
-    S: 0000
-    S: 004895dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint\0multi_ack\n
--   S: 0042d049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n
-+   S: 003fd049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n
-    S: 003c2cb58b79488a98d2721cea644875a8dd0026b115 refs/tags/v1.0\n
-    S: 003fa3c2e2402b99163d1d59756e5f207ae21cccba4c refs/tags/v1.0^{}\n
-    S: 0000
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index d5ce4eea8a..a4573d12ce 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -96,7 +96,7 @@ Basically what the Git client is doing to connect to an 'upload-pack'
- process on the server side over the Git protocol is this:
- 
-    $ echo -e -n \
--     "0039git-upload-pack /schacon/gitbook.git\0host=example.com\0" |
-+     "003agit-upload-pack /schacon/gitbook.git\0host=example.com\0" |
-      nc -v example.com 9418
- 
- 
-@@ -171,9 +171,9 @@ with a version number (if "version=1" is sent as an Extra Parameter),
- and a listing of each reference it has (all branches and tags) along
- with the object name that each reference currently points to.
- 
--   $ echo -e -n "0044git-upload-pack /schacon/gitbook.git\0host=example.com\0\0version=1\0" |
-+   $ echo -e -n "0045git-upload-pack /schacon/gitbook.git\0host=example.com\0\0version=1\0" |
-       nc -v example.com 9418
--   000aversion 1
-+   000eversion 1
-    00887217a7c7e582c46cec22a130adf4b9d7d950fba0 HEAD\0multi_ack thin-pack
- 		side-band side-band-64k ofs-delta shallow no-progress include-tag
-    00441d3fcd5ced445d1abc402225c0b8a1299641f497 refs/heads/integration
--- 
-2.25.0
+s/Fixed/Fix/ perhaps?
 
+> some pkt-line messages in `http-protocol.txt` and `pack-protocol.txt`.
+> 
+> Signed-off-by: Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
+
+Aside from the above, I manually checked all of the changes and they
+look good to me.
+
+-Denton
