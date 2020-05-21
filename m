@@ -2,161 +2,66 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 300DEC433E0
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 588CEC433E0
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:31:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 086E8207D3
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:29:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D23F20814
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:31:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729471AbgEUS3e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 14:29:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53732 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728240AbgEUS3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 14:29:33 -0400
-Received: (qmail 14930 invoked by uid 109); 21 May 2020 18:29:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 May 2020 18:29:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29799 invoked by uid 111); 21 May 2020 18:29:29 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 May 2020 14:29:29 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 May 2020 14:29:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 4/4] lib-submodule-update: pass OVERWRITING_FAIL
-Message-ID: <20200521182928.GA1308647@coredump.intra.peff.net>
-References: <cover.1588162842.git.liu.denton@gmail.com>
- <cover.1590019226.git.liu.denton@gmail.com>
- <48598e3f9859dc525ec878cd7f3eaadee8bb61b1.1590019226.git.liu.denton@gmail.com>
+        id S1729451AbgEUSbh convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 21 May 2020 14:31:37 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:42467 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729006AbgEUSbh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 14:31:37 -0400
+Received: by mail-io1-f65.google.com with SMTP id e18so8520015iog.9
+        for <git@vger.kernel.org>; Thu, 21 May 2020 11:31:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XMdZ+0mfebjUXtOKUUgKI9dubQ4B118qAUH4BASjZUc=;
+        b=hX4D/JsJ16+G0aDmMilHgZv3yfVwyxX7lKqauGYagRPNKrZWa48XNEG4SwwYwc4NJK
+         TEwOdlMNf8Hk65X6HzZLEnc6yvd1vQ7ny5qIqmNh2afsbjXM/w7egk/5BA5LXVnTDJ0F
+         knd4HomJA1WjS7tPM0PAaqD0/EjsRDH2mcy9o/BoFQuL6w/5wG0zc2Q0tPUsKreBNMyx
+         tv2ySlt0IoZskZfkTMnVdAEC1B+T7b1nfHB04+zm53RE29PDme1t2CtPyzM+1c2rnhxL
+         P7GdopRfJc/fuuJcviRBcT/tpyv2M70vZYjm0+jqFCHbj4yOo2TmuZULA/InV2Zj/Kx5
+         jH/w==
+X-Gm-Message-State: AOAM532c2xz3s39fAtukzt3FxeWU8j/c8Y03GuiDME/JHkMMmYdQKvr+
+        fDE+Jf1ijve0m20QM0Ns36GetGJFGmmR9dC6XZY=
+X-Google-Smtp-Source: ABdhPJyMs8R4K7djrYz0TjwhgcFGg8uBKn5BdllOfxRXeq+WksHu+7GrOVRwtJQpQVOSdyc1m0Cpx0U64MsXNDZO1eg=
+X-Received: by 2002:a5d:8041:: with SMTP id b1mr2498542ior.146.1590085896363;
+ Thu, 21 May 2020 11:31:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <48598e3f9859dc525ec878cd7f3eaadee8bb61b1.1590019226.git.liu.denton@gmail.com>
+References: <20200521142156.4717-1-ville.skytta@iki.fi> <xmqqo8qhrvrz.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8qhrvrz.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>
+Date:   Thu, 21 May 2020 21:31:24 +0300
+Message-ID: <CABr9L5BzpA1fnVP7+wk62-MMrfb05LSu7egvn-enZb6cmMNt2Q@mail.gmail.com>
+Subject: Re: [PATCH] completion: fix completing stashes with "show -p"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 20, 2020 at 08:24:18PM -0400, Denton Liu wrote:
-
-> We are using `test_must_fail $command`. However, $command is not
-> necessarily a git command; it could be a test helper function.
+On Thu, 21 May 2020 at 21:24, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> In an effort to stop using test_must_fail with non-git commands, instead
-> of invoking `test_must_fail $command`, run
-> `OVERWRITING_FAIL=test_must_fail $command` instead in
-> test_submodule_switch_common().
+> Ville Skyttä <ville.skytta@iki.fi> writes:
+>
+> > Regression in df70b190bdd2add42a906819f9d41dbf91cf0809
+>
+> That's not very helpful to readers.
+>
+> Something like this?  I am merely guessing why you thought this
+> change is a good one, but that is what the proposed log message
+> is supposed to do.
 
-I think there are really two separate issues being addressed by this
-patch.
-
-One is using "test_must_fail" with a helper function. IMHO this is not
-something we should go too far in trying to deal with. It's mostly a
-style issue about how test_must_fail is meant to be used, and there's no
-real downside if we occasionally use it for a non-git command.
-
-I don't mind cleaning up spots where it's obviously misused, but in this
-case we're introducing a lot of new complexity to handle the "sometimes"
-nature of this call. And I'm not sure it's worth it on its own.
-
-> This is useful because currently, when we run a test helper function, we
-> just mark the whole thing as `test_must_fail`. However, it's possible
-> that the helper function might fail earlier or later than expected due
-> to an introduced bug. If this happens, then the test case will still
-> report as passing but it should really be marked as failing since it
-> didn't actually display the intended behaviour.
-
-Now this second concern I think is much more interesting, because it
-impacts the test results. And it's really not even about test_must_fail
-in particular, but is a general problem with checking failure in any
-compound operation. We may expect the early parts to succeed, but the
-later parts to fail, and we want to tell the difference. And that's true
-whether you're using "!", test_must_fail, etc.
-
-You solve it here by passing OVERWRITING_FAIL down into the callback
-functions. And that does work. But I think it may be easier to
-understand if we invert the responsibility. Let the outer caller specify
-two callbacks: one for setup/prep that must succeed, and one for a
-single operation where we might expect success or failure.
-
-The changes in lib-submodule-update look something like:
-
-  @@ -326,7 +327,8 @@ test_submodule_switch_common() {
-                  (
-                          cd submodule_update &&
-                          git branch -t add_sub1 origin/add_sub1 &&
-  -                       $command add_sub1 &&
-  +                       $prep add_sub1 &&
-  +                       $command &&
-                          test_superproject_content origin/add_sub1 &&
-                          test_dir_is_empty sub1 &&
-                          git submodule update --init --recursive &&
-
-And in the caller we can simplify greatly:
-
-  diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-  index f916729a12..e3ae7c89f1 100755
-  --- a/t/t5572-pull-submodule.sh
-  +++ b/t/t5572-pull-submodule.sh
-  @@ -11,36 +11,13 @@ reset_branch_to_HEAD () {
-   	git branch --set-upstream-to="origin/$1" "$1"
-   }
-   
-  -git_pull () {
-  -	reset_branch_to_HEAD "$1" &&
-  -	git pull
-  -}
-  -
-   # pulls without conflicts
-  -test_submodule_switch "git_pull"
-  -
-  -git_pull_ff () {
-  -	reset_branch_to_HEAD "$1" &&
-  -	git pull --ff
-  -}
-  -
-  -test_submodule_switch "git_pull_ff"
-  -
-  -git_pull_ff_only () {
-  -	reset_branch_to_HEAD "$1" &&
-  -	git pull --ff-only
-  -}
-  -
-  -test_submodule_switch "git_pull_ff_only"
-  -
-  -git_pull_noff () {
-  -	reset_branch_to_HEAD "$1" &&
-  -	git pull --no-ff
-  -}
-  -
-  +test_submodule_switch "reset_branch_to_HEAD" "git pull"
-  +test_submodule_switch "reset_branch_to_HEAD" "git pull -ff"
-  +test_submodule_switch "reset_branch_to_HEAD" "git pull --ff-only"
-   KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
-   KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
-  -test_submodule_switch "git_pull_noff"
-  +test_submodule_switch "reset_branch_to_HEAD" "git pull --no-ff"
-   
-   test_expect_success 'pull --recurse-submodule setup' '
-   	test_create_repo child &&
-
-I suspect this approach involves touching more lines than yours (it has
-to add $prep everywhere $command is used). But IMHO the result is much
-simpler to understand, because there's no spooky-action-at-a-distance
-from magic environment variables.
-
-A more complete patch is below, which is enough to get t5572 passing. I
-think it would need the other test_submodule_switch() function updated,
-and other scripts would need to adapt to the 2-arg style.
-
--Peff
+Excellent guess and wording. Will copy verbatim and re-submit.
