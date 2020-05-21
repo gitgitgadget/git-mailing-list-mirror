@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB001C433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 22:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83AA4C433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 22:29:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F93A20826
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 22:19:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FFAC206F6
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 22:29:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vi0S90nG"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NCLFJQzF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730610AbgEUWTI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 18:19:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55584 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728701AbgEUWTI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 18:19:08 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8066D6AF0C;
-        Thu, 21 May 2020 18:19:04 -0400 (EDT)
+        id S1730525AbgEUW3X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 18:29:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63913 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730041AbgEUW3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 18:29:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE8EA52E51;
+        Thu, 21 May 2020 18:29:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g2dkqM8gRffvRXmPnj1SKQYbMb8=; b=Vi0S90
-        nGbhNixj9tS15hou9Tqwo5TI17w43uYXsdgTSq2vtZO3TRhxoYMxZUEkvFAzIqe3
-        QQMOCxXOPsJJHl490CXHOzQtiBNMryLQD9HSClNdtxtdFY+tVcViF+f3obY5gjq1
-        OzvEGaIckFvusfxLAT6+D0gNTUxUTQ8l3T2I8=
+        :content-type; s=sasl; bh=gQLM4wbSLWXZFo5xrJZ/c9FQ6uA=; b=NCLFJQ
+        zFg8EuJXAfOhZAvg14cwsVexojQg0Wo40ZzX2yyarvi5rbbieTuZelWVLRFIkbLK
+        wPrZf92zTWlCCnHG17FtmyTZA2b3Wep64KmHRZiamcRzuwupJLKFyCkSFKbEtRwF
+        auGatYMmWk3TQjbl95+mlf8ZKh8TPEJxW7bpU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=x3lupXkdzjAZX9pebrzZWiA06CUvloJ5
-        geRkG8mo6Ogfdc3NDlOkBRMWae4GddLQuapn8202YVnkwTKlzx8WqDIVCbx80048
-        pq2rOH34TWdxclPQmSoHMg+jB/oKoFZaocNtluXP7LVM6b99k5ly0P7zRyz6GDNm
-        x4A7TuQj5T0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 77D236AF0B;
-        Thu, 21 May 2020 18:19:04 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=aAgKNvhKHklHBht1PBqwOMcH5aI1Y51O
+        jeyO+7plYl5/O+Iea6w725ttDWmSdzF+HkSZlWBmZcupW9Yx/FGZ3Ppt5Xi9bFeC
+        Hx2gW3/5vuRQe5tcrYpbPscqjtz7vr03kFGxrDcUBXfnBqKhyk/C05s8z2APyYgp
+        mZGaTMPcrIY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C64CB52E50;
+        Thu, 21 May 2020 18:29:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8D7F6AF0A;
-        Thu, 21 May 2020 18:19:03 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F9B052E4F;
+        Thu, 21 May 2020 18:29:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Philip Oakley <philipoakley@iee.email>
@@ -55,58 +55,43 @@ References: <8142f64b-9b5e-3637-21a2-3671dd65a42e@iee.email>
         <6dd15666-1e3e-e9b2-d98b-396d58f241cd@iee.email>
         <xmqqpnaytb31.fsf@gitster.c.googlers.com>
         <ecac8516-e536-80e8-fc72-098406592fd5@iee.email>
-Date:   Thu, 21 May 2020 15:19:03 -0700
-In-Reply-To: <ecac8516-e536-80e8-fc72-098406592fd5@iee.email> (Philip Oakley's
-        message of "Thu, 21 May 2020 22:29:35 +0100")
-Message-ID: <xmqqzha1q6co.fsf@gitster.c.googlers.com>
+        <xmqqzha1q6co.fsf@gitster.c.googlers.com>
+Date:   Thu, 21 May 2020 15:29:19 -0700
+In-Reply-To: <xmqqzha1q6co.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 21 May 2020 15:19:03 -0700")
+Message-ID: <xmqqv9korkg0.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 142F7DBA-9BB1-11EA-BEBA-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 83A645D8-9BB2-11EA-80C3-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Or are you asking something else?
->>
-> I was more coming at the question from the other direction, that is,
-> about accessing, normally, the git manuals, and discovering the desired
-> information, both for existing and new users.
->
-> In your example, you needed to include the extra -w option, specific to
-> this 'special' manual, while all the other hundreds of man pages would
-> be accessed without it (even on Windows, as the config is set by default).
+> Or are you saying that nobody on Linux uses the html format?  I
+> should stop keeping the git-htmldocs.git repository up to date,
+> if that is the case, but I suspect it is not.
+> ...
+> Or are you volunteering to update the mark-up (if necessary) so that
+> user-manual would become part of "man" ("man git-user-manual",
+> perhaps) suite?  That would be an excellent suggestion.
 
-For those who have help.format set to html, it is no "extra" thing
-required.  I said "git help -w" so that people would understand what
-I meant regardless of their personal settings are.
+Having said that, I am not sure the way the material covered by the
+user-manual is presented in is a good match for the manpage format
+in the first place.  Don't modern manpage viewers, or generic pagers
+that can display textual contents (which may happen to be the "man 1
+git" output), or even a terminal enumrator that may happen to be
+showing the output of such a pager, notice a URL and allow users to
+activate on it (i.e. visit the HTML document the URL points at, by
+opening the URL in an already-running browser, or in a new instance
+of a browser)?  So perhaps a better solution for those who live in a
+text terminal and view our documentation via "git help -m git" or
+even "man git" would be to write a full URL to reach a version of
+user manual available to the user, perhaps with file:/// URL "as
+text" in the man output?  Then you do not have to reformat the user
+manual in the manpage format or anything silly like that.
 
-Or are you saying that nobody on Linux uses the html format?  I
-should stop keeping the git-htmldocs.git repository up to date,
-if that is the case, but I suspect it is not.
-
-> We do have the advised `git help -g` to list the concept guides, but
-> that doesn't advise about the user-manual, which surely we should
-> mention to those asking for help (without them needing a long journey of
-> discovery). The list does include `git everyday`...
->
-> I appreciate that, for some, there is a view that new users are other
-> peoples problems and that knowledgable users already know, roughly,
-> which command they wish to use and thus then peruse the appropriate
-> reference manual to confirm the correct form for their command. I'd
-> rather we direct uncertain users to their appropriate guide quickly,
-> using their expected viewer method. Hence the question.
-
-Or are you volunteering to update the mark-up (if necessary) so that
-user-manual would become part of "man" ("man git-user-manual",
-perhaps) suite?  That would be an excellent suggestion.
-
-Whatever proposal/volunteering comes from you after your question is
-answered would be quite interesting.  Hopefully that would be one
-that is beneficial to the project as a whoel ;-)
-
-Thanks.
-
+Hmm?
