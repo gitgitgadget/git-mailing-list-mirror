@@ -7,89 +7,110 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0DA6C433E0
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 03:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC6EC433E0
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 03:49:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ACD4720738
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 03:26:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28B5F20738
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 03:49:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XJwyrSVm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TegJvS7o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728148AbgEUD0x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 23:26:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36642 "EHLO
+        id S1728178AbgEUDtd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 May 2020 23:49:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726822AbgEUD0w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 23:26:52 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A17C061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 20:26:52 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id r22so2435374pga.12
-        for <git@vger.kernel.org>; Wed, 20 May 2020 20:26:52 -0700 (PDT)
+        with ESMTP id S1727998AbgEUDtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 May 2020 23:49:33 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5475C061A0E
+        for <git@vger.kernel.org>; Wed, 20 May 2020 20:49:32 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id s198so5098808oie.6
+        for <git@vger.kernel.org>; Wed, 20 May 2020 20:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hG+f81DzhcjghLs6r3T+/X8TPR8rsWsaw1QCQWTk9O8=;
-        b=XJwyrSVmxYt7MtIfHFGV0ffbJkLVrs+wVN4ezXBfVCegjYPqn8xvmnHYahEME7m3Vb
-         zbGWIimyiPP84w642DANbbAh7UxijqwE2VVztCWeG4+tBzmfLkjQW/ZM1Kwpqxv+rBMc
-         z9FSCz/+bajUbUtD56XGg6mYfqaQm2CHeIAppaXrpvGWnFoUe6KKZXpFeROwXkjZTx6z
-         1m+Bp4v0yK/OuhgCjeE0940jFc1grKNzky5Ddk/mS4YHujQLqpMSm5lePNHRMi+aHaro
-         2daiM6H97Zvfro7hMlhVaN7zJ08qmhRtStQYhEPKIDIa1cf6zJHw1WrLG8azONLhxU2e
-         pvKg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ry2lFj7MwaGlXv7giY3B6NL6WIvhEz9U0k2glgeucts=;
+        b=TegJvS7oKjojLl6GtgBjfQ4UJXzuV2ozvbvnLkMsIQVRJTaEn+tWF9xG2sIbcX7WuN
+         eKOY8/irdjHHG/+MSn3sPNFNZD4tyzj8MVsuZwZMMTe7F6KC2utPV2zUyNoXIiMrqHZT
+         PzoMJVaSLX1pOg+TAYhzCVEmqMdstK7sW9UKEvXy6Cn+4AvDmsTWDLBzg+iwle/NlR1J
+         gIvoLtqK8WfxM1eaxmo11My4yD3K7qvOJoDjM//XOpsO0wOa/CjsjD8aLlrVCWZ/uQPE
+         vI6S7CZT86KsOf5C+1R2MnwMjPj9IIZMfSUiWL+saQZ6oUDttnSBkakxxD/nbJVLC3fO
+         laCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hG+f81DzhcjghLs6r3T+/X8TPR8rsWsaw1QCQWTk9O8=;
-        b=qZOg7tvLe/A731B+wt32L+VqX3lIIS3bB4E3G+cwe8QSJXWRz5dm59XF8e2shrAP8u
-         z84Wp9Ox86NaXICmPzFol+vRY8RDQUXOqhixC3B7fLHZmdVeEbTXJqqFhoHhN508UrwX
-         MiYPMw3GE4xifB1kkEY6da1WqrPHW7z6yLdtGiANA0dFtjdR4pypP1cr/xeXUhMgbJwx
-         Uha/ALi8drszvcg5PUeLgDeF0GQqB0mriivTZJq4pO9aCdulungCUfp3o33Gfx3C9EWL
-         PsGFWwMgWJDupBlIfGhv8oxfmIFv9GUB39Ey8G8NM3A6VaQKjJgDpGIZ9WmIpRNHhVE4
-         3ZDw==
-X-Gm-Message-State: AOAM533H9oLbR3PrOLlZ9eQMXsnzytO4EwqW6Jx8WHBcMFmg6EljTg12
-        5PIimYH8djTmbQ3isfciufU=
-X-Google-Smtp-Source: ABdhPJxHPm5HFf5PuCg4MrehL/g9Fbq8bdAPzyGO3M9DwGYC84ifIFpKan20/nuvSn3wlvoRtvXvQw==
-X-Received: by 2002:a62:834b:: with SMTP id h72mr7304799pfe.237.1590031612220;
-        Wed, 20 May 2020 20:26:52 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id c22sm3279620pfc.127.2020.05.20.20.26.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2020 20:26:51 -0700 (PDT)
-Date:   Wed, 20 May 2020 20:26:48 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        bwilliams.eng@gmail.com
-Subject: Re: connect: don't request v2 when pushing (Re: Protocol v2 in v2.27)
-Message-ID: <20200521032648.GF20332@Carlos-MBP>
-References: <xmqqsgfuv2ko.fsf@gitster.c.googlers.com>
- <20200520193156.GA4700@coredump.intra.peff.net>
- <xmqq5zcquz4t.fsf_-_@gitster.c.googlers.com>
- <20200520220023.GB3648@google.com>
- <xmqqlflmtaxq.fsf@gitster.c.googlers.com>
- <20200521021533.GC3648@google.com>
- <20200521023554.GE20332@Carlos-MBP>
- <20200521024558.GA102425@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ry2lFj7MwaGlXv7giY3B6NL6WIvhEz9U0k2glgeucts=;
+        b=mPowJuv04DB/bPGpaWPc4nfAz5yHfcs+qN5j7ggoGqBYICyprEthQxeZC/XVjUrJh7
+         mHcwth9vgzvYP1cmqFvX1oxWOHfmJwarsQ+SGsNk3bSYrSStDtxyywa77khbuckWjmfF
+         g05xfRDZxgOs9osc10Sr5nMorEgaA7HUhfzYh3kOJnokkKnoXkcPMjLwXUzmqFrixQ2I
+         BZ+0hIDCmMXcCsmORAvlUdSbZ7FJl84m3ge3pv1Bf4Iwo1dm8LWZQ3u8uML/cv37KwMu
+         Rhtsr/nIe53JfIjnX8IlayJPseTsyrPbqDxuORfVcdm0jvwLQ3wVS1eIJ857odTp3tmQ
+         /8iQ==
+X-Gm-Message-State: AOAM531UK/5PGGqF9e4nsYK/BkJ6sFql8ILJk/Vbr81MYIiA3f9vI1be
+        otAr8OaeXyl7xAGPZxlm2gsWVJQ/L2PSlu8nd8TJ/Mhn
+X-Google-Smtp-Source: ABdhPJzaw60Rkhv4ZvpocrWc6uU5i46IGCmUNdqaY9Bysgqfdn3ABq0PJZcM5YiK1jZiNZbC039Gkcuqy881lLvpP3s=
+X-Received: by 2002:aca:3f44:: with SMTP id m65mr5648924oia.167.1590032971975;
+ Wed, 20 May 2020 20:49:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200521024558.GA102425@google.com>
+References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
+ <fcf948bda7aebcc5f88c17f5b308b2ce0cc285f5.1588857462.git.gitgitgadget@gmail.com>
+ <CABPp-BEkf0TVTt4=adJ9x70j814frL932vxyQCpm74AQiHWwGQ@mail.gmail.com>
+In-Reply-To: <CABPp-BEkf0TVTt4=adJ9x70j814frL932vxyQCpm74AQiHWwGQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 20 May 2020 20:49:20 -0700
+Message-ID: <CABPp-BGcjpJOht7ip_cPcHEtd3kx5fCwm=i19narWCEfCUwWAQ@mail.gmail.com>
+Subject: Re: [PATCH 06/10] sparse-checkout: use oidset to prevent repeat blobs
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 20, 2020 at 07:45:58PM -0700, Jonathan Nieder wrote:
-> 
-> Protocol v2 for push still does not exist, but we
-> have plans to introduce it soon (reusing more code from v0 push, so
-> this would hopefully have fewer teething pains than v2 for fetch).
+Replying to my own questions...
 
-Thanks for the explanation; I wasn't aware push was indeed still not
-implemented and was indeed puzzled by that code, which I found while
-looking at some unrelated issue.
+On Wed, May 20, 2020 at 9:40 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Thu, May 7, 2020 at 6:21 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Derrick Stolee <dstolee@microsoft.com>
+> >
+> > As we parse the in-tree config files that store the sparse.dir values
+> > used to create an in-tree sparse-checkout definition, we can easily
+> > avoid parsing the same file multiple times by using an oidset on those
+> > blobs. We only parse if the oid is new to the oidset.
+> >
+> > This is unlikely to have a major performance benefit right now, but will
+> > be extremely important when we introduce the sparse.inherit options to
+> > link multiple files in a directed graph. This oidset will prevent
+> > infinite loops when cycles exist in that digraph, or exponential blowups
+> > even in the case of a directed acyclic graph.
+>
+> I'm still not sure if I like the idea of having a mirror dependency
+> structure separate from (and duplicative of) the build code; I'm still
+> mulling that over.
 
-Carlo
+I mentioned this to a few other buildsystem folks at $DAYJOB.  They
+were strongly opposed to having more than one source of truth, but
+generating the git in-tree sparse values from the official build
+system files, with commit hooks and build system checks to make sure
+they get updated seemed like it'd be fine or not concern them much.
+
+> It's good that you've protected against infinite loops.
+>
+> Is there any reason to prefer swallowing infinite loops rather than
+> warning or flagging as an error?  (I'm not sure, just thinking my
+> questions out loud.)
+
+The buildsystem folks also reminded me that we have cylic dependencies
+already, and although it's absolutely ugly, it is somewhat forced on
+us by a combination of different external tools that we can't change.
+As such, warnings or errors would be really annoying and we'd be one
+of the ones to want to turn them off.  So drop that idea from me.  :-)
