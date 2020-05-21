@@ -8,130 +8,211 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBB60C433E0
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 16:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 841F6C433E0
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 16:38:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8735A2083E
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 16:35:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A4862072C
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 16:38:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fyqwo2kn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oGh9Edc6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729925AbgEUQfD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 12:35:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46374 "EHLO
+        id S1728581AbgEUQii (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 12:38:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726938AbgEUQfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 12:35:03 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F93EC061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 09:35:03 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id d3so3049743pln.1
-        for <git@vger.kernel.org>; Thu, 21 May 2020 09:35:03 -0700 (PDT)
+        with ESMTP id S1726938AbgEUQih (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 12:38:37 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D28AC061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 09:38:36 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id a13so3044850pls.8
+        for <git@vger.kernel.org>; Thu, 21 May 2020 09:38:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ifxvNzW9/AYFJNH+4+Kf5Pxab4EIWk3gM3bk4/ie0Vs=;
-        b=Fyqwo2knf6QUxsrvOXQSPprmGbiqmOD/hsZwcdnlySmV5rt5M3FmZSW7m8gLfPbUpI
-         1Xy/O1+MKmsqIyHi16Ucg/yIdqL7E9mkhXo6jfkObaNz/7wzNgr4ObqQxwar8e9v86pV
-         2AIoX8f8x7izaLwH3/Mpm53aEnsXoW4w/EsfWZC68hRrWHXqa5D7yPih9if6OFDX2POB
-         MdlulBqTfB208Qq0jWfPNzcy1NpR5v6hKETVZn1DOmJY4GS3GRlYNni5SOQQc5THa8iO
-         S0BdKpzgOQ0mi3gPOrdnf22lrK7Z9v1xsoP5+dYDpgMjXu94+7fEC+320EFa8LWXGKhF
-         M1SA==
+        bh=PV8/+i6YA6TU/J6/UP/jGKfvS8BVC6Esc07UiPXk9Bc=;
+        b=oGh9Edc6TAWdCGnp6rNoyBYYcLhjMWoP1iKuFO/uzJTNZBVQMd0CvusiEMShLJL/bI
+         17YFJa80sx+6n90DZ+pWLdXaYuml1Ptljdd1D86Ap5Q1vALpVMzwr2p9I91Adg+a7rGU
+         j8P23t9p20pcyV6VGMvJUOmmimW8Z5Aff5hpREgq5viJ6+jAuSCkCU+SmeGLeKin03hb
+         5jimHTa1DGFnVT9+0rxyZFFgpESm7nBk/XR4IbWSoTmoHZNqFfTNbFBXMtF647AjODHF
+         8TzPhpoJM82N6NFAavrkQLGcVv/6kYXa7ShEQ6/yTtie8TOEXciNR+SCLAmudPmQSAI4
+         c6DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ifxvNzW9/AYFJNH+4+Kf5Pxab4EIWk3gM3bk4/ie0Vs=;
-        b=QlLi8CX0PUgLflay31fCX5rzCWkDZDGj2HwzbJB/Sum3jkYCubZB9KuPH9J2NpNOle
-         A8ii4sVDFqp2N6lnHfug5VxCKNsqQyftviXC+IQdhSAAbJl14pqwGtDoFNgMzClAGHMu
-         L11cCa4GkMhGBNKS2Yrih4J9N18AQ5LeSqrkDTxG/HEua7Mhkqcii0k/7HJjzm9VArXf
-         dzGvfYs0GhkXLqXVAsGUSb3od7nUZ2r9MgeHLU3oUlAw+f3SL67lOSFY4neXVbQmUL9r
-         RSSpv6DmGaKkDCa3ZEv5GdU9QU7vKrCAwrNVxCTJelSZIASqw5iTlsuDHV2RN3PTGHX2
-         UCIg==
-X-Gm-Message-State: AOAM5316xPEYcfBIdNOO2A0H8igBK0s2eW8C8Nn+FCzfuKdfUkNYV9Zd
-        1+kg03vfkzBf68Dby/FxJw03Sxoa
-X-Google-Smtp-Source: ABdhPJxKuI452RnffWb8ywJ26uZKZa6vocZsy3gH3J0eJJ7DPVuROVUfSYY+rm5nIaf6iAJUlorj2A==
-X-Received: by 2002:a17:902:9049:: with SMTP id w9mr10642088plz.27.1590078902241;
-        Thu, 21 May 2020 09:35:02 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id m5sm4605591pjn.56.2020.05.21.09.35.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 May 2020 09:35:01 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
+        bh=PV8/+i6YA6TU/J6/UP/jGKfvS8BVC6Esc07UiPXk9Bc=;
+        b=rqfJ7nU7PENKWd2SvY+LHjQoWAi3595jpobSzEBYAR1thaH/XXlWfsom4XLSninnEH
+         RseYgJW9dUWJxRGBT8OyyeVXV35g1rDDoDtRk0kvHFHJVB3aJMYQVyMp115UARJLtoV/
+         Ctq7THslun1UsejJ3/dk/SjCQBQk4LKd7WeQbNBbqvRif30xS65m0dNC35qahwBq1Jm/
+         j9cwEvF0cPYbHhYYkJ3WJxDlQLmqaj84hCfbBof8WeN2vfMoS0/MU6lXJf/xuSg1Pf2x
+         Ww6B+BBSg8kgSW3TwSVEWImLSb3qNHq+Uh7Q5UzetTltTFehcIszsG6l/wxv0Pn0z5iO
+         ObTg==
+X-Gm-Message-State: AOAM531wVExJo5lwHpDLHKoGgwWxiWZnA/Wh7h1c51UpXl3NkLld3b1w
+        Pod/KJ84RCM44N6q5rPyVlBbhkIP+8NdBw==
+X-Google-Smtp-Source: ABdhPJxnAJ7HKkMFPBai2dj5KgjK9S5Lf6Ky0UmF3SAdmaaqpuweRt8jmL0/VLUQnZ/ilN0FlaynXA==
+X-Received: by 2002:a17:90b:e07:: with SMTP id ge7mr12370227pjb.105.1590079115273;
+        Thu, 21 May 2020 09:38:35 -0700 (PDT)
+Received: from konoha.iitr.ac.in ([103.37.201.174])
+        by smtp.gmail.com with ESMTPSA id v1sm4854421pjn.9.2020.05.21.09.38.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 May 2020 09:38:34 -0700 (PDT)
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
 To:     git@vger.kernel.org
-Cc:     mirucam@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] git-bisect: remove no longer needed variables
-Date:   Thu, 21 May 2020 09:34:49 -0700
-Message-Id: <20200521163449.36108-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.27.0.rc1.181.g8d5cacc8d1
+Cc:     christian.couder@gmail.com, kaartic.sivaraam@gmail.com,
+        liu.denton@gmail.com, gitster@pobox.com, congdanhqx@gmail.com,
+        sunshine@sunshineco.com,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3] submodule: port subcommand 'set-branch' from shell to C
+Date:   Thu, 21 May 2020 22:08:19 +0530
+Message-Id: <20200521163819.12544-1-shouryashukla.oo@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With the original functionality moved to bisect--helper there is no need
-for them in git-bisect.sh anymore.
+Convert submodule subcommand 'set-branch' to a builtin and call it via
+'git-submodule.sh'.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Helped-by: Denton Liu <liu.denton@gmail.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 ---
- git-bisect.sh | 34 ----------------------------------
- 1 file changed, 34 deletions(-)
+Thank you for the review Eric. I have changed the commit message,
+and the error prompts. Also, I have added a brief comment about
+the `quiet` option.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 2da0810b1a..d6debcbb87 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -1,41 +1,7 @@
- #!/bin/sh
- 
--USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|view|replay|log|run]'
--LONG_USAGE='git bisect help
--	print this long help message.
--git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
--		 [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
--	reset bisect state and start bisection.
--git bisect (bad|new) [<rev>]
--	mark <rev> a known-bad revision/
--		a revision after change in a given property.
--git bisect (good|old) [<rev>...]
--	mark <rev>... known-good revisions/
--		revisions before change in a given property.
--git bisect terms [--term-good | --term-bad]
--	show the terms used for old and new commits (default: bad, good)
--git bisect skip [(<rev>|<range>)...]
--	mark <rev>... untestable revisions.
--git bisect next
--	find next bisection to test and check it out.
--git bisect reset [<commit>]
--	finish bisection search and go back to commit.
--git bisect (visualize|view)
--	show bisect status in gitk.
--git bisect replay <logfile>
--	replay bisection log.
--git bisect log
--	show bisect log.
--git bisect run <cmd>...
--	use <cmd>... to automatically bisect.
--
--Please use "git help bisect" to get the full man page.'
--
--OPTIONS_SPEC=
- . git-sh-setup
- 
--_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
--_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- TERM_BAD=bad
- TERM_GOOD=good
- 
+ builtin/submodule--helper.c | 45 +++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            | 32 +++-----------------------
+ 2 files changed, 48 insertions(+), 29 deletions(-)
 
-base-commit: 011eca7cfdb7f13ee285c00dfe9ea576ec1166a7
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f50745a03f..d14b9856a3 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2284,6 +2284,50 @@ static int module_set_url(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++static int module_set_branch(int argc, const char **argv, const char *prefix)
++{
++	/*
++	 * The `quiet` option is present for backward compatibility
++	 * but is currently not used.
++	 */
++	int quiet = 0, opt_default = 0;
++	const char *opt_branch = NULL;
++	const char *path;
++	char *config_name;
++
++	struct option options[] = {
++		OPT__QUIET(&quiet,
++			N_("suppress output for setting default tracking branch")),
++		OPT_BOOL(0, "default", &opt_default,
++			N_("set the default tracking branch to master")),
++		OPT_STRING(0, "branch", &opt_branch, N_("branch"),
++			N_("set the default tracking branch")),
++		OPT_END()
++	};
++	const char *const usage[] = {
++		N_("git submodule--helper set-branch [--quiet] (-d|--default) <path>"),
++		N_("git submodule--helper set-branch [--quiet] (-b|--branch) <branch> <path>"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++
++	if (!opt_branch && !opt_default)
++		die(_("--branch or --default required"));
++
++	if (opt_branch && opt_default)
++		die(_("--branch and --default are mutually exclusive"));
++
++	if (argc != 1 || !(path = argv[0]))
++		usage_with_options(usage, options);
++
++	config_name = xstrfmt("submodule.%s.branch", path);
++	config_set_in_gitmodules_file_gently(config_name, opt_branch);
++
++	free(config_name);
++	return 0;
++}
++
+ #define SUPPORT_SUPER_PREFIX (1<<0)
+ 
+ struct cmd_struct {
+@@ -2315,6 +2359,7 @@ static struct cmd_struct commands[] = {
+ 	{"check-name", check_name, 0},
+ 	{"config", module_config, 0},
+ 	{"set-url", module_set_url, 0},
++	{"set-branch", module_set_branch, 0},
+ };
+ 
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 39ebdf25b5..8c56191f77 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -719,7 +719,7 @@ cmd_update()
+ # $@ = requested path
+ #
+ cmd_set_branch() {
+-	unset_branch=false
++	default=
+ 	branch=
+ 
+ 	while test $# -ne 0
+@@ -729,7 +729,7 @@ cmd_set_branch() {
+ 			# we don't do anything with this but we need to accept it
+ 			;;
+ 		-d|--default)
+-			unset_branch=true
++			default=1
+ 			;;
+ 		-b|--branch)
+ 			case "$2" in '') usage ;; esac
+@@ -750,33 +750,7 @@ cmd_set_branch() {
+ 		shift
+ 	done
+ 
+-	if test $# -ne 1
+-	then
+-		usage
+-	fi
+-
+-	# we can't use `git submodule--helper name` here because internally, it
+-	# hashes the path so a trailing slash could lead to an unintentional no match
+-	name="$(git submodule--helper list "$1" | cut -f2)"
+-	if test -z "$name"
+-	then
+-		exit 1
+-	fi
+-
+-	test -n "$branch"; has_branch=$?
+-	test "$unset_branch" = true; has_unset_branch=$?
+-
+-	if test $((!$has_branch != !$has_unset_branch)) -eq 0
+-	then
+-		usage
+-	fi
+-
+-	if test $has_branch -eq 0
+-	then
+-		git submodule--helper config submodule."$name".branch "$branch"
+-	else
+-		git submodule--helper config --unset submodule."$name".branch
+-	fi
++	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch $branch} ${default:+--default} -- "$@"
+ }
+ 
+ #
 -- 
-2.27.0.rc1.181.g8d5cacc8d1
+2.26.2
 
