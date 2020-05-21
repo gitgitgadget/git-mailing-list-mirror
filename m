@@ -2,81 +2,116 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-13.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0050C433E1
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C10C433E0
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:00:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3D8F207D3
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:57:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9554E20759
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:00:25 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wB2AZfFV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729996AbgEUS5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 14:57:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53852 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729092AbgEUS5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 14:57:55 -0400
-Received: (qmail 15097 invoked by uid 109); 21 May 2020 18:57:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 May 2020 18:57:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30169 invoked by uid 111); 21 May 2020 18:57:55 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 May 2020 14:57:55 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 May 2020 14:57:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Anyone know what is creating commits with bogus dates?
-Message-ID: <20200521185753.GB1308489@coredump.intra.peff.net>
-References: <CABPp-BFfa6q96qMUN07Dq3di6d3WuUzhyktBytbX=FGgarXgjg@mail.gmail.com>
+        id S1729747AbgEUTAY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 15:00:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729555AbgEUTAX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 15:00:23 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AB3C061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 12:00:23 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id l18so7723428wrn.6
+        for <git@vger.kernel.org>; Thu, 21 May 2020 12:00:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=2hAOpYME+IIwtSr7+nMBwh0Xr9A2EG9gxnOay0ioJ80=;
+        b=wB2AZfFVG/x/SoC0bku3NXNGVEoby1+guBMeER4gwvtgjGCEa2VONV4bE6zB0NjH+0
+         GS/lPyOeMPIbPFeAuPcmKephRNgyGGjr+xXnU6rTtl+A0lzuAPMzNPBBODJn35wRB+Qw
+         pOxz4MjhvhVpQwmMLfiXpuaKLUgwAaCZ2Fj8ac+R+Qii6DCrAcQbfP58VTwxIZoSCXTK
+         G4U+dE2C8HFEkNFow+jNweq9OUYv968/iPs00FR6Y3ojSiws0aDeeVgN8MbdOHuNZMXw
+         MC5BQKJPwhx3FdrsZU8NCDFDXWSIjQNVzS6Lg4ybzIkQgq3hMknTHlrBUlql0QkC+4P0
+         7Bdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=2hAOpYME+IIwtSr7+nMBwh0Xr9A2EG9gxnOay0ioJ80=;
+        b=i+3jr5fLjoRXOOyKMX7zZhfjGIKkgH4SUloM+nbNGnqrYUTvrTzICHv8xhtJi9NwaY
+         Mmd7fBC+3yp/I9LgXCY23lB+wDuI6ZVakuzTKA9pdaPfPvStxqS4YRAot3SkICw0S9sj
+         m4d4+SFS8fdv9OIokaIk7VcRQlMhQdkKugxPujeocMNPZEM8Uw5Cs8Lt9efkWF410y2y
+         L6WGiLEipHXtWIV4poG55zuy4ca7DV4HyK8hbU7mz7kqVyx+d9eUBYYbPKwnKWu8KDFJ
+         yu5ZMRIvHALGtbFMzbjAvKqykEVqMEcBUunnkFENZjBQtxQLCi64mC6Ln7IYM2GUmMhW
+         OFtQ==
+X-Gm-Message-State: AOAM532bZLvW8XmJcKnlXcTmaCgOMRzz9p18JsQvrXxf11h3ptVH0ZET
+        2Exzs4q5t7anDCP1oSeSBSMtQ+rYNREkAfqBFDN073iO
+X-Google-Smtp-Source: ABdhPJztOkeySNYPopWAufF9uoIEpygiPIHqWxgJjV/Phw86KY1p4qpqadBXPc1lTuuDG7Sd0/PPgqJUvONCOUWXKbg=
+X-Received: by 2002:a5d:61c3:: with SMTP id q3mr23792wrv.405.1590087620920;
+ Thu, 21 May 2020 12:00:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BFfa6q96qMUN07Dq3di6d3WuUzhyktBytbX=FGgarXgjg@mail.gmail.com>
+From:   Dana Dahlstrom <dahlstrom@google.com>
+Date:   Thu, 21 May 2020 12:00:00 -0700
+Message-ID: <CACqwCQiLpZ1HFzgJw0p0KR3jXNsxkhjXmF_huzhv+qkMZmybBQ@mail.gmail.com>
+Subject: 'HEAD' is not a commit (according to git-checkout)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 21, 2020 at 10:49:17AM -0700, Elijah Newren wrote:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> I wanted to report that we seem to have a number of repos in the wild
-> with bogus (as in "won't even parse") dates.
-> 
-> I first discovered such a repository in the wild a while ago with
-> rails.git.  It has a commit with a recorded timezone of "+051800" for
-> both author and committer.  Everything else about the commit looks
-> fine.  See https://github.com/rails/rails/commit/4cf94979c9f4d6683c9338d694d5eb3106a4e734.
-> 
-> Some google searches at the time turned up a few other examples, all
-> with the same "+051800" issue.  I put a special workaround for it into
-> filter-repo because I figured it was slightly prominent but probably
-> limited to that special timezone.  The fact that it was six digits but
-> the last two were zeros made it seem not quite as bad as it could be.
+  $ git clone https://github.com/githubtraining/hellogitworld.git
+  $ cd hellogitworld
+  $ git checkout -b work -t master HEAD
+  fatal: 'HEAD' is not a commit and a branch 'work' cannot be created from =
+it
+  $ git show -s --oneline
+  ef7bebf (HEAD -> master, origin/master, origin/HEAD) Fix groupId [=E2=80=
+=A6]
+  $ git checkout -b work -t master ef7bebf
+  fatal: 'ef7bebf' is not a commit and a branch 'work' cannot be created fr=
+om it
 
-I can't remember the source of the bug, but we've had a workaround in
-GitHub's incoming fsck checks to allow 6-digit zones like this since
-August 2011. I'm almost certain that it came up because of that
-rails/rails commit, but I don't remember the culprit implementation. I'm
-sure we would have dug it up and fixed it at the time.
+What did you expect to happen? (Expected behavior)
 
-Sadly our commit message for the fsck tweak gives no further details,
-nor can I dig up anything out of issues/etc.
+  I expected a new branch named 'work' to be created and checked out,
+  pointing to commit ef7bebf and with upstream branch set to 'master'.
 
-I _think_ it wasn't GitHub/grit which did this (the 0-prefixed tree
-modes you might come across are, though). I couldn't find any mention of
-the fix there, at least. I'd suspect perhaps libgit2, but I also
-couldn't find any fix.
+What happened instead? (Actual behavior)
 
-But I think it would be safe to assume the bug is long-since fixed, and
-it's nice if you can be a bit more lenient on the parsing for historical
-issues like this. Arguably fast-export ought to be normalizing it to
-something syntactically correct (just like we probably do with other
-unparsable dates), though I guess you could argue that a filter might
-want to see the broken form in order to fix it in a custom way.
+  I saw these erroneous messages (copied from above):
 
--Peff
+  fatal: 'HEAD' is not a commit and a branch 'work' cannot be created from =
+it
+  fatal: 'ef7bebf' is not a commit and a branch 'work' cannot be created fr=
+om it
+
+What's different between what you expected and what actually happened?
+
+  I expected a new branch but instead saw erroneous messages.
+
+Anything else you want to add:
+
+  This question seems to show the same problem:
+  stackoverflow.com/questions/48671851
+
+
+[System Info]
+git version:
+git version 2.27.0.rc0.183.gde8f92d652-goog
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+uname: Linux 5.2.17-1rodete3-amd64 #1 SMP Debian 5.2.17-1rodete3
+(2019-10-21 > 2018) x86_64
+compiler info: gnuc: 8.3
+libc info: glibc: 2.29
