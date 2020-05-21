@@ -2,102 +2,113 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C289C433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE73EC433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:09:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17AD520759
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:01:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D16620823
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:09:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kAEzPWKU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gqmtR3+2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729177AbgEUSBV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 14:01:21 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52426 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728888AbgEUSBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 14:01:21 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEF06693AA;
-        Thu, 21 May 2020 14:01:18 -0400 (EDT)
+        id S1729444AbgEUSJE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 14:09:04 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53544 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728067AbgEUSJC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 14:09:02 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7AB51BC7F0;
+        Thu, 21 May 2020 14:09:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=oW8ip186h/zH
-        04lKX6vh81uMOBU=; b=kAEzPWKUXo6gHOsUXzED06LBfvOd1yzu2e9kp+zjmN8H
-        IEni7AG425wayJGeAABEBPnQB9NMumSITsLclAL9gOic1TPuJ+4wuY2BL7TIimos
-        T81E3TD1pNTXwSNW8sJ6LQcpLayj9307NuddcQAAVJLKNgYVsJqpL1ZYEcAw13o=
+        :content-type:content-transfer-encoding; s=sasl; bh=HB0LVRgP0oFE
+        C9P0dCSOJRvM9UI=; b=gqmtR3+2Rgizk9QQhYjUhDuC8F7O8W1mpDVqokV2yZ98
+        bdyo+Ps0tQD0Eu7RsFaOJmrLH8Na3DwZM5hRE48/9OzxUA4fUBjkTRqYYz7sMU74
+        w6lTGbWJJFm2MImSDzWZNMyGloITSPgzzBM/TYyUgqMYeCzwNZvFpHats3mmADM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=yWZfXk
-        DqKuH8In1YHV4RhOMvqma9o6403qJldET4cJ2YAzOmtkXh8SvdgpAsqVWujoyalX
-        lYDBPyikGs1QwEeOfUQbP+s3i8bqEEgq7FcFLNugzSmMcWfntNUHHcnyWRwk91Ra
-        hSYBV/FGGJAHPp3r7urZNHwkfwJwT8SMPuTU4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D6119693A9;
-        Thu, 21 May 2020 14:01:18 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nA3mxz
+        OV7Rd00mal/X0o27uWrEqlYYTHCIVo4coShW1D2Q5yvcFO0m3laXEbSh8PBnUVx4
+        jxXta1GsTeiRGLDLYWVorwKNQdHhDw5gWs/fkeCMPRQ4EeKZ8ZVkAnOyasfTeCkD
+        d2AE/V4W3sUdBXIYxE8YS4xBPyQlmsVdvE0c8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 72DD0BC7EE;
+        Thu, 21 May 2020 14:09:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3E091693A8;
-        Thu, 21 May 2020 14:01:18 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9CE4CBC7E6;
+        Thu, 21 May 2020 14:08:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Brandon Williams <bwilliamseng@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/4] t1450: increase test coverage of in-tree d/f detection
-References: <CALN-EhTpiLERuB16-WPZaLub6GdaRHJW8xDeaOEqSFtKe0kCYw@mail.gmail.com>
-        <d963242a-72f3-7f42-7c95-ea5148f74804@web.de>
-        <xmqqpnbduiec.fsf@gitster.c.googlers.com>
-        <938f0818-7e57-b883-009f-01db88ef8f65@web.de>
-        <xmqqh7wovoop.fsf@gitster.c.googlers.com>
-        <aab9512b-a70a-0f5b-5cdc-5d40acd343d0@web.de>
-        <2937d635-52a9-5e69-b3d2-fbde415b7315@web.de>
-        <xmqq4ksmsaks.fsf@gitster.c.googlers.com>
-        <106c58e1-9c74-46e3-c83a-88eee114d9d6@web.de>
-        <20200521102053.GA578930@generichostname>
-        <1f982a11-358c-195d-21f4-0299f5b60ff2@web.de>
-Date:   Thu, 21 May 2020 11:01:17 -0700
-In-Reply-To: <1f982a11-358c-195d-21f4-0299f5b60ff2@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 21 May 2020 15:31:26 +0200")
-Message-ID: <xmqqwo55rwuq.fsf@gitster.c.googlers.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GIT PULL] git-gui pull request
+References: <20200521131220.t5lhw4e4qp4bpk3s@yadavpratyush.com>
+Date:   Thu, 21 May 2020 11:08:56 -0700
+In-Reply-To: <20200521131220.t5lhw4e4qp4bpk3s@yadavpratyush.com> (Pratyush
+        Yadav's message of "Thu, 21 May 2020 18:42:20 +0530")
+Message-ID: <xmqqsgftrwhz.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 11FD78FE-9B8D-11EA-9398-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 24669C86-9B8E-11EA-916F-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
->>> +check_duplicate_names () {
->>> +	expect=3D$1 &&
->>> +	shift &&
->>> +	names=3D$@ &&
->>
->> It doesn't really make sense to use $@ here since we're not using the
->> argument list behaviour of $@; we're just expanding it normally. I wou=
-ld
->> replace this with $* instead.
+> Hi Junio,
 >
-> The assignment to $names flattens the list, so $@ and $* behave the sam=
-e
-> here.
-> ...
-> At least I'd like to keep the $@ as kind of a reminder that we want to
-> pass on arguments (full names), not words.
+> Please pull the changes in git-gui for Git v2.27.0. Since there was som=
+e=20
+> fallout on MacOS last time around, please merge it in -rc2 so the=20
+> changes can get a bit more exposure, even though the changes this time=20
+> around are fairly minimal.
+>
+> Regards,
+> Pratyush Yadav
 
-I personally prefer to use "$*" when we are not invoking the "list"
-magic of "$@" and switch it to "$@" when it starts to matter, but I
-can also understand your "reminder value" reasoning, so I am on the
-fence.
+Thanks, will do.
+
+
+> ---
+> The following changes since commit=20
+> a5728022e07c53e5ac91db0960870518e243b7c1:
+>
+>   Merge branch 'py/remove-tcloo' (2020-03-19 21:29:19 +0530)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/prati0100/git-gui.git=20
+>
+> for you to fetch changes up to c195247812f8cd38ba7e1c603112e6c1d8d8e71e=
+:
+>
+>   Merge branch 'il/ctrl-bs-del' (2020-05-21 18:25:32 +0530)
+>
+> ----------------------------------------------------------------
+> Ansgar R=C3=B6ber (1):
+>       Subject: git-gui: fix syntax error because of missing semicolon
+>
+> Ismael Luceno (1):
+>       git-gui: Handle Ctrl + BS/Del in the commit msg
+>
+> Pratyush Yadav (2):
+>       Merge branch 'ar/ui-ready-semicolon'
+>       Merge branch 'il/ctrl-bs-del'
+>
+>  git-gui.sh        | 6 ++++--
+>  lib/index.tcl     | 6 +++---
+>  lib/mergetool.tcl | 2 +-
+>  3 files changed, 8 insertions(+), 6 deletions(-)
