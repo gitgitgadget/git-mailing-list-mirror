@@ -2,129 +2,189 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 745DDC433E0
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 11:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 952B0C433E0
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 11:54:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 399DD2072C
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 11:33:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6107F2078B
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 11:54:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ibnIVxTm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I6klTxia"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729000AbgEULdd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 07:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55682 "EHLO
+        id S1729064AbgEULyM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 07:54:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728348AbgEULdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 07:33:32 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762C2C061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 04:33:32 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id m7so2722833plt.5
-        for <git@vger.kernel.org>; Thu, 21 May 2020 04:33:32 -0700 (PDT)
+        with ESMTP id S1729015AbgEULyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 07:54:11 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC63C061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 04:54:11 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id b3so5912548oib.13
+        for <git@vger.kernel.org>; Thu, 21 May 2020 04:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Z0A7xge/3cfhtEhyaWu8u1oCDS3WiAll0HQWRg2gQdU=;
-        b=ibnIVxTmDnhV32EmkS7q4XbJ9SNerbbmVqyY1uUfWFnI41kwJFvY0pRIy9zEdi3/MK
-         UwBB2OfL04kT8PtCvah74rTWE1jMv8nKLS5y6l/VgJI7PZhiCPsbNZaQQ3meFwi/kul8
-         9BbB7GDXY41kmjojmvjp9VNMvHBZzNwxn5OWE4FPEfRd4O8sGW/BBT2EMjGu4twjXPRP
-         6LzZ7LBf1Uc3ijraFVc7fL8Vx40GxJa+wglxLqPAA8uwqwJ+4Zq5EtC7ijkmf7wpOh1m
-         7DZOqFQYTS//W6+mNTgoT78ThZCXbWfYG/7+5msFZfmAi1F7nUDur22ZW0zCzrpU/pnR
-         cq0A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=vt3V+NBwSFHYrc8YgLG77njnDGpWD5ELkAX1rQnMmEM=;
+        b=I6klTxiaeEVWfEia7V/yQshKNICsziF6nGQQ+23/Uqn4WADK390YCEi5/AgiLl5uXI
+         vHOSOWCUfmchUuZAtmuQYY+eti88EteJzyYsSe2qSPJ4iwf6Muoa7o6r1KpsLZpkJ23U
+         CaBUwwG7VOZhEzf2E5X91RjHmFehoNCeRehJWh9p4Nu1jRMU2eayKzCQiNzYomiFt36B
+         ERR5GgrIjr7CEGgXhl+qCC160Y9QmjJMRNPU6441XCtBKJ3SbUeg+6vfmiOyHpCvB9jL
+         b9AE+A+FH88jODlXuDRiR07LXWpiMDG60pLo7idRhw2gvS/j3FQeW0oFrvlZDEgMyNbW
+         DsTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Z0A7xge/3cfhtEhyaWu8u1oCDS3WiAll0HQWRg2gQdU=;
-        b=f6RRVWf0Hf5qimQoB9uFDOm/xnC5TfkuugjDXo3VRQAyZRek/IqhqjbdfSkm2f35Tv
-         HUCjqQtAGPuJFmnfEmvXriUDja5YeZ23+Zg3ynwj0RGKaJg0A7H6atlBzDSrOR3pm3pn
-         QxCBo8FcZVpiHerYCRxebgpWSaz4vs+XCb337xEGynumgVQYew2o+OjzLQdYa9Jq1uJv
-         ApdniWLJGT0Jue87nH6SqXiwpdv84iPu4Wo0tMPzOWn7FyOQ9zpVNah7tQM/F4LR3fFi
-         kuItif0TSpCqaL75l+HV5AENZCXZqPZM8jnYb/0LPfEOcWg9J42QT98gI7b3WTdLnyzY
-         75eA==
-X-Gm-Message-State: AOAM5336ecWHPt5gQzfHW3nPL8bb1VVQWXSN0vAz1h9zayvtnv1GAj7d
-        zbdxtrXW1xVIcVbh62nP5qw=
-X-Google-Smtp-Source: ABdhPJzqCuaZxojiFLmYuvsQWx5Ztdc4dANTbU3yNMFbp/gtwuAxk/CjMi4xuJkxfrnKFiAzJrgiig==
-X-Received: by 2002:a17:902:207:: with SMTP id 7mr8993176plc.331.1590060811353;
-        Thu, 21 May 2020 04:33:31 -0700 (PDT)
-Received: from localhost.localdomain ([47.89.83.2])
-        by smtp.gmail.com with ESMTPSA id q7sm3852720pgs.13.2020.05.21.04.33.29
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 May 2020 04:33:30 -0700 (PDT)
-From:   Jiuyang Xie <jiuyangxie@gmail.com>
-X-Google-Original-From: Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Cc:     Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: [PATCH v3] doc: fix wrong 4-byte length of pkt-line message
-Date:   Thu, 21 May 2020 19:32:38 +0800
-Message-Id: <20200521113238.37160-1-jiuyang.xjy@alibaba-inc.com>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <20200521112125.GA581643@generichostname>
-References: <20200521112125.GA581643@generichostname>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=vt3V+NBwSFHYrc8YgLG77njnDGpWD5ELkAX1rQnMmEM=;
+        b=oiZUqWf8GwJyMj86wnZzdFX3il37+fkUYsvkck3Cs4hh+gXRyHHuOSo2hQ58bN6EOj
+         1fsA20dVYaM5vTB0j7l6IQ+eYbwP9gFBQj73pJopsARSvLkkz3uTiBTF6OsetRsG1+Vm
+         GVq/0fhFX2eop1uFtmQFKvGVRA0Z0HRY5GF5sSKsrA1iBnFxFNsFRg7KqIabdeML8SEO
+         umrSoQ9hu7C6ZojkyBr6zIpGJ1JXN+62DREz2Tv+ZYvWHmz1de8lTb4gNTnM+wjRwhAI
+         hf8CgxfE8T+EPNkoOQdE6sMM2qDfjwoLLMqMCgf0cL3h3PJQ8QYJnsAHEz8tqT/lNMfJ
+         LYQA==
+X-Gm-Message-State: AOAM5307ryBwLbXuGFxYU3teRFLcyNMVmQQe3f4pcKiSMHSgY6Zp46+b
+        Yvwl86/l+w2WBZcQnQCxDoU=
+X-Google-Smtp-Source: ABdhPJzuOVE7p/Wh5qH4yamSEQ/fXM85kpLOrTBVTjLv8ejpTt2DebMMeiBc7ge5Ie47D+DGopGh8w==
+X-Received: by 2002:aca:72d6:: with SMTP id p205mr6384093oic.128.1590062050271;
+        Thu, 21 May 2020 04:54:10 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id s69sm1533057otb.4.2020.05.21.04.54.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 May 2020 04:54:09 -0700 (PDT)
+Subject: Re: Protocol v2 in v2.27 (Re: Re* [ANNOUNCE] Git v2.27.0-rc1)
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <xmqqsgfuv2ko.fsf@gitster.c.googlers.com>
+ <20200520193156.GA4700@coredump.intra.peff.net>
+ <xmqq5zcquz4t.fsf_-_@gitster.c.googlers.com>
+ <20200520220023.GB3648@google.com> <xmqqlflmtaxq.fsf@gitster.c.googlers.com>
+ <20200521021533.GC3648@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <1a3bf366-d888-74d3-5f81-78dfeb5eb79c@gmail.com>
+Date:   Thu, 21 May 2020 07:54:08 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
+ Thunderbird/77.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200521021533.GC3648@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first four bytes of the line, the pkt-len, indicates the total
-length of the pkt-line in hexadecimal. Fix wrong pkt-len headers of
-some pkt-line messages in `http-protocol.txt` and `pack-protocol.txt`.
+On 5/20/2020 10:15 PM, Jonathan Nieder wrote:
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+>>> Speaking of which, should we enable protocol v2 by default for people
+>>> with feature.experimental enabled, like this?
+>>
+>> It is an excellent idea, but is something that had to have been
+>> proposed before -rc0 to be in the upcoming release, no?
+> 
+> I would love to go back in time, but I only have the present to work
+> with.  Here, I'm hoping it makes the switch of default back to v0 less
+> of a regression for some interested users.
+> 
+>> The patch looks good; do we have the master list of things that are
+>> under control of feature.experimental knob in the documentation, or
+>> is it a feature that we do not have to have a centralized control?
+> 
+> Good catch.  Here's an updated patch with (1) a commit message and (2)
+> that doc update.
+> 
+> -- >8 --
+> Subject: config: let feature.experimental imply protocol.version=2
 
-Reviewed-by: Denton Liu <liu.denton@gmail.com>
-Signed-off-by: Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
----
- Documentation/technical/http-protocol.txt | 2 +-
- Documentation/technical/pack-protocol.txt | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+For some reason, I thought protocol v2 was part of feature.experimental
+at some point, but it doesn't appear to be so, or ever even part of the
+patch series.
 
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index 9c5b6f0fac..51a79e63de 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -216,7 +216,7 @@ smart server reply:
-    S: 001e# service=git-upload-pack\n
-    S: 0000
-    S: 004895dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint\0multi_ack\n
--   S: 0042d049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n
-+   S: 003fd049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n
-    S: 003c2cb58b79488a98d2721cea644875a8dd0026b115 refs/tags/v1.0\n
-    S: 003fa3c2e2402b99163d1d59756e5f207ae21cccba4c refs/tags/v1.0^{}\n
-    S: 0000
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index d5ce4eea8a..a4573d12ce 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -96,7 +96,7 @@ Basically what the Git client is doing to connect to an 'upload-pack'
- process on the server side over the Git protocol is this:
- 
-    $ echo -e -n \
--     "0039git-upload-pack /schacon/gitbook.git\0host=example.com\0" |
-+     "003agit-upload-pack /schacon/gitbook.git\0host=example.com\0" |
-      nc -v example.com 9418
- 
- 
-@@ -171,9 +171,9 @@ with a version number (if "version=1" is sent as an Extra Parameter),
- and a listing of each reference it has (all branches and tags) along
- with the object name that each reference currently points to.
- 
--   $ echo -e -n "0044git-upload-pack /schacon/gitbook.git\0host=example.com\0\0version=1\0" |
-+   $ echo -e -n "0045git-upload-pack /schacon/gitbook.git\0host=example.com\0\0version=1\0" |
-       nc -v example.com 9418
--   000aversion 1
-+   000eversion 1
-    00887217a7c7e582c46cec22a130adf4b9d7d950fba0 HEAD\0multi_ack thin-pack
- 		side-band side-band-64k ofs-delta shallow no-progress include-tag
-    00441d3fcd5ced445d1abc402225c0b8a1299641f497 refs/heads/integration
--- 
-2.25.0
+> Git 2.26 used protocol v2 as its default protocol, but soon after
+> release, users noticed that the protocol v2 negotiation code was prone
+> to fail when fetching from some remotes that are far ahead of others
+> (such as linux-next.git versus Linus's linux.git).  That has been
+> fixed by 0b07eecf6ed (Merge branch 'jt/v2-fetch-nego-fix',
+> 2020-05-01),
+
+Should we really mention the merge here? Is it because the "fix" is
+spread across two commits? Why not say the tip of the topic?
+
+2f0a093 (fetch-pack: in protocol v2, reset in_vain upon ACK, 2020-05-27)
+
+> but to be cautious, we are using protocol v0 as the
+> default in 2.27 to buy some time for any other unanticipated issues to
+> surface.
+> 
+> To that end, let's ensure that users requesting the bleeding edge
+> using the feature.experimental flag *do* get protocol v2.  This way,
+> we can gain experience with a wider audience for the new protocol
+> version and be more confident when it is time to enable it by default
+> for all users in some future Git version.
+> 
+> Implementation note: this isn't with the rest of the
+> feature.experimental options in repo-settings.c because those are tied
+> to a repository object, whereas this code path is used for operations
+> like "git ls-remote" that do not require a repository.
+
+(This may be why protocol.version wasn't included in the first place.)
+
+> +* `protocol.version=2` speeds up fetches from repositories with many refs by
+> +allowing the client to specify which refs to list before the server lists
+> +them.
+
+This is the appropriate tone for this section: it's more about _why_ than _what_.
+
+> --- a/Documentation/config/protocol.txt
+> +++ b/Documentation/config/protocol.txt
+> @@ -48,7 +48,8 @@ protocol.version::
+>  	If set, clients will attempt to communicate with a server
+>  	using the specified protocol version.  If the server does
+>  	not support it, communication falls back to version 0.
+> -	If unset, the default is `0`.
+> +	If unset, the default is `0`, unless `feature.experimental`
+> +	is enabled, in which case the default is `2`.
+
+Looks  good.
+
+> @@ -17,6 +17,7 @@ static enum protocol_version parse_protocol_version(const char *value)
+>  enum protocol_version get_protocol_version_config(void)
+>  {
+>  	const char *value;
+> +	int val;
+>  	const char *git_test_k = "GIT_TEST_PROTOCOL_VERSION";
+>  	const char *git_test_v;
+>  
+> @@ -30,6 +31,9 @@ enum protocol_version get_protocol_version_config(void)
+>  		return version;
+>  	}
+>  
+> +	if (!git_config_get_bool("feature.experimental", &val) && val)
+> +		return protocol_v2;
+> +
+>  	git_test_v = getenv(git_test_k);
+>  	if (git_test_v && *git_test_v) {
+>  		enum protocol_version env = parse_protocol_version(git_test_v);
+> 
+
+The context around this change is that we check "protocol.version" explicitly
+before checking "feature.experimental", so that explicit setting wins. Then,
+feature.experimental overrides the GIT_TEST_PROTOCOL_VERSION environment
+variable.
+
+LGTM.
+-Stolee
+
+
 
