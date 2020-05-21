@@ -2,115 +2,184 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC6EC433E0
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 03:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF5EFC433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 04:30:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28B5F20738
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 03:49:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76D4D207F9
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 04:30:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TegJvS7o"
+	dkim=pass (2048-bit key) header.d=iskunk.org header.i=@iskunk.org header.b="QmUdlLsW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KHoRPkzK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728178AbgEUDtd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 May 2020 23:49:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40200 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727998AbgEUDtd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 May 2020 23:49:33 -0400
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5475C061A0E
-        for <git@vger.kernel.org>; Wed, 20 May 2020 20:49:32 -0700 (PDT)
-Received: by mail-oi1-x243.google.com with SMTP id s198so5098808oie.6
-        for <git@vger.kernel.org>; Wed, 20 May 2020 20:49:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ry2lFj7MwaGlXv7giY3B6NL6WIvhEz9U0k2glgeucts=;
-        b=TegJvS7oKjojLl6GtgBjfQ4UJXzuV2ozvbvnLkMsIQVRJTaEn+tWF9xG2sIbcX7WuN
-         eKOY8/irdjHHG/+MSn3sPNFNZD4tyzj8MVsuZwZMMTe7F6KC2utPV2zUyNoXIiMrqHZT
-         PzoMJVaSLX1pOg+TAYhzCVEmqMdstK7sW9UKEvXy6Cn+4AvDmsTWDLBzg+iwle/NlR1J
-         gIvoLtqK8WfxM1eaxmo11My4yD3K7qvOJoDjM//XOpsO0wOa/CjsjD8aLlrVCWZ/uQPE
-         vI6S7CZT86KsOf5C+1R2MnwMjPj9IIZMfSUiWL+saQZ6oUDttnSBkakxxD/nbJVLC3fO
-         laCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ry2lFj7MwaGlXv7giY3B6NL6WIvhEz9U0k2glgeucts=;
-        b=mPowJuv04DB/bPGpaWPc4nfAz5yHfcs+qN5j7ggoGqBYICyprEthQxeZC/XVjUrJh7
-         mHcwth9vgzvYP1cmqFvX1oxWOHfmJwarsQ+SGsNk3bSYrSStDtxyywa77khbuckWjmfF
-         g05xfRDZxgOs9osc10Sr5nMorEgaA7HUhfzYh3kOJnokkKnoXkcPMjLwXUzmqFrixQ2I
-         BZ+0hIDCmMXcCsmORAvlUdSbZ7FJl84m3ge3pv1Bf4Iwo1dm8LWZQ3u8uML/cv37KwMu
-         Rhtsr/nIe53JfIjnX8IlayJPseTsyrPbqDxuORfVcdm0jvwLQ3wVS1eIJ857odTp3tmQ
-         /8iQ==
-X-Gm-Message-State: AOAM531UK/5PGGqF9e4nsYK/BkJ6sFql8ILJk/Vbr81MYIiA3f9vI1be
-        otAr8OaeXyl7xAGPZxlm2gsWVJQ/L2PSlu8nd8TJ/Mhn
-X-Google-Smtp-Source: ABdhPJzaw60Rkhv4ZvpocrWc6uU5i46IGCmUNdqaY9Bysgqfdn3ABq0PJZcM5YiK1jZiNZbC039Gkcuqy881lLvpP3s=
-X-Received: by 2002:aca:3f44:: with SMTP id m65mr5648924oia.167.1590032971975;
- Wed, 20 May 2020 20:49:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
- <fcf948bda7aebcc5f88c17f5b308b2ce0cc285f5.1588857462.git.gitgitgadget@gmail.com>
- <CABPp-BEkf0TVTt4=adJ9x70j814frL932vxyQCpm74AQiHWwGQ@mail.gmail.com>
-In-Reply-To: <CABPp-BEkf0TVTt4=adJ9x70j814frL932vxyQCpm74AQiHWwGQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 May 2020 20:49:20 -0700
-Message-ID: <CABPp-BGcjpJOht7ip_cPcHEtd3kx5fCwm=i19narWCEfCUwWAQ@mail.gmail.com>
-Subject: Re: [PATCH 06/10] sparse-checkout: use oidset to prevent repeat blobs
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726968AbgEUEaR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 00:30:17 -0400
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:46309 "EHLO
+        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726282AbgEUEaR (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 May 2020 00:30:17 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 36A1F109A;
+        Thu, 21 May 2020 00:30:14 -0400 (EDT)
+Received: from imap36 ([10.202.2.86])
+  by compute7.internal (MEProxy); Thu, 21 May 2020 00:30:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iskunk.org; h=
+        mime-version:message-id:in-reply-to:references:date:from:to:cc
+        :subject:content-type; s=fm3; bh=r7Nac3Ckfh79Cs8dhnW8af+wAVvrbQs
+        ip5pUYD8qJTY=; b=QmUdlLsWasmKD5BrPK3Qj1FhYtwhj6llFlIg9M8RKYsCtlQ
+        KQrV754LsUZ6rRiyKMqRfLj3qD2J/YQNahQS7ZH//zeyNXUndOwxQwcy0Wdkk17C
+        8z0YjH1Mct4G4Y9JSD/Rwti4ft7rLKx5cTtbeopBSiqA+bEM/tMua1JCxRYvEgo3
+        EGhaCUofqmXD/D3rYi7ZYWUVvB0+XOmKV8DeJhlIDpqNupv/wdl9f96r9ZYhBVm0
+        N195vyvqH4NMcUp+IGMPWqcel7I80Z/EJI10N2VJmDygQw3OT7l5mAo/9KaNmobn
+        GIeGPwBvh4gJUarmo3SGCRT1E9kwqhlTKM8uK4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=r7Nac3
+        Ckfh79Cs8dhnW8af+wAVvrbQsip5pUYD8qJTY=; b=KHoRPkzK4K3JwsO6p2jeiJ
+        XjBvmU3JQy6ppTRQc1lo8W9yKPQibOSQu5GrP9DooojN9Lt6CdsmXZww8sRjzr5Y
+        nUoIBSGiwxqEe3AMONr/isHW0rPHoUJd4TBa4HWdnqcYHo6Kz/jHyLDvUZvgiWVT
+        QKVeCa8OMxld3K5ZKXhedtF+pSCJi57bovSVu5mSbFBNsdgjtGB2jNASh5AHqLWB
+        5WlLPmsAUsMOhxqrLV7gQeK4wk60B+G8/Env0S4yf6u+zMgUK8xcOZ3BfajysKdE
+        UIcLI18/t7Gz8aP/VVmq0nI/SwTKw3XwFL9dVNGguDsi04HzOKD3YTeowX/BLNeQ
+        ==
+X-ME-Sender: <xms:1QPGXjhwZAYp22BPZj8OAW3UPeVQMq7B8iiDUGgxAlp2AeMi5XFsLQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedruddutddgkeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
+    ertderredtnecuhfhrohhmpedfffgrnhhivghlucftihgthhgrrhguucfirddfuceoshhk
+    uhhnkhesihfumfgfpffmrdfqtffiqeenucggtffrrghtthgvrhhnpeekvdehgeegvedtje
+    egudelvdeghfejuddujeekhfethfdtfedvieekgfejgffhueenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehskhhunhhksehiuffmfgfpmfdrqf
+    ftif
+X-ME-Proxy: <xmx:1QPGXgA0LEF1mNZbUbvpG6U1Jhyu6OQ3y1ZCp-9mwln8GXnKhwTuAw>
+    <xmx:1QPGXjF86l2-cc9_khVc3Qz8P-_8CyHBYbqsK71TJstU_CrmsTl1Sw>
+    <xmx:1QPGXgRTeugdGdW87qVDvHwl8avy_Boq6747q-XKQ-tNH3tnUBb86g>
+    <xmx:1QPGXv-pDcFLwdJrewYYxFbo2bnvIbCBRh0vS_bFnqtbw8D4S8c6cg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 0E847188006D; Thu, 21 May 2020 00:30:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-487-g38013f6-fm-20200519.001-g38013f6c
+Mime-Version: 1.0
+Message-Id: <86f751ac-b7c1-43fd-ada5-a8e2e9c4ebc9@www.fastmail.com>
+In-Reply-To: <20200520042838.GA102274@coredump.intra.peff.net>
+References: <7422404e-7fc8-4961-aae4-3f0adb71bb3a@www.fastmail.com>
+ <20200519024945.GB70483@coredump.intra.peff.net>
+ <40a42f1d-61bd-46fb-8946-5588df7b044b@www.fastmail.com>
+ <20200520042838.GA102274@coredump.intra.peff.net>
+Date:   Thu, 21 May 2020 00:29:18 -0400
+From:   "Daniel Richard G." <skunk@iSKUNK.ORG>
+To:     "Jeff King" <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Minor portability issues + fixes
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replying to my own questions...
-
-On Wed, May 20, 2020 at 9:40 AM Elijah Newren <newren@gmail.com> wrote:
+On Wed, 2020 May 20 00:28-04:00, Jeff King wrote:
 >
-> On Thu, May 7, 2020 at 6:21 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Derrick Stolee <dstolee@microsoft.com>
-> >
-> > As we parse the in-tree config files that store the sparse.dir values
-> > used to create an in-tree sparse-checkout definition, we can easily
-> > avoid parsing the same file multiple times by using an oidset on those
-> > blobs. We only parse if the oid is new to the oidset.
-> >
-> > This is unlikely to have a major performance benefit right now, but will
-> > be extremely important when we introduce the sparse.inherit options to
-> > link multiple files in a directed graph. This oidset will prevent
-> > infinite loops when cycles exist in that digraph, or exponential blowups
-> > even in the case of a directed acyclic graph.
->
-> I'm still not sure if I like the idea of having a mirror dependency
-> structure separate from (and duplicative of) the build code; I'm still
-> mulling that over.
+> > I've confirmed that this works. But would it not be safe to #include
+> > both inttypes.h and stdint.h explicitly if both are present, rather than
+> > cater to AIX specifically? I could see this similarly arising in, say,
+> > an old version of Solaris.
+> 
+> Yes, as long as we check that both are present, I think that would do
+> the right thing. And the autoconf check could cover that. I don't think
+> there's an easy way to have a general Makefile knob that can check which
+> files are present, though (and we generally consider the Makefile and
+> its knobs to be the primary mechanism; autoconf to turn those knobs is
+> generally implemented on top).
 
-I mentioned this to a few other buildsystem folks at $DAYJOB.  They
-were strongly opposed to having more than one source of truth, but
-generating the git in-tree sparse values from the official build
-system files, with commit hooks and build system checks to make sure
-they get updated seemed like it'd be fine or not concern them much.
+Okay, I see, so the whole phalanx of HAVE_BLAH_H symbols from Autoconf
+isn't available.
 
-> It's good that you've protected against infinite loops.
->
-> Is there any reason to prefer swallowing infinite loops rather than
-> warning or flagging as an error?  (I'm not sure, just thinking my
-> questions out loud.)
+> So probably we'd want something like (in this order):
+> 
+>   - NEEDS_EXPLICIT_STDINT gets passed from the Makefile into the
+>     compiler via -D, which then triggers stdint.h being included
+>     unconditionally in git-compat-util.h
+> 
+>   - optionally set that in config.mak.uname for AIX (checking uname_R
+>     since it sounds like only old versions need it)
+> 
+>   - add an autoconf rule that sets it, either strictly (when a
+>     test-program decides it's needed) or loosely (when we see that it's
+>     available at all)
+> 
+> Even just the first one would let you build by setting the knob
+> manually; the rest is gravy on top, if you or somebody else chooses to
+> do it.
 
-The buildsystem folks also reminded me that we have cylic dependencies
-already, and although it's absolutely ugly, it is somewhat forced on
-us by a combination of different external tools that we can't change.
-As such, warnings or errors would be really annoying and we'd be one
-of the ones to want to turn them off.  So drop that idea from me.  :-)
+Hmm... that's a fairly specific knob, which I would think is less than
+ideal. The rest is reasonable, but would have to be written in terms
+of the knob.
+
+I can put something together, knowing that this is the approach you'd
+want to see, but it'll need some more work. Eventually, I'll need to get
+Git up and running on a few other old systems I have here, so that will
+undoubtedly figure into it.
+
+Thanks for sketching out how this should work, however; this is helpful
+to keep in mind.
+
+> > The applicable value for CC_LD_DYNPATH on AIX is "-Wl,-blibpath:".
+> > However, have a look at the description for this option in the
+> > ld(1) man page:
+> 
+> OK, gross. :) I agree it's not worth going too far into this rabbit
+> hole. I do wonder if you could just be using GNU ld along with gcc, but
+> maybe that's not practical.
+
+Using the GNU linker can help in some cases, and hurt in others. We try
+to avoid it unless necessary.
+
+> You should be able to build with:
+> 
+>   make CC_LD_DYNPATH=-L
+> 
+> as a workaround
+
+Yep, this works handily as a no-op :)
+
+> but it would be nice if the Makefile handled this correctly. It looks
+> like CC_LD_DYNPATH gets used in a lot of places, so I suspect we'd
+> want a Makefile function to help out. Something like:
+> 
+>   # usage: $(call linker_lib,PATH)
+>   # Create linker args for looking for libraries in PATH at both link-time
+>   # and run-time.
+>   linker_lib = -L$1 $(if $(CC_LD_DYNPATH),$(CC_LD_DYNPATH)$1)
+> 
+> which would allow:
+> 
+>   EXTLIBS += $(call linker_lib,$(LIBPCREDIR)/$(lib))
+> 
+> etc. This would be our first foray into Makefile functions, but I think
+> we've determined that most platforms have a recent enough GNU make for
+> it to be OK (and we already require GNU make).
+
+Why not just a variable to wrap the conditional? Something like
+
+    CC_LD_DYNPATH_flag = $(if $(CC_LD_DYNPATH),$(CC_LD_DYNPATH),-L)
+
+    ...
+
+    EXTLIBS += -L$(ZLIB_PATH)/$(lib) $(CC_LD_DYNPATH_flag)$(ZLIB_PATH)/$(lib)
+
+Makefile functions are quite powerful, but they feel like a sledgehammer
+to this fly. (I've used them in the past to generate Make rules
+programmatically. It wasn't pretty, but it sure beat writing out
+makefile fragments and then include-ing them afterward!)
+
+
+--Daniel
+
+
+-- 
+Daniel Richard G. || skunk@iSKUNK.ORG
+My ASCII-art .sig got a bad case of Times New Roman.
