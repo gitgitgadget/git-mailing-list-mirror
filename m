@@ -2,123 +2,144 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B5DC433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4493C433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:16:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E57020759
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:03:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfIfitoe"
+	by mail.kernel.org (Postfix) with ESMTP id 8731720738
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 19:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729903AbgEUTDe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 15:03:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41532 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729548AbgEUTDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 15:03:33 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F67C061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 12:03:33 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id f83so8266492qke.13
-        for <git@vger.kernel.org>; Thu, 21 May 2020 12:03:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oQFeI2cftX3LRrZCtddzTmsnecQRRZW9evDc0yaminA=;
-        b=nfIfitoelDYCYGJFSm3HeScBk/rMd8VarNlvHxiTC+uubIdRa4VDay7wO0s2PWfkUF
-         ByLUHWZ4yWMsuorYRqw55PQhGkvTtTQBLD+WcjPHEThYswbyMrWHqUFnPRCJ0YlVaQ0b
-         VpsxxcD/MGVfFYiU5vAkkJaw7E/a1VcIztJpKubEUr7c1d3dRMaMSzhpee+gQXp4idXl
-         8PnAn4tw2/81BilRzObszTTOy6JOYvptphQPVYDpD2gTZPRwfPYQF7ghiSsAGKs7yjU6
-         hPBQuqWvJGjZT1lJFqGimCqNJC4BDIFxIImphquengSUMX+F7U/6kytxxT6U9DDnxIOp
-         WlkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oQFeI2cftX3LRrZCtddzTmsnecQRRZW9evDc0yaminA=;
-        b=tSa+ssGGE9035nh656xR9VCZbZ0hvhDipPCa1G4pYFTn/1Iw2hRtPTyKwXidN/QXjN
-         pM3e2VrPJaZ49o8oki/pM9/TmiraJqipvCq8dJo7v3M2MTM/zuIVuzjvitibOaTMCsKh
-         6+8qA1NbFc8gEG4HeTpp/nFfzLe2tI6Ioo5EUwjNqCdpR/e6Y5VdMKhmF7pJQhS0Azyd
-         9Vnm368YM5ydXJpXGxdbKQe9qXmuMeFwx53l3G+Ysr/9dZNuxjJKohkllcO5395K7krj
-         rGOZoOLTBi73tuBd/p3kFjO5vylaSrVLLEfzKuxaGmajf2d1aj+lDyi9GLMcF+cWtI6Q
-         TvNg==
-X-Gm-Message-State: AOAM533QgaP+fuibjN+nByYehlVTDb2Na7D9zoFowbyRx/nFnFj/S0qD
-        Y72BbA+4GVZGVfIRggHwCsu7yRDb
-X-Google-Smtp-Source: ABdhPJxbNl8wcEn32CFyOfjxQZHKMlgghK/DFYiEKbdTPZviGb6yiFVorLfUlB+SIWwE99g8MVUgCg==
-X-Received: by 2002:a37:a42:: with SMTP id 63mr11767432qkk.399.1590087812952;
-        Thu, 21 May 2020 12:03:32 -0700 (PDT)
-Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id d74sm5553020qke.100.2020.05.21.12.03.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2020 12:03:31 -0700 (PDT)
-Date:   Thu, 21 May 2020 15:03:29 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, kaartic.sivaraam@gmail.com,
-        congdanhqx@gmail.com, sunshine@sunshineco.com,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3] submodule: port subcommand 'set-branch' from shell to
- C
-Message-ID: <20200521190329.GB615266@generichostname>
-References: <20200521163819.12544-1-shouryashukla.oo@gmail.com>
- <xmqqk115ruux.fsf@gitster.c.googlers.com>
+        id S1729988AbgEUTQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 15:16:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53884 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729829AbgEUTQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 15:16:27 -0400
+Received: (qmail 15184 invoked by uid 109); 21 May 2020 19:16:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 May 2020 19:16:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 843 invoked by uid 111); 21 May 2020 19:16:27 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 May 2020 15:16:27 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 21 May 2020 15:16:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Dana Dahlstrom <dahlstrom@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: 'HEAD' is not a commit (according to git-checkout)
+Message-ID: <20200521191626.GC1308489@coredump.intra.peff.net>
+References: <CACqwCQiLpZ1HFzgJw0p0KR3jXNsxkhjXmF_huzhv+qkMZmybBQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqk115ruux.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACqwCQiLpZ1HFzgJw0p0KR3jXNsxkhjXmF_huzhv+qkMZmybBQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 21, 2020 at 11:44:22AM -0700, Junio C Hamano wrote:
-> Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+On Thu, May 21, 2020 at 12:00:00PM -0700, Dana Dahlstrom wrote:
+
+> What did you do before the bug happened? (Steps to reproduce your issue)
 > 
-> > Convert submodule subcommand 'set-branch' to a builtin and call it via
-> > 'git-submodule.sh'.
-> >
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> > Helped-by: Denton Liu <liu.denton@gmail.com>
-> > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> > Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-> > ---
-> > Thank you for the review Eric. I have changed the commit message,
-> > and the error prompts. Also, I have added a brief comment about
-> > the `quiet` option.
+>   $ git clone https://github.com/githubtraining/hellogitworld.git
+>   $ cd hellogitworld
+>   $ git checkout -b work -t master HEAD
+>   fatal: 'HEAD' is not a commit and a branch 'work' cannot be created from it
+>   $ git show -s --oneline
+>   ef7bebf (HEAD -> master, origin/master, origin/HEAD) Fix groupId […]
+>   $ git checkout -b work -t master ef7bebf
+>   fatal: 'ef7bebf' is not a commit and a branch 'work' cannot be created from it
+
+Thanks for a complete reproduction. There are a few things going on
+here.
+
+The "-t" option doesn't take an argument; it's a boolean that says
+"track the branch we started from". So "master" is taken as the
+start-point, and "HEAD" is tacked onto the end. I.e., equivalent to:
+
+  git checkout -b work master HEAD
+
+That error message is wrong and misleading. It looks like what happens
+is that we parse "master" as the start-point. And then we try to treat
+remaining options (i.e., "HEAD") as a pathspec. That fails, because
+there's no such path. But then instead of saying "hey, HEAD isn't a
+pathspec" we try to be clever:
+
+                  /*
+                   * Try to give more helpful suggestion.
+                   * new_branch && argc > 1 will be caught later.
+                   */
+                  if (opts->new_branch && argc == 1)
+                          die(_("'%s' is not a commit and a branch '%s' cannot be created from it"),
+                                  argv[0], opts->new_branch);
+
+We know we're making a new branch and there's one argument, so we assume
+that it didn't get parsed earlier as a start-point. But that misses the
+fact that if we _did_ parse a start-point, it would have been removed
+from argv, and our "single argument" is actually the former
+second-argument.
+
+Something like this works:
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index e9d111bb83..6559ac666b 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1553,6 +1553,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ {
+ 	struct branch_info new_branch_info;
+ 	int parseopt_flags = 0;
++	int got_start_point = 0;
+ 
+ 	memset(&new_branch_info, 0, sizeof(new_branch_info));
+ 	opts->overwrite_ignore = 1;
+@@ -1661,6 +1662,8 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 			!opts->new_branch;
+ 		int n = parse_branchname_arg(argc, argv, dwim_ok,
+ 					     &new_branch_info, opts, &rev);
++		if (n)
++			got_start_point = 1;
+ 		argv += n;
+ 		argc -= n;
+ 	} else if (!opts->accept_ref && opts->from_treeish) {
+@@ -1689,7 +1692,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 		 * Try to give more helpful suggestion.
+ 		 * new_branch && argc > 1 will be caught later.
+ 		 */
+-		if (opts->new_branch && argc == 1)
++		if (opts->new_branch && !got_start_point && argc == 1)
+ 			die(_("'%s' is not a commit and a branch '%s' cannot be created from it"),
+ 				argv[0], opts->new_branch);
+ 
+
+to produce:
+
+  $ git checkout -b work -t master HEAD
+  fatal: '--track' cannot be used with updating paths
+
+  $ git checkout -b work master HEAD
+  fatal: Cannot update paths and switch to branch 'work' at the same time.
+
+which are both correct. I wonder if there's a more elegant way to do it,
+though (probably not, as there's definitely some heuristic parsing going
+on to determine which checkout mode we're in; the new switch/restore
+alternatives don't suffer as much from this).
+
+> What did you expect to happen? (Expected behavior)
 > 
-> Sorry, I may have missed the previous rounds of discussion, but the
-> comment adds more puzzles than it helps readers.  "is currently not
-> used" can be seen from the code, but it is totally unclear why it is
-> not used.  Is that a design decision to always keep quiet or always
-> talkative (if so, "suppress output..." is not a good description)?
-> Is that that this is a WIP patch that the behaviour the option aims
-> to achieve hasn't been implemented?  Is it that no existing callers
-> pass "-q" to the scripted version, so there is no need to support
-> it (if so, why do we even accept it in the first place)?  Is it that
-> all existing callers pass "-q" so we need to accept it, but there is
-> nothing we need to make verbose so the variable is not passed around
-> in the codepath?
+>   I expected a new branch named 'work' to be created and checked out,
+>   pointing to commit ef7bebf and with upstream branch set to 'master'.
 
-As the original author of the shell code, I had it accept -q because,
-with the other subcommmands, you can pass -q either before or after the
-subcommand such as
+So getting back to your actual goal: you can't do what you want with a
+single checkout command. I think:
 
-	$ git submodule -q sync
+  git checkout -b work HEAD
+  git branch --set-upstream-to=master
 
-or
-	$ git submodule sync -q
-
-and I wanted set-branch to retain that behaviour even though -q
-ultimately doesn't affect set-branch at all since it's already a quiet
-command.
-
-Perhaps as a follow-up to this patch, we could stop accepting -q in
-set-branch. I highly doubt that anyone is using it anyway.
+-Peff
