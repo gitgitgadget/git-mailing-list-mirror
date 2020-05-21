@@ -2,198 +2,137 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7079C433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13AA4C433E0
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:55:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A8FF208C9
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:54:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E34EF20738
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:55:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TZt90AlV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bEV+4m4o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730074AbgEUSye (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 14:54:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40110 "EHLO
+        id S1729891AbgEUSzT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 14:55:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730071AbgEUSyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 14:54:33 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CBFDC061A0F
-        for <git@vger.kernel.org>; Thu, 21 May 2020 11:54:32 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 5so6415440ybe.17
-        for <git@vger.kernel.org>; Thu, 21 May 2020 11:54:32 -0700 (PDT)
+        with ESMTP id S1729639AbgEUSzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 14:55:18 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADEB3C061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 11:55:18 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id f13so8350610qkh.2
+        for <git@vger.kernel.org>; Thu, 21 May 2020 11:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=UyyyqzHhRLQ6JaolD9JAOwdk4Z7TICBWzomUYHy8LyQ=;
-        b=TZt90AlV8aAYoXI2XIYgwUEy32hAGhVlqUt3S+Cw4NEJb7CdwZqPyXqtmLSxoFaWu6
-         cnMAkKUGawa2rT0QQRGT42BSNl4kzAKtlRmml/L3CYeDOmo3rOQj7M+zjzccjyCZouHf
-         W9YEz9YdmGtkwvMWJ/KlzKNvRohVXmZCYHQkxOKHFdYmfS8DIPQdepndczIrq0tmorf/
-         3zf4Af6Z+91dK0gf63lkQRFC8S0AlrAwT1/BGkj53vVZQLG+xA3ZpkZtBUgU2WB9D0Jb
-         +s2YxsxYvCGf9GCyUfNxCn7nlqLa2QDQvC9KKGQesO81JWP+eLnuzgm0UKkAJO1gOBf0
-         iA0A==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jHbBHbB393Tqx+xKRt2ba6ThnR4kWRYQea1QuCt1Zxs=;
+        b=bEV+4m4ov8o5+E8ODaktuBLVsi0G0kGcitNg3HXJoUAxTFqW6M/+UpOFRs12aY7qFW
+         f8CtqvMIT/aXQKKm42qodaxvtjvNhFRMTz8pKeJwPORxPZeIyRw+mNGgAyRlx7K4v3eY
+         DioN8OFc6oKy4v4w+l0TH4Qb9PDZgHBx01tVoxc+suqA7rHQbFAVOz+pL4dfZGrVY+E5
+         JGCR0FuVk2BGwG77I/I919hynpDyG6h9iR857fvE8YQN5wv3sjRWHmgiWIyQkLY495CI
+         3t2nOE01sFsMrja4q2pE0E+GvJIz/41Xpa2DWdKXQu2fByvjjT+Eg9zKwdVBYIqJDyAB
+         pzRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=UyyyqzHhRLQ6JaolD9JAOwdk4Z7TICBWzomUYHy8LyQ=;
-        b=ts0f6fY7lLKmwAt+TrfSOTYtMZiCrRCV5wqcqxPZh5bCC0kb2tvOlxnXYJUGyWwd0M
-         uFxRMmS6AQtqlWi+PRi23zwM8snzlG7EoLRzpozx0c1RZAS1qvfU8ehdwoXJ5i5UBdSf
-         ZjI/nwQ4zDH4qWCtcKvWr7VgcYKlhTpyxcAS1ea/NTv9SyV/0FGRq9ESsXm+DkARqZGE
-         nvsv2d11e6YX6lQOQFdMI4n7J0Z9dWdzreqXemQmTZLVloJmuBGfcii7z84Lgi3s4cP2
-         ewR9V14EURbLg53cP7YOWMr2xF36qfy2kILvOX43EKI/yqdVTinL4cY4guiXejkHRcB+
-         SEqg==
-X-Gm-Message-State: AOAM530UK5JWuI28T0qPEHWcdGcTvPJaccOAcMAeHofLB74d4Cnoy797
-        kvR4KSEV92P4OoAAFUXotA8IenX2zdrUqg1UQK0Cbq2MD3pCjnLloIjcOxM4Wtzk7YpcNDcG17T
-        JQCsVc99mgDXKP8j/JpX4laYhp7r2ZuKhBBcrjCggfz6McY6pDU3lSPGsn37j+SgDc2yoj4mMhA
-        ==
-X-Google-Smtp-Source: ABdhPJxF+sL4BqDS204eyIRwI12SIUY/DQplHjnIvpIBZOVAbbWq0F14W9p/MKwVmbR6smvuHk2vTyGXjjVMkZXKnNs=
-X-Received: by 2002:a25:bc81:: with SMTP id e1mr15141342ybk.311.1590087271399;
- Thu, 21 May 2020 11:54:31 -0700 (PDT)
-Date:   Thu, 21 May 2020 11:54:14 -0700
-In-Reply-To: <20200521185414.43760-1-emilyshaffer@google.com>
-Message-Id: <20200521185414.43760-5-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20200521185414.43760-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652-goog
-Subject: [PATCH v2 4/4] hook: add --porcelain to list command
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jHbBHbB393Tqx+xKRt2ba6ThnR4kWRYQea1QuCt1Zxs=;
+        b=SqpGvxYavyDP5JeM8A2bIUi30X8QDWywtZptIYJObfngO6ebOOZzgMTzbFmnCnpeVn
+         X9BgVHGI/7slt5RCWLUZC12WZru1KfApGH9QWlF92K4w/7/DvlVZcWXZB4e3tLELl8cE
+         2WiMV/7n4UI7xtK/esuow48ygzsVs0kEgQTpNyJX8ZXdqTTTQrK4CfpSxWOzd+cKg6R6
+         j8D1OfV6obJVJufNWPu76jpmB7Ee/+/iW4o2wYbPLhjkUSXQ5y8OMBavDOliW29jjkJ1
+         QWGR2pcXSjnifGW8cm+TMzv6dBI0Xved+TJ7YEnc4iGZdHJDUQQZgyES+7vvbQQJ0XTV
+         WIHg==
+X-Gm-Message-State: AOAM531R38ZNFByrgOdQBHs+/aTnXBl9l0/ieBdEJNseGwKFY09yL8cr
+        NQUQmeCNLWmT2z/4lUiktHPNG2HJ
+X-Google-Smtp-Source: ABdhPJyeyk01sHBbE0oYR9Dhw/8iQ+BleTjUS/vfqYzQaoqVBefZ5sQx275SMBiKfl3j0DSth07eEA==
+X-Received: by 2002:a05:620a:556:: with SMTP id o22mr11684175qko.434.1590087317873;
+        Thu, 21 May 2020 11:55:17 -0700 (PDT)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id k57sm5907374qta.20.2020.05.21.11.55.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 May 2020 11:55:17 -0700 (PDT)
+Date:   Thu, 21 May 2020 14:55:14 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/4] lib-submodule-update: pass OVERWRITING_FAIL
+Message-ID: <20200521185514.GA615266@generichostname>
+References: <cover.1588162842.git.liu.denton@gmail.com>
+ <cover.1590019226.git.liu.denton@gmail.com>
+ <48598e3f9859dc525ec878cd7f3eaadee8bb61b1.1590019226.git.liu.denton@gmail.com>
+ <20200521182928.GA1308647@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200521182928.GA1308647@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach 'git hook list --porcelain <hookname>', which prints simply the
-commands to be run in the order suggested by the config. This option is
-intended for use by user scripts, wrappers, or out-of-process Git
-commands which still want to execute hooks. For example, the following
-snippet might be added to git-send-email.perl to introduce a
-`pre-send-email` hook:
+Hi Peff,
 
-  sub pre_send_email {
-    open(my $fh, 'git hook list --porcelain pre-send-email |');
-    chomp(my @hooks = <$fh>);
-    close($fh);
+On Thu, May 21, 2020 at 02:29:28PM -0400, Jeff King wrote:
+> > This is useful because currently, when we run a test helper function, we
+> > just mark the whole thing as `test_must_fail`. However, it's possible
+> > that the helper function might fail earlier or later than expected due
+> > to an introduced bug. If this happens, then the test case will still
+> > report as passing but it should really be marked as failing since it
+> > didn't actually display the intended behaviour.
+> 
+> Now this second concern I think is much more interesting, because it
+> impacts the test results. And it's really not even about test_must_fail
+> in particular, but is a general problem with checking failure in any
+> compound operation. We may expect the early parts to succeed, but the
+> later parts to fail, and we want to tell the difference. And that's true
+> whether you're using "!", test_must_fail, etc.
+> 
+> You solve it here by passing OVERWRITING_FAIL down into the callback
+> functions. And that does work. But I think it may be easier to
+> understand if we invert the responsibility. Let the outer caller specify
+> two callbacks: one for setup/prep that must succeed, and one for a
+> single operation where we might expect success or failure.
 
-    foreach $hook (@hooks) {
-            system $hook
-    }
+I believe that we'll need a third optional argument. For example, in
+t3906, we have the following diff
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- Documentation/git-hook.txt    | 13 +++++++++++--
- builtin/hook.c                | 17 +++++++++++++----
- t/t1360-config-based-hooks.sh | 11 +++++++++++
- 3 files changed, 35 insertions(+), 6 deletions(-)
+	diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
+	index 6a7e801ca0..6e8dac9669 100755
+	--- a/t/t3906-stash-submodule.sh
+	+++ b/t/t3906-stash-submodule.sh
+	@@ -8,7 +8,11 @@ test_description='stash can handle submodules'
+	 git_stash () {
+		git status -su >expect &&
+		ls -1pR * >>expect &&
+	-	git read-tree -u -m "$1" &&
+	+	$OVERWRITING_FAIL git read-tree -u -m "$1" &&
+	+	if test -n "$OVERWRITING_FAIL"
+	+	then
+	+		return
+	+	fi &&
+		git stash &&
+		git status -su >actual &&
+		ls -1pR * >>actual &&
 
-diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index e458586e96..0854035ce2 100644
---- a/Documentation/git-hook.txt
-+++ b/Documentation/git-hook.txt
-@@ -8,7 +8,7 @@ git-hook - Manage configured hooks
- SYNOPSIS
- --------
- [verse]
--'git hook' list <hook-name>
-+'git hook' list [--porcelain] <hook-name>
- 
- DESCRIPTION
- -----------
-@@ -43,11 +43,20 @@ Local config
- COMMANDS
- --------
- 
--list <hook-name>::
-+list [--porcelain] <hook-name>::
- 
- List the hooks which have been configured for <hook-name>. Hooks appear
- in the order they should be run, and note the config scope where the relevant
- `hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
-++
-+If `--porcelain` is specified, instead print the commands alone, separated by
-+newlines, for easy parsing by a script.
-+
-+OPTIONS
-+-------
-+--porcelain::
-+	With `list`, print the commands in the order they should be run,
-+	separated by newlines, for easy parsing by a script.
- 
- GIT
- ---
-diff --git a/builtin/hook.c b/builtin/hook.c
-index cfd8e388bd..2e51c84c81 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -16,8 +16,11 @@ static int list(int argc, const char **argv, const char *prefix)
- 	struct list_head *head, *pos;
- 	struct hook *item;
- 	struct strbuf hookname = STRBUF_INIT;
-+	int porcelain = 0;
- 
- 	struct option list_options[] = {
-+		OPT_BOOL(0, "porcelain", &porcelain,
-+			 "format for execution by a script"),
- 		OPT_END(),
- 	};
- 
-@@ -29,6 +32,8 @@ static int list(int argc, const char **argv, const char *prefix)
- 			      builtin_hook_usage, list_options);
- 	}
- 
-+
-+
- 	strbuf_addstr(&hookname, argv[0]);
- 
- 	head = hook_list(&hookname);
-@@ -41,10 +46,14 @@ static int list(int argc, const char **argv, const char *prefix)
- 
- 	list_for_each(pos, head) {
- 		item = list_entry(pos, struct hook, list);
--		if (item)
--			printf("%s:\t%s\n",
--			       config_scope_name(item->origin),
--			       item->command.buf);
-+		if (item) {
-+			if (porcelain)
-+				printf("%s\n", item->command.buf);
-+			else
-+				printf("%s:\t%s\n",
-+				       config_scope_name(item->origin),
-+				       item->command.buf);
-+		}
- 	}
- 
- 	clear_hook_list();
-diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-index 4e46d7dd4e..3296d8af45 100755
---- a/t/t1360-config-based-hooks.sh
-+++ b/t/t1360-config-based-hooks.sh
-@@ -55,4 +55,15 @@ test_expect_success 'git hook list reorders on duplicate commands' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'git hook list --porcelain prints just the command' '
-+	cat >expected <<-\EOF &&
-+	/path/ghi
-+	/path/abc
-+	/path/def
-+	EOF
-+
-+	git hook list --porcelain pre-commit >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.27.0.rc0.183.gde8f92d652-goog
+which means, when we're doing test_must_fail, we have to skip the
+remainder of the function otherwise, if the first command succeeds but
+it fails later in the test, then we report success even though it didn't
+fail at the point where we were expecting. I think that we'll have to
+have an optional third arg for $cleanup or something. The only thing
+that I'm worried about is that having three separate functions being
+passed in may be too messy.
 
+Aside from that, I like this approach much more than mine.
+
+Thanks,
+
+Denton
