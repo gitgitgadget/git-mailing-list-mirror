@@ -2,136 +2,102 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8D69C433E0
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 17:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C289C433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:01:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FF5120759
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 17:54:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17AD520759
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 18:01:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AoZ3k2Xy"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kAEzPWKU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728635AbgEURyj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 13:54:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727966AbgEURyj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 13:54:39 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E21FBC061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 10:54:38 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id c3so6157231otr.12
-        for <git@vger.kernel.org>; Thu, 21 May 2020 10:54:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=HZLUy5bcwAwyIh+MjAecaSZK0AWpMDYqSA48P5EuO8s=;
-        b=AoZ3k2XyoD9BDv8E93Ssbvg9/g3yLylQrQK32s4yy0rbjijkoc4+JsEabdPVsmTMD2
-         SedNlwDWc4xBwHVFEyIM5p5Y1dJTqAb7ls6YqbAMw3YR6krIN1VNU6CWbtPzBikaHk/0
-         ObgvftH7+L1CSwtWzOS5zN1DMMZX4wXcR4F8+2hfbj3iwFArdfhfkKUc84G1W/OeSfBH
-         Asl7c1AhmnlKUNnqo8vuWquM4OZU3slua/oLro4ve5yiin4EmEdAaCOf0X8yWLZtz9Ag
-         /vyXA1tOMrWC2/PV7f/GJ7I4umvSaoflORjOMNiuGjnLEt5zVCc+Spbe6/taLkFzYOqX
-         tbng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=HZLUy5bcwAwyIh+MjAecaSZK0AWpMDYqSA48P5EuO8s=;
-        b=MEfr5bFGdCD7tPA8u0hB6jsIRjOCDTC1HSPNhidQxQzKQLZKMQCYxPV0sGiFwibPP0
-         IAz7ZNJ3mp4dO0sXmGSGkWPkD6IH/kenqc3CQVOr2u6x4f46PWeSQW6w4zbUOTL3IJLM
-         C1AHqgvDufaRtsGdR0Cmp0ygl1oz/hdMAwpLpUyUK0CfONZMHcZS9hp9yiNoVz5AxXdm
-         t+V3/KSPDHrsznuJe1so2jXf7cRtGVXcCwnq6Hiaw6a1RxBdXrdNY1mlwBXO83xSIi1K
-         B0uXqowWxRNZDB+F7raCRfWpajclpSu1CowmXJRCkWDiVdni5KL2NOhMfZKZIidh3fyk
-         F3Uw==
-X-Gm-Message-State: AOAM531Xz2+a1XXhKu9nQY36Q0Ir2ZbvY2N99Yd/iEBCUMKEuG4qEquF
-        GqQx3bA0J1sZbJCpS8uCIg5zLLwuX2Q=
-X-Google-Smtp-Source: ABdhPJxHT9VY+6W2SVtR4inyetFwGZItT/ceuDX1ygA3/ubaUdO0rKbBlp8n+ERGeSPdt6mDghMTEA==
-X-Received: by 2002:a05:6830:1292:: with SMTP id z18mr7864418otp.333.1590083678039;
-        Thu, 21 May 2020 10:54:38 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 34sm1754043otq.67.2020.05.21.10.54.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2020 10:54:37 -0700 (PDT)
-Subject: Re: [PATCH 06/10] sparse-checkout: use oidset to prevent repeat blobs
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
- <fcf948bda7aebcc5f88c17f5b308b2ce0cc285f5.1588857462.git.gitgitgadget@gmail.com>
- <CABPp-BEkf0TVTt4=adJ9x70j814frL932vxyQCpm74AQiHWwGQ@mail.gmail.com>
- <CABPp-BGcjpJOht7ip_cPcHEtd3kx5fCwm=i19narWCEfCUwWAQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b78b124a-81f2-933a-775d-1d8256e83e05@gmail.com>
-Date:   Thu, 21 May 2020 13:54:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
- Thunderbird/77.0
+        id S1729177AbgEUSBV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 14:01:21 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52426 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728888AbgEUSBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 14:01:21 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DEF06693AA;
+        Thu, 21 May 2020 14:01:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=oW8ip186h/zH
+        04lKX6vh81uMOBU=; b=kAEzPWKUXo6gHOsUXzED06LBfvOd1yzu2e9kp+zjmN8H
+        IEni7AG425wayJGeAABEBPnQB9NMumSITsLclAL9gOic1TPuJ+4wuY2BL7TIimos
+        T81E3TD1pNTXwSNW8sJ6LQcpLayj9307NuddcQAAVJLKNgYVsJqpL1ZYEcAw13o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=yWZfXk
+        DqKuH8In1YHV4RhOMvqma9o6403qJldET4cJ2YAzOmtkXh8SvdgpAsqVWujoyalX
+        lYDBPyikGs1QwEeOfUQbP+s3i8bqEEgq7FcFLNugzSmMcWfntNUHHcnyWRwk91Ra
+        hSYBV/FGGJAHPp3r7urZNHwkfwJwT8SMPuTU4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D6119693A9;
+        Thu, 21 May 2020 14:01:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3E091693A8;
+        Thu, 21 May 2020 14:01:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Brandon Williams <bwilliamseng@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/4] t1450: increase test coverage of in-tree d/f detection
+References: <CALN-EhTpiLERuB16-WPZaLub6GdaRHJW8xDeaOEqSFtKe0kCYw@mail.gmail.com>
+        <d963242a-72f3-7f42-7c95-ea5148f74804@web.de>
+        <xmqqpnbduiec.fsf@gitster.c.googlers.com>
+        <938f0818-7e57-b883-009f-01db88ef8f65@web.de>
+        <xmqqh7wovoop.fsf@gitster.c.googlers.com>
+        <aab9512b-a70a-0f5b-5cdc-5d40acd343d0@web.de>
+        <2937d635-52a9-5e69-b3d2-fbde415b7315@web.de>
+        <xmqq4ksmsaks.fsf@gitster.c.googlers.com>
+        <106c58e1-9c74-46e3-c83a-88eee114d9d6@web.de>
+        <20200521102053.GA578930@generichostname>
+        <1f982a11-358c-195d-21f4-0299f5b60ff2@web.de>
+Date:   Thu, 21 May 2020 11:01:17 -0700
+In-Reply-To: <1f982a11-358c-195d-21f4-0299f5b60ff2@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 21 May 2020 15:31:26 +0200")
+Message-ID: <xmqqwo55rwuq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGcjpJOht7ip_cPcHEtd3kx5fCwm=i19narWCEfCUwWAQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: 11FD78FE-9B8D-11EA-9398-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/20/2020 11:49 PM, Elijah Newren wrote:
-> Replying to my own questions...
-> 
-> On Wed, May 20, 2020 at 9:40 AM Elijah Newren <newren@gmail.com> wrote:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+
+>>> +check_duplicate_names () {
+>>> +	expect=3D$1 &&
+>>> +	shift &&
+>>> +	names=3D$@ &&
 >>
->> On Thu, May 7, 2020 at 6:21 AM Derrick Stolee via GitGitGadget
->> <gitgitgadget@gmail.com> wrote:
->>>
->>> From: Derrick Stolee <dstolee@microsoft.com>
->>>
->>> As we parse the in-tree config files that store the sparse.dir values
->>> used to create an in-tree sparse-checkout definition, we can easily
->>> avoid parsing the same file multiple times by using an oidset on those
->>> blobs. We only parse if the oid is new to the oidset.
->>>
->>> This is unlikely to have a major performance benefit right now, but will
->>> be extremely important when we introduce the sparse.inherit options to
->>> link multiple files in a directed graph. This oidset will prevent
->>> infinite loops when cycles exist in that digraph, or exponential blowups
->>> even in the case of a directed acyclic graph.
->>
->> I'm still not sure if I like the idea of having a mirror dependency
->> structure separate from (and duplicative of) the build code; I'm still
->> mulling that over.
-> 
-> I mentioned this to a few other buildsystem folks at $DAYJOB.  They
-> were strongly opposed to having more than one source of truth, but
-> generating the git in-tree sparse values from the official build
-> system files, with commit hooks and build system checks to make sure
-> they get updated seemed like it'd be fine or not concern them much.
+>> It doesn't really make sense to use $@ here since we're not using the
+>> argument list behaviour of $@; we're just expanding it normally. I wou=
+ld
+>> replace this with $* instead.
+>
+> The assignment to $names flattens the list, so $@ and $* behave the sam=
+e
+> here.
+> ...
+> At least I'd like to keep the $@ as kind of a reminder that we want to
+> pass on arguments (full names), not words.
 
-The intention is that these files are "downstream" from the build
-system. As the build changes, it would adjust the config files to
-tell Git what to do.
-
->> It's good that you've protected against infinite loops.
->>
->> Is there any reason to prefer swallowing infinite loops rather than
->> warning or flagging as an error?  (I'm not sure, just thinking my
->> questions out loud.)
-> 
-> The buildsystem folks also reminded me that we have cylic dependencies
-> already, and although it's absolutely ugly, it is somewhat forced on
-> us by a combination of different external tools that we can't change.
-> As such, warnings or errors would be really annoying and we'd be one
-> of the ones to want to turn them off.  So drop that idea from me.  :-)
-
-This is more common than one might think!
-
-Thanks for taking a look,
--Stolee
+I personally prefer to use "$*" when we are not invoking the "list"
+magic of "$@" and switch it to "$@" when it starts to matter, but I
+can also understand your "reminder value" reasoning, so I am on the
+fence.
