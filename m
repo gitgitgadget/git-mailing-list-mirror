@@ -2,490 +2,125 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B0BCC433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 07:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE38C433E0
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 07:56:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D322D2065F
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 07:36:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B40492065F
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 07:56:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eTAmG90j"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KFeIUsfe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728432AbgEUHgz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 03:36:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47144 "EHLO
+        id S1728487AbgEUH4v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 03:56:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728053AbgEUHgy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 03:36:54 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70345C061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 00:36:53 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id z3so4786890otp.9
-        for <git@vger.kernel.org>; Thu, 21 May 2020 00:36:53 -0700 (PDT)
+        with ESMTP id S1728485AbgEUH4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 03:56:51 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75924C061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 00:56:51 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id y198so2967812pfb.4
+        for <git@vger.kernel.org>; Thu, 21 May 2020 00:56:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=b5Rd6PptHNlUJqoXwX1maykzBbb133+6sKDQTGJCY7Y=;
-        b=eTAmG90jdl7xT4xst+SuogVPOwYl9zTPG6r54hfomOokeEluYp2f2V59svkNhQB5pE
-         h9YSHE5x0kpY3FzrLh7EELPsADiVPpR/DSSPRiRgsWfzuO3XBkys9AvKb8SvzGy12AQH
-         2M1mWQFYBDldkfGBj2eFlAqPiLFaLHLuoK2bC6etFsPSSbXKdyCWZfYFJxeMWt2SWYSo
-         6yvsBsJMAURaGFdldTQ44e7THLODvshSWJgSUUGytOsEcav4P2ybGG2ecMpFgdVWScCA
-         QolN8R480Ub2C8i/aJZu4ZCI7xw2acW9qcFq/PZI19qM8uMv0+WInHPDbwWFNXzcgslt
-         4XBg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9fVVnH5h2MpThakG5zQ7whjxBxlNxECNjgqd20/LrW8=;
+        b=KFeIUsfePzPdaNwbne0uDU4AO9Xoh61MpBpFHxkvmJXgVLQpQFzAFu8QQbXi17j7jF
+         YyVzVtszZSKupf4EHWTxSbYWh+ZLeBz/hj5FjnFszRh5wfCfaRR4xgOG9j/0c0avbghV
+         NQfWpfxUEyXm2GTUrJbIFirCShS0U9GEH2qEdEOws5sq8E0t8er15h2qzTmch0uraLuE
+         HGvVq1SF214n73wYGRWQcQxf5delk0JHs6p76YhGIk3Qm26DLqP3Elkku5ZkG+IXUOfw
+         Aho7foBh6hXk4KN1vOw0khE2wp/rpshwTUPiDiNyaqav0/Q3yUoeAJDk6zwF/LsPlnTP
+         sBcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=b5Rd6PptHNlUJqoXwX1maykzBbb133+6sKDQTGJCY7Y=;
-        b=ClLMy9Yc0zF8c48N7UvSMe88plLXEiYzrPMvRQ93ZMznSlDEfgnquPyRCnRTBvJuO4
-         GtsWacWWObPIAFZUlYd9jAJHWIukKRZnajtm3agA4EoARIDTka0yzupGjPgpaV6YlqS1
-         FU+PQIKUkCUjEwXSis5S1/BwUjZrCsbV4+Nef6nVRGISp4upykZdM1LW4Hzd4HcYPUXV
-         on2drjyKIx1ELIE+IEyK11zdZMNDcqPaiqGBT5Br0jfaDAGNHs6mXyKLHuHvODrca3IL
-         1Yx57dIVwdGpeZvAK67krUnvum7r9FIRZCYF7ulMCg4XqDdIpuqzRZd5yqJn6NdoDKO4
-         NTng==
-X-Gm-Message-State: AOAM530cpLy5lNBhJbqiGiCFEdtuQwSNRm/n0UBpWbxw6XfyJ7liGgUs
-        5RxsH7iPJI4WW3HezX5yPSF9YIoQ45F4tJqdzIw=
-X-Google-Smtp-Source: ABdhPJykrl2tCZuOV5Qvd34enIWJ2w6/bhVxTVqFfCQn/yG241+S8LBvtKn89KIEsq3sl/MwHw1hghytsyksV8IaSFc=
-X-Received: by 2002:a9d:24e5:: with SMTP id z92mr6297329ota.345.1590046612621;
- Thu, 21 May 2020 00:36:52 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9fVVnH5h2MpThakG5zQ7whjxBxlNxECNjgqd20/LrW8=;
+        b=NmcJhPd4b8RfjPihUUh5n53ZsIH2G/Ff7dNtGe6BdVl7UKA7/lLNjwzsLcLYFDy/Hl
+         dkT5g3so8eXYVFiAWiAeKABawB43Qw111UoqVc/X8Y7jczZlgpLrBxrMp+e3l1PT1u8C
+         WAAcftIxEl8qS3rDQBB0i4eo9GzhRlmuu9b2PP8Z1WeAxyz55NmdGO4EN6XckZsLGwFD
+         jQPs7h09JsX97pTP3+M+BQ3p323CbkckH8CSb9nQoGDayOye7Oi/pNIMXI1FreDCcrZd
+         Mo5CYWBCoW/Pt1ZybdsIJm/mtUcX0UBysGbxyvcWgjh54vi6u0R+xc+ItvlEkTAArOm4
+         eJfQ==
+X-Gm-Message-State: AOAM530zNIg0rtfn2CZR01jg9JjUv8QQFXBXriQO+ZEZ0pjXflk10BtN
+        7klDLILCO6jLY3GyZhMm1u4=
+X-Google-Smtp-Source: ABdhPJxxWgXHo5021iRcE8vmWZjYppdUFseNt0tlz6KFBdT/utceCEe78QSRd9b1/ll4DecRm0b4vQ==
+X-Received: by 2002:a63:cd51:: with SMTP id a17mr6908690pgj.99.1590047810957;
+        Thu, 21 May 2020 00:56:50 -0700 (PDT)
+Received: from localhost.localdomain ([47.89.83.2])
+        by smtp.gmail.com with ESMTPSA id q4sm4146446pfu.42.2020.05.21.00.56.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 May 2020 00:56:50 -0700 (PDT)
+From:   Jiuyang Xie <jiuyangxie@gmail.com>
+X-Google-Original-From: Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Cc:     Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
+Subject: [PATCH] doc: fix wrong 4-byte length of pkt-line message
+Date:   Thu, 21 May 2020 15:56:43 +0800
+Message-Id: <20200521075643.35286-1-jiuyang.xjy@alibaba-inc.com>
+X-Mailer: git-send-email 2.25.0
 MIME-Version: 1.0
-References: <cover.1589058209.git.matheus.bernardino@usp.br>
- <e00674c7278b032b826110f33e25a5dee176c7ba.1589058209.git.matheus.bernardino@usp.br>
- <xmqqh7wmqn7k.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqh7wmqn7k.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 21 May 2020 00:36:41 -0700
-Message-ID: <CABPp-BFdb=5W7EfVsT9Nc52M=da5UE73wPNfvTEGLAbdfHnJFA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 3/4] grep: honor sparse checkout patterns
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 11, 2020 at 12:35 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > One of the main uses for a sparse checkout is to allow users to focus on
-> > the subset of files in a repository in which they are interested. But
-> > git-grep currently ignores the sparsity patterns and report all matches
-> > found outside this subset, which kind of goes in the opposite direction.
-> > Let's fix that, making it honor the sparsity boundaries for every
-> > grepping case:
-> >
-> > - git grep in worktree
-> > - git grep --cached
-> > - git grep $REVISION
->
-> It makes sense for these to be limited within the "sparse" area.
->
-> > - git grep --untracked and git grep --no-index (which already respect
-> >   sparse checkout boundaries)
->
-> I can understand the former; those untracked files are what _could_
-> be brought into attention by "git add", so limiting to the same
-> "sparse" area may make sense.
->
-> I am not sure about the latter, though, as "--no-index" is an
-> explicit request to pretend that we are dealing with a random
-> collection of files, not managed in a git repository.  But perhaps
-> there is a similar justification like how "--untracked" is
-> unjustifiable.  I dunno.
+The first four bytes of the line, the pkt-len, indicates the total
+length of the pkt-line in hexadecimal.  Fixed wrong pkt-len headers of
+some pkt-line messages in `http-protocol.txt` and `pack-protocol.txt`.
 
-I don't think it makes sense for sparsity patterns to affect either.
-sparsity patterns are a way of splitting "tracked" files into two
-subsets (those matching the sparsity paths and those that don't).
-Therefore, flags that are about searching things that aren't tracked,
-clearly don't have anything to do with sparsity patterns.
+Signed-off-by: Jiuyang Xie <jiuyang.xjy@alibaba-inc.com>
+---
+ Documentation/technical/http-protocol.txt | 2 +-
+ Documentation/technical/pack-protocol.txt | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-However, I think this was just a wording issue; in the subsequent
-commit Matheus made it clear that he's not modifying the behavior of
-grep --untracked or grep --no-index based on the presence or absence
-of sparsity patterns.
+diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
+index 9c5b6f0fac..51a79e63de 100644
+--- a/Documentation/technical/http-protocol.txt
++++ b/Documentation/technical/http-protocol.txt
+@@ -216,7 +216,7 @@ smart server reply:
+    S: 001e# service=git-upload-pack\n
+    S: 0000
+    S: 004895dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint\0multi_ack\n
+-   S: 0042d049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n
++   S: 003fd049f6c27a2244e12041955e262a404c7faba355 refs/heads/master\n
+    S: 003c2cb58b79488a98d2721cea644875a8dd0026b115 refs/tags/v1.0\n
+    S: 003fa3c2e2402b99163d1d59756e5f207ae21cccba4c refs/tags/v1.0^{}\n
+    S: 0000
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index d5ce4eea8a..a4573d12ce 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -96,7 +96,7 @@ Basically what the Git client is doing to connect to an 'upload-pack'
+ process on the server side over the Git protocol is this:
+ 
+    $ echo -e -n \
+-     "0039git-upload-pack /schacon/gitbook.git\0host=example.com\0" |
++     "003agit-upload-pack /schacon/gitbook.git\0host=example.com\0" |
+      nc -v example.com 9418
+ 
+ 
+@@ -171,9 +171,9 @@ with a version number (if "version=1" is sent as an Extra Parameter),
+ and a listing of each reference it has (all branches and tags) along
+ with the object name that each reference currently points to.
+ 
+-   $ echo -e -n "0044git-upload-pack /schacon/gitbook.git\0host=example.com\0\0version=1\0" |
++   $ echo -e -n "0045git-upload-pack /schacon/gitbook.git\0host=example.com\0\0version=1\0" |
+       nc -v example.com 9418
+-   000aversion 1
++   000eversion 1
+    00887217a7c7e582c46cec22a130adf4b9d7d950fba0 HEAD\0multi_ack thin-pack
+ 		side-band side-band-64k ofs-delta shallow no-progress include-tag
+    00441d3fcd5ced445d1abc402225c0b8a1299641f497 refs/heads/integration
+-- 
+2.25.0
 
-> > diff --git a/builtin/grep.c b/builtin/grep.c
-> > index a5056f395a..91ee0b2734 100644
-> > --- a/builtin/grep.c
-> > +++ b/builtin/grep.c
-> > @@ -410,7 +410,7 @@ static int grep_cache(struct grep_opt *opt,
-> >                     const struct pathspec *pathspec, int cached);
-> >  static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> >                    struct tree_desc *tree, struct strbuf *base, int tn_len,
-> > -                  int check_attr);
-> > +                  int is_root_tree);
-> >
-> >  static int grep_submodule(struct grep_opt *opt,
-> >                         const struct pathspec *pathspec,
-> > @@ -508,6 +508,10 @@ static int grep_cache(struct grep_opt *opt,
-> >
-> >       for (nr = 0; nr < repo->index->cache_nr; nr++) {
-> >               const struct cache_entry *ce = repo->index->cache[nr];
-> > +
-> > +             if (ce_skip_worktree(ce) && !S_ISGITLINK(ce->ce_mode))
-> > +                     continue;
->
-> Hmph.  Why exclude gitlink from this rule?  If a submodule sits at a
-> path that is excluded by the sparse pattern, should we still recurse
-> into it?
-
-That bothers me too.
-
-> >               strbuf_setlen(&name, name_base_len);
-> >               strbuf_addstr(&name, ce->name);
-> >
-> > @@ -520,8 +524,7 @@ static int grep_cache(struct grep_opt *opt,
-> >                        * cache entry are identical, even if worktree file has
-> >                        * been modified, so use cache version instead
-> >                        */
-> > -                     if (cached || (ce->ce_flags & CE_VALID) ||
-> > -                         ce_skip_worktree(ce)) {
-> > +                     if (cached || (ce->ce_flags & CE_VALID)) {
-> >                               if (ce_stage(ce) || ce_intent_to_add(ce))
-> >                                       continue;
-> >                               hit |= grep_oid(opt, &ce->oid, name.buf,
-> > @@ -552,9 +555,78 @@ static int grep_cache(struct grep_opt *opt,
-> >       return hit;
-> >  }
-> >
-> > -static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> > -                  struct tree_desc *tree, struct strbuf *base, int tn_len,
-> > -                  int check_attr)
-> > +static struct pattern_list *get_sparsity_patterns(struct repository *repo)
-> > +{
-> > +     struct pattern_list *patterns;
-> > +     char *sparse_file;
-> > +     int sparse_config, cone_config;
-> > +
-> > +     if (repo_config_get_bool(repo, "core.sparsecheckout", &sparse_config) ||
-> > +         !sparse_config) {
-> > +             return NULL;
-> > +     }
-> > +
-> > +     sparse_file = repo_git_path(repo, "info/sparse-checkout");
-> > +     patterns = xcalloc(1, sizeof(*patterns));
-> > +
-> > +     if (repo_config_get_bool(repo, "core.sparsecheckoutcone", &cone_config))
-> > +             cone_config = 0;
-> > +     patterns->use_cone_patterns = cone_config;
-> > +
-> > +     if (add_patterns_from_file_to_list(sparse_file, "", 0, patterns, NULL)) {
-> > +             if (file_exists(sparse_file)) {
-> > +                     warning(_("failed to load sparse-checkout file: '%s'"),
-> > +                             sparse_file);
-> > +             }
-> > +             free(sparse_file);
-> > +             free(patterns);
-> > +             return NULL;
-> > +     }
-> > +
-> > +     free(sparse_file);
-> > +     return patterns;
-> > +}
-> > +
-> > +static int in_sparse_checkout(struct strbuf *path, int prefix_len,
-> > +                           unsigned int entry_mode,
-> > +                           struct index_state *istate,
-> > +                           struct pattern_list *sparsity,
-> > +                           enum pattern_match_result parent_match,
-> > +                           enum pattern_match_result *match)
-> > +{
-> > +     int dtype = DT_UNKNOWN;
-> > +
-> > +     if (S_ISGITLINK(entry_mode))
-> > +             return 1;
->
-> This is consistent with the "we do not care where a gitlink
-> appears---submodules are always descended into, regardless of the
-> sparse definition" decision we saw earlier, I think.  I am not sure
-> if that is a good design in the first place, though.
->
-> > +     if (parent_match == MATCHED_RECURSIVE) {
-> > +             *match = parent_match;
-> > +             return 1;
-> > +     }
-> > +
-> > +     if (S_ISDIR(entry_mode) && !is_dir_sep(path->buf[path->len - 1]))
-> > +             strbuf_addch(path, '/');
-> > +
-> > +     *match = path_matches_pattern_list(path->buf, path->len,
-> > +                                        path->buf + prefix_len, &dtype,
-> > +                                        sparsity, istate);
-> > +     if (*match == UNDECIDED)
-> > +             *match = parent_match;
-> > +
-> > +     if (S_ISDIR(entry_mode))
-> > +             strbuf_trim_trailing_dir_sep(path);
-> > +
-> > +     if (*match == NOT_MATCHED && (S_ISREG(entry_mode) ||
-> > +         (S_ISDIR(entry_mode) && sparsity->use_cone_patterns)))
-> > +             return 0;
-> > +
-> > +     return 1;
-> > +}
->
->
->
-> > +static int do_grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> > +                     struct tree_desc *tree, struct strbuf *base, int tn_len,
-> > +                     int check_attr, struct pattern_list *sparsity,
-> > +                     enum pattern_match_result default_sparsity_match)
-> >  {
-> >       struct repository *repo = opt->repo;
-> >       int hit = 0;
-> > @@ -570,6 +642,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> >
-> >       while (tree_entry(tree, &entry)) {
-> >               int te_len = tree_entry_len(&entry);
-> > +             enum pattern_match_result sparsity_match = 0;
-> >
-> >               if (match != all_entries_interesting) {
-> >                       strbuf_addstr(&name, base->buf + tn_len);
-> > @@ -586,6 +659,19 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> >
-> >               strbuf_add(base, entry.path, te_len);
-> >
-> > +             if (sparsity) {
-> > +                     struct strbuf path = STRBUF_INIT;
-> > +                     strbuf_addstr(&path, base->buf + tn_len);
-> > +
-> > +                     if (!in_sparse_checkout(&path, old_baselen - tn_len,
-> > +                                             entry.mode, repo->index,
-> > +                                             sparsity, default_sparsity_match,
-> > +                                             &sparsity_match)) {
-> > +                             strbuf_setlen(base, old_baselen);
-> > +                             continue;
-> > +                     }
-> > +             }
->
-> OK.
->
-> >               if (S_ISREG(entry.mode)) {
-> >                       hit |= grep_oid(opt, &entry.oid, base->buf, tn_len,
-> >                                        check_attr ? base->buf + tn_len : NULL);
-> > @@ -602,8 +688,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> >
-> >                       strbuf_addch(base, '/');
-> >                       init_tree_desc(&sub, data, size);
-> > -                     hit |= grep_tree(opt, pathspec, &sub, base, tn_len,
-> > -                                      check_attr);
-> > +                     hit |= do_grep_tree(opt, pathspec, &sub, base, tn_len,
-> > +                                         check_attr, sparsity, sparsity_match);
-> >                       free(data);
-> >               } else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
-> >                       hit |= grep_submodule(opt, pathspec, &entry.oid,
-> > @@ -621,6 +707,31 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> >       return hit;
-> >  }
-> >
-> > +/*
-> > + * Note: sparsity patterns and paths' attributes will only be considered if
-> > + * is_root_tree has true value. (Otherwise, we cannot properly perform pattern
-> > + * matching on paths.)
-> > + */
-> > +static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-> > +                  struct tree_desc *tree, struct strbuf *base, int tn_len,
-> > +                  int is_root_tree)
-> > +{
-> > +     struct pattern_list *patterns = NULL;
-> > +     int ret;
-> > +
-> > +     if (is_root_tree)
-> > +             patterns = get_sparsity_patterns(opt->repo);
-> > +
-> > +     ret = do_grep_tree(opt, pathspec, tree, base, tn_len, is_root_tree,
-> > +                        patterns, 0);
-> > +
-> > +     if (patterns) {
-> > +             clear_pattern_list(patterns);
-> > +             free(patterns);
-> > +     }
->
-> OK, it is not like this codepath is driven by "git log" to grep from
-> top-level tree objects of many commits, so it is OK to grab the
-> sparsity patterns once before do_grep_tree() and discard it when we
-> are done.
->
-> > +     return ret;
-> > +}
-> > +
->
-> >  static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
-> >                      struct object *obj, const char *name, const char *path)
-> >  {
-> > diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-reading.sh
-> > index 37525cae3a..26852586ac 100755
-> > --- a/t/t7011-skip-worktree-reading.sh
-> > +++ b/t/t7011-skip-worktree-reading.sh
-> > @@ -109,15 +109,6 @@ test_expect_success 'ls-files --modified' '
-> >       test -z "$(git ls-files -m)"
-> >  '
-> >
-> > -test_expect_success 'grep with skip-worktree file' '
-> > -     git update-index --no-skip-worktree 1 &&
-> > -     echo test > 1 &&
-> > -     git update-index 1 &&
-> > -     git update-index --skip-worktree 1 &&
-> > -     rm 1 &&
-> > -     test "$(git grep --no-ext-grep test)" = "1:test"
-> > -'
-> > -
-> >  echo ":000000 100644 $ZERO_OID $EMPTY_BLOB A 1" > expected
-> >  test_expect_success 'diff-index does not examine skip-worktree absent entries' '
-> >       setup_absent &&
-> > diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
-> > new file mode 100755
-> > index 0000000000..3bd67082eb
-> > --- /dev/null
-> > +++ b/t/t7817-grep-sparse-checkout.sh
-> > @@ -0,0 +1,140 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='grep in sparse checkout
-> > +
-> > +This test creates a repo with the following structure:
-> > +
-> > +.
-> > +|-- a
-> > +|-- b
-> > +|-- dir
-> > +|   `-- c
-> > +`-- sub
-> > +    |-- A
-> > +    |   `-- a
-> > +    `-- B
-> > +     `-- b
-> > +
-> > +Where . has non-cone mode sparsity patterns and sub is a submodule with cone
-> > +mode sparsity patterns. The resulting sparse-checkout should leave the following
-> > +structure:
-> > +
-> > +.
-> > +|-- a
-> > +`-- sub
-> > +    `-- B
-> > +     `-- b
-> > +'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +test_expect_success 'setup' '
-> > +     echo "text" >a &&
-> > +     echo "text" >b &&
-> > +     mkdir dir &&
-> > +     echo "text" >dir/c &&
-> > +
-> > +     git init sub &&
-> > +     (
-> > +             cd sub &&
-> > +             mkdir A B &&
-> > +             echo "text" >A/a &&
-> > +             echo "text" >B/b &&
-> > +             git add A B &&
-> > +             git commit -m sub &&
-> > +             git sparse-checkout init --cone &&
-> > +             git sparse-checkout set B
-> > +     ) &&
-> > +
-> > +     git submodule add ./sub &&
-> > +     git add a b dir &&
-> > +     git commit -m super &&
-> > +     git sparse-checkout init --no-cone &&
-> > +     git sparse-checkout set "/*" "!b" "!/*/" &&
-> > +
-> > +     git tag -am t-commit t-commit HEAD &&
-> > +     tree=$(git rev-parse HEAD^{tree}) &&
-> > +     git tag -am t-tree t-tree $tree &&
-> > +
-> > +     test_path_is_missing b &&
-> > +     test_path_is_missing dir &&
-> > +     test_path_is_missing sub/A &&
-> > +     test_path_is_file a &&
-> > +     test_path_is_file sub/B/b
-> > +'
-> > +
-> > +test_expect_success 'grep in working tree should honor sparse checkout' '
-> > +     cat >expect <<-EOF &&
-> > +     a:text
-> > +     EOF
-> > +     git grep "text" >actual &&
-> > +     test_cmp expect actual
-> > +'
-> > +
-> > +test_expect_success 'grep --cached should honor sparse checkout' '
-> > +     cat >expect <<-EOF &&
-> > +     a:text
-> > +     EOF
-> > +     git grep --cached "text" >actual &&
-> > +     test_cmp expect actual
-> > +'
-> > +
-> > +test_expect_success 'grep <commit-ish> should honor sparse checkout' '
-> > +     commit=$(git rev-parse HEAD) &&
-> > +     cat >expect_commit <<-EOF &&
-> > +     $commit:a:text
-> > +     EOF
-> > +     cat >expect_t-commit <<-EOF &&
-> > +     t-commit:a:text
-> > +     EOF
-> > +     git grep "text" $commit >actual_commit &&
-> > +     test_cmp expect_commit actual_commit &&
-> > +     git grep "text" t-commit >actual_t-commit &&
-> > +     test_cmp expect_t-commit actual_t-commit
-> > +'
-> > +
-> > +test_expect_success 'grep <tree-ish> should ignore sparsity patterns' '
-> > +     commit=$(git rev-parse HEAD) &&
-> > +     tree=$(git rev-parse HEAD^{tree}) &&
-> > +     cat >expect_tree <<-EOF &&
-> > +     $tree:a:text
-> > +     $tree:b:text
-> > +     $tree:dir/c:text
-> > +     EOF
-> > +     cat >expect_t-tree <<-EOF &&
-> > +     t-tree:a:text
-> > +     t-tree:b:text
-> > +     t-tree:dir/c:text
-> > +     EOF
-> > +     git grep "text" $tree >actual_tree &&
-> > +     test_cmp expect_tree actual_tree &&
-> > +     git grep "text" t-tree >actual_t-tree &&
-> > +     test_cmp expect_t-tree actual_t-tree
-> > +'
-> > +
-> > +test_expect_success 'grep --recurse-submodules --cached should honor sparse checkout in submodule' '
-> > +     cat >expect <<-EOF &&
-> > +     a:text
-> > +     sub/B/b:text
-> > +     EOF
-> > +     git grep --recurse-submodules --cached "text" >actual &&
-> > +     test_cmp expect actual
-> > +'
-> > +
-> > +test_expect_success 'grep --recurse-submodules <commit-ish> should honor sparse checkout in submodule' '
-> > +     commit=$(git rev-parse HEAD) &&
-> > +     cat >expect_commit <<-EOF &&
-> > +     $commit:a:text
-> > +     $commit:sub/B/b:text
-> > +     EOF
-> > +     cat >expect_t-commit <<-EOF &&
-> > +     t-commit:a:text
-> > +     t-commit:sub/B/b:text
-> > +     EOF
-> > +     git grep --recurse-submodules "text" $commit >actual_commit &&
-> > +     test_cmp expect_commit actual_commit &&
-> > +     git grep --recurse-submodules "text" t-commit >actual_t-commit &&
-> > +     test_cmp expect_t-commit actual_t-commit
-> > +'
-> > +
-> > +test_done
