@@ -2,129 +2,127 @@ Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B925C433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 23:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 439FEC433DF
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 23:05:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F17D520814
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 23:04:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FB0A207F9
+	for <git@archiver.kernel.org>; Thu, 21 May 2020 23:05:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F3/HEmSY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cc+rfLXI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730734AbgEUXE6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 19:04:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51230 "EHLO
+        id S1730739AbgEUXFb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 19:05:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730626AbgEUXE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 19:04:57 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC75C061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 16:04:56 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id z15so1619845pjb.0
-        for <git@vger.kernel.org>; Thu, 21 May 2020 16:04:56 -0700 (PDT)
+        with ESMTP id S1730717AbgEUXFa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 19:05:30 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A64EDC061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 16:05:30 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id u22so3602431plq.12
+        for <git@vger.kernel.org>; Thu, 21 May 2020 16:05:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Lligo7vI0PcJuOsMovychw4/2LpFOJDtPp2uOcL9z5Q=;
-        b=F3/HEmSY1VmSAN5JKlv5i5GDImayAYXyu0b4X8uowgNHHuO3NwgyvIgf8EKfGdvLcc
-         oSE6RQd7nN9iNJ0QGKY4sYmDfJxt3RuMgt+zYK2FFyYI1j40VbMQMdB74WBH5ODIZwaT
-         9wHLcGSscLzw3EUy0Fjvq6ibDKAECs/PnCyR79B6A5tx36lAjDxUsl3zBG12VFYceUBS
-         aqMxhKLVevOiLa7lok7OAkaStKWEWdr8pSFfBSikqZxRL48vIO+qG3REykGcsBL/bOyc
-         TpOve+E9YXEe+Xf3pI7sXNHPSkzPvyQ73EEqpfim7nU3o05nqPzvPM64R5ItaZAbnYSV
-         p8GQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MOCDwH3MCd2fD2cgy+WOgq84CDIQ0ZiREVf0kfMRlcY=;
+        b=cc+rfLXIo1UzM45Bfn9QSXFpJSTGAKBnGrjjiuYdZPNUwNSrXsMiryW0PVhZtPuf7z
+         corlte8oOL0gdX6MwZN17mx4kHUJjqEuDoxWni4voM2yV84/oeh3Ut4hbbgUAp0coAuR
+         aWnWZ8C9dbQfUJ8AODordACQejtdeNtpFQllkqMutfmFQBvaLHFilF+j8k5t1ngyoX4D
+         /U4w4HDoOXCUF3XG8aeLdISwPRrsWyIcJJO8AptKveKGhoa3ehJ+bex9aT2jVHxfiYlv
+         2xVPAOGEdePEPMVWLsUSskdIk2mLb5aeCVs0KFGWV2Hdyif2p40ndeSI2D3MeOntQvF4
+         LbFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Lligo7vI0PcJuOsMovychw4/2LpFOJDtPp2uOcL9z5Q=;
-        b=G6bNbRU2jnUR/9jIO2OnqSuJHC6Du6J9jEPpYOIjfOuGfz1L8zPzcM5LQFZvipasU1
-         IaTqB6lQ7w4+2Bru8DMa5Ku0RkasX5+dHj75eVK6goTkPQmgsk+EiLY5JsoQDliIEEMi
-         CgQYz+z8inOXCmp173EfT3Vd0OcBteycJMVsKx1hxn1gVI9Orp8JzJxj189favWEoeGY
-         C5U/r+q2eqo1aU2Zf3rGBWwLIo/RWmncRVBvDmJDjBGRdsXCv75RDZEiFXi27ZZgCL5L
-         BAu9ykpfONhK64GIu2NoJUZBCHB8063cpIgnV2cITpCyr7j1SzyCV7bxnEslCk//NCVf
-         EB1g==
-X-Gm-Message-State: AOAM532rSFZ1v997HP4+zMNJIIVM/Slqbx865JO7eJKGbjGHwdM+zx75
-        q+Zw3rNuG5uk65iytZU0bR8=
-X-Google-Smtp-Source: ABdhPJxD99qOq4mu5roa+WUKqSfjsRwXlXSnB9WU09WC9QVFzBOEPQQU0DGZjd6TtULJ99vxFmRbCg==
-X-Received: by 2002:a17:902:a713:: with SMTP id w19mr11021177plq.296.1590102295970;
-        Thu, 21 May 2020 16:04:55 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
-        by smtp.gmail.com with ESMTPSA id j7sm5206232pfh.154.2020.05.21.16.04.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2020 16:04:55 -0700 (PDT)
-Date:   Fri, 22 May 2020 06:04:53 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, liu.denton@gmail.com,
-        gitster@pobox.com, sunshine@sunshineco.com,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3] submodule: port subcommand 'set-branch' from shell to
- C
-Message-ID: <20200521230453.GB2042@danh.dev>
-References: <20200521163819.12544-1-shouryashukla.oo@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MOCDwH3MCd2fD2cgy+WOgq84CDIQ0ZiREVf0kfMRlcY=;
+        b=sG4RToQ7zs7I6rKqAKSJPs70FXp8qi/mbjjEZ04KLyR7XagycmVc9fmq+H1SBnVn45
+         Gp7oLmTFUW6lquATtl8kfkQMv0gEtk1TWKlFS3pyfAiHT8HR1FLF6eE0mzDSlCu2fP2c
+         Rl4dOz9gGaLBu/wWSDnGvTQBlHPJhvj9rVRLihxcO3tvwe7NBak+DhGl4IHdrxttgD46
+         fC9rrhqULJVKjix9MPQwdgKCbIl8FwHHTnUE+6koVg40SmGuAP3bxKH3OyhAwQOSloL2
+         vs5jaC2zTFAqVQJjc8xgV2q5j1c5ucnOvAUhk6DhilFdxuYVnuZWONuD6QJwn9lIUXW2
+         6l5w==
+X-Gm-Message-State: AOAM5321LM4KiuhE6bHexkwJHvIupN0BjaEugLJmM7hUVQYiW6sEam78
+        L+8lkp1Lc48dj7IamdqdMN4eTzW5
+X-Google-Smtp-Source: ABdhPJyNyfG5qBrJfXF01n40p2Rnd6Tsz0nErWWSwpNtcxgXkdes+uy10lJwerTn1xhV45GGxzHGZA==
+X-Received: by 2002:a17:90b:b0e:: with SMTP id bf14mr938623pjb.98.1590102329790;
+        Thu, 21 May 2020 16:05:29 -0700 (PDT)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id p19sm4722849pfn.216.2020.05.21.16.05.27
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 May 2020 16:05:28 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH] t5608: avoid say and use skip_all for consistency
+Date:   Thu, 21 May 2020 16:05:10 -0700
+Message-Id: <20200521230510.13077-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.27.0.rc1.181.g8d5cacc8d1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200521163819.12544-1-shouryashukla.oo@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shourya,
+Printing a message directly to stdout could affect TAP processing
+and is not really needed, as there is a standard way to skip all
+tests that could be used instead (including a message).
 
-On 2020-05-21 22:08:19+0530, Shourya Shukla <shouryashukla.oo@gmail.com> wrote:
-> Thank you for the review Eric. I have changed the commit message,
-> and the error prompts. Also, I have added a brief comment about
-> the `quiet` option.
-> 
-> +	/*
-> +	 * The `quiet` option is present for backward compatibility
-> +	 * but is currently not used.
-> +	 */
-> +	int quiet = 0, opt_default = 0;
-> +	const char *opt_branch = NULL;
-> +	const char *path;
-> +	char *config_name;
-> +
-> +	struct option options[] = {
-> +		OPT__QUIET(&quiet,
-> +			N_("suppress output for setting default tracking branch")),
+While at it, update the message to better reflect the use of
+booleans and get rid of the prerequisite.
 
-IIUC, this option is provided to be backward compatible with old shell
-version, and this option doesn't affect anything.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ t/t5608-clone-2gb.sh | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-Would it make sense to hide quiet from default usage, via:
-
-	OPT_NOOP_NOARG(0, "quiet")
-
-I may missed some discussion related to the decision to keep it
-OPT__QUIET.
-
-> +		OPT_BOOL(0, "default", &opt_default,
-> +			N_("set the default tracking branch to master")),
-> +		OPT_STRING(0, "branch", &opt_branch, N_("branch"),
-> +			N_("set the default tracking branch")),
-> +		OPT_END()
-> +	};
-> +	const char *const usage[] = {
-> +		N_("git submodule--helper set-branch [--quiet] (-d|--default) <path>"),
-> +		N_("git submodule--helper set-branch [--quiet] (-b|--branch) <branch> <path>"),
-
-And if above comment is applicable, remove `--quiet` from here.
-
-> +	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch $branch} ${default:+--default} -- "$@"
-
-I think we need to quote `$branch`, no?
-
-	${branch:+--branch "$branch"}
-
+diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+index eee0842888..4c476d2fa1 100755
+--- a/t/t5608-clone-2gb.sh
++++ b/t/t5608-clone-2gb.sh
+@@ -5,12 +5,11 @@ test_description='Test cloning a repository larger than 2 gigabyte'
+ 
+ if ! test_bool_env GIT_TEST_CLONE_2GB false
+ then
+-	say 'Skipping expensive 2GB clone test; enable it with GIT_TEST_CLONE_2GB=t'
+-else
+-	test_set_prereq CLONE_2GB
++	skip_all='expensive 2GB clone test; enable with GIT_TEST_CLONE_2GB=true'
++	test_done
+ fi
+ 
+-test_expect_success CLONE_2GB 'setup' '
++test_expect_success 'setup' '
+ 
+ 	git config pack.compression 0 &&
+ 	git config pack.depth 0 &&
+@@ -38,13 +37,13 @@ test_expect_success CLONE_2GB 'setup' '
+ 
+ '
+ 
+-test_expect_success CLONE_2GB 'clone - bare' '
++test_expect_success 'clone - bare' '
+ 
+ 	git clone --bare --no-hardlinks . clone-bare
+ 
+ '
+ 
+-test_expect_success CLONE_2GB 'clone - with worktree, file:// protocol' '
++test_expect_success 'clone - with worktree, file:// protocol' '
+ 
+ 	git clone "file://$(pwd)" clone-wt
+ 
 -- 
-Danh
+2.27.0.rc1.181.g8d5cacc8d1
+
