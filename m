@@ -2,97 +2,168 @@ Return-Path: <SRS0=kZBr=7E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44501C433E0
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E81BC433E0
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 13:04:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 149392065C
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:48:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF704206D5
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 13:04:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="qECJErv5";
-	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="qECJErv5"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Hv7RZNBm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728672AbgEVKsi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 May 2020 06:48:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47558 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728606AbgEVKsh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 May 2020 06:48:37 -0400
-Received: from mail.spkdev.net (unknown [IPv6:2001:41d0:8:e379::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6522DC061A0E
-        for <git@vger.kernel.org>; Fri, 22 May 2020 03:48:37 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        by mail.spkdev.net (Postfix) with ESMTP id 838EB40348;
-        Fri, 22 May 2020 10:48:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1590144514;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=SgetkshzBTtZYjzoTQ79xGSPEOcCTmq4PDQxtGz9N/g=;
-        b=qECJErv5jiOCUZjqo0tHiPpP/Q0UbjovIxWllaqaw/RcD10rqZHfIq6X5ZNSBTaseJ5Ihg
-        nueRS2Pl3HAyTc6SYemnY4IarkxjwTrqWzYrIK2YzKDy8B0FPS9WihljMJ/PqDLX6vga8w
-        aNatpLB15FD8uravMs+FTcw/Zwtcv2w=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.spkdev.net (Postfix) with ESMTPSA id 0840C400F2;
-        Fri, 22 May 2020 10:48:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
-        t=1590144514;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=SgetkshzBTtZYjzoTQ79xGSPEOcCTmq4PDQxtGz9N/g=;
-        b=qECJErv5jiOCUZjqo0tHiPpP/Q0UbjovIxWllaqaw/RcD10rqZHfIq6X5ZNSBTaseJ5Ihg
-        nueRS2Pl3HAyTc6SYemnY4IarkxjwTrqWzYrIK2YzKDy8B0FPS9WihljMJ/PqDLX6vga8w
-        aNatpLB15FD8uravMs+FTcw/Zwtcv2w=
-Date:   Fri, 22 May 2020 12:48:33 +0200
-From:   Laurent Arnoud <laurent@spkdev.net>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v7] diff: add config option relative
-Message-ID: <20200522104833.GB2050@spk-laptop>
-References: <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
- <20200518094021.GA2069@spk-laptop>
- <20200518135656.GB1980@danh.dev>
- <xmqq4ksd5ggq.fsf@gitster.c.googlers.com>
- <20200518191205.GA1999@danh.dev>
- <xmqqo8ql0yjg.fsf@gitster.c.googlers.com>
- <20200519003006.GC1999@danh.dev>
- <xmqqv9krztwp.fsf@gitster.c.googlers.com>
- <20200519193902.GA202573@spk-laptop>
- <20200519230124.GA12509@danh.dev>
+        id S1729668AbgEVNE3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 May 2020 09:04:29 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59567 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728898AbgEVNE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 May 2020 09:04:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1590152666;
+        bh=vZTEr9NXjuqGO3QlNDedMmBJG7I1be2Cq4fHdVBp8BY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Hv7RZNBmotN70N4jZ1xoNgBC5xBAPdVVNwY4jYrIusJQq64jGUwNdtMCVdtX+TL6L
+         zsJx+ID9n0U9QQgtVcqSOM2DHAIu44rVQXk7eiJHWd4NC0+WKmryCLHvfeKCgez6Vx
+         o6BVjeSKl/XohOuV5a/OUwaUxG7YwvAdz0ldJlTo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.211.123] ([213.196.213.226]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1fn0-1iw8gM1AW8-011x4P; Fri, 22
+ May 2020 15:04:26 +0200
+Date:   Fri, 22 May 2020 15:04:23 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t5608: avoid say and use skip_all for consistency
+In-Reply-To: <20200521230510.13077-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2005221459190.56@tvgsbejvaqbjf.bet>
+References: <20200521230510.13077-1-carenas@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200519230124.GA12509@danh.dev>
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: multipart/mixed; boundary="8323328-299427116-1590152665=:56"
+X-Provags-ID: V03:K1:/mSfLuNX47cN4/YP6m6uy+8bmqnmPxl/FClhfBF9kHRl/MqhpEp
+ 6vp4hjSO0dLzNvZHS5++Z73saamHEqjipuQPf1tX06pn+Mj5XmPOYTAeNSt6wkPP5nz9NZW
+ u50CpBUznwIcpwnv9W0G25g88/wrg0P4B17U8A02pRfk94FoBf2Y0C2b2wiz0ozo3uobqvo
+ Z/61NRsdHotAUtG1Lr9xQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vKbY31baNSE=:mDkNt+e/NN9vhVGyy71Nfd
+ TKmBAVsfQni4bzbzLqgOenhX9a72ilVVABTi06tUoUtkelNsYE7ORDoS8NAbpd8AxdhM3Y4IN
+ kR5TOYx6pDtzdsRpFsSnrWIN5gPflOvfQ+96u/Fewv5wyZ67nAWAjJRQCHCYz2oRnMR8Z0Ps3
+ KibkAIiIuXupR8jEepva7hvbnuaJz6d3/ERKMpbZ9EPEMHNKa859oViM2Qxu8qGHzaSMPTsaZ
+ UcHL1CilCdu8IJc9esWjpL379dquv7O3WuTBEFLouy0MSrAiDvaj8iuHz+d85FPE0WC3CS/Ee
+ K0meklWBU2jS/8QfyqLZrNGhdValJfTWLtKTc3MCvIcLtgMjVUZ9yATC9U6bUNjc8SxLGDlj/
+ s6JVtmwGcwogSG3zbtUZ8QmgOJvSnbgLTWMaxs7hSvgh+HiNAFVi6H1MeXPaib3qmMWJ+MlPX
+ yBJ4BZyKqX8WqZZIMOrNEd8w7sVGkccvsQU8UajrRVUVnRgtzLWCTlswcPI6kTo1Hb6Yyk665
+ Ad2V5qRWfiY5Qs0nZWmPOLkQynSWTKJjAuvND22dZOR3+LuYzSUUJO84u8x0uXz9e/4whyPJj
+ xogdmqcEWD5uSvjrnnh1sIR3IA0HjJ0iqeL4Nj5lJnEmB8YsOBzdLOi70tuglBeU3aAzUrzCw
+ rafISSxrZFM0rvNvdXwHqByYFkXZM4cpt416ncXPRtYgrT2Yp5SnKrK4ib8COtofjCSPOeGLD
+ 5jTgJQwdp4y7+El+CDYmgK2Ojm64o7mLyPxJf/hv3L4GdL3/CIDmPfbNn1U8dSGxShDd2mEuE
+ ihkkP5c8AZ8pxkRdPRcTRt6+E1zFDipz6hMTypk6jl3yZBqT0MPUSfakTTC7zn5y50FeBvscx
+ b0ONP53aDIziDU1p/ODFjvbgu9ro9trpm1/7/0KDz22W7NRZ2IeTvm9t7hs71qOmI9WCXXyEA
+ RU8n/URD00B3ENHxow38vRdCueLuAs2U4qcyHyVxceCOVOjWwb32gBYH0fd9JIPFlygU4q3MV
+ BEWKLGdVF/5CRmXRC/IK13KrXWpsTvb6eYZMJd8OouIyDXLDi8MrK6rKb5sFuQgngIyFuYI2A
+ v4jUi/yDR48hWTOf9QVBLNaKfnWKI2aSNQ91air25vcfTIyaKf38AGYMi8reXea+3CYVjZCVt
+ O+BVlGdDNWmJlvZs/uDHbrcYbPVNVycvvRkogmkgbqb9EW6SUAVjl0J3seL+1e2VtBhR3EkO3
+ ++I9Cfr+S0uGHPjZ7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 20, 2020 at 06:01:24AM +0700, Đoàn Trần Công Danh wrote:
-> Sorry, I didn't think about this earlier.
-> 
-> > +	test_expect_success "config diff.relative $relative_opt -p $*" "
-> > +		short_blob_file1=$(git rev-parse --short $blob_file1) &&
-> > +		short_blob_file2=$(git rev-parse --short $blob_file2) &&
-> 
-> This test also needs to quote that dollar.
-> Beside that, LGTM.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-No worries I've submitted a v8 patch, thanks everyone for the reviews
+--8323328-299427116-1590152665=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Laurent
+Hi Carlo,
+
+> Subject : Re: [PATCH] t5608: avoid say and use skip_all for consistency
+
+It might make quite a bit of sense to add a visual indicator to "say" to
+make it clear that it is not a verb, but a function name. Otherwise
+non-native speakers such as myself (and maybe even native speakers) will
+stumble over the grammar of this sentence when trying to parse it.
+
+These would work better for me:
+
+	t5608: avoid `say` and use `skip_all` for consistency
+
+or
+
+	t5608: avoid say() and use skip_all() for consistency
+
+On Thu, 21 May 2020, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+
+> Printing a message directly to stdout could affect TAP processing
+> and is not really needed, as there is a standard way to skip all
+> tests that could be used instead (including a message).
+>
+> While at it, update the message to better reflect the use of
+> booleans and get rid of the prerequisite.
+
+Makes sense. I would have added a sentence to say that _all_ three test
+cases were guarded by the very same prereq, so `skip_all` is just much
+faster and idempotent.
+
+Otherwise, the patch looks good to me.
+
+Ciao,
+Dscho
+
+>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+>  t/t5608-clone-2gb.sh | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+> index eee0842888..4c476d2fa1 100755
+> --- a/t/t5608-clone-2gb.sh
+> +++ b/t/t5608-clone-2gb.sh
+> @@ -5,12 +5,11 @@ test_description=3D'Test cloning a repository larger t=
+han 2 gigabyte'
+>
+>  if ! test_bool_env GIT_TEST_CLONE_2GB false
+>  then
+> -	say 'Skipping expensive 2GB clone test; enable it with GIT_TEST_CLONE_=
+2GB=3Dt'
+> -else
+> -	test_set_prereq CLONE_2GB
+> +	skip_all=3D'expensive 2GB clone test; enable with GIT_TEST_CLONE_2GB=
+=3Dtrue'
+> +	test_done
+>  fi
+>
+> -test_expect_success CLONE_2GB 'setup' '
+> +test_expect_success 'setup' '
+>
+>  	git config pack.compression 0 &&
+>  	git config pack.depth 0 &&
+> @@ -38,13 +37,13 @@ test_expect_success CLONE_2GB 'setup' '
+>
+>  '
+>
+> -test_expect_success CLONE_2GB 'clone - bare' '
+> +test_expect_success 'clone - bare' '
+>
+>  	git clone --bare --no-hardlinks . clone-bare
+>
+>  '
+>
+> -test_expect_success CLONE_2GB 'clone - with worktree, file:// protocol'=
+ '
+> +test_expect_success 'clone - with worktree, file:// protocol' '
+>
+>  	git clone "file://$(pwd)" clone-wt
+>
+> --
+> 2.27.0.rc1.181.g8d5cacc8d1
+>
+>
+
+--8323328-299427116-1590152665=:56--
