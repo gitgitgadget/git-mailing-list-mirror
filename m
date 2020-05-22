@@ -2,467 +2,324 @@ Return-Path: <SRS0=kZBr=7E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F8DC433DF
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB9E0C433E0
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:46:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD86A2072C
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:27:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B29320738
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:46:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHanN7Op"
+	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="RUd0eB1u";
+	dkim=pass (1024-bit key) header.d=spkdev.net header.i=@spkdev.net header.b="XKBAxeSm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728506AbgEVK1s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 May 2020 06:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728362AbgEVK1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 May 2020 06:27:47 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC30C061A0E
-        for <git@vger.kernel.org>; Fri, 22 May 2020 03:27:46 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id g12so8450150wrw.1
-        for <git@vger.kernel.org>; Fri, 22 May 2020 03:27:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=BBajqcr36cb8WZEGXKxoMb4MrhoagJH5k04bckQdvH8=;
-        b=DHanN7OpPT+MpzGPqws6mae+ezDvQAK4DHWOSwAF63R7vEdmbS4D20NO743kSJbuky
-         aj1XkWhhjdM3R9nJrCWTbCYNQAleNaXdLBcOZ8NQWWcpcAt49sRS5rcZeapcEYHxYLCi
-         HNHNN3yyI6ICBccju0//GiaFJAjZtYZX9f1mczzCMhFX1cPf61M1jIhRLNbYrcE90lcD
-         HjLm+0+b30S5N8sR58x6wdVrklYQ2m+7G6dGrRSyOPF+gOVFpmF3fr1IuBz+KNvftfnx
-         Pr5+K/3KQc7ZXaAGUS8m6W4WqmLuhiPSQbnK9vSiUIApqQNe7RP7i+ypkHdaeuxBdOZj
-         HSTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=BBajqcr36cb8WZEGXKxoMb4MrhoagJH5k04bckQdvH8=;
-        b=pXdubccxzFSALdEqrWihTSZ53lDE8Ar2yxcPRuO+aUF9uNIahHazHBfonR1FLRV0ge
-         yBC+qhuVHPer9VS0ytpmo+Hd57PeJfwK9JXSqt13eluPJTjht58Yorg7YnGJKyVNgyIO
-         khdlvOQJnTVVEaU6ciW2C6Civu3/A6SH+c00tTrzWfovlfC88mj355Vy2MasJFHRK0aZ
-         qK/wiloJwyQ3ymccwzVmt/I6373tp+FJOoe2rCoX0tU/elBiFtTGHq9USHXCsQh0w5N0
-         A8X4MLTNo+E9/QZDdxpKfolaA3/hUPynMXCmEFw5IE1+wsO0YxX2b7T1tq3fkxldLky9
-         PEnw==
-X-Gm-Message-State: AOAM533LQOP4nC2VR9u8M1D8APJgfdU97RjMwhzQ5zoaUaAtj/gMPJ3S
-        13960IqemoZzhKMAmg9VF06uxuyc
-X-Google-Smtp-Source: ABdhPJx3GQhtBrSLwZMihBIPt3E/VhU9RXRG+mOiqTJm4nSmisFrZOGAOFdpra+v8vNEvRoEbV3QVg==
-X-Received: by 2002:a5d:514f:: with SMTP id u15mr3071880wrt.132.1590143265333;
-        Fri, 22 May 2020 03:27:45 -0700 (PDT)
-Received: from [192.168.1.201] (226.20.198.146.dyn.plus.net. [146.198.20.226])
-        by smtp.googlemail.com with ESMTPSA id s67sm9351921wmf.3.2020.05.22.03.27.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 May 2020 03:27:44 -0700 (PDT)
-Subject: Re: [PATCH v2 3/4] hook: add list command
-To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-References: <20200521185414.43760-1-emilyshaffer@google.com>
- <20200521185414.43760-4-emilyshaffer@google.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <41e4fcf3-5d39-71a2-35b2-ee143cd59033@gmail.com>
-Date:   Fri, 22 May 2020 11:27:44 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1729072AbgEVKq0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 May 2020 06:46:26 -0400
+Received: from ns3309586.ip-5-135-160.eu ([5.135.160.121]:50106 "EHLO
+        mail.spkdev.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728606AbgEVKqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 May 2020 06:46:25 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        by mail.spkdev.net (Postfix) with ESMTP id C5E1340348;
+        Fri, 22 May 2020 10:46:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
+        t=1590144381;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=/QX3U3fHZyMtBmwhPu2FBW/9wpkS2X/XHdor+HkDzZY=;
+        b=RUd0eB1uFu6GPDEH4rE49wgUrPEe5HOHc+hwrYfmTqNsAed6Z9whaRgLFmUgtfqBK1Dw9H
+        Q3JoTM+dGaT/O45vISWBHaq6UELKsF4TcjwFGSwIOIDFYWyFWuTkJqfP1H7k2MJgxECXgo
+        faSWJPHql5pnHIPuIaFlXiLP+Xk0jn8=
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.spkdev.net (Postfix) with ESMTPSA id 421D1400F2;
+        Fri, 22 May 2020 10:46:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spkdev.net; s=default;
+        t=1590144380;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=/QX3U3fHZyMtBmwhPu2FBW/9wpkS2X/XHdor+HkDzZY=;
+        b=XKBAxeSm+2ZFRXktRIVG1VzpaeRFq9z7ONBha2PIGjMxyanTflJCxO8Ev+dCMOA7Yhpdkd
+        j0jyGdGoCbufiSMxCxEIZIyO7+iszTAIBWYsTcnI2X95AVThDMOVoDq+n45uFOyayPsDux
+        gcE8AyJYpWixyA0zTd5nTvwQSqRQXy0=
+Date:   Fri, 22 May 2020 12:46:18 +0200
+From:   Laurent Arnoud <laurent@spkdev.net>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: [PATCH v8] diff: add config option relative
+Message-ID: <20200522104618.GA2050@spk-laptop>
+References: <xmqqlflq7fyd.fsf@gitster.c.googlers.com>
+ <20200518094021.GA2069@spk-laptop>
+ <20200518135656.GB1980@danh.dev>
+ <xmqq4ksd5ggq.fsf@gitster.c.googlers.com>
+ <20200518191205.GA1999@danh.dev>
+ <xmqqo8ql0yjg.fsf@gitster.c.googlers.com>
+ <20200519003006.GC1999@danh.dev>
+ <xmqqv9krztwp.fsf@gitster.c.googlers.com>
+ <20200519193902.GA202573@spk-laptop>
+ <20200519230124.GA12509@danh.dev>
 MIME-Version: 1.0
-In-Reply-To: <20200521185414.43760-4-emilyshaffer@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200519230124.GA12509@danh.dev>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily
+The `diff.relative` boolean option set to `true` shows only changes in
+the current directory/value specified by the `path` argument of the
+`relative` option and shows pathnames relative to the aforementioned
+directory.
 
-On 21/05/2020 19:54, Emily Shaffer wrote:
-> Teach 'git hook list <hookname>', which checks the known configs in
-> order to create an ordered list of hooks to run on a given hook event.
-> 
-> Multiple commands can be specified for a given hook by providing
-> multiple "hook.<hookname>.command = <path-to-hook>" lines. Hooks will be
-> run in config order. If more properties need to be set on a given hook
-> in the future, commands can also be specified by providing
-> "hook.<hookname>.command = <hookcmd-name>", as well as a "[hookcmd
-> <hookcmd-name>]" subsection; at minimum, this subsection must contain a
-> "hookcmd.<hookcmd-name>.command = <path-to-hook>" line.
-> 
-> For example:
-> 
->   $ git config --list | grep ^hook
->   hook.pre-commit.command=baz
->   hook.pre-commit.command=~/bar.sh
->   hookcmd.baz.command=~/baz/from/hookcmd.sh
-> 
->   $ git hook list pre-commit
->   ~/baz/from/hookcmd.sh
->   ~/bar.sh
-> 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  Documentation/git-hook.txt    | 37 +++++++++++++-
->  Makefile                      |  1 +
->  builtin/hook.c                | 55 +++++++++++++++++++--
->  hook.c                        | 90 +++++++++++++++++++++++++++++++++++
->  hook.h                        | 15 ++++++
->  t/t1360-config-based-hooks.sh | 51 +++++++++++++++++++-
->  6 files changed, 242 insertions(+), 7 deletions(-)
->  create mode 100644 hook.c
->  create mode 100644 hook.h
-> 
-> diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-> index 2d50c414cc..e458586e96 100644
-> --- a/Documentation/git-hook.txt
-> +++ b/Documentation/git-hook.txt
-> @@ -8,12 +8,47 @@ git-hook - Manage configured hooks
->  SYNOPSIS
->  --------
->  [verse]
-> -'git hook'
-> +'git hook' list <hook-name>
->  
->  DESCRIPTION
->  -----------
->  You can list, add, and modify hooks with this command.
->  
-> +This command parses the default configuration files for sections "hook" and
-> +"hookcmd". "hook" is used to describe the commands which will be run during a
-> +particular hook event; commands are run in config order. "hookcmd" is used to
-> +describe attributes of a specific command. If additional attributes don't need
-> +to be specified, a command to run can be specified directly in the "hook"
-> +section; if a "hookcmd" by that name isn't found, Git will attempt to run the
-> +provided value directly. For example:
-> +
-> +Global config
-> +----
-> +  [hook "post-commit"]
-> +    command = "linter"
-> +    command = "~/typocheck.sh"
-> +
-> +  [hookcmd "linter"]
-> +    command = "/bin/linter --c"
-> +----
-> +
-> +Local config
-> +----
-> +  [hook "prepare-commit-msg"]
-> +    command = "linter"
-> +  [hook "post-commit"]
-> +    command = "python ~/run-test-suite.py"
-> +----
-> +
-> +COMMANDS
-> +--------
-> +
-> +list <hook-name>::
-> +
-> +List the hooks which have been configured for <hook-name>. Hooks appear
-> +in the order they should be run, and note the config scope where the relevant
-> +`hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
-> +
->  GIT
->  ---
->  Part of the linkgit:git[1] suite
-> diff --git a/Makefile b/Makefile
-> index fce6ee154e..b7bbf3be7b 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -894,6 +894,7 @@ LIB_OBJS += grep.o
->  LIB_OBJS += hashmap.o
->  LIB_OBJS += help.o
->  LIB_OBJS += hex.o
-> +LIB_OBJS += hook.o
->  LIB_OBJS += ident.o
->  LIB_OBJS += interdiff.o
->  LIB_OBJS += json-writer.o
-> diff --git a/builtin/hook.c b/builtin/hook.c
-> index b2bbc84d4d..cfd8e388bd 100644
-> --- a/builtin/hook.c
-> +++ b/builtin/hook.c
-> @@ -1,21 +1,68 @@
->  #include "cache.h"
->  
->  #include "builtin.h"
-> +#include "config.h"
-> +#include "hook.h"
->  #include "parse-options.h"
-> +#include "strbuf.h"
->  
->  static const char * const builtin_hook_usage[] = {
-> -	N_("git hook"),
-> +	N_("git hook list <hookname>"),
->  	NULL
->  };
->  
-> -int cmd_hook(int argc, const char **argv, const char *prefix)
-> +static int list(int argc, const char **argv, const char *prefix)
->  {
-> -	struct option builtin_hook_options[] = {
-> +	struct list_head *head, *pos;
-> +	struct hook *item;
-> +	struct strbuf hookname = STRBUF_INIT;
-> +
-> +	struct option list_options[] = {
->  		OPT_END(),
->  	};
->  
-> -	argc = parse_options(argc, argv, prefix, builtin_hook_options,
-> +	argc = parse_options(argc, argv, prefix, list_options,
->  			     builtin_hook_usage, 0);
->  
-> +	if (argc < 1) {
-> +		usage_msg_opt("a hookname must be provided to operate on.",
-> +			      builtin_hook_usage, list_options);
-> +	}
-> +
-> +	strbuf_addstr(&hookname, argv[0]);
-> +
-> +	head = hook_list(&hookname);
-> +
-> +	if (!head) {
-> +		printf(_("no commands configured for hook '%s'\n"),
-> +		       hookname.buf);
-> +		return 0;
-> +	}
-> +
-> +	list_for_each(pos, head) {
-> +		item = list_entry(pos, struct hook, list);
-> +		if (item)
-> +			printf("%s:\t%s\n",
-> +			       config_scope_name(item->origin),
-> +			       item->command.buf);
-> +	}
-> +
-> +	clear_hook_list();
-> +	strbuf_release(&hookname);
-> +
->  	return 0;
->  }
-> +
-> +int cmd_hook(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct option builtin_hook_options[] = {
-> +		OPT_END(),
-> +	};
-> +	if (argc < 2)
-> +		usage_with_options(builtin_hook_usage, builtin_hook_options);
-> +
-> +	if (!strcmp(argv[1], "list"))
-> +		return list(argc - 1, argv + 1, prefix);
-> +
-> +	usage_with_options(builtin_hook_usage, builtin_hook_options);
-> +}
-> diff --git a/hook.c b/hook.c
-> new file mode 100644
-> index 0000000000..9dfc1a885e
-> --- /dev/null
-> +++ b/hook.c
-> @@ -0,0 +1,90 @@
-> +#include "cache.h"
-> +
-> +#include "hook.h"
-> +#include "config.h"
-> +
-> +static LIST_HEAD(hook_head);
-> +
-> +void free_hook(struct hook *ptr)
-> +{
-> +	if (ptr) {
-> +		strbuf_release(&ptr->command);
-> +		free(ptr);
-> +	}
-> +}
-> +
-> +static void emplace_hook(struct list_head *pos, const char *command)
-> +{
-> +	struct hook *to_add = malloc(sizeof(struct hook));
-> +	to_add->origin = current_config_scope();
-> +	strbuf_init(&to_add->command, 0);
-> +	strbuf_addstr(&to_add->command, command);
-> +
-> +	list_add_tail(&to_add->list, pos);
-> +}
-> +
-> +static void remove_hook(struct list_head *to_remove)
-> +{
-> +	struct hook *hook_to_remove = list_entry(to_remove, struct hook, list);
-> +	list_del(to_remove);
-> +	free_hook(hook_to_remove);
-> +}
-> +
-> +void clear_hook_list(void)
-> +{
-> +	struct list_head *pos, *tmp;
-> +	list_for_each_safe(pos, tmp, &hook_head)
-> +		remove_hook(pos);
-> +}
-> +
-> +static int hook_config_lookup(const char *key, const char *value, void *hook_key_cb)
-> +{
-> +	const char *hook_key = hook_key_cb;
-> +
-> +	if (!strcmp(key, hook_key)) {
-> +		const char *command = value;
-> +		struct strbuf hookcmd_name = STRBUF_INIT;
-> +		struct list_head *pos = NULL, *tmp = NULL;
-> +
-> +		/* Check if a hookcmd with that name exists. */
-> +		strbuf_addf(&hookcmd_name, "hookcmd.%s.command", command);
-> +		git_config_get_value(hookcmd_name.buf, &command);
+Teach `--no-relative` to override earlier `--relative`
 
-This looks dodgy to me. This code is called by git_config() as it parses
-the config files, so it has not had a chance to fully populate the
-config cache used by git_config_get_value(). I think the test below
-passes because the hookcmd setting is set in the global file and the
-hook setting is set in the local file so when we have already parsed the
-hookcmd setting when we come to look it up. The same comment applies to
-the hypothetical ordering config mentioned below. I think it would be
-better to collect the list of hook.<event>.command settings in this
-callback and then look up any hookcmd settings for those hook commands
-after we've finished reading all of the config files.
+Add for git-format-patch(1) options documentation `--relative` and
+`--no-relative`
 
-> +
-> +		if (!command)
-> +			BUG("git_config_get_value overwrote a string it shouldn't have");
-> +
-> +		/*
-> +		 * TODO: implement an option-getting callback, e.g.
-> +		 *   get configs by pattern hookcmd.$value.*
-> +		 *   for each key+value, do_callback(key, value, cb_data)
-> +		 */
-> +
-> +		list_for_each_safe(pos, tmp, &hook_head) {
-> +			struct hook *hook = list_entry(pos, struct hook, list);
-> +			/*
-> +			 * The list of hooks to run can be reordered by being redeclared
-> +			 * in the config. Options about hook ordering should be checked
-> +			 * here.
-> +			 */
-> +			if (0 == strcmp(hook->command.buf, command))
-> +				remove_hook(pos);
-> +		}
-> +		emplace_hook(pos, command);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +struct list_head* hook_list(const struct strbuf* hookname)
-> +{
-> +	struct strbuf hook_key = STRBUF_INIT;
-> +
-> +	if (!hookname)
-> +		return NULL;
-> +
-> +	strbuf_addf(&hook_key, "hook.%s.command", hookname->buf);
-> +
-> +	git_config(hook_config_lookup, (void*)hook_key.buf);
-> +
-> +	return &hook_head;
-> +}
-> diff --git a/hook.h b/hook.h
-> new file mode 100644
-> index 0000000000..aaf6511cff
-> --- /dev/null
-> +++ b/hook.h
-> @@ -0,0 +1,15 @@
-> +#include "config.h"
-> +#include "list.h"
-> +#include "strbuf.h"
-> +
-> +struct hook
-> +{
-> +	struct list_head list;
-> +	enum config_scope origin;
-> +	struct strbuf command;
-> +};
-> +
-> +struct list_head* hook_list(const struct strbuf *hookname);
-> +
-> +void free_hook(struct hook *ptr);
-> +void clear_hook_list(void);
-> diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-> index 34b0df5216..4e46d7dd4e 100755
-> --- a/t/t1360-config-based-hooks.sh
-> +++ b/t/t1360-config-based-hooks.sh
-> @@ -4,8 +4,55 @@ test_description='config-managed multihooks, including git-hook command'
->  
->  . ./test-lib.sh
->  
-> -test_expect_success 'git hook command does not crash' '
-> -	git hook
-> +test_expect_success 'git hook rejects commands without a mode' '
-> +	test_must_fail git hook pre-commit
-> +'
-> +
-> +
-> +test_expect_success 'git hook rejects commands without a hookname' '
-> +	test_must_fail git hook list
-> +'
-> +
-> +test_expect_success 'setup hooks in global, and local' '
-> +	git config --add --local hook.pre-commit.command "/path/ghi" &&
+Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
+---
+ Documentation/config/diff.txt  |  4 ++
+ Documentation/diff-options.txt |  5 ++-
+ diff.c                         | 11 +++--
+ t/t4014-format-patch.sh        | 13 ++++++
+ t/t4045-diff-relative.sh       | 82 ++++++++++++++++++++++++++++++++--
+ 5 files changed, 108 insertions(+), 7 deletions(-)
 
-Can I make a plea for the use of test_config please. Writing tests which
-rely on previous tests for their set-up creates a chain of hidden
-dependencies that make it hard to add/alter tests later or run a subset
-of the tests when developing a new patch. t3404-rebase-interactive.sh is
-a prime example of this and I dread touching it.
+diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+index ff09f1cf73..c3ae136eba 100644
+--- a/Documentation/config/diff.txt
++++ b/Documentation/config/diff.txt
+@@ -105,6 +105,10 @@ diff.mnemonicPrefix::
+ diff.noprefix::
+ 	If set, 'git diff' does not show any source or destination prefix.
 
-> +	git config --add --global hook.pre-commit.command "/path/def"
-> +'
-> +
-> +test_expect_success 'git hook list orders by config order' '
-> +	cat >expected <<-\EOF &&
-> +	global:	/path/def
-> +	local:	/path/ghi
-> +	EOF
-> +
-> +	git hook list pre-commit >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'git hook list dereferences a hookcmd' '
-> +	git config --add --local hook.pre-commit.command "abc" &&
-> +	git config --add --global hookcmd.abc.command "/path/abc" &&
-> +
-> +	cat >expected <<-\EOF &&
-> +	global:	/path/def
-> +	local:	/path/ghi
-> +	local:	/path/abc
++diff.relative::
++	If set to 'true', 'git diff' does not show changes outside of the directory
++	and show pathnames relative to the current directory.
++
+ diff.orderFile::
+ 	File indicating how to order files within a diff.
+ 	See the '-O' option to linkgit:git-diff[1] for details.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index bb31f0c42b..7987d72b02 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -643,15 +643,18 @@ ifndef::git-format-patch[]
+ -R::
+ 	Swap two inputs; that is, show differences from index or
+ 	on-disk file to tree contents.
++endif::git-format-patch[]
 
-We should make it clear in the documentation that the config origin
-applies to the hook setting, even though we display the hookcmd command
-which is set globally here for the last hook.
+ --relative[=<path>]::
++--no-relative::
+ 	When run from a subdirectory of the project, it can be
+ 	told to exclude changes outside the directory and show
+ 	pathnames relative to it with this option.  When you are
+ 	not in a subdirectory (e.g. in a bare repository), you
+ 	can name which subdirectory to make the output relative
+ 	to by giving a <path> as an argument.
+-endif::git-format-patch[]
++	`--no-relative` can be used to countermand both `diff.relative` config
++	option and previous `--relative`.
 
-Best Wishes
+ -a::
+ --text::
+diff --git a/diff.c b/diff.c
+index d1ad6a3c4a..863da896c0 100644
+--- a/diff.c
++++ b/diff.c
+@@ -48,6 +48,7 @@ static const char *diff_order_file_cfg;
+ int diff_auto_refresh_index = 1;
+ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
++static int diff_relative;
+ static int diff_stat_graph_width;
+ static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
+@@ -386,6 +387,10 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		diff_no_prefix = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "diff.relative")) {
++		diff_relative = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "diff.statgraphwidth")) {
+ 		diff_stat_graph_width = git_config_int(var, value);
+ 		return 0;
+@@ -4538,6 +4543,7 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
+ 	options->interhunkcontext = diff_interhunk_context_default;
+ 	options->ws_error_highlight = ws_error_highlight_default;
+ 	options->flags.rename_empty = 1;
++	options->flags.relative_name = diff_relative;
+ 	options->objfind = NULL;
 
-Phillip
+ 	/* pathchange left =NULL by default */
+@@ -5195,8 +5201,7 @@ static int diff_opt_relative(const struct option *opt,
+ {
+ 	struct diff_options *options = opt->value;
 
-> +	EOF
-> +
-> +	git hook list pre-commit >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'git hook list reorders on duplicate commands' '
-> +	git config --add --local hook.pre-commit.command "/path/def" &&
-> +
-> +	cat >expected <<-\EOF &&
-> +	local:	/path/ghi
-> +	local:	/path/abc
-> +	local:	/path/def
-> +	EOF
-> +
-> +	git hook list pre-commit >actual &&
-> +	test_cmp expected actual
->  '
->  
->  test_done
-> 
+-	BUG_ON_OPT_NEG(unset);
+-	options->flags.relative_name = 1;
++	options->flags.relative_name = !unset;
+ 	if (arg)
+ 		options->prefix = arg;
+ 	return 0;
+@@ -5492,7 +5497,7 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_GROUP(N_("Other diff options")),
+ 		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
+ 			       N_("when run from subdir, exclude changes outside and show relative paths"),
+-			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
++			       PARSE_OPT_OPTARG,
+ 			       diff_opt_relative),
+ 		OPT_BOOL('a', "text", &options->flags.text,
+ 			 N_("treat all files as text")),
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index db7e733af9..575e079cc2 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1602,6 +1602,19 @@ test_expect_success 'format patch ignores color.ui' '
+ 	test_cmp expect actual
+ '
 
++test_expect_success 'format patch respects diff.relative' '
++	rm -rf subdir &&
++	mkdir subdir &&
++	echo other content >subdir/file2 &&
++	git add subdir/file2 &&
++	git commit -F msg &&
++	test_unconfig diff.relative &&
++	git format-patch --relative=subdir --stdout -1 >expect &&
++	test_config diff.relative true &&
++	git -C subdir format-patch --stdout -1 >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'cover letter with invalid --cover-from-description and config' '
+ 	test_config branch.rebuild-1.description "config subject
+
+diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+index 258808708e..7be1de736d 100755
+--- a/t/t4045-diff-relative.sh
++++ b/t/t4045-diff-relative.sh
+@@ -8,7 +8,8 @@ test_expect_success 'setup' '
+ 	echo content >file1 &&
+ 	mkdir subdir &&
+ 	echo other content >subdir/file2 &&
+-	blob=$(git hash-object subdir/file2) &&
++	blob_file1=$(git hash-object file1) &&
++	blob_file2=$(git hash-object subdir/file2) &&
+ 	git add . &&
+ 	git commit -m one
+ '
+@@ -18,7 +19,7 @@ check_diff () {
+ 	shift
+ 	expect=$1
+ 	shift
+-	short_blob=$(git rev-parse --short $blob)
++	short_blob=$(git rev-parse --short $blob_file2)
+ 	cat >expected <<-EOF
+ 	diff --git a/$expect b/$expect
+ 	new file mode 100644
+@@ -70,7 +71,7 @@ check_raw () {
+ 	expect=$1
+ 	shift
+ 	cat >expected <<-EOF
+-	:000000 100644 $ZERO_OID $blob A	$expect
++	:000000 100644 $ZERO_OID $blob_file2 A	$expect
+ 	EOF
+ 	test_expect_success "--raw $*" "
+ 		git -C '$dir' diff --no-abbrev --raw $* HEAD^ >actual &&
+@@ -86,4 +87,79 @@ do
+ 	check_$type . dir/file2 --relative=sub
+ done
+
++check_diff_relative_option () {
++	dir=$1
++	shift
++	expect=$1
++	shift
++	relative_opt=$1
++	shift
++	test_expect_success "config diff.relative $relative_opt -p $*" "
++		short_blob=\$(git rev-parse --short $blob_file2) &&
++		cat >expected <<-EOF &&
++		diff --git a/$expect b/$expect
++		new file mode 100644
++		index 0000000..\$short_blob
++		--- /dev/null
++		+++ b/$expect
++		@@ -0,0 +1 @@
++		+other content
++		EOF
++		test_config -C $dir diff.relative $relative_opt &&
++		git -C '$dir' diff -p $* HEAD^ >actual &&
++		test_cmp expected actual
++	"
++}
++
++check_diff_no_relative_option () {
++	dir=$1
++	shift
++	expect=$1
++	shift
++	relative_opt=$1
++	shift
++	test_expect_success "config diff.relative $relative_opt -p $*" "
++		short_blob_file1=\$(git rev-parse --short $blob_file1) &&
++		short_blob_file2=\$(git rev-parse --short $blob_file2) &&
++		cat >expected <<-EOF &&
++		diff --git a/file1 b/file1
++		new file mode 100644
++		index 0000000..\$short_blob_file1
++		--- /dev/null
++		+++ b/file1
++		@@ -0,0 +1 @@
++		+content
++		diff --git a/$expect b/$expect
++		new file mode 100644
++		index 0000000..\$short_blob_file2
++		--- /dev/null
++		+++ b/$expect
++		@@ -0,0 +1 @@
++		+other content
++		EOF
++		test_config -C $dir diff.relative $relative_opt &&
++		git -C '$dir' diff -p $* HEAD^ >actual &&
++		test_cmp expected actual
++	"
++}
++
++check_diff_no_relative_option . subdir/file2 false
++check_diff_no_relative_option . subdir/file2 true --no-relative
++check_diff_no_relative_option . subdir/file2 false --no-relative
++check_diff_no_relative_option subdir subdir/file2 false
++check_diff_no_relative_option subdir subdir/file2 true --no-relative
++check_diff_no_relative_option subdir subdir/file2 false --no-relative
++
++check_diff_relative_option . file2 false --relative=subdir/
++check_diff_relative_option . file2 false --relative=subdir
++check_diff_relative_option . file2 true --relative=subdir/
++check_diff_relative_option . file2 true --relative=subdir
++check_diff_relative_option subdir file2 false --relative
++check_diff_relative_option subdir file2 true --relative
++check_diff_relative_option subdir file2 true
++check_diff_relative_option subdir file2 false --no-relative --relative
++check_diff_relative_option subdir file2 true --no-relative --relative
++check_diff_relative_option . file2 false --no-relative --relative=subdir
++check_diff_relative_option . file2 true --no-relative --relative=subdir
++
+ test_done
+--
+2.26.2
