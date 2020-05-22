@@ -2,126 +2,86 @@ Return-Path: <SRS0=kZBr=7E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48D22C433DF
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 00:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC54BC433DF
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 03:29:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 069012067B
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 00:25:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A297F20812
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 03:29:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CLo1KEwU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y/qbsrf+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726812AbgEVAZO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 20:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35594 "EHLO
+        id S1727865AbgEVD3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 23:29:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726650AbgEVAZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 20:25:13 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77AD2C061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 17:25:12 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id d7so11015045eja.7
-        for <git@vger.kernel.org>; Thu, 21 May 2020 17:25:12 -0700 (PDT)
+        with ESMTP id S1727080AbgEVD3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 23:29:19 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF46FC061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 20:29:17 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id z9so3307577oid.2
+        for <git@vger.kernel.org>; Thu, 21 May 2020 20:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ozQlQQv0SPjD5SN2F5m5r1muNv4gpVwXvn/S7pupZOY=;
-        b=CLo1KEwUIe/YAD2RBxJ50lqshFj/zWo3yRL0/M+alzNizhwCyzjKw/Wb8wp+SLDT43
-         41NrGfcRQ2JGtgU/RowMYlQK9POjqUY4dPeLQgI+VBLcsYnSycND0FAhKOaTPFC8YqgZ
-         L4Fe1rzSg6SwbrAzlgEObHIKfhbcOMoFd2tG0JBgwPzmszfr5CI1307FCJXFDCKrE/T3
-         Nps6jbykzyegccEVSdluNtFQXG6LoMPtW27Bnp2HHupW2PHUY5nxXdDcUi3L36PLNZ8R
-         VvIegwYtzFXMwtVxBTHhwQjsXe6bDFlftV6x/YzrB5NujwNvsPQVjMk0GUoTbJpwgydQ
-         klEw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=VPi3Hne6usxCh/b0tfkdTr7evoRbit2Yd/5m3pnqnjE=;
+        b=Y/qbsrf+bKkhojlCg5DdL1zn8oTHOHvK+E/GEfcyLQ8RxCxtBlsmz7YZP5a46E83+m
+         U7xztEj+a1dTHSqXYEx3vn0ZN3kSmOf9cnYg+fSshmjvmXav15VakC4isSSiR7r+DUVF
+         JU0odxp0Fc4TYuNM1wE10+iQ9Qkhbpcp8I+z+kTmINNXy71VCo4+cKBHNI2G7edCDt2A
+         kvEHU/qr0OASpUWFrTkQMfvfd+JRlwVl7WF4t68aacP3h11lY47dtOJuU9Xj7VAsG0oR
+         57foL5hZVSv4MP5q2RuRjPjPReBQVQbvX9jhwAV3yuatggHhAMFDay7dP7h3jFtFy+pB
+         UNVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ozQlQQv0SPjD5SN2F5m5r1muNv4gpVwXvn/S7pupZOY=;
-        b=YBcC6DCi2Zt4m5JsPaLXo4lH1B3yAbYgZlpFznnXIsDmWKOPbmYmLVgL7Y8wEgV2nU
-         2TOrHT5X05KkZjeW3ox9FJyZ/EMpgqNiJRL2V3LLYK9Q0GBM1zLeMexFl8Ts6Dx1j8aw
-         HVEsRuppKSpqrk5lf4IuyaIwu2UWh2pW4t37250T09kiznHwluUdbr9VoMEUgc1847cH
-         K0zqfJ3yiwZZpNOVIeK8ZKfAub/a/aIAXrMw7gWSccQKpuqzDerK5q6RlIMYlyhEO9vC
-         /vF11ZG6q0CETEdYdccTA3gClbvdUddqza2OpWiDyfWUZxP0k0Dj1EfKMOdGU4+rArv2
-         dnqw==
-X-Gm-Message-State: AOAM530BZCyBe0P1DBLTG/1/9UZOY2alPCFq7b/ZwmAFn0CqfSeHNyLe
-        /EBPdhmmqqPc7+KGoJFemn6QDzyR
-X-Google-Smtp-Source: ABdhPJxBsLtM97fC/18Z6xyilxP07jDTXaNSiAmW9hVrFYeQdbpaAVKJZ8kvEq3iMQyZ3wVZRXdnBQ==
-X-Received: by 2002:a17:906:3ed3:: with SMTP id d19mr6355705ejj.404.1590107110716;
-        Thu, 21 May 2020 17:25:10 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:a03f:b7f9:7600:5411:bf04:1190:8b1d])
-        by smtp.gmail.com with ESMTPSA id h18sm6544607eji.86.2020.05.21.17.25.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2020 17:25:09 -0700 (PDT)
-From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-To:     GIT Mailing-list <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Subject: [PATCH v2] sparse: allow '{ 0 }' to be used without warnings
-Date:   Fri, 22 May 2020 02:25:02 +0200
-Message-Id: <20200522002502.9010-1-luc.vanoostenryck@gmail.com>
-X-Mailer: git-send-email 2.26.2
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=VPi3Hne6usxCh/b0tfkdTr7evoRbit2Yd/5m3pnqnjE=;
+        b=C+8xmOSx2bWGOSsKX/33qmdaM4tQeXVhWRxlWCC4/bZlp1yA7JW0yUuPYaI6B83viz
+         ag6BAa1kVbDIbnagQsvhMuCof9J6/T1yuvcG8cQTCCDNT7uRzDtbOyBy2k7NVslbJgse
+         AE3RCaW+5FpAie84K7jdymiNMTosJCUy9w0i63YK55mN9hb0O2NWrd12mvRFi6VxPkc0
+         6Py8elYwH0sn6LwJ+J2SmhYjWiInZoTbK6uQoZixfbL6AD8ywFZEZSTufC4hvR56j8E/
+         b/gMgKQW7A1vH86c73OvPwnW1S97JeX8MVvJ7EosAA66Qq6yheaNNb48QsLNrFS91xWE
+         YFvQ==
+X-Gm-Message-State: AOAM530wlRwyweFwqsFNWRLBkV0jQo9um+w3AYJPFEIs2JQ5qVHVRq+x
+        2LNiOW/ZMxmC5G5BNFt2/+PFEmILoBtw1YEAmQEANB5fRzE=
+X-Google-Smtp-Source: ABdhPJwcCu0uqyH5a5nRNXWkzBzeSVooO+ea2LE05TxGlw4mUj2RIyuxrEtoswawhoSM1OJMywZd6udYxR6c46yQX0A=
+X-Received: by 2002:aca:2b04:: with SMTP id i4mr1271882oik.39.1590118156780;
+ Thu, 21 May 2020 20:29:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 21 May 2020 20:29:05 -0700
+Message-ID: <CABPp-BGHU_XA0K1YnOmKPzmS95e1+saXaUDrMFJqX7tesXC2xA@mail.gmail.com>
+Subject: New git-filter-repo resource: Cheat Sheets
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In standard C, '{ 0 }' can be used as an universal zero-initializer.
-However, Sparse complains if this is used on a type where the first
-member (possibly nested) is a pointer since Sparse purposely wants
-to warn when '0' is used to initialize a pointer type.
+Hi everyone,
 
-Legitimaly, it's desirable to be able to use '{ 0 }' as an idiom
-without these warnings [1,2]. To allow this, an option have now
-been added to Sparse:
-    537e3e2dae univ-init: conditionally accept { 0 } without warnings
+git-filter-repo now has two cheat sheets:
+    filter-branch => filter-repo
+    bfg repo cleaner => filter-repo
 
-So, add this option to the SPARSE_FLAGS variable.
+Each lists all the commands from the manual of the command on the
+left, and shows the equivalent commands to solve the same problem
+using filter-repo.  Links to both cheat sheets can be found at the end
+of each tools' section at
 
-Note: The option have just been added to Sparse. So, to benefit
-      now from this patch it's needed to use the latest Sparse
-      source from kernel.org. The option will simply be ignored
-      by older versions of Sparse.
+https://github.com/newren/git-filter-repo#why-filter-repo-instead-of-other-alternatives
 
-[1] https://lore.kernel.org/r/e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com
-[2] https://lore.kernel.org/r/xmqqd07xem9l.fsf@gitster.c.googlers.com
 
-Signed-off-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
----
+Each cheat sheet is actually half of a bigger guide that also provides
+an overview of high level differences between the tools (design
+structure, defaults, etc.); just scroll up from each cheat sheet to
+see the additional info in the guide.
 
-Change since v1:
-* adapt the commit message to:
-  - fix a typo
-  - give a reference to the Spatch patch
-  - add a note telling the latest Sparse source is needed to
-    benefit from the patch but older versions won't complain.
 
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index 3d3a39fc19..69f065ef8c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1189,7 +1189,7 @@ PTHREAD_CFLAGS =
- 
- # For the 'sparse' target
- SPARSE_FLAGS ?=
--SP_EXTRA_FLAGS =
-+SP_EXTRA_FLAGS = -Wno-universal-initializer
- 
- # For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
- # usually result in less CPU usage at the cost of higher peak memory.
--- 
-2.26.2
-
+I hope folks find these useful,
+Elijah
