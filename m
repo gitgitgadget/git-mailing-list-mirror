@@ -1,4 +1,4 @@
-Return-Path: <SRS0=Ny9l=7D=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=kZBr=7E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -8,121 +8,120 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 439FEC433DF
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 23:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48D22C433DF
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 00:25:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FB0A207F9
-	for <git@archiver.kernel.org>; Thu, 21 May 2020 23:05:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 069012067B
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 00:25:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cc+rfLXI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CLo1KEwU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730739AbgEUXFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 May 2020 19:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51316 "EHLO
+        id S1726812AbgEVAZO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 May 2020 20:25:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730717AbgEUXFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 May 2020 19:05:30 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A64EDC061A0E
-        for <git@vger.kernel.org>; Thu, 21 May 2020 16:05:30 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id u22so3602431plq.12
-        for <git@vger.kernel.org>; Thu, 21 May 2020 16:05:30 -0700 (PDT)
+        with ESMTP id S1726650AbgEVAZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 May 2020 20:25:13 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77AD2C061A0E
+        for <git@vger.kernel.org>; Thu, 21 May 2020 17:25:12 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id d7so11015045eja.7
+        for <git@vger.kernel.org>; Thu, 21 May 2020 17:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=MOCDwH3MCd2fD2cgy+WOgq84CDIQ0ZiREVf0kfMRlcY=;
-        b=cc+rfLXIo1UzM45Bfn9QSXFpJSTGAKBnGrjjiuYdZPNUwNSrXsMiryW0PVhZtPuf7z
-         corlte8oOL0gdX6MwZN17mx4kHUJjqEuDoxWni4voM2yV84/oeh3Ut4hbbgUAp0coAuR
-         aWnWZ8C9dbQfUJ8AODordACQejtdeNtpFQllkqMutfmFQBvaLHFilF+j8k5t1ngyoX4D
-         /U4w4HDoOXCUF3XG8aeLdISwPRrsWyIcJJO8AptKveKGhoa3ehJ+bex9aT2jVHxfiYlv
-         2xVPAOGEdePEPMVWLsUSskdIk2mLb5aeCVs0KFGWV2Hdyif2p40ndeSI2D3MeOntQvF4
-         LbFg==
+        bh=ozQlQQv0SPjD5SN2F5m5r1muNv4gpVwXvn/S7pupZOY=;
+        b=CLo1KEwUIe/YAD2RBxJ50lqshFj/zWo3yRL0/M+alzNizhwCyzjKw/Wb8wp+SLDT43
+         41NrGfcRQ2JGtgU/RowMYlQK9POjqUY4dPeLQgI+VBLcsYnSycND0FAhKOaTPFC8YqgZ
+         L4Fe1rzSg6SwbrAzlgEObHIKfhbcOMoFd2tG0JBgwPzmszfr5CI1307FCJXFDCKrE/T3
+         Nps6jbykzyegccEVSdluNtFQXG6LoMPtW27Bnp2HHupW2PHUY5nxXdDcUi3L36PLNZ8R
+         VvIegwYtzFXMwtVxBTHhwQjsXe6bDFlftV6x/YzrB5NujwNvsPQVjMk0GUoTbJpwgydQ
+         klEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=MOCDwH3MCd2fD2cgy+WOgq84CDIQ0ZiREVf0kfMRlcY=;
-        b=sG4RToQ7zs7I6rKqAKSJPs70FXp8qi/mbjjEZ04KLyR7XagycmVc9fmq+H1SBnVn45
-         Gp7oLmTFUW6lquATtl8kfkQMv0gEtk1TWKlFS3pyfAiHT8HR1FLF6eE0mzDSlCu2fP2c
-         Rl4dOz9gGaLBu/wWSDnGvTQBlHPJhvj9rVRLihxcO3tvwe7NBak+DhGl4IHdrxttgD46
-         fC9rrhqULJVKjix9MPQwdgKCbIl8FwHHTnUE+6koVg40SmGuAP3bxKH3OyhAwQOSloL2
-         vs5jaC2zTFAqVQJjc8xgV2q5j1c5ucnOvAUhk6DhilFdxuYVnuZWONuD6QJwn9lIUXW2
-         6l5w==
-X-Gm-Message-State: AOAM5321LM4KiuhE6bHexkwJHvIupN0BjaEugLJmM7hUVQYiW6sEam78
-        L+8lkp1Lc48dj7IamdqdMN4eTzW5
-X-Google-Smtp-Source: ABdhPJyNyfG5qBrJfXF01n40p2Rnd6Tsz0nErWWSwpNtcxgXkdes+uy10lJwerTn1xhV45GGxzHGZA==
-X-Received: by 2002:a17:90b:b0e:: with SMTP id bf14mr938623pjb.98.1590102329790;
-        Thu, 21 May 2020 16:05:29 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id p19sm4722849pfn.216.2020.05.21.16.05.27
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 May 2020 16:05:28 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] t5608: avoid say and use skip_all for consistency
-Date:   Thu, 21 May 2020 16:05:10 -0700
-Message-Id: <20200521230510.13077-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.27.0.rc1.181.g8d5cacc8d1
+        bh=ozQlQQv0SPjD5SN2F5m5r1muNv4gpVwXvn/S7pupZOY=;
+        b=YBcC6DCi2Zt4m5JsPaLXo4lH1B3yAbYgZlpFznnXIsDmWKOPbmYmLVgL7Y8wEgV2nU
+         2TOrHT5X05KkZjeW3ox9FJyZ/EMpgqNiJRL2V3LLYK9Q0GBM1zLeMexFl8Ts6Dx1j8aw
+         HVEsRuppKSpqrk5lf4IuyaIwu2UWh2pW4t37250T09kiznHwluUdbr9VoMEUgc1847cH
+         K0zqfJ3yiwZZpNOVIeK8ZKfAub/a/aIAXrMw7gWSccQKpuqzDerK5q6RlIMYlyhEO9vC
+         /vF11ZG6q0CETEdYdccTA3gClbvdUddqza2OpWiDyfWUZxP0k0Dj1EfKMOdGU4+rArv2
+         dnqw==
+X-Gm-Message-State: AOAM530BZCyBe0P1DBLTG/1/9UZOY2alPCFq7b/ZwmAFn0CqfSeHNyLe
+        /EBPdhmmqqPc7+KGoJFemn6QDzyR
+X-Google-Smtp-Source: ABdhPJxBsLtM97fC/18Z6xyilxP07jDTXaNSiAmW9hVrFYeQdbpaAVKJZ8kvEq3iMQyZ3wVZRXdnBQ==
+X-Received: by 2002:a17:906:3ed3:: with SMTP id d19mr6355705ejj.404.1590107110716;
+        Thu, 21 May 2020 17:25:10 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:a03f:b7f9:7600:5411:bf04:1190:8b1d])
+        by smtp.gmail.com with ESMTPSA id h18sm6544607eji.86.2020.05.21.17.25.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 May 2020 17:25:09 -0700 (PDT)
+From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+To:     GIT Mailing-list <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Subject: [PATCH v2] sparse: allow '{ 0 }' to be used without warnings
+Date:   Fri, 22 May 2020 02:25:02 +0200
+Message-Id: <20200522002502.9010-1-luc.vanoostenryck@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Printing a message directly to stdout could affect TAP processing
-and is not really needed, as there is a standard way to skip all
-tests that could be used instead (including a message).
+In standard C, '{ 0 }' can be used as an universal zero-initializer.
+However, Sparse complains if this is used on a type where the first
+member (possibly nested) is a pointer since Sparse purposely wants
+to warn when '0' is used to initialize a pointer type.
 
-While at it, update the message to better reflect the use of
-booleans and get rid of the prerequisite.
+Legitimaly, it's desirable to be able to use '{ 0 }' as an idiom
+without these warnings [1,2]. To allow this, an option have now
+been added to Sparse:
+    537e3e2dae univ-init: conditionally accept { 0 } without warnings
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+So, add this option to the SPARSE_FLAGS variable.
+
+Note: The option have just been added to Sparse. So, to benefit
+      now from this patch it's needed to use the latest Sparse
+      source from kernel.org. The option will simply be ignored
+      by older versions of Sparse.
+
+[1] https://lore.kernel.org/r/e6796c60-a870-e761-3b07-b680f934c537@ramsayjones.plus.com
+[2] https://lore.kernel.org/r/xmqqd07xem9l.fsf@gitster.c.googlers.com
+
+Signed-off-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
 ---
- t/t5608-clone-2gb.sh | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
-index eee0842888..4c476d2fa1 100755
---- a/t/t5608-clone-2gb.sh
-+++ b/t/t5608-clone-2gb.sh
-@@ -5,12 +5,11 @@ test_description='Test cloning a repository larger than 2 gigabyte'
+Change since v1:
+* adapt the commit message to:
+  - fix a typo
+  - give a reference to the Spatch patch
+  - add a note telling the latest Sparse source is needed to
+    benefit from the patch but older versions won't complain.
+
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 3d3a39fc19..69f065ef8c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1189,7 +1189,7 @@ PTHREAD_CFLAGS =
  
- if ! test_bool_env GIT_TEST_CLONE_2GB false
- then
--	say 'Skipping expensive 2GB clone test; enable it with GIT_TEST_CLONE_2GB=t'
--else
--	test_set_prereq CLONE_2GB
-+	skip_all='expensive 2GB clone test; enable with GIT_TEST_CLONE_2GB=true'
-+	test_done
- fi
+ # For the 'sparse' target
+ SPARSE_FLAGS ?=
+-SP_EXTRA_FLAGS =
++SP_EXTRA_FLAGS = -Wno-universal-initializer
  
--test_expect_success CLONE_2GB 'setup' '
-+test_expect_success 'setup' '
- 
- 	git config pack.compression 0 &&
- 	git config pack.depth 0 &&
-@@ -38,13 +37,13 @@ test_expect_success CLONE_2GB 'setup' '
- 
- '
- 
--test_expect_success CLONE_2GB 'clone - bare' '
-+test_expect_success 'clone - bare' '
- 
- 	git clone --bare --no-hardlinks . clone-bare
- 
- '
- 
--test_expect_success CLONE_2GB 'clone - with worktree, file:// protocol' '
-+test_expect_success 'clone - with worktree, file:// protocol' '
- 
- 	git clone "file://$(pwd)" clone-wt
- 
+ # For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
+ # usually result in less CPU usage at the cost of higher peak memory.
 -- 
-2.27.0.rc1.181.g8d5cacc8d1
+2.26.2
 
