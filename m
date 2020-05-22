@@ -5,71 +5,71 @@ X-Spam-Level:
 X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AEA3C433DF
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F8DC433DF
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:27:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BBDC205CB
-	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:13:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD86A2072C
+	for <git@archiver.kernel.org>; Fri, 22 May 2020 10:27:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oY3nq1bZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHanN7Op"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728588AbgEVKNS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 May 2020 06:13:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42092 "EHLO
+        id S1728506AbgEVK1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 May 2020 06:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728281AbgEVKNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 May 2020 06:13:16 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2943DC061A0E
-        for <git@vger.kernel.org>; Fri, 22 May 2020 03:13:16 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id k13so9641327wrx.3
-        for <git@vger.kernel.org>; Fri, 22 May 2020 03:13:16 -0700 (PDT)
+        with ESMTP id S1728362AbgEVK1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 May 2020 06:27:47 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC30C061A0E
+        for <git@vger.kernel.org>; Fri, 22 May 2020 03:27:46 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id g12so8450150wrw.1
+        for <git@vger.kernel.org>; Fri, 22 May 2020 03:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:from:message-id:date:user-agent:mime-version
          :in-reply-to:content-language:content-transfer-encoding;
-        bh=LssZsXI7LnUUHso8KX7NGyah9wNNIEPZljqAv1qQ+uY=;
-        b=oY3nq1bZ+6V6CRQDMMsdhMyZqa45uarhfBHDnmpDmNUh29ZM8TFLj0T3cQaP3V9KSW
-         GjdLfmPERzs58wmH5+eiQWBLCwl//4ce29WiM4hniRVLnP3xGmGIQbv7gbzW6DDP5Ufc
-         dPZrZoPoaDpcqMoo+gEb/k/jVvByAhMQem2Ry9G6mom46SHwORfyauiH1+yCp3q2UTK9
-         TymnvwJCOIzfpV6GHxI4eAgr3Cr9N7UsTcXlOidbHQ198bd1EnjdmxFpB3zzMRVGv3NM
-         aBYsB2Y98i7PnLrtlKxY9L3OAhFovVVpYPY/gVy66NU0e9nj4F3AVSOVdYKEF7TqIcTd
-         WZnQ==
+        bh=BBajqcr36cb8WZEGXKxoMb4MrhoagJH5k04bckQdvH8=;
+        b=DHanN7OpPT+MpzGPqws6mae+ezDvQAK4DHWOSwAF63R7vEdmbS4D20NO743kSJbuky
+         aj1XkWhhjdM3R9nJrCWTbCYNQAleNaXdLBcOZ8NQWWcpcAt49sRS5rcZeapcEYHxYLCi
+         HNHNN3yyI6ICBccju0//GiaFJAjZtYZX9f1mczzCMhFX1cPf61M1jIhRLNbYrcE90lcD
+         HjLm+0+b30S5N8sR58x6wdVrklYQ2m+7G6dGrRSyOPF+gOVFpmF3fr1IuBz+KNvftfnx
+         Pr5+K/3KQc7ZXaAGUS8m6W4WqmLuhiPSQbnK9vSiUIApqQNe7RP7i+ypkHdaeuxBdOZj
+         HSTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=LssZsXI7LnUUHso8KX7NGyah9wNNIEPZljqAv1qQ+uY=;
-        b=THRgE6QJxfy7iHcx7d8/yjDDe9AXRZ5Q8QRr6ZeFemiIxty0JAG7nv5GgqCR5/jO/m
-         fENx7w8V2RKLGh8hlzu6BdgakOhkyGZcWcwXHJla/d5SaEaAFyakFrPDSqwuPghNdHuH
-         8f+Gx9CTxierr4/nlovA2CYbkhtULxqGLNSNmA4HPpvoj8g4gGPyPhshTfd6Dk9S/vtr
-         poC5x0wVdlpreoczT/u5JxcDwWpluCTptbIHSVPIoWkmwd4MftzC95lmqTZxbJcEjDhS
-         8OVkFm+D2Fb4xbkAT+TwH9qqqhzFMeE8cj9KXWU53+A9x1UnL+x43giuiYH0Z6jKC96L
-         HN6w==
-X-Gm-Message-State: AOAM532KkHX1TsPYOqWvRyaGyQsfNaUL0k1gqg8/JipOBnnzHn3bmVgl
-        0Jm+hLQ8bSd8a1QrkE1inUGQHCKA
-X-Google-Smtp-Source: ABdhPJzzHxjRlNNBKJy2bJeT4zA/gvltT9DgtBWaDh1BFi/NONgwCoWSn4qJi0qWUF3bXtNejYH28Q==
-X-Received: by 2002:adf:eb08:: with SMTP id s8mr2778470wrn.361.1590142394347;
-        Fri, 22 May 2020 03:13:14 -0700 (PDT)
+        bh=BBajqcr36cb8WZEGXKxoMb4MrhoagJH5k04bckQdvH8=;
+        b=pXdubccxzFSALdEqrWihTSZ53lDE8Ar2yxcPRuO+aUF9uNIahHazHBfonR1FLRV0ge
+         yBC+qhuVHPer9VS0ytpmo+Hd57PeJfwK9JXSqt13eluPJTjht58Yorg7YnGJKyVNgyIO
+         khdlvOQJnTVVEaU6ciW2C6Civu3/A6SH+c00tTrzWfovlfC88mj355Vy2MasJFHRK0aZ
+         qK/wiloJwyQ3ymccwzVmt/I6373tp+FJOoe2rCoX0tU/elBiFtTGHq9USHXCsQh0w5N0
+         A8X4MLTNo+E9/QZDdxpKfolaA3/hUPynMXCmEFw5IE1+wsO0YxX2b7T1tq3fkxldLky9
+         PEnw==
+X-Gm-Message-State: AOAM533LQOP4nC2VR9u8M1D8APJgfdU97RjMwhzQ5zoaUaAtj/gMPJ3S
+        13960IqemoZzhKMAmg9VF06uxuyc
+X-Google-Smtp-Source: ABdhPJx3GQhtBrSLwZMihBIPt3E/VhU9RXRG+mOiqTJm4nSmisFrZOGAOFdpra+v8vNEvRoEbV3QVg==
+X-Received: by 2002:a5d:514f:: with SMTP id u15mr3071880wrt.132.1590143265333;
+        Fri, 22 May 2020 03:27:45 -0700 (PDT)
 Received: from [192.168.1.201] (226.20.198.146.dyn.plus.net. [146.198.20.226])
-        by smtp.googlemail.com with ESMTPSA id t7sm3130102wrq.41.2020.05.22.03.13.13
+        by smtp.googlemail.com with ESMTPSA id s67sm9351921wmf.3.2020.05.22.03.27.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 May 2020 03:13:13 -0700 (PDT)
-Subject: Re: [PATCH v2 1/4] doc: propose hooks managed by the config
+        Fri, 22 May 2020 03:27:44 -0700 (PDT)
+Subject: Re: [PATCH v2 3/4] hook: add list command
 To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
 References: <20200521185414.43760-1-emilyshaffer@google.com>
- <20200521185414.43760-2-emilyshaffer@google.com>
+ <20200521185414.43760-4-emilyshaffer@google.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <355b7780-0096-42a9-01df-387ec17cb206@gmail.com>
-Date:   Fri, 22 May 2020 11:13:07 +0100
+Message-ID: <41e4fcf3-5d39-71a2-35b2-ee143cd59033@gmail.com>
+Date:   Fri, 22 May 2020 11:27:44 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <20200521185414.43760-2-emilyshaffer@google.com>
+In-Reply-To: <20200521185414.43760-4-emilyshaffer@google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -80,400 +80,389 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Emily
 
-Thanks for working on this
-
 On 21/05/2020 19:54, Emily Shaffer wrote:
-> Begin a design document for config-based hooks, managed via git-hook.
-> Focus on an overview of the implementation and motivation for design
-> decisions. Briefly discuss the alternatives considered before this
-> point. Also, attempt to redefine terms to fit into a multihook world.
+> Teach 'git hook list <hookname>', which checks the known configs in
+> order to create an ordered list of hooks to run on a given hook event.
+> 
+> Multiple commands can be specified for a given hook by providing
+> multiple "hook.<hookname>.command = <path-to-hook>" lines. Hooks will be
+> run in config order. If more properties need to be set on a given hook
+> in the future, commands can also be specified by providing
+> "hook.<hookname>.command = <hookcmd-name>", as well as a "[hookcmd
+> <hookcmd-name>]" subsection; at minimum, this subsection must contain a
+> "hookcmd.<hookcmd-name>.command = <path-to-hook>" line.
+> 
+> For example:
+> 
+>   $ git config --list | grep ^hook
+>   hook.pre-commit.command=baz
+>   hook.pre-commit.command=~/bar.sh
+>   hookcmd.baz.command=~/baz/from/hookcmd.sh
+> 
+>   $ git hook list pre-commit
+>   ~/baz/from/hookcmd.sh
+>   ~/bar.sh
 > 
 > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > ---
->  Documentation/Makefile                        |   1 +
->  .../technical/config-based-hooks.txt          | 320 ++++++++++++++++++
->  2 files changed, 321 insertions(+)
->  create mode 100644 Documentation/technical/config-based-hooks.txt
+>  Documentation/git-hook.txt    | 37 +++++++++++++-
+>  Makefile                      |  1 +
+>  builtin/hook.c                | 55 +++++++++++++++++++--
+>  hook.c                        | 90 +++++++++++++++++++++++++++++++++++
+>  hook.h                        | 15 ++++++
+>  t/t1360-config-based-hooks.sh | 51 +++++++++++++++++++-
+>  6 files changed, 242 insertions(+), 7 deletions(-)
+>  create mode 100644 hook.c
+>  create mode 100644 hook.h
 > 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 15d9d04f31..5b21f31d31 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -80,6 +80,7 @@ SP_ARTICLES += $(API_DOCS)
->  TECH_DOCS += MyFirstContribution
->  TECH_DOCS += MyFirstObjectWalk
->  TECH_DOCS += SubmittingPatches
-> +TECH_DOCS += technical/config-based-hooks
->  TECH_DOCS += technical/hash-function-transition
->  TECH_DOCS += technical/http-protocol
->  TECH_DOCS += technical/index-format
-> diff --git a/Documentation/technical/config-based-hooks.txt b/Documentation/technical/config-based-hooks.txt
-> new file mode 100644
-> index 0000000000..59cdc25a47
-> --- /dev/null
-> +++ b/Documentation/technical/config-based-hooks.txt
-> @@ -0,0 +1,320 @@
-> +Configuration-based hook management
-> +===================================
+> diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+> index 2d50c414cc..e458586e96 100644
+> --- a/Documentation/git-hook.txt
+> +++ b/Documentation/git-hook.txt
+> @@ -8,12 +8,47 @@ git-hook - Manage configured hooks
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git hook'
+> +'git hook' list <hook-name>
+>  
+>  DESCRIPTION
+>  -----------
+>  You can list, add, and modify hooks with this command.
+>  
+> +This command parses the default configuration files for sections "hook" and
+> +"hookcmd". "hook" is used to describe the commands which will be run during a
+> +particular hook event; commands are run in config order. "hookcmd" is used to
+> +describe attributes of a specific command. If additional attributes don't need
+> +to be specified, a command to run can be specified directly in the "hook"
+> +section; if a "hookcmd" by that name isn't found, Git will attempt to run the
+> +provided value directly. For example:
 > +
-> +== Motivation
-> +
-> +Treat hooks as a first-class citizen by replacing the .git/hook/hookname path as
-> +the only source of hooks to execute, in a way which is friendly to users with
-> +multiple repos which have similar needs.
-> +
-> +Redefine "hook" as an event rather than a single script, allowing users to
-> +perform unrelated actions on a single event.
-> +
-> +Take a step closer to safety when copying zipped Git repositories from untrusted
-> +users.
-
-Having read through this (admittedly fairly quickly) I'm not sure what
-that step is
-
-> +
-> +Make it easier for users to discover Git's hook feature and automate their
-> +workflows.
-> +
-> +== User interfaces
-> +
-> +=== Config schema
-> +
-> +Hooks can be introduced by editing the configuration manually. There are two new
-> +sections added, `hook` and `hookcmd`.
-> +
-> +==== `hook`
-> +
-> +Primarily contains subsections for each hook event. These subsections define
-> +hook command execution order;
-
-May be "The order of these subsections define the hook command execution
-order" ?
-
-> hook commands can be specified by passing the
-> +command directly if no additional configuration is needed, or by passing the
-> +name of a `hookcmd`.
-
-I know what you mean by "passing" but as this section is talking about
-config settings perhaps it should refer to the keys and values.
-
-> If Git does not find a `hookcmd` whose subsection matches
-> +the value of the given command string, Git will try to execute the string
-> +directly. Hooks are executed by passing the resolved command string to the
-> +shell.
-
-Do we really need to invoke the shell just to split a command-line and
-look up the command in $PATH? If we used split_commandline() in alias.c
-then we could avoid invoking this extra process for each hook command.
-
-> Hook event subsections can also contain per-hook-event settings.
-> +
-> +Also contains top-level hook execution settings, for example,
-> +`hook.warnHookDir`, `hook.runHookDir`, or `hook.disableAll`.
-
-(see sections ...) ? for the forward references to these settings?
-
-> +
+> +Global config
 > +----
-> +[hook "pre-commit"]
-> +  command = perl-linter
-> +  command = /usr/bin/git-secrets --pre-commit
+> +  [hook "post-commit"]
+> +    command = "linter"
+> +    command = "~/typocheck.sh"
 > +
-> +[hook "pre-applypatch"]
-> +  command = perl-linter
-> +  error = ignore
-> +
-> +[hook]
-> +  runHookDir = interactive
+> +  [hookcmd "linter"]
+> +    command = "/bin/linter --c"
 > +----
 > +
-> +==== `hookcmd`
-> +
-> +Defines a hook command and its attributes, which will be used when a hook event
-> +occurs. Unqualified attributes are assumed to apply to this hook during all hook
-> +events, but event-specific attributes can also be supplied. The example runs
-> +`/usr/bin/lint-it --language=perl <args passed by Git>`, but for repos which
-> +include this config, the hook command will be skipped for all events to which
-> +it's normally subscribed _except_ `pre-commit`.
-> +
+> +Local config
 > +----
-> +[hookcmd "perl-linter"]
-> +  command = /usr/bin/lint-it --language=perl
-> +  skip = true
-> +  pre-commit-skip = false
+> +  [hook "prepare-commit-msg"]
+> +    command = "linter"
+> +  [hook "post-commit"]
+> +    command = "python ~/run-test-suite.py"
 > +----
 > +
-> +=== Command-line API
+> +COMMANDS
+> +--------
 > +
-> +Users should be able to view, reorder, and create hook commands via the command
-> +line. External tools should be able to view a list of hooks in the correct order
-> +to run.
+> +list <hook-name>::
 > +
-> +*`git hook list <hook-event>`*
+> +List the hooks which have been configured for <hook-name>. Hooks appear
+> +in the order they should be run, and note the config scope where the relevant
+> +`hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
 > +
-> +*`git hook list (--system|--global|--local|--worktree)`*
+>  GIT
+>  ---
+>  Part of the linkgit:git[1] suite
+> diff --git a/Makefile b/Makefile
+> index fce6ee154e..b7bbf3be7b 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -894,6 +894,7 @@ LIB_OBJS += grep.o
+>  LIB_OBJS += hashmap.o
+>  LIB_OBJS += help.o
+>  LIB_OBJS += hex.o
+> +LIB_OBJS += hook.o
+>  LIB_OBJS += ident.o
+>  LIB_OBJS += interdiff.o
+>  LIB_OBJS += json-writer.o
+> diff --git a/builtin/hook.c b/builtin/hook.c
+> index b2bbc84d4d..cfd8e388bd 100644
+> --- a/builtin/hook.c
+> +++ b/builtin/hook.c
+> @@ -1,21 +1,68 @@
+>  #include "cache.h"
+>  
+>  #include "builtin.h"
+> +#include "config.h"
+> +#include "hook.h"
+>  #include "parse-options.h"
+> +#include "strbuf.h"
+>  
+>  static const char * const builtin_hook_usage[] = {
+> -	N_("git hook"),
+> +	N_("git hook list <hookname>"),
+>  	NULL
+>  };
+>  
+> -int cmd_hook(int argc, const char **argv, const char *prefix)
+> +static int list(int argc, const char **argv, const char *prefix)
+>  {
+> -	struct option builtin_hook_options[] = {
+> +	struct list_head *head, *pos;
+> +	struct hook *item;
+> +	struct strbuf hookname = STRBUF_INIT;
 > +
-> +*`git hook edit <hook-event>`*
+> +	struct option list_options[] = {
+>  		OPT_END(),
+>  	};
+>  
+> -	argc = parse_options(argc, argv, prefix, builtin_hook_options,
+> +	argc = parse_options(argc, argv, prefix, list_options,
+>  			     builtin_hook_usage, 0);
+>  
+> +	if (argc < 1) {
+> +		usage_msg_opt("a hookname must be provided to operate on.",
+> +			      builtin_hook_usage, list_options);
+> +	}
 > +
-> +*`git hook add <hook-command> <hook-event> <options...>`*
+> +	strbuf_addstr(&hookname, argv[0]);
 > +
-> +=== Hook editor
+> +	head = hook_list(&hookname);
 > +
-> +The tool which is presented by `git hook edit <hook-command>`. Ideally, this
-> +tool should be easier to use than manually editing the config, and then produce
-> +a concise config afterwards. It may take a form similar to `git rebase
-> +--interactive`.
-
-rebase -i is not necessarily an exemplar of user interface design, what
-sort of thing do you have in mind?
-
+> +	if (!head) {
+> +		printf(_("no commands configured for hook '%s'\n"),
+> +		       hookname.buf);
+> +		return 0;
+> +	}
 > +
-> +== Implementation
+> +	list_for_each(pos, head) {
+> +		item = list_entry(pos, struct hook, list);
+> +		if (item)
+> +			printf("%s:\t%s\n",
+> +			       config_scope_name(item->origin),
+> +			       item->command.buf);
+> +	}
 > +
-> +=== Library
+> +	clear_hook_list();
+> +	strbuf_release(&hookname);
 > +
-> +`hook.c` and `hook.h` are responsible for interacting with the config files. In
-> +the case when the code generating a hook event doesn't have special concerns
-> +about how to run the hooks, the hook library will provide a basic API to call
-> +all hooks in config order with an `argv_array` provided by the code which
-> +generates the hook event:
+>  	return 0;
+>  }
 > +
-> +*`int run_hooks(const char *hookname, struct argv_array *args)`*
+> +int cmd_hook(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct option builtin_hook_options[] = {
+> +		OPT_END(),
+> +	};
+> +	if (argc < 2)
+> +		usage_with_options(builtin_hook_usage, builtin_hook_options);
 > +
-> +This call includes the hook command provided by `run-command.h:find_hook()`;
-> +eventually, this legacy hook will be gated by a config `hook.runHookDir`. The
-> +config is checked against a number of cases:
+> +	if (!strcmp(argv[1], "list"))
+> +		return list(argc - 1, argv + 1, prefix);
 > +
-> +- "no": the legacy hook will not be run
-> +- "interactive": Git will prompt the user before running the legacy hook
-> +- "warn": Git will print a warning to stderr before running the legacy hook
-> +- "yes" (default): Git will silently run the legacy hook
-> +
-> +In case this list is expanded in the future, if a value for `hook.runHookDir` is
-> +given which Git does not recognize, Git should discard that config entry. For
-> +example, if "warn" was specified at system level and "junk" was specified at
-> +global level, Git would resolve the value to "warn"; if the only time the config
-> +was set was to "junk", Git would use the default value of "yes".
-> +
-> +If the caller wants to do something more complicated, the hook library can also
-> +provide a callback API:
-> +
-> +*`int for_each_hookcmd(const char *hookname, hookcmd_function *cb)`*
-> +
-> +Finally, to facilitate the builtin, the library will also provide the following
-> +APIs to interact with the config:
-> +
-> +----
-> +int set_hook_commands(const char *hookname, struct string_list *commands,
-> +	enum config_scope scope);
-> +int set_hookcmd(const char *hookcmd, struct hookcmd options);
-> +
-> +int list_hook_commands(const char *hookname, struct string_list *commands);
-> +int list_hooks_in_scope(enum config_scope scope, struct string_list *commands);
-> +----
-> +
-> +`struct hookcmd` is expected to grow in size over time as more functionality is
-> +added to hooks; so that other parts of the code don't need to understand the
-> +config schema, `struct hookcmd` should contain logical values instead of string
-> +pairs.
-> +
-> +----
-> +struct hookcmd {
-> +  const char *name;
-> +  const char *command;
-> +
-> +  /* for illustration only; not planned at present */
-> +  int parallelizable;
-> +  const char *hookcmd_before;
-> +  const char *hookcmd_after;
-> +  enum recovery_action on_fail;
+> +	usage_with_options(builtin_hook_usage, builtin_hook_options);
 > +}
-> +----
+> diff --git a/hook.c b/hook.c
+> new file mode 100644
+> index 0000000000..9dfc1a885e
+> --- /dev/null
+> +++ b/hook.c
+> @@ -0,0 +1,90 @@
+> +#include "cache.h"
 > +
-> +=== Builtin
+> +#include "hook.h"
+> +#include "config.h"
 > +
-> +`builtin/hook.c` is responsible for providing the frontend. It's responsible for
-> +formatting user-provided data and then calling the library API to set the
-> +configs as appropriate. The builtin frontend is not responsible for calling the
-> +config directly, so that other areas of Git can rely on the hook library to
-> +understand the most recent config schema for hooks.
+> +static LIST_HEAD(hook_head);
 > +
-> +=== Migration path
+> +void free_hook(struct hook *ptr)
+> +{
+> +	if (ptr) {
+> +		strbuf_release(&ptr->command);
+> +		free(ptr);
+> +	}
+> +}
 > +
-> +==== Stage 0
+> +static void emplace_hook(struct list_head *pos, const char *command)
+> +{
+> +	struct hook *to_add = malloc(sizeof(struct hook));
+> +	to_add->origin = current_config_scope();
+> +	strbuf_init(&to_add->command, 0);
+> +	strbuf_addstr(&to_add->command, command);
 > +
-> +Hooks are called by running `run-command.h:find_hook()` with the hookname and
-> +executing the result. The hook library and builtin do not exist. Hooks only
-> +exist as specially named scripts within `.git/hooks/`.
+> +	list_add_tail(&to_add->list, pos);
+> +}
 > +
-> +==== Stage 1
+> +static void remove_hook(struct list_head *to_remove)
+> +{
+> +	struct hook *hook_to_remove = list_entry(to_remove, struct hook, list);
+> +	list_del(to_remove);
+> +	free_hook(hook_to_remove);
+> +}
 > +
-> +`git hook list --porcelain <hook-event>` is implemented. Users can replace their
-> +`.git/hooks/<hook-event>` scripts with a trampoline based on `git hook list`'s
-> +output. Modifier commands like `git hook add` and `git hook edit` can be
-> +implemented around this time as well.
+> +void clear_hook_list(void)
+> +{
+> +	struct list_head *pos, *tmp;
+> +	list_for_each_safe(pos, tmp, &hook_head)
+> +		remove_hook(pos);
+> +}
 > +
-> +==== Stage 2
+> +static int hook_config_lookup(const char *key, const char *value, void *hook_key_cb)
+> +{
+> +	const char *hook_key = hook_key_cb;
 > +
-> +`hook.h:run_hooks()` is taught to include `run-command.h:find_hook()` at the
-> +end; calls to `find_hook()` are replaced with calls to `run_hooks()`. Users can
-> +opt-in to config-based hooks simply by creating some in their config; otherwise
-> +users should remain unaffected by the change.
+> +	if (!strcmp(key, hook_key)) {
+> +		const char *command = value;
+> +		struct strbuf hookcmd_name = STRBUF_INIT;
+> +		struct list_head *pos = NULL, *tmp = NULL;
 > +
-> +==== Stage 3
-> +
-> +The call to `find_hook()` inside of `run_hooks()` learns to check for a config,
-> +`hook.runHookDir`. Users can opt into managing their hooks completely via the
-> +config this way.
-> +
-> +==== Stage 4
-> +
-> +`.git/hooks` is removed from the template and the hook directory is considered
-> +deprecated. To avoid breaking older repos, the default of `hook.runHookDir` is
-> +not changed, and `find_hook()` is not removed.
-> +
-> +== Caveats
-> +
-> +=== Security and repo config
-> +
-> +Part of the motivation behind this refactor is to mitigate hooks as an attack
-> +vector;footnote:[https://lore.kernel.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/]
-> +however, as the design stands, users can still provide hooks in the repo-level
-> +config, which is included when a repo is zipped and sent elsewhere.  The
-> +security of the repo-level config is still under discussion; this design
-> +generally assumes the repo-level config is secure, which is not true yet. The
-> +goal is to avoid an overcomplicated design to work around a problem which has
-> +ceased to exist.
-> +
-> +=== Ease of use
-> +
-> +The config schema is nontrivial; that's why it's important for the `git hook`
-> +modifier commands to be usable.
+> +		/* Check if a hookcmd with that name exists. */
+> +		strbuf_addf(&hookcmd_name, "hookcmd.%s.command", command);
+> +		git_config_get_value(hookcmd_name.buf, &command);
 
-That's an important point
+This looks dodgy to me. This code is called by git_config() as it parses
+the config files, so it has not had a chance to fully populate the
+config cache used by git_config_get_value(). I think the test below
+passes because the hookcmd setting is set in the global file and the
+hook setting is set in the local file so when we have already parsed the
+hookcmd setting when we come to look it up. The same comment applies to
+the hypothetical ordering config mentioned below. I think it would be
+better to collect the list of hook.<event>.command settings in this
+callback and then look up any hookcmd settings for those hook commands
+after we've finished reading all of the config files.
 
-> Contributors with UX expertise are encouraged to
-> +share their suggestions.
 > +
-> +== Alternative approaches
+> +		if (!command)
+> +			BUG("git_config_get_value overwrote a string it shouldn't have");
 > +
-> +A previous summary of alternatives exists in the
-> +archives.footnote:[https://lore.kernel.org/git/20191116011125.GG22855@google.com]
+> +		/*
+> +		 * TODO: implement an option-getting callback, e.g.
+> +		 *   get configs by pattern hookcmd.$value.*
+> +		 *   for each key+value, do_callback(key, value, cb_data)
+> +		 */
 > +
-> +=== Status quo
+> +		list_for_each_safe(pos, tmp, &hook_head) {
+> +			struct hook *hook = list_entry(pos, struct hook, list);
+> +			/*
+> +			 * The list of hooks to run can be reordered by being redeclared
+> +			 * in the config. Options about hook ordering should be checked
+> +			 * here.
+> +			 */
+> +			if (0 == strcmp(hook->command.buf, command))
+> +				remove_hook(pos);
+> +		}
+> +		emplace_hook(pos, command);
+> +	}
 > +
-> +Today users can implement multihooks themselves by using a "trampoline script"
-> +as their hook, and pointing that script to a directory or list of other scripts
-> +they wish to run.
+> +	return 0;
+> +}
 > +
-> +=== Hook directories
+> +struct list_head* hook_list(const struct strbuf* hookname)
+> +{
+> +	struct strbuf hook_key = STRBUF_INIT;
 > +
-> +Other contributors have suggested Git learn about the existence of a directory
-> +such as `.git/hooks/<hookname>.d` and execute those hooks in alphabetical order.
+> +	if (!hookname)
+> +		return NULL;
 > +
-> +=== Comparison table
+> +	strbuf_addf(&hook_key, "hook.%s.command", hookname->buf);
 > +
-> +.Comparison of alternatives
-> +|===
-> +|Feature |Config-based hooks |Hook directories |Status quo
+> +	git_config(hook_config_lookup, (void*)hook_key.buf);
 > +
-> +|Supports multiple hooks
-> +|Natively
-> +|Natively
-> +|With user effort
+> +	return &hook_head;
+> +}
+> diff --git a/hook.h b/hook.h
+> new file mode 100644
+> index 0000000000..aaf6511cff
+> --- /dev/null
+> +++ b/hook.h
+> @@ -0,0 +1,15 @@
+> +#include "config.h"
+> +#include "list.h"
+> +#include "strbuf.h"
 > +
-> +|Safer for zipped repos
-> +|A little
-> +|No
-> +|No
+> +struct hook
+> +{
+> +	struct list_head list;
+> +	enum config_scope origin;
+> +	struct strbuf command;
+> +};
 > +
-> +|Previous hooks just work
-> +|If configured
-> +|Yes
-> +|Yes
+> +struct list_head* hook_list(const struct strbuf *hookname);
 > +
-> +|Can install one hook to many repos
-> +|Yes
-> +|No
-> +|No
+> +void free_hook(struct hook *ptr);
+> +void clear_hook_list(void);
+> diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
+> index 34b0df5216..4e46d7dd4e 100755
+> --- a/t/t1360-config-based-hooks.sh
+> +++ b/t/t1360-config-based-hooks.sh
+> @@ -4,8 +4,55 @@ test_description='config-managed multihooks, including git-hook command'
+>  
+>  . ./test-lib.sh
+>  
+> -test_expect_success 'git hook command does not crash' '
+> -	git hook
+> +test_expect_success 'git hook rejects commands without a mode' '
+> +	test_must_fail git hook pre-commit
+> +'
 > +
-> +|Discoverability
-> +|Better (in `git help git`)
-> +|Same as before
-> +|Same as before
 > +
-> +|Hard to run unexpected hook
-> +|If configured
-> +|No
-> +|No
-> +|===
+> +test_expect_success 'git hook rejects commands without a hookname' '
+> +	test_must_fail git hook list
+> +'
 > +
-> +== Future work
-> +
-> +=== Execution ordering
-> +
-> +We may find that config order is insufficient for some users; for example,
-> +config order makes it difficult to add a new hook to the system or global config
-> +which runs at the end of the hook list. A new ordering schema should be:
-> +
-> +1) Specified by a `hook.order` config, so that users will not unexpectedly see
-> +their order change;
-> +
-> +2) Either dependency or numerically based.
-> +
-> +Dependency-based ordering is prone to classic linked-list problems, like a
-> +cycles and handling of missing dependencies. But, it paves the way for enabling
-> +parallelization if some tasks truly depend on others.
-> +
-> +Numerical ordering makes it tricky for Git to generate suggested ordering
-> +numbers for each command, but is easy to determine a definitive order.
-> +
-> +=== Parallelization
-> +
-> +Users with many hooks might want to run them simultaneously, if the hooks don't
-> +modify state; if one hook depends on another's output, then users will want to
-> +specify those dependencies. If we decide to solve this problem, we may want to
-> +look to modern build systems for inspiration on how to manage dependencies and
-> +parallel tasks.
-> +
-> +=== Securing hookdir hooks
-> +
-> +With the design as written in this doc, it's still possible for a malicious user
-> +to modify `.git/config` to include `hook.pre-receive.command = rm -rf /`, then
-> +zip their repo and send it to another user. It may be necessary to teach Git to
-> +only allow one-line hooks like this if they were configured outside of the local
-> +scope;
+> +test_expect_success 'setup hooks in global, and local' '
+> +	git config --add --local hook.pre-commit.command "/path/ghi" &&
 
-Does "disabling one-line hooks" mean "disable passing command line
-arguments to the hook"? I'm not sure that gains much security - can't I
-just set 'hook.pre-receive.command = ./delete-everything' and include
-delete-everything in my malicious repo?
+Can I make a plea for the use of test_config please. Writing tests which
+rely on previous tests for their set-up creates a chain of hidden
+dependencies that make it hard to add/alter tests later or run a subset
+of the tests when developing a new patch. t3404-rebase-interactive.sh is
+a prime example of this and I dread touching it.
+
+> +	git config --add --global hook.pre-commit.command "/path/def"
+> +'
+> +
+> +test_expect_success 'git hook list orders by config order' '
+> +	cat >expected <<-\EOF &&
+> +	global:	/path/def
+> +	local:	/path/ghi
+> +	EOF
+> +
+> +	git hook list pre-commit >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'git hook list dereferences a hookcmd' '
+> +	git config --add --local hook.pre-commit.command "abc" &&
+> +	git config --add --global hookcmd.abc.command "/path/abc" &&
+> +
+> +	cat >expected <<-\EOF &&
+> +	global:	/path/def
+> +	local:	/path/ghi
+> +	local:	/path/abc
+
+We should make it clear in the documentation that the config origin
+applies to the hook setting, even though we display the hookcmd command
+which is set globally here for the last hook.
 
 Best Wishes
 
 Phillip
 
-> or another approach, like a list of safe projects, might be useful. It
-> +may also be sufficient (or at least useful) to teach a `hook.disableAll` config
-> +or similar flag to the Git executable.
+> +	EOF
 > +
-> +=== Submodule inheritance
+> +	git hook list pre-commit >actual &&
+> +	test_cmp expected actual
+> +'
 > +
-> +It's possible some submodules may want to run the identical set of hooks that
-> +their superrepo runs. While a globally-configured hook set is helpful, it's not
-> +a great solution for users who have multiple repos-with-submodules under the
-> +same user. It would be useful for submodules to learn how to run hooks from
-> +their superrepo's config, or inherit that hook setting.
+> +test_expect_success 'git hook list reorders on duplicate commands' '
+> +	git config --add --local hook.pre-commit.command "/path/def" &&
 > +
-> +== Glossary
+> +	cat >expected <<-\EOF &&
+> +	local:	/path/ghi
+> +	local:	/path/abc
+> +	local:	/path/def
+> +	EOF
 > +
-> +*hook event*
-> +
-> +A point during Git's execution where user scripts may be run, for example,
-> +_prepare-commit-msg_ or _pre-push_.
-> +
-> +*hook command*
-> +
-> +A user script or executable which will be run on one or more hook events.
+> +	git hook list pre-commit >actual &&
+> +	test_cmp expected actual
+>  '
+>  
+>  test_done
 > 
 
