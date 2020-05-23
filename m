@@ -7,84 +7,98 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0260C433DF
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 22:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC65AC433E0
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 23:05:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6381220727
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 22:45:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A87FC207FB
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 23:05:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elKQTYWt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G321YVzy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388016AbgEWWpM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 May 2020 18:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43602 "EHLO
+        id S2388047AbgEWXFb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 May 2020 19:05:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727827AbgEWWpM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 May 2020 18:45:12 -0400
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F7CC061A0E
-        for <git@vger.kernel.org>; Sat, 23 May 2020 15:45:11 -0700 (PDT)
-Received: by mail-ua1-x92a.google.com with SMTP id b13so5038613uav.3
-        for <git@vger.kernel.org>; Sat, 23 May 2020 15:45:11 -0700 (PDT)
+        with ESMTP id S2388010AbgEWXFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 May 2020 19:05:31 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47C4C061A0E
+        for <git@vger.kernel.org>; Sat, 23 May 2020 16:05:29 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id b190so6919168pfg.6
+        for <git@vger.kernel.org>; Sat, 23 May 2020 16:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=rEkkcs1lhhUJl6eFcQnPyH8W5/jYnV0uzFE1yc25ieM=;
-        b=elKQTYWtGIQVsPThwM7I9PAIQMPFUMKg6tjNrIG+D+WHXP5fTUuKsgOjsR6j0l0dh/
-         uAMul0XEMpRt9hGc5IwaHzj4fjZzQ5sOrR/j5GsAM1b7blTabzf69h9Y5bcqMObVBLQM
-         TR5Q4TcfVPlB7JH504fqLEOL/hFwOsv8gD4+ZAqcMWbel719dS8ZxKbOXVIUC7iJsZE+
-         XxMdwsTNHhIXOEczhG5xhJINDTIgHwfmPSYr0yGO+zOWwWSySIsNh75WQZ9WdELzqG5J
-         JpaetDN/O8Nnd8JflK4gyt8gZGtEEY8SHMVKd7OEI4QbRt9Uxmg7j9DiasUetPQRqf+u
-         xFOw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ToDnEe0PvDL7y5vjjI1bBeUj79faSN4akz50pZJUQBI=;
+        b=G321YVzy2PIyC+ATAGz4erklc07OObeGCw5Gbz/BnH2ZYT/s0qIi+4vbmu4/Y/suUF
+         uJ9qX3KRqfhU9tyQzvl9zA9yodccshZC+hswH/HcEouWxl45wd+SEFDEGXEuxXEfPPWG
+         avqZfMSBEdoW3y1f+5K9G/dIwt4TKO5FWiAv/5gt3ux3FkzHBhggx1XMeKdo7JsVDc55
+         hXHRj7fSWDJyAn8s58XKRwzx5d0sTe+Ci1ZrRmNe1fuwRsatUOIR03lE0GXxWzJkuXE7
+         w3wY222dQSRJZTVtp+FGg8LsKn6DWBL5r6gtp3U/7l1zWtyu2D9SONfhhs5y1dySoLb0
+         K9aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=rEkkcs1lhhUJl6eFcQnPyH8W5/jYnV0uzFE1yc25ieM=;
-        b=RSc+gZdK5MrOc73Jo38CfrUfPOH0tuyWjLofm98qbh+sCSReVPN9SbxRDFA1JhBDCm
-         PZ3QRoBKkec49DhTniWLMw1A2/VeX/WRoaNTiOnFKCYeHy1qwgAcO3nEhlxh8DQ32edI
-         0UqwXj9LLLDjzFUuxIWnnc9nOz16iknhTOvcndP40dCzocaG9swgi8cvk/FiakjF6yP9
-         0l19pqPSU7AhPlEJKv4ufawvHHkHQZjyNWMAjP/BPI4Khzj0yUOEOZhoUfKHXK7vMnP9
-         Tdx1qm4JcNHnNbnjQwPDHONi6A8pk2tEX/EscIx7rGFFkrAfO8ssY0fSLJyOCHrIXiXC
-         qnSQ==
-X-Gm-Message-State: AOAM532U6PJynOGrXJfx30b3jI05/lSw8gTffQjnbMwH0Hhdj6ap5kc9
-        gv/sxTRwqyPdW0LsEgpnH2mHchdPv1E1hY+Vlnxj1dZs
-X-Google-Smtp-Source: ABdhPJxiLpv7Ohiu+YLy0qLiSGhDLsWBHo2wS9FZ2bqG78G3c+vaD7ecUHHIGtfu8fQVvU5f/Cdv9DBAT1Qk6+vrtAc=
-X-Received: by 2002:ab0:6855:: with SMTP id a21mr15181765uas.30.1590273910528;
- Sat, 23 May 2020 15:45:10 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ToDnEe0PvDL7y5vjjI1bBeUj79faSN4akz50pZJUQBI=;
+        b=VMyNq9u1VZzCL1UxBC2j6wqak8BB+jlfJYKnR3sfBO95/BtUa2sBu2H/OGBiviNBvn
+         RI8ABJjwEeqNHSNIUbgIUk9RTfm3FStIRsnTTDqRaK4FFII1fMwJsiHbVbCIZejGhBJU
+         UlFSf/5jH5c1JZtumsN5OLH8UsOI4hsGkGl8OOsLSczKhRO8Ilnr/aLvN59OyCP7XiyB
+         tEnB5oeWH+Y1SukbaiDTzzg9zy3SE1VEVzFaeSFFQtsYduGZi1RPVkXSL0z11yPJ02XG
+         Djbt+hyAyeonCK8o+uQ5+D81WQZZV6Nl29xFhD15gfqYh4cOAwx+lyFiDKUoZTUIchX+
+         Q2Hw==
+X-Gm-Message-State: AOAM533Mf6Ve7X0je1e3Ujb7SK3ga9VH0Qffm9f98RvhVBDW+rA19Wpk
+        lK0eBoY5W5uyziOq5Gf0Xhs=
+X-Google-Smtp-Source: ABdhPJxxqdpSnUphpstIPE4pxjbKdGXu0d5BV939q6X9EUIti6XCt01qXAJLpjjEy/E8f2y6s7PLzQ==
+X-Received: by 2002:aa7:9e52:: with SMTP id z18mr10410624pfq.57.1590275129073;
+        Sat, 23 May 2020 16:05:29 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
+        by smtp.gmail.com with ESMTPSA id m3sm9140854pjs.17.2020.05.23.16.05.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 May 2020 16:05:28 -0700 (PDT)
+Date:   Sun, 24 May 2020 06:05:26 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 4/5] rebase -i: support --ignore-date
+Message-ID: <20200523230526.GA1981@danh.dev>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com>
+ <20200521101455.63484-1-phillip.wood123@gmail.com>
+ <20200521101455.63484-5-phillip.wood123@gmail.com>
+ <20200523123025.GA20683@danh.dev>
+ <bc6bc4d4-79cb-f788-deca-41a3735fcaae@gmail.com>
+ <20200523155203.GA10163@danh.dev>
+ <0cf07e92-25f2-ae0f-6f44-c2cd9e9f4851@gmail.com>
 MIME-Version: 1.0
-From:   Michal Vrana <mivra1@gmail.com>
-Date:   Sun, 24 May 2020 00:44:59 +0200
-Message-ID: <CA+sZKRqMaSZqj3PdpRz3xrruTbz1CJV=W9s_ox4BrhCAuQqhKA@mail.gmail.com>
-Subject: Submodule init uses STDERR output
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0cf07e92-25f2-ae0f-6f44-c2cd9e9f4851@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-I've come across an issue that seems like a bug to me. If I clone a
-repository with a submodule but want to initialize it separately, then
-the error output is used during this initialization for what seems to
-be a standard message.
-Motivation:
-Cannot use - Fail on standard error setting in a devops pipeline
+Hi Phillip,
 
-Steps to reproduce:
-1. git clone
-2. git submodule init 2>err.txt
+On 2020-05-23 19:50:40+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> 
+> The part of my reply you've cut said "I've checked the log invocations in
+> the other tests and I think they're all OK." So it is just the one that you
+> pointed out that needs to be fixed up (the others without -1 are all
+> checking the result of rebase --root). I'm happy to re-roll if Junio wants -
+> lets wait and see what he says.
 
-The err.txt contains a message like
-Submodule 'xyz' (xyz.git) registered for path 'abc'
-From what I've read this is the standard output in this case. And if
-not then why when I use "quiet" mode then the error output is empty.
-So why is the error output even used?
+Ah, I was thinking "they're all OK" meant that part can be left as-is,
+and the only part need to change is the --pretty=format.
 
-Platforms reproduced on:
-git version 2.26.2.windows.1 - Windows server
-git version 2.19.0.windows.1 - gitbash - Windows 10
-git version 2.17.1 Ubuntu (Windows subsystem)
+Sorry for the noise, (and my bad in reading).
 
-Thanks,
-Michal Vrana
+-- 
+Danh
