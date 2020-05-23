@@ -2,80 +2,77 @@ Return-Path: <SRS0=yx/J=7F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 806F1C433E0
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 12:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2574AC433DF
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 14:17:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D21A207F9
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 12:30:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE76220727
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 14:17:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KKACP1v6"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TrmTbc7O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387800AbgEWMaa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 May 2020 08:30:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60718 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728969AbgEWMa3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 May 2020 08:30:29 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A386DC061A0E
-        for <git@vger.kernel.org>; Sat, 23 May 2020 05:30:28 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id ci23so6220814pjb.5
-        for <git@vger.kernel.org>; Sat, 23 May 2020 05:30:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZXRWi1d2gaNqqDm48szBGelCR8GSzi7DkI/c/uUn1V0=;
-        b=KKACP1v6a+bGRTjQi7+NnDkgz2U32JkIf+cH6Vx5TAoTG8Fi3aqw4LGDrQGw6LEx4W
-         UzGebvzbwuAbSuzadm+AiABVset1X5CSJ5Gc+Gra9stUCqjLZkLprvx4vhyeEPGmnEEC
-         DQHkHx4xMQnbLZbofmiilCawI/ehfmu46ekF0FKlAFBFNl+70rGSev/4YvcSZsZ+zkyg
-         xoPkqpP53fBpwOr90nhkZRPdIT/wrEi56OhIjwajXiUORkt1ZCEEjeJVsBxwctgJHwTN
-         w2XDmA14M5C5/VX8kg/JVfu7318K1HHVICUNo23XtQRi935XbEl0DTPr1NWkQvunHyaG
-         7UVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZXRWi1d2gaNqqDm48szBGelCR8GSzi7DkI/c/uUn1V0=;
-        b=JCGdIz1HQVfqOHg0zYnuOw84e2KjnSRpMsgny8pG3UagaqBHA6STkm8hNyAQP8BAhk
-         uWH9iutCpwxlVVCYpWP+FA/DNUxUzOsqhYsSb9FeS4+FVdhjMAfd5+uNvxevNLrGPP/D
-         niTgevgbswjr/GQjaOoi/ClxXTWZh6CWLNCJ8pOc0T9RrLuyeko5VsYSdrVX8+cw/vL2
-         xjQjnM//d2gKl7BCd5iZLjGDgxKcC39fWyDKi0qfjW4u961Ls3QUwxzgacvcTMkLqaob
-         mNopmlfFl5GciZhAlAUHqo0D2Pu0mSYHWmBj2cNTc+DUc0snFtWoVMl3blHXmo+ZmpDc
-         r87Q==
-X-Gm-Message-State: AOAM531VX/Z2BgPwdzVrQKW+dTf1R4kh/DPoJtOe1Yhh38QnsLeu+Hf1
-        3aZN8R5LlhrmXY+GtunLoD6nSv9V
-X-Google-Smtp-Source: ABdhPJw338Hz5zLws2Qc/xMEd6ROsvvzTRiKFz1blrFMTxS/+5YyNxYhWUHemcsLaQmK5E1kUnToYg==
-X-Received: by 2002:a17:90a:b113:: with SMTP id z19mr10358878pjq.183.1590237028201;
-        Sat, 23 May 2020 05:30:28 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
-        by smtp.gmail.com with ESMTPSA id q189sm9349456pfc.112.2020.05.23.05.30.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 May 2020 05:30:27 -0700 (PDT)
-Date:   Sat, 23 May 2020 19:30:25 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
+        id S2387834AbgEWORG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 May 2020 10:17:06 -0400
+Received: from mout.gmx.net ([212.227.17.22]:39321 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387799AbgEWORF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 May 2020 10:17:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1590243416;
+        bh=RnaobU4ey9U5IHjtkocwbl+jK+bfXr9KReCFWEaGK58=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=TrmTbc7OeDeZB/gJFdT3mweHVudj3jJsCE6hQqHb5qz7fcS2vR5ToKQHbkNUvviZo
+         ppA0KiJ265Y15mp6eSh3ApDcQB/VRoMjL85kVw2OSZWdYkJKwrzqiUW/7p1gsaOhjc
+         Kyqb51FSq62BhLiUbbN49Rqp/FKqccmgD7cmKvPk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.211.123] ([89.1.214.131]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwQXN-1imjqn1zr3-00sLjv; Sat, 23
+ May 2020 16:16:56 +0200
+Date:   Sat, 23 May 2020 08:59:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
+cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 4/5] rebase -i: support --ignore-date
-Message-ID: <20200523123025.GA20683@danh.dev>
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
- <20200521101455.63484-1-phillip.wood123@gmail.com>
- <20200521101455.63484-5-phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 0/5] cleanup ra/rebase-i-more-options
+In-Reply-To: <20200521101455.63484-1-phillip.wood123@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2005230857120.56@tvgsbejvaqbjf.bet>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com> <20200521101455.63484-1-phillip.wood123@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200521101455.63484-5-phillip.wood123@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:m7UKe0TWOBmGYF8gB442g3pJIj7TMiUBtwYMuMSHt+x52ziq9ZT
+ p13DJfNIAvcqYK9HlGDXfoUxkZDhYfG6E5+0J4mYmmEmK9KKRPxcNYpjrALMWxKRSpvDAIk
+ xbg27Iw/NB9xk+Jo6ChI8tjAX+dCCRHOqCoveXx49ECV1H6DC7JJa49U17/UqoM0sG4sdTr
+ g+OixgQidhTkWKm0P4viQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ol2ImenvZ2Q=:WdVBCcpI3OAm7AOBJxpIPn
+ kR8lOJSF8ssN6e19tChKCkMxqXs8w2mifGNzIWDSIo3mB9foZekE+gCBKvpN8IfE89JXemTNw
+ BuakwowHqUJYab1fV3ZR755clm9le/NA3bSFXYU9aNHpJxHqWby+BtglM1jhozdSKF9YUrtIO
+ fbYg3lcSed35u5fjlQnh+zEbCdxOE7SNZdcXZm4YeSi6Vob5zTgp1YctCkxlHZEH8Jur0532U
+ 27Mgpri3XT2Nvx15nFH0f+j82DWMw3L9iL6OtgFezN2JDn1pY0Hhnw/xjs2lDYiuJYXSg1nYB
+ ibWIlPT/dfrUXQdW/jCx2+NLkRKk3L6fIT7BJ6KjH9thpn9YYWykLDTFtAW/FC1n2Pei8U/yE
+ IEF+BDt0H8nxQ26LwBV9zGtq8OcfkQsAeVVS14lxnPRr8gYNAcq1lOpoVnO70fGIkl2PXf0EB
+ 9waP2lfBfUX2hoSqNrEDXmql4zoPbiFHyePwDC5rflenV/AvVWIbdLMn2hHIe3Z+ltQkV1dxV
+ KsmMT6rcx/7+SdSfOENtYfeGgL4AXbx+Pr/f5gTPi1hzaB605TRIjKrXFtsu2aCkgk4zkhvhg
+ bXi8CrJD8SLwh2U3vykoKL68wZkhtVsPr1okI62I3DCbNW/RBmovYgVYX8DOX/eZQw3TwXBiB
+ CL1P8XrKwZRDy9f5zlRlwUa+tDEVhAqGS+g+6tc8FPA1x1aIqE/aSq/Qk6Psa1fqbAGc6BORB
+ SX9WnKzhq8jz55qomnLupYbFuFa0gmEAdRV6+T9q2rAwf/kRdNQu1qiulZOaOpBQfrxP7Qo7Z
+ YNz+KjNzepV0079ba++brSBSRLwhvva8UlcZwo3hg56H2+O/vCnrdb36BmMwl45WyPg8Sgpfl
+ 0xmG7f96NudwKF0q9J54K0OyAYjQH9/XB6jbZdBQ9E0KKkcAJA/mkWZJoaZYv+eSrcO/fU3mu
+ hOPmdw5VVKdHg9veM0xzW0YLyx8c6DTmIQtoQrPjpeVJbyBjyVQ6+WGygkGS8gfxBTH/5rdK3
+ x06x9fN5MW4jfMCedQFgxvD5Qv2p4ne9xbY4OKtcYCwV8W4tjgBn5qYodhCIh4WtzC1UiFUoC
+ FfDqb0zXegELr2ggkAx7mIvMpsIhL2wCc6zZgtUSZrnMPr+a+P2DktERlOhC5BtABCfUkkSaS
+ 8nh3IFiufG39vPTjdFsSPmrMxoX45t1FMwsRUV3h62fQpno1OHgGRrbvtXGYscPtA52mnBguc
+ 39KjjuAwvgBFmybUP
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -83,58 +80,138 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Phillip,
 
-On 2020-05-21 11:14:54+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> +# Checking for +0000 in author time is enough since default
-> +# timezone is UTC, but the timezone used while committing
-> +# sets to +0530.
-> +test_expect_success '--ignore-date works with apply backend' '
-> +	git commit --amend --date="$GIT_AUTHOR_DATE" &&
-> +	git rebase --apply --ignore-date HEAD^ &&
-> +	git log -1 --pretty="format:%ai" >authortime &&
+On Thu, 21 May 2020, Phillip Wood wrote:
 
-Those --pretty="format:%ai" won't print the newline character in my
-test environment.
-It looks like it won't print the newline if stdout isn't a tty.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Thanks for the feedback on v2, I've updated the documentation as
+> suggested by Elijah and made the style fixes suggested by Alban but
+> I've not changed read_author_script() for the reasons explained in
+> https://lore.kernel.org/git/c6a2711a-96c1-d7ac-9678-20c581408ef5@gmail.c=
+om
+>
+> These patches are based on 9fadedd637 ("Merge branch
+> 'ds/default-pack-use-sparse-to-true'", 2020-03-29)
 
-	git log -1 --pretty=%ai
+Thank you for working on these patches! TBH what I was looking to most in
+that GSoC project was the ability to combine `--interactive` with Sverre's
+`--whitespace=3Dfix` option, but it never came even close to that. So I ha=
+d
+planned to help this patch series as much as I can.
 
-doesn't have that issue.
+Turns out that I do not really have any time to help this patch series,
+therefore I am very happy to see Danh and Elijah jump in and review the
+patch series, and that makes me think that between the three of you, it is
+in good hands now.
 
-I think there're some grep out there considers file doesn't end with
-newline as non-text files.
+Thanks,
+Dscho
 
-> +	grep "+0000" authortime
-> +'
-> +
-> +test_expect_success '--ignore-date works with merge backend' '
-> +	git commit --amend --date="$GIT_AUTHOR_DATE" &&
-> +	git rebase --ignore-date -m HEAD^ &&
-> +	git log -1 --pretty="format:%ai" >authortime &&
-> +	grep "+0000" authortime
-> +'
-> +
-> +test_expect_success '--ignore-date works after conflict resolution' '
-> +	test_must_fail git rebase --ignore-date -m \
-> +		--onto commit2^^ commit2^ commit2 &&
-> +	echo resolved >foo &&
-> +	git add foo &&
-> +	git rebase --continue &&
-> +	git log --pretty=%ai >authortime &&
-> +	grep +0000 authortime
-> +'
-
-From the test's name, I guess git-rebase is supposed to continue
-respect --ignore-date after conflict resolution.
-
-But the content of authortime read:
-
-	2020-05-23 12:13:58 +0000
-	1999-04-02 08:03:20 +0530
-	1999-04-02 08:03:20 +0530
-
-It's still pass "grep +0000 authortime" because of first line,
-I'm not sure if I missed anything.
-
-
--- 
-Danh
+>
+> Phillip Wood (2):
+>   rebase -i: support --committer-date-is-author-date
+>   rebase -i: support --ignore-date
+>
+> Rohit Ashiwal (3):
+>   rebase -i: add --ignore-whitespace flag
+>   sequencer: rename amend_author to author_to_free
+>   rebase: add --reset-author-date
+>
+>  Documentation/git-rebase.txt           |  33 +++-
+>  builtin/rebase.c                       |  46 ++++--
+>  sequencer.c                            | 111 ++++++++++++-
+>  sequencer.h                            |   2 +
+>  t/t3422-rebase-incompatible-options.sh |   2 -
+>  t/t3436-rebase-more-options.sh         | 209 +++++++++++++++++++++++++
+>  6 files changed, 379 insertions(+), 24 deletions(-)
+>  create mode 100755 t/t3436-rebase-more-options.sh
+>
+> Range-diff against v2:
+> 1:  5ef315240a ! 1:  df8c4ed2e9 rebase -i: add --ignore-whitespace flag
+>     @@ Documentation/git-rebase.txt: your branch contains commits which =
+were dropped, t
+>       with `--keep-base` in order to drop those commits from your branch=
+.
+>
+>       --ignore-whitespace::
+>     -+	Behaves differently depending on which backend is selected.
+>     ++	Ignore whitespace differences when trying to reconcile
+>     ++differences. Currently, each backend implements an approximation o=
+f
+>     ++this behavior:
+>      ++
+>      +apply backend: When applying a patch, ignore changes in whitespace=
+ in
+>     -+context lines.
+>     ++context lines. Unfortunately, this means that if the "old" lines b=
+eing
+>     ++replaced by the patch differ only in whitespace from the existing
+>     ++file, you will get a merge conflict instead of a successful patch
+>     ++application.
+>      ++
+>      +merge backend: Treat lines with only whitespace changes as unchang=
+ed
+>     -+when merging.
+>     ++when merging. Unfortunately, this means that any patch hunks that =
+were
+>     ++intended to modify whitespace and nothing else will be dropped, ev=
+en
+>     ++if the other side had no changes that conflicted.
+>      +
+>       --whitespace=3D<option>::
+>      -	These flags are passed to the 'git apply' program
+> 2:  55eb3a7efc ! 2:  df44a0bde6 rebase -i: support --committer-date-is-a=
+uthor-date
+>     @@ Commit message
+>          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+>       ## Documentation/git-rebase.txt ##
+>     -@@ Documentation/git-rebase.txt: when merging.
+>     +@@ Documentation/git-rebase.txt: if the other side had no changes t=
+hat conflicted.
+>       See also INCOMPATIBLE OPTIONS below.
+>
+>       --committer-date-is-author-date::
+>     @@ sequencer.c: static int run_git_commit(struct repository *r,
+>
+>       	if (!(flags & VERIFY_MSG))
+>      @@ sequencer.c: static int try_to_commit(struct repository *r,
+>     -
+>     - 	if (parse_head(r, &current_head))
+>     - 		return -1;
+>     --
+>     - 	if (flags & AMEND_MSG) {
+>     - 		const char *exclude_gpgsig[] =3D { "gpgsig", "gpgsig-sha256", NU=
+LL };
+>     - 		const char *out_enc =3D get_commit_output_encoding();
+>     -@@ sequencer.c: static int try_to_commit(struct repository *r,
+>       		commit_list_insert(current_head, &parents);
+>       	}
+>
+> 3:  19352fdc22 =3D 3:  fa3d4856b4 sequencer: rename amend_author to auth=
+or_to_free
+> 4:  5e971abb74 ! 4:  96657233d4 rebase -i: support --ignore-date
+>     @@ sequencer.c: static const char *author_date_from_env_array(const =
+struct argv_arr
+>      +		error(_("malformed ident line '%s'"), author);
+>      +		return NULL;
+>      +	}
+>     ++
+>      +	len =3D ident.mail_end - ident.name_begin + 1;
+>     -+
+>      +	strbuf_addf(&new_author, "%.*s ", len, ident.name_begin);
+>      +	datestamp(&new_author);
+>      +	return strbuf_detach(&new_author, NULL);
+>     @@ sequencer.c: static int try_to_commit(struct repository *r,
+>      +		free(author_to_free);
+>      +		author_to_free =3D (char *)author;
+>      +	}
+>     ++
+>       	if (commit_tree_extended(msg->buf, msg->len, &tree, parents,
+>       				 oid, author, opts->gpg_sign, extra)) {
+>       		res =3D error(_("failed to write commit object"));
+> 5:  43a097c583 =3D 5:  828155baba rebase: add --reset-author-date
+>
+> --
+> 2.26.2
+>
