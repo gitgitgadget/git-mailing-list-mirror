@@ -2,106 +2,145 @@ Return-Path: <SRS0=yx/J=7F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 625C6C433DF
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 02:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C531BC433E0
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 07:08:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 242AC206DD
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 02:14:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94E2B206C3
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 07:08:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMRWFSpG"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="iXcAGiy7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387453AbgEWCOl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 May 2020 22:14:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387413AbgEWCOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 May 2020 22:14:40 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2222C061A0E
-        for <git@vger.kernel.org>; Fri, 22 May 2020 19:14:40 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id 5so5828471pjd.0
-        for <git@vger.kernel.org>; Fri, 22 May 2020 19:14:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YaMfLWyIHE0MI2jocNUXWW3nAzSrOFM4KTPDie8++bE=;
-        b=CMRWFSpGiuJZ+pJW4xDREp5Dix3B9Lfuzhvv2PQECwJUKjen+moVng3WBQpdEDiDp5
-         Qe6XlOlwl4sj9SPBMizkownFB59g0nwwqumQWsJoyIQpBz3IOpkLh6oQFbT0Kr37Z0Ty
-         BJyrvnZlxe+wxuTB8U7EB4N+qiITfgxxBks5XCINR5t2ScKyNYS6/4UlC76IhL1AQwYw
-         1ul4MJRQMLZhyijKUGx+OYfJ6eogfbuiTEbnbUDwaL1iEK9KfryDY7B2wQpYFeQ6lwju
-         TOEDSuczicbxthvkXO6zNIazDWC9y0Oajd0svDkGU4JRBgfvJZuTfbtuLtz2bGfjELKt
-         kOLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YaMfLWyIHE0MI2jocNUXWW3nAzSrOFM4KTPDie8++bE=;
-        b=taj5JxUHcvlNdUVXIOqT5CKZb0zl0HBc5FmBRn7o8CqsUD2E9VYg9uaqud5xvuoL0Z
-         Nqywz6/8DE95PDrqTS/jHKbYZaAkaFx4WdSDXcwbwHwLS3X6WhlJbrNVjUtR5ekRGkhZ
-         hRKGl7MPgU8luddSnrB4MnzMAdR0i4iUXcZyOXvSSq07SDoxAUQ2QX/fzLL9LDdNPS1B
-         alFmTpWoOBNqa2g46Hs2Tctwn6GfL1inua1bDgO9H3GvXw/gHj4M/brQSXYEcRlKyQ7N
-         Ur8dLPAs1e23M/P3aCbaWIk8QerIGV+F6eQLOCBknVnixqndxMCVqhJOwdGhL0iRsKyc
-         XwMg==
-X-Gm-Message-State: AOAM532U7NnEMki1ZwfeHBB50y4Z7UTdfMnFSlrYzRdgmFr85u93y2TK
-        Bi19pBJXIefiTW5NRaSjHyA=
-X-Google-Smtp-Source: ABdhPJwyHr81Kh3E5RqqCsIcEiQ+A18GSsQeC40ptsWnVvmIeGul8x4w8RP9qwnsNhN8oE9XG48rEw==
-X-Received: by 2002:a17:902:bd47:: with SMTP id b7mr18251054plx.79.1590200080171;
-        Fri, 22 May 2020 19:14:40 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
-        by smtp.gmail.com with ESMTPSA id z1sm7690728pjn.43.2020.05.22.19.14.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2020 19:14:39 -0700 (PDT)
-Date:   Sat, 23 May 2020 09:14:37 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Laurent Arnoud <laurent@spkdev.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v8] diff: add config option relative
-Message-ID: <20200523021437.GE3283@danh.dev>
-References: <20200518094021.GA2069@spk-laptop>
- <20200518135656.GB1980@danh.dev>
- <xmqq4ksd5ggq.fsf@gitster.c.googlers.com>
- <20200518191205.GA1999@danh.dev>
- <xmqqo8ql0yjg.fsf@gitster.c.googlers.com>
- <20200519003006.GC1999@danh.dev>
- <xmqqv9krztwp.fsf@gitster.c.googlers.com>
- <20200519193902.GA202573@spk-laptop>
- <20200519230124.GA12509@danh.dev>
- <20200522104618.GA2050@spk-laptop>
+        id S2387681AbgEWHIE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 May 2020 03:08:04 -0400
+Received: from mout.web.de ([212.227.17.11]:34969 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387629AbgEWHID (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 May 2020 03:08:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1590217671;
+        bh=yaFPdflKr+Nh9s7GgNllhG3DUH0cfSJNF6aSzKzF8uI=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=iXcAGiy7Iho8yXvNUzMRJJEBjvS/m9DK7k9XATRuDqu6JRGjsMR4f0k9mf+OIEOXQ
+         PnqyQDktKUnbhs4Efu4V/0rGWpAjLfAS32ogEePy8uNExtldxOq5e+/I2NfvGekKFp
+         QpVHMfy9AC5J1M4+SarJAl3HGBX6fzrmA1+qSI78=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.24.188]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lheqz-1jGZyo0NxB-00mpMf; Sat, 23
+ May 2020 09:07:51 +0200
+Subject: Re: 'HEAD' is not a commit (according to git-checkout)
+To:     Jeff King <peff@peff.net>, Dana Dahlstrom <dahlstrom@google.com>
+Cc:     git@vger.kernel.org
+References: <CACqwCQiLpZ1HFzgJw0p0KR3jXNsxkhjXmF_huzhv+qkMZmybBQ@mail.gmail.com>
+ <20200521191626.GC1308489@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <9f26099a-e77b-ede4-bee3-27382a5a0875@web.de>
+Date:   Sat, 23 May 2020 09:07:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200522104618.GA2050@spk-laptop>
+In-Reply-To: <20200521191626.GC1308489@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:082gw/7Le9v+ZaJid9d8X4JB2THtqWF7VUnkOYUnTHwbxEBBvhA
+ KkXszmiXwr/4xBjUkTKP97A/vJz+bW1nEEDMpK3oSKJompboRsSGngjnEJja0HElL9e4R4Z
+ siNl+5tdv2NxBA810VkH5BzUUPzspl/2J/rftXVsVB1m1P3Mv/sK3mha8MXY/hYyKyb2l0f
+ KPKFlfXj7PSu/vlps2Z0w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lywRVBk6PXo=:CG3BTuKOi21zBZjtmOsNO+
+ mD+pjvg2p3bfsD3aYiH8H6stXxV3PF4GHfVu3NbKPWdhx5UBDNUzk75naKhFLllRH9k1T6jEN
+ HY/62D67YdE8lt/Rjpx3aXvSstTou0ltqISvCCPvesvW7+whkhVG84SLX2fF5GYU00LgPnhSd
+ okslfN6aKm/XvlCpFaIUoTM33tLnHpuq8uDizJ1MSY0if8UvLjWx9JFcQeW1BKzs5MKjjOkGe
+ nD30bjP37Vtxxxs3w4Tf6XYoaPj4HkE7FQgEHnmxxin/j8saHPM2ocXxcdo11YIAwt/aVs8s1
+ WLVCc5StWvgJQeRiX03fOv+6ZebuhfuGp8G63D3EYzntxPKddItmlRtCrjft0JNPagHXw1Nd7
+ Mvd8Urz4nr5d1tdAZmKW6dvLxZdQIry83tWxK9jwHSJfV0u+G+20hH1giL34Rps4gXExA0JHs
+ DjBpvSfJmFLuRwC7uwoKGmyK2JaWa2K51E2ksm3NQLg1oishRPaWVv7Px/dq3+OV5W9+dAx7l
+ KDFDeWYOFqv9H7XzoOS15vXv2EGc1kV20qaTyy1I/8gClOQH8J6f7kTSc9l806JfQx94SPHLF
+ /uLNDFRUNobHPFrePnQGK7MmjcLVeY7MmHQDWBEsDnoa7+5gRn3EvyZwx4Fw15SEhkIceCyBz
+ gjgzuGMqbCta1vcZi4/Me6+dHyG7EuqVkf+BtH6F4S+uSw6ENjQdW7ejLbp5lLcl2l97Y6adu
+ RO81IvZPWVVpG1aex2JO+zw1ZMFjQTHYXmU8+azZdA0T6B5G8RISgMe2Z0gQdxK9av50ZzsI3
+ zvAPlrhCnZczXaY9xFDCPV05sPDTDb1lk3Wcp8lS1NdcyW3Pxzd0auxdJiAu+lynAwh5OPJb3
+ 5CnpG1outNVWBK/awaHOWl/RA5yWnhOsDkeI+GVuRppqwa/2wJVb8O4L2ETTfPbUQD/tPky/S
+ 6PxYvOL/E1V1ahTZX3q0IJh3lDPda9Gs44DqxdkPKtZ9KsuRcwX7P/zrDZQabXzeaLKN3E2hB
+ L40AksQ1Yox21CeKb4dzaUVRK57FMO984gTb5ZhW19ADR2Y2onedV88dFzaAWjzObZQJTmzsA
+ bxMcVR3qdFZcVY+vAsvGyn93rwTnwPU7qhtCwJn2kMgHChDOjh/h7BiSeC/luuoBWitvGEbSD
+ owwVv+ub/mb3EIc8D090YOPINF+pjGl3/Bgyq3GLLf7AchGs3XSY7l/Ojbj4xfDbhXgJi4UTT
+ yM55K8tgZ9m0rTGUb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Laurent,
+Am 21.05.20 um 21:16 schrieb Jeff King:
+> Something like this works:
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index e9d111bb83..6559ac666b 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1553,6 +1553,7 @@ static int checkout_main(int argc, const char **ar=
+gv, const char *prefix,
+>  {
+>  	struct branch_info new_branch_info;
+>  	int parseopt_flags =3D 0;
+> +	int got_start_point =3D 0;
+>
+>  	memset(&new_branch_info, 0, sizeof(new_branch_info));
+>  	opts->overwrite_ignore =3D 1;
+> @@ -1661,6 +1662,8 @@ static int checkout_main(int argc, const char **ar=
+gv, const char *prefix,
+>  			!opts->new_branch;
+>  		int n =3D parse_branchname_arg(argc, argv, dwim_ok,
+>  					     &new_branch_info, opts, &rev);
+> +		if (n)
+> +			got_start_point =3D 1;
+>  		argv +=3D n;
+>  		argc -=3D n;
+>  	} else if (!opts->accept_ref && opts->from_treeish) {
+> @@ -1689,7 +1692,7 @@ static int checkout_main(int argc, const char **ar=
+gv, const char *prefix,
+>  		 * Try to give more helpful suggestion.
+>  		 * new_branch && argc > 1 will be caught later.
+>  		 */
+> -		if (opts->new_branch && argc =3D=3D 1)
+> +		if (opts->new_branch && !got_start_point && argc =3D=3D 1)
+>  			die(_("'%s' is not a commit and a branch '%s' cannot be created from=
+ it"),
+>  				argv[0], opts->new_branch);
+>
+>
+> to produce:
+>
+>   $ git checkout -b work -t master HEAD
+>   fatal: '--track' cannot be used with updating paths
+>
+>   $ git checkout -b work master HEAD
+>   fatal: Cannot update paths and switch to branch 'work' at the same tim=
+e.
+>
+> which are both correct. I wonder if there's a more elegant way to do it,
+> though (probably not, as there's definitely some heuristic parsing going
+> on to determine which checkout mode we're in; the new switch/restore
+> alternatives don't suffer as much from this).
 
-On 2020-05-22 12:46:18+0200, Laurent Arnoud <laurent@spkdev.net> wrote:
-> The `diff.relative` boolean option set to `true` shows only changes in
-> the current directory/value specified by the `path` argument of the
-> `relative` option and shows pathnames relative to the aforementioned
-> directory.
-> 
-> Teach `--no-relative` to override earlier `--relative`
-> 
-> Add for git-format-patch(1) options documentation `--relative` and
-> `--no-relative`
-> 
-> Signed-off-by: Laurent Arnoud <laurent@spkdev.net>
+Perhaps:
 
-Look good to me, I also run those tests and manually tested some
-usecase I'm interested in.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index e9d111bb83..24336e1017 100644
+=2D-- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1689,7 +1689,7 @@ static int checkout_main(int argc, const char **argv=
+, const char *prefix,
+ 		 * Try to give more helpful suggestion.
+ 		 * new_branch && argc > 1 will be caught later.
+ 		 */
+-		if (opts->new_branch && argc =3D=3D 1)
++		if (opts->new_branch && argc =3D=3D 1 && !new_branch_info.commit)
+ 			die(_("'%s' is not a commit and a branch '%s' cannot be created from i=
+t"),
+ 				argv[0], opts->new_branch);
 
--- 
-Danh
