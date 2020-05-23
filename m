@@ -2,116 +2,139 @@ Return-Path: <SRS0=yx/J=7F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC5F8C433DF
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 12:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 806F1C433E0
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 12:30:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2BB320814
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 12:22:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D21A207F9
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 12:30:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KrrBN/DT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KKACP1v6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731236AbgEWMWP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 May 2020 08:22:15 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38626 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726671AbgEWMWO (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 23 May 2020 08:22:14 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4C0E060427;
-        Sat, 23 May 2020 12:22:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590236533;
-        bh=DhF/+1Id8ECVT8dyV1Co7Rtu+zumInlHWqHfrxpdQQA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=KrrBN/DTjHBgFV8U/NZVFVrpU0AhNVR0MVBW5NMMZbEtQa4iWwOD0Ki54uo19nyuG
-         M50nDNY9YLL3Re8WG4+rRFKt4oB3YAB+rlGyHqQMSIx3iSLFhmP/Z8s0PdzwpkNFX+
-         dM25MoEXa2aN4pNri+whzGn6WG+Hi8TknXEmygpwBPfJlKG4ymGrTdSKh8ImwtMSUv
-         EXnC05sEmAOXhdo4hBe2yOMUaQxHCxobyrKn2zjUsETcZsIm9pe7E81DVIb2E+aCCw
-         pNV+uBxnBBenymNhHQpkzhUmc0/OObQysEjmXMtycGP+w669QwZplE2dG4ac1PPQJD
-         iNslcQrMs7qJMsAmaVokmVgrBc0DE9tsSTgUeJUDXKD20Nt+W6Lp+/gXmBraffKIEo
-         dP0M3AaCmysZVAGgzgkPNVRuZfbD0OhehBOLpakSw3XcfwooNDPmjWyUja5t7cYNBi
-         ynKKIpURAG6GPtNevWlnVCYGiiGgXJHi78uiG9LStFubk8NgI6W
-Date:   Sat, 23 May 2020 12:22:05 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/2] builtin/checkout: simplify metadata initialization
-Message-ID: <20200523122205.GA1915090@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <ef72aedf-4264-e386-9563-050c54483c93@gmail.com>
- <20200521020712.1620993-1-sandals@crustytoothpaste.net>
- <20200521020712.1620993-2-sandals@crustytoothpaste.net>
- <xmqq1rndtcmd.fsf@gitster.c.googlers.com>
+        id S2387800AbgEWMaa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 May 2020 08:30:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60718 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728969AbgEWMa3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 May 2020 08:30:29 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A386DC061A0E
+        for <git@vger.kernel.org>; Sat, 23 May 2020 05:30:28 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id ci23so6220814pjb.5
+        for <git@vger.kernel.org>; Sat, 23 May 2020 05:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZXRWi1d2gaNqqDm48szBGelCR8GSzi7DkI/c/uUn1V0=;
+        b=KKACP1v6a+bGRTjQi7+NnDkgz2U32JkIf+cH6Vx5TAoTG8Fi3aqw4LGDrQGw6LEx4W
+         UzGebvzbwuAbSuzadm+AiABVset1X5CSJ5Gc+Gra9stUCqjLZkLprvx4vhyeEPGmnEEC
+         DQHkHx4xMQnbLZbofmiilCawI/ehfmu46ekF0FKlAFBFNl+70rGSev/4YvcSZsZ+zkyg
+         xoPkqpP53fBpwOr90nhkZRPdIT/wrEi56OhIjwajXiUORkt1ZCEEjeJVsBxwctgJHwTN
+         w2XDmA14M5C5/VX8kg/JVfu7318K1HHVICUNo23XtQRi935XbEl0DTPr1NWkQvunHyaG
+         7UVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZXRWi1d2gaNqqDm48szBGelCR8GSzi7DkI/c/uUn1V0=;
+        b=JCGdIz1HQVfqOHg0zYnuOw84e2KjnSRpMsgny8pG3UagaqBHA6STkm8hNyAQP8BAhk
+         uWH9iutCpwxlVVCYpWP+FA/DNUxUzOsqhYsSb9FeS4+FVdhjMAfd5+uNvxevNLrGPP/D
+         niTgevgbswjr/GQjaOoi/ClxXTWZh6CWLNCJ8pOc0T9RrLuyeko5VsYSdrVX8+cw/vL2
+         xjQjnM//d2gKl7BCd5iZLjGDgxKcC39fWyDKi0qfjW4u961Ls3QUwxzgacvcTMkLqaob
+         mNopmlfFl5GciZhAlAUHqo0D2Pu0mSYHWmBj2cNTc+DUc0snFtWoVMl3blHXmo+ZmpDc
+         r87Q==
+X-Gm-Message-State: AOAM531VX/Z2BgPwdzVrQKW+dTf1R4kh/DPoJtOe1Yhh38QnsLeu+Hf1
+        3aZN8R5LlhrmXY+GtunLoD6nSv9V
+X-Google-Smtp-Source: ABdhPJw338Hz5zLws2Qc/xMEd6ROsvvzTRiKFz1blrFMTxS/+5YyNxYhWUHemcsLaQmK5E1kUnToYg==
+X-Received: by 2002:a17:90a:b113:: with SMTP id z19mr10358878pjq.183.1590237028201;
+        Sat, 23 May 2020 05:30:28 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
+        by smtp.gmail.com with ESMTPSA id q189sm9349456pfc.112.2020.05.23.05.30.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 May 2020 05:30:27 -0700 (PDT)
+Date:   Sat, 23 May 2020 19:30:25 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 4/5] rebase -i: support --ignore-date
+Message-ID: <20200523123025.GA20683@danh.dev>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com>
+ <20200521101455.63484-1-phillip.wood123@gmail.com>
+ <20200521101455.63484-5-phillip.wood123@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="k+w/mQv8wyuph6w0"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq1rndtcmd.fsf@gitster.c.googlers.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-1-amd64)
+In-Reply-To: <20200521101455.63484-5-phillip.wood123@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2020-05-21 11:14:54+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> +# Checking for +0000 in author time is enough since default
+> +# timezone is UTC, but the timezone used while committing
+> +# sets to +0530.
+> +test_expect_success '--ignore-date works with apply backend' '
+> +	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+> +	git rebase --apply --ignore-date HEAD^ &&
+> +	git log -1 --pretty="format:%ai" >authortime &&
 
-On 2020-05-21 at 17:35:22, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > ...  The only case in which we do not have a commit object is when
-> > invoking git switch with --orphan.  Moreover, we can only hit this code
-> > path without a commit object additionally with either --force or
-> > --discard-changes.
->=20
-> It was easy for me to trace the codepath to see when these options
-> are used we end up with no commit object, but I ran out of time
-> trying to see if the "forced orphan" is the only way to end up with
-> a NULL in new_branch_info->commit.  Assuming that is true, of course
-> the following perfectly makes sense.
+Those --pretty="format:%ai" won't print the newline character in my
+test environment.
+It looks like it won't print the newline if stdout isn't a tty.
 
-I believe it is.  The only case in which we have a NULL commit as far as
-I can tell is with switch and an orphan, and in merge_working_tree we
-call reset_tree either if the changes are discarded or unpack_trees
-couldn't do a trivial merge.  Since I'm pretty sure unpack_trees can
-indeed merge with the empty tree, we would only call reset_trees with
---discard-changes or --force.  And reset_tree is only called from
-merge_working_tree.
+	git log -1 --pretty=%ai
 
-In addition, I did try other situations plus the entire testsuite with
-my erroneous first patch and was unable to cause a segfault anywhere
-(which would have been a trivial NULL dereference) in case I missed
-something, which leads me to believe that this is in fact the only
-situation in which this occurs.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+doesn't have that issue.
 
---k+w/mQv8wyuph6w0
-Content-Type: application/pgp-signature; name="signature.asc"
+I think there're some grep out there considers file doesn't end with
+newline as non-text files.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+> +	grep "+0000" authortime
+> +'
+> +
+> +test_expect_success '--ignore-date works with merge backend' '
+> +	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+> +	git rebase --ignore-date -m HEAD^ &&
+> +	git log -1 --pretty="format:%ai" >authortime &&
+> +	grep "+0000" authortime
+> +'
+> +
+> +test_expect_success '--ignore-date works after conflict resolution' '
+> +	test_must_fail git rebase --ignore-date -m \
+> +		--onto commit2^^ commit2^ commit2 &&
+> +	echo resolved >foo &&
+> +	git add foo &&
+> +	git rebase --continue &&
+> +	git log --pretty=%ai >authortime &&
+> +	grep +0000 authortime
+> +'
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXskVbAAKCRB8DEliiIei
-gUvBAP9E3mdLX8ZEFhSkvB2FL9HahCu/QA4oKZgRWAI0WjkFZAD9FbXJKFh1Af1I
-rnpDWCYdftIGij40hdP0qUX4ljGfcwI=
-=TEsB
------END PGP SIGNATURE-----
+From the test's name, I guess git-rebase is supposed to continue
+respect --ignore-date after conflict resolution.
 
---k+w/mQv8wyuph6w0--
+But the content of authortime read:
+
+	2020-05-23 12:13:58 +0000
+	1999-04-02 08:03:20 +0530
+	1999-04-02 08:03:20 +0530
+
+It's still pass "grep +0000 authortime" because of first line,
+I'm not sure if I missed anything.
+
+
+-- 
+Danh
