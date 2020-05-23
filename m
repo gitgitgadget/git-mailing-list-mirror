@@ -2,119 +2,72 @@ Return-Path: <SRS0=yx/J=7F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64B5BC433DF
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 15:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F7CCC433DF
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 16:29:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41CB620870
-	for <git@archiver.kernel.org>; Sat, 23 May 2020 15:52:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M4tn5ti8"
+	by mail.kernel.org (Postfix) with ESMTP id 66B6E20735
+	for <git@archiver.kernel.org>; Sat, 23 May 2020 16:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727951AbgEWPwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 May 2020 11:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726650AbgEWPwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 May 2020 11:52:06 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98489C061A0E
-        for <git@vger.kernel.org>; Sat, 23 May 2020 08:52:06 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id w19so5611597ply.11
-        for <git@vger.kernel.org>; Sat, 23 May 2020 08:52:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NmIwbJEL7oSHOnpv337DxuimiPW9hfdny1xG/mQTdmE=;
-        b=M4tn5ti8grcdVzQTDRGlKq+MwrOsbSecRd8H8ghHE7wt/tioB44rN73T+QXZ4/dUob
-         WJtu8seWixhUL+ggXthvLZ2u8i4SvorgeewL0Jug5Mf99Jrg6PpC5JNoG928r4r4MBDQ
-         8ySXYMXROUdSjR9E1hAlDFN7JidOucxyJIfrykhpuHZll372uzSThDeRtxSW3kZuB15P
-         ztbwT1tsAupJHBvpjeZpNTbIS8XHI1BnSwgzr08c+40jS/psM6PgJLLJz95yP74zl/hh
-         Vq0RlNPHfjm2CNuprMP5iyR8jk+BpuRdMcnEh/gYsCU6jYRhRmtjz7XgE2ezQZ42uDWZ
-         otIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NmIwbJEL7oSHOnpv337DxuimiPW9hfdny1xG/mQTdmE=;
-        b=C9CZ/P1ESAe2nKrfjx3SglgUdl+/Qiv2YU8dPDGMrUFjVsb3o13nMqvc7Qidq9cpq4
-         E5UjddADIppnKMkmtUQ14gCXgmLdb3/ugaAPwII5MgmD+9c0CWgbp16QdfccLP/XI+/r
-         SSnFVK407zLP4M0kWvbjB/U0fkDea9w2LCoZsXBTdy1LpIVvu1ekuhRpFymQjCUV4Kww
-         cWtcgz/oT7CgyWam/2o2FAK0qcLip3hhjGTB9ftCPkFLT1aN9tT6UljqaOMGPaLT5MKO
-         5DQatCl/IhQF/yUEizGWfS9dYgA+/ZiaKs7O765Xka6pTLoXZsO34mxoQrqshDu0R9uR
-         i0RA==
-X-Gm-Message-State: AOAM53058UArylxvX62LI/cyerfFC94jsCsa37bdo9bDa/JAaC2vESDK
-        X+0guOTxZcBzd2e47foIxNI=
-X-Google-Smtp-Source: ABdhPJykE7kzE5vM8dxdnNZeLV3dQldK/HkunMgYSk8wwhNpipLtLcFKABrdhpCqC8wtvGzS7NLwSg==
-X-Received: by 2002:a17:90a:890b:: with SMTP id u11mr555056pjn.233.1590249125714;
-        Sat, 23 May 2020 08:52:05 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
-        by smtp.gmail.com with ESMTPSA id z20sm8464510pgv.52.2020.05.23.08.52.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 May 2020 08:52:05 -0700 (PDT)
-Date:   Sat, 23 May 2020 22:52:03 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 4/5] rebase -i: support --ignore-date
-Message-ID: <20200523155203.GA10163@danh.dev>
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
- <20200521101455.63484-1-phillip.wood123@gmail.com>
- <20200521101455.63484-5-phillip.wood123@gmail.com>
- <20200523123025.GA20683@danh.dev>
- <bc6bc4d4-79cb-f788-deca-41a3735fcaae@gmail.com>
+        id S1728033AbgEWQ3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 May 2020 12:29:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55080 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727884AbgEWQ3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 May 2020 12:29:16 -0400
+Received: (qmail 27754 invoked by uid 109); 23 May 2020 16:29:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 23 May 2020 16:29:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14038 invoked by uid 111); 23 May 2020 16:29:15 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 23 May 2020 12:29:15 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 23 May 2020 12:29:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Dana Dahlstrom <dahlstrom@google.com>, git@vger.kernel.org
+Subject: Re: 'HEAD' is not a commit (according to git-checkout)
+Message-ID: <20200523162914.GA2178752@coredump.intra.peff.net>
+References: <CACqwCQiLpZ1HFzgJw0p0KR3jXNsxkhjXmF_huzhv+qkMZmybBQ@mail.gmail.com>
+ <20200521191626.GC1308489@coredump.intra.peff.net>
+ <9f26099a-e77b-ede4-bee3-27382a5a0875@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <bc6bc4d4-79cb-f788-deca-41a3735fcaae@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9f26099a-e77b-ede4-bee3-27382a5a0875@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip
+On Sat, May 23, 2020 at 09:07:50AM +0200, René Scharfe wrote:
 
-On 2020-05-23 16:43:39+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > On 2020-05-21 11:14:54+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > > +# Checking for +0000 in author time is enough since default
-> > > +# timezone is UTC, but the timezone used while committing
-> > > +# sets to +0530.
-> > > +test_expect_success '--ignore-date works with apply backend' '
-> > > +	git commit --amend --date="$GIT_AUTHOR_DATE" &&
-> > > +	git rebase --apply --ignore-date HEAD^ &&
-> > > +	git log -1 --pretty="format:%ai" >authortime &&
-> > 
-> > Those --pretty="format:%ai" won't print the newline character in my
-> > test environment.
-> > It looks like it won't print the newline if stdout isn't a tty.
-> > 
-> > 	git log -1 --pretty=%ai
-> > 
-> > doesn't have that issue.
-> > 
-> > I think there're some grep out there considers file doesn't end with
-> > newline as non-text files.
+> > which are both correct. I wonder if there's a more elegant way to do it,
+> > though (probably not, as there's definitely some heuristic parsing going
+> > on to determine which checkout mode we're in; the new switch/restore
+> > alternatives don't suffer as much from this).
 > 
-> Yes it would be better to print the newline, thanks
->
-> Junio - are you happy to fix this up (assuming there are no other issues) or
-> do you want a re-roll?
+> Perhaps:
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index e9d111bb83..24336e1017 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1689,7 +1689,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>  		 * Try to give more helpful suggestion.
+>  		 * new_branch && argc > 1 will be caught later.
+>  		 */
+> -		if (opts->new_branch && argc == 1)
+> +		if (opts->new_branch && argc == 1 && !new_branch_info.commit)
+>  			die(_("'%s' is not a commit and a branch '%s' cannot be created from it"),
+>  				argv[0], opts->new_branch);
+> 
 
-There're 11 invocation of git-log with "--pretty=format",
-in 2/5 and 4/5
+Oh, indeed, that's way better. Want to wrap it up as a patch?
 
-I think it's worth to have a re-roll to avoid mistake.
-
--- 
-Danh
+-Peff
