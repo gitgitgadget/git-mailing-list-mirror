@@ -2,212 +2,155 @@ Return-Path: <SRS0=NZH0=7G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9208DC433E0
-	for <git@archiver.kernel.org>; Sun, 24 May 2020 21:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 340E0C433E0
+	for <git@archiver.kernel.org>; Sun, 24 May 2020 21:38:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 618AF2076C
-	for <git@archiver.kernel.org>; Sun, 24 May 2020 21:19:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C502204EF
+	for <git@archiver.kernel.org>; Sun, 24 May 2020 21:38:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aEZhWCMU"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="SURYrXMw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387973AbgEXVTy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 May 2020 17:19:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55284 "EHLO
+        id S2388250AbgEXViT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 May 2020 17:38:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387830AbgEXVTy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 May 2020 17:19:54 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF6EC061A0E
-        for <git@vger.kernel.org>; Sun, 24 May 2020 14:19:54 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id r2so4581558ila.4
-        for <git@vger.kernel.org>; Sun, 24 May 2020 14:19:54 -0700 (PDT)
+        with ESMTP id S2387879AbgEXViS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 May 2020 17:38:18 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C9AAC061A0E
+        for <git@vger.kernel.org>; Sun, 24 May 2020 14:38:17 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id r3so7350927qve.1
+        for <git@vger.kernel.org>; Sun, 24 May 2020 14:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ApR268sDB2cjCJYBQqmM4dD1Skifvz4ueKI+yw4HR+8=;
-        b=aEZhWCMUsNoxaSVAQsqGbSQ/jHalmb3z8Dq7wKoVU0xU8N9j4eERR7EcAKIA7h0BRF
-         42iVGByFX7bHuVliXabZ4BFc41IqZsunYTJnbTA0grxcuPCFY1u5lROvK2bHnBI0B7tV
-         ZR1uf6gGqylta9gf7Ag68F/qLLHtRVS8pcHeAffkRsPWL3NFd6+3T8V/trPzkkQTdSMz
-         PTXH4baXRvofK8RiIYtevlv3219trTikmLj+4F3o3QyeJavVI92yXbAheHyg6GIR+Sp7
-         iy7mzXM1+eCJXb2miWCGFD1kVO83YVQfbcp6fGJilGMUOPYOgW1Ka6Ht11R2Ltq7S9u3
-         a8ew==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=bLxpOOdY24IAC0R6OIFGDXLsAKo7p6mjUe3fCBOUW1U=;
+        b=SURYrXMw/69wZfVP4YoQ4oX+FLzk103DO7tZO3BclyH0beIGZ/GEt1OhRzG3CIyNAa
+         ljkblaPcNlj+D8y425bG2D+H+4ojgIfkXbpvzPTqZbs8rzRePaFYLPihCydYKFNoLTnC
+         7GBigANGgqN5zpbJ3a009wygb/LMiEGUMLKKwNvF6NN9WTCMTlFyEZXGiC9jiSseEVYm
+         jB3bn9LGfgWRDky4vCftRacRFgaABnnjv3C/fHOky9VOLnyxJmd3tNf7YWgcBe0Osn4L
+         4vYrkpQI1+RLA7hfofKoVSdLtFBsoqyc4u9katcT4Ddcma94dq4tWrOpBvL9FybMdj0W
+         09mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ApR268sDB2cjCJYBQqmM4dD1Skifvz4ueKI+yw4HR+8=;
-        b=Vt2VRe+AN3Y8XUbOAFs5ZWfIf/eDjvoYxR6EzuPacYsYpxNH0D6bjRRICsqmWSN0Ss
-         wsfQxcVj/YjKcSYlxmhc6sKizQN2U4j2C09OfYnP9Q6nQCEvSXIK6zwgeq01nU7rSael
-         WJQH1lzZwxvWJbDpxoN8AtrPsPhHKeyLdL8/aOcdf/4dkKeqYN2VDKL/CNBGdWf3sTfp
-         jOGY1Ts7qhuCxQsh01m1iQYHYTaffSY5aMHJMnAB53tgdyv/zTsR2eE/yxkA0kkUQVAU
-         zWSMVviXbilw0FFNPr8Cayu7comy+7ZHa6ml/HLOuXCX4lKOdjm2iV/zoQSW2St8ma/f
-         MA3Q==
-X-Gm-Message-State: AOAM531YwJL05mMZSrIjAR9xjCrn3ba2pm2dGTAsjEm7T/vKQW8quCFw
-        7xU8/HiwUpQhphIZ03T4An1qBqySGLpWO1e4cXDBl/Bj
-X-Google-Smtp-Source: ABdhPJwXDDL569qIoQbN/BAGGtnA1lxUMqdOB7Af+31M59ca4C/pO9VyL1qZ92vY4YwlYIHi+V7CFoyrM2ffea7v6ZI=
-X-Received: by 2002:a92:d98a:: with SMTP id r10mr20928369iln.127.1590355193727;
- Sun, 24 May 2020 14:19:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=bLxpOOdY24IAC0R6OIFGDXLsAKo7p6mjUe3fCBOUW1U=;
+        b=H3MxZu26rh7XRwjEsVSpTs9I+xn5OUWXL8hORksE2BL/gsXhXwaw7Ki4E1ojc7RYkb
+         kb3tSNvGYep2ce7Z1z5qOGz47X+jonPIzkIBQEIhIH3PzAGbr3CFbfhu0fEbhzDrnsZ8
+         j174Txo6kfyQpwwa0YNFx5rXbXyvN0j/YwU20Hpr5HjJ/BbMouwD1fNS9UWcCzvsXcPe
+         y74WblGwCyISCjR8+7pkFtWcSl+4/e5JPK3qvCwlBaaKMC5etQRHd2o+lumhdHbyacvL
+         w4Y3uh5OEoeJxrIhq7884QI5XQOvCOq1Ivi3qpkyzhtzC1dVkNRjfnl0H0d25B4sC48T
+         ae/A==
+X-Gm-Message-State: AOAM533rpBcZP/XjxbzX1npeF30NlQPJ9J+3MyyTsARmbWrwXDDzW22Z
+        vm/6bviF/bo9/ftBD816r6Dkrw==
+X-Google-Smtp-Source: ABdhPJwddzyl801ZuN8+okBdC124bBPM6KDup7Z0z4AzgIbHUApocTtGSnPzV03wpvOJCgHCudSEkw==
+X-Received: by 2002:a0c:b5a4:: with SMTP id g36mr13606566qve.86.1590356296001;
+        Sun, 24 May 2020 14:38:16 -0700 (PDT)
+Received: from mango.spo.virtua.com.br ([2804:14c:81:9a16::1])
+        by smtp.gmail.com with ESMTPSA id g3sm12708213qtu.90.2020.05.24.14.38.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 May 2020 14:38:15 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     asottile@umich.edu
+Cc:     git@vger.kernel.org
+Subject: Re: git git<tab> completes non-existent command `git gitk`
+Date:   Sun, 24 May 2020 18:38:08 -0300
+Message-Id: <20200524213808.24849-1-matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <CA+dzEBnpheB-ZT5+bajKphux-+7gYFx1Msws7mXM=LOJO7pukw@mail.gmail.com>
+References: <CA+dzEBnpheB-ZT5+bajKphux-+7gYFx1Msws7mXM=LOJO7pukw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20200423070704.39872-1-mirucam@gmail.com> <nycvar.QRO.7.76.6.2005230007260.56@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2005230007260.56@tvgsbejvaqbjf.bet>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Sun, 24 May 2020 23:19:42 +0200
-Message-ID: <CAN7CjDD1v+0Rxc-+r=8zusknTgkfR=5ese8cXmWVsoXxt3A9Fw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/12] Finish converting git bisect to C part 2
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi, Anthony
 
-El s=C3=A1b., 23 may. 2020 a las 0:09, Johannes Schindelin
-(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
+On Sat, May 23, 2020 at 7:25 PM Anthony Sottile <asottile@umich.edu> wrote:
 >
-> Hi Miriam,
+> easiest to reproduce is with docker
 >
-> On Thu, 23 Apr 2020, Miriam Rubio wrote:
+> ```dockerfile
+> FROM ubuntu:focal
+> RUN : \
+>     && apt-get update \
+>     && DEBIAN_FRONTEND=noninteractive apt-get install -y
+> --no-install-recommends \
+>         bash-completion \
+>         git \
+>     && apt-get clean \
+>     && rm -rf /var/lib/apt/lists/*
+> ```
 >
-> > These patches correspond to a second part of patch series
-> > of Outreachy project "Finish converting `git bisect` from shell to C"
-> > started by Pranit Bauva and Tanushree Tumane
-> > (https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
-> > continued by me.
-> >
-> > These patch series emails were generated from:
-> > https://gitlab.com/mirucam/git/commits/git-bisect-work-part2-v3.
-> >
-> > I would like to thank Junio Hamano for reviewing this patch series and
-> > Christian Couder for his help.
-> >
-> > --- Changes since v2 Finish converting git bisect to C part 2 patch ser=
-ies ---
+> ```console
+> $ docker run --rm -ti test bash
+> root@23e691ecc7ba:/# [ -f /etc/bash_completion ] && . /etc/bash_completion
+> root@23e691ecc7ba:/# git gitk
+> ```
 >
-> Thank you for this detailed summary!
+> (I typed git git<tab>)
 >
-> I reviewed the patches in their entirety, and left a couple of
-> suggestions, some of them minor.
+> ```console
+> $ git gitk
+> git: 'gitk' is not a git command. See 'git --help'.
+> ```
+> this is a bit annoying because I have some aliases/commands for git-github-*
 >
-Thank you very much for reviewing.
+> the git version I have is 2.25.1:
 
-> Hopefully you find them helpful!
-Of course! :)
+Thanks for the report. This is also reproducible in Git 2.27.0-rc1. To complete
+subcommands, git-completion.bash uses[1] the output of:
 
-I hope I can send the next version soon.
+	git --list-cmds=list-mainporcelain,others,nohelpers,alias,list-complete,config
 
-Best,
-Miriam
->
-> Ciao,
-> Dscho
->
-> >
-> > General changes
-> > ---------------
-> >
-> > * Rebase on master branch: efe3874640 (Sync with v2.26.1, 2020-04-13)
-> >
-> > Specific changes
-> > ----------------
-> >
-> > [1/12] bisect--helper: fix `cmd_*()` function switch default return
-> >
-> > * Use `BUG()` instead of `return error()` in default switch.
-> >
-> > --
-> >
-> > [2/12] bisect--helper: use '-res' in 'cmd_bisect__helper' return
-> >
-> > * New patch: use '-res' instead of 'abs(res)'.
-> >
-> > --
-> >
-> > [3/12] bisect--helper: introduce new `write_in_file()` function
-> >
-> > * Rename input parameter `filepath` to `path`.
-> > * Change `error_errno()` to `error()` in mode checking.
-> > * Change error message when file cannot be opened.
-> > * Add `fclose()` before error return.
-> >
-> > --
-> >
-> > [4/12] bisect--helper: reimplement `bisect_autostart` shell function in=
- C
-> >
-> > * Reorder patch before `reimplement `bisect_next` and `bisect_auto_next=
-`
-> > shell functions in C` to use `bisect_autostart()` function in
-> > `bisect_append_log_quoted()`.
-> >
-> > --
-> > `
-> > [5/12] bisect--helper: reimplement `bisect_next` and `bisect_auto_next`=
- shell
-> > functions in C
-> >
-> > * Amend commit message.
-> > * Add `clear_commit_marks()` at the end of bisect_next_all() and remove=
- it from
-> > `bisect_rev_setup()`.
-> > * Fix if condition.
-> > * Add `bisect_autostart()` in `bisect_append_log_quoted()`.
-> > * Check `git_path_bisect_head()` with `file_exist()` instead of
-> > `is_empty_or_missing_file()`.
-> > * Fix return with BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND.
-> > * Add conversion in `cmd_*()` to BISECT_OK when return is
-> > BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND.
-> >
-> > * Note to previous reviewer: suggestion to change `bisect_auto_next()` =
-function
-> > to return void cannot be done because errors from `bisect_next()` are n=
-ot
-> > ignored.
-> >
-> > --
-> >
-> > [5/12] bisect--helper: reimplement `bisect_state` & `bisect_head` shell
-> > functions in C
-> >
-> > * Check `git_path_bisect_head()` with `file_exist()` instead of
-> > `is_empty_or_missing_file()`.
-> >
-> > --
-> >
-> > Miriam Rubio (3):
-> >   bisect--helper: fix `cmd_*()` function switch default return
-> >   bisect--helper: use '-res' in 'cmd_bisect__helper' return
-> >   bisect--helper: introduce new `write_in_file()` function
-> >
-> > Pranit Bauva (9):
-> >   bisect--helper: reimplement `bisect_autostart` shell function in C
-> >   bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shel=
-l
-> >     functions in C
-> >   bisect--helper: finish porting `bisect_start()` to C
-> >   bisect--helper: retire `--bisect-clean-state` subcommand
-> >   bisect--helper: retire `--next-all` subcommand
-> >   bisect--helper: reimplement `bisect_state` & `bisect_head` shell
-> >     functions in C
-> >   bisect--helper: retire `--check-expected-revs` subcommand
-> >   bisect--helper: retire `--write-terms` subcommand
-> >   bisect--helper: retire `--bisect-autostart` subcommand
-> >
-> >  bisect.c                 |   8 +
-> >  builtin/bisect--helper.c | 383 +++++++++++++++++++++++++++++++++------
-> >  git-bisect.sh            | 145 +--------------
-> >  3 files changed, 347 insertions(+), 189 deletions(-)
-> >
-> > --
-> > 2.25.0
-> >
-> >
+And the list returned by the line above contains "gitk", because this
+command is in the "mainporcelain" category (in command-list.txt).
+
+One possible solution to the invalid completion you mentioned, without having
+to re-categorize "gitk", is to explicitly exclude it in git-completion.bash:
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b1d6e5ebed..f07394584f 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3214,7 +3214,10 @@ __git_main ()
+ 			then
+ 				__gitcomp "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
+ 			else
+-				__gitcomp "$(__git --list-cmds=list-mainporcelain,others,nohelpers,alias,list-complete,config)"
++				local cmds="$(__git --list-cmds=list-mainporcelain,others,nohelpers,list-complete,config | \
++						sed -e '/^gitk$/d')"
++				local aliases="$(__git --list-cmds=alias,config)"
++				__gitcomp "$cmds $aliases"
+ 			fi
+ 			;;
+ 		esac
+
+(I had to split the list into "cmds" and "aliases" so that we could still give
+completion for a valid "git gitk" alias, if present.)
+
+This should solve the problem, althought it's admittedly not very elegant...
+Nevertheless, I'd be happy to send a complete patch if folks are happy with the
+workaround.
+
+In the meantime, you could use:
+
+	git config completion.commands -gitk
+
+To locally remove the completion for "gitk".
+
+Thanks,
+Matheus
+
+[1]: See contrib/completion/git-completion.bash +3218
+     (https://github.com/git/git/blob/master/contrib/completion/git-completion.bash#L3218)
