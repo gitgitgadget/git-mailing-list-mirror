@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 509F0C433E1
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F16EC433E2
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32E682073B
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14A6C2073B
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KeTj/awl"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MmuhxG1p"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390482AbgEYUAH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 16:00:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38728 "EHLO
+        id S2390487AbgEYUAI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 16:00:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38716 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390463AbgEYUAC (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 16:00:02 -0400
+        by vger.kernel.org with ESMTP id S2390460AbgEYUAA (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 16:00:00 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7234360D1B;
-        Mon, 25 May 2020 20:00:01 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A4DA960D1C;
+        Mon, 25 May 2020 19:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436801;
-        bh=VQHK4KZV/HJtohhf/r/fcuDQ02WfP9S43VaRaa73xx8=;
+        s=default; t=1590436800;
+        bh=74qW95Zvoq9O2u0va6v/nSh8paXnLt0Me5nQURj92D4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=KeTj/awlmSZCc1n4OsbgMCeirTBqxwTuWJDdgTMQG7aCx99d4lKYwlGwP6/YSYOWM
-         47jKdUyMGAW8OYe6+lB2vPx8XgAVKfPH828h8pksN/UUKTreZzRr/QNENTBP/VhBLZ
-         H7ae9+sItJD6a6NOcDPHdcSrDIR33O9KbY8N78l2NdBq6cjaTk2r2tJppT5Gx4J5A7
-         BMZCQZL0OzJ3/QEgVZ98iRZeYOIXrUJi0QvWkKF7APPRNLtyRhLaFE+V8NJkbUiV5y
-         V9PcehK7SVTu0yqv7r2r0ATJDVbIUHoltQ0g3KMAdf6AQqpS05gQtQUgL5NTjUZ391
-         syRCxttjlK1DLiuU+rKYIV+E6is4+76PilJrVT40/UaU+GlB9aBnCwVS4UUCKnhPei
-         6KcoxI6YTnMyeEZEwjajIC3wpElxL3EPiUC5NWsok3oqH8OltIao7yVPWCvUrn9Jkb
-         uDykMgQckbaIsVY0m9pDY30B7mjzo48BZ7k1Fan+ru+6E/GObkq
+        b=MmuhxG1pQWW/NeS1jxfCvrVw3EVkgl6WIJrjp2twv3Gn7Lu2xEM+jzdDnggngrPmP
+         MS1ID5sUMjvaCn3lv9oTNA0px6JS94y/1GcfybG+8ZMaY0tfd/vNepElEeCzyZV75d
+         nCYiat+ZFffpX7Al1/3nK4DpIyMWImeq8jsOoSwRomlcUdF+ud4cpR0B7k50UR7Znx
+         mqmLHGpXyRoDBulWlU9XY0UhVtuexm3KWb+4vw0D15N/2jZbk2C+qSINPalTNMDY7i
+         emhBynLUVzLMa93UtlP0ZQupsl+LtaZU1UqFP97vmiClLVQhdPRhJYTD9cQe/Pvw/Z
+         9V7jzNdkwrHa4RWwQ3UjJsRgoXmInEsmT6gN9Sc0gkTMHIWegPR4M9yKfuJSdz4lcn
+         H5RLI+2FG72G1F5nhLq4A2xuwt733P/fnF3tX4a/Zbgmf1FPG7sbY6Rdeb+jamWxlF
+         nmfg7VTE+a9zbCibGagPmDYqKdWOlgO79ujN1COSTKxoDYL0b/5
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 43/44] bundle: detect hash algorithm when reading refs
-Date:   Mon, 25 May 2020 19:59:29 +0000
-Message-Id: <20200525195930.309665-44-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 39/44] t5702: offer an object-format capability in the test
+Date:   Mon, 25 May 2020 19:59:25 +0000
+Message-Id: <20200525195930.309665-40-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,103 +57,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Much like with the dumb HTTP transport, there isn't a way to explicitly
-specify the hash algorithm when dealing with a bundle, so detect the
-algorithm based on the length of the object IDs in the prerequisites and
-ref advertisements.
+In order to make this test work with SHA-256, offer an object-format
+capability so that both sides use the same algorithm.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- bundle.c    | 22 +++++++++++++++++++++-
- bundle.h    |  1 +
- transport.c | 10 ++++++++--
- 3 files changed, 30 insertions(+), 3 deletions(-)
+ t/t5702-protocol-v2.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/bundle.c b/bundle.c
-index 99439e07a1..2a0d744d3f 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -23,6 +23,17 @@ static void add_to_ref_list(const struct object_id *oid, const char *name,
- 	list->nr++;
- }
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 5039e66dc4..116358b9ac 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -13,6 +13,7 @@ start_git_daemon --export-all --enable=receive-pack
+ daemon_parent=$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent
  
-+static const struct git_hash_algo *detect_hash_algo(struct strbuf *buf)
-+{
-+	size_t len = strcspn(buf->buf, " \n");
-+	int algo;
-+
-+	algo = hash_algo_by_length(len / 2);
-+	if (algo == GIT_HASH_UNKNOWN)
-+		return NULL;
-+	return &hash_algos[algo];
-+}
-+
- static int parse_bundle_header(int fd, struct bundle_header *header,
- 			       const char *report_path)
- {
-@@ -52,12 +63,21 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
- 		}
- 		strbuf_rtrim(&buf);
- 
-+		if (!header->hash_algo) {
-+			header->hash_algo = detect_hash_algo(&buf);
-+			if (!header->hash_algo) {
-+				error(_("unknown hash algorithm length"));
-+				status = -1;
-+				break;
-+			}
-+		}
-+
- 		/*
- 		 * Tip lines have object name, SP, and refname.
- 		 * Prerequisites have object name that is optionally
- 		 * followed by SP and subject line.
- 		 */
--		if (parse_oid_hex(buf.buf, &oid, &p) ||
-+		if (parse_oid_hex_algop(buf.buf, &oid, &p, header->hash_algo) ||
- 		    (*p && !isspace(*p)) ||
- 		    (!is_prereq && !*p)) {
- 			if (report_path)
-diff --git a/bundle.h b/bundle.h
-index ceab0c7475..2dc9442024 100644
---- a/bundle.h
-+++ b/bundle.h
-@@ -15,6 +15,7 @@ struct ref_list {
- struct bundle_header {
- 	struct ref_list prerequisites;
- 	struct ref_list references;
-+	const struct git_hash_algo *hash_algo;
- };
- 
- int is_bundle(const char *path, int quiet);
-diff --git a/transport.c b/transport.c
-index b43d985f90..38a432be69 100644
---- a/transport.c
-+++ b/transport.c
-@@ -143,6 +143,9 @@ static struct ref *get_refs_from_bundle(struct transport *transport,
- 	data->fd = read_bundle_header(transport->url, &data->header);
- 	if (data->fd < 0)
- 		die(_("could not read bundle '%s'"), transport->url);
-+
-+	transport->hash_algo = data->header.hash_algo;
-+
- 	for (i = 0; i < data->header.references.nr; i++) {
- 		struct ref_list_entry *e = data->header.references.list + i;
- 		struct ref *ref = alloc_ref(e->name);
-@@ -157,11 +160,14 @@ static int fetch_refs_from_bundle(struct transport *transport,
- 			       int nr_heads, struct ref **to_fetch)
- {
- 	struct bundle_transport_data *data = transport->data;
-+	int ret;
- 
- 	if (!data->get_refs_from_bundle_called)
- 		get_refs_from_bundle(transport, 0, NULL);
--	return unbundle(the_repository, &data->header, data->fd,
--			transport->progress ? BUNDLE_VERBOSE : 0);
-+	ret = unbundle(the_repository, &data->header, data->fd,
-+			   transport->progress ? BUNDLE_VERBOSE : 0);
-+	transport->hash_algo = data->header.hash_algo;
-+	return ret;
- }
- 
- static int close_bundle(struct transport *transport)
+ test_expect_success 'create repo to be served by git-daemon' '
++	test_oid_init &&
+ 	git init "$daemon_parent" &&
+ 	test_commit -C "$daemon_parent" one
+ '
+@@ -394,6 +395,7 @@ test_expect_success 'even with handcrafted request, filter does not work if not
+ 	# Custom request that tries to filter even though it is not advertised.
+ 	test-tool pkt-line pack >in <<-EOF &&
+ 	command=fetch
++	object-format=$(test_oid algo)
+ 	0001
+ 	want $(git -C server rev-parse master)
+ 	filter blob:none
