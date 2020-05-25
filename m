@@ -2,243 +2,121 @@ Return-Path: <SRS0=RB3M=7H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82BDCC433E0
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D40DFC433DF
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:27:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5640720723
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:06:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 668322078B
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:27:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iQAOj/5a"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qf96H6Q7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389312AbgEYRGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 13:06:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42800 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389112AbgEYRGo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 May 2020 13:06:44 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3E8C061A0E
-        for <git@vger.kernel.org>; Mon, 25 May 2020 10:06:42 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id z6so21424613ljm.13
-        for <git@vger.kernel.org>; Mon, 25 May 2020 10:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=clpqlEu8xiPvCAJeMz/dcbxSY/4HKVlvqtPiC/Pt6bE=;
-        b=iQAOj/5aK8ASwsx17/etG4FRMu7YGVGFbI2BqF+6U9IJZszAeyFlEBQxphXoKVO4GE
-         i5buHFz43xuDiDlliS8UEnSG0cV20Dz+n1+S7G1wQYRGKE+3QRIPwHUepeDh41wzNHrW
-         s5VbLoDkUvICtNixOF5nvpGJeatv3w0TTK2hmy2pjoEGpAJ8tv7nz07uGKEOOLDHE37+
-         Zt5hn5uPljvUaqRHK9K3bCOfzMKLNSV8CdghU7RzTyO6Xcq2ygRvIDhC+41AFcMuC299
-         bnWmRtfu+B+Hgw70pyC+OORTQpU1+DoyONf3oJYgvtG3sWrREDi0T/2Sucz4fMcAZnVB
-         RYkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=clpqlEu8xiPvCAJeMz/dcbxSY/4HKVlvqtPiC/Pt6bE=;
-        b=F5+/GT84b64602t6B2P7ZiofVlLL4OfKohYe+gIWfVL8NyK5EkItZv1ETEde0Jn7Gt
-         ++lj1yhqwugP+Wa4Kh/Nj8Dwbb79zIg9DdJBbjFCewzIPvV8NBOe0Jd1E48pyTawxTo6
-         Rxm/Re35br0R4yZ8nh1JdpBUGAWOVQziigF6ed6iN0A+R1wxeSRkp8mt8n+VCuuI/QUr
-         +uEVimSwYxeABR7WVPSckWVexL4YljNbmP75BP7Z91ZW6nRq1FO/dQ3UsM+KHr2ItA6d
-         M7zbJQ8uABOzudBrCM7wiFaZUD54rYEG0q35iKTpO/v/RMiiIfRDSbOeUXy49v3QtQc7
-         8Oog==
-X-Gm-Message-State: AOAM530/qOiXzIkOLP/YNdVD+c/Ns/PeGVKSAC7VBVZcH22YP1PPZy8b
-        iMRiJJRMpzPxTKV85kakhegMYouh
-X-Google-Smtp-Source: ABdhPJyRI/ujQVnbkzSjLch2o0EdGxgeZwCmz87QMQR9kREsgpzpDdBVBBpmwmnzu78mCdQwzL/ciw==
-X-Received: by 2002:a2e:8191:: with SMTP id e17mr14662734ljg.68.1590426399297;
-        Mon, 25 May 2020 10:06:39 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id i11sm1649585ljb.1.2020.05.25.10.06.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2020 10:06:38 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v2] rev-list-options.txt: start a list for `show-pulls`
-Date:   Mon, 25 May 2020 19:06:07 +0200
-Message-Id: <20200525170607.8000-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.27.0.rc0
-In-Reply-To: <xmqqsgfx0z9k.fsf@gitster.c.googlers.com>
-References: <xmqqsgfx0z9k.fsf@gitster.c.googlers.com>
+        id S2391326AbgEYR1N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 13:27:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51794 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389251AbgEYR1N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 May 2020 13:27:13 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 202F56D76A;
+        Mon, 25 May 2020 13:27:11 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=6qiOUTx9s61/2
+        WlMXXm9mEwc79k=; b=Qf96H6Q78p0sOj+udP+UsCOa7bdq5fKl+JFO5+N/t900j
+        RUTBZrmleJdRORlMcDwHtDRnFFW3GEFaocACbIMPsc4RqMkfUb+lrlIWEUTHkjKD
+        ZDQfQhGWyMjFRgSKp9X9hmII35R/orDZTh0Y6h3fe6LL+nVmODLqeomvkgrto8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=PLle5cS
+        htDkSQCE6qomtO9CfPeUq8UDyekrwS3lcAT5CcDYyPLGJZKZJxIDE3zIsLAdGFqO
+        uLclxXWG8WnY6l0dMQYuolzs+gY8WLZK50zdD7aeXAUmdGF4B3NlShRFylwBozrM
+        y7eTBV7BiyQna8P5j65k671fvd5LnkJIJy3M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F0666D769;
+        Mon, 25 May 2020 13:27:11 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [71.254.198.10])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6C9226D768;
+        Mon, 25 May 2020 13:27:10 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Mon, 25 May 2020 13:27:08 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Son Luong Ngoc <sluongng@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2020, #08; Sun, 24)
+Message-ID: <20200525172708.GT6611@pobox.com>
+References: <xmqqh7w4pulj.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <xmqqh7w4pulj.fsf@gitster.c.googlers.com>
+X-Pobox-Relay-ID: F7183B46-9EAC-11EA-8C7B-C28CBED8090B-09356542!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 18 May 2020 at 22:22, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Martin Ågren <martin.agren@gmail.com> writes:
->
-> > I currently have the commit message below for my patch plus your fixup.
-> > ...
->
-> I've queued 1, 3, 4, 5, and 6 in the meantime.  Todd gave us a
-> replacement for 2, which I also took.
->
-> Thanks.
+Hi,
 
-A long weekend offline passes and it's already a week later...
+Junio C Hamano wrote:
+> Git 2.27-rc2 will be tagged soon, but most of the topics planned for
+> it are already in 'master'.
 
-Here is my original patch 7/7 plus Stolee's fixup, with the rephrased
-commit message from upthread. I've tried to test it from all angles I
-can think of -- AsciiDoc/Asciidoctor, man/html, doc-diff, ... It should
-be low-risk and does avoid beginning ~20 paragraphs with a literal "+"
-in the rendered docs for this new option.
+There's a minor issue in the ss/faq-ignore topic which
+breaks the doc build on CentOS/ RHEL 6 that was mentioned by
+Son Luong Ngoc=B9.  The "." in the anchor text causes an issue
+for the older doc toolchain on these systems.
 
-Martin
+I included a simple patch for that in a reply=B2.  I haven't
+seen any discussion on it one way or another.  At the risk
+of pestering, I thought I'd mention it in case it had just
+flown under everyone's radar during this busy time.
 
--- >8 --
-The explanation of the `--show-pulls` option added in commit 8d049e182e
-("revision: --show-pulls adds helpful merges", 2020-04-10) consists of
-several paragraphs and we use "+" throughout to tie them together in one
-long chain of list continuations. Only thing is, we're not in any kind
-of list, so these pluses end up being rendered literally.
+On one hand, the doc build toolchain on CentOS / RHEL 6 is
+old and those systems will be EOL at the end of November.
+So we might find it acceptable to stop supporting the doc
+build there.
 
-The preceding few paragraphs describe `--ancestry-path` and there we
-*do* have a list, since we've started one with `--ancestry-path::`. In
-fact, we have several such lists for all the various history-simplifying
-options we're discussing earlier in this file.
+On the other hand, the fix/workaround is quite trivial and
+nearly imperceptible to readers of the documentation.  The
+problematic "." in ".gitiginore" only appears in the anchor
+link for HTML viewers or in the plain text for readers of
+the .txt file:
 
-Thus, we're missing a list both from a consistency point of view and
-from a practical rendering standpoint.
+    [[files-in-.gitignore-are-tracked]]
 
-Let's start a list for `--show-pulls` where we start actually discussing
-the option, and keep the paragraphs preceding it out of that list. That
-is, drop all those pluses before the new list we're adding here.
+vs.
 
-Helped-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/rev-list-options.txt | 35 ++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+    [[files-in-gitignore-are-tracked]]
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 04ad7dd36e..b01b2b6773 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -581,12 +581,12 @@ option does. Applied to the 'D..M' range, it results in:
- 
- Before discussing another option, `--show-pulls`, we need to
- create a new example history.
--+
-+
- A common problem users face when looking at simplified history is that a
- commit they know changed a file somehow does not appear in the file's
- simplified history. Let's demonstrate a new example and show how options
- such as `--full-history` and `--simplify-merges` works in that case:
--+
-+
- -----------------------------------------------------------------------
- 	  .-A---M-----C--N---O---P
- 	 /     / \  \  \/   /   /
-@@ -595,7 +595,7 @@ such as `--full-history` and `--simplify-merges` works in that case:
- 	  \ /      /\        /
- 	   `---X--'  `---Y--'
- -----------------------------------------------------------------------
--+
-+
- For this example, suppose `I` created `file.txt` which was modified by
- `A`, `B`, and `X` in different ways. The single-parent commits `C`, `Z`,
- and `Y` do not change `file.txt`. The merge commit `M` was created by
-@@ -607,19 +607,19 @@ the contents of `file.txt` at `X`. Hence, `R` is TREESAME to `X` but not
- contents of `file.txt` at `R`, so `N` is TREESAME to `R` but not `C`.
- The merge commits `O` and `P` are TREESAME to their first parents, but
- not to their second parents, `Z` and `Y` respectively.
--+
-+
- When using the default mode, `N` and `R` both have a TREESAME parent, so
- those edges are walked and the others are ignored. The resulting history
- graph is:
--+
-+
- -----------------------------------------------------------------------
- 	I---X
- -----------------------------------------------------------------------
--+
-+
- When using `--full-history`, Git walks every edge. This will discover
- the commits `A` and `B` and the merge `M`, but also will reveal the
- merge commits `O` and `P`. With parent rewriting, the resulting graph is:
--+
-+
- -----------------------------------------------------------------------
- 	  .-A---M--------N---O---P
- 	 /     / \  \  \/   /   /
-@@ -628,21 +628,21 @@ merge commits `O` and `P`. With parent rewriting, the resulting graph is:
- 	  \ /      /\        /
- 	   `---X--'  `------'
- -----------------------------------------------------------------------
--+
-+
- Here, the merge commits `O` and `P` contribute extra noise, as they did
- not actually contribute a change to `file.txt`. They only merged a topic
- that was based on an older version of `file.txt`. This is a common
- issue in repositories using a workflow where many contributors work in
- parallel and merge their topic branches along a single trunk: manu
- unrelated merges appear in the `--full-history` results.
--+
-+
- When using the `--simplify-merges` option, the commits `O` and `P`
- disappear from the results. This is because the rewritten second parents
- of `O` and `P` are reachable from their first parents. Those edges are
- removed and then the commits look like single-parent commits that are
- TREESAME to their parent. This also happens to the commit `N`, resulting
- in a history view as follows:
--+
-+
- -----------------------------------------------------------------------
- 	  .-A---M--.
- 	 /     /    \
-@@ -651,18 +651,18 @@ in a history view as follows:
- 	  \ /      /
- 	   `---X--'
- -----------------------------------------------------------------------
--+
-+
- In this view, we see all of the important single-parent changes from
- `A`, `B`, and `X`. We also see the carefully-resolved merge `M` and the
- not-so-carefully-resolved merge `R`. This is usually enough information
- to determine why the commits `A` and `B` "disappeared" from history in
- the default view. However, there are a few issues with this approach.
--+
-+
- The first issue is performance. Unlike any previous option, the
- `--simplify-merges` option requires walking the entire commit history
- before returning a single result. This can make the option difficult to
- use for very large repositories.
--+
-+
- The second issue is one of auditing. When many contributors are working
- on the same repository, it is important which merge commits introduced
- a change into an important branch. The problematic merge `R` above is
-@@ -671,10 +671,13 @@ important branch. Instead, the merge `N` was used to merge `R` and `X`
- into the important branch. This commit may have information about why
- the change `X` came to override the changes from `A` and `B` in its
- commit message.
-+
-+--show-pulls::
-+	In addition to the commits shown in the default history, show
-+	each merge commit that is not TREESAME to its first parent but
-+	is TREESAME to a later parent.
- +
--The `--show-pulls` option helps with both of these issues by adding more
--merge commits to the history results. If a merge is not TREESAME to its
--first parent but is TREESAME to a later parent, then that merge is
-+When a merge commit is included by `--show-pulls`, the merge is
- treated as if it "pulled" the change from another branch. When using
- `--show-pulls` on this example (and no other options) the resulting
- graph is:
--- 
-2.27.0.rc0
+I'm not sure there's enough value in keeping the "." in this
+case to justify breaking the doc build for users stuck on an
+old CentOS / RHEL 6 system.
 
+I think the risk of applying the patch is sufficiently low
+that it would be worth including in 2.27.0.  That is, unless
+there is a strong opinion that the "." is quite useful or
+that even low effort isn't worth taking to support such an
+old doc toolchain.
+
+=B9 https://lore.kernel.org/git/CAL3xRKdwOASiGys+7Uu_OA5kBPrTdAURfEw3UQ+r=
+guTXT+C6JQ@mail.gmail.com/
+=B2 https://lore.kernel.org/git/20200519045301.GY24220@pobox.com/
+
+Thanks,
+
+--=20
+Todd
