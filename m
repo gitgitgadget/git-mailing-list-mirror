@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3404C433DF
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D274AC433E1
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FFBA2071A
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA2C02073B
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UfukM/5j"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sVIodrIE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390680AbgEYUAq (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2390685AbgEYUAq (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 25 May 2020 16:00:46 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38844 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38716 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390570AbgEYUAY (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 16:00:24 -0400
+        by vger.kernel.org with ESMTP id S2390412AbgEYT7y (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:54 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 53CBE60D0A;
-        Mon, 25 May 2020 19:59:52 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5BC3560D03;
+        Mon, 25 May 2020 19:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436792;
-        bh=5tWITec1XvUpGU34jbqxhafBFLo7Ap2izOu3L993MKI=;
+        s=default; t=1590436789;
+        bh=smmJElpsjDUJ3khU5WIlomu9EU1J8x04QmZc/+KQYhc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=UfukM/5j5oXTgDcwVw2bFQ8SsTT5lyfqKlHaVPaGdk2aZP9ZMoxVdvzotVoxH/cnD
-         b2l+h4HHPams+ZSo4fL5qlP/EMvOGdICAiXZlVPtYqNUcUy0g7N/S04ziNlnOg2L4O
-         4q4qsyPqP2Me2IwIPmCEeZvU5RM5TnbxbaeL5HmFY9lZ2PytY/B1VA732YtvpcoY7t
-         ABvYcls48u6de2GTTqnkq+U/nvbNbIPmX78utaGU5LsGKcdYbRmEiQuLifbOI1nzat
-         h3JpNCw9HgX065no15d54yN+/ll/KZFHCQ9UpUhOvQbbGAPYn7tVTuktkGTpqkpyaR
-         E9t0luF1X3KswWktoWEZVYxpjArQxJvyn2X2R6LeiRraBnOxnxfrSsRRlim+CAZRsp
-         lpfHTuEFmYMXb6LQ0xBJumqTZp156FNVlh/AIk5iKeXul43vvqHVtzBjbcSprmZqyd
-         FxAsdFvO/7aB/IOXvrKTgaKWwpbwb/6pQY/S1rWt1frvsZbdMaL
+        b=sVIodrIEk4bhl+4ckn4WE/NdlJv4wxe3/LqaSnespZepUOG/+r+Zba/aNpa2udHaO
+         iKwVLPRIzwVpXSjfYRlbh6Bu9RyHHghbSe3SzxKSeDC1LhVth79U1QHFd8Rw/+HBJZ
+         CshnRXF8sebja3ZQTxxCgtwRvFjF6LdFJQIbvrqq0j27RBVA98LDXx9TZpzlWn2QAY
+         PKsNGQhzKZNu+cpuj8ltYGkZ8YCvObNgNQMCR8IAZVjat7QU3siayBjTxRv7DPgyRi
+         42wI6KUs51VrYo88Vl7yyz2SwFbqjganPpWzdlwYOSrIBUP9rAWkNR36q3ujFcdUWE
+         U5s7ElBsUvm8vCIFN7l7KMg/Z/4F1Kv/5tx+6PIy6ItVMB8AqCGVUlINfWKhuTB9J6
+         2BDFmk++slY0abyMhbbTyy9v3S12XVImyR6XaN1/tAqg1D8G9diUlpUYi2QGDMtSly
+         lRszxnyJDyjzxDiI29X1RZTtjrusBFmHJqiA0G7cxlI6tE2ZsRn
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 22/44] setup: set the_repository's hash algo when checking format
-Date:   Mon, 25 May 2020 19:59:08 +0000
-Message-Id: <20200525195930.309665-23-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 15/44] builtin/receive-pack: detect when the server doesn't support our hash
+Date:   Mon, 25 May 2020 19:59:01 +0000
+Message-Id: <20200525195930.309665-16-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,27 +57,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we're checking the repository's format, set the hash algorithm at
-the same time.  This ensures that we perform a suitable initialization
-early enough to avoid confusing any parts of the code.  If we defer
-until later, we can end up with portions of the code which are confused
-about the hash algorithm, resulting in segfaults when working with
-SHA-256 repositories.
+Detect when the server doesn't support our hash algorithm and abort.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- setup.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/receive-pack.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/setup.c b/setup.c
-index 65fe5ecefb..019a1c6367 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1273,6 +1273,7 @@ void check_repository_format(struct repository_format *fmt)
- 		fmt = &repo_fmt;
- 	check_repository_format_gently(get_git_dir(), fmt, NULL);
- 	startup_info->have_repository = 1;
-+	repo_set_hash_algo(the_repository, fmt->hash_algo);
- 	clear_repository_format(&repo_fmt);
- }
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 4ffa501dce..d43663bb0a 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1625,6 +1625,8 @@ static struct command *read_head_info(struct packet_reader *reader,
+ 		linelen = strlen(reader->line);
+ 		if (linelen < reader->pktlen) {
+ 			const char *feature_list = reader->line + linelen + 1;
++			const char *hash = NULL;
++			int len = 0;
+ 			if (parse_feature_request(feature_list, "report-status"))
+ 				report_status = 1;
+ 			if (parse_feature_request(feature_list, "side-band-64k"))
+@@ -1637,6 +1639,13 @@ static struct command *read_head_info(struct packet_reader *reader,
+ 			if (advertise_push_options
+ 			    && parse_feature_request(feature_list, "push-options"))
+ 				use_push_options = 1;
++			hash = parse_feature_value(feature_list, "object-format", &len, NULL);
++			if (!hash) {
++				hash = hash_algos[GIT_HASH_SHA1].name;
++				len = strlen(hash);
++			}
++			if (xstrncmpz(the_hash_algo->name, hash, len))
++				die("error: unsupported object format '%s'", hash);
+ 		}
  
+ 		if (!strcmp(reader->line, "push-cert")) {
