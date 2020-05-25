@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D981CC433E1
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7795C433E0
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B46AE2071A
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8B7B2075F
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="k7seesj2"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Mx/WiaVv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390640AbgEYUAc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 16:00:32 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38728 "EHLO
+        id S2390643AbgEYUAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 16:00:33 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38722 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390316AbgEYT7y (ORCPT
+        by vger.kernel.org with ESMTP id S2390418AbgEYT7y (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:54 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DDEEB60D09;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 10B8B60D07;
         Mon, 25 May 2020 19:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436792;
-        bh=vP7nC3ffY6aR9uRzQGpX+7hdzpsv9yyEoRYuzrjpRQw=;
+        s=default; t=1590436791;
+        bh=sxSDhOXns0vesz2DtA7y4piK/iRpR30k7wtrsZNC1VU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=k7seesj24Aa76Kh5UqpIOzIoDaqIqVR8tcpcJjtlUJc2Agsl2HC6Vqk4+cIE59pWK
-         foma0JU3G8lsDCZ+4v3dNddG/qdr0J7FGAoLIQHqmzlgkKDuhkZiSBg/jGoDs9c5vO
-         917pRPYCVulTbw6z/+zIRuz1Dqscn8LgPkrh9k9xoiXRt6ndZbwewHERYlYqAPZH4E
-         j268JaWvKn824DIcMCdp17yFAi2F+shwbMDE7r/j2phvj6Ne4dIKOCmKK6mShDfvaZ
-         J10q2QxGGqRGF9boKwJNTRQrtjtCbhsFocHqr/6p27LMU8VldW4ZPiJtpV0GNb2Rnl
-         JXAW5PSNhVwarQxdrywDsoopXVXp9ULB4UcTl8c0Pni3xyYngWi5T6FgA/MAzK6s/9
-         K7oaqtNRStPoNCfMDXqpauBkI6JdDqjyptt6ESob+tBvxUohJcCeBCS/XcCYo9vAF5
-         8zPLyb7x70312NqfJ7+0Es/accM9668nnXuJ6nF9wwIuVyQSGXg
+        b=Mx/WiaVv9dKpzs0X329sUQKXSpqUj64H7ir46EQyHVw10NErcL0mB8ajU7O0FLw3J
+         l7Z1BQryfxHyXT6z8RR0x+OLmJVVZkU+ybFx9jHu+P0fNEa1MqhRdaWBO8vGCfCiis
+         C1fOFO7r+hfmoTGiv3nXPZtheW7JPs3NSutTf2rUgIQotyIYB/Kcpz6ZlCmvunC3Mz
+         F5h0b+62g7s0cBIbefUByolb97uY42DJtvmUMghlkJvKx/tg9CsHip8GXMHnvnJamL
+         EcAwx1cZcm9u/vv9Kiz0kq70UUKmpEXvECXaasW5gYzXCNH+xRxs+1Oevta+m7uvF5
+         YDvzKSVtqf6UbYkpHpn+jkf/08u6M6WGcmK/k6XKKvHe7Zx98scZzVtS2Uxx+xSAGC
+         TzxJ8AwhBFL3wWbO9hy/lM+E7JEe9g+UULfxaKex1GT8bBG6wQ3XNSEaVO7vIMAOqN
+         /spmlxAMF0d9VYtqY1JdQkjGPpWYFCS/KfxBk//Wn+DTQT+z6a3
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 21/44] fetch-pack: parse and advertise the object-format capability
-Date:   Mon, 25 May 2020 19:59:07 +0000
-Message-Id: <20200525195930.309665-22-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 19/44] builtin/clone: initialize hash algorithm properly
+Date:   Mon, 25 May 2020 19:59:05 +0000
+Message-Id: <20200525195930.309665-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,41 +57,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Parse the server's object-format capability and respond accordingly,
-dying if there is a mismatch.
+When performing a clone, we don't know what hash algorithm the other end
+will support.  Currently, we don't support fetching data belonging to a
+different algorithm, so we must know what algorithm the remote side is
+using in order to properly initialize the repository.  We can know that
+only after fetching the refs, so if the remote side has any references,
+use that information to reinitialize the repository with the correct
+hash algorithm information.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fetch-pack.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ builtin/clone.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 34c339a5fe..ecfb8c3cf5 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1180,6 +1180,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 			      int sideband_all, int seen_ack)
- {
- 	int ret = 0;
-+	const char *hash_name;
- 	struct strbuf req_buf = STRBUF_INIT;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index cb48a291ca..f27d38bc8e 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1217,6 +1217,15 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	refs = transport_get_remote_refs(transport, &ref_prefixes);
  
- 	if (server_supports_v2("fetch", 1))
-@@ -1194,6 +1195,17 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 					 args->server_options->items[i].string);
- 	}
- 
-+	if (server_feature_v2("object-format", &hash_name)) {
-+		int hash_algo = hash_algo_by_name(hash_name);
-+		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
-+			die(_("mismatched algorithms: client %s; server %s"),
-+			    the_hash_algo->name, hash_name);
-+		packet_write_fmt(fd_out, "object-format=%s", the_hash_algo->name);
-+	} else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1) {
-+		die(_("the server does not support algorithm '%s'"),
-+		    the_hash_algo->name);
-+	}
+ 	if (refs) {
++		int hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
 +
- 	packet_buf_delim(&req_buf);
- 	if (args->use_thin_pack)
- 		packet_buf_write(&req_buf, "thin-pack");
++		/*
++		 * Now that we know what algorithm the remote side is using,
++		 * let's set ours to the same thing.
++		 */
++		initialize_repository_version(hash_algo);
++		repo_set_hash_algo(the_repository, hash_algo);
++
+ 		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
+ 		/*
+ 		 * transport_get_remote_refs() may return refs with null sha-1
