@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23903C433DF
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D73EC433E0
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 087772071A
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76F642075F
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="WY5NG1rb"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lWgfWh40"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390651AbgEYUAg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 16:00:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38856 "EHLO
+        id S2390657AbgEYUAh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 16:00:37 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38858 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390616AbgEYUAc (ORCPT
+        by vger.kernel.org with ESMTP id S2390626AbgEYUAc (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 16:00:32 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 976E560D1F;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0A23C60D20;
         Mon, 25 May 2020 20:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436800;
-        bh=hYAhEgO21Q1ObbuQ8R0buMjNd5pGl8EufAeC4U72FN8=;
+        s=default; t=1590436801;
+        bh=0kTnW+si/14E4LvMgtbMNpi0j1rIx5tw+Yjkj/LLNLQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=WY5NG1rbXg5bR8BqX9jnJt2qAs58z4YxJ0dU7OKMQK1LP9fKWpcnniFTOk9stiGAm
-         B0cWpCrTaL55/8pnBjY4aSxByjDuKxXotZ+6Ioh96sKnqPzgWhqViQOGeh8EfFvDqh
-         vJ5bOvTe1eDLbWoFror+0NKkOFbqhUj7YdLTn38TNULewvRr8S6ulbZVGajMkJsbBR
-         vWU8ObSjDx4ZXWkF+Jz+XA+jg85H75CsMyouURce/HUmRc7WhAWKGzBFTfoCU+nAeB
-         opvz7ii7PzqmesZk3cEfF1TkakJFjkk3/6hD5cpOHzd/Mp3iQ/ifbmxpqEOEE8n766
-         QnBCe5Z9JJUJ1qBA5RzF0/YapwHozutcQ//AYz98rTnXW/bI6G5jdOr8SycHG0g59Y
-         l57uloOwZgkKOGB0Ml/vo30HGcVUENIRsLVaa8MCyMTEDZuH24m18mRFAJG+h0oFRM
-         7RtbOru1yXZUjjS4WlmEpPeXRF5FHHFpUVZBcAcf73VaMtQel7u
+        b=lWgfWh4052vO2yv4L+bARyg0AUBiVcFw8ErpK1eCqoZNtlhoxVjis88zH6S1FfvV3
+         pTUIY0nkvZBvlh/GGFZMVWN+LD0loS2kzexdd6oaQkpZjjlfMsUd07Xd2rj+Cy34Ap
+         5+d2FLX4igg4R8ZI4P8SnSk0n9w50hq49zaG+YTIVFWbEf4jjoPx+TXw/uQuNcupwV
+         4JD70eskY30dZd7RHB8l7R7k1RmDQAAuCxe/NxOUXkTp9u9DVtBXAkbO0p+Sjfj6sz
+         y5h8plJp9sl1QWYZwCDsEwwAV8IQroD9r+R/MzNj9+RWqNF7A+679hHeLYs2quGWRh
+         hvR4h7wMuvatktm5Mmeci5MFDj9Ur+ZiKPL/kjP6ky0miJsJcujD1MMBY2kmsZ0myo
+         ZUOv8rypoO3H9NN3BrJBsfLqf9+p8liiHbIYp18QGVX+bCphOZ+d/uViA2ntiCdUJ0
+         1Mmtcg11LBrcD71gueI1yumw1+gjoKlibXkOrTCyjUTREU8bngH
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 41/44] t5704: send object-format capability with SHA-256
-Date:   Mon, 25 May 2020 19:59:27 +0000
-Message-Id: <20200525195930.309665-42-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 42/44] t5300: pass --object-format to git index-pack
+Date:   Mon, 25 May 2020 19:59:28 +0000
+Message-Id: <20200525195930.309665-43-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,34 +57,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we speak protocol v2 in this test, we must pass the object-format
-header if the algorithm is not SHA-1.  Otherwise, git upload-pack fails
-because the hash algorithm doesn't match and not because we've failed to
-speak the protocol correctly.  Pass the header so that our assertions
-test what we're really interested in.
+git index-pack by default reads the repository to determine the object
+format. However, when outside of a repository, it's necessary to specify
+the hash algorithm in use so that the pack can be properly indexed. Add
+an --object-format argument when invoking git index-pack outside of a
+repository.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t5704-protocol-violations.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ t/t5300-pack-object.sh | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5704-protocol-violations.sh b/t/t5704-protocol-violations.sh
-index 950cfb21fe..5c941949b9 100755
---- a/t/t5704-protocol-violations.sh
-+++ b/t/t5704-protocol-violations.sh
-@@ -9,6 +9,7 @@ making sure that we do not segfault or otherwise behave badly.'
- test_expect_success 'extra delim packet in v2 ls-refs args' '
- 	{
- 		packetize command=ls-refs &&
-+		packetize "object-format=$(test_oid algo)" &&
- 		printf 0001 &&
- 		# protocol expects 0000 flush here
- 		printf 0001
-@@ -21,6 +22,7 @@ test_expect_success 'extra delim packet in v2 ls-refs args' '
- test_expect_success 'extra delim packet in v2 fetch args' '
- 	{
- 		packetize command=fetch &&
-+		packetize "object-format=$(test_oid algo)" &&
- 		printf 0001 &&
- 		# protocol expects 0000 flush here
- 		printf 0001
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 410a09b0dd..746cdb626e 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -12,7 +12,8 @@ TRASH=$(pwd)
+ 
+ test_expect_success \
+     'setup' \
+-    'rm -f .git/index* &&
++    'test_oid_init &&
++     rm -f .git/index* &&
+      perl -e "print \"a\" x 4096;" > a &&
+      perl -e "print \"b\" x 4096;" > b &&
+      perl -e "print \"c\" x 4096;" > c &&
+@@ -412,18 +413,18 @@ test_expect_success 'set up pack for non-repo tests' '
+ '
+ 
+ test_expect_success 'index-pack --stdin complains of non-repo' '
+-	nongit test_must_fail git index-pack --stdin <foo.pack &&
++	nongit test_must_fail git index-pack --object-format=$(test_oid algo) --stdin <foo.pack &&
+ 	test_path_is_missing non-repo/.git
+ '
+ 
+ test_expect_success 'index-pack <pack> works in non-repo' '
+-	nongit git index-pack ../foo.pack &&
++	nongit git index-pack --object-format=$(test_oid algo) ../foo.pack &&
+ 	test_path_is_file foo.idx
+ '
+ 
+ test_expect_success 'index-pack --strict <pack> works in non-repo' '
+ 	rm -f foo.idx &&
+-	nongit git index-pack --strict ../foo.pack &&
++	nongit git index-pack --strict --object-format=$(test_oid algo) ../foo.pack &&
+ 	test_path_is_file foo.idx
+ '
+ 
