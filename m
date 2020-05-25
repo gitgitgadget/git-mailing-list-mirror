@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC5BDC433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92639C433E1
 	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:59:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98EEF2075F
+	by mail.kernel.org (Postfix) with ESMTP id 7389F2073B
 	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:59:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hyBXMI93"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="iezzkm4l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390443AbgEYT75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 15:59:57 -0400
+        id S2390437AbgEYT74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 15:59:56 -0400
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:38718 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390395AbgEYT7t (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:49 -0400
+        by vger.kernel.org with ESMTP id S2390411AbgEYT7y (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:54 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E781A609D3;
-        Mon, 25 May 2020 19:59:47 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C27A060D04;
+        Mon, 25 May 2020 19:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436788;
-        bh=+VC8gXa5DUc8GKeavPNfMWykrG004iaSqUaxmId/s2c=;
+        s=default; t=1590436790;
+        bh=JYZIPaXyfRmBGoUSPO/BC8tfJm3FljXIDJUspJCISoE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=hyBXMI93ALcLY8UBwKDkK3u2rFdTfM4jQMwiM5HD9PpXjag0602fP69cgMboG9Wma
-         TVZ6KUgf8ihrPNigoISPsDiHaLmkP3quYqviXc+AsAV4W22lLurZ0XU1J1iWGxOZqR
-         BdyPj3y1hW28WGqNUJYLwC0te1i0kUod3f7ekvoyGmdDYCxRBof5msLd7yhTlsCWkS
-         D2P3NJ0u8CpQuunMd0XmJE//1GR/e1pkIiCLLWxHKwmFUIyBfEE2wefgC9SG52taAX
-         GM7DEhXydH85Aet5OcaXMgJMzDb/QNxct0ecElTAEPBEWn5/oVBauTKTKPECIq4Ue9
-         pXUqk1HwIFQK5dUNr2Us0lcrrz9CBRlcOuzevqKwr1PAJN7LKBGr7/CbR9i8AhnmY7
-         34ns2CZLWKQioaDQ1SMSNlX9NVVJM5Rftm3M3nMFhs0sTn5OQ4p490FB4MTLddC4KE
-         riuqOWcAxosUsX8cWgrLPpUHkcQUfEKwz3/lHiVe+2YyOLSwDcy
+        b=iezzkm4lXTUxYcHVj7+Mm0b0NUJesbkr54guJqloEGUN4dnJGGNv8nczUZ0fYG+kx
+         EYrogpc4nGWDCEBpQdyZcvd/BBEree5F0QkRmGknwl6wZLdfRzgq0jnQok/gM24i4f
+         4olT0Dy5fZ+qGqZoiIHggKgWYUp220OHI8JfoskU6oOYUoKJd6QWcO7gVzQooH7zBJ
+         hLD2OQL6teGJ2EKSN0HgZ1yGzRPnu4tD21M33B3HupXm5wpoVLP/Q/ijZ0HaeTIU/K
+         diYmF6ObZInmnjFGLlK/sRMuVZFlbSbM3dri2jYUfynOuKSQSvPEWZ0TIKgtoWU2FM
+         tlk/mOyNlbIjBeOjzZMX8y5bxKBo7OK8lcgTJzt9/nlzhtbW+RkdnhrJmfDb1DBHER
+         /3u3nbJpYAxAd+W/aS/tCxjPoeHJ8DSGhqA5IJGDdstV0Mx6B3IcP3Sg2mk04Zrk9D
+         flH61Ky5EOHAV/4vK+tjSt0frHxvQUjfTRqSodB7S88YMWHMiP6
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 12/44] connect: make parse_feature_value extern
-Date:   Mon, 25 May 2020 19:58:58 +0000
-Message-Id: <20200525195930.309665-13-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 16/44] docs: update remote helper docs for object-format extensions
+Date:   Mon, 25 May 2020 19:59:02 +0000
+Message-Id: <20200525195930.309665-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,45 +57,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We're going to be using this function in other files, so no longer mark
-this function static.
+Update the remote helper docs to document the object-format extensions
+we will implement in remote-curl and the transport helper code shortly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- connect.c | 3 +--
- connect.h | 1 +
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/gitremote-helpers.txt | 33 +++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index eaa13b41bb..397fad7e32 100644
---- a/connect.c
-+++ b/connect.c
-@@ -18,7 +18,6 @@
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index f48a031dc3..26f32e4421 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -238,6 +238,9 @@ the remote repository.
+ 	`--signed-tags=verbatim` to linkgit:git-fast-export[1].  In the
+ 	absence of this capability, Git will use `--signed-tags=warn-strip`.
  
- static char *server_capabilities_v1;
- static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
--static const char *parse_feature_value(const char *, const char *, int *, int *);
- static const char *next_server_feature_value(const char *feature, int *len, int *offset);
++'object-format'::
++	This indicates that the helper is able to interact with the remote
++	side using an explicit hash algorithm extension.
  
- static int check_ref(const char *name, unsigned int flags)
-@@ -467,7 +466,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	return list;
- }
  
--static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
-+const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
- {
- 	int len;
+ COMMANDS
+@@ -257,12 +260,14 @@ Support for this command is mandatory.
+ 'list'::
+ 	Lists the refs, one per line, in the format "<value> <name>
+ 	[<attr> ...]". The value may be a hex sha1 hash, "@<dest>" for
+-	a symref, or "?" to indicate that the helper could not get the
+-	value of the ref. A space-separated list of attributes follows
+-	the name; unrecognized attributes are ignored. The list ends
+-	with a blank line.
++	a symref, ":<keyword> <value>" for a key-value pair, or
++	"?" to indicate that the helper could not get the value of the
++	ref. A space-separated list of attributes follows the name;
++	unrecognized attributes are ignored. The list ends with a
++	blank line.
+ +
+ See REF LIST ATTRIBUTES for a list of currently defined attributes.
++See REF LIST KEYWORDS for a list of currently defined keywords.
+ +
+ Supported if the helper has the "fetch" or "import" capability.
  
-diff --git a/connect.h b/connect.h
-index fc75d6a457..ace074dcb6 100644
---- a/connect.h
-+++ b/connect.h
-@@ -19,6 +19,7 @@ struct packet_reader;
- enum protocol_version discover_version(struct packet_reader *reader);
+@@ -430,6 +435,18 @@ attributes are defined.
+ 	This ref is unchanged since the last import or fetch, although
+ 	the helper cannot necessarily determine what value that produced.
  
- int server_supports_hash(const char *desired, int *feature_supported);
-+const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset);
- int server_supports_v2(const char *c, int die_on_error);
- int server_feature_v2(const char *c, const char **v);
- int server_supports_feature(const char *c, const char *feature,
++REF LIST KEYWORDS
++-----------------
++
++The 'list' command may produce a list of key-value pairs.
++The following keys are defined.
++
++'object-format'::
++	The refs are using the given hash algorithm.  This keyword is only
++	used if the server and client both support the object-format
++	extension.
++
++
+ OPTIONS
+ -------
+ 
+@@ -514,6 +531,14 @@ set by Git if the remote helper has the 'option' capability.
+ 	transaction.  If successful, all refs will be updated, or none will.  If the
+ 	remote side does not support this capability, the push will fail.
+ 
++'option object-format' {'true'|algorithm}::
++	If 'true', indicate that the caller wants hash algorithm information
++	to be passed back from the remote.  This mode is used when fetching
++	refs.
+++
++If set to an algorithm, indicate that the caller wants to interact with
++the remote side using that algorithm.
++
+ SEE ALSO
+ --------
+ linkgit:git-remote[1]
