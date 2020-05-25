@@ -2,114 +2,145 @@ Return-Path: <SRS0=RB3M=7H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34EF5C433DF
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E34C433E0
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:53:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C2CC207D8
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:29:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E9D820723
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:53:19 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="v8fQOWZL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388615AbgEYR3v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 13:29:51 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:17144 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388230AbgEYR3v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 May 2020 13:29:51 -0400
-Received: from [89.243.191.101] (helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1jdGv6-0008jw-3Z; Mon, 25 May 2020 18:29:48 +0100
-Subject: Re: [PATCH] rebase --autosquash: fix a potential segfault
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Andrei Rybak <rybak.a.v@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Paul Ganssle <paul@ganssle.io>,
-        Jeff King <peff@peff.net>
-References: <pull.625.git.1588624804554.gitgitgadget@gmail.com>
- <2367cf9d-2e37-b8c2-6881-f3e6c951a460@gmail.com>
- <nycvar.QRO.7.76.6.2005071626340.56@tvgsbejvaqbjf.bet>
- <1a03a7b4-f436-83c5-f825-3b68c07785e9@iee.email>
- <4f2ddbba-a9ba-a96a-36c1-b233ea861575@gmail.com>
- <fc616e86-dfc1-fccf-d22b-ad2aee0d1b16@iee.email>
- <nycvar.QRO.7.76.6.2005180522230.55@tvgsbejvaqbjf.bet>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <9a9e7432-7a74-f46e-9a77-b8acaa9a974f@iee.email>
-Date:   Mon, 25 May 2020 18:29:47 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+        id S2389133AbgEYRxS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 13:53:18 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38656 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388621AbgEYRxS (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 13:53:18 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D795A60482;
+        Mon, 25 May 2020 17:53:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1590429197;
+        bh=RA9JnQSxZ2B7whHCrSQPrWs8pS+K/y0CXC4AsOsbagw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=v8fQOWZLsGiR6TusmtFICu/s01v6DTsqW2xfivKyPU17X2v8bgCk46O9Ra6THzBce
+         GhydwlGhEOWFV9v64ayaqMdpM5+uNlr+scoWhTrkqLiTtMoovE5vCBIPhyTcTgyhYG
+         p+HB3vtsSqFdpONMzs/B6Y3DyC8cEQ3ta90QQthqeI5EHC63zCB9PDKRnutegF69XD
+         By7YneHaG/VIXogAreEiEo6uYXNotyYAq++A8t+u3GkIH2SmTo47wtyIqzS6Gm4y8k
+         rywi8H4l6xSN6+mDpUHeDQ/lB65zE5OH2ZEipmEXNLK717U/E7vnmlvlVyO6wC67Xy
+         5LIdgkYEUzEztMer2RqTHAvKHVWQAT7MbuVdfD/ZsoxNKbw+fU/mPdHbYZxKYOMQzn
+         rMcaS9M8vnEYD3mQLSg82VBAR7K4MKtPHEm1n2xq38+TrzqLGPyVarP4rwpoOxOgEW
+         AeVOFL5bOqCRTTekUNR1EUT4PZRVpS22rc1r3p+Ka2W1g4GzJ6C
+Date:   Mon, 25 May 2020 17:53:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2020, #08; Sun, 24)
+Message-ID: <20200525175309.GD1915090@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+References: <xmqqh7w4pulj.fsf@gitster.c.googlers.com>
+ <20200525172708.GT6611@pobox.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2005180522230.55@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="RhUH2Ysw6aD5utA4"
+Content-Disposition: inline
+In-Reply-To: <20200525172708.GT6611@pobox.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-1-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
 
-On 18/05/2020 04:27, Johannes Schindelin wrote:
-> Hi Philip,
->
-> On Mon, 18 May 2020, Philip Oakley wrote:
->
->> On 08/05/2020 17:57, Andrei Rybak wrote:
->>> On 2020-05-08 18:43, Philip Oakley wrote:
->>>> On 07/05/2020 15:27, Johannes Schindelin wrote:
->>>> Is this ability to have a commit message `fixup! <commit-hash>` documented?
->>>> I've looked a few times in the past and didn't find it. The docs for
->>>> `git commit --fixup=` doesn't put the oid in the commit's subject line,
->>>> rather it puts the subject of the referent commit after the "fixup! ".
->>>>
->>>> Searching from a different direction I've just seen it is mentioned in
->>>> the v1.7.4 release notes.
->>>>
->>>> Would a doc fix to clarify this be appropriate or have I missed something?
->>>>
->>>> Philip
->>> Yes, it's documented in description of --autosquash: "A commit matches the `...`
->>> if the commit subject matches, or if the `...` refers to the commit's hash."
->> The docs don't  clarify if a full oid has is required, or a unique
->> abbreviation within the repository, or just unique within the rebase
->> instruction sheet.
-> It's even worse: _any_ valid reference will do. As you can see from
-> https://github.com/git/git/blob/efcab5b7a3d2/sequencer.c#L5359-L5381, the
-> search goes like this:
->
->   - For the remainder of the `fixup! <remainder>` line:
->
-> 	1. If it is identical to the oneline of any commit mentioned in a
-> 	   previously-seen `pick` line, pick that as target.
->
-> 	2. Otherwise, if the remainder can be looked up as a commit
-> 	   (think: `fixup! master~3`) _and_ that commit was mentioned in
-> 	   a previously-seen `pick` line, pick that as target.
->
-> 	3. If all else fails, and if the remainder is the _start_ of a
-> 	   oneline of a commit previously seen in a `pick` line, pick that
-> 	   as target (if multiple lines match, use the first one).
->
-> Do feel free to put that into a native-speaker form of a patch to improve
-> the documentation.
->
->
-Sorry for the delay on a reply to this one.  I do have a small couple of
-patches to slightly improve the docs. Hope to send soon.
+--RhUH2Ysw6aD5utA4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm thinking that for the longer term it may need a section covering
-fixup/squash, so as to cover all the different user interaction stages,
-e.g. the commit options, and commit message; and then the initial
-interactive instruction sheet, and on-going edits of the instruction
-sheet when the rebase pauses.
+On 2020-05-25 at 17:27:08, Todd Zullinger wrote:
+> Hi,
+>=20
+> Junio C Hamano wrote:
+> > Git 2.27-rc2 will be tagged soon, but most of the topics planned for
+> > it are already in 'master'.
+>=20
+> There's a minor issue in the ss/faq-ignore topic which
+> breaks the doc build on CentOS/ RHEL 6 that was mentioned by
+> Son Luong Ngoc=C2=B9.  The "." in the anchor text causes an issue
+> for the older doc toolchain on these systems.
+>=20
+> I included a simple patch for that in a reply=C2=B2.  I haven't
+> seen any discussion on it one way or another.  At the risk
+> of pestering, I thought I'd mention it in case it had just
+> flown under everyone's radar during this busy time.
+>=20
+> On one hand, the doc build toolchain on CentOS / RHEL 6 is
+> old and those systems will be EOL at the end of November.
+> So we might find it acceptable to stop supporting the doc
+> build there.
+>=20
+> On the other hand, the fix/workaround is quite trivial and
+> nearly imperceptible to readers of the documentation.  The
+> problematic "." in ".gitiginore" only appears in the anchor
+> link for HTML viewers or in the plain text for readers of
+> the .txt file:
+>=20
+>     [[files-in-.gitignore-are-tracked]]
+>=20
+> vs.
+>=20
+>     [[files-in-gitignore-are-tracked]]
+>=20
+> I'm not sure there's enough value in keeping the "." in this
+> case to justify breaking the doc build for users stuck on an
+> old CentOS / RHEL 6 system.
+>=20
+> I think the risk of applying the patch is sufficiently low
+> that it would be worth including in 2.27.0.  That is, unless
+> there is a strong opinion that the "." is quite useful or
+> that even low effort isn't worth taking to support such an
+> old doc toolchain.
 
-In particular, the (assuming proper understanding) the interjection
-between the almost identical 1 & 3  [identical vs start of the oneline
-of a commit in the `pick` (insn) list...], of the ability to specify an
-almost arbitrary rev. I still have to check the code to see what it
-does/tries to do.
+I think since this is an anchor link it's just fine to change for
+compatibility.  People are already used to slugs in fragments and
+elsewhere that don't include every possible component, and I think it
+would be better to produce more compatible ones over more precise ones.
+The burden of the change is very small, and the benefit is much greater.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Philip 
+--RhUH2Ysw6aD5utA4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXswGBQAKCRB8DEliiIei
+gd12AQCz0wDU1rrrXqk1MnyF0XrYXCYEbRBtJzrX46QWsmx5iwEA0dtvKnLG/l9J
+I7aE4gjxUecR02ESLW+HG1vl99/Vdws=
+=Kn04
+-----END PGP SIGNATURE-----
+
+--RhUH2Ysw6aD5utA4--
