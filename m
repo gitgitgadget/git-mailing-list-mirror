@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB952C433DF
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D981CC433E1
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DA9C2071A
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B46AE2071A
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HtJ5p1Oi"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="k7seesj2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390621AbgEYUAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 16:00:31 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38796 "EHLO
+        id S2390640AbgEYUAc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 16:00:32 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38728 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390545AbgEYUAR (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 16:00:17 -0400
+        by vger.kernel.org with ESMTP id S2390316AbgEYT7y (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:54 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 62A1C60CF2;
-        Mon, 25 May 2020 19:59:45 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DDEEB60D09;
+        Mon, 25 May 2020 19:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436785;
-        bh=qQ80ZzeBSLgKo57xBL5U1/mAg+xY3uajsMWjI2OqhAg=;
+        s=default; t=1590436792;
+        bh=vP7nC3ffY6aR9uRzQGpX+7hdzpsv9yyEoRYuzrjpRQw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=HtJ5p1OiBnGpzzz9b4o5Ax2Lppf9MoxdTPix4UnLEbwVPeMdd9oA+0CDaDifXEx8x
-         lTLf20PPN3Z0w7d/aAOq/KdGsw071n5gQYU+tnfbMrQcQNEoRwxbUHtftRpMxfDR+B
-         /DdKydg7UkEaGg5Ya2tFDWaSgJZ+LoZ9LkH5Md5m6D7sHPA9XobNEgW+idEf8oJLXG
-         YbdNF1rGwttnJ8YHkWwoS875bLUGegI+ya8bzlD11lARcddbS/UPPghuWbH5vzRVFg
-         zodCJaNttGMqm5KNFnQJWqBzdF+yZ4dF9pU2VhARtNLWgfT5WLI56p7S3DBlmDpD1S
-         PlBhlkRMT16kJ8eRCwrIrPueNt+FQqbZBNvJouziuLx2VsqOaz/kK69bSDuNJPid8N
-         8TTveejBhb5m0OYWW9Kxgpieytwc9g3QgVSDE1kTlk/o3Pgeq7bVDg2gUiYmJWqSrs
-         izIx38Yqgit2SIGeH5kuQUNLKxUSe3tOwF3VZ7TMbNMDjBgoCcq
+        b=k7seesj24Aa76Kh5UqpIOzIoDaqIqVR8tcpcJjtlUJc2Agsl2HC6Vqk4+cIE59pWK
+         foma0JU3G8lsDCZ+4v3dNddG/qdr0J7FGAoLIQHqmzlgkKDuhkZiSBg/jGoDs9c5vO
+         917pRPYCVulTbw6z/+zIRuz1Dqscn8LgPkrh9k9xoiXRt6ndZbwewHERYlYqAPZH4E
+         j268JaWvKn824DIcMCdp17yFAi2F+shwbMDE7r/j2phvj6Ne4dIKOCmKK6mShDfvaZ
+         J10q2QxGGqRGF9boKwJNTRQrtjtCbhsFocHqr/6p27LMU8VldW4ZPiJtpV0GNb2Rnl
+         JXAW5PSNhVwarQxdrywDsoopXVXp9ULB4UcTl8c0Pni3xyYngWi5T6FgA/MAzK6s/9
+         K7oaqtNRStPoNCfMDXqpauBkI6JdDqjyptt6ESob+tBvxUohJcCeBCS/XcCYo9vAF5
+         8zPLyb7x70312NqfJ7+0Es/accM9668nnXuJ6nF9wwIuVyQSGXg
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 06/44] connect: add function to parse multiple v1 capability values
-Date:   Mon, 25 May 2020 19:58:52 +0000
-Message-Id: <20200525195930.309665-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 21/44] fetch-pack: parse and advertise the object-format capability
+Date:   Mon, 25 May 2020 19:59:07 +0000
+Message-Id: <20200525195930.309665-22-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,104 +57,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a capability response, we can have multiple symref entries.  In the
-future, we will also allow for multiple hash algorithms to be specified.
-To avoid duplication, expand the parse_feature_value function to take an
-optional offset where the parsing should begin next time.  Add a wrapper
-function that allows us to query the next server feature value, and use
-it in the existing symref parsing code.
+Parse the server's object-format capability and respond accordingly,
+dying if there is a mismatch.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- connect.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ fetch-pack.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index ccc5274189..2b55a32d4d 100644
---- a/connect.c
-+++ b/connect.c
-@@ -18,7 +18,8 @@
- 
- static char *server_capabilities_v1;
- static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
--static const char *parse_feature_value(const char *, const char *, int *);
-+static const char *parse_feature_value(const char *, const char *, int *, int *);
-+static const char *next_server_feature_value(const char *feature, int *len, int *offset);
- 
- static int check_ref(const char *name, unsigned int flags)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 34c339a5fe..ecfb8c3cf5 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1180,6 +1180,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 			      int sideband_all, int seen_ack)
  {
-@@ -180,17 +181,16 @@ static void parse_one_symref_info(struct string_list *symref, const char *val, i
- static void annotate_refs_with_symref_info(struct ref *ref)
- {
- 	struct string_list symref = STRING_LIST_INIT_DUP;
--	const char *feature_list = server_capabilities_v1;
-+	int offset = 0;
+ 	int ret = 0;
++	const char *hash_name;
+ 	struct strbuf req_buf = STRBUF_INIT;
  
--	while (feature_list) {
-+	while (1) {
- 		int len;
- 		const char *val;
- 
--		val = parse_feature_value(feature_list, "symref", &len);
-+		val = next_server_feature_value("symref", &len, &offset);
- 		if (!val)
- 			break;
- 		parse_one_symref_info(&symref, val, len);
--		feature_list = val + 1;
+ 	if (server_supports_v2("fetch", 1))
+@@ -1194,6 +1195,17 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 					 args->server_options->items[i].string);
  	}
- 	string_list_sort(&symref);
  
-@@ -452,7 +452,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	return list;
- }
- 
--static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
-+static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
- {
- 	int len;
- 
-@@ -460,6 +460,8 @@ static const char *parse_feature_value(const char *feature_list, const char *fea
- 		return NULL;
- 
- 	len = strlen(feature);
-+	if (offset)
-+		feature_list += *offset;
- 	while (*feature_list) {
- 		const char *found = strstr(feature_list, feature);
- 		if (!found)
-@@ -474,9 +476,14 @@ static const char *parse_feature_value(const char *feature_list, const char *fea
- 			}
- 			/* feature with a value (e.g., "agent=git/1.2.3") */
- 			else if (*value == '=') {
-+				int end;
++	if (server_feature_v2("object-format", &hash_name)) {
++		int hash_algo = hash_algo_by_name(hash_name);
++		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
++			die(_("mismatched algorithms: client %s; server %s"),
++			    the_hash_algo->name, hash_name);
++		packet_write_fmt(fd_out, "object-format=%s", the_hash_algo->name);
++	} else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1) {
++		die(_("the server does not support algorithm '%s'"),
++		    the_hash_algo->name);
++	}
 +
- 				value++;
-+				end = strcspn(value, " \t\n");
- 				if (lenp)
--					*lenp = strcspn(value, " \t\n");
-+					*lenp = end;
-+				if (offset)
-+					*offset = value + end - feature_list;
- 				return value;
- 			}
- 			/*
-@@ -491,12 +498,17 @@ static const char *parse_feature_value(const char *feature_list, const char *fea
- 
- int parse_feature_request(const char *feature_list, const char *feature)
- {
--	return !!parse_feature_value(feature_list, feature, NULL);
-+	return !!parse_feature_value(feature_list, feature, NULL, NULL);
-+}
-+
-+static const char *next_server_feature_value(const char *feature, int *len, int *offset)
-+{
-+	return parse_feature_value(server_capabilities_v1, feature, len, offset);
- }
- 
- const char *server_feature_value(const char *feature, int *len)
- {
--	return parse_feature_value(server_capabilities_v1, feature, len);
-+	return parse_feature_value(server_capabilities_v1, feature, len, NULL);
- }
- 
- int server_supports(const char *feature)
+ 	packet_buf_delim(&req_buf);
+ 	if (args->use_thin_pack)
+ 		packet_buf_write(&req_buf, "thin-pack");
