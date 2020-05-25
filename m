@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28D3AC433E1
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 21:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBCDEC433E0
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 21:58:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15D552071C
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 21:58:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC3062071C
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 21:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730062AbgEYV6D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 17:58:03 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:64145 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727842AbgEYV6C (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729995AbgEYV6C (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 25 May 2020 17:58:02 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:20067 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728092AbgEYV6B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 May 2020 17:58:01 -0400
 Received: from localhost.localdomain ([89.243.191.101])
         by smtp.talktalk.net with SMTP
-        id dL6djC8oOIndsdL6ejhPZn; Mon, 25 May 2020 22:58:00 +0100
+        id dL6djC8oOIndsdL6ejhPZo; Mon, 25 May 2020 22:58:00 +0100
 X-Originating-IP: [89.243.191.101]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=QYIYQfTv c=1 sm=1 tr=0 a=5KGm1Kp77X3djDixdaHiLg==:117
  a=5KGm1Kp77X3djDixdaHiLg==:17 a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10
- a=ldyaYNNxDcoA:10 a=ZZnuYtJkoWoA:10 a=ZCRl24wqHeiA8RQ32E4A:9
+ a=ldyaYNNxDcoA:10 a=ZZnuYtJkoWoA:10 a=oimc2BXduHynNlwWpvgA:9
  a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
 From:   Philip Oakley <philipoakley@iee.email>
 To:     git@vger.kernel.org
-Subject: [PATCH 2/4] blame: add option to show only blamed commits `--blame-only`
-Date:   Mon, 25 May 2020 22:57:49 +0100
-Message-Id: <20200525215751.1735-3-philipoakley@iee.email>
+Subject: [PATCH 3/4] blame: do not show boundary commits, only those blamed
+Date:   Mon, 25 May 2020 22:57:50 +0100
+Message-Id: <20200525215751.1735-4-philipoakley@iee.email>
 X-Mailer: git-send-email 2.26.2.windows.1.13.g9dddff6983
 In-Reply-To: <20200525215751.1735-1-philipoakley@iee.email>
 References: <20200525215751.1735-1-philipoakley@iee.email>
@@ -44,70 +44,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For large files the will be many lines which are not blamed with the
-revision range or date period which clutter the output.
-
-Add an option to suppress the display of boundary commits lines, not
-just the object id (`-b` option).
-
-This is non-functional at this stage. The next commit will add
-functionality, tests, and documenation.
+Make the option functional and add tests
 
 Signed-off-by: Philip Oakley <philipoakley@iee.email>
 ---
- Documentation/blame-options.txt | 4 ++++
- Documentation/git-blame.txt     | 2 +-
- builtin/blame.c                 | 2 ++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ builtin/blame.c  | 1 +
+ t/t8002-blame.sh | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 5d122db6e9..b4b27033a6 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -2,6 +2,10 @@
- 	Show blank SHA-1 for boundary commits.  This can also
- 	be controlled via the `blame.blankboundary` config option.
- 
-+--blame-only::
-+	Do not show any boundary commit lines created by revision range
-+	specifiers. Only show blamed lines.
-+
- --root::
- 	Do not treat root commits as boundaries.  This can also be
- 	controlled via the `blame.showRoot` config option.
-diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
-index 02f9ad6fe9..74b6344c7b 100644
---- a/Documentation/git-blame.txt
-+++ b/Documentation/git-blame.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
--	    [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
-+	    [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>] [--blame-only]
- 	    [--ignore-rev <rev>] [--ignore-revs-file <file>]
- 	    [--progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>..<rev>]
- 	    [--] <file>
 diff --git a/builtin/blame.c b/builtin/blame.c
-index bf1cecdf3f..b699c777c4 100644
+index b699c777c4..61e5a7ff44 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -45,6 +45,7 @@ static int max_score_digits;
- static int show_root;
- static int reverse;
- static int blank_boundary;
-+static int blame_only;
- static int incremental;
- static int xdl_opts;
- static int abbrev = -1;
-@@ -843,6 +844,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	const struct option options[] = {
- 		OPT_BOOL(0, "incremental", &incremental, N_("Show blame entries as we find them, incrementally")),
- 		OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: off)")),
-+		OPT_BOOL(0, "blame-only", &blame_only, N_("Only show blamed commits (Default: off)")),
- 		OPT_BOOL(0, "root", &show_root, N_("Do not treat root commits as boundaries (Default: off)")),
- 		OPT_BOOL(0, "show-stats", &show_stats, N_("Show work cost statistics")),
- 		OPT_BOOL(0, "progress", &show_progress, N_("Force progress reporting")),
+@@ -475,6 +475,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
+ 			fputs(color, stdout);
+ 
+ 		if (suspect->commit->object.flags & UNINTERESTING) {
++			if (blame_only) continue;
+ 			if (blank_boundary)
+ 				memset(hex, ' ', length);
+ 			else if (!(opt & OUTPUT_ANNOTATE_COMPAT)) {
+diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+index eea048e52c..d4877c7c54 100755
+--- a/t/t8002-blame.sh
++++ b/t/t8002-blame.sh
+@@ -122,4 +122,11 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+ 	test_must_fail git blame --exclude-promisor-objects one
+ '
+ 
++test_expect_success 'test --blame-only, exclude boundary commits' '
++	git blame --blame-only branch1.. -- file >actual &&
++	git blame branch1.. -- file >full &&
++	sed -e "/^\^/d" full >expected &&
++	test_cmp expected actual
++'
++
+ test_done
 -- 
 2.26.2.windows.1.13.g9dddff6983
 
