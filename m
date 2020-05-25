@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E1FC433E2
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21BD1C433DF
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF6842073B
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:59:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EADA92073B
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="A6XJCRUT"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lf40IDtk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390452AbgEYT76 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 15:59:58 -0400
+        id S2390459AbgEYT77 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 15:59:59 -0400
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:38716 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390393AbgEYT7t (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:49 -0400
+        by vger.kernel.org with ESMTP id S2390431AbgEYT75 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:57 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7EF90609CF;
-        Mon, 25 May 2020 19:59:47 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7EC8860D0F;
+        Mon, 25 May 2020 19:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436787;
-        bh=edUdmuqwqgrI4d7hU9gk2tehK/HwKep/ouFUbgKC4Xo=;
+        s=default; t=1590436794;
+        bh=VVQ0dANHQNwdWuSaocgt9e3EABF8vgKVBdEBtDLaQuI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=A6XJCRUTQUKscCWf5X97I6xLbNgW7naieDvuPKDBa73ov++gSVHGGmesN0/nmn9Qg
-         WK9WEpHWs7hB0OtYmgcmL7SJEkDQrFmHqzEO72vRo143dsLWQYfYMtNxxSeMt+JifL
-         XR7cH+vhUmgsjDNGDOd+4+9At/lzqI9CAIzSRFCI5et7+3WjX9r7kVPz7fyY8lafPq
-         9jjKLUnL2CLcla5JOnuY+8ViG+PwqKpPhlrLPA13jT8JBLkFirNOqMJq17kyWnuQJ8
-         wWi8YjU4GozmXjkHC2bm6kjnnwabblRrOnNnzoLoz8Gp0vhs4ziieOe0xgQJU6R0/F
-         5/3Xc+2On+v77Dvq4GLDnwUAEhTPQK0zX/MUJkmJ9KGTD0M7CRoQUfJEktVwZaJoTH
-         oLFsvioikQViBhvSNxRDltmRWXmCLEIDveXe9dLGX65Lpqk9G9MKdqlTf+nPsIhnpn
-         3+VjDZ0S0/0e0OOgzfigNJbECeXWm8jAWbHnXajFk/GQmR5lRn7
+        b=lf40IDtkEP5vng/dKzEZfo5j5c0cN/xUbJqt3FGZoY4s1I8hopWclsx0PtSj1q83h
+         DSkzocHKwmnzr7mvot9B3tLUIylCvE6y4/WssxnTfB2FkiosT1uHAe6qZDqKqbWkDp
+         fpwQk805kDSKSs+zaE517+WTParCUO2Y+hWn+iIII3v2rmSjQQ2LLjiX6VlDQUKtR8
+         Tsi1BTIPOHNzE765KYtZFjX+FQrxNZX5vhxicOvniu0oopwFQ4ui1B8eQpe0qpBI4a
+         XJqC31IBNBUKuotzll44/oWp7dfr1qlMISODT7l9QFb/JeenKG06ieHEfunIX7lEqP
+         LhR7Tv+rgE7wrSng5nsk7NfkcwgifgD1uqYna1ZORqcsLZMyXORqkimsqTkRZHNExT
+         W6Ubraefk9JVb3RFZ4NKFdWCqXJWhx/VIpf1ttGi67Vfa7ZfLiXdVh8JxfUIsqSirU
+         tV9cZgCWVMsAStPzPzFrhBJo7hQqsMoUyR3BdpI9z0bAc6voPw6
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 11/44] send-pack: detect when the server doesn't support our hash
-Date:   Mon, 25 May 2020 19:58:57 +0000
-Message-Id: <20200525195930.309665-12-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 27/44] t1302: expect repo format version 1 for SHA-256
+Date:   Mon, 25 May 2020 19:59:13 +0000
+Message-Id: <20200525195930.309665-28-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,43 +57,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Detect when the server doesn't support our hash algorithm and abort.
-If the server does support our hash, advertise it as part of our
-capabilities.
+When using SHA-256, we need to take advantage of the extensions section
+in the config file, so we need to use repository format version 1.
+Update the test to look for the correct value.
+
+Note that test_oid produces a value without a trailing newline, so use
+echo to ensure we print a trailing newline to compare it correctly
+against the actual results.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- send-pack.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ t/t1302-repo-version.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index 0abee22283..02aefcb08e 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -363,6 +363,7 @@ int send_pack(struct send_pack_args *args,
- 	int atomic_supported = 0;
- 	int use_push_options = 0;
- 	int push_options_supported = 0;
-+	int object_format_supported = 0;
- 	unsigned cmds_sent = 0;
- 	int ret;
- 	struct async demux;
-@@ -389,6 +390,9 @@ int send_pack(struct send_pack_args *args,
- 	if (server_supports("push-options"))
- 		push_options_supported = 1;
+diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
+index ce4cff13bb..d60c042ce8 100755
+--- a/t/t1302-repo-version.sh
++++ b/t/t1302-repo-version.sh
+@@ -8,6 +8,10 @@ test_description='Test repository version check'
+ . ./test-lib.sh
  
-+	if (!server_supports_hash(the_hash_algo->name, &object_format_supported))
-+		die(_("the receiving end does not support this repository's hash algorithm"));
-+
- 	if (args->push_cert != SEND_PACK_PUSH_CERT_NEVER) {
- 		int len;
- 		push_cert_nonce = server_feature_value("push-cert", &len);
-@@ -429,6 +433,8 @@ int send_pack(struct send_pack_args *args,
- 		strbuf_addstr(&cap_buf, " atomic");
- 	if (use_push_options)
- 		strbuf_addstr(&cap_buf, " push-options");
-+	if (object_format_supported)
-+		strbuf_addf(&cap_buf, " object-format=%s", the_hash_algo->name);
- 	if (agent_supported)
- 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+ test_expect_success 'setup' '
++	test_oid_cache <<-\EOF &&
++	version sha1:0
++	version sha256:1
++	EOF
+ 	cat >test.patch <<-\EOF &&
+ 	diff --git a/test.txt b/test.txt
+ 	new file mode 100644
+@@ -23,7 +27,7 @@ test_expect_success 'setup' '
+ '
  
+ test_expect_success 'gitdir selection on normal repos' '
+-	echo 0 >expect &&
++	echo $(test_oid version) >expect &&
+ 	git config core.repositoryformatversion >actual &&
+ 	git -C test config core.repositoryformatversion >actual2 &&
+ 	test_cmp expect actual &&
