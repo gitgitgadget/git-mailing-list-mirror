@@ -2,94 +2,93 @@ Return-Path: <SRS0=RB3M=7H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE97C433E0
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B74AAC433DF
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:59:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C50C62073B
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:16:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90D3E2073B
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:59:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NfZ2IMbt"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vXQhq1on"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389678AbgEYTQW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 15:16:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389460AbgEYTQW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 May 2020 15:16:22 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01883C061A0E
-        for <git@vger.kernel.org>; Mon, 25 May 2020 12:16:21 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id h9so4228821qtj.7
-        for <git@vger.kernel.org>; Mon, 25 May 2020 12:16:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xciOG4zrUq7MgcCGK0yAI780GaKMktaUEL1qMknn/Og=;
-        b=NfZ2IMbtun16A2XhELqRY6UgjZMDPZkJC21DshxVtHUI6STFGV/RtAx4P1dznbQ+jz
-         IosBhy8sZU0C3DYxTjRH6vCDDVIOVuHVVWYJxgxtymxJNKp6AkEQh3g8RUaVwlTUbp64
-         S/8XsiPPjf5zoivBx7UsmDOWKC4VGErW3MPTgpWnypkWbTOMAT3wHxt3F1dDDYFewfzt
-         7jwZlL5vayIvyiE0FD7ehysZL9ekY0MsosorY98Ry+8ho18LLkDHiQae3gh0PCEWZgeU
-         ba8F+3rjdH/8i3178lLKJNwpaEIoR5K3COu/6a2aj/rrpLWztweHCEO96YbWC7ASCqKl
-         gfEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xciOG4zrUq7MgcCGK0yAI780GaKMktaUEL1qMknn/Og=;
-        b=LaCwTwIoF0gwBzHt+o+tDMsCNAVZmozuBR3CUvxft3+O+MFM6fjTCxSS0fYlZROKhW
-         cNSRF4qMvc1UJ91gXJnxNJmED2pblt9aSOeex8AxTpwA41fVzQ/8i95T1XtYDh9m/56x
-         srE6yWrPmrACuokmKTtq5NCJ+DrQSkl4oAu6aBZo4kByMYPkviy8KkRU40d/NrcgeGRS
-         61D0anYoF55KbYEi4w4fw/wFnf1754k4ybHxCopLhAO5V8wlEfHP1axeSpMVkDGTtwVr
-         t+pBDKnqkngCX3OLKqkPduXJcriLPE4WVOASlhTZmMF1yV7hRE4Sp673yUUOBKzWaTuH
-         Pm6g==
-X-Gm-Message-State: AOAM532G/4FP/i8I/XgGo1fPz+1uggKfc5xiVbCRG+pc7MmU+41AmXJN
-        ciX9ZsWvIvM4MBantlGoC+vqq5OOon+fhl6EX+Q=
-X-Google-Smtp-Source: ABdhPJyFhVZWWfkg/U22v5/udn91z8xf2VPuo0WCm7IfP0aKOsCsdSdcOtCjwsKQH79rGJTZhr0xpfxnYPWTBlqldLU=
-X-Received: by 2002:ac8:2bc4:: with SMTP id n4mr10225776qtn.222.1590434181131;
- Mon, 25 May 2020 12:16:21 -0700 (PDT)
+        id S2390387AbgEYT7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 15:59:46 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38678 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2390354AbgEYT7o (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:44 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 419866081B;
+        Mon, 25 May 2020 19:59:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1590436783;
+        bh=hh0AAPebP5FiADzq2rtNsAQTbv06qUSl3vhXg+93iek=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=vXQhq1onyb6tdMWILgHHVIIa36sdR4Q8eLKdIZUPe/CTM3P2BwvwddvdWKnGr5+YX
+         Px6ECsZ03mFQZ68gBHqXc2EBhi06PKhEKSMXXx0syvEGUmZ7ubjwARVfZ1PklO+eF2
+         +yGkLqSB3iNm/3tU7GCDhTihePfC7+HOFBm8+qQZXBkGBnX3514kOutnBi4QBioTjJ
+         7UBa+4tL1t5OWeORIxFUN3yygyk/YhJ6bHw1fvY8j/LJXMPYaN0J/URzCKPdh5vFzW
+         //YHkcjgOP7e/l12mT5i2Bzf3VlobX1qE5cI3fvDIL0wHRKDStITMvNE9S6SOgCYHd
+         Vdvcf6fOvb+cby/D/CyjBYF9Gesdk74it1s6mBRT23sFz/DghVQqgy/jaJasqTmKNL
+         Q+J5CwJBGz+LyFzPSP45axvyTPiYDdajMKmPJ0Njccq5Bwa6wtPFzCvwVK9dbmRNNL
+         ByXrsanhZzJvWJZKtZrBo9mJG2/Bx5MLqhGems0RyXrGkrcG/KU
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+Subject: [PATCH v2 01/44] t1050: match object ID paths in a hash-insensitive way
+Date:   Mon, 25 May 2020 19:58:47 +0000
+Message-Id: <20200525195930.309665-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
+In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
+References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
+ <20200525195930.309665-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
- <pull.614.v2.git.1589302254.gitgitgadget@gmail.com> <fa1b8032906c6042a0e5851f803ec0427922a1a5.1589302255.git.gitgitgadget@gmail.com>
- <xmqq3684c096.fsf@gitster.c.googlers.com> <CAKiG+9VXk1vdMM1amQK6pnHcn9H_93-3fkqgK4nwKf=GtrDGyg@mail.gmail.com>
-In-Reply-To: <CAKiG+9VXk1vdMM1amQK6pnHcn9H_93-3fkqgK4nwKf=GtrDGyg@mail.gmail.com>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Tue, 26 May 2020 00:46:10 +0530
-Message-ID: <CAKiG+9Uz4YG=Hq9PRN8EhFF_agXNUPRnYjetY=ZNVRE6_VDAew@mail.gmail.com>
-Subject: Re: [PATCH v2 11/11] ci: modification of main.yml to use cmake for
- vs-build job
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+The pattern here looking for failures is specific to SHA-1.  Let's
+create a variable that matches the regex or glob pattern for a path
+within the objects directory.
 
-I have finished the changes you have asked for.
-1) Relocating the CMake script to contrib/buildsystems from patch 01/xx.
-2) Parse the Makefile for sources from patch 01/xx.
-3) Reworded the commit messages you pointed out.
-4) Rebased the ST_BLOCKS_IN_STRUCT_STAT and ICONV_OMITS_BOM to patch
-01/xx to make the review process easier.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ t/t1050-large.sh | 2 +-
+ t/test-lib.sh    | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-No new features will be introduced in the script, to make the review
-process easier.
-
-I have looked at the GIT-VERSION-GEN script and the logic it uses to
-determine the version of git.
-The logic is a bit complicated to be implemented in a  CMake script,
-so I am skipping it for now.
-
-Any other changes I should make before I submit PATCH v3?
-
-Thank You,
-Sibi Siddharthan
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 184b479a21..7f88ea07c2 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -64,7 +64,7 @@ test_expect_success 'add a large file or two' '
+ 	test $count = 1 &&
+ 	cnt=$(git show-index <"$idx" | wc -l) &&
+ 	test $cnt = 2 &&
+-	for l in .git/objects/??/??????????????????????????????????????
++	for l in .git/objects/$OIDPATH_REGEX
+ 	do
+ 		test_path_is_file "$l" || continue
+ 		bad=t
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index d36b6ddc62..5c65c3e26c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1414,6 +1414,7 @@ test_oid_init
+ 
+ ZERO_OID=$(test_oid zero)
+ OID_REGEX=$(echo $ZERO_OID | sed -e 's/0/[0-9a-f]/g')
++OIDPATH_REGEX=$(test_oid_to_path $ZERO_OID | sed -e 's/0/[0-9a-f]/g')
+ EMPTY_TREE=$(test_oid empty_tree)
+ EMPTY_BLOB=$(test_oid empty_blob)
+ _z40=$ZERO_OID
