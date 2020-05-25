@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84401C433E1
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DEEDC433DF
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6032B2073B
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 339312073B
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 20:00:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Pal+HS1V"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JOIO/+uB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390469AbgEYUAD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 16:00:03 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38720 "EHLO
+        id S2390473AbgEYUAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 16:00:04 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38716 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2390438AbgEYT76 (ORCPT
+        by vger.kernel.org with ESMTP id S2390445AbgEYT76 (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 15:59:58 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9D56A60D14;
-        Mon, 25 May 2020 19:59:56 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 78D0D60D16;
+        Mon, 25 May 2020 19:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590436796;
-        bh=Mo6wZuC9p3nChbBxsGl44GyZeJquT3ZYpX4+z7OuAXU=;
+        s=default; t=1590436797;
+        bh=BrGE5IRK4iD22ojUaw6vyETbInj2RPhBRq6D/5gJkk0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Pal+HS1VZGU1EhADht+iCnJ+7u16QcTNQjtspEGQoRRNJ99ZgspWE+NDSG/pziCff
-         j8W5wQDYSHK18YP6W5kj58IzuMZz1GSUQ2kCY5miOh82wrmF3cGIpUiwCcZOkueOad
-         AJt5yEny2VDCM6HuYXtoh5q3EQFpcWUQEJ6m7ZoQTphbqNcFrAjfLnHk1BGiCM44T9
-         1QBy4v6HMtrIJeFylMOzmC4Fe6sBTwzUBy5j5IbvXrAV/AuVnwtfUJ9Pn/9SJJkq+p
-         x7/2Z1dMxBTHUv2IRc9Lh8s/kc2gkEMW1Pt2atZMflHeltY/aUBuTTZnQdlUQEkpvd
-         GrpebolJiLWoRbEj5UU34cvZILgxvbE8ZF4hENgDFUc5Qc0QqNQwhuaf9Yzvn21m4k
-         B6IUwdSg6hgX1wZu4MhOvse876lZL/rzkykwTpgeAsfx1YYUC5D603PiRoKK8CfKqF
-         zOt8okS2+Ki0wu4vQQMOkSU9IvuBUQXQuDYLFo8ZAmwbkRASR+l
+        b=JOIO/+uBSwvVusO7yiGWK8pJQsl7TqzOuQQpkhyXUjJ4EyhSkznN5QSG9icbY17Ml
+         v03v8uogRa7HS4DSSEA+jjQ5l61TPtnwTvSc+TCu3K1AJccbUseb6bucKf/TV+ohIi
+         /4Cx7fFz+8Ajyrr8QtvCX4i9RNUnTzWTrFfi8VsK/C7Qtn/LyGdIB2uAg1N7Pi8NMI
+         wICeBykPe1j5mdM9urhPB2IZDipyzZb6esrI6JcR1O7UGQCRaZ7If+kXi/nTi6hCyz
+         kfVGzBI0fPC99Wh9vT8/t0YWHugkpzhmvxVXrTAwiLe2OtuukQMzEeEc/Pp2pQA0Iy
+         ImOePx9h8ud6h/RvM4RhSF5hj1KeZYiJz8ziB+gpdZQiDoOdN+zI0dUspUYrMnX722
+         ltSTaebN3N6Fs4+OzySjHgBnMIJ218IvEtuhyZLV2+iK+eALtA8SsnaqEDooyNbxmy
+         rogVSQSk78KDXc2jeOyVe7f5fpZgmmmRB1VrNNTJky1pFPQ38Th
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2 32/44] t5500: make hash independent
-Date:   Mon, 25 May 2020 19:59:18 +0000
-Message-Id: <20200525195930.309665-33-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 34/44] remote-curl: detect algorithm for dumb HTTP by size
+Date:   Mon, 25 May 2020 19:59:20 +0000
+Message-Id: <20200525195930.309665-35-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652
 In-Reply-To: <20200525195930.309665-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -57,31 +57,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test has hard-coded pkt-lines with object IDs.  The pkt-line
-lengths necessarily differ between hash algorithms, so generate these
-lines with the packetize helper so they're always the right size.  In
-addition, we will require an object-format capability for SHA-256, so
-pass that capability on to the upload-pack process.
+When reading the info/refs file for a repository, we have no explicit
+way to detect which hash algorithm is in use because the file doesn't
+provide one. Detect the hash algorithm in use by the size of the first
+object ID.
+
+We anonymize the URL like elsewhere in the function in case the user has
+decided to include a secret in the URL.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t5500-fetch-pack.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ remote-curl.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 8c54e34ef1..dfed113247 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -871,9 +871,10 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
+diff --git a/remote-curl.c b/remote-curl.c
+index 3ed0dfec1b..617edfedf4 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -252,6 +252,19 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
+ 	return list;
+ }
  
- 	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
- 	0012command=fetch
-+	$(echo "object-format=$(test_oid algo)" | packetize)
- 	00010013deepen-since 1
--	0032want $(git rev-parse other)
--	0032have $(git rev-parse master)
-+	$(echo "want $(git rev-parse other)" | packetize)
-+	$(echo "have $(git rev-parse master)" | packetize)
- 	0000
- 	EOF
- 	)
++static const struct git_hash_algo *detect_hash_algo(struct discovery *heads)
++{
++	const char *p = memchr(heads->buf, '\t', heads->len);
++	int algo;
++	if (!p)
++		return NULL;
++
++	algo = hash_algo_by_length((p - heads->buf) / 2);
++	if (algo == GIT_HASH_UNKNOWN)
++		return NULL;
++	return &hash_algos[algo];
++}
++
+ static struct ref *parse_info_refs(struct discovery *heads)
+ {
+ 	char *data, *start, *mid;
+@@ -262,6 +275,12 @@ static struct ref *parse_info_refs(struct discovery *heads)
+ 	struct ref *ref = NULL;
+ 	struct ref *last_ref = NULL;
+ 
++	options.hash_algo = detect_hash_algo(heads);
++	if (!options.hash_algo)
++		die("%sinfo/refs not valid: could not determine hash algorithm; "
++		    "is this a git repository?",
++		    transport_anonymize_url(url.buf));
++
+ 	data = heads->buf;
+ 	start = NULL;
+ 	mid = data;
+@@ -272,13 +291,13 @@ static struct ref *parse_info_refs(struct discovery *heads)
+ 		if (data[i] == '\t')
+ 			mid = &data[i];
+ 		if (data[i] == '\n') {
+-			if (mid - start != the_hash_algo->hexsz)
++			if (mid - start != options.hash_algo->hexsz)
+ 				die(_("%sinfo/refs not valid: is this a git repository?"),
+ 				    transport_anonymize_url(url.buf));
+ 			data[i] = 0;
+ 			ref_name = mid + 1;
+ 			ref = alloc_ref(ref_name);
+-			get_oid_hex(start, &ref->old_oid);
++			get_oid_hex_algop(start, &ref->old_oid, options.hash_algo);
+ 			if (!refs)
+ 				refs = ref;
+ 			if (last_ref)
