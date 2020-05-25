@@ -6,100 +6,77 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E339CC433E0
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:58:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51545C433E0
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 18:13:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4801206DD
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 17:58:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F1312071C
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 18:13:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lKTRPNgz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wgx+w0Kz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389139AbgEYR6e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 13:58:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38670 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388621AbgEYR6e (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 May 2020 13:58:34 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S2388103AbgEYSNd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 14:13:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58651 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387644AbgEYSNc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 May 2020 14:13:32 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 75C8A6DB0D;
+        Mon, 25 May 2020 14:13:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Wf6fvZjDEwccF1LkfmA6mL+xAf4=; b=wgx+w0
+        KzbWF9mN0Tx3w0sr2JdKwWAZdQB7q8zljoIp9QTNz7Ug726wWwsIqW/sUtdtmJxQ
+        uso67ktGxPZiwPBFuxkuUrqv0JA+BzeRqkfOUoWpiiuLsqYfpAKQzOXRKoDIGwSp
+        JZjI7722FbqgZlPQ7KDyWpM0iOyDsWZpZuerM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xL/uaXydDuef/YZHBw1iAxQt0Y04rIhz
+        PLbHYgtKE189ENcLNCc/1GvrRyGOG3QLRvFemz8C1ghZ8h6F+F838KJJZ7fKJXyE
+        O7WYNWTKrlZ/TxOOQsOL7VXhnv7KnL6mWyJE+d0Svu9ITRwg8MwaV5LcOJ/xudV+
+        P3QjoRo/UTk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B9166DB0C;
+        Mon, 25 May 2020 14:13:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4D61360482;
-        Mon, 25 May 2020 17:58:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590429482;
-        bh=311y1oWr9lN6gCQgWE1Dj0lSpD+XDBjqQLfDKlmycJY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=lKTRPNgz6k4lAUdM8KxVSDU5PVeV+o1VM+ybaSzNX0P4fgT5AroIAI4iy8N74RY3W
-         hcROhITrgRN7NcimSN/Kkhw08o115S0Hm2mfQuKabX98jUh4cCUzQYE0rkXsAtB72+
-         VbK/KmgDZwSbaPbbtSrDNm5gl+tWmGObWS0MMI+f/djXyk30wlpyi+70ECsfB1ACZy
-         aF2tQZ+F31X6jbYcKFxXTRBsM3EanqPZ1Ice8uGFI8WAmkMgfXDvqojbdB3hJoKPzN
-         iiHEaBjYWsP+bipXt9pdwcUHtTScTmsPUA5C1QrWUra5HPay/9wOMyLwNr+zUMobwF
-         s8fMbaL8XmR9FRxFAzVFHp3p+RsWBff1Ts76Xv3NRJDJSBvL1AZRMQK0HrDNHiCKXb
-         DjfGM2Uv2jR3mF+E5cC8p2XHL+R1DmAeF1mtQZZ/UlCjC4A9r5VAPdrPl+a9shTLt9
-         OeqdnAdHs0fO2pOT+66xX4Yb6k0OX6/MKwXRr0qB+hmkQzNC97U
-Date:   Mon, 25 May 2020 17:57:58 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Toon Claes <toon@iotcl.com>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] Documentation: correct hash environment variable
-Message-ID: <20200525175758.GE1915090@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Toon Claes <toon@iotcl.com>, Git Mailing List <git@vger.kernel.org>
-References: <20200525144138.1624272-1-toon@iotcl.com>
- <20200525144138.1624272-2-toon@iotcl.com>
- <CAN0heSoyxvTTaJaRmnQADTaMrWa4QBbGnXi8MUZp7ksibejc8g@mail.gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E7B4A6DB0B;
+        Mon, 25 May 2020 14:13:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Todd Zullinger <tmz@pobox.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2020, #08; Sun, 24)
+References: <xmqqh7w4pulj.fsf@gitster.c.googlers.com>
+        <20200525172708.GT6611@pobox.com>
+        <20200525175309.GD1915090@camp.crustytoothpaste.net>
+Date:   Mon, 25 May 2020 11:13:29 -0700
+In-Reply-To: <20200525175309.GD1915090@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Mon, 25 May 2020 17:53:09 +0000")
+Message-ID: <xmqq8shfq3w6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="AsxXAMtlQ5JHofzM"
-Content-Disposition: inline
-In-Reply-To: <CAN0heSoyxvTTaJaRmnQADTaMrWa4QBbGnXi8MUZp7ksibejc8g@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-1-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6FC4310C-9EB3-11EA-AF4A-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---AsxXAMtlQ5JHofzM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I think since this is an anchor link it's just fine to change for
+> compatibility.
 
-On 2020-05-25 at 16:42:57, Martin =C3=85gren wrote:
-> > -`GIT_DEFAULT_HASH_ALGORITHM`::
-> > +`GIT_DEFAULT_HASH`::
-> >         If this variable is set, the default hash algorithm for new
-> >         repositories will be set to this value. This value is currently
-> >         ignored when cloning; the setting of the remote repository
->=20
-> Indeed. This discrepancy is visible in the commit which added both the
-> documentation and the implementation, 3c9331a129 ("builtin/init-db: add
-> environment variable for new repo hash", 2020-02-22). As
-> developers-only as this variable is, that commit was not in v2.26.0, so
-> this might be worth fixing before cutting v2.27.0.
+Given that no other document in tree seems to point at the anchor, I
+think the patch is probably OK.
 
-Yeah, thanks for catching this.  I think this is worth fixing.  It
-doesn't do anything right now except produce an error, but we might as
-well not mislead people.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---AsxXAMtlQ5JHofzM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXswHJgAKCRB8DEliiIei
-gb/7AP4q4vH+Cgw7hUhbDieRdNHBr+RZ5T5foVflGYZmQDtEUQD/R99fecOoVUN2
-2x8wxn68pywIMawKuLetbXtEkK8QdwM=
-=mOsG
------END PGP SIGNATURE-----
-
---AsxXAMtlQ5JHofzM--
+Thanks.
