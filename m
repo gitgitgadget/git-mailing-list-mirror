@@ -2,91 +2,94 @@ Return-Path: <SRS0=RB3M=7H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1074AC433E0
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 18:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE97C433E0
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:16:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88C4920723
-	for <git@archiver.kernel.org>; Mon, 25 May 2020 18:37:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C50C62073B
+	for <git@archiver.kernel.org>; Mon, 25 May 2020 19:16:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="K6GAnAEK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NfZ2IMbt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389725AbgEYShj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 May 2020 14:37:39 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63549 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726729AbgEYShj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 May 2020 14:37:39 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 84E52B87F6;
-        Mon, 25 May 2020 14:37:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=64rN3A8RvYsQTrCybDq2hurS/zU=; b=K6GAnA
-        EKDzTQweFRj+SrdoPz99hTRezzcSTeeisx9jnRZhvPO7Hzk+2GxsQFmjnQfYKX/U
-        72kCtW5ZcYr1zHjPK75gD00YkxVnJfZa5SCnhEUg/uRpZskjSi4ja2eSPfoVAC7Q
-        FWcCPQkZnOGUkrXuIq2B2/uw1MUFFisdu1Y4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=i5d8ALRTnXfbMRarRKtcf0FMzmKbBUsf
-        FtdAVFrD0OiZ5u7VGCo+JDpfmqd+zRse43tDxJrzrebxOyDzud/DUDpF3f8nC+wh
-        2GVGaBAq4THD2FCUagQ3XcJwSSiH8bKnqH6iYKY8bPQmmXhlk1ow4KnzS5Q/TqhT
-        xCaMh4qdgWU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CA8EB87F5;
-        Mon, 25 May 2020 14:37:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 97CEBB87F0;
-        Mon, 25 May 2020 14:37:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lukas Wunner <lukas@wunner.de>
-Cc:     Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Fetching 24 Linux commits = 1.2 GiB
-References: <b7f5bfb9-61fb-2552-4399-b744428728e4@suse.cz>
-        <20200415135627.vx75hsphbpmgrquv@chatter.i7.local>
-        <xmqq1roo947y.fsf@gitster.c.googlers.com> <87sgfvq967.fsf@igel.home>
-        <20200520194019.GA340985@coredump.intra.peff.net>
-        <20200525182205.7hcffndaro2pgink@wunner.de>
-Date:   Mon, 25 May 2020 11:37:31 -0700
-In-Reply-To: <20200525182205.7hcffndaro2pgink@wunner.de> (Lukas Wunner's
-        message of "Mon, 25 May 2020 20:22:05 +0200")
-Message-ID: <xmqq4ks3q2s4.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2389678AbgEYTQW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 May 2020 15:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34638 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389460AbgEYTQW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 May 2020 15:16:22 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01883C061A0E
+        for <git@vger.kernel.org>; Mon, 25 May 2020 12:16:21 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id h9so4228821qtj.7
+        for <git@vger.kernel.org>; Mon, 25 May 2020 12:16:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xciOG4zrUq7MgcCGK0yAI780GaKMktaUEL1qMknn/Og=;
+        b=NfZ2IMbtun16A2XhELqRY6UgjZMDPZkJC21DshxVtHUI6STFGV/RtAx4P1dznbQ+jz
+         IosBhy8sZU0C3DYxTjRH6vCDDVIOVuHVVWYJxgxtymxJNKp6AkEQh3g8RUaVwlTUbp64
+         S/8XsiPPjf5zoivBx7UsmDOWKC4VGErW3MPTgpWnypkWbTOMAT3wHxt3F1dDDYFewfzt
+         7jwZlL5vayIvyiE0FD7ehysZL9ekY0MsosorY98Ry+8ho18LLkDHiQae3gh0PCEWZgeU
+         ba8F+3rjdH/8i3178lLKJNwpaEIoR5K3COu/6a2aj/rrpLWztweHCEO96YbWC7ASCqKl
+         gfEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xciOG4zrUq7MgcCGK0yAI780GaKMktaUEL1qMknn/Og=;
+        b=LaCwTwIoF0gwBzHt+o+tDMsCNAVZmozuBR3CUvxft3+O+MFM6fjTCxSS0fYlZROKhW
+         cNSRF4qMvc1UJ91gXJnxNJmED2pblt9aSOeex8AxTpwA41fVzQ/8i95T1XtYDh9m/56x
+         srE6yWrPmrACuokmKTtq5NCJ+DrQSkl4oAu6aBZo4kByMYPkviy8KkRU40d/NrcgeGRS
+         61D0anYoF55KbYEi4w4fw/wFnf1754k4ybHxCopLhAO5V8wlEfHP1axeSpMVkDGTtwVr
+         t+pBDKnqkngCX3OLKqkPduXJcriLPE4WVOASlhTZmMF1yV7hRE4Sp673yUUOBKzWaTuH
+         Pm6g==
+X-Gm-Message-State: AOAM532G/4FP/i8I/XgGo1fPz+1uggKfc5xiVbCRG+pc7MmU+41AmXJN
+        ciX9ZsWvIvM4MBantlGoC+vqq5OOon+fhl6EX+Q=
+X-Google-Smtp-Source: ABdhPJyFhVZWWfkg/U22v5/udn91z8xf2VPuo0WCm7IfP0aKOsCsdSdcOtCjwsKQH79rGJTZhr0xpfxnYPWTBlqldLU=
+X-Received: by 2002:ac8:2bc4:: with SMTP id n4mr10225776qtn.222.1590434181131;
+ Mon, 25 May 2020 12:16:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CCDB5B74-9EB6-11EA-A708-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <pull.614.git.1587700897.gitgitgadget@gmail.com>
+ <pull.614.v2.git.1589302254.gitgitgadget@gmail.com> <fa1b8032906c6042a0e5851f803ec0427922a1a5.1589302255.git.gitgitgadget@gmail.com>
+ <xmqq3684c096.fsf@gitster.c.googlers.com> <CAKiG+9VXk1vdMM1amQK6pnHcn9H_93-3fkqgK4nwKf=GtrDGyg@mail.gmail.com>
+In-Reply-To: <CAKiG+9VXk1vdMM1amQK6pnHcn9H_93-3fkqgK4nwKf=GtrDGyg@mail.gmail.com>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Tue, 26 May 2020 00:46:10 +0530
+Message-ID: <CAKiG+9Uz4YG=Hq9PRN8EhFF_agXNUPRnYjetY=ZNVRE6_VDAew@mail.gmail.com>
+Subject: Re: [PATCH v2 11/11] ci: modification of main.yml to use cmake for
+ vs-build job
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lukas Wunner <lukas@wunner.de> writes:
+Hi Junio,
 
-> On Wed, May 20, 2020 at 03:40:19PM -0400, Jeff King wrote:
->> The "too big fetch" issue has since been fixed in "master", as well as
->> reverting the switch to the v2 protocol (which I think is just
->> belt-and-suspenders; AFAIK there are no known issues after the fix).
->> Both will be in v2.27. I don't see anything on "maint", but they _could_
->> be part of an eventual v2.26.3.
->> 
->> The fix was merged in 0b07eecf6e (Merge branch 'jt/v2-fetch-nego-fix',
->> 2020-05-01) for reference.
->
-> Please consider cutting a v2.26.3 release with this fix at your
-> earliest convenience.  The waste of bandwidth is mind-boggling.
-> (> 1 GByte whenever fetching from a kernel remote.)
+I have finished the changes you have asked for.
+1) Relocating the CMake script to contrib/buildsystems from patch 01/xx.
+2) Parse the Makefile for sources from patch 01/xx.
+3) Reworded the commit messages you pointed out.
+4) Rebased the ST_BLOCKS_IN_STRUCT_STAT and ICONV_OMITS_BOM to patch
+01/xx to make the review process easier.
 
-In the meantime, v2.27.0 rc2 will be out tomorrow.  Please consider
-helping us polish it by testing that version.
+No new features will be introduced in the script, to make the review
+process easier.
 
-Thanks.
+I have looked at the GIT-VERSION-GEN script and the logic it uses to
+determine the version of git.
+The logic is a bit complicated to be implemented in a  CMake script,
+so I am skipping it for now.
+
+Any other changes I should make before I submit PATCH v3?
+
+Thank You,
+Sibi Siddharthan
