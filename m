@@ -2,119 +2,103 @@ Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0E53C433DF
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 19:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E007C433DF
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 19:19:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FE82208B6
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 19:13:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65C042053B
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 19:19:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f54wPcuE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VnuMnm3M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404199AbgEZTNW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 15:13:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
+        id S2392412AbgEZTTL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 15:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404246AbgEZTNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 15:13:21 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29325C03E96D
-        for <git@vger.kernel.org>; Tue, 26 May 2020 12:13:21 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id u188so691618wmu.1
-        for <git@vger.kernel.org>; Tue, 26 May 2020 12:13:21 -0700 (PDT)
+        with ESMTP id S2392401AbgEZTTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 15:19:08 -0400
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C9FC03E96D
+        for <git@vger.kernel.org>; Tue, 26 May 2020 12:19:07 -0700 (PDT)
+Received: by mail-vs1-xe44.google.com with SMTP id e7so12461485vsm.6
+        for <git@vger.kernel.org>; Tue, 26 May 2020 12:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:mime-version:content-transfer-encoding
-         :fcc:to:cc;
-        bh=gU+wSt/AixCehJwXKSN4CJBEWs34S+BTWcCw7uoKKek=;
-        b=f54wPcuEuem6HP09mS4pN1C91SnH8xN4/VUqeW2Ieud8ITIx8mwV2F/vBFqVxgZW1E
-         q6eM33ucqvpdbUAAAEI/AA86GogIbaNWKW3zEqvvBFYT/7c5nb7PJPJ6SkKdrz81IrRk
-         ZB3COz7T9h0n8OAT6saIY+sP41jgILQPBAreRdux1DA3K9MsK1SMLEGsp6WJkP1uf0TB
-         8iYXmM/TGO5zDjymSXvTAspSZvh3vir9JzKrfYjRoDJS7yI+BlB5d52JctLrkLTQc5Wz
-         qscKeasA5qvztj9WmhXfm5pM2Nb67NW2wOC7NzN7imJjXGTTEWjYW/sOv9Yqyg/dkQhL
-         +vSQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/OX2Mj27IrTJ4TMgnaV3ld5lU3zjPjJdTD9qnx1OCUk=;
+        b=VnuMnm3MBCC4iuincqLSDG/iZjGMTZ2iFHD+0w1znj9Si9uX0XzltvZnaPQDsYOzRZ
+         z8s53yHDzBQr4WfSOyHiIYGRYbT+ZiH/dGPb/fSriLtdCtns8BUh1h68eOmneLD8kaxs
+         SGy2MwtuCbQpXx/UIUZtoohQiQqdZhfwSCl+7ZNih0xgCkjS8xQZkGyxo8v/DP/WxVWi
+         a9FfF6L7TuhAKFgSwEd6OGr5dtLkuYiTK5SYoBm7mpqFpPI5zKowty93GcFbokhot0rG
+         KVz/6XsT9Ku12G0WOtuGo72UHZ3TwA8riQaprOTciO7+MWANUn0hOqRr49ormUjl2eWr
+         CWsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=gU+wSt/AixCehJwXKSN4CJBEWs34S+BTWcCw7uoKKek=;
-        b=B6FdvLJMzcDPLdXEBnnDae94hd3VO0vCY9z8xhgsVzcjOvokNRZnh0IbUNb7f3tUrT
-         QJ+HfOqtmvL35oM3eF9+OB8nt280YNYe77KlNBqWjUGC4GjppVnsnv+/S6x8b/61XFXH
-         4dw9RSurDwe4pjv2Hmn3EqNv10qrrZI+WVnHcx0Dj3etxk3UyTC+Yv5gAl9qaxdPe8DD
-         Gxkyk9JzXuK1VkidCeXRpmhUNDuP+X+RhyH8L7N0nOZ3er2kKnqsuocC7onFLmuDmnC4
-         tM3HXmKEMNb94oH8BY7QqgAFKaqTnT+Hgphg7x2IoGFf4Li22ecUnyW6XKBL9v6TkQX6
-         7dVw==
-X-Gm-Message-State: AOAM530wfieUd1xbF9lR5oMmpcE4gDiMJLfPNGSByoGtTQOYdZdCzXMq
-        CyE7Sf0b7mrPwvXgFTrFuZvym1CA
-X-Google-Smtp-Source: ABdhPJxJ33GdcFwwbfXZqmbrkX0Czmgr11BMT9GMnFwxmlTyeEWiytAvdEEzxqvCm1C/+0BJ3diPQQ==
-X-Received: by 2002:a1c:e0c3:: with SMTP id x186mr610170wmg.17.1590520399332;
-        Tue, 26 May 2020 12:13:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k14sm628960wrq.97.2020.05.26.12.13.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2020 12:13:18 -0700 (PDT)
-Message-Id: <pull.645.git.1590520398132.gitgitgadget@gmail.com>
-From:   "Marco Trevisan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 May 2020 19:13:17 +0000
-Subject: [PATCH] completion: use native ZSH array pattern matching
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/OX2Mj27IrTJ4TMgnaV3ld5lU3zjPjJdTD9qnx1OCUk=;
+        b=GuPFnEl1XKO81aqJKuGR/6VLazZodQxVV+N3I7aNr5S4HHbcD3Eqd8vNH7zgvkHWBb
+         DQk0XDY3Qh5nhrz6DZeE39XV5UGlI1FTHyhhcJR0/2PcTOuzwWeu2xjVmI7zqThkNT9R
+         GhCi7cu3WQtwGpvfLKHU26H4RWKEoDELH6anJfEkk5mYGaOKJeRBlbbScYWvcSwIoNVh
+         aisduKvWkzBZbtHProvJsANfsseUbJFquKn3KuOAZWIKoBxBiopeLJdjqINKy4CQCMe0
+         Iaa3gxIOwDCoLCJ8iPXCqBZsGsJ6RzL4aKNgXFmEXt707fUnGvg78HlsDB/5RANO8Nqg
+         PtLg==
+X-Gm-Message-State: AOAM5321i2oJR39rvA5v3ssWlXB5yA7Qk7N7wYp4MZ81yQQnPGVJF5eq
+        2UbwdaJX127B40/tqgOQFSbEtSJ0WNn75ASYPB0=
+X-Google-Smtp-Source: ABdhPJxGYt3MF/W1Yy8FaOMyKQQrgIJjFeMY7fDzmUuTn/OSTZiJAvO7GNnW1wjFiD2mo5bDqCPrLF6JtJDjGzTAt4o=
+X-Received: by 2002:a67:2f95:: with SMTP id v143mr2142199vsv.79.1590520746704;
+ Tue, 26 May 2020 12:19:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Marco Trevisan <mail@3v1n0.net>,
-        =?UTF-8?q?Marco=20Trevisan=20=28Trevi=C3=B1o=29?= <mail@3v1n0.net>
+References: <xmqqsgfx0z9k.fsf@gitster.c.googlers.com> <20200525170607.8000-1-martin.agren@gmail.com>
+ <4a3797f8-5169-b016-b1c4-ce544f00b34b@gmail.com>
+In-Reply-To: <4a3797f8-5169-b016-b1c4-ce544f00b34b@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 26 May 2020 21:18:55 +0200
+Message-ID: <CAN0heSq3mv8OcFiESVhN_fZ=iChSAUQ_Js0g=bTsY5dMepkk9A@mail.gmail.com>
+Subject: Re: [PATCH v2] rev-list-options.txt: start a list for `show-pulls`
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Marco=20Trevisan=20=28Trevi=C3=B1o=29?= <mail@3v1n0.net>
+Hi Stolee,
 
-When clearing the builtin operations on re-sourcing in the ZSH case we
-can use the native ${parameters} associative array keys values to get
-the currently `__gitcomp_builtin_*` operations using pattern matching
-instead of using sed.
+On Tue, 26 May 2020 at 14:24, Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 5/25/2020 1:06 PM, Martin =C3=85gren wrote:
+> > On Mon, 18 May 2020 at 22:22, Junio C Hamano <gitster@pobox.com> wrote:
+> > @@ -671,10 +671,13 @@ important branch. Instead, the merge `N` was used=
+ to merge `R` and `X`
+> >  into the important branch. This commit may have information about why
+> >  the change `X` came to override the changes from `A` and `B` in its
+> >  commit message.
+> > +
+> > +--show-pulls::
+> > +     In addition to the commits shown in the default history, show
+> > +     each merge commit that is not TREESAME to its first parent but
+> > +     is TREESAME to a later parent.
+> >  +
+> > -The `--show-pulls` option helps with both of these issues by adding mo=
+re
+>
+> I like how you found a way to add the list item without needing to make a
+> huge shift in the surrounding prose. LGTM.
 
-As also stated in commit 94408dc7, introducing this change the usage of
-sed has some overhead implications, while ZSH can do this check just
-using its native syntax.
+Actually, I didn't see how to do it, but luckily, you did. [1] So I take
+this to mean that even on re-reading your proposed text some time later,
+you like it. ;-)
 
-Signed-off-by: Marco Trevisan (Treviño) <mail@3v1n0.net>
----
-    completion: Use native ZSH array pattern matching
-    
-    When clearing the builtin operations on re-sourcing in the ZSH case we
-    can use the native ${parameters} associative array keys values to get
-    the currently __gitcomp_builtin_* operations using pattern matching
-    instead of using sed.
+Martin
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-645%2F3v1n0%2Fzsh-native-operation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-645/3v1n0/zsh-native-operation-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/645
-
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 70ad04e1b2a..ad6934a3864 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -373,7 +373,7 @@ __gitcomp ()
- # Clear the variables caching builtins' options when (re-)sourcing
- # the completion script.
- if [[ -n ${ZSH_VERSION-} ]]; then
--	unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\)=.*/\1/p') 2>/dev/null
-+	unset ${(M)${(k)parameters[@]}:#__gitcomp_builtin_*} 2>/dev/null
- else
- 	unset $(compgen -v __gitcomp_builtin_)
- fi
-
-base-commit: d2ecc46c0981fb829fdfb204604ed0a2798cbe07
--- 
-gitgitgadget
+[1] https://lore.kernel.org/git/34870e5f-8e61-4af8-1050-43bfbe30d8f9@gmail.=
+com/
