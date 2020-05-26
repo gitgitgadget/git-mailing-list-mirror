@@ -2,79 +2,125 @@ Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32B69C433DF
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 15:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27AB5C433E0
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 15:33:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EFF720787
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 15:21:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F15DE20663
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 15:33:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KS3/PfLS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kWSn437o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729709AbgEZPVc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 11:21:32 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56344 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729478AbgEZPVb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 11:21:31 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D40AAB8533;
-        Tue, 26 May 2020 11:21:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9dggKvRsHIg3Fvmfz688IfSC31c=; b=KS3/Pf
-        LSiuJrFI+zDf+g/qMDVNXbYkH9y3bWodRI4mvO5HERUi1AlWPbs2evcwArORSqfl
-        6qb80gn4H0WlilPTtJNgIdNylfLoLf2rzAXV8RQTES3XrycPh+LhCjBrkMq3GsBE
-        M4fmGWWzDKWgVo4R/qNHDPCrNjBPzo485ao2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cea5+xLXZmZ6phsAR63bJAPdDy710xVK
-        n0+mDN1/RgqwDctRjw6953xNPW3/IOOiTtWvjXQrOiEKrE0iEzCCElPKNdXNRW/2
-        kF7TH7XttvySO5nOO4hCGUIzv5BeuqktE/RT7LRL7zmlDCJUFIuvq9lNkhjnuXT8
-        SrTNQKm7tjI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CB555B8532;
-        Tue, 26 May 2020 11:21:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 17627B8531;
-        Tue, 26 May 2020 11:21:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eugeniu Rosca <erosca@de.adit-jv.com>
-Cc:     <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= 
-        <avarab@gmail.com>,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>, Eugeniu Rosca <roscaeugeniu@gmail.com>
-Subject: Re: Assessing about commit order in upstream Linux
-References: <20200526065320.GA18107@lxhi-065.adit-jv.com>
-Date:   Tue, 26 May 2020 08:21:25 -0700
-In-Reply-To: <20200526065320.GA18107@lxhi-065.adit-jv.com> (Eugeniu Rosca's
-        message of "Tue, 26 May 2020 08:53:20 +0200")
-Message-ID: <xmqqr1v6oh6y.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729311AbgEZPdY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 11:33:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56472 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727898AbgEZPdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 11:33:24 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEC2C03E96D
+        for <git@vger.kernel.org>; Tue, 26 May 2020 08:33:24 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id y17so12425548wrn.11
+        for <git@vger.kernel.org>; Tue, 26 May 2020 08:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=QbSRwWHmTIvxLCfAjUQpB13egZVObZEavEjKN7ezg9s=;
+        b=kWSn437oGGSNU2GwTZMloegpsfSDedeuaVVJhrBpWUoI4B34W4j7Cm+SRd7acnau32
+         fqdUoJ8mDhCERfM0Q1pcxgrDN4x6i6hJyV+S4VEFARxl5u8lkXACLY4hQ0i+SrMHrGPH
+         36rTzei8okgQkFLPfGaG99JvDhPur/y4/UMcdX3svzcvhqa9yXDLTVn/t0S4PPUnSEWD
+         iPtWX+16pI/cW6pIFVXoKOzGKt1gRvCrTp3zqaYaT6xNGcnlKYfsUkOw1XMYdWtEw8OF
+         svfx27Bd2fg7TMizNAynBO1kkBKNHKpJHMARHDzGHbiSNiWQQLjsUnwpTdNW0x5/Cpuq
+         Ub1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=QbSRwWHmTIvxLCfAjUQpB13egZVObZEavEjKN7ezg9s=;
+        b=tjw+Fa97NYmv2CNiHpEAemOOkvM6D/5UeWrf+eC+iI+3zg4l02YsitrTig49C6yh9+
+         ITv0h4WRhuCGyBp6uzNWp4Mz5A2To8xu2sK6kUOH1Qw2Z/i5W+xHVUSTh6nbqyhK8IYI
+         VyvjacHsSDT2e9vW5YcdIf2QGIhNWSR16l6nFAm3yhauVa81l9OBjCAjortPlbTeA33e
+         gzFy6SIG2BXDjR89BGUy25uUaDi2ZCOaH7y6oiihwvyBR1VpmFXhY8mtpSP486hITtkn
+         jKZd7ya2ClhvpcK/NsQrfRRtI8h6I3biPmrz1+cXEv4bIatce/yNlhn0OKyBrAa+CIJC
+         ah2g==
+X-Gm-Message-State: AOAM531wg4vOjn7DqxxmxgJ9NNHkEgnASRZrf2Ird1XszBvlYpbiw3Qm
+        G7pTXiu/AwG04ryyYk7ZUj7zquE4
+X-Google-Smtp-Source: ABdhPJxwyPVQYAUKq4Aujb6vaaZy3sAB1/uvxQWG7xvj7e8ktbT7dixlVhM0EEC+vd4GMe1GYudO+Q==
+X-Received: by 2002:adf:a1c1:: with SMTP id v1mr20981260wrv.205.1590507202866;
+        Tue, 26 May 2020 08:33:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y4sm177722wro.91.2020.05.26.08.33.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 May 2020 08:33:22 -0700 (PDT)
+Message-Id: <pull.644.git.1590507201474.gitgitgadget@gmail.com>
+From:   "Mikhail Terekhov via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 26 May 2020 15:33:21 +0000
+Subject: [PATCH] git-gui: allow opening work trees from the startup dialog
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 91471284-9F64-11EA-AB30-B0405B776F7B-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Mikhail Terekhov <termim@gmail.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Mikhail Terekhov <termim@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eugeniu Rosca <erosca@de.adit-jv.com> writes:
+From: Mikhail Terekhov <termim@gmail.com>
 
-> So, the two approaches lead to different results. If you see any false
-> assumption or mistaken belief, could you please pinpoint that? TIA.
+In proc _is_git check that supplied path is a valid work tree path.
+This allows the choose_repository::pick dialog to accept path to a
+work tree directory.
 
-Perhaps the assumption/belief that the set of commits in a history
-can be totally ordered is the issue?  When multiple people work
-together on a project, especially in a project where "pull --no-ff"
-is not enforced, there can exist only partial order among them?
+Signed-off-by: Mikhail Terekhov <termim@gmail.com>
+---
+    git-gui: allow opening work trees from the startup dialog
+    
+    Trying to open a working tree from the "Open Existing Repository" link
+    of the git-gui startup dialog results in an error: Not a Git repository:
+    .... This patch fixes that error.
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-644%2Ftermim%2Fgit-gui-open-worktree-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-644/termim/git-gui-open-worktree-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/644
+
+ lib/choose_repository.tcl | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
+index e54f3e66d8f..8f911e89fbb 100644
+--- a/lib/choose_repository.tcl
++++ b/lib/choose_repository.tcl
+@@ -362,8 +362,19 @@ proc _is_git {path {outdir_var ""}} {
+ 		gets $fp line
+ 		close $fp
+ 		if {[regexp "^gitdir: (.+)$" $line line link_target]} {
++			set check_path [file normalize $path]
+ 			set path [file join [file dirname $path] $link_target]
+ 			set path [file normalize $path]
++
++			if {[file exists [file join $path gitdir]]} {
++				set fp [open [file join $path gitdir] r]
++				gets $fp worktree_path
++				close $fp
++				if {[string equal $check_path $worktree_path]} {
++					set outdir $path
++					return 1
++				}
++			}
+ 		}
+ 	}
+ 
+
+base-commit: c195247812f8cd38ba7e1c603112e6c1d8d8e71e
+-- 
+gitgitgadget
