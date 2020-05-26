@@ -2,79 +2,96 @@ Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DF31C433DF
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 06:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D518FC433DF
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 06:53:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 762D220776
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 06:28:46 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MYCKdjQF"
+	by mail.kernel.org (Postfix) with ESMTP id A430320870
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 06:53:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726842AbgEZG2o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 02:28:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726750AbgEZG2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 02:28:44 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7873DC061A0E
-        for <git@vger.kernel.org>; Mon, 25 May 2020 23:28:44 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id e11so8719680pfn.3
-        for <git@vger.kernel.org>; Mon, 25 May 2020 23:28:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=mo6uU/rH1XFen6vNs8rgLeLRzTkQiBJ3+miBvTlgveA=;
-        b=MYCKdjQFde7GVmpkJPUxx6e+6qOiVdj0miqy4FPqko5MgQza1PmxfZe3JyWMbh6TZw
-         Pg85lcjs1NSG0sZKHQC+yqvYDGxzYtZ5P/yDSqFJn4iPy9ragkzEX4UYxNu0+lXC2Uxm
-         9+QpC5FuwdB8PSkJLppGODRosKs7fyFfdm6Huqx98P2F+wNws2D/GLohAlJvjMdBK3JN
-         PEVqVKI2embwm32DbyTSJxtz915YpNLt/2QiXJ0dYmnc0aKqVNBoXmie6mXLD507sp+r
-         K9BO8fQr8JkhVC4hp6sDhMAXS3CradpK6R+FTWiWgQVA0f5JnjrVLIV+j06Q5Vdbd5hk
-         30KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=mo6uU/rH1XFen6vNs8rgLeLRzTkQiBJ3+miBvTlgveA=;
-        b=WAox9IOhcK1DGbSYCdPRporjGzpcLQ+pi67aRH510NxorHlH41JoAJJg79rUKSSABt
-         qDye2UX0rwzpcqb3hvI98zQ0aNxkMZGr3+vhYqpx08w0Nwy+xLQxCSNL+IhsKNIISIk4
-         5NtrgBAlrbiFe/lO8LNQlOjEq2dI3M394W63lYZ9mTNij/HVEjiq2ct0fy+FfbfrPM4E
-         Ic/H9tyrrAT8JXMgkmHMuvAL1pCCSi0zmaKFYVf7yi9CYPXz3qCIAI4xozu1VR9xPo3p
-         82wQTnMDe9y6etL7Lbee+Blmnu5IA1bTD+nUTnam8ynopVm35pHCpETlDS11gNoFRryT
-         tQEQ==
-X-Gm-Message-State: AOAM533wgdpspfc33Gjnp/mNbYO8aAvmNGkznHdfI5JwZHuWAiIJIKD1
-        YEY7VBEmTpYm6jGS97s93GuSBYc=
-X-Google-Smtp-Source: ABdhPJzURzY5UYduTAm+myqYiJAp4J+i5d6PSNTSe6F7Wdk1jvL6SEGL9Z/51bckRBzWiZzUlD1QFg==
-X-Received: by 2002:a63:a36e:: with SMTP id v46mr29431805pgn.378.1590474521864;
-        Mon, 25 May 2020 23:28:41 -0700 (PDT)
-Received: from ?IPv6:::1? ([2001:19f0:7001:5397:5400:2ff:fec6:e36b])
-        by smtp.gmail.com with ESMTPSA id x22sm30558pfn.26.2020.05.25.23.28.37
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 May 2020 23:28:41 -0700 (PDT)
-From:   Xirui Zhao <zhaoxirui434@gmail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Bug: "git restore --staged" on a newly created repository
-Message-Id: <1F3FD418-38D2-4A10-A882-666D4327F993@gmail.com>
-Date:   Tue, 26 May 2020 14:18:34 +0800
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        id S1731245AbgEZGxc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 02:53:32 -0400
+Received: from smtp1.de.adit-jv.com ([93.241.18.167]:57876 "EHLO
+        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726873AbgEZGxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 02:53:32 -0400
+Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
+        by smtp1.de.adit-jv.com (Postfix) with ESMTP id A2F123C0022;
+        Tue, 26 May 2020 08:53:30 +0200 (CEST)
+Received: from smtp1.de.adit-jv.com ([127.0.0.1])
+        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id WNAf5URCYaeZ; Tue, 26 May 2020 08:53:25 +0200 (CEST)
+Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id A706F3C057C;
+        Tue, 26 May 2020 08:53:25 +0200 (CEST)
+Received: from lxhi-065.adit-jv.com (10.72.94.23) by HI2EXCH01.adit-jv.com
+ (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.487.0; Tue, 26 May
+ 2020 08:53:25 +0200
+Date:   Tue, 26 May 2020 08:53:20 +0200
+From:   Eugeniu Rosca <erosca@de.adit-jv.com>
+To:     <git@vger.kernel.org>
+CC:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>
+Subject: Assessing about commit order in upstream Linux
+Message-ID: <20200526065320.GA18107@lxhi-065.adit-jv.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+X-Originating-IP: [10.72.94.23]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tested on git version 2.27.0-rc1 (latest build from master branch on =
-github) and 2.26.2
-`git restore --staged file` on a newly created repository outputs error =
-"fatal: could not resolve HEAD", but `git reset file` correctly unstages =
-the file.=
+Dear Git community,
+
+Assessing about the correct order of upstream commits is essential
+during the backporting process, since we aim to ensure that the
+backporting result can be built and bisected at each commit.
+
+However, there appear to be at least two ways to compute the
+relative order of "mainline" commits, specifically based on the:
+
+ * index/position of commit summary line in the output of
+   'git log --oneline --topo-order upstream/master'
+
+ * 'git describe --contains --match="v*" <SHA1>' of each commit
+
+I've considered both approaches equivalent, until I ran into [A-B].
+
+Judging by the index in the 'git log' output, commit [B] seems to
+(topologically) come first and hence would need to be backported first:
+
+$ git log --reverse --oneline --topo-order v4.14..v4.15 | grep -n "mm: slabinfo: remove CONFIG_SLABINFO" | cut -f1 -d:
+7261
+$ git log --reverse --oneline --topo-order v4.14..v4.15 | grep -n "RDMA/umem: Avoid partial declaration of non-static function" | cut -f1 -d:
+7029
+
+Judging by the version returned by 'git describe --contains', commit [A]
+seems to (topologically) come first due to '~93' putting it (mentally)
+"earlier" in the topological graph compared to '~73':
+
+$ git describe --contains --match="v*" 5b36577109be
+  v4.15-rc1~93^2~117
+$ git describe --contains --match="v*" fec99ededf6b
+  v4.15-rc1~73^2~56
+
+So, the two approaches lead to different results. If you see any false
+assumption or mistaken belief, could you please pinpoint that? TIA.
+
+[A] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5b36577109be
+  ("mm: slabinfo: remove CONFIG_SLABINFO")
+[B] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fec99ededf6b
+  ("RDMA/umem: Avoid partial declaration of non-static function")
+
+-- 
+Best regards,
+Eugeniu Rosca
