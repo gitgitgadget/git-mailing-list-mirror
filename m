@@ -2,92 +2,84 @@ Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 700E4C433DF
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 17:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 415DAC433E0
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 18:33:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44B16207FB
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 17:21:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F31DC206F1
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 18:33:21 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pDBR8Kjl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389096AbgEZRV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 13:21:29 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:30191 "EHLO smtp2-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388463AbgEZRV3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 13:21:29 -0400
-Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
-        by smtp2-g21.free.fr (Postfix) with ESMTP id 5E8AF200406;
-        Tue, 26 May 2020 19:21:27 +0200 (CEST)
-Date:   Tue, 26 May 2020 19:21:27 +0200 (CEST)
-From:   ydirson@free.fr
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1730210AbgEZSdU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 14:33:20 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63827 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728113AbgEZSdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 14:33:20 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B435675577;
+        Tue, 26 May 2020 14:33:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WEnkJxKJoImhaSL+EJtzZMztduo=; b=pDBR8K
+        jl5BIaUr9C2rtDEKjFlwyUyTlIiU11p6uAcHN11W6xkxegc8G3QrAG4fl2jvEcfc
+        7UReAfEzYgWOxwNYAjbFfW75pyMbReQ8zCLS31bBFYy+ebodyg90J9SPLqG/sFtv
+        pKjq5pQaxCF3Aa/wTfF48wbn/D73LCeH7uptw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dilqdhC653uzpBT+owfS7nEK3F8SsXSJ
+        X6J1d5oFKLHpKsPV4YQ5U/BK9lXt1JBx6zOL736TcD2XWPapTMo52RgUQhQWWi0b
+        tJIhUdNpInkgq8QLPXW4/fdyi8GC0oxMB5Tq75BIVTNyNxqUOtL6ddZnZ5q6nTWA
+        pMt8+twuHQY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A5F3A75576;
+        Tue, 26 May 2020 14:33:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1DD0C75575;
+        Tue, 26 May 2020 14:33:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ydirson@free.fr
 Cc:     git <git@vger.kernel.org>
-Message-ID: <505382066.1036329918.1590513687177.JavaMail.root@zimbra39-e7>
-In-Reply-To: <253380167.1036247407.1590512216359.JavaMail.root@zimbra39-e7>
 Subject: Re: [BUG] diff algorithm selection issue
+References: <505382066.1036329918.1590513687177.JavaMail.root@zimbra39-e7>
+Date:   Tue, 26 May 2020 11:33:18 -0700
+In-Reply-To: <505382066.1036329918.1590513687177.JavaMail.root@zimbra39-e7>
+        (ydirson@free.fr's message of "Tue, 26 May 2020 19:21:27 +0200
+        (CEST)")
+Message-ID: <xmqq5zcio8b5.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [91.170.159.152]
-X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
-X-Authenticated-User: ydirson@free.fr
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5EFA99D4-9F7F-11EA-A65C-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+ydirson@free.fr writes:
 
-> > > When the config has diff.algorithm=patience set, "git diff
-> > > --minimal" seems to
-> > > be ignored, and does not give the same output as "git diff
-> > > --diff-algorithm=minimal",
-> > > but really the same as "git diff --diff-algorithm=patience".
-> > 
-> > As I wrote, that is absolutely the intended behaviour.
-> > 
-> > When patience and other algorithm learns how to trade cycles off
-> > with output size, --minimal may make a difference, but unlike
-> > "--diff-algorithm=minimal" that forces Myers algorithm, the
-> > "--minimal" option should not change the underlying algorithm.
-> 
-> OK, so then the problem is just in the doc, where
-> --diff-algorithm=minimal
-> should rather be documented as something like:
-> 
->  The basic greedy "myers" diff algorithm, spending extra time to make
->  sure the smallest possible diff is produced (equivalent to
->  `--diff-algorithm=myers --minimal`).
-> 
-> Or is it rather intended to be `--diff-algorithm=default --minimal`,
-> whatever the default may be in the future ?
+>> Or is it rather intended to be `--diff-algorithm=default --minimal`,
+>> whatever the default may be in the future ?
+>
+> Now that I think about it, do we really want "minimal" as a valid choice
+> for --diff-algorithm, if it's not a choice of algorithm ?
 
-Now that I think about it, do we really want "minimal" as a valid choice
-for --diff-algorithm, if it's not a choice of algorithm ?
+I asked the same question to myself before writing my first response
+but it is way too late to ask it now.  I do support the spirit of
+"--minimal", but not "--diff-algorithm=minimal" which may be an
+ill-thought-out shorthand for "--diff-algorithm=default --minimal".
 
-In that case, we may need a separate config option line diff.algorithm.minimal
-or maybe diff.algorithm.tuning ?
+If you dig the list archive, I would imagine that you would find
+that not an insignificant part of list participant back then thought
+it was a good idea ;-)
 
-> 
-> 
-> As for the other flags, --patience and --histogram should probably
-> documented as backward-compatibility aliases for --diff-algorithm=,
-> right ?
-> 
-> 
-> I'll send a formal patch if all of this sounds good.
-> 
-> 
-> And as a last point, there would be the problem shown by patience
-> diff
-> on the commit referenced in my original post - If patience is still
-> considered for promotion to default some day, I guess we wouldn't
-> want
-> it to make such a bad choice.
-> 
-> Best regards,
-> --
-> Yann
-> 
+
