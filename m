@@ -2,90 +2,108 @@ Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C9CC433DF
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 23:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA67AC433DF
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 23:32:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 765D920849
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 23:17:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A236A206F1
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 23:32:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RLc1dj8i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HZChPjdh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389361AbgEZXQV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 19:16:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44464 "EHLO
+        id S1725914AbgEZXct (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 19:32:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389185AbgEZXQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 19:16:21 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6D6C061A0F
-        for <git@vger.kernel.org>; Tue, 26 May 2020 16:16:21 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id d3so9351452pln.1
-        for <git@vger.kernel.org>; Tue, 26 May 2020 16:16:21 -0700 (PDT)
+        with ESMTP id S1725857AbgEZXct (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 19:32:49 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73777C061A0F
+        for <git@vger.kernel.org>; Tue, 26 May 2020 16:32:49 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id t11so10839084pgg.2
+        for <git@vger.kernel.org>; Tue, 26 May 2020 16:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oIL80/JAa6PxPtuvnWyCGKQP0HHgx0IkfEKqVUH3KUg=;
-        b=RLc1dj8i1Dd1U7lzN++62GKbpsqQmksWlo0ULQD+ZEizmWZURzeYe7kPpT6MfAb1jg
-         GSqNjtNozvhRc3l8BZX40MO6nh4C6fyxgKVV/AK2t4OkN2v+SmvJFF4Yv36ij14Fu5Mn
-         8UV3cinXbwhsIhl/DXYq5MZMA6y/vrdSHFgbRLVDHggYRET349L4xXenxjjm+xUCti5t
-         IcW7QrIlocaqYvB1V2GsMWI1rQ970q+84xuAhPR2BYNbJW29/M+VqRwhK152YyTCVBaD
-         2ffmnAmpqD5cIQurtzTi5KeUzh19CoLKh+oi/LJrZR/wQ6yn/mWNjx5ggOcyLHK3gqsd
-         IMXw==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=knVlasSVS0nOC+QQUSJn7CE1MDmQe4+kWBiE/lPwme4=;
+        b=HZChPjdhUl5wn5JpPsp5o+fuRU9hnL4o2i7Y0C7r+0VXL2E8M0BlmsJ71z/Rmd1nAM
+         5oDeF4C+U5I6P4Zc+ebXXKELz9AxPxOVxYT83pp185QfhuMzBjdn/7eGECFHMo3dZ3rk
+         VcBfB5Q46GeOZRlzzYa4zOsl+wKdYSOEBohJxOxI9G6uOYhDZl4z/2+d7B86PJghGY10
+         DG0rZKvpD5DzHURiE8QAJcx+L/cVQnyFlxvOhFUFhPFmy3IPZf3lzQNah8ezAns/o9bI
+         JieHZ13+GW5i8ryE2aAwvJ2ZXPaX2Ixve6nuxSeC52sKLMFTa+w10/XAVeM7rKpk5EV5
+         RQqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oIL80/JAa6PxPtuvnWyCGKQP0HHgx0IkfEKqVUH3KUg=;
-        b=L6/+1Zk3kRVu9d7HM66mDMLE41HbS6Z87obkxjQhZIjfwXCFqjYYlNJiRChj25KpRn
-         lU8d6FM40sDwOsilUGAFr2c9pRiU67yV9cWkmqGiRJVlXLPvvV2w9akNcu36MQkUlmy8
-         mhR0XTf7qI1KdmCtr6nz2KvSEInqm8Bg+Ayr+Mq/5Ek9OCbmT4Xgql3sh8AUSJSFsLmm
-         ptEwqdvreERED2xjU0pkBtwt+P2RkHsgq9rNHdec0jprzzh8L+fzJlJRDLA8gxBbsptA
-         Bnh74woVbKiYiCnTEC+w34SH9+PnTvfhkR/Hu+F9PDR2tiO34Hm6yKxJM9AF3Aah4eVA
-         po3w==
-X-Gm-Message-State: AOAM5322RhBZcXOtde16qfipqdI/xojvV1yZjdHbyhaLiUt5j+Tr02J0
-        9frx5vxuCcrfhKKHdf+OrB0=
-X-Google-Smtp-Source: ABdhPJwIfAKSRZmnB+ObWiLHD4Bz5F3/4sT3KiGJyf9uGKrLPh27vDPE7R8BFyj/kw+jXRkufW71ew==
-X-Received: by 2002:a17:90a:d713:: with SMTP id y19mr1505412pju.113.1590534980191;
-        Tue, 26 May 2020 16:16:20 -0700 (PDT)
-Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id b63sm489782pfg.86.2020.05.26.16.16.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2020 16:16:19 -0700 (PDT)
-Date:   Tue, 26 May 2020 16:16:17 -0700
-From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH] reftable: technical documentation link fixes
-Message-ID: <20200526231617.GA40564@Carlos-MBP>
-References: <20200525210232.87550-1-carenas@gmail.com>
- <CAFQ2z_NaCGypqPD6V1k0eXWQYnCm5WE_wz+6vJURd=Cc6nHA4w@mail.gmail.com>
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=knVlasSVS0nOC+QQUSJn7CE1MDmQe4+kWBiE/lPwme4=;
+        b=JnoCwoY3uoIlETWRBxUrbS1aNspC3qTwXvYlOVRB2KHpR+R4QOIPk4YiQdqrW24EqQ
+         eEBdt0263bnbgMO0oioGeUMkyRz2ZWs2ie7nPppg8DNuB6Ofst5AURHXPERWLS3Eho7N
+         MEobqLBnLP58QYVS7sjnuLaYmG2tHtjUPRn2YY1SR+7VlJQRwysdPZChpC2UpjzcB9Mm
+         dWmOdqtdBIeJjMkfQiwM3YT0IQw4MqV7tIB7oQf3MMyiSZNUTYYUzLa0gZ1chfJyF8+J
+         6pC6Zl/ewyqlfcbyiTrSHhlTb9iohAsmb2AAvxqb1rNu65GLOzeyw6z45g4HJtkT75g7
+         NtUQ==
+X-Gm-Message-State: AOAM532rFgj0q1JNLX/GJmMr8o9kCFxWXMCdkMc4rL2yz6cSEBT6BVpU
+        OKy83NBe9kWswpTqeISrvfdQlzMIRU4=
+X-Google-Smtp-Source: ABdhPJxsvJuBkwRxfuNAIC5Ca97hJaZ0zAewOUdB9qQVmWRHYQo7fgm/W2cAxhLkxHbBjyJPX6pFUQ==
+X-Received: by 2002:a62:1845:: with SMTP id 66mr1174226pfy.192.1590535968636;
+        Tue, 26 May 2020 16:32:48 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain ([144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id y75sm496585pfb.212.2020.05.26.16.32.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 May 2020 16:32:47 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [L10N] Kickoff for Git 2.27.0 round #2
+Date:   Tue, 26 May 2020 19:32:42 -0400
+Message-Id: <20200526233242.28285-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFQ2z_NaCGypqPD6V1k0eXWQYnCm5WE_wz+6vJURd=Cc6nHA4w@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 26, 2020 at 08:53:08PM +0200, Han-Wen Nienhuys wrote:
-> 
-> What do I do now? Does Junio fold this in, or do I have to send an
-> updated patch series?
+Hi,
 
-since the issue was introduced with 27eede2922 (reftable: file format
-documentation, 2020-05-20) which is already in next, then Junio might
-just add it to the tip of either hn/reftable or hn/refs-cleanup and
-include it with the reroll that would come after the 2.27 release.
+Git v2.27.0-rc2 has been released, and it's time to start new round of git l10n.
+This time there are 1 new message need to be translated since last update:
 
-if you have other fixes and are planning a reroll on those branches
-then it might be better if you squash it in and therefore avoid both
-the bug and my typo in the commit message.
+    l10n: git.pot: v2.27.0 round 2 (+1)
+    
+    Generate po/git.pot from v2.27.0-rc2 for git v2.27.0 l10n round 2.
+    
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-Carlo
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
+
+--
+Jiang Xin
