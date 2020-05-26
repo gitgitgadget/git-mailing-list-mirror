@@ -2,98 +2,118 @@ Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1826DC433E0
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 19:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5A4FC433E0
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 20:45:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E90EB208B6
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 19:25:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82FCA20888
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 20:45:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nqynxx6P"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Mzilf0h0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392314AbgEZTZh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 15:25:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33472 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391649AbgEZTGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 15:06:34 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE87DC03E96D;
-        Tue, 26 May 2020 12:06:33 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id bh7so2146745plb.11;
-        Tue, 26 May 2020 12:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GRcaB+mIzfLDLlFG78mKyVuPh26Fe+lvp5hkpJeot3s=;
-        b=Nqynxx6PjGvEUZ1vtdBukxxUlM6ZSXnf+QzDLWfl+huq9Bf6ZSVBiPnYfUBC9Dm8qI
-         /YHuV8Ukd1QPbrbMm1BaQRDqMZJKOKzQBA795QM0k1YDFT0WAC+i7zjw2PRJZiDXDdQ2
-         BbUxqeqtNKM1TJTdMA7ERT3IRA1HFK6NQjZ2X3X33quoU+tMoTGq+FbMWjPuRbPHSSfP
-         u22Kd9dK22J+1vfq2qmx6QYQvBoBhUhts04C/Ya9NKP6eL67/4Dn9Cl43sOvYNNasjgi
-         7b266JVDDOmQQgGmWUcj6idaoJHHU6hTILO6Z9oYrNUIGCN3PjGiQYRAWASkHnSdhY3X
-         xGDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GRcaB+mIzfLDLlFG78mKyVuPh26Fe+lvp5hkpJeot3s=;
-        b=e3qDmNQ5ewExzFSuFpCrQqPt680oaerEbRKvlQ7O81qMi0OWWRscMT5T0rd1CMbuuP
-         Dg0qgn3dVIwc9mKTVgm4PcjXCnZzXExBt3c3v5Mm8CJHH6Ur8dpJR18Ey9qKjACISNAr
-         ufeo8oYG7yI2BmFtYHsliA/9obSQ/8CCqCZTMh/T55mOmPKzlVAdVojIq8NRQCA/maLt
-         yE8+l2VU3d5hUA366bhXwqsHYtw9bb+5IE07ZGFTGnqko2n6qPKWD2R9RtQyUvDsEh1p
-         iEjMwO3zWyv0+PNkhbn47U3QWiUSea8vyI8Ug7fTzwdmRCnJZ/ibF31Se4C6yBl2YRXc
-         38Jw==
-X-Gm-Message-State: AOAM530j0twft7uQg8u+v1iw1FWjzr2L79imGHmfXfTJkISkS9R8Gc/F
-        k618p2qJlG7ZvAO2vANQQ3o=
-X-Google-Smtp-Source: ABdhPJyj7v5wDj7jxE/+gZB0RtFsKRceZTkA3pyRGaDUaeRtW5SFdh5wW2q4rDfjAwUOuIi02wPtug==
-X-Received: by 2002:a17:902:47:: with SMTP id 65mr2284406pla.54.1590519993316;
-        Tue, 26 May 2020 12:06:33 -0700 (PDT)
-Received: from [192.168.208.37] ([49.206.126.69])
-        by smtp.gmail.com with ESMTPSA id s123sm242456pfs.170.2020.05.26.12.06.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 May 2020 12:06:32 -0700 (PDT)
-Subject: Re: [ANNOUNCE] Git v2.27.0-rc2
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
+        id S2403919AbgEZUpn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 16:45:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:46031 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2403895AbgEZUpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 16:45:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1590525941;
+        bh=ONMtxzBJjDQcJMmNVConcfd+y9orUhtslZKQ1sHPQYU=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=Mzilf0h013UWm0JSDbyCzpPbf/VWA2yIhim2RGNkTQBg56eyJYyFNCfJkhu/wPCzu
+         9Y8kkyDGoyuLIIsmqpeGGkclbk+EgghH5Bx1CbefaHDVuFcOx2isgq8obZL08REX+N
+         LutkZLvXlZKAx21NWzMOzZyKu0HVM0+bAnm5Hxmo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az773.okiqhce2e5nuzak4zx0woeelqg.bx.internal.cloudapp.net
+ ([52.234.148.96]) by mail.gmx.com (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MG9kC-1jnWCv0fAi-00GcEz; Tue, 26 May 2020 22:45:41 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
         git-packagers@googlegroups.com
-References: <xmqqtv02mt2m.fsf@gitster.c.googlers.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <e66ea483-5e7f-4ebd-5ba8-91227efa454a@gmail.com>
-Date:   Wed, 27 May 2020 00:36:29 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.27.0-rc2
+Date:   Tue, 26 May 2020 20:45:39 +0000
+Message-Id: <20200526204539.6181-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.26.2
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-In-Reply-To: <xmqqtv02mt2m.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Fcc:    Sent
+X-Provags-ID: V03:K1:6573Jks9OlJnwPjNQN8phGe6JO+7FU7iavtlwHyOkEc6VC85G0S
+ u3Ko2w6GiXxAKtOLI7hqvvtDZjErTsjCJ8fOXCfv0zaFL7UJySrj5TSIvrAB9fmjySAa5pw
+ bSK0wjFRZt2OMA4yVnOY8aH432Qp9H4cnzl0t5hQOUXW5+p1TQMuQ1sjvSfNjiDczFGL3c3
+ acbXLoIvg+J/uw/of1ugA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xB50/L/boRI=:2RRqm4CKaMF/bUBpwmGOiI
+ WTyQLBf5vJx+23IvhWT0imimjlHGnXJOBYrhDJR7OHOLw5dLqblNaeMulF0atYTfVuFqztqZT
+ gysVMU+iR+OACr2I0IuBxpnTwOQBSwwiVC4OIPRZRQmW7PtOMKp/uM1kGYiIUZUXGVpVjmGUN
+ awgyJdvVUNe7A2gv2zhyr4YKkQUwbvqOH3kDINtX642KTl9aUzPiP/5SClHc3+qK5DERwQmDz
+ lzKPOhk5T0Uy+S4uufaoPGZu3jaAPaBl881eWgYl8o55ytJjKs5FA/uT0S5rxotIT+HDnU2l/
+ MRnW1K75mINXq62NiTyk23nSAQv3rL6oFatLDO+EH9LeOG6a+dou2Rx5P4RkEG2Z4v/FkNScl
+ M36HrKO+oARAxtFieuVL/M1hFyVYW6og2Bn9V0vGETk3/zcvCG7x8YHnJVJm16bRSwD85t7le
+ aM/bblddCuUGYzmjx3e97G70+i6yqvsbE2EM+xCIslLrwQDGXmt4xyyzziJWz95OOszLxa30c
+ Z7t2jV48puLOwhFfRQLb6feL3scFptOcgbijvpKp/1/Hi4fFirVfQIZl5bVHeZAd07+R6L5Tg
+ md7VSnN2CEdmfbNIDAClNQMpPgH+cKqSXTN3W6/CSKm2zcTqFvlayAOA5Og97wKtHGJ6X2p3R
+ oDMWkSbcY3oQtmSMOOkyeJOMvKwzlA3xCxq6PeyeeVprg520ilwSmpDZWkGDYPz56CEoJxJNT
+ zQTK3KEokBOmPRgxaKkNds7mI3juxsOLB+Gt6bfqeTJza8KnVUi9skdFUaDF8IyPQBNvbbHI4
+ cftJ0xHthBETkCmPqDAUm+FVIpJM8r+SGqMTSOzQu04H7uHCfxg9iaCHKmZpaThJnfH1aoP+5
+ rY7o5s7mDI6xnBaGxA6suzswMIxakAHD0tslzloaRVu7FEZro+ynO2Jky1ZXUiHT4RyAREyBh
+ VwCYElga7YqkWfQtIwPvKsxzyLon8BSWZX1tZj6u8IqWxfUx49jkRihtOzOrRnk9AW54r5RFT
+ HbUsG3lPxG4sH0nS+N23OEZ5hxNxB9yfS0gsphl8sFRIdyo4Afcf63aLjmeo0FWoFyAj2ofe8
+ P0u2+Xobim9jFn99LHFx6X7TkqAHe9NUYeebNoXr4logLFGYrrOZwJIb6bP8r90Z3G97cLH2M
+ 0QgJUzmdVAmkAbrykFRqc9rCYqYyFCNhe77EN91fqRQTERCPjAcFHwnNZ9rv0tdsakUPWItdF
+ cmZX5Fp4Egcp4bpVd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Dear Git users,
 
-On 27-05-2020 00:17, Junio C Hamano wrote:
-> Shourya Shukla (4):
->        submodule--helper.c: Rename 'cb_foreach' to 'foreach_cb'
->        gitfaq: files in .gitignore are tracked
->        gitfaq: fetching and pulling a repository
->        submodule: port subcommand 'set-url' from shell to C
+I hereby announce that Git for Windows 2.27.0-rc2 is available from:
 
-This is the only place where the `set-url` conversion from Shell to C is 
-mentioned. I wonder if it's enough or if it needs a little bit more 
-attention may be in the "Performance, Internal Implementation, 
-Development Support etc." as it is a conversion of a submodule sub-command?
+    https://github.com/git-for-windows/git/releases/tag/v2.27.0-rc2.windows.1
 
-I'm not sure about the importance that these kinds of conversion 
-require, thus the question :)
+Changes since Git for Windows v2.26.2 (April 20th 2020)
 
--- 
-Sivaraam
+This release comes with a Git Bash that optionally uses Windows-native
+pseudo consoles. Meaning: finally, Git Bash can accommodate console
+programs like node.exe, Python or PHP, without using the winpty helper
+(see Known Issues above). Note that this is still a very new feature
+and is therefore known to have some corner-case bugs.
+
+New Features
+
+  * Comes with Git v2.27.0-rc2.
+  * Comes with OpenSSL v1.1.1g.
+  * Comes with cURL v7.70.0.
+  * Comes with subversion v1.13.0.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.1.4.
+  * The release notes have been made a bit more readable and are now
+    linked from the Start Menu group.
+  * The Frequently Asked Questions (FAQ) are now linked in a Start Menu
+    item.
+  * Comes with Git LFS v2.11.0.
+
+Bug Fixes
+
+  * Some Perl packages (e.g. Net::SSLeay) that had been broken recently
+    have been fixed.
+
+Git-2.27.0-rc2-64-bit.exe | 5fff39a4563d9bcfdf77946adef06781ae77433ca09ff6afaae5f9398ec071cb
+Git-2.27.0-rc2-32-bit.exe | 5a9ddc85a99c048cd89a329e9353ef31ac36532d0fd274f7413bf0ee7710f81d
+PortableGit-2.27.0-rc2-64-bit.7z.exe | ac0665a5739d939eecd37d475091b38ed6e0535cbda92f1a53385cd46bed8904
+PortableGit-2.27.0-rc2-32-bit.7z.exe | f2151bb3804aadeb44e2e1047113b38540305ad3bd5e7f2598c8db004b0bf834
+MinGit-2.27.0-rc2-64-bit.zip | 7948a5ec291fb73ad3af1fbacaeebb234fb1926915a69e2e927aabb436b51f8b
+MinGit-2.27.0-rc2-32-bit.zip | f47b9b3869cb072518c7e971a2709b3c5659d4bc35867fab0a117c392f395eaf
+MinGit-2.27.0-rc2-busybox-64-bit.zip | af7b9e1da84ed21bff6d4dac3fdf4ca9dfd5788d7238ac6fda759bbe5fb7f875
+MinGit-2.27.0-rc2-busybox-32-bit.zip | 16f3f8b90bfeed191db11c18995169380db0d34a45ff5a3004d5434acef98d58
+Git-2.27.0-rc2-64-bit.tar.bz2 | b1275d236ff7c4de3d713deefc326120b07ba9a4d32761bf2216364be10a8867
+Git-2.27.0-rc2-32-bit.tar.bz2 | 24993d2abbe7c75d3bb0557550366f919ee10750733c0fd9e05b6ff7c8180c7a
+
+Ciao,
+Johannes
