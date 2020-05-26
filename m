@@ -2,72 +2,92 @@ Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B9AC433DF
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 17:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 700E4C433DF
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 17:21:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70B7C2084C
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 17:14:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44B16207FB
+	for <git@archiver.kernel.org>; Tue, 26 May 2020 17:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731363AbgEZROs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 13:14:48 -0400
-Received: from mx2.suse.de ([195.135.220.15]:55064 "EHLO mx2.suse.de"
+        id S2389096AbgEZRV3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 13:21:29 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:30191 "EHLO smtp2-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730491AbgEZROq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 13:14:46 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 6CC0FAC12;
-        Tue, 26 May 2020 17:14:48 +0000 (UTC)
-Date:   Tue, 26 May 2020 19:14:43 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+        id S2388463AbgEZRV3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 13:21:29 -0400
+Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 5E8AF200406;
+        Tue, 26 May 2020 19:21:27 +0200 (CEST)
+Date:   Tue, 26 May 2020 19:21:27 +0200 (CEST)
+From:   ydirson@free.fr
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eugeniu Rosca <erosca@de.adit-jv.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Eugeniu Rosca <roscaeugeniu@gmail.com>
-Subject: Re: Assessing about commit order in upstream Linux
-Message-ID: <20200526171443.GE25173@kitsune.suse.cz>
-References: <20200526065320.GA18107@lxhi-065.adit-jv.com>
- <xmqqr1v6oh6y.fsf@gitster.c.googlers.com>
+Cc:     git <git@vger.kernel.org>
+Message-ID: <505382066.1036329918.1590513687177.JavaMail.root@zimbra39-e7>
+In-Reply-To: <253380167.1036247407.1590512216359.JavaMail.root@zimbra39-e7>
+Subject: Re: [BUG] diff algorithm selection issue
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr1v6oh6y.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [91.170.159.152]
+X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
+X-Authenticated-User: ydirson@free.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 26, 2020 at 08:21:25AM -0700, Junio C Hamano wrote:
-> Eugeniu Rosca <erosca@de.adit-jv.com> writes:
+
+> > > When the config has diff.algorithm=patience set, "git diff
+> > > --minimal" seems to
+> > > be ignored, and does not give the same output as "git diff
+> > > --diff-algorithm=minimal",
+> > > but really the same as "git diff --diff-algorithm=patience".
+> > 
+> > As I wrote, that is absolutely the intended behaviour.
+> > 
+> > When patience and other algorithm learns how to trade cycles off
+> > with output size, --minimal may make a difference, but unlike
+> > "--diff-algorithm=minimal" that forces Myers algorithm, the
+> > "--minimal" option should not change the underlying algorithm.
 > 
-> > So, the two approaches lead to different results. If you see any false
-> > assumption or mistaken belief, could you please pinpoint that? TIA.
+> OK, so then the problem is just in the doc, where
+> --diff-algorithm=minimal
+> should rather be documented as something like:
 > 
-> Perhaps the assumption/belief that the set of commits in a history
-> can be totally ordered is the issue?  When multiple people work
-> together on a project, especially in a project where "pull --no-ff"
-> is not enforced, there can exist only partial order among them?
+>  The basic greedy "myers" diff algorithm, spending extra time to make
+>  sure the smallest possible diff is produced (equivalent to
+>  `--diff-algorithm=myers --minimal`).
 > 
-As in if you have history with two branches
+> Or is it rather intended to be `--diff-algorithm=default --minimal`,
+> whatever the default may be in the future ?
 
-   D
-  / \
- B   C
-  \ /
-   A
+Now that I think about it, do we really want "minimal" as a valid choice
+for --diff-algorithm, if it's not a choice of algorithm ?
 
-commits B and C are not comparable. They are both between A and D but
-the order of B and C is arbitrary. Different renderings of the history
-may choose different order of B and C. This is a simle example. Linux
-history is a spaghetti of tens of branches.
+In that case, we may need a separate config option line diff.algorithm.minimal
+or maybe diff.algorithm.tuning ?
 
-Thanks
-
-Michal
+> 
+> 
+> As for the other flags, --patience and --histogram should probably
+> documented as backward-compatibility aliases for --diff-algorithm=,
+> right ?
+> 
+> 
+> I'll send a formal patch if all of this sounds good.
+> 
+> 
+> And as a last point, there would be the problem shown by patience
+> diff
+> on the commit referenced in my original post - If patience is still
+> considered for promotion to default some day, I guess we wouldn't
+> want
+> it to make such a bad choice.
+> 
+> Best regards,
+> --
+> Yann
+> 
