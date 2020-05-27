@@ -2,86 +2,113 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87797C433DF
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A820AC433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:48:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A0AE2151B
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:47:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86F552071A
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:48:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sOubI6sm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YBN2js0H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391708AbgE0Qrf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 12:47:35 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51788 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391655AbgE0Qrd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 12:47:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 969F2CA397;
-        Wed, 27 May 2020 12:47:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=EBt5bUpJqsID
-        0RnNEkCLJsx64Iw=; b=sOubI6smGwbgKZQzWgG4VoPVIShNz6T1tNp1L7v5+ex4
-        qrzeEWoKF4KqWC/NYmobK903OZujBl5JMW1V3gLX1CrBs+2dq81Yp9l4Fu7YXiRI
-        3H8j+TEBhTgNByUWR03ZYeqnsashTMjeB0n57D+qpaQasmMIoHbytxkSYtmkzf4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=W3qYqT
-        i8MFyS3Dct7W5UyDesHF/Zylxan6yTxTzxlZyGrPk9nOSPFLTm7TrmVjj2y9CRmi
-        enwa7HdC8yDsOIc0iWEW67Yr53Ox17Cj3iLEd1uAIDcsNXSqu38b9rbF10PdJY9c
-        vif5+xVGqiM41Kdlp9GALxklKE1z3V0/ea3Zk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E68DCA396;
-        Wed, 27 May 2020 12:47:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D5525CA395;
-        Wed, 27 May 2020 12:47:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.27.0-rc2
-References: <xmqqtv02mt2m.fsf@gitster.c.googlers.com>
-        <20200527101820.rprpjhtmkiu7gadg@yadavpratyush.com>
-Date:   Wed, 27 May 2020 09:47:27 -0700
-In-Reply-To: <20200527101820.rprpjhtmkiu7gadg@yadavpratyush.com> (Pratyush
-        Yadav's message of "Wed, 27 May 2020 15:48:20 +0530")
-Message-ID: <xmqq5zchmijk.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728203AbgE0Qr7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 12:47:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37846 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726928AbgE0Qr7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 12:47:59 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C33C8C05BD1E
+        for <git@vger.kernel.org>; Wed, 27 May 2020 09:47:58 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id u188so85075wmu.1
+        for <git@vger.kernel.org>; Wed, 27 May 2020 09:47:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mBmqsrXG+1gof22K0ulz6ASIEWcoDVdZNdSBmRHLLkE=;
+        b=YBN2js0HsxErCZPj812WBOryb3jU88jLtIYxTky7VueQIbJiBd3glYRXVhlpBoQVDA
+         FgXGiyZlRMqFiI4JehFtizPrRdSU6E/kz87W36Ax2pNptfxv/xwleJgxvFyC3laBFZDI
+         LA9/X/61Ekv3DOQcC6UIPhXIyhx9uJ54S3UKU03opCVDFhW10Cht0nRbMyDSHDrltjuv
+         a1ySjeMFujuwSf+Vj8OIKmeuN42CdKsEhbTWr2svbzYEs1uk0Kx2r6sBW8eK+P4pk8JZ
+         P7A3pXH7rUS9tIxIFL/PGaNpqqkVs54HMJGEY0ylB5hFgqPTGCuqOy06FuZP83VU0I0f
+         +55Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mBmqsrXG+1gof22K0ulz6ASIEWcoDVdZNdSBmRHLLkE=;
+        b=JqsK8t2b960n3oqlStNTQk48kkcHcuNKqXsUWDxPc4PRkGGC+JcpZze8JfhZXzrKVO
+         avG/MsOOA5ivQbe2Onh/GD+25TRdIGgkv7H03MO1XpXCECV8Fl/AD/8YYADEkSimBliN
+         klgeitcR+RVYDCC2cEhS5aQsLuGM0PNqTEg8DElCsWOvyPa9p+V+mPy355aXBVYiJyLH
+         9rgR6cb15zbsYP+cLDoJkRZ6k9oLW6TrHA/P/fWzAmBeVKFYH3IsaSh81vSL86Hf2K9b
+         oLgFU9CDSl6R7XvCMsz6laB8K1ZCBH6QAUqNaP8ki4Jy1H/CAZfUnqPj4qikuzSSkD6I
+         YfXw==
+X-Gm-Message-State: AOAM533hr291kwEO4eiB9vn5eZCx8LN10pX/A6r4Al4tfyCuQ16xycdS
+        HkIaz4YIV2YH/sx4lOuK/4rvaRHwdwY=
+X-Google-Smtp-Source: ABdhPJy28LuE6Psbwrh+bStZZpWXlVm4mBngbChAW0uAdbC39WlKl11+BlWuL4Nn6mIC6qNt3Guamw==
+X-Received: by 2002:a1c:f207:: with SMTP id s7mr5035611wmc.123.1590598077239;
+        Wed, 27 May 2020 09:47:57 -0700 (PDT)
+Received: from localhost.localdomain ([193.57.121.40])
+        by smtp.gmail.com with ESMTPSA id d17sm2432852wrg.75.2020.05.27.09.47.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2020 09:47:56 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 00/12] upload-pack: use 'struct upload_pack_data' thoroughly, part 2
+Date:   Wed, 27 May 2020 18:47:30 +0200
+Message-Id: <20200527164742.23067-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.27.0.rc2.38.gc6b4ed14d2.dirty
+In-Reply-To: <20200515100454.14486-1-chriscool@tuxfamily.org>
+References: <20200515100454.14486-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C0599648-A039-11EA-9A92-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+This patch series is the second part of an effort to move all static
+variables in 'upload-pack.c' into 'struct upload_pack_data'.
 
-> On 26/05/20 11:47AM, Junio C Hamano wrote:
->> A release candidate Git v2.27.0-rc2 is now available for testing
->> at the usual places.  It is comprised of 509 non-merge commits
->> since v2.26.0, contributed by 59 people, 17 of which are new faces.
->>=20
->> Changes since v2.26.0 are as follows:
->>=20
->> Ansgar R=C3=B6ber (1):
->>       Subject: git-gui: fix syntax error because of missing semicolon
->
-> Looks like I messed up somewhere and left the "Subject: " in there. Its=
-=20
-> too late to do anything about it now I guess...
+It is based on 'cc/upload-pack-data' which contains "part 1" of this
+effort. (See also: https://lore.kernel.org/git/20200515100454.14486-1-chriscool@tuxfamily.org/)
 
-Yup, indeed you did ;-)  But we all make mistakes and learn from the
-ones we or others make, so...
+A part 3 will follow with the rest of the patches needed to get rid of
+the static variables left after this patch series.
+
+Thanks to Peff and Stolee for their review and help.
+
+Christian Couder (11):
+  upload-pack: move static vars to upload_pack_data
+  upload-pack: move use_sideband to upload_pack_data
+  upload-pack: move filter_capability_requested to upload_pack_data
+  upload-pack: move multi_ack to upload_pack_data
+  upload-pack: change multi_ack to an enum
+  upload-pack: pass upload_pack_data to upload_pack_config()
+  upload-pack: move keepalive to upload_pack_data
+  upload-pack: move allow_filter to upload_pack_data
+  upload-pack: move allow_ref_in_want to upload_pack_data
+  upload-pack: move allow_sideband_all to upload_pack_data
+  upload-pack: move pack_objects_hook to upload_pack_data
+
+Jeff King (1):
+  upload-pack: actually use some upload_pack_data bitfields
+
+ upload-pack.c | 185 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 101 insertions(+), 84 deletions(-)
+
+-- 
+2.27.0.rc2.38.gc6b4ed14d2.dirty
+
