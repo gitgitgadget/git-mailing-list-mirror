@@ -2,101 +2,140 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1B8CC433E0
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 02:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 044FBC433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 02:50:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DA69207CB
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 02:21:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF4972075F
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 02:50:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I43pA2f6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qSAjSglj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726330AbgE0CVq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 22:21:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44802 "EHLO
+        id S1728212AbgE0Cuw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 22:50:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725826AbgE0CVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 May 2020 22:21:45 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BEFC061A0F
-        for <git@vger.kernel.org>; Tue, 26 May 2020 19:21:45 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id k22so9489081pls.10
-        for <git@vger.kernel.org>; Tue, 26 May 2020 19:21:45 -0700 (PDT)
+        with ESMTP id S1725893AbgE0Cuw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 22:50:52 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D69C061A0F
+        for <git@vger.kernel.org>; Tue, 26 May 2020 19:50:51 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id q8so11097711pfu.5
+        for <git@vger.kernel.org>; Tue, 26 May 2020 19:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=5RSYrZiyDNDwpuh6CFhN+3fpjFARTpzTKshvPAb4r3s=;
-        b=I43pA2f63zZi3uWDh89waz22obYh2CXqzHm+I7p3fhglGnU2LJh0mpxLm9hpqXpMo3
-         ZRtMqby0puQMzvHqQ8v+wdqd5GA2+O458D0fg6iiT4h3/UOOfGb20uW9hLGpiikJXbyM
-         yUfBfimhyqQqJlVu7S8z1M0pu1rmk3w8KlxAaPPogUm4N2Xro032wHGekrl88ZSOxgoE
-         48/ogJ+p0yPiMzZ0JWcLoZENCVSo9tIw4gnovxMMV4EbNM7sjGNOZ345bqVq7BRx1bKB
-         +kvm4vanp7Iyt7emiUnru+sIX9lmPj7P9skuex4e9WVgznk7kX60S5/M/tugp5UT+bUa
-         18kQ==
+         :content-disposition:in-reply-to;
+        bh=GfmwOtfafwvq0aLhDpeqVnlBv7o/p6thxxK5P/oz93k=;
+        b=qSAjSgljnKcHqfuhX/qhVPPJ7H6TQcmF8TPW0BymZr0EDtRCnZc+drjSxfz3QE+XJF
+         sX78NN6fwi5kqkMRMC1nROEe6m7qBJStot0UBuYLQdQ0FLvHjnH1wr1TeK+o/Be5uous
+         58OFVqY20lKPdSYDHECo7jKddXcgY01/ptSIAvwJiaY6Sjnjdu0bN67EYaPMlZgXOaNJ
+         +l1cNS/ypMvGVwCpkLYqZ4Otd3mTxk6YIgbBX32r1fVwUjyGU5dxoUIbH+6FhQsHMiCI
+         PHQUk8HuOWFuFU8Fq3Ab087z9q5Eeb20T02YiZNL08fZwwwaWoE9w7Hg5LUEAdRk5XNY
+         UWbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=5RSYrZiyDNDwpuh6CFhN+3fpjFARTpzTKshvPAb4r3s=;
-        b=pSEEiyndRJ/dEI9ypP1qlLrqGvyZiORwlndf7nz4ZiC2yviQKUD27iA7qDmfcQwv/E
-         P/D/ikBf4E38zbeblg4lvulsF/34t6usRnUWo/oLu/QEPF8tVLBLU5/4LLS/FQIo4xY6
-         b5Jvruc/ckpCpkXm+xElx5IsysgYJLw5Uv8Sqo5JlQ0Aovg/hLGhS8ApLIUGJwh1oVvX
-         EIOxliYe7jyL8koN9dBx1FFublZaXy0G7L9a6/zdZqP6Jjg/nC6e+Z+Bisx6YB8nVVgf
-         uwch+2jNqyNRWF+rAmNvGP/lPKDxM7YmQm5Yn7fw1hn9wUEDtousLr5TNWjEqfcvzU6n
-         iMSA==
-X-Gm-Message-State: AOAM531eRyhDZiJAuP9Ev0OCfolBeU1E18QTki5UWiGBoj2oDbG3+RUm
-        9sx8hRfZ+1FpY4Wgvn89Ye5bq30L
-X-Google-Smtp-Source: ABdhPJzGGxG1iULtGDEQS5En30yhb70Eov7789PzNJ+Ld1lY9xoZnmTu9MGdV7BEfqCsDedDNFfKYA==
-X-Received: by 2002:a17:902:c082:: with SMTP id j2mr3946641pld.268.1590546105019;
-        Tue, 26 May 2020 19:21:45 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to;
+        bh=GfmwOtfafwvq0aLhDpeqVnlBv7o/p6thxxK5P/oz93k=;
+        b=KKfjf7cnd3l24hSr5k59Hx+FNta81sOXfeNw+/+aB4T7j77Zk2Vg/uQJN9eYjK2V4p
+         lHOL2g9dm5RzPBqV91IoF+4L5iyRxEbyMGi5xSEj5oYNLqSGNeE8S4gfH/csuelPlp8A
+         J9/3Excsv7ijHqq147EL9NSJdboAuaovTIW1XVeF+5t457IdybeIySG5TYAF3/hte28t
+         xZXdTQKhvcwtOmSaciVRUpaGjjBhhTu6jyjm927JuTAyL7cpuGmEE1DakHMTWicrKzRU
+         /Xbslx8DyB16fOJdioB1HEPvVM05r530sU/UQop/dNVO295xZxrYVMgQVBlrKGg6Skrd
+         zIWg==
+X-Gm-Message-State: AOAM532kzCGMFjYjeulULzojjymZEomU1U0/j/I032HChehJjdGy/jIL
+        n9bjXkgNBIvlZy5LtiZXmJXIBpav
+X-Google-Smtp-Source: ABdhPJzG6Nt4Hjxfp5FCspw3r+Dd1q80xZ3V9NwvKS2RjQFjpPA7HMFedYjMYMK5eW+2Lv9cV1w+pg==
+X-Received: by 2002:a62:2c8d:: with SMTP id s135mr1827715pfs.231.1590547850805;
+        Tue, 26 May 2020 19:50:50 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id m12sm744792pgj.46.2020.05.26.19.21.43
+        by smtp.gmail.com with ESMTPSA id x14sm787849pgj.14.2020.05.26.19.50.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2020 19:21:44 -0700 (PDT)
-Date:   Tue, 26 May 2020 19:21:42 -0700
+        Tue, 26 May 2020 19:50:50 -0700 (PDT)
+Date:   Tue, 26 May 2020 19:50:48 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, hanwen@google.com
-Subject: Re: [PATCH] reftable: technical documentation link fixes
-Message-ID: <20200527022142.GB172669@google.com>
-References: <20200525210232.87550-1-carenas@gmail.com>
+To:     Kevin Buchs <kevin.buchs@newcontext.com>
+Cc:     git@vger.kernel.org
+Subject: Re: rationale behind git not tracking history of branches
+Message-ID: <20200527025048.GC172669@google.com>
+References: <CAKTRx=09tjsH0j+Nf4_1uzn-GwasWFB_Q96KEO=qtr5nVBkAew@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200525210232.87550-1-carenas@gmail.com>
+In-Reply-To: <CAKTRx=09tjsH0j+Nf4_1uzn-GwasWFB_Q96KEO=qtr5nVBkAew@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Belón wrote:
+Hi,
 
-> Subject: reftable: technical documentation link fixes
+Kevin Buchs wrote:
 
-For next time, try to make the subject line summarize what specific
-improvement the patch makes.  For example:
-
-	reftable doc: use link: and urlencode to avoid dead links
-
-> Showing as broken links in the html version (when using asciidoc 8.6.10)
-> because some of the characters in the url need encoding.
+> For many years of using Git, I always struggled to make sense of
+> commit history graphs (git log --graph; gitk). Just recently I
+> discovered that git does not track the history of branches to which
+> commits belonged and the lightbulb turned on. This is proving to be
+> painful in a project I inherited with permanent multiple branches.
+> Now, I am a bit curious as to the rationale behind this intentional
+> decision not to track branch history. Is it entirely a matter of
+> keeping branches lightweight?
 >
-> Change them to use a explicit "link" and URL encode the problematic
-> charecters (ex: +, =, @).  While at it, change the base URL to use
-> lore.kernel.org as has been suggested since 56e6c16394 (Merge branch
-> 'dl/lore-is-the-archive', 2019-12-06)
->
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  Documentation/technical/reftable.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> I am assuming one can backfill for the missing capability by using a
+> commit hook to manually track when a branch head is changed. Perhaps
+> by storing the branch in the commit notes.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+I think this comes down to a question of mental model: one thing I
+value when using Git is that each commit does *not* belong to a
+specific branch --- branches describe the shape of history, and
+commits are points in that history.
 
-Thanks.
+This becomes particularly relevant when working with multiple
+colleagues, sharing history between different servers: I may have a
+branch I call "linus" that points to the same history that a colleague
+called "master".
+
+That said, I can understand how that may be difficult to get used to
+coming from other version control systems (such as Subversion) in
+which a revision does belong to a branch.
+
+Can you say a little more about what aim you're trying to achieve when
+you want to make this lookup?  For example:
+
+- are you looking to figure out what the commit author was working
+  on when they made the commit?  For that, the commit message is meant
+  to provide context, and a commit hook like you describe can be a
+  good way to enforce that (for example if you want every commit
+  message to contain a bug number for context).
+
+- are you looking to find out *when* a commit became part of a
+  particular published branch?  It's true that Git doesn't provide a
+  good way to do that today.  I have some hope that some best
+  practices like discussed in [1][2] will coalesce for attesting to
+  the history of a branch's state.
+
+  If you always perform merges with --no-ff, then you can find some
+  things out using the --first-parent history.  It is possible to
+  enforce such practices using hooks, but this may be a lot of fuss
+  for little gain, depending on the underlying need.
+
+  I find "git log --ancestry-path" to be very useful for finding out
+  *how* a commit became part of a particular published branch.
+
+- or are you looking for this information for some other purpose?
+
+Returning to your question: one reason that I find Git not recording
+the current branch name to be liberating is that I am not great at
+naming things.  I can use a placeholder name, knowing that I am its
+only audience, without fear of embarrassment.
+
+Thanks and hope that helps,
+Jonathan
+
+[1] https://git.eclipse.org/r/c/51128, describing refs/meta/push-certs
+[2] https://lore.kernel.org/git/22945.15202.337224.529980@chiark.greenend.org.uk/
