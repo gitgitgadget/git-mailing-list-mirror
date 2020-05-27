@@ -2,143 +2,108 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92FE2C433DF
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A06E3C433DF
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:58:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65C9820707
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:36:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C79520835
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:58:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HkALFKge"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hv8wv+0l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403782AbgE0RgE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 13:36:04 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61108 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403778AbgE0RgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 13:36:04 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 40223CA836;
-        Wed, 27 May 2020 13:36:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=F3OkQUYteqD0iKLhs61IP3RNaZY=; b=HkALFK
-        geyT4r5zurnlbWpW4HNAQ/cOQJNBMqKnKDkyNWAT9Mut05TwwzI0oTUDPhVvH5CU
-        mNM1Hek6Je9+jNgW4QaASYZ/FWy4f6qGKHkovq9Mfd/Rgck4Ss5PXyIKqhYCZZG6
-        O6kuENfmiL8N+teyh8m6pzdh8Py4VpLhn+Tyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xMjO+bEzHpOP1HbtXrtOoiDYu6U9OcCg
-        OS2Z8EFQFW+p6xD2GkwVrV2MCff2eZtEc2j7cGE1iLnOuBCSsoLZFxUTB2alSzaM
-        m6FOu/h0UX0Z3hn5NE0K0C+oBOSY3C9js0XBfas+ImyKPwkDbawkSfGZq2xr+080
-        vUA9Dmzu/FU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 39F9BCA835;
-        Wed, 27 May 2020 13:36:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 77B7BCA830;
-        Wed, 27 May 2020 13:35:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] doc: fixup/squash: clarify use of <oid-hash> in subject line
-References: <9a9e7432-7a74-f46e-9a77-b8acaa9a974f@iee.email>
-        <20200525213632.1626-1-philipoakley@iee.email>
-        <20200525213632.1626-2-philipoakley@iee.email>
-Date:   Wed, 27 May 2020 10:35:57 -0700
-In-Reply-To: <20200525213632.1626-2-philipoakley@iee.email> (Philip Oakley's
-        message of "Mon, 25 May 2020 22:36:31 +0100")
-Message-ID: <xmqqmu5tl1qa.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2403914AbgE0R6C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 13:58:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48850 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387653AbgE0R6B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 13:58:01 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCC3FC03E97D
+        for <git@vger.kernel.org>; Wed, 27 May 2020 10:58:00 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id k26so324879wmi.4
+        for <git@vger.kernel.org>; Wed, 27 May 2020 10:58:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=hug2+HGAr+Yof8+HRcycD3K48zAjtt2NaPLaqmMNsXM=;
+        b=Hv8wv+0lnWmyWwzPK8kVjiVmiZ6VS0+S5TTcpSOGnuF25tOPIRDh7y+OEY4VKDRSSc
+         XAfchdUuauUNVSg3nbu9HCcgUhWmt8QsGlL5Ke2G5rz+iKSUCwbnUIyI661Gdx+AO46X
+         IDk+gh4iK6PCkgmanj7JuuDkYqxKPkDMMZLqJearheXRns6RInh9tQRKjODV0TqdrlpV
+         pxNwGz1RPxqbuxBvWMPq09lNeyssd10PyrFo9J4/2FZoOz9SItK3Ed45K8+u0XRAgJzS
+         7+cT41qwrvNw86UHRkCikSbSbMc3CvPVtIrCivm1tbq5Pzf8QR+kD48Px9zndr9XsKiY
+         5lTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:reply-to:mime-version:content-transfer-encoding;
+        bh=hug2+HGAr+Yof8+HRcycD3K48zAjtt2NaPLaqmMNsXM=;
+        b=S4VEq1h5ahsy09HUcK1cPQQMa73xdJfAAJy1RBmqhQpVfojtctSdEvUT/wTYuLuZnC
+         Y9JZA5/0h058cLSQp+DzqYLXAX4b+F/FfprHuaJX3QJ0Y+azLU1ZTCkvZl8OYGtITzV9
+         2pE0u50eJAbyMirfFS/XQTFRmlaLDjXC988sPLB0dLwAfViSsZ/6vmgTscHAfGKQeL4u
+         ODJkdhWF6EUNwImg3AmIBvslXSEo7JD30lpythLZN/h15IG6oUUHIs2fN/DBg3NiSDWk
+         tjKS5Um1J5xssE5+0JZ3q+tvUKeBnzEvgkfnA2Be5JunNXAyVLzeJuwm67sx1sS59Jex
+         EDPg==
+X-Gm-Message-State: AOAM532mEqErK20iBdlHn38KNib250BE1+0WK+Mi0bMYCKLgCX7YDEmT
+        ZXdxK/47GIngwyuXcGU7LtY=
+X-Google-Smtp-Source: ABdhPJz5zOdNQrWyJbekYEFXEOBZukU4AeDmO97zDY2fR9IQo6Z/P6Auw8Tm5ga3VgNa+l8TjBQ07Q==
+X-Received: by 2002:a7b:c096:: with SMTP id r22mr5333115wmh.92.1590602279570;
+        Wed, 27 May 2020 10:57:59 -0700 (PDT)
+Received: from localhost.localdomain (226.20.198.146.dyn.plus.net. [146.198.20.226])
+        by smtp.gmail.com with ESMTPSA id p7sm3471502wro.26.2020.05.27.10.57.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2020 10:57:59 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v4 6/5] fixup! rebase: add --reset-author-date
+Date:   Wed, 27 May 2020 18:57:48 +0100
+Message-Id: <20200527175748.54468-1-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200527173356.47364-6-phillip.wood123@gmail.com>
+References: <20200527173356.47364-6-phillip.wood123@gmail.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8736933C-A040-11EA-8368-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> The use of ellision `...` isn't great, as it gives no hint or clue,
-> leaving the subsequent test with a difficult explanation.
+Sorry I somehow forgot to commit this before sending the v4 patches,
+it fixes up the final patch
 
-True.  If you are planning to correct it in 2/2, then I think it
-makes more sense to squash that in to have a single patch.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ t/t3436-rebase-more-options.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Clarify if a full oid has is required, or a unique abbreviation within
-> the respository, or just uniques within the rebase instruction?
-
-Puzzled.  You must know the answer to "do we need a full object
-name, or is it sufficient to have anything that gives us a unique
-commit object name?" so why not write it in the patch instead of
-asking the question here?  Or do you not know the answer and this is
-a RFC/WIP patch????
-
-> This is a minimal change that sidesteps the chance to rewrite/clarify
-> the potential wider confusions over specifying the <commit> being
-> referred to in the fixup/squash process.
-
-Hmph.  So this step cannot be reviewed to judge if it is a good
-change by itself?
-
-Let me locally recreate a squashed single patch and review _that_
-instead.
-
->  Documentation/git-rebase.txt | 18 ++++++++++--------
->  1 file changed, 10 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 4624cfd288..462cb4c52c 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -571,16 +571,18 @@ See also INCOMPATIBLE OPTIONS below.
->  
->  --autosquash::
->  --no-autosquash::
-> -	When the commit log message begins with "squash! ..." (or
-> -	"fixup! ..."), and there is already a commit in the todo list that
-> -	matches the same `...`, automatically modify the todo list of rebase
-> +	When the commit log message begins with "squash! <line>" (or
-> +	"fixup! <line>"), and there is already a commit in the todo list that
-> +	matches the same `<line>`, automatically modify the todo list of rebase
->  	-i so that the commit marked for squashing comes right after the
->  	commit to be modified, and change the action of the moved commit
-> +	from `pick` to `squash` (or `fixup`).
-> ++
-> +A commit matches the `<line>` if
-> +the commit subject matches, or if the `<line>` refers to the commit's
-> +hash. As a fall-back, partial matches of the commit subject work,
-> +too.  The recommended way to create fixup/squash commits is by using
-> +the `--fixup`/`--squash` options of linkgit:git-commit[1].
->  +
-
-Overall it looks much better than the original.
-
-The original did not even attempt to define what is a "match" for
-the purpose of this option, so the ellipses may have been OK, but
-once we need to refer to what is there, we need a name to refer to
-it and ellipses no longer are sufficient, and using the step 1/2
-alone would not make any sense.  We definitely should take the step
-2/2 together with it.
-
-"A commit matches the <line> if the commit subject matches" is not a
-great definition of what a "match" is, though.  The readers are left
-in the same darkness about what constitutes a "match" of <line>
-against "the commit subject".  If you define this "subject matches"
-as a substring match, for example, you do not even have to say "as a
-fall-back"---it is by (the updated version of your) definition that
-how the commit subject and <line> matches so there is no need to
-allow any fall-back involved.
-
-
+diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
+index 5ee193f333..ecfd68397f 100755
+--- a/t/t3436-rebase-more-options.sh
++++ b/t/t3436-rebase-more-options.sh
+@@ -196,7 +196,7 @@ test_expect_success '--ignore-date is an alias for --reset-author-date' '
+ 	git rebase --apply --ignore-date HEAD^ &&
+ 	git commit --allow-empty -m empty --date="$GIT_AUTHOR_DATE" &&
+ 	git rebase -m --ignore-date HEAD^ &&
+-	git log -2 --pretty="format:%ai" >authortime &&
++	git log -2 --pretty=%ai >authortime &&
+ 	grep "+0000" authortime >output &&
+ 	test_line_count = 2 output
+ '
+-- 
+2.26.2
 
