@@ -2,212 +2,143 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B294C433E0
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92FE2C433DF
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:36:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 270DC2075A
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:34:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65C9820707
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:36:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lkPADG3G"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HkALFKge"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391022AbgE0ReQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 13:34:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45114 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390994AbgE0ReO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 13:34:14 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60694C03E97D
-        for <git@vger.kernel.org>; Wed, 27 May 2020 10:34:14 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id y17so16493723wrn.11
-        for <git@vger.kernel.org>; Wed, 27 May 2020 10:34:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=CeQw1oTw85cmZtM9faGk8LN07ohrx63jTjd3ZUclmDE=;
-        b=lkPADG3GevWrlO0e/94Ft5ACOcmZf8abnTK1bHhc/LkNvbW0tHdFe9rItjg07UCWZH
-         GFEzDn77WiEWxeXndB1kjhEqkxWQH+viYz3vw0HrEemYUPj9yOl5hn5rzhiZJ3+ExmPw
-         DQe6SoIICRO+sPTSj1cvuJQ496qzTBL2iLKzlV8v7MryU/xwU7w/EhCiMS+pR77OSYI0
-         s+fJ7XfNZ7AGQIu1ifCshtw6lirPBh8vLbw55S1kPuLYxlN7+cFPLUXGocaLMZtM3/FB
-         aOx73pYNPnk6Spwy0qONw1WUOwlNgufFyhLK3PWYAe8BgCh8a6ZEsifjj8n4lNOhulQz
-         cC1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:reply-to:mime-version:content-transfer-encoding;
-        bh=CeQw1oTw85cmZtM9faGk8LN07ohrx63jTjd3ZUclmDE=;
-        b=ZiPT8qP3SyEVEVlze6RaVXBNMCPsgl5iNUQFao+eHaqDV6/FyJPX8olYgQGugLQo1q
-         cdOh3zUwioechqf8f/3610tgXbq0X2KzsnImrruX1ATN0M3Ei/hSbvIK+m1M0SehroE6
-         HYyoLa5Wj+rDHeKj4CqK80JiIoTW+DtxQOEJfuKxHorxn5APEVqHac7ymlNP3ac6Gsc7
-         sVeJ75fNJvceoAo9AHC46H+zOMmMnC1+K5I92JSLti5KXoA2eT5khI/t/9yx8Yj4xJEu
-         SEFdSHoSD/bckXvsIPtTTMc3rRTWdl0eyuWljKGZOX8NXziji0hEDLr/+6I4O2xUhPmP
-         i55Q==
-X-Gm-Message-State: AOAM53121K//YRyX69Rh0F6+HggP/CmunaarcCEV6+7FgzknO79C9AMI
-        xvbMROgmfcebFcDuKr2eayU72hTM
-X-Google-Smtp-Source: ABdhPJzMhXAVCRRhVcl+wDjWKOjTC5MNAmNTtzufRQ2Apy7yppOvRGa7JSSdtWqsUxsHEaPWkPGgng==
-X-Received: by 2002:adf:e7ce:: with SMTP id e14mr3269090wrn.217.1590600853044;
-        Wed, 27 May 2020 10:34:13 -0700 (PDT)
-Received: from localhost.localdomain (226.20.198.146.dyn.plus.net. [146.198.20.226])
-        by smtp.gmail.com with ESMTPSA id h196sm3524807wme.22.2020.05.27.10.34.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2020 10:34:12 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH v4 5/5] rebase: add --reset-author-date
-Date:   Wed, 27 May 2020 18:33:56 +0100
-Message-Id: <20200527173356.47364-6-phillip.wood123@gmail.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200527173356.47364-1-phillip.wood123@gmail.com>
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
- <20200527173356.47364-1-phillip.wood123@gmail.com>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        id S2403782AbgE0RgE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 13:36:04 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61108 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403778AbgE0RgE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 13:36:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 40223CA836;
+        Wed, 27 May 2020 13:36:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=F3OkQUYteqD0iKLhs61IP3RNaZY=; b=HkALFK
+        geyT4r5zurnlbWpW4HNAQ/cOQJNBMqKnKDkyNWAT9Mut05TwwzI0oTUDPhVvH5CU
+        mNM1Hek6Je9+jNgW4QaASYZ/FWy4f6qGKHkovq9Mfd/Rgck4Ss5PXyIKqhYCZZG6
+        O6kuENfmiL8N+teyh8m6pzdh8Py4VpLhn+Tyg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xMjO+bEzHpOP1HbtXrtOoiDYu6U9OcCg
+        OS2Z8EFQFW+p6xD2GkwVrV2MCff2eZtEc2j7cGE1iLnOuBCSsoLZFxUTB2alSzaM
+        m6FOu/h0UX0Z3hn5NE0K0C+oBOSY3C9js0XBfas+ImyKPwkDbawkSfGZq2xr+080
+        vUA9Dmzu/FU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 39F9BCA835;
+        Wed, 27 May 2020 13:36:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 77B7BCA830;
+        Wed, 27 May 2020 13:35:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] doc: fixup/squash: clarify use of <oid-hash> in subject line
+References: <9a9e7432-7a74-f46e-9a77-b8acaa9a974f@iee.email>
+        <20200525213632.1626-1-philipoakley@iee.email>
+        <20200525213632.1626-2-philipoakley@iee.email>
+Date:   Wed, 27 May 2020 10:35:57 -0700
+In-Reply-To: <20200525213632.1626-2-philipoakley@iee.email> (Philip Oakley's
+        message of "Mon, 25 May 2020 22:36:31 +0100")
+Message-ID: <xmqqmu5tl1qa.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8736933C-A040-11EA-8368-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Philip Oakley <philipoakley@iee.email> writes:
 
-The previous commit introduced --ignore-date flag to rebase -i, but the
-name is rather vague as it does not say whether the author date or the
-committer date is ignored. Add an alias to convey the precise purpose.
+> The use of ellision `...` isn't great, as it gives no hint or clue,
+> leaving the subsequent test with a difficult explanation.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
----
- Documentation/git-rebase.txt   |  1 +
- builtin/rebase.c               |  6 ++++--
- t/t3436-rebase-more-options.sh | 34 ++++++++++++++++++++++------------
- 3 files changed, 27 insertions(+), 14 deletions(-)
+True.  If you are planning to correct it in 2/2, then I think it
+makes more sense to squash that in to have a single patch.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index e2717e20e6..a5f82913fb 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -450,6 +450,7 @@ See also INCOMPATIBLE OPTIONS below.
- 	date. This option implies --force-rebase.
- 
- --ignore-date::
-+--reset-author-date::
- 	Instead of using the author date of the original commit, use
- 	the current time as the	author date of the rebased commit.  This
- 	option implies `--force-rebase`.
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index cf86240bc8..911587690b 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1519,8 +1519,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "committer-date-is-author-date",
- 			 &options.committer_date_is_author_date,
- 			 N_("make committer date match author date")),
--		OPT_BOOL(0, "ignore-date", &options.ignore_date,
--			 "ignore author date and use current date"),
-+		OPT_BOOL(0, "reset-author-date", &options.ignore_date,
-+			 N_("ignore author date and use current date")),
-+		OPT_HIDDEN_BOOL(0, "ignore-date", &options.ignore_date,
-+				N_("synonym of --reset-author-date")),
- 		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
- 				  N_("passed to 'git apply'"), 0),
- 		OPT_BOOL(0, "ignore-whitespace", &options.ignore_whitespace,
-diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-index a3f9d5b41a..5ee193f333 100755
---- a/t/t3436-rebase-more-options.sh
-+++ b/t/t3436-rebase-more-options.sh
-@@ -137,22 +137,22 @@ test_expect_success '--committer-date-is-author-date works when committing confl
- # Checking for +0000 in author time is enough since default
- # timezone is UTC, but the timezone used while committing
- # sets to +0530.
--test_expect_success '--ignore-date works with apply backend' '
-+test_expect_success '--reset-author-date works with apply backend' '
- 	git commit --amend --date="$GIT_AUTHOR_DATE" &&
--	git rebase --apply --ignore-date HEAD^ &&
-+	git rebase --apply --reset-author-date HEAD^ &&
- 	git log -1 --pretty=%ai >authortime &&
- 	grep "+0000" authortime
- '
- 
--test_expect_success '--ignore-date works with merge backend' '
-+test_expect_success '--reset-author-date works with merge backend' '
- 	git commit --amend --date="$GIT_AUTHOR_DATE" &&
--	git rebase --ignore-date -m HEAD^ &&
-+	git rebase --reset-author-date -m HEAD^ &&
- 	git log -1 --pretty=%ai >authortime &&
- 	grep "+0000" authortime
- '
- 
--test_expect_success '--ignore-date works after conflict resolution' '
--	test_must_fail git rebase --ignore-date -m \
-+test_expect_success '--reset-author-date works after conflict resolution' '
-+	test_must_fail git rebase --reset-author-date -m \
- 		--onto commit2^^ commit2^ commit2 &&
- 	echo resolved >foo &&
- 	git add foo &&
-@@ -161,17 +161,17 @@ test_expect_success '--ignore-date works after conflict resolution' '
- 	grep +0000 authortime
- '
- 
--test_expect_success '--ignore-date works with rebase -r' '
-+test_expect_success '--reset-author-date works with rebase -r' '
- 	git checkout side &&
- 	git merge --no-ff commit3 &&
--	git rebase -r --root --ignore-date &&
-+	git rebase -r --root --reset-author-date &&
- 	git log --pretty=%ai >authortime &&
- 	! grep -v "+0000" authortime
- '
- 
--test_expect_success '--ignore-date with --committer-date-is-author-date works' '
-+test_expect_success '--reset-author-date with --committer-date-is-author-date works' '
- 	test_must_fail git rebase -m --committer-date-is-author-date \
--		--ignore-date --onto commit2^^ commit2^ commit3 &&
-+		--reset-author-date --onto commit2^^ commit2^ commit3 &&
- 	git checkout --theirs foo &&
- 	git add foo &&
- 	git rebase --continue &&
-@@ -181,16 +181,26 @@ test_expect_success '--ignore-date with --committer-date-is-author-date works' '
- 	! grep -v "+0000" authortime
- '
- 
--test_expect_success '--ignore-date --committer-date-is-author-date works when forking merge' '
-+test_expect_success '--reset-author-date --committer-date-is-author-date works when forking merge' '
- 	GIT_SEQUENCE_EDITOR="echo \"merge -C $(git rev-parse HEAD) commit3\">" \
--		git rebase -i --strategy=resolve --ignore-date \
-+		git rebase -i --strategy=resolve --reset-author-date \
- 		--committer-date-is-author-date side side &&
- 	git log -1 --pretty=%ai >authortime &&
- 	git log -1 --pretty=%ci >committertime &&
- 	test_cmp authortime committertime &&
- 	grep "+0000" authortime
-  '
- 
-+test_expect_success '--ignore-date is an alias for --reset-author-date' '
-+	git commit --amend --date="$GIT_AUTHOR_DATE" &&
-+	git rebase --apply --ignore-date HEAD^ &&
-+	git commit --allow-empty -m empty --date="$GIT_AUTHOR_DATE" &&
-+	git rebase -m --ignore-date HEAD^ &&
-+	git log -2 --pretty="format:%ai" >authortime &&
-+	grep "+0000" authortime >output &&
-+	test_line_count = 2 output
-+'
-+
- # This must be the last test in this file
- test_expect_success '$EDITOR and friends are unchanged' '
- 	test_editor_unchanged
--- 
-2.26.2
+> Clarify if a full oid has is required, or a unique abbreviation within
+> the respository, or just uniques within the rebase instruction?
+
+Puzzled.  You must know the answer to "do we need a full object
+name, or is it sufficient to have anything that gives us a unique
+commit object name?" so why not write it in the patch instead of
+asking the question here?  Or do you not know the answer and this is
+a RFC/WIP patch????
+
+> This is a minimal change that sidesteps the chance to rewrite/clarify
+> the potential wider confusions over specifying the <commit> being
+> referred to in the fixup/squash process.
+
+Hmph.  So this step cannot be reviewed to judge if it is a good
+change by itself?
+
+Let me locally recreate a squashed single patch and review _that_
+instead.
+
+>  Documentation/git-rebase.txt | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 4624cfd288..462cb4c52c 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -571,16 +571,18 @@ See also INCOMPATIBLE OPTIONS below.
+>  
+>  --autosquash::
+>  --no-autosquash::
+> -	When the commit log message begins with "squash! ..." (or
+> -	"fixup! ..."), and there is already a commit in the todo list that
+> -	matches the same `...`, automatically modify the todo list of rebase
+> +	When the commit log message begins with "squash! <line>" (or
+> +	"fixup! <line>"), and there is already a commit in the todo list that
+> +	matches the same `<line>`, automatically modify the todo list of rebase
+>  	-i so that the commit marked for squashing comes right after the
+>  	commit to be modified, and change the action of the moved commit
+> +	from `pick` to `squash` (or `fixup`).
+> ++
+> +A commit matches the `<line>` if
+> +the commit subject matches, or if the `<line>` refers to the commit's
+> +hash. As a fall-back, partial matches of the commit subject work,
+> +too.  The recommended way to create fixup/squash commits is by using
+> +the `--fixup`/`--squash` options of linkgit:git-commit[1].
+>  +
+
+Overall it looks much better than the original.
+
+The original did not even attempt to define what is a "match" for
+the purpose of this option, so the ellipses may have been OK, but
+once we need to refer to what is there, we need a name to refer to
+it and ellipses no longer are sufficient, and using the step 1/2
+alone would not make any sense.  We definitely should take the step
+2/2 together with it.
+
+"A commit matches the <line> if the commit subject matches" is not a
+great definition of what a "match" is, though.  The readers are left
+in the same darkness about what constitutes a "match" of <line>
+against "the commit subject".  If you define this "subject matches"
+as a substring match, for example, you do not even have to say "as a
+fall-back"---it is by (the updated version of your) definition that
+how the commit subject and <line> matches so there is no need to
+allow any fall-back involved.
+
+
 
