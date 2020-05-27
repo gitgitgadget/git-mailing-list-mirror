@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A948C433DF
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18A3BC433DF
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:48:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 670042071A
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:48:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E89CF2071A
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:48:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QkU68WE1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZGMkokw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730463AbgE0QsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 12:48:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37888 "EHLO
+        id S2387913AbgE0QsQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 12:48:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387583AbgE0QsI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 12:48:08 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9565CC05BD1E
-        for <git@vger.kernel.org>; Wed, 27 May 2020 09:48:08 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id l11so24763046wru.0
-        for <git@vger.kernel.org>; Wed, 27 May 2020 09:48:08 -0700 (PDT)
+        with ESMTP id S1730454AbgE0QsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 12:48:14 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B113AC08C5C1
+        for <git@vger.kernel.org>; Wed, 27 May 2020 09:48:13 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id j10so9112779wrw.8
+        for <git@vger.kernel.org>; Wed, 27 May 2020 09:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nkG9ASB0F2f1N5uJN9mnbqQ/vFK2xlrVKb1Ou+cdgLQ=;
-        b=QkU68WE1zIz3C9Z8yNyt02O9TQKza4yjEuqvWuthYCdSVOtBQqK8YCh5BD3Uc6vIwq
-         L9VJnVNy/9MAB062A4axREagcm3jGZSMYVywcoyE4BEhVMaCTkeuhrAyaLJPuY4eAPsv
-         2qyqmY5ohGp4I4hO7X64ORSLKoEQBbUOawzPmEfmCBxnCboHKo9XryaMjl3t9YIQCIf2
-         ERLjytzD1n8mPKfWgh0hfmk6JeHojJYGfJNDObGqHySiqyP496AJVvDU7HYB2pQg7Z+w
-         gH9ksclhHKi9Jnj+mbtVAj3fv6KJZf5ONf21G7qJ88GfRFHqOTlyJVkYVl6cJVAPchku
-         p//A==
+        bh=SRsCxpsZBYpWwlFd7P2jlA08CC1Cq0Wbcebjv+yKgFE=;
+        b=RZGMkokwbbeN8rTIWCmSIZDk7LxFIWFRwYG2zjmOc94r3CVds796HNVq/4S57VTLDg
+         ebUpEPLoGNwyNH/bkaEbhWRIJSRspiuGZWC3X/yfmtZRhvouMYLfVDEluv7V884IrYr9
+         AfVRh4ccdALKFJjsALcys4OYgJY4NOls1CwGwqYoRcG2IfkkVGvCJhxt/EK6te9w+ha0
+         NCDEFUQJ84F5EgceNtm5phkINVIKjo57dSv5Jzb5jFYQ0ntfreSeVYsH0jVf6lwIlpIu
+         u+JobKnGZLaz91m9OHBJM59d6LeScu5NXsiKEdk0GLWIOHUnvk6Q5uEq35c7vFwee2Yc
+         yStA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nkG9ASB0F2f1N5uJN9mnbqQ/vFK2xlrVKb1Ou+cdgLQ=;
-        b=gpdNYABRhLeXV5QxQr5s1eJ0vkGwebZFlYTTXMbjDQmW9taDlX5/Sf/hHmE8iv0GCq
-         3GxGVcw08w0MfUaSaCE4KhYsxyw4w2wlBsNAYbIfPKEOET5CFFNAs8b6advkHmQ86QGH
-         fpr4r/QVd4XX7Ou+CqghWw9yAXcMa+tcZ8fenr2Tq/KeNEeDoncX+sjnbZkABf36JU53
-         AukUznYtSebfTUAVhsYgOmZ3VsLkBesTWw1fnA0mfqtl7AKaWd557BkrkW/2KXMI6ZRp
-         VW/ehDzDIk0jYolSmsDq7oX52YDx5UJiaQjTRxwoHjFPhY0yNMtJl/yuBe/QvgIU+hUM
-         6n6A==
-X-Gm-Message-State: AOAM532IQQiZqoRbS0WndHXNH8L+YxWZS1JMUeWCeeBJ10zn7RiQ7vPA
-        wAtH4waIt5fiUWF4nK8dF2A7+JBr3dw=
-X-Google-Smtp-Source: ABdhPJxeW92Hw4B9H6aYCk1lsVzbSKReenG727MLV3kDpjAK9guUZDV6Igusw7SKU1ShPC/lVA4D+g==
-X-Received: by 2002:a05:6000:10cf:: with SMTP id b15mr24985312wrx.214.1590598087053;
-        Wed, 27 May 2020 09:48:07 -0700 (PDT)
+        bh=SRsCxpsZBYpWwlFd7P2jlA08CC1Cq0Wbcebjv+yKgFE=;
+        b=f3/9xC0i+wZi38ATUJXqwpI9gxKPbB0o8XFeGWlhsBolmn6QHYMJbwwvTvnUvDXpHp
+         qtLmAZfUlPjaTre1aFwoqwgYyqJV3r1Mb+7l4eOArZhpS6raumrwPFVaolrXLriSV2HN
+         tfeBEBvrsRLXySoLlg1ZgVPLcUKwBpqR3QTxPm/K2UQ5HdXOXBQnLHm1h1chpAJ/BFZq
+         25sOw968FFiXKlhSX91HPYYKH9eQIk1FfnxAsknk8x50/Q0nUqvhHB6hNCLsrg+OaNhg
+         iMtXB3o+k1fQRl7hLE1bIQ9dWoBZX2aiXZHEC0F0iIVj9GiNW7UMwquFHLrg9K/EIGjh
+         HmWw==
+X-Gm-Message-State: AOAM5339CE/wbv9112G9JoishPQNwOG/tIJbxtNxigJ4V6IjI9GQjorq
+        kPjdJVCbwM+7GFveLssmwFoXtZWUOhc=
+X-Google-Smtp-Source: ABdhPJxURN3gNWrS90GzZ2cYUdT3IwUcxTqCqQBBtfRDrunE6FIlT3PPE/vvdbIyUcYUzWHlKXVXBw==
+X-Received: by 2002:a5d:6541:: with SMTP id z1mr25529975wrv.264.1590598092206;
+        Wed, 27 May 2020 09:48:12 -0700 (PDT)
 Received: from localhost.localdomain ([193.57.121.40])
-        by smtp.gmail.com with ESMTPSA id d17sm2432852wrg.75.2020.05.27.09.48.06
+        by smtp.gmail.com with ESMTPSA id d17sm2432852wrg.75.2020.05.27.09.48.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2020 09:48:06 -0700 (PDT)
+        Wed, 27 May 2020 09:48:11 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 08/12] upload-pack: move keepalive to upload_pack_data
-Date:   Wed, 27 May 2020 18:47:38 +0200
-Message-Id: <20200527164742.23067-9-chriscool@tuxfamily.org>
+Subject: [PATCH 12/12] upload-pack: move pack_objects_hook to upload_pack_data
+Date:   Wed, 27 May 2020 18:47:42 +0200
+Message-Id: <20200527164742.23067-13-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.27.0.rc2.38.gc6b4ed14d2.dirty
 In-Reply-To: <20200527164742.23067-1-chriscool@tuxfamily.org>
 References: <20200515100454.14486-1-chriscool@tuxfamily.org>
@@ -82,90 +82,70 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-more thoroughly, let's move the 'keepalive' static variable
-into this struct.
+more thoroughly, let's move the 'pack_objects_hook' static
+variable into this struct.
 
 It is used by code common to protocol v0 and protocol v2.
 
+While at it let's also free() it in upload_pack_data_clear().
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- upload-pack.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ upload-pack.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 101e28f478..e00631a703 100644
+index becefd5bdc..3e9ae53e6c 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
 @@ -53,7 +53,6 @@ static timestamp_t oldest_have;
  static unsigned int allow_unadvertised_object_request;
  static int shallow_nr;
  static struct object_array extra_edge_obj;
--static int keepalive = 5;
- static const char *pack_objects_hook;
+-static const char *pack_objects_hook;
  
- static int allow_filter;
-@@ -75,6 +74,7 @@ struct upload_pack_data {
- 	int deepen_rev_list;
- 	int deepen_relative;
- 	int timeout;
-+	int keepalive;
+ struct upload_pack_data {
+ 	struct string_list symref;
+@@ -84,6 +83,8 @@ struct upload_pack_data {
  
- 	enum  {
- 		no_multi_ack = 0,
-@@ -120,6 +120,8 @@ static void upload_pack_data_init(struct upload_pack_data *data)
- 	data->shallows = shallows;
- 	data->deepen_not = deepen_not;
- 	packet_writer_init(&data->writer, 1);
+ 	struct packet_writer writer;
+ 
++	const char *pack_objects_hook;
 +
-+	data->keepalive = 5;
+ 	unsigned stateless_rpc : 1;
+ 	unsigned daemon_mode : 1;
+ 
+@@ -133,6 +134,8 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
+ 	object_array_clear(&data->shallows);
+ 	string_list_clear(&data->deepen_not, 0);
+ 	list_objects_filter_release(&data->filter_options);
++
++	free((char *)data->pack_objects_hook);
  }
  
- static void upload_pack_data_clear(struct upload_pack_data *data)
-@@ -248,7 +250,7 @@ static void create_pack_file(struct upload_pack_data *pack_data)
+ static void reset_timeout(int timeout)
+@@ -177,10 +180,10 @@ static void create_pack_file(struct upload_pack_data *pack_data)
+ 	int i;
+ 	FILE *pipe_fd;
  
- 	while (1) {
- 		struct pollfd pfd[2];
--		int pe, pu, pollsize;
-+		int pe, pu, pollsize, polltimeout;
- 		int ret;
+-	if (!pack_objects_hook)
++	if (!pack_data->pack_objects_hook)
+ 		pack_objects.git_cmd = 1;
+ 	else {
+-		argv_array_push(&pack_objects.args, pack_objects_hook);
++		argv_array_push(&pack_objects.args, pack_data->pack_objects_hook);
+ 		argv_array_push(&pack_objects.args, "git");
+ 		pack_objects.use_shell = 1;
+ 	}
+@@ -1149,7 +1152,7 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
+ 	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
+ 	current_config_scope() != CONFIG_SCOPE_WORKTREE) {
+ 		if (!strcmp("uploadpack.packobjectshook", var))
+-			return git_config_string(&pack_objects_hook, var, value);
++			return git_config_string(&data->pack_objects_hook, var, value);
+ 	}
  
- 		reset_timeout(pack_data->timeout);
-@@ -272,8 +274,11 @@ static void create_pack_file(struct upload_pack_data *pack_data)
- 		if (!pollsize)
- 			break;
- 
--		ret = poll(pfd, pollsize,
--			keepalive < 0 ? -1 : 1000 * keepalive);
-+		polltimeout = pack_data->keepalive < 0
-+			? -1
-+			: 1000 * pack_data->keepalive;
-+
-+		ret = poll(pfd, pollsize, polltimeout);
- 
- 		if (ret < 0) {
- 			if (errno != EINTR) {
-@@ -1110,6 +1115,8 @@ static int find_symref(const char *refname, const struct object_id *oid,
- 
- static int upload_pack_config(const char *var, const char *value, void *cb_data)
- {
-+	struct upload_pack_data *data = cb_data;
-+
- 	if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
- 		if (git_config_bool(var, value))
- 			allow_unadvertised_object_request |= ALLOW_TIP_SHA1;
-@@ -1126,9 +1133,9 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
- 		else
- 			allow_unadvertised_object_request &= ~ALLOW_ANY_SHA1;
- 	} else if (!strcmp("uploadpack.keepalive", var)) {
--		keepalive = git_config_int(var, value);
--		if (!keepalive)
--			keepalive = -1;
-+		data->keepalive = git_config_int(var, value);
-+		if (!data->keepalive)
-+			data->keepalive = -1;
- 	} else if (!strcmp("uploadpack.allowfilter", var)) {
- 		allow_filter = git_config_bool(var, value);
- 	} else if (!strcmp("uploadpack.allowrefinwant", var)) {
+ 	return parse_hide_refs_config(var, value, "uploadpack");
 -- 
 2.27.0.rc2.38.gc6b4ed14d2.dirty
 
