@@ -2,81 +2,148 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,URIBL_SBL,URIBL_SBL_A,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C07C433DF
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 19:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30CB1C433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 19:31:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7FB7207D3
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 19:31:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1142A207D3
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 19:31:58 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=chello.nl header.i=@chello.nl header.b="nunSyqx3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbgE0Tbx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 15:31:53 -0400
-Received: from mx2.suse.de ([195.135.220.15]:44448 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725306AbgE0Tbw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 15:31:52 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id AB482AF52;
-        Wed, 27 May 2020 19:31:53 +0000 (UTC)
-Date:   Wed, 27 May 2020 21:31:49 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Kevin Buchs <kevin.buchs@newcontext.com>
-Cc:     git@vger.kernel.org
-Subject: Re: rationale behind git not tracking history of branches
-Message-ID: <20200527193149.GJ25173@kitsune.suse.cz>
-References: <CAKTRx=09tjsH0j+Nf4_1uzn-GwasWFB_Q96KEO=qtr5nVBkAew@mail.gmail.com>
- <20200527025048.GC172669@google.com>
- <CAKTRx=29XBtKgt0m1+aCex_YZeiDzk5oBBxuM45NvVHmuqUVNQ@mail.gmail.com>
+        id S1726755AbgE0Tb5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 15:31:57 -0400
+Received: from smtpq3.tb.mail.iss.as9143.net ([212.54.42.166]:38878 "EHLO
+        smtpq3.tb.mail.iss.as9143.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725306AbgE0Tb4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 27 May 2020 15:31:56 -0400
+Received: from [212.54.42.134] (helo=smtp10.tb.mail.iss.as9143.net)
+        by smtpq3.tb.mail.iss.as9143.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <eaw.janssen@chello.nl>)
+        id 1je1mL-0006dW-Fd; Wed, 27 May 2020 21:31:53 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chello.nl;
+         s=202002corplgsmtpnl; h=Subject:To:From:Date;
+        bh=Zr/xjpCppG69TmZdra2Npz24Z3XyBqGjgkJ+DUYx2PM=; b=nunSyqx33y+xKjtPRala6/2rWZ
+        igUE/XiSqeaQbHk9X6JFyL4FiSIG1/e/byApC23d9VAymcilf1hEqBY0xjPlRtOVhgEddwQ0L+cRQ
+        1FdbTfEhELeKTfarW8qke6ckZcltjzLbQ/cN0iBFTs/wYPKrX2pKZYbQolZW9eRIXBh+JmTL064lJ
+        nomfst6AZPXmAS34DxbWi50OwXAD442hg0L833BXhanPG9f5sOHGwVODgbysQlNrERZ4gNDjkzDCM
+        mrJ4yCnt68tUocizJ7Re3Ru1hLTVHNOtK2F7h1qPUs5ZJvePjkiyJ9/bNnCNT7EwesdD/h40X2c3b
+        RhG7rSFg==;
+Received: from outbound-10.tb.mail.iss.as9143.net ([212.54.41.173] helo=oxbe10)
+        by smtp10.tb.mail.iss.as9143.net with esmtp (Exim 4.90_1)
+        (envelope-from <eaw.janssen@chello.nl>)
+        id 1je1mL-0003Nl-Bq; Wed, 27 May 2020 21:31:53 +0200
+Date:   Wed, 27 May 2020 21:31:53 +0200 (CEST)
+From:   Erik Janssen <eaw.janssen@chello.nl>
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>
+Message-ID: <1983783029.127560.1590607913242@mail.ziggo.nl>
+In-Reply-To: <021801d63433$3f0c5e80$bd251b80$@nexbridge.com>
+References: <1098602171.79502.1590528083387@mail.ziggo.nl>
+ <20200527124445.GB2013@danh.dev>
+ <021801d63433$3f0c5e80$bd251b80$@nexbridge.com>
+Subject: RE: [Feature request] Add -u option to git rm to delete untracked
+ files
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKTRx=29XBtKgt0m1+aCex_YZeiDzk5oBBxuM45NvVHmuqUVNQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev70
+X-Originating-IP: 178.85.216.109
+X-Originating-Client: open-xchange-appsuite
+X-Authenticated-Sender: eaw.janssen@chello.nl (via webmail)
+X-Ziggo-spambar: /
+X-Ziggo-spamscore: 0.0
+X-Ziggo-spamreport: CMAE Analysis: v=2.3 cv=INuZ9jnG c=1 sm=1 tr=0 a=9+rZDBEiDlHhcck0kWbJtElFXBc=:19 a=ra8t5kwndXoA:10 a=IkcTkHD0fZMA:10 a=sTwFKg_x9MkA:10 a=O45WepMlw8oA:10 a=Dx4yW56zAAAA:8 a=VwQbUJbxAAAA:8 a=-x0kH7OMmkFaufFYKnsA:9 a=QEXdDO2ut3YA:10 a=X_u8qhY6y2Nm79co_leF:22 a=AjGcO6oz07-iQ99wixmX:22
+X-Ziggo-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 27, 2020 at 11:24:59AM -0500, Kevin Buchs wrote:
-> Hi Jonathan,
-> 
-> Thanks for the reply. I will give you my current situation. I am just
-> taking over a project that many cooks were involved in previously. We
-> have three persistent branches: dev, staging and master which
-> correspond directly to three CD environments: dev, staging and prod.
-> The nominal commit history ought to be that all changes happen in the
-> dev branch, and that the latest dev is merged into staging and then to
-> master at appropriate milestones of testing. However, the history of
-In this setup you should have merges on dev only. staging should be
-behind dev and master behid staging but any merge between these branches
-should be fast-forward. Creating the merge commits would only add noise.
+Hello All,
 
-> commit chains clearly show that is not the case. Here is what gitk
-> shows me: https://1drv.ms/u/s!AgKA2HL-SveIha4Y_5lihkQO7ulfKQ?e=oA9PEi
-> .
-> Now, you can see that the nominal practice was not followed. Sure,
-> there are many commit messages to indicate merges and I could assume
-> those are correct and possibly reconstruct which branch each commit
-> might have belonged to. However, you can see there were a series of
-> changes to multiple commit chains, when there should have just been a
-> single chain - corresponding to the dev branch. How do I know there
-> were not changes that should be included in dev that were stranded?
-Find commits that are not ancestors of dev branch tip.
+Thanks for the responses!
+I was not aware of the alias option, but it gave me the following idea that=
+ seems to work:
+git config --global alias.rmclean '!git rm -r -f $1; git clean -f $1'
 
-But if you are taking over the project maybe just auditing the actual
-difference between the branches might be easier. Then you can use git
-blame to see how the pieces of code that differ entered the branch in
-question.
+A dir with a untracked file 'file1' will give:
+git rmclean file1
+fatal: pathspec 'file1' did not match any files
+Removing file1
+but effectively the file is gone.
 
-Going from the diverging history to one where the branches are as
-described you can merge master to dev once to make all commits formally
-ancestors of dev, preferably after examining and reconciling the
-differences.
+A dir with a tracked file 'file2' will give:
+git rmclean file2
+rm 'file2'
 
-HTH
+alternatively, ignore the errors:
+git config --global alias.rmclean '!git rm -r -f $1 2>/dev/null; git clean =
+-f $1 2>/dev/null'
 
-Michal
+some setup as above, untracked file1, tracked file2 in one go:
+git rmclean .
+
+gives:
+rm 'file2'
+Removing file1
+
+So I think I solved my own question :-)
+
+Kind regards,
+Erik.
+
+
+> Op 27 mei 2020 om 16:29 schreef "Randall S. Becker" <rsbecker@nexbridge.c=
+om>:
+>=20
+>=20
+> On May 27, 2020 8:45 AM, =C3=90o=C3=A0n Tr?n C=C3=B4ng Danh wrote:
+> > To: Erik Janssen <eaw.janssen@chello.nl>
+> > Cc: git@vger.kernel.org
+> > Subject: Re: [Feature request] Add -u option to git rm to delete untrac=
+ked
+> > files
+> >=20
+> > On 2020-05-26 23:21:23+0200, Erik Janssen <eaw.janssen@chello.nl> wrote=
+:
+> > > Would it be feasible to add a -u option to git rm to specify that I
+> > > also want a file deleted if it is not tracked by git?
+> > > Currently, git rm -f can remove files in whatever state it seems,
+> > > except when it is untracked.
+> > > By allowing a -u option (-u: also delete untracked files) I would be
+> > > sure that the file is gone while it would also make sure that it
+> > > doesn't break past behaviour where people perhaps rely on git rm to
+> > > leave untracked files alone.
+> >=20
+> > I _think_ remove untracked file is pretty much risky operation, and it =
+should
+> > be done separately/independently (via git-clean(1)).
+>=20
+> A git alias could easily be set up to do this, of course dangerous becaus=
+e of what git-clean does without any arguments:
+>=20
+>     git config --global alias.rmu 'clean -f --'
+>=20
+> > Let's assume we have -u|--untracked,
+> > nothing (probably) can stop our users from:
+> >=20
+> > =09git rm -u src
+> > =09git rm -u .
+> >=20
+> > Even git-clean(1) requires either --force or --interactive because it's=
+ too
+> > much risky to begin with.
+> >=20
+> > If we think Git as a FileSystem, its rm should only care about its trac=
+ked file. I
+> > prefer to just rm(1) instead of "git-rm -u".
+>
