@@ -2,190 +2,105 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15AEAC433E2
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 11:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A521BC433E1
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 12:44:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDB12207D3
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 11:38:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85AE0207CB
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 12:44:50 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzEBI3ah"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728117AbgE0Liw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 07:38:52 -0400
-Received: from mga18.intel.com ([134.134.136.126]:3342 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730076AbgE0Lif (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 07:38:35 -0400
-IronPort-SDR: Zji22/gi/XeoYTyONXQyLG8+ZmJBvEyuqRgf6iDL+O82IksuJavTdNNOckwF321H8BO0fdFbiw
- dHEYu/VHbQCw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2020 04:38:34 -0700
-IronPort-SDR: JMWBlBMNE/tiHTdWo4OkHmBv3cqj6LTqQWgLbWFi6sTvAHvGLJlzFwD0NhbonX8T2zMVO8lnuV
- TD/IubWYjtEg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,441,1583222400"; 
-   d="scan'208";a="302431801"
-Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.33])
-  by orsmga008.jf.intel.com with ESMTP; 27 May 2020 04:38:34 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2 7/9] completion: improve handling of --track in switch/checkout
-Date:   Wed, 27 May 2020 04:38:29 -0700
-Message-Id: <20200527113831.3294409-8-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.25.2
-In-Reply-To: <20200527113831.3294409-1-jacob.e.keller@intel.com>
-References: <20200527113831.3294409-1-jacob.e.keller@intel.com>
+        id S1729807AbgE0Mot (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 08:44:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56308 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728513AbgE0Mot (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 08:44:49 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18CA2C08C5C1
+        for <git@vger.kernel.org>; Wed, 27 May 2020 05:44:49 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id n18so11778893pfa.2
+        for <git@vger.kernel.org>; Wed, 27 May 2020 05:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=6VLCC6fxsJjsmmoOLn4RsT2hJENkGHZcnehcwOXtSrI=;
+        b=bzEBI3ahpt27qchgPM570lL4t2gQE8LE3BZpcnWwpF8o+kLDxhJOlnhNUUvlDexxpz
+         0N43jyivXXJf6kCrpPnhlP2xw2H5RuZCmIHydRzexIDPRKSwIxB51LYagjs6+chx2FyK
+         PO/CVDwUFBo5DklsFwm8Ud3j2rhuWL9PhN5/jmwsmF5Lv7yg6HN6omqgJPqoPtd17x60
+         SeUASsT5D+ZZ5MRmzIJaDcg9Sb1RnTIHl3zwP1VminWbjP3pZAcXR/j26FXPN7bkrNYC
+         EQr3KKSsOTJFKgdlLzId1Jt3rYDa91Yf53RuyOItzignC9gi8HNVRcfLbOL4ehI/QXX3
+         H2pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=6VLCC6fxsJjsmmoOLn4RsT2hJENkGHZcnehcwOXtSrI=;
+        b=KCzuLoB2NKLahmrAS29xy7+1lj3W8htHAZlIFrHWkFnHJeLNuP3C4pvgZfuBALPCqg
+         5TZ+Fm6V0dihLSxdkoyxW/urWAtwi+1cdY/H5O+De59ULYe9BeWUPAF72PajisBinJAj
+         fCHlycx09cGjMlA+FKoQyzEeVbSyCyTasxB3eVLFEmPqaDUbY6mXnTott2vDEIo2h1Y/
+         WtTBSkxQoc/QMwxlhJZaD2HYtdOWIZYBZRtFnA8Z9+t8gI+6q2sUS1rZ1wJYJIP3K5F4
+         +A5CzAlPyabKNOU0c+9XjxhYEpmXw4a6Mji990cPCVA0zp/9zviN9YqD3Kte85zlakKg
+         XPzA==
+X-Gm-Message-State: AOAM531pml/aFUNFPwwipgk6N1hNoLvvraZQX7gHVsfXpenLZJ8JJEUc
+        ngy9r6wwsXS0iTjYqET2TFzhlnmE
+X-Google-Smtp-Source: ABdhPJzpwClLaVP+k3IgPxNm9CD/XzlsZvzFxMRGW0wtLJBPLJDRQxfkcEstjk8tvFvB6kLpQpON8Q==
+X-Received: by 2002:a62:e305:: with SMTP id g5mr3927189pfh.144.1590583488457;
+        Wed, 27 May 2020 05:44:48 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
+        by smtp.gmail.com with ESMTPSA id ep10sm2251739pjb.25.2020.05.27.05.44.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2020 05:44:47 -0700 (PDT)
+Date:   Wed, 27 May 2020 19:44:45 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Erik Janssen <eaw.janssen@chello.nl>
+Cc:     git@vger.kernel.org
+Subject: Re: [Feature request] Add -u option to git rm to delete untracked
+ files
+Message-ID: <20200527124445.GB2013@danh.dev>
+References: <1098602171.79502.1590528083387@mail.ziggo.nl>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <1098602171.79502.1590528083387@mail.ziggo.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On 2020-05-26 23:21:23+0200, Erik Janssen <eaw.janssen@chello.nl> wrote:
+> Would it be feasible to add a -u option to git rm to specify that
+> I also want a file deleted if it is not tracked by git?
+> Currently, git rm -f can remove files in whatever state it seems,
+> except when it is untracked. 
+> By allowing a -u option (-u: also delete untracked files) I would be
+> sure that the file is gone while it would also make sure that it
+> doesn't break past behaviour where people perhaps rely on git rm to
+> leave untracked files alone.
 
-Current completion for the --track option of git switch and git checkout
-is sub par. In addition to the DWIM logic of a bare branch name, --track
-has DWIM logic to convert specified remote/branch names into a local
-branch tracking that remote. For example
+I _think_ remove untracked file is pretty much risky operation,
+and it should be done separately/independently (via git-clean(1)).
 
-  $git switch --track origin/master
+Let's assume we have -u|--untracked,
+nothing (probably) can stop our users from:
 
-This will create a local branch name master, that tracks the master
-branch of the origin remote.
+	git rm -u src
+	git rm -u .
 
-In fact, git switch --track on its own will not accept other forms of
-references. These must instead be specified manually via the -c/-C/-b/-B
-options.
+Even git-clean(1) requires either --force or --interactive
+because it's too much risky to begin with.
 
-Introduce __git_remote_heads() and the "remote-heads" mode for
-__git_complete_refs. Use this when the --track option is provided while
-completing in _git_switch and _git_checkout. Just as in the --detach
-case, we never enable DWIM mode for --track, because it doesn't make
-sense.
+If we think Git as a FileSystem, its rm should only care about its
+tracked file. I prefer to just rm(1) instead of "git-rm -u".
 
-It should be noted that completion support is still a bit sub par when
-it comes to handling -c/-C and --orphan. This will be resolved in
-a future change.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- contrib/completion/git-completion.bash | 24 +++++++++++++++++--
- t/t9902-completion.sh                  | 32 ++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 38b5a5a0d874..4cdf09987725 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -624,6 +624,19 @@ __git_heads ()
- 			"refs/heads/$cur_*" "refs/heads/$cur_*/**"
- }
- 
-+# Lists branches from remote repositories.
-+# 1: A prefix to be added to each listed branch (optional).
-+# 2: List only branches matching this word (optional; list all branches if
-+#    unset or empty).
-+# 3: A suffix to be appended to each listed branch (optional).
-+__git_remote_heads ()
-+{
-+	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
-+
-+	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
-+			"refs/remotes/$cur_*" "refs/remotes/$cur_*/**"
-+}
-+
- # Lists tags from the local repository.
- # Accepts the same positional parameters as __git_heads() above.
- __git_tags ()
-@@ -783,8 +796,9 @@ __git_refs ()
- # --sfx=<suffix>: A suffix to be appended to each ref instead of the default
- #                 space.
- # --mode=<mode>: What set of refs to complete, one of 'refs' (the default) to
--#                complete all refs, 'heads' to complete only branches. Note
--#                that --remote is only compatible with --mode=refs.
-+#                complete all refs, 'heads' to complete only branches, or
-+#                'remote-heads' to complete only remote branches. Note that
-+#                --remote is only compatible with --mode=refs.
- __git_complete_refs ()
- {
- 	local remote dwim pfx cur_="$cur" sfx=" " mode="refs"
-@@ -810,6 +824,8 @@ __git_complete_refs ()
- 			__gitcomp_direct "$(__git_refs "$remote" "" "$pfx" "$cur_" "$sfx")" ;;
- 		heads)
- 			__gitcomp_direct "$(__git_heads "$pfx" "$cur_" "$sfx")" ;;
-+		remote-heads)
-+			__gitcomp_direct "$(__git_remote_heads "$pfx" "$cur_" "$sfx")" ;;
- 		*)
- 			return 1 ;;
- 	esac
-@@ -1492,6 +1508,8 @@ _git_checkout ()
- 
- 		if [ -n "$(__git_find_on_cmdline "-d --detach")" ]; then
- 			__git_complete_refs --mode="refs"
-+		elif [ -n "$(__git_find_on_cmdline "--track")" ]; then
-+			__git_complete_refs --mode="remote-heads"
- 		else
- 			__git_complete_refs $dwim_opt --mode="refs"
- 		fi
-@@ -2347,6 +2365,8 @@ _git_switch ()
- 
- 		if [ -n "$(__git_find_on_cmdline "-d --detach")" ]; then
- 			__git_complete_refs --mode="refs"
-+		elif [ -n "$(__git_find_on_cmdline "--track")" ]; then
-+			__git_complete_refs --mode="remote-heads"
- 		else
- 			__git_complete_refs $dwim_opt --mode="heads"
- 		fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 5b1868e43632..b09eb498d175 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1404,6 +1404,38 @@ test_expect_success 'git checkout - with -d, complete only references' '
- 	EOF
- '
- 
-+test_expect_success 'git switch - with --track, complete only remote branches' '
-+	test_completion "git switch --track " <<-\EOF
-+	other/branch-in-other Z
-+	other/master-in-other Z
-+	EOF
-+'
-+
-+test_expect_success 'git checkout - with --track, complete only remote branches' '
-+	test_completion "git checkout --track " <<-\EOF
-+	other/branch-in-other Z
-+	other/master-in-other Z
-+	EOF
-+'
-+
-+test_expect_success 'git switch - with --no-track, complete only local branch names' '
-+	test_completion "git switch --no-track " <<-\EOF
-+	master Z
-+	matching-branch Z
-+	EOF
-+'
-+
-+test_expect_success 'git checkout - with --no-track, complete only local references' '
-+	test_completion "git checkout --no-track " <<-\EOF
-+	HEAD Z
-+	master Z
-+	matching-branch Z
-+	matching-tag Z
-+	other/branch-in-other Z
-+	other/master-in-other Z
-+	EOF
-+'
-+
- test_expect_success 'teardown after ref completion' '
- 	git branch -d matching-branch &&
- 	git tag -d matching-tag &&
 -- 
-2.25.2
-
+Danh
