@@ -2,88 +2,200 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E1D1C433DF
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D01A9C433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:34:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 487F2207CB
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:31:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2E502075A
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 17:34:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXnQpkdA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387837AbgE0Rby (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 13:31:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57692 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726487AbgE0Rby (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 13:31:54 -0400
-Received: (qmail 22956 invoked by uid 109); 27 May 2020 17:31:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2020 17:31:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5473 invoked by uid 111); 27 May 2020 17:31:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2020 13:31:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 27 May 2020 13:31:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Junio C Hamano' <gitster@pobox.com>,
-        =?utf-8?B?J1JlbsOp?= Scharfe' <l.s.r@web.de>,
-        'Dana Dahlstrom' <dahlstrom@google.com>, git@vger.kernel.org
-Subject: Re: 'HEAD' is not a commit (according to git-checkout)
-Message-ID: <20200527173152.GA4019609@coredump.intra.peff.net>
-References: <CACqwCQiLpZ1HFzgJw0p0KR3jXNsxkhjXmF_huzhv+qkMZmybBQ@mail.gmail.com>
- <20200521191626.GC1308489@coredump.intra.peff.net>
- <9f26099a-e77b-ede4-bee3-27382a5a0875@web.de>
- <20200523162914.GA2178752@coredump.intra.peff.net>
- <ad267e83-eea0-bb78-d88c-a37a28d04dbe@web.de>
- <xmqqimglqpga.fsf@gitster.c.googlers.com>
- <20200527065210.GC4005121@coredump.intra.peff.net>
- <xmqqimghmlgk.fsf@gitster.c.googlers.com>
- <022e01d6343e$d6c045b0$8440d110$@nexbridge.com>
+        id S2390927AbgE0ReI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 13:34:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45086 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388017AbgE0ReH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 13:34:07 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 644B2C03E97D
+        for <git@vger.kernel.org>; Wed, 27 May 2020 10:34:07 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id u188so257684wmu.1
+        for <git@vger.kernel.org>; Wed, 27 May 2020 10:34:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=GIbcaVTCkdJunaftCAWINArafGwUNBRM+PG6FPDNfCc=;
+        b=MXnQpkdAAtP2rAD6/LS8GUVDOettAr2qqQws7TTpRVGuXXRadtGju+f/tXBuispadJ
+         6onmrl2ktH457ErVg1KrzTQkQoxgPP2ikXX98lkcBGdeaxsnETAduXhc3nyO4lip1lrj
+         Rd8KnfT1dLxtfjARVgZLAZAUIrOJjo6NZVoBV8mVvokQfPK5IomfPTsVs3xhpDZIO/Jv
+         ruCrN7LtH0GqYnzWoxIhRAoA9U2FM6bZhtXRV0iN4mh+pnvZvZ2mliv2O2Md68aQK2xE
+         NQ8AQnYXUN6Lm67IIREajscKxVAz0+dfwGybvvi7Xs5a6nRtcm9tBwXOXUEX/xiIbY+y
+         Ng8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:reply-to:mime-version:content-transfer-encoding;
+        bh=GIbcaVTCkdJunaftCAWINArafGwUNBRM+PG6FPDNfCc=;
+        b=s92SAnhaNDtXH9ltCTbfoymbs8ajxwJEV7F3KBnuyNoF/obqSnE4pBQ+H2vevnjYGU
+         2Rqjy0T0KJECuz05iPPFqUup7uGHxJ4wkvUu/HAdpqDO8JfYOb0ax4Rpal1JhLvjcoy/
+         uzpvV4hg2BzKyyKC3U6KviiJo5MnNkIwn4DnD6rT+AxArNTOR347kmhg1a0pgKr8CWT+
+         5+DrbbX8uj4zUW0a+NvpCHBAcz1qOX6tGCuN1UIJGYq51VTYgj/uryw7QW2fzhcerxIK
+         Gl4CgQ7jCCMkWZPv+Tx7lOc91AdqV6ABu8XOMVDV9JLJMg3K9vFoVkUsurUzJk7e7cP7
+         GyEg==
+X-Gm-Message-State: AOAM533rhFOx+iqdtwXrs6t338RlGmHSGY40STkUWwsPLypml1kV6NGk
+        zShZfOoieIeiVcTKiLRwKg4=
+X-Google-Smtp-Source: ABdhPJxMzgyxyEvMX9gBCmnPeCIYJyk5FuhM6qDA+Ssm9BzucWo1bYwU/VGdNUlzLBGe+Kzw7C8rYA==
+X-Received: by 2002:a1c:2943:: with SMTP id p64mr5132343wmp.42.1590600846119;
+        Wed, 27 May 2020 10:34:06 -0700 (PDT)
+Received: from localhost.localdomain (226.20.198.146.dyn.plus.net. [146.198.20.226])
+        by smtp.gmail.com with ESMTPSA id h196sm3524807wme.22.2020.05.27.10.34.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2020 10:34:05 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v4 0/5] cleanup ra/rebase-i-more-options
+Date:   Wed, 27 May 2020 18:33:51 +0100
+Message-Id: <20200527173356.47364-1-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200407141125.30872-1-phillip.wood123@gmail.com>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <022e01d6343e$d6c045b0$8440d110$@nexbridge.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 27, 2020 at 11:52:28AM -0400, Randall S. Becker wrote:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> On May 27, 2020 11:44 AM, Junio C Hamano wrote:
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > On Sun, May 24, 2020 at 09:15:33AM -0700, Junio C Hamano wrote:
-> > >
-> > >> So, should we allow a random upstream & start-point combination?  It
-> > >> appears to me that as long as they share _some_ common ancestory, it
-> > >> may make sense.
-> > >
-> > > But wouldn't just about any two tips in a repository share some common
-> > > ancestry?
-> > 
-> > Yes, we are on the same page; the above was my round-about way to say
-> > that it does not look useful to restrict the allowed combination in order to
-> > give us some safety.
-> 
-> I have seen some strange ones, as part of migrating from other SCM
-> solutions to git, where there were two completely unrelated histories
-> - at least temporarily until stitched together towards the end of the
-> migration. I don't think the assumption about common ancestry holds
-> generally. I might have misunderstood, though.
+Thanks to Danh for the review, I've updated the tests accordingly.
 
-No, I don't think you've misunderstood. It does happen, and there's even
-an example in git.git. Doing:
+Phillip Wood (2):
+  rebase -i: support --committer-date-is-author-date
+  rebase -i: support --ignore-date
 
-  git checkout -b new-branch --track=origin/todo origin/master
+Rohit Ashiwal (3):
+  rebase -i: add --ignore-whitespace flag
+  sequencer: rename amend_author to author_to_free
+  rebase: add --reset-author-date
 
-would be nonsense. But it's a rare enough case that I don't think it's
-worth worrying too much about. Plus it's pretty easy to undo, or at
-least no harder than lots of other mistakes (e.g., trying to rebase on
-the wrong branch).
+ Documentation/git-rebase.txt           |  33 +++-
+ builtin/rebase.c                       |  46 ++++--
+ sequencer.c                            | 111 ++++++++++++-
+ sequencer.h                            |   2 +
+ t/t3422-rebase-incompatible-options.sh |   2 -
+ t/t3436-rebase-more-options.sh         | 209 +++++++++++++++++++++++++
+ 6 files changed, 379 insertions(+), 24 deletions(-)
+ create mode 100755 t/t3436-rebase-more-options.sh
 
--Peff
+Range-diff against v3:
+1:  df8c4ed2e9 = 1:  df8c4ed2e9 rebase -i: add --ignore-whitespace flag
+2:  df44a0bde6 ! 2:  ad21e5d8fb rebase -i: support --committer-date-is-author-date
+    @@ t/t3436-rebase-more-options.sh: test_expect_success '--ignore-whitespace is reme
+     +test_expect_success '--committer-date-is-author-date works with apply backend' '
+     +	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
+     +	git rebase --apply --committer-date-is-author-date HEAD^ &&
+    -+	git log -1 --pretty="format:%ai" >authortime &&
+    -+	git log -1 --pretty="format:%ci" >committertime &&
+    ++	git log -1 --pretty=%ai >authortime &&
+    ++	git log -1 --pretty=%ci >committertime &&
+     +	test_cmp authortime committertime
+     +'
+     +
+     +test_expect_success '--committer-date-is-author-date works with merge backend' '
+     +	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
+     +	git rebase -m --committer-date-is-author-date HEAD^ &&
+    -+	git log -1 --pretty="format:%ai" >authortime &&
+    -+	git log -1 --pretty="format:%ci" >committertime &&
+    ++	git log -1 --pretty=%ai >authortime &&
+    ++	git log -1 --pretty=%ci >committertime &&
+     +	test_cmp authortime committertime
+     +'
+     +
+     +test_expect_success '--committer-date-is-author-date works with rebase -r' '
+     +	git checkout side &&
+     +	GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
+     +	git rebase -r --root --committer-date-is-author-date &&
+    -+	git log --pretty="format:%ai" >authortime &&
+    -+	git log --pretty="format:%ci" >committertime &&
+    ++	git log --pretty=%ai >authortime &&
+    ++	git log --pretty=%ci >committertime &&
+     +	test_cmp authortime committertime
+     +'
+     +
+     +test_expect_success '--committer-date-is-author-date works when forking merge' '
+     +	git checkout side &&
+     +	GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
+     +	git rebase -r --root --strategy=resolve --committer-date-is-author-date &&
+    -+	git log --pretty="format:%ai" >authortime &&
+    -+	git log --pretty="format:%ci" >committertime &&
+    ++	git log --pretty=%ai >authortime &&
+    ++	git log --pretty=%ci >committertime &&
+     +	test_cmp authortime committertime
+     +
+     +'
+3:  fa3d4856b4 = 3:  af92e29cf9 sequencer: rename amend_author to author_to_free
+4:  96657233d4 ! 4:  4399dc19b6 rebase -i: support --ignore-date
+    @@ t/t3436-rebase-more-options.sh: test_expect_success '--committer-date-is-author-
+     +test_expect_success '--ignore-date works with apply backend' '
+     +	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+     +	git rebase --apply --ignore-date HEAD^ &&
+    -+	git log -1 --pretty="format:%ai" >authortime &&
+    ++	git log -1 --pretty=%ai >authortime &&
+     +	grep "+0000" authortime
+     +'
+     +
+     +test_expect_success '--ignore-date works with merge backend' '
+     +	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+     +	git rebase --ignore-date -m HEAD^ &&
+    -+	git log -1 --pretty="format:%ai" >authortime &&
+    ++	git log -1 --pretty=%ai >authortime &&
+     +	grep "+0000" authortime
+     +'
+     +
+    @@ t/t3436-rebase-more-options.sh: test_expect_success '--committer-date-is-author-
+     +	echo resolved >foo &&
+     +	git add foo &&
+     +	git rebase --continue &&
+    -+	git log --pretty=%ai >authortime &&
+    ++	git log -1 --pretty=%ai >authortime &&
+     +	grep +0000 authortime
+     +'
+     +
+5:  828155baba ! 5:  a11db78eb4 rebase: add --reset-author-date
+    @@ t/t3436-rebase-more-options.sh: test_expect_success '--committer-date-is-author-
+      	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+     -	git rebase --apply --ignore-date HEAD^ &&
+     +	git rebase --apply --reset-author-date HEAD^ &&
+    - 	git log -1 --pretty="format:%ai" >authortime &&
+    + 	git log -1 --pretty=%ai >authortime &&
+      	grep "+0000" authortime
+      '
+      
+    @@ t/t3436-rebase-more-options.sh: test_expect_success '--committer-date-is-author-
+      	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+     -	git rebase --ignore-date -m HEAD^ &&
+     +	git rebase --reset-author-date -m HEAD^ &&
+    - 	git log -1 --pretty="format:%ai" >authortime &&
+    + 	git log -1 --pretty=%ai >authortime &&
+      	grep "+0000" authortime
+      '
+      
+
+-- 
+2.25.1.551.gd3318bf0d3.dirty
+
