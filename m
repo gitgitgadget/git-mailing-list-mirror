@@ -6,76 +6,52 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AA78C433DF
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 07:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAFC7C433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 07:32:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E553E207D3
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 07:30:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5243207D3
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 07:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729283AbgE0HaW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 03:30:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57128 "EHLO cloud.peff.net"
+        id S2387603AbgE0HcG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 03:32:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57134 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728303AbgE0HaV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 03:30:21 -0400
-Received: (qmail 20450 invoked by uid 109); 27 May 2020 07:30:21 -0000
+        id S2387411AbgE0HcG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 03:32:06 -0400
+Received: (qmail 20465 invoked by uid 109); 27 May 2020 07:32:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2020 07:30:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2020 07:32:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1564 invoked by uid 111); 27 May 2020 07:30:21 -0000
+Received: (qmail 1586 invoked by uid 111); 27 May 2020 07:32:06 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2020 03:30:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2020 03:32:06 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 27 May 2020 03:30:20 -0400
+Date:   Wed, 27 May 2020 03:32:05 -0400
 From:   Jeff King <peff@peff.net>
-To:     Philip Oakley <philipoakley@iee.email>
+To:     Xirui Zhao <zhaoxirui434@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/4] blame: test the -b option, use blank oid for
- boundary commits.
-Message-ID: <20200527073020.GB4006199@coredump.intra.peff.net>
-References: <20200525215751.1735-1-philipoakley@iee.email>
- <20200525215751.1735-5-philipoakley@iee.email>
+Subject: Re: Bug: "git restore --staged" on a newly created repository
+Message-ID: <20200527073205.GC4006199@coredump.intra.peff.net>
+References: <1F3FD418-38D2-4A10-A882-666D4327F993@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200525215751.1735-5-philipoakley@iee.email>
+In-Reply-To: <1F3FD418-38D2-4A10-A882-666D4327F993@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 25, 2020 at 10:57:51PM +0100, Philip Oakley wrote:
+On Tue, May 26, 2020 at 02:18:34PM +0800, Xirui Zhao wrote:
 
-> The sed script removes the last hex digit from boundary commit oids
-> '^hexx msg' -> '^hex  msg' until all leading hex's are gone, finally
-> removing the boundary commit marker.
+> Tested on git version 2.27.0-rc1 (latest build from master branch on github) and 2.26.2
+> `git restore --staged file` on a newly created repository outputs
+> error "fatal: could not resolve HEAD", but `git reset file` correctly
+> unstages the file.
 
-Thanks for documenting this, as the sed was rather hard to read:
-
-> +test_expect_success 'test -b option, blank oid for boundary commits' '
-> +	git blame -b branch1.. -- file >actual &&
-> +	git blame branch1.. -- file >full &&
-> +	sed -e "/^\^/{
-> +		:loop;
-> +		s/^\(\^[0-9a-f]*\)[0-9a-f] \(.*\)/\1  \2/g;
-> +		tloop;
-> +		s/^\^/ /;
-> +	}" full >expected &&
-
-I wonder if we can make it simpler.
-
-In perl I'd probably just replace the whole string with the equivalent
-number of spaces, like:
-
-  perl -pe 's/^\^\S+/" " x length($&)/e'
-
-but I suppose some would consider that pretty magical, too. It might be
-simpler still to just avoid testing leading whitespace:
-
-   sed 's/^\^[0-9a-f]* *//' <full >expected &&
-   sed 's/^ *//' <actual >actual.stripped &&
-   test_cmp expected actual.stripped
-
-but perhaps the indentation is a useful part of what we're testing.
+Yeah, "restore" is based on git-checkout, which is a little pickier than
+"git reset" here. I don't think this ever worked in any version of
+git-restore. It would probably be OK for it to use the empty tree when
+HEAD is unborn, at least when operating in git-restore mode.
 
 -Peff
