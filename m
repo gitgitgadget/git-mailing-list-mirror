@@ -2,82 +2,66 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D23E1C433E0
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 14:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2DDFC433DF
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 15:20:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE2FE20873
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 14:29:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 577F1208DB
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 15:20:35 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=protonmail.ch header.i=@protonmail.ch header.b="dDx95Qub"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389259AbgE0O3w convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 27 May 2020 10:29:52 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:52237 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389033AbgE0O3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 10:29:52 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 04RETaCi001546
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 27 May 2020 10:29:36 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     =?UTF-8?B?J8SQb8OgbiBUcuG6p24gQ8O0bmcgRGFuaCc=?= 
-        <congdanhqx@gmail.com>, "'Erik Janssen'" <eaw.janssen@chello.nl>
-Cc:     <git@vger.kernel.org>
-References: <1098602171.79502.1590528083387@mail.ziggo.nl> <20200527124445.GB2013@danh.dev>
-In-Reply-To: <20200527124445.GB2013@danh.dev>
-Subject: RE: [Feature request] Add -u option to git rm to delete untracked files
-Date:   Wed, 27 May 2020 10:29:29 -0400
-Message-ID: <021801d63433$3f0c5e80$bd251b80$@nexbridge.com>
+        id S1727046AbgE0PUe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 11:20:34 -0400
+Received: from mail-40130.protonmail.ch ([185.70.40.130]:43407 "EHLO
+        mail-40130.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbgE0PUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 11:20:34 -0400
+Date:   Wed, 27 May 2020 15:01:21 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+        s=protonmail; t=1590591685;
+        bh=n3z8G4E/sZiNinfibSyIWIzSCu/bMhbf7CGBUPjJsvo=;
+        h=Date:To:From:Reply-To:Subject:From;
+        b=dDx95Qub55bm3Os1jwwmAxKUqZBlNUWJMr4DLvpXRMq4ErVtkF39//VKMuIyeNioT
+         w64zDXB6l0mHBMEWZjAqdWkBpY+IroYBpCURI/zRMQf8vNXOtA6Vrsz5nBAAEkav8F
+         4QVNikjCFz13UXUyAJmIAaPBoNfJGLPlaQTbK2r4=
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>
+Reply-To: Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>
+Subject: git submodule question
+Message-ID: <Wri_F6OxTiG7HZNvyVdFwGp7qrTWqC7Oipu214kLQ8gGMhna7SU6AXdm_m8tkDaPlMKtXGXc84TSACkN0tigR9satiLkrXn23bfM331g09U=@protonmail.ch>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQF3XkBivtEXa9yvTaR7mLwAzbMragMQFSbRqWEoJMA=
-Content-Language: en-ca
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 27, 2020 8:45 AM, Ðoàn Tr?n Công Danh wrote:
-> To: Erik Janssen <eaw.janssen@chello.nl>
-> Cc: git@vger.kernel.org
-> Subject: Re: [Feature request] Add -u option to git rm to delete untracked
-> files
-> 
-> On 2020-05-26 23:21:23+0200, Erik Janssen <eaw.janssen@chello.nl> wrote:
-> > Would it be feasible to add a -u option to git rm to specify that I
-> > also want a file deleted if it is not tracked by git?
-> > Currently, git rm -f can remove files in whatever state it seems,
-> > except when it is untracked.
-> > By allowing a -u option (-u: also delete untracked files) I would be
-> > sure that the file is gone while it would also make sure that it
-> > doesn't break past behaviour where people perhaps rely on git rm to
-> > leave untracked files alone.
-> 
-> I _think_ remove untracked file is pretty much risky operation, and it should
-> be done separately/independently (via git-clean(1)).
+Hi,
 
-A git alias could easily be set up to do this, of course dangerous because of what git-clean does without any arguments:
+I'm using git submodule to pull some third-party config templates into my g=
+it tree, using the following:
 
-    git config --global alias.rmu 'clean -f --'
+git fetch  foobar-github master
+git subtree pull --prefix software/files/perimiter_mail/foobar-github fooba=
+r-github master --squash
 
-> Let's assume we have -u|--untracked,
-> nothing (probably) can stop our users from:
-> 
-> 	git rm -u src
-> 	git rm -u .
-> 
-> Even git-clean(1) requires either --force or --interactive because it's too
-> much risky to begin with.
-> 
-> If we think Git as a FileSystem, its rm should only care about its tracked file. I
-> prefer to just rm(1) instead of "git-rm -u".
+Now, the question is, when the upstream makes a new commit can I force pull=
+ that commit and make git overwrite any changes I've made in the subtree.
 
+At the moment I get bitter complaints from git, e.g. :
+CONFLICT (content): Merge conflict in....
+Automatic merge failed; fix conflicts and then commit the result.
+
+Basically, I want to make myslef an update script that force-pulls the late=
+st upstream repo and then the script will take care of making the necessary=
+ modifications (the upstream puts placeholders in their repo, so my script =
+would take care of replacing the placeholders with the real values so that =
+everything works again)
+
+Thanks !
