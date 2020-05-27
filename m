@@ -2,131 +2,117 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.1 required=3.0 tests=DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2EC8C433E0
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 21:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05A27C433DF
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 21:22:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD629207E8
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 21:11:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB4DC2078C
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 21:22:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ikI81CR0"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="fgzYnhNN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727090AbgE0VLp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 17:11:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50804 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726129AbgE0VLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 17:11:45 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFB50C05BD1E
-        for <git@vger.kernel.org>; Wed, 27 May 2020 14:11:44 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id e1so25663924wrt.5
-        for <git@vger.kernel.org>; Wed, 27 May 2020 14:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=sMkZ8CAOesFNl3apPz+dxvdim0U04buYE65CvwRoCuA=;
-        b=ikI81CR0CrL/KO8LVZGdyN13XGYT2VfV6srmAU00uN9hvi26vjskxubWHH0hB1oofW
-         iloTX5kRv3OYWbG9R30f0R+UAVzO8MiuU7pGjrDXaJd5iQltonAuLodptU6Fg13lMGPc
-         zx7nxykJAhVSKz6ALITj+Z6etbOjQTqvfCaIMMPdh4ACToV3VsGarWDxoI2ePZwAEdeS
-         ySTCXmxmE1CxTDk+4N2cf5cZ6EF0U3gWL6TH3oOUC+OP73DPeU91+gTSd0YPBklgA7yy
-         /FO5tpQx3a4Z6O4Mb/RlCle8LKB0HKuvPXibd7nLzjgadEEI89rXdXoVAbQX7RJPp8ZQ
-         xllg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=sMkZ8CAOesFNl3apPz+dxvdim0U04buYE65CvwRoCuA=;
-        b=k72wbQqJ3+LyLn3S5f26GQgKlJZ7sH3jl2rWSSmuh0Nzv77xMcJvtUPLEH6OoSB1aZ
-         BbEjlPXHjJwEzdJBZBzGPrJMnSg4Blk2UbjvZDUIuliOr/6a/TgbQiQ6gcQ8M6/cVbG6
-         FSHWDg2i31y1IrI3RgB6IvnKyXew0hKSc6qencKMvJqOTEfuXnT//cO/vD3i3pdG/tEl
-         5dFHIRGrPsmcSp5i3HH+otp2actRzHHSB0lht2KyZ8A4pt5rw+7lr0Sah3J6L6ibw76h
-         w02DxI7NiiM/Hg3ueEUbWtmFoc39Bwvtxm4yOJ0a2j84DYSqqa9ZHUmJr4kk3ypeuyHl
-         GYow==
-X-Gm-Message-State: AOAM5324sMovV+JOs8c2Z4lFi6nqd65NcTrjPUIWN97KjB7Pif/FZ1S/
-        QriEIO4yysbYa047JFq6hDygzbpBwxiz1Q==
-X-Google-Smtp-Source: ABdhPJyaaE3/zBIRI3gRwLRWQZFCrdQ+vBWUtpD0UZg3QHZwCRBJ+BS8cTfP6sz0r4qHjCsWPB//VQ==
-X-Received: by 2002:adf:a4d6:: with SMTP id h22mr204362wrb.300.1590613903552;
-        Wed, 27 May 2020 14:11:43 -0700 (PDT)
-Received: from feanor (87-231-246-247.rev.numericable.fr. [87.231.246.247])
-        by smtp.gmail.com with ESMTPSA id 5sm3829865wmz.16.2020.05.27.14.11.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2020 14:11:42 -0700 (PDT)
-Date:   Wed, 27 May 2020 23:11:40 +0200
-From:   Damien Robert <damien.olivier.robert@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Hariom verma <hariom18599@gmail.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: Draft of Git Rev News edition 63
-Message-ID: <20200527211140.qbgbbitoxr4mx7gk@feanor>
-X-PGP-Key: http://www.normalesup.org/~robert/pro/files/Damien_Olivier_Robert.asc
-X-Start-Date: Wed, 27 May 2020 22:52:31 +0200
-References: <CAP8UFD3MvaAPMUwc=hW-bayDbNpxSX3jtMiPQro4b2Ai17GkNg@mail.gmail.com>
+        id S1728515AbgE0VWa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 17:22:30 -0400
+Received: from mout.gmx.net ([212.227.15.19]:46475 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728475AbgE0VWa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 17:22:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1590614532;
+        bh=LbnLro2zAtOnLWbW3pRTuAsIg18qjqUsPyf++S5ow5Y=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fgzYnhNNp2ev9SLaBBN0l+uPgOed8WvEhA5o4VDENKkpK7RO9z8rKy+Tq0cUZZRnf
+         /IVrOxacZqqvn1LtSdOvlFnYywd2hMTWPyo5GQXQXi/2vLFq9QajTaw0SDvVYhYPFJ
+         LicV3fs959Z7LKZVqAXrrdkgHa8BdZbyauE5HPok=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.211.123] ([89.1.214.52]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4QwW-1iuEuw0Td0-011PWU; Wed, 27
+ May 2020 23:22:12 +0200
+Date:   Wed, 27 May 2020 06:48:28 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Merlin_B=C3=BCge?= <toni@bluenox07.de>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: Question about behaviour of git-checkout --patch option
+In-Reply-To: <20200527123234.737efc3f.toni@bluenox07.de>
+Message-ID: <nycvar.QRO.7.76.6.2005270646550.56@tvgsbejvaqbjf.bet>
+References: <20200525221100.31d36d4d.toni@bluenox07.de>        <20200527075648.GA4006373@coredump.intra.peff.net>        <20200527080009.GB4006373@coredump.intra.peff.net> <20200527123234.737efc3f.toni@bluenox07.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD3MvaAPMUwc=hW-bayDbNpxSX3jtMiPQro4b2Ai17GkNg@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-970195157-1590554910=:56"
+X-Provags-ID: V03:K1:/8XUf97jqLudwDp5wXrJkYDd8QxHKT790CV3mxJMCXPmWsPO65O
+ zk2eVnDEMG0csV9UNd5VQ2AqPouhSdqxzXAnnC67VLEoctdhfI8uopTtl9PRnKUMI0WtEvp
+ erH6Q1wEgdqcAA8U6OgVo7+6tWlLXHKcKEM70h2fkxeWPjiZjYc4abeMt4Ii6A8dTO8x9px
+ Kf2usr3CfHtQNwGSSJYEA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:A53unIhMQYQ=:FDXN1wJnKq7igflIe90SAs
+ jG/CuoBd1Ac5ILAQZxHxpLlmmOVS7NPiN/gwSTwBwlJHschhYQU4GJZeKbcLu2dBI5b8etkT5
+ Fvkl9J1n8uMIk1uOBwmIx76lJPedonTxeuGNaBHMFFO4WmWclHAizCEeIgev94KYduBjbANIU
+ FCdln0iqgOsyFapyxhiRzl5NBqw/8RYWQFiNZ5zwaEZkzPf57Oql88DalC55OYNxf+AueL3BA
+ M/ZSj04xCeBUyxRdgssRbr167wzlaKqk2DKl10w8t5zvdIq3N2t3aG66pI36V90X/uXNCl9Pe
+ prpzuzlRnu5od2Wq+Ywz5TZHuK4uAFN7cu9XyvObKRU31QouM+kPvNypte91ZK6SQPD6gjdkH
+ iUB7Kvd5QKU9S3GMWl5QtftHeCg3geD9/RNJRvbfb2RuEiVrf3WQWakuh7lYMxB8D4Bwo7w7n
+ IVOMg4OHXIuF9bDYa+NDG3c1FIXcMlyjxHAH5H3do16jBryewyLrYrATwQ03vlKTerO/Dz5ss
+ 9hFmwjo0z5MQclSef7tmkYRWw7M52x9VUnwGRLuAmq45dTQ3Z7f6bPLpah+YqYYoUVWazcI28
+ rDtpZYHg8Wve+6p5ss8Q61T/XPNrdTAWCLvZZFRPBkY/mBcMeeS/kLuaHTEF0C/JHdu+swtYS
+ 7Pz0C3S93dFTMS082DCAQ+9eXq8zgfYrKIoHytAEC9vo2pa5swpdOgwj2pb29xhZo/EgzdB8p
+ WwKU6ftChtR8kP3zo0FW2kosUyC++gcCnOj3bOuQx9fZXlNaJ8QsWeXYcVLLJz8jxKyTXccys
+ XZOwmgD74wbzV5iXotyz/0llMEcj0v6ei11hzdmkIjfVNtGPMHtnTSRiPzSzq0BXaRJll7/il
+ mezMDoV0bJU1xzd00rMUei/1UMqkjgDAK4TdqsuWksyWn4cPK7zw/vj3jLIvAhgnBYN498WeR
+ pDon0JQIZyFsSV5jQgo1BW931XQo3CWhjmc5ohTmQzlICN9f4Nwcc77si1zR4fQ6gPx8vDXpl
+ KZnkMM4ie3m0MT8PKlFLkFZ3Aa/SUO5pQYsNQG7sKfBgNZjPxkLyeDnLtXT51lF5CjhsqMzWU
+ SEeFR4YY7mJiZFzhzcIbKhMaDpY8mOT3IfGinE6XqspMkq4L9pywEqDEmxQP0z0ZnXk+npDLK
+ AlUsLkVTBaTB5X8wwkV/wwzc9jO0odsfEX9tR7C059a+PTEC1E53D/tfn3QvE+LBppQq5u4a6
+ H8qBsuBkZh4t4ATYt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From Christian Couder, Tue 26 May 2020 at 19:10:32 (+0200) :
-> A draft of a new Git Rev News edition is available here:
->   https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-63.md
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> # Reviews
-> remote.c: fix handling of push:remote_ref
+--8323328-970195157-1590554910=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Wow! I don't know who was motivated enough to go through the history of this
-series, but I am impressed. I just sent a pull request with some
-suggestions.
+Hi Merlin,
 
-This series was a complete mess, a lesson learned is that I should stay
-focused on the original scope of the series, rather than try to extend it
-mid-way when I find other bugs in adjacent areas. And instead fix the new
-uncovered bugs in other series.
+On Wed, 27 May 2020, Merlin B=C3=BCge wrote:
 
-> This led to some release confusion as Junio then had merged the 2 patches to the next branch, while Damien had sent a version 8 that contains only his patch without the triangular workflow fixes and test cases.
+> On Wed, 27 May 2020 04:00:09 -0400
+> Jeff King <peff@peff.net> wrote:
+>
+> > Trying your case with:
+> >
+> >   git -c add.interactive.usebuiltin=3Dtrue checkout -p master .
+> >
+> > shows that it does not list the added file at all. I suspect the form =
+of
+> > the fix will be similar, but it may have to plumb through the file
+> > addition from the diff layer, as well.
+>
+> Thanks a lot for your explanation! Good to know what's going on there.
+>
+> Out of curiosity: How does the git community keep track of open bugs?
+> On https://git-scm.com/ I read that bug reports should be just send to
+> the mailing list. But if they are not fixed within a few days, wouldn't
+> they just get lost...?
 
-> This last version is now merged in the pu branch, and will is likely to find its way to master, while hopefully the fixes related to triangular workflows will be re-sent separately.
+There is not really any centralized way to keep track of open bugs.
 
-In "What's cooking in git", the series is marked as stalled, so I think Junio
-is waiting for a reroll. I haven't forgotten about this series, but with
-the current situation I did not have time to rework on it.
+And yes, sometimes they get lost after a few days.
 
-Meanwhile, the version v8 in 'pu' does not detect triangular workflows (since
-I ejected that patch).
+In your case, however, there is now
+https://lore.kernel.org/git/pull.646.git.1590613746507.gitgitgadget@gmail.=
+com/T/#u
+which is better than just a ticket: it is already a patch.
 
-The version v6 in 'next' does, but there it has the corner case of
-a branch 'foo' which has a pushRemote=foobar but no remote and 'origin'
-does not exists. In this case %(push:remote_ref) detects a triangular
-workflow but `git push` does not.
+Ciao,
+Johannes
 
-So this is really a minor corner case (and I actually think its `git push` which
-should be fixed here), so it is not too bad that this version is
-in 'next', especially since there are still other bugs in the ref-filter
-machinery anyway
-(see eg
-https://public-inbox.org/git/20200418173651.djzriazxj5kbo6ax@doriath/ and
-https://public-inbox.org/git/20200416152145.wp2zeibxmuyas6y6@feanor/).
-
-Best regards,
-Damien
+--8323328-970195157-1590554910=:56--
