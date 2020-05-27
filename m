@@ -2,119 +2,119 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A2AC433E0
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 23:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BAE6C433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 23:04:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA93D208C3
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 23:03:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69453207BC
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 23:04:35 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EoVVGeTR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726214AbgE0XD7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 19:03:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58254 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725267AbgE0XD6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 19:03:58 -0400
-Received: (qmail 24606 invoked by uid 109); 27 May 2020 23:03:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2020 23:03:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9137 invoked by uid 111); 27 May 2020 23:03:58 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2020 19:03:57 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 27 May 2020 19:03:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Merlin =?utf-8?B?QsO8Z2U=?= <toni@bluenox07.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] checkout -p: handle new files correctly
-Message-ID: <20200527230357.GB546534@coredump.intra.peff.net>
-References: <pull.646.git.1590613746507.gitgitgadget@gmail.com>
+        id S1725820AbgE0XEe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 19:04:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40078 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725267AbgE0XEe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 19:04:34 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDC44C08C5C1
+        for <git@vger.kernel.org>; Wed, 27 May 2020 16:04:33 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id x14so20559175wrp.2
+        for <git@vger.kernel.org>; Wed, 27 May 2020 16:04:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6pHXnJi803fhZxO23ujtpldm/o0TrCmHf/Q7FuCRChw=;
+        b=EoVVGeTRrlfiKxj8IgIQE5J5zF05K7gjj5yqfEyTmBFKBd+n0gCMHamcdFQ/NLR10v
+         xypQBiyjj47yXTyLAxs/j8x2uEq36bwKkz+7KxeaWJUKVkcx7SYWM/bTBBJYwfuRF9sr
+         /WnRfE5FEpT6gjsb8bQO1YG7502yMx/dfJOXTX0IvJsQj/LuB3Ub4B7B7fb/m2ALal7j
+         Q7y5mQWnwrisujzt2frL42zeI6lLbrlYPLIMK57bdOM2xaU6NT11T3Gs3hLUZwgCeCnX
+         /R3cR+qfgE3yy1pbJ2IaZP2yFgD9YcC3OgavcnqVKD5q1APTOv/OvsMAlmFTkuOj6bGI
+         1zdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6pHXnJi803fhZxO23ujtpldm/o0TrCmHf/Q7FuCRChw=;
+        b=SRAcn7xXIuxsG7I7C3PgG3ebGnr4NvPgssMo6Hdz+srv0UJdnPbsR7XEsJLiUcxV8N
+         wd+8wjRbeXKJz1fidd4on7xxsNTfAULBw6Rv4JNvY4LqScssbrPp3lbcMl7WXBBUFj3k
+         zPwr2bKItqD/j1xxZF1TvcuTFQH8hxuOscwk5dLHWvRhVDoZ3/4LL6Pt9rJRiL4FGWzj
+         grNTmjqEGkxo4v8J+/l0gGwKGPp0ozE6BcN2msIpDqpouxuHjyks77RR/PsmFNrX+lXl
+         a/beJ1EfIyst9U+Vg7jDknh/mLuFaZG3ZxIXUzwBYlooYWZJEwJ/6DZen4aRwjqsGjJZ
+         AU6g==
+X-Gm-Message-State: AOAM530LXXJLbttwZrIehjvd0n4BZV5ue4pTDZ8vCAwa6cehaTxyUrtD
+        4AVZ9wB5iBO5KOPVQmTzOgtGTU9YTvFju+w92cE=
+X-Google-Smtp-Source: ABdhPJxeltpiQ4LDOEql9TqD6KuxxHl8XyxYzinaHy8HwKUGobVpEIq9d/JQg6Dw7DgIuWWtG2tNuWu9N/49KHjC6hs=
+X-Received: by 2002:adf:de0b:: with SMTP id b11mr527919wrm.346.1590620672598;
+ Wed, 27 May 2020 16:04:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.646.git.1590613746507.gitgitgadget@gmail.com>
+References: <CAMP9c5k=Ci8eQyOdzW7a-sssgp9g9TJ+rxAAPF3YLDCr7t6wrg@mail.gmail.com>
+ <20200527224824.GA546534@coredump.intra.peff.net> <CAMP9c5=kRAfKqfWL4AJg1m9c-3OwG1Vv=vBaiOhsD6abjtXH=A@mail.gmail.com>
+In-Reply-To: <CAMP9c5=kRAfKqfWL4AJg1m9c-3OwG1Vv=vBaiOhsD6abjtXH=A@mail.gmail.com>
+From:   Zach Riggle <zachriggle@gmail.com>
+Date:   Wed, 27 May 2020 18:04:21 -0500
+Message-ID: <CAMP9c5m65hBXKgP76iUCGe79c_s5p106K6iwzJyPmm7fCsc7LA@mail.gmail.com>
+Subject: Re: git grep --show-function treats GOTO labels as function names
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 27, 2020 at 09:09:06PM +0000, Johannes Schindelin via GitGitGadget wrote:
+It looks like that does the trick for "goto" labels, but there are
+also some issue on function name parsing with attributes when they are
+split onto a second line.
 
-> However, since the same machinery was used for `git checkout -p` &
-> friends, we can see new files.
-> 
-> Handle this case specifically, adding a new prompt for it that is
-> modeled after the `deleted file` case.
+$ cat attr.cpp
+int main() __attribute__ ( (no_sanitize("alignment")) )
+{
+    FOO
+}
+$ git grep --no-index --show-function -e FOO attr.cpp
+attr.cpp=2=__attribute__ ( (no_sanitize("alignment")) )
+attr.cpp:4:    FOO
 
-Thanks! I was planning to dig further into this topic today, and here it
-is all wrapped up with a bow. :)
+Zach Riggle
 
->  add-patch.c                | 30 +++++++++++++++++++++++-------
->  git-add--interactive.perl  | 21 +++++++++++++++++++--
-
-Ooh, you even fixed the perl version, too. I was just going to leave it
-in the dust and add a test that set GIT_TEST_ADD_I_USE_BUILTIN.
-
-Both versions look good, and are similar to what I expected from looking
-at it last night.
-
-> The original patch selection code was written for `git add -p`, and the
-> fundamental unit on which it works is a hunk.
-> 
-> We hacked around that to handle deletions back in 24ab81ae4d
-> (add-interactive: handle deletion of empty files, 2009-10-27). But `git
-> add -p` would never see a new file, since we only consider the set of
-> tracked files in the index.
-
-I lied a little with "would never see a new file". There _is_ a related
-case with "add -p" that might be worth thinking about: intent-to-add
-files.
-
-  $ git init
-  $ >empty
-  $ echo content >not-empty
-  $ git add -N .
-  $ git add -p
-  diff --git a/not-empty b/not-empty
-  index e69de29..d95f3ad 100644
-  --- a/not-empty
-  +++ b/not-empty
-  @@ -0,0 +1 @@
-  +content
-  (1/1) Stage this hunk [y,n,q,a,d,e,?]? n
-
-  [no mention of empty file!]
-
-I think the culprit here is diff-files, though, which doesn't show a
-patch for intent-to-add:
-
-  $ git diff-files
-  :100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 M	empty
-  :100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 M	not-empty
-
-  $ git diff-files -p
-  diff --git a/not-empty b/not-empty
-  index e69de29..d95f3ad 100644
-  --- a/not-empty
-  +++ b/not-empty
-  @@ -0,0 +1 @@
-  +content
-
-I don't think this really intersects with the patch here at all, because
-diff-files is not producing "new file" lines for these entries (even for
-the non-empty one).
-
-The solution _might_ be to convince diff-files to treat i-t-a entries as
-creations. And then with your patch here, we'd naturally do the right
-thing. So I don't think this needs to hold up your patch in any way, nor
-do we necessarily need to deal with i-t-a now. I was mostly curious how
-they worked, since we don't support added files. The answer is just that
-they don't always. ;)
-
--Peff
+On Wed, May 27, 2020 at 5:54 PM Zach Riggle <zachriggle@gmail.com> wrote:
+>
+> Awesome, thanks!
+>
+>
+> Zach Riggle
+>
+> On Wed, May 27, 2020 at 5:48 PM Jeff King <peff@peff.net> wrote:
+> >
+> > On Wed, May 27, 2020 at 05:29:08PM -0500, Zach Riggle wrote:
+> >
+> > > It looks like there is an issue with how the parser handles "goto"
+> > > labels, as it treats them the same as a function name.
+> >
+> > By default, the function-finding isn't aware of the specific content in
+> > the file. But you can associate extensions with particular types, like:
+> >
+> >   $ echo '*.cpp diff=cpp' >~/.gitattributes
+> >   $ git config --global core.attributesFile ~/.gitattributes
+> >   $ git grep --no-index --show-function -e FOO test2.cpp
+> >   test2.cpp=int main() {
+> >   test2.cpp:    FOO
+> >   test2.cpp:    FOO
+> >
+> > Usually this is done in-repo, but since your example used --no-index, I
+> > showed how to set up a per-user attribute file. The "diff" attribute
+> > covers both diff and grep (for diff, the hunk headers will also show the
+> > function).
+> >
+> > The "cpp" diff regexes are built-in to the git binary. We just don't
+> > associate any filenames by default. You can also add your own; see the
+> > section "Defining a custom hunk-header" from "git help attributes".
+> >
+> > -Peff
