@@ -1,145 +1,102 @@
-Return-Path: <SRS0=GnTn=7I=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AE70C433E0
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 23:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1B8CC433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 02:21:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 135CC20700
-	for <git@archiver.kernel.org>; Tue, 26 May 2020 23:59:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7DA69207CB
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 02:21:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="TBKc3mTz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I43pA2f6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726701AbgEZX7L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 May 2020 19:59:11 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38902 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725891AbgEZX7K (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 26 May 2020 19:59:10 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D755260482;
-        Tue, 26 May 2020 23:58:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1590537519;
-        bh=8/BejdtwA/rh4F8qnLXQBbMGkembU7SW8Qja/QFHrsw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=TBKc3mTzgcRDpsNvb0oXOu20Jr1t7AhkTrq3kIaUy0ncEk1ye2MDTRskTC3dw8ukD
-         UTmbTP9bSOTv4bpgIef1xvzv3igcXZIaLMc0UoQv3Pzs2evEa+HOSQUQlAH0N1d4Jr
-         YrYCuaO/NRiNKSN3ZoU2zda9SqSGU4dyUw1cWDKm4Vq2U3sFwpQ+UpSIb+kdRW7AMQ
-         tpml+1YEI8eKdBSdSeb5vcuXoeLjkglUFfVV37zTU/qhI6LngarN4hVj8FQjBgVgMB
-         ZEL6EsGYkeeFLwylkCbm3ei8Lt3dPEA/GgWDFsVDbJ7JkNAtQtD4f8F5G4GF1fFQge
-         GsGJjjvlpZMiigtYUrugUeOfSvYe1VabMHub67pdPO7NtPSULveg9l5IB/cj5wQ5GX
-         dbD1caNq8fJ1T5Zz1en4sO4npBUUnELP3TH3TSgHYGv1pAmaAWmyURnlszmKby1iG3
-         M9Ft7S1wEnawvtvfGLlqAnJeeX+cX0uMSe713P1mJ7FNNSfMTNJ
-Date:   Tue, 26 May 2020 23:58:34 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Marco Trevisan via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Marco Trevisan <mail@3v1n0.net>
-Subject: Re: [PATCH] completion: use native ZSH array pattern matching
-Message-ID: <20200526235834.GG1915090@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Marco Trevisan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Marco Trevisan <mail@3v1n0.net>
-References: <pull.645.git.1590520398132.gitgitgadget@gmail.com>
+        id S1726330AbgE0CVq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 May 2020 22:21:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44802 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725826AbgE0CVp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 May 2020 22:21:45 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BEFC061A0F
+        for <git@vger.kernel.org>; Tue, 26 May 2020 19:21:45 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id k22so9489081pls.10
+        for <git@vger.kernel.org>; Tue, 26 May 2020 19:21:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=5RSYrZiyDNDwpuh6CFhN+3fpjFARTpzTKshvPAb4r3s=;
+        b=I43pA2f63zZi3uWDh89waz22obYh2CXqzHm+I7p3fhglGnU2LJh0mpxLm9hpqXpMo3
+         ZRtMqby0puQMzvHqQ8v+wdqd5GA2+O458D0fg6iiT4h3/UOOfGb20uW9hLGpiikJXbyM
+         yUfBfimhyqQqJlVu7S8z1M0pu1rmk3w8KlxAaPPogUm4N2Xro032wHGekrl88ZSOxgoE
+         48/ogJ+p0yPiMzZ0JWcLoZENCVSo9tIw4gnovxMMV4EbNM7sjGNOZ345bqVq7BRx1bKB
+         +kvm4vanp7Iyt7emiUnru+sIX9lmPj7P9skuex4e9WVgznk7kX60S5/M/tugp5UT+bUa
+         18kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=5RSYrZiyDNDwpuh6CFhN+3fpjFARTpzTKshvPAb4r3s=;
+        b=pSEEiyndRJ/dEI9ypP1qlLrqGvyZiORwlndf7nz4ZiC2yviQKUD27iA7qDmfcQwv/E
+         P/D/ikBf4E38zbeblg4lvulsF/34t6usRnUWo/oLu/QEPF8tVLBLU5/4LLS/FQIo4xY6
+         b5Jvruc/ckpCpkXm+xElx5IsysgYJLw5Uv8Sqo5JlQ0Aovg/hLGhS8ApLIUGJwh1oVvX
+         EIOxliYe7jyL8koN9dBx1FFublZaXy0G7L9a6/zdZqP6Jjg/nC6e+Z+Bisx6YB8nVVgf
+         uwch+2jNqyNRWF+rAmNvGP/lPKDxM7YmQm5Yn7fw1hn9wUEDtousLr5TNWjEqfcvzU6n
+         iMSA==
+X-Gm-Message-State: AOAM531eRyhDZiJAuP9Ev0OCfolBeU1E18QTki5UWiGBoj2oDbG3+RUm
+        9sx8hRfZ+1FpY4Wgvn89Ye5bq30L
+X-Google-Smtp-Source: ABdhPJzGGxG1iULtGDEQS5En30yhb70Eov7789PzNJ+Ld1lY9xoZnmTu9MGdV7BEfqCsDedDNFfKYA==
+X-Received: by 2002:a17:902:c082:: with SMTP id j2mr3946641pld.268.1590546105019;
+        Tue, 26 May 2020 19:21:45 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id m12sm744792pgj.46.2020.05.26.19.21.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 May 2020 19:21:44 -0700 (PDT)
+Date:   Tue, 26 May 2020 19:21:42 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, hanwen@google.com
+Subject: Re: [PATCH] reftable: technical documentation link fixes
+Message-ID: <20200527022142.GB172669@google.com>
+References: <20200525210232.87550-1-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="FLPM4o+7JoHGki3m"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.645.git.1590520398132.gitgitgadget@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-1-amd64)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200525210232.87550-1-carenas@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Carlo Marcelo Arenas Belón wrote:
 
---FLPM4o+7JoHGki3m
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Subject: reftable: technical documentation link fixes
 
-On 2020-05-26 at 19:13:17, Marco Trevisan via GitGitGadget wrote:
-> From: =3D?UTF-8?q?Marco=3D20Trevisan=3D20=3D28Trevi=3DC3=3DB1o=3D29?=3D <=
-mail@3v1n0.net>
->=20
-> When clearing the builtin operations on re-sourcing in the ZSH case we
-> can use the native ${parameters} associative array keys values to get
-> the currently `__gitcomp_builtin_*` operations using pattern matching
-> instead of using sed.
->=20
-> As also stated in commit 94408dc7, introducing this change the usage of
-> sed has some overhead implications, while ZSH can do this check just
-> using its native syntax.
->=20
-> Signed-off-by: Marco Trevisan (Trevi=C3=B1o) <mail@3v1n0.net>
+For next time, try to make the subject line summarize what specific
+improvement the patch makes.  For example:
+
+	reftable doc: use link: and urlencode to avoid dead links
+
+> Showing as broken links in the html version (when using asciidoc 8.6.10)
+> because some of the characters in the url need encoding.
+>
+> Change them to use a explicit "link" and URL encode the problematic
+> charecters (ex: +, =, @).  While at it, change the base URL to use
+> lore.kernel.org as has been suggested since 56e6c16394 (Merge branch
+> 'dl/lore-is-the-archive', 2019-12-06)
+>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 > ---
->     completion: Use native ZSH array pattern matching
->    =20
->     When clearing the builtin operations on re-sourcing in the ZSH case we
->     can use the native ${parameters} associative array keys values to get
->     the currently __gitcomp_builtin_* operations using pattern matching
->     instead of using sed.
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-645%2F3=
-v1n0%2Fzsh-native-operation-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-645/3v1n0/=
-zsh-native-operation-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/645
->=20
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 70ad04e1b2a..ad6934a3864 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -373,7 +373,7 @@ __gitcomp ()
->  # Clear the variables caching builtins' options when (re-)sourcing
->  # the completion script.
->  if [[ -n ${ZSH_VERSION-} ]]; then
-> -	unset $(set |sed -ne 's/^\(__gitcomp_builtin_[a-zA-Z0-9_][a-zA-Z0-9_]*\=
-)=3D.*/\1/p') 2>/dev/null
-> +	unset ${(M)${(k)parameters[@]}:#__gitcomp_builtin_*} 2>/dev/null
->  else
->  	unset $(compgen -v __gitcomp_builtin_)
->  fi
+>  Documentation/technical/reftable.txt | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
-This file is necessarily used by both bash and zsh.  Does bash
-(including the bash 3 used on macOS) happen to continue to work with
-this syntax?
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-We've had cases in the past where despite some code running under shell
-A, shell B, which also parsed file, choked on the data because it
-had to parse it even though it didn't execute it.
-
-If so, and this works there, can you mention that in your commit message
-for future readers?
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---FLPM4o+7JoHGki3m
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXs2tKgAKCRB8DEliiIei
-gczSAQDKHldIX3y4ut5qCAJ+W57gYfLttEmNlgVzDYJYWMkJ6QD+PIIm+xh9HxGw
-8rv7sUKxfxvDY9JXh1/lgK2hSaQXmwM=
-=+cXs
------END PGP SIGNATURE-----
-
---FLPM4o+7JoHGki3m--
+Thanks.
