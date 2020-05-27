@@ -6,39 +6,38 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D21C3C433E2
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 11:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3731C433E0
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 11:38:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B564520888
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 11:38:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBB0620888
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 11:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730099AbgE0Lik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 07:38:40 -0400
+        id S1728061AbgE0Lis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 07:38:48 -0400
 Received: from mga18.intel.com ([134.134.136.126]:3343 "EHLO mga18.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730090AbgE0Lii (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 07:38:38 -0400
-IronPort-SDR: yIos0zB07lzMf0/gb4BFAfZgYWkYMK6khOtfH81wiAbyXk9rcOhEs4z3O2RHuh0qQ0tNCRUIpC
- NM1UwI+tWUeA==
+        id S1730075AbgE0Lig (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 07:38:36 -0400
+IronPort-SDR: /zBeaFpDqe4fQ9pQcWpYHtDqhWXfjsj6qkfv+ycDcf5HxcDZ6l7IP7vNOFsMlpKU9aJJWpdK98
+ GT+R4T+1z4bw==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
   by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2020 04:38:34 -0700
-IronPort-SDR: vV6MX35L64bu4BoJB6ExKphY148NFhMYgasD3yLvrvAnDPgwoNAej6+wQCWxcGAUuncIGabhGl
- QII/yMJ07mLw==
+IronPort-SDR: /LDSV9MZae240sa6HIrFzWOXBE9H13naiG+dk6f8isMu7k5klN47FwI/zIpkvOpo3PowVzWo2P
+ 48iwPWI1195w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,441,1583222400"; 
-   d="scan'208";a="302431797"
+   d="scan'208";a="302431800"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.33])
   by orsmga008.jf.intel.com with ESMTP; 27 May 2020 04:38:34 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/9] completion: extract function __git_dwim_remote_heads
-Date:   Wed, 27 May 2020 04:38:25 -0700
-Message-Id: <20200527113831.3294409-4-jacob.e.keller@intel.com>
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v2 6/9] completion: improve handling of --detach in checkout
+Date:   Wed, 27 May 2020 04:38:28 -0700
+Message-Id: <20200527113831.3294409-7-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.25.2
 In-Reply-To: <20200527113831.3294409-1-jacob.e.keller@intel.com>
 References: <20200527113831.3294409-1-jacob.e.keller@intel.com>
@@ -51,76 +50,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-__git_refs() has the ability to report unique remote names for
-supporting completion of remote branch names for the DWIMery of git
-checkout and git switch.
+Just like git switch, we should not complete DWIM remote branch names
+if --detach has been specified. To avoid this, refactor _git_checkout in
+a similar way to _git_switch.
 
-For git checkout, this is fine, because it always supports completing
-all local references.
+Note that we don't simply clear dwim_opt when we find -d or --detach, as
+we will be adding other modes and checks, making this flow easier to
+follow.
 
-However, git switch by default only supports either switching branches
-or using this DWIMery to create a local branch tracking the remote
-branch.
-
-Future work to cleanup and improve completion support for git switch
-will be aided if the remote branch names can be completed separately
-from __git_refs.
-
-Extract this logic to a function __git_dwim_remote_heads(), and use it
-in __git_refs.
+Add new tests for the expected --detach behavior for both git switch and
+git checkout.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- contrib/completion/git-completion.bash | 28 +++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ contrib/completion/git-completion.bash |  7 +++-
+ t/t9902-completion.sh                  | 44 ++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ed966f5e2991..8854812cb32e 100644
+index 53afd72d0e4e..38b5a5a0d874 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -621,6 +621,26 @@ __git_tags ()
- 			"refs/tags/$cur_*" "refs/tags/$cur_*/**"
+@@ -1489,7 +1489,12 @@ _git_checkout ()
+ 		;;
+ 	*)
+ 		local dwim_opt="$(__git_checkout_default_dwim_mode)"
+-		__git_complete_refs $dwim_opt
++
++		if [ -n "$(__git_find_on_cmdline "-d --detach")" ]; then
++			__git_complete_refs --mode="refs"
++		else
++			__git_complete_refs $dwim_opt --mode="refs"
++		fi
+ 		;;
+ 	esac
  }
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index ec9437688cd7..5b1868e43632 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1360,6 +1360,50 @@ test_expect_success 'git checkout - a later --no-guess overrides previous --gues
+ 	EOF
+ '
  
-+# List unique branches from refs/remotes used for 'git checkout' and 'git
-+# switch' tracking DWIMery.
-+# 1: A prefix to be added to each listed branch (optional)
-+# 2: List only branches matching this word (optional; list all branches if
-+#    unset or empty).
-+# 3: A suffix to be appended to each listed branch (optional).
-+__git_dwim_remote_heads ()
-+{
-+	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
-+	local fer_pfx="${pfx//\%/%%}" # "escape" for-each-ref format specifiers
++test_expect_success 'git switch - with --detach, complete all references' '
++	test_completion "git switch --detach " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
 +
-+	# employ the heuristic used by git checkout and git switch
-+	# Try to find a remote branch that cur_es the completion word
-+	# but only output if the branch name is unique
-+	__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
-+		--sort="refname:strip=3" \
-+		"refs/remotes/*/$cur_*" "refs/remotes/*/$cur_*/**" | \
-+	uniq -u
-+}
++test_expect_success 'git checkout - with --detach, complete only references' '
++	test_completion "git checkout --detach " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
 +
- # Lists refs from the local (by default) or from a remote repository.
- # It accepts 0, 1 or 2 arguments:
- # 1: The remote to list refs from (optional; ignored, if set but empty).
-@@ -696,13 +716,7 @@ __git_refs ()
- 		__git_dir="$dir" __git for-each-ref --format="$fer_pfx%($format)$sfx" \
- 			"${refs[@]}"
- 		if [ -n "$track" ]; then
--			# employ the heuristic used by git checkout
--			# Try to find a remote branch that matches the completion word
--			# but only output if the branch name is unique
--			__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
--				--sort="refname:strip=3" \
--				"refs/remotes/*/$match*" "refs/remotes/*/$match*/**" | \
--			uniq -u
-+			__git_dwim_remote_heads "$pfx" "$match" "$sfx"
- 		fi
- 		return
- 	fi
++test_expect_success 'git switch - with -d, complete all references' '
++	test_completion "git switch -d " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
++
++test_expect_success 'git checkout - with -d, complete only references' '
++	test_completion "git checkout -d " <<-\EOF
++	HEAD Z
++	master Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/master-in-other Z
++	EOF
++'
++
+ test_expect_success 'teardown after ref completion' '
+ 	git branch -d matching-branch &&
+ 	git tag -d matching-tag &&
 -- 
 2.25.2
 
