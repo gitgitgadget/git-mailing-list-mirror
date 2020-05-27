@@ -2,135 +2,174 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51C99C433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 12:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 233CFC433DF
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 12:25:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31A3520888
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 12:21:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E845820888
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 12:25:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DTs6gWqI"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="d9IPToK/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389306AbgE1MVx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 08:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50382 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389213AbgE1MVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 08:21:51 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84866C05BD1E
-        for <git@vger.kernel.org>; Thu, 28 May 2020 05:21:51 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id y11so3211969plt.12
-        for <git@vger.kernel.org>; Thu, 28 May 2020 05:21:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uqKuJXoIYZCIe38F7o8Q3bJDHZEd2zu63y8I1xHGub8=;
-        b=DTs6gWqIrgf9fPjiwV71k9OBaYWzrR845AvvElKU9OXoP7UBTK94Cdu2dEtyKmXwfg
-         pJoTYZ4rC4m8tOJQg8motbwe6GP8IwOciRoq30V4Uy/GY/lHIE8ehL+gqsn8hHu4xbaL
-         YksvH/RRP16e3MUNCuv9d6gRgv9/qGSujzTj06A9qWAnP53kQ5ZNmfqMPjfoUDU28i1i
-         +6iXevkob1A2D6x4GgKFQha63PDJ6SBvL6NvkyAQFRNR7oZmYtzS2VOR09zAQYlKCUnO
-         YU014EDQRGThZ/zCSwnRdTzaCFLcmYU7PQaPyEEftZqJHP+EH664ENBasRrNqK1uzZfO
-         zgKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uqKuJXoIYZCIe38F7o8Q3bJDHZEd2zu63y8I1xHGub8=;
-        b=hfvaS3TckZ2q3W7K1ykWJEcEk/pZkAWHhQd1S6t+tNQIGatWwbCI0IjHuCPn0qlMVr
-         AgMoNMuRAWmMSTBhayJNt9uUfsz1DXJHPIEoIdGZAFtG/WmOT5UPRN7lJDkKj9tcF/es
-         jrIxomyBmUSj73HNIg4fm24EkxvZQL1sANPvixqU2cKutM88WzPYABObGrqOEvqgf7W1
-         q/c3eUbb6Z+Yt0EkS6NeQ6j89FMBkX6XevD7iB6b628PeYDWGlTsSBqYVtFIKwFEh3fL
-         gT7S3LozMRTz12FdWXOFSsqG6acdKRW9tkW5+ft4k8gcX3JaTR03zUyuBGRjfEhI7QR6
-         LuJQ==
-X-Gm-Message-State: AOAM532fUXIKC+7LW5l+JtUaMp2kW5c4oIXIIGKxW6uUI2oTeOoGrOX0
-        km9JGGQ/DAWRHWU+lOwM6vw=
-X-Google-Smtp-Source: ABdhPJxnfKHCdtKzHunayf+q7SS4wbDwzjQVRyZ0msRUj+a2TJrMrSJ9WI9bIAublB4lLks4KWRdDQ==
-X-Received: by 2002:a17:90a:c28c:: with SMTP id f12mr3183709pjt.152.1590668511020;
-        Thu, 28 May 2020 05:21:51 -0700 (PDT)
-Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
-        by smtp.gmail.com with ESMTPSA id q28sm4781604pfg.180.2020.05.28.05.21.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 05:21:50 -0700 (PDT)
-Date:   Thu, 28 May 2020 19:21:47 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, gitster@pobox.com,
-        liu.denton@gmail.com, sunshine@sunshineco.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v4] submodule: port subcommand 'set-branch' from shell to
- C
-Message-ID: <20200528122147.GA1983@danh.dev>
-References: <20200521163819.12544-1-shouryashukla.oo@gmail.com>
- <20200523163929.7040-1-shouryashukla.oo@gmail.com>
- <33127873-fb19-2bd5-3028-bcd1757e92e5@gmail.com>
- <20200527171358.GA22073@konoha>
+        id S2389213AbgE1MZf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 08:25:35 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57473 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388767AbgE1MZe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 08:25:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1590668714;
+        bh=Hp2SykjHi+YLMQA7UK3BACeXIXyiSxyyd7Z7TJehnIQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=d9IPToK/y0Tfr4LQHppYrvS990swsRstBNG1EgIwNJXI4h396OePDQUKeEN2mP7Wx
+         bIclDWB/QHF5D2Q4dmMispETx+IpwTqGI5+ZdiWnZtox+FyLq302a6GgbB9t20+6DF
+         qv2n5rBzxhOXQoQSu2DW3AS1pZSzmrNbcftJ1NuY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.211.123] ([89.1.215.188]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma24y-1jYpYs0lqW-00Vw01; Thu, 28
+ May 2020 14:25:14 +0200
+Date:   Wed, 27 May 2020 21:51:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Merlin_B=C3=BCge?= <toni@bluenox07.de>
+Subject: Re: [PATCH] checkout -p: handle new files correctly
+In-Reply-To: <20200527230357.GB546534@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2005272150220.56@tvgsbejvaqbjf.bet>
+References: <pull.646.git.1590613746507.gitgitgadget@gmail.com> <20200527230357.GB546534@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200527171358.GA22073@konoha>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Df7ilCG575Be4VsPzutdGI4NbRjBbjXVcVx005dVWF/DAhjVtdO
+ swqaQoKeJjYsmb1wgeARS/CeCJM8WbnpGJww1IBKp4cB/8TYjTsOGdaIsk+AHcZ9DV3r3CP
+ ZDvbVeJtVJPAt5nZtKoQ14/Qp3JQeh74kNRVMiHVrKYDpsAhuQ+uv6uTz8lNzomYUxG5ZKG
+ fYVC4hCOuX5nNF0rjZTeg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qmHIMiylI5c=:bUOshTF0e57r/WO1P+Oxnl
+ bqX2iRb/8Gy9uXOM54HLE9UPlZoDY+cZwVyzVcGNPLgBcvY9neRdDuM3q8wAfWZE9yundJF/e
+ eYpzUjOW1zsULg17hkx1juAhHIhA8827UQJ9xMwVdYT2cj5XL51cipvBtHr7PqFxnHGD+cSeq
+ w2DmyNLhKvA2dc7SQziBpOh7TBCPPpmPTa2Cuftn/VkdtHhswPwNpSeLr3X/dWIW1oBk9aYrV
+ n4CFj21HZOQ+Z5BNlBtY0vK8DBeqJUB4U4MC2832FybrGGksBTxEW/ZgzWXyBLyMCTry2nsFL
+ 6v5k8qS16Rtrqo4rzpjyTPlDV6/VUxJQUpqVxMQ6mBT+QlmKGjxmeMRoQ2fcogHm2GgqJUWBa
+ vzS6Qcpm0rn2FACjVNWhrDoydz90ciET8JpM1wBGYkps3Zfj9o8cAbg7lCKTxn8c7mbukhZfY
+ E1M/caSy5oIqJ5WC31Pm5IEd9MlDx/jTfWR5kp8Ns61QYYLx3DvgdqZiBTx6LR5xhQvOhKfs0
+ xFkvuC5wFQoD6T+yzt40z8iTWwq0vCjdAgPPcFwlkQsZiUI8NiZdnB/qNI1OU/xwAZI9/mtWf
+ 81TlELwLeTd9NX5B51T1aEZCKUph48xQBY7f0D7nhKyGnEPWRuCwL0Um7vbO3Fv64dPn2aq4t
+ NiZ/nQUNZi0nP9a1BcTQUf7HqiIqr1PzGsDHmeVSEbexW5FURG5gpIwCi5fGiMi/tf/W1ZBZM
+ NXX04Evg3eA71w9WQhbaiGu/Xp+mdMfBs2bbghJlRqXTjh46iO5hSPjgKDF70pAbTEzlsjQY8
+ 9YrtKEHQeyg1YyKsk0KSAf1vje0/JjA91ZjWviLm/bzJm7eScnBEPY6ic28YMI2vmQ3ZuA4CX
+ yXPkDtLJCkwoLD2h02sgmZcmeHZrRaR206qn8t1xiZFVSB5Q+Uz0ihybR9K6M+hls75b6ioPB
+ KgZzkuMt87g+Cp7lO5ey3M1BzBIjoe2j7/3Dml2NGHYuIME4VdUoWMBHdl2/++aPuiJ+YkuXV
+ MsqENAAj6KavoXHUAgor7UYoZEXe2TCSyIr5UN4YKnOOuaTidkudRkxmN10K732kdTDpj3Amn
+ FLRGkZ9q1LG2TmOHkODtWO82N91/eiYAOLMSDfIgbQJ4cikCnEy1FcvlTm9nqY5yYqeac/wQm
+ p8eMUl7oVSZca9GJLoyi/KVIi8xq63OAGoON+jrbuhHyuoCue3IkXY9+33b33ybjg4BqGjl4A
+ CHxpC01jgbyr85Shx
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-05-27 22:43:58+0530, Shourya Shukla <shouryashukla.oo@gmail.com> wrote:
-> On 24/05 12:19, Kaartic Sivaraam wrote:
-> > As '--quiet' in 'set-branch' is a no-op and is being accepted only for
-> > uniformity, I think it makes sense to use OPT_NOOP_NOARG instead of
-> > OPT__QUIET for specifying it, as suggested by Danh.
-> > 
-> > Also, the description "suppress output for setting default tracking branch"
-> > doesn't seem to be valid anymore as we don't print anything when set-branch
-> > succeeds.
-> 
-> I think it will all boil down to the consistency of all the subcommands.
-> Changing this would require making changes in various places: the C code
-> (obviously), the shell script (not only the cmd_set_branch() function
-> but the part for accepting user input as well) and the Documentation (I
-> might have maybe missed a couple of other changes to list here too). Its
+Hi Peff,
 
-I don't think this is a valid argument.
+On Wed, 27 May 2020, Jeff King wrote:
 
-Using OPT_NOOP_NOARG doesn't require any change in shell script since
-the binary still accepts -q|--quiet.
+> On Wed, May 27, 2020 at 09:09:06PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+>
+> > However, since the same machinery was used for `git checkout -p` &
+> > friends, we can see new files.
+> >
+> > Handle this case specifically, adding a new prompt for it that is
+> > modeled after the `deleted file` case.
+>
+> Thanks! I was planning to dig further into this topic today, and here it
+> is all wrapped up with a bow. :)
 
-The documentation of --quiet is still valid (since it doesn't print
-anything regardless)
+:-)
 
-The only necessary change in in that C code.
+>
+> >  add-patch.c                | 30 +++++++++++++++++++++++-------
+> >  git-add--interactive.perl  | 21 +++++++++++++++++++--
+>
+> Ooh, you even fixed the perl version, too. I was just going to leave it
+> in the dust and add a test that set GIT_TEST_ADD_I_USE_BUILTIN.
 
-> not that I don't want to do this, but it would add unnecessary changes
-> don't you think? I would love it if others could weigh in their opinions
-> too about this.
-> 
->  > +	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch $branch} ${default:+--default} -- "$@"
-> 
-> > Danh questioned whether '$branch' needs to be quoted here. I too think it
-> > needs to be quoted unless I'm missing something.
-> 
-> We want to do this because $branch is an argument right?
+As long as there is an escape hatch, I try to keep it working.
 
-We want to do this because we don't want to whitespace-split "$branch"
+> Both versions look good, and are similar to what I expected from looking
+> at it last night.
 
-Let's say, for some reason, this command was run:
+Thank you!
 
-	git submodule set-branch --branch "a-branch --branch another" a-submodule
+> > The original patch selection code was written for `git add -p`, and th=
+e
+> > fundamental unit on which it works is a hunk.
+> >
+> > We hacked around that to handle deletions back in 24ab81ae4d
+> > (add-interactive: handle deletion of empty files, 2009-10-27). But `gi=
+t
+> > add -p` would never see a new file, since we only consider the set of
+> > tracked files in the index.
+>
+> I lied a little with "would never see a new file". There _is_ a related
+> case with "add -p" that might be worth thinking about: intent-to-add
+> files.
 
-This version will run:
+Indeed. Maybe I can leave that as #leftoverbits?
 
-	git submodule--helper --branch a-branch --branch another a-submodule
+Ciao,
+Dscho
 
-Which will success if there's a branch "another" in the "a-submodule".
-While that command should fail because we don't accept refname with
-space.
-
--- 
-Danh
+>
+>   $ git init
+>   $ >empty
+>   $ echo content >not-empty
+>   $ git add -N .
+>   $ git add -p
+>   diff --git a/not-empty b/not-empty
+>   index e69de29..d95f3ad 100644
+>   --- a/not-empty
+>   +++ b/not-empty
+>   @@ -0,0 +1 @@
+>   +content
+>   (1/1) Stage this hunk [y,n,q,a,d,e,?]? n
+>
+>   [no mention of empty file!]
+>
+> I think the culprit here is diff-files, though, which doesn't show a
+> patch for intent-to-add:
+>
+>   $ git diff-files
+>   :100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 00000000000000=
+00000000000000000000000000 M	empty
+>   :100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 00000000000000=
+00000000000000000000000000 M	not-empty
+>
+>   $ git diff-files -p
+>   diff --git a/not-empty b/not-empty
+>   index e69de29..d95f3ad 100644
+>   --- a/not-empty
+>   +++ b/not-empty
+>   @@ -0,0 +1 @@
+>   +content
+>
+> I don't think this really intersects with the patch here at all, because
+> diff-files is not producing "new file" lines for these entries (even for
+> the non-empty one).
+>
+> The solution _might_ be to convince diff-files to treat i-t-a entries as
+> creations. And then with your patch here, we'd naturally do the right
+> thing. So I don't think this needs to hold up your patch in any way, nor
+> do we necessarily need to deal with i-t-a now. I was mostly curious how
+> they worked, since we don't support added files. The answer is just that
+> they don't always. ;)
+>
+> -Peff
+>
