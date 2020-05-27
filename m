@@ -2,141 +2,86 @@ Return-Path: <SRS0=7zPC=7J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5747BC433E0
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C6F3C433E1
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:47:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F05CA2071A
-	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:45:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5035D20873
+	for <git@archiver.kernel.org>; Wed, 27 May 2020 16:47:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VJp/rAKV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GGiQO8Sw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391458AbgE0QpW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 12:45:22 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65195 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391452AbgE0QpV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 12:45:21 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6F41ACA354;
-        Wed, 27 May 2020 12:45:18 -0400 (EDT)
+        id S2391663AbgE0QrH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 12:47:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50752 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391654AbgE0QrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 12:47:05 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF64D7585F;
+        Wed, 27 May 2020 12:47:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nJ61ZA/RUSsBJgfU4apGrQD5EBA=; b=VJp/rA
-        KVeljJ+JL2Owkr17UwUUYsyZl3d4M0/ySkbilU35dxIIsux5zDG7Eg91bzTNAZCi
-        eCaEirUTJhwMvMxF1DOPvRGyKKwYE4H4gMQPQ3J9HnO9ZX5UzbebVawpQgyDV8xr
-        6jyVcUN6/bc6vG0pMiBX/N7Ubaa2zr/VQcmMA=
+        :content-type; s=sasl; bh=C9lLlkSdNrXGdh5hXfHODVnFNP4=; b=GGiQO8
+        SwCgFSVbcgRgnlELY7xHJ8fXDTBb7GW8BJq+DqY8lhK6lPTQN1WsAlt2CSuaj7H2
+        siJ2BZapsEc4kz9ToQGY3SSJz2cwj3y56BWN8BR9wZtcs7ksmK9nYTJ2N4WZpQA8
+        1Zoi/Kk57sZj/6Md37PI+Km6ab46xGGqMvlf4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=U+dvTUw/zszLCTRS0xcoe26UjqG5xwT3
-        M87wfsxPrwMDp1PnouMlGbWfYQfTay5oXqVqpfdwo3XiU9laOhVXoEXYgJq4aO+b
-        PdfEcc2xRDyEFm2LesGWu2RpT5nmUPzPxc2u5R5iqMNmaJdshjt9Y0aoKPe0CSId
-        LO9ZxpCgrFA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 66680CA352;
-        Wed, 27 May 2020 12:45:18 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=DEh7/W9b2etf/AQifYw/WVwhXMm6SDyN
+        V00UIE/wiOPzR3iBCVPSuH/SzxKcPI1ItwcKVQw3lNmD1U7WShd0+enolNEF4TMO
+        MOxLVylq6KIZJ/KXZNyzBqtTYsix6CbytebQ7q8AdkkM7EElQUqEBi7s9gWP7KhP
+        IWa0GhdN7BY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C54A47585E;
+        Wed, 27 May 2020 12:47:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
+Received: from pobox.com (unknown [35.231.104.69])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A821ACA351;
-        Wed, 27 May 2020 12:45:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33B767585D;
+        Wed, 27 May 2020 12:47:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Simon Ser <contact@emersion.fr>
-Cc:     git@vger.kernel.org, me@ttaylorr.com,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] grep: add configuration variables for --heading
-References: <4WK2xPaKLXPbLE0jjY0rBR9M_BVt69rzJKBN17M0ily4VPYuMNC_a2kXsIKWR8y6lc7j58WpBmaIqdbJ1whnjonrfEWz7YE-WpdQqCu_lN0=@emersion.fr>
-        <C5PlGbi78_QpceNrgFm_-Wt6BooqbntaL8OdH7XjxjXCtyIfsisyeOQMslLOwNY68Dg7iUxGIvzLPAvUEWyMIC0GdpTgeWwgwD5sWlsyrSM=@emersion.fr>
-Date:   Wed, 27 May 2020 09:45:13 -0700
-In-Reply-To: <C5PlGbi78_QpceNrgFm_-Wt6BooqbntaL8OdH7XjxjXCtyIfsisyeOQMslLOwNY68Dg7iUxGIvzLPAvUEWyMIC0GdpTgeWwgwD5sWlsyrSM=@emersion.fr>
-        (Simon Ser's message of "Wed, 27 May 2020 15:45:46 +0000")
-Message-ID: <xmqqeer5mina.fsf@gitster.c.googlers.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.27.0-rc2
+References: <xmqqtv02mt2m.fsf@gitster.c.googlers.com>
+        <e66ea483-5e7f-4ebd-5ba8-91227efa454a@gmail.com>
+Date:   Wed, 27 May 2020 09:47:01 -0700
+In-Reply-To: <e66ea483-5e7f-4ebd-5ba8-91227efa454a@gmail.com> (Kaartic
+        Sivaraam's message of "Wed, 27 May 2020 00:36:29 +0530")
+Message-ID: <xmqqa71tmika.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 70F72AF2-A039-11EA-92D6-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B075B298-A039-11EA-B15E-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simon Ser <contact@emersion.fr> writes:
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-> There are already configuration variables for -n and --column. Add one
-> for --heading, allowing users to customize the default behaviour.
+> Hi Junio,
 >
-> Signed-off-by: Simon Ser <contact@emersion.fr>
-> ---
+> On 27-05-2020 00:17, Junio C Hamano wrote:
+>> Shourya Shukla (4):
+>>        submodule--helper.c: Rename 'cb_foreach' to 'foreach_cb'
+>>        gitfaq: files in .gitignore are tracked
+>>        gitfaq: fetching and pulling a repository
+>>        submodule: port subcommand 'set-url' from shell to C
 >
-> v2: add a test
->
->  Documentation/git-grep.txt | 3 +++
->  grep.c                     | 5 +++++
->  t/t7810-grep.sh            | 5 +++++
->  3 files changed, 13 insertions(+)
->
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index a7f9bc99eaf1..ed4f05d885a2 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -47,6 +47,9 @@ grep.lineNumber::
->  grep.column::
->  	If set to true, enable the `--column` option by default.
->  
-> +grep.heading::
-> +	If set to true, enable the `--heading` option by default.
-> +
+> This is the only place where the `set-url` conversion from Shell to C
+> is mentioned. I wonder if it's enough or if it needs a little bit more
+> attention may be in the "Performance, Internal Implementation,
+> Development Support etc." as it is a conversion of a submodule
+> sub-command?
 
-OK.
-
-Naturally it follows that a command-line option
-
-	$ git config grep.heading yes
-	$ git grep --no-heading -e pattern
-
-is a way to countermand the configured default per invocation
-basis.
-
-> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-> index 991d5bd9c03f..1acc6fe89c51 100755
-> --- a/t/t7810-grep.sh
-> +++ b/t/t7810-grep.sh
-> @@ -1556,6 +1556,11 @@ test_expect_success 'grep --heading' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'grep with grep.heading=true' '
-> +	git -c grep.heading=true grep -e char -e lo_w hello.c hello_world >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-
-When writing new tests, we often get too excited and stop at showing
-off how well the shiny new feature works, but we should make sure
-that we test the "negative" case, too, i.e. that the "feature" can
-be disabled when the user does not want to trigger it, and that the
-"feature" notices incorrect invocations and fails appropriately.
-
-E.g.
-
-	git -c grep.heading=yes grep --no-heading ...
-
-should not leave the opt->heading true, and
-
-	git -c grep.heading=nonsense grep ...
-
-should fail, saying "grep.heading must be a bool" (or something
-along that line).
-
-Thanks.
-
->  cat >expected <<EOF
->  <BOLD;GREEN>hello.c<RESET>
->  4:int main(int argc, const <BLACK;BYELLOW>char<RESET> **argv)
+I'm not sure if it is worth the bits.  It may matter _only_ if/when
+new implementaiton of set-url hurts the end-users by being buggy ;-)
