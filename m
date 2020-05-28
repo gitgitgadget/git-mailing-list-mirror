@@ -2,107 +2,265 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A74FAC433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 19:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D999C433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 19:47:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6338F208B8
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 19:29:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00314207BC
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 19:47:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gCxobdh3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z8xfCPbo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406355AbgE1T3Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 15:29:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63158 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406289AbgE1T3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 15:29:24 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFC7058DBD;
-        Thu, 28 May 2020 15:29:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2957OHn6DcMHWCl2mG0wTs7k1qA=; b=gCxobd
-        h3ccCzEqtIm8NQ5rcIVKTgexR9TPuJMUMqM9b9cZx5+1+OnS3zEZDPRPlcoN+eiG
-        1vROweplGuB0njLhU5x6MKMrOsNQyWNw+DnvytaBJJe/K4uEvW8qT77y0i1HBZKU
-        j/49T04TLf5TbOaTBIhzDdB3QYgcJmA+KLEKg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tamLuoJcOOuNReToHL9ILNKRgmylzoGn
-        JNJxSNqpwR3x1PWMMAUBm74OlkMFq+1vYkzPAZdHGNdKLqsHm6bIardsXKGAW257
-        lJxTKZKB+UwKZU/xAKUG5rs9X5WaNEoVDClm5CeC0SIEZj/TtjNpuuHzy5WKLYp7
-        UyxK7kPIyoU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B62BD58DBC;
-        Thu, 28 May 2020 15:29:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0743F58DBA;
-        Thu, 28 May 2020 15:29:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kenneth Lorber <keni@his.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH v2 3/6] doc: Add namespace collision guidelines file
-References: <1589681624-36969-1-git-send-email-keni@hers.com>
-        <20200525232727.21096-1-keni@his.com>
-        <20200525232727.21096-4-keni@his.com>
-        <xmqqy2pb3new.fsf@gitster.c.googlers.com>
-Date:   Thu, 28 May 2020 12:29:20 -0700
-In-Reply-To: <xmqqy2pb3new.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 28 May 2020 11:49:27 -0700")
-Message-ID: <xmqqo8q73lkf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2406714AbgE1TrY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 15:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406708AbgE1TrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 15:47:10 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE40EC008632
+        for <git@vger.kernel.org>; Thu, 28 May 2020 12:47:05 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id q11so540339wrp.3
+        for <git@vger.kernel.org>; Thu, 28 May 2020 12:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=TMT/p0p/wFgp1KGmMBUtFHWfZ+EaU42OHCZCtr9WXPg=;
+        b=Z8xfCPboWcsebtc52YaaBPaEp3WcmHMzrnV35TImsKaH2spYhH7Z4q/2T9CX6OhWq7
+         jcF57AiW2NbQUG+9py0zzPWhOevP7KsvKXZibYD7wr+dAYexFG5H3/CawcANb0GOt34C
+         1MUZ2PzPXCAVNP563NdmYxa4mW6b8DD7CEQ5e8+8rnZUV17sE3GpdoBWqNbDMw439DoV
+         HNF3+WmrSfKAqsOxIhk4zMNyA10ZrOpUHzJ6t+5S1cLbGX2Wm/eKzqyOc05gb4bB9gTq
+         sgjDguvto+lU0aqK/rszsj4cdYvcIl1mCOXpKLKa3h9rO4HF3JOSuawIiQt3ERsoVB3F
+         oanA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=TMT/p0p/wFgp1KGmMBUtFHWfZ+EaU42OHCZCtr9WXPg=;
+        b=DuJZYk2ekRFC24TeVcnTtEP463Qm33fDejewtENtDy8DIn7m127p1pN2ss3hXsKnTT
+         Vo745uO9OQ4i9iH4hO/jUfgR/uhwJd9nX7o8mnptL6d9J4c4UcDewzoDId7IABwBBNQj
+         z0ej9yn0TVGXwZkZ6K85t6YWkOz2PmNFHh/iwxeK7b5wb804CoF9BGlUtDc/0eW6w7fa
+         tNqPVNpPM/WfnvByIRSWkRDOO2rWDx3VDwMCav0YBGN8KK4OlAYTNBMWCRcm45icfenx
+         IzIZzm4JQoS/jeyPWiiCveKsVflkOHjen1/hjNN/I7hZXVGvIMZ4GGV+yYI9WD6VuaMW
+         tElA==
+X-Gm-Message-State: AOAM531ZwZf2uZG8DMlJlpUkgJs3957q1j9Bv1cc4nDgZcWXgTIsmWX1
+        8xn3VkGGc+D7nFtoZcdrTkUOfALa
+X-Google-Smtp-Source: ABdhPJxBGHPW/R34h59qO8fuwvQ/YuJD3sluiGFraGwgM7/wAhtOKo4hj4gkObetYS2kBybovkJwBw==
+X-Received: by 2002:a5d:4404:: with SMTP id z4mr3997508wrq.189.1590695224400;
+        Thu, 28 May 2020 12:47:04 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d13sm7603461wmb.39.2020.05.28.12.47.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 12:47:03 -0700 (PDT)
+Message-Id: <5e401e4f1ac4847d1f15df4833fbc65c2531c155.1590695210.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
+References: <pull.539.v14.git.1589833884.gitgitgadget@gmail.com>
+        <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 28 May 2020 19:46:49 +0000
+Subject: [PATCH v15 13/13] Add reftable testing infrastructure
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 87A8F11E-A119-11EA-980F-C28CBED8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-> Kenneth Lorber <keni@his.com> writes:
->
->> +Git uses identifiers in a number of different namespaces:
->> +
->> +* environment variables
->> +* files in $GIT_DIR
->> +* files in the working trees
->> +* config sections
->> +* hooks
->> +* attributes
->
-> The names of the subcommands "git" can spawn is a shared resource.
-> You can install "git-imerge" program in one of the directories on
-> your $PATH and say "git imerge" to invoke the program.  
->
-> Two third-party developers may have to coordinate to avoid giving
-> the same name to their totally-unrelated tools, if they hope that
-> both of their tools to be useful in the larger Git ecosystem.
+* Add GIT_TEST_REFTABLE environment var to control default ref storage
 
-Also names of worktrees that are attached to a single repository.
-If a third-party tool wants to make it "easy" for its users by
-automatically taking a name to do its job (instead of forcing the
-users to come up with a name and giving it to the tool), the name
-must be chosen in such a way that it does not collide names in use
-and names the user (or other third-party tools) will pick in the
-future.
+* Add test_prerequisite REFTABLE.
 
-I (or others) may come up with other things that must be named and
-name collisions must be avoided.  Even though I already said that I
-didn't think the "suggestions to avoid name collisions" given by the
-RFC PATCH are well done, I do think it is worth being aware of the
-problem space, and enumerating what kind of names are shared and
-limited resource is the first step to become so.
+* Skip some tests that are incompatible:
 
-Thanks.
+  * t3210-pack-refs.sh - does not apply
+  * t9903-bash-prompt - The bash mode reads .git/HEAD directly
+  * t1450-fsck.sh - manipulates .git/ directly to create invalid state
 
+Major test failures:
 
+ * t1400-update-ref.sh - Reads from .git/{refs,logs} directly
+ * t1404-update-ref-errors.sh - Manipulates .git/refs/ directly
+ * t1405 - inspecs .git/ directly.
+
+Worst offenders:
+
+t1400-update-ref.sh                      - 82 of 185
+t2400-worktree-add.sh                    - 58 of 69
+t1404-update-ref-errors.sh               - 44 of 53
+t3514-cherry-pick-revert-gpg.sh          - 36 of 36
+t5541-http-push-smart.sh                 - 29 of 38
+t6003-rev-list-topo-order.sh             - 29 of 35
+t3420-rebase-autostash.sh                - 28 of 42
+t6120-describe.sh                        - 21 of 82
+t3430-rebase-merges.sh                   - 18 of 24
+t2018-checkout-branch.sh                 - 15 of 22
+..
+
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ builtin/clone.c               | 2 +-
+ builtin/init-db.c             | 2 +-
+ refs.c                        | 6 +++---
+ t/t1409-avoid-packing-refs.sh | 6 ++++++
+ t/t1450-fsck.sh               | 6 ++++++
+ t/t3210-pack-refs.sh          | 6 ++++++
+ t/t9903-bash-prompt.sh        | 6 ++++++
+ t/test-lib.sh                 | 5 +++++
+ 8 files changed, 34 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 4d0cf065e4a..780c5807415 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1109,7 +1109,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN,
+-		DEFAULT_REF_STORAGE, INIT_DB_QUIET);
++		default_ref_storage(), INIT_DB_QUIET);
+ 
+ 	if (real_git_dir)
+ 		git_dir = real_git_dir;
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index b7053b9e370..da5b4670c84 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -545,7 +545,7 @@ static const char *const init_db_usage[] = {
+ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *git_dir;
+-	const char *ref_storage_format = DEFAULT_REF_STORAGE;
++	const char *ref_storage_format = default_ref_storage();
+ 	const char *real_git_dir = NULL;
+ 	const char *work_tree;
+ 	const char *template_dir = NULL;
+diff --git a/refs.c b/refs.c
+index bd1f3cc0e45..ba5239b8421 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1748,7 +1748,7 @@ struct ref_store *get_main_ref_store(struct repository *r)
+ 	r->refs_private = ref_store_init(r->gitdir,
+ 					 r->ref_storage_format ?
+ 						 r->ref_storage_format :
+-						 DEFAULT_REF_STORAGE,
++						 default_ref_storage(),
+ 					 REF_STORE_ALL_CAPS);
+ 	if (getenv("GIT_DEBUG_REFS")) {
+ 		r->refs_private = debug_wrap(r->refs_private);
+@@ -1807,7 +1807,7 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 		goto done;
+ 
+ 	/* assume that add_submodule_odb() has been called */
+-	refs = ref_store_init(submodule_sb.buf, DEFAULT_REF_STORAGE, /* XXX */
++	refs = ref_store_init(submodule_sb.buf, default_ref_storage(),
+ 			      REF_STORE_READ | REF_STORE_ODB);
+ 	register_ref_store_map(&submodule_ref_stores, "submodule",
+ 			       refs, submodule);
+@@ -1821,7 +1821,7 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 
+ struct ref_store *get_worktree_ref_store(const struct worktree *wt)
+ {
+-	const char *format = DEFAULT_REF_STORAGE; /* XXX */
++	const char *format = default_ref_storage();
+ 	struct ref_store *refs;
+ 	const char *id;
+ 
+diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
+index be12fb63506..c6f78325563 100755
+--- a/t/t1409-avoid-packing-refs.sh
++++ b/t/t1409-avoid-packing-refs.sh
+@@ -4,6 +4,12 @@ test_description='avoid rewriting packed-refs unnecessarily'
+ 
+ . ./test-lib.sh
+ 
++if test_have_prereq REFTABLE
++then
++  skip_all='skipping pack-refs tests; incompatible with reftable'
++  test_done
++fi
++
+ # Add an identifying mark to the packed-refs file header line. This
+ # shouldn't upset readers, and it should be omitted if the file is
+ # ever rewritten.
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 344a2aad82f..09669203249 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -8,6 +8,12 @@ test_description='git fsck random collection of tests
+ 
+ . ./test-lib.sh
+ 
++if test_have_prereq REFTABLE
++then
++  skip_all='skipping tests; incompatible with reftable'
++  test_done
++fi
++
+ test_expect_success setup '
+ 	test_oid_init &&
+ 	git config gc.auto 0 &&
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index f41b2afb996..edaef2c175a 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -11,6 +11,12 @@ semantic is still the same.
+ '
+ . ./test-lib.sh
+ 
++if test_have_prereq REFTABLE
++then
++  skip_all='skipping pack-refs tests; incompatible with reftable'
++  test_done
++fi
++
+ test_expect_success 'enable reflogs' '
+ 	git config core.logallrefupdates true
+ '
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index ab5da2cabc4..5deaaf968b0 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -7,6 +7,12 @@ test_description='test git-specific bash prompt functions'
+ 
+ . ./lib-bash.sh
+ 
++if test_have_prereq REFTABLE
++then
++  skip_all='skipping tests; incompatible with reftable'
++  test_done
++fi
++
+ . "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
+ 
+ actual="$TRASH_DIRECTORY/actual"
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index dbc027ff267..3ce9b957b1b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1504,6 +1504,11 @@ parisc* | hppa*)
+ 	;;
+ esac
+ 
++if test -n "$GIT_TEST_REFTABLE"
++then
++  test_set_prereq REFTABLE
++fi
++
+ ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
+ test -z "$NO_PERL" && test_set_prereq PERL
+ test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
+-- 
+gitgitgadget
