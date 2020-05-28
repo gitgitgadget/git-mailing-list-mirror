@@ -2,50 +2,73 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86F07C433DF
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E822BC433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 22:04:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6785B2088E
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:51:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B896C206F1
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 22:04:49 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S+7bJmbg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436694AbgE1VvK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 17:51:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59324 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436611AbgE1VvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 17:51:09 -0400
-Received: (qmail 32183 invoked by uid 109); 28 May 2020 21:51:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 May 2020 21:51:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18738 invoked by uid 111); 28 May 2020 21:51:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 May 2020 17:51:08 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 28 May 2020 17:51:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     Steven Willis via GitGitGadget <gitgitgadget@gmail.com>
+        id S2436730AbgE1WEp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 18:04:45 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54362 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436758AbgE1WEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 18:04:41 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE593D509E;
+        Thu, 28 May 2020 18:04:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=R5u/tvEmb4az5+CWXbeBMHk8D84=; b=S+7bJm
+        bg9ixv7il6HNwuFr7vRXf67qo0BR3wZWgbmyyrc+YCHv8ShbTNpWVIV4u9YOuxJM
+        0ywjfL4ER7+/n169XuNSqb1NY7F+BhTG3hhxAAh2N9/aWHnSkOXru8VtY4PLYInD
+        S+rsUjG2pX/EOD57R30TtD5e9XIqladMsWdSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GAlFlVrige8gu2KdtLvXDZQKB42/2AyD
+        5XiVcAXLaEc18NsCJWK9oGk367GnRrOdcaqOVyAOLHgOe7GJGw27yZ9C3swnSWyz
+        OvwMdFlWp99JAotpGq6f3sB7sUjPSXSKUlWi3krSpnS2RqAsMTpziRhRNPFG/m1D
+        5PKoMptBk1w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C621CD509D;
+        Thu, 28 May 2020 18:04:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 17EC5D509C;
+        Thu, 28 May 2020 18:04:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Steven Willis via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Steven Willis <onlynone@gmail.com>
 Subject: Re: [PATCH] doc: ls-tree paths do not support wildcards
-Message-ID: <20200528215107.GA1265681@coredump.intra.peff.net>
 References: <pull.796.git.git.1590700996483.gitgitgadget@gmail.com>
+Date:   Thu, 28 May 2020 15:04:33 -0700
+In-Reply-To: <pull.796.git.git.1590700996483.gitgitgadget@gmail.com> (Steven
+        Willis via GitGitGadget's message of "Thu, 28 May 2020 21:23:16
+        +0000")
+Message-ID: <xmqq4krz3edq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.796.git.git.1590700996483.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3746CB90-A12F-11EA-A0CF-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 28, 2020 at 09:23:16PM +0000, Steven Willis via GitGitGadget wrote:
+"Steven Willis via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
 > From: Steven Willis <onlynone@gmail.com>
-> 
+>
 > Signed-off-by: Steven Willis <onlynone@gmail.com>
 > ---
 >     doc: ls-tree paths do not support wildcards
@@ -53,70 +76,12 @@ On Thu, May 28, 2020 at 09:23:16PM +0000, Steven Willis via GitGitGadget wrote:
 >     The documentation for ls-tree says that paths can be wildcards, but this
 >     appears to be incorrect, only raw paths seem to work.
 
-This part probably should be in the commit message. :)
+This is not something you would write after the three-dash line.
 
->  [<path>...]::
-> -	When paths are given, show them (note that this isn't really raw
-> -	pathnames, but rather a list of patterns to match).  Otherwise
-> +	When paths are given, show them (note that this is really raw
-> +	pathnames, not a list of patterns to match).  Otherwise
->  	implicitly uses the root level of the tree as the sole path argument.
+The documentation does not say paths can be wildcards.  It allows a
+list of "patterns to match" and never says they are wildcards.
 
-You're right that we don't match globs, but I don't think it's accurate
-to say that these aren't patterns, or that they are raw pathnames. We
-_do_ parse them as pathspecs, include magic prefixes. E.g.:
+I think they take the traditional "leading paths" (i.e. by saying
+"git ls-tree HEAD t/", you can show all paths that are under t/,
+and is different from the "raw path" i.e. "git ls-tree HEAD t").
 
-  $ git -C Documentation ls-tree HEAD -- :/Makefile
-  100644 blob 90aa329eb7836824a7a45383e4b5b157124d815c	../Makefile
-
-And we complain about pathspec magic that isn't supported in the
-matching code:
-
-  $ git ls-tree HEAD -- :^Makefile
-  fatal: :^Makefile: pathspec magic not supported by this command: 'exclude' (mnemonic: '!')
-
-But we don't complain about an attempt to use glob characters (which
-_could_ really be an attempt to specify a funny-named file, though I
-guess you could argue the same for ":" magic).
-
-So I think for now we ought to explain the situation a bit more clearly:
-leave this language as-is, but add a new section describing what
-patterns we do support.
-
-In the long run it would be nice to actually match regular pathspecs.
-That would be a backwards-incompatibility, which I think is why nobody
-has pursued it further (and ls-tree is meant to be plumbing that should
-stay consistent, so we need to be extra careful). So we'd need a
-transition plan. Perhaps:
-
-  1. Deprecate the current behavior in the documentation and release
-     notes, encouraging people who want literal matching to use
-     --literal-pathspecs or the ":(literal)" magic. AFAICT we've
-     supported these since at least 2013 for this command, so it should
-     be safe to use unconditionally.
-
-  2. Add a new option, "--use-pathspecs" or similar, that switches the
-     matching code to use match_pathspec(). That lets people use the new
-     feature immediately if they want to.
-
-  3. When --use-pathspecs is not in use, warn to stderr about any
-     wildcard characters in the input. That reinforces the deprecation
-     notice in (1) and is likely to get more people's attention.
-
-  4. After several releases, flip the default to --use-pathspecs,
-     leaving --no-use-pathspecs as an escape hatch for people who still
-     haven't switched their scripts.
-
-  5. After several more releases, eventually remove the old-style
-     matching (perhaps leaving --use-pathspecs as a noop).
-
-To be honest, that may be more careful than we absolutely need to be.
-We'd only do the wrong thing if you really do have files with glob
-metacharacters in their names. And if you're expecting to match names
-literally and not using ":(literal)" or similar, your script is
-_already_ wrong, since it would be barfing on names starting with a
-colon. I have a feeling we made that backwards-incompatible change when
-this was converted to pathspecs years ago, and nobody noticed either
-way.
-
--Peff
