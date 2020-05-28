@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CFFDC433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70BC3C433E1
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:11:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06E74207D3
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:11:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61251207D3
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:11:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405715AbgE1SLT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 14:11:19 -0400
-Received: from mga14.intel.com ([192.55.52.115]:20263 "EHLO mga14.intel.com"
+        id S2405721AbgE1SLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 14:11:22 -0400
+Received: from mga14.intel.com ([192.55.52.115]:20223 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405705AbgE1SLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 14:11:14 -0400
-IronPort-SDR: s7wyLyBZCnQBYOSQfJES8qP4NxjlkMgb3JtdcXxfccVF1BWRRGh7yNmYiP1jK2GoyVR6+V2a8/
- uQcXbS4Rg9JQ==
+        id S2405704AbgE1SLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 14:11:15 -0400
+IronPort-SDR: mImNE5RBi+mJYyAj5ENNWuij4TddKDaFgR0VGnZBN/smH3UhNlISjw1+JfrBSjrXMnJJ3v148h
+ 0X8uTeP80XgQ==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
   by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2020 11:10:51 -0700
-IronPort-SDR: w8dOi99/YjMsfAdvi9cTOJB4xw7cBkgUDHnFKQuJfmNMtm0XKnLyIjHC6JSoTxNmmF7sGecQbt
- ltUQNlvQW5zw==
+IronPort-SDR: M76eEBZMUtwAqOjSr9veD+npHpylRTey0iYpt8UWQAjYCxs4I+1eFazu64ZE3vD+HxgMn4hedc
+ Eu7VptXWBjYg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,445,1583222400"; 
-   d="scan'208";a="267301346"
+   d="scan'208";a="267301345"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.33])
   by orsmga003.jf.intel.com with ESMTP; 28 May 2020 11:10:50 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
@@ -36,9 +36,9 @@ To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v3 02/16] completion: add tests showing subpar DWIM logic for switch/checkout
-Date:   Thu, 28 May 2020 11:10:34 -0700
-Message-Id: <20200528181048.3509470-3-jacob.e.keller@intel.com>
+Subject: [PATCH v3 01/16] completion: add test showing subpar git switch completion
+Date:   Thu, 28 May 2020 11:10:33 -0700
+Message-Id: <20200528181048.3509470-2-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.25.2
 In-Reply-To: <20200528181048.3509470-1-jacob.e.keller@intel.com>
 References: <20200528181048.3509470-1-jacob.e.keller@intel.com>
@@ -51,83 +51,69 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-When provided with a single argument that is the name of a remote branch
-that does not yet exist locally, both git switch and git checkout can
-interpret this as a request to create a local branch that tracks that
-remote branch. We call this behavior "Do What I Mean", or DWIM for
-short.
+When provided with no options, git switch only allows switching between
+branches. The one exception to this is the "Do What I Mean" logic that
+allows a unique remote branch name to be interpreted as a request to
+create a branch of the same name that is tracking that remote branch.
 
-To aid in using this DWIM, it makes sense for completion to list these
-unique remote branch names when completing possible arguments for git
-switch and git checkout. Indeed, both _git_checkout and _git_switch
-implement support for completing such DWIM branch names.
+Unfortunately, the logic for the completion of git switch results in
+completing not just branch names, but also pseudorefs like HEAD, tags,
+and fully specified <remote>/<branch> references.
 
-In other words, in addition to the usual completions provided for git
-switch, this "DWIM" logic means completion will include the names of
-branches on remotes that are unique and thus there can be no ambiguity
-of which remote to track when creating the local branch.
+For example, we currently complete the following:
 
-However, the DWIM logic is not always active. Many options, such as
---no-guess, --no-track, and --track disable this DWIM logic, as they
-cause git switch and git checkout to behave in different modes.
+ $git switch <TAB>
+ HEAD
+ branch-in-other
+ master
+ master-in-other
+ matching-branch
+ matching-tag
+ other/branch-in-other
+ other/master-in-other
 
-Additionally, some completion users do not wish to have tab completion
-include these remote names by default, and thus introduced
-GIT_COMPLETION_CHECKOUT_NO_GUESS as an optional way to configure the
-completion support to disable this feature of completion support.
+Indeed, if one were to attempt to use git switch with some of these
+provided options, git will reject the request:
 
-For this reason, _git_checkout and _git_switch have many rules about
-when to enable or disable completing of these remote refs. The two
-commands follow similar but not identical rules.
+ $git switch HEAD
+ fatal: a branch is expected, got 'HEAD
 
-Set aside the question of command modes that do not accept this DWIM
-logic (--track, -c, --orphan, --detach) for now. Thinking just about the
-main mode of git checkout and git switch, the following guidelines will
-help explain the basic rules we ought to support when deciding whether
-to list the remote branches for DWIM in completion.
+ $git switch matching-tag
+ fatal: a branch is expected, got tag 'matching-tag'
 
-1.  if --guess is enabled, we should list DWIM remote branch names, even
-    if something else would disable it
-2.  if --no-guess, --no-track or GIT_COMPLETION_CHECKOUT_NO_GUESS=1,
-    then we should disable listing DWIM remote branch names.
-3.  Since the '--guess' option is a boolean option, a later --guess
-    should override --no-guess, and a later --no-guess should override
-    --guess.
+ $git switch other/branch-in-other
+ fatal: a branch is expected, got remote branch 'other/branch-in-other'
 
-Putting all of these together, add some tests that highlight the
-expected behavior of this DWIM logic.
+Ideally, git switch without options ought to complete only words which
+will be accepted. Without options, this means to list local branch names
+and the unique remote branch names without their remote name pre-pended.
+
+ $git switch <TAB>
+ branch-in-other
+ master
+ master-in-other
+ matching-branch
+
+Add a test case that highlights this subpar completion. Also add
+a similar test for git checkout completion that shows that due to the
+complex nature of git checkout, it must complete all references.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- t/t9902-completion.sh | 105 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 105 insertions(+)
+ t/t9902-completion.sh | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 8f25fd24b43e..ff234dee4da9 100755
+index 3c44af694015..8f25fd24b43e 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -1263,6 +1263,111 @@ test_expect_success 'git checkout - completes refs and unique remote branches fo
- 	EOF
+@@ -1240,6 +1240,29 @@ test_expect_success '__git_complete_fetch_refspecs - fully qualified & prefix' '
+ 	test_cmp expected out
  '
  
-+test_expect_success 'git switch - with --no-guess, complete only local branches' '
-+	test_completion "git switch --no-guess " <<-\EOF
-+	master Z
-+	matching-branch Z
-+	EOF
-+'
-+
-+test_expect_success 'git switch - with GIT_COMPLETION_CHECKOUT_NO_GUESS=1, complete only local branches' '
-+	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git switch " <<-\EOF
-+	master Z
-+	matching-branch Z
-+	EOF
-+'
-+
-+#TODO: --guess/--no-guess ordering is not taken into account
 +#TODO: git switch completion includes unexpected references
-+test_expect_failure 'git switch - --guess overrides GIT_COMPLETION_CHECKOUT_NO_GUESS=1, complete local branches and unique remote names for DWIM logic' '
-+	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git switch --guess " <<-\EOF
++test_expect_failure 'git switch - with no options, complete local branches and unique remote branch names for DWIM logic' '
++	test_completion "git switch " <<-\EOF
 +	branch-in-other Z
 +	master Z
 +	master-in-other Z
@@ -135,79 +121,12 @@ index 8f25fd24b43e..ff234dee4da9 100755
 +	EOF
 +'
 +
-+#TODO: --guess/--no-guess ordering is not taken into account
-+#TODO: git switch completion includes unexpected references
-+test_expect_failure 'git switch - a later --guess overrides previous --no-guess, complete local and remote unique branches for DWIM' '
-+	test_completion "git switch --no-guess --guess " <<-\EOF
-+	branch-in-other Z
-+	master Z
-+	master-in-other Z
-+	matching-branch Z
-+	EOF
-+'
-+
-+#TODO: --guess/--no-guess ordering is not taken into account
-+test_expect_failure 'git switch - a later --no-guess overrides previous --guess, complete only local branches' '
-+	test_completion "git switch --guess --no-guess " <<-\EOF
-+	master Z
-+	matching-branch Z
-+	EOF
-+'
-+
-+test_expect_success 'git checkout - with GIT_COMPLETION_NO_GUESS=1 only completes refs' '
-+	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git checkout " <<-\EOF
-+	HEAD Z
-+	master Z
-+	matching-branch Z
-+	matching-tag Z
-+	other/branch-in-other Z
-+	other/master-in-other Z
-+	EOF
-+'
-+
-+#TODO: git checkout does not override variable when --guess is provided
-+test_expect_failure 'git checkout - --guess overrides GIT_COMPLETION_NO_GUESS=1, complete refs and unique remote branches for DWIM' '
-+	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git checkout --guess " <<-\EOF
++test_expect_success 'git checkout - completes refs and unique remote branches for DWIM' '
++	test_completion "git checkout " <<-\EOF
 +	HEAD Z
 +	branch-in-other Z
 +	master Z
 +	master-in-other Z
-+	matching-branch Z
-+	matching-tag Z
-+	other/branch-in-other Z
-+	other/master-in-other Z
-+	EOF
-+'
-+
-+test_expect_success 'git checkout - with --no-guess, only completes refs' '
-+	test_completion "git checkout --no-guess " <<-\EOF
-+	HEAD Z
-+	master Z
-+	matching-branch Z
-+	matching-tag Z
-+	other/branch-in-other Z
-+	other/master-in-other Z
-+	EOF
-+'
-+
-+#TODO: --guess/--no-guess ordering is not taken into account
-+test_expect_failure 'git checkout - a later --guess overrides previous --no-guess, complete refs and unique remote branches for DWIM' '
-+	test_completion "git checkout --no-guess --guess " <<-\EOF
-+	HEAD Z
-+	branch-in-other Z
-+	master Z
-+	master-in-other Z
-+	matching-branch Z
-+	matching-tag Z
-+	other/branch-in-other Z
-+	other/master-in-other Z
-+	EOF
-+'
-+
-+test_expect_success 'git checkout - a later --no-guess overrides previous --guess, complete only refs' '
-+	test_completion "git checkout --guess --no-guess " <<-\EOF
-+	HEAD Z
-+	master Z
 +	matching-branch Z
 +	matching-tag Z
 +	other/branch-in-other Z
