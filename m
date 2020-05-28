@@ -2,123 +2,99 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B4E7C433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 08:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 658EDC433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 08:53:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 21D6D2063A
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 08:38:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39A332088E
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 08:53:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qVh6sFdq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WehfuKVR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727039AbgE1Ih7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 04:37:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43820 "EHLO
+        id S1727842AbgE1Ix2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 04:53:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726955AbgE1Ih6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 04:37:58 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA9AC05BD1E
-        for <git@vger.kernel.org>; Thu, 28 May 2020 01:37:58 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id z15so1935018pjb.0
-        for <git@vger.kernel.org>; Thu, 28 May 2020 01:37:58 -0700 (PDT)
+        with ESMTP id S1727786AbgE1Ix1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 04:53:27 -0400
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9EDEC05BD1E
+        for <git@vger.kernel.org>; Thu, 28 May 2020 01:53:27 -0700 (PDT)
+Received: by mail-vs1-xe42.google.com with SMTP id r10so2930211vsa.12
+        for <git@vger.kernel.org>; Thu, 28 May 2020 01:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=b3tYNF5OIXHAHKJZ+8I7e+vdmXfqleFT72/a7tvS0DE=;
-        b=qVh6sFdqKQK7o8kSTe086ir7L0s1fFN8AcOwHWScYsfFq1JGTnN0q+nSJXTsWrlzPY
-         2Dkc+QTq8KWIBGZlfHaRNV4IPcpoOMatIoocpShPkGr968JCtnPVUA3787QGyThMcLva
-         Mcz+Ar+12y9Zkq21IVTBHk/S1km4QEnv/SrWeo15tMzfrl8HlZpE3ph2l/lrIUn7XnZy
-         BMqURqKnYIVr6tkmXCzOjt/CU7kxDOyWM+7s1fES9j/zar9lUi5/aGN2Fy6O+oyz4K3p
-         vzVl2teUJk0QAMfZjblc1obtB8N1vY2Ro/SHstGZ/xQjNEn6PjPHOi7EiOHL0MNip7B1
-         2dxw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XtXsIA2C/pjrV8CGoJU83Ii5yelU14EzH7YgVc+dh00=;
+        b=WehfuKVRnqARjLMvRZjU82plXVFMMQGUIhajgMZfw3QwbwezyPCfShSN5PP5ise15c
+         r6gALIxGpTCLLMd/YXkTgjTExBlrSfdM/qN0RihyKmeR4M9UFKOqy3Dx6Kp9Y76bREQu
+         rEc3bxAkTP4tK6FDh295wDtOqkhq7NGlZoO8Dh2k1/iWKe12p29EXIA36S28JsJR+4Pm
+         G9pWpw5VoUMl2K2FIHAamslvpMrnpeh7iaHM5yIh4br0fE36A+uE+w4C9wan2K/d/FOo
+         VRcwoY3hZRm7q2bl2o/j+Qq62Z34wxJW+bJx/1jgBYtpfz4REMI6VuBLiJ5PiFWIL7ke
+         +OnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=b3tYNF5OIXHAHKJZ+8I7e+vdmXfqleFT72/a7tvS0DE=;
-        b=tCtlDSEh4kgUsfYTdeTmKGb31ODMQ+gs2JE3vETufrTc7Zr8G9mWkf0JiQZ6ZHLFcg
-         Ycih/pTPM4wFzptGyKnOVVgKQK7qR30puJEB3Ezr9I3betB+zhB2dkQ58n/1H4UGwka7
-         +U7yLjBzpzntcCARBa/QhrRZOZ90hl5kwPTmq+6UkHjSrF8R6U6iZGw5vzzFp4QC/Xap
-         iQvKwCsKsz81X06aKoLWYO1WUrCs3vCC3RcPnVvjHnT+EDr0LHNz+MCn7A6+TQvsorQe
-         9+9BT4baXdd7ZqZW6+kVEa5u0HbPx/k3+thozNGkMOAXLmOQcLa1nAfgGAiK8ydjff52
-         kImg==
-X-Gm-Message-State: AOAM532bD40S1aTyFQuFvIMCAkKRIbhhKTxEBFP9eOUo40/rzfaN93Bp
-        lFaENEWKi5dmQebtohksS7AOGn8S
-X-Google-Smtp-Source: ABdhPJzvXzs6Qxq3MUxj5e0R8IWsgeaOTMCo7sm5hd8KEWeVBKnHpbJufp46BhE1gCXqxUQraX9/9Q==
-X-Received: by 2002:a17:90b:b0e:: with SMTP id bf14mr2555451pjb.98.1590655077693;
-        Thu, 28 May 2020 01:37:57 -0700 (PDT)
-Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id y5sm4041886pff.150.2020.05.28.01.37.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 May 2020 01:37:57 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     hji@dyntopia.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] t: avoid alternation (not POSIX) in grep's BRE
-Date:   Thu, 28 May 2020 01:37:45 -0700
-Message-Id: <20200528083745.15273-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.27.0.rc2.257.gaada2199e1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XtXsIA2C/pjrV8CGoJU83Ii5yelU14EzH7YgVc+dh00=;
+        b=gPtrTnjOUuIRY/+bLyBYTXziLoy+zckWIypQDkc/8IS77T7IsY6PLE7cfk16wQnfhp
+         hxp5K8c2PxRB807xYIBeBgZCDqGpSzZV9jt5OF6b49tEt5aSXVozHba30ueoGrg4nF4S
+         UQQhvW0ZmhkAaXbFLVtNGZlsq/xD4bQCUr1SIiw9oFdL6HFAB1y2C/LFeHwRDHsMz5Pd
+         TEYIpswCWaqiycNt9/nYa3M36+zV8PaZm8vw4gWf9jN5L5g+1C5UDrh6IzOkFXkJjzCA
+         f12nGl5/suXwiz+LEbHBM48lg5PeXP3Gpzy8fMsU3gzOb16+oWA/DQU6fFp+SmkKrO9o
+         hZ1A==
+X-Gm-Message-State: AOAM531FouHxz6hYilN79iR/YbwRmn3QBNFa+8b37YlOaUS8+vhebRm9
+        n6hXOOmHeWtHZWjM+lLjgj/Tn/6/7ZoC9+XzChGS2Mby
+X-Google-Smtp-Source: ABdhPJzENN50xkWykVUwjUgmP0dRdYPJcEjxXDoFiwL0vQ8Tq3yCjc+Yj5Qr6T+mlBSWfHzlpDVpGh/ub93PmIjsPRU=
+X-Received: by 2002:a67:c299:: with SMTP id k25mr1228354vsj.153.1590656006841;
+ Thu, 28 May 2020 01:53:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20200527113831.3294409-1-jacob.e.keller@intel.com>
+ <20200527113831.3294409-3-jacob.e.keller@intel.com> <xmqqimghl0ft.fsf@gitster.c.googlers.com>
+ <CA+P7+xoTJzsV=NbWeWs+fbdgETXwqUs0T9MToBbrGJ0EA-bFcA@mail.gmail.com>
+In-Reply-To: <CA+P7+xoTJzsV=NbWeWs+fbdgETXwqUs0T9MToBbrGJ0EA-bFcA@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 28 May 2020 01:53:17 -0700
+Message-ID: <CA+P7+xrxt5oybijmRWFd-fMYxKSB8cnuX188g9x9UkRcmwigVw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/9] completion: improve handling of DWIM mode for switch/checkout
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using and escaped '|' for alternations is allowed in some implementations
-of grep (GNU and busybox, al least), but it is no suppored by POSIX[1]
-and therefore will fail in at least macOS and the BSD.
+On Wed, May 27, 2020 at 12:41 PM Jacob Keller <jacob.keller@gmail.com> wrote:
+> >
+> > and without getting any answer to them.  Perhaps the proposed log
+> > message for [1/9] can be made a bit more robust to cover it?
+> >
+>
+> Sure, I'll look at what I can do to make this more logical.
+>
+> > Thanks.
+> >
 
-Change syntax to ERE and use Extended regular expression with grep
-explicitly.
+I'll have a v3 which splits most of the tests into their own patch
+with a better description of the reasoning of the problem with output
+and the new expected behavior. The commit descriptions for the
+improvements will then focus primarily on the reasons for the
+particular method of implementing that output. It's a few more
+patches, but hopefully it will read more logically, and we can help
+settle some of the open questions:
 
-[1] https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_03
+particular to interest me is: what sort of words should we complete
+when completing a new branch name for --orphan, -c/-C and -b/-B? I
+think all of these ought to remain as consistent as possible, but I'm
+not sure what other folks think.
 
-Fixes: f1e3df3169 (t: increase test coverage of signature verification
-       output, 2020-03-04)
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- t/t4202-log.sh           | 2 +-
- t/t6200-fmt-merge-msg.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index f1ea7d97f5..a0930599aa 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1692,7 +1692,7 @@ test_expect_success GPG 'log --graph --show-signature for merged tag with missin
- 	GNUPGHOME=. git log --graph --show-signature -n1 plain-nokey >actual &&
- 	grep "^|\\\  merged tag" actual &&
- 	grep "^| | gpg: Signature made" actual &&
--	grep "^| | gpg: Can'"'"'t check signature: \(public key not found\|No public key\)" actual
-+	grep -E "^| | gpg: Can'"'"'t check signature: (public key not found|No public key)" actual
- '
- 
- test_expect_success GPG 'log --graph --show-signature for merged tag with bad signature' '
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index b15582a7a2..e4c2a6eca4 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -103,7 +103,7 @@ test_expect_success GPG 'message for merging local tag signed by unknown key' '
- 	GNUPGHOME=. git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
- 	grep "^Merge tag ${apos}signed-good-tag${apos}" actual &&
- 	grep "^# gpg: Signature made" actual &&
--	grep "^# gpg: Can${apos}t check signature: \(public key not found\|No public key\)" actual
-+	grep -E "^# gpg: Can${apos}t check signature: (public key not found|No public key)" actual
- '
- 
- test_expect_success 'message for merging external branch' '
--- 
-2.27.0.rc2.257.gaada2199e1
-
+Thanks,
+Jake
