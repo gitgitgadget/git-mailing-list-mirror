@@ -2,121 +2,135 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4911C433DF
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 860D1C433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:23:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEDF020721
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:21:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E34D2088E
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:23:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cMpE43dR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e4uqWlpz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436526AbgE1VVv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 17:21:51 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53248 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436527AbgE1VVr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 17:21:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5CBDECE541;
-        Thu, 28 May 2020 17:21:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0OnsmjOlYmv4rTJC+KPqfuppFFU=; b=cMpE43
-        dRUxZNdz/gVA1AD1fp+9K0pgdnstOpl0SNmDIAq4tN/bjtsCq3/Wn8zUZGvqEDse
-        w3og9u8jS/Y3osPWq6gGVWvakn/k90diikBaEBNKivZc0u8wlN4k1bwacjyMigYI
-        GzLtGlDUA89JmMUhYTyTjJXNnOdOyArFjc99o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kmObs5ewV4Uty1jzBudtSvTqM8hqJJfV
-        hsFhv7hmMlK9tTXJrJ9BJKP1k2dNaX/s59Leyvq/BmOmLiENYspfnS6WySF6g0hc
-        cRADjV3qRy/d4IwtCEB0a0/+E2QFzNCaa+Sdetxp552qPk06L0LeKkNbTcLQPxVf
-        HtHvPEhqTdI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 554F7CE540;
-        Thu, 28 May 2020 17:21:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 93041CE53D;
-        Thu, 28 May 2020 17:21:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v15 00/13] Reftable support git-core
-References: <pull.539.v14.git.1589833884.gitgitgadget@gmail.com>
-        <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
-Date:   Thu, 28 May 2020 14:21:38 -0700
-In-Reply-To: <pull.539.v15.git.1590695209.gitgitgadget@gmail.com> (Han-Wen
-        Nienhuys via GitGitGadget's message of "Thu, 28 May 2020 19:46:36
-        +0000")
-Message-ID: <xmqq8shb3gd9.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2436515AbgE1VX0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 17:23:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50286 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436505AbgE1VXT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 17:23:19 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE540C08C5C6
+        for <git@vger.kernel.org>; Thu, 28 May 2020 14:23:18 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id l26so679751wme.3
+        for <git@vger.kernel.org>; Thu, 28 May 2020 14:23:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=W7fIRq65sQiLkyjxcL6rdITG8jr033f6ASzjpQNDIl8=;
+        b=e4uqWlpzdC1mtdjuAYn3wUCx7P8RU6EKKLV+i9abZB0OHdSnPaEhK/DYzaOezs6tZu
+         Fc1tymdlu8Z1gypDL91v07TZcbdhJawrpJWHTw6SkprDlcM2xIEnhYsdMCG4XmfKKFIP
+         HsJcNHmIkl8PK5EPAd6Uyn7wAux7ltpZCH14ZzW7ooSi0jzxGWUHUxl6whhY9lJsFkR7
+         nv4QAPj1weqZot7JiXL8hEFg70vvPe381V6ouV1911Khv9E8tq4xREQOwfuxOu36VfJd
+         Va9UgjCSuhOQknWgIaW/MytHTr5cdgbrtrqP3Yqe2A7MYoUcTmjXGaJ10I7AX71Nujiw
+         t92A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=W7fIRq65sQiLkyjxcL6rdITG8jr033f6ASzjpQNDIl8=;
+        b=P+SgEddZmPaByWFKIZUzK5KCwmWdEPoCBe79jIJ31m2dOinElSXNRzJwhdihjJlJUt
+         Ah6PcVsHBif0dp/L+Hhb0BTUyLVxtz/KAq6TvWz86WMos2QdbGtNwSATDC6O837PZWOB
+         dQYeJXhCQTI5RfgvGUk08dWuJmtsCBHZ9Sm6bW/L3jF3uXpILxbU9k0t7A6Go3jCAI+e
+         r0gBKHOxvW/h6T+iXOnwLsUnuoHA2CgV2/d2oCK+vdB0OerfEeAg62GsW+xLTpzi4c0m
+         RBd+KlyxFgAvkJQlkTquCvWBTFQ8n0jHq7aycNLQdDXSSdQP/dVBJTKqx7XoPgGHORWD
+         VZ+w==
+X-Gm-Message-State: AOAM5331Nb5tgVTHWUcTaT+S1HShIbs5iqHB/bSUxxSnlF93iBCcj6Gq
+        PMLswzVVLH/e5x56HHON8cD+Lh8r
+X-Google-Smtp-Source: ABdhPJy5zyDUToNxDRFU/jCNIfUXKadZXVKb6RpHxs/1+34tNXUsKvUZHTxecYo3vVKpmGG4ZJQ5vA==
+X-Received: by 2002:a7b:c7d4:: with SMTP id z20mr5147231wmk.35.1590700997346;
+        Thu, 28 May 2020 14:23:17 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h20sm8059168wma.6.2020.05.28.14.23.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 14:23:16 -0700 (PDT)
+Message-Id: <pull.796.git.git.1590700996483.gitgitgadget@gmail.com>
+From:   "Steven Willis via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 28 May 2020 21:23:16 +0000
+Subject: [PATCH] doc: ls-tree paths do not support wildcards
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 38C1E7EE-A129-11EA-AE8E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Steven Willis <onlynone@gmail.com>,
+        Steven Willis <onlynone@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Steven Willis <onlynone@gmail.com>
 
-> This adds the reftable library, and hooks it up as a ref backend. Based on
-> hn/refs-cleanup.
->
-> Includes testing support, to test: make -C t/ GIT_TEST_REFTABLE=1
->
-> Summary 20479 tests pass 1299 tests fail
+Signed-off-by: Steven Willis <onlynone@gmail.com>
+---
+    doc: ls-tree paths do not support wildcards
+    
+    The documentation for ls-tree says that paths can be wildcards, but this
+    appears to be incorrect, only raw paths seem to work.
 
-Testing without GIT_TEST_REFTABLE=0 gives a few failures, too.  I
-haven't taken a look into them, though.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-796%2Fonlynone%2Fls-tree-paths-do-not-support-wildcards-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-796/onlynone/ls-tree-paths-do-not-support-wildcards-v1
+Pull-Request: https://github.com/git/git/pull/796
 
-Thanks.
+ Documentation/git-ls-tree.txt | 6 +++---
+ t/t3102-ls-tree-wildcards.sh  | 6 ++++++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+index a7515714da1..8a8ce20cf51 100644
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -19,7 +19,7 @@ Lists the contents of a given tree object, like what "/bin/ls -a" does
+ in the current working directory.  Note that:
+ 
+  - the behaviour is slightly different from that of "/bin/ls" in that the
+-   '<path>' denotes just a list of patterns to match, e.g. so specifying
++   '<path>' denotes just a list of files to match, e.g. so specifying
+    directory name (without `-r`) will behave differently, and order of the
+    arguments does not matter.
+ 
+@@ -74,8 +74,8 @@ OPTIONS
+ 	Implies --full-name.
+ 
+ [<path>...]::
+-	When paths are given, show them (note that this isn't really raw
+-	pathnames, but rather a list of patterns to match).  Otherwise
++	When paths are given, show them (note that this is really raw
++	pathnames, not a list of patterns to match).  Otherwise
+ 	implicitly uses the root level of the tree as the sole path argument.
+ 
+ 
+diff --git a/t/t3102-ls-tree-wildcards.sh b/t/t3102-ls-tree-wildcards.sh
+index 1e16c6b8ea6..6c0f2af1d04 100755
+--- a/t/t3102-ls-tree-wildcards.sh
++++ b/t/t3102-ls-tree-wildcards.sh
+@@ -33,4 +33,10 @@ test_expect_failure 'ls-tree does not yet support negated pathspec' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_failure 'ls-tree does not yet support wildcard pathspec' '
++	git ls-files "a*" >expect &&
++	git ls-tree --name-only -r HEAD "a*" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 
-*** log for hn/reftable ***
-HEAD is now at 341a26d318 Add reftable testing infrastructure
-GIT_VERSION = unknown.g00000000
-    * new build flags
-    CC fuzz-commit-graph.o
-    CC fuzz-pack-headers.o
-    CC fuzz-pack-idx.o
-    CC bugreport.o
-...
-[14:11:46] t7112-reset-submodule.sh ........................... ok   141577 ms ( 2.43 usr  0.95 sys + 661.06 cusr 464.38 csys = 1128.82 CPU)
-[14:11:50] t9402-git-cvsserver-refs.sh ........................ ok    41912 ms ( 0.61 usr  0.17 sys + 260.43 cusr 177.60 csys = 438.81 CPU)
-[14:12:03] t9001-send-email.sh ................................ ok   129424 ms ( 1.47 usr  0.57 sys + 576.18 cusr 387.33 csys = 965.55 CPU)
-[14:12:03]
-
-Test Summary Report
--------------------
-t3510-cherry-pick-sequence.sh                    (Wstat: 256 Tests: 50 Failed: 0)
-  Non-zero exit status: 1
-  Parse errors: Tests out of sequence.  Found (14) but expected (13)
-                Tests out of sequence.  Found (15) but expected (14)
-                Tests out of sequence.  Found (16) but expected (15)
-                Tests out of sequence.  Found (17) but expected (16)
-                Tests out of sequence.  Found (18) but expected (17)
-Displayed the first 5 of 39 TAP syntax errors.
-Re-run prove with the -p option to see them all.
-t3404-rebase-interactive.sh                      (Wstat: 256 Tests: 118 Failed: 0)
-  Non-zero exit status: 1
-  Parse errors: Tests out of sequence.  Found (100) but expected (98)
-                Tests out of sequence.  Found (101) but expected (99)
-                Tests out of sequence.  Found (102) but expected (100)
-                Tests out of sequence.  Found (103) but expected (101)
-                Tests out of sequence.  Found (104) but expected (102)
-Displayed the first 5 of 22 TAP syntax errors.
-Re-run prove with the -p option to see them all.
-Files=906, Tests=22755, 360 wallclock secs (10.16 usr  3.35 sys + 1318.97 cusr 996.62 csys = 2329.10 CPU)
-Result: FAIL
-make[1]: *** [Makefile:52: prove] Error 1
-make[1]: Leaving directory '/usr/local/google/home/jch/w/git.cycle/t'
-make: *** [Makefile:2799: test] Error 2
+base-commit: 2d5e9f31ac46017895ce6a183467037d29ceb9d3
+-- 
+gitgitgadget
