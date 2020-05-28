@@ -7,90 +7,135 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73399C433E2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5987DC433E1
 	for <git@archiver.kernel.org>; Thu, 28 May 2020 19:47:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57656208DB
+	by mail.kernel.org (Postfix) with ESMTP id 2E44F2088E
 	for <git@archiver.kernel.org>; Thu, 28 May 2020 19:47:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z6qr3C1E"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pGz/sWde"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728706AbgE1Trf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 15:47:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35282 "EHLO
+        id S1728625AbgE1Tre (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 15:47:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406681AbgE1TrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 15:47:05 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 609A7C014D07
-        for <git@vger.kernel.org>; Thu, 28 May 2020 12:47:00 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id x14so549799wrp.2
-        for <git@vger.kernel.org>; Thu, 28 May 2020 12:47:00 -0700 (PDT)
+        with ESMTP id S2406692AbgE1TrG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 15:47:06 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61A1C008630
+        for <git@vger.kernel.org>; Thu, 28 May 2020 12:47:04 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id l10so462916wrr.10
+        for <git@vger.kernel.org>; Thu, 28 May 2020 12:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1g7xJNEHljtESnR5/L4oArBHPSBJu5a8+IEAIVDCwIk=;
-        b=Z6qr3C1EyyyLtX36viWjQsSJ+sYrLOqF3vCPzqrkNZre1thUd1f1/Kc2VYEJHCGBLs
-         ussbzEGaFMdpbvFihDNiKbvh+QynDlABsyex2vmr3eX2uUNnckvkoHz7B+Tgd22R+tEv
-         0h6faDusecqivj1t+9vEib7ynCx4IWd0P5TIi1p7EIahe8lRv+Z0Eso/hL14vSREVNT1
-         6cYH26pzSruDC2cVcEDn+/8i0qc+x/rmkxazrYMr2WLj6CyaijzNnxvSKUoTVZCVCw4t
-         xL/hrHY4L6xRKNkn4d4F0Q8ywd9n4G+Vpd0U1iUZoexDJ7QGzo2xcWSO6CR4fLJA+NbP
-         YajQ==
+        bh=teX7AqpUfUWLns9KilNy8wSxyty44dVk2EoRcGz+lx8=;
+        b=pGz/sWde9+yU6qbX/qR3L/73JsVdrXUVUdZH2EtOqfFt/CGgjkowXmmlDLq1dscR8r
+         77zA9wPvob6p0qu737I8ty4Yq202FvoZ/HL7eGf1y1kbivayf1ngk8kG2RIm3KD6Y/77
+         O40Gkccd6WqUY3hES2BCgqGFuAQhtQUnWBk/txTadBmCXgUyPo8dS5ToBjMFPEBUgFso
+         i8nfSwNMekkZcocEQjhesRDNQPqy4QIIUjYERLZPvnYKbv5owhgpBl+EHU7hEyxigNxB
+         1OpT8OojYMham8YfUNbK1bZ9TS921Hfn/iF3t5hLlqJYFEhNqPPf8ZPyAcoOUYLd8gIH
+         vXaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1g7xJNEHljtESnR5/L4oArBHPSBJu5a8+IEAIVDCwIk=;
-        b=CoFpO8atEdQYmmrWAXMYPc8pJix0qK+OJtdobknhz5MGL+piCtlcV3vdd3csHEWwAa
-         e/bwpHklxLzo3imhzSHsNi/KZDAVoiLkAyqDEm/0iWWPZhJf3r4hRlLneW2/pkPnJhwR
-         94B6O2CgxYsxNhMS3uT/Y8wIYwn9tXRI6NWELDFxdwGgMaxYbS1DjJtp+nxUzstj9quw
-         KPXgObj6F0kcPvIQR4OFXoGotqk9g6DCufoWi+X1Ptn8FZ8seNOUYgCe5vUih3nUyNSN
-         +sTk6WuqXGqVyrxU9f3fFlLushgOPzmKOsjil7x1pqHH6gYrVjPLvyzWmkJ1KRmwk1NK
-         VXqQ==
-X-Gm-Message-State: AOAM533BBWM+8QjnHN0q7gXsxOVY7dGU5PTy82WhLa0Qbrm9PejiLAHh
-        7uqp6NU3gO2X8+JyAv3WhJWeMlV/
-X-Google-Smtp-Source: ABdhPJwe1fr5EH7bedbdpFxF+pqRchojCce2yZmbt7A9rezq5LiSISHo4yHulI9RICZYSkFfYipd1A==
-X-Received: by 2002:a5d:54c3:: with SMTP id x3mr4898588wrv.312.1590695219111;
-        Thu, 28 May 2020 12:46:59 -0700 (PDT)
+        bh=teX7AqpUfUWLns9KilNy8wSxyty44dVk2EoRcGz+lx8=;
+        b=meN/LSf5LqZf7jugEeQeENfdBkSAVkV2juzHZYUXlQLBabH/4ZqRZ5F7DjmF2Ft3l3
+         zCNcJ/iRLt30Chx4VS10AH3GS+OCakt9Ee+2RcjXRhd2hjxETfzySkrA4q0oSAfad89s
+         PDPpho5J+zlm4oLXEtqBB7NfDXhjPg1+uuae0pxB32k97ji9RiVizrpneHsXZ5g2kHtb
+         ZJDRYjaJuF46MmHlp6QCwU0rdquQ1dgD4I+Kp13Ku932IMJ64CL7pparki7MIuaLdveX
+         SG95deBBNTnS9zbWXDEFmo8+K9X65YdfGl501bOnQKVcgkwVyfoTNK82agLuhk2+HPbA
+         jANw==
+X-Gm-Message-State: AOAM533zSwEXaqofqVJ5NIOxg/9buIrDFezg02d3x+KjGnuOnOEfjrOg
+        GbK3hpXQneF7nUeY4XmmMOjlXObN
+X-Google-Smtp-Source: ABdhPJyGNviRaEVG+uErFRlUgC7AA+Z+PFUI4qYv9LN6TogoDC7Bspa38Q+2S3YionIQ5fDrnXnlMQ==
+X-Received: by 2002:a5d:4fc4:: with SMTP id h4mr4900831wrw.49.1590695223413;
+        Thu, 28 May 2020 12:47:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e6sm501909wrx.80.2020.05.28.12.46.58
+        by smtp.gmail.com with ESMTPSA id a124sm8309500wmh.4.2020.05.28.12.47.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2020 12:46:58 -0700 (PDT)
-Message-Id: <dcbd000e7f7d3dc48c7dc9eee75636a9abfbd31f.1590695210.git.gitgitgadget@gmail.com>
+        Thu, 28 May 2020 12:47:02 -0700 (PDT)
+Message-Id: <9b98ed614ecdb97046ae77ec31d609e4de2cfc6a.1590695210.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
 References: <pull.539.v14.git.1589833884.gitgitgadget@gmail.com>
         <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 28 May 2020 19:46:44 +0000
-Subject: [PATCH v15 08/13] Add .gitattributes for the reftable/ directory
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 28 May 2020 19:46:48 +0000
+Subject: [PATCH v15 12/13] vcxproj: adjust for the reftable changes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+This allows Git to be compiled via Visual Studio again after integrating
+the `hn/reftable` branch.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- reftable/.gitattributes | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 reftable/.gitattributes
+ config.mak.uname                           |  2 +-
+ contrib/buildsystems/Generators/Vcxproj.pm | 11 ++++++++++-
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/reftable/.gitattributes b/reftable/.gitattributes
-new file mode 100644
-index 00000000000..f44451a3795
---- /dev/null
-+++ b/reftable/.gitattributes
-@@ -0,0 +1 @@
-+/zlib-compat.c	whitespace=-indent-with-non-tab,-trailing-space
+diff --git a/config.mak.uname b/config.mak.uname
+index c7eba69e54e..ae4e25a1a42 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -709,7 +709,7 @@ vcxproj:
+ 	# Make .vcxproj files and add them
+ 	unset QUIET_GEN QUIET_BUILT_IN; \
+ 	perl contrib/buildsystems/generate -g Vcxproj
+-	git add -f git.sln {*,*/lib,t/helper/*}/*.vcxproj
++	git add -f git.sln {*,*/lib,*/libreftable,t/helper/*}/*.vcxproj
+ 
+ 	# Generate the LinkOrCopyBuiltins.targets and LinkOrCopyRemoteHttp.targets file
+ 	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
+diff --git a/contrib/buildsystems/Generators/Vcxproj.pm b/contrib/buildsystems/Generators/Vcxproj.pm
+index 5c666f9ac03..33a08d31652 100644
+--- a/contrib/buildsystems/Generators/Vcxproj.pm
++++ b/contrib/buildsystems/Generators/Vcxproj.pm
+@@ -77,7 +77,7 @@ sub createProject {
+     my $libs_release = "\n    ";
+     my $libs_debug = "\n    ";
+     if (!$static_library) {
+-      $libs_release = join(";", sort(grep /^(?!libgit\.lib|xdiff\/lib\.lib|vcs-svn\/lib\.lib)/, @{$$build_structure{"$prefix${name}_LIBS"}}));
++      $libs_release = join(";", sort(grep /^(?!libgit\.lib|xdiff\/lib\.lib|vcs-svn\/lib\.lib|reftable\/libreftable\.lib)/, @{$$build_structure{"$prefix${name}_LIBS"}}));
+       $libs_debug = $libs_release;
+       $libs_debug =~ s/zlib\.lib/zlibd\.lib/g;
+       $libs_debug =~ s/libcurl\.lib/libcurl-d\.lib/g;
+@@ -231,6 +231,7 @@ sub createProject {
+ EOM
+     if (!$static_library || $target =~ 'vcs-svn' || $target =~ 'xdiff') {
+       my $uuid_libgit = $$build_structure{"LIBS_libgit_GUID"};
++      my $uuid_libreftable = $$build_structure{"LIBS_reftable/libreftable_GUID"};
+       my $uuid_xdiff_lib = $$build_structure{"LIBS_xdiff/lib_GUID"};
+ 
+       print F << "EOM";
+@@ -240,6 +241,14 @@ sub createProject {
+       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+     </ProjectReference>
+ EOM
++      if (!($name =~ /xdiff|libreftable/)) {
++        print F << "EOM";
++    <ProjectReference Include="$cdup\\reftable\\libreftable\\libreftable.vcxproj">
++      <Project>$uuid_libreftable</Project>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++    </ProjectReference>
++EOM
++      }
+       if (!($name =~ 'xdiff')) {
+         print F << "EOM";
+     <ProjectReference Include="$cdup\\xdiff\\lib\\xdiff_lib.vcxproj">
 -- 
 gitgitgadget
 
