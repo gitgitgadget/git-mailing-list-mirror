@@ -2,105 +2,166 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 488C8C433DF
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 00:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 437A5C433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 01:13:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6CA1206DF
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 00:48:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEA6E20DD4
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 01:13:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vqPt7Qnl"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="JZum0ZDQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725905AbgE1AsD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 20:48:03 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63459 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725891AbgE1AsC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 20:48:02 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B6905C6726;
-        Wed, 27 May 2020 20:48:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IPZ2GOs9HRSYVOd7ryFAOZp9fWQ=; b=vqPt7Q
-        nlK/z5z+bx2HhOlpobIk7xQkQ15Iab6w5YxcXKdEC+OfxMTl4ocgEO59QtxBTvv4
-        mM2CuciKuBH8UlMtyORt8Ws6VRy43pX0OdUeg0RWQj+To3uTX5W3468NPi6lVw9n
-        IFZgFR0JFnZkOkn05Bc3SGkoiylC2D688qtCM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DysuI0YMGnWoFSAI+RMvDI7ATWtBmwDd
-        sLwx+n7fHfHPWkTaITZUbmve3tuh4H9DGxvxheCmCXiRojcJTgl7Of3XxtRu1Jlu
-        SmhzJi8g0NeWsSSy5NxKZSEo9/HjtNNGwbw24/lPa2t+LYsZ9N/uIwj93Xr4Ldvk
-        9ljb5IefMMg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AEE02C6725;
-        Wed, 27 May 2020 20:48:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5D03C6724;
-        Wed, 27 May 2020 20:47:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 00/15] [RFC] Maintenance jobs and job runner
-References: <pull.597.git.1585946894.gitgitgadget@gmail.com>
-        <xmqqv9mgxn7u.fsf@gitster.c.googlers.com>
-        <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com>
-        <20200407014829.GL6369@camp.crustytoothpaste.net>
-        <nycvar.QRO.7.76.6.2004072355100.46@tvgsbejvaqbjf.bet>
-        <20200408000149.GN6369@camp.crustytoothpaste.net>
-        <20200527223907.GB65111@google.com>
-Date:   Wed, 27 May 2020 17:47:55 -0700
-In-Reply-To: <20200527223907.GB65111@google.com> (Josh Steadmon's message of
-        "Wed, 27 May 2020 15:39:07 -0700")
-Message-ID: <xmqqa71s6g1w.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726350AbgE1BNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 21:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59968 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725795AbgE1BNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 21:13:45 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E716FC03E96E
+        for <git@vger.kernel.org>; Wed, 27 May 2020 18:13:44 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id h9so10772565qtj.7
+        for <git@vger.kernel.org>; Wed, 27 May 2020 18:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=gUU3kG2njJdwu6kxo7ucxWl6Z9P+M9pcu/vz3EAnCTc=;
+        b=JZum0ZDQ0QYWRoFe79cGgjmoNKJXOKvPS6MHY/jABr2eSb9V7WZR6U/7aYskGgyAo2
+         C75NufezxeYHbnB6KSgPdbU1Adc+8zh0K0hFUvFjA1vRTYhuZaqmKoOGFQTx/4CAvN7z
+         8JMusjNmRdJLZMXdJQxpWRq1NlthbOojju7v3/rbzQ1IE5W0ymiZbZ3C5sBg4gwTEBUb
+         2D41uA36HOjjO9RZAeiF6q0eWbZuqy52Tqi9mND7swGVJ4tbE8sFwyZRlkzCKgO9tN5f
+         8ED1AZRtN9Lr2usAZJNOf0hkrosr8X9+Ki8sIwU0rTJj0w55cp7Si9zVN77XIvc8A+h3
+         c09w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=gUU3kG2njJdwu6kxo7ucxWl6Z9P+M9pcu/vz3EAnCTc=;
+        b=sdX7yxAAI0nQLziuxcxK2bhIXPVSNn/jQJ0Jz3U7p2ERUZ06OWFgfn953uZKA2ZU6Y
+         SX5RrgFJU2EUcNLMjKQtBMzlvEvp5JxOtL31eUW6M8dPS4OgED3ouMao2CIroa3+t6cR
+         rFQywq51InECsxN9XTkv4gJiZwgz8kDvegtZXWYJvqI5brj3TQ6sKSZFfk5Gs7jnu1fZ
+         1NXnEDEHqbXppp0IkfW4P4al6/r/1xqrbb+Tu5aRNyV0ksxKAAelaJhPlQSoYKzMip4R
+         RJ4JcfGKYscPQHlSmaIs2M9n58MrPD38ARvT1sAEoxTn4GeU91m0bkJhSTDHsiTx+Jla
+         K4Zg==
+X-Gm-Message-State: AOAM533zcN2Mbz6Twm5wa2T2WRzUt2rSbRT3TaXMgCVYoB2cDohNjkcE
+        KEgcRKDyCeeic41JTXJ+bk6f2lSKfhG+BQ==
+X-Google-Smtp-Source: ABdhPJzGPzFQKI7cjzDJ7/D3XPCo1kfkbo+oNT2/vEQTxUi6CuxjbVj93l93qlMF3Y+LavdcHG8Tow==
+X-Received: by 2002:ac8:4741:: with SMTP id k1mr725978qtp.250.1590628423701;
+        Wed, 27 May 2020 18:13:43 -0700 (PDT)
+Received: from mango.spo.virtua.com.br ([2804:14c:81:9a16::1])
+        by smtp.gmail.com with ESMTPSA id a188sm3547872qkg.11.2020.05.27.18.13.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2020 18:13:42 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, stolee@gmail.com, newren@gmail.com,
+        jonathantanmy@google.com
+Subject: [PATCH v3 1/5] doc: grep: unify info on configuration variables
+Date:   Wed, 27 May 2020 22:12:59 -0300
+Message-Id: <63c195d737dea1dbdc44294483d11a8400f608cc.1590627264.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.26.2
+In-Reply-To: <cover.1590627264.git.matheus.bernardino@usp.br>
+References: <cover.1590627264.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF0FB0B6-A07C-11EA-93C4-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Explanations about the configuration variables for git-grep are
+duplicated in "Documentation/git-grep.txt" and
+"Documentation/config/grep.txt", which can make maintenance difficult.
+The first also contains a definition not present in the latter
+(grep.fullName). To avoid problems like this, let's unify the
+information in the second file and include it in the first.
 
-> Regardless of what happens with the job-runner, I would like to see a
-> top-level command that performs a single iteration of all the
-> recommended maintenance steps, with zero configuration required, on a
-> single repo. This gives an entry point for users who want to manage
-> their own maintenance schedule without running a background process.
-> ...
->> Unix users will be unhappy with us if we use our own scheduling system
->> when cron is available.  They will expect us to reimplement those
->> features and they will complain if we do not.  While I cannot name
->> names, there are a nontrivial number of large, enterprise monorepos that
->> run only on macOS and Linux.
->
-> Speaking purely as a user, I agree with this point. This is why I want a
-> single-iteration top-level maintenance command.
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ Documentation/config/grep.txt | 10 ++++++++--
+ Documentation/git-grep.txt    | 36 ++++++-----------------------------
+ 2 files changed, 14 insertions(+), 32 deletions(-)
 
-Yes, well said.  
-
-It exactly is what "git gc" was meant to be.  To put it differently,
-if you asked any non-novice end-user if there is one single command
-that s/he would use to keep a repository healthy, it is very likely
-that the answer would be "git gc".
-
-And having such a single point of entry would be a good thing.
-
-Thanks.
-
+diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
+index 44abe45a7c..dd51db38e1 100644
+--- a/Documentation/config/grep.txt
++++ b/Documentation/config/grep.txt
+@@ -16,8 +16,14 @@ grep.extendedRegexp::
+ 	other than 'default'.
+ 
+ grep.threads::
+-	Number of grep worker threads to use.
+-	See `grep.threads` in linkgit:git-grep[1] for more information.
++	Number of grep worker threads to use. See `--threads`
++ifndef::git-grep[]
++	in linkgit:git-grep[1]
++endif::git-grep[]
++	for more information.
++
++grep.fullName::
++	If set to true, enable `--full-name` option by default.
+ 
+ grep.fallbackToNoIndex::
+ 	If set to true, fall back to git grep --no-index if git grep
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index a7f9bc99ea..9bdf807584 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -41,34 +41,8 @@ characters.  An empty string as search expression matches all lines.
+ CONFIGURATION
+ -------------
+ 
+-grep.lineNumber::
+-	If set to true, enable `-n` option by default.
+-
+-grep.column::
+-	If set to true, enable the `--column` option by default.
+-
+-grep.patternType::
+-	Set the default matching behavior. Using a value of 'basic', 'extended',
+-	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
+-	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
+-	value 'default' will return to the default matching behavior.
+-
+-grep.extendedRegexp::
+-	If set to true, enable `--extended-regexp` option by default. This
+-	option is ignored when the `grep.patternType` option is set to a value
+-	other than 'default'.
+-
+-grep.threads::
+-	Number of grep worker threads to use. If unset (or set to 0), Git will
+-	use as many threads as the number of logical cores available.
+-
+-grep.fullName::
+-	If set to true, enable `--full-name` option by default.
+-
+-grep.fallbackToNoIndex::
+-	If set to true, fall back to git grep --no-index if git grep
+-	is executed outside of a git repository.  Defaults to false.
+-
++:git-grep: 1
++include::config/grep.txt[]
+ 
+ OPTIONS
+ -------
+@@ -269,8 +243,10 @@ providing this option will cause it to die.
+ 	found.
+ 
+ --threads <num>::
+-	Number of grep worker threads to use.
+-	See `grep.threads` in 'CONFIGURATION' for more information.
++	Number of grep worker threads to use. If not provided (or set to
++	0), Git will use as many worker threads as the number of logical
++	cores available. The default value can also be set with the
++	`grep.threads` configuration.
+ 
+ -f <file>::
+ 	Read patterns from <file>, one per line.
+-- 
+2.26.2
 
