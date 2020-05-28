@@ -2,71 +2,71 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E55C433DF
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 01:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B48C0C433E2
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 01:13:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E99520DD4
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 01:13:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B9FF208B8
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 01:13:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="zq58bW0W"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="jnUr5B2t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725969AbgE1BNq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 May 2020 21:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59962 "EHLO
+        id S1726441AbgE1BNv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 May 2020 21:13:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725294AbgE1BNp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 May 2020 21:13:45 -0400
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C9CC05BD1E
-        for <git@vger.kernel.org>; Wed, 27 May 2020 18:13:43 -0700 (PDT)
-Received: by mail-qv1-xf43.google.com with SMTP id f89so12200835qva.3
-        for <git@vger.kernel.org>; Wed, 27 May 2020 18:13:43 -0700 (PDT)
+        with ESMTP id S1725795AbgE1BNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 May 2020 21:13:50 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB9EC05BD1E
+        for <git@vger.kernel.org>; Wed, 27 May 2020 18:13:50 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id c185so1642063qke.7
+        for <git@vger.kernel.org>; Wed, 27 May 2020 18:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xQjfJvvjEKsVDAcS/kg+gMyIxUqf45ENaQFisrsBNrs=;
-        b=zq58bW0WdZyi+XuxS+zb3bYjcTEmemLtyN8uujxD6D1C2woD+dhIWMTPk/N5IfOvkH
-         /zv3oFZFsisIYFbP51ocNc9UaVwj///TuUJ4BhRBu1WCm9dSA0mZ3oSgCMZWG7cpecbK
-         rcTAkR2jr/htyVcbegpcXX2pcdF/BMJ+8pDlh7R24+QI486v3z4x30CFWy1eTHAq6S4W
-         NVJK0eGm/9jkYKYkTv879Jkpj14IN9wN7Wa3MYwNtebk0/kQEj+uc67MQP2AD2vLAw97
-         wFM/H3TboitiKkdFxUxhifNU1ilMXE3xwkf6sMVpALtIZ3FuZB9rWqMhLPX2h2+TsPNn
-         T8rQ==
+        bh=jTlFEnOPMIEPQscrGGxHcP+GTuaiBD3/F6KgeOc9eAw=;
+        b=jnUr5B2tvm/1qU8nxyK0eXEATWEfAef2AlOAkU/72oh0S5B3mxeMPLIGpHestti/+g
+         HoHZWqA95aVoFxTERspnwyb1o1qs6Pf/oQHLv2yi9WjH7bjzsA/eruXIEjl8ikMRxbot
+         J7dB6Q0M+cHT9lttELtqACTj4zDU8u2blD5l3+0OzgSTN2EHNzMqZ2m54hwpJ05AsWV3
+         6b2uwe0hJi1uIVBLmqOOptRTNl1Q3df4/OafU/Js32DR3zXulfKUyLAD25be7msG210J
+         MEZaYoTTpgsxtShouXBgpwDGiSw5vuqzWtuxscVzpmsoHI2oUDz7v2xGfECLvctFzJ0T
+         AgsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xQjfJvvjEKsVDAcS/kg+gMyIxUqf45ENaQFisrsBNrs=;
-        b=nCx/nyb9+/gci1pQX3T/8hZp3/wcmACWatWRubDC03Zh9l2svYISpkieEz9wQLYciT
-         tVZ7qZyUSYs+9PAvkQQvsGtV69UnWrzvIxFKNR+t1CLdoj79SJhZQ/aW+k7RhT16Bp4V
-         V4sC6m88E62zaAx1bOkXECUYOep17kCn/ob/cUWJqv/Z0VGgT5TkbdxgjN0Dxf19Ey50
-         1neIOURu0f/NdhbxveH1bxzSoTPyWZ8GpKwbhW8es4DBs9CtCCjTtJoXEQnvPrQ3/+0s
-         bVpAke1BL7OXhyC6iKwzrrXS8YlBqt4rFMcXRqkWGNf+7JWQcLMdTZxmhSWVHUB0dSFU
-         DSoQ==
-X-Gm-Message-State: AOAM533qS2nzSXIrqfLj8LkL8ClkdilEugGbdi+RQoS2ZFeC0oCHK6Re
-        NQ8/Dz8Fb20gTHFIF2cWwsPIM5nGtB8GjA==
-X-Google-Smtp-Source: ABdhPJwZERr5CQZ5auK+MloO4+/lC/+109f4qN8Pfg8YTM51n6tmmUp6xrxaegTWUkFnWIFPdZI3Zg==
-X-Received: by 2002:a0c:b21b:: with SMTP id x27mr783118qvd.177.1590628421072;
-        Wed, 27 May 2020 18:13:41 -0700 (PDT)
+        bh=jTlFEnOPMIEPQscrGGxHcP+GTuaiBD3/F6KgeOc9eAw=;
+        b=ChpxAmkqqnYn5nQuhRQYUaqOsQ0aYHiUMDUggNf0uPz/9Rd1heQooz10Y5Ki3Kj04b
+         vJmXzMp0vf8JaHlULaVZtQz9eNDDoHtgsDCN2z48tvSq4Flr7pXPop5bzdgteB2PZVGd
+         SNLBI2oODCIbe0dAFI/ldwFvASrnAejH0i8KKUEaf4xfOE0TyGtDdymRlKewNxgIL8fq
+         hZOLAoKOVBFGkWktc+DJpqSXNGyIB2ehE1OoivC21gx/KqMwlvMLKfAeY0oZkFZa7t3B
+         VsQgs0ydpPPaeQc/i68C4EqFTIxBqA75/lPwP3mla+MDNooa/u4IGGqtuUJG8ANtMvQl
+         /hHg==
+X-Gm-Message-State: AOAM530fPL/xEpvedXUAds6rgCBowTbY/r4GOY/GxQH01Gyr4gDoJfIq
+        HV73hG2WoFJ+QDX5UlFJTdsImoCW5ED0rQ==
+X-Google-Smtp-Source: ABdhPJzxEv8d/utorNnGi6oMYWQVDeyEX+smF9zd/G2y9VkKSIgk4ZY9zOzu+7jS3XipZViLWgiixg==
+X-Received: by 2002:a37:9cd5:: with SMTP id f204mr640858qke.346.1590628428547;
+        Wed, 27 May 2020 18:13:48 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:9a16::1])
-        by smtp.gmail.com with ESMTPSA id a188sm3547872qkg.11.2020.05.27.18.13.37
+        by smtp.gmail.com with ESMTPSA id a188sm3547872qkg.11.2020.05.27.18.13.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2020 18:13:40 -0700 (PDT)
+        Wed, 27 May 2020 18:13:47 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, stolee@gmail.com, newren@gmail.com,
         jonathantanmy@google.com
-Subject: [PATCH v3 0/5] grep: honor sparse checkout and add option to ignore it
-Date:   Wed, 27 May 2020 22:12:58 -0300
-Message-Id: <cover.1590627264.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 3/5] config: correctly read worktree configs in submodules
+Date:   Wed, 27 May 2020 22:13:01 -0300
+Message-Id: <448e0efffd0bbc89d8ea891923f242b5123c5826.1590627264.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.26.2
-In-Reply-To: <cover.1589058209.git.matheus.bernardino@usp.br>
-References: <cover.1589058209.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1590627264.git.matheus.bernardino@usp.br>
+References: <cover.1590627264.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -74,618 +74,304 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is based on the discussions in [1]. The idea is to make
-git-grep (and other commands, in the future) be able to restrict their
-output to the sparsity patterns, when requested by the user.
+One of the steps in do_git_config_sequence() is to load the
+worktree-specific config file. Although the function receives a git_dir
+string, it relies on git_pathdup(), which uses the_repository->git_dir,
+to make the path to the file. Furthermore, it also checks that
+extensions.worktreeConfig is set through the
+repository_format_worktree_config variable, which refers to
+the_repository only. Thus, when a submodule has worktree settings, a
+command executed in the superproject that recurses into the submodule
+won't find the said settings.
 
-[1]: https://lore.kernel.org/git/CAHd-oW7e5qCuxZLBeVDq+Th3E+E4+P8=WzJfK8WcG2yz=n_nag@mail.gmail.com/t/#u
+Such a scenario might not be needed now, but it will be in the following
+patch. git-grep will learn to honor sparse checkouts and, when running
+with --recurse-submodules, the submodule's sparse checkout settings must
+be loaded. As these settings are stored in the config.worktree file,
+they would be ignored without this patch. So let's fix this by reading
+the right config.worktree file and extensions.worktreeConfig setting,
+based on the git_dir and commondir paths given to
+do_git_config_sequence(). Also add a test to avoid any regressions.
 
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ config.c                   |  21 +++++--
+ t/helper/test-config.c     | 119 +++++++++++++++++++++++++++----------
+ t/t2404-worktree-config.sh |  16 +++++
+ 3 files changed, 118 insertions(+), 38 deletions(-)
 
-Note on tests:
-
-In the previous iteration, the setup test in t7817 (patch 4), used the
-following command to set sparse-checkout up:
-
-    git sparse-checkout set "/*" "!b" "!/*/" "/sub"
-
-In this iteration, though, I had to change "/sub" to "sub" (which is not
-the same, but should produce the same results in t1787). Using the
-previous format, the test failed on Windows because git grep
---recurse-submodules did not recurse into "/sub" (a submodule). I used
-[2] to investigate and noticed that sub indeed had the SKIP_WORKTREE bit
-set on the repo created by the test on Windows. And the sparse-checkout
-file contained the following:
-
-/*
-!b
-!/*/
-C:/Users/<path_to_the_Git_for_Windows_SDK_installation>/sub
-
-I wasn't expecting the conversion from "/sub" to the path above. But I'm
-not very familiar with the Git for Windows SDK, so is this conversion
-expected? 
-
-Furthermore, `pwd` would output:
-
-    /usr/src/git/t/trash directory.t7817-grep-sparse-checkout
-
-So I think that would explain why the converted path for the "/sub" rule
-didn't match sub. Could this be a bug in `git sparse-checkout set`? Or
-am I missing something?
-
-[2]: https://github.com/sbp/gin
-
-
-Main changes since v2:
-
-Added patch 2.
-
-Patch 3:
-- Fix reading of extensions.worktreeConfig value in do_git_config_sequence(), to
-  get the one from the given git_dir, not the_repository.
-- Add --submodule option to test-config helper and regression test for the fixes
-  in do_git_config_sequence().
-
-Patch 4:
-- Reword commit message to remove snippet about --untracked and --no-index
-  respecting the sparsity patterns.
-- Don't grep submodules that are excluded by the sparsity patterns.
-- Add tests to ensure that submodules (and other paths) that are excluded by the
-  sparsity patterns, but present in the working tree, are not grepped.
-- Some minor variable renames in tests, for better readability.
-
-Patch 5:
-- Mention in sparse config docs that --[no-]restrict-to-sparse-paths won't
-  affect writting commands.
-- die() in grep when --[no-]restrict-to-sparse-paths is used with --no-index
-  or --untracked, and add test for this behavior.
-- Use test_when_finished and test_config, when possible, to avoid breaking next
-  test cases on a test error.
-- Adjust the behavior of --[no-]restrict-to-sparse-paths to follow the ideas
-  proposed by Elijah in [3] and [4]. Also add more tests for the different
-  cases where this option is relevant and improve docs at
-  Documentation/config/sparse.txt.
-
-[3]: https://lore.kernel.org/git/CABPp-BE6M9ATDYuQh8f_r3S00dM2Cv9vM3T5j5W_odbVzhC-5A@mail.gmail.com/
-[4]: https://lore.kernel.org/git/CABPp-BGEPU49yRN2FRtwhYn6Uh+scGKEFYP4G2GH6=uBTN1SCw@mail.gmail.com/
-
-CI: https://github.com/matheustavares/git/actions/runs/117388742
-
-Matheus Tavares (5):
-  doc: grep: unify info on configuration variables
-  t/helper/test-config: return exit codes consistently
-  config: correctly read worktree configs in submodules
-  grep: honor sparse checkout patterns
-  config: add setting to ignore sparsity patterns in some cmds
-
- Documentation/config.txt               |   2 +
- Documentation/config/grep.txt          |  10 +-
- Documentation/config/sparse.txt        |  24 ++
- Documentation/git-grep.txt             |  37 +--
- Documentation/git.txt                  |   4 +
- Makefile                               |   1 +
- builtin/grep.c                         | 134 ++++++++++-
- config.c                               |  21 +-
- contrib/completion/git-completion.bash |   2 +
- git.c                                  |   6 +
- sparse-checkout.c                      |  16 ++
- sparse-checkout.h                      |  11 +
- t/helper/test-config.c                 | 183 +++++++++------
- t/t2404-worktree-config.sh             |  16 ++
- t/t7011-skip-worktree-reading.sh       |   9 -
- t/t7817-grep-sparse-checkout.sh        | 300 +++++++++++++++++++++++++
- t/t9902-completion.sh                  |   4 +-
- 17 files changed, 663 insertions(+), 117 deletions(-)
- create mode 100644 Documentation/config/sparse.txt
- create mode 100644 sparse-checkout.c
- create mode 100644 sparse-checkout.h
- create mode 100755 t/t7817-grep-sparse-checkout.sh
-
-Range-diff against v2:
-1:  c344d22313 = 1:  63c195d737 doc: grep: unify info on configuration variables
-2:  882310b69f < -:  ---------- config: load the correct config.worktree file
--:  ---------- > 2:  43402007ad t/helper/test-config: return exit codes consistently
--:  ---------- > 3:  448e0efffd config: correctly read worktree configs in submodules
-3:  e00674c727 ! 4:  5ddac81818 grep: honor sparse checkout patterns
-    @@ Commit message
-         git-grep currently ignores the sparsity patterns and report all matches
-         found outside this subset, which kind of goes in the opposite direction.
-         Let's fix that, making it honor the sparsity boundaries for every
-    -    grepping case:
-    +    grepping case where this is relevant:
-     
-         - git grep in worktree
-         - git grep --cached
-         - git grep $REVISION
-    -    - git grep --untracked and git grep --no-index (which already respect
-    -      sparse checkout boundaries)
-     
-    -    This is also what some users reported[1] they would want as the default
-    -    behavior.
-    +    For the worktree case, we will not grep paths that have the
-    +    SKIP_WORKTREE bit set, even if they are present for some reason (e.g.
-    +    manually created after `git sparse-checkout init`). But the next patch
-    +    will add an option to do so. (See 'Note' below.)
-     
-    -    Note: for `git grep $REVISION`, we will choose to honor the sparsity
-    -    patterns only when $REVISION is a commit-ish object. The reason is that,
-    -    for a tree, we don't know whether it represents the root of a
-    -    repository or a subtree. So we wouldn't be able to correctly match it
-    -    against the sparsity patterns. E.g. suppose we have a repository with
-    -    these two sparsity rules: "/*" and "!/a"; and the following structure:
-    +    For `git grep $REVISION`, we will choose to honor the sparsity patterns
-    +    only when $REVISION is a commit-ish object. The reason is that, for a
-    +    tree, we don't know whether it represents the root of a repository or a
-    +    subtree. So we wouldn't be able to correctly match it against the
-    +    sparsity patterns. E.g. suppose we have a repository with these two
-    +    sparsity rules: "/*" and "!/a"; and the following structure:
-     
-         /
-         | - a (file)
-    @@ Commit message
-         therefore it would wrongly match the pattern "!/a". Furthermore, for a
-         search in a blob object, we wouldn't even have a path to check the
-         patterns against. So, let's ignore the sparsity patterns when grepping
-    -    non-commit-ish objects (tags to commits should be fine).
-    +    non-commit-ish objects.
-     
-    -    Finally, the old behavior may still be desirable for some use cases. So
-    -    the next patch will add an option to allow restoring it when needed.
-    +    Note: The behavior introduced in this patch is what some users have
-    +    reported[1] that they would like by default. But the old behavior is
-    +    still desirable for some use cases. Therefore, the next patch will add
-    +    an option to allow restoring it when needed.
-     
-         [1]: https://lore.kernel.org/git/CABPp-BGuFhDwWZBRaD3nA8ui46wor-4=Ha1G1oApsfF8KNpfGQ@mail.gmail.com/
-     
-    @@ builtin/grep.c: static int grep_cache(struct grep_opt *opt,
-      	for (nr = 0; nr < repo->index->cache_nr; nr++) {
-      		const struct cache_entry *ce = repo->index->cache[nr];
-     +
-    -+		if (ce_skip_worktree(ce) && !S_ISGITLINK(ce->ce_mode))
-    ++		if (ce_skip_worktree(ce))
-     +			continue;
-     +
-      		strbuf_setlen(&name, name_base_len);
-    @@ builtin/grep.c: static int grep_cache(struct grep_opt *opt,
-     +			      enum pattern_match_result *match)
-     +{
-     +	int dtype = DT_UNKNOWN;
-    -+
-    -+	if (S_ISGITLINK(entry_mode))
-    -+		return 1;
-    ++	int is_dir = S_ISDIR(entry_mode);
-     +
-     +	if (parent_match == MATCHED_RECURSIVE) {
-     +		*match = parent_match;
-     +		return 1;
-     +	}
-     +
-    -+	if (S_ISDIR(entry_mode) && !is_dir_sep(path->buf[path->len - 1]))
-    ++	if (is_dir && !is_dir_sep(path->buf[path->len - 1]))
-     +		strbuf_addch(path, '/');
-     +
-     +	*match = path_matches_pattern_list(path->buf, path->len,
-    @@ builtin/grep.c: static int grep_cache(struct grep_opt *opt,
-     +	if (*match == UNDECIDED)
-     +		*match = parent_match;
-     +
-    -+	if (S_ISDIR(entry_mode))
-    ++	if (is_dir)
-     +		strbuf_trim_trailing_dir_sep(path);
-     +
-    -+	if (*match == NOT_MATCHED && (S_ISREG(entry_mode) ||
-    -+	    (S_ISDIR(entry_mode) && sparsity->use_cone_patterns)))
-    -+		return 0;
-    ++	if (*match == NOT_MATCHED &&
-    ++		(!is_dir || (is_dir && sparsity->use_cone_patterns)))
-    ++	     return 0;
-     +
-     +	return 1;
-     +}
-    @@ t/t7817-grep-sparse-checkout.sh (new)
-     +|-- b
-     +|-- dir
-     +|   `-- c
-    -+`-- sub
-    -+    |-- A
-    -+    |   `-- a
-    -+    `-- B
-    -+	`-- b
-    -+
-    -+Where . has non-cone mode sparsity patterns and sub is a submodule with cone
-    -+mode sparsity patterns. The resulting sparse-checkout should leave the following
-    -+structure:
-    ++|-- sub
-    ++|   |-- A
-    ++|   |   `-- a
-    ++|   `-- B
-    ++|       `-- b
-    ++`-- sub2
-    ++    `-- a
-    ++
-    ++Where . has non-cone mode sparsity patterns, sub is a submodule with cone mode
-    ++sparsity patterns and sub2 is a submodule that is excluded by the superproject
-    ++sparsity patterns. The resulting sparse checkout should leave the following
-    ++structure on the working tree:
-     +
-     +.
-     +|-- a
-    -+`-- sub
-    -+    `-- B
-    -+	`-- b
-    ++|-- sub
-    ++|   `-- B
-    ++|       `-- b
-    ++`-- sub2
-    ++    `-- a
-    ++
-    ++But note that sub2 should have the SKIP_WORKTREE bit set.
-     +'
-     +
-     +. ./test-lib.sh
-    @@ t/t7817-grep-sparse-checkout.sh (new)
-     +		git sparse-checkout set B
-     +	) &&
-     +
-    ++	git init sub2 &&
-    ++	(
-    ++		cd sub2 &&
-    ++		echo "text" >a &&
-    ++		git add a &&
-    ++		git commit -m sub2
-    ++	) &&
-    ++
-     +	git submodule add ./sub &&
-    ++	git submodule add ./sub2 &&
-     +	git add a b dir &&
-     +	git commit -m super &&
-     +	git sparse-checkout init --no-cone &&
-    -+	git sparse-checkout set "/*" "!b" "!/*/" &&
-    ++	git sparse-checkout set "/*" "!b" "!/*/" "sub" &&
-     +
-    -+	git tag -am t-commit t-commit HEAD &&
-    ++	git tag -am tag-to-commit tag-to-commit HEAD &&
-     +	tree=$(git rev-parse HEAD^{tree}) &&
-    -+	git tag -am t-tree t-tree $tree &&
-    ++	git tag -am tag-to-tree tag-to-tree $tree &&
-     +
-     +	test_path_is_missing b &&
-     +	test_path_is_missing dir &&
-     +	test_path_is_missing sub/A &&
-     +	test_path_is_file a &&
-    -+	test_path_is_file sub/B/b
-    ++	test_path_is_file sub/B/b &&
-    ++	test_path_is_file sub2/a
-     +'
-     +
-    ++# The test bellow checks a special case: the sparsity patterns exclude '/b'
-    ++# and sparse checkout is enable, but the path exists on the working tree (e.g.
-    ++# manually created after `git sparse-checkout init`). In this case, grep should
-    ++# skip it.
-     +test_expect_success 'grep in working tree should honor sparse checkout' '
-     +	cat >expect <<-EOF &&
-     +	a:text
-     +	EOF
-    ++	echo "new-text" >b &&
-    ++	test_when_finished "rm b" &&
-     +	git grep "text" >actual &&
-     +	test_cmp expect actual
-     +'
-    @@ t/t7817-grep-sparse-checkout.sh (new)
-     +	cat >expect_commit <<-EOF &&
-     +	$commit:a:text
-     +	EOF
-    -+	cat >expect_t-commit <<-EOF &&
-    -+	t-commit:a:text
-    ++	cat >expect_tag-to-commit <<-EOF &&
-    ++	tag-to-commit:a:text
-     +	EOF
-     +	git grep "text" $commit >actual_commit &&
-     +	test_cmp expect_commit actual_commit &&
-    -+	git grep "text" t-commit >actual_t-commit &&
-    -+	test_cmp expect_t-commit actual_t-commit
-    ++	git grep "text" tag-to-commit >actual_tag-to-commit &&
-    ++	test_cmp expect_tag-to-commit actual_tag-to-commit
-     +'
-     +
-     +test_expect_success 'grep <tree-ish> should ignore sparsity patterns' '
-    @@ t/t7817-grep-sparse-checkout.sh (new)
-     +	$tree:b:text
-     +	$tree:dir/c:text
-     +	EOF
-    -+	cat >expect_t-tree <<-EOF &&
-    -+	t-tree:a:text
-    -+	t-tree:b:text
-    -+	t-tree:dir/c:text
-    ++	cat >expect_tag-to-tree <<-EOF &&
-    ++	tag-to-tree:a:text
-    ++	tag-to-tree:b:text
-    ++	tag-to-tree:dir/c:text
-     +	EOF
-     +	git grep "text" $tree >actual_tree &&
-     +	test_cmp expect_tree actual_tree &&
-    -+	git grep "text" t-tree >actual_t-tree &&
-    -+	test_cmp expect_t-tree actual_t-tree
-    ++	git grep "text" tag-to-tree >actual_tag-to-tree &&
-    ++	test_cmp expect_tag-to-tree actual_tag-to-tree
-    ++'
-    ++
-    ++# Note that sub2/ is present in the worktree but it is excluded by the sparsity
-    ++# patterns, so grep should not recurse into it.
-    ++test_expect_success 'grep --recurse-submodules should honor sparse checkout in submodule' '
-    ++	cat >expect <<-EOF &&
-    ++	a:text
-    ++	sub/B/b:text
-    ++	EOF
-    ++	git grep --recurse-submodules "text" >actual &&
-    ++	test_cmp expect actual
-     +'
-     +
-     +test_expect_success 'grep --recurse-submodules --cached should honor sparse checkout in submodule' '
-    @@ t/t7817-grep-sparse-checkout.sh (new)
-     +	$commit:a:text
-     +	$commit:sub/B/b:text
-     +	EOF
-    -+	cat >expect_t-commit <<-EOF &&
-    -+	t-commit:a:text
-    -+	t-commit:sub/B/b:text
-    ++	cat >expect_tag-to-commit <<-EOF &&
-    ++	tag-to-commit:a:text
-    ++	tag-to-commit:sub/B/b:text
-     +	EOF
-     +	git grep --recurse-submodules "text" $commit >actual_commit &&
-     +	test_cmp expect_commit actual_commit &&
-    -+	git grep --recurse-submodules "text" t-commit >actual_t-commit &&
-    -+	test_cmp expect_t-commit actual_t-commit
-    ++	git grep --recurse-submodules "text" tag-to-commit >actual_tag-to-commit &&
-    ++	test_cmp expect_tag-to-commit actual_tag-to-commit
-     +'
-     +
-     +test_done
-4:  3e9e906249 ! 5:  748b1e955c config: add setting to ignore sparsity patterns in some cmds
-    @@ Commit message
-         subset of files in which they are interested; and allow some commands to
-         possibly perform better, by not considering uninteresting paths. For
-         this reason, we taught grep to honor the sparsity patterns, in the
-    -    previous commit. But, on the other hand, allowing grep and the other
-    +    previous patch. But, on the other hand, allowing grep and the other
-         commands mentioned to optionally ignore the patterns also make for some
-         interesting use cases. E.g. using grep to search for a function
-    -    definition that resides outside the sparse checkout.
-    +    documentation that resides outside the sparse checkout.
-     
-         In any case, there is no current way for users to configure the behavior
-         they want for these commands. Aiming to provide this flexibility, let's
-    @@ Documentation/config/sparse.txt (new)
-     ++
-     +When this option is true (default), some git commands may limit their behavior
-     +to the paths specified by the sparsity patterns, or to the intersection of
-    -+those paths and any (like `*.c) that the user might also specify on the command
-    -+line. When false, the affected commands will work on full trees, ignoring the
-    -+sparsity patterns. For now, only git-grep honors this setting. In this command,
-    -+the restriction becomes relevant in one of these three cases: with --cached;
-    -+when a commit-ish is given; when searching a working tree that contains paths
-    -+previously excluded by the sparsity patterns.
-    ++those paths and any (like `*.c`) that the user might also specify on the
-    ++command line. When false, the affected commands will work on full trees,
-    ++ignoring the sparsity patterns. For now, only git-grep honors this setting. In
-    ++this command, the restriction takes effect in three cases: with --cached; when
-    ++a commit-ish is given; when searching a working tree where some paths excluded
-    ++by the sparsity patterns are present (e.g. manually created paths or not
-    ++removed submodules).
-     ++
-     +Note: commands which export, integrity check, or create history will always
-     +operate on full trees (e.g. fast-export, format-patch, fsck, commit, etc.),
-    -+unaffected by any sparsity patterns.
-    ++unaffected by any sparsity patterns. Also, writting commands such as
-    ++sparse-checkout and read-tree will not be affected by this configuration.
-     
-      ## Documentation/git-grep.txt ##
-     @@ Documentation/git-grep.txt: characters.  An empty string as search expression matches all lines.
-    @@ builtin/grep.c: static int grep_cache(struct grep_opt *opt,
-      	for (nr = 0; nr < repo->index->cache_nr; nr++) {
-      		const struct cache_entry *ce = repo->index->cache[nr];
-      
-    --		if (ce_skip_worktree(ce) && !S_ISGITLINK(ce->ce_mode))
-    -+		if (sparse_paths_only && ce_skip_worktree(ce) &&
-    -+		    !S_ISGITLINK(ce->ce_mode))
-    +-		if (ce_skip_worktree(ce))
-    ++		if (sparse_paths_only && ce_skip_worktree(ce))
-      			continue;
-      
-      		strbuf_setlen(&name, name_base_len);
-    @@ builtin/grep.c: int cmd_grep(int argc, const char **argv, const char *prefix)
-      		int use_exclude = (opt_exclude < 0) ? use_index : !!opt_exclude;
-     +
-     +		if (opt_restrict_to_sparse_paths >= 0) {
-    -+			warning(_("--[no-]restrict-to-sparse-paths is ignored"
-    -+				  " with --no-index or --untracked"));
-    ++			die(_("--[no-]restrict-to-sparse-paths is incompatible"
-    ++				  " with --no-index and --untracked"));
-     +		}
-     +
-      		hit = grep_directory(&opt, &pathspec, use_exclude, use_index);
-    @@ sparse-checkout.h (new)
-     
-      ## t/t7817-grep-sparse-checkout.sh ##
-     @@ t/t7817-grep-sparse-checkout.sh: test_expect_success 'setup' '
-    - 	test_path_is_file sub/B/b
-    + 	test_path_is_file sub2/a
-      '
-      
-    +-# The test bellow checks a special case: the sparsity patterns exclude '/b'
-     +# The two tests bellow check a special case: the sparsity patterns exclude '/b'
-    -+# and sparse checkout is enable, but the path exists on the working tree (e.g.
-    -+# manually created after `git sparse-checkout init`). In this case, grep should
-    -+# honor --restrict-to-sparse-paths.
-    + # and sparse checkout is enable, but the path exists on the working tree (e.g.
-    + # manually created after `git sparse-checkout init`). In this case, grep should
-    +-# skip it.
-    ++# skip the file by default, but not with --no-restrict-to-sparse-paths.
-      test_expect_success 'grep in working tree should honor sparse checkout' '
-      	cat >expect <<-EOF &&
-      	a:text
-    - 	EOF
-    -+	echo newtext >b &&
-    +@@ t/t7817-grep-sparse-checkout.sh: test_expect_success 'grep in working tree should honor sparse checkout' '
-      	git grep "text" >actual &&
-    --	test_cmp expect actual
-    -+	test_cmp expect actual &&
-    -+	rm b
-    -+'
-    + 	test_cmp expect actual
-    + '
-     +test_expect_success 'grep w/ --no-restrict-to-sparse-paths for sparsely excluded but present paths' '
-     +	cat >expect <<-EOF &&
-     +	a:text
-    -+	b:newtext
-    ++	b:new-text
-     +	EOF
-    -+	echo newtext >b &&
-    ++	echo "new-text" >b &&
-    ++	test_when_finished "rm b" &&
-     +	git --no-restrict-to-sparse-paths grep "text" >actual &&
-    -+	test_cmp expect actual &&
-    -+	rm b
-    - '
-    ++	test_cmp expect actual
-    ++'
-      
-      test_expect_success 'grep --cached should honor sparse checkout' '
-    + 	cat >expect <<-EOF &&
-    +@@ t/t7817-grep-sparse-checkout.sh: test_expect_success 'grep <tree-ish> should ignore sparsity patterns' '
-    + '
-    + 
-    + # Note that sub2/ is present in the worktree but it is excluded by the sparsity
-    +-# patterns, so grep should not recurse into it.
-    ++# patterns, so grep should only recurse into it with --no-restrict-to-sparse-paths.
-    + test_expect_success 'grep --recurse-submodules should honor sparse checkout in submodule' '
-    + 	cat >expect <<-EOF &&
-    + 	a:text
-    +@@ t/t7817-grep-sparse-checkout.sh: test_expect_success 'grep --recurse-submodules should honor sparse checkout in s
-    + 	git grep --recurse-submodules "text" >actual &&
-    + 	test_cmp expect actual
-    + '
-    ++test_expect_success 'grep --recurse-submodules should search in excluded submodules w/ --no-restrict-to-sparse-paths' '
-    ++	cat >expect <<-EOF &&
-    ++	a:text
-    ++	sub/B/b:text
-    ++	sub2/a:text
-    ++	EOF
-    ++	git --no-restrict-to-sparse-paths grep --recurse-submodules "text" >actual &&
-    ++	test_cmp expect actual
-    ++'
-    + 
-    + test_expect_success 'grep --recurse-submodules --cached should honor sparse checkout in submodule' '
-    + 	cat >expect <<-EOF &&
-     @@ t/t7817-grep-sparse-checkout.sh: test_expect_success 'grep --recurse-submodules <commit-ish> should honor sparse
-    - 	test_cmp expect_t-commit actual_t-commit
-    + 	test_cmp expect_tag-to-commit actual_tag-to-commit
-      '
-      
-     +for cmd in 'git --no-restrict-to-sparse-paths grep' \
-    @@ t/t7817-grep-sparse-checkout.sh: test_expect_success 'grep --recurse-submodules
-     +		$commit:b:text
-     +		$commit:dir/c:text
-     +		EOF
-    -+		cat >expect_t-commit <<-EOF &&
-    -+		t-commit:a:text
-    -+		t-commit:b:text
-    -+		t-commit:dir/c:text
-    ++		cat >expect_tag-to-commit <<-EOF &&
-    ++		tag-to-commit:a:text
-    ++		tag-to-commit:b:text
-    ++		tag-to-commit:dir/c:text
-     +		EOF
-     +		$cmd "text" $commit >actual_commit &&
-     +		test_cmp expect_commit actual_commit &&
-    -+		$cmd "text" t-commit >actual_t-commit &&
-    -+		test_cmp expect_t-commit actual_t-commit
-    ++		$cmd "text" tag-to-commit >actual_tag-to-commit &&
-    ++		test_cmp expect_tag-to-commit actual_tag-to-commit
-     +	'
-     +done
-     +
-    ++test_expect_success 'grep --recurse-submodules --cached \w --no-restrict-to-sparse-paths' '
-    ++	cat >expect <<-EOF &&
-    ++	a:text
-    ++	b:text
-    ++	dir/c:text
-    ++	sub/A/a:text
-    ++	sub/B/b:text
-    ++	sub2/a:text
-    ++	EOF
-    ++	git --no-restrict-to-sparse-paths grep --recurse-submodules --cached \
-    ++		"text" >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    ++test_expect_success 'grep --recurse-submodules <commit-ish> \w --no-restrict-to-sparse-paths' '
-    ++	commit=$(git rev-parse HEAD) &&
-    ++	cat >expect_commit <<-EOF &&
-    ++	$commit:a:text
-    ++	$commit:b:text
-    ++	$commit:dir/c:text
-    ++	$commit:sub/A/a:text
-    ++	$commit:sub/B/b:text
-    ++	$commit:sub2/a:text
-    ++	EOF
-    ++	cat >expect_tag-to-commit <<-EOF &&
-    ++	tag-to-commit:a:text
-    ++	tag-to-commit:b:text
-    ++	tag-to-commit:dir/c:text
-    ++	tag-to-commit:sub/A/a:text
-    ++	tag-to-commit:sub/B/b:text
-    ++	tag-to-commit:sub2/a:text
-    ++	EOF
-    ++	git --no-restrict-to-sparse-paths grep --recurse-submodules "text" \
-    ++		$commit >actual_commit &&
-    ++	test_cmp expect_commit actual_commit &&
-    ++	git --no-restrict-to-sparse-paths grep --recurse-submodules "text" \
-    ++		tag-to-commit >actual_tag-to-commit &&
-    ++	test_cmp expect_tag-to-commit actual_tag-to-commit
-    ++'
-    ++
-     +test_expect_success 'should respect the sparse.restrictCmds values from submodules' '
-     +	cat >expect <<-EOF &&
-     +	a:text
-     +	sub/A/a:text
-     +	sub/B/b:text
-     +	EOF
-    -+	git -C sub config sparse.restrictCmds false &&
-    ++	test_config -C sub sparse.restrictCmds false &&
-     +	git grep --cached --recurse-submodules "text" >actual &&
-    -+	test_cmp expect actual &&
-    -+	git -C sub config --unset sparse.restrictCmds
-    ++	test_cmp expect actual
-     +'
-     +
-     +test_expect_success 'should propagate --[no]-restrict-to-sparse-paths to submodules' '
-    @@ t/t7817-grep-sparse-checkout.sh: test_expect_success 'grep --recurse-submodules
-     +	dir/c:text
-     +	sub/A/a:text
-     +	sub/B/b:text
-    ++	sub2/a:text
-     +	EOF
-    -+	git -C sub config sparse.restrictCmds true &&
-    ++	test_config -C sub sparse.restrictCmds true &&
-     +	git --no-restrict-to-sparse-paths grep --cached --recurse-submodules "text" >actual &&
-    -+	test_cmp expect actual &&
-    -+	git -C sub config --unset sparse.restrictCmds
-    ++	test_cmp expect actual
-     +'
-    ++
-    ++for opt in '--untracked' '--no-index'
-    ++do
-    ++	test_expect_success "--[no]-restrict-to-sparse-paths and $opt are incompatible" "
-    ++		test_must_fail git --restrict-to-sparse-paths grep $opt . 2>actual &&
-    ++		test_i18ngrep 'restrict-to-sparse-paths is incompatible with' actual
-    ++	"
-    ++done
-     +
-      test_done
-     
+diff --git a/config.c b/config.c
+index 8db9c77098..c2d56309dc 100644
+--- a/config.c
++++ b/config.c
+@@ -1747,11 +1747,22 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 		ret += git_config_from_file(fn, repo_config, data);
+ 
+ 	current_parsing_scope = CONFIG_SCOPE_WORKTREE;
+-	if (!opts->ignore_worktree && repository_format_worktree_config) {
+-		char *path = git_pathdup("config.worktree");
+-		if (!access_or_die(path, R_OK, 0))
+-			ret += git_config_from_file(fn, path, data);
+-		free(path);
++	if (!opts->ignore_worktree && repo_config && opts->git_dir) {
++		struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
++		struct strbuf buf = STRBUF_INIT;
++
++		read_repository_format(&repo_fmt, repo_config);
++
++		if (!verify_repository_format(&repo_fmt, &buf) &&
++		    repo_fmt.worktree_config) {
++			char *path = mkpathdup("%s/config.worktree", opts->git_dir);
++			if (!access_or_die(path, R_OK, 0))
++				ret += git_config_from_file(fn, path, data);
++			free(path);
++		}
++
++		strbuf_release(&buf);
++		clear_repository_format(&repo_fmt);
+ 	}
+ 
+ 	current_parsing_scope = CONFIG_SCOPE_COMMAND;
+diff --git a/t/helper/test-config.c b/t/helper/test-config.c
+index 1c8e965840..284f83a921 100644
+--- a/t/helper/test-config.c
++++ b/t/helper/test-config.c
+@@ -2,12 +2,19 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "string-list.h"
++#include "submodule-config.h"
+ 
+ /*
+  * This program exposes the C API of the configuration mechanism
+  * as a set of simple commands in order to facilitate testing.
+  *
+- * Reads stdin and prints result of command to stdout:
++ * Usage: test-tool config [--submodule=<path>] <cmd> [<args>]
++ *
++ * If --submodule=<path> is given, <cmd> will operate on the submodule at the
++ * given <path>. This option is not valid for the commands: read_early_config,
++ * configset_get_value and configset_get_value_multi.
++ *
++ * Possible cmds are:
+  *
+  * get_value -> prints the value with highest priority for the entered key
+  *
+@@ -84,33 +91,63 @@ int cmd__config(int argc, const char **argv)
+ 	int i, val;
+ 	const char *v;
+ 	const struct string_list *strptr;
+-	struct config_set cs;
++	struct config_set cs = { .hash_initialized = 0 };
+ 	enum test_config_exit_code ret = TC_SUCCESS;
++	struct repository *repo = the_repository;
++	const char *subrepo_path = NULL;
++
++	argc--; /* skip over "config" */
++	argv++;
++
++	if (argc == 0)
++		goto print_usage_error;
++
++	if (skip_prefix(*argv, "--submodule=", &subrepo_path)) {
++		argc--;
++		argv++;
++		if (argc == 0)
++			goto print_usage_error;
++	}
+ 
+-	if (argc == 3 && !strcmp(argv[1], "read_early_config")) {
+-		read_early_config(early_config_cb, (void *)argv[2]);
++	if (argc == 2 && !strcmp(argv[0], "read_early_config")) {
++		if (subrepo_path) {
++			fprintf(stderr, "Cannot use --submodule with read_early_config\n");
++			return TC_USAGE_ERROR;
++		}
++		read_early_config(early_config_cb, (void *)argv[1]);
+ 		return TC_SUCCESS;
+ 	}
+ 
+ 	setup_git_directory();
+-
+ 	git_configset_init(&cs);
+ 
+-	if (argc < 2)
+-		goto print_usage_error;
++	if (subrepo_path) {
++		const struct submodule *sub;
++		struct repository *subrepo = xcalloc(1, sizeof(*repo));
++
++		sub = submodule_from_path(the_repository, &null_oid, subrepo_path);
++		if (!sub || repo_submodule_init(subrepo, the_repository, sub)) {
++			fprintf(stderr, "Invalid argument to --submodule: '%s'\n",
++				subrepo_path);
++			free(subrepo);
++			ret = TC_USAGE_ERROR;
++			goto out;
++		}
++		repo = subrepo;
++	}
+ 
+-	if (argc == 3 && !strcmp(argv[1], "get_value")) {
+-		if (!git_config_get_value(argv[2], &v)) {
++	if (argc == 2 && !strcmp(argv[0], "get_value")) {
++		if (!repo_config_get_value(repo, argv[1], &v)) {
+ 			if (!v)
+ 				printf("(NULL)\n");
+ 			else
+ 				printf("%s\n", v);
+ 		} else {
+-			printf("Value not found for \"%s\"\n", argv[2]);
++			printf("Value not found for \"%s\"\n", argv[1]);
+ 			ret = TC_VALUE_NOT_FOUND;
+ 		}
+-	} else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
+-		strptr = git_config_get_value_multi(argv[2]);
++	} else if (argc == 2 && !strcmp(argv[0], "get_value_multi")) {
++		strptr = repo_config_get_value_multi(repo, argv[1]);
+ 		if (strptr) {
+ 			for (i = 0; i < strptr->nr; i++) {
+ 				v = strptr->items[i].string;
+@@ -120,32 +157,38 @@ int cmd__config(int argc, const char **argv)
+ 					printf("%s\n", v);
+ 			}
+ 		} else {
+-			printf("Value not found for \"%s\"\n", argv[2]);
++			printf("Value not found for \"%s\"\n", argv[1]);
+ 			ret = TC_VALUE_NOT_FOUND;
+ 		}
+-	} else if (argc == 3 && !strcmp(argv[1], "get_int")) {
+-		if (!git_config_get_int(argv[2], &val)) {
++	} else if (argc == 2 && !strcmp(argv[0], "get_int")) {
++		if (!repo_config_get_int(repo, argv[1], &val)) {
+ 			printf("%d\n", val);
+ 		} else {
+-			printf("Value not found for \"%s\"\n", argv[2]);
++			printf("Value not found for \"%s\"\n", argv[1]);
+ 			ret = TC_VALUE_NOT_FOUND;
+ 		}
+-	} else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
+-		if (!git_config_get_bool(argv[2], &val)) {
++	} else if (argc == 2 && !strcmp(argv[0], "get_bool")) {
++		if (!repo_config_get_bool(repo, argv[1], &val)) {
+ 			printf("%d\n", val);
+ 		} else {
+-			printf("Value not found for \"%s\"\n", argv[2]);
++
++			printf("Value not found for \"%s\"\n", argv[1]);
+ 			ret = TC_VALUE_NOT_FOUND;
+ 		}
+-	} else if (argc == 3 && !strcmp(argv[1], "get_string")) {
+-		if (!git_config_get_string_const(argv[2], &v)) {
++	} else if (argc == 2 && !strcmp(argv[0], "get_string")) {
++		if (!repo_config_get_string_const(repo, argv[1], &v)) {
+ 			printf("%s\n", v);
+ 		} else {
+-			printf("Value not found for \"%s\"\n", argv[2]);
++			printf("Value not found for \"%s\"\n", argv[1]);
+ 			ret = TC_VALUE_NOT_FOUND;
+ 		}
+-	} else if (argc >= 3 && !strcmp(argv[1], "configset_get_value")) {
+-		for (i = 3; i < argc; i++) {
++	} else if (argc >= 2 && !strcmp(argv[0], "configset_get_value")) {
++		if (subrepo_path) {
++			fprintf(stderr, "Cannot use --submodule with configset_get_value\n");
++			ret = TC_USAGE_ERROR;
++			goto out;
++		}
++		for (i = 2; i < argc; i++) {
+ 			int err;
+ 			if ((err = git_configset_add_file(&cs, argv[i]))) {
+ 				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
+@@ -153,17 +196,22 @@ int cmd__config(int argc, const char **argv)
+ 				goto out;
+ 			}
+ 		}
+-		if (!git_configset_get_value(&cs, argv[2], &v)) {
++		if (!git_configset_get_value(&cs, argv[1], &v)) {
+ 			if (!v)
+ 				printf("(NULL)\n");
+ 			else
+ 				printf("%s\n", v);
+ 		} else {
+-			printf("Value not found for \"%s\"\n", argv[2]);
++			printf("Value not found for \"%s\"\n", argv[1]);
+ 			ret = TC_VALUE_NOT_FOUND;
+ 		}
+-	} else if (argc >= 3 && !strcmp(argv[1], "configset_get_value_multi")) {
+-		for (i = 3; i < argc; i++) {
++	} else if (argc >= 2 && !strcmp(argv[0], "configset_get_value_multi")) {
++		if (subrepo_path) {
++			fprintf(stderr, "Cannot use --submodule with configset_get_value_multi\n");
++			ret = TC_USAGE_ERROR;
++			goto out;
++		}
++		for (i = 2; i < argc; i++) {
+ 			int err;
+ 			if ((err = git_configset_add_file(&cs, argv[i]))) {
+ 				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
+@@ -171,7 +219,7 @@ int cmd__config(int argc, const char **argv)
+ 				goto out;
+ 			}
+ 		}
+-		strptr = git_configset_get_value_multi(&cs, argv[2]);
++		strptr = git_configset_get_value_multi(&cs, argv[1]);
+ 		if (strptr) {
+ 			for (i = 0; i < strptr->nr; i++) {
+ 				v = strptr->items[i].string;
+@@ -181,18 +229,23 @@ int cmd__config(int argc, const char **argv)
+ 					printf("%s\n", v);
+ 			}
+ 		} else {
+-			printf("Value not found for \"%s\"\n", argv[2]);
++			printf("Value not found for \"%s\"\n", argv[1]);
+ 			ret = TC_VALUE_NOT_FOUND;
+ 		}
+-	} else if (!strcmp(argv[1], "iterate")) {
+-		git_config(iterate_cb, NULL);
++	} else if (!strcmp(argv[0], "iterate")) {
++		repo_config(repo, iterate_cb, NULL);
+ 	} else {
+ print_usage_error:
+-		fprintf(stderr, "Invalid syntax. Usage: test-tool config <cmd> [args]\n");
++		fprintf(stderr, "Invalid syntax. Usage: test-tool config"
++				" [--submodule=<path>] <cmd> [args]\n");
+ 		ret = TC_USAGE_ERROR;
+ 	}
+ 
+ out:
+ 	git_configset_clear(&cs);
++	if (repo != the_repository) {
++		repo_clear(repo);
++		free(repo);
++	}
+ 	return ret;
+ }
+diff --git a/t/t2404-worktree-config.sh b/t/t2404-worktree-config.sh
+index 286121d8de..b6ab793203 100755
+--- a/t/t2404-worktree-config.sh
++++ b/t/t2404-worktree-config.sh
+@@ -76,4 +76,20 @@ test_expect_success 'config.worktree no longer read without extension' '
+ 	test_cmp_config -C wt2 shared this.is
+ '
+ 
++test_expect_success 'correctly read config.worktree from submodules' '
++	test_unconfig extensions.worktreeConfig &&
++	git init sub &&
++	(
++		cd sub &&
++		test_commit A &&
++		git config extensions.worktreeConfig true &&
++		git config --worktree wtconfig.sub test-value
++	) &&
++	git submodule add ./sub &&
++	git commit -m "add sub" &&
++	echo test-value >expect &&
++	test-tool config --submodule=sub get_value wtconfig.sub >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.26.2
 
