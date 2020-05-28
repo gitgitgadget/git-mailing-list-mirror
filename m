@@ -6,114 +6,105 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EF75C433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 22:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54BA0C433DF
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 22:57:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F2E22078C
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 22:21:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26B41207F9
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 22:57:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ia5YNROX"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0QkQ/0Ae"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436932AbgE1WVn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 18:21:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51888 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436893AbgE1WVm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 18:21:42 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BC6A0D5185;
-        Thu, 28 May 2020 18:21:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rLZreXKz+6b8ZelvesFb2aW8VcY=; b=Ia5YNR
-        OX4kP2KCM011X64lYyCBH2PT08/eZN7sNDZEZILHQ+axR6gZ28dNoQM1LOC9d5nf
-        7tgnftXjsotHypmFnRGcwVqWa25WdqyfSYSdxqKWaF0nVYYVFomC7EyFjX4/KjeQ
-        5+yKLDmLRjYitp1V59IKyKkPdbm+o37Vbp/Kw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cqCtyEUby41DsmyGLJ//GKxl9JFsPGSS
-        Yg5dSlSqHaU6kfwTJqYwr80QWYVVacLQgLJz1TFouvkA0CpT+eW7o2bcPP+lcMtu
-        kJd4Y/bM6xRoGt0RS1kqEUjL42CeTjzHb5aZ7S/76wwZ4arcwkgabQD1BXhrtggO
-        x9m2xS2XiHI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B4651D5184;
-        Thu, 28 May 2020 18:21:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2437295AbgE1W5l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 18:57:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38934 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2437266AbgE1W5k (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 28 May 2020 18:57:40 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 065CCD5182;
-        Thu, 28 May 2020 18:21:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Steven Willis via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Steven Willis <onlynone@gmail.com>
-Subject: Re: [PATCH] doc: ls-tree paths do not support wildcards
-References: <pull.796.git.git.1590700996483.gitgitgadget@gmail.com>
-        <20200528215107.GA1265681@coredump.intra.peff.net>
-Date:   Thu, 28 May 2020 15:21:34 -0700
-In-Reply-To: <20200528215107.GA1265681@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 28 May 2020 17:51:07 -0400")
-Message-ID: <xmqqy2pb1z0x.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 690536045A;
+        Thu, 28 May 2020 22:57:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1590706658;
+        bh=qs4d+qm3DU1jTR/femDBjY7ngS5MyHs8y8gxMyGfB+s=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=0QkQ/0AeMHSVVyMVHbA5OzWEtVjn86WSB24FSfqWpGq/TvP8I6EfVTutGzzalm+M7
+         KeLvZSUmzZmEkzA6cDkpLY5FfNgoPqnMByzXAldB757kRnzmy5fcMANBtgO1NE3WK7
+         PZaWd4ezBQO4xBZk5EIFp81apR77znU2bFXjmw1u21SuW58f6YjfDjOFYvTbB+XLuP
+         LMADRmap3a7BFRl9ZpEj5rwLqrMfRcTwBuIKi3ui2GUnrM6ZcpPmQ4BznRBoydO/Ng
+         5UFmUQG85mH167pmhowxrqkHtGLzj2mAbIwL6iOKVGN9503UQMQ/V/VaUXZjbWU1u8
+         azH4ES/YmAOScNPePHP8NJnfy47o5VR/JQaBJP8BEp1AweE5gAn7uLs/1c0Xd1QWpM
+         KpNwwmSQrV+gEw+XtQaoc8aM+XM3eE7hwTZdLoZcwINmmPukOhAdYqk+vTEK0Z4a1R
+         LYS8HDG8NNh8YXLL7bJRgaAmrxpb2rnaNAFalu4BKgk+tCGqQSP
+Date:   Thu, 28 May 2020 22:57:33 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Marco Trevisan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Marco Trevisan <mail@3v1n0.net>
+Subject: Re: [PATCH] completion: use native ZSH array pattern matching
+Message-ID: <20200528225733.GI1915090@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Marco Trevisan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Marco Trevisan <mail@3v1n0.net>
+References: <pull.645.git.1590520398132.gitgitgadget@gmail.com>
+ <20200526235834.GG1915090@camp.crustytoothpaste.net>
+ <20200527061359.GB40564@Carlos-MBP>
+ <20200528021727.GH1915090@camp.crustytoothpaste.net>
+ <xmqqd06o3vhy.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 97CBE7F0-A131-11EA-B830-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="KZLWU/9q3evlN4nQ"
+Content-Disposition: inline
+In-Reply-To: <xmqqd06o3vhy.fsf@gitster.c.googlers.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-1-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> So I think for now we ought to explain the situation a bit more clearly:
-> leave this language as-is, but add a new section describing what
-> patterns we do support.
+--KZLWU/9q3evlN4nQ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks; you said a lot better than I could ;-)
+On 2020-05-28 at 15:54:49, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> > Yes, that is what I meant.  I'm glad to know my question has been
+> > answered and things work.  I'm okay with the patch as it is in that
+> > case, although I'd give bonus points for mentioning that this syntax
+> > doesn't regress bash.
+>=20
+> True.  And we would want to also have tested-by on more recent
+> versions of bash, no?
 
-> In the long run it would be nice to actually match regular pathspecs.
-> That would be a backwards-incompatibility, which I think is why nobody
-> has pursued it further (and ls-tree is meant to be plumbing that should
-> stay consistent, so we need to be extra careful). So we'd need a
-> transition plan. Perhaps:
->
->   1. Deprecate the current behavior in the documentation and release
->      notes, encouraging people who want literal matching to use
->      --literal-pathspecs or the ":(literal)" magic. AFAICT we've
->      supported these since at least 2013 for this command, so it should
->      be safe to use unconditionally.
->
->   2. Add a new option, "--use-pathspecs" or similar, that switches the
->      matching code to use match_pathspec(). That lets people use the new
->      feature immediately if they want to.
->
->   3. When --use-pathspecs is not in use, warn to stderr about any
->      wildcard characters in the input. That reinforces the deprecation
->      notice in (1) and is likely to get more people's attention.
+Sure, such testing would be welcome, but I believe those are tested with
+our tests on most platforms.  macOS is special because it uses the last
+GPLv2 version of bash, which is less capable in some ways.  I assumed
+that bash would not be more likely to break here in newer versions, but
+perhaps I shouldn't make that assumption.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Hmph, if we are serious about deprecation and migration, I would
-image that in stage #1, we should do this check already.  When
-"--literal-pathspecs" is NOT in use, if a pathspec would change its
-meaning if not taken literally (e.g. has glob letters, begins with
-:-magic introducer, etc.), we warn and do so from the very beginning
-of the migration process.
+--KZLWU/9q3evlN4nQ
+Content-Type: application/pgp-signature; name="signature.asc"
 
->   4. After several releases, flip the default to --use-pathspecs,
->      leaving --no-use-pathspecs as an escape hatch for people who still
->      haven't switched their scripts.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-Wouldn't --literal-pathspecs be the accepted escape hatch that will
-always be accepted, even after --use-pathspecs becomes a no-op?
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXtBB3AAKCRB8DEliiIei
+gXWlAQCzMSJWA/YkyaNz5SDEA+UnEjL2TAK9I4eQ5MiytzprkAEArACuIbVhwep0
+xaiiQ/f+LmzZ/cwbpp3jb+KYmC0tOA0=
+=7snB
+-----END PGP SIGNATURE-----
 
->   5. After several more releases, eventually remove the old-style
->      matching (perhaps leaving --use-pathspecs as a noop).
-
-> To be honest, that may be more careful than we absolutely need to be.
-
-Yeah, there seem to be some room for optimization, but I think the
-key steps are about right if we wanted to do this migration.
-
-Thanks.
+--KZLWU/9q3evlN4nQ--
