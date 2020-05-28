@@ -2,130 +2,123 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D20D4C433DF
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 15:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23507C433E1
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 15:30:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE31E20663
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 15:20:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0006D2075A
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 15:30:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wfk6gvgL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ly1E81lX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404265AbgE1PUP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 11:20:15 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55068 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404236AbgE1PUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 11:20:13 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7375FD24AC;
-        Thu, 28 May 2020 11:20:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=KUFWsiuDx5QN
-        aaMXgEqP2BO9LDc=; b=Wfk6gvgLn7sXkOau8HJcelN2/uDVppVTXR1bfFaucH8x
-        HVbeANTiHzjw6hI4Q+RWmauCAyHkNtxHMffhUhGjsfBxCOhjTVdFlFnktwsF93Zq
-        3JrQ95OGlP47lCGypTR3bdmSPxpy45AHYh/0l1O4oA9PD1sLTfhZWN4BzIilzag=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IyOQUL
-        ujrKj3A/NLNfezCTYNrQY3MP+wHH49sRgGDCaTG/OS1cK357MVTxYUKqYDyP9B6F
-        Zq50WLXy82GJlD3rEYVyJ4WpGs0cdmbR9PhAqiAThAeCP82nETBrldEb0/hoRiol
-        NNdHf+uGeg449roAHvrWu6NasEjzd7rZEMEbQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6AFB0D24AB;
-        Thu, 28 May 2020 11:20:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8DE42D24A9;
-        Thu, 28 May 2020 11:20:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, hji@dyntopia.com
-Subject: Re: [PATCH] t: avoid alternation (not POSIX) in grep's BRE
-References: <20200528083745.15273-1-carenas@gmail.com>
-Date:   Thu, 28 May 2020 08:20:04 -0700
-In-Reply-To: <20200528083745.15273-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 28 May 2020 01:37:45 -0700")
-Message-ID: <xmqqo8q83x3v.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2404389AbgE1Paf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 11:30:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404312AbgE1Pae (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 11:30:34 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D8CC08C5C7
+        for <git@vger.kernel.org>; Thu, 28 May 2020 08:30:34 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id c12so3397944qkk.13
+        for <git@vger.kernel.org>; Thu, 28 May 2020 08:30:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pfr8NgfQ3KnWWSEX8+aJrjdpDd8iIeLEE2sHclRmu+w=;
+        b=ly1E81lX4nOrEGXItqBqWvX0jW0DDj+YCyiewPbtuXGNHiEcANNc1bYCGPmT8eTQ8w
+         kx5kkqMlYx1fWX4Q0/5ZyUM9P/sVxy9RBcI/mKr1bf0XojGYSfFeG1mQtpZ51XRqWMVO
+         OdgE8DkZevCwfq+mNBUweW5MB9HK6+SWlAauxy3zztwwCzNJ+a/wNV01sB3uNvg/mLiU
+         bAUEUVHf5RRXJVyPqDRlYpirkGbhdSVLI8Bs95o+wR4uyVodMNkS6du+16Od7fzqlT4i
+         avUph/8pz0ZmwUjj9DnnTnc+FqKFOGbAU/6gqYnRCPlRb9/E1a2nBR8qnuSyBZXmvu/o
+         2gyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pfr8NgfQ3KnWWSEX8+aJrjdpDd8iIeLEE2sHclRmu+w=;
+        b=AdYtFkYCglVOTicil2eI36TRSwm+VOk4tN4fN4PpOhpnRfQuoD/MJV4WspJR30vQ35
+         f6XjDXCsmRLRODzLR1fLWyeJIFzmzac8gllIbKAEmeKSj4tYRw2HdrsPT9DBX/S8ua0Q
+         wNaYvFekOGHqcYHhVq05YzaXK6ZHo3FKjEHLhG8xP8JOwbdcjjPn3XcKOzY48Z0YvGGO
+         fxEc+HglSG52mMN1wsasthu0zEs7imcK4tCGxFU810bgMLdO7FjJhHZ7cnp1TTwpNOoQ
+         H9XnkzZRG5eTyl97V3MwEHFZbhLVutKpKaLW/ANqZdBfO7XpeMwRkUV+P3HY1Nmi8kcR
+         5H2A==
+X-Gm-Message-State: AOAM533l8m185Wwko9zZ5U4XFsmeHTClDeO/As82UorJdN9g8ZgVk5//
+        l4XL+RtyBL2LyCIeat+Ydjw=
+X-Google-Smtp-Source: ABdhPJyGuByV5HrjXbtnc8iTExKJYh/LRhPe+xD0NFURcQl0Ina3gHJE+uetzf9bzZNt92S76WkJBg==
+X-Received: by 2002:a37:a056:: with SMTP id j83mr3634924qke.329.1590679833216;
+        Thu, 28 May 2020 08:30:33 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id b185sm5304473qkg.86.2020.05.28.08.30.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 May 2020 08:30:32 -0700 (PDT)
+Subject: Re: [PATCH 00/15] [RFC] Maintenance jobs and job runner
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Josh Steadmon <steadmon@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <xmqqv9mgxn7u.fsf@gitster.c.googlers.com>
+ <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com>
+ <20200407014829.GL6369@camp.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2004072355100.46@tvgsbejvaqbjf.bet>
+ <20200408000149.GN6369@camp.crustytoothpaste.net>
+ <20200527223907.GB65111@google.com> <xmqqa71s6g1w.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2005272334560.56@tvgsbejvaqbjf.bet>
+ <20200528145018.GA58643@google.com> <xmqqwo4w3y4s.fsf@gitster.c.googlers.com>
+ <20200528150340.GB58643@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <980f76bc-c28e-42cd-a85e-acb70861c9a7@gmail.com>
+Date:   Thu, 28 May 2020 11:30:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
+ Thunderbird/77.0
 MIME-Version: 1.0
+In-Reply-To: <20200528150340.GB58643@google.com>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B61CE3CA-A0F6-11EA-B57D-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+On 5/28/2020 11:03 AM, Jonathan Nieder wrote:
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+>>>                              The real question is, do we consider the
+>>> existing "git gc" infrastructure such a lost cause that we should
+>>> touch it as little as possible?
+>>
+>> I am fine with that, as long as the "new" thing will take over what
+>> "git gc" currently does.
+> 
+> Good reminder, thank you.
+> 
+> Yes, as long as we end up replacing the old thing, making a parallel
+> new thing (e.g. with a config option for switching between during a
+> transition period) can be a fine approach.
 
-> Using and escaped '|' for alternations is allowed in some implementatio=
-ns
-> of grep (GNU and busybox, al least), but it is no suppored by POSIX[1]
-> and therefore will fail in at least macOS and the BSD.
->
-> Change syntax to ERE and use Extended regular expression with grep
-> explicitly.
+Thanks for the discussion, everyone. I'm sorry that I'm very late in
+providing a new RFC that takes this approach, but yes I intend to create
+the "single entry point" for maintenance activities, and incorporate
+auto-GC as a default option there.
 
-Thanks.
+Something that is a good long-term goal is to have the new maintenance
+entry point replace the "git gc --auto" calls, so we have better
+customization of post-command "automatic" maintenance. This can be done
+without any of the "background" part of my original RFC.
 
-> [1] https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09=
-.html#tag_09_03
->
-> Fixes: f1e3df3169 (t: increase test coverage of signature verification
->        output, 2020-03-04)
+I've just been to busy with other tasks to devote the deep focus that
+this feature deserves. Thanks for your patience.
 
-I do appreciate the information recorded in the log message, but not
-like this.  Does everybody's tool understand the "folding" the above
-two physical lines require to be able to handle it correctly?
-
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  t/t4202-log.sh           | 2 +-
->  t/t6200-fmt-merge-msg.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index f1ea7d97f5..a0930599aa 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -1692,7 +1692,7 @@ test_expect_success GPG 'log --graph --show-signa=
-ture for merged tag with missin
->  	GNUPGHOME=3D. git log --graph --show-signature -n1 plain-nokey >actua=
-l &&
->  	grep "^|\\\  merged tag" actual &&
->  	grep "^| | gpg: Signature made" actual &&
-> -	grep "^| | gpg: Can'"'"'t check signature: \(public key not found\|No=
- public key\)" actual
-> +	grep -E "^| | gpg: Can'"'"'t check signature: (public key not found|N=
-o public key)" actual
->  '
-> =20
->  test_expect_success GPG 'log --graph --show-signature for merged tag w=
-ith bad signature' '
-> diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-> index b15582a7a2..e4c2a6eca4 100755
-> --- a/t/t6200-fmt-merge-msg.sh
-> +++ b/t/t6200-fmt-merge-msg.sh
-> @@ -103,7 +103,7 @@ test_expect_success GPG 'message for merging local =
-tag signed by unknown key' '
->  	GNUPGHOME=3D. git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
->  	grep "^Merge tag ${apos}signed-good-tag${apos}" actual &&
->  	grep "^# gpg: Signature made" actual &&
-> -	grep "^# gpg: Can${apos}t check signature: \(public key not found\|No=
- public key\)" actual
-> +	grep -E "^# gpg: Can${apos}t check signature: (public key not found|N=
-o public key)" actual
->  '
-> =20
->  test_expect_success 'message for merging external branch' '
+-Stolee
