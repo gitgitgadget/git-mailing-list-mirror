@@ -2,127 +2,121 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.1 required=3.0 tests=DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9A14C433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4911C433DF
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:21:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 987DE206C3
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:13:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AEDF020721
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:21:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ghFvDFX9"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cMpE43dR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436502AbgE1VNr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 17:13:47 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36967 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2407477AbgE1VNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 17:13:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1590700400;
-        bh=wJJEb51EUkCTSycbKfDIwxVq06CouOa7C+tupG8yNOs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ghFvDFX9TZUpsdOh2tPc0oh1sQJClt+liTgC37Jsef7bknfjnB9xtV2rqOyIpKFio
-         EHsUl1zvKdT2hIBg7JWhwnPV0U7vIDBVSX/huvxldCBsN310JEgyAOYDhCwNr1sJi7
-         AE/AWomI19xwArBd7nRuKXurjp2j10Wtjd0wyW/c=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.211.123] ([89.1.215.188]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgvrL-1j4Xin0dnZ-00hQ3X; Thu, 28
- May 2020 23:13:20 +0200
-Date:   Thu, 28 May 2020 06:39:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee <stolee@gmail.com>
-cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jrnieder@google.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 00/15] [RFC] Maintenance jobs and job runner
-In-Reply-To: <980f76bc-c28e-42cd-a85e-acb70861c9a7@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2005280638570.56@tvgsbejvaqbjf.bet>
-References: <xmqqv9mgxn7u.fsf@gitster.c.googlers.com> <cc9df614-2736-7cdd-006f-59878ee551c8@gmail.com> <20200407014829.GL6369@camp.crustytoothpaste.net> <nycvar.QRO.7.76.6.2004072355100.46@tvgsbejvaqbjf.bet> <20200408000149.GN6369@camp.crustytoothpaste.net>
- <20200527223907.GB65111@google.com> <xmqqa71s6g1w.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2005272334560.56@tvgsbejvaqbjf.bet> <20200528145018.GA58643@google.com> <xmqqwo4w3y4s.fsf@gitster.c.googlers.com> <20200528150340.GB58643@google.com>
- <980f76bc-c28e-42cd-a85e-acb70861c9a7@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2436526AbgE1VVv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 17:21:51 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53248 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436527AbgE1VVr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 17:21:47 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5CBDECE541;
+        Thu, 28 May 2020 17:21:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0OnsmjOlYmv4rTJC+KPqfuppFFU=; b=cMpE43
+        dRUxZNdz/gVA1AD1fp+9K0pgdnstOpl0SNmDIAq4tN/bjtsCq3/Wn8zUZGvqEDse
+        w3og9u8jS/Y3osPWq6gGVWvakn/k90diikBaEBNKivZc0u8wlN4k1bwacjyMigYI
+        GzLtGlDUA89JmMUhYTyTjJXNnOdOyArFjc99o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kmObs5ewV4Uty1jzBudtSvTqM8hqJJfV
+        hsFhv7hmMlK9tTXJrJ9BJKP1k2dNaX/s59Leyvq/BmOmLiENYspfnS6WySF6g0hc
+        cRADjV3qRy/d4IwtCEB0a0/+E2QFzNCaa+Sdetxp552qPk06L0LeKkNbTcLQPxVf
+        HtHvPEhqTdI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 554F7CE540;
+        Thu, 28 May 2020 17:21:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 93041CE53D;
+        Thu, 28 May 2020 17:21:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v15 00/13] Reftable support git-core
+References: <pull.539.v14.git.1589833884.gitgitgadget@gmail.com>
+        <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
+Date:   Thu, 28 May 2020 14:21:38 -0700
+In-Reply-To: <pull.539.v15.git.1590695209.gitgitgadget@gmail.com> (Han-Wen
+        Nienhuys via GitGitGadget's message of "Thu, 28 May 2020 19:46:36
+        +0000")
+Message-ID: <xmqq8shb3gd9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:WcBKKWl3pr4hfRuWuFQUk3oL2yVtYSGd/Ljv6lUYH46GiJMbW8B
- rV/2DqDfwesu4iwWY7Qr2P/HzU/UUB8cmRUn+I3keZRSe3O5Dt/AFOoLEO/fMPxSXn2Ha3I
- tocacJoOQvH/cVMQJx6exiWlkgJC1tOTIMbl7J6DhQd3wYNxO2bgF3hTUGLZxPwPhIfEjf6
- upKZ2LzfiMDzU0LZqWcwA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:m2JyszjrFRA=:Rr21tK0qeOD41V4xfWNiJo
- DuyL2b6unh0p5wRdozUlYcVFoM7JqMgWfrvi4sICqHWa/0eeD7PB9/VrI5nHhFK/nu+MBu1pM
- fSqK2xbE9KwTuKOoYP741kUikbsvlzQgFIrC+HcMl6pYYDlSxotYqKntdYFNih2jgaTn06GzG
- s56M8xuv4WsXalzOXX1ORk52dfgLUed+jMgR8Bz0H5kN3GRISrR+17sZuQcjSr3uv56kuBrkV
- mkX1CeB5jlzfle2WeaXgM/VWaNlo2fp3GDfluzaH6ojUdDEgvZdJo3OXxdO1it3JkXIMZaFf3
- 9Nzzz/JmlTL9MTAECH/o6FCMkL0jCF0/uHud0c/Jj9AYjq6cA2sP/uOPV7+0OvebirZYyEcI6
- y5jNA4rNOL8Se7OAlimkArUc8kgJ4TWUeeXGt1NYznJlMXyDMZgV8Oyt0xrOik5Xq52do0uhT
- 2+8MlkskDOApFOAQ6CElahlwmobT8K3i59L2PkpSDCvPNfRu86fNh2zuGXzpsMPwRWBjjM0lL
- EZXsuUrRUJHNaORk1jlClRk17Zt5bn/UlGTxz/11BflSy/hlLwvH+OFK7V88r7G+rYcNOPqJW
- 9yIYfwIbT/CYWCiSVFC1b9Nq/+/AxzeZ5yt5WBI6P2tWM5dsamA8b2+bUWPN29UlMOruaK5rB
- 0tfonRdJJ2tFRjonY2NBhuHI03On2aqNjNFII0IYm7i6nLLI1Qjab2AXKaFkeEV3fLT749nSF
- uy7IcbnhLTVzAV6Gny86KAiaDW2GSasuc0u1EjTf2RWNLOiXhjTbkQF0qxeLlTng/oSust8LZ
- 7BhtKL8NmpOkNHAXVWJgHxsyj1wIiqegw+o0sg6+nZQdCmowLiuQ5z0E1wzMBDIFOqmdX450Z
- DIXIz2eu2ZnCiAm8jukc99WYu0B+uU6ph3Fo0sZaWkNKiu4WjG051Nprm2DY5QM8ckV1rBPHw
- r6JPvP+ZNpCd8YOazrF4fwKtUNBmP1nbZeyo/SzvwVFWOUEbsXyE/KvZNXEPOf+e/MbjKKZ1v
- ECdUkyBU8CGOMOiPE1YT7BaUJhlExYCWZOOyQNMCA6v8xSHAz+QL4qoa8Gfb5m6TAsSmz/P/9
- ygjeqhgIvBsb1sMApdfjdVZS5/G/g9ZIrbMLunkP8ZKn/wxFpZZYjo7KGZmT2C8eljE7rm/j3
- ls+Bh6rUCOywFkhUm1ASqywF+ozYghA/AzSSFJyfx9HJ3modQ7mK98bQ5T84npzX5c1D17fjX
- I4zjljBnsTncJGkP7
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 38C1E7EE-A129-11EA-AE8E-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Thu, 28 May 2020, Derrick Stolee wrote:
+> This adds the reftable library, and hooks it up as a ref backend. Based on
+> hn/refs-cleanup.
+>
+> Includes testing support, to test: make -C t/ GIT_TEST_REFTABLE=1
+>
+> Summary 20479 tests pass 1299 tests fail
 
-> On 5/28/2020 11:03 AM, Jonathan Nieder wrote:
-> > Junio C Hamano wrote:
-> >> Jonathan Nieder <jrnieder@gmail.com> writes:
-> >
-> >>>                              The real question is, do we consider th=
-e
-> >>> existing "git gc" infrastructure such a lost cause that we should
-> >>> touch it as little as possible?
-> >>
-> >> I am fine with that, as long as the "new" thing will take over what
-> >> "git gc" currently does.
-> >
-> > Good reminder, thank you.
-> >
-> > Yes, as long as we end up replacing the old thing, making a parallel
-> > new thing (e.g. with a config option for switching between during a
-> > transition period) can be a fine approach.
->
-> Thanks for the discussion, everyone. I'm sorry that I'm very late in
-> providing a new RFC that takes this approach, but yes I intend to create
-> the "single entry point" for maintenance activities, and incorporate
-> auto-GC as a default option there.
+Testing without GIT_TEST_REFTABLE=0 gives a few failures, too.  I
+haven't taken a look into them, though.
 
-Great! I look forward to reviewing your next patch series iteration,
-whenever you're ready.
+Thanks.
 
-Ciao,
-Dscho
 
->
-> Something that is a good long-term goal is to have the new maintenance
-> entry point replace the "git gc --auto" calls, so we have better
-> customization of post-command "automatic" maintenance. This can be done
-> without any of the "background" part of my original RFC.
->
-> I've just been to busy with other tasks to devote the deep focus that
-> this feature deserves. Thanks for your patience.
->
-> -Stolee
->
+*** log for hn/reftable ***
+HEAD is now at 341a26d318 Add reftable testing infrastructure
+GIT_VERSION = unknown.g00000000
+    * new build flags
+    CC fuzz-commit-graph.o
+    CC fuzz-pack-headers.o
+    CC fuzz-pack-idx.o
+    CC bugreport.o
+...
+[14:11:46] t7112-reset-submodule.sh ........................... ok   141577 ms ( 2.43 usr  0.95 sys + 661.06 cusr 464.38 csys = 1128.82 CPU)
+[14:11:50] t9402-git-cvsserver-refs.sh ........................ ok    41912 ms ( 0.61 usr  0.17 sys + 260.43 cusr 177.60 csys = 438.81 CPU)
+[14:12:03] t9001-send-email.sh ................................ ok   129424 ms ( 1.47 usr  0.57 sys + 576.18 cusr 387.33 csys = 965.55 CPU)
+[14:12:03]
+
+Test Summary Report
+-------------------
+t3510-cherry-pick-sequence.sh                    (Wstat: 256 Tests: 50 Failed: 0)
+  Non-zero exit status: 1
+  Parse errors: Tests out of sequence.  Found (14) but expected (13)
+                Tests out of sequence.  Found (15) but expected (14)
+                Tests out of sequence.  Found (16) but expected (15)
+                Tests out of sequence.  Found (17) but expected (16)
+                Tests out of sequence.  Found (18) but expected (17)
+Displayed the first 5 of 39 TAP syntax errors.
+Re-run prove with the -p option to see them all.
+t3404-rebase-interactive.sh                      (Wstat: 256 Tests: 118 Failed: 0)
+  Non-zero exit status: 1
+  Parse errors: Tests out of sequence.  Found (100) but expected (98)
+                Tests out of sequence.  Found (101) but expected (99)
+                Tests out of sequence.  Found (102) but expected (100)
+                Tests out of sequence.  Found (103) but expected (101)
+                Tests out of sequence.  Found (104) but expected (102)
+Displayed the first 5 of 22 TAP syntax errors.
+Re-run prove with the -p option to see them all.
+Files=906, Tests=22755, 360 wallclock secs (10.16 usr  3.35 sys + 1318.97 cusr 996.62 csys = 2329.10 CPU)
+Result: FAIL
+make[1]: *** [Makefile:52: prove] Error 1
+make[1]: Leaving directory '/usr/local/google/home/jch/w/git.cycle/t'
+make: *** [Makefile:2799: test] Error 2
