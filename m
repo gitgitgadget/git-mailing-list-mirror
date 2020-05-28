@@ -2,68 +2,87 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64886C433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 16:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EBDDC433DF
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 17:19:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D4D7207D3
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 16:52:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2082A20721
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 17:19:33 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mL9gZAnE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405159AbgE1Qwr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 12:52:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58902 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405105AbgE1Qwq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 12:52:46 -0400
-Received: (qmail 30673 invoked by uid 109); 28 May 2020 16:52:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 May 2020 16:52:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15476 invoked by uid 111); 28 May 2020 16:52:45 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 May 2020 12:52:45 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 28 May 2020 12:52:45 -0400
-From:   Jeff King <peff@peff.net>
+        id S2405444AbgE1RTa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 13:19:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40380 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405353AbgE1RT2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 13:19:28 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8960CC08C5C6
+        for <git@vger.kernel.org>; Thu, 28 May 2020 10:19:27 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id d66so1179965pfd.6
+        for <git@vger.kernel.org>; Thu, 28 May 2020 10:19:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VJi+QLVq8VPKoX1kAEuD5VUaZv+ZQ8+fL4sR9we58ik=;
+        b=mL9gZAnEqV9cNtiMddNELmzP8fVP07qTqzNdhmjV3Ey1YY426P2F5yaviZDVIbPFa/
+         zGAWGF4I/5hEqKCBZLcLBZMwIe4qma0TeXUhQJSS29DFDq1zh0b2g2MS850rXhboEXED
+         4k0mmYouDqked3x6kqUtq12Hx2zh1bhIVsaBHcuMb+f7EjsnJXEo/Qgd+gCABeOvCAzv
+         Owrq47CBFgigK9ad9k7uml4+ORsPL2eexIXYhbsyV6cr2NPRa1t0VjUM9XrDqBSuhPvd
+         DjAlkNIYRYmsZa84YgweJEhgQhe6myXtcC2KpehKF5VJ5WOQ+/NeiDnYxJOg6+fkef95
+         PZVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VJi+QLVq8VPKoX1kAEuD5VUaZv+ZQ8+fL4sR9we58ik=;
+        b=J7I2ludILBFIgNRH5XatjjUUlNpZqqjLz371g4qEQuqEgiVZhMEmpL8tuw1xwbyLqn
+         MIdhBKtZ2l2Kzv/lW6Veb5IYLhIZ6bamX46j1aNZZ6IFFbhY9boo5JXoekpFjYLuxBei
+         5edeA025eUYydGaV8K6z5lSuLUy4uqPjYzUkzQI0yJSUrtr5/3Xn59qBOTlfQs+F0ZiS
+         8PcyA3PSNqpLeNqnzt/ltm18pOO3LGwrSzJ6dJT8iRvG3mmROxSHEN3R1nG7avyaVwJE
+         7G4yS++GYatfd9fDem6Ac1HhCWjfcjO5y+8CnU931BLIiGUOxZ8iJtcXCmXapMfUmYhh
+         6Xag==
+X-Gm-Message-State: AOAM533KGcpCZt7HFwhMGp15szj36EZyk7rXd/qG9gwD2C6NJ1hlXane
+        vCd7loMuTJMKlQCrjKCxiug=
+X-Google-Smtp-Source: ABdhPJwBeNLsGyGGq2H4/pTgrBFqchzD/Jw+QIMWyUXBdr/PkI6cngbCcoXF02EkatnuB99hYZxzmA==
+X-Received: by 2002:a62:15c7:: with SMTP id 190mr4163525pfv.190.1590686366888;
+        Thu, 28 May 2020 10:19:26 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id u1sm4693299pgf.28.2020.05.28.10.19.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 10:19:26 -0700 (PDT)
+Date:   Thu, 28 May 2020 10:19:24 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        git@vger.kernel.org, hji@dyntopia.com
-Subject: Re: [PATCH] t: avoid alternation (not POSIX) in grep's BRE
-Message-ID: <20200528165245.GA1223396@coredump.intra.peff.net>
-References: <20200528083745.15273-1-carenas@gmail.com>
- <xmqqo8q83x3v.fsf@gitster.c.googlers.com>
- <20200528154349.GA1215380@coredump.intra.peff.net>
- <xmqqh7w03vnq.fsf@gitster.c.googlers.com>
+Cc:     Xin Li <delphij@google.com>, git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 1/1] fetch: allow adding a filter after initial clone.
+Message-ID: <20200528171924.GC58643@google.com>
+References: <20200528025359.20931-2-delphij@google.com>
+ <xmqqsgfk3xtd.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqh7w03vnq.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqsgfk3xtd.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 28, 2020 at 08:51:21AM -0700, Junio C Hamano wrote:
+Junio C Hamano wrote:
 
-> > I think it may be a good policy to stick to the
-> > simplest machine-readable formats for trailers. Likewise I'd suggest
-> > using the full sha1-hex for future-proofing in this context.
-> 
-> Yes, or just roll it into prose like we often do.  Anybody can spot
-> many examples from "git log --no-merges" ;-)
+> It would be safe to upgrade version 0 repository when there is *no*
+> existing configuration variable in the "extension" section,
 
-Yeah, I was sort of working under the assumption that people found
-utility in putting that data in a trailer (in which case I'd really
-suggest doing both; a prose one with subject meant for readers, and a
-machine-readable annotation).
+Yes, that makes sense (also for the case Brian mentioned where someone
+may try setting extension.objectFormat, see no effect, and then forget
+about it).
 
-But I haven't really found a use for "Fixes" in machine-readable format.
-I don't _mind_ people doing it if they do have a use (and I'd even
-consider doing it myself if I were shown that it was useful). In the
-meantime, I don't know if we want to state a project preference against
-it.
-
--Peff
+Thanks,
+Jonathan
