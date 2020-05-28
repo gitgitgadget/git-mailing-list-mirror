@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B12C433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B83C433DF
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:10:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6725E207D3
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:10:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7496B20829
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 18:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391463AbgE1SKz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 14:10:55 -0400
-Received: from mga07.intel.com ([134.134.136.100]:18371 "EHLO mga07.intel.com"
+        id S2391469AbgE1SK4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 14:10:56 -0400
+Received: from mga07.intel.com ([134.134.136.100]:18377 "EHLO mga07.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391370AbgE1SKy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 14:10:54 -0400
-IronPort-SDR: ZYu5u1WS5U8AncNMs4j2FN9BIsk5M/l9IlWrF0Fl+IXco4tGz6Tasnu6VAx+sHKlztaHyN3iqS
- fbw10E4HhJAA==
+        id S2391429AbgE1SKz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 14:10:55 -0400
+IronPort-SDR: pDTQubUmHGWKAcrGDDz9uO0ZQGR6WNZatRxJQ6hHjQNoCNpFM5g4nVSSt+SxNpjUuo/41R5jrM
+ RhcQsFRxzpCA==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
   by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2020 11:10:52 -0700
-IronPort-SDR: eNpNzGU1KgThv92Yry57e0nlr4ar9dzAXYf4IiSrezrIoAqgVuJKbDRSiaKmBIEFcU5Pev4mEV
- y04EkViq0mZw==
+IronPort-SDR: 0SpoJhka0RLSbMAMkb4d8k8BMW87E8RjC2w7Kl2rTBjj+euFruSue+RiIRmGDlVYyEpXSS2Io3
+ uTEDA2ZwQMiA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.73,445,1583222400"; 
-   d="scan'208";a="267301356"
+   d="scan'208";a="267301353"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.33])
   by orsmga003.jf.intel.com with ESMTP; 28 May 2020 11:10:51 -0700
 From:   Jacob Keller <jacob.e.keller@intel.com>
@@ -36,9 +36,9 @@ To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v3 10/16] completion: perform DWIM logic directly in __git_complete_refs
-Date:   Thu, 28 May 2020 11:10:42 -0700
-Message-Id: <20200528181048.3509470-11-jacob.e.keller@intel.com>
+Subject: [PATCH v3 08/16] completion: replace overloaded track term for __git_complete_refs
+Date:   Thu, 28 May 2020 11:10:40 -0700
+Message-Id: <20200528181048.3509470-9-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.25.2
 In-Reply-To: <20200528181048.3509470-1-jacob.e.keller@intel.com>
 References: <20200528181048.3509470-1-jacob.e.keller@intel.com>
@@ -51,79 +51,121 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-__git_complete_refs is the main function used for completing references.
-It is primarily used as a wrapper around __git_refs, and is easier to
-extend since its arguments are option-like.
+The __git_complete_refs uses the "--track" option to specify when to
+enable listing of unique remote branches which are used by the DWIM
+logic of git checkout and git switch.
 
-One major downside of __git_complete_refs and __git_refs currently, is
-the lack of ability to complete only a subset of refs such as branches
-(refs/heads) or tags (refs/tags).
+Using the term '--track' here is confusing because the git commands
+themselves have '--track' as an argument. Additionally, the completion
+logic for _git_switch also checks for --track. Keeping the meaning of
+track_opt and --track for __git_complete_refs straight from the --track
+git switch and git checkout option is difficult when reading this code.
 
-Normally, a caller might just decide to use __git_heads() or
-__git_tags(). However, in the case of git-switch, it is useful to
-complete both branches *and* DWIM remote branch names.
+Use the option '--dwim' instead, indicating this is about enabling or
+disabling logic related to DWIM mode. Also rename the local variable
+track_opt to dwim_opt to further reduce the confusion when reading the
+completion code for _git_switch.
 
-Due to the complexity and implementation of __git_refs, it is not easy
-to extend it to support listing only a subset of references.
-
-Instead, we can extend __git_complete_refs to do this. For this to be
-done, we must first ensure that "--dwim" support is not tied to calling
-__git_refs.
-
-Instead of passing $dwim into __git_refs, we can implement
-a __gitcomp_direct_append function which can append to COMPREPLY after
-a call to __gitcomp_direct.
-
-If --dwim is passed to __git_complete_refs, use __gitcomp_direct_append
-to add the output of __git_dwim_remote_heads to the completion list.
-
-In this way, --dwim support is now independent of calling __git_refs.
-
-A future change will add an additional option to control what set of
-references __git_complete_refs will output.
+Because it is plausible for users to have developed their own
+completions which rely on __git_complete_ref, keep --track as a synonym
+for --dwim, even though we no longer use it in any of the core git
+completion logic. Add a comment explaining why it remains as an
+alternative spelling for --dwim.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- contrib/completion/git-completion.bash | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 28 ++++++++++++++------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ffe3c499e1a4..5c13d2cd0fde 100644
+index 70ad04e1b2a8..2972df4cb4c9 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -301,6 +301,19 @@ __gitcomp_direct ()
- 	COMPREPLY=($1)
- }
- 
-+# Similar to __gitcomp_direct, but appends to COMPREPLY instead.
-+# Callers must take care of providing only words that match the current word
-+# to be completed and adding any prefix and/or suffix (trailing space!), if
-+# necessary.
-+# 1: List of newline-separated matching completion words, complete with
-+#    prefix and suffix.
-+__gitcomp_direct_append ()
-+{
-+	local IFS=$'\n'
-+
-+	COMPREPLY+=($1)
-+}
-+
- __gitcompappend ()
+@@ -749,7 +749,7 @@ __git_refs ()
+ # Usage: __git_complete_refs [<option>]...
+ # --remote=<remote>: The remote to list refs from, can be the name of a
+ #                    configured remote, a path, or a URL.
+-# --track: List unique remote branches for 'git checkout's tracking DWIMery.
++# --dwim: List unique remote branches for 'git switch's tracking DWIMery.
+ # --pfx=<prefix>: A prefix to be added to each ref.
+ # --cur=<word>: The current ref to be completed.  Defaults to the current
+ #               word to be completed.
+@@ -757,12 +757,14 @@ __git_refs ()
+ #                 space.
+ __git_complete_refs ()
  {
- 	local x i=${#COMPREPLY[@]}
-@@ -787,7 +800,11 @@ __git_complete_refs ()
+-	local remote track pfx cur_="$cur" sfx=" "
++	local remote dwim pfx cur_="$cur" sfx=" "
+ 
+ 	while test $# != 0; do
+ 		case "$1" in
+ 		--remote=*)	remote="${1##--remote=}" ;;
+-		--track)	track="yes" ;;
++		--dwim)		dwim="yes" ;;
++		# --track is an old spelling of --dwim
++		--track)	dwim="yes" ;;
+ 		--pfx=*)	pfx="${1##--pfx=}" ;;
+ 		--cur=*)	cur_="${1##--cur=}" ;;
+ 		--sfx=*)	sfx="${1##--sfx=}" ;;
+@@ -771,7 +773,7 @@ __git_complete_refs ()
  		shift
  	done
  
--	__gitcomp_direct "$(__git_refs "$remote" "$dwim" "$pfx" "$cur_" "$sfx")"
-+	__gitcomp_direct "$(__git_refs "$remote" "" "$pfx" "$cur_" "$sfx")"
-+
-+	if [ "$dwim" = "yes" ]; then
-+		__gitcomp_direct_append "$(__git_dwim_remote_heads "$pfx" "$cur_" "$sfx")"
-+	fi
+-	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx")"
++	__gitcomp_direct "$(__git_refs "$remote" "$dwim" "$pfx" "$cur_" "$sfx")"
  }
  
  # __git_refs2 requires 1 argument (to pass to __git_refs)
+@@ -1370,12 +1372,12 @@ _git_checkout ()
+ 	*)
+ 		# check if --track, --no-track, or --no-guess was specified
+ 		# if so, disable DWIM mode
+-		local flags="--track --no-track --no-guess" track_opt="--track"
++		local flags="--track --no-track --no-guess" dwim_opt="--dwim"
+ 		if [ "$GIT_COMPLETION_CHECKOUT_NO_GUESS" = "1" ] ||
+ 		   [ -n "$(__git_find_on_cmdline "$flags")" ]; then
+-			track_opt=''
++			dwim_opt=''
+ 		fi
+-		__git_complete_refs $track_opt
++		__git_complete_refs $dwim_opt
+ 		;;
+ 	esac
+ }
+@@ -2226,27 +2228,27 @@ _git_switch ()
+ 	*)
+ 		# check if --track, --no-track, or --no-guess was specified
+ 		# if so, disable DWIM mode
+-		local track_opt="--track" only_local_ref=n
++		local dwim_opt="--dwim" only_local_ref=n
+ 		if [ "$GIT_COMPLETION_CHECKOUT_NO_GUESS" = "1" ] ||
+ 		   [ -n "$(__git_find_on_cmdline "--track --no-track --no-guess")" ]; then
+-			track_opt=''
++			dwim_opt=''
+ 		fi
+ 		# explicit --guess enables DWIM mode regardless of
+ 		# $GIT_COMPLETION_CHECKOUT_NO_GUESS
+ 		if [ -n "$(__git_find_on_cmdline "--guess")" ]; then
+-			track_opt='--track'
++			dwim_opt='--dwim'
+ 		fi
+ 		if [ -z "$(__git_find_on_cmdline "-d --detach")" ]; then
+ 			only_local_ref=y
+ 		else
+ 			# --guess --detach is invalid combination, no
+ 			# dwim will be done when --detach is specified
+-			track_opt=
++			dwim_opt=
+ 		fi
+-		if [ $only_local_ref = y -a -z "$track_opt" ]; then
++		if [ $only_local_ref = y -a -z "$dwim_opt" ]; then
+ 			__gitcomp_direct "$(__git_heads "" "$cur" " ")"
+ 		else
+-			__git_complete_refs $track_opt
++			__git_complete_refs $dwim_opt
+ 		fi
+ 		;;
+ 	esac
 -- 
 2.25.2
 
