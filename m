@@ -2,130 +2,106 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-22.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C67ADC433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 23:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07BF3C433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 23:53:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9EFF32078C
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 23:49:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3369206E2
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 23:53:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IMuZn9kf"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QWKqTuxS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437800AbgE1Xty (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 19:49:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44868 "EHLO
+        id S2437720AbgE1Xxm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 19:53:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437793AbgE1Xtr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 19:49:47 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9CAC014D07
-        for <git@vger.kernel.org>; Thu, 28 May 2020 16:49:46 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id u6so882608ybo.18
-        for <git@vger.kernel.org>; Thu, 28 May 2020 16:49:46 -0700 (PDT)
+        with ESMTP id S2437677AbgE1Xxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 19:53:39 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0E5C08C5C8
+        for <git@vger.kernel.org>; Thu, 28 May 2020 16:53:38 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id a45so1115552pje.1
+        for <git@vger.kernel.org>; Thu, 28 May 2020 16:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=Qwger4EkEA/L3+WknRNKqdcLjh+FKLiOb9Gq9+esKBM=;
-        b=IMuZn9kf5ZeRKKIogR+fqQtIEhI2yILronZ8Q5x6RIRgnBf2Rjh7mCxonFQhEj6oNg
-         zNdwyQUcUrMxSPd4v617C7120SkWkL7c5PQw2dhZXm9aSyImqt5IG7+ZSnrHbPBD8WNw
-         HMcDjw5Hxqsm4W1fspLJ+Nw1tkM8bNHtq3GxIXcTra0V8Q8keDpeEUECBUNQbnTfZHb5
-         phB5ZTFSPONhidAtEq8R9djYROdehc65GJf9NNSAkyXedfAW8Vkm4TNErVO0A2AAG97f
-         0btzG5TP0LYBi6TUPNwu3EfimNV2/NaiCLdCVA0GtPQsB4bRV1f9z9h/roJWKceTsT9a
-         OqpQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BHBvxpZOuR++2lMcVBcaweMmDugHT6BIBpEaf/lXbCY=;
+        b=QWKqTuxSHIAxDbIsEpnJtSVQrDbblR2I3x8+gHjxeWo08QrByNSBGC4lFFwoYt9qHn
+         kUYas5oqUy2pB4j5zhw9cTyvzvhUmYIq7ADKZSlIptrQ62g+Z/r0O7eQ/e4J6QxwPDEt
+         uqfAEEmuYD6uRZ7saLhEA5C7NLihNI0pG1EdAzYYEG6b+KxzFDmFp2P8i3GqQsdos2it
+         +2bHlCt+1xUSNNYgE4ZWJ+E9o86JV6nh6Kf4D3VW441cYeBzs49uno3JK/ldI+mlAkyh
+         o9AbhPdYeCy3lXYcU91MmXoZuPxhCooI/R5jOXxqxxi3XI08oW07hW//ZTy2UH0kIYA8
+         ygLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=Qwger4EkEA/L3+WknRNKqdcLjh+FKLiOb9Gq9+esKBM=;
-        b=QZLTQ1u1drMZS2cw0pweuCgac68ZQmHoTXFXWF2dGzV+YzM3dxi3x9Ko0pWrdDrLLA
-         Rrd8hQAVMrEQVHSu+PbaPe+dooHr8ia56nk8F4Y3SCsT1Ks1YyXnzb0Oa863Myn3dbxe
-         +VwXGODOFXfPD98NRzT8T3wy68gLaC/1EnqFzWAgjoEhgYHucIkMxoDq/24SebVb07sK
-         09qkL5bDhRPhGBWBzPEQKcDlIuRbeXdOjGXNdqV7WIUxaSBNkUK63L4JqisvdBj1at+4
-         l+sGMroadOKjHNUFA/15Zrjppa5TOSclWjPEzoNaJ3QbHgWBvvf3r3hfyNLI7joGXxbt
-         ir4w==
-X-Gm-Message-State: AOAM532r3+7oyNsR52cdVJJn7GzdUdPwpskEN1LFZCjHF6prP5MAVo4R
-        zy4b1Sj7PiUM6aKRUtjR76cLkpL/hvh2oVexsY+hSfzs7oWeV+ubiHcQGXmtHlHYwa8iWmzSB0j
-        otrkr+trH/jNL54ulRXajXzJCqljAg1c7qNSpZv37gsFlqpFNA8E2cYF8m3Mdc9exixepAE/hvw
-        ==
-X-Google-Smtp-Source: ABdhPJxnwGHG//jFe4ejWHLHgHaUMHh7PkppvxCcLfY4Uu/WXPFoaaJ8dLa30NrIIEG0WsNyL91t8pK13rhNvH9j9K8=
-X-Received: by 2002:a25:904:: with SMTP id 4mr8543143ybj.3.1590709785262; Thu,
- 28 May 2020 16:49:45 -0700 (PDT)
-Date:   Thu, 28 May 2020 16:49:39 -0700
-Message-Id: <20200528234939.145396-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652-goog
-Subject: [PATCH] docs: mention MyFirstContribution in more places
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BHBvxpZOuR++2lMcVBcaweMmDugHT6BIBpEaf/lXbCY=;
+        b=evohvCbIx9jEGBmlhTsqx7dDzMleenSCWP9OpNb2r9duKXYoey6WMNQjEEyvD9py3v
+         ZwlO8ytRfZkS7b6b55zRuOo2Tds89HIB9Xkb/Yrb+OYj5gBKgBRz8anQbLJ7VZr2jMWe
+         lj0tMod2SbfC/xtMUX/QBjf46Dd0lwjDICbu4qbH8ay7xNoJvtbpDPRo5UzdYWC06xAT
+         gk0wR2k71oKKk2f9RSEUbifqaDgG33We71w9GQrr6AqRTJ1jCLGfyNnHqoTJS0WG0jRY
+         1mamlMb8sstmKgEEqrnmnSkhBoXgmO6LKTnGEUginzKrEAupqYowes9oUWeZEnlwrXFq
+         iuUA==
+X-Gm-Message-State: AOAM5304dMYndsURlmCgMk8ioinw05DbHEqD3ZBD/zBxmvW68/5OnTzi
+        qwsiqtabXAUYO6/7iNBsjLzSauAvDHU=
+X-Google-Smtp-Source: ABdhPJyGnayIe12wKCJfJ1TG4h7UD//Urv6P1Ui2irrRM9KkffjOf00miSAO3Zhc7GCcL/eOMqxqqw==
+X-Received: by 2002:a17:90b:f8c:: with SMTP id ft12mr6609361pjb.127.1590710018014;
+        Thu, 28 May 2020 16:53:38 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id q4sm5953827pfu.42.2020.05.28.16.53.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 16:53:37 -0700 (PDT)
+Date:   Thu, 28 May 2020 16:53:30 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [git-scm.com PATCH] community: advertise 'git-bugreport' tool
+Message-ID: <20200528235330.GA148632@google.com>
+References: <20200528231608.59507-1-emilyshaffer@google.com>
+ <xmqqftbj1vpf.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqftbj1vpf.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the MyFirstContribution guide exists and has received some use and
-positive reviews, it is still not as discoverable as it could be. Add a
-reference to it from the GitHub pull request template, where many
-brand-new contributors may look. Also add a reference to it in
-SubmittingPatches, which is the central source of guidance for patch
-contribution.
+On Thu, May 28, 2020 at 04:33:16PM -0700, Junio C Hamano wrote:
+> 
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> >    <p>
+> >      Bugs in git can be reported directly to the mailing list (see above for
+> > -    details). Note that you do not need to subscribe to the list to send
+> > -    to it. You can help us out by attempting to reproduce the bug in the latest
+> > -    released version of git, or if you're willing to build git from source, the
+> > -    <a href="https://github.com/git/git/tree/next"><code>next</code> branch</a>.
+> > +    details). Note that you do not need to subscribe to the list to send to it.
+> > +    If you are using git 2.27.0 or later, you can run <code>git bugreport</code>,
+> > +    which generates a template to guide you through writing a useful bug report
+> > +    and gathers some diagnostic information about your environment. You can
+> > +    help us out by attempting to reproduce the bug in the latest released
+> > +    version of git, or if you're willing to build git from source, the
+> > +    <a href="https:/break/github.com/git/git/tree/next"><code>next</code> branch</a>.
+> 
+> It took me a bit more then necessary to spot this due to rewrapping
+> of the string, but I do not think you meant "https:/break/" there.
+> 
+> Care to share how it happened (what tool has the tendency to
+> introduce this particular breakage)?
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
-Philippe mentioned out-of-band that they wished for some more pointers
-to MyFirstContribution in the Git documentation
-(https://github.com/git/git-scm.com/issues/1464#issuecomment-631757274).
-
-Here's a first pass. The change for the GH PR template was easy, since
-there are a couple other "here's how" resources listed the same way. But
-the change for SubmittingPatches I wasn't so sure about. Since that
-document dives right into technical details and doesn't feature some
-"other resources" section (at least not that I found), I made a quick
-reference at the top, which I was hoping would be unintrusive but also
-easy to find for newbies overwhelmed by the large list of rules. It's
-not very scalable if we want to add more info, though, so I'm open to
-other suggestions.
+Yes, I noticed it late. I have no idea how it happened - I imagine I
+leaned on my touchpad (middle mouse paste) while typing or otherwise
+mashed some keys in Vim.  In other words, the tool was me :)  Have fixed
+it locally, thanks for spying it.
 
  - Emily
-
- .github/CONTRIBUTING.md         | 3 +++
- Documentation/SubmittingPatches | 5 +++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/.github/CONTRIBUTING.md b/.github/CONTRIBUTING.md
-index e7b4e2f3c2..c8755e38de 100644
---- a/.github/CONTRIBUTING.md
-+++ b/.github/CONTRIBUTING.md
-@@ -16,4 +16,7 @@ If you prefer video, then [this talk](https://www.youtube.com/watch?v=Q7i_qQW__q
- might be useful to you as the presenter walks you through the contribution
- process by example.
- 
-+Or, you can follow the ["My First Contribution"](https://git-scm.com/docs/MyFirstContribution)
-+tutorial for another example of the contribution process.
-+
- Your friendly Git community!
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 4515cab519..d8c6b4d71b 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -3,8 +3,9 @@ Submitting Patches
- 
- == Guidelines
- 
--Here are some guidelines for people who want to contribute their code
--to this software.
-+Here are some guidelines for people who want to contribute their code to this
-+software. There is also an link:MyFirstContribution.html[interactive tutorial]
-+available which covers many of these same guidelines.
- 
- [[base-branch]]
- === Decide what to base your work on.
--- 
-2.27.0.rc0.183.gde8f92d652-goog
-
