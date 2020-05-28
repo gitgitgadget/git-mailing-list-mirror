@@ -2,106 +2,86 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4011C433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 20:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 107EFC433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 20:35:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF662207BC
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 20:25:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED127208DB
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 20:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407226AbgE1UZs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 16:25:48 -0400
-Received: from mx2.suse.de ([195.135.220.15]:60882 "EHLO mx2.suse.de"
+        id S2407190AbgE1UfV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 16:35:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59242 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2407204AbgE1UZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 16:25:44 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 6A36BAD5D;
-        Thu, 28 May 2020 20:25:39 +0000 (UTC)
-Date:   Thu, 28 May 2020 22:25:38 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Eugeniu Rosca <erosca@de.adit-jv.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Eugeniu Rosca <roscaeugeniu@gmail.com>
-Subject: Re: Assessing about commit order in upstream Linux
-Message-ID: <20200528202538.GK25173@kitsune.suse.cz>
-References: <20200526065320.GA18107@lxhi-065.adit-jv.com>
- <xmqqr1v6oh6y.fsf@gitster.c.googlers.com>
- <20200526171443.GE25173@kitsune.suse.cz>
- <20200528181226.GB9275@lxhi-065.adit-jv.com>
+        id S2388955AbgE1UfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 16:35:19 -0400
+Received: (qmail 31986 invoked by uid 109); 28 May 2020 20:35:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 May 2020 20:35:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18148 invoked by uid 111); 28 May 2020 20:35:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 May 2020 16:35:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 28 May 2020 16:35:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        git@vger.kernel.org, hji@dyntopia.com
+Subject: Re: [PATCH] t: avoid alternation (not POSIX) in grep's BRE
+Message-ID: <20200528203516.GA1245262@coredump.intra.peff.net>
+References: <20200528083745.15273-1-carenas@gmail.com>
+ <xmqqo8q83x3v.fsf@gitster.c.googlers.com>
+ <20200528154349.GA1215380@coredump.intra.peff.net>
+ <xmqqh7w03vnq.fsf@gitster.c.googlers.com>
+ <20200528165245.GA1223396@coredump.intra.peff.net>
+ <xmqqsgfj3lym.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200528181226.GB9275@lxhi-065.adit-jv.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqsgfj3lym.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 28, 2020 at 08:12:26PM +0200, Eugeniu Rosca wrote:
-> Hi Michal,
-> 
-> On Tue, May 26, 2020 at 07:14:43PM +0200, Michal Suchánek wrote:
-> > On Tue, May 26, 2020 at 08:21:25AM -0700, Junio C Hamano wrote:
-> > > Eugeniu Rosca <erosca@de.adit-jv.com> writes:
-> > > 
-> > > > So, the two approaches lead to different results. If you see any false
-> > > > assumption or mistaken belief, could you please pinpoint that? TIA.
-> > > 
-> > > Perhaps the assumption/belief that the set of commits in a history
-> > > can be totally ordered is the issue?  When multiple people work
-> > > together on a project, especially in a project where "pull --no-ff"
-> > > is not enforced, there can exist only partial order among them?
-> > > 
-> > As in if you have history with two branches
-> > 
-> >    D
-> >   / \
-> >  B   C
-> >   \ /
-> >    A
-> > 
-> > commits B and C are not comparable. They are both between A and D but
-> > the order of B and C is arbitrary. Different renderings of the history
-> > may choose different order of B and C. This is a simle example. Linux
-> > history is a spaghetti of tens of branches.
-> 
-> While in theory 'B' and 'C' might look equivalent, IMHO in practice
-> there is a clear distinction between the two. It's commonly known that
-> Git refers to 'B' as the 'first parent' of 'D'. Git also provides means
-> to identify such first parents via 'git log --first-parent'.
-> 
-> A fun fact about first parents is that, unless Linus is on vacation
-> and hands over his responsibilities to GKH, you will be quite
-> confident that 'git log --first-parent linux/master' will list
-> stuff committed by Linus himself. That's why (I bet) in the minds
-> of people involved in Linux development, the diagram looks like:
-> 
->     D
->     | \
->     B  C
->     | /
->     A
-And that's not the case. Commits B and C will typically com from
-different subsystems, and are truly interchangeable. These subsystems,
-again, will have number of separate branches that are merged together
-before they are submitted to Linus. Often a feature requires cross-merge
-between different subsystems which further complicates the history. Even
-if B is a commit authored by Linus and you can infer from that it's on
-the master branch it says nothing about order of B and C. They are
-still not comparable. And you may still need to reconcile the changes in
-B and C in D and whatever order you choose for backporting them you will
-need to reflect D in both B and C in the conflicting case.
+On Thu, May 28, 2020 at 12:20:49PM -0700, Junio C Hamano wrote:
 
-HTH
+> I've seen "Fixes: bug number" in projects that maintain bug
+> databases and automatically updates the status of the named bug when
+> a commit with such a footer hits certain integration branches; the
+> utility of such a usecase would be fairly obvious.
+> 
+> But "Fixes: <commit>" makes me nervous.  One reason is because a
+> commit very often introduces multiple bugs (or no bugs at all), so
+> which one (or more) of the bug is corrected cannot be read from such
+> a footer that _only_ blames a particular commit.
+> 
+> 	Side note: also "fixes:" footer would cast a claim made when
+> 	a commit was created in stone---which may later turn out to
+> 	be false.  But the issue is not unique to "Fixes: <commit>";
+> 	"Fixes: <bugid>" suffers exactly from the same problem.
+> 
+> An interesting aspect of "Fixes: <commit>" is that we can use it to
+> easily see who is the buggiest by dividing number of buggy commit by
+> number of total commits per author ;-)
 
-Michal
+Thanks for writing this out. I agree with all of it.
+
+You could probably get interesting numbers in our project by grepping
+for [0-9a-f]{7,} in commit messages to see which commits are referenced
+a lot. Those aren't always bug-fixes exactly, but they are often "we did
+this in commit XYZ, but that missed this case". Or maybe it would just
+tell you which commits are interesting enough that we keep coming back
+to them. ;)
+
+> I'd rather not to see people adding random footers whose utility is
+> dubious, but for this particular one, I am not against it strongly
+> enough to be tempted to declare an immediate ban.
+
+Sounds reasonable.
+
+-Peff
