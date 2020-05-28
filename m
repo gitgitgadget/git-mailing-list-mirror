@@ -2,108 +2,88 @@ Return-Path: <SRS0=eul5=7K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8845C433DF
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 20:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E2EEC433DF
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:05:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C6202074B
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 20:52:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0621A208E4
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 21:05:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FhjDUc3P"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FadHRRp+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407363AbgE1Uwe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 16:52:34 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58053 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2407319AbgE1Uwd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 16:52:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C0305D485D;
-        Thu, 28 May 2020 16:52:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ndCv+Df7xUtNcsvP+DwNXJcOce8=; b=FhjDUc
-        3PMngL7zNYB4lM8J7m5/KVp/jXPrqYglTnnmoaLkUyqu624e2FvQI7FG4YcWisi4
-        R9wLXaN3LncmVkIAVqZZkKZTuKOHMWqD2xg0El0/8aARmYofe0XDz1Z9bdeuzjj5
-        nGQSDH+ZQkyNvxJyeGK9jGPQcNHjbPrmIXWA0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=inIYd5jr5mCMeu83pGplgCPvJWmSSsuX
-        JC+Ur0X6NLJ9fI5SkS7JJhrpPLX0R/27wRXnZJD+r2rsxg4Urt8u2Ko4deOV3n4D
-        s7CJ+h2ALyqQbvWss+CdIQAARtFWEDxh+OisMk6qOI0Luhk8GzV5Xc0Giq8RtpSW
-        QczkkP6aENc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8332D485B;
-        Thu, 28 May 2020 16:52:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9FCF8D4853;
-        Thu, 28 May 2020 16:52:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v15 03/13] Treat BISECT_HEAD as a pseudo ref
-References: <pull.539.v14.git.1589833884.gitgitgadget@gmail.com>
-        <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
-        <60a82678a1b0b221b6d43434f70f9475a929d2a6.1590695210.git.gitgitgadget@gmail.com>
-Date:   Thu, 28 May 2020 13:52:26 -0700
-In-Reply-To: <60a82678a1b0b221b6d43434f70f9475a929d2a6.1590695210.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Thu, 28 May 2020
-        19:46:39 +0000")
-Message-ID: <xmqqd06n3hpx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2407534AbgE1VFf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 17:05:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47508 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2407547AbgE1VFZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 17:05:25 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07D88C08C5C8
+        for <git@vger.kernel.org>; Thu, 28 May 2020 14:05:24 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id y18so81221ybb.3
+        for <git@vger.kernel.org>; Thu, 28 May 2020 14:05:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=0F9Da19lteNpD5Z7+QUNJ0nSohHnUcY35ddph0LpiGU=;
+        b=FadHRRp+L1KCcUETBVJGZEgRYFDyyuwKNgLiMjnfmaLPaH9TvR3aWAWpIMTd7BCyZD
+         1Uk+J5nnXy6/8QsQP8XVwUYluIf3dxL5D6WurRdIsNUKv6g5nxa4maUZ0PGqHMPHxmWG
+         2ViklXmsXnJ22n5cJ3SXDQUSpgrMMX8SrUH8bUojXjyX0roexMjYYZKpFfUqIyfUgdim
+         E05neyZAWtVboJUiAvZVUgHypikOzFBq49V/PdLz5NgyC84zKJpm3V9wTqTCAbM8An6v
+         mIsADaLu/9DeY0Id6Wsd0sFZ3WIjYXyh/lPGuGITmxoZejuOWjTyjXxHHFwKjXOW7jFt
+         Pfrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=0F9Da19lteNpD5Z7+QUNJ0nSohHnUcY35ddph0LpiGU=;
+        b=IiqrcPiYI9PO1TlM7X6xBsRDvT3xJi7KY+4k9x/h71dSnfyBSDgynkTWO4E8qmrKZo
+         Kq1LWHEz25RgCXrK4/RWsT9txpGFWTchul1cab4uKPG29/pCtSgpwCDuGTQ3zjSgf0Yf
+         UbKIjbbK5TpFRE1WMikGbEXw1LMqDIfirslcMmOrBnUX9y5nK1qNhLBdShrOaGvMZ7hi
+         D9p+PQHcZui1v1QH0F+0ghYTIk59q+SLqy9Q8VjlZjyWYDJhpRec9cFob3plc/6EBltI
+         9XMPbuz/qrRs+atCYqc27ODY1s+lpyEAEbhEQ66fn81sey1hM/DdkiJIvOtQG7ct4Ev3
+         t9SA==
+X-Gm-Message-State: AOAM532LsyKZ4qP1SFEG8qHWxML8geACKWVPB6anc2F9s+DOWiLyk/SZ
+        x+EAU6Nb9vdmooxcfN6PAWD+aKY+cQVCzDAO+9iVITD4Vp0ryw==
+X-Google-Smtp-Source: ABdhPJy+W8j7lWI4lYEC1aaDgRweR44pnydSiML/1cuOaKTHEUOOxTce01u0luyEs9vCZwhA81Oj7IkqzJ8FVuMhr7Q=
+X-Received: by 2002:a5b:883:: with SMTP id e3mr8350478ybq.452.1590699923164;
+ Thu, 28 May 2020 14:05:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2483A104-A125-11EA-9B3B-8D86F504CC47-77302942!pb-smtp21.pobox.com
+From:   Peter Jensen <report.jensen@gmail.com>
+Date:   Thu, 28 May 2020 22:05:12 +0100
+Message-ID: <CAHgM7c5X0W=Dj11SA=xsWC0WfGHs=T27jBqaVaAuwVw+zKwgDw@mail.gmail.com>
+Subject: Git gui freeze on ubuntu 18.04
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+git gui often freezes on Ubuntu 18.04. I can reproduce the problem by
+launching the gui several times. If I press the "ctrl" key then the
+gui becomes visible.
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> Both the git-bisect.sh as bisect--helper inspected the file system directly.
->
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  builtin/bisect--helper.c | 3 +--
->  git-bisect.sh            | 4 ++--
->  2 files changed, 3 insertions(+), 4 deletions(-)
+Collected information.
 
-Makes sense.  
+uname -a
+Linux optiplex 5.3.0-53-generic #47~18.04.1-Ubuntu SMP Thu May 7
+13:10:50 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
 
-A topic that adds more callers to the git_path_bisect_head()
-function has already been in flight for quite a while; I wonder if
-we can meet the topic in the middle.  For example, would it have
-helped if we had a helper like this one:
+env | grep -i git
+GIT_EDITOR=nano
 
-        static inline int bisect_head_exists(void) {
-               return ref_exists("BISECT_HEAD");
-        }
+# Strace up to freeze.
+sudo strace -p 568
+strace: Process 568 attached
+wait4(572,
 
-on this side, and have the other side have something like:
+#Verbose output does not provide more information
+sudo strace -v -p 1991
+strace: Process 1991 attached
+wait4(2003,
 
-        static inline int bisect_head_exists(void) {
-               return file_exists(git_path_bisect_head());
-        }
-
-Then the caller(s) of bisect_head_exists() don't have to be changed
-at all.
-
-Anyway, it's just a lesson that communication and collaboration
-between developers may help coming up with correct integration
-results.
-
-Thanks.  Queued.
+Peter
