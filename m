@@ -7,94 +7,130 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 658EDC433E0
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 08:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51C99C433E0
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 12:21:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39A332088E
-	for <git@archiver.kernel.org>; Thu, 28 May 2020 08:53:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31A3520888
+	for <git@archiver.kernel.org>; Thu, 28 May 2020 12:21:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WehfuKVR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DTs6gWqI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727842AbgE1Ix2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 04:53:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46218 "EHLO
+        id S2389306AbgE1MVx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 08:21:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727786AbgE1Ix1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 04:53:27 -0400
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com [IPv6:2607:f8b0:4864:20::e42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9EDEC05BD1E
-        for <git@vger.kernel.org>; Thu, 28 May 2020 01:53:27 -0700 (PDT)
-Received: by mail-vs1-xe42.google.com with SMTP id r10so2930211vsa.12
-        for <git@vger.kernel.org>; Thu, 28 May 2020 01:53:27 -0700 (PDT)
+        with ESMTP id S2389213AbgE1MVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 08:21:51 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84866C05BD1E
+        for <git@vger.kernel.org>; Thu, 28 May 2020 05:21:51 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id y11so3211969plt.12
+        for <git@vger.kernel.org>; Thu, 28 May 2020 05:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XtXsIA2C/pjrV8CGoJU83Ii5yelU14EzH7YgVc+dh00=;
-        b=WehfuKVRnqARjLMvRZjU82plXVFMMQGUIhajgMZfw3QwbwezyPCfShSN5PP5ise15c
-         r6gALIxGpTCLLMd/YXkTgjTExBlrSfdM/qN0RihyKmeR4M9UFKOqy3Dx6Kp9Y76bREQu
-         rEc3bxAkTP4tK6FDh295wDtOqkhq7NGlZoO8Dh2k1/iWKe12p29EXIA36S28JsJR+4Pm
-         G9pWpw5VoUMl2K2FIHAamslvpMrnpeh7iaHM5yIh4br0fE36A+uE+w4C9wan2K/d/FOo
-         VRcwoY3hZRm7q2bl2o/j+Qq62Z34wxJW+bJx/1jgBYtpfz4REMI6VuBLiJ5PiFWIL7ke
-         +OnA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uqKuJXoIYZCIe38F7o8Q3bJDHZEd2zu63y8I1xHGub8=;
+        b=DTs6gWqIrgf9fPjiwV71k9OBaYWzrR845AvvElKU9OXoP7UBTK94Cdu2dEtyKmXwfg
+         pJoTYZ4rC4m8tOJQg8motbwe6GP8IwOciRoq30V4Uy/GY/lHIE8ehL+gqsn8hHu4xbaL
+         YksvH/RRP16e3MUNCuv9d6gRgv9/qGSujzTj06A9qWAnP53kQ5ZNmfqMPjfoUDU28i1i
+         +6iXevkob1A2D6x4GgKFQha63PDJ6SBvL6NvkyAQFRNR7oZmYtzS2VOR09zAQYlKCUnO
+         YU014EDQRGThZ/zCSwnRdTzaCFLcmYU7PQaPyEEftZqJHP+EH664ENBasRrNqK1uzZfO
+         zgKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XtXsIA2C/pjrV8CGoJU83Ii5yelU14EzH7YgVc+dh00=;
-        b=gPtrTnjOUuIRY/+bLyBYTXziLoy+zckWIypQDkc/8IS77T7IsY6PLE7cfk16wQnfhp
-         hxp5K8c2PxRB807xYIBeBgZCDqGpSzZV9jt5OF6b49tEt5aSXVozHba30ueoGrg4nF4S
-         UQQhvW0ZmhkAaXbFLVtNGZlsq/xD4bQCUr1SIiw9oFdL6HFAB1y2C/LFeHwRDHsMz5Pd
-         TEYIpswCWaqiycNt9/nYa3M36+zV8PaZm8vw4gWf9jN5L5g+1C5UDrh6IzOkFXkJjzCA
-         f12nGl5/suXwiz+LEbHBM48lg5PeXP3Gpzy8fMsU3gzOb16+oWA/DQU6fFp+SmkKrO9o
-         hZ1A==
-X-Gm-Message-State: AOAM531FouHxz6hYilN79iR/YbwRmn3QBNFa+8b37YlOaUS8+vhebRm9
-        n6hXOOmHeWtHZWjM+lLjgj/Tn/6/7ZoC9+XzChGS2Mby
-X-Google-Smtp-Source: ABdhPJzENN50xkWykVUwjUgmP0dRdYPJcEjxXDoFiwL0vQ8Tq3yCjc+Yj5Qr6T+mlBSWfHzlpDVpGh/ub93PmIjsPRU=
-X-Received: by 2002:a67:c299:: with SMTP id k25mr1228354vsj.153.1590656006841;
- Thu, 28 May 2020 01:53:26 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uqKuJXoIYZCIe38F7o8Q3bJDHZEd2zu63y8I1xHGub8=;
+        b=hfvaS3TckZ2q3W7K1ykWJEcEk/pZkAWHhQd1S6t+tNQIGatWwbCI0IjHuCPn0qlMVr
+         AgMoNMuRAWmMSTBhayJNt9uUfsz1DXJHPIEoIdGZAFtG/WmOT5UPRN7lJDkKj9tcF/es
+         jrIxomyBmUSj73HNIg4fm24EkxvZQL1sANPvixqU2cKutM88WzPYABObGrqOEvqgf7W1
+         q/c3eUbb6Z+Yt0EkS6NeQ6j89FMBkX6XevD7iB6b628PeYDWGlTsSBqYVtFIKwFEh3fL
+         gT7S3LozMRTz12FdWXOFSsqG6acdKRW9tkW5+ft4k8gcX3JaTR03zUyuBGRjfEhI7QR6
+         LuJQ==
+X-Gm-Message-State: AOAM532fUXIKC+7LW5l+JtUaMp2kW5c4oIXIIGKxW6uUI2oTeOoGrOX0
+        km9JGGQ/DAWRHWU+lOwM6vw=
+X-Google-Smtp-Source: ABdhPJxnfKHCdtKzHunayf+q7SS4wbDwzjQVRyZ0msRUj+a2TJrMrSJ9WI9bIAublB4lLks4KWRdDQ==
+X-Received: by 2002:a17:90a:c28c:: with SMTP id f12mr3183709pjt.152.1590668511020;
+        Thu, 28 May 2020 05:21:51 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
+        by smtp.gmail.com with ESMTPSA id q28sm4781604pfg.180.2020.05.28.05.21.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2020 05:21:50 -0700 (PDT)
+Date:   Thu, 28 May 2020 19:21:47 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, gitster@pobox.com,
+        liu.denton@gmail.com, sunshine@sunshineco.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v4] submodule: port subcommand 'set-branch' from shell to
+ C
+Message-ID: <20200528122147.GA1983@danh.dev>
+References: <20200521163819.12544-1-shouryashukla.oo@gmail.com>
+ <20200523163929.7040-1-shouryashukla.oo@gmail.com>
+ <33127873-fb19-2bd5-3028-bcd1757e92e5@gmail.com>
+ <20200527171358.GA22073@konoha>
 MIME-Version: 1.0
-References: <20200527113831.3294409-1-jacob.e.keller@intel.com>
- <20200527113831.3294409-3-jacob.e.keller@intel.com> <xmqqimghl0ft.fsf@gitster.c.googlers.com>
- <CA+P7+xoTJzsV=NbWeWs+fbdgETXwqUs0T9MToBbrGJ0EA-bFcA@mail.gmail.com>
-In-Reply-To: <CA+P7+xoTJzsV=NbWeWs+fbdgETXwqUs0T9MToBbrGJ0EA-bFcA@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 28 May 2020 01:53:17 -0700
-Message-ID: <CA+P7+xrxt5oybijmRWFd-fMYxKSB8cnuX188g9x9UkRcmwigVw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/9] completion: improve handling of DWIM mode for switch/checkout
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200527171358.GA22073@konoha>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 27, 2020 at 12:41 PM Jacob Keller <jacob.keller@gmail.com> wrote:
-> >
-> > and without getting any answer to them.  Perhaps the proposed log
-> > message for [1/9] can be made a bit more robust to cover it?
-> >
->
-> Sure, I'll look at what I can do to make this more logical.
->
-> > Thanks.
-> >
+On 2020-05-27 22:43:58+0530, Shourya Shukla <shouryashukla.oo@gmail.com> wrote:
+> On 24/05 12:19, Kaartic Sivaraam wrote:
+> > As '--quiet' in 'set-branch' is a no-op and is being accepted only for
+> > uniformity, I think it makes sense to use OPT_NOOP_NOARG instead of
+> > OPT__QUIET for specifying it, as suggested by Danh.
+> > 
+> > Also, the description "suppress output for setting default tracking branch"
+> > doesn't seem to be valid anymore as we don't print anything when set-branch
+> > succeeds.
+> 
+> I think it will all boil down to the consistency of all the subcommands.
+> Changing this would require making changes in various places: the C code
+> (obviously), the shell script (not only the cmd_set_branch() function
+> but the part for accepting user input as well) and the Documentation (I
+> might have maybe missed a couple of other changes to list here too). Its
 
-I'll have a v3 which splits most of the tests into their own patch
-with a better description of the reasoning of the problem with output
-and the new expected behavior. The commit descriptions for the
-improvements will then focus primarily on the reasons for the
-particular method of implementing that output. It's a few more
-patches, but hopefully it will read more logically, and we can help
-settle some of the open questions:
+I don't think this is a valid argument.
 
-particular to interest me is: what sort of words should we complete
-when completing a new branch name for --orphan, -c/-C and -b/-B? I
-think all of these ought to remain as consistent as possible, but I'm
-not sure what other folks think.
+Using OPT_NOOP_NOARG doesn't require any change in shell script since
+the binary still accepts -q|--quiet.
 
-Thanks,
-Jake
+The documentation of --quiet is still valid (since it doesn't print
+anything regardless)
+
+The only necessary change in in that C code.
+
+> not that I don't want to do this, but it would add unnecessary changes
+> don't you think? I would love it if others could weigh in their opinions
+> too about this.
+> 
+>  > +	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch $branch} ${default:+--default} -- "$@"
+> 
+> > Danh questioned whether '$branch' needs to be quoted here. I too think it
+> > needs to be quoted unless I'm missing something.
+> 
+> We want to do this because $branch is an argument right?
+
+We want to do this because we don't want to whitespace-split "$branch"
+
+Let's say, for some reason, this command was run:
+
+	git submodule set-branch --branch "a-branch --branch another" a-submodule
+
+This version will run:
+
+	git submodule--helper --branch a-branch --branch another a-submodule
+
+Which will success if there's a branch "another" in the "a-submodule".
+While that command should fail because we don't accept refname with
+space.
+
+-- 
+Danh
