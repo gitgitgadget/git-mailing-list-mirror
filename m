@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5959C433E1
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C2BC433E1
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3AEF20723
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96CB7207BC
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BwlSmuDN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BuNCFk1e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726891AbgE2IvT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 May 2020 04:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44346 "EHLO
+        id S1726893AbgE2IvV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 04:51:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726829AbgE2IvP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 May 2020 04:51:15 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20632C03E969
-        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:15 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id c3so2488140wru.12
-        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:15 -0700 (PDT)
+        with ESMTP id S1726451AbgE2IvR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 04:51:17 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C16C03E969
+        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:16 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id f5so2446108wmh.2
+        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3AwbeNjCGkrC2eS1uZk0En1qi4xz1nodTJdEFIybPKA=;
-        b=BwlSmuDNLImKRYU7La69Brv2yUw3T4+oTc+ZZdYEopSF83hUo7yV4Zs2gAnkqxNjph
-         IWVqtoMf1PLkQwp+xdA/+kTBCqNWkJ8ZGMO0q8t423VNw/HC/NaTF7V+pumAHZ+GwauS
-         aW9Uh0F0ujNrCOW+VFtw48sn/9WgSTOXG7gAbCxYXvTTge44wCmZ+YmgJJ2aYRr6gUBA
-         Rt4cUNxY3E/gNYKKPnYfhaOdp0zZcEyufUQacwbUq+MIwwrqrlUUY6oa14WS9xIMNTrR
-         rMUyUr/rd2w40tfdwnCpPCNKRWRJMWCXNTYtk/DWxK944HnVqa9Bx7VqaonKSwZZ5EVo
-         AAgQ==
+        bh=1TeN09yRt1/4eMt06pjBn+7kZntign7fMUBusi+VkRU=;
+        b=BuNCFk1eD8ZwH4ggbvN9D/D8uXNYRfzdbroFBRhTbsJNo1mOj6+yWJ/zMo+kAf9qJ5
+         v/56UK51asXIczuW0WtCZwYkrBU3+9AIJueXb8ZoL8KBuIcVsCTmogPEyYVAwA19QE5c
+         0Sw6Jq8/6LyaRVwMDGRwyofApJIa+XquDbI+EQwvscjnf7Qw1sG0cr+sOBZoaRQG/hZr
+         1geSrn5zbOPl71GKdTolr4WH4w8/kZqyAtO9N26ZDUKTlSFvr9DS7taUkxaN5hd/nyVT
+         jVfRRSwutCucJ5nnB4qujPNprMge7LA4Go0BMBLdGhCagpuaKdGidVibqEMT3XHhNiM1
+         yi4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3AwbeNjCGkrC2eS1uZk0En1qi4xz1nodTJdEFIybPKA=;
-        b=skNBBVEQYwVStOgr5+cOC5dD7KTahzPuLHHgHWVHUjKq4tPPPgKJ59SULsn4NfZbDt
-         KUumZ/7RX2bi2w2kJAtt3+ho39jac8DVmosruwXY1sgiWOOa5e/PDi6muzwIGpSmMbmq
-         nkSrqrjIndqS+w/8ioFPomBEC3K3w+JshpyS7bWOmWNGhx5ACk30k5YV4qogMhi2fCS5
-         Nb+1Mv3DCgX0Vz0gx2xoeDA8zDeNAlrtUH2A0S8rrToUVK0MZldPsHHvl3FHYID97K7k
-         4DGdzkr9J9paIokoSFDtFx/c63gQJZtsnVCYVPPrlAeISnh49JPryaYxKg2P7UJnm3we
-         YxvA==
-X-Gm-Message-State: AOAM533m0kcXk+H25s5thEnrWQv4LcfnLLuWDS6ksE2G5RS+c05XxYvS
-        yH8Ec/umP6OuWQE53hF77JL5gIbg
-X-Google-Smtp-Source: ABdhPJwptIIUucDuaePpfZNNYJtCWIC1BUG3fn9SFPgfCNVX9REW/XNlnjBGykZvA7oyT7R7fII9nQ==
-X-Received: by 2002:a05:6000:12c4:: with SMTP id l4mr8187491wrx.128.1590742273432;
-        Fri, 29 May 2020 01:51:13 -0700 (PDT)
+        bh=1TeN09yRt1/4eMt06pjBn+7kZntign7fMUBusi+VkRU=;
+        b=PBjqC3B1zNTOewagydT3NXHAyIl+ETGNPfgvuHmlgoKtpM+XrngbncCaLUc0JHPoZE
+         ZQeKcN8W8DdGRfoi+mwLbtQGCq3BhGttjcqIgBylBOFP96A+fXLbziDbMR4C9Lu8Eb28
+         oQBIdOJGJ6Q8NXgvZvTYUxrz1Ub3xr5v7a9ltApbxv7d89hAPksvIJZMTbGoRqAFCE01
+         b3VzwW+72Jge51E4o+cFgOvzdVNmUYrqaQIHpcaVNzNTXyhYjigQH5Y0Acrl1fGDHZ4s
+         69GYEzI6t6yvHDMjWYXVY7YmbgN1WDIJesctQmboWuw+h/xNQYPFFyRfbvHCMPzYn1qV
+         f2sA==
+X-Gm-Message-State: AOAM5332J/0qEOQn460ThWB8kbna1xt8s6dbKUZMMNN8sVKcB7H7q3P6
+        rpvvqSedVMdGKcs9LhYuibszbuaH
+X-Google-Smtp-Source: ABdhPJzgjVLqpL1kwjHzrK09KQF1BjIQ+fmj8S8gs+j++ViqjqSDe4H2rrYqPrK28U+7lZ5+R3wUxw==
+X-Received: by 2002:a1c:df57:: with SMTP id w84mr7985604wmg.52.1590742275085;
+        Fri, 29 May 2020 01:51:15 -0700 (PDT)
 Received: from localhost.localdomain (84-236-109-105.pool.digikabel.hu. [84.236.109.105])
-        by smtp.gmail.com with ESMTPSA id f11sm3525255wrj.2.2020.05.29.01.51.11
+        by smtp.gmail.com with ESMTPSA id f11sm3525255wrj.2.2020.05.29.01.51.13
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 May 2020 01:51:12 -0700 (PDT)
+        Fri, 29 May 2020 01:51:14 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 11/34] commit-graph: allocate the 'struct chunk_info' array dinamically
-Date:   Fri, 29 May 2020 10:50:15 +0200
-Message-Id: <20200529085038.26008-12-szeder.dev@gmail.com>
+Subject: [PATCH 12/34] commit-graph: unify the signatures of all write_graph_chunk_*() functions
+Date:   Fri, 29 May 2020 10:50:16 +0200
+Message-Id: <20200529085038.26008-13-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.27.0.rc1.431.g5c813f95dc
 In-Reply-To: <20200529085038.26008-1-szeder.dev@gmail.com>
 References: <20200529085038.26008-1-szeder.dev@gmail.com>
@@ -80,179 +80,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During writing a new commit-graph file, the size of the 'struct
-chunk_info' array is hardcoded to be the maximum number of possible
-chunks plus one for the terminating label.  This array size must be
-adjusted each time when a new chunk is added, which can be easily
-forgotten.
+Update the write_graph_chunk_*() helper functions to have the same
+signature:
 
-So let's make the constant-sized 'struct chunk_info' array an
-ALLOC_GROW()-able array instead.
+  - Return an int error code from all these functions.
+    write_graph_chunk_base() already has an int error code, now the
+    others will have one, too, but since they don't indicate any
+    error, they will always return 0.
 
-There are a couple of cases where writing a new commit-graph file
-returns with error; those spots were adjusted to free the dinamically
-allocated 'struct chunk_info' array.
+  - Drop the hash size parameter of write_graph_chunk_oids() and
+    write_graph_chunk_data(); its value can be read directly from
+    'the_hash_algo' inside these functions as well.
 
-Arguably the several ALLOC_GROW() call sites look unusal, because we
-usually call ALLOC_GROW() in loops, once in each iteration...
-However, this way anyone who adds a new chunk will notice that they
-have to cargo-cult the ALLOC_GROW() call as well.
+This opens up the possibility for further cleanups and foolproofing in
+the following two patches.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- commit-graph.c | 74 ++++++++++++++++++++++++++++++++------------------
- 1 file changed, 47 insertions(+), 27 deletions(-)
+ commit-graph.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index d95c739c10..c8ba17e457 100644
+index c8ba17e457..33e70bdfea 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1355,12 +1355,13 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	int fd;
- 	struct hashfile *f;
- 	struct lock_file lk = LOCK_INIT;
--	struct chunk_info chunks[6];
-+	struct chunk_info *chunks = NULL;
-+	int chunks_nr = 0, chunks_alloc = 0;
- 	const unsigned hashsz = the_hash_algo->rawsz;
- 	struct strbuf progress_title = STRBUF_INIT;
--	int num_chunks = 3;
- 	uint64_t chunk_offset;
- 	struct object_id file_hash;
-+	int ret = 0;
+@@ -793,7 +793,7 @@ struct write_commit_graph_context {
+ 	const struct split_commit_graph_opts *split_opts;
+ };
  
- 	if (ctx->split) {
- 		struct strbuf tmp_file = STRBUF_INIT;
-@@ -1398,35 +1399,48 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
+-static void write_graph_chunk_fanout(struct hashfile *f,
++static int write_graph_chunk_fanout(struct hashfile *f,
+ 				     struct write_commit_graph_context *ctx)
+ {
+ 	int i, count = 0;
+@@ -815,17 +815,19 @@ static void write_graph_chunk_fanout(struct hashfile *f,
+ 
+ 		hashwrite_be32(f, count);
  	}
- 
--	chunks[0].id = GRAPH_CHUNKID_OIDFANOUT;
--	chunks[0].size = GRAPH_FANOUT_SIZE;
--	chunks[1].id = GRAPH_CHUNKID_OIDLOOKUP;
--	chunks[1].size = hashsz * ctx->commits.nr;
--	chunks[2].id = GRAPH_CHUNKID_DATA;
--	chunks[2].size = (hashsz + 16) * ctx->commits.nr;
-+	ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
-+	chunks[chunks_nr].id = GRAPH_CHUNKID_OIDFANOUT;
-+	chunks[chunks_nr].size = GRAPH_FANOUT_SIZE;
-+	chunks_nr++;
-+	ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
-+	chunks[chunks_nr].id = GRAPH_CHUNKID_OIDLOOKUP;
-+	chunks[chunks_nr].size = hashsz * ctx->commits.nr;
-+	chunks_nr++;
-+	ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
-+	chunks[chunks_nr].id = GRAPH_CHUNKID_DATA;
-+	chunks[chunks_nr].size = (hashsz + 16) * ctx->commits.nr;
-+	chunks_nr++;
- 	if (ctx->num_extra_edges) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_EXTRAEDGES;
--		chunks[num_chunks].size = 4 * ctx->num_extra_edges;
--		num_chunks++;
-+		ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
-+		chunks[chunks_nr].id = GRAPH_CHUNKID_EXTRAEDGES;
-+		chunks[chunks_nr].size = 4 * ctx->num_extra_edges;
-+		chunks_nr++;
- 	}
- 	if (ctx->num_commit_graphs_after > 1) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_BASE;
--		chunks[num_chunks].size = hashsz * (ctx->num_commit_graphs_after - 1);
--		num_chunks++;
-+		ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
-+		chunks[chunks_nr].id = GRAPH_CHUNKID_BASE;
-+		chunks[chunks_nr].size = hashsz * (ctx->num_commit_graphs_after - 1);
-+		chunks_nr++;
- 	}
- 
--	chunks[num_chunks].id = 0;
--	chunks[num_chunks].size = 0;
-+	ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
-+	chunks[chunks_nr].id = 0;
-+	chunks[chunks_nr].size = 0;
-+	/*
-+	 * Do not increase 'chunks_nr', so it still reflects the number of
-+	 * actual chunks, without the Chunk Lookup table's terminating label.
-+	 */
- 
- 	hashwrite_be32(f, GRAPH_SIGNATURE);
- 
- 	hashwrite_u8(f, GRAPH_VERSION);
- 	hashwrite_u8(f, oid_version());
--	hashwrite_u8(f, num_chunks);
-+	hashwrite_u8(f, chunks_nr);
- 	hashwrite_u8(f, ctx->num_commit_graphs_after - 1);
- 
--	chunk_offset = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
--	for (i = 0; i <= num_chunks; i++) {
-+	chunk_offset = 8 + (chunks_nr + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
-+	for (i = 0; i <= chunks_nr; i++) {
- 		uint32_t chunk_write[3];
- 
- 		chunk_write[0] = htonl(chunks[i].id);
-@@ -1441,11 +1455,11 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		strbuf_addf(&progress_title,
- 			    Q_("Writing out commit graph in %d pass",
- 			       "Writing out commit graph in %d passes",
--			       num_chunks),
--			    num_chunks);
-+			       chunks_nr),
-+			    chunks_nr);
- 		ctx->progress = start_delayed_progress(
- 			progress_title.buf,
--			num_chunks * ctx->commits.nr);
-+			chunks_nr * ctx->commits.nr);
- 	}
- 	write_graph_chunk_fanout(f, ctx);
- 	write_graph_chunk_oids(f, hashsz, ctx);
-@@ -1454,7 +1468,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		write_graph_chunk_extra_edges(f, ctx);
- 	if (ctx->num_commit_graphs_after > 1 &&
- 	    write_graph_chunk_base(f, ctx)) {
--		return -1;
-+		ret = -1;
-+		goto cleanup;
- 	}
- 	stop_progress(&ctx->progress);
- 	strbuf_release(&progress_title);
-@@ -1481,7 +1496,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 
- 		if (!chainf) {
- 			error(_("unable to open commit-graph chain file"));
--			return -1;
-+			ret = -1;
-+			goto cleanup;
- 		}
- 
- 		if (ctx->base_graph_name) {
-@@ -1493,7 +1509,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 
- 				if (result) {
- 					error(_("failed to rename base commit-graph file"));
--					return -1;
-+					ret = -1;
-+					goto cleanup;
- 				}
- 			}
- 		} else {
-@@ -1513,13 +1530,16 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 
- 		if (result) {
- 			error(_("failed to rename temporary commit-graph file"));
--			return -1;
-+			ret = -1;
-+			goto cleanup;
- 		}
- 	}
- 
- 	commit_lock_file(&lk);
- 
--	return 0;
-+cleanup:
-+	free(chunks);
-+	return ret;
++	return 0;
  }
  
- static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+-static void write_graph_chunk_oids(struct hashfile *f, int hash_len,
++static int write_graph_chunk_oids(struct hashfile *f,
+ 				   struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	int count;
+ 	for (count = 0; count < ctx->commits.nr; count++, list++) {
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+-		hashwrite(f, (*list)->object.oid.hash, (int)hash_len);
++		hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
+ 	}
++	return 0;
+ }
+ 
+ static const unsigned char *commit_to_sha1(size_t index, void *table)
+@@ -834,7 +836,7 @@ static const unsigned char *commit_to_sha1(size_t index, void *table)
+ 	return commits[index]->object.oid.hash;
+ }
+ 
+-static void write_graph_chunk_data(struct hashfile *f, int hash_len,
++static int write_graph_chunk_data(struct hashfile *f,
+ 				   struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+@@ -852,7 +854,7 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(&(*list)->object.oid));
+ 		tree = get_commit_tree_oid(*list);
+-		hashwrite(f, tree->hash, hash_len);
++		hashwrite(f, tree->hash, the_hash_algo->rawsz);
+ 
+ 		parent = (*list)->parents;
+ 
+@@ -932,9 +934,10 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 
+ 		list++;
+ 	}
++	return 0;
+ }
+ 
+-static void write_graph_chunk_extra_edges(struct hashfile *f,
++static int write_graph_chunk_extra_edges(struct hashfile *f,
+ 					  struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+@@ -984,6 +987,7 @@ static void write_graph_chunk_extra_edges(struct hashfile *f,
+ 
+ 		list++;
+ 	}
++	return 0;
+ }
+ 
+ static int oid_compare(const void *_a, const void *_b)
+@@ -1462,8 +1466,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			chunks_nr * ctx->commits.nr);
+ 	}
+ 	write_graph_chunk_fanout(f, ctx);
+-	write_graph_chunk_oids(f, hashsz, ctx);
+-	write_graph_chunk_data(f, hashsz, ctx);
++	write_graph_chunk_oids(f, ctx);
++	write_graph_chunk_data(f, ctx);
+ 	if (ctx->num_extra_edges)
+ 		write_graph_chunk_extra_edges(f, ctx);
+ 	if (ctx->num_commit_graphs_after > 1 &&
 -- 
 2.27.0.rc1.431.g5c813f95dc
 
