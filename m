@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09288C433E1
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:30:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3E89C433E0
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:30:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA51320810
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:30:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D04CD207BC
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:30:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ksYIdLur"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ke3w4043"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728391AbgE2Wag (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 May 2020 18:30:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59204 "EHLO
+        id S1728433AbgE2Wai (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 18:30:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726555AbgE2Wae (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 May 2020 18:30:34 -0400
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D208C03E969
-        for <git@vger.kernel.org>; Fri, 29 May 2020 15:30:34 -0700 (PDT)
-Received: by mail-qv1-xf49.google.com with SMTP id s15so2337130qvo.6
-        for <git@vger.kernel.org>; Fri, 29 May 2020 15:30:34 -0700 (PDT)
+        with ESMTP id S1728395AbgE2Wah (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 18:30:37 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21114C08C5C9
+        for <git@vger.kernel.org>; Fri, 29 May 2020 15:30:37 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id x6so4251539qts.3
+        for <git@vger.kernel.org>; Fri, 29 May 2020 15:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=S031r3fa8qHI52krymqvmwy6Oalu9UjGWzVJofOIT6g=;
-        b=ksYIdLurzMIF2IxsmHWRTr0srqUIYENxi54ba1jX+gMIWU9tbj7Levx5vytbVRcpkJ
-         qKCl7cP9wXx2JoZHoWuBjvfQyUDVP6nrUytvoI6tGuMWsNVDfJSRr7J+eJmut836Cqmi
-         DqqLWrqrjE8XimwHXQitIw57YIzu9JFSc9V5H3QIOMF6JaD10qZ77euE41Rv8pLwUK99
-         7fQCU7SJSFhA5WVvlZim3vw6cEZSkGHWmEE+yf/lNo886aRxQnLa++aN+r2likdCDRTM
-         MwfUEO41edw7Sv1BOmWeCiTZj/tVxSElVUdadPmCt/OCgQ2FQVemXc08rgVrEB5J85Vq
-         +SWg==
+        bh=g+q9b2cPs+1BdeT4vO5zikuuaRjd4B1f9EEvKXkyJAI=;
+        b=Ke3w4043q2Qwh9bBPf/xNyycJGXZFkZ5d1Fe9zFqOWdPJOFft9SlfRds9htCLdjzzy
+         fWDt+srXZEoY7999OoOT84mHFnYiy4PPjfcpIEFS4+SFiRJkCif87qns139r/FdByad3
+         6lqKtlUWtS7BYyWLfxK9Ym92TAkU+c0GnuNnrwsRRC4GWyD8mSRVzTKnwtUkfGaEMQDN
+         8fUoBYPx8e4l3Mb8qvxdnsQh+r8QMwhLBPpsrjeqJSobWDaGqqesX/xRcO26ym3Mhui7
+         IyYAezLb82HAhn+sjaHkkIPYnSyfUZVqxiEIuivJRghook48H8db7gr14J9gHb9DlaeB
+         iJuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=S031r3fa8qHI52krymqvmwy6Oalu9UjGWzVJofOIT6g=;
-        b=udG0FeLAdvPp635Maryp9YsF25rQmHKKRFcdBaxEV471wDsASGGfiZdvXML4nwLMAd
-         gdawyysWbosx6m2kNb2dNZUyr42efKyGrt/PhIVi+1w8csl2zYgHACVO3Z2Cl11tK2iz
-         Yg1RXDwNtoHFyFr6Sk7aSMWjGW7BflGX6At/saRTEGXbb4bGM0sjkmI1DDl5NBCsbeLj
-         mlcr8aGlB2v0N5FRbPUE16qIBBWoSjg/oQJYldgB//GL8/0IBX9DnZng1WxEgSRHGk9C
-         cietVEGD5nm7Dln8bbLrUzrE7/B/QFqX+nzO5bZKBq1kcEjIpOdgQIAjcOnUT6iPAwwN
-         6MCA==
-X-Gm-Message-State: AOAM532+tpIoup69Uc5bz8o05mSZKpUhDcn59vDvfC9g9AadXf4eHzfz
-        4Bo2y9w4F94yFdyQ6YX4Elyt19gvFvhx7qtQxGhXZMZ//x2TzudNB1jiWhx51Ue0mjaRkgcQJma
-        rG4bb14ilMEGRd9iuHMZe7zc3ZntG8aPz+FdTSnhWca6hZnPJYIlnamYw+qqRj+12kXQiY51Nn6
-        RC
-X-Google-Smtp-Source: ABdhPJyVRdhTc8Pt+8wtcXmCRB99ux74KxTlMunYIJwKQQ1Qn1lyHTkZzMk2EBzF1WZBrbHTNH5eosWmoIoORB0cbeKj
-X-Received: by 2002:a0c:b593:: with SMTP id g19mr10648329qve.55.1590791433431;
- Fri, 29 May 2020 15:30:33 -0700 (PDT)
-Date:   Fri, 29 May 2020 15:30:14 -0700
+        bh=g+q9b2cPs+1BdeT4vO5zikuuaRjd4B1f9EEvKXkyJAI=;
+        b=GOxc0AsliIpY5uGfd0MTTmdLPkgIbAlkQYQuA3nHb1YSZRb1kprHkJB9w1ElKcj0OZ
+         vMM08DT+MQMRtGn9QlSYPHOrSih0OHQBRTnNFLXTCO6O81t+dD9IDOiJ2VP0MUWOoaxb
+         0DB5PRn/WXbe5q+oizS+pqyT7146+CCHXNvN1P0cCpFwsyGBLEeRvhml+WSaiZCtIi+w
+         Wgx6jv6sY80XPUl2rYn/9BrjqkHdVpUOoGkWSop7YeSkwD7R/L2eIPFO1B2Mqj1Q6FUt
+         EbESl6WiCLmAhmokChHmH8hJbl8dhibVnF2ZgMGdmUj7QrKWv7DkGNr8+dT7MNLtKPlY
+         qE4A==
+X-Gm-Message-State: AOAM533Oju5a2edKCqPViIn4D4yu6EfYny7PxURnS7Pf17jxa47P7jp2
+        SsmpPm8b9mOlTN3xGlelZ6VDLt1epJY6KHSTEzuhmo9xHtJWOHgbZiF+0n2cthE3UejdMOGwcD1
+        7UqDydUSRW5lhvNvYUNoLTYsXKfmPY8/LaMiaycrWxwV8Rf4vIKf9523duJV585tRyJZwp5CQMC
+        k/
+X-Google-Smtp-Source: ABdhPJy2UhjLj/RpdkaLNl57HYGLZLtnh5WVC/fXCA3Ih/Vz+B21Q50dRfL17v3JBUc94xh+rbLVw83iOLD1MQlK/rGw
+X-Received: by 2002:a0c:fb0e:: with SMTP id c14mr10819819qvp.63.1590791436280;
+ Fri, 29 May 2020 15:30:36 -0700 (PDT)
+Date:   Fri, 29 May 2020 15:30:16 -0700
 In-Reply-To: <cover.1590789428.git.jonathantanmy@google.com>
-Message-Id: <7c66ab1be0722eecf3a7be76921b4c1ef9bb50f2.1590789428.git.jonathantanmy@google.com>
+Message-Id: <7a2e9c3c5994fc155eb6a40f039cf2298957fa6c.1590789428.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1590789428.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652-goog
-Subject: [PATCH 2/8] http: improve documentation of http_pack_request
+Subject: [PATCH 4/8] Documentation: order protocol v2 sections
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -71,53 +71,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-struct http_pack_request and the functions that use it will be modified
-in a subsequent patch. Using it is complicated (to use, call the
-initialization function, then set some but not all fields in the
-returned struct), so add some documentation to help future users.
+The current C Git implementation expects Git servers to follow a
+specific order of sections when transmitting protocol v2 responses, but
+this is not explicit in the documentation. Make the order explicit.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- http.h | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ Documentation/technical/protocol-v2.txt | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/http.h b/http.h
-index faf8cbb0d1..a5b082f3ae 100644
---- a/http.h
-+++ b/http.h
-@@ -215,14 +215,31 @@ int http_get_info_packs(const char *base_url,
- 			struct packed_git **packs_head);
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index 3996d70891..ef7514a3ee 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -327,11 +327,11 @@ included in the client's request:
  
- struct http_pack_request {
-+	/*
-+	 * Initialized by new_http_pack_request().
-+	 */
- 	char *url;
- 	struct packed_git *target;
-+	struct active_request_slot *slot;
-+
-+	/*
-+	 * After calling new_http_pack_request(), point lst to the head of the
-+	 * pack list that target is in. finish_http_pack_request() will remove
-+	 * target from lst and call install_packed_git() on target.
-+	 */
- 	struct packed_git **lst;
-+
-+	/*
-+	 * State managed by functions in http.c.
-+	 */
- 	FILE *packfile;
- 	struct strbuf tmpfile;
--	struct active_request_slot *slot;
- };
+ The response of `fetch` is broken into a number of sections separated by
+ delimiter packets (0001), with each section beginning with its section
+-header.
++header. Most sections are sent only when the packfile is sent.
  
-+/*
-+ * target must be an element in a pack list obtained from
-+ * http_get_info_packs().
-+ */
- struct http_pack_request *new_http_pack_request(
- 	struct packed_git *target, const char *base_url);
- int finish_http_pack_request(struct http_pack_request *preq);
+-    output = *section
+-    section = (acknowledgments | shallow-info | wanted-refs | packfile)
+-	      (flush-pkt | delim-pkt)
++    output = acknowledgements flush-pkt |
++	     [acknowledgments delim-pkt] [shallow-info delim-pkt]
++	     [wanted-refs delim-pkt] packfile flush-pkt
+ 
+     acknowledgments = PKT-LINE("acknowledgments" LF)
+ 		      (nak | *ack)
+@@ -353,9 +353,10 @@ header.
+ 	       *PKT-LINE(%x01-03 *%x00-ff)
+ 
+     acknowledgments section
+-	* If the client determines that it is finished with negotiations
+-	  by sending a "done" line, the acknowledgments sections MUST be
+-	  omitted from the server's response.
++	* If the client determines that it is finished with negotiations by
++	  sending a "done" line (thus requiring the server to send a packfile),
++	  the acknowledgments sections MUST be omitted from the server's
++	  response.
+ 
+ 	* Always begins with the section header "acknowledgments"
+ 
+@@ -406,9 +407,6 @@ header.
+ 	  which the client has not indicated was shallow as a part of
+ 	  its request.
+ 
+-	* This section is only included if a packfile section is also
+-	  included in the response.
+-
+     wanted-refs section
+ 	* This section is only included if the client has requested a
+ 	  ref using a 'want-ref' line and if a packfile section is also
 -- 
 2.27.0.rc0.183.gde8f92d652-goog
 
