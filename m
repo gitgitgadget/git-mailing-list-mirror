@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 893F0C433DF
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28093C433DF
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6880020776
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0429520776
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u0gSeoIf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G/HRUI2M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbgE2Iv4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 May 2020 04:51:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44438 "EHLO
+        id S1727034AbgE2Iv6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 04:51:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726954AbgE2Ivf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 May 2020 04:51:35 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB554C08C5C9
-        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:34 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id c71so2286943wmd.5
-        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:34 -0700 (PDT)
+        with ESMTP id S1726911AbgE2Ivd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 04:51:33 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51352C08C5C8
+        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:33 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id q11so2592764wrp.3
+        for <git@vger.kernel.org>; Fri, 29 May 2020 01:51:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=E25T6WKYfK/7sdSOmyHdVl5+9CRJNLnuNQ7Z36H+LLc=;
-        b=u0gSeoIfcWmdkYQS1Mq+I01/iHFmWEf30EdZIHk+lEx4fuRzdDvYoQgi+DxV5SjBC7
-         /Qb4jYithl2O6Aid6urD0x3cSscEIUprkuOVVPoSWQRjqCfkafA0HQNdaKoDwtF+BOZb
-         5mVVzmLDhDzONRfxSIwyJiS/KctNm+tzqv2iJqYNLhp2fM284LKT7RnAbN49B6hC2grx
-         4DEENCAw+PyfKmKHYaaZ9t7lF3Vlwtr20u8HHQlQI+y/N56lCYHXAc+BVosqiHsO1Gl0
-         ZDzKf8fnfMawLORjHn0ORW05v6va9FsSE82vWWXfrugjDGlb9eg9fuhPxw/7DmZ1wi18
-         kHYg==
+        bh=xq9RPwStefHvCymyxByn3fvYLabVFMEidu2zASdQcu0=;
+        b=G/HRUI2MG3qzrPCZ1Iuo6DiUplG9ImjappnenKNxJQfkI1+B41wC7lBmF2QrJQgUbJ
+         acwr0ofWGGUyYSLa/n2vVRf2x8byKu3MjuFy0xY/FOpnwHBuhQDgFixqLmtm/A/9MHIJ
+         AM/noY/f41IAsrjABoF2VVi5zTSBuDgf0r8zmYm6G2aYoqDDrRH0UjctvAXlue3bSjX3
+         xdmVJt3lBGVYbjAZgRzcXcFWxUJUgRost3t/IRHrNY0PmldcgG5NgOdSVsx5eYXMk4Ib
+         octeYg7bz+etr8Po0w8PIrd+e9v/qf0gX0t4ZifAKmplSIyxK9qp+NgukM02ytLhozgr
+         Irjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=E25T6WKYfK/7sdSOmyHdVl5+9CRJNLnuNQ7Z36H+LLc=;
-        b=NLLJ7k8PXAvCR1FE31/j+bpZalB9YysDbUyjXwKY/DONHSK9Tccqd+jfAKSCLf/rQy
-         P50XXXvcf1Xb+OZ5vGHBFIn+2FfDtV9BauL+iIisHp81JEe8fENtsrWDgZX16XtbWlsk
-         MqLL1taUyOwemP8qYFwk+97L+AM7W7YhbPIyjGcoOTHkfHGxif2rdR4qTsT9wScUYD25
-         vLHbQHrg9VWiZL4onaVZArFV0lmPYmjxxWxexeVux607rYADzu2eUElGKlbL41TQpzO6
-         4Fk8gm9T4egcjynTHAGYPQ4u5kXct0+gWfQPkKTYzCPLEAEWOyEnFPxorRfWxijQQ02t
-         Q6tQ==
-X-Gm-Message-State: AOAM530a8emzs7jAtsmTybdw+EgbqmAxLyuoBEHmX5+b42figEABlxOm
-        VACWE0yaE42ghINFFaLrZqfDu7NM
-X-Google-Smtp-Source: ABdhPJwZccDYZQ9BoRH5DC0i1J4+AgGqP4BqG8ZqJHeJYUERh8v9WgHXWErrozRrh76iMHIDA+57Gw==
-X-Received: by 2002:a7b:c353:: with SMTP id l19mr7758614wmj.187.1590742293168;
-        Fri, 29 May 2020 01:51:33 -0700 (PDT)
+        bh=xq9RPwStefHvCymyxByn3fvYLabVFMEidu2zASdQcu0=;
+        b=AVjP1JrnCBIbQ/p63eibS6WRSnVWr08tTO9a/1aqGmqM8/rt0AhX5jN3L7SVbm4ooM
+         sSELzHUUg3g+GNW43FePCnWjFnWND5vRoMqsApSYRSm4jdtkXZjGD9jPe0eIjLtRviVq
+         0LhccIgZDB/URGhBrS2decRC4PfTo9wK/PekxNqQYJj9doYy7Bf68tu28ZCo5N5jdcqa
+         0vuWDacAOk3OUEbcYpBTkEisuLwOClbxWgin9dH/Gd/Q4ULSy3U9AKqEY8ysJHnWaSmW
+         HebgY22cdy6eSHUf9RT9v4OyZDLlkjJcoJPlTGAQcFBO5YOfwespiJsdTyW8l67ndn3Z
+         oC9A==
+X-Gm-Message-State: AOAM532ytW/ZQoKAlQnSHMsk1Qu9p0pMLNNQH+pnWB7wRZ75sUnpiTNL
+        h61ejoKjbAVXyhnuyad+SdkjGuju
+X-Google-Smtp-Source: ABdhPJyZBo+zX3d+JS5eH5Iv7771KLHseOIarzbTIe83Lg85hPLFiwIPooN/wgZsIo7fxDbvY5a1GQ==
+X-Received: by 2002:adf:8023:: with SMTP id 32mr8118751wrk.247.1590742291682;
+        Fri, 29 May 2020 01:51:31 -0700 (PDT)
 Received: from localhost.localdomain (84-236-109-105.pool.digikabel.hu. [84.236.109.105])
-        by smtp.gmail.com with ESMTPSA id f11sm3525255wrj.2.2020.05.29.01.51.32
+        by smtp.gmail.com with ESMTPSA id f11sm3525255wrj.2.2020.05.29.01.51.30
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 May 2020 01:51:32 -0700 (PDT)
+        Fri, 29 May 2020 01:51:30 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 23/34] commit-graph: load and use the Modified Path Bloom Filters chunk
-Date:   Fri, 29 May 2020 10:50:27 +0200
-Message-Id: <20200529085038.26008-24-szeder.dev@gmail.com>
+Subject: [PATCH 22/34] commit-graph: write the Modified Path Bloom Filters chunk
+Date:   Fri, 29 May 2020 10:50:26 +0200
+Message-Id: <20200529085038.26008-23-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.27.0.rc1.431.g5c813f95dc
 In-Reply-To: <20200529085038.26008-1-szeder.dev@gmail.com>
 References: <20200529085038.26008-1-szeder.dev@gmail.com>
@@ -78,120 +78,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The table below compares the average runtime and memory usage of
-
-  git rev-list HEAD -- "$path"
-
-with and without modified path Bloom filters for 5000+ randomly
-selected paths from each repository:
-
-                  Average runtime            |       Max RSS
-                 without     with   Speedup  |  without   with
-  -------------------------------------------+-------------------------
-  android-base   0.8780s   0.1742s    5.04x  |   387MB   227MB   -41.4%
-  cmssw          0.3143s   0.0452s    6.95x  |   181MB    79MB   -56.4%
-  cpython        0.7453s   0.0956s    7.80x  |   159MB    71MB   -55.4%
-  elasticsearch  0.1492s   0.0191s    7.82x  |   134MB    53MB   -60.2%
-  gcc            7.1852s   0.3584s   20.05x  |   297MB   231MB   -22.3%
-  gecko-dev      4.6113s   0.6318s    7.30x  |   832MB   600MB   -27.9%
-  git            0.6180s   0.0405s   15.26x  |   131MB    43MB   -67.2%
-  glibc          0.5618s   0.0471s   11.93x  |   136MB    50MB   -63.3%
-  go             0.4913s   0.0515s    9.53x  |   130MB    50MB   -61.5%
-  jdk            0.0482s   0.0089s    5.42x  |    52MB    39MB   -25.0%
-  linux          0.7043s   0.1129s    6.24x  |   438MB   270MB   -38.4%
-  llvm-project   2.6844s   0.4873s    5.51x  |   384MB   282MB   -26.6%
-  rails          0.2784s   0.0484s    5.75x  |    88MB    51MB   -42.1%
-  rust           0.7757s   0.0619s   12.53x  |   345MB    89MB   -74.3%
-  tensorflow     0.6258s   0.0642s    9.74x  |   233MB    85MB   -63.5%
-  webkit         1.9137s   0.3332s    5.74x  |   941MB   480MB   -49.0%
+Write the Modified Path Bloom Filters chunk first, keeping track of
+the offsets where each (non-embedded) Bloom filter has been written,
+and then write the Modified Path Bloom Filter Index chunk using those
+recorded offsets.
 ---
- commit-graph.c | 44 ++++++++++++++++++++++++++++++++++++++++++--
- commit-graph.h |  2 ++
- 2 files changed, 44 insertions(+), 2 deletions(-)
+ commit-graph.c | 78 ++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 69 insertions(+), 9 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 3210ec2f93..f9a21ecdfb 100644
+index fb24600bb3..3210ec2f93 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -327,6 +327,15 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 			}
- 			break;
+@@ -26,6 +26,7 @@
+ #define GRAPH_CHUNKID_EXTRAEDGES 0x45444745 /* "EDGE" */
+ #define GRAPH_CHUNKID_BASE 0x42415345 /* "BASE" */
+ #define GRAPH_CHUNKID_MODIFIED_PATH_BLOOM_FILTER_INDEX 0x4d504249 /* "MPBI" */
++#define GRAPH_CHUNKID_MODIFIED_PATH_BLOOM_FILTERS 0x4d504246 /* "MPBF" */
+ #define GRAPH_CHUNKID_MODIFIED_PATH_BLOOM_FILTER_EXCLUDES 0x4d504258 /* "MPBX" */
  
-+		case GRAPH_CHUNKID_MODIFIED_PATH_BLOOM_FILTERS:
-+			if (graph->chunk_mpbf_filters)
-+				chunk_repeated = 1;
-+			else {
-+				graph->chunk_mpbf_filters = data + chunk_offset;
-+				graph->chunk_mpbf_filters_size = next_chunk_offset - chunk_offset;
-+			}
-+			break;
-+
- 		case GRAPH_CHUNKID_MODIFIED_PATH_BLOOM_FILTER_EXCLUDES:
- 			if (graph->chunk_mpbf_excludes)
- 				chunk_repeated = 1;
-@@ -830,6 +839,7 @@ static int load_modified_path_bloom_filter_from_graph(
- 		struct commit *parent, struct bloom_filter *bf)
- {
- 	const uint8_t *bloom_index;
+ #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+@@ -56,6 +57,12 @@
+ 
+ struct modified_path_bloom_filter_info {
+ 	struct bloom_filter filter;
++	/*
++	 * The offset relative to the start of the Modified Path Bloom
++	 * Filters chunk where this Bloom filter has been written,
++	 * -1 before that.
++	 */
 +	uint64_t offset;
- 	int first_parent = 0;
+ };
  
- 	if (commit->graph_pos == COMMIT_NOT_FROM_GRAPH)
-@@ -857,9 +867,39 @@ static int load_modified_path_bloom_filter_from_graph(
- 		bf->nr_bits = GRAPH_MODIFIED_PATH_BLOOM_FILTER_EMBEDDED_NR_BITS;
- 		bf->bits = (uint8_t*) bloom_index;
- 		return 1;
-+	} else if (bloom_index[0] & (1 << 6)) {
-+		/*
-+		 * Modified path Bloom filters for second..nth parents of
-+		 * merge commits are not implemented yet.
-+		 */
-+		return 0;
-+	} else {
-+		if (!first_parent)
-+			return 0;
-+		offset = get_be64(bloom_index);
- 	}
--	/* support for non-embedded Bloom filters is not implemented yet. */
--	return 0;
+ static void free_modified_path_bloom_filter_info_in_slab(
+@@ -1019,6 +1026,9 @@ struct write_commit_graph_context {
+ 		 */
+ 		uint32_t *hashes;
+ 		int hashes_nr, hashes_alloc;
 +
-+	if (!graph->chunk_mpbf_filters)
-+		BUG("commit %s refers to offset %lu of the Modified Path Bloom Filters chunk, but that chunk is missing",
-+		    oid_to_hex(&commit->object.oid), offset);
-+
-+	if (offset + sizeof(uint32_t) >= graph->chunk_mpbf_filters_size)
-+		BUG("commit %s refers to offset %lu of the Modified Path Bloom Filters chunk, but that's too large for chunk of size %lu bytes",
-+		    oid_to_hex(&commit->object.oid), offset,
-+		    graph->chunk_mpbf_filters_size);
-+
-+	bf->nr_bits = get_be32(graph->chunk_mpbf_filters + offset);
-+	if (!bf->nr_bits)
-+		BUG("commit %s has a modified path Bloom filter at offset %lu, which has zero size",
-+		    oid_to_hex(&commit->object.oid), offset);
-+	if (offset + sizeof(uint32_t) + bloom_filter_bytes(bf) > graph->chunk_mpbf_filters_size)
-+		BUG("commit %s has a modified path Bloom filter of %u bits at offset %lu, which doesn't fit into a Modified Path Bloom Filters chunk of %lu bytes",
-+		    oid_to_hex(&commit->object.oid), bf->nr_bits, offset,
-+		    graph->chunk_mpbf_filters_size);
-+	/* Casting away const-ness :( */
-+	bf->bits = (uint8_t*)(graph->chunk_mpbf_filters + offset + sizeof(uint32_t));
-+
-+	return 1;
++		/* Excluding embedded modified path Bloom filters */
++		uint64_t total_filter_size;
+ 	} mpbfctx;
+ };
+ 
+@@ -1219,6 +1229,43 @@ static int write_graph_chunk_extra_edges(struct hashfile *f,
+ 	return 0;
  }
  
- enum bloom_result check_modified_path_bloom_filter(struct repository *r,
-diff --git a/commit-graph.h b/commit-graph.h
-index 09dfc16932..cde0d7fa30 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -69,6 +69,8 @@ struct commit_graph {
- 	const unsigned char *chunk_base_graphs;
- 	const unsigned char *chunk_mpbf_index;
- 	uint64_t chunk_mpbf_index_size;
-+	const unsigned char *chunk_mpbf_filters;
-+	uint64_t chunk_mpbf_filters_size;
- 	const unsigned char *chunk_mpbf_excludes;
++static int write_graph_chunk_modified_path_bloom_filters(struct hashfile *f,
++		struct write_commit_graph_context *ctx)
++{
++	uint64_t offset = 0;
++	int i;
++
++	for (i = 0; i < ctx->commits.nr; i++) {
++		struct commit *commit = ctx->commits.list[i];
++		struct modified_path_bloom_filter_info *bfi;
++		unsigned int filter_size;
++
++		display_progress(ctx->progress, ++ctx->progress_cnt);
++
++		bfi = modified_path_bloom_filters_peek(
++				&modified_path_bloom_filters, commit);
++
++		if (!bfi || !bfi->filter.nr_bits)
++			continue;
++		if (bfi->filter.nr_bits == GRAPH_MODIFIED_PATH_BLOOM_FILTER_EMBEDDED_NR_BITS)
++			continue;
++
++		if (offset >> 62)
++			BUG("offset %lu is too large for the Modified Path Bloom Filter Index chunk",
++			    offset);
++
++		bfi->offset = offset;
++
++		filter_size = bloom_filter_bytes(&bfi->filter);
++
++		hashwrite_be32(f, bfi->filter.nr_bits);
++		hashwrite(f, bfi->filter.bits, filter_size);
++
++		offset += sizeof(uint32_t) + filter_size;
++	}
++	return 0;
++}
++
+ static int write_graph_chunk_modified_path_bloom_index(struct hashfile *f,
+ 		struct write_commit_graph_context *ctx)
+ {
+@@ -1247,8 +1294,11 @@ static int write_graph_chunk_modified_path_bloom_index(struct hashfile *f,
+ 			 */
+ 			filterdata[0] |= 1 << 7;
+ 			hashwrite(f, filterdata, sizeof(filterdata));
++		} else if (bfi->offset != -1) {
++			uint64_t offset = htonll(bfi->offset);
++			hashwrite(f, &offset, sizeof(offset));
+ 		} else
+-			BUG("writing non-embedded Bloom filters is not implemented yet");
++			BUG("modified path Bloom filter offset is still -1?!");
+ 	}
+ 	return 0;
+ }
+@@ -1424,17 +1474,20 @@ static void create_modified_path_bloom_filter(
+ 	diff_tree_oid(parent_oid, &commit->object.oid, "", &mpbfctx->diffopt);
+ 	path_component_count = mpbfctx->hashes_nr / mpbfctx->num_hashes;
  
- 	uint8_t num_modified_path_bloom_hashes;
++	bfi = modified_path_bloom_filters_at(&modified_path_bloom_filters,
++					     commit);
++	bfi->offset = -1;
+ 	if (path_component_count > mpbfctx->embedded_limit) {
+-		/* Not implemented yet. */
+-	} else {
+-		bfi = modified_path_bloom_filters_at(
+-				&modified_path_bloom_filters, commit);
+-
++		bloom_filter_init(&bfi->filter, mpbfctx->num_hashes,
++				  path_component_count);
++		mpbfctx->total_filter_size += sizeof(uint32_t) +
++					      bloom_filter_bytes(&bfi->filter);
++	} else
+ 		bloom_filter_init_with_size(&bfi->filter,
+ 				GRAPH_MODIFIED_PATH_BLOOM_FILTER_EMBEDDED_NR_BITS);
+-		bloom_filter_set_bits(&bfi->filter, mpbfctx->hashes,
+-				      mpbfctx->hashes_nr);
+-	}
++
++	bloom_filter_set_bits(&bfi->filter, mpbfctx->hashes,
++			      mpbfctx->hashes_nr);
+ }
+ 
+ static void add_missing_parents(struct write_commit_graph_context *ctx, struct commit *commit)
+@@ -1845,6 +1898,13 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 		chunks_nr++;
+ 	}
+ 	if (ctx->mpbfctx.use_modified_path_bloom_filters) {
++		if (ctx->mpbfctx.total_filter_size) {
++			ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
++			chunks[chunks_nr].id = GRAPH_CHUNKID_MODIFIED_PATH_BLOOM_FILTERS;
++			chunks[chunks_nr].size = ctx->mpbfctx.total_filter_size;
++			chunks[chunks_nr].write_fn = write_graph_chunk_modified_path_bloom_filters;
++			chunks_nr++;
++		}
+ 		ALLOC_GROW(chunks, chunks_nr + 1, chunks_alloc);
+ 		chunks[chunks_nr].id = GRAPH_CHUNKID_MODIFIED_PATH_BLOOM_FILTER_INDEX;
+ 		chunks[chunks_nr].size = sizeof(uint8_t) +
 -- 
 2.27.0.rc1.431.g5c813f95dc
 
