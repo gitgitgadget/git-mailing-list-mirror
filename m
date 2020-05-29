@@ -5,65 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4D98C433E0
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 13:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3934EC433E2
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 13:40:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82F6F206E2
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 13:40:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 145FA206E2
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 13:40:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bvp8jS3j"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRPG9fHW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbgE2Nkb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 May 2020 09:40:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32802 "EHLO
+        id S1726978AbgE2Nke (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 09:40:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726838AbgE2Nka (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 May 2020 09:40:30 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6FE9C08C5C8
-        for <git@vger.kernel.org>; Fri, 29 May 2020 06:40:29 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id y17so3607478wrn.11
-        for <git@vger.kernel.org>; Fri, 29 May 2020 06:40:29 -0700 (PDT)
+        with ESMTP id S1726936AbgE2Nkb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 09:40:31 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD86EC03E969
+        for <git@vger.kernel.org>; Fri, 29 May 2020 06:40:30 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r7so3711572wro.1
+        for <git@vger.kernel.org>; Fri, 29 May 2020 06:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OhIjPJZOf7I1KB/jyyrVj2q85xSxOK3c5hJf/Vo2MLo=;
-        b=bvp8jS3jjLm4kBuD8urirOnVMzmbYOMEs7K/E2H+onXndQlpKU4y5QFJVf6q0exDKY
-         orVBfVvcLpk8g7hSWpDhy1NG2jihDkHl4zebW77X8bv3KfYVCINie8WwLYiqCqhq72J9
-         2PCq1RFqULlSuKtF7eKNLyvWwN920G94Y4gqiUhEnrhszYgot4eQl+yhq40o//WugiN3
-         d/FnBL1ZzRnls8KzKeD5YZDJt10tzgCj4zIKaM7ji1tdENMLSTqTtR7fqrKfj3AkAsYL
-         b7dViX28NOdBBprBMm+gSitklTEwvyvd8i+ZQW1KKD7+4VnHI1Aj8jPLU0qm3Lq2iuUM
-         vPJA==
+        bh=iPdJHPPwp9ESA4pKPEUgZPvxABcaPcm1YcFWNUgoLcs=;
+        b=VRPG9fHWlCp0OU+dEcH5U9/6NI82RowgUaHzFa5oR86+weNY6/Jan3gPiNAsENFDmt
+         R9EoRGQQ3KxYt2RWakSFxaf3TF+Xu4WykbETPqzlOWW6bcfIJnX8rtrKYg+lTbtdnpbh
+         +eYbv0i8/oPPgmHxRBCke09Db08cL8AzfRpuj9OP5S0MVT5KrQ9lqrPAeEqMJ+nh4OsZ
+         CR9CH+9HKFzKCVkMr0OtCuXR3uOVaZl4Wt8mzdNkTdFNwIDRTIFTUNDI5RpROcEV6ex4
+         9Ug/zk+zmoPzzr0ikGFEPDeoBQbNHfdvlgkGbZFqACDy8bJUOUKrznj182YBDCn682pz
+         rh3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OhIjPJZOf7I1KB/jyyrVj2q85xSxOK3c5hJf/Vo2MLo=;
-        b=TXRH2dh+fSc8jbrMqFSgCUp5IUKEozjLJzYBgFDvMwCCQI/g81ksg4Qj0K6iMjur7X
-         Dod5Y9LQc4ZscDg7595bu67ypNjai/hKl2VxtRhur23smHYAk2piIXgHLf3Y5jAtwmBw
-         M8c1hhQXFNN3a1XJCdsnIzzkBP4J7gZWCndR7qOB5XdgUScdqO/OgvAf19ZgqFiHTZ0D
-         1G/Djo/t3DCY5pxWUfuu9FsWA1uzY/YAsVG5tx2pzYnmz65UwPGjgzd6pRI1OmvTKg7o
-         1Z2mwYmYZ5m1xE3z9/F4Wetq0y6BtiJc4VSFbUKOfbEha2zFQl2ftz4MU78XeL8W56Bl
-         zU9g==
-X-Gm-Message-State: AOAM531+DRrMqCl5q2dYchNi4/zMdt8myYz72l33/z8nGz3bNX8rV6Hq
-        6yVgXzdRcVGkfVaedqxXerbirh4y
-X-Google-Smtp-Source: ABdhPJwrsSMDJw+iNjKt4fXzoQG4Uq6o2mDXBb5I0d9y+vB6Ts4ANy5sqbvO4ue7auxFhZM2I54qzA==
-X-Received: by 2002:a5d:6305:: with SMTP id i5mr1687781wru.268.1590759628227;
-        Fri, 29 May 2020 06:40:28 -0700 (PDT)
+        bh=iPdJHPPwp9ESA4pKPEUgZPvxABcaPcm1YcFWNUgoLcs=;
+        b=AZ8tCiNsWQAFXty8cvqIClSIvsu8TJjhjWe+FjccHjKfh5pPxJunGsG7t1hTqiV2Rg
+         frw2BN912DZf0ETxhZBW5S0N85UiFrr4cDO2HjxYwggigr8ejPMqKo5ob/FHXtLCD1/2
+         Oda/6iC9sCGziJOViWZocd2sDyYfZWV42bTCRu0ePAsTwQpgtwBoisKFr4fcPEr8D10L
+         73/VA6JTLhaDlzdumGHU2jiH6lMMk9vCfChoR3mpe0OvDl2FwKVsQFzaMB+dK5jqHzm3
+         ZPlYUwz3ISXSQeDDQrlpgeCngB7JjE1M4xifFoeti58xVlVUrUOZnbznPD3tWqDM515G
+         2BKg==
+X-Gm-Message-State: AOAM5315pfrHwS13xhblMz6W1rH3ZcgnjFhMFHV79lPsSBewZFe0c2+/
+        gMX0R26NspoYRd3AfPsiSyblxZkZ
+X-Google-Smtp-Source: ABdhPJwjn5M/RnCYqgsOB58DbEQQNzmaEln/TVSi8DKiqLIFhnFKDuAFUtJSBw3v7VfP3CTMp0avCg==
+X-Received: by 2002:a5d:6802:: with SMTP id w2mr8832333wru.68.1590759629134;
+        Fri, 29 May 2020 06:40:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e5sm10024855wrw.19.2020.05.29.06.40.27
+        by smtp.gmail.com with ESMTPSA id h20sm11277723wma.6.2020.05.29.06.40.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2020 06:40:27 -0700 (PDT)
-Message-Id: <6ec73d3e967f41fe145e092e542235e3bf1b9869.1590759624.git.gitgitgadget@gmail.com>
+        Fri, 29 May 2020 06:40:28 -0700 (PDT)
+Message-Id: <cdc53172b3f073095911fe9f7f5ff8ea6546013c.1590759624.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v3.git.1590759624.gitgitgadget@gmail.com>
 References: <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
         <pull.614.v3.git.1590759624.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 May 2020 13:40:19 +0000
-Subject: [PATCH v3 3/8] cmake: installation support for git
+Date:   Fri, 29 May 2020 13:40:20 +0000
+Subject: [PATCH v3 4/8] cmake: support for testing git with ctest
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,88 +79,203 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 
-Install the built binaries and scripts using CMake
+This patch provides an alternate way to test git using ctest.
+CTest ships with CMake, so there is no additional dependency being
+introduced.
 
-This is very similar to `make install`.
-By default the destination directory(DESTDIR) is /usr/local/ on Linux
-To set a custom installation path do this:
-cmake `relative-path-to-srcdir`
-	-DCMAKE_INSTALL_PREFIX=`preferred-install-path`
+To perform the tests with ctest do this after building:
+ctest -j[number of jobs]
 
-Then run `make install`
+NOTE: -j is optional, the default number of jobs is 1
+
+Each of the jobs does this:
+cd t/ && sh t[something].sh
+
+The reason for using CTest is that it logs the output of the tests
+in a neat way, which can be helpful during diagnosis of failures.
+
+After the tests have run ctest generates three log files located in
+`build-directory`/Testing/Temporary/
+
+These log files are:
+
+CTestCostData.txt:
+This file contains the time taken to complete each test.
+
+LastTestsFailed.log:
+This log file contains the names of the tests that have failed in the
+run.
+
+LastTest.log:
+This log file contains the log of all the tests that have run.
+A snippet of the file is given below.
+
+10/901 Testing: D:/my/git-master/t/t0009-prio-queue.sh
+10/901 Test: D:/my/git-master/t/t0009-prio-queue.sh
+Command: "sh.exe" "D:/my/git-master/t/t0009-prio-queue.sh"
+Directory: D:/my/git-master/t
+"D:/my/git-master/t/t0009-prio-queue.sh"
+Output:
+----------------------------------------------------------
+ok 1 - basic ordering
+ok 2 - mixed put and get
+ok 3 - notice empty queue
+ok 4 - stack order
+passed all 4 test(s)
+1..4
+<end of output>
+Test time =   1.11 sec
+
+NOTE: Testing only works when building in source for now.
 
 Changes:
-Removed a comment regarding the installation of gitk.
+Renamed the variable test_helper_sources to test-tool_SOURCES
+to be consistent with the naming of source variables.
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 49 +++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ contrib/buildsystems/CMakeLists.txt | 124 ++++++++++++++++++++++++++++
+ 1 file changed, 124 insertions(+)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 11c909d23e3..0cde1a02cbc 100644
+index 0cde1a02cbc..33a3559eb8c 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -57,6 +57,8 @@ project(git
- 	VERSION ${git_version}
- 	LANGUAGES C)
+@@ -86,6 +86,7 @@ include(CheckIncludeFile)
+ include(CheckFunctionExists)
+ include(CheckSymbolExists)
+ include(CheckStructHasMember)
++include(CTest)
  
-+#TODO gitk git-gui gitweb
-+#TODO Add pcre support
- 
- #macros for parsing the Makefile for sources and scripts
- macro(parse_makefile_for_sources list_var regex)
-@@ -682,3 +684,50 @@ if(MSGFMT_EXE)
- 	endforeach()
- 	add_custom_target(po-gen ALL DEPENDS ${po_gen})
+ find_package(ZLIB REQUIRED)
+ find_package(CURL)
+@@ -731,3 +732,126 @@ install(DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/ DESTINATION share/git-core/
+ if(MSGFMT_EXE)
+ 	install(DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale DESTINATION share)
  endif()
 +
 +
-+#to help with the install
-+list(TRANSFORM git_shell_scripts PREPEND "${CMAKE_BINARY_DIR}/")
-+list(TRANSFORM git_perl_scripts PREPEND "${CMAKE_BINARY_DIR}/")
++if(BUILD_TESTING)
 +
-+#install
-+install(TARGETS git git-shell
-+	RUNTIME DESTINATION bin)
-+install(PROGRAMS ${CMAKE_BINARY_DIR}/git-cvsserver
-+	DESTINATION bin)
++#tests-helpers
++add_executable(test-fake-ssh ${CMAKE_SOURCE_DIR}/t/helper/test-fake-ssh.c)
++target_link_libraries(test-fake-ssh common-main)
 +
-+list(REMOVE_ITEM PROGRAMS_BUILT git git-shell)
-+install(TARGETS ${PROGRAMS_BUILT}
-+	RUNTIME DESTINATION libexec/git-core)
++add_executable(test-line-buffer ${CMAKE_SOURCE_DIR}/t/helper/test-line-buffer.c)
++target_link_libraries(test-line-buffer common-main vcs-svn)
 +
-+set(bin_links
-+	git-receive-pack git-upload-archive git-upload-pack)
++add_executable(test-svn-fe ${CMAKE_SOURCE_DIR}/t/helper/test-svn-fe.c)
++target_link_libraries(test-svn-fe common-main vcs-svn)
 +
-+foreach(b ${bin_links})
-+install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git ${CMAKE_INSTALL_PREFIX}/bin/${b})")
++#test-tool
++parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
++
++list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/t/helper/")
++add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES})
++target_link_libraries(test-tool common-main)
++
++set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
++			PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/helper)
++
++#wrapper scripts
++set(wrapper_scripts
++	git git-upload-pack git-receive-pack git-upload-archive git-shell git-remote-ext)
++
++set(wrapper_test_scripts
++	test-fake-ssh test-line-buffer test-svn-fe test-tool)
++
++
++foreach(script ${wrapper_scripts})
++	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
++	string(REPLACE "@@PROG@@" "${script}" content "${content}")
++	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
 +endforeach()
 +
-+install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git)")
-+install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git-shell ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git-shell)")
-+
-+foreach(b ${git_links})
-+	string(REPLACE "${CMAKE_BINARY_DIR}" "" b ${b})
-+	install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git ${CMAKE_INSTALL_PREFIX}/libexec/git-core/${b})")
++foreach(script ${wrapper_test_scripts})
++	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
++	string(REPLACE "@@PROG@@" "t/helper/${script}" content "${content}")
++	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
 +endforeach()
 +
-+foreach(b ${git_http_links})
-+	string(REPLACE "${CMAKE_BINARY_DIR}" "" b ${b})
-+	install(CODE "file(CREATE_LINK  ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git-remote-http ${CMAKE_INSTALL_PREFIX}/libexec/git-core/${b})")
-+endforeach()
++file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
++string(REPLACE "@@PROG@@" "git-cvsserver" content "${content}")
++file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
 +
-+install(PROGRAMS ${git_shell_scripts} ${git_perl_scripts} ${CMAKE_BINARY_DIR}/git-p4
-+	DESTINATION libexec/git-core)
++#options for configuring test options
++option(PERL_TESTS "Perform tests that use perl" ON)
++option(PYTHON_TESTS "Perform tests that use python" ON)
 +
-+install(DIRECTORY ${CMAKE_SOURCE_DIR}/mergetools DESTINATION libexec/git-core)
-+install(DIRECTORY ${CMAKE_BINARY_DIR}/perl/build/lib/ DESTINATION share/perl5
-+	FILES_MATCHING PATTERN "*.pm")
-+install(DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/ DESTINATION share/git-core/templates)
++#GIT-BUILD-OPTIONS
++set(TEST_SHELL_PATH ${SHELL_PATH})
++set(DIFF diff)
++set(PYTHON_PATH /usr/bin/python)
++set(TAR tar)
++set(NO_CURL )
++set(NO_EXPAT )
++set(USE_LIBPCRE1 )
++set(USE_LIBPCRE2 )
++set(NO_LIBPCRE1_JIT )
++set(NO_PERL )
++set(NO_PTHREADS )
++set(NO_PYTHON )
++set(PAGER_ENV "LESS=FRX LV=-c")
++set(DC_SHA1 YesPlease)
++set(RUNTIME_PREFIX true)
++set(NO_GETTEXT )
 +
-+if(MSGFMT_EXE)
-+	install(DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale DESTINATION share)
++if(NOT CURL_FOUND)
++	set(NO_CURL 1)
 +endif()
++
++if(NOT EXPAT_FOUND)
++	set(NO_EXPAT 1)
++endif()
++
++if(NOT Intl_FOUND)
++	set(NO_GETTEXT 1)
++endif()
++
++if(NOT PERL_TESTS)
++	set(NO_PERL 1)
++endif()
++
++if(NOT PYTHON_TESTS)
++	set(NO_PYTHON 1)
++endif()
++
++file(WRITE ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SHELL_PATH='${SHELL_PATH}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TEST_SHELL_PATH='${TEST_SHELL_PATH}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PERL_PATH='${PERL_PATH}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DIFF='${DIFF}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PYTHON_PATH='${PYTHON_PATH}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TAR='${TAR}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_CURL='${NO_CURL}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_EXPAT='${NO_EXPAT}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "USE_LIBPCRE1='${USE_LIBPCRE1}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_LIBPCRE1_JIT='${NO_LIBPCRE1_JIT}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PERL='${NO_PERL}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PTHREADS='${NO_PTHREADS}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_UNIX_SOCKETS='${NO_UNIX_SOCKETS}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PAGER_ENV='${PAGER_ENV}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DC_SHA1='${DC_SHA1}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X=''\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
++file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
++
++file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
++
++#test
++foreach(tsh ${test_scipts})
++	add_test(NAME ${tsh}
++		COMMAND ${SH_EXE} ${tsh}
++		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
++endforeach()
++
++endif()#BUILD_TESTING
 -- 
 gitgitgadget
 
