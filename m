@@ -2,147 +2,170 @@ Return-Path: <SRS0=mJAO=7L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FA89C433E0
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 03:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB94C433DF
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 05:43:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C8DC20C56
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 03:39:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E4B1208A7
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 05:43:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="YOHIENJT"
+	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="GTfKntkL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437263AbgE2Djg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 23:39:36 -0400
-Received: from mout.web.de ([212.227.15.3]:48993 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2436751AbgE2Djf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 23:39:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1590723571;
-        bh=n6oERA67vUvHuBGU4oRkONlyBDUYsY0823Rh4iIKA/M=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=YOHIENJTADXp4MhmBU7ywo0G287/xZLVJSJwVS3tg/91amashZsTftTsFWNcJuL0B
-         afSBDrowTbCheP1qKWDY/oY/t2dms1TAeU/aswxoEOZ+eTetwQplmPT4OMRhTX3pdj
-         ThJ4ErW7DXPnbcZivcCAgNK4CMq42GQolxsHk3vo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MGiLB-1jjEoc39wP-00DbUc; Fri, 29
- May 2020 05:39:31 +0200
-Date:   Fri, 29 May 2020 05:39:31 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, hji@dyntopia.com
-Subject: Re: [PATCH] t: avoid alternation (not POSIX) in grep's BRE
-Message-ID: <20200529033931.xb4jb4ewgdwtjknc@tb-raspi4>
-References: <20200528083745.15273-1-carenas@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+        id S1725852AbgE2Fnf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 01:43:35 -0400
+Received: from mail-eopbgr1320104.outbound.protection.outlook.com ([40.107.132.104]:10000
+        "EHLO APC01-PU1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725790AbgE2Fne (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 01:43:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GelqJpD9TYi8Z+nL+kg9z6s05Ff+FD0meRZH4hGMit/qF4yo4POqiWXydIVFgvOoaV0wLNYA7gqi7Rk9XxVIXcvEutgeL8K31gw7dBUK1orRFQSR2I8Q/1Gg8MSxaPJ1GXAOWJyVI/U3fBENWOopLZ/3cIcakKd+QAgt8oFAt+rq6fDSzLyeFqwQx1ih6nwBGmF0U0cmZ1Hpf5PGm8G9HV/TjNoUtIubL6vlTkXX+Edyd/Dup6i4Z4Oj5Rjpw3OyruwFdalsmeEqvLAmDdaOlhAMk3V186tYLt5wNVxr04UJApO9WN9Ys7jqVBosoHzOnar8lwkxWjK/s0qHT9z7YA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CcX8zTXezOMMdgCpeCLsOLxdRi87WhBo48VufcqUJzA=;
+ b=HDyAQ6ckuUKRLe3UbV5p6FQxlWr4i0w1KlOVG2zl4exArR1l42p7YlpyxGf5Ss7T+izTud58S1noyNLi22zrwOG90WSQKrbqctRoxPdaEigyZZUIrycRz9U0SIEGCz3tso6SJXIJxt4G4PaYGead2NDYwvocO+hVVEGa8V1GCilvuivFun8TkrGvtKct1cjyBXYv8jD3XNM6POffdjqqqLgHPsqhYvWFWeo8nW8zzZPMO/yVR8s/r6di3dFdlTa3t0LA3oggjSkAPb+gLgluEieBch93vNO85iJ0MQg0mXRBTo36jH8UFchNeyx+a2TlbMi48eQBBd3Cg/ONxMCQFQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CcX8zTXezOMMdgCpeCLsOLxdRi87WhBo48VufcqUJzA=;
+ b=GTfKntkLv1lWt6s/3Mw5LSNt+k0I3poEDzvGHfYzRsk7ZefvE43UthrS0+eAf5lfJJxunJhHZr69B2V0jMDA7G7s/HzMeBJfht5iqxNrdi47A0QO03JYxsJ9TyFoZrJvENLXR9EFmvVJHTbFGpu1JRB1Hd998mBJ+iHEJQipUfc=
+Received: from HK0P153MB0113.APCP153.PROD.OUTLOOK.COM (2603:1096:203:19::14)
+ by HK0P153MB0180.APCP153.PROD.OUTLOOK.COM (2603:1096:203:29::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3066.3; Fri, 29 May
+ 2020 05:43:30 +0000
+Received: from HK0P153MB0113.APCP153.PROD.OUTLOOK.COM
+ ([fe80::c196:a6cb:9d5:c814]) by HK0P153MB0113.APCP153.PROD.OUTLOOK.COM
+ ([fe80::c196:a6cb:9d5:c814%6]) with mapi id 15.20.3066.010; Fri, 29 May 2020
+ 05:43:30 +0000
+From:   Dexuan Cui <decui@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [BUG] New git unable to show this commit completely?
+Thread-Topic: [BUG] New git unable to show this commit completely?
+Thread-Index: AdY1e90QgQZ+lnAgT725z0zgKS9EiA==
+Date:   Fri, 29 May 2020 05:43:29 +0000
+Message-ID: <HK0P153MB0113E08900C5C8B8311A4B24BF8F0@HK0P153MB0113.APCP153.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2020-05-29T05:43:27Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=5a65efbe-ddbe-4420-ad57-7407c6263222;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none
+ header.from=microsoft.com;
+x-originating-ip: [2601:600:a280:7f70:29e9:a365:d0a8:25d2]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: cfd5d859-3ce3-4df1-d6bd-08d8039337b7
+x-ms-traffictypediagnostic: HK0P153MB0180:
+x-microsoft-antispam-prvs: <HK0P153MB0180F8F9262A7AFB0249AF19BF8F0@HK0P153MB0180.APCP153.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:1923;
+x-forefront-prvs: 04180B6720
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Y0F1qqReYQuBUTmrSCXS5UuuFIz627BbSA5PQIv09CKRHjJP3EtfYlE0N6N14BllU3gJcxSksb04x1tLeX1KxeSOlk91M4+LQDFpir1ksEqF2561w3dZEqqJbkGgN9fB6FuYLQeF9LehBG04B3cUQhdmPQga74Z7VTRdQ0ewYCVoZvn310aiG+sGRex7/JIevnRLfPovH3hIfWD3sRC6RYbykUF1y/Jndp2FuVT6G0RQPXefFBKubHrekIx4Jo62DPUKfdX5tdCCi4bppA2hB84xli8aJHfRvffNjlgsPxpIV9kw8pDXfQSdF1fcDIUlnHN3u6lfpxgQ08s/jaf9Z+qQwVJ0/a8LcF4QNzy3yrXzjNXzV6/Tf5etuhVijX0xCl78beN6n4WVt7yZIrdzhg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK0P153MB0113.APCP153.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(136003)(346002)(396003)(366004)(376002)(39860400002)(478600001)(71200400001)(6916009)(86362001)(8676002)(8936002)(7696005)(8990500004)(33656002)(83380400001)(186003)(2906002)(6506007)(5660300002)(316002)(76116006)(66946007)(55016002)(966005)(66476007)(9686003)(66446008)(82960400001)(52536014)(66556008)(64756008)(82950400001)(10290500003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: pmVLNzJ6q3CvyJkMQJbzILsELSupgcdAa5CMdTfjcOMoLSrs899lEGGZeiElaMcHZWpaur6s9iikytcD+PaIa8ltHmGYxScuWegFn9g26jlvtU62FEqB7hkFeBWnVTwDirmYZo12DKomviO5yyBbLbPWD36ercaOpfGner4NZ5lIuLQzHP73DEzEDmdtxwBeLkpo+8U0miRFBP/KeYZslRNSrJNrsJRdYBNzkKJ0AmMfPIIidLvRPrTXcSNQNoSvaPXVdRR7iYoqOp3bLmxBROf2KlPt30a8tBEWSzvZcMfsDFRVQzgxAkt4caMZoJfN7m82Fm45EW+Cigpi2zY2xSslZjaIoKNX/NtByJ88Co+pU2GcRc0dxT5Fb5NbZUkCQ8zoPFtLbH3ca5BhjT1umudecrAEh63AtyvxVhjFy57WiE6tn7uD6Ox+fd9jgzgyahgIwVKzqwXOjxWcjg94ST+mKzMr00jmBjbVkB8NnVp/BgFUSIQ4IAKDUof3w/J+V/hvZK0ZH4qzKI2YipIFCQWWH6qAs3S/uyYbTWacSE7owvYaTJojOILcuGn7ZuJV
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20200528083745.15273-1-carenas@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:E+wrhPgeao9g50Ayl9zPBGerD8bCRblYdNQIbOft1wB+lPdDM3t
- uFQm3fgtLI9phFFdC+VTHwo6leqJ11EdvY5OScdnsNyEwBgGG8Dz+/ipHlg0Dbm1uYRiTsW
- 2YWnmhx/3dwwlYNRUFCxkjVzN5gtnHmLt0NXicRFh3cMeiKANCfgy1t7uZ8SuSrkFdP7wEs
- lZEGZ3VdstI9M7BR7bOaA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eEV666m3Xy8=:i5Iac8jnpC3/21CpfL//fs
- ad9P9zm9GZyF0L7gY6yo9J54HMR4Q1dX6IkxgkmLMvajLVgu7KHAg+o+eMAh/m1fm1RPI1vXl
- Pdt0K/vbfmg7kp/qRBnU7uIFLBy2s0xwltFDXEEdnh98F6nt47/57aprsIrlV+aJienZ5Tkqa
- LowAyJ9vP8VT1cbrZOyN1BI82I2LGr+XHN2Epe823OeiK61B9xbQOtoQQTigj+Wfdet45ubmw
- kEX5iPsfGWxiFek6kQRBK9JfgJU1UrwKEWBkzeBZEXTJZ9BfX8HfFrs9kQsDOqi+oU3c3Ahcm
- RChDbG30vlhvNAa4IbGmz9Evrgk9sJW7GXzBnq9Dx9yN7mkZEiiUogw98kE6ZZgvEahmvoMvg
- ui8MJmhcW+SWR1etCLEjHRjFRo8RIzFlV5V7BiHlXDf39V1zlcmV4ReYqWmxgU3/CO32A0S8p
- KoJgVelcw51Lcv27BLcJgzcqv3WNtI+2lmGRKFIQ2U8vv183PYSGtbOiJB3mR63m3YAv7UDoF
- TApbKTznAi5y6NqgA39c34/vabXYtFmMlF6rm5bMlEIwEHeImrMCpMpO3rJBc/fJX0has2KGF
- XN79Nn6YWluxjjxb8TlLEjbVjWam3a8nf3oyFdl0mdOsnvRm5xt3pjI6+qd7HsT3H9t4AVOuC
- a3W6ThL2KqPa5D7RuQsCLtbfy4RX2K8lzHa/nX4CJdO69NIAQhXeyR87x3sCXitApXwOCJ0eI
- eYy1UqZPsCNGR+tfypIiBrVw+HwAuEpMccRge24TYcclTx/GFveppqkPc4is0DH+y3aCPBCpK
- XtM7bSEx9zppNlKQFutT7zXcRpUaDovfXmpVzh8sEpFA2onyMdKaQJUMWwLTpXSq0jw69Bl/u
- hBMvqI4hdMj5cpnk/SIo582azeBy+4W4A2ZVRKVyRCAyJ0xzzg3bR1TGXrmxeqKzK6GNI6CWo
- rqJNmfsGoBcnpqMxG2EUAL5pyqhXml9Gt8uWSMXWyQ39ivHixABQfXFiRegVPUO509KdRRLYH
- yaCQ1kz8ZwEhX3hAtn5VrzeSLgh7BpOrjhebb+lyP3Vke9VSSXTieMHbUapQfCMgq9wbBF68s
- h6YGkF1Y7B4cWPWeTKnFXdPjIzHVA74xQb1yWSyHh1uqFEPHIuuF/iWJFWcZz9UdINZcJka6Z
- bsff4ktBNi57bm1X4be4iJKf49443Ol2LF9AtAYpkIwrDQ99d4gD6NoX82o1Aq5cp2DDNt/DY
- i53JQnhgrFZRk0iSG
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cfd5d859-3ce3-4df1-d6bd-08d8039337b7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 May 2020 05:43:29.8368
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: J95OJLHQk4ghYE2UMDbsuHObCC7w/lcxgb+puzxMyWOS7GiLweqxgRY89VCxn+wbMmvdzXSqMIee1IXg8ggfLQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0P153MB0180
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 28, 2020 at 01:37:45AM -0700, Carlo Marcelo Arenas Bel=F3n wro=
-te:
-> Using and escaped '|' for alternations is allowed in some implementation=
-s
-        ^^^
-Is this a typo ? "Using an escaped"...
-And there are more typos and small things that deserve improvements.
-> of grep (GNU and busybox, al least), but it is no suppored by POSIX[1]
-> and therefore will fail in at least macOS and the BSD.
+Hi,
+In CentOS 7.8, git 1.8.3.1 can show this commit from the mainline Linux ker=
+nel correctly:
 
-I don't think that macOS (or BSD) ever claimed to be be POSIX compliant.
-How about something in this style:
+[decui@localhost linus.git]$ git --version
+git version 1.8.3.1
+
+[decui@localhost linus.git]$ git show --stat 7b38725318f4517af6168ccbff9906=
+0d67aba1c8
+commit 7b38725318f4517af6168ccbff99060d67aba1c8
+Author: Ingo Molnar <mingo@elte.hu>
+Date:   Wed Jan 28 19:11:44 2009 +0100
+
+    x86: remove subarchitecture support code
+
+    Remove remaining bits of the subarchitecture code. Now that all the
+    special platforms are runtime probed and runtime handled, we can remove
+    these facilities.
+
+    Signed-off-by: Ingo Molnar <mingo@elte.hu>
+
+ arch/x86/Makefile              |   5 --
+ arch/x86/kernel/Makefile       |   2 +-
+ arch/x86/kernel/probe_32.c     | 248 +++++++++++++++++++++++++++++++++++++=
+++
+ arch/x86/mach-generic/Makefile |   7 ---
+ arch/x86/mach-generic/probe.c  | 156 -------------------------------------=
+--
+ 5 files changed, 249 insertions(+), 169 deletions(-)
 
 
-Using an escaped '|' for alternations works only in some implementations
-of grep (e.g. GNU and busybox).
+However, in Ubuntu 20.04, the git doesn't show the deleted file
+arch/x86/mach-generic/probe.c at all:
 
-It is not part of POSIX[1] and not supported by BSD, macOS
-(and possibly other) non-GNU implementations.
+root@decui-u2004:~/linux# git --version
+git version 2.25.1
 
-Solution: Use =B4grep -E=B4.
+root@decui-u2004:~/linux# git show --stat 7b38725318f4517af6168ccbff99060d6=
+7aba1c8
+commit 7b38725318f4517af6168ccbff99060d67aba1c8
+Author: Ingo Molnar <mingo@elte.hu>
+Date:   Wed Jan 28 19:11:44 2009 +0100
 
-[1] https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.ht=
-ml#tag_09_03
+    x86: remove subarchitecture support code
 
+    Remove remaining bits of the subarchitecture code. Now that all the
+    special platforms are runtime probed and runtime handled, we can remove
+    these facilities.
 
->
-> Fixes: f1e3df3169 (t: increase test coverage of signature verification
->        output, 2020-03-04)
-> Signed-off-by: Carlo Marcelo Arenas Bel=F3n <carenas@gmail.com>
-> ---
->  t/t4202-log.sh           | 2 +-
->  t/t6200-fmt-merge-msg.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index f1ea7d97f5..a0930599aa 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -1692,7 +1692,7 @@ test_expect_success GPG 'log --graph --show-signat=
-ure for merged tag with missin
->  	GNUPGHOME=3D. git log --graph --show-signature -n1 plain-nokey >actual=
- &&
->  	grep "^|\\\  merged tag" actual &&
->  	grep "^| | gpg: Signature made" actual &&
-> -	grep "^| | gpg: Can'"'"'t check signature: \(public key not found\|No =
-public key\)" actual
-> +	grep -E "^| | gpg: Can'"'"'t check signature: (public key not found|No=
- public key)" actual
->  '
->
->  test_expect_success GPG 'log --graph --show-signature for merged tag wi=
-th bad signature' '
-> diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-> index b15582a7a2..e4c2a6eca4 100755
-> --- a/t/t6200-fmt-merge-msg.sh
-> +++ b/t/t6200-fmt-merge-msg.sh
-> @@ -103,7 +103,7 @@ test_expect_success GPG 'message for merging local t=
-ag signed by unknown key' '
->  	GNUPGHOME=3D. git fmt-merge-msg <.git/FETCH_HEAD >actual 2>&1 &&
->  	grep "^Merge tag ${apos}signed-good-tag${apos}" actual &&
->  	grep "^# gpg: Signature made" actual &&
-> -	grep "^# gpg: Can${apos}t check signature: \(public key not found\|No =
-public key\)" actual
-> +	grep -E "^# gpg: Can${apos}t check signature: (public key not found|No=
- public key)" actual
->  '
->
->  test_expect_success 'message for merging external branch' '
-> --
-> 2.27.0.rc2.257.gaada2199e1
->
+    Signed-off-by: Ingo Molnar <mingo@elte.hu>
+
+ arch/x86/Makefile                                    |  5 ----
+ arch/x86/kernel/Makefile                             |  2 +-
+ arch/x86/{mach-generic/probe.c =3D> kernel/probe_32.c} | 92 ++++++++++++++=
+++++
+ arch/x86/mach-generic/Makefile                       |  7 -----
+ 4 files changed, 93 insertions(+), 13 deletions(-)
+
+I tried the latest git release git-2.26.2.tar.gz from kernel.org, and it al=
+so has the
+same issue.
+
+The web interface has the same issue too:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?=
+id=3D7b38725318f4517af6168ccbff99060d67aba1c8
+
+It looks there is a bug introduced in some git verson newer than 1.8.3.1?
+
+Thanks,
+-- Dexuan
+
