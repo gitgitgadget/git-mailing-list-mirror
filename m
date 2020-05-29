@@ -2,499 +2,296 @@ Return-Path: <SRS0=mJAO=7L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	UNWANTED_LANGUAGE_BODY,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F03ABC433E0
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73163C433DF
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A77B32072D
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:37:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3987620723
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 08:51:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XEraI1dX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d2/pxh16"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725936AbgE2Ih3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 May 2020 04:37:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42174 "EHLO
+        id S1725306AbgE2Iu7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 04:50:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725306AbgE2Ih2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 May 2020 04:37:28 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4725BC03E969
-        for <git@vger.kernel.org>; Fri, 29 May 2020 01:37:28 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id l10so2464353wrr.10
-        for <git@vger.kernel.org>; Fri, 29 May 2020 01:37:28 -0700 (PDT)
+        with ESMTP id S1725865AbgE2Iu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 04:50:58 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D66C03E969
+        for <git@vger.kernel.org>; Fri, 29 May 2020 01:50:57 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id h4so2306141wmb.4
+        for <git@vger.kernel.org>; Fri, 29 May 2020 01:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:cc:references:subject:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=iIUNTzQRAT8cNIRuwjCAO7B6pkGngE9B4eiQyMNETII=;
-        b=XEraI1dXZgArI2+OB2WJFxXVGTA9Qk3yDnWIqwRgzsr8jHa/xD8RN5FzrDGpZT8ihQ
-         LeMLaNP0b0opiDlOVPIYlnlpDAtuJ4AKbUT14ml7z+rMImIaU/UYDUR711MiVhxU/iGH
-         lYOzDrhbJwyhn42nZM5RKH4XawZg5C2yV1i2UwIe4O3wnt4ecS/IFL57F6LFGxdPbt+0
-         3vAsVVDbwSI2lgbIhGI7M83eeZESBMkRHIKcSTgGIINYPMS++k1JfcKzj1WzzguQxc1U
-         wP8LRauFTjSBuBpe6QbVwFu09UZeid3oGIOa9//vQkVg4k3rK3cgGeWALrEaGInIcQW3
-         MHbg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WuAwNqI1eWrevATa0+rS79Mm+BMtAhzIXymTTOw7d6w=;
+        b=d2/pxh168i8wPwv2SasE62JFag5cUxowiHxaO8tKgRQXD2FYXX+MbGvMrKS0+SU4fx
+         BSKQylBouBDp0UnPDRut1sNbcyYn7Lz7BmxokxkNrtTAvutX1w2YO7sCnOIy6NTKTfPC
+         TxhVrr1mrdou9l6znwBIVFB2DCC+yPsuJBN2lhBJj7kdiUcOgCzHevraTuc2Biwd6GjE
+         79AP73Q2Yuce5A++jDSsv61m+UUoEMAcm6NUeaG9vsXLAPn6zloD3iy3ldYFIJBRmlhh
+         0pfUN1OMbeneqDwhoJkwl46KHzpafZck2w/Rxv+1z4COp1qgY74VbqYCZf0XDIaQZwoB
+         ja8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:subject:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=iIUNTzQRAT8cNIRuwjCAO7B6pkGngE9B4eiQyMNETII=;
-        b=biU4FpBF9cGjfVtwbePG+CXr0I1W70R6/bJ0dRxEm5iYHZzahBL3rQ+RVZ/Y2cnzDU
-         DklJ43OX0P7CvdvhM2KbkdcaUnDd4ZqWYifrpLCxhLu8oaAyihQBtQARK0xhJUAOtuMp
-         8gvTO/tUDJINaDnbyk0/7XwcmNFNuUtdti6taKXLIG2D6iJ1b596Cj+wbMhaANEiVM3/
-         UtEh18BTfsB0NC/IPBzL6ioUyFJxgEFnavy80MSu3Top9j+j64VbfWFhrw1gvRenjUqs
-         uscViHK4M0OVDvtwzAwJG+9/sy9m1FNTi9Q2Fwq5p8OMrgS7vYw8uzB/5pllXgUToVlj
-         BZLg==
-X-Gm-Message-State: AOAM531bp39BV+tl1JjDYMq3TMaG7w10IJftr1LsxB/b6z19Xp2vUjTa
-        xuHlKqSLUQWCbAdP2vkHvlJLTghB
-X-Google-Smtp-Source: ABdhPJyRrS/Jba4VEu/dhDlic1Yn6Ze+83c1ChwZwRKTLVgiUjhCJoC0jUJYi8l8n8pscJ3MrIFN3g==
-X-Received: by 2002:adf:97cb:: with SMTP id t11mr7561408wrb.314.1590741446120;
-        Fri, 29 May 2020 01:37:26 -0700 (PDT)
-Received: from ?IPv6:2a02:c7d:ca99:ce00:3db7:e240:d1a8:b96e? ([2a02:c7d:ca99:ce00:3db7:e240:d1a8:b96e])
-        by smtp.gmail.com with ESMTPSA id t14sm2406887wri.7.2020.05.29.01.37.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 May 2020 01:37:25 -0700 (PDT)
-To:     report.jensen@gmail.com
-Cc:     git@vger.kernel.org
-References: <CAHgM7c4PQQvTrfn4fqKy8evQ2ydbO7ggBn4hPUTF5e2G+ApMvQ@mail.gmail.com>
-Subject: Re: Git gui freeze on ubuntu 18.04
-From:   Peter Jensen <home.jensen@gmail.com>
-Message-ID: <76f5b3ff-21a7-bff7-4785-b56c34eda644@gmail.com>
-Date:   Fri, 29 May 2020 09:37:24 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WuAwNqI1eWrevATa0+rS79Mm+BMtAhzIXymTTOw7d6w=;
+        b=O4GFGULeRCmpefLLvay9MFdFiFJL444x/LoaQcl08lH9/entzFMgz0VD9VH3kMwQRv
+         6Eizhu58eZ2vy9evkxLuzJoli/1orpprvVXDEup188O69S/53zzd/wklrgkMCflyMcO0
+         u05axos9XNocgFfNNP5iBZA/QnN7jSINiZkUPha7+VhF1m6xC+CwTdzgeXQrINrwmE13
+         AdnZuMVDIrtm4+aRbhqerI3xnKLZSBDTWN5b2kJFdk1Dgxwovhueouqk+R9RigWrd0k+
+         7cLOANnH6HBDfRfxsS9u/xbsykeGsvJsqBNqr5atVA+zhJ1cc3pT5JYSPlk8lAh7byNA
+         jO7g==
+X-Gm-Message-State: AOAM531biwtuyay7216l9kAOX8xRt86AbQ+Fni/d1CY/Ds7Ns0SfaPHG
+        dKopHM2Q4t5I68UhOg2bXhzZTl9k
+X-Google-Smtp-Source: ABdhPJx1U2IhfU6uT2YhXD7bLaj9h5L0QT7gqxsE82mVTAR7nJYfYy2z4EGy7K5d6Zuw83DI2iJKxw==
+X-Received: by 2002:a1c:7305:: with SMTP id d5mr7756590wmb.85.1590742256011;
+        Fri, 29 May 2020 01:50:56 -0700 (PDT)
+Received: from localhost.localdomain (84-236-109-105.pool.digikabel.hu. [84.236.109.105])
+        by smtp.gmail.com with ESMTPSA id f11sm3525255wrj.2.2020.05.29.01.50.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 May 2020 01:50:54 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Garima Singh <garima.singh@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PoC PATCH 00/34] An alternative modified path Bloom filters implementation
+Date:   Fri, 29 May 2020 10:50:04 +0200
+Message-Id: <20200529085038.26008-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.27.0.rc1.431.g5c813f95dc
 MIME-Version: 1.0
-In-Reply-To: <CAHgM7c4PQQvTrfn4fqKy8evQ2ydbO7ggBn4hPUTF5e2G+ApMvQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-strace from the very beginning until crash
+Sigh...  but better late than never, right?
 
--------------------------------------------------------------------------------------------------------
-strace git gui
-execve("/usr/bin/git", ["git", "gui"], 0x7ffc195900c8 /* 59 vars */) = 0
-brk(NULL)                               = 0x55c206a34000
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFREG|0644, st_size=96441, ...}) = 0
-mmap(NULL, 96441, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fa7e6533000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libpcre2-8.so.0", 
-O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\360\36\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0644, st_size=530984, ...}) = 0
-mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) 
-= 0x7fa7e6531000
-mmap(NULL, 2626312, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fa7e60a2000
-mprotect(0x7fa7e6123000, 2093056, PROT_NONE) = 0
-mmap(0x7fa7e6322000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x80000) = 0x7fa7e6322000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libz.so.1", O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\220\37\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0644, st_size=116960, ...}) = 0
-mmap(NULL, 2212016, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fa7e5e85000
-mprotect(0x7fa7e5ea1000, 2093056, PROT_NONE) = 0
-mmap(0x7fa7e60a0000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b000) = 0x7fa7e60a0000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", 
-O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0000b\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0755, st_size=144976, ...}) = 0
-mmap(NULL, 2221184, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fa7e5c66000
-mprotect(0x7fa7e5c80000, 2093056, PROT_NONE) = 0
-mmap(0x7fa7e5e7f000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19000) = 0x7fa7e5e7f000
-mmap(0x7fa7e5e81000, 13440, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fa7e5e81000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/librt.so.1", O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\"\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0644, st_size=31680, ...}) = 0
-mmap(NULL, 2128864, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fa7e5a5e000
-mprotect(0x7fa7e5a65000, 2093056, PROT_NONE) = 0
-mmap(0x7fa7e5c64000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6000) = 0x7fa7e5c64000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\34\2\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0755, st_size=2030544, ...}) = 0
-mmap(NULL, 4131552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fa7e566d000
-mprotect(0x7fa7e5854000, 2097152, PROT_NONE) = 0
-mmap(0x7fa7e5a54000, 24576, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) = 0x7fa7e5a54000
-mmap(0x7fa7e5a5a000, 15072, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fa7e5a5a000
-close(3)                                = 0
-mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) 
-= 0x7fa7e652f000
-arch_prctl(ARCH_SET_FS, 0x7fa7e6530080) = 0
-mprotect(0x7fa7e5a54000, 16384, PROT_READ) = 0
-mprotect(0x7fa7e5e7f000, 4096, PROT_READ) = 0
-mprotect(0x7fa7e5c64000, 4096, PROT_READ) = 0
-mprotect(0x7fa7e60a0000, 4096, PROT_READ) = 0
-mprotect(0x7fa7e6322000, 4096, PROT_READ) = 0
-mprotect(0x55c204d21000, 16384, PROT_READ) = 0
-mprotect(0x7fa7e654b000, 4096, PROT_READ) = 0
-munmap(0x7fa7e6533000, 96441)           = 0
-set_tid_address(0x7fa7e6530350)         = 21766
-set_robust_list(0x7fa7e6530360, 24)     = 0
-rt_sigaction(SIGRTMIN, {sa_handler=0x7fa7e5c6bcb0, sa_mask=[], 
-sa_flags=SA_RESTORER|SA_SIGINFO, sa_restorer=0x7fa7e5c78890}, NULL, 8) = 0
-rt_sigaction(SIGRT_1, {sa_handler=0x7fa7e5c6bd50, sa_mask=[], 
-sa_flags=SA_RESTORER|SA_RESTART|SA_SIGINFO, sa_restorer=0x7fa7e5c78890}, 
-NULL, 8) = 0
-rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
-prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, 
-rlim_max=RLIM64_INFINITY}) = 0
-openat(AT_FDCWD, "/dev/null", O_RDWR)   = 3
-close(3)                                = 0
-rt_sigprocmask(SIG_UNBLOCK, [PIPE], NULL, 8) = 0
-rt_sigaction(SIGPIPE, {sa_handler=SIG_DFL, sa_mask=[PIPE], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fa7e56abf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-brk(NULL)                               = 0x55c206a34000
-brk(0x55c206a55000)                     = 0x55c206a55000
-stat("/usr/share/locale", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFREG|0644, st_size=10281936, ...}) = 0
-mmap(NULL, 10281936, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fa7e4c9e000
-close(3)                                = 0
-access("/etc/gitconfig", R_OK)          = -1 ENOENT (No such file or 
-directory)
-access("/home/peter/.config/git/config", R_OK) = -1 ENOENT (No such file 
-or directory)
-access("/home/peter/.gitconfig", R_OK)  = 0
-openat(AT_FDCWD, "/home/peter/.gitconfig", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-read(3, "[push]\n\tdefault = current\n\n[user"..., 4096) = 170
-read(3, "", 4096)                       = 0
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-getcwd("/home/peter/git/gh_code", 129)  = 24
-stat("/home/peter/git/gh_code", {st_mode=S_IFDIR|0775, st_size=4096, 
-...}) = 0
-stat("/home/peter/git/gh_code/.git", {st_mode=S_IFDIR|0775, 
-st_size=4096, ...}) = 0
-lstat("/home/peter/git/gh_code/.git/HEAD", {st_mode=S_IFREG|0664, 
-st_size=23, ...}) = 0
-openat(AT_FDCWD, "/home/peter/git/gh_code/.git/HEAD", O_RDONLY) = 3
-read(3, "ref: refs/heads/master\n", 255) = 23
-read(3, "", 232)                        = 0
-close(3)                                = 0
-lstat("/home/peter/git/gh_code/.git/commondir", 0x7ffd14998020) = -1 
-ENOENT (No such file or directory)
-access("/home/peter/git/gh_code/.git/objects", X_OK) = 0
-access("/home/peter/git/gh_code/.git/refs", X_OK) = 0
-lstat(".git/commondir", 0x7ffd149981a0) = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, ".git/config", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-read(3, "[core]\n\trepositoryformatversion "..., 4096) = 834
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-access("/etc/gitconfig", R_OK)          = -1 ENOENT (No such file or 
-directory)
-access("/home/peter/.config/git/config", R_OK) = -1 ENOENT (No such file 
-or directory)
-access("/home/peter/.gitconfig", R_OK)  = 0
-openat(AT_FDCWD, "/home/peter/.gitconfig", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-read(3, "[push]\n\tdefault = current\n\n[user"..., 4096) = 170
-read(3, "", 4096)                       = 0
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-access(".git/config", R_OK)             = 0
-openat(AT_FDCWD, ".git/config", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-read(3, "[core]\n\trepositoryformatversion "..., 4096) = 834
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-stat("/usr/lib/git-core/git-gui", {st_mode=S_IFREG|0755, st_size=105779, 
-...}) = 0
-pipe([3, 4])                            = 0
-rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-clone(child_stack=NULL, 
-flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, 
-child_tidptr=0x7fa7e6530350) = 21767
-rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-rt_sigaction(SIGINT, {sa_handler=0x55c204a01810, sa_mask=[INT], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fa7e56abf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGHUP, {sa_handler=0x55c204a01810, sa_mask=[HUP], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fa7e56abf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGTERM, {sa_handler=0x55c204a01810, sa_mask=[TERM], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fa7e56abf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGQUIT, {sa_handler=0x55c204a01810, sa_mask=[QUIT], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fa7e56abf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGPIPE, {sa_handler=0x55c204a01810, sa_mask=[PIPE], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fa7e56abf20}, 
-{sa_handler=SIG_DFL, sa_mask=[PIPE], sa_flags=SA_RESTORER|SA_RESTART, 
-sa_restorer=0x7fa7e56abf20}, 8) = 0
-close(4)                                = 0
-read(3, "", 8)                          = 0
-close(3)                                = 0
-wait4(21767, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 21767
---- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=21767, 
-si_uid=1000, si_status=0, si_utime=8, si_stime=2} ---
-exit_group(0)                           = ?
-+++ exited with 0 +++
-peter@optiplex[ master* ]>
-peter@optiplex[ master* ]> strace git gui
-execve("/usr/bin/git", ["git", "gui"], 0x7fffe2ceb3d8 /* 59 vars */) = 0
-brk(NULL)                               = 0x5555e3e40000
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFREG|0644, st_size=96441, ...}) = 0
-mmap(NULL, 96441, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fcb00ac3000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libpcre2-8.so.0", 
-O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\360\36\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0644, st_size=530984, ...}) = 0
-mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) 
-= 0x7fcb00ac1000
-mmap(NULL, 2626312, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fcb00632000
-mprotect(0x7fcb006b3000, 2093056, PROT_NONE) = 0
-mmap(0x7fcb008b2000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x80000) = 0x7fcb008b2000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libz.so.1", O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\220\37\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0644, st_size=116960, ...}) = 0
-mmap(NULL, 2212016, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fcb00415000
-mprotect(0x7fcb00431000, 2093056, PROT_NONE) = 0
-mmap(0x7fcb00630000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1b000) = 0x7fcb00630000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", 
-O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0000b\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0755, st_size=144976, ...}) = 0
-mmap(NULL, 2221184, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fcb001f6000
-mprotect(0x7fcb00210000, 2093056, PROT_NONE) = 0
-mmap(0x7fcb0040f000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19000) = 0x7fcb0040f000
-mmap(0x7fcb00411000, 13440, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fcb00411000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/librt.so.1", O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\"\0\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0644, st_size=31680, ...}) = 0
-mmap(NULL, 2128864, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fcafffee000
-mprotect(0x7fcaffff5000, 2093056, PROT_NONE) = 0
-mmap(0x7fcb001f4000, 8192, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x6000) = 0x7fcb001f4000
-close(3)                                = 0
-access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
-read(3, 
-"\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\34\2\0\0\0\0\0"..., 
-832) = 832
-fstat(3, {st_mode=S_IFREG|0755, st_size=2030544, ...}) = 0
-mmap(NULL, 4131552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 
-0) = 0x7fcaffbfd000
-mprotect(0x7fcaffde4000, 2097152, PROT_NONE) = 0
-mmap(0x7fcafffe4000, 24576, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) = 0x7fcafffe4000
-mmap(0x7fcafffea000, 15072, PROT_READ|PROT_WRITE, 
-MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fcafffea000
-close(3)                                = 0
-mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) 
-= 0x7fcb00abf000
-arch_prctl(ARCH_SET_FS, 0x7fcb00ac0080) = 0
-mprotect(0x7fcafffe4000, 16384, PROT_READ) = 0
-mprotect(0x7fcb0040f000, 4096, PROT_READ) = 0
-mprotect(0x7fcb001f4000, 4096, PROT_READ) = 0
-mprotect(0x7fcb00630000, 4096, PROT_READ) = 0
-mprotect(0x7fcb008b2000, 4096, PROT_READ) = 0
-mprotect(0x5555e1e2a000, 16384, PROT_READ) = 0
-mprotect(0x7fcb00adb000, 4096, PROT_READ) = 0
-munmap(0x7fcb00ac3000, 96441)           = 0
-set_tid_address(0x7fcb00ac0350)         = 21805
-set_robust_list(0x7fcb00ac0360, 24)     = 0
-rt_sigaction(SIGRTMIN, {sa_handler=0x7fcb001fbcb0, sa_mask=[], 
-sa_flags=SA_RESTORER|SA_SIGINFO, sa_restorer=0x7fcb00208890}, NULL, 8) = 0
-rt_sigaction(SIGRT_1, {sa_handler=0x7fcb001fbd50, sa_mask=[], 
-sa_flags=SA_RESTORER|SA_RESTART|SA_SIGINFO, sa_restorer=0x7fcb00208890}, 
-NULL, 8) = 0
-rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
-prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, 
-rlim_max=RLIM64_INFINITY}) = 0
-openat(AT_FDCWD, "/dev/null", O_RDWR)   = 3
-close(3)                                = 0
-rt_sigprocmask(SIG_UNBLOCK, [PIPE], NULL, 8) = 0
-rt_sigaction(SIGPIPE, {sa_handler=SIG_DFL, sa_mask=[PIPE], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fcaffc3bf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-brk(NULL)                               = 0x5555e3e40000
-brk(0x5555e3e61000)                     = 0x5555e3e61000
-stat("/usr/share/locale", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
-fstat(3, {st_mode=S_IFREG|0644, st_size=10281936, ...}) = 0
-mmap(NULL, 10281936, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fcaff22e000
-close(3)                                = 0
-access("/etc/gitconfig", R_OK)          = -1 ENOENT (No such file or 
-directory)
-access("/home/peter/.config/git/config", R_OK) = -1 ENOENT (No such file 
-or directory)
-access("/home/peter/.gitconfig", R_OK)  = 0
-openat(AT_FDCWD, "/home/peter/.gitconfig", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-read(3, "[push]\n\tdefault = current\n\n[user"..., 4096) = 170
-read(3, "", 4096)                       = 0
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-getcwd("/home/peter/git/gh_code", 129)  = 24
-stat("/home/peter/git/gh_code", {st_mode=S_IFDIR|0775, st_size=4096, 
-...}) = 0
-stat("/home/peter/git/gh_code/.git", {st_mode=S_IFDIR|0775, 
-st_size=4096, ...}) = 0
-lstat("/home/peter/git/gh_code/.git/HEAD", {st_mode=S_IFREG|0664, 
-st_size=23, ...}) = 0
-openat(AT_FDCWD, "/home/peter/git/gh_code/.git/HEAD", O_RDONLY) = 3
-read(3, "ref: refs/heads/master\n", 255) = 23
-read(3, "", 232)                        = 0
-close(3)                                = 0
-lstat("/home/peter/git/gh_code/.git/commondir", 0x7ffd6bbf1280) = -1 
-ENOENT (No such file or directory)
-access("/home/peter/git/gh_code/.git/objects", X_OK) = 0
-access("/home/peter/git/gh_code/.git/refs", X_OK) = 0
-lstat(".git/commondir", 0x7ffd6bbf1400) = -1 ENOENT (No such file or 
-directory)
-openat(AT_FDCWD, ".git/config", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-read(3, "[core]\n\trepositoryformatversion "..., 4096) = 834
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-access("/etc/gitconfig", R_OK)          = -1 ENOENT (No such file or 
-directory)
-access("/home/peter/.config/git/config", R_OK) = -1 ENOENT (No such file 
-or directory)
-access("/home/peter/.gitconfig", R_OK)  = 0
-openat(AT_FDCWD, "/home/peter/.gitconfig", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0775, st_size=170, ...}) = 0
-read(3, "[push]\n\tdefault = current\n\n[user"..., 4096) = 170
-read(3, "", 4096)                       = 0
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-access(".git/config", R_OK)             = 0
-openat(AT_FDCWD, ".git/config", O_RDONLY) = 3
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-fstat(3, {st_mode=S_IFREG|0664, st_size=834, ...}) = 0
-read(3, "[core]\n\trepositoryformatversion "..., 4096) = 834
-read(3, "", 4096)                       = 0
-close(3)                                = 0
-stat("/usr/lib/git-core/git-gui", {st_mode=S_IFREG|0755, st_size=105779, 
-...}) = 0
-pipe([3, 4])                            = 0
-rt_sigprocmask(SIG_SETMASK, ~[RTMIN RT_1], [], 8) = 0
-clone(child_stack=NULL, 
-flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, 
-child_tidptr=0x7fcb00ac0350) = 21806
-rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
-rt_sigaction(SIGINT, {sa_handler=0x5555e1b0a810, sa_mask=[INT], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fcaffc3bf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGHUP, {sa_handler=0x5555e1b0a810, sa_mask=[HUP], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fcaffc3bf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGTERM, {sa_handler=0x5555e1b0a810, sa_mask=[TERM], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fcaffc3bf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGQUIT, {sa_handler=0x5555e1b0a810, sa_mask=[QUIT], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fcaffc3bf20}, 
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGPIPE, {sa_handler=0x5555e1b0a810, sa_mask=[PIPE], 
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fcaffc3bf20}, 
-{sa_handler=SIG_DFL, sa_mask=[PIPE], sa_flags=SA_RESTORER|SA_RESTART, 
-sa_restorer=0x7fcaffc3bf20}, 8) = 0
-close(4)                                = 0
-read(3, "", 8)                          = 0
-close(3)                                = 0
-wait4(21806, 0x7ffd6bbf1684, 0, NULL)   = ? ERESTARTSYS (To be restarted 
-if SA_RESTART is set)
---- SIGWINCH {si_signo=SIGWINCH, si_code=SI_KERNEL} ---
-wait4(21806, 0x7ffd6bbf1684, 0, NULL)   = ? ERESTARTSYS (To be restarted 
-if SA_RESTART is set)
---- SIGWINCH {si_signo=SIGWINCH, si_code=SI_KERNEL} ---
-wait4(21806, 0x7ffd6bbf1684, 0, NULL)   = ? ERESTARTSYS (To be restarted 
-if SA_RESTART is set)
---- SIGWINCH {si_signo=SIGWINCH, si_code=SI_KERNEL} ---
-wait4(21806,
+I experimented quite a bit with modified path Bloom filters a year and
+more ago, and got quite far...  but my disappointment in the
+inadequacy of all double hashing schemes, the arrival of split
+commit-graphs, and, well, life in general has put the whole thing on
+the back burner, and I haven't touched it for a couple of releases.
+
+Now I finally managed to take a closer look at the current changed
+paths Bloom filters implementation, and saw that it has some of the
+same issues that I had stumbled upon and that it missed some
+optimization opportunities.  Unfortunately, fixing those issues and
+performing those optimizations do require a thorough format change.
+
+So here is my proof of concept version, in all its incompleteness,
+with the following benefits:
+
+  - Better understanding of the problem it tries to optimize.
+  - Better understanding of the issues with many small Bloom filters.
+  - Better hashing scheme (though it should be better still).
+  - Orders of magnitude lower average false positive rate.
+  - Consequently, faster pathspec-limited revision walks.
+  - Faster processing of the tree-diff output and lower memory usage
+    while computing Bloom filters (from scratch...).
+  - Optional support for storing Bloom filters for all parents of
+    merge commits.
+  - Deduplicates Bloom filters.
+  - Supports multiple pathspecs right from the start.
+  - Supports some wildcards in pathspecs.
+  - Handles as many commits as the commit-graph format can.
+  - It has the right name :)  The diff machinery and all its frontends
+    report "modified" paths with the letter 'M', not "changed".
+  - More cleanups, more bugfixes.
+  - Consistent output with and without modified path Bloom filters for
+    over 80k random paths in 16 repositories, even with submodules in
+    them.  Well, at least on my machine, if nowhere else...
+
+Alas, the drawbacks are significant:
+
+  - No tests whatsoever.
+  - Computes all modified path Bloom filters from scratch when
+    writing, no matter what.
+  - Doesn't work with split commit-graphs.
+  - Basically if anything works besides 'git commit-graph write
+    --reachable' it's a miracle.
+  - Not a single test.
+  - Many BUG()s, which should rather be graceful errors...  though I
+    have to admit that at this point they are indeed bugs.
+  - Many TODOs, both in commit messages and code, some incomplete
+    commit messages, crappy subject lines, even missing signoffs.
+  - Some ridiculously long variable, function, macro and config
+    variable names.
+  - It's based on v2.25.0 (no technical reason, but that's the version
+    I used to run the baseline benchmarks the last time, which takes
+    days...)
+  - I'm pretty sure that there are more...
+  - Oh, did I mention that there are no tests?
 
 
+The first 14 patches are preparatory fixes and cleanups:
+
+  01/34 tree-walk.c: don't match submodule entries for 'submod/anything'
+
+This fix or something similar is necessary to have consistent output
+with and without modified path Bloom filters for paths crossing
+submodule boundary.
+
+  02/34 commit-graph: fix parsing the Chunk Lookup table
+
+The minimal (though not the best) fix for a bug which, I think, is as
+old as the commit-graph.  I don't know how to test this.
+
+  03/34 commit-graph-format.txt: all multi-byte numbers are in network byte order
+  04/34 commit-slab: add a function to deep free entries on the slab
+  05/34 diff.h: drop diff_tree_oid() & friends' return value
+  06/34 commit-graph: clean up #includes
+
+A couple of minor cleanups.
+
+  07/34 commit-graph: simplify parse_commit_graph() #1
+  08/34 commit-graph: simplify parse_commit_graph() #2
+
+These two would be the right, though not minimal fix for the parsing
+bug above.
+
+  09/34 commit-graph: simplify write_commit_graph_file() #1
+  10/34 commit-graph: simplify write_commit_graph_file() #2
+  11/34 commit-graph: allocate the 'struct chunk_info' array dinamically
+
+I think these three cleanup patches are a better alternative of
+3be7efcafc (commit-graph: define and use MAX_NUM_CHUNKS, 2020-03-30),
+because...
+
+  12/34 commit-graph: unify the signatures of all write_graph_chunk_*() functions
+  13/34 commit-graph: simplify write_commit_graph_file() #3
+  14/34 commit-graph: check chunk sizes after writing
+
+... they laid the ground work for this patch.
+
+  15/34 commit-graph-format.txt: document the modified path Bloom filter chunks
+
+This is the most important one, specifying and _justifying_ the new
+chunk formats.
+
+Do grab a cup or pint of your favourite beverage and get comfy before
+reading this one.  You have been warned.
+
+  16/34 Add a generic and minimal Bloom filter implementation
+  17/34 Import a streaming-capable Murmur3 hash function implementation
+  18/34 commit-graph: write "empty" Modified Path Bloom Filter Index chunk
+  19/34 commit-graph: add commit slab for modified path Bloom filters
+  20/34 commit-graph: fill the Modified Path Bloom Filter Index chunk
+
+This shows a more efficient approach to process the tree-diff output
+into Bloom filters.
+
+  21/34 commit-graph: load and use the Modified Path Bloom Filter Index chunk
+  22/34 commit-graph: write the Modified Path Bloom Filters chunk
+  23/34 commit-graph: load and use the Modified Path Bloom Filters chunk
+  24/34 commit-graph: check all leading directories in modified path Bloom filters
+
+This was a good lightbulb moment.  It is essential to try to maintain
+reasonable performance in repositories where the vast majority of
+changes are concentrated to a single directory.
+
+  25/34 commit-graph: check embedded modified path Bloom filters with a mask
+  26/34 commit-graph: deduplicate modified path Bloom filters
+  27/34 commit-graph: load modified path Bloom filters for merge commits
+  28/34 commit-graph: write Modified Path Bloom Filter Merge Index chunk
+  29/34 commit-graph: extract init and free write_commit_graph_context
+  30/34 commit-graph: move write_commit_graph_reachable below write_commit_graph
+  31/34 t7007-show: make the first test compatible with the next patch
+  32/34 PoC commit-graph: use revision walk machinery for '--reachable'
+
+Once upon a time I thought this was the greatest idea ever, but as
+time goes by I get more and more concerned that this is a really dumb
+idea, though don't yet know why.
+
+  33/34 commit-graph: write modified path Bloom filters in "history order"
+  34/34 commit-graph: use modified path Bloom filters with wildcards, if possible
+
+Finally a cherry on top.
+
+
+
+SZEDER Gábor (34):
+  tree-walk.c: don't match submodule entries for 'submod/anything'
+  commit-graph: fix parsing the Chunk Lookup table
+  commit-graph-format.txt: all multi-byte numbers are in network byte
+    order
+  commit-slab: add a function to deep free entries on the slab
+  diff.h: drop diff_tree_oid() & friends' return value
+  commit-graph: clean up #includes
+  commit-graph: simplify parse_commit_graph() #1
+  commit-graph: simplify parse_commit_graph() #2
+  commit-graph: simplify write_commit_graph_file() #1
+  commit-graph: simplify write_commit_graph_file() #2
+  commit-graph: allocate the 'struct chunk_info' array dinamically
+  commit-graph: unify the signatures of all write_graph_chunk_*()
+    functions
+  commit-graph: simplify write_commit_graph_file() #3
+  commit-graph: check chunk sizes after writing
+  commit-graph-format.txt: document the modified path Bloom filter
+    chunks
+  Add a generic and minimal Bloom filter implementation
+  Import a streaming-capable Murmur3 hash function implementation
+  commit-graph: write "empty" Modified Path Bloom Filter Index chunk
+  commit-graph: add commit slab for modified path Bloom filters
+  commit-graph: fill the Modified Path Bloom Filter Index chunk
+  commit-graph: load and use the Modified Path Bloom Filter Index chunk
+  commit-graph: write the Modified Path Bloom Filters chunk
+  commit-graph: load and use the Modified Path Bloom Filters chunk
+  commit-graph: check all leading directories in modified path Bloom
+    filters
+  commit-graph: check embedded modified path Bloom filters with a mask
+  commit-graph: deduplicate modified path Bloom filters
+  commit-graph: load modified path Bloom filters for merge commits
+  commit-graph: write Modified Path Bloom Filter Merge Index chunk
+  commit-graph: extract init and free write_commit_graph_context
+  commit-graph: move write_commit_graph_reachable below
+    write_commit_graph
+  t7007-show: make the first test compatible with the next patch
+  PoC commit-graph: use revision walk machinery for '--reachable'
+  commit-graph: write modified path Bloom filters in "history order"
+  commit-graph: use modified path Bloom filters with wildcards, if
+    possible
+
+ Documentation/config/core.txt                 |   19 +
+ .../technical/commit-graph-format.txt         |  127 +-
+ Makefile                                      |    2 +
+ bloom-filter.c                                |   91 ++
+ bloom-filter.h                                |   47 +
+ commit-graph.c                                | 1239 +++++++++++++++--
+ commit-graph.h                                |   24 +-
+ commit-slab-decl.h                            |    1 +
+ commit-slab-impl.h                            |   13 +
+ commit-slab.h                                 |   10 +
+ compat/PMurHash.c                             |  291 ++++
+ compat/PMurHash.h                             |   62 +
+ diff.h                                        |   10 +-
+ pathspec.c                                    |   10 +
+ pathspec.h                                    |   13 +
+ revision.c                                    |   27 +-
+ shallow.c                                     |   14 +-
+ t/t4010-diff-pathspec.sh                      |    4 +-
+ t/t5318-commit-graph.sh                       |    3 +-
+ t/t7007-show.sh                               |    7 +-
+ tree-diff.c                                   |   21 +-
+ tree-walk.c                                   |    9 +-
+ 22 files changed, 1872 insertions(+), 172 deletions(-)
+ create mode 100644 bloom-filter.c
+ create mode 100644 bloom-filter.h
+ create mode 100644 compat/PMurHash.c
+ create mode 100644 compat/PMurHash.h
+
+-- 
+2.27.0.rc1.431.g5c813f95dc
 
