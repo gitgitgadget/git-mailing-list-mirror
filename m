@@ -2,68 +2,67 @@ Return-Path: <SRS0=mJAO=7L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B82FBC433DF
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 19:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC552C433DF
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 19:28:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 62FF6207D4
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 19:27:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 862BE20810
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 19:28:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fJCX+217"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xeDDPyoK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727878AbgE2T1x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 May 2020 15:27:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51054 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726866AbgE2T1x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 May 2020 15:27:53 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD304506EA;
-        Fri, 29 May 2020 15:27:50 -0400 (EDT)
+        id S1727964AbgE2T2E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 15:28:04 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55044 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726866AbgE2T2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 15:28:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A870DBDE10;
+        Fri, 29 May 2020 15:28:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0/oZ1qbox53FwWJrPjk1ryhvhAM=; b=fJCX+2
-        17IQQB2L6jDZ2eG07oiIEh+omJTZqmP98eTE3Hm6sD2LV+BZAe0ryEVl035N3mjq
-        s1jTybnTWuA5mYgg0D+xGKaq6OC1Dy154kfrWLJjlnPu88NTuhZgiRz0Orpa9m1k
-        /LE5zjZT6X3JfmpievpdEYHek6as90DLxgdWM=
+        :content-type; s=sasl; bh=ZBqTQP+95o78i96/wqiCFTqBY1E=; b=xeDDPy
+        oKepqCTjMcB0v5OTdC1IIFP/rPlsVuhLy/Xga1psrMV6ightMHfiEo8giZNqMCki
+        qiKo3YQ0SDEogQUFj2EyTmDo2neJKAg6KM1gA/NyIu3cKYPSfXy5GnZ7Vneq/dPi
+        jH55CuNd6pqB7fqpkUsk76pA0ZzE0daSLklvU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ySCm3cNT20W1XxLlyNAhyv6xI586jFza
-        wVTiUuPC47egjhFyqGQP1fYUBrCUS/Rtpblw4vjm5XVH1WmzGE8E4tRtfqEqRsUr
-        f0rpqN1hHcJWsael0PKwaE6RotpNiJIn9mvtoOeK9LMgPU9XKfbohnQPTSnX3y4z
-        G6kE/SJkDP0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5178506E9;
-        Fri, 29 May 2020 15:27:50 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=XBLBH2OtfyNX+OredO+aq9nQXHUB+qRo
+        BLTtLbjDv5bwEPBkg5W2LrM3/KFNMXjEzyiYI/MhuFGyq1nC7mUHUT7a7rmBCKxV
+        LkvvJyprLDdUrfRKrR3nwUvtRMS0jHzc26MbMM9OHS9lRNS40EWfrtzz9a22cx+T
+        1cBQiAUC+uE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F759BDE0F;
+        Fri, 29 May 2020 15:28:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5E0C9506E7;
-        Fri, 29 May 2020 15:27:50 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B7976BDE0A;
+        Fri, 29 May 2020 15:27:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Subject: Re: [PATCH v3 1/8] Introduce CMake support for configuring Git
+Subject: Re: [PATCH v3 2/8] cmake: generate the shell/perl/python scripts and templates, translations
 References: <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
         <pull.614.v3.git.1590759624.gitgitgadget@gmail.com>
-        <09c972de52b35b14a4c6f44b10c3dfc1732b2c7a.1590759624.git.gitgitgadget@gmail.com>
-Date:   Fri, 29 May 2020 12:27:49 -0700
-In-Reply-To: <09c972de52b35b14a4c6f44b10c3dfc1732b2c7a.1590759624.git.gitgitgadget@gmail.com>
+        <f19794fdbc09cc3c57392dc522920f7b01691d88.1590759624.git.gitgitgadget@gmail.com>
+Date:   Fri, 29 May 2020 12:27:56 -0700
+In-Reply-To: <f19794fdbc09cc3c57392dc522920f7b01691d88.1590759624.git.gitgitgadget@gmail.com>
         (Sibi Siddharthan via GitGitGadget's message of "Fri, 29 May 2020
-        13:40:17 +0000")
-Message-ID: <xmqqy2pay216.fsf@gitster.c.googlers.com>
+        13:40:18 +0000")
+Message-ID: <xmqqwo4uy20z.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7C0B376C-A1E2-11EA-B5B3-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 806EEE52-A1E2-11EA-A18F-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,179 +72,111 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 >
-> At the moment, the recommended way to configure Git's builds is to
-> ...
-> Note: this patch asks for the minimum version v3.14 of CMake (which is
-> not all that old as of time of writing) because that is the first
-> version to offer a platform-independent way to generate hardlinks as
-> part of the build. This is needed to generate all those hardlinks for
-> the built-in commands of Git.
+> Implement the placeholder substitution to generate scripted
+> Porcelain commands, e.g. git-request-pull out of
+> git-request-pull.sh
+>
+> Generate shell/perl/python scripts and template using CMake instead of
+> using sed like the build procedure in the Makefile does.
+>
+> The text translations are only build if `msgfmt` is found in your path.
+>
+> NOTE: The scripts and templates are generated during configuration.
 
-All of the above reads reasonable.
+OK.
 
 > Changes
 > The CMake script parses the Makefile for:
-> LIB_OBJS
-> BUILTIN_OBJS
-> XDIFF_OBJS
-> VCSSVN_OBJS
-> TEST_BUILTINS_OBJS
->
-> By doing this we avoid duplication of text between the Makefile and
-> the CMake script.
->
-> The CMake script has been relocated to contrib/buildsystems.
->
-> The CMake script uses GIT-VERSION-GEN to determine the version of Git
-> being built.
+> SCRIPT_SH
+> SCRIPT_PERL
 
-Everything after the "Changes" line does not belong to the commit
-log, as it is no use for those who read "git log" output and
-encounter the "first" attempt to add CMake support there.  There is
-no need to tell them that you did things differently from this
-version in the past, as they simply do not know what you did in the
-previous iterations, nor particularly care about them.
+Below the three-dash line.
 
-These *do* help reviewers who saw previous iterations, and the space
-after the three-dash line below is the right/recommended place for
-them.
+> +#shell scripts
+> +parse_makefile_for_scripts(git_sh_scripts "SCRIPT_SH" ".sh")
 
-The above applies to other patches in this series.
+OK.
 
-> Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-> ---
->  contrib/buildsystems/CMakeLists.txt | 575 ++++++++++++++++++++++++++++
->  1 file changed, 575 insertions(+)
->  create mode 100644 contrib/buildsystems/CMakeLists.txt
->
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-> new file mode 100644
-> index 00000000000..8e2b27f44a6
-> --- /dev/null
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -0,0 +1,575 @@
-> +#
-> +#	Copyright (c) 2020 Sibi Siddharthan
-> +#
+> +set(git_shell_scripts
+> +	${git_sh_scripts}
+> +	git-mergetool--lib git-parse-remote git-rebase--preserve-merges
+> +	git-sh-setup git-sh-i18n git-instaweb)
+
+Do we need to have enumeration here, which can drift out of sync
+with the reality?  Wouldn't we want to avoid it with something like
+
+ parse_makefile_for_scripts(git_sh_lib "SCRIPT_LIB" "")
+
+too?
+
+> +#perl modules
+> +file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
 > +
-> +#[[
+> +foreach(pm ${perl_modules})
+> +	string(REPLACE "${CMAKE_SOURCE_DIR}/perl/" "" file_path ${pm})
+> +	file(STRINGS ${pm} content NEWLINE_CONSUME)
+> +	string(REPLACE "@@LOCALEDIR@@" "${LOCALEDIR}" content "${content}")
+> +	string(REPLACE "@@NO_PERL_CPAN_FALLBACKS@@" "" content "${content}")
+> +	file(WRITE ${CMAKE_BINARY_DIR}/perl/build/lib/${file_path} ${content})
+> +#test-lib.sh requires perl/build/lib to be the build directory of perl modules
+> +endforeach()
 > +
-> +Instructions to run CMake:
 > +
-> +cmake `relative-path-to-CMakeLists.txt` -DCMAKE_BUILD_TYPE=Release
+> +#templates
+> +file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/branches) #create branches
+> +set(hooks_templates
+> +	applypatch-msg.sample pre-applypatch.sample pre-push.sample
+> +	commit-msg.sample pre-commit.sample pre-rebase.sample
+> +	fsmonitor-watchman.sample pre-merge-commit.sample pre-receive.sample
+> +	post-update.sample prepare-commit-msg.sample update.sample)
 
-The readers can infer from `relative-path-to-CMakeLists` that they
-can run this command from anywhere, e.g.
+Do we need to have enumeration here, which can drift out of sync
+with the reality?  Wouldn't we want to avoid it with file(GLOB) or
+something?
 
-	$ cd $HOME
-	$ tar xf /var/tmp/git-2.7.0.tar
-	$ cd /tmp
-	$ cmake $HOME/git/contrib/buildsystems/CMakeLists.txt
-
-but when given the freedom/flexibility to use it from "anywhere",
-they are faced by an extra choice to make.  It may be helpful to
-readers to elaborate a bit more to help them decide where in the
-directory hierarchy they would want to run this command.  In the
-above example sequence, I chose /tmp, but if I used /var/tmp as the
-starting place instead, what becomes different?  The answer might
-be "resulting 'git' binary is stored in the directory you run the
-'cmake' command in", and by spelling it out, it helps readers to
-make an informed decision.
-
-> +Possible build configurations(-DCMAKE_BUILD_TYPE) with corresponding
-> +compiler flags
-> +Debug : -g
-> +Release: -O3
-> +RelWithDebInfo : -O2 -g
-> +MinSizeRel : -Os
-> +empty(default) :
+> +#templates have @.*@ replacement so use configure_file instead
+> +#hooks
+> +foreach(tm ${hooks_templates})
+> +	configure_file(${CMAKE_SOURCE_DIR}/templates/hooks--${tm} ${CMAKE_BINARY_DIR}/templates/blt/hooks/${tm} @ONLY)
+> +endforeach()
 > +
-> +NOTE: -DCMAKE_BUILD_TYPE is optional. For multi-config generators like Visual Studio
-> +this option is ignored
-
-Quite helpful.
-
-> +This process generates a Makefile(Linux) , Visual Studio solution(Windows) by default.
-> +Run `make` to build Git on Linux.
-> +Open git.sln on Windows and build Git.
+> +#info
+> +configure_file(${CMAKE_SOURCE_DIR}/templates/info--exclude ${CMAKE_BINARY_DIR}/templates/blt/info/exclude @ONLY)
 > +
-> +NOTE: By default CMake uses Makefile as the build tool on Linux and Visual Studio in Windows,
+> +#this
+> +configure_file(${CMAKE_SOURCE_DIR}/templates/this--description ${CMAKE_BINARY_DIR}/templates/blt/description @ONLY)
 
-The above makes it sound as if Linux and VS are the only two systems
-we care about, but is it really Linux, or UNIX-flavoured systems in
-general?  In other words, are we excluding friends on BSD and macOS
-with the above?
+I was hoping that we could drive any build system without having to
+have separate rules like the above.  The idea behind all files with
+funny double-dash in its name under templates/ directory is:
 
-The above is not a complaint about "exclusion", but is a complaint
-about unclarity.
+ - double-dash denotes directory boundary
 
-> +to use another tool say `ninja` add this to the command line when configuring.
-> +`-G Ninja`
-> +
-> +]]
-> +cmake_minimum_required(VERSION 3.14)
-> ...
-> +check_c_source_compiles("
+ - when a template input ends with double-dash, it tells us to
+   create a directory
 
-The "source" given to check_c_source_{compiles,runs} may be allowed
-to be anything, but I'd prefer to see it follow some consistent
-style, preferrably our CodingGuidelines (except for git specific
-bits like "do not include standard system file but instead just use
-git-compat-util.h", which of course should not apply).  This is a
-comment not only about the two instances below I use as examples,
-but all C-source snippets in this patch.
+ - leading "this--" denotes "not in a subdirectory but at the top
+   level of the generated template directory"
 
-> +#include <alloca.h>
-> +int
-> +main ()
-> +{
+so that each of them knows what the name of the file and directory
+hierarchy of the final destination is, and the result of transforming
+can be created and deposited at the final place mechanically with a
+single rule.
 
-	int main(void)
-	{
+> +#translations
+> +if(MSGFMT_EXE)
+> +	set(po_files bg  ca  de  el  es  fr  is  it  ko  pt_PT  ru  sv  tr  vi  zh_CN  zh_TW)
 
-is how we start this function.
+Do we need to have enumeration here, which can drift out of sync
+with the reality?  Wouldn't globbing for *.po be sufficient?
 
-> +char *p = (char *) alloca (2 * sizeof (int));
-
-And the decl of function local variable here would be indented by a
-HT like the remainder of the function.  No SP between function name
-and the parentheses around its arguments.  NP SP after sizeof,
-either.
-
-> +	if (p) return 0;
-> +	return 0;
-> +}"
-> +HAVE_ALLOCA_H)
-> ...
-> +check_c_source_runs("
-> +#include<stdio.h>
-> +#include<stdarg.h>
-> +#include<string.h>
-> +#include<stdlib.h>
-> +int test_vsnprintf(char *str, size_t maxsize, const char *format, ...)
-> +{
-> +	int ret;
-> +	va_list ap;
-> +
-> +	va_start(ap, format);
-> +	ret = vsnprintf(str, maxsize, format, ap);
-> +	va_end(ap);
-> +	return ret;
-> +}
-> +
-> +int
-> +main ()
-> +{
-
-Likewise.
-
-> +	char buf[6];
-> +	if (test_vsnprintf(buf, 3, \"%s\", \"12345\") != 5
-> +		|| strcmp(buf, \"12\")) return 1;
-> +	if (snprintf(buf, 3, \"%s\", \"12345\") != 5
-> +		|| strcmp(buf, \"12\")) return 1;
-> +
-> +	return 0;
-> +}"
+> +	foreach(po ${po_files})
+> +		file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
+> +		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
+> +				COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
+> +		list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
+> +	endforeach()
+> +	add_custom_target(po-gen ALL DEPENDS ${po_gen})
+> +endif()
 
 Thanks.
