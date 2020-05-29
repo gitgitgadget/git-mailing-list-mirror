@@ -2,117 +2,99 @@ Return-Path: <SRS0=mJAO=7L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C0BBC433DF
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 01:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96112C433E0
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 03:19:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D635020723
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 01:49:59 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RYrLtkck"
+	by mail.kernel.org (Postfix) with ESMTP id 707342075F
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 03:19:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403870AbgE2Bt6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 May 2020 21:49:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35392 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390018AbgE2Bt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 May 2020 21:49:56 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0C9BC08C5C6
-        for <git@vger.kernel.org>; Thu, 28 May 2020 18:49:54 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id w1so888377qkw.5
-        for <git@vger.kernel.org>; Thu, 28 May 2020 18:49:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=8oRN9fvrg7W5O5v4cxyyyfYEt2gYunvnQfXs3DuXmbk=;
-        b=RYrLtkckWNUqqyytFy3ocTzQ2xho+V2EL9/fqaSHDAj9FFkk0s0XazGjFUt4awQcdR
-         Y5aEy8P8PTra2bJ9kUD3JcGylaQE/WWVj7pE0CNAR4+xg82M1N2vKtnsfhtG3JMy2bPV
-         n0a71MSNwAls+BvhavxP9R5sh37KlB+EyoBRCiQ5OsvN4yLlus3ADqmwUeC3NdIDMEVz
-         gLRStcSKGP8RIKUHW0nYOb8HhZ4NVXARKBUpFa4AcCgBn+7oQpwbM8TxjwmSCcIxYWTN
-         Az7RDnkKyD5/cLg5BuBrnd5gZ1ulDFsl6KXUH0LKvVUabsxQTw6MQeuHXI52JtfmtZh3
-         10nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=8oRN9fvrg7W5O5v4cxyyyfYEt2gYunvnQfXs3DuXmbk=;
-        b=Ve+kE03MwLyd0GSAr8dNq+szfwIwWNsCNpKqZPaWUxj8aaWpLLx/hsjhwTLaaq9vzT
-         JXW0wZF/Uf6mfUVGyIKs/McXRReRZSP5IXTYwiajCOnYIp4A80cpHzJQpY7upUYmvka2
-         jsotgHbMAagK+9LyW1kRikdW7gABDWs5CLXseR4m2dgjXD7VfG2Wia4Cp+SXxvzSnBm0
-         IQM98g/ZroSaKgIsSx1NncR/nHOPddoUDqpvbU8frJaBc/rcga2HN92LkxwBlhYRJ7f+
-         gO03e0ebF+uHIv22fgPa18KItIYBDcpayIEfTBXL77Ted5LavLjINKx1Af3UYVr0B+jy
-         bUhw==
-X-Gm-Message-State: AOAM5301IIoPm+gA5bs0SHr0915KVb3Xj/gYhV71Dmpk57u7z8FWqNdx
-        k0vp2vC+sf8gVwtHE61JSgA=
-X-Google-Smtp-Source: ABdhPJxLSluiQRaNdxFTfPvZqACVVih+6s5VGVucoclrXrIcdwQxfx9879kAPyHNhzJ3EH7wwpvqdQ==
-X-Received: by 2002:a05:620a:1310:: with SMTP id o16mr5724608qkj.68.1590716994063;
-        Thu, 28 May 2020 18:49:54 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id 11sm6415336qtb.41.2020.05.28.18.49.52
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Thu, 28 May 2020 18:49:53 -0700 (PDT)
+        id S2391716AbgE2DTB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 May 2020 23:19:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59618 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2390172AbgE2DTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 May 2020 23:19:00 -0400
+Received: (qmail 955 invoked by uid 109); 29 May 2020 03:19:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 May 2020 03:19:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20506 invoked by uid 111); 29 May 2020 03:18:59 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 May 2020 23:18:59 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 28 May 2020 23:18:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        git@vger.kernel.org, hji@dyntopia.com
+Subject: digging into historical commit references
+Message-ID: <20200529031858.GA1271617@coredump.intra.peff.net>
+References: <20200528083745.15273-1-carenas@gmail.com>
+ <xmqqo8q83x3v.fsf@gitster.c.googlers.com>
+ <20200528154349.GA1215380@coredump.intra.peff.net>
+ <xmqqh7w03vnq.fsf@gitster.c.googlers.com>
+ <20200528165245.GA1223396@coredump.intra.peff.net>
+ <xmqqsgfj3lym.fsf@gitster.c.googlers.com>
+ <20200528203516.GA1245262@coredump.intra.peff.net>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [git-scm.com PATCH] community: advertise 'git-bugreport' tool
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <20200528231608.59507-1-emilyshaffer@google.com>
-Date:   Thu, 28 May 2020 21:49:51 -0400
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <83936F1F-BFA8-4F74-8C24-07D42B1A044C@gmail.com>
-References: <20200528231608.59507-1-emilyshaffer@google.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-X-Mailer: Apple Mail (2.3124)
+Content-Disposition: inline
+In-Reply-To: <20200528203516.GA1245262@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+On Thu, May 28, 2020 at 04:35:17PM -0400, Jeff King wrote:
 
-> Le 28 mai 2020 =C3=A0 19:16, Emily Shaffer <emilyshaffer@google.com> a =
-=C3=A9crit :
->=20
-> Starting with 2.27.0, 'git bugreport' can gather diagnostic info and
-> drop the user into an editor with a template for a useful bugreport.
-> Advertise this feature to users who want to report a bug in Git.
->=20
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->=20
-> Hi all,
->=20
-> Since this patch deals with some prominent information about how to
-> contact the community, I figured it was worth passing through the list
-> for feedback rather than just sending a PR to the website repo.
-> Discussion prior to this patch here:
-> https://github.com/git/git-scm.com/issues/1464
->=20
-> In the index.html.erb diff I'm interested in wordsmithing feedback; =
-this
-> is the page which appears at https://git-scm.com/community. The diff =
-in
-> _debugging.html.erb is modifying the list of references in
-> https://git-scm.com/docs - I'm interested in feedback on whether this =
-is
-> the best header to include git-bugreport under.
+> You could probably get interesting numbers in our project by grepping
+> for [0-9a-f]{7,} in commit messages to see which commits are referenced
+> a lot. Those aren't always bug-fixes exactly, but they are often "we did
+> this in commit XYZ, but that missed this case". Or maybe it would just
+> tell you which commits are interesting enough that we keep coming back
+> to them. ;)
 
-I think maybe `app/views/shared/ref/_setup.html.erb` would be a better =
-fit ?
-That's the section at the top of the page, with `git`, `help` and =
-`config`, called
-"Setup and Config"...=20
+Just for fun, I tried this. You can get a list of plausible references
+with:
 
-The wording on the community page looks good.
+  git log --format=%B |
+  perl -lne 'print $& for /[0-9a-f]{7,}/' |
+  git cat-file --batch-check='%(objectname)' |
+  grep -v missing
 
-Thanks,
+The top hits (by count) in git.git are:
 
-Philippe.=
+  16 d1c5f2a42d (Add git-am, applymbox replacement., 2005-10-07)
+
+     Referenced a lot during the C conversion, but not particularly
+     buggy.
+
+  14 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+
+     Not a commit. Experienced Gits might recognize this particular
+     sha1.
+
+  13 d95138e695 (setup: set env $GIT_WORK_TREE when work tree is set, like $GIT_DIR, 2015-06-26)
+
+     This one _is_ interesting, as it caused a lot of fallout and was
+     reverted. But really only 4 commits; it just got mentioned several
+     times in each (and my line-by-line count doesn't notice that).
+
+  12 b1ef400eec (setup_git_env: avoid blind fall-back to ".git", 2016-10-20)
+
+     This one also caused a lot of fallout (and actually had 7
+     commits mention it), which doesn't surprise me, given the topic.
+
+  10 94da9193a6 (grep: add support for PCRE v2, 2017-06-01)
+
+     I wouldn't have thought this could have caused a lot of bugs, but
+     apparently it did. :)
+
+So I dunno. A little fun to look through, but I didn't find it
+especially enlightening.
+
+-Peff
