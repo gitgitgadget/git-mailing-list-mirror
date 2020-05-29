@@ -2,134 +2,109 @@ Return-Path: <SRS0=mJAO=7L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.7 required=3.0 tests=DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CFC6C433DF
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EDB7C433DF
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:30:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7F4020897
-	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:29:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7C2C20810
+	for <git@archiver.kernel.org>; Fri, 29 May 2020 22:30:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gUogjlA6"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bhDT8tY2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727964AbgE2W3u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 May 2020 18:29:50 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58567 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726555AbgE2W3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 May 2020 18:29:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1590791385;
-        bh=PInr4ajsQ0nHLRnGHZLQk7Wnll/5BXQAO0NYJrMZLrY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gUogjlA6HRFKGFBeNfLzNZHD9Mhlx+8IwuNWCiSFd0D8AqAO9i7pZ5xB/h6MEIIKc
-         1Rmqpt13IHwyfc0B1PP9mHkXDHVbRkE5Ky7xYR4wf0GaA3UJ1zbNCfp2/KuFL0QZAJ
-         FU5T6OD3yqdwN9qYJdBg0/HD9JLsRoSxgaJS2b3A=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.211.123] ([89.1.214.207]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTRR0-1jZO7B2WfE-00Tipe; Sat, 30
- May 2020 00:29:45 +0200
-Date:   Fri, 29 May 2020 07:56:04 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Subject: Re: symbolic links in Git for Windows v2.27.0, was Re: [ANNOUNCE]
- Git for Windows 2.27.0-rc2
-In-Reply-To: <xmqqsgfizmcf.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2005290748580.56@tvgsbejvaqbjf.bet>
-References: <20200526204539.6181-1-johannes.schindelin@gmx.de>        <nycvar.QRO.7.76.6.2005282322580.56@tvgsbejvaqbjf.bet> <xmqqsgfizmcf.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jApOXGm5szsCMRVeSeT7O5JsqZaki+Cmy26XCwnfNYJ/nnhy1dQ
- HynXhCqoAQVG8JDmBOV95cHSZmbGI3uQ8SR5/Yvm3NWhJ+7r3ccemvMMNAgZJsl+DqvU61e
- AUUFFv1zZRW6hwv1+5aS9LqHr/Vl9H3QhfQq4/r4cv0ojwigVDB8ji0AuWSzWb0H4FpoofY
- AZ+XA4PnqIessbF4uyd2Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Mb8uwlAZGzA=:+s9fkmf1hn0co7ZYldqrxY
- fdVV6cwd4Edii4FFgTYiimW71giYx83XkrHcjI0L127GxhQHmjeTT/iUUiwWut9VV7dl6lvU3
- anZg1sxXIewjBrWPKqxY5KQOxL2ndfalG02jFnGpoxXVvzRiVbG6dfe9SkPj3p0yNXDWKuWQe
- NmRIsH131wVS/YE3J8Su6l0fDlxxabRpaLVKOPuDbcs8HW8A1BHFdQ/vx8v2VO4tiwZ1AlilE
- 7zbgT4oOlKJqw/lqDdmvLODJauHBZByg+pun873vrzHQxv2pnIRa2popuBzRJR4Qk7LvOdxy/
- H0vm8VRMF5YN4dwkgUHH5ebsDEuQ0KfkmY9EVoE9UXQYgdJ2yLupgbNjymR1KEB7V7FDfdAmu
- H0Nb4O3v0iwEioW27Ltk50DWAls2X00doqbu4bcVe4GzL+ipITRG+WmfCBmnq0LbcZIzx2yo9
- hmVSAwGG+CzOSNE/Q04FKzAjlN/Gcwm4cGPM7MlLNbfh8S4hToTYAsa3AuvdIxh5yLu+WQXUw
- 8gzA+d5Rb+zIh2sti3p791y1pyyirxPfvBtVIMYvBQWB+IxZSitu/ILrlUQpBeeUWqMw76NKj
- J/6yuFJ47V+auomZP+6eADjjHNdchWj8F/x02quC5HQycboMAn7B7VZondhMygDz2943/1AyY
- hHcCqBsMHnFQ1HdUogBtCqd0CHap4tXhC5O/dqTA6my7FuNRQ2ALsqXqThovKU+eIkE259lXe
- pajNvopWlOvl8CDbkIlXvOI5O2rvEG0qtSqt9CuvUMcL0+doH3v3JRItmo/DygrRbM659GIGy
- Gau3sD0Ah601uDvdIT3+EyJQx09sG0sQ843+ZnTpL/tk0EPuBatYnEiMKLOQ/Jnhq+dI1sNAQ
- 6phn7Bso1/u8MyXenWVjT5evNXc1CuIL3xF68MyWm4ntLIk1I+h7OkjM1iAwxIEfGDb7aWFR/
- 2HBu4S8Jrd9cRZexHPM9MpBsrDBhP3dwy3NhZ2Mn1YfkiUMrB9+yf9hYSMlWe68TuiB/EvhBN
- jBLwUCv/pRtAz8QrGdJ0c5MFzdRHEzGF8kLOL4/74xT+w4eab5AxsmRcK2tkBiJyHiJirXI9p
- rm2wgYhK7MJXHtD6MMoUuNwWWL4lg/brXm4dGJWL7PhWR8Dqbh+c4OmnsudOodo+O0DNwTgRX
- eKhGhqN3mW6ST0prchdl4Md7uC8WdUk0MgDO6Qnx6FNpb4qiwfd3rqEvDAAQuIpicmZc4faC5
- HZGNCUeskszyElcJX
-Content-Transfer-Encoding: quoted-printable
+        id S1728304AbgE2Wae (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 May 2020 18:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59194 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726555AbgE2Wad (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 May 2020 18:30:33 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48EC6C03E969
+        for <git@vger.kernel.org>; Fri, 29 May 2020 15:30:31 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id o11so4233825qtm.7
+        for <git@vger.kernel.org>; Fri, 29 May 2020 15:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=hxBUgFdYqtL5CytpcvC4d5hJM3B66NlI4v7I62nYfYo=;
+        b=bhDT8tY2+cYuIl6c4g4LDGZ4fg+X3bzhZoM21gmmW6PvZc6UNJL3nAku6l8KEYIshF
+         FZRBWCYzJQ5/GNS1lKy+08ae31KFDyfeL+P10RsESA5RUkDwT0r/iR7LrbIBydBT5AVo
+         4lxaV6gKBA2B9yXeI+/CHMK81RHnng3bq8eIGQn1UNRrOiFgjLdYoShF9QqPXN0QbfbY
+         8yC6Qt7bAUMm5D80wdOktvAnqUPqZRt6B7QsEl8XTnkeantb6Al67r7djddjdcuK209t
+         TrgTRcZi1q7J81qIb4vr1EDrhADfwOIOuFOlzTRFc96KHVg9hgBCPHLPHhheGwNS3CBu
+         Cixw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=hxBUgFdYqtL5CytpcvC4d5hJM3B66NlI4v7I62nYfYo=;
+        b=ZjwbPSjmU5jY68VkBBVI3A77e+B7tq9qizVPbQdelx9M1EYFw8+ml8QoKx9B+JJCSk
+         1U3vfK7ZXvxYWe50bwqcJKe2wSmPGbskw/iQ+pfDjB6ShPpnV7cx7pOxMCegyM81/A2+
+         ek4klqLoD+rpkPCBVIx85qC9pmXm1fAbtGypcw99DlDetFigwlaeQocnEL6L8hp8xQo4
+         5sdgyy3RNBa+9vq3ngXuXXde1ptJrY2SLJNpFGCe5uAFfjRThWzJCiFdTbYLy31eipZ+
+         xaQyGceF+Edq2WOr3GyqhQ39Tmmgw9fnZRAGrSOWkXH2jRwjKTYXJJ8BByZpXduHrB5w
+         iWKQ==
+X-Gm-Message-State: AOAM531zox1OB+DtGEB9EwCFlVhQK+TvQw8+tnIl2kPPevy+bOhVTl0u
+        4/OOYwD0i5sSNUuziNH5OP12+39SiCaB711ePLTzZSjnnE0UrJhGpqSSOjpZO2prxEh/wFlEhwv
+        hrTVxk+cz4c1BBxiLSq7etyXQtG3V11R/ePZ/obh69zYaNjJAFBhn7wngeYqqP5IC/l5cnay1JC
+        Ji
+X-Google-Smtp-Source: ABdhPJzKvGTaVDJTCetH5V4vFxKmP6uQ0NtftJyvqU/MJC6OUHroXnuCIjIznD3Eslq9m1XLhCINXIpS9SG6wyqmqubp
+X-Received: by 2002:ad4:56b2:: with SMTP id bd18mr8819404qvb.209.1590791430409;
+ Fri, 29 May 2020 15:30:30 -0700 (PDT)
+Date:   Fri, 29 May 2020 15:30:12 -0700
+Message-Id: <cover.1590789428.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.27.0.rc0.183.gde8f92d652-goog
+Subject: [PATCH 0/8] CDN offloading update
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+For those of you who are interested in CDN offloading, we have been
+trying it out at $DAYJOB and found a bug - since we use the URL as the
+name of a temporary file, if the URL is longer than the maximum filename
+size (255 on Linux), it will not work.
 
-On Fri, 29 May 2020, Junio C Hamano wrote:
+Here are the latest patches with the bug fix. Note that these are based
+on the "next" branch.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Dear Git users,
-> >
-> > On Tue, 26 May 2020, Johannes Schindelin wrote:
-> >
-> >> I hereby announce that Git for Windows 2.27.0-rc2 is available from:
-> >>
-> >>     https://github.com/git-for-windows/git/releases/tag/v2.27.0-rc2.w=
-indows.1
-> >
-> > Git for Windows v2.27.0 will be out on Tuesday (or even on Monday if G=
-it
-> > v2.27.0 is released early enough). It has a (last-minute) bug fix wher=
-e
-> > the length of symbolic links that is recorded in the Git index is the
-> > _actual_ length of the link target, so that `git status` agrees betwee=
-n
-> > Git for Windows and WSL Git.
-> >
-> > Unfortunately, that means that every existing checkout that contains
-> > symbolic links tracked by Git will report them as changed until `git a=
-dd
-> > <path-to-symlink>` (or `git add -u`) is called.
->
-> So, this is not something "git update-index --refresh" would be able
-> to fix?
+Jonathan Tan (8):
+  http: use --stdin when getting dumb HTTP pack
+  http: improve documentation of http_pack_request
+  http-fetch: support fetching packfiles by URL
+  Documentation: order protocol v2 sections
+  Documentation: add Packfile URIs design doc
+  upload-pack: refactor reading of pack-objects out
+  fetch-pack: support more than one pack lockfile
+  upload-pack: send part of packfile response as uri
 
-I just tested this, and no, it does not fix the issue.
+ Documentation/git-http-fetch.txt         |   8 +-
+ Documentation/technical/packfile-uri.txt |  78 +++++++++++
+ Documentation/technical/protocol-v2.txt  |  44 +++++--
+ builtin/fetch-pack.c                     |  17 ++-
+ builtin/pack-objects.c                   |  76 +++++++++++
+ connected.c                              |   8 +-
+ fetch-pack.c                             | 135 ++++++++++++++++---
+ fetch-pack.h                             |   2 +-
+ http-fetch.c                             |  64 +++++++--
+ http.c                                   |  88 ++++++++-----
+ http.h                                   |  32 ++++-
+ t/t5550-http-fetch-dumb.sh               |  25 ++++
+ t/t5702-protocol-v2.sh                   |  88 +++++++++++++
+ transport-helper.c                       |   5 +-
+ transport.c                              |  12 +-
+ transport.h                              |   6 +-
+ upload-pack.c                            | 157 +++++++++++++++++------
+ 17 files changed, 711 insertions(+), 134 deletions(-)
+ create mode 100644 Documentation/technical/packfile-uri.txt
 
-The bug in question records the length of _any_ symbolic link as 4096 in
-the index, and an `update-index --refresh` with a fixed version of Git
-apparently does not update that (the contents did _not_ change, after all)=
-.
+-- 
+2.27.0.rc0.183.gde8f92d652-goog
 
-Ciao,
-Dscho
-
->
-> >
-> > In cases where users use both Git Bash and another version of Git, thi=
-s
-> > might cause the problem where one of them will always report the symbo=
-lic
-> > links as modified in `git status`, but not in `git diff`.
-> >
-> > Sorry about the late heads-up, I only just realized that this might po=
-se a
-> > problem. Granted, symbolic links are not all _that_ common on Windows.
-> >
-> > Ciao,
-> > Johannes
->
