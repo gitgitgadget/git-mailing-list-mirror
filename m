@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FE54C433DF
-	for <git@archiver.kernel.org>; Sat, 30 May 2020 14:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E9B1C433DF
+	for <git@archiver.kernel.org>; Sat, 30 May 2020 15:48:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DF752074D
-	for <git@archiver.kernel.org>; Sat, 30 May 2020 14:49:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB74C20722
+	for <git@archiver.kernel.org>; Sat, 30 May 2020 15:48:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DCCufA7a"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TiVDSsLG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729038AbgE3Otf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 May 2020 10:49:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42010 "EHLO
+        id S1729139AbgE3Psn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 May 2020 11:48:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728927AbgE3Ote (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 May 2020 10:49:34 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C0BFC03E969
-        for <git@vger.kernel.org>; Sat, 30 May 2020 07:49:33 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id h7so4319209otr.3
-        for <git@vger.kernel.org>; Sat, 30 May 2020 07:49:33 -0700 (PDT)
+        with ESMTP id S1728927AbgE3Psn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 May 2020 11:48:43 -0400
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6976C03E969
+        for <git@vger.kernel.org>; Sat, 30 May 2020 08:48:42 -0700 (PDT)
+Received: by mail-oo1-xc42.google.com with SMTP id q188so131917ooq.4
+        for <git@vger.kernel.org>; Sat, 30 May 2020 08:48:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=u+DB8HzNLijzPn4AjtBJXO0rAu3dhJfdXiIuofTn16I=;
-        b=DCCufA7a0adBWbURZbdeXQs/vF54m0flzxPEtQRh/RT4dn1SPXMePKJ5wi3eM5Dhvp
-         yUjIY4vF2L5V0smuOBaINGfB0ZyK25GVrnDSxt9K+GU7NFTmqRYu3uuDuGkghSp5mDxo
-         seAYlrh5nnvi2NjRJVQ2QF+YXYzeUtr9J4vBort0y14ueWwRYtj1mRpawRaZ09Y/B8kC
-         VT8tfsa8Pgr51r36XB3bWSz1dMKM7I3FVzACPDHpFP/yDwznyXPpTiG/IYDzk1/JNq77
-         OAVzbcPZLtnXQ7Pn1PQd5oJy2uMuu+dBBe8/hAJzjqEirkN536lZn2VUlw9d5elvZFd1
-         AY1A==
+        bh=fpRX5KjB3xvGN5eU3bWJDFI4m6ObiO2josN+gLSrHzw=;
+        b=TiVDSsLGNfXG599bVbsp8qTlR/TSKns/gvDdbrPyhVHli+esMY8an3mbyySUqnlz+a
+         gSKsD2jSLu9WUTFgVJsrBI/t2B8O3S8f2v4OOtYT4UuMIA/C9IonZdZ2zWou2e32U+c6
+         WBHn7QU32psOMy8RDco5+fYbzLHqqcx8s1ObI2q8dyKapnv5qlA1qXyBVM09r+BGg9eM
+         uKIEWtU+gcGXj6yIAUN/vGX8tWa0T9I37LFFahSWWkPCqzu6UPsolPkcPg+7HpOMySVx
+         xKELxa6LCS1wAi3H7WO7lJ3NfTcairQWD/9//bPO4lBMiSczSV1qNGzRsHmRyK1goHKq
+         EVBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=u+DB8HzNLijzPn4AjtBJXO0rAu3dhJfdXiIuofTn16I=;
-        b=qpzrfMsfWWvEKavj6ygNJzjqSHs7Ntr6ZlTcgggl/hWiGU7cDi+QKtVl07k78rxcAi
-         VbpQTtoNgOJreLw5tju9otJaQ+6yhzoaItWfebLltC6Qeqgn6A3Hf2ZtEUfaQsWusMi0
-         kibvzTPq9wRXYPZvtwd6FNsajfC+MARtcpIXfn73eLZDdJL4qsjQ0WWMSSeCfw5iujEz
-         giXiX7SnjdAhtbojA5Ib+CeuziV9MkNlkmuGRSSLBG4x6u8gUJkIIuNFumq1+tk99jH5
-         x7HlEfJmWiJ0yg+HWEWiWa4v31WhYrPKxau4phZL7umFL+yzkElZVwNX7YlMmAiYCmlC
-         6gcA==
-X-Gm-Message-State: AOAM530bE/tgMD+YiMxUFaGJVJ06R9qCduQ8dbjsaHBljcIfYSiCo8Om
-        7nxmXo9AT9n3XNKMSzoRBjdGvRqfSyqviOs/bWV/I6cm
-X-Google-Smtp-Source: ABdhPJwKrr79fcUsPBeF/msJkf4EVZMvAG31GGk8zvdIQ2HG9Io4/iaNBncFSMZvYNmIAxPWirMOIMxq6dJd5UgcWhA=
-X-Received: by 2002:a05:6830:4c3:: with SMTP id s3mr10488707otd.162.1590850172389;
- Sat, 30 May 2020 07:49:32 -0700 (PDT)
+        bh=fpRX5KjB3xvGN5eU3bWJDFI4m6ObiO2josN+gLSrHzw=;
+        b=SBn6hx4VW+daejUJxv+doxC8i92bDRmFwWqY/yJAFLJvNThFNomNpfqb9Lv9PpA2l+
+         17L/S6ocWsMeOygeWrUH4X3hbJsoU4OCXmYUS1UGErW/kg+MXflZjihMBzIryBQhl5m/
+         M2QhyFK3nn1RmAl2KhQk7aqidN5bH0NI4MRL8dfwmGzYLBDuOjRTSb71QRRpUKKpF4lR
+         rZEoPDRpQkyxn5zasytbjiTYMLPjhuJsIYLdJshsRfWxnMiYALGrn1CMBSJ7AJbAP3rQ
+         SmjrYWWINSYdtLMcPxe8pUzFuhE9cvFyu+YCgBJxw9E3WJoFWuc/uxcO6U0Fsw7Os+uL
+         hCfg==
+X-Gm-Message-State: AOAM533M1H9c/tuvt+SHS8eUPJUIrFe8I4b0A8P+KxEAVPD/IZDnxYtL
+        3ME0yNLmT71X+ydb8MvBu+Wuug7cjkxUg3F6nR0=
+X-Google-Smtp-Source: ABdhPJyJP3ZC8c5doxOMiFzNaZphopr4+/1rccDR7C8Mu6l9dAVcop+Q58ih9ZqNPuMROo/feq5PstxlhETO+Z72yo0=
+X-Received: by 2002:a4a:91c2:: with SMTP id e2mr11012647ooh.45.1590853721517;
+ Sat, 30 May 2020 08:48:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1590627264.git.matheus.bernardino@usp.br> <448e0efffd0bbc89d8ea891923f242b5123c5826.1590627264.git.matheus.bernardino@usp.br>
-In-Reply-To: <448e0efffd0bbc89d8ea891923f242b5123c5826.1590627264.git.matheus.bernardino@usp.br>
+References: <cover.1590627264.git.matheus.bernardino@usp.br> <5ddac818185d316cd5ad9576105f0e4e695b9456.1590627264.git.matheus.bernardino@usp.br>
+In-Reply-To: <5ddac818185d316cd5ad9576105f0e4e695b9456.1590627264.git.matheus.bernardino@usp.br>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 30 May 2020 07:49:20 -0700
-Message-ID: <CABPp-BGVaMM9Naiu3HeO6n2aOxsHwiuc813MF-hFWezSFa9CsA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] config: correctly read worktree configs in submodules
+Date:   Sat, 30 May 2020 08:48:29 -0700
+Message-ID: <CABPp-BFsCPPNOZ92JQRJeGyNd0e-TCW-LcLyr0i_+VSQJP+GCg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] grep: honor sparse checkout patterns
 To:     Matheus Tavares <matheus.bernardino@usp.br>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -75,341 +75,556 @@ X-Mailing-List: git@vger.kernel.org
 On Wed, May 27, 2020 at 6:13 PM Matheus Tavares
 <matheus.bernardino@usp.br> wrote:
 >
-> One of the steps in do_git_config_sequence() is to load the
-> worktree-specific config file. Although the function receives a git_dir
-> string, it relies on git_pathdup(), which uses the_repository->git_dir,
-> to make the path to the file. Furthermore, it also checks that
-> extensions.worktreeConfig is set through the
-> repository_format_worktree_config variable, which refers to
-> the_repository only. Thus, when a submodule has worktree settings, a
-> command executed in the superproject that recurses into the submodule
-> won't find the said settings.
+> One of the main uses for a sparse checkout is to allow users to focus on
+> the subset of files in a repository in which they are interested. But
+> git-grep currently ignores the sparsity patterns and report all matches
+> found outside this subset, which kind of goes in the opposite direction.
+> Let's fix that, making it honor the sparsity boundaries for every
+> grepping case where this is relevant:
 >
-> Such a scenario might not be needed now, but it will be in the following
+> - git grep in worktree
+> - git grep --cached
+> - git grep $REVISION
+>
+> For the worktree case, we will not grep paths that have the
+> SKIP_WORKTREE bit set, even if they are present for some reason (e.g.
+> manually created after `git sparse-checkout init`).
 
-It's not needed?  Are there not other config values that affect grep's
-behavior, such as smudge filters of the submodule that might be
-important if doing a 'git grep --recurse-submodules $REVISION'?
+This seems worded to rise alarm bells and make users suspect
+implementation difficulties or regrets rather than desired behavior.
+It would be much better to word this simply as something like:
 
-Also, is there a similar issue here for .gitattributes?  (e.g. if the
-submodule declares certain files to be binary?)
+    For the worktree and cached cases, we iterate over paths without
+the SKIP_WORKTREE bit set, and limit our searches to these paths.
 
-(I don't actually know if these are issues but I'm just surprised to
-hear that this would be the first case that would need to look at
-submodule-specific configuration.  If the current code handles these
-other scenarios I bring up, then you just need to correct your commit
-message.  If these aren't issues, then I'd appreciate a quick
-explanation of why I'm off base.  If these are current issues and the
-current code isn't handling them, I'm not saying you need to address
-them in this patch series, but you might need to reword the commit
-message to mention that was already an issue that has previously been
-overlooked and we're starting by fixing one case.)
+> But the next patch
+> will add an option to do so. (See 'Note' below.)
 
-> patch. git-grep will learn to honor sparse checkouts and, when running
-> with --recurse-submodules, the submodule's sparse checkout settings must
-> be loaded. As these settings are stored in the config.worktree file,
-> they would be ignored without this patch. So let's fix this by reading
-> the right config.worktree file and extensions.worktreeConfig setting,
-> based on the git_dir and commondir paths given to
-> do_git_config_sequence(). Also add a test to avoid any regressions.
+Because this was in the same paragraph as the previous sentence, it
+made it sound like you were going to provide a special worktree-only
+option to search outside the SKIP_WORKTREE bits.  Very confusing.  I
+think I'd combine this sentence into the very first paragraph of the
+commit message and massage the wording a little.  Perhaps something
+like:  ...goes in the opposite direction.  There are some usecases for
+ignoring the sparsity patterns and the next commit will add an option
+to obtain this behavior, but here we start by making grep honor the
+sparsity boundaries for every...
+
+> For `git grep $REVISION`, we will choose to honor the sparsity patterns
+> only when $REVISION is a commit-ish object. The reason is that, for a
+> tree, we don't know whether it represents the root of a repository or a
+> subtree. So we wouldn't be able to correctly match it against the
+> sparsity patterns. E.g. suppose we have a repository with these two
+> sparsity rules: "/*" and "!/a"; and the following structure:
+>
+> /
+> | - a (file)
+> | - d (dir)
+>     | - a (file)
+>
+> If `git grep $REVISION` were to honor the sparsity patterns for every
+> object type, when grepping the /d tree, we would wrongly ignore the /d/a
+> file. This happens because we wouldn't know it resides in /d and
+> therefore it would wrongly match the pattern "!/a". Furthermore, for a
+> search in a blob object, we wouldn't even have a path to check the
+> patterns against. So, let's ignore the sparsity patterns when grepping
+> non-commit-ish objects.
+
+This doesn't actually make it clear how you handle $REVISION which is
+a commit object; you focus so much on when $REVISION is just a tree
+and contrasting that case that you omit the behavior for the case of
+interest.  Also, $REVISION to my mind implies "commit"; if you want to
+imply that a commit or tree could be used, you'd use $TREE or
+$TREE_ISH or something else.  I think it'd make sense to cover all
+three relevant cases into a single paragraph (thus combining with the
+previous paragraph), and then add a second paragraph about the $TREE
+case that streamlines the last two pargraphs above.  So, perhaps we
+can your paragraphs from "For the worktree case, we will not grep
+paths..." all the way to "So, let's ignore the sparsity patterns when
+grepping non-commit-ish objects" (after first moving the comment about
+adding an option in the next commit to some other area of the commit
+message, as dicussed above) with something like the following:
+
+
+    For the worktree and cached cases, we iterate over paths without
+the SKIP_WORKTREE bit set, and limit our searches to these paths.  For
+the $REVISION case, we limit the paths we search to those that match
+the sparsity patterns.  (We do not check the SKIP_WORKTREE bit for the
+$REVISION case, because $REVISION may contain paths that do not exist
+in HEAD and thus for which we have no SKIP_WORKTREE bit to consult.
+The sparsity patterns tell us how the SKIP_WORKTREE bit would be set
+if we were to check out $REVISION, so we consult those.  Also, we
+don't use the sparsity paths with the worktree or cached cases, both
+because we have a bit we can check directly and more efficiently, and
+because unmerged entries from a merge or a rebase could cause more
+files to temporarily be present than the sparsity patterns would
+normally select.)
+
+    Note that there is a special case here: `git grep $TREE`.  In this
+case we cannot know whether $TREE corresponds to the root of the
+repository or some sub-tree, and thus there is no way for us to know
+which sparsity patterns, if any, apply.  So the $TREE case will not
+use sparsity patterns or any SKIP_WORKTREE bits and will instead
+always search all files within the $TREE.
+
+>
+> Note: The behavior introduced in this patch is what some users have
+> reported[1] that they would like by default. But the old behavior is
+> still desirable for some use cases. Therefore, the next patch will add
+> an option to allow restoring it when needed.
+
+This paragraph duplicates information you already stated previously.
+It's much clearer than what you stated before, but if you just reword
+the previous comments and combine them into the first paragraph, then
+we can drop this final note.
+
+
+> [1]: https://lore.kernel.org/git/CABPp-BGuFhDwWZBRaD3nA8ui46wor-4=Ha1G1oApsfF8KNpfGQ@mail.gmail.com/
 >
 > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 > ---
->  config.c                   |  21 +++++--
->  t/helper/test-config.c     | 119 +++++++++++++++++++++++++++----------
->  t/t2404-worktree-config.sh |  16 +++++
->  3 files changed, 118 insertions(+), 38 deletions(-)
+>  builtin/grep.c                   | 125 ++++++++++++++++++++--
+>  t/t7011-skip-worktree-reading.sh |   9 --
+>  t/t7817-grep-sparse-checkout.sh  | 174 +++++++++++++++++++++++++++++++
+>  3 files changed, 291 insertions(+), 17 deletions(-)
+>  create mode 100755 t/t7817-grep-sparse-checkout.sh
 >
-> diff --git a/config.c b/config.c
-> index 8db9c77098..c2d56309dc 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1747,11 +1747,22 @@ static int do_git_config_sequence(const struct config_options *opts,
->                 ret += git_config_from_file(fn, repo_config, data);
->
->         current_parsing_scope = CONFIG_SCOPE_WORKTREE;
-> -       if (!opts->ignore_worktree && repository_format_worktree_config) {
-> -               char *path = git_pathdup("config.worktree");
-> -               if (!access_or_die(path, R_OK, 0))
-> -                       ret += git_config_from_file(fn, path, data);
-> -               free(path);
-> +       if (!opts->ignore_worktree && repo_config && opts->git_dir) {
-> +               struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
-> +               struct strbuf buf = STRBUF_INIT;
-> +
-> +               read_repository_format(&repo_fmt, repo_config);
-> +
-> +               if (!verify_repository_format(&repo_fmt, &buf) &&
-> +                   repo_fmt.worktree_config) {
-> +                       char *path = mkpathdup("%s/config.worktree", opts->git_dir);
-> +                       if (!access_or_die(path, R_OK, 0))
-> +                               ret += git_config_from_file(fn, path, data);
-> +                       free(path);
-> +               }
-> +
-> +               strbuf_release(&buf);
-> +               clear_repository_format(&repo_fmt);
->         }
->
->         current_parsing_scope = CONFIG_SCOPE_COMMAND;
-> diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-> index 1c8e965840..284f83a921 100644
-> --- a/t/helper/test-config.c
-> +++ b/t/helper/test-config.c
-> @@ -2,12 +2,19 @@
->  #include "cache.h"
->  #include "config.h"
->  #include "string-list.h"
-> +#include "submodule-config.h"
->
->  /*
->   * This program exposes the C API of the configuration mechanism
->   * as a set of simple commands in order to facilitate testing.
->   *
-> - * Reads stdin and prints result of command to stdout:
-> + * Usage: test-tool config [--submodule=<path>] <cmd> [<args>]
-> + *
-> + * If --submodule=<path> is given, <cmd> will operate on the submodule at the
-> + * given <path>. This option is not valid for the commands: read_early_config,
-> + * configset_get_value and configset_get_value_multi.
-> + *
-> + * Possible cmds are:
->   *
->   * get_value -> prints the value with highest priority for the entered key
->   *
-> @@ -84,33 +91,63 @@ int cmd__config(int argc, const char **argv)
->         int i, val;
->         const char *v;
->         const struct string_list *strptr;
-> -       struct config_set cs;
-> +       struct config_set cs = { .hash_initialized = 0 };
->         enum test_config_exit_code ret = TC_SUCCESS;
-> +       struct repository *repo = the_repository;
-> +       const char *subrepo_path = NULL;
-> +
-> +       argc--; /* skip over "config" */
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index a5056f395a..11e33b8aee 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -410,7 +410,7 @@ static int grep_cache(struct grep_opt *opt,
+>                       const struct pathspec *pathspec, int cached);
+>  static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>                      struct tree_desc *tree, struct strbuf *base, int tn_len,
+> -                    int check_attr);
+> +                    int is_root_tree);
 
-This line alone is responsible for a fairly big set of changes
-throughout this file, just decrementing indices everywhere.  It might
-be nice for review purposes if this and the other changes it caused
-were pulled out into a separate step, so we can more easily
-concentrate on the primary additions and changes you are making to
-this file.  In particular, being so unfamiliar with submodules I'd
-really like to try to find someone who knows them a bit better to
-review all the subrepo_path related portions of this change to this
-file plus the config.c changes, but I think that'd be easier if the
-change were more focused.
+So you modified the forward declaration of grep_tree()...
 
-> +       argv++;
+>
+>  static int grep_submodule(struct grep_opt *opt,
+>                           const struct pathspec *pathspec,
+> @@ -508,6 +508,10 @@ static int grep_cache(struct grep_opt *opt,
+>
+>         for (nr = 0; nr < repo->index->cache_nr; nr++) {
+>                 const struct cache_entry *ce = repo->index->cache[nr];
 > +
-> +       if (argc == 0)
-> +               goto print_usage_error;
+> +               if (ce_skip_worktree(ce))
+> +                       continue;
 > +
-> +       if (skip_prefix(*argv, "--submodule=", &subrepo_path)) {
-> +               argc--;
-> +               argv++;
-> +               if (argc == 0)
-> +                       goto print_usage_error;
-> +       }
+>                 strbuf_setlen(&name, name_base_len);
+>                 strbuf_addstr(&name, ce->name);
 >
-> -       if (argc == 3 && !strcmp(argv[1], "read_early_config")) {
-> -               read_early_config(early_config_cb, (void *)argv[2]);
-> +       if (argc == 2 && !strcmp(argv[0], "read_early_config")) {
-> +               if (subrepo_path) {
-> +                       fprintf(stderr, "Cannot use --submodule with read_early_config\n");
-> +                       return TC_USAGE_ERROR;
-> +               }
-> +               read_early_config(early_config_cb, (void *)argv[1]);
->                 return TC_SUCCESS;
->         }
->
->         setup_git_directory();
-> -
->         git_configset_init(&cs);
->
-> -       if (argc < 2)
-> -               goto print_usage_error;
-> +       if (subrepo_path) {
-> +               const struct submodule *sub;
-> +               struct repository *subrepo = xcalloc(1, sizeof(*repo));
-> +
-> +               sub = submodule_from_path(the_repository, &null_oid, subrepo_path);
-> +               if (!sub || repo_submodule_init(subrepo, the_repository, sub)) {
-> +                       fprintf(stderr, "Invalid argument to --submodule: '%s'\n",
-> +                               subrepo_path);
-> +                       free(subrepo);
-> +                       ret = TC_USAGE_ERROR;
-> +                       goto out;
-> +               }
-> +               repo = subrepo;
-> +       }
->
-> -       if (argc == 3 && !strcmp(argv[1], "get_value")) {
-> -               if (!git_config_get_value(argv[2], &v)) {
-> +       if (argc == 2 && !strcmp(argv[0], "get_value")) {
-> +               if (!repo_config_get_value(repo, argv[1], &v)) {
->                         if (!v)
->                                 printf("(NULL)\n");
->                         else
->                                 printf("%s\n", v);
->                 } else {
-> -                       printf("Value not found for \"%s\"\n", argv[2]);
-> +                       printf("Value not found for \"%s\"\n", argv[1]);
->                         ret = TC_VALUE_NOT_FOUND;
->                 }
-> -       } else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
-> -               strptr = git_config_get_value_multi(argv[2]);
-> +       } else if (argc == 2 && !strcmp(argv[0], "get_value_multi")) {
-> +               strptr = repo_config_get_value_multi(repo, argv[1]);
->                 if (strptr) {
->                         for (i = 0; i < strptr->nr; i++) {
->                                 v = strptr->items[i].string;
-> @@ -120,32 +157,38 @@ int cmd__config(int argc, const char **argv)
->                                         printf("%s\n", v);
->                         }
->                 } else {
-> -                       printf("Value not found for \"%s\"\n", argv[2]);
-> +                       printf("Value not found for \"%s\"\n", argv[1]);
->                         ret = TC_VALUE_NOT_FOUND;
->                 }
-> -       } else if (argc == 3 && !strcmp(argv[1], "get_int")) {
-> -               if (!git_config_get_int(argv[2], &val)) {
-> +       } else if (argc == 2 && !strcmp(argv[0], "get_int")) {
-> +               if (!repo_config_get_int(repo, argv[1], &val)) {
->                         printf("%d\n", val);
->                 } else {
-> -                       printf("Value not found for \"%s\"\n", argv[2]);
-> +                       printf("Value not found for \"%s\"\n", argv[1]);
->                         ret = TC_VALUE_NOT_FOUND;
->                 }
-> -       } else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
-> -               if (!git_config_get_bool(argv[2], &val)) {
-> +       } else if (argc == 2 && !strcmp(argv[0], "get_bool")) {
-> +               if (!repo_config_get_bool(repo, argv[1], &val)) {
->                         printf("%d\n", val);
->                 } else {
-> -                       printf("Value not found for \"%s\"\n", argv[2]);
-> +
-> +                       printf("Value not found for \"%s\"\n", argv[1]);
->                         ret = TC_VALUE_NOT_FOUND;
->                 }
-> -       } else if (argc == 3 && !strcmp(argv[1], "get_string")) {
-> -               if (!git_config_get_string_const(argv[2], &v)) {
-> +       } else if (argc == 2 && !strcmp(argv[0], "get_string")) {
-> +               if (!repo_config_get_string_const(repo, argv[1], &v)) {
->                         printf("%s\n", v);
->                 } else {
-> -                       printf("Value not found for \"%s\"\n", argv[2]);
-> +                       printf("Value not found for \"%s\"\n", argv[1]);
->                         ret = TC_VALUE_NOT_FOUND;
->                 }
-> -       } else if (argc >= 3 && !strcmp(argv[1], "configset_get_value")) {
-> -               for (i = 3; i < argc; i++) {
-> +       } else if (argc >= 2 && !strcmp(argv[0], "configset_get_value")) {
-> +               if (subrepo_path) {
-> +                       fprintf(stderr, "Cannot use --submodule with configset_get_value\n");
-> +                       ret = TC_USAGE_ERROR;
-> +                       goto out;
-> +               }
-> +               for (i = 2; i < argc; i++) {
->                         int err;
->                         if ((err = git_configset_add_file(&cs, argv[i]))) {
->                                 fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
-> @@ -153,17 +196,22 @@ int cmd__config(int argc, const char **argv)
->                                 goto out;
->                         }
->                 }
-> -               if (!git_configset_get_value(&cs, argv[2], &v)) {
-> +               if (!git_configset_get_value(&cs, argv[1], &v)) {
->                         if (!v)
->                                 printf("(NULL)\n");
->                         else
->                                 printf("%s\n", v);
->                 } else {
-> -                       printf("Value not found for \"%s\"\n", argv[2]);
-> +                       printf("Value not found for \"%s\"\n", argv[1]);
->                         ret = TC_VALUE_NOT_FOUND;
->                 }
-> -       } else if (argc >= 3 && !strcmp(argv[1], "configset_get_value_multi")) {
-> -               for (i = 3; i < argc; i++) {
-> +       } else if (argc >= 2 && !strcmp(argv[0], "configset_get_value_multi")) {
-> +               if (subrepo_path) {
-> +                       fprintf(stderr, "Cannot use --submodule with configset_get_value_multi\n");
-> +                       ret = TC_USAGE_ERROR;
-> +                       goto out;
-> +               }
-> +               for (i = 2; i < argc; i++) {
->                         int err;
->                         if ((err = git_configset_add_file(&cs, argv[i]))) {
->                                 fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
-> @@ -171,7 +219,7 @@ int cmd__config(int argc, const char **argv)
->                                 goto out;
->                         }
->                 }
-> -               strptr = git_configset_get_value_multi(&cs, argv[2]);
-> +               strptr = git_configset_get_value_multi(&cs, argv[1]);
->                 if (strptr) {
->                         for (i = 0; i < strptr->nr; i++) {
->                                 v = strptr->items[i].string;
-> @@ -181,18 +229,23 @@ int cmd__config(int argc, const char **argv)
->                                         printf("%s\n", v);
->                         }
->                 } else {
-> -                       printf("Value not found for \"%s\"\n", argv[2]);
-> +                       printf("Value not found for \"%s\"\n", argv[1]);
->                         ret = TC_VALUE_NOT_FOUND;
->                 }
-> -       } else if (!strcmp(argv[1], "iterate")) {
-> -               git_config(iterate_cb, NULL);
-> +       } else if (!strcmp(argv[0], "iterate")) {
-> +               repo_config(repo, iterate_cb, NULL);
->         } else {
->  print_usage_error:
-> -               fprintf(stderr, "Invalid syntax. Usage: test-tool config <cmd> [args]\n");
-> +               fprintf(stderr, "Invalid syntax. Usage: test-tool config"
-> +                               " [--submodule=<path>] <cmd> [args]\n");
->                 ret = TC_USAGE_ERROR;
->         }
->
->  out:
->         git_configset_clear(&cs);
-> +       if (repo != the_repository) {
-> +               repo_clear(repo);
-> +               free(repo);
-> +       }
->         return ret;
+> @@ -520,8 +524,7 @@ static int grep_cache(struct grep_opt *opt,
+>                          * cache entry are identical, even if worktree file has
+>                          * been modified, so use cache version instead
+>                          */
+> -                       if (cached || (ce->ce_flags & CE_VALID) ||
+> -                           ce_skip_worktree(ce)) {
+> +                       if (cached || (ce->ce_flags & CE_VALID)) {
+>                                 if (ce_stage(ce) || ce_intent_to_add(ce))
+>                                         continue;
+>                                 hit |= grep_oid(opt, &ce->oid, name.buf,
+> @@ -552,9 +555,76 @@ static int grep_cache(struct grep_opt *opt,
+>         return hit;
 >  }
-> diff --git a/t/t2404-worktree-config.sh b/t/t2404-worktree-config.sh
-> index 286121d8de..b6ab793203 100755
-> --- a/t/t2404-worktree-config.sh
-> +++ b/t/t2404-worktree-config.sh
-> @@ -76,4 +76,20 @@ test_expect_success 'config.worktree no longer read without extension' '
->         test_cmp_config -C wt2 shared this.is
+>
+> -static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+> -                    struct tree_desc *tree, struct strbuf *base, int tn_len,
+> -                    int check_attr)
+
+Here the patch splits your handling of grep_tree()...
+
+> +static struct pattern_list *get_sparsity_patterns(struct repository *repo)
+> +{
+> +       struct pattern_list *patterns;
+> +       char *sparse_file;
+> +       int sparse_config, cone_config;
+> +
+> +       if (repo_config_get_bool(repo, "core.sparsecheckout", &sparse_config) ||
+> +           !sparse_config) {
+> +               return NULL;
+> +       }
+
+Is core_apply_sparse_checkout not initialized for some reason?
+
+> +
+> +       sparse_file = repo_git_path(repo, "info/sparse-checkout");
+> +       patterns = xcalloc(1, sizeof(*patterns));
+> +
+> +       if (repo_config_get_bool(repo, "core.sparsecheckoutcone", &cone_config))
+> +               cone_config = 0;
+> +       patterns->use_cone_patterns = cone_config;
+
+Similarly, is core_sparse_checkout_cone not intialized?
+
+> +
+> +       if (add_patterns_from_file_to_list(sparse_file, "", 0, patterns, NULL)) {
+> +               if (file_exists(sparse_file)) {
+> +                       warning(_("failed to load sparse-checkout file: '%s'"),
+> +                               sparse_file);
+> +               }
+> +               free(sparse_file);
+> +               free(patterns);
+> +               return NULL;
+> +       }
+> +
+> +       free(sparse_file);
+> +       return patterns;
+> +}
+> +
+> +static int in_sparse_checkout(struct strbuf *path, int prefix_len,
+
+This function name in_sparse_checkout() makes me think "Does the
+working tree represent a sparse checkout?"  Perhaps we could rename it
+to path_matches_sparsity_patterns() ?
+
+Also, is there a reason we can't use dir.c's
+path_matches_pattern_list() here?  How does this new function differ
+in behavior from that function?
+
+> +                             unsigned int entry_mode,
+> +                             struct index_state *istate,
+> +                             struct pattern_list *sparsity,
+> +                             enum pattern_match_result parent_match,
+> +                             enum pattern_match_result *match)
+> +{
+> +       int dtype = DT_UNKNOWN;
+> +       int is_dir = S_ISDIR(entry_mode);
+> +
+> +       if (parent_match == MATCHED_RECURSIVE) {
+> +               *match = parent_match;
+> +               return 1;
+> +       }
+> +
+> +       if (is_dir && !is_dir_sep(path->buf[path->len - 1]))
+> +               strbuf_addch(path, '/');
+> +
+> +       *match = path_matches_pattern_list(path->buf, path->len,
+> +                                          path->buf + prefix_len, &dtype,
+> +                                          sparsity, istate);
+> +       if (*match == UNDECIDED)
+> +               *match = parent_match;
+> +
+> +       if (is_dir)
+> +               strbuf_trim_trailing_dir_sep(path);
+> +
+> +       if (*match == NOT_MATCHED &&
+> +               (!is_dir || (is_dir && sparsity->use_cone_patterns)))
+> +            return 0;
+> +
+> +       return 1;
+> +}
+> +
+> +static int do_grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+
+I thought this meant you were renaming grep_tree() to do_grep_tree()
+but it's a new function that happens to have most of the logic from
+the old grep_tree() and which the new grep_tree() will call to do most
+its work.
+
+> +                       struct tree_desc *tree, struct strbuf *base, int tn_len,
+> +                       int check_attr, struct pattern_list *sparsity,
+> +                       enum pattern_match_result default_sparsity_match)
+>  {
+>         struct repository *repo = opt->repo;
+>         int hit = 0;
+> @@ -570,6 +640,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>
+>         while (tree_entry(tree, &entry)) {
+>                 int te_len = tree_entry_len(&entry);
+> +               enum pattern_match_result sparsity_match = 0;
+>
+>                 if (match != all_entries_interesting) {
+>                         strbuf_addstr(&name, base->buf + tn_len);
+> @@ -586,6 +657,19 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>
+>                 strbuf_add(base, entry.path, te_len);
+>
+> +               if (sparsity) {
+> +                       struct strbuf path = STRBUF_INIT;
+> +                       strbuf_addstr(&path, base->buf + tn_len);
+> +
+> +                       if (!in_sparse_checkout(&path, old_baselen - tn_len,
+> +                                               entry.mode, repo->index,
+> +                                               sparsity, default_sparsity_match,
+> +                                               &sparsity_match)) {
+> +                               strbuf_setlen(base, old_baselen);
+> +                               continue;
+> +                       }
+> +               }
+> +
+>                 if (S_ISREG(entry.mode)) {
+>                         hit |= grep_oid(opt, &entry.oid, base->buf, tn_len,
+>                                          check_attr ? base->buf + tn_len : NULL);
+> @@ -602,8 +686,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>
+>                         strbuf_addch(base, '/');
+>                         init_tree_desc(&sub, data, size);
+> -                       hit |= grep_tree(opt, pathspec, &sub, base, tn_len,
+> -                                        check_attr);
+> +                       hit |= do_grep_tree(opt, pathspec, &sub, base, tn_len,
+> +                                           check_attr, sparsity, sparsity_match);
+>                         free(data);
+>                 } else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
+>                         hit |= grep_submodule(opt, pathspec, &entry.oid,
+> @@ -621,6 +705,31 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>         return hit;
+>  }
+>
+> +/*
+> + * Note: sparsity patterns and paths' attributes will only be considered if
+> + * is_root_tree has true value. (Otherwise, we cannot properly perform pattern
+> + * matching on paths.)
+> + */
+> +static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+> +                    struct tree_desc *tree, struct strbuf *base, int tn_len,
+> +                    int is_root_tree)
+> +{
+> +       struct pattern_list *patterns = NULL;
+> +       int ret;
+> +
+> +       if (is_root_tree)
+> +               patterns = get_sparsity_patterns(opt->repo);
+> +
+> +       ret = do_grep_tree(opt, pathspec, tree, base, tn_len, is_root_tree,
+> +                          patterns, 0);
+> +
+> +       if (patterns) {
+> +               clear_pattern_list(patterns);
+> +               free(patterns);
+> +       }
+> +       return ret;
+> +}
+
+Once I figured out grep_tree() was just becoming a wrapper around
+do_grep_tree(), the patch made more sense; I should have scrolled to
+the end quicker.  ;-)
+
+> +
+>  static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+>                        struct object *obj, const char *name, const char *path)
+>  {
+> diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-reading.sh
+> index 37525cae3a..26852586ac 100755
+> --- a/t/t7011-skip-worktree-reading.sh
+> +++ b/t/t7011-skip-worktree-reading.sh
+> @@ -109,15 +109,6 @@ test_expect_success 'ls-files --modified' '
+>         test -z "$(git ls-files -m)"
 >  '
 >
-> +test_expect_success 'correctly read config.worktree from submodules' '
-> +       test_unconfig extensions.worktreeConfig &&
+> -test_expect_success 'grep with skip-worktree file' '
+> -       git update-index --no-skip-worktree 1 &&
+> -       echo test > 1 &&
+> -       git update-index 1 &&
+> -       git update-index --skip-worktree 1 &&
+> -       rm 1 &&
+> -       test "$(git grep --no-ext-grep test)" = "1:test"
+> -'
+
+Yaay!
+
+> -
+>  echo ":000000 100644 $ZERO_OID $EMPTY_BLOB A   1" > expected
+>  test_expect_success 'diff-index does not examine skip-worktree absent entries' '
+>         setup_absent &&
+> diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
+> new file mode 100755
+> index 0000000000..ce080cf572
+> --- /dev/null
+> +++ b/t/t7817-grep-sparse-checkout.sh
+> @@ -0,0 +1,174 @@
+> +#!/bin/sh
+> +
+> +test_description='grep in sparse checkout
+> +
+> +This test creates a repo with the following structure:
+> +
+> +.
+> +|-- a
+> +|-- b
+> +|-- dir
+> +|   `-- c
+> +|-- sub
+> +|   |-- A
+> +|   |   `-- a
+> +|   `-- B
+> +|       `-- b
+> +`-- sub2
+> +    `-- a
+> +
+> +Where . has non-cone mode sparsity patterns, sub is a submodule with cone mode
+
+Maybe "Where the outer repository has non-code mode..."?  The use of
+'.' threw me for a bit.
+
+> +sparsity patterns and sub2 is a submodule that is excluded by the superproject
+> +sparsity patterns. The resulting sparse checkout should leave the following
+> +structure on the working tree:
+
+s/on the/in the/?
+
+> +
+> +.
+> +|-- a
+> +|-- sub
+> +|   `-- B
+> +|       `-- b
+> +`-- sub2
+> +    `-- a
+> +
+> +But note that sub2 should have the SKIP_WORKTREE bit set.
+> +'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +       echo "text" >a &&
+> +       echo "text" >b &&
+> +       mkdir dir &&
+> +       echo "text" >dir/c &&
+> +
 > +       git init sub &&
 > +       (
 > +               cd sub &&
-> +               test_commit A &&
-> +               git config extensions.worktreeConfig true &&
-> +               git config --worktree wtconfig.sub test-value
+> +               mkdir A B &&
+> +               echo "text" >A/a &&
+> +               echo "text" >B/b &&
+> +               git add A B &&
+> +               git commit -m sub &&
+> +               git sparse-checkout init --cone &&
+> +               git sparse-checkout set B
 > +       ) &&
+> +
+> +       git init sub2 &&
+> +       (
+> +               cd sub2 &&
+> +               echo "text" >a &&
+> +               git add a &&
+> +               git commit -m sub2
+> +       ) &&
+> +
 > +       git submodule add ./sub &&
-> +       git commit -m "add sub" &&
-> +       echo test-value >expect &&
-> +       test-tool config --submodule=sub get_value wtconfig.sub >actual &&
+> +       git submodule add ./sub2 &&
+> +       git add a b dir &&
+> +       git commit -m super &&
+> +       git sparse-checkout init --no-cone &&
+> +       git sparse-checkout set "/*" "!b" "!/*/" "sub" &&
+> +
+> +       git tag -am tag-to-commit tag-to-commit HEAD &&
+> +       tree=$(git rev-parse HEAD^{tree}) &&
+> +       git tag -am tag-to-tree tag-to-tree $tree &&
+> +
+> +       test_path_is_missing b &&
+> +       test_path_is_missing dir &&
+> +       test_path_is_missing sub/A &&
+> +       test_path_is_file a &&
+> +       test_path_is_file sub/B/b &&
+> +       test_path_is_file sub2/a
+> +'
+> +
+> +# The test bellow checks a special case: the sparsity patterns exclude '/b'
+
+s/bellow/below/
+
+> +# and sparse checkout is enable, but the path exists on the working tree (e.g.
+
+s/enable/enabled/, s/on/in/
+
+> +# manually created after `git sparse-checkout init`). In this case, grep should
+> +# skip it.
+> +test_expect_success 'grep in working tree should honor sparse checkout' '
+> +       cat >expect <<-EOF &&
+> +       a:text
+> +       EOF
+> +       echo "new-text" >b &&
+> +       test_when_finished "rm b" &&
+> +       git grep "text" >actual &&
 > +       test_cmp expect actual
 > +'
 > +
->  test_done
+> +test_expect_success 'grep --cached should honor sparse checkout' '
+> +       cat >expect <<-EOF &&
+> +       a:text
+> +       EOF
+> +       git grep --cached "text" >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'grep <commit-ish> should honor sparse checkout' '
+> +       commit=$(git rev-parse HEAD) &&
+> +       cat >expect_commit <<-EOF &&
+> +       $commit:a:text
+> +       EOF
+> +       cat >expect_tag-to-commit <<-EOF &&
+> +       tag-to-commit:a:text
+> +       EOF
+> +       git grep "text" $commit >actual_commit &&
+> +       test_cmp expect_commit actual_commit &&
+> +       git grep "text" tag-to-commit >actual_tag-to-commit &&
+> +       test_cmp expect_tag-to-commit actual_tag-to-commit
+> +'
+> +
+> +test_expect_success 'grep <tree-ish> should ignore sparsity patterns' '
+> +       commit=$(git rev-parse HEAD) &&
+> +       tree=$(git rev-parse HEAD^{tree}) &&
+> +       cat >expect_tree <<-EOF &&
+> +       $tree:a:text
+> +       $tree:b:text
+> +       $tree:dir/c:text
+> +       EOF
+> +       cat >expect_tag-to-tree <<-EOF &&
+> +       tag-to-tree:a:text
+> +       tag-to-tree:b:text
+> +       tag-to-tree:dir/c:text
+> +       EOF
+> +       git grep "text" $tree >actual_tree &&
+> +       test_cmp expect_tree actual_tree &&
+> +       git grep "text" tag-to-tree >actual_tag-to-tree &&
+> +       test_cmp expect_tag-to-tree actual_tag-to-tree
+> +'
+> +
+> +# Note that sub2/ is present in the worktree but it is excluded by the sparsity
+> +# patterns, so grep should not recurse into it.
+> +test_expect_success 'grep --recurse-submodules should honor sparse checkout in submodule' '
+> +       cat >expect <<-EOF &&
+> +       a:text
+> +       sub/B/b:text
+> +       EOF
+> +       git grep --recurse-submodules "text" >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'grep --recurse-submodules --cached should honor sparse checkout in submodule' '
+> +       cat >expect <<-EOF &&
+> +       a:text
+> +       sub/B/b:text
+> +       EOF
+> +       git grep --recurse-submodules --cached "text" >actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'grep --recurse-submodules <commit-ish> should honor sparse checkout in submodule' '
+> +       commit=$(git rev-parse HEAD) &&
+> +       cat >expect_commit <<-EOF &&
+> +       $commit:a:text
+> +       $commit:sub/B/b:text
+> +       EOF
+> +       cat >expect_tag-to-commit <<-EOF &&
+> +       tag-to-commit:a:text
+> +       tag-to-commit:sub/B/b:text
+> +       EOF
+> +       git grep --recurse-submodules "text" $commit >actual_commit &&
+> +       test_cmp expect_commit actual_commit &&
+> +       git grep --recurse-submodules "text" tag-to-commit >actual_tag-to-commit &&
+> +       test_cmp expect_tag-to-commit actual_tag-to-commit
+> +'
+> +
+> +test_done
 > --
 > 2.26.2
 
-The index updates seem fine, and I like the test, and I tried to look
-at the submodule and config bits but I'm quite unfamiliar with that
-area of the code and I'd like to see if we can find someone who knows
-submodules and/or config a bit better to review those pieces.  A split
-of this patch into two in your next roll of this series would be nice
-so we can ask someone to look at just the relevant bits.
+Looks good.  Do we want to add a testcase where a file is unmerged and
+present in the working copy despite not matching the sparsity patterns
+(i.e. to emulate being in the middle of a merge/rebase/cherry-pick)?
