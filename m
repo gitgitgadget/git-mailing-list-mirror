@@ -2,112 +2,346 @@ Return-Path: <SRS0=ERGy=7M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD701C433E0
-	for <git@archiver.kernel.org>; Sat, 30 May 2020 19:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B583C433E0
+	for <git@archiver.kernel.org>; Sat, 30 May 2020 20:26:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A189020722
-	for <git@archiver.kernel.org>; Sat, 30 May 2020 19:28:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5ABA120776
+	for <git@archiver.kernel.org>; Sat, 30 May 2020 20:26:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r5/Lnnu9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="atRZs3HZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729327AbgE3T2b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 May 2020 15:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56932 "EHLO
+        id S1729297AbgE3U0D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 May 2020 16:26:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726898AbgE3T23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 May 2020 15:28:29 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FFCC03E969
-        for <git@vger.kernel.org>; Sat, 30 May 2020 12:28:29 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id y5so2861592iob.12
-        for <git@vger.kernel.org>; Sat, 30 May 2020 12:28:29 -0700 (PDT)
+        with ESMTP id S1726211AbgE3U0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 May 2020 16:26:02 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6530CC03E969
+        for <git@vger.kernel.org>; Sat, 30 May 2020 13:26:01 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id f5so7523074wmh.2
+        for <git@vger.kernel.org>; Sat, 30 May 2020 13:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fG+Ch9pypZOMBVey6UZOOUgD2mp/z04gbkn3HNpLmL8=;
-        b=r5/Lnnu9g3aIKbeDnPbIl2r2EXHxXhousE6l58tyGIy43yiRNdPOr745Zjv4L3S8N0
-         Rxu2z4QAeeLutlagxbD2SmI1G8oXkRqzljsyORMsmEbSxfCv6DHUb149DdvyYdYppSIk
-         60MokbGm7TTYtiEJA8IMMKl68OAtqvszbr1moO42+uC4f0EUja8aE+572vW0dZaplHKZ
-         xOjs6qj/9X7VI3PSGIalDoldJskHgRx1/GGPkh93Olx6uNH5j7zLvVngaA0dHYd7pPfM
-         ZgP/wzoqZJ5D5NspwAkZaQ8Z5BK/fWoLS1i5eMF12+nt8MCVYqTXjerX1eSKezr80jqg
-         dYTw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=N4rv3zxXJYjCoHuVCQInMQFmMcV4hvQQhL2K9kGwpNI=;
+        b=atRZs3HZGnn4tvKihyM+aqMSv11Y1ObTgjd1uS2Bj4qL1CWF+3jqrPU2APUfO6iNdO
+         ZVwGipp1SLN7nXjfokNXK7GZ6VC+V5dSnyBRKCikf1q6HI07BuB3OIQKzT65Dlo2aaS6
+         UnMYpgp5lCYZjOqzKIOoDuFzyySQi1lxTzpGF3SKlvroR8sbyf2Raj020TsNovbeRn6s
+         CdGSYWl4xpEcXTRp0rbZUb7uNqN6moMTsrJIbcSzgcYF4I6o2UksHezSVC0Xgm/V4l25
+         Jmg8GIAQ6GNo4rpENgiWpPOesrFBDnB/KURC38oAM1jlFtpNO4+RxpaRpDNnOtJsipY6
+         XqJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fG+Ch9pypZOMBVey6UZOOUgD2mp/z04gbkn3HNpLmL8=;
-        b=uIblLVgoEABLzD1NYSeo8uL5p1EuICw+/wtBpGF7fu7DRKmGRxCrO8F5necOma3rnX
-         bq1X07ErTSnQ6jY9Whbv/8UtlymnoyT9hEsoUvZFD3suD8OnP67vE18CD4Y3ZAe64DH8
-         5akE7njm6iLwBunLrfUAgY2fgdQldZAyTGDeW1gVKZj6TKZWYiK1lXt/Rcyov/IBZ+28
-         /RqY5Tdjj8btMWnqI3aczAfLZldBXnyRKRraRpatqiaM0Wp791TWhSiu/FVFhKGe0LCl
-         2txBrP4JnpmK0N0NNRMaV8p6JNMAaXjJQauXt9J3ueJsUFdKQPA8DYjvPkELzCK2bG3g
-         a07w==
-X-Gm-Message-State: AOAM533Q3WgYS9whheM9Th9AzPcEG5+1oJ/IoMu+yOVY5PGkJM0FlGvZ
-        lEtTXE5bqg9vtYsnSbk76TFjmyq5hfGL2/WskLI=
-X-Google-Smtp-Source: ABdhPJwxHoYmJ0RnGQ5cDAiQpDTPgiLxb52n7idED6VR1nj6rsN0qzSNOhCRDeCNz9mYHc9Mk4EFExfQKb2w6SSHGoE=
-X-Received: by 2002:a02:cd2b:: with SMTP id h11mr7375578jaq.47.1590866907366;
- Sat, 30 May 2020 12:28:27 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=N4rv3zxXJYjCoHuVCQInMQFmMcV4hvQQhL2K9kGwpNI=;
+        b=JCUzgOl9QSl/5xZ+RXVp/Y3rWUmqywP0XoLo0rfbYYFxKjvXS60s6CjHlWSBViaGcm
+         E8W8ivP2YxYPT/BN9hqkvMcx+TzRCzk2n/7Xa8m157Fb2Cb2N1DeWibFvEyb6pAkoAdC
+         xNmKzuH3Ibhud1p9vBI+CqSqrOt2/BgLQdORVU3q3jjTwiczAg8t2CVBBgGzIKXDXeoR
+         JFZhi7GPE73EulmHLcBXYXF2O8C+UmekcBcf+USrna8iNCYU14U0IqVbSBdxeX4YL9PU
+         HxEue6quf3tQNv5dUAekRWUPdTqrsuuCvhh3dWi6CxdOC7Dp4QXWtMrLIpCysR3AZQLU
+         sMsQ==
+X-Gm-Message-State: AOAM531M5Rw+Y+ONIVHzNCKkcMYVDswLSdpe87zlEiIdsCvM6Rt6Cn2r
+        BvUIxZOMKU6gTmEPITD13h2mtC0d
+X-Google-Smtp-Source: ABdhPJznSIKEQcz5WMdoH6EfzV2Gb927jVB0BNSfOUrUDokRjNY9olUjGSL3Tv2HCgXqvCWThfT+Mw==
+X-Received: by 2002:a1c:46c3:: with SMTP id t186mr13779195wma.36.1590870359743;
+        Sat, 30 May 2020 13:25:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i74sm14841500wri.49.2020.05.30.13.25.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 May 2020 13:25:58 -0700 (PDT)
+Message-Id: <pull.795.v3.git.git.1590870357549.gitgitgadget@gmail.com>
+In-Reply-To: <pull.795.v2.git.git.1590698437607.gitgitgadget@gmail.com>
+References: <pull.795.v2.git.git.1590698437607.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 30 May 2020 20:25:57 +0000
+Subject: [PATCH v3] fast-import: add new --date-format=raw-permissive format
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAHgM7c4PQQvTrfn4fqKy8evQ2ydbO7ggBn4hPUTF5e2G+ApMvQ@mail.gmail.com>
- <76f5b3ff-21a7-bff7-4785-b56c34eda644@gmail.com> <20200530180259.yv6vfsv3ysk7yg5c@yadavpratyush.com>
-In-Reply-To: <20200530180259.yv6vfsv3ysk7yg5c@yadavpratyush.com>
-From:   Peter Jensen <report.jensen@gmail.com>
-Date:   Sat, 30 May 2020 20:28:16 +0100
-Message-ID: <CAHgM7c4GkPafhtTCJ4uk0wUq3CwVpg1XSZmB9qaUtYpdz1pKyQ@mail.gmail.com>
-Subject: Re: Git gui freeze on ubuntu 18.04
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org, Peter Jensen <report.jensen@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, jrnieder@gmail.com,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush,
+From: Elijah Newren <newren@gmail.com>
 
->Any hints more specific than "something
-> crashes" would be much more helpful in figuring out what's going wrong.
-The program freeze before the main window appears.
-As far as I can see from the strace log "tcl" is waiting for something
-to happen.
-I think "tcl" is waiting for the output from a git command.
+There are multiple repositories in the wild with random, invalid
+timezones.  Most notably is a commit from rails.git with a timezone of
+"+051800"[1].  A few searches will find other repos with that same
+invalid timezone as well.  Further, Peff reports that GitHub relaxed
+their fsck checks in August 2011 to accept any timezone value[2], and
+there have been multiple reports to filter-repo about fast-import
+crashing while trying to import their existing repositories since they
+had timezone values such as "-7349423" and "-43455309"[3].
 
-If the strace log does not give you any useful information, what do you suggest
-I do to track the bug down? Has git-gui got any logging build in that I can
-activate via an option e.g "-debug" or by setting an environment variable?
+The existing check on timezone values inside fast-import may prove
+useful for people who are crafting fast-import input by hand or with a
+new script.  For them, the check may help them avoid accidentally
+recording invalid dates.  (Note that this check is rather simplistic and
+there are still several forms of invalid dates that fast-import does not
+check for: dates in the future, timezone values with minutes that are
+not divisible by 15, and timezone values with minutes that are 60 or
+greater.)  While this simple check may have some value for those users,
+other users or tools will want to import existing repositories as-is.
+Provide a --date-format=raw-permissive format that will not error out on
+these otherwise invalid timezones so that such existing repositories can
+be imported.
 
-If not can you suggest anything that would be useful?
+[1] https://github.com/rails/rails/commit/4cf94979c9f4d6683c9338d694d5eb3106a4e734
+[2] https://lore.kernel.org/git/20200521195513.GA1542632@coredump.intra.peff.net/
+[3] https://github.com/newren/git-filter-repo/issues/88
 
-I installed 18.04 on my laptop, and the bug also showed up here.
-The machines have very little in common, except that they
-both have a SSD disk.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    fast-import: accept invalid timezones so we can import existing repos
+    
+    Changes since v2:
+    
+     * Add documentation
+     * Note the fact that the "strict" method really isn't all that strict
+       with some NEEDSWORK comments
+     * Check for parsed as unsigned before checking that value range makes
+       sense
+     * Simplify the testcase as suggested by Peff, leaving it to stick out a
+       bit like a sore thumb from the rest of the tests in the same file
+       (#leftoverbits)
 
-Peter
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-795%2Fnewren%2Floosen-fast-import-timezone-parsing-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-795/newren/loosen-fast-import-timezone-parsing-v3
+Pull-Request: https://github.com/git/git/pull/795
 
-On Sat, May 30, 2020 at 7:03 PM Pratyush Yadav <me@yadavpratyush.com> wrote:
->
-> Hi Peter,
->
-> On 29/05/20 09:37AM, Peter Jensen wrote:
-> > strace from the very beginning until crash
->
-> git-gui is written in Tcl. So while strace output might give some clues,
-> it is not as helpful as I'd hope. And anyway, I'm afraid I just don't
-> have the bandwidth to look through it and figure out what's going on.
->
-> If you could try the latest master [0], it would be nice. The build is
-> pretty simple and quick. Any hints more specific than "something
-> crashes" would be much more helpful in figuring out what's going wrong.
->
-> [0] https://github.com/prati0100/git-gui/
->
-> --
-> Regards,
-> Pratyush Yadav
+Range-diff vs v2:
+
+ 1:  9580aacdb21 ! 1:  48326d16dbd fast-import: add new --date-format=raw-permissive format
+     @@ Commit message
+      
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+     + ## Documentation/git-fast-import.txt ##
+     +@@ Documentation/git-fast-import.txt: by users who are located in the same location and time zone.  In this
+     + case a reasonable offset from UTC could be assumed.
+     + +
+     + Unlike the `rfc2822` format, this format is very strict.  Any
+     +-variation in formatting will cause fast-import to reject the value.
+     ++variation in formatting will cause fast-import to reject the value,
+     ++and some sanity checks on the numeric values may also be performed.
+     ++
+     ++`raw-permissive`::
+     ++	This is the same as `raw` except that no sanity checks on
+     ++	the numeric epoch and local offset are performed.  This can
+     ++	be useful when trying to filter or import an existing history
+     ++	with e.g. bogus timezone values.
+     + 
+     + `rfc2822`::
+     + 	This is the standard email format as described by RFC 2822.
+     +
+       ## fast-import.c ##
+      @@ fast-import.c: struct hash_list {
+       
+     @@ fast-import.c: static int parse_data(struct strbuf *sb, uintmax_t limit, uintmax
+       {
+       	const char *orig_src = src;
+       	char *endp;
+     - 	unsigned long num;
+     -+	int out_of_range_timezone;
+     - 
+     +@@ fast-import.c: static int validate_raw_date(const char *src, struct strbuf *result)
+       	errno = 0;
+       
+     + 	num = strtoul(src, &endp, 10);
+     +-	/* NEEDSWORK: perhaps check for reasonable values? */
+     ++	/*
+     ++	 * NEEDSWORK: perhaps check for reasonable values? For example, we
+     ++	 *            could error on values representing times more than a
+     ++	 *            day in the future.
+     ++	 */
+     + 	if (errno || endp == src || *endp != ' ')
+     + 		return -1;
+     + 
+      @@ fast-import.c: static int validate_raw_date(const char *src, struct strbuf *result)
+       		return -1;
+       
+       	num = strtoul(src + 1, &endp, 10);
+      -	if (errno || endp == src + 1 || *endp || 1400 < num)
+     -+	out_of_range_timezone = strict && (1400 < num);
+     -+	if (errno || endp == src + 1 || *endp || out_of_range_timezone)
+     ++	/*
+     ++	 * NEEDSWORK: check for brokenness other than num > 1400, such as
+     ++	 *            (num % 100) >= 60, or ((num % 100) % 15) != 0 ?
+     ++	 */
+     ++	if (errno || endp == src + 1 || *endp || /* did not parse */
+     ++	    (strict && (1400 < num))             /* parsed a broken timezone */
+     ++	   )
+       		return -1;
+       
+       	strbuf_addstr(result, orig_src);
+     @@ t/t9300-fast-import.sh: test_expect_success 'B: accept empty committer' '
+      +	COMMIT
+      +	INPUT_END
+      +
+     -+	test_when_finished "git update-ref -d refs/heads/invalid-timezone
+     -+		git gc
+     -+		git prune" &&
+     -+	git fast-import --date-format=raw-permissive <input &&
+     -+	git cat-file -p invalid-timezone >out &&
+     ++	git init invalid-timezone &&
+     ++	git -C invalid-timezone fast-import --date-format=raw-permissive <input &&
+     ++	git -C invalid-timezone cat-file -p invalid-timezone >out &&
+      +	grep "1234567890 [+]051800" out
+      +'
+      +
+
+
+ Documentation/git-fast-import.txt |  9 ++++++++-
+ fast-import.c                     | 25 +++++++++++++++++++++----
+ t/t9300-fast-import.sh            | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 57 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 77c6b3d0019..7d9aad2a7e1 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -293,7 +293,14 @@ by users who are located in the same location and time zone.  In this
+ case a reasonable offset from UTC could be assumed.
+ +
+ Unlike the `rfc2822` format, this format is very strict.  Any
+-variation in formatting will cause fast-import to reject the value.
++variation in formatting will cause fast-import to reject the value,
++and some sanity checks on the numeric values may also be performed.
++
++`raw-permissive`::
++	This is the same as `raw` except that no sanity checks on
++	the numeric epoch and local offset are performed.  This can
++	be useful when trying to filter or import an existing history
++	with e.g. bogus timezone values.
+ 
+ `rfc2822`::
+ 	This is the standard email format as described by RFC 2822.
+diff --git a/fast-import.c b/fast-import.c
+index c98970274c4..0dfa14dc8c3 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -139,6 +139,7 @@ struct hash_list {
+ 
+ typedef enum {
+ 	WHENSPEC_RAW = 1,
++	WHENSPEC_RAW_PERMISSIVE,
+ 	WHENSPEC_RFC2822,
+ 	WHENSPEC_NOW
+ } whenspec_type;
+@@ -1911,7 +1912,7 @@ static int parse_data(struct strbuf *sb, uintmax_t limit, uintmax_t *len_res)
+ 	return 1;
+ }
+ 
+-static int validate_raw_date(const char *src, struct strbuf *result)
++static int validate_raw_date(const char *src, struct strbuf *result, int strict)
+ {
+ 	const char *orig_src = src;
+ 	char *endp;
+@@ -1920,7 +1921,11 @@ static int validate_raw_date(const char *src, struct strbuf *result)
+ 	errno = 0;
+ 
+ 	num = strtoul(src, &endp, 10);
+-	/* NEEDSWORK: perhaps check for reasonable values? */
++	/*
++	 * NEEDSWORK: perhaps check for reasonable values? For example, we
++	 *            could error on values representing times more than a
++	 *            day in the future.
++	 */
+ 	if (errno || endp == src || *endp != ' ')
+ 		return -1;
+ 
+@@ -1929,7 +1934,13 @@ static int validate_raw_date(const char *src, struct strbuf *result)
+ 		return -1;
+ 
+ 	num = strtoul(src + 1, &endp, 10);
+-	if (errno || endp == src + 1 || *endp || 1400 < num)
++	/*
++	 * NEEDSWORK: check for brokenness other than num > 1400, such as
++	 *            (num % 100) >= 60, or ((num % 100) % 15) != 0 ?
++	 */
++	if (errno || endp == src + 1 || *endp || /* did not parse */
++	    (strict && (1400 < num))             /* parsed a broken timezone */
++	   )
+ 		return -1;
+ 
+ 	strbuf_addstr(result, orig_src);
+@@ -1963,7 +1974,11 @@ static char *parse_ident(const char *buf)
+ 
+ 	switch (whenspec) {
+ 	case WHENSPEC_RAW:
+-		if (validate_raw_date(ltgt, &ident) < 0)
++		if (validate_raw_date(ltgt, &ident, 1) < 0)
++			die("Invalid raw date \"%s\" in ident: %s", ltgt, buf);
++		break;
++	case WHENSPEC_RAW_PERMISSIVE:
++		if (validate_raw_date(ltgt, &ident, 0) < 0)
+ 			die("Invalid raw date \"%s\" in ident: %s", ltgt, buf);
+ 		break;
+ 	case WHENSPEC_RFC2822:
+@@ -3258,6 +3273,8 @@ static void option_date_format(const char *fmt)
+ {
+ 	if (!strcmp(fmt, "raw"))
+ 		whenspec = WHENSPEC_RAW;
++	else if (!strcmp(fmt, "raw-permissive"))
++		whenspec = WHENSPEC_RAW_PERMISSIVE;
+ 	else if (!strcmp(fmt, "rfc2822"))
+ 		whenspec = WHENSPEC_RFC2822;
+ 	else if (!strcmp(fmt, "now"))
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 768257b29e0..e151df81c06 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -410,6 +410,34 @@ test_expect_success 'B: accept empty committer' '
+ 	test -z "$out"
+ '
+ 
++test_expect_success 'B: reject invalid timezone' '
++	cat >input <<-INPUT_END &&
++	commit refs/heads/invalid-timezone
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1234567890 +051800
++	data <<COMMIT
++	empty commit
++	COMMIT
++	INPUT_END
++
++	test_when_finished "git update-ref -d refs/heads/invalid-timezone" &&
++	test_must_fail git fast-import <input
++'
++
++test_expect_success 'B: accept invalid timezone with raw-permissive' '
++	cat >input <<-INPUT_END &&
++	commit refs/heads/invalid-timezone
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1234567890 +051800
++	data <<COMMIT
++	empty commit
++	COMMIT
++	INPUT_END
++
++	git init invalid-timezone &&
++	git -C invalid-timezone fast-import --date-format=raw-permissive <input &&
++	git -C invalid-timezone cat-file -p invalid-timezone >out &&
++	grep "1234567890 [+]051800" out
++'
++
+ test_expect_success 'B: accept and fixup committer with no name' '
+ 	cat >input <<-INPUT_END &&
+ 	commit refs/heads/empty-committer-2
+
+base-commit: 2d5e9f31ac46017895ce6a183467037d29ceb9d3
+-- 
+gitgitgadget
