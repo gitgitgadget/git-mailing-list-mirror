@@ -2,193 +2,114 @@ Return-Path: <SRS0=PU/F=7O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 089C8C433DF
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 04:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AD8AC433DF
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 07:35:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC5F2206E2
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 04:46:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56E9A206A4
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 07:35:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="jlHMln4w"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J4aZvqtS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725886AbgFAEqM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Jun 2020 00:46:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53808 "EHLO
+        id S1727945AbgFAHff (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Jun 2020 03:35:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725290AbgFAEqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jun 2020 00:46:12 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 228A1C061A0E
-        for <git@vger.kernel.org>; Sun, 31 May 2020 21:46:12 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id c11so6491854ljn.2
-        for <git@vger.kernel.org>; Sun, 31 May 2020 21:46:12 -0700 (PDT)
+        with ESMTP id S1725972AbgFAHff (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jun 2020 03:35:35 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B602FC061A0E
+        for <git@vger.kernel.org>; Mon,  1 Jun 2020 00:35:34 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id n123so4709268ybf.11
+        for <git@vger.kernel.org>; Mon, 01 Jun 2020 00:35:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=spfz70KsmaWfJPZhaux40i6S/dssFm/wRaPyqLciHLI=;
-        b=jlHMln4wUeyv9f64J5yja4kNXS+6TRx2nqDaipCY/jZRIP486LVZIx3xVMTtMijvwa
-         MsP1yn0uXRGC2ziZcs1N09qLw2l2JzRGI2gDg3TyqQ7QVgdTbpUOZ/6xUoeR3TPj6Se1
-         dkAtw4RQyi/+DWksf+PvmeUcFqqT1R3hrtvJ6HshxO47/vjWwx5lnSzW8P8e+403jmBH
-         SHIbQeFsXRm6RWTfDvcjwqdQiooAFmK6vtKGmY6o+weR0lM6zG0Z8aXV+O98ipN1MUJ6
-         P4AmZmxYbjkvczUL/ha3Aja1rTRIsatBPqqw63FpS7RCeIjFi0au4xtTLYMNozq/LTtX
-         Etkg==
+         :cc:content-transfer-encoding;
+        bh=664V4ORxn5twmBOFc9YgKdEqX78qGXRHxXPy1xqoajY=;
+        b=J4aZvqtSFDRK4Cjuxcb6aApUBuZr0tePbqC5dvfMvs4GpAhns02aknYPXlrF8dftqy
+         VSK1zuBt31s3XXMTyU21uWy07lKz0PhUiZCyHjZdjnB0jda02kzjrtQppAI4nMihj7Oo
+         Wc0ecM8QZ1ANrDwQJ6fzAvI3tgc1T0OSNG6wADa342PBIAkv1VeAvOA+NIkIm3qMjPuJ
+         7G/jD17OhUs0rbeIDj3wmcY1ETIaiaObolko6wyBpUwTHDtYk8bvTPNJQhzUoM7TUPrV
+         4W3KEIztvleWKoTuuLqehf8nWJK5RiQEgV16gw5Gh+2oPW+Cwgbs1vKJoF1ezZhhqXGv
+         OyPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=spfz70KsmaWfJPZhaux40i6S/dssFm/wRaPyqLciHLI=;
-        b=XMU7seBLDq7S04RevQHongzkoSipWerfzKEie0qbsEm2tpLdVM5YxreAiDhKPAsbCo
-         w7zBpDHwQEWNHVpOAed/boYpiGXyXQk7B1GyMH9uCsGLavGmmfMWJT2IHII8Qo1Lt4qr
-         oep8g1XWo96cjIBHHQQDj+MVr7m8D3bw1PVFOvrUeUrz+9YvRhFvLqcOCILikE/DOh77
-         dH4Y9NHKRGeoMyrN7IvBDyYp+wSmlHx74KtRcHMejbo30cl6M7K/WdLAsg323LTbeN0K
-         W6bdP+6+ECLI9OIT0D2W1PtbEND7BSi9BbEjRTs+Wn0XVzFqvB22O3LwKzYYMXVg8SHm
-         jB8w==
-X-Gm-Message-State: AOAM532RS4Q9a6MVp+yOJ1GA9+XE/y2ek7UlGvyvIfXSGDgrt35Alj1c
-        x9nv+G7N6sjB1SAvsvWEPEI2HF08lSBR/jXuRKLSLdakCOw=
-X-Google-Smtp-Source: ABdhPJzjMfzc2c4KE4a3Iv6T3Yv4XrQL2QnxfL9SzFKn9sr/+UUZDFFhKEMXQ2SPg/ntLGJyac/1IH4grN0/2vBzC9o=
-X-Received: by 2002:a05:651c:228:: with SMTP id z8mr9434029ljn.202.1590986770573;
- Sun, 31 May 2020 21:46:10 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=664V4ORxn5twmBOFc9YgKdEqX78qGXRHxXPy1xqoajY=;
+        b=I3FKGdwkZGr0upKvc+1jcJ20RORiH4W5vEHzpFADm49BNyWdVquM9RpzAgzs/C+pka
+         z+4ogkcR/70g8gcLr2Qym/grQUbMzF3w57vkNvruYefZIjMCG0XlDG5EH68GwEzrhNiA
+         cuqyjIcl2OIjvnLd9JawhnWLa+U3MoYPEFAf5xo98Oa/gAnQQZyjT8fmZYgxKMl/bJAm
+         1BXaVdhyAlWlpaFckA+H/jGHUp1F1veHPVng8a9f0c34UV/g4jGICOGUtHKWzIxYgWb9
+         ifl9frq6dioiCgCOBvE4JXUVk1VvH0iKalWNaaKDj1LYH7BEdq7OsRjY77wS7wMNfGwe
+         +tdg==
+X-Gm-Message-State: AOAM530R1VmgBNedNL5ifVI13OvobW5pxDsi5N64omZGtPYW7RwlgOli
+        3DgALfPScSDqzSDAOcHmGuh/74x61M6l5uDluBI=
+X-Google-Smtp-Source: ABdhPJyp4juAFi1c3UfMDhjuXC7tLb8tqo1aBfMbwdPe3WrSHZtiELJZZsCV246pLAH/wXD+2dyQVKdyw3P7BNyeUOs=
+X-Received: by 2002:a25:98c2:: with SMTP id m2mr11267688ybo.155.1590996933365;
+ Mon, 01 Jun 2020 00:35:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1590627264.git.matheus.bernardino@usp.br>
- <748b1e955ccdcf7cd897a180f4b4fe82d7bfcf00.1590627264.git.matheus.bernardino@usp.br>
- <CABPp-BHzHhBVGZ+vOgE4jTCT3HJzXo+gzZ+6SVGDUWWdfkL6Dw@mail.gmail.com>
-In-Reply-To: <CABPp-BHzHhBVGZ+vOgE4jTCT3HJzXo+gzZ+6SVGDUWWdfkL6Dw@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 1 Jun 2020 01:45:59 -0300
-Message-ID: <CAHd-oW7b41hqfPXm_GL_sth+QRfx56ceMr4VM9B9xhj3_P9iGQ@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] config: add setting to ignore sparsity patterns in
- some cmds
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
+References: <20200531051726.9793-1-worldhello.net@gmail.com> <xmqqy2p8ug1c.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqy2p8ug1c.fsf@gitster.c.googlers.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Mon, 1 Jun 2020 15:35:22 +0800
+Message-ID: <CANYiYbH0DzFriPU3AUBfyvADc7OD8r_qjFVp0C2pSVfWk0Zw6Q@mail.gmail.com>
+Subject: Re: [GIT PULL] l10n updates for 2.27.0 round 2
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Christopher Diaz Riveros <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Emir_Sar=C4=B1?= <bitigchi@me.com>,
+        Jan Engelhardt <jengelh@inai.de>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Tran Ngoc Quan <vnwildman@gmail.com>,
+        Yi-Jyun Pan <pan93412@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 30, 2020 at 1:18 PM Elijah Newren <newren@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2020=E5=B9=B46=E6=9C=881=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=882:15=E5=86=99=E9=81=93=EF=BC=9A
 >
-> On Wed, May 27, 2020 at 6:14 PM Matheus Tavares
-> <matheus.bernardino@usp.br> wrote:
-> > diff --git a/Documentation/config/sparse.txt b/Documentation/config/sparse.txt
-> > new file mode 100644
-> > index 0000000000..2a25b4b8ef
-> > --- /dev/null
-> > +++ b/Documentation/config/sparse.txt
-> > @@ -0,0 +1,24 @@
-> > +sparse.restrictCmds::
-> > +       Only meaningful in conjunction with core.sparseCheckout. This option
-> > +       extends sparse checkouts (which limit which paths are written to the
-> > +       working tree), so that output and operations are also limited to the
-> > +       sparsity paths where possible and implemented. The purpose of this
-> > +       option is to (1) focus output for the user on the portion of the
-> > +       repository that is of interest to them, and (2) enable potentially
-> > +       dramatic performance improvements, especially in conjunction with
-> > +       partial clones.
-> > ++
-> > +When this option is true (default), some git commands may limit their behavior
-> > +to the paths specified by the sparsity patterns, or to the intersection of
-> > +those paths and any (like `*.c`) that the user might also specify on the
-> > +command line. When false, the affected commands will work on full trees,
-> > +ignoring the sparsity patterns. For now, only git-grep honors this setting. In
-> > +this command, the restriction takes effect in three cases: with --cached; when
-> > +a commit-ish is given; when searching a working tree where some paths excluded
-> > +by the sparsity patterns are present (e.g. manually created paths or not
-> > +removed submodules).
+> Jiang Xin <worldhello.net@gmail.com> writes:
 >
-> I think "In this command, the restriction takes effect..." to the end
-> of the paragraph should be removed.  I don't want every subcommand's
-> behavior to be specified here; it'll grow unreadably long and be more
-> likely to eventually go stale.
-
-Yeah, I was also concerned about that. But wouldn't it be important to
-inform the users how the setting takes place in grep (specially with
-the corner cases)? And maybe others, in the future?
-
-What if we move the information that is only relevant to a single
-command into its own man page? I.e. git-grep.txt would have something
-like:
-
-sparse.restrictCmds::
-See complete definition in linkgit:git-config[1]. In grep, the
-restriction takes effect in three cases: with --cached; when a
-commit-ish is given; when searching a working tree where some paths
-excluded by the sparsity patterns are present (e.g. manually created
-paths or not removed submodules).
-
-The only problem then is that the information would be a little
-scattered... But I think it shouldn't be a big deal, as a person
-interested in knowing how foo behaves with sparse.restrictCmds would
-only need to look into foo's man page, anyway.
-
-> > diff --git a/git.c b/git.c
-> > index a2d337eed7..6db1382ae4 100644
-> > --- a/git.c
-> > +++ b/git.c
-> > @@ -319,6 +324,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
-> >                 (*argv)++;
-> >                 (*argc)--;
-> >         }
-> > +
-> >         return (*argv) - orig_argv;
-> >  }
+> > Hi Junio,
 > >
+> > Please pull the following l10n updates for Git 2.27.0.
+> >
+> > The following changes since commit 2d5e9f31ac46017895ce6a183467037d29ce=
+b9d3:
+> >
+> >   Git 2.27-rc2 (2020-05-26 09:38:13 -0700)
+> >
+> > are available in the Git repository at:
+> >
+> >   git@github.com:git-l10n/git-po.git tags/l10n-2.27.0-rnd2
+> >
+> > for you to fetch changes up to cb26198ec6b3fa0bc58d210ea0338f4e972f9f50=
+:
+> >
+> >   Merge branch 'master' of github.com:ruester/git-po-de (2020-05-30 11:=
+26:53 +0800)
 >
-> Why the stray whitespace change?
+> Thanks.  Swapped GPG key recently?
 
-Oops, that shouldn't be there. Thanks!
+My pgp key has expired on April 6th, so I generated a new one.  Which
+is the best practice? Edit the old pgp key to extend the expiry time
+or generate a new pgp key?
 
->
-> > diff --git a/sparse-checkout.c b/sparse-checkout.c
-> > new file mode 100644
-> > index 0000000000..9a9e50fd29
-> > --- /dev/null
-> > +++ b/sparse-checkout.c
-> > @@ -0,0 +1,16 @@
-> > +#include "cache.h"
-> > +#include "config.h"
-> > +#include "sparse-checkout.h"
-> > +
-> > +int restrict_to_sparse_paths(struct repository *repo)
-> > +{
-> > +       int ret;
-> > +
-> > +       if (opt_restrict_to_sparse_paths >= 0)
-> > +               return opt_restrict_to_sparse_paths;
-> > +
-> > +       if (repo_config_get_bool(repo, "sparse.restrictcmds", &ret))
-> > +               ret = 1;
-> > +
-> > +       return ret;
-> > +}
->
-> Do we want to considering renaming this file to sparse.c, since it's
-> for sparse grep and sparse diff and etc., not just for the checkout
-> piece?  It would also go along well with our toplevel related config
-> being in the "sparse" namespace.
-
-Makes sense. But since Stolee is already working on
-"sparse-checkout.c" [1], if we use "sparse.c" in this series we will
-end up with two extra files. And as "sparse.c" is quite small, I think
-we could unify into the "sparse-checkout.c".
-
-[1]: https://lore.kernel.org/git/0181a134bfb6986dc0e54ae624c478446a1324a9.1588857462.git.gitgitgadget@gmail.com/
-
-> > diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
-> > index ce080cf572..1aef084186 100755
-> > --- a/t/t7817-grep-sparse-checkout.sh
-> > +++ b/t/t7817-grep-sparse-checkout.sh
->
-> All these testcases look great (modulo the small typo I pointed out
-> earlier); I kept thinking "but what about case <x>?" and then I kept
-> reading and saw you covered it.  You even added some I wasn't thinking
-> about and might have overlooked but seem important.
-
-Thanks :)
+--
+Jiang Xin
