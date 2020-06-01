@@ -2,103 +2,143 @@ Return-Path: <SRS0=PU/F=7O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0351C433DF
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 23:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07A3EC433DF
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 23:56:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9706C2076B
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 23:27:50 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="imwWI1kY"
+	by mail.kernel.org (Postfix) with ESMTP id E065B2071E
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 23:56:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726844AbgFAX1t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Jun 2020 19:27:49 -0400
-Received: from avasout03.plus.net ([84.93.230.244]:41034 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725802AbgFAX1t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jun 2020 19:27:49 -0400
-Received: from [10.0.2.15] ([217.32.115.138])
-        by smtp with ESMTPA
-        id ftqGj5iEoNXR9ftqHjWHmI; Tue, 02 Jun 2020 00:27:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1591054065; bh=SCU7Ck1U5a/UpHzUfsVVBKJjDLHIA5g3tmzzr+i71dw=;
-        h=To:Cc:From:Subject:Date;
-        b=imwWI1kYp9sweHNn9YhvDv7NbngAjUodRjfuFSNvimGgBq0VrdLN/nACWVDKavcAj
-         MG3DiTXAPKcAY+eOJwJ+2jU7szL1RZtt/HYTcwAR4pxtSEaefhOPmdFulIiW6HK0ZX
-         xuZmp/vhBVkh//xomjtIkkDNsD+Vhmoucb9ay9i5Mq+eu8lUMQeRo/OxLROj0k/lgD
-         uSMfOsVfk3kj1cnT1dlcuOPRdUNta3knBbKmwX3SvoQy5VbpzYI7WKGaO0o679nYJ6
-         9gqhqYcZNXdU0c7FpTS4pc7mNOm9oF9Wbflh69Ry+hZs/L0B1w2L1UnKUhR2aQmknu
-         6FZBVfjG1pMqQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=ZemGyvdA c=1 sm=1 tr=0
- a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=uyT1YxFDGUNa-xvaTxYA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] git.c: fix sparse warning
-Message-ID: <d9686e75-0792-33f7-dd70-3dc8ca6c4d66@ramsayjones.plus.com>
-Date:   Tue, 2 Jun 2020 00:27:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+        id S1728900AbgFAX4X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Jun 2020 19:56:23 -0400
+Received: from smtp-1a.his.com ([216.194.196.25]:59863 "EHLO smtp-1a.his.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726472AbgFAX4W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jun 2020 19:56:22 -0400
+Received: from cuda201.his.com (cuda201.his.com [216.194.196.22])
+        by smtp-1a.his.com (Postfix) with ESMTPS id 795CF2AEC
+        for <git@vger.kernel.org>; Mon,  1 Jun 2020 19:56:21 -0400 (EDT)
+X-ASG-Debug-ID: 1591055721-061c413ab036f70001-QuoKaX
+Received: from smtp-nf-202.his.com (smtp-nf-202.his.com [216.194.196.20]) by cuda201.his.com with ESMTP id V5Insh7TufnEDREM; Mon, 01 Jun 2020 19:55:21 -0400 (EDT)
+X-Barracuda-Envelope-From: keni@his.com
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
+Received: from zproxy101.his.com (zproxy101.his.com [18.218.2.49])
+        by smtp-nf-202.his.com (Postfix) with ESMTPS id 0512F6095B;
+        Mon,  1 Jun 2020 19:55:21 -0400 (EDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by zproxy101.his.com (Postfix) with ESMTP id C282617806C;
+        Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
+X-Barracuda-RBL-IP: 18.218.2.49
+X-Barracuda-Effective-Source-IP: zproxy101.his.com[18.218.2.49]
+X-Barracuda-Apparent-Source-IP: 18.218.2.49
+Received: from zproxy101.his.com ([127.0.0.1])
+        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id iVrhqNZ1OuIs; Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by zproxy101.his.com (Postfix) with ESMTP id AA4A317806B;
+        Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at zproxy101.his.com
+Received: from zproxy101.his.com ([127.0.0.1])
+        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id N4KPSw34jC09; Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
+Received: from [192.168.1.168] (pool-74-96-209-77.washdc.fios.verizon.net [74.96.209.77])
+        by zproxy101.his.com (Postfix) with ESMTPSA id 808A9178069;
+        Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: [RFC PATCH v2 3/6] doc: Add namespace collision guidelines file
+From:   Kenneth Lorber <keni@his.com>
+X-ASG-Orig-Subj: Re: [RFC PATCH v2 3/6] doc: Add namespace collision guidelines file
+In-Reply-To: <xmqqo8q73lkf.fsf@gitster.c.googlers.com>
+Date:   Mon, 1 Jun 2020 19:55:20 -0400
+Cc:     git@vger.kernel.org, Kenneth Lorber <keni@his.com>
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfCokVZ+Q40NYY+Rkiua0GSMBgyYOOYjL9z0xKUOQOsqbMcxrSxvpz6Sr25g6lnshJyjYjfPo6I0bUBClBQTfTdM0BOHRMJ0JWV8taCcZ3lBm9yJs3pub
- a3HQL0EB3xdfQC7ouCDoFFqaay+dPdZEkWZoZDpM1vJ5NrP50t8d49qU5EsWsQLUj+UeYdPWsZg/3Q==
+Message-Id: <4654CD5E-6802-4277-AFDE-0DD09A40986B@his.com>
+References: <1589681624-36969-1-git-send-email-keni@hers.com>
+ <20200525232727.21096-1-keni@his.com> <20200525232727.21096-4-keni@his.com>
+ <xmqqy2pb3new.fsf@gitster.c.googlers.com>
+ <xmqqo8q73lkf.fsf@gitster.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
+X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
+X-Barracuda-Start-Time: 1591055721
+X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Scan-Msg-Size: 2415
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=6.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.82261
+        Rule breakdown below
+         pts rule name              description
+        ---- ---------------------- --------------------------------------------------
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Commit 4acc44d720 (config: add setting to ignore sparsity patterns in
-some cmds, 2020-05-27) adds an external symbol definition without a
-corresponding external symbol declaration. This causes sparse to
-complain: "symbol 'opt_restrict_to_sparse_paths' was not declared.
-Should it be static?".
 
-In order to suppress the warning, #include the 'sparse-checkout.h'
-header file, which contains the required extern declaration.
+> On May 28, 2020, at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Kenneth Lorber <keni@his.com> writes:
+>> 
+>>> +Git uses identifiers in a number of different namespaces:
+>>> +
+>>> +* environment variables
+>>> +* files in $GIT_DIR
+>>> +* files in the working trees
+>>> +* config sections
+>>> +* hooks
+>>> +* attributes
+>> 
+>> The names of the subcommands "git" can spawn is a shared resource.
+>> You can install "git-imerge" program in one of the directories on
+>> your $PATH and say "git imerge" to invoke the program.  
+>> 
+>> Two third-party developers may have to coordinate to avoid giving
+>> the same name to their totally-unrelated tools, if they hope that
+>> both of their tools to be useful in the larger Git ecosystem.
+> 
+> Also names of worktrees that are attached to a single repository.
+> If a third-party tool wants to make it "easy" for its users by
+> automatically taking a name to do its job (instead of forcing the
+> users to come up with a name and giving it to the tool), the name
+> must be chosen in such a way that it does not collide names in use
+> and names the user (or other third-party tools) will pick in the
+> future.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+One more, but only as an issue to be documented - you don't need to
+convince me that trying to handle this should simply be declared
+"left as an exercise for the reader" and that's extensions that
+require being compiled in to git (so file names, global variables,
+functions, test names, etc).
 
-Hi Matheus,
+I'd propose "Do something similar to the above or ask for help on
+the list" if that's acceptable (where "above" is whatever the current
+proposal turns into).
 
-If you need to re-roll your 'mt/grep-sparse-checkout' branch, could you
-please squash this into the relevant patch.
 
-[This is the minimum fix - but I might be tempted to move the definition
-of the variable to 'sparse-checkout.c' as well.]
+> 
+> I (or others) may come up with other things that must be named and
+> name collisions must be avoided.  Even though I already said that I
+> didn't think the "suggestions to avoid name collisions" given by the
+> RFC PATCH are well done, I do think it is worth being aware of the
+> problem space, and enumerating what kind of names are shared and
+> limited resource is the first step to become so.
 
-Thanks!
+Each message seems less enthusiastic than the last.  I'm not sure I see any
+point in creating a v3 until I have time and inspiration to write
+something significantly different.
 
-ATB,
-Ramsay Jones
+> 
+> Thanks.
 
- git.c | 1 +
- 1 file changed, 1 insertion(+)
+You're welcome.
 
-diff --git a/git.c b/git.c
-index 07de4363ef..6e62001f2f 100644
---- a/git.c
-+++ b/git.c
-@@ -5,6 +5,7 @@
- #include "run-command.h"
- #include "alias.h"
- #include "shallow.h"
-+#include "sparse-checkout.h"
- 
- #define RUN_SETUP		(1<<0)
- #define RUN_SETUP_GENTLY	(1<<1)
--- 
-2.26.2
+PS - nothing to reply to in the next 2 messages from you.  Saved them for v3.
