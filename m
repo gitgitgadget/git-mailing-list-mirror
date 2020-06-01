@@ -2,156 +2,439 @@ Return-Path: <SRS0=PU/F=7O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2272FC433DF
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 09:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 088C6C433DF
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 10:26:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C41E8206A4
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 09:23:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C367420772
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 10:26:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=atos.net header.i=@atos.net header.b="tDZvMotw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BCEdaC+Q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbgFAJXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Jun 2020 05:23:13 -0400
-Received: from smtppost.atos.net ([193.56.114.176]:25737 "EHLO
-        smarthost3.atos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1725290AbgFAJXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jun 2020 05:23:13 -0400
+        id S1725977AbgFAK0M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Jun 2020 06:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49738 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725935AbgFAK0M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jun 2020 06:26:12 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A22BC061A0E
+        for <git@vger.kernel.org>; Mon,  1 Jun 2020 03:26:12 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id u26so11739383wmn.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2020 03:26:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=atos.net; i=@atos.net; q=dns/txt; s=mail;
-  t=1591003390; x=1622539390;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=FLdySBCT7dHViBxnqNYWg4Nu54oLbVDPwulZeMJu2HI=;
-  b=tDZvMotwpTYPoUPsB8npXAo+i9A0ger6zUFplscy2Wf07GR+xu4uQpdy
-   wyN7ItdBg39+kZ9ywWtbkTD3qFBukPkNiAJm4w8D+R4iliuj4vOUOQS0M
-   kPG0pWytC4GO2bkH635HJtRgBO61RYQSxVGHo7XVAvA/f0zB7Keg+rZdr
-   w=;
-IronPort-SDR: St3QDpVAwkDHkj+V0dgSVFY3GVy5GCX2pFnlW/DMbmTR5cxJb7tvLMIPzuw+6yRCvwFK/woPcY
- d1rzmI2PJdXOSOoQts+SYBTWPxjXk8mQDx1FeThIrJFrJ640EZgMtwnv+/J0ykcmEyHgMnmjU2
- r+ahi631JQ4pqff1uBxF7xKwHoHwjfv8+o3PJ197h2Ji4WhmlgL+5ngOkT/AFMTD18P/ucUpdi
- pCsFwsaKrF9+5iuWZQonqpX1zigADHkY86N3ZTr3E3+At/y0/2M1EJCMFHr9XM3VwBw/yC5dQD
- RZr7zPxd2BruZIwvUzWkba2r
-X-IronPort-AV: E=Sophos;i="5.73,460,1583190000"; 
-   d="scan'208";a="59827999"
-X-MGA-submission: =?us-ascii?q?MDGBrHLyfuNeYCZZ9vjHlElzArIhr12qfovhXA?=
- =?us-ascii?q?wNTO99iuRv17EuzQGQF6jdOAovESjz5vZsnheI5/lDHo8+FUbFv5YGeV?=
- =?us-ascii?q?7OUmjXlq1aQNOhflseM9STBkgLn7ClOtOsWhsnEllsGmcdz+ns0RPdw7?=
- =?us-ascii?q?21?=
-Received: from unknown (HELO DEFTHW99ETTMSX.ww931.my-it-solutions.net) ([10.86.142.101])
-  by smarthost3.atos.net with ESMTP/TLS/ECDHE-RSA-AES256-SHA384; 01 Jun 2020 11:23:07 +0200
-Received: from DEFTHW99ETQMSX.ww931.my-it-solutions.net (10.86.142.98) by
- DEFTHW99ETTMSX.ww931.my-it-solutions.net (10.86.142.101) with Microsoft SMTP
- Server (TLS) id 14.3.487.0; Mon, 1 Jun 2020 11:23:03 +0200
-Received: from EUR02-HE1-obe.outbound.protection.outlook.com (10.86.142.137)
- by hybridsmtp.it-solutions.atos.net (10.86.142.98) with Microsoft SMTP Server
- (TLS) id 14.3.487.0; Mon, 1 Jun 2020 11:23:02 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G1Pk9Q8fsLH2MRP4D5uHvBJt1VjBq62rzUULixj7PsdD7gJiUZh7Y0dpDaAbacUSB2Y/eip1YLmTmVMiowcVK+ASIugRCpUgl40WtWlWt8eNb60bdHlmblJvW6Euk2YGTzV1y8qCEFTfqT8Q7AG/2EyO42jBHVMJuJlpfSmRCZL9xVftLeQ552aFeR+KH1aNp+Zmb+OMRub17rxyykkOn7zG+29VfFizgdJsn5ZWQagVTODbxhbJWxgmR3LOPNj3qyUmFg00JMsbohuJJNOG0vFfrmOKkCSEfkeqL6fDVJHazXoo9Uryc9Z/c9w+X99/jAnBLT7lPtK42yCcMUNpKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FLdySBCT7dHViBxnqNYWg4Nu54oLbVDPwulZeMJu2HI=;
- b=f7mqkIYUHsVgNKFZVcD2adqKhjHqE0ym712qAP6UMXcFY+t2ZFnVmGS8xZ7lK2FL5gOHNAdv9djLUbKijgIgnhSRF0hvb4VMb2DM3cmTKVtF4XE7tSz88FXPN1t+0Ph46hGIHbfb2tR0ADyP277HwiNvGjIZjFPj2R+bZPXqXyvEuDAqRbklSBHG76SrX1LYzZnlLeGLpNjHPL78SlHDUsYfTyPyVzP1PIMX17BUxnpCBivdgZP9TOFizdT6fb4iRvgqN5OJ7Hr0HzCeHf8J/Jh9VdHix6HW+vT7sqoGQGbgkI7ZzGpRuDLsa+erMmOG5YSE0jHin2O2r7WsfafQww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atos.net; dmarc=pass action=none header.from=atos.net;
- dkim=pass header.d=atos.net; arc=none
-Received: from AM0PR02MB4081.eurprd02.prod.outlook.com (2603:10a6:208:df::14)
- by AM0PR02MB4082.eurprd02.prod.outlook.com (2603:10a6:208:e4::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3045.17; Mon, 1 Jun
- 2020 09:23:01 +0000
-Received: from AM0PR02MB4081.eurprd02.prod.outlook.com
- ([fe80::a0e5:332b:1ec1:b23e]) by AM0PR02MB4081.eurprd02.prod.outlook.com
- ([fe80::a0e5:332b:1ec1:b23e%7]) with mapi id 15.20.3045.024; Mon, 1 Jun 2020
- 09:23:01 +0000
-From:   "Kerry, Richard" <richard.kerry@atos.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: RE: [PATCH v4 1/5] rebase -i: add --ignore-whitespace flag
-Thread-Topic: [PATCH v4 1/5] rebase -i: add --ignore-whitespace flag
-Thread-Index: AQHWNE0SaS0VWJWkeEaxpXaaQGYeA6i+W+iAgAUla8A=
-Date:   Mon, 1 Jun 2020 09:23:01 +0000
-Message-ID: <AM0PR02MB40817D1733D2070B8E0154B39C8A0@AM0PR02MB4081.eurprd02.prod.outlook.com>
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZTyHSLJbrD/4EVR8IgZ8f2KdBvknYD2F5de8Uo12mNk=;
+        b=BCEdaC+QX0lmk/yphFq7PYtEt11MfTXhlAt+FaO0JeCItJeSwaFq4fYXE2OajV6+hJ
+         XPHAvqSOGosIzivI5ifWjMFCZhX6Epeu8IcLAJkoVhYq2hOn7VXvDOYAJO+hFIhU96j5
+         q74GwJhO3ASsotEKFBKONJ7tAwgEitaaIJuDSV9PjEI+1GinMr2ll7ELmwKxP+uZrrrM
+         Ug3udX4FSJVmcUIOgNUy7W461z1y3KlcfeBvpNw0Kvy3j+YLeAwYJHJnbYLxiRGk9d+5
+         xGqRv+QLy8ntj2l0DSK/SFNr7LsRqglHvgo7EK2onVA9o2G3HF2ezeVva+AH7RHBWCYB
+         2uAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZTyHSLJbrD/4EVR8IgZ8f2KdBvknYD2F5de8Uo12mNk=;
+        b=AxPOqjmkNFtJYhdzk3l/YrLSdWEXak+bbwrsnrYAXhe678kVq8iwxRwyty3jfhtR7C
+         lDeCzMWO1r69LddFTagR/mP6D/iBZBbLF8Uo15Yd3SaYbEFY1JfPtdzCjZuJpB+Twrxh
+         31hOiCkdKTBiLHzMdAesmojZZf1VsLJbrTWlQuuSHrqBFQ/4AJC0vGW0ZblBmsOgU61N
+         Hoi1UAWIE2Mky4ZRQMEaueeT6diDSfBrOCyEmdhAlDKhrelRN3iZCwCgVyn0hP3/Ldj+
+         vP5KETbAOsXv9d+lv0MfyEq75AFVNnA0q6o1jPifIKrs902F0hJJXJgDdTZp6HdYFDbx
+         Qylg==
+X-Gm-Message-State: AOAM532xJv5SCQ41PoApNdmQ8x+mBEWCSghqY9CXTkks1KGcSEyn3BbE
+        G/ZWsFuT6TAd5s9AKUe4ejnREiJR
+X-Google-Smtp-Source: ABdhPJx6IVmKpMei42hsktwDiHhhfGO8jp5H/jISAVBDZCIniF0R/v8L8IHYbAj4UmxeQbQ5PQb6Kg==
+X-Received: by 2002:a1c:8107:: with SMTP id c7mr20895366wmd.20.1591007170249;
+        Mon, 01 Jun 2020 03:26:10 -0700 (PDT)
+Received: from [192.168.1.201] (226.20.198.146.dyn.plus.net. [146.198.20.226])
+        by smtp.googlemail.com with ESMTPSA id d15sm20744832wrq.30.2020.06.01.03.26.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Jun 2020 03:26:09 -0700 (PDT)
+Subject: Re: [PATCH v4 1/5] rebase -i: add --ignore-whitespace flag
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 References: <20200407141125.30872-1-phillip.wood123@gmail.com>
  <20200527173356.47364-1-phillip.wood123@gmail.com>
  <20200527173356.47364-2-phillip.wood123@gmail.com>
  <nycvar.QRO.7.76.6.2005290437350.56@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2005290437350.56@tvgsbejvaqbjf.bet>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Enabled=True;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Owner=richard.kerry@atos.net;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_SetDate=2020-06-01T09:23:00.0741880Z;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Name=Atos For Internal Use;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_ActionId=404b7074-b2b5-42be-83ba-808f471fff0c;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Extended_MSFT_Method=Automatic;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=True;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Owner=richard.kerry@atos.net;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2020-06-01T09:23:00.0741880Z;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=Atos For Internal Use -
- All Employees;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=404b7074-b2b5-42be-83ba-808f471fff0c;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Parent=112e00b9-34e2-4b26-a577-af1fd0f9f7ee;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Extended_MSFT_Method=Automatic
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none header.from=atos.net;
-x-originating-ip: [212.56.108.147]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 5fc11e19-541c-467a-d412-08d8060d61af
-x-ms-traffictypediagnostic: AM0PR02MB4082:
-x-microsoft-antispam-prvs: <AM0PR02MB4082A4D8BEE5CF830DCB9A3A9C8A0@AM0PR02MB4082.eurprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 0421BF7135
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: sTy81YIDwv2syKJpu89gcD6wHaYIheQ46KQq0xejYIEXZqIpQ95otX7XSl1oAfsYZyHNHg0+w5VezCA9tHd+5Ab2IYnFUoh7gsQcVZWO5iFfYulLt35x9NCtQlZPlEDMuhstdQOgCWs6jZEVUUdWHAB3p4pv+ijuEiIt75t8wPJlBdNaAwWHpwgcgtPsfwUG8crkhSa+gw9R0Z/4t1Krj4DW5YnVgxB2JYoSC2BMPGsS+4Ot0yYuDHfyfO9j05UZDM7eiZ5tzuuDwWO9pfWQizvzMSvH1Ds0epiL6eyXDZT3F7ynMH8WHW9PPIjuseLtV1TDl9D98pc8EvuFiP3dKQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR02MB4081.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(396003)(366004)(136003)(376002)(346002)(39860400002)(5660300002)(316002)(33656002)(2906002)(52536014)(6916009)(9686003)(8676002)(86362001)(55016002)(478600001)(71200400001)(6506007)(7696005)(8936002)(186003)(66946007)(66446008)(76116006)(26005)(66476007)(83380400001)(64756008)(66556008)(66574014);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: 9ju9VlNZfts1/1X0CvGybPuBn+ljiBjY9tskkE/geKq2W64n4jbu+yLfK07TdCfrQId8oN2ItNGH/lQ/c6fKHeDAHX/uWVaFc29BGsqR00Y1uZikAG8fbuhKpxEZksdLZIY+mMTDID0R8y7b4igwn3YQ1uJBSqtE70hSH6tiNK2HKkU+5pMt06roZ4wD3U2kE3gqe+q08Sqp+wwCjyvBcB11AU+BqFk7kx8B19kDbog1pBY+lpEqrYbfCG+4xn3cToBG8gjerG4ngaZmsY98pixnQUxPgi8XGkoqBnYyp7lxuJGVwy6GuiaUS2NT3y51G6794y67crX2Qz/3Xtoy9pmzS/hjX9w+n22u5X4fi2YKJLFsvxruTNjPr6RGju7N4zFUyK5s/frUUF8TXVPOGc2vSThRTOttlWfHpytLDdkh/8jny+F/06yedYOe/mAMdrckoqU02fmmCLdvfBXj67wccWW0XTlcnDa2u+5bAuW1kWA1/2/R0V7NCIUa+Y8v
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <5003e918-5f24-2bf1-fbb0-1730961af8d7@gmail.com>
+Date:   Mon, 1 Jun 2020 11:26:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5fc11e19-541c-467a-d412-08d8060d61af
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2020 09:23:01.4680
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: PLA3fH2NqzvDcmAy/1LHGyh3Hr0cxswtKZGHJgfxOCs11r8olq6EWxh1STLE5I6VvBoR2E3359Y6j97nLIPvsg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR02MB4082
-X-OriginatorOrg: atos.net
+In-Reply-To: <nycvar.QRO.7.76.6.2005290437350.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQpBcyBhIG5vbi1uYXRpdmUgc3BlYWtlciwgSSBhbSB0aHJvd24gb2ZmIHdoZW4gcmVhZGluZyAi
-YXZhaWxhYmxlIHRvIg0KaW5zdGVhZCBvZiB0aGUgZ3JhbW1hdGljYWxseSBjb3JyZWN0IChJIGJl
-bGlldmUpICJhdmFpbGFibGUgaW4iLiBMaWtld2lzZSwgIm9uIGdvaW5nIiBpbnN0ZWFkIG9mICJv
-bmdvaW5nIiBqdXN0IGRpc3J1cHRzIG15IHdvcmtmbG93Lg0KDQpNYXliZSB0aGVzZSBjYW4gYmUg
-Zml4ZWQ/DQoNCltSS10gVGhlcmUgaXMgYSBkaXN0aW5jdCBkaWZmZXJlbmNlIGJldHdlZW4gImF2
-YWlsYWJsZSB0byIgYW5kICJhdmFpbGFibGUgaW4iLg0KW1JLXSAic2VydmljZSBBIGlzIGF2YWls
-YWJsZSB0byBlbnRpdHkgQiIgZG9lcyBub3QgbWVhbiB0aGUgc2FtZSBhcyAic2VydmljZSBBIGlz
-IGF2YWlsYWJsZSBpbiBlbnRpdHkgQiIuICBUaGUgZm9ybWVyIGluZGljYXRlcyB0aGF0IHNlcnZp
-Y2UgQSBpcyBpbXBsZW1lbnRlZCB3aXRoaW4gZW50aXR5IEIsIHRoZSBsYXR0ZXIgaW5kaWNhdGVz
-IG1lcmVseSB0aGF0IGVudGl0eSBCIHVzZXMgc2VydmljZSBBLg0KW1JLXSBBcyBhIHJlYWwgd29y
-bGQgZXhhbXBsZSBjb25zaWRlciAiVGhlIGludGVybmV0IGJhbmtpbmcgc2VydmljZSBvZiBCYW5r
-IFggaXMgYXZhaWxhYmxlIHRvIG1lIiwgd2hpY2ggbWFrZXMgY29tcGxldGUgc2Vuc2UuICBCdXQg
-IlRoZSBpbnRlcm5ldCBiYW5raW5nIHNlcnZpY2Ugb2YgQmFuayBYIGlzIGF2YWlsYWJsZSBpbiBt
-ZSIgd291bGQgYmUgbm9uc2Vuc2UuICBJIGRvbid0IGtub3cgd2hhdCB0aGUgT1AgaW50ZW5kZWQg
-YnV0IHRoZSBkaWZmZXJlbmNlIGJldHdlZW4gdGhlc2UgaXMgbm90IHB1cmVseSBncmFtbWF0aWNh
-bCwgdGhlcmUgaXMgYSBkaWZmZXJlbmNlIGluIG1lYW5pbmcgd2hpY2ggSSBtdXN0IGxlYXZlIHRo
-ZSBPUCB0byBjbGFyaWZ5Lg0KDQpbUktdIEFzIGZvciB0aGUgb3RoZXIgaXNzdWUsIEkgdG9vIHdv
-dWxkIHN1Z2dlc3QgIm9uZ29pbmciLg0KDQpbUktdIFJlZ2FyZHMsDQpbUktdIFJpY2hhcmQuDQoN
-Cg==
+Hi dscho
+
+Thanks for taking a look at this
+
+On 29/05/2020 03:38, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> sorry to be _so_ late in the game. (And sorry for sending this to you
+> twice, I managed to skip all the Cc:s due to the Reply-To: header the
+> first time round.)
+> 
+> On Wed, 27 May 2020, Phillip Wood wrote:
+> 
+>> From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+>>
+>> Rebase is implemented with two different backends - 'apply' and 'merge'
+>> each of which support a different set of options. In particuar the apply
+>> backend supports a number of options implemented by 'git am' that are
+>> not available to the merge backend. As part of an on going effort to
+> 
+> As a non-native speaker, I am thrown off when reading "available to"
+> instead of the grammatically correct (I believe) "available in". Likewise,
+> "on going" instead of "ongoing" just disrupts my workflow.
+> 
+> Maybe these can be fixed?
+
+Sure
+
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 27a07d4e78..5d8e117276 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -86,6 +86,7 @@ struct rebase_options {
+>>  	int signoff;
+>>  	int allow_rerere_autoupdate;
+>>  	int autosquash;
+>> +	int ignore_whitespace;
+>>  	char *gpg_sign_opt;
+>>  	int autostash;
+>>  	char *cmd;
+>> @@ -108,6 +109,7 @@ struct rebase_options {
+>>
+>>  static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>>  {
+>> +	struct strbuf strategy_buf = STRBUF_INIT;
+>>  	struct replay_opts replay = REPLAY_OPTS_INIT;
+>>
+>>  	replay.action = REPLAY_INTERACTIVE_REBASE;
+>> @@ -126,14 +128,20 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>>  	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+>>  	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+>>  	replay.strategy = opts->strategy;
+>> +
+>>  	if (opts->strategy_opts)
+>> -		parse_strategy_opts(&replay, opts->strategy_opts);
+>> +		strbuf_addstr(&strategy_buf, opts->strategy_opts);
+>> +	if (opts->ignore_whitespace)
+>> +		strbuf_addstr(&strategy_buf, " --ignore-space-change");
+>> +	if (strategy_buf.len)
+>> +		parse_strategy_opts(&replay, strategy_buf.buf);
+> 
+> Quite honestly, this is very, very ugly.
+> 
+> I would have expected this at a way earlier layer, namely in
+> `cmd__rebase()`. Something along these lines:
+
+Yes your version is definitely better, I'll update with that (I had left
+this patch mostly alone as unlike the later ones the original actually
+worked)
+
+> 
+> -- snip --
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 37ba76ac3d26..748e08aee2f2 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1289,6 +1289,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	struct strbuf revisions = STRBUF_INIT;
+>  	struct strbuf buf = STRBUF_INIT;
+>  	struct object_id merge_base;
+> +	int ignore_whitespace = 0;
+>  	enum action action = ACTION_NONE;
+>  	const char *gpg_sign = NULL;
+>  	struct string_list exec = STRING_LIST_INIT_NODUP;
+> @@ -1318,9 +1319,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
+>  		OPT_BOOL(0, "signoff", &options.signoff,
+>  			 N_("add a Signed-off-by: line to each commit")),
+> -		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &options.git_am_opts,
+> -				  NULL, N_("passed to 'git am'"),
+> -				  PARSE_OPT_NOARG),
+> +		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
+> +			 N_("passed to 'git am'")),
+>  		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
+>  				  &options.git_am_opts, NULL,
+>  				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+> @@ -1682,6 +1682,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		imply_merge(&options, "--rebase-merges");
+>  	}
+> 
+> +	if (ignore_whitespace) {
+> +		if (options.type == REBASE_APPLY)
+> +			argv_array_push(&options.git_am_opts,
+> +					"--ignore-whitespace");
+> +		else
+> +			string_list_append(&stragey_options,
+> +					   "--ignore-space-change");
+> +	}
+> +
+>  	if (strategy_options.nr) {
+>  		int i;
+> 
+> -- snap --
+> 
+> 
+>>
+>>  	if (opts->squash_onto) {
+>>  		oidcpy(&replay.squash_onto, opts->squash_onto);
+>>  		replay.have_squash_onto = 1;
+>>  	}
+>>
+>> +	strbuf_release(&strategy_buf);
+>>  	return replay;
+>>  }
+>>
+>> @@ -539,6 +547,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+>>  	argc = parse_options(argc, argv, prefix, options,
+>>  			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
+>>
+>> +	opts.strategy_opts = xstrdup_or_null(opts.strategy_opts);
+> 
+> I am not sure what this is about: `opts.strategy_opts` is of type `char
+> *`, i.e. it is supposed to be already allocated.
+> 
+> Not that `cmd_rebase__interactive()` matters _all_ that much anymore, of
+> course: it is only used by the --preserve-merges backend, which will
+> hopefully be retired soon.
+> 
+>> +
+>>  	if (!is_null_oid(&squash_onto))
+>>  		opts.squash_onto = &squash_onto;
+>>
+>> @@ -991,6 +1001,8 @@ static int run_am(struct rebase_options *opts)
+>>  	am.git_cmd = 1;
+>>  	argv_array_push(&am.args, "am");
+>>
+>> +	if (opts->ignore_whitespace)
+>> +		argv_array_push(&am.args, "--ignore-whitespace");
+>>  	if (opts->action && !strcmp("continue", opts->action)) {
+>>  		argv_array_push(&am.args, "--resolved");
+>>  		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
+>> @@ -1495,16 +1507,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>  			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
+>>  		OPT_BOOL(0, "signoff", &options.signoff,
+>>  			 N_("add a Signed-off-by: line to each commit")),
+>> -		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &options.git_am_opts,
+>> -				  NULL, N_("passed to 'git am'"),
+>> -				  PARSE_OPT_NOARG),
+>>  		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
+>>  				  &options.git_am_opts, NULL,
+>>  				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+>>  		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts, NULL,
+>>  				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+>>  		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
+>>  				  N_("passed to 'git apply'"), 0),
+>> +		OPT_BOOL(0, "ignore-whitespace", &options.ignore_whitespace,
+>> +			 N_("ignore changes in whitespace")),
+>>  		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
+>>  				  N_("action"), N_("passed to 'git apply'"), 0),
+>>  		OPT_BIT('f', "force-rebase", &options.flags,
+>> diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
+>> index 50e7960702..55ca46786d 100755
+>> --- a/t/t3422-rebase-incompatible-options.sh
+>> +++ b/t/t3422-rebase-incompatible-options.sh
+>> @@ -61,7 +61,6 @@ test_rebase_am_only () {
+>>  }
+>>
+>>  test_rebase_am_only --whitespace=fix
+>> -test_rebase_am_only --ignore-whitespace
+>>  test_rebase_am_only --committer-date-is-author-date
+>>  test_rebase_am_only -C4
+>>
+>> diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
+>> new file mode 100755
+>> index 0000000000..fb5e747e86
+>> --- /dev/null
+>> +++ b/t/t3436-rebase-more-options.sh
+>> @@ -0,0 +1,86 @@
+>> +#!/bin/sh
+>> +#
+>> +# Copyright (c) 2019 Rohit Ashiwal
+>> +#
+>> +
+>> +test_description='tests to ensure compatibility between am and interactive backends'
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +. "$TEST_DIRECTORY"/lib-rebase.sh
+>> +
+>> +# This is a special case in which both am and interactive backends
+>> +# provide the same output. It was done intentionally because
+>> +# both the backends fall short of optimal behaviour.
+>> +test_expect_success 'setup' '
+>> +	git checkout -b topic &&
+>> +	q_to_tab >file <<-\EOF &&
+>> +	line 1
+>> +	Qline 2
+>> +	line 3
+>> +	EOF
+>> +	git add file &&
+>> +	git commit -m "add file" &&
+>> +	cat >file <<-\EOF &&
+>> +	line 1
+>> +	new line 2
+>> +	line 3
+>> +	EOF
+>> +	git commit -am "update file" &&
+>> +	git tag side &&
+>> +
+>> +	git checkout --orphan master &&
+>> +	sed -e "s/^|//" >file <<-\EOF &&
+>> +	|line 1
+>> +	|        line 2
+>> +	|line 3
+>> +	EOF
+>> +	git add file &&
+>> +	git commit -m "add file" &&
+>> +	git tag main
+>> +'
+> 
+> The file contents are repeated in an awfully repetitive manner. That not
+> only makes things a bit hard to read, it also makes it all too easy to
+> slip in bugs by mistake. How about something like this instead?
+> 
+> 	test_commit file &&
+> 
+> 	test_write_lines line1 Qline2 line3 >templ &&
+> 
+> 	q_to_tab <templ >file.t &&
+> 	git commit -m tab file.t &&
+> 
+> 	sed "s/Q/new /" <templ >file.t &&
+> 	git commit -m new file.t &&
+> 	git tag side &&
+> 
+> 	git checkout file -- &&
+> 	sed "s/Q/        /" <templ >file.t &&
+> 	git commit -m spaces file.t
+
+I'm not totally convinced by this, I'd prefer to be able to read the
+contents rather than having to work out what sed is doing. What about
+
+test_write_lines "line 1" "	line 2" "line 3" >file &&
+add and commit
+test_write_lines "line 1" "new line 2" "line 3" >file &&
+commit and tag
+test_write_lines "line 1" "  line 2" "line 3" >file &&
+commit and tag
+
+It does not get rid of the repetition but it does dispense with having
+the work out what sed and q_to_tab are doing
+
+> ... and then...
+> 
+>> +
+>> +test_expect_success '--ignore-whitespace works with apply backend' '
+>> +	cat >expect <<-\EOF &&
+>> +	line 1
+>> +	new line 2
+>> +	line 3
+>> +	EOF
+> 
+> 	sed "s/Q/new /" <templ >expect
+> 
+>> +	test_must_fail git rebase --apply main side &&
+>> +	git rebase --abort &&
+>> +	git rebase --apply --ignore-whitespace main side &&
+>> +	test_cmp expect file
+> 
+> Personally, I prefer to read the contents of `expect` directly before the
+> `test_cmp expect file.t`
+
+I can move it but if we use sed you cannot see the contents
+
+>> +'
+>> +
+>> +test_expect_success '--ignore-whitespace works with merge backend' '
+>> +	cat >expect <<-\EOF &&
+>> +	line 1
+>> +	new line 2
+>> +	line 3
+>> +	EOF
+> 
+> Isn't this totally identical to the `expect` constructed earlier? And in
+> any case, isn't this identical to `git show main:file.t`, which is what we
+> _actually_ expect: for the file contents to be identical to the tagged
+> `main`? I.e.
+
+Well spotted I'll update (I think it's actually the same as side)
+
+> 	git diff --exit-code main
+> 
+>> +	test_must_fail git rebase --merge main side &&
+>> +	git rebase --abort &&
+>> +	git rebase --merge --ignore-whitespace main side &&
+>> +	test_cmp expect file
+>> +'
+>> +
+>> +test_expect_success '--ignore-whitespace is remembered when continuing' '
+>> +	cat >expect <<-\EOF &&
+>> +	line 1
+>> +	new line 2
+>> +	line 3
+>> +	EOF
+>> +	(
+>> +		set_fake_editor &&
+>> +		FAKE_LINES="break 1" git rebase -i --ignore-whitespace main side
+>> +	) &&
+>> +	git rebase --continue &&
+>> +	test_cmp expect file
+> 
+> It is a bit funny to see these two invocations _specifically_ pulled out
+> from the subshell, that's not how we do things in other test scripts:
+> instead, we run all the Git commands _inside_ the subshell, and all the
+> verifications after the subshell.
+
+The idea was to only set the variable where it is used.
+
+Best Wishes
+
+Phillip
+
+> I believe that with my suggestions, this test script will be a ton easier
+> to read and to maintain. At least it will be a lot DRYer.
+> 
+> Ciao,
+> Dscho
+> 
+>> +'
+>> +
+>> +# This must be the last test in this file
+>> +test_expect_success '$EDITOR and friends are unchanged' '
+>> +	test_editor_unchanged
+>> +'
+>> +
+>> +test_done
+>> --
+>> 2.26.2
+>>
+>>
+
