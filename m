@@ -2,181 +2,183 @@ Return-Path: <SRS0=PU/F=7O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC008C433DF
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 16:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74327C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 17:08:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B165D20734
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 16:54:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FFF0206E2
+	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 17:08:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e2daBkTz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726901AbgFAQyJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Jun 2020 12:54:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33430 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726125AbgFAQyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jun 2020 12:54:09 -0400
-Received: (qmail 29324 invoked by uid 109); 1 Jun 2020 16:54:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 01 Jun 2020 16:54:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12310 invoked by uid 111); 1 Jun 2020 16:54:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 01 Jun 2020 12:54:08 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 1 Jun 2020 12:54:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jan Christoph Uhde <Jan@UhdeJc.com>
-Cc:     git@vger.kernel.org
-Subject: Re: mmap failure in master 1aa69c73577df21f5e37e47cc40cf44fc049121e
-Message-ID: <20200601165408.GA2536619@coredump.intra.peff.net>
-References: <54a3a798-0387-64df-be20-af69db124042@UhdeJc.com>
- <20200601044511.GA2529317@coredump.intra.peff.net>
- <cfc79aec-ec85-dbec-e37b-6b7035b4c5a4@UhdeJc.com>
+        id S1726825AbgFARIT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Jun 2020 13:08:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726017AbgFARIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jun 2020 13:08:19 -0400
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE72C05BD43;
+        Mon,  1 Jun 2020 10:08:18 -0700 (PDT)
+Received: by mail-oo1-xc43.google.com with SMTP id n31so783959ooi.10;
+        Mon, 01 Jun 2020 10:08:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IuNX0RBOyq9ZMZHylOoUGOnRUxtAySELbUZxdQWAGnE=;
+        b=e2daBkTzwE7ZsjVzAHRtk4RLjPTRbd0XFDleV5g5ijfbgfFd+dEzdLKl+8vksRW0Hm
+         BDX6cm3YKV6Lrc/jLSxDv7xB1jpWkXCeo0KL9NTfpKLgKtIlZQAZPEqSO9KYmFmTQaOR
+         8OyZNsEzhXvWX9A4Uv1uxhxjS2o/mA8FkRZ+iwSY0n8NazYMlfICP3EPQ5JAcqZ5k7ht
+         M/O/HD9ipnw+c8/Xa4BGJnvA9EPOeNzfx2J9cl9W9j8MEPkc5w1l4LglO9C38iB8svj7
+         rRoFTg9gRVk45UDaV4RO03mA9jv3z/wdvwzdMs4lO0R89fcAU8GDquZVJ+xPOlMaseoN
+         Gr8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IuNX0RBOyq9ZMZHylOoUGOnRUxtAySELbUZxdQWAGnE=;
+        b=gUR54q+qkhhpyUwKJFn1s113HBNoqXe58nrQJBr1DJYNzWxZfUQ5rtp6/CqczWjvki
+         9otKCpRyqW+EzMW9JpNUYvCNHRwwVbPK2EPWLnElSa8yMQ4Y+YmxWcHfTVoPcxmwKNja
+         CuQyp3Tw5ahci4AL16r8UTrC4SYfg4+YRVl1w2ALgy/6bIrqvXZeyBUl2Ji36GjY7Bgb
+         iLbv/hJklYeNvNEEAAQ4JRhqw+NPLSYaJwSRkxI8dL0lP43xbqBOemnea2mVxV42KtPd
+         TjCoalDn5Qe5ykra22eOx2FX3rIvO7rYXeOuuem5xJ0m9nTDtd5+kSLTDSUY4MvYwAiQ
+         XYfQ==
+X-Gm-Message-State: AOAM5326dj/WTci5l2lBK+kzxAeIGntxDMAXmn/i0YL0bShZcz1GtBgs
+        XrQU6ktOeJ6daenRWGNZ71usUFZSF8Rl/BAjmK0y9fdflEQ=
+X-Google-Smtp-Source: ABdhPJwnlJTyc++OYB32+ItAiDcmLobzOA8nwNegzqr1Lrg6XsfjhESMBgV4Ea8bOFtAdVCiiJH+hQIbXpHKTeRziQg=
+X-Received: by 2002:a4a:91c2:: with SMTP id e2mr17601384ooh.45.1591031297817;
+ Mon, 01 Jun 2020 10:08:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cfc79aec-ec85-dbec-e37b-6b7035b4c5a4@UhdeJc.com>
+References: <xmqqzh9mu4my.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqzh9mu4my.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 1 Jun 2020 10:08:06 -0700
+Message-ID: <CABPp-BF+xvzroi5QU8zPp-7KoSS16v1CsM43vWx1WO5NjyU0BQ@mail.gmail.com>
+Subject: [ANNOUNCE] git-filter-repo v2.27.0 (Was: Re: [ANNOUNCE] Git v2.27.0)
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[re-adding list to cc; I think there are some interesting bits for
-discussion here]
+Hi,
 
-On Mon, Jun 01, 2020 at 08:41:08AM +0200, Jan Christoph Uhde wrote:
+On Mon, Jun 1, 2020 at 9:37 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> The latest feature release Git v2.27.0 is now available at the
+> usual places.  It is comprised of 537 non-merge commits since
+> v2.26.0, contributed by 71 people, 19 of which are new faces.
 
-> > Is it possible that your local repository has large number of packs? Git
-> > will leave open maps to each pack's index file, plus some packs
-> > themselves (ones we're accessing, plus we map+close small ones), plus
-> > whatever maps are used by libc to malloc.  The kernel default limit for
-> > the number of maps is 65530. If you have on the order of 30,000 packs
-> > you might run into this limit.
-> > 
-> > You can check the number of packs with "git count-objects -v", and the
-> 
-> » git count-objects -v
-> count: 0
-> size: 0
-> in-pack: 2399361
-> packs: 1
-> size-pack: 919395
-> prune-packable: 0
-> garbage: 0
-> size-garbage: 0
+The latest release of git-filter-repo, v2.27.0, is also now available.
+It is comprised of 26 non-merge commits since v2.26.0, including two
+changes from new contributors.
 
-OK, so that's just one pack (with a few million objects, which is
-expected).
+If you have been holding off on trying filter-repo because you didn't
+want to figure out how to convert your filter-branch or BFG commands,
+there are now cheat sheets for converting any example from the manual of
+either of those tools into equivalent filter-repo commands; see the last
+two links here:
 
-> > If that's the problem, the solution is to repack (which should also
-> > generally improve performance). If you have trouble repacking due to the
-> > limits, you can overcome the chicken and egg with:
-> > 
-> >    sysctl -w vm.max_map_count=131060
-> 
-> This fixes the problem indeed!
+    https://github.com/newren/git-filter-repo#how-do-i-use-it
 
-Now that surprises me. However, I can reproduce the issue with a fresh
-clone of gcc:
 
-  $ git clone https://github.com/gcc-mirror/gcc
-  $ cd gcc
-  $ git diff --quiet ;# works!
-  $ find . -type f | xargs touch ;# dirty the index entry for each file
-  $ git diff --quiet
-  fatal: mmap failed: Cannot allocate memory
+The public repo of filter-repo is at
 
-There are ~100k files in that repo. If we mmap each one as part of
-diff_populate_filespec(), we're going to end up with too many maps.
+    https://github.com/newren/git-filter-repo
 
-So we can easily reproduce this case without having to download the huge
-gcc repo:
+The tarballs can be found at:
 
-  git init repo
-  cd repo
-  for i in $(seq 70); do
-    mkdir $i
-    for j in $(seq 1000); do
-      echo "foo" >$i/$j
-    done
-  done
-  git add .
-  git commit -m 'add a bunch of files'
+    https://github.com/newren/git-filter-repo/releases
 
-  git diff --quiet
-  git ls-files | xargs touch
-  git diff --quiet
+git-filter-repo can also be installed via a variety of package managers
+across Windows, Mac OS, or Linux (and maybe others)[1].
 
-> What could be the reason that the problem only occurs with the `--quiet` flag
-> that I use in my prompt command, but not when using `git diff` without the flag.
+New contributors whose contributions weren't in v2.26.0 are as follows.
+Welcome to the git-filter-repo development community!
 
-That is curious, and I can reproduce it here.
+  * Kate F
+  * Marius Renner
 
-In the non-quiet case, we queue each filepair that we find to be
-stat-dirty. And then we call diffcore_skip_stat_unmatch() from
-diffcore_std() on the whole list. We load each file singly, see that
-it's not really a change (the index entries are just stat-dirty because
-of our touch), and then discard it.
+[1] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md
 
-Whereas in the --quiet case, we hit this code in diff_change when
-queuing each:
+----------------------------------------------------------------
 
-          if (options->flags.quick && options->skip_stat_unmatch &&
-              !diff_filespec_check_stat_unmatch(options->repo, p))
-                  return;
+git-filter-repo 2.27 Release Notes
+==================================
 
-          options->flags.has_changes = 1;
+(Note: Additional information is available for many release notes at
+    https://github.com/newren/git-filter-repo/issues/<NUMBER>)
 
-That code is trying to make sure we accurately set the has_changes flag
-in quick/quiet mode (because we can stop diffing as soon as we see a
-single change). Since none of these changes is interesting (they're all
-just stat-dirty entries), we have to keep going and look at each one.
-But this code leaves the populated filespec in the queue. Doing this
-makes "diff --quiet" succeed in this case:
+* Fixes:
+  * fix ugly bug with mixing path filtering and renaming (#96)
+  * suggest --no-local when cloning local repos (discourage use of --force)
+  * fix possible deadlock in sanity_check_args (#86)
+  * fix --prune-degenerate=never with path filtering (#92)
+  * throw an error if user specifies any path starting with a slash (#73)
+  * ensure we write final newline after final progress update (#84)
+  * repack with --source or --target (#66)
+  * make --version more robust against modified shebangs
+  * make git version requirement error message more direct (#94)
+  * allow removing .git directories from history
 
-diff --git a/diff.c b/diff.c
-index d1ad6a3c4a..2535614735 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6758,8 +6758,15 @@ void diff_change(struct diff_options *options,
- 		return;
- 
- 	if (options->flags.quick && options->skip_stat_unmatch &&
--	    !diff_filespec_check_stat_unmatch(options->repo, p))
-+	    !diff_filespec_check_stat_unmatch(options->repo, p)) {
-+		/*
-+		 * discard any populated data; this entry is uninteresting;
-+		 * we probably ought to avoid queuing the pair at all!
-+		 */
-+		diff_free_filespec_data(p->one);
-+		diff_free_filespec_data(p->two);
- 		return;
-+	}
- 
- 	options->flags.has_changes = 1;
- }
+* Documentation:
+  * fix typo in example (#69)
+  * add more detailed explanation of safety checks and --force
+  * add guides & cheat sheets for people converting from filter-branch or BFG
+  * add examples for --subdirectory-filter and --to-subdirectory-filter
+  * add missing documentation for --no-ff option (#92)
+  * add more --paths-from-file examples with large filtering lists
+  * clarify usage of --use-base-name
+  * streamline install instructions a bit
+  * and various other miscellaneous improvements and fixes
 
-But that's only because these aren't "real" changes. If we swap out our
-"touch" for:
+* contrib scripts:
+  * fix special character handling in filter-lamely (#71)
 
-  git ls-files | while read fn; do
-    echo bar >$fn
-  done
+* Miscellaneous:
+  * add sanity checks around release script
 
-then we have real changes. Our --quiet case will exit immediately once
-it sees a change, so it's OK. But now the non-quiet one will fail,
-because it's going to load each file to confirm that it's an actual
-change, but leave the mmap in place for when we do the actual
-content-level diff.
 
-So I think in general we do have problems diffing more than 65k working
-tree files in a single process because of this limit. It may still be
-worth doing something along the lines of the patch above, though,
-because it seems more likely for somebody to have 65k stat-dirty files
-than 65k actual changes.
+Changes since v2.26.0 are as follows:
 
--Peff
+Elijah Newren (24):
+      Makefile: a few sanity checks for releasing
+      filter-repo: fix bitrotted documentation links
+      filter-repo: suggest --no-local when cloning local repos
+      filter-repo: ensure we write final newline after final progress update
+      filter-repo: make --version more robust against modified shebangs
+      filter-repo: clarify usage of --use-base-name
+      git-filter-repo.txt: add examples for --[to-]subdirectory-filter
+      filter-repo: throw an error if user specifies any path starting
+with a slash
+      git-filter-repo.txt: add documentation of --no-ff option
+      filter-repo: allow removing .git directories from history
+      Documentation: add guides for people converting from filter-branch or BFG
+      git-filter-repo.txt: add more --paths-from-file examples with
+large filtering lists
+      INSTALL: streamline a bit and guide folks to package managers
+      filter-repo: fix --no-local error when there is no remote
+      Documentation: add more detailed explanation of safety checks and --force
+      filter-repo: make git version requirement error message more direct
+      filter-repo: fix possible deadlock in sanity_check_args
+      filter-repo: fix ugly bug with mixing path filtering and renaming
+      filter-repo: fix --prune-degenerate=never with path filtering
+      git-filter-repo.txt: fix extraneous space
+      filter-repo: repack with --source or --target
+      filter-repo (README): link cheat sheets from usage section too
+      filter-repo (README): separate sections for different tools
+      git-filter-repo.txt: connect --no-local and fresh clones more thoroughly
+
+Kate F (1):
+      git-filter-repo.txt: Fix typo for example
+
+Marius Renner (1):
+      contrib: fix special character handling in filter-lamely
