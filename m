@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77838C433E2
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84A1AC433E3
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 525982072F
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 643E92072F
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NhPMMq9y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vX6SVsbZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726003AbgFBERW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 00:17:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49150 "EHLO
+        id S1726012AbgFBERX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 00:17:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbgFBERU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 00:17:20 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77448C05BD43
-        for <git@vger.kernel.org>; Mon,  1 Jun 2020 21:17:19 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id j10so1876673wrw.8
-        for <git@vger.kernel.org>; Mon, 01 Jun 2020 21:17:19 -0700 (PDT)
+        with ESMTP id S1725930AbgFBERV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 00:17:21 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98082C061A0E
+        for <git@vger.kernel.org>; Mon,  1 Jun 2020 21:17:20 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id c3so1850608wru.12
+        for <git@vger.kernel.org>; Mon, 01 Jun 2020 21:17:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zAUxvrmQabyo5XtTJMcze18A6XkrCUCkok/k6x+PkAU=;
-        b=NhPMMq9ymQdZcItZWheQxAnxFVhQyH1CqWQd6B94pMof+2fBAEptqKDE+Ud315jxjq
-         WCSdgDmC+2GcY8FSkJvbNVJgkhLZ7cd8H/nI+huQ5TbSOtIl7/bbERG01nO1p7dGPelt
-         fVlvP+hJCfcaTFSTXMQBnjL/ZBKuDJVmsuQRToxHLBJmV5Y0cabv4KBPCITEIZUDAfDR
-         drp7+R3BoxKdxuKwLOynpeW5dLlYr3EQF833WaaZ23+Kc6s7yxHjf6gqWvvDxwh3teuj
-         hQBgQ2iSqgnJNJ69HMKRGbmlcw0HaDbwp7W0EKy05scOUfP3dD2WF4flSaxim/L7R6pb
-         AfYA==
+        bh=rIAqGSr0E2QrY1BV92Agexl6dH59N7rlDPfpK3T3/fg=;
+        b=vX6SVsbZdJGMNx5LPbdAUnbbSzjlUTRIvipbgjsbnzwlyeMm4qGrALkh/TWZrjzL04
+         pP7nELJKTsIQN5ftXXfrb/i4MwBk52RCILbwqflpi5OS6ym+NpD9x26++XW7HM8OqPcC
+         g97zEfuUtj9eY2KEKO2CD6Vx2JCEDX5tebBVKB+FuUzIkr2usxLnjuS3B1dtSwT1+HiB
+         syJUUA9ojqdAz6HEqFKygrdA+PAE86Q0Ap7PyVH4xWy46Lz5aGmQHnPBYf4BjazkUDAd
+         izup+lcSDas4zaVi76zOP18rwqRnd8fkdtn+lAVS+mSmhQw4CRHvTGTg49Q6knf/agjG
+         aI9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zAUxvrmQabyo5XtTJMcze18A6XkrCUCkok/k6x+PkAU=;
-        b=L2I63CZ3AYCgLonk7H7G8utEfnDy0bqXU/TK8YjQdEm2qGHS9y8x7JBvF3Y3eEUqfC
-         lUwdWo0bgAUY91GWCqGi4/KuQK1oCWx/dDFXma/rUH2ozvqsWdH0H3xvtm0q0IBJACl2
-         YQFVi874ERI6bQFuy7BOFntlgenmc/M4yhjoBmf60ziXe+AtlCMqNekcDBiRs66ZghSu
-         DMe2k4P8zqGqDKpjQMe4ii4SDaic0Q2bax30f/UV2LUbDd7nmtVSpJTLzaN3vZmB4wAG
-         zZT3w1jbRMrcSuY0FF+gaEGbikEg9uZmtPVdHntYW1NxSTh0Y9qi3MWniGLO328kE+Io
-         IWqg==
-X-Gm-Message-State: AOAM5336wSuJ0MFQ4WgqRKnyz8sHA52aBbtbmf6i8amWaMMe3vbdaCqf
-        yuVYZ+C7vNyha+rOFmoX3Kg+WxlUBmo=
-X-Google-Smtp-Source: ABdhPJwbxQvA93Ipp7vFP+uzhKKUDpNQs2byCHyzr9mgoQ0V0yqSem8qocX+6eHrKcx7u+RDfnr1ag==
-X-Received: by 2002:a5d:4a45:: with SMTP id v5mr24403193wrs.223.1591071437861;
-        Mon, 01 Jun 2020 21:17:17 -0700 (PDT)
+        bh=rIAqGSr0E2QrY1BV92Agexl6dH59N7rlDPfpK3T3/fg=;
+        b=WYsgkAQU4ZiTxTmcY/cyc4u2kUUoqojABETF/153OFIdunjm8njOcUWgiR/0USApne
+         piIcx97CrbxUfh3Yuq/QVDIckb3OMIv+1BLM5pCSFZTh3tqj81S036+Ymc/TkHuY4CmB
+         vOjzgbFKr0VpgSw6NdL7C4N6vpAwPL7chMvCfGI2Bs55sEy3OxhXRqwYYXf6irI53U6o
+         cs87ZmBI03GFAb7OIEjHTM5h9/bYmjzNwLnSOl0JrTEfvQ/Bk/Rf/K9QpCNdOOIBSv6a
+         yMfwTJVUdGIZUK1eUeJ81cnV1Ri63CIu/Y7N9rjHLpN1bXlO7UTcAbDCfMTvWGAgggDW
+         W1Hg==
+X-Gm-Message-State: AOAM531MtOaKlV+ONbdPnuAcBMwj+1zXUlbD9SwKbx61atAq+wWHbG7q
+        VS/IW1f0l3FonGfToQAq+E4w5n7TqvQ=
+X-Google-Smtp-Source: ABdhPJzEmSpqhspflswXLBPpdm92zqhmJNxlKcsT5UdyvHuOk2L0XsCmkuFUfInLR963g9tspkoTIA==
+X-Received: by 2002:adf:fd41:: with SMTP id h1mr25614206wrs.374.1591071439073;
+        Mon, 01 Jun 2020 21:17:19 -0700 (PDT)
 Received: from localhost.localdomain ([185.228.230.249])
-        by smtp.gmail.com with ESMTPSA id z2sm1717614wrs.87.2020.06.01.21.17.16
+        by smtp.gmail.com with ESMTPSA id z2sm1717614wrs.87.2020.06.01.21.17.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2020 21:17:17 -0700 (PDT)
+        Mon, 01 Jun 2020 21:17:18 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 01/13] upload-pack: actually use some upload_pack_data bitfields
-Date:   Tue,  2 Jun 2020 06:16:45 +0200
-Message-Id: <20200602041657.7132-2-chriscool@tuxfamily.org>
+Subject: [PATCH v2 02/13] upload-pack: annotate upload_pack_data fields
+Date:   Tue,  2 Jun 2020 06:16:46 +0200
+Message-Id: <20200602041657.7132-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.27.0.rc0.26.gf2851482f5
 In-Reply-To: <20200602041657.7132-1-chriscool@tuxfamily.org>
 References: <20200527164742.23067-1-chriscool@tuxfamily.org>
@@ -81,126 +81,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
-
 As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-more thoroughly, let's actually start using some bitfields of
-that struct, which were previously unused.
+more thoroughly, let's annotate fields from this struct to let
+people know which ones are used only for protocol v0 and which
+ones only for protocol v2.
 
-We could instead have just removed the following bitfields
-from the struct:
-
-unsigned use_thin_pack : 1;
-unsigned use_ofs_delta : 1;
-unsigned no_progress : 1;
-unsigned use_include_tag : 1;
-
-but using them makes it possible to remove a number of static
-variables with the same name and purpose from 'upload-pack.c'.
-
-This is a behavior change, as we accidentally used to let values
-in those bitfields propagate from one v2 "fetch" command to
-another for ssh/git/file connections (but not for http). That's
-fixing a bug, but one nobody is likely to see, because it would
-imply the client sending different capabilities for each request.
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- upload-pack.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ upload-pack.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 401c9e6c4b..2fa645834a 100644
+index 2fa645834a..3963a3805e 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -46,8 +46,7 @@ static timestamp_t oldest_have;
+@@ -70,12 +70,16 @@ static int allow_ref_in_want;
  
- static int multi_ack;
- static int no_done;
--static int use_thin_pack, use_ofs_delta, use_include_tag;
--static int no_progress, daemon_mode;
-+static int daemon_mode;
- /* Allow specifying sha1 if it is a ref tip. */
- #define ALLOW_TIP_SHA1	01
- /* Allow request of a sha1 if it is reachable from a ref (possibly hidden ref). */
-@@ -186,17 +185,17 @@ static void create_pack_file(struct upload_pack_data *pack_data)
- 	}
- 	argv_array_push(&pack_objects.args, "pack-objects");
- 	argv_array_push(&pack_objects.args, "--revs");
--	if (use_thin_pack)
-+	if (pack_data->use_thin_pack)
- 		argv_array_push(&pack_objects.args, "--thin");
+ static int allow_sideband_all;
  
- 	argv_array_push(&pack_objects.args, "--stdout");
- 	if (shallow_nr)
- 		argv_array_push(&pack_objects.args, "--shallow");
--	if (!no_progress)
-+	if (!pack_data->no_progress)
- 		argv_array_push(&pack_objects.args, "--progress");
--	if (use_ofs_delta)
-+	if (pack_data->use_ofs_delta)
- 		argv_array_push(&pack_objects.args, "--delta-base-offset");
--	if (use_include_tag)
-+	if (pack_data->use_include_tag)
- 		argv_array_push(&pack_objects.args, "--include-tag");
- 	if (pack_data->filter_options.choice) {
- 		const char *spec =
-@@ -955,17 +954,17 @@ static void receive_needs(struct upload_pack_data *data,
- 		if (parse_feature_request(features, "no-done"))
- 			no_done = 1;
- 		if (parse_feature_request(features, "thin-pack"))
--			use_thin_pack = 1;
-+			data->use_thin_pack = 1;
- 		if (parse_feature_request(features, "ofs-delta"))
--			use_ofs_delta = 1;
-+			data->use_ofs_delta = 1;
- 		if (parse_feature_request(features, "side-band-64k"))
- 			use_sideband = LARGE_PACKET_MAX;
- 		else if (parse_feature_request(features, "side-band"))
- 			use_sideband = DEFAULT_PACKET_MAX;
- 		if (parse_feature_request(features, "no-progress"))
--			no_progress = 1;
-+			data->no_progress = 1;
- 		if (parse_feature_request(features, "include-tag"))
--			use_include_tag = 1;
-+			data->use_include_tag = 1;
- 		if (allow_filter && parse_feature_request(features, "filter"))
- 			filter_capability_requested = 1;
++/*
++ * Please annotate, and if possible group together, fields used only
++ * for protocol v0 or only for protocol v2.
++ */
+ struct upload_pack_data {
+-	struct string_list symref;
+-	struct string_list wanted_refs;
++	struct string_list symref;				/* v0 only */
+ 	struct object_array want_obj;
+ 	struct object_array have_obj;
+-	struct oid_array haves;
++	struct oid_array haves;					/* v2 only */
++	struct string_list wanted_refs;				/* v2 only */
  
-@@ -997,7 +996,7 @@ static void receive_needs(struct upload_pack_data *data,
- 		check_non_tip(data);
+ 	struct object_array shallows;
+ 	struct string_list deepen_not;
+@@ -88,13 +92,14 @@ struct upload_pack_data {
  
- 	if (!use_sideband && daemon_mode)
--		no_progress = 1;
-+		data->no_progress = 1;
+ 	struct packet_writer writer;
  
- 	if (data->depth == 0 && !data->deepen_rev_list && data->shallows.nr == 0)
- 		return;
-@@ -1279,19 +1278,19 @@ static void process_args(struct packet_reader *request,
+-	unsigned stateless_rpc : 1;
++	unsigned stateless_rpc : 1;				/* v0 only */
  
- 		/* process args like thin-pack */
- 		if (!strcmp(arg, "thin-pack")) {
--			use_thin_pack = 1;
-+			data->use_thin_pack = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "ofs-delta")) {
--			use_ofs_delta = 1;
-+			data->use_ofs_delta = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "no-progress")) {
--			no_progress = 1;
-+			data->no_progress = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "include-tag")) {
--			use_include_tag = 1;
-+			data->use_include_tag = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "done")) {
+ 	unsigned use_thin_pack : 1;
+ 	unsigned use_ofs_delta : 1;
+ 	unsigned no_progress : 1;
+ 	unsigned use_include_tag : 1;
+-	unsigned done : 1;
++
++	unsigned done : 1;					/* v2 only */
+ };
+ 
+ static void upload_pack_data_init(struct upload_pack_data *data)
 -- 
 2.27.0.rc0.26.g636377a2c4
 
