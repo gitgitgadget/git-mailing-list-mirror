@@ -2,112 +2,109 @@ Return-Path: <SRS0=E3tc=7P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B960C433DF
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E95FC433E0
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:54:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C470620738
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:49:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 443FD206E2
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:54:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="P0et444q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jj5Ao6Sb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726420AbgFBQts (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 12:49:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56975 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbgFBQts (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 12:49:48 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92FCC6AF26;
-        Tue,  2 Jun 2020 12:49:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fD+fWvENcmV2oth93VBWF/Kx/3o=; b=P0et44
-        4qM/5TlwCePl3rkHM6ebYXdZbVY0BSBfnPnKm2uNLqC7siDgvVEISrl1cbV28zzi
-        LdHUL/c+B7oqHV/uoCLg6SQ8hSohoJfkKBVNBYt/tMuzugjMXLk6aLPsITSGqcHa
-        OeUrEEqBEuCRM3iTmZGyfqixHVOwrwWm1L1h8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bLkvpiWgYTGig4ALdmr4A407vtUHj+Dm
-        /5j44f/LUR3K/Za/VyZ3w2jDYdxoR8dzjaHBDY4zP5PxTLejbGq1skD6idJCSkTR
-        Rt1gR2c9Iw+T8nQLdTtJh7N/M+CYDS59uAUUrZ9hxeEJQcosNvo3xC+VZLbxhE0Y
-        7IhaLq8dT0Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B12C6AF25;
-        Tue,  2 Jun 2020 12:49:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 163E36AF24;
-        Tue,  2 Jun 2020 12:49:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jan Christoph Uhde <Jan@UhdeJc.com>, git@vger.kernel.org
-Subject: Re: [PATCH] diff: discard blob data from stat-unmatched pairs
-References: <54a3a798-0387-64df-be20-af69db124042@UhdeJc.com>
-        <20200601044511.GA2529317@coredump.intra.peff.net>
-        <cfc79aec-ec85-dbec-e37b-6b7035b4c5a4@UhdeJc.com>
-        <20200601165408.GA2536619@coredump.intra.peff.net>
-        <20200601202218.GA2763518@coredump.intra.peff.net>
-Date:   Tue, 02 Jun 2020 09:49:43 -0700
-In-Reply-To: <20200601202218.GA2763518@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 1 Jun 2020 16:22:18 -0400")
-Message-ID: <xmqqmu5ltntk.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726130AbgFBQyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 12:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725969AbgFBQyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 12:54:23 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD9FC05BD1E
+        for <git@vger.kernel.org>; Tue,  2 Jun 2020 09:54:23 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id 9so11975089ljc.8
+        for <git@vger.kernel.org>; Tue, 02 Jun 2020 09:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yZOTvjhjew6Tqx5jyccT5jVnfHJlCPMxmyUCyUvvJfE=;
+        b=jj5Ao6SbUGTH3shlZ26rq4gf5ZvKhSleR2J7OqmQmIVVM+UExx0grM8tG5xJgOhGPq
+         6CPnD/5uxrEU+UIitURTRRwRQyj0nrgVfULJAtK2xmGX2eMR6UEv7pQyV+kPN4eWVVhJ
+         Dq0nQV8//H6ys+4S2aPFLkFJHy5Y3PGDDtvgzSo9gDtDeMgVxkFY6F8nkgRRsA9d4xUl
+         cN4Lp8dNrOOBZJBmYnrVeNQI4eIop7eiII1AkGnT4pQ4oMwPrcsIhNjvdDVZ8O2w8qCi
+         P6bczDRfWjAe/OE4AYD1rAHYCGCNccArMmZGkEvtVJBhi/KIR06ZVRiMUDLHA3LDoBcX
+         c0lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yZOTvjhjew6Tqx5jyccT5jVnfHJlCPMxmyUCyUvvJfE=;
+        b=BpdfMqU7dQqnmOeZa/KC1y3lWrhgypLf8SEViYifW0Gz6sGEKbbwxRUI8Vd15KCkVP
+         3e/avsaTce8ojh7VaUC5kjFaHEi+R/WTSoOZRmha6g+xlaamyen3xijhqlLzjb0AEUOJ
+         KoQgtxzNYo/PhapEhRyeHiTo32MmNzlNIyhcRqSblJuTvI+OmiqnfHWhi9vMYiKWcHqV
+         EpspTj45L8WZH+QLtCLDw7HvfCm+ywYEnGm2IZ9pdp1rstWGI8OZSsQ7aqGC1fEKpQh6
+         EbSk8vgGIOIPtoeAjkMBT9RD/V7wdNHiSY2OTUSeXolrLJGLsxEdf8f8SqMnZAQXSSKK
+         0qFA==
+X-Gm-Message-State: AOAM532NheCLaNKXjsNFb16xgwl/rI6uWzoJ1ybmeriN77hxMmPItAlP
+        mCseQCphhqT2iG0Dz20QQyDBZWxEbcxQlOBefq0=
+X-Google-Smtp-Source: ABdhPJwuxfWtWbiocmTB2rA1tgs533bKoQoROYHvCM4jAzGSn+6wGM12/2LcnXWlGyfKATpcTXcZz/e2pj4KR+hoX3w=
+X-Received: by 2002:a05:651c:11c5:: with SMTP id z5mr53443ljo.220.1591116861746;
+ Tue, 02 Jun 2020 09:54:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0F6C61AA-A4F1-11EA-83F5-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <CAGKX4vGhTbEqZS9+iYA2wZWRRaddQC6O4KV+zLaNYKkZgN36Xg@mail.gmail.com>
+ <20200601214003.GA3309882@coredump.intra.peff.net> <xmqqr1uxtow4.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqr1uxtow4.fsf@gitster.c.googlers.com>
+From:   John Siu <john.sd.siu@gmail.com>
+Date:   Tue, 2 Jun 2020 12:54:10 -0400
+Message-ID: <CAGKX4vFcqQ_0XFb5qOku9wAxF3+fj-fByrm+zmSXHr3k60yjKw@mail.gmail.com>
+Subject: Re: Git multiple remotes push stop at first failed connection
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> Subject: [PATCH] diff: discard blob data from stat-unmatched pairs
+On Tue, Jun 2, 2020 at 12:26 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> When performing a tree-level diff against the working tree, we may find
-> that our index stat information is dirty, so we queue a filepair to be
-> examined later. If the actual content hasn't changed, we call this a
-> stat-unmatch; the stat information was out of date, but there's no
-> actual diff.  Normally diffcore_std() would detect and remove these
-> identical filepairs via diffcore_skip_stat_unmatch().  However, when
-> "--quiet" is used, we want to stop the diff as soon as we see any
-> changes, so we check for stat-unmatches immediately in diff_change().
+> Jeff King <peff@peff.net> writes:
 >
-> That check may require us to actually load the file contents into the
-> pair of diff_filespecs. If we find that the pair isn't a stat-unmatch,
-> then no big deal; we'd likely load the contents later anyway to generate
-> a patch, do rename detection, etc, so we want to hold on to it. But if
-> it a stat-unmatch, then we have no more use for that data; the whole
-> point is that we're going discard the pair. However, we never free the
-> allocated diff_filespec data.
+> > There's really no benefit to doing it all in a single Git process, as
+> > we'd connect to each independently, run a separate independent
+> > pack-objects for each, etc.
+> >
+> > I'd even suggest that Git implement such a loop itself, as we did for
+> > "git fetch --all", but sadly "push --all" is already taken for a
+> > different meaning (but it might still be worth doing under a different
+> > option name).
+>
 
-Nicely spotted.  So we can discard when quiet is in effect after
-this check, which makes sense.
+Yes. We notice the fetch/push --all is for branches.
 
-After reading the initial analysis, I wondered if the fix we did in
-f34b205f (diff: do not quit early on stat-dirty files, 2014-01-25)
-was suboptimal and we should have instead done the "if QUICK, check
-if the pair is merely stat-unmatch" in the loop(s) that call
-diff_change(), hoping that it may have given us a better control
-over the lifetime of the filespecs in each diff_filepair, but I do
-not think it would made much difference.
+> I wonder if it is possible to update the implementation to do so
+> without changing the UI at all, though.
+>
+> The presence of the "--all" option in "fetch" command is tied
+> closely to the fact that it makes no sense to have multiple URLs
+> that are used to download from at the same time under a single
+> remote name (e.g. what should "remotes/origin/master" point at if
+> two URLs say different things if such an arrangement were allowed?).
+>
+> On the other hand, the pushURL for a single remote can be multiple
+> places for redundancy (a possible #leftoverbits here is that we
+> should probably disable the "pretend that we immediately turned
+> around and fetched from them after pushing" optimization when
+> pushing to a remote that has multiple pushURLs defined) does not
+> need an extra option.  If the way we currently push is suboptimal
+> and it is better to spawn a separate "git push" instance via the
+> run_command() API, that can safely be done as a bugfix without
+> affecting any UI elements, no?
+>
 
->  	if (options->flags.quick && options->skip_stat_unmatch &&
-> -	    !diff_filespec_check_stat_unmatch(options->repo, p))
-> +	    !diff_filespec_check_stat_unmatch(options->repo, p)) {
-> +		diff_free_filespec_data(p->one);
-> +		diff_free_filespec_data(p->two);
->  		return;
-> +	}
-
-Thanks.  Will queue (with that s/it/& is/ typofix mentioned
-elsewhere).
-
+I agree a "bugfix" for push only is good enough and safe. As the
+current behavior is already pushing to all pushURLs of a single
+remote. We are not trying to change behavior or do anything extra.
