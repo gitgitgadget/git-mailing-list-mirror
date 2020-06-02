@@ -1,144 +1,87 @@
-Return-Path: <SRS0=PU/F=7O=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=E3tc=7P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07A3EC433DF
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 23:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2546AC433E0
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 00:46:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E065B2071E
-	for <git@archiver.kernel.org>; Mon,  1 Jun 2020 23:56:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8CC8207D5
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 00:46:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=rams-colostate-edu.20150623.gappssmtp.com header.i=@rams-colostate-edu.20150623.gappssmtp.com header.b="YQmNbnoR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728900AbgFAX4X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Jun 2020 19:56:23 -0400
-Received: from smtp-1a.his.com ([216.194.196.25]:59863 "EHLO smtp-1a.his.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726472AbgFAX4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jun 2020 19:56:22 -0400
-Received: from cuda201.his.com (cuda201.his.com [216.194.196.22])
-        by smtp-1a.his.com (Postfix) with ESMTPS id 795CF2AEC
-        for <git@vger.kernel.org>; Mon,  1 Jun 2020 19:56:21 -0400 (EDT)
-X-ASG-Debug-ID: 1591055721-061c413ab036f70001-QuoKaX
-Received: from smtp-nf-202.his.com (smtp-nf-202.his.com [216.194.196.20]) by cuda201.his.com with ESMTP id V5Insh7TufnEDREM; Mon, 01 Jun 2020 19:55:21 -0400 (EDT)
-X-Barracuda-Envelope-From: keni@his.com
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
-Received: from zproxy101.his.com (zproxy101.his.com [18.218.2.49])
-        by smtp-nf-202.his.com (Postfix) with ESMTPS id 0512F6095B;
-        Mon,  1 Jun 2020 19:55:21 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by zproxy101.his.com (Postfix) with ESMTP id C282617806C;
-        Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
-X-Barracuda-RBL-IP: 18.218.2.49
-X-Barracuda-Effective-Source-IP: zproxy101.his.com[18.218.2.49]
-X-Barracuda-Apparent-Source-IP: 18.218.2.49
-Received: from zproxy101.his.com ([127.0.0.1])
-        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id iVrhqNZ1OuIs; Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by zproxy101.his.com (Postfix) with ESMTP id AA4A317806B;
-        Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at zproxy101.his.com
-Received: from zproxy101.his.com ([127.0.0.1])
-        by localhost (zproxy101.his.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id N4KPSw34jC09; Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
-Received: from [192.168.1.168] (pool-74-96-209-77.washdc.fios.verizon.net [74.96.209.77])
-        by zproxy101.his.com (Postfix) with ESMTPSA id 808A9178069;
-        Mon,  1 Jun 2020 19:55:20 -0400 (EDT)
+        id S1725985AbgFBAqE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Jun 2020 20:46:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44450 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725793AbgFBAqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jun 2020 20:46:03 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87DA7C061A0E
+        for <git@vger.kernel.org>; Mon,  1 Jun 2020 17:46:01 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id c8so8996854iob.6
+        for <git@vger.kernel.org>; Mon, 01 Jun 2020 17:46:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rams-colostate-edu.20150623.gappssmtp.com; s=20150623;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=BxtBYcw7PMyM4OnZEsQWKCObY8j6Cr/n1eLoBgs7MnA=;
+        b=YQmNbnoRVgHuR7MM2McK+heofpqc6vEC1d/g2soaK50392zJOiwoi2wvFueQLzBx7E
+         wCf4TwOa6GW89V0rhsDHd0qCCwDIMnuPMchfbJOYmE23Q2O5ZoHq9o1in3tIbc9jNbYi
+         GTIDKwAA0UvKwctfaEu2mXlm/B69uoJA1Ic37UXC2+ANMMYAiKgkE10cPCGohRBLo3bI
+         493GSNDLMMETCrwAnARY9HPJ8hNTCI9iistqVm5xS8R3JPDOWocp98TJ0yI8muq9lkHK
+         M+5JZkA7Igy/wn3LJ/Tmlm0RtD56lls8gqFEteJw/Yg5iHko0VHifayKm09zilMEWPzz
+         Tcqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=BxtBYcw7PMyM4OnZEsQWKCObY8j6Cr/n1eLoBgs7MnA=;
+        b=exqbgXk/rVZFs1SW4uk/UHJCRskVsj9zolUw+OxpMYlTP1t4ebeUthEQFMyVWuGfuS
+         kF70Brs7c1J228FJYLNvOaJ/fnHyJCVhrxDLRlUFwGjbTUPMXDEKjBjSB+1dhBedSVUg
+         Tvezhchi9jMEaju2xaQH7qz08UwPDzF7Vn9yglCyx0Z860IYqEcLjRxlryD2JHOX3cjP
+         VD2Jwhs4/wxiMfPsYui3AnGBB+TykwracbELzlXjGVvLMlkJt89j7k9PJDzz/KWuHP3l
+         btgaDpG70jiSewRZZZSX6QBx07nLg8MFQQyzeOwSGsQ3KRsdekvAYa6xcCjACKueETbK
+         YqRQ==
+X-Gm-Message-State: AOAM531qGuTgHHrAkjTXdAWh9FRkkcIvIpqtFXuzb6BtYDcgSch0GEW2
+        nru/4MhbWepujpWMOzo2WsiGF6+gDXE=
+X-Google-Smtp-Source: ABdhPJxdERUSePjhAsptraqXGe9XklXOJWYjWYcOEjO+Qosr1roa73m1aSSHQ9OG6zIrE27OaOerQw==
+X-Received: by 2002:a02:b88e:: with SMTP id p14mr22632822jam.36.1591058759798;
+        Mon, 01 Jun 2020 17:45:59 -0700 (PDT)
+Received: from [10.180.91.251] (host-110-27.cofcdis.ftcollins.co.us.clients.pavlovmedia.net. [68.180.110.27])
+        by smtp.gmail.com with ESMTPSA id f26sm410031ion.23.2020.06.01.17.45.59
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jun 2020 17:45:59 -0700 (PDT)
+From:   Jimit Bhalavat <jimit@rams.colostate.edu>
 Content-Type: text/plain;
         charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: [RFC PATCH v2 3/6] doc: Add namespace collision guidelines file
-From:   Kenneth Lorber <keni@his.com>
-X-ASG-Orig-Subj: Re: [RFC PATCH v2 3/6] doc: Add namespace collision guidelines file
-In-Reply-To: <xmqqo8q73lkf.fsf@gitster.c.googlers.com>
-Date:   Mon, 1 Jun 2020 19:55:20 -0400
-Cc:     git@vger.kernel.org, Kenneth Lorber <keni@his.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <4654CD5E-6802-4277-AFDE-0DD09A40986B@his.com>
-References: <1589681624-36969-1-git-send-email-keni@hers.com>
- <20200525232727.21096-1-keni@his.com> <20200525232727.21096-4-keni@his.com>
- <xmqqy2pb3new.fsf@gitster.c.googlers.com>
- <xmqqo8q73lkf.fsf@gitster.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
-X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
-X-Barracuda-Start-Time: 1591055721
-X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Scan-Msg-Size: 2415
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=6.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.82261
-        Rule breakdown below
-         pts rule name              description
-        ---- ---------------------- --------------------------------------------------
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Jimit Bhalavat [Hyperledger Git Commit Signing]
+Message-Id: <81807F23-6218-46C2-B8AF-C84375F267E8@rams.colostate.edu>
+Date:   Mon, 1 Jun 2020 18:42:47 -0600
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Good Evening,
 
+I am Jimit Bhalavat, a junior at Colorado State University, majoring in =
+Computer Science and minors in Mathematics and Statistics. I am going to =
+continue working on Hyperledger Git Commit Signing project and carry on =
+the work from Summer 2019.=20
 
-> On May 28, 2020, at 3:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Kenneth Lorber <keni@his.com> writes:
->> 
->>> +Git uses identifiers in a number of different namespaces:
->>> +
->>> +* environment variables
->>> +* files in $GIT_DIR
->>> +* files in the working trees
->>> +* config sections
->>> +* hooks
->>> +* attributes
->> 
->> The names of the subcommands "git" can spawn is a shared resource.
->> You can install "git-imerge" program in one of the directories on
->> your $PATH and say "git imerge" to invoke the program.  
->> 
->> Two third-party developers may have to coordinate to avoid giving
->> the same name to their totally-unrelated tools, if they hope that
->> both of their tools to be useful in the larger Git ecosystem.
-> 
-> Also names of worktrees that are attached to a single repository.
-> If a third-party tool wants to make it "easy" for its users by
-> automatically taking a name to do its job (instead of forcing the
-> users to come up with a name and giving it to the tool), the name
-> must be chosen in such a way that it does not collide names in use
-> and names the user (or other third-party tools) will pick in the
-> future.
+Just wanted to introduce myself.
 
-One more, but only as an issue to be documented - you don't need to
-convince me that trying to handle this should simply be declared
-"left as an exercise for the reader" and that's extensions that
-require being compiled in to git (so file names, global variables,
-functions, test names, etc).
+Thank you.
 
-I'd propose "Do something similar to the above or ask for help on
-the list" if that's acceptable (where "above" is whatever the current
-proposal turns into).
-
-
-> 
-> I (or others) may come up with other things that must be named and
-> name collisions must be avoided.  Even though I already said that I
-> didn't think the "suggestions to avoid name collisions" given by the
-> RFC PATCH are well done, I do think it is worth being aware of the
-> problem space, and enumerating what kind of names are shared and
-> limited resource is the first step to become so.
-
-Each message seems less enthusiastic than the last.  I'm not sure I see any
-point in creating a v3 until I have time and inspiration to write
-something significantly different.
-
-> 
-> Thanks.
-
-You're welcome.
-
-PS - nothing to reply to in the next 2 messages from you.  Saved them for v3.
+Best,
+Jimit Bhalavat.=
