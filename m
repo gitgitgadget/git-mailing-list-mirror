@@ -2,140 +2,107 @@ Return-Path: <SRS0=E3tc=7P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED64C433DF
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0BDDC433E0
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:21:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29306206E2
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:11:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A63712074B
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:21:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F7VpPK0n"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AcSmvbpU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727776AbgFBTLN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 15:11:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46474 "EHLO
+        id S1726420AbgFBTV0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 15:21:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726420AbgFBTLM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 15:11:12 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B9FC08C5C0
-        for <git@vger.kernel.org>; Tue,  2 Jun 2020 12:11:11 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id n24so13888600ejd.0
-        for <git@vger.kernel.org>; Tue, 02 Jun 2020 12:11:10 -0700 (PDT)
+        with ESMTP id S1726139AbgFBTV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 15:21:26 -0400
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C84EC08C5C0
+        for <git@vger.kernel.org>; Tue,  2 Jun 2020 12:21:25 -0700 (PDT)
+Received: by mail-oo1-xc34.google.com with SMTP id e8so1954355ooi.11
+        for <git@vger.kernel.org>; Tue, 02 Jun 2020 12:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=06Go+qkYFYP4YFXm231GpMn7fJo4+RuYYTziC5rcMd8=;
-        b=F7VpPK0nxowBMwuVFCDGBBi7gW4Pe/68069yO10B5Upeo/B7kJvwUiPCIq7z4+2VRC
-         8UTtHFlpfEGKXH3jgptX/hZ3jy3eWkogVgTBIVbj/be+IjGcFoa/DZlf5zZI6TK29C6O
-         VhyELCsG/asWuLFe0O/xhdCCcsaJfTSRfBD3FCuJax97DxbHMTUeSj6oWnDDX+qqjDbK
-         lmHvK/GdNwx66yec/n/tBdP2bcXC2D4arNRQw0vC2x4KuZ2ky2v1gcovSkILZK7scKz8
-         +2+Su9TWBOECOAgwgOfy6XNgocoyRhfxoW7230eXGNE3xEV6emEqZCRIQNGEKoIsztFq
-         Tu5Q==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=YpIFREdAE88dN87RMr6DlroEh4klu901a3Q03mOwG0I=;
+        b=AcSmvbpUfpdBRbKBQ95+Mnj6rfBmPURsVs2/w1yuEdoYFNMsvqdl0cj2tjE6uefH4/
+         yVw3td0llohsoptH2tuMJ3B4Wm1sxwEEDC1hdsAl7cTCQUJN+dn/+A8PNNyDY7sH38Zl
+         amUegZODqUMfbW30mwJCR87dvznAAalGwMzMIP82NuCJQADs/AmjiIyQ5RRtwCEpqBOw
+         RHD5HdzoeNvE4O80OZ+ial9W4uuNr0rFs7se0waqNtptppNkNMM9rRg+y+HICpF8/k18
+         SRnR1MxqGjhYcMfJjT7PNmoHDhZU3qnJD38eqwZO0kvVxxVIe7zVrR0MTp4f2M1MVfaD
+         MExQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=06Go+qkYFYP4YFXm231GpMn7fJo4+RuYYTziC5rcMd8=;
-        b=i7ggFVack5mo+BzKsPTU0HIV4tMGG2GsHKZnpBPCCu8vxuHm7RJasvF451/2aWmEY4
-         cPaQbVZmAI2zsk73BmC8FKxoOpXuQWxAM/nmsRuXrxF0r6Tcn4Km2vFOO8yjO3mgRXq7
-         cTucM/zwi+8cacoX9N02kPG3e6lwCO+PfxP4GyZQKAmj2GZCE53ZXpkX3ry6Jo0XLH8V
-         Efq2nFeCGA28EyB3zxUxgcGBIOPpQOgNWqlCV6BRKXqnvdhKm6C2bz8UIlQ+7+/4GoIa
-         owGkKvzqwpUUvpHjxyuoFpzsPWQxQciS6rG2pJCTykathheImQJM6ndpDCHCgP5hXr/Y
-         fu7Q==
-X-Gm-Message-State: AOAM5301xBp9UxaknkDkvoi/eEBdnoW2EyS9jFqTZ+Jhq21zjmG8iHJb
-        ebrHrEbjh4YqW/PXKF7tqcU1qSvZ/xusJsx5Lms87vgk
-X-Google-Smtp-Source: ABdhPJyN1gZIkufeB4+YNBpx+HLIO1xUNrnOeyyxhVECRP1q+YwhH4KYNe+xQmQYGlfrAAc1FK+Ze2tb54Z9+HgFz/A=
-X-Received: by 2002:a17:906:e47:: with SMTP id q7mr11347125eji.279.1591125069424;
- Tue, 02 Jun 2020 12:11:09 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=YpIFREdAE88dN87RMr6DlroEh4klu901a3Q03mOwG0I=;
+        b=Ar6f88o6CnzNJ1Mxo8JSth0tb6as1If0HFtvUCx5rhOIAtDi5RHkoF4JQ0OLiHh6R5
+         lw3q+mdUNF+9+a/2b/0kkuiPyyEzyfX+MrkVgU/8WR1yOoJ2ELBm0f9zRJVsC3KvL7AX
+         rLgR5IXYVqx3RcJIBCX5HZOhSF/nzfEkyd9PunPR/0RAAQwA2vyNcAPU8kCXBwc699YL
+         ec7dblyyYcEApDDILjnzOIdKSCBbzJ4OtzeMnshZOt4j+spGaTdjtvhXf3Vwi14USOfl
+         SdVdOz5WF5K44dOKXdn9FGr2Oyx1SFK7Gzp9FGgx0AiTk1aAkdeikiZZgdWSB+hCHwRC
+         6nzQ==
+X-Gm-Message-State: AOAM532MBAPdNJarPY6X3goIBAj+CVlBd9LUamkJ+YJULxF/9NAuTqPA
+        cGSe/iBSfBiPiRX8MN74UDGdipZGweNqagF4BFFAzTuyxhM=
+X-Google-Smtp-Source: ABdhPJzVTTkHmhTss19RVnDDOD1chssK31G3/PUCldy+szNpdgP47hxgJAs4hOXXRKu07ZokmRsjWnsio5TJWUGuTCg=
+X-Received: by 2002:a4a:91c2:: with SMTP id e2mr21607113ooh.45.1591125684539;
+ Tue, 02 Jun 2020 12:21:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200523163929.7040-1-shouryashukla.oo@gmail.com>
- <20200602163523.7131-1-shouryashukla.oo@gmail.com> <1b851e49-3bb1-3b59-7f24-b903c5514391@gmail.com>
-In-Reply-To: <1b851e49-3bb1-3b59-7f24-b903c5514391@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Date:   Wed, 3 Jun 2020 00:40:58 +0530
-Message-ID: <CA+ARAtoDzoU=eu0mJom7LwVF60k4CtiuBha-RC7zkx9o7O=H3A@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v5] submodule: port subcommand 'set-branch' from
- shell to C
-To:     Git Users <git@vger.kernel.org>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        congdanhqx@gmail.com, Junio C Hamano <gitster@pobox.com>,
-        liu.denton@gmail.com, Eric Sunshine <sunshine@sunshineco.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 2 Jun 2020 12:21:13 -0700
+Message-ID: <CABPp-BEswHLhymQ1_07g3qqu=7kFR3eQyAHR0qMgSvi6THy=zQ@mail.gmail.com>
+Subject: Huge push upload despite only having a tiny change
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 3, 2020 at 12:31 AM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
->
-> I also noticed one other thing. A quote from
-> Documentation/CodingGuidelines regarding the usage for reference:
->
-> >  Optional parts are enclosed in square brackets:
-> >    [<extra>]
-> >    (Zero or one <extra>.)
-> >
-> >    --exec-path[=<path>]
-> >    (Option with an optional argument.  Note that the "=" is inside the
-> >    brackets.)
-> >
-> >    [<patch>...]
-> >    (Zero or more of <patch>.  Note that the dots are inside, not
-> >    outside the brackets.)
-> >
-> >  Multiple alternatives are indicated with vertical bars:
-> >    [-q | --quiet]
-> >    [--utf8 | --no-utf8]
-> >
-> >  Parentheses are used for grouping:
-> >    [(<rev> | <range>)...]
-> >    (Any number of either <rev> or <range>.  Parens are needed to make
-> >    it clear that "..." pertains to both <rev> and <range>.)
-> >
-> >    [(-p <parent>)...]
-> >    (Any number of option -p, each with one <parent> argument.)
-> >
-> >    git remote set-head <name> (-a | -d | <branch>)
-> >    (One and only one of "-a", "-d" or "<branch>" _must_ (no square
-> >    brackets) be provided.)
->
-> So, according to this, I think the usage should be ...
->
->      git submodule--helper set-branch [-q | --quiet] [-d | --default] <path>
->
-> ... and ...
->
->      git submodule--helper set-branch [-q|--quiet] [-b |
-> --branch]<branch> <path>
->
+Hi,
 
-Apologies, my mail client messed a little with the formatting.
-This should actually be:
+I had a user report that two nearly identical pushes (the second being
+an amended commit of the first) took dramatically differing amounts of
+time and amount of data uploaded (from 4.5 seconds and about 21k
+uploaded, to 223 seconds and over 100 MB uploaded).
 
-    git submodule--helper set-branch [-q | --quiet] [-b | --branch]
-<branch> <path>
+I'm curious if this might be a known issue; it sounds similar to some
+push protocol discussion I remember from the contributor's summit (but
+I don't know anything on the protocol side and tend to work on other
+things during protocol discussion).  If this does sound like a known
+issue, does anyone have links to some relevant discussion I can read
+up on (and perhaps pass long to this user)?  If it doesn't sound like
+a known issue, what other things would be useful for me to dig up?
 
-> ... respectively.
->
-> > +             NULL
-> > +     };
->
-> ---
-> Footnotes:
->
-> [1]:
-> https://github.com/periperidip/git/commit/9a8918bf0688c583740b3dddafdba82f47972442#r39606384
->
+Additional details:
+* Both pushes involved cases where the user had a single commit that
+the server didn't.
+* The parent of the commit that needed to be pushed was the same in both cases.
+* The commit in question was small; modifying either 13 or 15 lines of
+two files that were each less than about 8k in size.
+* The user was pushing up a new branch each time, but the new branch
+was closely related to an existing branch (i.e. had all but a few
+commits of history in common)
+* The user was two commits behind the closely-related branch at the
+time of the first push, and 10 commits behind at the time of the
+second push.  Running format-patch on these 10 commits that were on
+the server at the time shows their size is at most about ~55 k.
+* The server has a huge number of refs; about 470k of them (most of
+them related to code reviews).
+* The server was running Gerrit 3.1.4 (i.e. jgit).
+* The user was using a version of git based off master from a few
+weeks ago, in particular, with a few changes on top of commit
+b994622632 ("The eighth batch", 2020-05-08).  I don't think the few
+internal changes could affect anything here, but those changes were:
+(1) making features.experimental default to true (which only turns on
+two fetch settings as far as I can tell), (2) making
+merge.directoryRenames default to true, and (3) setting a few trace2.*
+config settings by default.
 
--- 
-Sivaraam
+Thanks,
+Elijah
