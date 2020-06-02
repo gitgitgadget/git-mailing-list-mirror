@@ -2,109 +2,138 @@ Return-Path: <SRS0=E3tc=7P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E95FC433E0
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FC63C433E0
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:55:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 443FD206E2
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:54:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0E79206E2
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 16:55:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jj5Ao6Sb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zy2yBmh9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726130AbgFBQyY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 12:54:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725969AbgFBQyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 12:54:23 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD9FC05BD1E
-        for <git@vger.kernel.org>; Tue,  2 Jun 2020 09:54:23 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id 9so11975089ljc.8
-        for <git@vger.kernel.org>; Tue, 02 Jun 2020 09:54:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yZOTvjhjew6Tqx5jyccT5jVnfHJlCPMxmyUCyUvvJfE=;
-        b=jj5Ao6SbUGTH3shlZ26rq4gf5ZvKhSleR2J7OqmQmIVVM+UExx0grM8tG5xJgOhGPq
-         6CPnD/5uxrEU+UIitURTRRwRQyj0nrgVfULJAtK2xmGX2eMR6UEv7pQyV+kPN4eWVVhJ
-         Dq0nQV8//H6ys+4S2aPFLkFJHy5Y3PGDDtvgzSo9gDtDeMgVxkFY6F8nkgRRsA9d4xUl
-         cN4Lp8dNrOOBZJBmYnrVeNQI4eIop7eiII1AkGnT4pQ4oMwPrcsIhNjvdDVZ8O2w8qCi
-         P6bczDRfWjAe/OE4AYD1rAHYCGCNccArMmZGkEvtVJBhi/KIR06ZVRiMUDLHA3LDoBcX
-         c0lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yZOTvjhjew6Tqx5jyccT5jVnfHJlCPMxmyUCyUvvJfE=;
-        b=BpdfMqU7dQqnmOeZa/KC1y3lWrhgypLf8SEViYifW0Gz6sGEKbbwxRUI8Vd15KCkVP
-         3e/avsaTce8ojh7VaUC5kjFaHEi+R/WTSoOZRmha6g+xlaamyen3xijhqlLzjb0AEUOJ
-         KoQgtxzNYo/PhapEhRyeHiTo32MmNzlNIyhcRqSblJuTvI+OmiqnfHWhi9vMYiKWcHqV
-         EpspTj45L8WZH+QLtCLDw7HvfCm+ywYEnGm2IZ9pdp1rstWGI8OZSsQ7aqGC1fEKpQh6
-         EbSk8vgGIOIPtoeAjkMBT9RD/V7wdNHiSY2OTUSeXolrLJGLsxEdf8f8SqMnZAQXSSKK
-         0qFA==
-X-Gm-Message-State: AOAM532NheCLaNKXjsNFb16xgwl/rI6uWzoJ1ybmeriN77hxMmPItAlP
-        mCseQCphhqT2iG0Dz20QQyDBZWxEbcxQlOBefq0=
-X-Google-Smtp-Source: ABdhPJwuxfWtWbiocmTB2rA1tgs533bKoQoROYHvCM4jAzGSn+6wGM12/2LcnXWlGyfKATpcTXcZz/e2pj4KR+hoX3w=
-X-Received: by 2002:a05:651c:11c5:: with SMTP id z5mr53443ljo.220.1591116861746;
- Tue, 02 Jun 2020 09:54:21 -0700 (PDT)
+        id S1726162AbgFBQzM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 12:55:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54035 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725969AbgFBQzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 12:55:12 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D474674666;
+        Tue,  2 Jun 2020 12:55:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vgTg36KWSitcnubu8Yo9rsfVhGU=; b=Zy2yBm
+        h9KrLBVhIM7461Aau9d8woJsk3G/AqKt0qiixlV7F3o2Jy/z9nO6jHhrPbon6Rvv
+        iI9HaZ7dVSm8bfkluuSjEGsqVEzOkurP0F++X8IxaXbnXHoF9EjGo55Ia+AAz+6r
+        X5mpxLmH6bHdrn6fdyXTe/QKkQ0yhz930PkOQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CMQBRjoqyZz+S+pXMcaHA4I8dJKnWnC3
+        bgQ2IMtTj6YEDcLNRa0Hni0FTIfDynZbgNmzxvdNaZVsYOqHXiSqUHyaBgau3tSk
+        UaGW1/nXZ1BPPR17NgMtZRhVSG7LQORMyNq3wyCqEAdWLFIfGnON/T9H6XVF6E4X
+        RvQZVmH7Yoo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF84074665;
+        Tue,  2 Jun 2020 12:55:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21FF874664;
+        Tue,  2 Jun 2020 12:55:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] clone/fetch: anonymize URLs in the reflog
+References: <pull.797.git.git.1591039202561.gitgitgadget@gmail.com>
+        <20200601214715.GB3309882@coredump.intra.peff.net>
+Date:   Tue, 02 Jun 2020 09:55:07 -0700
+In-Reply-To: <20200601214715.GB3309882@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 1 Jun 2020 17:47:15 -0400")
+Message-ID: <xmqqimg9tnkk.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAGKX4vGhTbEqZS9+iYA2wZWRRaddQC6O4KV+zLaNYKkZgN36Xg@mail.gmail.com>
- <20200601214003.GA3309882@coredump.intra.peff.net> <xmqqr1uxtow4.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqr1uxtow4.fsf@gitster.c.googlers.com>
-From:   John Siu <john.sd.siu@gmail.com>
-Date:   Tue, 2 Jun 2020 12:54:10 -0400
-Message-ID: <CAGKX4vFcqQ_0XFb5qOku9wAxF3+fj-fByrm+zmSXHr3k60yjKw@mail.gmail.com>
-Subject: Re: Git multiple remotes push stop at first failed connection
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D092C356-A4F1-11EA-928D-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 2, 2020 at 12:26 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jeff King <peff@peff.net> writes:
->
-> > There's really no benefit to doing it all in a single Git process, as
-> > we'd connect to each independently, run a separate independent
-> > pack-objects for each, etc.
-> >
-> > I'd even suggest that Git implement such a loop itself, as we did for
-> > "git fetch --all", but sadly "push --all" is already taken for a
-> > different meaning (but it might still be worth doing under a different
-> > option name).
->
+Jeff King <peff@peff.net> writes:
 
-Yes. We notice the fetch/push --all is for branches.
+> On Mon, Jun 01, 2020 at 07:20:02PM +0000, Johannes Schindelin via GitGitGadget wrote:
+>
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> 
+>> Even if we strongly discourage putting credentials into the URLs passed
+>> via the command-line, there _is_ support for that, and users _do_ do
+>> that.
+>> 
+>> Let's scrub them before writing them to the reflog.
+>
+> Good idea.
+>
+>>     This came up in an internal audit, but we do not consider this to be a
+>>     big deal: the reflog is local and not really shared with anybody.
+>
+> Agreed.
 
-> I wonder if it is possible to update the implementation to do so
-> without changing the UI at all, though.
->
-> The presence of the "--all" option in "fetch" command is tied
-> closely to the fact that it makes no sense to have multiple URLs
-> that are used to download from at the same time under a single
-> remote name (e.g. what should "remotes/origin/master" point at if
-> two URLs say different things if such an arrangement were allowed?).
->
-> On the other hand, the pushURL for a single remote can be multiple
-> places for redundancy (a possible #leftoverbits here is that we
-> should probably disable the "pretend that we immediately turned
-> around and fetched from them after pushing" optimization when
-> pushing to a remote that has multiple pushURLs defined) does not
-> need an extra option.  If the way we currently push is suboptimal
-> and it is better to spawn a separate "git push" instance via the
-> run_command() API, that can safely be done as a bugfix without
-> affecting any UI elements, no?
->
+Nice.
 
-I agree a "bugfix" for push only is good enough and safe. As the
-current behavior is already pushing to all pushURLs of a single
-remote. We are not trying to change behavior or do anything extra.
+>>  builtin/clone.c            | 10 ++++++----
+>>  builtin/fetch.c            |  9 +++++++--
+>>  t/t5541-http-push-smart.sh | 15 +++++++++++++++
+>
+> The patch itself looks very neatly done.
+>
+>> @@ -993,11 +993,13 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>>  
+>>  	path = get_repo_path(repo_name, &is_bundle);
+>>  	if (path)
+>> -		repo = absolute_pathdup(repo_name);
+>> +		display_repo = repo = absolute_pathdup(repo_name);
+>>  	else if (!strchr(repo_name, ':'))
+>>  		die(_("repository '%s' does not exist"), repo_name);
+>> -	else
+>> +	else {
+>>  		repo = repo_name;
+>> +		display_repo = transport_anonymize_url(repo);
+>> +	}
+>
+> Not introduced by your patch, but I had to read this a few times to make
+> sure we always end up with repo and display_repo set. IMHO it would be
+> easier to read as:
+>
+>   if (this) {
+>      repo = ...;
+>      display_repo = ...;
+>   } else if (that) {
+>      repo = ...;
+>      display_repo = ...;
+>   } else {
+>      die(...);
+>   }
+>
+> instead of sticking the die() in the middle.  Maybe just personal
+> preference, though. :)
+
+For a if/elseif cascade of few-liner blocks each, I do not think it
+would matter, but if a block were larger, having the die() case at
+the beginning or at the end would indeed make it easier to spot any
+anomalies.
+
+>> +	# should have been scrubbed down to vanilla URL
+>> +	git log -g master >reflog &&
+>> +	grep "$HTTPD_URL" reflog &&
+>> +	! grep "$HTTPD_URL_USER_PASS" reflog
+>> +'
+>
+> And you make sure we retain the username. Nice.
