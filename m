@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92F04C433E0
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F7C8C433E1
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7359A2072F
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1030E2072F
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 04:17:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s70t3d5I"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pMcRHp9A"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726190AbgFBERj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 00:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49214 "EHLO
+        id S1726189AbgFBERh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 00:17:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726097AbgFBERe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 00:17:34 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2876DC061A0E
-        for <git@vger.kernel.org>; Mon,  1 Jun 2020 21:17:34 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id q11so1906322wrp.3
-        for <git@vger.kernel.org>; Mon, 01 Jun 2020 21:17:34 -0700 (PDT)
+        with ESMTP id S1726171AbgFBERc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 00:17:32 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF81C061A0E
+        for <git@vger.kernel.org>; Mon,  1 Jun 2020 21:17:32 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id r9so1482097wmh.2
+        for <git@vger.kernel.org>; Mon, 01 Jun 2020 21:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ncZlyZBKSWv7UWqfcUEiYlIqu/0Sa8vD0+mW3XH7jvg=;
-        b=s70t3d5Ib743A2DEjyIPMMX8opjsBIKOKhuc+hCm9vwC0OsMFf1XD7ACa8vS/xR0pd
-         LOMskXmfIlxtV+n1ItDGqexrSfyyEJuBprFApSF94vU2IVa4FFRN3yYQCz3rWxLAdczj
-         50DRVby88kfNvGp37aQqvZTjxBzlejM/kPaOYsFRwvJY9AMIfcBFq5Rt5YV44rUuBopH
-         Ic3AOitryOS02GGtGkK3P4HfT2dHgnod1P5RQWgquSV8ky9ZRvwOruCx0k9WMcuT+4Aa
-         GOeuYWWAEUXwrMABHYldVIUYjsq8c42OH8UVRVBOjijNYTVfMcOztOcX+BZqZOCRNPf7
-         CJSQ==
+        bh=JdrO+vOZkCvNrejQcxamuRBCDHKbWhkYM+Rym0CJobo=;
+        b=pMcRHp9ADi5SrdWDXOhqY1iWSeMbHZA0jBsMzGIWFA+nm9vxCj9cWHrLU+KaAoklT0
+         aIag9jdnXK0T1cneOmtFQ5SpWGfKgIuhxxxio54KOTwsQbUv2pMyvhMPY6BX1D9DBAB3
+         3cx7wwHtI0oLpM+nqSONmUq1nvYHf8jLyXOZ/DpR2SnTLlBdiikxhgmqgAqYl4W89QGZ
+         tzor1lg9rsOlDmI6taNuciEZPGxc4F5zNFGrJ3N2D1Cc0UCqCEmY4BZB8yWhjp9zncV4
+         xKVZucY5Dyzy9DqrRyMiL46dFzc+n39F5p6p7SdhgotVIwVyhm+XaHRnAwttdKfO5HZ8
+         slQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ncZlyZBKSWv7UWqfcUEiYlIqu/0Sa8vD0+mW3XH7jvg=;
-        b=eStTLabE42GRY0GI65+1UN4HfpS9bphYT/VH3ExstHrHiTuZQpTSlOrZ0sckbMNEqS
-         cDDOWrzkDiEyMcPQlgsh3v6P+9TNhDDGbsWj1gjQrNIrB2FEjZeF6gPSX0q2M6XAxheU
-         njfn0TGvi0sBucEA2J8Y/tsqIBD6Rt2Sx30PDYM1w7XesaG5QbFGFWJuv/BwLYOsUjhL
-         R4L2ke1OU6p/hCmmTDxnIHrZ5YmrVdA0fA7cylEfy7zP/+dgImc2oWWpYxHjwANq+pqH
-         vkMzzb2Ptc8bC6OKrGBhcwiXMQrYpW3d72wXiVajL0u2J79FTiUI2iTvPV4Fq8+JRWv7
-         jALg==
-X-Gm-Message-State: AOAM530Ty5qj+t88T2vv5z0xaiegl3BfniqyEtcBvPXZiwxad3XsAAfO
-        qYZpXCFhFzshApl2i59+b19Cyz0eiOo=
-X-Google-Smtp-Source: ABdhPJy5THFLt4czkcS56h2HCGgY1HnaFvMDBrFcO4CaAyNC/o+E8KSqut7dRnVp3ZzD0FsfZuOUyw==
-X-Received: by 2002:a5d:4ccc:: with SMTP id c12mr17895894wrt.281.1591071452108;
-        Mon, 01 Jun 2020 21:17:32 -0700 (PDT)
+        bh=JdrO+vOZkCvNrejQcxamuRBCDHKbWhkYM+Rym0CJobo=;
+        b=H4YcaRwMb9AtkrCOSd8ATuwHgDKKEFbFbjEa/EV7sWoxXQg0UVICgSWTEMR+uIzKN+
+         5Yl3/eH0VbPSnW0ZZyrN50MYOrKB3jaez33qOxONd8h2zP+wUsSGAJYjFSNeSVlNK5B8
+         qEmeiDCAH3BKxB2v3ftRHVEj8Bqn9KUc4vZZl2QJKKNRx9mhgrs/yPdowzMmbgHPvXwo
+         creudCQvJLVjKHQj16WOB0oDZKmQyNq5DZFzTiOD5YjlKPIoa6cNLEBwexii1mR6DNwQ
+         //Idti400jtBGBwQG45MYR94jDcHTdFn4M6a58nd8IwgeVeE/6yzVB5vMC39H0V5C+nP
+         D3+w==
+X-Gm-Message-State: AOAM532mlceKzDkBRKxkMVg3+1JPgFxIlBCK0hqQb36DbcTiPHIt1mjD
+        CLC9rzDbbt9CN/PqsfSXWfYQtiloAvU=
+X-Google-Smtp-Source: ABdhPJwWaGJMi6ROIz7EZYILpvoJ44M8beMGHN164HOjzUgiRgWGm4QWgC+Ix5Y/q6Q+lLqLFIU9/w==
+X-Received: by 2002:a1c:7dd5:: with SMTP id y204mr2100455wmc.182.1591071450946;
+        Mon, 01 Jun 2020 21:17:30 -0700 (PDT)
 Received: from localhost.localdomain ([185.228.230.249])
-        by smtp.gmail.com with ESMTPSA id z2sm1717614wrs.87.2020.06.01.21.17.31
+        by smtp.gmail.com with ESMTPSA id z2sm1717614wrs.87.2020.06.01.21.17.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2020 21:17:31 -0700 (PDT)
+        Mon, 01 Jun 2020 21:17:30 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 13/13] upload-pack: move pack_objects_hook to upload_pack_data
-Date:   Tue,  2 Jun 2020 06:16:57 +0200
-Message-Id: <20200602041657.7132-14-chriscool@tuxfamily.org>
+Subject: [PATCH v2 12/13] upload-pack: move allow_sideband_all to upload_pack_data
+Date:   Tue,  2 Jun 2020 06:16:56 +0200
+Message-Id: <20200602041657.7132-13-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.27.0.rc0.26.gf2851482f5
 In-Reply-To: <20200602041657.7132-1-chriscool@tuxfamily.org>
 References: <20200527164742.23067-1-chriscool@tuxfamily.org>
@@ -82,70 +82,55 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-more thoroughly, let's move the 'pack_objects_hook' static
+more thoroughly, let's move the 'allow_sideband_all' static
 variable into this struct.
 
-It is used by code common to protocol v0 and protocol v2.
-
-While at it let's also free() it in upload_pack_data_clear().
+It is used only by protocol v2 code.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- upload-pack.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ upload-pack.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index 0887410791..30e8c54060 100644
+index 3c00d79443..0887410791 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -53,7 +53,6 @@ static timestamp_t oldest_have;
- static unsigned int allow_unadvertised_object_request;
- static int shallow_nr;
+@@ -55,8 +55,6 @@ static int shallow_nr;
  static struct object_array extra_edge_obj;
--static const char *pack_objects_hook;
+ static const char *pack_objects_hook;
  
+-static int allow_sideband_all;
+-
  /*
   * Please annotate, and if possible group together, fields used only
-@@ -88,6 +87,8 @@ struct upload_pack_data {
+  * for protocol v0 or only for protocol v2.
+@@ -103,6 +101,7 @@ struct upload_pack_data {
  
- 	struct packet_writer writer;
+ 	unsigned done : 1;					/* v2 only */
+ 	unsigned allow_ref_in_want : 1;				/* v2 only */
++	unsigned allow_sideband_all : 1;			/* v2 only */
+ };
  
-+	const char *pack_objects_hook;
-+
- 	unsigned stateless_rpc : 1;				/* v0 only */
- 	unsigned no_done : 1;					/* v0 only */
- 	unsigned daemon_mode : 1;				/* v0 only */
-@@ -137,6 +138,8 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
- 	object_array_clear(&data->shallows);
- 	string_list_clear(&data->deepen_not, 0);
- 	list_objects_filter_release(&data->filter_options);
-+
-+	free((char *)data->pack_objects_hook);
- }
- 
- static void reset_timeout(unsigned int timeout)
-@@ -181,10 +184,10 @@ static void create_pack_file(struct upload_pack_data *pack_data)
- 	int i;
- 	FILE *pipe_fd;
- 
--	if (!pack_objects_hook)
-+	if (!pack_data->pack_objects_hook)
- 		pack_objects.git_cmd = 1;
- 	else {
--		argv_array_push(&pack_objects.args, pack_objects_hook);
-+		argv_array_push(&pack_objects.args, pack_data->pack_objects_hook);
- 		argv_array_push(&pack_objects.args, "git");
- 		pack_objects.use_shell = 1;
+ static void upload_pack_data_init(struct upload_pack_data *data)
+@@ -1146,7 +1145,7 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
+ 	} else if (!strcmp("uploadpack.allowrefinwant", var)) {
+ 		data->allow_ref_in_want = git_config_bool(var, value);
+ 	} else if (!strcmp("uploadpack.allowsidebandall", var)) {
+-		allow_sideband_all = git_config_bool(var, value);
++		data->allow_sideband_all = git_config_bool(var, value);
+ 	} else if (!strcmp("core.precomposeunicode", var)) {
+ 		precomposed_unicode = git_config_bool(var, value);
  	}
-@@ -1153,7 +1156,7 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
- 	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
- 	current_config_scope() != CONFIG_SCOPE_WORKTREE) {
- 		if (!strcmp("uploadpack.packobjectshook", var))
--			return git_config_string(&pack_objects_hook, var, value);
-+			return git_config_string(&data->pack_objects_hook, var, value);
- 	}
+@@ -1341,7 +1340,7 @@ static void process_args(struct packet_reader *request,
+ 		}
  
- 	return parse_hide_refs_config(var, value, "uploadpack");
+ 		if ((git_env_bool("GIT_TEST_SIDEBAND_ALL", 0) ||
+-		     allow_sideband_all) &&
++		     data->allow_sideband_all) &&
+ 		    !strcmp(arg, "sideband-all")) {
+ 			data->writer.use_sideband = 1;
+ 			continue;
 -- 
 2.27.0.rc0.26.g636377a2c4
 
