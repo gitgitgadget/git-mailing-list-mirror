@@ -2,158 +2,140 @@ Return-Path: <SRS0=E3tc=7P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 378AAC433E0
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED64C433DF
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:11:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03868206E2
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:05:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29306206E2
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 19:11:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jhvPSBcZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F7VpPK0n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726842AbgFBTF1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 15:05:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45552 "EHLO
+        id S1727776AbgFBTLN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 15:11:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgFBTF0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 15:05:26 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A009AC08C5C0
-        for <git@vger.kernel.org>; Tue,  2 Jun 2020 12:05:26 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id r18so18394191ybg.10
-        for <git@vger.kernel.org>; Tue, 02 Jun 2020 12:05:26 -0700 (PDT)
+        with ESMTP id S1726420AbgFBTLM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 15:11:12 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B9FC08C5C0
+        for <git@vger.kernel.org>; Tue,  2 Jun 2020 12:11:11 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id n24so13888600ejd.0
+        for <git@vger.kernel.org>; Tue, 02 Jun 2020 12:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=zVGUQ46i/sT1rue0cxm+TNO01SeW+Vv4+qBjwHI48ok=;
-        b=jhvPSBcZ6knSIG5UiuAM0qguR7PUq9KnSBaJAKmBO/tPNeNVWaMu05BH70EXk+l5Oz
-         WGdmbL+d+Pw5QS5efhKcr8jkftWvOjMYOkQ3oAo4HJ/e17arwIKfTD0ausbuKcJMZpRx
-         iNKIQfZl1ucgqoviVXedboNlDesLLJr3SvhEzLztjIK6yQG8/7UT1leoHQSbp67jtaPr
-         qRj7qPzJphy0IyU1Rw8CxMGbdfhBKpdzRob6IRsTbWSwnk29I24+d70J6jF6QGVoRz4f
-         Bwxx57I4f0ROcLBpdiXPZNZDcFzgGQ3UGQVzjCDeaX3j8G64tFVBXQkzilWm9K/DSL/g
-         HzYA==
+        bh=06Go+qkYFYP4YFXm231GpMn7fJo4+RuYYTziC5rcMd8=;
+        b=F7VpPK0nxowBMwuVFCDGBBi7gW4Pe/68069yO10B5Upeo/B7kJvwUiPCIq7z4+2VRC
+         8UTtHFlpfEGKXH3jgptX/hZ3jy3eWkogVgTBIVbj/be+IjGcFoa/DZlf5zZI6TK29C6O
+         VhyELCsG/asWuLFe0O/xhdCCcsaJfTSRfBD3FCuJax97DxbHMTUeSj6oWnDDX+qqjDbK
+         lmHvK/GdNwx66yec/n/tBdP2bcXC2D4arNRQw0vC2x4KuZ2ky2v1gcovSkILZK7scKz8
+         +2+Su9TWBOECOAgwgOfy6XNgocoyRhfxoW7230eXGNE3xEV6emEqZCRIQNGEKoIsztFq
+         Tu5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=zVGUQ46i/sT1rue0cxm+TNO01SeW+Vv4+qBjwHI48ok=;
-        b=TwP9BF+gwV4hRLXrB0yfcmuF6SLHXWfZJ6Iuh/HDWgqKRl4U51RXEQcq23/PRZOgv3
-         cofnEcaWtDe9yFFwaZBK6SJdEg3A8GPFMWR1u3Lh9Y6XoLF4WsKkm7yRs2b7Z1PeHcc5
-         bpM8f4/bZjoVg4RZWaBRSPsYdAOfOUx7M2NOao2TaU4WWykc1j3Rt6S4V/ZuoKe4nHzs
-         fNRdTteKabERqtrAtuva+RByrkiKhlKWSW2a/p0wsw84aEX+7zjfhdx+FiYUkqyoSxz4
-         Rqxo1zeFFRbpf5LRZrAu4l7Yh1H4696Aw+IJplQ1bIVbfKJkbkCz2ypAsyS0JIfWPRfX
-         pYgg==
-X-Gm-Message-State: AOAM5328oAvaiIhnrIrzr56Mbu3jo6Hv7FXs1qHjSB0uIfGuA3QlRhdk
-        Fu/SyAsB7NxkuCaRl+w0asxzo9Yi7R1grUwUhiTkfp5hRaiT6OVgmFR+gn1XvRHlPteEpx/acgP
-        TkB9eshyc7OjQTSW+jtdyW76GI3EtObxEjhMZzilwvrvoJxpVbD8faWPyTQuaMaUvAPpoxScXIu
-        CR
-X-Google-Smtp-Source: ABdhPJxFW+H4qplw+kapYWEQH6MbjipRKzZ+miIeOFPz0qmSY+Fc6vGOFwS54w7pnnLCrZcwElbgQEomFuDUnzPOmzNe
-X-Received: by 2002:a25:b0f:: with SMTP id 15mr13470031ybl.258.1591124725786;
- Tue, 02 Jun 2020 12:05:25 -0700 (PDT)
-Date:   Tue,  2 Jun 2020 12:05:21 -0700
-In-Reply-To: <20200602041657.7132-1-chriscool@tuxfamily.org>
-Message-Id: <20200602190521.32877-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20200602041657.7132-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.27.0.rc2.251.g90737beb825-goog
-Subject: [PATCH] fixup! upload-pack: change multi_ack to an enum
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        christian.couder@gmail.com, peff@peff.net, gitster@pobox.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=06Go+qkYFYP4YFXm231GpMn7fJo4+RuYYTziC5rcMd8=;
+        b=i7ggFVack5mo+BzKsPTU0HIV4tMGG2GsHKZnpBPCCu8vxuHm7RJasvF451/2aWmEY4
+         cPaQbVZmAI2zsk73BmC8FKxoOpXuQWxAM/nmsRuXrxF0r6Tcn4Km2vFOO8yjO3mgRXq7
+         cTucM/zwi+8cacoX9N02kPG3e6lwCO+PfxP4GyZQKAmj2GZCE53ZXpkX3ry6Jo0XLH8V
+         Efq2nFeCGA28EyB3zxUxgcGBIOPpQOgNWqlCV6BRKXqnvdhKm6C2bz8UIlQ+7+/4GoIa
+         owGkKvzqwpUUvpHjxyuoFpzsPWQxQciS6rG2pJCTykathheImQJM6ndpDCHCgP5hXr/Y
+         fu7Q==
+X-Gm-Message-State: AOAM5301xBp9UxaknkDkvoi/eEBdnoW2EyS9jFqTZ+Jhq21zjmG8iHJb
+        ebrHrEbjh4YqW/PXKF7tqcU1qSvZ/xusJsx5Lms87vgk
+X-Google-Smtp-Source: ABdhPJyN1gZIkufeB4+YNBpx+HLIO1xUNrnOeyyxhVECRP1q+YwhH4KYNe+xQmQYGlfrAAc1FK+Ze2tb54Z9+HgFz/A=
+X-Received: by 2002:a17:906:e47:: with SMTP id q7mr11347125eji.279.1591125069424;
+ Tue, 02 Jun 2020 12:11:09 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200523163929.7040-1-shouryashukla.oo@gmail.com>
+ <20200602163523.7131-1-shouryashukla.oo@gmail.com> <1b851e49-3bb1-3b59-7f24-b903c5514391@gmail.com>
+In-Reply-To: <1b851e49-3bb1-3b59-7f24-b903c5514391@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Date:   Wed, 3 Jun 2020 00:40:58 +0530
+Message-ID: <CA+ARAtoDzoU=eu0mJom7LwVF60k4CtiuBha-RC7zkx9o7O=H3A@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v5] submodule: port subcommand 'set-branch' from
+ shell to C
+To:     Git Users <git@vger.kernel.org>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        congdanhqx@gmail.com, Junio C Hamano <gitster@pobox.com>,
+        liu.denton@gmail.com, Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-I think enum values should be all-caps, so here is a fixup for that. I
-also fixed a spacing issue (2 spaces between "enum" and "{").
+On Wed, Jun 3, 2020 at 12:31 AM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> I also noticed one other thing. A quote from
+> Documentation/CodingGuidelines regarding the usage for reference:
+>
+> >  Optional parts are enclosed in square brackets:
+> >    [<extra>]
+> >    (Zero or one <extra>.)
+> >
+> >    --exec-path[=<path>]
+> >    (Option with an optional argument.  Note that the "=" is inside the
+> >    brackets.)
+> >
+> >    [<patch>...]
+> >    (Zero or more of <patch>.  Note that the dots are inside, not
+> >    outside the brackets.)
+> >
+> >  Multiple alternatives are indicated with vertical bars:
+> >    [-q | --quiet]
+> >    [--utf8 | --no-utf8]
+> >
+> >  Parentheses are used for grouping:
+> >    [(<rev> | <range>)...]
+> >    (Any number of either <rev> or <range>.  Parens are needed to make
+> >    it clear that "..." pertains to both <rev> and <range>.)
+> >
+> >    [(-p <parent>)...]
+> >    (Any number of option -p, each with one <parent> argument.)
+> >
+> >    git remote set-head <name> (-a | -d | <branch>)
+> >    (One and only one of "-a", "-d" or "<branch>" _must_ (no square
+> >    brackets) be provided.)
+>
+> So, according to this, I think the usage should be ...
+>
+>      git submodule--helper set-branch [-q | --quiet] [-d | --default] <path>
+>
+> ... and ...
+>
+>      git submodule--helper set-branch [-q|--quiet] [-b |
+> --branch]<branch> <path>
+>
 
-Also, maybe replace the first paragraph of the 1st patch:
+Apologies, my mail client messed a little with the formatting.
+This should actually be:
 
-  As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-  more thoroughly, let's actually start using some bitfields of
-  that struct, which were previously unused.
+    git submodule--helper set-branch [-q | --quiet] [-b | --branch]
+<branch> <path>
 
-with:
+> ... respectively.
+>
+> > +             NULL
+> > +     };
+>
+> ---
+> Footnotes:
+>
+> [1]:
+> https://github.com/periperidip/git/commit/9a8918bf0688c583740b3dddafdba82f47972442#r39606384
+>
 
-  As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-  more thoroughly, let's actually start using some bitfields of
-  that struct. These bitfields were introduced in 3145ea957d
-  ("upload-pack: introduce fetch server command", 2018-03-15) but were
-  never used.
-
-Other than that, this patch set looks good to me.
-
- upload-pack.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/upload-pack.c b/upload-pack.c
-index 30e8c54060..bc7e3ca19d 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -74,10 +74,10 @@ struct upload_pack_data {
- 	int keepalive;
- 
- 	unsigned int timeout;					/* v0 only */
--	enum  {
--		no_multi_ack = 0,
--		multi_ack = 1,
--		multi_ack_detailed = 2
-+	enum {
-+		NO_MULTI_ACK = 0,
-+		MULTI_ACK = 1,
-+		MULTI_ACK_DETAILED = 2
- 	} multi_ack;						/* v0 only */
- 
- 	/* 0 for no sideband, otherwise DEFAULT_PACKET_MAX or LARGE_PACKET_MAX */
-@@ -451,7 +451,7 @@ static int get_common_commits(struct upload_pack_data *data,
- 		reset_timeout(data->timeout);
- 
- 		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
--			if (data->multi_ack == multi_ack_detailed
-+			if (data->multi_ack == MULTI_ACK_DETAILED
- 			    && got_common
- 			    && !got_other
- 			    && ok_to_give_up(&data->have_obj, &data->want_obj)) {
-@@ -478,7 +478,7 @@ static int get_common_commits(struct upload_pack_data *data,
- 				if (data->multi_ack
- 				    && ok_to_give_up(&data->have_obj, &data->want_obj)) {
- 					const char *hex = oid_to_hex(&oid);
--					if (data->multi_ack == multi_ack_detailed) {
-+					if (data->multi_ack == MULTI_ACK_DETAILED) {
- 						sent_ready = 1;
- 						packet_write_fmt(1, "ACK %s ready\n", hex);
- 					} else
-@@ -488,7 +488,7 @@ static int get_common_commits(struct upload_pack_data *data,
- 			default:
- 				got_common = 1;
- 				oid_to_hex_r(last_hex, &oid);
--				if (data->multi_ack == multi_ack_detailed)
-+				if (data->multi_ack == MULTI_ACK_DETAILED)
- 					packet_write_fmt(1, "ACK %s common\n", last_hex);
- 				else if (data->multi_ack)
- 					packet_write_fmt(1, "ACK %s continue\n", last_hex);
-@@ -968,9 +968,9 @@ static void receive_needs(struct upload_pack_data *data,
- 		if (parse_feature_request(features, "deepen-relative"))
- 			data->deepen_relative = 1;
- 		if (parse_feature_request(features, "multi_ack_detailed"))
--			data->multi_ack = multi_ack_detailed;
-+			data->multi_ack = MULTI_ACK_DETAILED;
- 		else if (parse_feature_request(features, "multi_ack"))
--			data->multi_ack = multi_ack;
-+			data->multi_ack = MULTI_ACK;
- 		if (parse_feature_request(features, "no-done"))
- 			data->no_done = 1;
- 		if (parse_feature_request(features, "thin-pack"))
 -- 
-2.27.0.rc2.251.g90737beb825-goog
-
+Sivaraam
