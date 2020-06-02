@@ -6,95 +6,79 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CC49C433E0
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 17:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99827C433E0
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 17:25:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18E45206C3
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 17:08:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 699B620734
+	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 17:25:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tc7RP8fH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f28wOArT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726373AbgFBRIo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 13:08:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58999 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725969AbgFBRIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 13:08:43 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 021DACB427;
-        Tue,  2 Jun 2020 13:08:42 -0400 (EDT)
+        id S1726977AbgFBRZF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 13:25:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55512 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726019AbgFBRZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 13:25:05 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 88DF26B53B;
+        Tue,  2 Jun 2020 13:25:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ucKISUK/nM+o
-        SZupE2KH+y9Gk7Q=; b=tc7RP8fHfIw2I+I0cd9yedY1hQVYqi4dNIi3AgvcMslD
-        dztEgUdfaiUlet+ZpcfKxbuz+XI89NlzdZR2heFiupkCSHdb9gxTASQo7Y/D3VDz
-        hb5eoHnNkA0Lf6WNjQC5kMnS/bm1WgguWugaTQ6HngKMSPbV9QrSPmK1noY54Fo=
+        :content-type; s=sasl; bh=Ism9XzX0izrfA4wYNT8A0j6LiTA=; b=f28wOA
+        rTefeedrbfPZDKD1V72bamt6hs6iV49cNbAWKSCkunEpIqHWBz/ffdnw8/hWVzwD
+        JJjDSRz43MnQhUgRTZ411/t73MGe5EYZf/EvelkdzDn2VVUF2dl9JGke7QgeVGCb
+        or+bXHqqm0IACkL095AwUv3NK/3LmwVpwgFag=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Qc3zPY
-        f+EVFJzI2MQDGz/dBSpN5m0Sm3L0bnXZgx1hMLwvNF9e5ZhcnMcDyF04mjcit/xl
-        Iazso3f+cj9L/Cg6gdDoNDFg72CNvnJST2Q/v/E4Cg8cG2OmCiK2kbcRvDEfvouW
-        VV9dc4/caYu7ovZXuQy+GDiQJQ04wRDDV+PTg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id ED388CB426;
-        Tue,  2 Jun 2020 13:08:41 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=SmR4aqTMGGdVN2NH8tXNoZbSBqGQpZyG
+        QBhDsOYDUmLFofcRqokcU5MaIQer+O7krKEMyqrnL4vspKHzXmGHSXiZimsTXRha
+        V4ItVW64qxycsjgQz929TpLKIKT578heOSfgGmndhGwBDIbuFW2mo1LZ5diZSorG
+        MPJIdp1+T54=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 10E886B538;
+        Tue,  2 Jun 2020 13:25:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2E188CB425;
-        Tue,  2 Jun 2020 13:08:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8FB0D6B536;
+        Tue,  2 Jun 2020 13:25:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Garima Singh <garima.singh@microsoft.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PoC PATCH 00/34] An alternative modified path Bloom filters implementation
-References: <20200529085038.26008-1-szeder.dev@gmail.com>
-        <20200601232504.GA42750@syl.local>
-Date:   Tue, 02 Jun 2020 10:08:37 -0700
-In-Reply-To: <20200601232504.GA42750@syl.local> (Taylor Blau's message of
-        "Mon, 1 Jun 2020 17:25:04 -0600")
-Message-ID: <xmqqeeqxtmy2.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 00/13] upload-pack: use 'struct upload_pack_data' thoroughly, part 2
+References: <20200527164742.23067-1-chriscool@tuxfamily.org>
+        <20200602041657.7132-1-chriscool@tuxfamily.org>
+        <20200602070802.GB4005274@coredump.intra.peff.net>
+Date:   Tue, 02 Jun 2020 10:24:59 -0700
+In-Reply-To: <20200602070802.GB4005274@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 2 Jun 2020 03:08:02 -0400")
+Message-ID: <xmqqa71ltm6s.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B3FEE826-A4F3-11EA-80F2-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: FCF7DBC6-A4F5-11EA-896A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, May 29, 2020 at 10:50:04AM +0200, SZEDER G=C3=A1bor wrote:
->> Sigh...  but better late than never, right?
+> On Tue, Jun 02, 2020 at 06:16:44AM +0200, Christian Couder wrote:
 >
-> Yes, indeed. I think that there is a balance here: I'm thrilled that yo=
-u
-> are choosing to spend your time working on and improving the
-> changed-path Bloom filter implementation.
+>> Compared to V1 the changes are the following:
+>> [...]
 >
-> Of course, it couldn't have hurt to have these ideas earlier when the
-> list was more focused on reviewing Garima's original patches. But,
-> nothing is set in stone, and it seems like there are some re-usable
-> ideas and clean-ups below.
+> Thanks, this version looks good to me.
 
-Yes, I had the same impression as you did, unlike some folks who
-sounded as if they felt offended seeing a comment that sabotages
-existing work.  It could have been presented in a more useful ways
-(i.e. instead of risking to appear suggesting total replacement,
-which I do not think was the intention, massaged to build on top of
-what is already there as improvements), though.
+Thanks, both.
 
-> I think you're right to draw the "laying the ground work" line here.
-> Could these first fourteen patches be applied cleanly to master? They
-> all look mostly like improvements to me, especially the second patch.
-
-Again, I concur.
-
-Thanks.
