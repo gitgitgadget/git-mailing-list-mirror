@@ -6,147 +6,92 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A847EC433E0
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 19:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E87C433DF
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 19:34:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BDA22067B
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 19:28:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5D582067B
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 19:34:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BUOaSDYT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f6OAEiSq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725985AbgFCT2Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Jun 2020 15:28:16 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51499 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725821AbgFCT2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jun 2020 15:28:16 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D321DE431;
-        Wed,  3 Jun 2020 15:28:14 -0400 (EDT)
+        id S1725961AbgFCTez (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Jun 2020 15:34:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52884 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725821AbgFCTey (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jun 2020 15:34:54 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 869A15C7F2;
+        Wed,  3 Jun 2020 15:34:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sZ1WfqB0vqSjQeIzi/+STTuERes=; b=BUOaSD
-        YTKdvKVE2zJSreI8x0Tjt9fYwPK0nNO5+z7tmjDUfkczY44RXvtaiZRYJlt9eIho
-        cXV38yTEAyrL63ELkpRtbxthKnHYLWl3F4aVaew2XWyt/Wm6rZh5QIfXEdEEiQ2b
-        GAn/bzuz+2oBwPRH+HSEhudeS6AG+sZIHBDQk=
+        :content-type; s=sasl; bh=zNRyXX+udrDmQPpFPXecFRDhR58=; b=f6OAEi
+        SqZdhrmYs0lNkBYFHdK1It/QP67s1Vf8YtFWFR9WVx6UpXD62FtO6p7TWxMKb+cp
+        TA977puA3sSgkYAsVJdOwBDPiBddF275SRRNqJNhp6iX7E1e56W+LR6e0k6Yc/Dj
+        lwigqEqqIxmo0kcfMGD3wpaKIvZMf4Y5at5co=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BOSr6SEot9MUiGL9lIm3InPiCrVB7KG2
-        6IUuGCitKSCJhhh/Vu11+zsjSgV1k2IQoS/Nr8DflGgSi0DvI3iwHKaX4F5DRk+m
-        urpmnq2oVJOITDmRD8nVVWucLYj5OGWUoU0jalDiIc6uCTqchJSjSIxc2kTD0uC8
-        8WAz+T+H7vI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 351C3DE430;
-        Wed,  3 Jun 2020 15:28:14 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=LZVJz/My/PGOXzbyvcVbkSsM1XMmvz1K
+        rlhHg5P90mTmVn0CkhqUbnjZGCWLf66p2ITXNqOX2o3j0cJ5B5K4ja8BPyWHK89Q
+        yAwhzy8i1XJ4kBd/dld3Lcb/Uqh+ZZFIa+nZMFuKhK5LNWLwYb4HDURPoQXldJpr
+        nvXgp7nSGLk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E8FB5C7F0;
+        Wed,  3 Jun 2020 15:34:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 73253DE42D;
-        Wed,  3 Jun 2020 15:28:11 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06E0E5C7EE;
+        Wed,  3 Jun 2020 15:34:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kalle Kromann <kalle.kromann@man-es.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: The commit-msg hook is not invoked by git-merge as specified in documentation
-References: <AM0PR08MB55379DD182941E93F3BD3D37D7880@AM0PR08MB5537.eurprd08.prod.outlook.com>
-Date:   Wed, 03 Jun 2020 12:28:09 -0700
-In-Reply-To: <AM0PR08MB55379DD182941E93F3BD3D37D7880@AM0PR08MB5537.eurprd08.prod.outlook.com>
-        (Kalle Kromann's message of "Wed, 3 Jun 2020 12:46:27 +0000")
-Message-ID: <xmqq367crlti.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: Re: symbolic links in Git for Windows v2.27.0, was Re: [ANNOUNCE] Git for Windows 2.27.0-rc2
+References: <20200526204539.6181-1-johannes.schindelin@gmx.de>
+        <nycvar.QRO.7.76.6.2005282322580.56@tvgsbejvaqbjf.bet>
+        <xmqqv9kats3k.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006022232340.56@tvgsbejvaqbjf.bet>
+        <xmqqlfl5rwug.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006031550400.56@tvgsbejvaqbjf.bet>
+Date:   Wed, 03 Jun 2020 12:34:51 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2006031550400.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 3 Jun 2020 15:54:03 +0200 (CEST)")
+Message-ID: <xmqqy2p4q6xw.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5CAD2D52-A5D0-11EA-BFAC-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 4B6D652E-A5D1-11EA-A426-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kalle Kromann <kalle.kromann@man-es.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> For reference, the prepare-commit-msg hook works with both commands as expected.
+>> I'll remind myself that I'll try to tag and push out the final
+>> before 1700 UTC, which would be around 10AM for me ;-)
 >
-> Is there something subtle I'm overlooking?
+> That will work. That's 7pm for me, which is still safely after-hours, but
+> it's better than 2am.
 
-On what platform, and which version of Git are we talking about?
-What is the difference between these two hooks?  I.e. perhaps
+That time is 2AM for me depending on the season, though I am
+straying off of my migratory patterns this year.
 
-    $ ls -l .git/hooks/prepare-commit-msg .git/hooks/commit-msg
+> On the other hand, I do not even think that Git for Windows versions
+> _need_ to be released on the same calendar day as Git versions.
 
-tells you some subtle differences between the two?
+True.  The "same calendar day" is a fuzzy notion anyway, and the
+other major platform seems to lag by a lot more if I am not
+mistaken.
 
-> Of course a fast forward merge should not invoke the commit-msg
-> hook, because no commit is made.  But in my tests with non
-> FF-merges the hook is still not invoked.
+I was just trying to make the schedule predictable, so that you and
+others do not have to say "if the tag was pushed early enough in the
+day for me".  I'd actually prefer to tag a bit later in the day
+myself, so we can pick any time, or pick no time at all and have you
+and distro folks subscribed to push notification RSS, perhaps.
 
-Other than the last one, nothing comes to my mind.  And it does not
-reproduce for me.
-
-I just did this:
-
-    $ echo exit 1 >.git/hooks/commit-msg
-    $ chmod +x .git/hooks/commit-msg
-    $ git checkout master^0
-    $ git merge ds/line-log-on-bloom
-	    ... editor launches and I save the message ...
-    Auto-merging revision.c
-    Auto-merging line-log.c
-    Auto-merging bloom.h
-    Auto-merging bloom.c
-    Not committing merge; use 'git commit' to complete the merge.
-
-The last line comes from builtin/merge.c::abort_commit(), which is
-called from this piece of code in builtin/merge.c::prepare_to_commit()
-
-	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-commit-msg",
-			    git_path_merge_msg(the_repository), "merge", NULL))
-		abort_commit(remoteheads, NULL);
-	if (0 < option_edit) {
-		if (launch_editor(git_path_merge_msg(the_repository), NULL, NULL))
-			abort_commit(remoteheads, NULL);
-	}
-
-	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
-					  "commit-msg",
-					  git_path_merge_msg(the_repository), NULL))
-		abort_commit(remoteheads, NULL);
-
-I do not have prepare-commit-msg, and my launch_editor() thing
-successfully returned, and the call to abort_commit() is cleraly
-coming from the last line, where run_commit_hook() noticed that the
-commit-msg hook ran and reported a failure.
-
-After this, I did this to just confirm:
-
-    $ echo exit 0 >.git/hooks/commit-msg
-    $ git reset --hard
-    $ git merge ds/line-log-on-bloom
-
-This time, instead of "Not committing...", I got
-
-    Merge made by the 'recursive' strategy.
-
-followed by the usual diffstat.
-
-The above demonstrates that commit-msg does run well enough to cause
-its exit status affects the outcome in both cases.
-
-For fun, I tried another.
-
-    $ echo exit 1 >.git/hooks/commit-msg
-    $ chmod -x .git/hooks/commit-msg
-    $ git reset --hard master
-    $ GIT_EDITOR=: git merge ds/line-log-on-bloom
-    Auto-merging revision.c
-    Auto-merging line-log.c
-    Auto-merging bloom.h
-    Auto-merging bloom.c
-    hint: The '.git/hooks/commit-msg' hook was ignored because it's not set as executable.
-    hint: You can disable this warning with `git config advice.ignoredHook false`.
-    Merge made by the 'recursive' strategy.
-    ... diffstat follows ...
-
-So...
 
