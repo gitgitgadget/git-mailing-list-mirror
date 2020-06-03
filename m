@@ -2,77 +2,68 @@ Return-Path: <SRS0=EE6k=7Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B26BC433E0
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 03:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67B35C433DF
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 04:37:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 436DF2074B
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 03:42:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39A0A2053B
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 04:37:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nAQ2mBU+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dHwMJ1Gw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725922AbgFCDmS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 23:42:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40664 "EHLO
+        id S1725909AbgFCEhS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Jun 2020 00:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725876AbgFCDmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 23:42:17 -0400
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B27C08C5C0
-        for <git@vger.kernel.org>; Tue,  2 Jun 2020 20:42:17 -0700 (PDT)
-Received: by mail-pg1-x541.google.com with SMTP id p21so758205pgm.13
-        for <git@vger.kernel.org>; Tue, 02 Jun 2020 20:42:17 -0700 (PDT)
+        with ESMTP id S1725275AbgFCEhR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jun 2020 00:37:17 -0400
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF934C05BD43
+        for <git@vger.kernel.org>; Tue,  2 Jun 2020 21:37:17 -0700 (PDT)
+Received: by mail-ot1-x343.google.com with SMTP id v17so877911ote.0
+        for <git@vger.kernel.org>; Tue, 02 Jun 2020 21:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Yp4It6MMCu+m1XDXCzWDH+tEhOvblHHzqKhbdGhY4X4=;
-        b=nAQ2mBU+OlDcM+qS1Ag+qE72CfcXyL8o+MS6k47puHlX4NBFVEsE6QZ89VtiexqTf/
-         wDScURFsioQ+/oev6pr/F0YwYivHm/li9uncuR4o6TWRWVGmAomf16Z42vz0xZzf70HQ
-         r72yWR3WO15Ui+jTl886Kb8AzTj1TrJkT0BBqx86LzaAn0KuNR3/iEOlmML8cepiGqDR
-         kRoPJ1M4RMaihV2lM3qaPHGRfrx9E7avpJ6O60j28SgI9wCLiyBIwSjn7HCs0t/LhvV7
-         QrDUnxnBiPaex1lEXWtvslM18aIB3/U2ofQBCVvwCPJAnhPJ2B4q80471pi7OtIpaJc4
-         kt6w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0QxX0TMDy+dbSVQSntkh2lxUDuGWAg7S1LhLw+esVt4=;
+        b=dHwMJ1Gw4kZYUx894MXELU9ZTJpTsTTkex5W/tCoRLrvYXkuR1Wlckw2yDKbCdZfeD
+         oyChKga2NQnjEDo49hhvYSb8N/hPxA775rWy0q6yuzImAMkLOFZbx1FkZ249RuLQ9wpk
+         ipgt6/t3YVFnaceBOdpkeKzcOFJUfx+m/FH6/zCw+9J1HOyEYG41hivmqTRjR5hXxmTY
+         uvtyl/7vKRsZMcIhvaKrDGCBIS0upEGCYqIVBt7TUasOM0DW1ij+cHLESOpY8aKBtoGt
+         7+tvSErZ5tfEX3b5KEC+jE3QMOA511yrL/gf9UBFNcEISIc3Mpx7UjgXOYVRPFq6VKYV
+         ozIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Yp4It6MMCu+m1XDXCzWDH+tEhOvblHHzqKhbdGhY4X4=;
-        b=sJe27gc1f4RZpf5S73OGKm+CQO3Uj19oiysG93HDy5dHslhTvBqn4PcNu7/DsoZK1/
-         TIWaQN8qy28jnon8lMo1X8AEouCi3YzJTheAhEGg7Ks7oHdfCt8/1WRB9+Si422lzGll
-         sOUOdzMnwaCJjmxdFi75p2MEuj84N88qkWaROdNyqEyuMn/uEL57AQpZDHjPS534CAVy
-         SgRrF/ByfQ4sjwTJK/lUbieoXbw4Mg74qNeAxW3egy9Y5NO0wkADcAExdz2wb3ueNA/c
-         gwzf1Sr6BQes4UIdu5mncZllV40HLA1HiFMXIi5yyBZjSFOCfLON3GISCxE4wF1Inmxc
-         Wdbw==
-X-Gm-Message-State: AOAM530msdSz1s9O3n/oFgbxhthV5+FNtdcaAZCNcgWqk2pGtvssTH1D
-        pCveo7pZ8O35BIRhB1zVTnyywmEv
-X-Google-Smtp-Source: ABdhPJzh6+I+7yxon+xUEpLsBhnQgheWMYq1EGOFHr1eZwg1V8bT5gCCcRs+E4OttKIqzYsAte+Gug==
-X-Received: by 2002:a62:76d5:: with SMTP id r204mr19826188pfc.46.1591155737056;
-        Tue, 02 Jun 2020 20:42:17 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id gm11sm433772pjb.9.2020.06.02.20.42.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2020 20:42:16 -0700 (PDT)
-Date:   Tue, 2 Jun 2020 20:42:13 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
-        newren@gmail.com, Jay Conrod <jayconrod@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 2/2] shallow.c: use '{commit,rollback}_shallow_file'
-Message-ID: <20200603034213.GB253041@google.com>
-References: <20200423001438.GC19100@syl.local>
- <cover.1587601501.git.me@ttaylorr.com>
- <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0QxX0TMDy+dbSVQSntkh2lxUDuGWAg7S1LhLw+esVt4=;
+        b=XHgiYn0ZU9JBfgt1V1m85dAPW/2Y0YO+vXhPteN4j10uGm4nisZfjAkslhVjRxDktg
+         19XfWfblliouu80EM6D0O3A2VEzM0Ek9ZdnHjY/YA36wE7dDUDu9QUTOqLVPUG2Md4rG
+         ji4D3PTqKH0H6CnG3dZAZMHh+XC+ek8iapG8TeH4Rv21gxu+Mv39mZeUzW0RynZYgbUb
+         oVkk+LAtYfzmltlHzduwfEQSEI4+Tw0clT5NkX28PePwvGSK6hxRVjpo6NUJMAXsNph3
+         VibShqtnSbEdkYi9mhB/h0ATnUDawDJOjr/7uCUShKdK63FGzMP0wa+nrdTS2tFW9RPq
+         V91Q==
+X-Gm-Message-State: AOAM533c6bHd40vjee593gIU76TQGLz8SgvwATcyrQdvzMIvUunK+wdo
+        nPgYJUo1wt4gOPFYtPk2R9FN1Gj9Ezi9SmKGMqg=
+X-Google-Smtp-Source: ABdhPJzhrZImKOTEDDiSAnT8vmiqfjHUKQ7yLWl6xQjbsnRgm76jcbINeDZPqiaZdNZ1e2MvCmbnTdPCnRU8vrhDXdw=
+X-Received: by 2002:a9d:6c07:: with SMTP id f7mr1868886otq.345.1591159036570;
+ Tue, 02 Jun 2020 21:37:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
+References: <CAD3+_6CUX0RPr-dgfUnfGDNNfqu80SYCskioYnu=MS6aJv2dEQ@mail.gmail.com>
+In-Reply-To: <CAD3+_6CUX0RPr-dgfUnfGDNNfqu80SYCskioYnu=MS6aJv2dEQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 2 Jun 2020 21:37:05 -0700
+Message-ID: <CABPp-BGvc3GZfFuiXaqDk6391ZexQ7D3x9gr5JK6-L+rDQQ4sg@mail.gmail.com>
+Subject: Re: Possible regression for sparse-checkout in git 2.27.0
+To:     Shaun Case <warmsocks@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -80,60 +71,173 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Taylor Blau wrote:
+On Tue, Jun 2, 2020 at 6:12 PM Shaun Case <warmsocks@gmail.com> wrote:
+>
+> I'm seeing an unexpected change in behavior of git sparse-checkout
+> between 2.26.2 and 2.27.0 on CentOS 7.8.  Problem manifests with both
+> github and multiple recent versions of gitlab.
+>
+> Sources came from
+> https://mirrors.edge.kernel.org/pub/software/scm/git/, I verified the
+> sha256 hashes for both 2.26.2 and 2.27.0 matched.
+>
+> Built with
+> gcc (GCC) 8.3.1 20190311 (Red Hat 8.3.1-3)
+>
+> By doing:
+>
+> ./configure \
+>     --prefix=/usr/local \
+>     --with-python=python3
+> make -j 10
+> sudo make -j 10 install install-doc install-html
+>
+> Problem detail:
+>
+> In 2.26.2, git sparse-checkout commands...
+>
+>   init --cone
+>   set
+>   add
+>
+> ... all bring in files.  In 2.27.0, no files appear except the .git subdir
+> until I do:
+>
+> git read-tree -mu HEAD
+>
+> However, according to my reading of this, git read-tree should not be
+> necessary in 2.27.0:
+> https://stackoverflow.com/questions/28760940/why-does-one-call-git-read-tree-after-a-sparse-checkout/
+>
+> When I do export GIT_TRACE_PACKET=1, I see that the init --cone, set
+> and add sparse-checkout commands all talk to the server.  In 2.27.0,
+> these commands do not result in any packets sent to the server.  It
+> sounds like they should be calling update_sparsity() themselves, but
+> aren't.  Is that wrong?  I couldn't find a git CLI client command to
+> invoke it directly except for read-tree.
+>
+> Below is a small bash script and its output that shows the problem
+> with a small random public repo on github.
+>
+> Best regards,
+> Shaun
+>
+> Script:
+> ==============================================
+> #!/bin/bash -x
+>
+> export GIT_TRACE_PACKET=0
+> git --version
+> git clone --filter=blob:none --no-checkout
+> https://github.com/r-spacex/launch-timeline.git
+> cd launch-timeline
+>
+> # Note no server traffic at from here...
+> export GIT_TRACE_PACKET=1
+> git sparse-checkout init --cone
+> git sparse-checkout set README.md
+> git sparse-checkout add css
+> # ... to here.
+>
+> # There is nothing here yet except .git/
+> ls -las
+>
+> # This brings in the files as expected, uncomment to verify.
+> # git read-tree -mu HEAD
+> ==============================================
+>
+>
+> Output:
+> ==============================================
+> 3sc3396:/tmp>demo-git-sparse-checkout-bug.sh
+> + export GIT_TRACE_PACKET=0
+> + GIT_TRACE_PACKET=0
+> + git --version
+> git version 2.27.0
+> + git clone --filter=blob:none --no-checkout
+> https://github.com/r-spacex/launch-timeline.git
+> Cloning into 'launch-timeline'...
+> remote: Enumerating objects: 529, done.
+> remote: Total 529 (delta 0), reused 0 (delta 0), pack-reused 529
+> Receiving objects: 100% (529/529), 67.49 KiB | 987.00 KiB/s, done.
+> Resolving deltas: 100% (168/168), done.
+> + cd launch-timeline
+> + export GIT_TRACE_PACKET=1
+> + GIT_TRACE_PACKET=1
+> + git sparse-checkout init --cone
+> + git sparse-checkout set README.md
+> + git sparse-checkout add css
+> + ls -las
+> total 68
+>  4 drwxrwxr-x   3 scase scase  4096 Jun  2 17:46 .
+> 60 drwxrwxrwt. 34 root  root  57344 Jun  2 17:46 ..
+>  4 drwxrwxr-x   8 scase scase  4096 Jun  2 17:46 .git
+> ==============================================
 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  builtin/receive-pack.c   |  4 ++--
->  commit.h                 |  2 ++
->  fetch-pack.c             | 10 +++++-----
->  shallow.c                | 30 +++++++++++++++++++++---------
->  t/t5537-fetch-shallow.sh | 29 +++++++++++++++++++++++++++++
->  5 files changed, 59 insertions(+), 16 deletions(-)
+Thanks for the detailed report.  This change came from commit
+f56f31af03 ("sparse-checkout: use new update_sparsity() function",
+2020-03-27), made by me.  After playing with it for a bit, the
+--filter=blob:none turns out to not be relevant to reproducing the
+behavior of not getting any files in the working tree, other than
+perhaps providing you a way to measure what was or wasn't happening.
 
-I haven't investigated the cause yet, but I've run into an interesting
-bug that bisects to this commit.  Jay Conrod (cc-ed) reports:
+I think it'd be more natural to run
+  git clone --filter=blob:none --sparse
+https://github.com/r-spacex/launch-timeline.git
+in place of the combination of
+  git clone --filter=blob:none --no-checkout
+https://github.com/r-spacex/launch-timeline.git
+  git sparse-checkout init --cone
+since the --sparse flag was added just for this kind of case -- to do
+a clone but start with only a few things checked out.  It's easier, is
+the route we're moving towards, and as a bonus also happens to work.
+;-)
 
-| I believe this is also the cause of Go toolchain test failures we've
-| been seeing. Go uses git to fetch dependencies.
-|
-| The problem we're seeing can be reproduced with the script below. It
-| should print "success". Instead, the git merge-base command fails
-| because the commit 7303f77963648d5f1ec5e55eccfad8e14035866c
-| (origin/master) has no history.
+A bit of a side note, or a few of them, but this command of yours is broken:
+  git sparse-checkout set README.md
+because --cone mode means you are specifying *directories* that should
+be checked out.  Currently, this gives no error, it instead silently
+drops you back to non-cone mode, which seems bad to me.
+sparse-checkout should provide some kind of error -- or at very least
+a warning -- when you make that mistake.
 
--- 8< --
-#!/bin/bash
+Now let's talk about the commit in question that changed behavior
+here.  The point of sparse-checkout is never to switch branches or
+checkout new commits; all it does is update which paths are in the
+current working directory.  A related point to this is it should never
+add or remove entries from the index and shouldn't change any hashes
+of files in the index.  It used to violate this, at first via an
+implementation that was literally invoking `git read-tree -mu HEAD` in
+a subprocess, and then later using internal code equivalent to
+invoking that command in a subprocess.  But by violating the
+leave-index-entries-alone mandate, it left folks who were in the
+middle of a rebase and wanted to update their sparse-checkout to
+include some more directories in their working tree in a precarious
+spot -- if they didn't update, then they didn't have the files
+necessary to build, and if they did forcibly update via `git read-tree
+-mu HEAD` then their staged changes would all get wiped out.  I spent
+some quality time helping users recover their files and teaching them
+about the git storage model.
 
-set -euxo pipefail
-if [ -d legacytest ]; then
-  echo "legacytest directory already exists" >&2
-  exit 1
-fi
-mkdir legacytest
-cd legacytest
-git init --bare
-git config protocol.version 2
-git config fetch.writeCommitGraph true
-git remote add origin -- https://github.com/rsc/legacytest
-git fetch -f --depth=1 origin refs/heads/master:refs/heads/master
-git fetch -f origin 'refs/heads/*:refs/heads/*' 'refs/tags/*:refs/tags/*'
-git fetch --unshallow -f origin
-git merge-base --is-ancestor -- v2.0.0 7303f77963648d5f1ec5e55eccfad8e14035866c
-echo success
--- >8 --
+So that brings us back to your original question.  When you said
+--no-checkout, it means that there is no commit checked out and the
+index is empty.  update_sparsity() is correctly toggling the
+SKIP_WORKTREE bits for the existing index entries that don't match the
+sparsity patterns, and it is correctly calling check_updates().
+check_updates() is correctly checking for files currently in the index
+which have toggled to being needed in the current worktree so that it
+can issue downloads related to promisor packs.  The problem is just
+that there aren't any index entries to begin with, so there are no
+SKIP_WORKTREE bits to update, and thus no files that need to be
+downloaded.
 
-The fetch.writeCommitGraph part is interesting.  When does a commit
-graph file get written in this sequence of operations?  In an
-unshallow operation, does the usual guard against writing a commit
-graph in a shallow repo get missed?
+It seems a bit risky to make sparse-checkout start doing
+checkout/switch behavior and adding entries to the index.  There's a
+couple ways forward.  One, we could decide this is a special edge or
+corner case where we allow it: if the index is completely empty, then
+there's no data to lose and thus we could make `git sparse-checkout
+init [--cone]` in that one case use the old 'read-tree -mu HEAD'
+logic.  Alternatively, we could just require users to run 'git reset
+--hard' at the end of your script.
 
-"rm -fr objects/info/commit-graphs" recovers the full history in the
-repo, so this is not a case of writing the wrong shallows --- it's
-only a commit graph issue.
-
-I'll take a closer look, but thought I'd give others a chance to look
-to in case there's something obvious. :)
-
-Thanks,
-Jonathan
+Stolee: Thoughts?
