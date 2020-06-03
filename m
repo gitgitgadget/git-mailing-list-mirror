@@ -2,246 +2,223 @@ Return-Path: <SRS0=EE6k=7Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8332C433DF
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 09:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46CABC433DF
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 11:25:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3C5320663
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 09:45:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DE7F204EF
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 11:25:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T7EnBFnY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ks/2cSd1"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mJQ84Bk7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OjtHVFDk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726099AbgFCJpf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Jun 2020 05:45:35 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56843 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725881AbgFCJpe (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 3 Jun 2020 05:45:34 -0400
+        id S1725936AbgFCLZV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Jun 2020 07:25:21 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55209 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725833AbgFCLZU (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 3 Jun 2020 07:25:20 -0400
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id EB9B75C00E8;
-        Wed,  3 Jun 2020 05:45:32 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id DE9285C0078;
+        Wed,  3 Jun 2020 07:25:18 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 03 Jun 2020 05:45:32 -0400
+  by compute3.internal (MEProxy); Wed, 03 Jun 2020 07:25:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=kvQ3GU6bhVhqPuGvGKdFFJaqSTM
-        EV8wPQ9JBb2G8dV4=; b=T7EnBFnYYUhaNurNwGohNia99UlDvrAczcIekkPwNOS
-        e922JsR1PqJI8N2Qxcwc3Ib10q0pXJCqkJ7A96Xwc646OHomuIvAo/iiTvKnidys
-        tEQijNAhrLpvkL+fIDKZdcrdIi4245/5wQPyAgsNaAaKaA9hUcLE2uBSzqxGmWLM
-        jr8ullKRLIzV1DtomBDDGYPAx0KZ4Ey8hDfSwRGU1kv0spi6eKmn/udAzStnkFpo
-        icpEEONMvWpUm9zxV5IWwcGIqB8DjkDuireyhrVf9mII8gADG4i+Pl59pAYMTzZN
-        sgR1Q5JerLiFP4xNKTlp6tSAz8zi2etdhqhKv5tO9KQ==
+        :content-type:in-reply-to; s=fm1; bh=942GjcqAzJEfkUkirwF1wDfH0aO
+        74MV4XD4S4+lye0w=; b=mJQ84Bk7/jDh5Gnqu4A63WM9YgbJbZm4JzCPa0yUaIO
+        buy08tEP1BPBmTFF6XqFR7wbP9B/Lf35AL68qXHfD1tQC4EbWI56HN/8+F8RP837
+        cyNRNB+ZL2TRwHX5y3GZNZUHreU+hksrmOYWpBOzcvmWL9F+AqnZQAk89NjELTYZ
+        nw/QnqJbW5ZrVk/9VpAA0AQQRKWOcbnUzqq9x2Y7V1xmsq/5ZvK0oYoJQskHh+N+
+        nJZ9Nnvjt4aruBcNoZ0b0pQ1tDu2i2IbSHvGYbSyXtxU97ny5ShMfK+0tWPBv6VV
+        T5BXwcznbLXexAGFr/9BirtX23bC0YJ9pf1fbFjQVWQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=kvQ3GU
-        6bhVhqPuGvGKdFFJaqSTMEV8wPQ9JBb2G8dV4=; b=Ks/2cSd1vp3IEZ9/emnnLk
-        oW89QgCa3IeHb/eLxH2caqkxzSI3Jf8bPEyUm+0IaNJ57Bu3f2C5rjCeifV+a4+9
-        8W65ZGRqiIWMARvERxj/K/PI7Z6scTeUE6LeHOw3mPv1hs6ZS6Y57sn0FbQTDHRk
-        vxHl57CijQ0QWhvfbZNWKX9PTB0u/LTDeiXUnLXAtnOGMBODzwYGf0r8ENtwET3I
-        JaWKdGw3ZIOT1AAD48+SGaCxWVs6fZULXxTfYyzdC0tSdBFfvucYf6gjqNTfJEvn
-        61xTAhv+IumjdFH+Eid3DLmukD2Ga+KOfblh2EJ8F1LR9MXN9GaRxtqp037q6zcA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=942Gjc
+        qAzJEfkUkirwF1wDfH0aO74MV4XD4S4+lye0w=; b=OjtHVFDkhjioymLsff6Glt
+        AAnKkTDMJxLL6OHIys376xsJkoy7rEiOuydF+xnadB3hS5C0Ua/bURc74t3bQDAw
+        05y1s6ZwMb6gqbhbFsnlBzvnUdDXFQIl2M4Poh81UYuyBwu+lQYvpLuW3OhX09X9
+        /pslpHKxlklacZEz1uckFSGswW6NWPtUVZPax99IG1quRyMCxyn+K+CuaJUv3LgU
+        672y1YELUK0pQjLT75I+ZVgTAEt47NhA3mo0MZu/vpsx4lILR1zowRm+r0pajiUt
+        RdfAKsOk0whKuFggvHo91XAbDSEmXZV1e7sMro9aP4lMjp3q82dtvObXHiHUr7lw
         ==
-X-ME-Sender: <xms:PHHXXmTcHNwaz9VzKMk9OmJHG7c044AutKKH8lwUTQ0ysWP6pgpopw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudefledgudegucetufdoteggodetrfdotf
+X-ME-Sender: <xms:nojXXjmenhFbkiNgjIruqYyvGBYWqmr6obboJsjLjVYzcBm1STJCQg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudefledgvdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnheptdffjeeiudduleehvdfgteeifeelheejte
-    dvteduiedttedvtdffffefhfdvgffgnecukfhppeejjedrudefrddujeeirddujedunecu
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeejjedrudefrddujeeirddujedunecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:PHHXXrzKcdKsUVrfQNrCAxVimG2cCiB3GXYRAXHjq8HZ5YmYINMDVw>
-    <xmx:PHHXXj2SSLtyEeXv1z-QC1ezwgmOxnGZkpiscuiUttDCzEIoKkbvRg>
-    <xmx:PHHXXiB-aOyQ6Y-1CitzNAVe2c70tT-gnq9kSht8yRgierX6F1NU5A>
-    <xmx:PHHXXqvvXs8Wm4IN0GheH951mMRUGo6e5Aoah6DBZTYPsGwoC8I9lw>
+X-ME-Proxy: <xmx:nojXXm2wMpVhALa_M_CAjA-bu_IGGifkxEnyuzZqNy4gdT2j1rX_gw>
+    <xmx:nojXXppk8zJqGCmoUUCDkPBDpCdmaLwiKN2diRYsetYf-PESKoNbXg>
+    <xmx:nojXXrmd3-xSkwtsxsk7_fG655qIc_Ve51-oX2YFqJ3DKmRwlxXMgw>
+    <xmx:nojXXiA3RZuvxyoDLM9c6DX_SF5-P6hI0itfqX9xGzjM-_vkADcAew>
 Received: from vm-mail.pks.im (x4d0db0ab.dyn.telefonica.de [77.13.176.171])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 2B448328005E;
-        Wed,  3 Jun 2020 05:45:32 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id E95A23280067;
+        Wed,  3 Jun 2020 07:25:17 -0400 (EDT)
 Received: from localhost (tanuki [10.192.0.23])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id f1b7a639 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 3 Jun 2020 09:45:27 +0000 (UTC)
-Date:   Wed, 3 Jun 2020 11:46:18 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 957bc8f6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 3 Jun 2020 11:25:12 +0000 (UTC)
+Date:   Wed, 3 Jun 2020 13:26:04 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] refs: implement reference transaction hooks
-Message-ID: <20200603094618.GA4194@tanuki.pks.im>
+Message-ID: <20200603112604.GA25644@tanuki.pks.im>
 References: <1d1a94426f95d842e0e3ea6a1569c0c45239229c.1591086316.git.ps@pks.im>
- <20200602180900.GA11344@szeder.dev>
+ <xmqq4krttl4k.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="sdtB3X0nJg68CQEu"
+        protocol="application/pgp-signature"; boundary="45Z9DzgjV8m4Oswq"
 Content-Disposition: inline
-In-Reply-To: <20200602180900.GA11344@szeder.dev>
+In-Reply-To: <xmqq4krttl4k.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---sdtB3X0nJg68CQEu
-Content-Type: text/plain; charset=iso-8859-1
+--45Z9DzgjV8m4Oswq
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 02, 2020 at 08:09:00PM +0200, SZEDER G=E1bor wrote:
-> On Tue, Jun 02, 2020 at 10:25:44AM +0200, Patrick Steinhardt wrote:
-> > The low-level reference transactions used to update references are
-> > currently completely opaque to the user. While certainly desirable in
-> > most usecases, there are some which might want to hook into the
-> > transaction to observe all queued reference updates as well as observing
-> > the abortion or commit of a prepared transaction.
-> >=20
-> > One such usecase would be to have a set of replicas of a given Git
-> > repository, where we perform Git operations on all of the repositories
-> > at once and expect the outcome to be the same in all of them. While
-> > there exist hooks already for a certain subset of Git commands that
-> > could be used to implement a voting mechanism for this, many others
-> > currently don't have any mechanism for this.
-> >=20
+On Tue, Jun 02, 2020 at 10:47:55AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
 > > The above scenario is the motivation for a set of three new hooks that
 > > reach directly into Git's reference transaction. Each of the following
 > > new hooks (currently) doesn't accept any parameters and receives the set
 > > of queued reference updates via stdin:
-> >=20
-> >     - ref-transaction-prepared gets called when all reference updates
-> >       have been queued. At this stage, the hook may decide to abort the
-> >       transaction prematurely by returning a non-zero status code.
-> >=20
-> >     - ref-transaction-committed gets called when a reference transaction
-> >       was transmitted and all queued updates have been persisted.
-> >=20
-> >     - ref-transaction-aborted gets called when a reference transaction
-> >       was aborted and all queued updates have been rolled back.
 >=20
-> The point of reference transactions is that they are atomic, and these
-> hooks must work together to ensure that.  This raises the question how
-> these hooks can be updated in an actively used repository.
+> Do we have something (e.g. performance measurement) to convince
+> ourselves that this won't incur unacceptable levels of overhead in
+> null cases where there is no hook installed in the repository?
+
+Not yet, but I'll try to come up with a benchmark in the next iteration.
+I guess the best way to test is to directly exercise git-update-refs, as
+it's nearly a direct wrapper around reference transactions.
+
+> > +	proc.in =3D -1;
+> > +	proc.stdout_to_stderr =3D 1;
+> > +	proc.trace2_hook_name =3D hook_name;
+> > +
+> > +	code =3D start_command(&proc);
+> > +	if (code)
+> > +		return code;
+> > +
+> > +	sigchain_push(SIGPIPE, SIG_IGN);
+> > +
+> > +	for (i =3D 0; i < transaction->nr; i++) {
+> > +		struct ref_update *update =3D transaction->updates[i];
+> > +
+> > +		strbuf_reset(&buf);
+> > +		strbuf_addf(&buf, "%s %s %s\n",
+> > +			    oid_to_hex(&update->old_oid),
+> > +			    oid_to_hex(&update->new_oid),
+> > +			    update->refname);
+> > +
+> > +		if (write_in_full(proc.in, buf.buf, buf.len) < 0)
+> > +			break;
 >=20
-> Having multiple hooks means that they can't be updated atomically, and
-> git might invoke the new abort hook after the transaction was prepared
-> with the old hook.  Now, if there were a single 'ref-transaction' hook
-> (which gets the phase of the transaction ('prepared', 'committed' or
-> 'aborted') as a parameter), then it could be updated atomically by
-> mv-ing it to place, but even that update can happen in between git
-> invokes 'ref-transaction prepared' and 'ref-transaction aborted'.
+> We leave the loop early when we detect a write failure here...
 >=20
-> I suppose this issue could be addressed by a single hook which runs
-> during the whole transaction and some back-and-forth communication
-> through stdin/out between git and the hook.  However, this would, I'm
-> afraid, complicate both Git's handling of this hook and the hook as
-> well, so let's take a step back first: is this something we should
-> worry about in the first place?
+> > +	}
+> > +
+> > +	close(proc.in);
+> > +	sigchain_pop(SIGPIPE);
+> > +
+> > +	strbuf_release(&buf);
+> > +	return finish_command(&proc);
+>=20
+> ... but the caller does not get notified.  Intended?
 
-Very good point about which I didn't previously think, thanks a lot for
-raising it!
+This is semi-intended. In case the hook doesn't fully consume stdin and
+exits early, writing to its stdin would fail as we ignore SIGPIPE. We
+don't want to force the hook to care about consuming all of stdin,
+though.
 
-I agree that using a single long-lived hook would complicate the logic
-by quite a bit. Given that the ref-transaction mechanism is such a
-central piece to Git, I'd be wary of introducing such complexity. But
-merging the current three hooks into a single hook accepting a parameter
-sounds like a fair compromise to me that would at least allow users to
-replace them atomically, even though it doesn't mean all stages were run
-with the same version of the hook.
+We could improve error handling here by ignoring EPIPE, but making every
+other write error fatal. If there's any other abnormal error condition
+then we certainly don't want the hook to act on incomplete data and
+pretend everything's fine.
 
-If we want to go further and also ensure the same script's run across
-all hook invocations, we could also open the hook's file descriptor on
-first invocation and then use `fexecve` on all subsequent invocations.
-As long as the user doesn't do inline rewrites of the file, we'd thus
-always use the same file. I'm not sure how portable that syscall is,
-though, but it's at least part of POSIX-2008.
-
-> > Given the usecase described above, a voting mechanism can now be
-> > implemented as a "ref-transaction-prepared" hook: as soon as it gets
-> > called, it will take all of stdin and use it to cast a vote to a central
-> > service. When all replicas of the repository agree, the hook will exit
-> > with zero, otherwise it will abort the transaction by returning
-> > non-zero. The most important upside is that this will catch _all_
-> > commands writing references at once, allowing to implement strong
-> > consistency for reference updates via a single mechanism.
-> >=20
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  Documentation/githooks.txt       | 51 ++++++++++++++++++
-> >  refs.c                           | 67 +++++++++++++++++++++++-
-> >  t/t1416-ref-transaction-hooks.sh | 88 ++++++++++++++++++++++++++++++++
-> >  3 files changed, 204 insertions(+), 2 deletions(-)
-> >  create mode 100755 t/t1416-ref-transaction-hooks.sh
-> >=20
-> > diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> > index 81f2a87e88..48f8446943 100644
-> > --- a/Documentation/githooks.txt
-> > +++ b/Documentation/githooks.txt
-> > @@ -404,6 +404,57 @@ Both standard output and standard error output are=
- forwarded to
-> >  `git send-pack` on the other end, so you can simply `echo` messages
-> >  for the user.
+> > +}
+> > +
+> >  int ref_transaction_prepare(struct ref_transaction *transaction,
+> >  			    struct strbuf *err)
+> >  {
+> >  	struct ref_store *refs =3D transaction->ref_store;
+> > +	int ret;
 > > =20
-> > +ref-transaction-prepared
-> > +~~~~~~~~~~~~~~~~~~~~~~~~
+> >  	switch (transaction->state) {
+> >  	case REF_TRANSACTION_OPEN:
+> > @@ -2012,7 +2060,17 @@ int ref_transaction_prepare(struct ref_transacti=
+on *transaction,
+> >  		return -1;
+> >  	}
+> > =20
+> > -	return refs->be->transaction_prepare(refs, transaction, err);
+> > +	ret =3D refs->be->transaction_prepare(refs, transaction, err);
+> > +	if (ret)
+> > +		return ret;
 > > +
-> > +This hook is invoked by any Git command that performs reference
-> > +updates. It executes as soon as all reference updates were queued to
-> > +the transaction and locked on disk. This hook executes for every
-> > +reference transaction that is being prepared and may thus get called
-> > +multiple times.
-> > +
-> > +It takes no arguments, but for each ref to be updated it receives on
-> > +standard input a line of the format:
-> > +
-> > +  <old-value> SP <new-value> SP <ref-name> LF
-> > +
-> > +If the hook exits with a non-zero status, the transaction is aborted
-> > +and the command exits immediately. The
-> > +<<ref-transaction-aborted,'ref-transaction-aborted'>> hook is not
-> > +executed in that case.
-> > +
-> > +[[ref-transaction-aborted]]
-> > +ref-transaction-aborted
-> > +~~~~~~~~~~~~~~~~~~~~~~~
-> > +
-> > +This hook is invoked by any Git command that performs reference
-> > +updates. It executes as soon as a reference transaction is aborted and
-> > +after all reference locks were released and any changes made to
-> > +references were rolled back. The hook may get called multiple times or
-> > +never in case no transaction was aborted.
-> > +
-> > +The hook takes no arguments, but for each ref to be updated it
+> > +	ret =3D run_transaction_hook(transaction, "ref-transaction-prepared");
 >=20
-> Nit: I found it a bit surprising to read about refs "to be updated" in
-> the description of the 'aborted' hook, because by the time this hook
-> is called the update has already been refused.  The same applies to
-> the 'committed' hook below as well.
+> This caller does care about it, no?
 
-Fair. This should rather read "that would have been updated" and "that
-were updated", respectively.
+This caller does as it may abort the transaction, but...
+
+> > +	if (ret) {
+> > +		ref_transaction_abort(transaction, err);
+> > +		die(_("ref updates aborted by hook"));
+> > +	}
+> > +
+> > +	return 0;
+> >  }
+> > =20
+> >  int ref_transaction_abort(struct ref_transaction *transaction,
+> > @@ -2036,6 +2094,8 @@ int ref_transaction_abort(struct ref_transaction =
+*transaction,
+> >  		break;
+> >  	}
+> > =20
+> > +	run_transaction_hook(transaction, "ref-transaction-aborted");
+>=20
+> And I presume that the callers of "ref_xn_abort()" would, too, but
+> the value returned here does not get folded into 'ret'.
+
+=2E.. this one doesn't. The thing is that the reference transaction hook
+for the "aborted" case can't do anything about an aborted transaction
+after the fact anyway. That's why I chose to ignore errors here, same
+for the "committed" case.
 
 Patrick
 
---sdtB3X0nJg68CQEu
+--45Z9DzgjV8m4Oswq
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl7XcWkACgkQVbJhu7ck
-PpS4tw//eNA2uTLVizvbG4FAvWzm6Zh4Bg1ToZeGpniVnrNoOxmpzTNRHlgdK0Ir
-sIBdNHFtpMPq+XtV1tJ3TTTwoELRfEIY4NkoPRUjU9XNWjG0Yofq0yczpoGbRoN/
-MnDOf7trtlHgpWlKIJFYin/qspc4fveKXyjWHd+lr9TFqlj6ZO0tdoY89VLx374L
-WlAEu4R4cjDQrYNRreItHqr1M+Y+10g94UNA76kvNlL83SE+xU/friV6Xa9q4rYk
-OgPs97KkMECg74QvLIwgp/HgtkwV/smD/cyPSzoikljbAASRtUtkWp7DdTPShz1+
-t7xU9mzAY10+mUubp/GOAoSgTZJDmUOIb8IljSMQXtCCu4yxxTQR/jW73DP0NZnk
-u4Qksz/qmOW90JSm/lyqWAEOphgyNFXqsQopNpsnindrvGZjAXb4jTIQSEvu9I0r
-MdeeWoMmRJy/R74bt8TFmbadOQP2CTM/Ifa8MDm+b7Kn21kwTmhQi3/+IAsiJgr9
-JDH5shFry0Wr308zdKmvE1innrBDPGPLaC/CRvLm2SKMN33K7Pb3UhrEQOaa9Vai
-0xyblAbfU4+UwfEr7ZRrncmdPmiE65SxENkz87bJpRiXdRF3c7R8jKTUIzrmjewY
-7+7+W2KLNrnenNZjrnVu13sWFelZGso4iHe5nJavJYqLZiapruU=
-=skJn
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl7XiMsACgkQVbJhu7ck
+PpSWSQ/+KDmdHUx/yvrVk8b0ZjAwhHpJbnZFtvtqFSIOqxKRvNaAxXqAtcUOH7Bu
+ZP9wcaIK3Iw3KS4NooTpJh1stPIbOuzov9GW8xICWs0427rOvCqbbQ9r6iJlC3Qk
+bJ60yMjbBIxpcOgIZ4WnxuP8MxuDlG9NQy7Ps040y+HDsQim1wwokQNhAQjdOc9e
+yqSuPVSt/2NxqkX+ze9OAWCPL3YGC4ky7reZVE5RM5Iq9e7rF6J2NFEKEOLI/eCJ
+juCIY9cFVDwK3N03BZsyk9+pZvAORZb66CZyTLaNRyJc6jyk+V+0x1rv8JcXAtSO
+pKwDh1KMgU1A3QVRqfPmgVpWg3fcPdTHZZF7vnLbPrH177I233yq3e2XzWH5FczR
+SFH9lHkvIDM7Qr4FHMtn5SgQOYTjhi/sj8Z72hfDt6y7jFt98+QgGs5XWm9HwMHl
+cqGu+AHJeYj9vKyYuXbzxQEaU+FuTVPwZYroCia76qtRhEuYvEHBdo/h/yDVojI8
+dM6FA7jIh5XxNNdrOx1ogeGSmp9sQRQHaUW0dlZ7mSEP6iw+ziNZxvgz0EKyYMdl
+/tzBxmvoEmKdCYzdl3roAzSq5SA7vrJ2FAhk9vs3vzPGfmhhHRiNm5hRcIsPXcwM
+LylnpbpjcUgDfY4XhFVEudBu6omev8uqqG/eSD4T7srU/D9aseo=
+=UY5O
 -----END PGP SIGNATURE-----
 
---sdtB3X0nJg68CQEu--
+--45Z9DzgjV8m4Oswq--
