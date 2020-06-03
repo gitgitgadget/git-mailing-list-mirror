@@ -1,95 +1,121 @@
-Return-Path: <SRS0=E3tc=7P=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=EE6k=7Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C689C433DF
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 22:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF1DDC433DF
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 00:12:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7247620678
-	for <git@archiver.kernel.org>; Tue,  2 Jun 2020 22:09:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA0942067B
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 00:12:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Amhabqt6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tffFmsd1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726223AbgFBWJo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 18:09:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50874 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726112AbgFBWJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 18:09:43 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1625BCF645;
-        Tue,  2 Jun 2020 18:09:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hQ8r5yzULzZovNJF8zBOZi3W3ng=; b=Amhabq
-        t6KgK+63WacrKFn9PjPVvisi8vbJfMuEkWNWTBmwGBL6QQAvwZ4Re06otsTA8mxO
-        kPFsQKG0Om2PHsh1U4IehMazWGzxXkUScA19SEe6jbvnFOg4z71u/pLXofCakkdj
-        Mho2zsK8IQUc/7elskOOTysbBk2mImbY9XBHE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NReqtE6XwCiDexIM0VjCc3x8p5efpECE
-        Vm8SBxYydCaDsRpWMuHDqMKvteHtv9au/wHU8XSblNIByigUmYCZCYbF2C+ZUkhR
-        AQBRAB/aPTVlpF/f4OBWP474h7YrU+886gmzm+h3twSyNGToaA6l0tuRb7QGFRig
-        neN9YlT01ig=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B9B2CF644;
-        Tue,  2 Jun 2020 18:09:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 210E6CF640;
-        Tue,  2 Jun 2020 18:09:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Laurent Arnoud <laurent@spkdev.net>
-Subject: Re: [PATCH] format-patch: generate valid patch with diff.noprefix config
-References: <20200602204924.GA1853335@spk-laptop>
-        <xmqqpnahrx2y.fsf@gitster.c.googlers.com>
-Date:   Tue, 02 Jun 2020 15:09:36 -0700
-In-Reply-To: <xmqqpnahrx2y.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 02 Jun 2020 14:12:37 -0700")
-Message-ID: <xmqqeeqxrufz.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728344AbgFCAM2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 20:12:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36576 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbgFCAM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 20:12:28 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D73C08C5C0
+        for <git@vger.kernel.org>; Tue,  2 Jun 2020 17:12:28 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id w20so447149pga.6
+        for <git@vger.kernel.org>; Tue, 02 Jun 2020 17:12:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=x63iBLhKW0OQTEnRVaBFYFJxgeaXK82YzsoSLv3Gnhg=;
+        b=tffFmsd179RLK/7U4DHaVrjcwdMy4sRucH33gaAI21wMV7U52VBV0V5CZAFgxMz8U5
+         DI1zL5n/nZGs/yIUUmfbWTM69X3b6oRc65cDBwqBXu7hT7Kif2w1fmDj07ZtFKgA0uo9
+         Nx7qhhQFw2UziQrdyeMA84NGAlbzXSCWVim4Zhew+ncPhpgfs4w19PpU2G3rv+VaqHA/
+         T0dT9wpt94BiQf7Le9VOQfb7EOxGdkX9amjFtoOSXHtcWSMaV0yviZbppPhyT83xDdBm
+         B03Rupk1MMujUqtkOtfIdSwnuP/SPfl8ApBOlc6lP9pvpvkwO7ABu0pQMLzRW8rHXDMf
+         xAkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=x63iBLhKW0OQTEnRVaBFYFJxgeaXK82YzsoSLv3Gnhg=;
+        b=cjdBjmnZovZYg7S/k1AbPuHI8g6+RhkggZDPU2co0aGru+aKOrTxcatSI6c24Zk6we
+         5d/gJSCsh6Y3Vo1HVDu14KPaX76RvEZGd6togD8ELygHtYSVK6zupl7jCa3XuHVBA+h3
+         RPwcqkCUo4MA7EaPAzKCN2IToaA53F3o44i8pUzl8P/Zw9APIxbaedmoGvHSP9KSmE0f
+         wirSSB8F6RK2KIrBjiaWE9HR2VwQq9kWucj7gFiuKkiEp7hXY9XCp2j0naRFX5cuvVmu
+         DfjVARNq8sw3rBl7MgT868TpJbXZahz3VWnxFOxu0KGN5OTn23S75GHFphKRGS8BNk8f
+         Hy/w==
+X-Gm-Message-State: AOAM533gdJbBCt4W0x7uUSqAnKRnVj1qovFxRAaYtX4tex0SFG0GHBp0
+        qBTsVS14MYkKJ0KedtTMACM=
+X-Google-Smtp-Source: ABdhPJw0BHRY15WkwTCmQue5vJPv0kACe1iHUr3E6VTmXgoh6FQ41Ga33q5b6G8Ra9ohruoLB1yO9A==
+X-Received: by 2002:a65:6703:: with SMTP id u3mr25716728pgf.179.1591143147624;
+        Tue, 02 Jun 2020 17:12:27 -0700 (PDT)
+Received: from localhost ([2402:800:6374:cd6f:3908:64aa:a24d:1be1])
+        by smtp.gmail.com with ESMTPSA id cu9sm175754pjb.28.2020.06.02.17.12.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Jun 2020 17:12:26 -0700 (PDT)
+Date:   Wed, 3 Jun 2020 07:12:25 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Johannes.Schindelin@gmx.de, chriscool@tuxfamily.org,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        kaartic.sivaraam@gmail.com, liu.denton@gmail.com,
+        sunshine@sunshineco.com
+Subject: Re: [GSoC][PATCH v5] submodule: port subcommand 'set-branch' from
+ shell to C
+Message-ID: <20200603001225.GB2222@danh.dev>
+References: <20200523163929.7040-1-shouryashukla.oo@gmail.com>
+ <20200602163523.7131-1-shouryashukla.oo@gmail.com>
+ <xmqqzh9ls622.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BFF745F4-A51D-11EA-A493-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqzh9ls622.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2020-06-02 10:58:45-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+> 
+> > +	 * though there is nothing to make less verbose in this subcommand.
+> > +	 */
+> > +	struct option options[] = {
+> > +		OPT_NOOP_NOARG('q', "quiet"),
+> > +		OPT_BOOL('d', "default", &opt_default,
+> > +			N_("set the default tracking branch to master")),
+> > +		OPT_STRING('b', "branch", &opt_branch, N_("branch"),
+> > +			N_("set the default tracking branch")),
+> > ...
+> > +		OPT_END()
+> > +	};
+> > +	const char *const usage[] = {
+> > +		N_("git submodule--helper set-branch [-q|--quiet] (-d|--default) <path>"),
+> > +		N_("git submodule--helper set-branch [-q|--quiet] (-b|--branch) <branch> <path>"),
+> 
+> 
+> I notice that we gained back -d and -b shorthands that was
+> advertised but not implemented the previous rounds.  It is a bit
+> curious that we are adding these short-hands that nobody uses,
+> though.  
 
-> Laurent Arnoud <laurent@spkdev.net> writes:
->
->> With diff.noprefix enabled the patch generated with format-patch does not
->> include prefix a/ and b/ so not applicable with `git am`.
->
-> Some projects (not this one) do not want to see a/ and b/ prefix in
-> their patches, and noprefix is an option for those who needs to give
-> patches to such projects.  As "am" can be told with -p<num> to accept
-> such a patch just fine, I do not think this change is appropriate.
->
->> Solution is to force a_prefix and b_prefix on diffopt.
->
-> Sorry, I do not think there is any problem to be solved here ;-)
+I think a day will come, when all git-submodule functionalities will
+run by calling git-submodule--helper.
 
-Having said all that, we seem to be letting more configurations for
-the diff.* family to affect the format-patch command.  The latest
-addition was "diff.relative"---together with the "diff.noprefix"
-that triggered this thread, some users may feel that it is a bug to
-allow these configuration variables to affect the output from the
-"log -p", "show", and "format-patch" commands.  
+In that day, we will use current git-submodule--helper as the new
+git-submodule.
 
-It *might* make sense to introduce log.diff.* configuration
-variables so that when they are set, they are used by
-log/show/format-patch instead of diff.* counterparts, or something
-along those lines.  I dunno.
+To me, it'll be less noise to just gs/--helper// from this file and use
+it as the new git-submodule, instead of changing the OPT_* all over
+places.
 
+Or is that a complain for missing some tests?
+
+-- 
+Danh
