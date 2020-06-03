@@ -2,198 +2,169 @@ Return-Path: <SRS0=EE6k=7Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFAA4C433E0
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 22:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6BAFC433E0
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 22:21:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2BC4205CB
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 22:14:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACDE22067B
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 22:21:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="yQ7RNZmx"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="pQpVyaKk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726812AbgFCWO4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Jun 2020 18:14:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43702 "EHLO
+        id S1726799AbgFCWVK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Jun 2020 18:21:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726354AbgFCWO4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jun 2020 18:14:56 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5485BC08C5C0
-        for <git@vger.kernel.org>; Wed,  3 Jun 2020 15:14:56 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id j1so2254173pfe.4
-        for <git@vger.kernel.org>; Wed, 03 Jun 2020 15:14:56 -0700 (PDT)
+        with ESMTP id S1726354AbgFCWVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jun 2020 18:21:10 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67000C08C5C0
+        for <git@vger.kernel.org>; Wed,  3 Jun 2020 15:21:10 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id q16so1322440plr.2
+        for <git@vger.kernel.org>; Wed, 03 Jun 2020 15:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=t/JsiJmTANBHw8h8bJdZlSxnqvBPRVoQI52g8IDRe/Y=;
-        b=yQ7RNZmx1HbDt/5C0lebXaBad2qyGCzPzHBUpWJFd8UT+vLJsqbzGy+2NENsP/Yx8j
-         2aIVuEFf/08IWHu+XszKkRF4IziY6TzhU9tubFmupkRW2MTMIG26I2E+Ivl2iJDv4Q6D
-         KK9ur2bZh+L/txC2kVbADZ6YCc4YRSypc/m9A288eodP6W4qRLKP5mjoEv3JwsbcmvdY
-         oAiVc5iPK3jvD0q3jBBFB/PlbqlnMdo2Fno7fbRltwpuzj9OQgXOl4qn/a9Zp4kHHrno
-         oj0jATJY54r8bVawskiq202MyAm7zXE7KX4uGCxnlyjxC8NdzCvHYaI/qo/CX+Zhx1Dz
-         pufQ==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ZIcoXxH4b5GB1zCKP0HCa+yd/CtbEWABai9t3T0dNa8=;
+        b=pQpVyaKkCZ9TAVxuKw1+b3wbVWKsm5ZuCPk0cLsyF4OSlE1lY7CoMKXXDpPFr7Q1tk
+         82kqHJohkmZn+4sUJ84ND0f/2X7mVuzpw8jzuDxnUcs5xWriM+umhby4Amc58LboTfGs
+         KGNxAJ8a9+lU/LO7n9bgWcjWhbJUCdAd6KorhOpIZtkMFpAFLgJrpAQGDQJfEnc69+za
+         Xk0yuJBqzToicjABVlrA0n3j73kd6tQy5zBbmQ1bVPvl3t67YoWf1ZkpnLF9jGdWBWVH
+         b3EBmSM8fDBg/8IRSUH37Da3OR2oxrC6PpGHnc+ukgexeCoWMCl7n+vR6s9CGehpYLKN
+         PEOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=t/JsiJmTANBHw8h8bJdZlSxnqvBPRVoQI52g8IDRe/Y=;
-        b=ZeLlOmCVEI7E3vJDwLO7ntoEU4YMekBlLqvIQgyQqLOw8qTSMV6IrDaI+QI5qAgNyS
-         F9d3lygaNPzkufjChPNxLGf0ZJgqU2/4YIT11Urj8luNBmwJgKs1Fj3uv94Fxdj6BLAk
-         zAqAr1j2KWVKih5H5tARIXRS/FsFQDByAmW9cNjOk2dzX1sTCCpnUo3/y5yYUwDbVMmL
-         riIC5Jx6KXYBfSozVbihmgS1lPdLhwTuuHfm3J+CPs7fLG2TS9MevAYJbKJIfsvXyf71
-         BqqBvs4gOXzvqewQSFOMgbit769HVmPK0DKy4zzmt3o/mx50TP6SBqdLTFQDkH+QeHaq
-         DOwg==
-X-Gm-Message-State: AOAM532zqQp8D8ciComkjiJXjpQ05aM24kpfyTYgxU7tYYpQifvdyLVZ
-        tcTR6wk578hWURQGfFxpVXKYd+1KfbI=
-X-Google-Smtp-Source: ABdhPJwmZzR9OqQpkd7TIBI5ovaiTYMmTRp6Rv3jNC2Yk3Aldz+EgXm0weozEvRmJKlbckllvB/psw==
-X-Received: by 2002:a62:1b87:: with SMTP id b129mr1201629pfb.162.1591222495677;
-        Wed, 03 Jun 2020 15:14:55 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ZIcoXxH4b5GB1zCKP0HCa+yd/CtbEWABai9t3T0dNa8=;
+        b=LJxdV3+fP+ljKff16036gphYDRCajOUe++NMxLlj19mNRmXYPZM0m7fGWi09A5qRQU
+         x8ABxJPX2QxZnxDaBGJHAqv+7pgVlV/TEO/HpKxG2PhwT4UIhColcnjDJZn+gXF0Xzuu
+         D/GnKAHvg+n6CQ1CU+ylG/CfxSXsE13s7b282mK9W5kKsIOUMK/osBidB24RYlWJaw8A
+         rleHjQRbfEmihiukF8ftxVZJ7A7S4xmlKgL0UEtzi5aiD06n/y4ntjts9dg5oN17UjpO
+         bFAtJP3DOhmVWrkv2UVPXtD1MIGYZ8RmSF/D/EnF1e3xlL0ZucxJqUBtazUStUJL5hI8
+         bRVg==
+X-Gm-Message-State: AOAM530h7t448Abk3LOUAW8ZYgJe5iCw7sKCgd0nQlRRFpIAfzgRlwxE
+        HeW38bA3UF3h4w4owdekbG1C9A==
+X-Google-Smtp-Source: ABdhPJw/nshT5hDVIfr9PYNXZcWfD8yu/58ji1ip2DCGHD2xf+rtpUieC491uqan0zCR27ryjS+r6g==
+X-Received: by 2002:a17:902:242:: with SMTP id 60mr1708030plc.120.1591222869746;
+        Wed, 03 Jun 2020 15:21:09 -0700 (PDT)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id g65sm2646789pfb.61.2020.06.03.15.14.54
+        by smtp.gmail.com with ESMTPSA id q26sm2593078pfh.74.2020.06.03.15.21.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jun 2020 15:14:54 -0700 (PDT)
-Date:   Wed, 3 Jun 2020 16:14:53 -0600
+        Wed, 03 Jun 2020 15:21:08 -0700 (PDT)
+Date:   Wed, 3 Jun 2020 16:21:07 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        jonathantanmy@google.com, gitster@pobox.com, newren@gmail.com,
-        Jay Conrod <jayconrod@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 2/2] shallow.c: use '{commit,rollback}_shallow_file'
-Message-ID: <20200603221453.GA36237@syl.local>
-References: <20200423001438.GC19100@syl.local>
- <cover.1587601501.git.me@ttaylorr.com>
- <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
- <20200603034213.GB253041@google.com>
- <20200603045248.GA20266@syl.local>
- <20200603051631.GA20678@syl.local>
- <20200603205151.GC253041@google.com>
+        dstolee@microsoft.com
+Subject: Re: [PATCH 1/2] t5318: use 'test_must_be_empty'
+Message-ID: <20200603222107.GA37471@syl.local>
+References: <cover.1591034353.git.me@ttaylorr.com>
+ <fddbe588147444fe2675224c94f50e24a1d12871.1591034353.git.me@ttaylorr.com>
+ <20200602180403.GA4791@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200603205151.GC253041@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200602180403.GA4791@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 03, 2020 at 01:51:51PM -0700, Jonathan Nieder wrote:
-> Taylor Blau wrote:
+On Tue, Jun 02, 2020 at 08:04:03PM +0200, SZEDER Gábor wrote:
+> On Mon, Jun 01, 2020 at 12:01:27PM -0600, Taylor Blau wrote:
+> > A handful of tests in t5318 use 'test_line_count = 0 ...' to make sure
+> > that some command does not write any output. While correct, it is more
+> > helpful to use 'test_must_be_empty' instead, since the latter prints the
+> > contents of the file if it is non-empty.
+> >
+> > Since 'test_line_count' only prints the expected and actual line count,
+> > not the contents, using 'test_must_be_empty' may be more helpful for
+> > debugging if there is regression in any of these tests.
 >
-> > Ah, this only sort of has to do with the object cache. In
-> > 'parse_commit_buffer()' we stop parsing parents in the case that the
-> > repository is shallow (this goes back to 7f3140cd23 (git repack: keep
-> > commits hidden by a graft, 2009-07-23)).
+> These two paragraphs essentially say the same thing, so I think only
+> one would be sufficient, but...  Both paragraphs are wrong, because
+> 'test_line_count' does include the content of the file on failure:
 >
-> Ah, good analysis.  (In fact, the behavior is older: it's from
-> 5da5c8f4cf4 (Teach parse_commit_buffer about grafting., 2005-07-30).)
-> So this is additional "cached" data that needs to be invalidated by
-> reset_repository_shallow.
+>   expecting success of 9999.1 'test':
+>           cat >foo <<-EOF &&
+>           Add
+>           some
+>           content
+>           EOF
+>           test_line_count = 0 foo
 >
-> So the question is, what other information falls into that category?
+>   test_line_count: line count for foo != 0
+>   Add
+>   some
+>   content
+>   not ok 1 - test
 >
-> [...]
-> > --- a/shallow.c
-> > +++ b/shallow.c
-> > @@ -90,6 +90,9 @@ static void reset_repository_shallow(struct repository *r)
-> >  {
-> >  	r->parsed_objects->is_shallow = -1;
-> >  	stat_validity_clear(r->parsed_objects->shallow_stat);
-> > +
->
-> (nit: the above two lines wouldn't be needed if r->parsed_objects is
-> being thrown away.)
+> Having said that, I think that the change itself is good, because
+> 'test_must_be_empty foo' is more idiomatic.
 
-Right, thanks. I don't think that it matters since you point out a
-legitimate issue with dangling references, but serves me right for
-working on this so late at night ;-).
+Sounds good. Let's use this version of the patch instead, and otherwise
+I think this should be ready to go:
 
-> > +	parsed_object_pool_clear(r->parsed_objects);
-> > +	r->parsed_objects = parsed_object_pool_new();
-> >  }
->
-> Shallows don't affect the ref store.  They only affect object walks.
-> So r->parsed_objects does seem like the only place that could be
-> affected.
->
-> That said, with this change I'd worry about use-after-free from any
-> existing references to objects in the pool.
->
-> Stepping back, what I think I would like to see is to *not* have
-> grafts and shallow state affect the in-memory persisted parsed
-> objects.  Instead, act as an overlay in accessors that traverse over
-> them.
->
-> Lacking that, I like the idea of a "dirty bit" that gets written as
-> soon as we have started lying in the parsed object pool.  Something
-> like this.  What do you think?
->
-> diff --git i/commit-graph.c w/commit-graph.c
-> index 2ff042fbf4f..84b49ce903b 100644
-> --- i/commit-graph.c
-> +++ w/commit-graph.c
-> @@ -149,7 +149,8 @@ static int commit_graph_compatible(struct repository *r)
->  	}
->
->  	prepare_commit_graft(r);
-> -	if (r->parsed_objects && r->parsed_objects->grafts_nr)
-> +	if (r->parsed_objects &&
-> +	    (r->parsed_objects->grafts_nr || r->parsed_objects->substituted_parent))
+--- >8 ---
 
-This is a little tricky. Why would we set substituted_parent without
-also incrementing grafts_nr? That seems like the real bug here: if we
-incremented grafts_nr, then we would return a non-zero value from
-'commit_graph_compatible' and rightly stop even without this sticky-bit.
+Subject: [PATCH] t5318: use 'test_must_be_empty'
 
-I don't quite understand this myself. If it's an oversight, it's a
-remarkably long-lived one. Do you have a better sense of this?
+A handful of tests in t5318 use 'test_line_count = 0 ...' to make sure
+that some command does not write any output. While correct, it is more
+idiomatic to use 'test_must_be_empty' instead. Switch the former
+invocations to use the latter instead.
 
->  		return 0;
->  	if (is_repository_shallow(r))
->  		return 0;
-> diff --git i/commit.c w/commit.c
-> index 87686a7055b..762f09e53ae 100644
-> --- i/commit.c
-> +++ w/commit.c
-> @@ -423,6 +423,8 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
->  	pptr = &item->parents;
->
->  	graft = lookup_commit_graft(r, &item->object.oid);
-> +	if (graft)
-> +		r->parsed_objects->substituted_parent = 1;
->  	while (bufptr + parent_entry_len < tail && !memcmp(bufptr, "parent ", 7)) {
->  		struct commit *new_parent;
->
-> @@ -447,6 +449,7 @@ int parse_commit_buffer(struct repository *r, struct commit *item, const void *b
->  	if (graft) {
->  		int i;
->  		struct commit *new_parent;
-> +
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t5318-commit-graph.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Nit: unnecessary whitespace change, but I doubt it really matters much.
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index a79c624875..d23986f603 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -147,7 +147,7 @@ test_expect_success 'Add more commits' '
+ test_expect_success 'commit-graph write progress off for redirected stderr' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write 2>err &&
+-	test_line_count = 0 err
++	test_must_be_empty err
+ '
 
->  		for (i = 0; i < graft->nr_parent; i++) {
->  			new_parent = lookup_commit(r,
->  						   &graft->parent[i]);
-> diff --git i/object.h w/object.h
-> index b22328b8383..db02fdcd6b2 100644
-> --- i/object.h
-> +++ w/object.h
-> @@ -26,6 +26,7 @@ struct parsed_object_pool {
->  	char *alternate_shallow_file;
->
->  	int commit_graft_prepared;
-> +	int substituted_parent;
->
->  	struct buffer_slab *buffer_slab;
->  };
->
-> Thanks,
-> Jonathan
+ test_expect_success 'commit-graph write force progress on for stderr' '
+@@ -159,13 +159,13 @@ test_expect_success 'commit-graph write force progress on for stderr' '
+ test_expect_success 'commit-graph write with the --no-progress option' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph write --no-progress 2>err &&
+-	test_line_count = 0 err
++	test_must_be_empty err
+ '
 
-Thanks,
-Taylor
+ test_expect_success 'commit-graph verify progress off for redirected stderr' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph verify 2>err &&
+-	test_line_count = 0 err
++	test_must_be_empty err
+ '
+
+ test_expect_success 'commit-graph verify force progress on for stderr' '
+@@ -177,7 +177,7 @@ test_expect_success 'commit-graph verify force progress on for stderr' '
+ test_expect_success 'commit-graph verify with the --no-progress option' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git commit-graph verify --no-progress 2>err &&
+-	test_line_count = 0 err
++	test_must_be_empty err
+ '
+
+ # Current graph structure:
+--
+2.27.0
+
