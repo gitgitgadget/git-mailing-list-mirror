@@ -2,143 +2,199 @@ Return-Path: <SRS0=EE6k=7Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8039FC433DF
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC4E7C433DF
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:38:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 579B720757
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:37:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FA0320663
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:38:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yt1HZYB6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fiGmy/Hk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725836AbgFCChA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 22:37:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58874 "EHLO
+        id S1725883AbgFCCiw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 22:38:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725810AbgFCChA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 22:37:00 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5050C08C5C0
-        for <git@vger.kernel.org>; Tue,  2 Jun 2020 19:36:59 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id d67so444266oig.6
-        for <git@vger.kernel.org>; Tue, 02 Jun 2020 19:36:59 -0700 (PDT)
+        with ESMTP id S1725810AbgFCCiv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 22:38:51 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 442CBC08C5C0
+        for <git@vger.kernel.org>; Tue,  2 Jun 2020 19:38:51 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id s13so677413otd.7
+        for <git@vger.kernel.org>; Tue, 02 Jun 2020 19:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=WV+7L6Y2CKqAr7Kc/EZWjo6FkdeSIUhrRJEyXoY08yQ=;
-        b=Yt1HZYB6SbMnbQsNRCfhBKvCOSthsDX4kSWCXTSQYLvpdWISrLRGU1N146h8qIqDZh
-         RFOpWoBhCU/rnZ1Jx6vmkS9KBkg2wmrh1C2YmoTLNI0ES8GoEkzyE4OXDBxLMlD3srEy
-         tYJKkat/k3LEDg0aoJfJSLBzZehfxV8iwpYMKsaCNA82Cn1V8WtkZSQvJjyJvyXatuJx
-         w+g3HMpjLLHe7eVk3lqlha7luQlvvxL4qvJENlQhbqiav2zvCmd128XOTs79VdobcbrP
-         a4esIk8Yc3vqwGK74jUVQvbNOd/Y2A8San8aKISK95ou77wwdlGl8ZCOkl51pOFZxkeG
-         vwKA==
+        bh=ARgTm47GcHyeOxfWXcFltmaVAx85YOrV5Az22YU1P/8=;
+        b=fiGmy/Hkx7ziOLdhfRgnY1tzLJGSNfvhtYZOX5OMDIP/mv7hH4XCqBzHlHgm9UsVQP
+         Wi/KT8PIDwP3FXVy6Yv3NrukYcfeWPBqoPhUFvXc4QYV+zzpgs41QkDZH25VhzKWB79G
+         eYPywX3lcgIVxuGoxmyk+DEkO3ZgCXl/DBBuvHkFOK1cjP0mdqy+8tQ3xMgB8Pl087zw
+         qmYABcdTk0VFCszb6EgDgi0OGjn1vlWVeq+j2aDb/XpDBEOpatRogs+SWd8qd3BDU2Nz
+         4gm5SJPhuB2bWnuvYoEP+5b7h/7N8nJeKZk5qdeCUlZ18kjAQdEEIWAzloKC0Oi9717X
+         nw/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=WV+7L6Y2CKqAr7Kc/EZWjo6FkdeSIUhrRJEyXoY08yQ=;
-        b=XNHYIXQhlfjq71eSboCqXd69c7o8IpGnC3rp3AVv8yYPPLvcEoZghWFu3PvbpxHWEP
-         DoOdHKJ7e4Msb6LyaoM9cOijH+WQ9JZ7q5ax4MvEGyR3NUqkwkHkLMdEVPCvsiRSTkMU
-         mXYqm8UInFMeHu6MfmjWvw42gae44k3zJLYkIZJrzhtUUsDkVSkIPoaddJAm+nC+9IBp
-         3f+3uErGudcFrygvNzFJfAlsJmLZCaPSWLaf0+UaC7P4rcuYTQJUunQPtx54v4uJozqr
-         hLy6nhaB6/A+Ll8Ef+rLv7B0IEThuszJvEvoDj74ulQS4zT/kGAIXJUIGUcQjTs6iuFR
-         1Uww==
-X-Gm-Message-State: AOAM532AXTCjB1k9EgUUKsa4WLoufk8KxI5M4ufLX6VIH1iHkpYqJl3N
-        jSevMLcncIzBDEQ3sRcRey4e4+OcvMJVVJCEbp8=
-X-Google-Smtp-Source: ABdhPJwOjkRXJWwgaLGwo/fsgN+A7iNCoFR59piM8nS26m5XsmIdJH5T0xBVYMB9AW+zi/CiFnlzHjFQFJIfEDhuc5o=
-X-Received: by 2002:aca:3f44:: with SMTP id m65mr5072846oia.167.1591151818742;
- Tue, 02 Jun 2020 19:36:58 -0700 (PDT)
+        bh=ARgTm47GcHyeOxfWXcFltmaVAx85YOrV5Az22YU1P/8=;
+        b=L50xhIYx36SqVXeeTNV8CbMET5TEHJK4+ybl9Xc55IKYIvlrqZPu2NuinpMdB27men
+         vhLTFfIQIlkKnZqWiHNyqDiD1+pa8F0/5ufV+EUAXIrnIEzB1nd12jSI1mrTStED9+nt
+         YmZW3e5jeokgZ1JE5hswfq0pfyZ5LBMfR14RZUBoKhCDj17dzSdn54YMFm/IOTIvuexm
+         0LtZVRBDyRCamxbRY+Kdt72V2HDUyb0vXhD9dTux4guiRZaI4xcDQ+W9gO35dgAZMXFI
+         xz901DLgO97E4k177ET01dhCavz5sMEtix2cYTd80qWNCP4dSRUHyYqcH4lp1f7VU00m
+         1ipw==
+X-Gm-Message-State: AOAM533JY31yjpVl/ikbi4dCj9PMGA66RDXlhG4R5SV0A64xA2QXHFjK
+        u3cwvKeL6NBjBeePdf0iGmmSMYyuu+hSXVZQzBQ=
+X-Google-Smtp-Source: ABdhPJz68x0QuFDXSjWjlwonCXPbdOwNethUO/OJXyGy+iGOo4vTTIy8HKu7fJLE4wBqjJ6sTHwePVNK6AlawgSQ5OA=
+X-Received: by 2002:a9d:6c07:: with SMTP id f7mr1628402otq.345.1591151930510;
+ Tue, 02 Jun 2020 19:38:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABPp-BEswHLhymQ1_07g3qqu=7kFR3eQyAHR0qMgSvi6THy=zQ@mail.gmail.com>
- <20200603015314.GA253041@google.com>
-In-Reply-To: <20200603015314.GA253041@google.com>
+References: <cover.1590627264.git.matheus.bernardino@usp.br>
+ <5ddac818185d316cd5ad9576105f0e4e695b9456.1590627264.git.matheus.bernardino@usp.br>
+ <CABPp-BFsCPPNOZ92JQRJeGyNd0e-TCW-LcLyr0i_+VSQJP+GCg@mail.gmail.com> <CAHd-oW7JEu0rBrBMyjfFZ4WZ982+WwpGSvqg4meOwxmHjocknQ@mail.gmail.com>
+In-Reply-To: <CAHd-oW7JEu0rBrBMyjfFZ4WZ982+WwpGSvqg4meOwxmHjocknQ@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 2 Jun 2020 19:36:46 -0700
-Message-ID: <CABPp-BH9M-Rkq1YkNkJGqzu_z5poT4uS6Pk1f==ey+NLckiHTg@mail.gmail.com>
-Subject: Re: Huge push upload despite only having a tiny change
-To:     Jonathan Nieder <jrnieder@gmail.com>
+Date:   Tue, 2 Jun 2020 19:38:39 -0700
+Message-ID: <CABPp-BF6=s-cAy98d-FTTExeR18YhxrHmDNzbH-1P8AiMfskfg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] grep: honor sparse checkout patterns
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
 Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Minh Thai <mthai@google.com>
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, May 31, 2020 at 9:44 PM Matheus Tavares Bernardino
+<matheus.bernardino@usp.br> wrote:
+>
+> On Sat, May 30, 2020 at 12:48 PM Elijah Newren <newren@gmail.com> wrote:
+> >
+> > On Wed, May 27, 2020 at 6:13 PM Matheus Tavares
+> > <matheus.bernardino@usp.br> wrote:
+> > >
+[...]
+> > > +static struct pattern_list *get_sparsity_patterns(struct repository *repo)
+> > > +{
+> > > +       struct pattern_list *patterns;
+> > > +       char *sparse_file;
+> > > +       int sparse_config, cone_config;
+> > > +
+> > > +       if (repo_config_get_bool(repo, "core.sparsecheckout", &sparse_config) ||
+> > > +           !sparse_config) {
+> > > +               return NULL;
+> > > +       }
+> >
+> > Is core_apply_sparse_checkout not initialized for some reason?
+>
+> It should be already initialized, yes. But we cannot rely on that as
+> `repo` might be a submodule, and core_apply_sparse_checkout holds the
+> configuration's value for `the_repository`.
 
-On Tue, Jun 2, 2020 at 6:53 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> (cc: Jonathan Tan for "git push" discussion; Minh Thai for negotiate
->  hook discussion)
-> Hi,
->
-> Elijah Newren wrote:
->
-> > I had a user report that two nearly identical pushes (the second being
-> > an amended commit of the first) took dramatically differing amounts of
-> > time and amount of data uploaded (from 4.5 seconds and about 21k
-> > uploaded, to 223 seconds and over 100 MB uploaded).
->
-> Yes, this is why I want push negotiation.  (It's been something we've
-> been discussing for protocol v2 for push.)
->
-> If they fetch before they push, does that help?
+Ah, gotcha.  Thanks for straightening me out.
 
-In my attempts to reproduce which I assume are similar, yes it helps immensely.
+> > > +static int in_sparse_checkout(struct strbuf *path, int prefix_len,
+> >
+> > This function name in_sparse_checkout() makes me think "Does the
+> > working tree represent a sparse checkout?"  Perhaps we could rename it
+> > to path_matches_sparsity_patterns() ?
+> >
+> > Also, is there a reason we can't use dir.c's
+> > path_matches_pattern_list() here?
+>
+> Oh, we do use path_matches_pattern_list() inside:
+>
+> > > +       *match = path_matches_pattern_list(path->buf, path->len,
+> > > +                                          path->buf + prefix_len, &dtype,
+> > > +                                          sparsity, istate);
+> > > +       if (*match == UNDECIDED)
+> > > +               *match = parent_match;
+>
+> > How does this new function differ
+> > in behavior from that function?
+>
+> The idea of in_sparse_checkout() is to implement a logic closer to
+> what we have in clear_ce_flags_1(). Here, it is effectively a wrapper
+> to path_matches_pattern_list() but with some extra logic to decide
+> whether grep should search in a given entry, based on its mode, the
+> match result against the sparsity patterns, and the result from the
+> parent dir.
 
-> [...]
-> > * The server was running Gerrit 3.1.4 (i.e. jgit).
->
-> Gerrit servers have the interesting property that many people are
-> pushing to the same Git repo.  (This is common in some other hosting
-> scenarios such as Gitlab, but the most common case among Git users
-> still seems to be pushing to a repo you own.)
->
-> When you push, because there's no negotiation phase, the only
-> information we have about what is present on the server is what is in
-> the ref advertisement.  (We have remote-tracking branches which seem
-> potentially useful, but we don't have a way to ask the server "are
-> these objects you still have?")  The ref advertisement describes the
-> *current* state of all refs.  If I am pushing a new topic branch (in
-> Gerrit jargon, a new change for review) based on the *old* state of a
-> branch that has moved on, then we can only hope that some other ref
-> (for example a tag) points to a recent enough state to give us a base
-> for what to upload.
->
-> There is one trick a server can use to mitigate this: advertise some
-> refs that don't exist!  If you advertise a ref ".have", then Git
-> will understand that the server has that object but it is not an
-> actual ref.  Gerrit uses this trick in its HackPushNegotiateHook[1]
-> to advertise a few recent commits.
->
-> At $DAYJOB we ran into some clients where "a few recent commits" was
-> not sufficient to get to history that the client is aware of.  We
-> tried changing it to do some exponential deepening, and that helped.
-> We should probably upstream that change for other Gerrit users.
->
-> Gerrit also advertises some other ".have"s, for example for recent
-> changes by the same author in case you're uploading an amended
-> version.  That's less relevant here.
->
-> But fundamentally, this is something that cannot be addressed properly
-> without improving the "git push" protocol (adding a negotiation
-> phase).
->
-> Summary: (1) try fetching first (2) let's improve
-> HackPushNegotiateHook#advertiseRefs (3) let's improve "git push"
-> protocol to make this a problem of the past.
->
-> Thanks and hope that helps,
-> Jonathan
->
-> [1] https://gerrit.googlesource.com/gerrit/+/e1f4fee1f3ce674f44cb9788e6798ff8522bb876/java/com/google/gerrit/server/git/receive/HackPushNegotiateHook.java#111
+I've had this response and one to 5/5 sitting in my draft folder for
+over a day because I was hoping to go read clear_ce_flags_1() and find
+out what it is.  I have no idea, so your answer doesn't answer my
+question... ;-)  I'll try to find some time and maybe respond further
+after I do.
 
-Yes, this helps a lot.  Thanks for the pointers and explanations!
+>
+> > > diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
+> > > new file mode 100755
+> > > index 0000000000..ce080cf572
+> > > --- /dev/null
+> > > +++ b/t/t7817-grep-sparse-checkout.sh
+> > > @@ -0,0 +1,174 @@
+> > > +#!/bin/sh
+> > > +
+> > > +test_description='grep in sparse checkout
+> > > +
+> > > +This test creates a repo with the following structure:
+> > > +
+> > > +.
+> > > +|-- a
+> > > +|-- b
+> > > +|-- dir
+> > > +|   `-- c
+> > > +|-- sub
+> > > +|   |-- A
+> > > +|   |   `-- a
+> > > +|   `-- B
+> > > +|       `-- b
+> > > +`-- sub2
+> > > +    `-- a
+> > > +
+> > > +Where . has non-cone mode sparsity patterns, sub is a submodule with cone mode
+> >
+> > Maybe "Where the outer repository has non-code mode..."?  The use of
+> > '.' threw me for a bit.
+>
+> Sure!
+>
+> > > +test_done
+> > > --
+> > > 2.26.2
+> >
+> > Looks good.  Do we want to add a testcase where a file is unmerged and
+> > present in the working copy despite not matching the sparsity patterns
+> > (i.e. to emulate being in the middle of a merge/rebase/cherry-pick)?
+>
+> Sure, I can add that. But after a quick test here, it seems that the
+> unmerged path doesn't have the SKIP_WORKTREE bit set. Is this how it
+> should be?
+
+Right, the merge machinery will clear the SKIP_WORKTREE bit when it
+writes out conflicted files.  Also, any future 'git sparse-checkout'
+commands will see the unmerged entry and avoid marking it as
+SKIP_WORKTREE even though it doesn't match the sparsity patterns.
+Thus, grep doesn't have to do any special checking for whether the
+files are merged or not, and from your current implementation probably
+doesn't look like a special case at all -- you just check the
+SKIP_WORKTREE bit.
+
+However, I think the test still has value because the test enforces
+that other areas of the code (merge, sparse-checkout) don't break the
+invariants that grep is relying on.  (I could see someone making a
+merge change that keeps the SKIP_WORKTREE bit accidentally set even
+though it writes the file out to the working tree, for example.)
+Sure, merge has some tests around that, so it might be viewed as
+slightly duplicative, but I see it as an interesting edge case that
+exercises whether the SKIP_WORKTREE bit should really be set and since
+grep expects a certain invariant about how that is handled, the
+testcase will help make sure our expectations aren't violated.
