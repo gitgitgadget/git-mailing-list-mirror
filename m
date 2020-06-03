@@ -2,139 +2,88 @@ Return-Path: <SRS0=EE6k=7Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 032EBC433E0
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 20:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E3C7C433E0
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 20:24:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9FC5207D0
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 20:02:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EB1C20734
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 20:24:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pe3szKZZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MsSgiZFL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726138AbgFCUCU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Jun 2020 16:02:20 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58209 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725922AbgFCUCU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jun 2020 16:02:20 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 36319DEB67;
-        Wed,  3 Jun 2020 16:02:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=RKN/yDPZ3Ix3
-        aWlpwtO/uirWoIM=; b=Pe3szKZZbGj6KzoAVtwuI/8xuuYbn3eWXoy1ogHW1rPD
-        ZSXXYNs4OgmJZjrHDEuiQd8EE9hKs0Se8ARpUfQG1qmy4lCBOk0KlPugy+mdzdS1
-        BhKU0CIQbqk7/Ta8Sr5RSO062C8CvtF1nAg0WQFziN1vuW7Eg3eAj5Rzp/fkURc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nV29tz
-        riD43i5vq+pNRvK3/uczMmEwdq5aBBhDhuW9+gzwiPTT0aH1t1qo6bZG1Ps0wYvc
-        cjBNOzxg2Bo+zco5fV7TRuipcmSoX6yyWPeIpMYdj9Icl3zrx8S4lLqO48j6DcVv
-        N/alEQGAV/ln8cxW5yOkUacYqgC56WSa8lDX4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2D44EDEB66;
-        Wed,  3 Jun 2020 16:02:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 65300DEB65;
-        Wed,  3 Jun 2020 16:02:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Johannes.Schindelin@gmx.de, chriscool@tuxfamily.org,
-        christian.couder@gmail.com, git@vger.kernel.org,
-        kaartic.sivaraam@gmail.com, liu.denton@gmail.com,
-        sunshine@sunshineco.com
-Subject: Re: [GSoC][PATCH v5] submodule: port subcommand 'set-branch' from shell to C
-References: <20200523163929.7040-1-shouryashukla.oo@gmail.com>
-        <20200602163523.7131-1-shouryashukla.oo@gmail.com>
-        <xmqqzh9ls622.fsf@gitster.c.googlers.com>
-        <20200603001225.GB2222@danh.dev>
-Date:   Wed, 03 Jun 2020 13:02:12 -0700
-In-Reply-To: <20200603001225.GB2222@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
- =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s message
-        of "Wed, 3 Jun 2020 07:12:25 +0700")
-Message-ID: <xmqqtuzrrk8r.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726138AbgFCUYB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Jun 2020 16:24:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54858 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725992AbgFCUYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jun 2020 16:24:00 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC711C08C5C0
+        for <git@vger.kernel.org>; Wed,  3 Jun 2020 13:24:00 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id o5so3776769iow.8
+        for <git@vger.kernel.org>; Wed, 03 Jun 2020 13:24:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=umtEA9r2lXi3rqey6DpVifHYK5B+iB5RpruudbmSxrY=;
+        b=MsSgiZFL6k7roMrNW7H269P9ieBzXDX4AkTGEJQmpmkX/ytr4fmEabWl4PWGL5EgEz
+         rJgsodMJxXZvyeBCA4XdaCMSoHTTEhRQd4wjU4uOxcuu0IT8YaY/bptay6PTRCAN2+Ki
+         urfSA1Tiz+IlBMdOBCIBFtB8G5WcLXaR6KTxviMWV7kacNNM0z9kTTgZOwKCNwhLc8ud
+         ivGjlu68g2VxUTxQA+xR85ootpwpSNSoQZzkF0nqETUS1N4ilsyOyMTrI0/WStbTHNAi
+         AAVrWE0aeOAuh8jScSZQNnI0v/N5cJGnRUK49l8O+deAWzPbEViVv5rb5FRlUfNK46Fn
+         Z+IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=umtEA9r2lXi3rqey6DpVifHYK5B+iB5RpruudbmSxrY=;
+        b=iPL5VfVVzs5/il6N/0zcmJfNv0Xg94eS21yuBHNz0z5jdnhuN6PGt5v6mf429YlR2u
+         Y3vEycOY775m+IhcfMRWjNoe6cVOH/YDA5s3QyNpHuP30mExTbZcSeD8JB1haHwRYdRK
+         Y9sFj48Rs2HjwzLzjsxoEgl71gtmZj37ER6FsAdy1UP8xSFD4V5nV+fk2c6stE10wEAT
+         A2q0F+6T3qreyjltA6UCzWPymsoNZr45Cb/lajTDtY9FPJu7gAq0ap7v2f1PxR7B11gE
+         n2v7Y0SjqE/3GuVMagIvag8S7UoR4aZU7jDKf406os4AZtjer/tlw/JbG4ePNeNTUuuu
+         l1Qw==
+X-Gm-Message-State: AOAM5339RHlmIsJ6s47AA7vBwWD9ICibpjg3x/efFg/pK48IEwP+eSvb
+        ndhgqlsRxMgeC8yntdWpeLRs/mtyftIlJAEGgkGlZQ==
+X-Google-Smtp-Source: ABdhPJyIy7N7eot4O11Y4bc5ve/hE/CLgG4+dXSx29pgkJM4/LoiUmYF0QsSv/ENj3SI5X35hgihbK14exUEh2LLJpY=
+X-Received: by 2002:a02:958e:: with SMTP id b14mr1551670jai.126.1591215839867;
+ Wed, 03 Jun 2020 13:23:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1E5E3B7C-A5D5-11EA-AD0C-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 2002:a6b:8d03:0:0:0:0:0 with HTTP; Wed, 3 Jun 2020 13:23:59 -0700 (PDT)
+From:   Martin Ruegg <marrue@gmail.com>
+Date:   Wed, 3 Jun 2020 22:23:59 +0200
+Message-ID: <CACPN43cgtvsHWn=a9s75hZT3kXNfm-T5K+BgCr1ETUu1Y90jug@mail.gmail.com>
+Subject: Crash when opening GIT bash on Window 7 with newest version of GIT 2.27.0-32bit
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Hi,
 
-> On 2020-06-02 10:58:45-0700, Junio C Hamano <gitster@pobox.com> wrote:
->> Shourya Shukla <shouryashukla.oo@gmail.com> writes:
->>=20
->> > +	 * though there is nothing to make less verbose in this subcommand=
-.
->> > +	 */
->> > +	struct option options[] =3D {
->> > +		OPT_NOOP_NOARG('q', "quiet"),
->> > +		OPT_BOOL('d', "default", &opt_default,
->> > +			N_("set the default tracking branch to master")),
->> > +		OPT_STRING('b', "branch", &opt_branch, N_("branch"),
->> > +			N_("set the default tracking branch")),
->> > ...
->> > +		OPT_END()
->> > +	};
->> > +	const char *const usage[] =3D {
->> > +		N_("git submodule--helper set-branch [-q|--quiet] (-d|--default) =
-<path>"),
->> > +		N_("git submodule--helper set-branch [-q|--quiet] (-b|--branch) <=
-branch> <path>"),
->>=20
->>=20
->> I notice that we gained back -d and -b shorthands that was
->> advertised but not implemented the previous rounds.  It is a bit
->> curious that we are adding these short-hands that nobody uses,
->> though. =20
->
-> I think a day will come, when all git-submodule functionalities will
-> run by calling git-submodule--helper.
+After installation of the newest version of GIT versio 2.27.0-32bit on
+Windows 7, I wanted tio open GIT bash and it did not open. Instead a
+file with name mintty.exe.stackdump appeared in the directory.
 
-I'd expect that when that day with no scripted parts of "git
-submodule" remains comes, the main entry point functions in
-builtin/submodule--helper.c (like module_list(), update_clone(),
-module_set_branch(), etc.) will become helper functions that live in
-submodule-lib.c and would be called from builtin/submodule.c.  And
-the conversion would rip out calls to parse_options() in each of
-these functions that would migrate to submodule-lib.c
+The content of the file mintty.exe.stackdump is;
 
-    Side note: instead of adding submodule-lib.c, you could add them
-    directly to submodule.c if they are small enough.  I am however
-    modeling after how the "diff" family was converted to C; the
-    diff-lib.c layer is "library-ish helpers that get pre-parsed
-    command line arguments and performs a single unit of work" that
-    utilizes service routines at the lower layer that are in diff.c
-    and submodule-lib.c and submodule.c will be in a similar kind of
-    relationship.
+Exception: STATUS_ACCESS_VIOLATION at eip=000A03C8
+eax=00000000 ebx=0045028B ecx=0022C5CC edx=777A6B94 esi=004A0410 edi=80000000
+ebp=0022CB48 esp=0022C614 program=C:\Program
+Files\Git\usr\bin\mintty.exe, pid 1540, thread main
+cs=001B ds=0023 es=0023 fs=003B gs=0000 ss=0023
+Stack trace:
+Frame     Function  Args
+0022CB48  000A03C8 (200710B0, 200710BA, 0022CD28, 6100AFA5)
+0022CD28  6100AFA5 (00000000, 0022CD84, 61009DD0, 00000000)
+0022CD84  610088B2 (00000000, 00000000, 00000000, 00000000)
+End of stack trace
 
-> In that day, we will use current git-submodule--helper as the new
-> git-submodule.
+Thanks for bugfixing
 
-No, I do not think so.  Most of the option parsers would be redone
-in builtin/submodule.c; only some that can be used as-is may migrate
-as a whole to builtin/submodule.c and its parse_options() stuff
-reused, but most of what is in submodule--helper would have to lose
-their parse_options() calls, as nobody would be using module_list()
-when there is no scripted "git submodule" exists, for example.
-
-> Or is that a complain for missing some tests?
-
-No, it was "do the minimum necessary for an implementation detail,
-as we'll discard that part later anyway".
+Martin
