@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC4E7C433DF
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24C6BC433E1
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:40:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FA0320663
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:38:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE10F20757
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 02:40:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fiGmy/Hk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IhfGTWod"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725883AbgFCCiw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Jun 2020 22:38:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59156 "EHLO
+        id S1725810AbgFCCkH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Jun 2020 22:40:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725810AbgFCCiv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jun 2020 22:38:51 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 442CBC08C5C0
-        for <git@vger.kernel.org>; Tue,  2 Jun 2020 19:38:51 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id s13so677413otd.7
-        for <git@vger.kernel.org>; Tue, 02 Jun 2020 19:38:51 -0700 (PDT)
+        with ESMTP id S1725884AbgFCCkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jun 2020 22:40:06 -0400
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4FDDC08C5C0
+        for <git@vger.kernel.org>; Tue,  2 Jun 2020 19:40:05 -0700 (PDT)
+Received: by mail-oo1-xc44.google.com with SMTP id x17so214361oog.6
+        for <git@vger.kernel.org>; Tue, 02 Jun 2020 19:40:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ARgTm47GcHyeOxfWXcFltmaVAx85YOrV5Az22YU1P/8=;
-        b=fiGmy/Hkx7ziOLdhfRgnY1tzLJGSNfvhtYZOX5OMDIP/mv7hH4XCqBzHlHgm9UsVQP
-         Wi/KT8PIDwP3FXVy6Yv3NrukYcfeWPBqoPhUFvXc4QYV+zzpgs41QkDZH25VhzKWB79G
-         eYPywX3lcgIVxuGoxmyk+DEkO3ZgCXl/DBBuvHkFOK1cjP0mdqy+8tQ3xMgB8Pl087zw
-         qmYABcdTk0VFCszb6EgDgi0OGjn1vlWVeq+j2aDb/XpDBEOpatRogs+SWd8qd3BDU2Nz
-         4gm5SJPhuB2bWnuvYoEP+5b7h/7N8nJeKZk5qdeCUlZ18kjAQdEEIWAzloKC0Oi9717X
-         nw/Q==
+        bh=ueUbOxOe06NPQFbWGXoFrW/sktiX95WCMAQsvPUGXrI=;
+        b=IhfGTWodfOv+dqoSR03NHh4uPX4EO6kNvAUvMEDePodBm1Ovf2dR1e7Y/k1ATbYThr
+         D0BGuPf4foYtXj2JsxGm5VsiCAACoBqEEMc7UmaqvmTsguVMZuzE2dHq+wd+H3jagscE
+         d6M0jTj3n3SaojALe+4yoANo9FhY4+icw+WGWY2xmiEY2QNu1T7LKIr9Lz9ewNosa39V
+         78eKf3WShCZgHrDKgPqGdxZZocQp3V7Jslfp6CXBnD2Y9SSfzzI2xIVbWcO1PDPLHunX
+         QFpzgunHo2LqRsMG4sB20VoTN75KWjDVEnYOPuFpxRJCP0r3aYxysNLQkQ1/zSgaqY69
+         wMTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ARgTm47GcHyeOxfWXcFltmaVAx85YOrV5Az22YU1P/8=;
-        b=L50xhIYx36SqVXeeTNV8CbMET5TEHJK4+ybl9Xc55IKYIvlrqZPu2NuinpMdB27men
-         vhLTFfIQIlkKnZqWiHNyqDiD1+pa8F0/5ufV+EUAXIrnIEzB1nd12jSI1mrTStED9+nt
-         YmZW3e5jeokgZ1JE5hswfq0pfyZ5LBMfR14RZUBoKhCDj17dzSdn54YMFm/IOTIvuexm
-         0LtZVRBDyRCamxbRY+Kdt72V2HDUyb0vXhD9dTux4guiRZaI4xcDQ+W9gO35dgAZMXFI
-         xz901DLgO97E4k177ET01dhCavz5sMEtix2cYTd80qWNCP4dSRUHyYqcH4lp1f7VU00m
-         1ipw==
-X-Gm-Message-State: AOAM533JY31yjpVl/ikbi4dCj9PMGA66RDXlhG4R5SV0A64xA2QXHFjK
-        u3cwvKeL6NBjBeePdf0iGmmSMYyuu+hSXVZQzBQ=
-X-Google-Smtp-Source: ABdhPJz68x0QuFDXSjWjlwonCXPbdOwNethUO/OJXyGy+iGOo4vTTIy8HKu7fJLE4wBqjJ6sTHwePVNK6AlawgSQ5OA=
-X-Received: by 2002:a9d:6c07:: with SMTP id f7mr1628402otq.345.1591151930510;
- Tue, 02 Jun 2020 19:38:50 -0700 (PDT)
+        bh=ueUbOxOe06NPQFbWGXoFrW/sktiX95WCMAQsvPUGXrI=;
+        b=DmXjPmhi9plBaphhSwNIMkM1waVglCHZdTQFWic9p0sdCIAeaBYq6+aNWNap6Eiirq
+         l6ak185t7qKi6QMwhBXACJ4fph11UZcOt5hkOCh6pr9htWoL5VXNlUJ6+oK2jtdPB199
+         R8Wgq4OooNJIrmGTDrpHSL+3Ns01u9bEfZ1owQASKoYU/pUIUphfoJSl4lqJEFfZwEmv
+         PJn+yPU6QVQp4TYNOQCoC89mNu0qEMT3VEfZ1bgEOoFKgGGqh2VEoWEiv7TNftRdYCCh
+         ftyKwR65W6SbEnQZJTf8O59OTMCsFsfii4v7q1O5FARvdgKpSWis3xZ2LFeH6YEdOR3L
+         2Kgg==
+X-Gm-Message-State: AOAM532kRfMfAQScRH2yhUEhPok/lPtscHgGzN1UZW2HRNzBPFnzlQzR
+        2NkuZ8rUGFL5PDt/GqrXkVMsgMCiMiYjuTnW87I=
+X-Google-Smtp-Source: ABdhPJxzREUVFWCH7bLUmuTp5YdhcDrw8L96VPBFHDmRfr134XPN1yrmmk6FJ0BbbG2wSZqERAeCqjxHXeiigW4B8t4=
+X-Received: by 2002:a4a:8688:: with SMTP id x8mr9679550ooh.7.1591152004823;
+ Tue, 02 Jun 2020 19:40:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1590627264.git.matheus.bernardino@usp.br>
- <5ddac818185d316cd5ad9576105f0e4e695b9456.1590627264.git.matheus.bernardino@usp.br>
- <CABPp-BFsCPPNOZ92JQRJeGyNd0e-TCW-LcLyr0i_+VSQJP+GCg@mail.gmail.com> <CAHd-oW7JEu0rBrBMyjfFZ4WZ982+WwpGSvqg4meOwxmHjocknQ@mail.gmail.com>
-In-Reply-To: <CAHd-oW7JEu0rBrBMyjfFZ4WZ982+WwpGSvqg4meOwxmHjocknQ@mail.gmail.com>
+ <748b1e955ccdcf7cd897a180f4b4fe82d7bfcf00.1590627264.git.matheus.bernardino@usp.br>
+ <CABPp-BHzHhBVGZ+vOgE4jTCT3HJzXo+gzZ+6SVGDUWWdfkL6Dw@mail.gmail.com> <CAHd-oW7b41hqfPXm_GL_sth+QRfx56ceMr4VM9B9xhj3_P9iGQ@mail.gmail.com>
+In-Reply-To: <CAHd-oW7b41hqfPXm_GL_sth+QRfx56ceMr4VM9B9xhj3_P9iGQ@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 2 Jun 2020 19:38:39 -0700
-Message-ID: <CABPp-BF6=s-cAy98d-FTTExeR18YhxrHmDNzbH-1P8AiMfskfg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] grep: honor sparse checkout patterns
+Date:   Tue, 2 Jun 2020 19:39:53 -0700
+Message-ID: <CABPp-BH0d5WKz7bXLkFQGDBKXbd0tccS_+1_iNc1Wqr93h+KaQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] config: add setting to ignore sparsity patterns in
+ some cmds
 To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -73,128 +74,139 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 31, 2020 at 9:44 PM Matheus Tavares Bernardino
+On Sun, May 31, 2020 at 9:46 PM Matheus Tavares Bernardino
 <matheus.bernardino@usp.br> wrote:
 >
-> On Sat, May 30, 2020 at 12:48 PM Elijah Newren <newren@gmail.com> wrote:
+> On Sat, May 30, 2020 at 1:18 PM Elijah Newren <newren@gmail.com> wrote:
 > >
-> > On Wed, May 27, 2020 at 6:13 PM Matheus Tavares
+> > On Wed, May 27, 2020 at 6:14 PM Matheus Tavares
 > > <matheus.bernardino@usp.br> wrote:
-> > >
-[...]
-> > > +static struct pattern_list *get_sparsity_patterns(struct repository *repo)
-> > > +{
-> > > +       struct pattern_list *patterns;
-> > > +       char *sparse_file;
-> > > +       int sparse_config, cone_config;
-> > > +
-> > > +       if (repo_config_get_bool(repo, "core.sparsecheckout", &sparse_config) ||
-> > > +           !sparse_config) {
-> > > +               return NULL;
-> > > +       }
-> >
-> > Is core_apply_sparse_checkout not initialized for some reason?
->
-> It should be already initialized, yes. But we cannot rely on that as
-> `repo` might be a submodule, and core_apply_sparse_checkout holds the
-> configuration's value for `the_repository`.
-
-Ah, gotcha.  Thanks for straightening me out.
-
-> > > +static int in_sparse_checkout(struct strbuf *path, int prefix_len,
-> >
-> > This function name in_sparse_checkout() makes me think "Does the
-> > working tree represent a sparse checkout?"  Perhaps we could rename it
-> > to path_matches_sparsity_patterns() ?
-> >
-> > Also, is there a reason we can't use dir.c's
-> > path_matches_pattern_list() here?
->
-> Oh, we do use path_matches_pattern_list() inside:
->
-> > > +       *match = path_matches_pattern_list(path->buf, path->len,
-> > > +                                          path->buf + prefix_len, &dtype,
-> > > +                                          sparsity, istate);
-> > > +       if (*match == UNDECIDED)
-> > > +               *match = parent_match;
->
-> > How does this new function differ
-> > in behavior from that function?
->
-> The idea of in_sparse_checkout() is to implement a logic closer to
-> what we have in clear_ce_flags_1(). Here, it is effectively a wrapper
-> to path_matches_pattern_list() but with some extra logic to decide
-> whether grep should search in a given entry, based on its mode, the
-> match result against the sparsity patterns, and the result from the
-> parent dir.
-
-I've had this response and one to 5/5 sitting in my draft folder for
-over a day because I was hoping to go read clear_ce_flags_1() and find
-out what it is.  I have no idea, so your answer doesn't answer my
-question... ;-)  I'll try to find some time and maybe respond further
-after I do.
-
->
-> > > diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
-> > > new file mode 100755
-> > > index 0000000000..ce080cf572
+> > > diff --git a/Documentation/config/sparse.txt b/Documentation/config/sparse.txt
+> > > new file mode 100644
+> > > index 0000000000..2a25b4b8ef
 > > > --- /dev/null
+> > > +++ b/Documentation/config/sparse.txt
+> > > @@ -0,0 +1,24 @@
+> > > +sparse.restrictCmds::
+> > > +       Only meaningful in conjunction with core.sparseCheckout. This option
+> > > +       extends sparse checkouts (which limit which paths are written to the
+> > > +       working tree), so that output and operations are also limited to the
+> > > +       sparsity paths where possible and implemented. The purpose of this
+> > > +       option is to (1) focus output for the user on the portion of the
+> > > +       repository that is of interest to them, and (2) enable potentially
+> > > +       dramatic performance improvements, especially in conjunction with
+> > > +       partial clones.
+> > > ++
+> > > +When this option is true (default), some git commands may limit their behavior
+> > > +to the paths specified by the sparsity patterns, or to the intersection of
+> > > +those paths and any (like `*.c`) that the user might also specify on the
+> > > +command line. When false, the affected commands will work on full trees,
+> > > +ignoring the sparsity patterns. For now, only git-grep honors this setting. In
+> > > +this command, the restriction takes effect in three cases: with --cached; when
+> > > +a commit-ish is given; when searching a working tree where some paths excluded
+> > > +by the sparsity patterns are present (e.g. manually created paths or not
+> > > +removed submodules).
+> >
+> > I think "In this command, the restriction takes effect..." to the end
+> > of the paragraph should be removed.  I don't want every subcommand's
+> > behavior to be specified here; it'll grow unreadably long and be more
+> > likely to eventually go stale.
+>
+> Yeah, I was also concerned about that. But wouldn't it be important to
+> inform the users how the setting takes place in grep (specially with
+> the corner cases)? And maybe others, in the future?
+>
+> What if we move the information that is only relevant to a single
+> command into its own man page? I.e. git-grep.txt would have something
+> like:
+
+Moving it to grep's manpage seems ideal to me.  grep's behavior should
+be defined in grep's manual.
+
+> sparse.restrictCmds::
+> See complete definition in linkgit:git-config[1]. In grep, the
+> restriction takes effect in three cases: with --cached; when a
+> commit-ish is given; when searching a working tree where some paths
+> excluded by the sparsity patterns are present (e.g. manually created
+> paths or not removed submodules).
+
+That looks more than a little confusing.  Could this definition be
+something more like "See base definition in linkgit:git-config[1].
+grep honors sparse.restrictCmds by limiting searches to the sparsity
+paths in three cases: when searching the working tree, when searching
+the index with --cached, or when searching a specified commit"
+
+> The only problem then is that the information would be a little
+> scattered... But I think it shouldn't be a big deal, as a person
+> interested in knowing how foo behaves with sparse.restrictCmds would
+> only need to look into foo's man page, anyway.
+>
+> > > diff --git a/git.c b/git.c
+> > > index a2d337eed7..6db1382ae4 100644
+> > > --- a/git.c
+> > > +++ b/git.c
+> > > @@ -319,6 +324,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+> > >                 (*argv)++;
+> > >                 (*argc)--;
+> > >         }
+> > > +
+> > >         return (*argv) - orig_argv;
+> > >  }
+> > >
+> >
+> > Why the stray whitespace change?
+>
+> Oops, that shouldn't be there. Thanks!
+>
+> >
+> > > diff --git a/sparse-checkout.c b/sparse-checkout.c
+> > > new file mode 100644
+> > > index 0000000000..9a9e50fd29
+> > > --- /dev/null
+> > > +++ b/sparse-checkout.c
+> > > @@ -0,0 +1,16 @@
+> > > +#include "cache.h"
+> > > +#include "config.h"
+> > > +#include "sparse-checkout.h"
+> > > +
+> > > +int restrict_to_sparse_paths(struct repository *repo)
+> > > +{
+> > > +       int ret;
+> > > +
+> > > +       if (opt_restrict_to_sparse_paths >= 0)
+> > > +               return opt_restrict_to_sparse_paths;
+> > > +
+> > > +       if (repo_config_get_bool(repo, "sparse.restrictcmds", &ret))
+> > > +               ret = 1;
+> > > +
+> > > +       return ret;
+> > > +}
+> >
+> > Do we want to considering renaming this file to sparse.c, since it's
+> > for sparse grep and sparse diff and etc., not just for the checkout
+> > piece?  It would also go along well with our toplevel related config
+> > being in the "sparse" namespace.
+>
+> Makes sense. But since Stolee is already working on
+> "sparse-checkout.c" [1], if we use "sparse.c" in this series we will
+> end up with two extra files. And as "sparse.c" is quite small, I think
+> we could unify into the "sparse-checkout.c".
+>
+> [1]: https://lore.kernel.org/git/0181a134bfb6986dc0e54ae624c478446a1324a9.1588857462.git.gitgitgadget@gmail.com/
+
+Or we could just suggest he use sparse.c too.  :-)
+
+Stolee?
+
+
+> > > diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
+> > > index ce080cf572..1aef084186 100755
+> > > --- a/t/t7817-grep-sparse-checkout.sh
 > > > +++ b/t/t7817-grep-sparse-checkout.sh
-> > > @@ -0,0 +1,174 @@
-> > > +#!/bin/sh
-> > > +
-> > > +test_description='grep in sparse checkout
-> > > +
-> > > +This test creates a repo with the following structure:
-> > > +
-> > > +.
-> > > +|-- a
-> > > +|-- b
-> > > +|-- dir
-> > > +|   `-- c
-> > > +|-- sub
-> > > +|   |-- A
-> > > +|   |   `-- a
-> > > +|   `-- B
-> > > +|       `-- b
-> > > +`-- sub2
-> > > +    `-- a
-> > > +
-> > > +Where . has non-cone mode sparsity patterns, sub is a submodule with cone mode
 > >
-> > Maybe "Where the outer repository has non-code mode..."?  The use of
-> > '.' threw me for a bit.
+> > All these testcases look great (modulo the small typo I pointed out
+> > earlier); I kept thinking "but what about case <x>?" and then I kept
+> > reading and saw you covered it.  You even added some I wasn't thinking
+> > about and might have overlooked but seem important.
 >
-> Sure!
->
-> > > +test_done
-> > > --
-> > > 2.26.2
-> >
-> > Looks good.  Do we want to add a testcase where a file is unmerged and
-> > present in the working copy despite not matching the sparsity patterns
-> > (i.e. to emulate being in the middle of a merge/rebase/cherry-pick)?
->
-> Sure, I can add that. But after a quick test here, it seems that the
-> unmerged path doesn't have the SKIP_WORKTREE bit set. Is this how it
-> should be?
-
-Right, the merge machinery will clear the SKIP_WORKTREE bit when it
-writes out conflicted files.  Also, any future 'git sparse-checkout'
-commands will see the unmerged entry and avoid marking it as
-SKIP_WORKTREE even though it doesn't match the sparsity patterns.
-Thus, grep doesn't have to do any special checking for whether the
-files are merged or not, and from your current implementation probably
-doesn't look like a special case at all -- you just check the
-SKIP_WORKTREE bit.
-
-However, I think the test still has value because the test enforces
-that other areas of the code (merge, sparse-checkout) don't break the
-invariants that grep is relying on.  (I could see someone making a
-merge change that keeps the SKIP_WORKTREE bit accidentally set even
-though it writes the file out to the working tree, for example.)
-Sure, merge has some tests around that, so it might be viewed as
-slightly duplicative, but I see it as an interesting edge case that
-exercises whether the SKIP_WORKTREE bit should really be set and since
-grep expects a certain invariant about how that is handled, the
-testcase will help make sure our expectations aren't violated.
+> Thanks :)
