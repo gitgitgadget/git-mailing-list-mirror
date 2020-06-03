@@ -2,169 +2,131 @@ Return-Path: <SRS0=EE6k=7Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6BAFC433E0
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 22:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2D1EC433E0
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 23:06:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ACDE22067B
-	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 22:21:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9596120829
+	for <git@archiver.kernel.org>; Wed,  3 Jun 2020 23:06:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="pQpVyaKk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KGfwG5hQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726799AbgFCWVK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Jun 2020 18:21:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44670 "EHLO
+        id S1726209AbgFCXGR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Jun 2020 19:06:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726354AbgFCWVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jun 2020 18:21:10 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67000C08C5C0
-        for <git@vger.kernel.org>; Wed,  3 Jun 2020 15:21:10 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id q16so1322440plr.2
-        for <git@vger.kernel.org>; Wed, 03 Jun 2020 15:21:10 -0700 (PDT)
+        with ESMTP id S1725876AbgFCXGR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jun 2020 19:06:17 -0400
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E185C08C5C0
+        for <git@vger.kernel.org>; Wed,  3 Jun 2020 16:06:17 -0700 (PDT)
+Received: by mail-pj1-x1042.google.com with SMTP id s88so244337pjb.5
+        for <git@vger.kernel.org>; Wed, 03 Jun 2020 16:06:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ZIcoXxH4b5GB1zCKP0HCa+yd/CtbEWABai9t3T0dNa8=;
-        b=pQpVyaKkCZ9TAVxuKw1+b3wbVWKsm5ZuCPk0cLsyF4OSlE1lY7CoMKXXDpPFr7Q1tk
-         82kqHJohkmZn+4sUJ84ND0f/2X7mVuzpw8jzuDxnUcs5xWriM+umhby4Amc58LboTfGs
-         KGNxAJ8a9+lU/LO7n9bgWcjWhbJUCdAd6KorhOpIZtkMFpAFLgJrpAQGDQJfEnc69+za
-         Xk0yuJBqzToicjABVlrA0n3j73kd6tQy5zBbmQ1bVPvl3t67YoWf1ZkpnLF9jGdWBWVH
-         b3EBmSM8fDBg/8IRSUH37Da3OR2oxrC6PpGHnc+ukgexeCoWMCl7n+vR6s9CGehpYLKN
-         PEOw==
+         :content-disposition:in-reply-to;
+        bh=wflxk0x/Wdp6RAQIvg+pqX8IxKAYrpM+sfKl7rqq69w=;
+        b=KGfwG5hQOVgaA6UFTy9GfG0wq1F0TvwPGXuhjBPdDCr/A73HIGYn/HseP7ii6dZFAz
+         s2qRblYq6dVhQeXxPi/ZorqJE+8ZOjBOWa63z/SKebzK9GSnhp4BTT0aBExkdEQtDatR
+         RJST5gokUPLrKxlLgxkPNHSejZ1MkeGnxWUE8tgOJC7uEnU2wIV2OjOGJW8yfRi/6Pvz
+         ywP8REfR4PCs0tGUJe+DJSHwCeo5B5n6oz2U0z0KOn7TWntLocP41af0pAybr66neDEo
+         kC1Cykvvb2OuSgN6lJtQvSuW/mI5Rdi45MY07dnqCYVicvutnFMChPTWdwf4gVFc9/io
+         jyTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ZIcoXxH4b5GB1zCKP0HCa+yd/CtbEWABai9t3T0dNa8=;
-        b=LJxdV3+fP+ljKff16036gphYDRCajOUe++NMxLlj19mNRmXYPZM0m7fGWi09A5qRQU
-         x8ABxJPX2QxZnxDaBGJHAqv+7pgVlV/TEO/HpKxG2PhwT4UIhColcnjDJZn+gXF0Xzuu
-         D/GnKAHvg+n6CQ1CU+ylG/CfxSXsE13s7b282mK9W5kKsIOUMK/osBidB24RYlWJaw8A
-         rleHjQRbfEmihiukF8ftxVZJ7A7S4xmlKgL0UEtzi5aiD06n/y4ntjts9dg5oN17UjpO
-         bFAtJP3DOhmVWrkv2UVPXtD1MIGYZ8RmSF/D/EnF1e3xlL0ZucxJqUBtazUStUJL5hI8
-         bRVg==
-X-Gm-Message-State: AOAM530h7t448Abk3LOUAW8ZYgJe5iCw7sKCgd0nQlRRFpIAfzgRlwxE
-        HeW38bA3UF3h4w4owdekbG1C9A==
-X-Google-Smtp-Source: ABdhPJw/nshT5hDVIfr9PYNXZcWfD8yu/58ji1ip2DCGHD2xf+rtpUieC491uqan0zCR27ryjS+r6g==
-X-Received: by 2002:a17:902:242:: with SMTP id 60mr1708030plc.120.1591222869746;
-        Wed, 03 Jun 2020 15:21:09 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id q26sm2593078pfh.74.2020.06.03.15.21.08
+         :mime-version:content-disposition:in-reply-to;
+        bh=wflxk0x/Wdp6RAQIvg+pqX8IxKAYrpM+sfKl7rqq69w=;
+        b=ewDqBOwZdD4ENPFa1+ziIcquehyMyUFwqudH9ZRLk8gEYcI4UiFBHG8+Eck5Lqfd+/
+         x6olDD78uELrt2pnm11Mf18IbDIe7kySYXT7V94i9ctVK0EuoUKmXOYBVLnf7zWmmXcq
+         iw2PSnHVChwC7A4bmcpeczsN8binQpl9piKzqVFmaX3q+RQppAN7Uf+20WOtyRTIMkxp
+         MsUU6h91+wDAn+nIRyDq6wAVOrrJPeqzeAkG7lQvo06K6DVaA1TxFzUQYZrPBooRpLXG
+         ryjLMnAwerhzObH/46Npso/6bSjRlXv51kTXhCA6557Ign2ZPlzzJkMzSdIzxMov8uVD
+         nZCg==
+X-Gm-Message-State: AOAM533aVaEHcdbl24WK6Vuco2EA9XW8E2WMgQ+wWx/pYuY/RSKP9t5G
+        Ijb9PqaAfq0gyDp+nGTA0zM=
+X-Google-Smtp-Source: ABdhPJwD4R8ewdzLDARDF++l8s3nVsfezRZmYnQ0Z5Nqnjgm9C7UYl2LQRWdSeKnrnV96kayYb9jNw==
+X-Received: by 2002:a17:90a:bb81:: with SMTP id v1mr2349814pjr.168.1591225575890;
+        Wed, 03 Jun 2020 16:06:15 -0700 (PDT)
+Received: from gmail.com (119.81.105.34.bc.googleusercontent.com. [34.105.81.119])
+        by smtp.gmail.com with ESMTPSA id c9sm2715278pfp.100.2020.06.03.16.06.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jun 2020 15:21:08 -0700 (PDT)
-Date:   Wed, 3 Jun 2020 16:21:07 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com
-Subject: Re: [PATCH 1/2] t5318: use 'test_must_be_empty'
-Message-ID: <20200603222107.GA37471@syl.local>
-References: <cover.1591034353.git.me@ttaylorr.com>
- <fddbe588147444fe2675224c94f50e24a1d12871.1591034353.git.me@ttaylorr.com>
- <20200602180403.GA4791@szeder.dev>
+        Wed, 03 Jun 2020 16:06:15 -0700 (PDT)
+Date:   Wed, 3 Jun 2020 16:06:11 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
+        newren@gmail.com, Jay Conrod <jayconrod@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 2/2] shallow.c: use '{commit,rollback}_shallow_file'
+Message-ID: <20200603230611.GA1925@gmail.com>
+References: <20200423001438.GC19100@syl.local>
+ <cover.1587601501.git.me@ttaylorr.com>
+ <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
+ <20200603034213.GB253041@google.com>
+ <20200603045248.GA20266@syl.local>
+ <20200603051631.GA20678@syl.local>
+ <20200603205151.GC253041@google.com>
+ <20200603221453.GA36237@syl.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200602180403.GA4791@szeder.dev>
+In-Reply-To: <20200603221453.GA36237@syl.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 02, 2020 at 08:04:03PM +0200, SZEDER Gábor wrote:
-> On Mon, Jun 01, 2020 at 12:01:27PM -0600, Taylor Blau wrote:
-> > A handful of tests in t5318 use 'test_line_count = 0 ...' to make sure
-> > that some command does not write any output. While correct, it is more
-> > helpful to use 'test_must_be_empty' instead, since the latter prints the
-> > contents of the file if it is non-empty.
-> >
-> > Since 'test_line_count' only prints the expected and actual line count,
-> > not the contents, using 'test_must_be_empty' may be more helpful for
-> > debugging if there is regression in any of these tests.
+Taylor Blau wrote:
+> On Wed, Jun 03, 2020 at 01:51:51PM -0700, Jonathan Nieder wrote:
+
+>> --- i/commit-graph.c
+>> +++ w/commit-graph.c
+>> @@ -149,7 +149,8 @@ static int commit_graph_compatible(struct repository *r)
+>>  	}
+>>
+>>  	prepare_commit_graft(r);
+>> -	if (r->parsed_objects && r->parsed_objects->grafts_nr)
+>> +	if (r->parsed_objects &&
+>> +	    (r->parsed_objects->grafts_nr || r->parsed_objects->substituted_parent))
 >
-> These two paragraphs essentially say the same thing, so I think only
-> one would be sufficient, but...  Both paragraphs are wrong, because
-> 'test_line_count' does include the content of the file on failure:
->
->   expecting success of 9999.1 'test':
->           cat >foo <<-EOF &&
->           Add
->           some
->           content
->           EOF
->           test_line_count = 0 foo
->
->   test_line_count: line count for foo != 0
->   Add
->   some
->   content
->   not ok 1 - test
->
-> Having said that, I think that the change itself is good, because
-> 'test_must_be_empty foo' is more idiomatic.
+> This is a little tricky. Why would we set substituted_parent without
+> also incrementing grafts_nr? That seems like the real bug here: if we
+> incremented grafts_nr, then we would return a non-zero value from
+> 'commit_graph_compatible' and rightly stop even without this sticky-bit.
+> 
+> I don't quite understand this myself. If it's an oversight, it's a
+> remarkably long-lived one. Do you have a better sense of this?
 
-Sounds good. Let's use this version of the patch instead, and otherwise
-I think this should be ready to go:
+The idea here is to check for two different things:
 
---- >8 ---
+ 1. Do we have grafts (either from a grafts file or from a shallow
+    file)?  If so, this repository is not commit graph compatible
+    because we could encounter one of them.
 
-Subject: [PATCH] t5318: use 'test_must_be_empty'
+ 2. Have cached parsed objects taken any history modifications into
+    account?  If so, this in-memory state is not commit graph
+    compatible because we could encounter one of them.
 
-A handful of tests in t5318 use 'test_line_count = 0 ...' to make sure
-that some command does not write any output. While correct, it is more
-idiomatic to use 'test_must_be_empty' instead. Switch the former
-invocations to use the latter instead.
+The check (1) might seem sufficient if the set of grafts is constant
+for the lifetime of a git process.  But since 37b9dcabfc (shallow.c:
+use '{commit,rollback}_shallow_file', 2020-04-22), it is not constant
+for the process lifetime, so we need the check (2) as well.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/t5318-commit-graph.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+We might want a similar check for replace refs as well some day, but
+not today (there is not a way to remove entries from replace_map
+during the life of a process).
 
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index a79c624875..d23986f603 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -147,7 +147,7 @@ test_expect_success 'Add more commits' '
- test_expect_success 'commit-graph write progress off for redirected stderr' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph write 2>err &&
--	test_line_count = 0 err
-+	test_must_be_empty err
- '
+I can try sending a proper patch with commit message and tests
+tomorrow morning (or if someone else takes care of it, that's fine,
+too).  Thanks, both, for your help --- it was nice seeing a clear
+explanation of the cause already figured out and explained when I woke
+up.
 
- test_expect_success 'commit-graph write force progress on for stderr' '
-@@ -159,13 +159,13 @@ test_expect_success 'commit-graph write force progress on for stderr' '
- test_expect_success 'commit-graph write with the --no-progress option' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph write --no-progress 2>err &&
--	test_line_count = 0 err
-+	test_must_be_empty err
- '
-
- test_expect_success 'commit-graph verify progress off for redirected stderr' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph verify 2>err &&
--	test_line_count = 0 err
-+	test_must_be_empty err
- '
-
- test_expect_success 'commit-graph verify force progress on for stderr' '
-@@ -177,7 +177,7 @@ test_expect_success 'commit-graph verify force progress on for stderr' '
- test_expect_success 'commit-graph verify with the --no-progress option' '
- 	cd "$TRASH_DIRECTORY/full" &&
- 	git commit-graph verify --no-progress 2>err &&
--	test_line_count = 0 err
-+	test_must_be_empty err
- '
-
- # Current graph structure:
---
-2.27.0
-
+Regards,
+Jonathan
