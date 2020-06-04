@@ -2,253 +2,112 @@ Return-Path: <SRS0=8h89=7R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCF21C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 20:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0291BC433DF
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 20:19:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE4A5206E6
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 20:08:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4957207ED
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 20:19:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sWUA4myk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hlCT/qlg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728054AbgFDUId (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Jun 2020 16:08:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49522 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727111AbgFDUId (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jun 2020 16:08:33 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE3BC08C5C0
-        for <git@vger.kernel.org>; Thu,  4 Jun 2020 13:08:32 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id h5so7464685wrc.7
-        for <git@vger.kernel.org>; Thu, 04 Jun 2020 13:08:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=1e1SVdh11oF55BndZqWMPRP80f9rBPFfJQXczpSsUKs=;
-        b=sWUA4mykjMoBlEwZSf6qulU5Xh0g5H+h6NpjqH762ooy3dq1sSX/3tPQx85HRIl0BW
-         0URrUiYR8Nv89G2xYLLTNqQB/BOeT6zoz+QDNh30RPP6yY09zDV8wc+TC9p+8W1Oveux
-         GcMJVbAJOQymoF7HcyiPdNGknIuYdVnfDtFK3L8nGveOuSYvXfGbCroVubcRpdlRQT/X
-         wpTtKwG0GAlYQhw4EOBT4KDJnlWTYVwnyZp6gcNSI6UwsJJo/V3nWH8KTuhVmX0FeYqY
-         JwmCk8LmoX6jfN5JVSUgy9bS7MIXs+5m5ySwr4FYNyxL68/dY0LyGxdEnVO1qChMEQ3/
-         Wf0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1e1SVdh11oF55BndZqWMPRP80f9rBPFfJQXczpSsUKs=;
-        b=KMOQCgeD29He7SZbw1x4WwbW50CAZ3k7bjgZDAVBj1WmtoQZDCAOH8G4FJ3bblqDpL
-         e4jDYDy/SnZblJQInzWcwzoDtbss9KosiiNJeujk+bDV7eT7+3vHSD/tC6ZtdJMqzEmN
-         Wgi3xJWB+J3UtD23WFpbdMvD2OijIhm7oVn1Rmxux0tq4rkIqujZZR/6Pb+XXfWNlQ0O
-         1mCGoidDibS3LALMWzes/wUd+Ksg9w0PG32xLSyQ+JLaj8YRov5qf3Hz9fscod6rTU3c
-         2MVIXJGNtphtuccMt83Qh5M2iN/OBFkIAZSlDYPUoZrd1jBjkhETeIUBUuzMOnQaEZu6
-         vdNA==
-X-Gm-Message-State: AOAM5331oO/QdA2vwWwV/aLI0oHAmDzG+DCLi4q8W/7ku47cqmaE4gFL
-        lwh1Da6aTWg4jnJN6TLu3+cWghSV
-X-Google-Smtp-Source: ABdhPJx0JmRhbfdMF3/897C5wm7Sz9bAkhsZrtv2IYAq+kfnhB2LyNrAb3Bv4h1A48hDwEOk9PaYcg==
-X-Received: by 2002:a5d:440c:: with SMTP id z12mr6172612wrq.241.1591301310665;
-        Thu, 04 Jun 2020 13:08:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i10sm9132178wrw.51.2020.06.04.13.08.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2020 13:08:30 -0700 (PDT)
-Message-Id: <pull.797.v2.git.git.1591301309308.gitgitgadget@gmail.com>
-In-Reply-To: <pull.797.git.git.1591039202561.gitgitgadget@gmail.com>
-References: <pull.797.git.git.1591039202561.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Jun 2020 20:08:29 +0000
-Subject: [PATCH v2] clone/fetch: anonymize URLs in the reflog
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729910AbgFDUTE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Jun 2020 16:19:04 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63398 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729723AbgFDUTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jun 2020 16:19:03 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F25ADC2058;
+        Thu,  4 Jun 2020 16:19:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wu50yyin1QvRNpcU1/5GegGs6h4=; b=hlCT/q
+        lgEllaersBnmMZ3MgJ/xF1fPwoSDAGUy32znM2EvMvqPimnAWjZV0Pi63H8oWazh
+        41qWZ54o/e9jyyZcOUwHjtfU/GW/+KBReK5TKum1JtuHOMIYRGhUAXBcpxA06WBs
+        xQZJLrRUsIGbeOgYrMU6FlZC0QZcF/4cDog14=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oVt5Ucj92C+oExu74tY6tAMgA73mHO8P
+        G6nXfxtvM124KQWGdYhBP73F/4r/4lqPlPeVnKwA9D7fbeRSf7+2xpU+tIm6c3Ri
+        ICDQ8kZDtFUmvsGrEB82Uw9ow5/AzOemE4luahxgLUL+xgT3Kj2LjgzO8GExcr/y
+        LQwVfy/nMqA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EA371C2057;
+        Thu,  4 Jun 2020 16:19:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 356E5C2054;
+        Thu,  4 Jun 2020 16:18:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Laurent Arnoud <laurent@spkdev.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] format-patch: generate valid patch with diff.noprefix config
+References: <20200602204924.GA1853335@spk-laptop>
+        <xmqqpnahrx2y.fsf@gitster.c.googlers.com>
+        <xmqqeeqxrufz.fsf@gitster.c.googlers.com>
+        <20200604193238.GA1911544@spk-laptop>
+Date:   Thu, 04 Jun 2020 13:18:57 -0700
+In-Reply-To: <20200604193238.GA1911544@spk-laptop> (Laurent Arnoud's message
+        of "Thu, 4 Jun 2020 21:32:38 +0200")
+Message-ID: <xmqq367aposu.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9FB04532-A6A0-11EA-B317-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Laurent Arnoud <laurent@spkdev.net> writes:
 
-Even if we strongly discourage putting credentials into the URLs passed
-via the command-line, there _is_ support for that, and users _do_ do
-that.
+> I don't know if its a bug but I founded strange that I needed to use an alias
+> "git -c diff.noprefix=false format-patch" to generate a patch that I can apply
+> directly with "git am".
 
-Let's scrub them before writing them to the reflog.
+The same thing can be said about the diff.relative option.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Anonymize URLs in the reflog
-    
-    This came up in an internal audit, but we do not consider this to be a
-    big deal: the reflog is local and not really shared with anybody.
-    
-    Changes since v1:
-    
-     * Changed the if...else if...else cadence to move the die() to the last
-       arm
-     * Stopped the memory leak of display_repo (allocated by 
-       transport_anonymize_url())
+As I do not use either of these variables myself, I am somewhat
+indifferent, if those who set these variables find the consequences
+of doing so unpleasant.  As people often say, if it hurts, then...
+;-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-797%2Fdscho%2Fanonymize-clone-reflog-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-797/dscho/anonymize-clone-reflog-v2
-Pull-Request: https://github.com/git/git/pull/797
+Because the recipient of format-patch output who consumes it is
+typically different from the one who generates it, it probably does
+not make much sense to attempt linking diff.noprefix=true with the
+-p0 option (there isn't even a configuration for 'git am -p<num>',
+if I am not mistaken).
 
-Range-diff vs v1:
+Depending on the project a user works with, allowing
+log/show/format-patch to honor certain diff.* configuration
+variables, without a way to countermand them with more specific
+configuration for log/show/format-patch, may smell like a bug.  
 
- 1:  11c0d47c95e ! 1:  933a7353847 clone/fetch: anonymize URLs in the reflog
-     @@ Commit message
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## builtin/clone.c ##
-     -@@ builtin/clone.c: static int path_exists(const char *path)
-     - int cmd_clone(int argc, const char **argv, const char *prefix)
-     +@@ builtin/clone.c: int cmd_clone(int argc, const char **argv, const char *prefix)
-       {
-       	int is_bundle = 0, is_local;
-     --	const char *repo_name, *repo, *work_tree, *git_dir;
-     -+	const char *repo_name, *repo, *display_repo, *work_tree, *git_dir;
-     - 	char *path, *dir;
-     + 	const char *repo_name, *repo, *work_tree, *git_dir;
-     +-	char *path, *dir;
-     ++	char *path, *dir, *display_repo = NULL;
-       	int dest_exists;
-       	const struct ref *refs, *remote_head;
-     + 	const struct ref *remote_head_points_at;
-      @@ builtin/clone.c: int cmd_clone(int argc, const char **argv, const char *prefix)
-     - 
-       	path = get_repo_path(repo_name, &is_bundle);
-       	if (path)
-     --		repo = absolute_pathdup(repo_name);
-     -+		display_repo = repo = absolute_pathdup(repo_name);
-     - 	else if (!strchr(repo_name, ':'))
-     - 		die(_("repository '%s' does not exist"), repo_name);
-     + 		repo = absolute_pathdup(repo_name);
-     +-	else if (!strchr(repo_name, ':'))
-     +-		die(_("repository '%s' does not exist"), repo_name);
-      -	else
-     -+	else {
-     ++	else if (strchr(repo_name, ':')) {
-       		repo = repo_name;
-      +		display_repo = transport_anonymize_url(repo);
-     -+	}
-     ++	} else
-     ++		die(_("repository '%s' does not exist"), repo_name);
-       
-       	/* no need to be strict, transport_set_option() will validate it again */
-       	if (option_depth && atoi(option_depth) < 1)
-     @@ builtin/clone.c: int cmd_clone(int argc, const char **argv, const char *prefix)
-       			"an empty directory."), dir);
-       
-      -	strbuf_addf(&reflog_msg, "clone: from %s", repo);
-     -+	strbuf_addf(&reflog_msg, "clone: from %s", display_repo);
-     ++	strbuf_addf(&reflog_msg, "clone: from %s",
-     ++		    display_repo ? display_repo : repo);
-     ++	free(display_repo);
-       
-       	if (option_bare)
-       		work_tree = NULL;
+I am not sure where to draw the line, though.  Would we treat only
+format-patch and no other commands in the log family specially?
+Would we treat each commands in the log family specially and
+separately, so that you could say "diff and show uses noprefix, but
+'log -p' and 'whatchanged' uses the standard a/ and b/ prefix and
+format-patch uses old/ and new/ prefix" independently?
+
+> I didn't know the -p option but to send a patch to a
+> mailinglist it should have the prefix I guess ?
+
+The participants in this project would certainly find it unusual
+when they see a prefix-less patch.
+
+There probably are projects older than Git whose convention is to
+use .noprefix; we didn't want to force them to switch and instead
+accomodated their preference with .noprefix but in hindsight, it may
+have been a better idea to force one true way to everybody, which
+would have kept the world simpler.  I dunno.
 
 
- builtin/clone.c            | 13 ++++++++-----
- builtin/fetch.c            |  9 +++++++--
- t/t5541-http-push-smart.sh | 15 +++++++++++++++
- 3 files changed, 30 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 1ad26f4d8c8..002d23ab0a2 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -939,7 +939,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0, is_local;
- 	const char *repo_name, *repo, *work_tree, *git_dir;
--	char *path, *dir;
-+	char *path, *dir, *display_repo = NULL;
- 	int dest_exists;
- 	const struct ref *refs, *remote_head;
- 	const struct ref *remote_head_points_at;
-@@ -994,10 +994,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	path = get_repo_path(repo_name, &is_bundle);
- 	if (path)
- 		repo = absolute_pathdup(repo_name);
--	else if (!strchr(repo_name, ':'))
--		die(_("repository '%s' does not exist"), repo_name);
--	else
-+	else if (strchr(repo_name, ':')) {
- 		repo = repo_name;
-+		display_repo = transport_anonymize_url(repo);
-+	} else
-+		die(_("repository '%s' does not exist"), repo_name);
- 
- 	/* no need to be strict, transport_set_option() will validate it again */
- 	if (option_depth && atoi(option_depth) < 1)
-@@ -1014,7 +1015,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		die(_("destination path '%s' already exists and is not "
- 			"an empty directory."), dir);
- 
--	strbuf_addf(&reflog_msg, "clone: from %s", repo);
-+	strbuf_addf(&reflog_msg, "clone: from %s",
-+		    display_repo ? display_repo : repo);
-+	free(display_repo);
- 
- 	if (option_bare)
- 		work_tree = NULL;
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index bf6bab80fab..d58b7572114 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1765,8 +1765,13 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	/* Record the command line for the reflog */
- 	strbuf_addstr(&default_rla, "fetch");
--	for (i = 1; i < argc; i++)
--		strbuf_addf(&default_rla, " %s", argv[i]);
-+	for (i = 1; i < argc; i++) {
-+		/* This handles non-URLs gracefully */
-+		char *anon = transport_anonymize_url(argv[i]);
-+
-+		strbuf_addf(&default_rla, " %s", anon);
-+		free(anon);
-+	}
- 
- 	fetch_config_from_gitmodules(&submodule_fetch_jobs_config,
- 				     &recurse_submodules);
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index 23be8ce92d6..2d60381a5e7 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -456,6 +456,21 @@ test_expect_success 'push status output scrubs password' '
- 	grep "^To $HTTPD_URL/smart/test_repo.git" status
- '
- 
-+test_expect_success 'clone/fetch scrubs password from reflogs' '
-+	cd "$ROOT_PATH" &&
-+	git clone "$HTTPD_URL_USER_PASS/smart/test_repo.git" \
-+		reflog-test &&
-+	cd reflog-test &&
-+	test_commit prepare-for-force-fetch &&
-+	git switch -c away &&
-+	git fetch "$HTTPD_URL_USER_PASS/smart/test_repo.git" \
-+		+master:master &&
-+	# should have been scrubbed down to vanilla URL
-+	git log -g master >reflog &&
-+	grep "$HTTPD_URL" reflog &&
-+	! grep "$HTTPD_URL_USER_PASS" reflog
-+'
-+
- test_expect_success 'colorize errors/hints' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	test_must_fail git -c color.transport=always -c color.advice=always \
-
-base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
--- 
-gitgitgadget
