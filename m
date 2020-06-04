@@ -2,96 +2,147 @@ Return-Path: <SRS0=8h89=7R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68453C433DF
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 16:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E072CC433DF
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 16:57:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 380E22072E
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 16:43:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF934207D8
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 16:57:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NVf+Azw5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="U1Wlpori"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729898AbgFDQng (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Jun 2020 12:43:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46030 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729893AbgFDQnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jun 2020 12:43:35 -0400
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E86C08C5C0
-        for <git@vger.kernel.org>; Thu,  4 Jun 2020 09:43:35 -0700 (PDT)
-Received: by mail-qt1-x842.google.com with SMTP id y1so5761255qtv.12
-        for <git@vger.kernel.org>; Thu, 04 Jun 2020 09:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=M6snPRh9i4WFWx9xYIUw6HZPUrRdAhsulEZPk/EyqZ0=;
-        b=NVf+Azw5CztfhlatXkUa8I1N0qZabnYWq96Hg6T3bDkn5z/bLlha0BN9g80Ck4aEV8
-         Yb87s1ljovMYnJC+JpfGmaQyBzsltIzSBfDOMi3sALcFV6AYioS7FhzV7waY2NpPttnC
-         cRxsZCBHpDF4ay0IzxCtZ1pf3zWYN8d739n0V8PviaSYwlCKNGCgdyo71Muing3dWpP/
-         JyMvWRxrKtYEn91z8UlKcCASUxQEC7msPh5Q0XnZwXZ0C75s03I667wXLQ8m4Zj1mN1z
-         sYnKKphHDTQjFjBuh9Q2OY0oY9OTDZJKv0nx0UR5IQhPGOZmvbCYXPge5iJ8NWj5iHlS
-         intw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=M6snPRh9i4WFWx9xYIUw6HZPUrRdAhsulEZPk/EyqZ0=;
-        b=GJSC2mkZ8p34SGfx16fAE3bZo/l4laE/7cAMFXX0KXcNwpllEAWUR6QifiGE7ObLgv
-         d+q5t808MbUHjh+5Z4wBmKEc4id+GCxC1XF9iG7QD/ob6EjcstcbvWdjaLlfT/TOQM9O
-         sJB2dpewYoXeenAKNoLEXJh4dvacEvRque46X6cZKTb8QpCMT2TV18EKofh2m8qWfzcH
-         p2suLKbqwkAyJRJuMQfVACD2HOgfLgTyGDAnltzztYfkwRFErsjDTIcZZhbhKPb13+lM
-         YjSqun0CP1UUoerKYTDe3v16286BI1vZ0x23CmP/odQ04tJqwwQcd0AKvFzu+xoJSuLd
-         sChQ==
-X-Gm-Message-State: AOAM532x5bwx8wUSIsExrqFQ3KgRAta5clFSQH+50zZoodhq5CxeHKI+
-        b7gZK36KxFL0V31t+wnQ1s0=
-X-Google-Smtp-Source: ABdhPJyMu8hkfsWecUAwkJSfKcSRzgE7lBYeOhTHQ1fHA47zSFq0S4UeKuvLXuLWooCWsG3fflQyOg==
-X-Received: by 2002:aed:2d44:: with SMTP id h62mr5705811qtd.167.1591289014755;
-        Thu, 04 Jun 2020 09:43:34 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id s52sm5601910qtb.3.2020.06.04.09.43.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jun 2020 09:43:34 -0700 (PDT)
-Subject: Re: [PATCH 04/34] commit-slab: add a function to deep free entries on
- the slab
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>,
-        Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>
-References: <20200529085038.26008-1-szeder.dev@gmail.com>
- <20200529085038.26008-5-szeder.dev@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8030939b-44fe-e251-5b76-2b2f260b980f@gmail.com>
-Date:   Thu, 4 Jun 2020 12:43:32 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
- Thunderbird/77.0
+        id S1729994AbgFDQ5z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Jun 2020 12:57:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57610 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729115AbgFDQ5z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jun 2020 12:57:55 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 201BE501CA;
+        Thu,  4 Jun 2020 12:57:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=umZfJDepxqDeB5gH2yEqrj51kno=; b=U1Wlpo
+        ries/MMN8Ui1jneeacl5GHXYhZXYXMXyyDNXbflETOcnGqjpTiMpAZKsluBKdGpy
+        Al0exQnFZaWdWzXvgLj1Hauq1+K+wlDs9X7Ld2zZelzS8MgNjsGJlsso7brCAeM6
+        pmU8SIgzQtYrUbUeqwedxdqzfx8/VtEKTt8bc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CLpoU/4Uf7lPd7PfdFlFekB86E1qWWam
+        A3XYabaP2/nFX4Oqew5vPEpnJGccNE2xH000P6dcC/RZKNh1lG4huO3u5ugSJ5Md
+        ebGDpbsgc8qekseSb4PDk2ux6tzqbzlso3+p9T0l8nAvuFG1V6V4HLkTyCXS7phr
+        VSwtKgo5lSY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 17DB6501C8;
+        Thu,  4 Jun 2020 12:57:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 915A6501C5;
+        Thu,  4 Jun 2020 12:57:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, warmsocks@gmail.com, stolee@gmail.com,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] sparse-checkout: avoid staging deletions of all files
+References: <pull.801.git.git.1591258657818.gitgitgadget@gmail.com>
+Date:   Thu, 04 Jun 2020 09:57:51 -0700
+In-Reply-To: <pull.801.git.git.1591258657818.gitgitgadget@gmail.com> (Elijah
+        Newren via GitGitGadget's message of "Thu, 04 Jun 2020 08:17:37
+        +0000")
+Message-ID: <xmqq4krqrcog.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20200529085038.26008-5-szeder.dev@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 876BD278-A684-11EA-BF1B-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/29/2020 4:50 AM, SZEDER Gábor wrote:
-> +void free_depth_in_slab(int **ptr)
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This needs to be "static" to compile with DEVELOPER=1.
+> ...  Thus, instead of all the files appearing deleted in `git
+> status` being known to git as a special artifact of not yet being on a
+> branch, our recording of an empty index made it suddenly look to git as
+> though it was definitely on a branch with ALL files staged for deletion!
+> A subsequent checkout or switch then had to contend with the fact that
+> it wasn't on an initial_checkout but had a bunch of staged deletions.
 
-(I'm working to apply your patches on top of ds/line-log-on-bloom
-so we can get the benefit of these universally-good things. I just
-want to report the things that I stumble on.)
+Nicely analysed and explained.
 
-Thanks,
--Stolee
+> Make sure that sparse-checkout changes nothing in the index other than
+> the SKIP_WORKTREE bit; in particular, when the index is unborn we do not
+> have any branch checked out so there is no sparsification or
+> de-sparsification work to do.  Simply return from
+> update_working_directory() early.
 
+OK, and that would avoid writing out an empty index, leaving the
+"is_index_unborn()" still true after we are done.  Makes sense.
+
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>     sparse-checkout: avoid staging deletions of all files
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-801%2Fnewren%2Fsparse-checkout-and-unborn-index-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-801/newren/sparse-checkout-and-unborn-index-v1
+> Pull-Request: https://github.com/git/git/pull/801
+>
+>  builtin/sparse-checkout.c          |  4 ++++
+>  t/t1091-sparse-checkout-builtin.sh | 19 +++++++++++++++++++
+>  2 files changed, 23 insertions(+)
+>
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 95d08824172..595463be68e 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -99,6 +99,10 @@ static int update_working_directory(struct pattern_list *pl)
+>  	struct lock_file lock_file = LOCK_INIT;
+>  	struct repository *r = the_repository;
+>  
+> +	/* If no branch has been checked out, there are no updates to make. */
+> +	if (is_index_unborn(r->index))
+> +		return UPDATE_SPARSITY_SUCCESS;
+> +
+>  	memset(&o, 0, sizeof(o));
+>  	o.verbose_update = isatty(2);
+>  	o.update = 1;
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index 88cdde255cd..bc287e5c1fa 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -100,6 +100,25 @@ test_expect_success 'clone --sparse' '
+>  	check_files clone a
+>  '
+>  
+> +test_expect_success 'interaction with clone --no-checkout (unborn index)' '
+> +	git clone --no-checkout "file://$(pwd)/repo" clone_no_checkout &&
+> +	git -C clone_no_checkout sparse-checkout init --cone &&
+> +	git -C clone_no_checkout sparse-checkout set folder1 &&
+> +	git -C clone_no_checkout sparse-checkout list >actual &&
+> +	cat >expect <<-\EOF &&
+> +	folder1
+> +	EOF
+> +	test_cmp expect actual &&
+> +	ls clone_no_checkout >actual &&
+> +	test_must_be_empty actual &&
+> +	test_path_is_missing clone_no_checkout/.git/index &&
+> +
+> +	# No branch is checked out until we manually switch to one
+> +	git -C clone_no_checkout switch master &&
+> +	test_path_is_file clone_no_checkout/.git/index &&
+> +	check_files clone_no_checkout a folder1
+> +'
+> +
+>  test_expect_success 'set enables config' '
+>  	git init empty-config &&
+>  	(
+>
+> base-commit: 20514004ddf1a3528de8933bc32f284e175e1012
