@@ -2,149 +2,118 @@ Return-Path: <SRS0=8h89=7R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3C36C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 17:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5873C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 17:49:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A66B4204EF
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 17:45:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFA41204EF
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 17:49:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="bWBBPH5g"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W2RtTLrC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730196AbgFDRpr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Jun 2020 13:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55598 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730191AbgFDRpq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jun 2020 13:45:46 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A37FEC08C5C0
-        for <git@vger.kernel.org>; Thu,  4 Jun 2020 10:45:45 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id s88so1512796pjb.5
-        for <git@vger.kernel.org>; Thu, 04 Jun 2020 10:45:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+GWMGUMfXGyPmWKF8GX082+oaWaxusXMJKKLoSEEEDs=;
-        b=bWBBPH5g2OfEnjgj7mdo0deAegbtX9w1Ol/v+gURzywL7YATYyZCt4mvHGrpb6bXrY
-         i0VqbgB5drKrn8BCsngQkqjH8yFc11CRKUA+VCLp2oQN57Vr9Y46jrveS6rlDWGtBim5
-         4r3P/JOmepxwYqsZiUU9Kxn/Eca47sGKJgoNmHKlz7yi7srw/6M16aQ/2eH7YiiR1opu
-         nSW3xUAIgNmT1sDlIvks50y7Sbmmpux1J31JDidKqXS5PeA05wFDkllHfSrR2T6IGQml
-         nBpghsCs8sxCtqLKT6IcoW4L/S5oPSKVLVlXg0yVrlwPtjhXVCdl9b4XMzCBlJ0QBaxj
-         MR7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+GWMGUMfXGyPmWKF8GX082+oaWaxusXMJKKLoSEEEDs=;
-        b=WQSYIEOzOqwMjKPzbAt3OQ1PUsAVTWOIZpeRHd8NpMZRuGR2ho10U+sFXItpVZZmPE
-         G2IXE0ryHGyuDrO8j1cEiD0KBkZ2w84gel6/xucKCx/RUUxe4BsnJkhgsytIewjtfJ4U
-         rctfsrREPraejXcPpMHdqjeHcQhNlFb9n025OrSyiCybx1A+efAw4kn8z1m7EptNlpNx
-         +v6CTtXWoGmbJw2fykWd+5OzhaDHPojfbrwLfM0hB+BuOZiiZHJXtDtI2F6YAceB2cEr
-         8kKpvP+ZdD7NBREz6+a4/h89yE0xGPptDfZEB1bRILf/Y7ECcftFRaC6BbpDVZF/md0J
-         tD2g==
-X-Gm-Message-State: AOAM533msGRiYuq3lFsA9q1RGji4Co9rT+njMXaPkcqIvM48WyDXhqAI
-        NmlRFzkmcwn2PlkQRtNHnECqy6RVZsk=
-X-Google-Smtp-Source: ABdhPJwCcDyzc0RNJdNLz1N0sAtpXffehjYKNpq5s2kzkQOwkusbm+OS9+tnyZhWqoVJ5P3uklbopQ==
-X-Received: by 2002:a17:90a:648b:: with SMTP id h11mr7106893pjj.59.1591292745081;
-        Thu, 04 Jun 2020 10:45:45 -0700 (PDT)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id h15sm4735454pgl.12.2020.06.04.10.45.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2020 10:45:44 -0700 (PDT)
-Date:   Thu, 4 Jun 2020 11:45:42 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        jonathantanmy@google.com, gitster@pobox.com, newren@gmail.com,
-        Jay Conrod <jayconrod@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 2/2] shallow.c: use '{commit,rollback}_shallow_file'
-Message-ID: <20200604174542.GA58239@syl.local>
-References: <20200423001438.GC19100@syl.local>
- <cover.1587601501.git.me@ttaylorr.com>
- <296e70790d7a391d471554b0bc5a58e2a091ce88.1587601501.git.me@ttaylorr.com>
- <20200603034213.GB253041@google.com>
- <20200603045248.GA20266@syl.local>
- <20200603051631.GA20678@syl.local>
- <20200603205151.GC253041@google.com>
- <20200603221453.GA36237@syl.local>
- <20200603230611.GA1925@gmail.com>
+        id S1730285AbgFDRtv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Jun 2020 13:49:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62343 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730124AbgFDRtu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jun 2020 13:49:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12B786DD35;
+        Thu,  4 Jun 2020 13:49:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7Ubd+QkRJi5Numijmm2ZViyFleg=; b=W2RtTL
+        rCR7kzSHvEwfhGAwjQ0rmtvdi/hmvNOxwCJviPdpsKpLagdiLntN2+dQC7vcNDLs
+        AXrfbW53TwhgkuFiJDptuwAgndSFYe5n2Ng/jEuLZpoikUagXxaLoEFAr8jSkfwo
+        NGf0t7wHm0WGUsVSur/oEy/2lUO6OlUueU9Xw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yjWCJgNMBnX47Wk8Ct3yaFt7c3BkHQ2u
+        GiBFqy5S0UQj3Q6vXpWpn5qH9CjoGuG+m8uTiMyn5Ec/5jbALYuvXeJv3UK+tYYc
+        eFMLZ0pqAiJggUp75Uoip+yEzk6IXelVGRFjmgzr3Ss0zTQ6RclMj0W+Zi7PKYxx
+        D0za9zzSncc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 071416DD34;
+        Thu,  4 Jun 2020 13:49:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6229A6DD33;
+        Thu,  4 Jun 2020 13:49:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, jnareb@gmail.com
+Subject: Re: [GSoC Patch 2/3] commit: convert commit->generation to a slab
+References: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
+        <20200604072759.19142-3-abhishekkumar8222@gmail.com>
+Date:   Thu, 04 Jun 2020 10:49:45 -0700
+In-Reply-To: <20200604072759.19142-3-abhishekkumar8222@gmail.com> (Abhishek
+        Kumar's message of "Thu, 4 Jun 2020 12:57:58 +0530")
+Message-ID: <xmqqftbapvpi.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200603230611.GA1925@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C765A2D0-A68B-11EA-A90D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
 
-On Wed, Jun 03, 2020 at 04:06:11PM -0700, Jonathan Nieder wrote:
-> Taylor Blau wrote:
-> > On Wed, Jun 03, 2020 at 01:51:51PM -0700, Jonathan Nieder wrote:
+> In this commit, we will use the generation slab helpers introduced in
+> last commit and replace existing uses of commit->generation using
+> 'contrib/coccinelle/generation.cocci'
 >
-> >> --- i/commit-graph.c
-> >> +++ w/commit-graph.c
-> >> @@ -149,7 +149,8 @@ static int commit_graph_compatible(struct repository *r)
-> >>  	}
-> >>
-> >>  	prepare_commit_graft(r);
-> >> -	if (r->parsed_objects && r->parsed_objects->grafts_nr)
-> >> +	if (r->parsed_objects &&
-> >> +	    (r->parsed_objects->grafts_nr || r->parsed_objects->substituted_parent))
-> >
-> > This is a little tricky. Why would we set substituted_parent without
-> > also incrementing grafts_nr? That seems like the real bug here: if we
-> > incremented grafts_nr, then we would return a non-zero value from
-> > 'commit_graph_compatible' and rightly stop even without this sticky-bit.
-> >
-> > I don't quite understand this myself. If it's an oversight, it's a
-> > remarkably long-lived one. Do you have a better sense of this?
+> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> ---
+>  alloc.c                             |  1 -
+>  blame.c                             |  2 +-
+>  commit-graph.c                      | 39 +++++++++++-----------
+>  commit-reach.c                      | 50 ++++++++++++++---------------
+>  commit.c                            |  4 +--
+>  commit.h                            |  1 -
+>  contrib/coccinelle/generation.cocci | 12 +++++++
+>  revision.c                          | 16 ++++-----
+>  8 files changed, 68 insertions(+), 57 deletions(-)
+>  create mode 100644 contrib/coccinelle/generation.cocci
 >
-> The idea here is to check for two different things:
->
->  1. Do we have grafts (either from a grafts file or from a shallow
->     file)?  If so, this repository is not commit graph compatible
->     because we could encounter one of them.
->
->  2. Have cached parsed objects taken any history modifications into
->     account?  If so, this in-memory state is not commit graph
->     compatible because we could encounter one of them.
+> diff --git a/alloc.c b/alloc.c
+> index 1c64c4dd16..cbed187094 100644
+> --- a/alloc.c
+> +++ b/alloc.c
+> @@ -109,7 +109,6 @@ void init_commit_node(struct repository *r, struct commit *c)
+>  	c->object.type = OBJ_COMMIT;
+>  	c->index = alloc_commit_index(r);
+>  	c->graph_pos = COMMIT_NOT_FROM_GRAPH;
+> -	c->generation = GENERATION_NUMBER_INFINITY;
+>  }
+>  
+>  void *alloc_commit_node(struct repository *r)
+> diff --git a/blame.c b/blame.c
+> index da7e28800e..50e6316076 100644
+> --- a/blame.c
+> +++ b/blame.c
+> @@ -1272,7 +1272,7 @@ static int maybe_changed_path(struct repository *r,
+>  	if (!bd)
+>  		return 1;
+>  
+> -	if (origin->commit->generation == GENERATION_NUMBER_INFINITY)
+> +	if (generation(origin->commit) == GENERATION_NUMBER_INFINITY)
 
-Ah, breaking it up like this makes it clearer. The gist is that it is
-possible to generate a situation which has (1) no grafts explicitly, but
-(2) *does* have history modifications.
+Hmmmm, as C is not all that object-oriented that lets us say "commit
+objects have generation() method", a plain vanilla function whose
+name is generation() is a bit overly vague.  The field name this
+helper function replaces, .generation, is very localized to a commit
+"object" and does not have such a problem.
 
-> The check (1) might seem sufficient if the set of grafts is constant
-> for the lifetime of a git process.  But since 37b9dcabfc (shallow.c:
-> use '{commit,rollback}_shallow_file', 2020-04-22), it is not constant
-> for the process lifetime, so we need the check (2) as well.
->
-> We might want a similar check for replace refs as well some day, but
-> not today (there is not a way to remove entries from replace_map
-> during the life of a process).
+We probably need to choose a better name in the previous step to fix
+it.
 
-Right.
-
-> I can try sending a proper patch with commit message and tests
-> tomorrow morning (or if someone else takes care of it, that's fine,
-> too).  Thanks, both, for your help --- it was nice seeing a clear
-> explanation of the cause already figured out and explained when I woke
-> up.
-
-If you are interested, by all means -- I'd certainly be appreciative.
-I'm on vacation next week, and so it may be better if you are able to
-shepherd the patches through. Otherwise, I'd be happy to do it the week
-after when I get back.
-
-> Regards,
-> Jonathan
-
-Thanks,
-Taylor
