@@ -2,222 +2,124 @@ Return-Path: <SRS0=8h89=7R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 184E8C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 08:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AC40C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 08:27:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCCED207D3
-	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 08:17:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13DB420738
+	for <git@archiver.kernel.org>; Thu,  4 Jun 2020 08:27:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ah4ulS0B"
+	dkim=pass (1024-bit key) header.d=man-es.com header.i=@man-es.com header.b="vQuipy8S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727921AbgFDIRl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Jun 2020 04:17:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52276 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726912AbgFDIRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jun 2020 04:17:40 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95BE7C03E96D
-        for <git@vger.kernel.org>; Thu,  4 Jun 2020 01:17:40 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id c3so5025231wru.12
-        for <git@vger.kernel.org>; Thu, 04 Jun 2020 01:17:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=yGFOHnKfKRbCRfWDcQ2weNeGPvC7T+qbd27mGLR5jiA=;
-        b=ah4ulS0By3A4rfrbxkzRu8AKvcmOwwEX4tNyAWEwO8E+vrgyPN5NlpLq9/RgBlg6W/
-         x/Ph452uYd8mue2fQ1y6VYYP2OROQ6iT5x2Mi1YbAR9a7AvmEJTUe2DcdUtb9q3Rabeq
-         p+1giAwgvS4eWqMKuEFajiIOrNae0nF6oPoOKV707SQWrV3VSFEjHT8NTL4P+9fp0OqW
-         L7OBJmJ126xxE/Gkaxmgve7DfFQZjp9cT69JN7ExMrIAErgSEPhjaIac8RvbJ4wgsOfY
-         ZxlHtlv03npMWcrY6qmibf3XlUF8lqVbxH2GXuPYf8QIJe5aOMmAJLXgFl8DefEbIbk3
-         izRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=yGFOHnKfKRbCRfWDcQ2weNeGPvC7T+qbd27mGLR5jiA=;
-        b=makvIAGupT0OMFYr1ib8XiyGwMn+o5l7DOXLYn6SahVoi8yivZ1QzL8sTHSlrNjWU1
-         W1XX/zD9dr9H+RTcPv0nj9pMm9irF3/uF4IkACgTN88t0imeiXjh6JKAZgRv/A10QdMG
-         vVoD1djhqjL44MI+fsIIG8geqzoLhabuy77/bJTQL5EKU05FIeukoVbLMog8j0YQzh5X
-         zFns3WpPpkbLEecggedJdYd7hKJt3drhx6YaijcRyWsk0T/7TwsJ+CBNGta7rw3zQ94I
-         ea0eGjMXDp6SGLBIpPx1IDauATFRX8V1+8IQb/aIpfNq4u3bgVb6xivj3+xkV4eJyJ39
-         rVdg==
-X-Gm-Message-State: AOAM532tlCWeRRQeystGYsuaDuVR9cwtkGmbibN5lDitETsmxq1ElD/W
-        EYId0K1Y5wGz2tNyE6do+uaJpmWU
-X-Google-Smtp-Source: ABdhPJxA1FkgbBrb3G2dmpzE3q/S2ifzCAjUozpLqbh+XLU7P7xR9Z1U6yVmlK9zIDPxi9dr9SddSg==
-X-Received: by 2002:adf:ed01:: with SMTP id a1mr3438684wro.271.1591258659002;
-        Thu, 04 Jun 2020 01:17:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm7004541wrm.96.2020.06.04.01.17.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2020 01:17:38 -0700 (PDT)
-Message-Id: <pull.801.git.git.1591258657818.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Jun 2020 08:17:37 +0000
-Subject: [PATCH] sparse-checkout: avoid staging deletions of all files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727768AbgFDI1d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Jun 2020 04:27:33 -0400
+Received: from mail-eopbgr80132.outbound.protection.outlook.com ([40.107.8.132]:31299
+        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726967AbgFDI1c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jun 2020 04:27:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lnDx8T3WfUQIXFFfbU6hv8zr/h2/3j0N4vH05pTGFRajFvElQJPB7pvCZRMEaLtSSEiLfX8GdHse9Lzt9e1OoNCJEENLBagPyXbs0y4r2ful8nhaytJ9zrBk6h+n1eQxGRRpYq6kzadgZMN1OBf5AbnPKSGyczQWQsnMJHyU58uT2f617sT56malQ5sQPr4w22TyGu9fvtag5Huz/rbLO2NrrCwTnmjq4XN/PuwkKA12lm4sIXBMKjxQYmlnES8XedCFqltBtzo6EzpFGbh7xaJFuqtM8KYe6YYENtzp4G8ocPlce2BoMvT/9edOD07E3feIkWod2QfAZgxaV/y4og==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JtbK9nCEWOLU+YvfdB2jlw2oigg3ps7E8M/u0kEjw3M=;
+ b=NSkF6/m02AT3UykVdPjr/9G3DbFXjHJBJ6e9WUWGl9MtSlTRkekrQwozfbVgdGC1I3x0Ye0W/QUd5d53jZPuJuFm/fQzyvKow0QJw6k72brtmjYoRNmah59sSISLhlLIqAG6qfVTEI8w/t6VcktDRP991+7mAtv+6XJbVb1WEbZ2d/dWmO0wzhW+t+kLMfCOJP5GVM7GrqIagU7Oqq8XLhXc05BPf+4EqOE8pWRQdEx0gdCuMUW1EeeBREvUteoSexz3xSO/N8pQa69riiOtEZoP+2BA27c9rnOTlC7e17Lh8bxJrDvrDXZcYxpSz5faYLLkBel9Tgp+Lq9qhH1tuQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=man-es.com; dmarc=pass action=none header.from=man-es.com;
+ dkim=pass header.d=man-es.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=man-es.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JtbK9nCEWOLU+YvfdB2jlw2oigg3ps7E8M/u0kEjw3M=;
+ b=vQuipy8SK1Y5rOq4ZOHkdqwo7xG57v5CbkfPQO3K3Bq9fHVQrISdT/mNZkhJ43ljsf5OzdIovu3kYKAI/QxqY4hs9JDSKK5FKRcddc3p5BkHI63C8A2Qib7o2U/0GS8IzSxxEUD28madgORjmrkQHiAamtoT0bZQoTP6Mz2+r3M=
+Received: from AM0PR08MB5537.eurprd08.prod.outlook.com (2603:10a6:208:148::23)
+ by AM0PR08MB5410.eurprd08.prod.outlook.com (2603:10a6:208:182::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3066.18; Thu, 4 Jun
+ 2020 08:27:29 +0000
+Received: from AM0PR08MB5537.eurprd08.prod.outlook.com
+ ([fe80::f05d:e55a:aad9:8bc2]) by AM0PR08MB5537.eurprd08.prod.outlook.com
+ ([fe80::f05d:e55a:aad9:8bc2%6]) with mapi id 15.20.3066.018; Thu, 4 Jun 2020
+ 08:27:29 +0000
+From:   Kalle Kromann <kalle.kromann@man-es.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: The commit-msg hook is not invoked by git-merge as specified in
+ documentation
+Thread-Topic: The commit-msg hook is not invoked by git-merge as specified in
+ documentation
+Thread-Index: AdY5pP6PAidBAzepRc2W87PwqBsBqAAOCPWAABsFR5A=
+Date:   Thu, 4 Jun 2020 08:27:29 +0000
+Message-ID: <AM0PR08MB553711CE7CE5D39EC2CE8422D7890@AM0PR08MB5537.eurprd08.prod.outlook.com>
+References: <AM0PR08MB55379DD182941E93F3BD3D37D7880@AM0PR08MB5537.eurprd08.prod.outlook.com>
+ <xmqq367crlti.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq367crlti.fsf@gitster.c.googlers.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: pobox.com; dkim=none (message not signed)
+ header.d=none;pobox.com; dmarc=none action=none header.from=man-es.com;
+x-originating-ip: [85.24.121.228]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 8af531b4-9fc8-4e02-9a97-08d808611ee7
+x-ms-traffictypediagnostic: AM0PR08MB5410:
+x-microsoft-antispam-prvs: <AM0PR08MB5410C178010D18D232B8B020D7890@AM0PR08MB5410.eurprd08.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-forefront-prvs: 04244E0DC5
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: bGqLBYbP5LH9dXQdPZZgWcsoMxgintjEwQiXwgww4OgEbrsVb/Le5KQgHrwM+LVNIHR0YRJzdUFfvSsHicvHBzdh5PJezSTjrgrgS7aQbw8IqRf5FZfR4c/Uz8gjBa27Hf0pfTeSOew0Fi9GaK3NFl8w37DIU7L7QJTklN+//eykItrfcZU22W9C4q+72n0JIExrqwZSzWIoOF286TIxl2MfEbcTvnnGIWOHH3pQ6BjXbqksTodE2zlLL3rMmzJXkY/KejWYB0c/8j9K507z7yOCRjAUw35JIiu/e2Z9mLskZpkXjRuqcvofu56NOBDNrk6wOqQcUuzIx6eQZ2Uaeg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR08MB5537.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(366004)(346002)(136003)(396003)(39860400002)(376002)(66476007)(6916009)(66556008)(26005)(186003)(66446008)(64756008)(8936002)(83380400001)(7696005)(55016002)(316002)(2906002)(44832011)(52536014)(86362001)(71200400001)(5660300002)(8676002)(6506007)(9686003)(4326008)(478600001)(66946007)(76116006)(33656002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: WH6m3Ogmg+1moOQEB4Sm81WVNDRFzYpmk1Js4YHnUTWaBG5uCYJqBzJ8mYDbmm8OiGuXw8k4db7ASjGBG57pQGA8hjCYZGPyLAmr5fIQoDJiNDfFECWKoBHFGW1pKLRAw4EQOgPr6/7WE1uCg7KTXijU9n9svI8HtCEukMnQMPqjGuqGR9ipf9SYS/ZS4Qls79Y5NASd7/EhEjjaNV5AFe8ev5+Bj0rkudghIHfkUhgU0pdSydZd8GJDzHTGPymLvJW8LC/fRfvjQmjh5T8Vl+oRsC5KFUaOjvX9ZaghxYRe0MFIq6SjRz8aXruDLCFiD9LGZ6DH3kAJU7XsOLHkjKEbFl40zZ/W/ZTzoRO6M+zzPGdogZVBE2FgZhi4IncwjN1iad6Q3S9mAd6fh+F+GboNr+BdbZhz7lYuCLyYYo/liQTRXQHnLORGCIfWwIxCUKxOQj04qsQLlmRyTiwwQDw5E8ydo2FDfEtwmDVpyxw=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     warmsocks@gmail.com, stolee@gmail.com,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+X-OriginatorOrg: man-es.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8af531b4-9fc8-4e02-9a97-08d808611ee7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jun 2020 08:27:29.4900
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: d5f1616e-c93d-4966-a1a4-a5ccabbd76cb
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: UBFfrLoFQT36k4XQ3IslB9B/ERuKn3QaPHi1qnkG5K1Y7vy7rUM6HFRdLArHL3hRVPhac1iBas1zl8LZFCkd64sepF12mHmc0pjTAb9IFkk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR08MB5410
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hello, thanks for the reply.
 
-sparse-checkout's purpose is to update the working tree to have it
-reflect a subset of the tracked files.  As such, it shouldn't be
-switching branches, making commits, downloading or uploading data, or
-staging or unstaging changes.  Other than updating the worktree, the
-only thing sparse-checkout should touch is the SKIP_WORKTREE bit of the
-index.  In particular, this sets up a nice invariant: running
-sparse-checkout will never change the status of any file in `git status`
-(reflecting the fact that we only set the SKIP_WORKTREE bit if the file
-is safe to delete, i.e. if the file is unmodified).
+Sorry for not including it originally, the platform I was using to test was=
+ WSL (Windows subsystem for Linux).
+And the git version was the latest available from apt-get in WSL, 2.7.4.
 
-Traditionally, we did a _really_ bad job with this goal.  The
-predecessor to sparse-checkout involved manual editing of
-.git/info/sparse-checkout and running `git read-tree -mu HEAD`.  That
-command would stage and unstage changes and overwrite dirty changes in
-the working tree.
+It seems like one of these things is affecting the execution of the hook.
+I just did the exact same test in Cygwin with git version 2.17 and it works=
+ as expected here.
 
-The initial implementation of the sparse-checkout command was no better;
-it simply invoked `git read-tree -mu HEAD` as a subprocess and had the
-same caveats, though this issue came up repeatedly in review comments
-and workarounds for the problems were put in place before the feature
-was merged[1, 2, 3, 4, 5, 6; especially see 4 & 6].
+Do you know if it's a recent change that git-merge should invoke the hook a=
+s well?
+Or do you think it is related to using git in WSL?
 
-[1] https://lore.kernel.org/git/CABPp-BFT9A5n=_bx5LsjCvbogqwSjiwgr5amcjgbU1iAk4KLJg@mail.gmail.com/
-[2] https://lore.kernel.org/git/CABPp-BEmwSwg4tgJg6nVG8a3Hpn_g-=ZjApZF4EiJO+qVgu4uw@mail.gmail.com/
-[3] https://lore.kernel.org/git/CABPp-BFV7TA0qwZCQpHCqx9N+JifyRyuBQ-pZ_oGfe-NOgyh7A@mail.gmail.com/
-[4] https://lore.kernel.org/git/CABPp-BHYCCD+Vx5fq35jH82eHc1-P53Lz_aGNpHJNcx9kg2K-A@mail.gmail.com/
-[5] https://lore.kernel.org/git/CABPp-BF+JWYZfDqp2Tn4AEKVp4b0YMA=Mbz4Nz62D-gGgiduYQ@mail.gmail.com/
-[6] https://lore.kernel.org/git/20191121163706.GV23183@szeder.dev/
-
-However, these workarounds, in addition to disabling the feature in a
-number of important cases, also missed one special case.  I'll get back
-to it later.
-
-In the 2.27.0 cycle, the disabling of the feature was lifted by finally
-replacing the internal equivalent of `git read-tree -mu HEAD` with
-something that did what we wanted: the new update_sparsity() function in
-unpack-trees.c that only ever updates SKIP_WORKTREE bits in the index
-and updates the working tree to match.  This new function handles all
-the cases that were problematic for the old implementation, except that
-it breaks the same special case that avoided the workarounds of the old
-implementation, but broke it in a different way.
-
-So...that brings us to the special case: a git clone performed with
---no-checkout.  As per the meaning of the flag, --no-checkout does not
-check out any branch, with the implication that you aren't on one and
-need to switch to one after the clone.  Implementationally, HEAD is
-still set (so in some sense you are partially on a branch), but
-  * the index is "unborn" (non-existent)
-  * there are no files in the working tree (other than .git/)
-  * the next time git switch (or git checkout) is run it will run
-    unpack_trees with `initial_checkout` flag set to true.
-It is not until you run, e.g. `git switch <somebranch>` that the index
-will be written and files in the working tree populated.
-
-With this special --no-checkout case, the traditional `read-tree -mu
-HEAD` behavior would have done the equivalent of acting like checkout --
-switch to the default branch (HEAD), write out an index that matches
-HEAD, and update the working tree to match.  This special case slipped
-through the avoid-making-changes checks in the original sparse-checkout
-command and thus continued there.
-
-After update_sparsity() was introduced and used (see commit f56f31af03
-("sparse-checkout: use new update_sparsity() function", 2020-03-27)),
-the behavior for the --no-checkout case changed:  Due to git's
-auto-vivification of an empty in-memory index (see do_read_index() and
-note that `must_exist` is false), and due to sparse-checkout's
-update_working_directory() code to always write out the index after it
-was done, we got a new bug.  That made it so that sparse-checkout would
-switch the repository from a clone with an "unborn" index (i.e. still
-needing an initial_checkout), to one that had a recorded index with no
-entries.  Thus, instead of all the files appearing deleted in `git
-status` being known to git as a special artifact of not yet being on a
-branch, our recording of an empty index made it suddenly look to git as
-though it was definitely on a branch with ALL files staged for deletion!
-A subsequent checkout or switch then had to contend with the fact that
-it wasn't on an initial_checkout but had a bunch of staged deletions.
-
-Make sure that sparse-checkout changes nothing in the index other than
-the SKIP_WORKTREE bit; in particular, when the index is unborn we do not
-have any branch checked out so there is no sparsification or
-de-sparsification work to do.  Simply return from
-update_working_directory() early.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    sparse-checkout: avoid staging deletions of all files
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-801%2Fnewren%2Fsparse-checkout-and-unborn-index-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-801/newren/sparse-checkout-and-unborn-index-v1
-Pull-Request: https://github.com/git/git/pull/801
-
- builtin/sparse-checkout.c          |  4 ++++
- t/t1091-sparse-checkout-builtin.sh | 19 +++++++++++++++++++
- 2 files changed, 23 insertions(+)
-
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 95d08824172..595463be68e 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -99,6 +99,10 @@ static int update_working_directory(struct pattern_list *pl)
- 	struct lock_file lock_file = LOCK_INIT;
- 	struct repository *r = the_repository;
- 
-+	/* If no branch has been checked out, there are no updates to make. */
-+	if (is_index_unborn(r->index))
-+		return UPDATE_SPARSITY_SUCCESS;
-+
- 	memset(&o, 0, sizeof(o));
- 	o.verbose_update = isatty(2);
- 	o.update = 1;
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 88cdde255cd..bc287e5c1fa 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -100,6 +100,25 @@ test_expect_success 'clone --sparse' '
- 	check_files clone a
- '
- 
-+test_expect_success 'interaction with clone --no-checkout (unborn index)' '
-+	git clone --no-checkout "file://$(pwd)/repo" clone_no_checkout &&
-+	git -C clone_no_checkout sparse-checkout init --cone &&
-+	git -C clone_no_checkout sparse-checkout set folder1 &&
-+	git -C clone_no_checkout sparse-checkout list >actual &&
-+	cat >expect <<-\EOF &&
-+	folder1
-+	EOF
-+	test_cmp expect actual &&
-+	ls clone_no_checkout >actual &&
-+	test_must_be_empty actual &&
-+	test_path_is_missing clone_no_checkout/.git/index &&
-+
-+	# No branch is checked out until we manually switch to one
-+	git -C clone_no_checkout switch master &&
-+	test_path_is_file clone_no_checkout/.git/index &&
-+	check_files clone_no_checkout a folder1
-+'
-+
- test_expect_success 'set enables config' '
- 	git init empty-config &&
- 	(
-
-base-commit: 20514004ddf1a3528de8933bc32f284e175e1012
--- 
-gitgitgadget
+Thanks again!
+This is an e-mail from MAN Energy Solutions, branch of MAN Energy Solutions=
+ SE, Germany (CVR no. 31611792).
+This e-mail (including any attachments) is confidential and may be privileg=
+ed. If you have received this e-mail by mistake, please notify the sender b=
+y e-mail and delete it from your system.
+Any unauthorized use or dissemination of this e-mail or its contents in who=
+le or in part is strictly prohibited. Please note that e-mails are suscepti=
+ble to change.
+MAN Energy Solutions SE (including its group companies) shall not be liable=
+ for improper or incomplete transmission of the information contained in th=
+is e-mail or for any delay in its receipt.
+MAN Energy Solutions SE (or its group companies) does not guarantee that th=
+is e-mail has not been compromised or that it is free of viruses, intercept=
+ions or interference.
