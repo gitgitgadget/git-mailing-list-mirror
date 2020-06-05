@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 669E6C433E1
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8649C433E2
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 432A0206DB
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99086206E6
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lu3etRpu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kn6owTYV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbgFENAj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 09:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36388 "EHLO
+        id S1726889AbgFENAm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 09:00:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726409AbgFENAj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726670AbgFENAj (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 5 Jun 2020 09:00:39 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0FEBC08C5C2
-        for <git@vger.kernel.org>; Fri,  5 Jun 2020 06:00:38 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id x14so9684173wrp.2
-        for <git@vger.kernel.org>; Fri, 05 Jun 2020 06:00:38 -0700 (PDT)
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4690C08C5C3
+        for <git@vger.kernel.org>; Fri,  5 Jun 2020 06:00:37 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id c71so8344869wmd.5
+        for <git@vger.kernel.org>; Fri, 05 Jun 2020 06:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=A6ucJ0SWUz4kmpDNWvRxCKcVzBHjjvOAnSVMnoTFDtY=;
-        b=lu3etRpu7BGJjIy9eH3KvPGEu/TqjexGts+kmnt4qr/LOFoS9nl3ekEh+4has6yzHd
-         7+WTn6TM2uzfBaOX91PGY33nVuEVvkb2HEJfdXfK+jpuYKUVrE04KP+6b8fwYe9f51wQ
-         r6mNTpfoxz8U3nUf7zz94PUjqfgrAEJzhTMXKppp+J+PE3M3dB9gemDA8vrjILVmjxsJ
-         FrjwiwRN6VhRkPoN3vZIatYBIuOReuDebmesdGBtJhJ7y83KfSv/SzTOR25jN1AMUkn8
-         9G38bPnPWXtN+eJrhwuuaZ5E80LvTVksDirCTs1Z865ny1K2L09AC55VpR5+4B1IzQVb
-         haAQ==
+        bh=hfAWl+d0E00LStrOS05jPHsQ3rRuDqDxiOji5yY/OJg=;
+        b=kn6owTYV0bVXfIo2685XtGg/5DcZqNcvt7MBI8YUhuJzfVo2lro+yFEpfxLA1NPf5+
+         EaYkQRgOmoP3ieSeOv/KbEYxRGnoAwFhSB9d/ubWMS0GYdahUQMKTcmLzIi8/q7FuZqJ
+         jP+DfpmrYpKcPxzFWnOhQW900cP00fOJx2raTmfh5Ol2AIi6E1JCNyI8JVkJDBjNNe/Y
+         4gyP4W0MA1ewpVnfT3Ip2ohrV29jCc3uCSBYnqvAIsqI3egg4qxq5qZ73NsBj7PkXgPY
+         OpKLuunyx53jP+YOEZKDFcj1UZnqZTVjEbvQeYXoke5tbh8xIGyZSLzmKZ9M7rxOQUYW
+         5qqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=A6ucJ0SWUz4kmpDNWvRxCKcVzBHjjvOAnSVMnoTFDtY=;
-        b=hTLfbsfWqW3VsGt/Ym86O+VWLeoLpd2DoF/91DYQt2/QrgqC6lHtx+8Rh0Rcjuh0b8
-         KyZtSXGck+eJdSb4Q77TyZYR7B+aFRYKMVVXWadpGLE8aNGX80WtT0wKBMuL9pjMdFAh
-         u71BPcEGQO06ZCI3ttQxoQjn1JmFM1oNBe30n68JGsbqNgIVpoXSjXkVGUN15var+LGH
-         JTmsg3obL5aEMDGmYOCNLBG00wMMIqbWgZpiNyzk18EzX2DQvAFcUxkMPktIVntCKmUe
-         BP4KpBbZgPBaqJNSAUXP6BJ0If6vRES/07sRnuTnnGsfrlxwGTGJ6YvEgF033dhblelq
-         qitg==
-X-Gm-Message-State: AOAM531ntTEV2wrxII7f+6FCbLkH7kPtjhOTTWJm9+0I/h1hZJeKHjzx
-        vlEpqpHMnIpWfe38Dae6Z5yatDIQ
-X-Google-Smtp-Source: ABdhPJwFNnTGstz24D4VZOyMJWSz6gKOx7UshpXUlURSnqAoW0vsr9ywIYZUxUhrLOsqZ6kltzvTiw==
-X-Received: by 2002:adf:dc8e:: with SMTP id r14mr9050896wrj.333.1591362037290;
-        Fri, 05 Jun 2020 06:00:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b8sm12532436wrs.36.2020.06.05.06.00.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=hfAWl+d0E00LStrOS05jPHsQ3rRuDqDxiOji5yY/OJg=;
+        b=LUlzFO5PJopraUDDws+FJLP8dRqr4A5xcJpZZr6K7pakFN90JnwMlCVxDjXSRb+895
+         1u1kB9gT4GUkj/XuoW9xuBdaJv8farvD821/shsSjUddGHyqJ2g3AeuvhpjRDUpUtcxm
+         ifSIs/f6nYSYs3AnEUlcpUO6mKR/+/PGs54xj2LCiaPIsbTwYiepQqrMLbLw54LHNwmk
+         j/WHxNKZ9WyA38kl4ZZ2SieNJTf0ZCAWPZykd20q/QzK3AMv3ZNhgA9p4SjaW3anLJ8O
+         5DSdfZqs9TRA++TvHTr0ykKQWamlLI/Gu+t43Rx+zNVZUYI2BW3Nkv9PTGW8Q7SBnEFK
+         LQfg==
+X-Gm-Message-State: AOAM533IOKWbMR6lX2q5dxnCpJaUiak0Ch/fP8lyW/UVBxHQNITLjA1m
+        Rumu7ioLljvTcUziJb4wYRd9Zv1v
+X-Google-Smtp-Source: ABdhPJwm2uQpFyFyMhcNcCDoU6VepqueAyMOTlbdYXAMd9koJOzJyITlKkhd3C2RmlpWZzrQhqn+LA==
+X-Received: by 2002:a1c:4105:: with SMTP id o5mr2526733wma.168.1591362036414;
         Fri, 05 Jun 2020 06:00:36 -0700 (PDT)
-Message-Id: <1e1671e7c699adf72fcf4ba8f03a7427ff30c9e7.1591362033.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q1sm10877477wmc.15.2020.06.05.06.00.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2020 06:00:35 -0700 (PDT)
+Message-Id: <af84c253b243656f74707e4ea44d13b1d9a464d1.1591362032.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.650.git.1591362032.gitgitgadget@gmail.com>
 References: <pull.650.git.1591362032.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 05 Jun 2020 13:00:24 +0000
-Subject: [PATCH 02/10] commit-graph: fix parsing the Chunk Lookup table
+Date:   Fri, 05 Jun 2020 13:00:23 +0000
+Subject: [PATCH 01/10] tree-walk.c: don't match submodule entries for
+ 'submod/anything'
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,84 +82,73 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-The commit-graph file format specifies that the chunks may be in any
-order.  However, if the OID Lookup chunk happens to be the last one in
-the file, then any command attempting to access the commit-graph data
-will fail with:
+Submodules should be handled the same as regular directories with
+respect to the presence of a trailing slash, i.e. commands like:
 
-  fatal: invalid commit position. commit-graph is likely corrupt
+  git diff rev1 rev2 -- $path
+  git rev-list HEAD -- $path
 
-In this case the error is wrong, the commit-graph file does conform to
-the specification, but the parsing of the Chunk Lookup table is a bit
-buggy, and leaves the field holding the number of commits in the
-commit-graph zero-initialized.
+should produce the same output whether $path is 'submod' or 'submod/'.
+This has been fixed in commit 74b4f7f277 (tree-walk.c: ignore trailing
+slash on submodule in tree_entry_interesting(), 2014-01-23).
 
-The number of commits in the commit-graph is determined while parsing
-the Chunk Lookup table, by dividing the size of the OID Lookup chunk
-with the hash size.  However, the Chunk Lookup table doesn't actually
-store the size of the chunks, but it stores their starting offset.
-Consequently, the size of a chunk can only be calculated by
-subtracting the starting offsets of that chunk from the offset of the
-subsequent chunk, or in case of the last chunk from the offset
-recorded in the terminating label.  This is currenly implemented in a
-bit complicated way: as we iterate over the entries of the Chunk
-Lookup table, we check the ID of each chunk and store its starting
-offset, then we check the ID of the last seen chunk and calculate its
-size using its previously saved offset if necessary (at the moment
-it's only necessary for the OID Lookup chunk).  Alas, while parsing
-the Chunk Lookup table we only interate through the "real" chunks, but
-never look at the terminating label, thus don't even check whether
-it's necessary to calulate the size of the last chunk.  Consequently,
-if the OID Lookup chunk is the last one, then we don't calculate its
-size and turn don't run the piece of code determining the number of
-commits in the commit graph, leaving the field holding that number
-unchanged (i.e. zero-initialized), eventually triggering the sanity
-check in load_oid_from_graph().
+Unfortunately, that commit had the unintended side effect to handle
+'submod/anything' the same as 'submod' and 'submod/' as well, e.g.:
 
-Fix this by iterating through all entries in the Chunk Lookup table,
-including the terminating label.
+  $ git log --oneline --name-only -- sha1collisiondetection/whatever
+  4125f78222 sha1dc: update from upstream
+  sha1collisiondetection
+  07a20f569b Makefile: fix unaligned loads in sha1dc with UBSan
+  sha1collisiondetection
+  23e37f8e9d sha1dc: update from upstream
+  sha1collisiondetection
+  86cfd61e6b sha1dc: optionally use sha1collisiondetection as a submodule
+  sha1collisiondetection
 
-Note that this is the minimal fix, suitable for the maintenance track.
-A better fix would be to simplify how the chunk sizes are calculated,
-but that is a more invasive change, less suitable for 'maint', so that
-will be done in later patches.
-
-This additional flexibility of scanning more chunks breaks a test for
-"git commit-graph verify" so alter that test to mutate the commit-graph
-to have an even lower chunk count.
+Fix this by rejecting submodules as partial pathnames when their
+trailing slash is followed by anything.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c          | 2 +-
- t/t5318-commit-graph.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ t/t4010-diff-pathspec.sh | 4 +++-
+ tree-walk.c              | 9 ++++++++-
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 196e817a84c..7807d945626 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -277,7 +277,7 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 	last_chunk_id = 0;
- 	last_chunk_offset = 8;
- 	chunk_lookup = data + 8;
--	for (i = 0; i < graph->num_chunks; i++) {
-+	for (i = 0; i <= graph->num_chunks; i++) {
- 		uint32_t chunk_id;
- 		uint64_t chunk_offset;
- 		int chunk_repeated = 0;
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 18304a65e4d..79e7fbcd40e 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -488,7 +488,7 @@ test_expect_success 'detect bad hash version' '
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index e5ca359edfa..65cc703c659 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -125,7 +125,9 @@ test_expect_success 'setup submodules' '
+ test_expect_success 'diff-tree ignores trailing slash on submodule path' '
+ 	git diff --name-only HEAD^ HEAD submod >expect &&
+ 	git diff --name-only HEAD^ HEAD submod/ >actual &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
++	git diff --name-only HEAD^ HEAD -- submod/whatever >actual &&
++	test_must_be_empty actual
  '
  
- test_expect_success 'detect low chunk count' '
--	corrupt_graph_and_verify $GRAPH_BYTE_CHUNK_COUNT "\02" \
-+	corrupt_graph_and_verify $GRAPH_BYTE_CHUNK_COUNT "\01" \
- 		"missing the .* chunk"
- '
+ test_expect_success 'diff multiple wildcard pathspecs' '
+diff --git a/tree-walk.c b/tree-walk.c
+index bb0ad34c545..0160294712b 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -851,7 +851,14 @@ static int match_entry(const struct pathspec_item *item,
+ 	if (matchlen > pathlen) {
+ 		if (match[pathlen] != '/')
+ 			return 0;
+-		if (!S_ISDIR(entry->mode) && !S_ISGITLINK(entry->mode))
++		/*
++		 * Reject non-directories as partial pathnames, except
++		 * when match is a submodule with a trailing slash and
++		 * nothing else (to handle 'submod/' and 'submod'
++		 * uniformly).
++		 */
++		if (!S_ISDIR(entry->mode) &&
++		    (!S_ISGITLINK(entry->mode) || matchlen > pathlen + 1))
+ 			return 0;
+ 	}
  
 -- 
 gitgitgadget
