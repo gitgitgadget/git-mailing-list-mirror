@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 095AAC433E0
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E9C6C433DF
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D99412070B
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8ABA206DB
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qM0Fsp5z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="urvWeY27"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726910AbgFENAt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 09:00:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36396 "EHLO
+        id S1726916AbgFENAu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 09:00:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726844AbgFENAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jun 2020 09:00:41 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEB0FC08C5C3
-        for <git@vger.kernel.org>; Fri,  5 Jun 2020 06:00:40 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id l10so9651253wrr.10
-        for <git@vger.kernel.org>; Fri, 05 Jun 2020 06:00:40 -0700 (PDT)
+        with ESMTP id S1726891AbgFENAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jun 2020 09:00:42 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12222C08C5C4
+        for <git@vger.kernel.org>; Fri,  5 Jun 2020 06:00:42 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id d128so9030892wmc.1
+        for <git@vger.kernel.org>; Fri, 05 Jun 2020 06:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=PuFVyAZuk3CYUvpSCADXvcZQsAuDiMmt2d4mjw1LE7Q=;
-        b=qM0Fsp5z3+Xuq28jaNBjzdH4TLf0gvldYHQ0d/bFjXXiUyHGr9cOfUPsNBaSIZsSUR
-         E9Chddt6wPHYa16viO+qzpvYIorbdbrDHEVwrYVb7xiIS1DE1LSnO20nZhLdmt0+ZFPH
-         d/gM7Avpy5CWEYDVRk5wYckDmvZkhb5df8Qk6KT24cUK1tg7pSnUCZzZ5RwPZijj3Z1e
-         mVaRevavKHOFj+m+X2MdpBlX3gZWNPFXKrW/txozYnnZteUBsXKspWFdZxa+kghMMzbf
-         PmBdvJGcu67VvTXHxHn9JTqcOOB/JbVtWAxAZ8m7PGBTYQnbCVfSaZf4bFP/61m6fsYN
-         /toA==
+        bh=5y12Vv4tcA8nt2cWBn1HR41BrCvwx+6I06Aj7OsEFAo=;
+        b=urvWeY27FZhTnEmKDP/589NBCKKjCXGlZjwvKXezLTcEnmhHF6QSywuVDw0bh0zym2
+         Zp7XMsMhfTp3nqTcNi+dAfqSn4dloP7mdqnO+YOkprFiuzYUnlWyfP9LANanb+cRaRuc
+         pk9sfb58nHjP7UOcXlzVNreX1ap3/hA/+914nuJrepnO3W9tp2RUsxJgykXBMBLgG309
+         m4NE+imVG30PokMMmXVQuxQBffCl5vDTTnLK0gbqqZKK47rttLpBjgpvT7KAdsUBh3r8
+         8E5IHP86Fk9/xSLk+B2YPzEGsDueQBgk86aR6HF2IxsqWx2/NiAQ9kBt4rY7YyoDsEjT
+         K08Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=PuFVyAZuk3CYUvpSCADXvcZQsAuDiMmt2d4mjw1LE7Q=;
-        b=DNlvGh949P8iNyhaXf+ayhGwHILIOYXg60PzX129aIMfFik7KObDAC5B7ezbAPqcjR
-         a801w3tmNQD2GWdI2cbJFUJdEA2GZ0C7xmzUCWPZ30GrJPlnP+HqNJUj4LqT9d9W4YHU
-         JNJUNGArZsuaivQTvfGaVZnxK9AeglZF1fYP4xA0LLvFjjMncBPykmbIP136ZQaOZNxT
-         5/MAjOrqEFOEN/v63RrOaIUrDsJb4rXyRPIN3REZB8DgkxB1KFhZUJ4Bm/Sfh3I73+NX
-         TCUxnLqXnfKBs4ka+OJdKp11GhGATnWDp9eX8WzKE2VRMlNbrG1gwEN6FK0yaDvo/++F
-         Qkdg==
-X-Gm-Message-State: AOAM531q/9KgZgSViRAT7+Rsx5AZg0+7pvKgYDpBzY+KThiM5r4HXl9J
-        DPuSIpG5KOPLvQESrHDhTE/KnnJw
-X-Google-Smtp-Source: ABdhPJwCD8x0dr0OFaIsfxoDUnkYVUAjEWCNVb8RLYHnd1ttl1pbXRvQ/2WNBAF6wPffleQKpl078g==
-X-Received: by 2002:adf:f389:: with SMTP id m9mr8938054wro.195.1591362039404;
-        Fri, 05 Jun 2020 06:00:39 -0700 (PDT)
+        bh=5y12Vv4tcA8nt2cWBn1HR41BrCvwx+6I06Aj7OsEFAo=;
+        b=jPbm7ufH2/h5B3HVbx3npIPkWznHNgZeAn5o5G6WVHQUfefhmGa2UDj/gbKkaPh/hH
+         fdUjyCxp0TckQM+xeyGKhGIupBMbrzq+8XgMmCXstRCFWlm6XDrvNC396ERNVm9mNNGY
+         CPHzDYfcuEk0PpijRAukVf6723ZU2arQqmclv7ynOd9S/DSlk9gsehrRk5UFqPe3kE2L
+         7n4WoqN02E+KRpEx7hIj8SV0gAy7kTQKcR2K4k805ZuVvI4y8yNlIs01uWnHM0WymhJH
+         rGRnXz516OX+bTyhbUjAxvUfM7zSmSZoVTMPWG1Akvb8U/gqBjyZYZZIFasRypBscU9j
+         +VMQ==
+X-Gm-Message-State: AOAM533SVf7tMjvSKhrmZrEM3z8F5sLegZ8xyI2Rdfj3aTSOlWrIKbUj
+        4i4IWVrc4eN8vNVyA1KscqM1mO1o
+X-Google-Smtp-Source: ABdhPJyNKYqEUtAb+fx+DfifKrXjBhRinoLqw3nBMrRTV6rLohZKD7wEF0RWI7Kzopkof0vhMbyY9Q==
+X-Received: by 2002:a1c:3d05:: with SMTP id k5mr2607098wma.160.1591362040424;
+        Fri, 05 Jun 2020 06:00:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f71sm10699684wmf.22.2020.06.05.06.00.38
+        by smtp.gmail.com with ESMTPSA id z132sm12232874wmc.29.2020.06.05.06.00.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2020 06:00:38 -0700 (PDT)
-Message-Id: <32a6f11cc475f5292075093dcdc3b2a5c6d02ed0.1591362033.git.gitgitgadget@gmail.com>
+        Fri, 05 Jun 2020 06:00:39 -0700 (PDT)
+Message-Id: <1a70ff05aea11cb479d9ba7529ccad6dcd79e23d.1591362033.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.650.git.1591362032.gitgitgadget@gmail.com>
 References: <pull.650.git.1591362032.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 05 Jun 2020 13:00:26 +0000
-Subject: [PATCH 04/10] commit-slab: add a function to deep free entries on the
- slab
+Date:   Fri, 05 Jun 2020 13:00:27 +0000
+Subject: [PATCH 05/10] diff.h: drop diff_tree_oid() & friends' return value
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,125 +80,163 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-clear_##slabname() frees only the memory allocated for a commit slab
-itself, but entries in the commit slab might own additional memory
-outside the slab that should be freed as well.  We already have (at
-least) one such commit slab, and this patch series is about to add one
-more.
+ll_diff_tree_oid() has only ever returned 0 [1], so it's return value
+is basically useless.  It's only caller diff_tree_oid() has only ever
+returned the return value of ll_diff_tree_oid() as-is [2], so its
+return value is just as useless.  Most of diff_tree_oid()'s callers
+simply ignore its return value, except:
 
-To free all additional memory owned by entries on the commit slab the
-user of such a slab could iterate over all commits it knows about,
-peek whether there is a valid entry associated with each commit, and
-free the additional memory, if any.  Or it could rely on intimate
-knowledge about the internals of the commit slab implementation, and
-could itself iterate directly through all entries in the slab, and
-free the additional memory.  Or it could just leak the additional
-memory...
+  - diff_root_tree_oid() is a thin wrapper around diff_tree_oid() and
+    returns with its return value, but all of diff_root_tree_oid()'s
+    callers ignore its return value.
 
-Introduce deep_clear_##slabname() to allow releasing memory owned by
-commit slab entries by invoking the 'void free_fn(elemtype *ptr)'
-function specified as parameter for each entry in the slab.
+  - rev_compare_tree() and rev_same_tree_as_empty() do look at the
+    return value in a condition, but, since the return value is always
+    0, the former's < 0 condition is never fulfilled, while the
+    latter's >= 0 condition is always fulfilled.
 
-Use it in get_shallow_commits() in 'shallow.c' to replace an
-open-coded iteration over a commit slab's entries.
+So let's drop the return value of ll_diff_tree_oid(), diff_tree_oid()
+and diff_root_tree_oid(), and drop those conditions from
+rev_compare_tree() and rev_same_tree_as_empty() as well.
+
+[1] ll_diff_tree_oid() and its ancestors have been returning only 0
+    ever since it was introduced as diff_tree() in 9174026cfe (Add
+    "diff-tree" program to show which files have changed between two
+    trees., 2005-04-09).
+[2] diff_tree_oid() traces back to diff-tree.c:main() in 9174026cfe as
+    well.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-slab-decl.h |  1 +
- commit-slab-impl.h | 13 +++++++++++++
- commit-slab.h      | 10 ++++++++++
- shallow.c          | 14 +++++---------
- 4 files changed, 29 insertions(+), 9 deletions(-)
+ diff.h      | 10 +++++-----
+ revision.c  |  9 +++------
+ tree-diff.c | 30 ++++++++++++++----------------
+ 3 files changed, 22 insertions(+), 27 deletions(-)
 
-diff --git a/commit-slab-decl.h b/commit-slab-decl.h
-index adc7b46c83b..286164b7e27 100644
---- a/commit-slab-decl.h
-+++ b/commit-slab-decl.h
-@@ -32,6 +32,7 @@ struct slabname {							\
- void init_ ##slabname## _with_stride(struct slabname *s, unsigned stride); \
- void init_ ##slabname(struct slabname *s);				\
- void clear_ ##slabname(struct slabname *s);				\
-+void deep_clear_ ##slabname(struct slabname *s, void (*free_fn)(elemtype *ptr)); \
- elemtype *slabname## _at_peek(struct slabname *s, const struct commit *c, int add_if_missing); \
- elemtype *slabname## _at(struct slabname *s, const struct commit *c);	\
- elemtype *slabname## _peek(struct slabname *s, const struct commit *c)
-diff --git a/commit-slab-impl.h b/commit-slab-impl.h
-index 5c0eb91a5d1..557738df271 100644
---- a/commit-slab-impl.h
-+++ b/commit-slab-impl.h
-@@ -38,6 +38,19 @@ scope void clear_ ##slabname(struct slabname *s)			\
- 	FREE_AND_NULL(s->slab);						\
- }									\
- 									\
-+scope void deep_clear_ ##slabname(struct slabname *s, void (*free_fn)(elemtype *)) \
-+{									\
-+	unsigned int i;							\
-+	for (i = 0; i < s->slab_count; i++) {				\
-+		unsigned int j;						\
-+		if (!s->slab[i])					\
-+			continue;					\
-+		for (j = 0; j < s->slab_size; j++)			\
-+			free_fn(&s->slab[i][j * s->stride]);		\
-+	}								\
-+	clear_ ##slabname(s);						\
-+}									\
-+									\
- scope elemtype *slabname## _at_peek(struct slabname *s,			\
- 						  const struct commit *c, \
- 						  int add_if_missing)   \
-diff --git a/commit-slab.h b/commit-slab.h
-index 05b3f2804e7..8e72a305365 100644
---- a/commit-slab.h
-+++ b/commit-slab.h
-@@ -47,6 +47,16 @@
-  *
-  *   Call this function before the slab falls out of scope to avoid
-  *   leaking memory.
-+ *
-+ * - void deep_clear_indegree(struct indegree *, void (*free_fn)(int*))
-+ *
-+ *   Empties the slab, similar to clear_indegree(), but in addition it
-+ *   calls the given 'free_fn' for each slab entry to release any
-+ *   additional memory that might be owned by the entry (but not the
-+ *   entry itself!).
-+ *   Note that 'free_fn' might be called even for entries for which no
-+ *   indegree_at() call has been made; in this case 'free_fn' is invoked
-+ *   with a pointer to a zero-initialized location.
-  */
+diff --git a/diff.h b/diff.h
+index 9443dc1b003..e0c0af6286b 100644
+--- a/diff.h
++++ b/diff.h
+@@ -431,11 +431,11 @@ struct combine_diff_path *diff_tree_paths(
+ 	struct combine_diff_path *p, const struct object_id *oid,
+ 	const struct object_id **parents_oid, int nparent,
+ 	struct strbuf *base, struct diff_options *opt);
+-int diff_tree_oid(const struct object_id *old_oid,
+-		  const struct object_id *new_oid,
+-		  const char *base, struct diff_options *opt);
+-int diff_root_tree_oid(const struct object_id *new_oid, const char *base,
+-		       struct diff_options *opt);
++void diff_tree_oid(const struct object_id *old_oid,
++		   const struct object_id *new_oid,
++		   const char *base, struct diff_options *opt);
++void diff_root_tree_oid(const struct object_id *new_oid, const char *base,
++			struct diff_options *opt);
  
- #define define_commit_slab(slabname, elemtype) \
-diff --git a/shallow.c b/shallow.c
-index 7fd04afed19..c4ac8a73273 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -84,6 +84,10 @@ int is_repository_shallow(struct repository *r)
-  * supports a "valid" flag.
-  */
- define_commit_slab(commit_depth, int *);
-+static void free_depth_in_slab(int **ptr)
-+{
-+	FREE_AND_NULL(*ptr);
-+}
- struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
- 		int shallow_flag, int not_shallow_flag)
+ struct combine_diff_path {
+ 	struct combine_diff_path *next;
+diff --git a/revision.c b/revision.c
+index cbf4b61aa67..c644c660917 100644
+--- a/revision.c
++++ b/revision.c
+@@ -791,9 +791,7 @@ static int rev_compare_tree(struct rev_info *revs,
+ 
+ 	tree_difference = REV_TREE_SAME;
+ 	revs->pruning.flags.has_changes = 0;
+-	if (diff_tree_oid(&t1->object.oid, &t2->object.oid, "",
+-			   &revs->pruning) < 0)
+-		return REV_TREE_DIFFERENT;
++	diff_tree_oid(&t1->object.oid, &t2->object.oid, "", &revs->pruning);
+ 
+ 	if (!nth_parent)
+ 		if (bloom_ret == 1 && tree_difference == REV_TREE_SAME)
+@@ -804,7 +802,6 @@ static int rev_compare_tree(struct rev_info *revs,
+ 
+ static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
  {
-@@ -150,15 +154,7 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
- 			}
- 		}
- 	}
--	for (i = 0; i < depths.slab_count; i++) {
--		int j;
--
--		if (!depths.slab[i])
--			continue;
--		for (j = 0; j < depths.slab_size; j++)
--			free(depths.slab[i][j]);
--	}
--	clear_commit_depth(&depths);
-+	deep_clear_commit_depth(&depths, free_depth_in_slab);
+-	int retval;
+ 	struct tree *t1 = get_commit_tree(commit);
  
- 	return result;
+ 	if (!t1)
+@@ -812,9 +809,9 @@ static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
+ 
+ 	tree_difference = REV_TREE_SAME;
+ 	revs->pruning.flags.has_changes = 0;
+-	retval = diff_tree_oid(NULL, &t1->object.oid, "", &revs->pruning);
++	diff_tree_oid(NULL, &t1->object.oid, "", &revs->pruning);
+ 
+-	return retval >= 0 && (tree_difference == REV_TREE_SAME);
++	return tree_difference == REV_TREE_SAME;
+ }
+ 
+ struct treesame_state {
+diff --git a/tree-diff.c b/tree-diff.c
+index f3d303c6e54..6ebad1a46f3 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -29,9 +29,9 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ 	struct combine_diff_path *p, const struct object_id *oid,
+ 	const struct object_id **parents_oid, int nparent,
+ 	struct strbuf *base, struct diff_options *opt);
+-static int ll_diff_tree_oid(const struct object_id *old_oid,
+-			    const struct object_id *new_oid,
+-			    struct strbuf *base, struct diff_options *opt);
++static void ll_diff_tree_oid(const struct object_id *old_oid,
++			     const struct object_id *new_oid,
++			     struct strbuf *base, struct diff_options *opt);
+ 
+ /*
+  * Compare two tree entries, taking into account only path/S_ISDIR(mode),
+@@ -679,9 +679,9 @@ static void try_to_follow_renames(const struct object_id *old_oid,
+ 	q->nr = 1;
+ }
+ 
+-static int ll_diff_tree_oid(const struct object_id *old_oid,
+-			    const struct object_id *new_oid,
+-			    struct strbuf *base, struct diff_options *opt)
++static void ll_diff_tree_oid(const struct object_id *old_oid,
++			     const struct object_id *new_oid,
++			     struct strbuf *base, struct diff_options *opt)
+ {
+ 	struct combine_diff_path phead, *p;
+ 	pathchange_fn_t pathchange_old = opt->pathchange;
+@@ -697,29 +697,27 @@ static int ll_diff_tree_oid(const struct object_id *old_oid,
+ 	}
+ 
+ 	opt->pathchange = pathchange_old;
+-	return 0;
+ }
+ 
+-int diff_tree_oid(const struct object_id *old_oid,
+-		  const struct object_id *new_oid,
+-		  const char *base_str, struct diff_options *opt)
++void diff_tree_oid(const struct object_id *old_oid,
++		   const struct object_id *new_oid,
++		   const char *base_str, struct diff_options *opt)
+ {
+ 	struct strbuf base;
+-	int retval;
+ 
+ 	strbuf_init(&base, PATH_MAX);
+ 	strbuf_addstr(&base, base_str);
+ 
+-	retval = ll_diff_tree_oid(old_oid, new_oid, &base, opt);
++	ll_diff_tree_oid(old_oid, new_oid, &base, opt);
+ 	if (!*base_str && opt->flags.follow_renames && diff_might_be_rename())
+ 		try_to_follow_renames(old_oid, new_oid, &base, opt);
+ 
+ 	strbuf_release(&base);
+-
+-	return retval;
+ }
+ 
+-int diff_root_tree_oid(const struct object_id *new_oid, const char *base, struct diff_options *opt)
++void diff_root_tree_oid(const struct object_id *new_oid,
++			const char *base,
++			struct diff_options *opt)
+ {
+-	return diff_tree_oid(NULL, new_oid, base, opt);
++	diff_tree_oid(NULL, new_oid, base, opt);
  }
 -- 
 gitgitgadget
