@@ -2,214 +2,133 @@ Return-Path: <SRS0=KQVw=7S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 027F0C433E0
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 23:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89C31C433DF
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 23:24:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE231207D8
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 23:23:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61C64207D5
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 23:24:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7KSt8cn"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="g3ZMWn5E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728405AbgFEXXa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 19:23:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728316AbgFEXXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jun 2020 19:23:30 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA327C08C5C2
-        for <git@vger.kernel.org>; Fri,  5 Jun 2020 16:23:28 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id u16so6771411lfl.8
-        for <git@vger.kernel.org>; Fri, 05 Jun 2020 16:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=wx6ds5c/A/4jzULpnJGBZWj9+xvG32MKkcpuVWdlSXM=;
-        b=H7KSt8cn11IdHWgnLzaYZP8O07FhpoLAxK4WZZwyKWKXK7kudohj9fuWWJcRVcIrLE
-         CmAyL1p/rZrHVoGHBYjTRCYdS2swa4OAuG1tu16JYcaEJ9iXns2nuU4gLsgcJgO5/APW
-         xIy2uKg66eeCUGlLObIwMYNRWDHIZMWuqhtHsvw9+tqeb4aa5GHJFuO0OkE+jH/j1Bcr
-         FfIp1uNEXSG+wiP/Civubaxhj8p7fu61YoNyQVcWBsqb3FnmZksOc6yhpsBPAIP48hQJ
-         9HcM5A+G0D47/ynFVq7UQi0XPwlgiKI9kt8J6NWr+TxfOdXijN3h69PQk+fL+SqOku6f
-         0tRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=wx6ds5c/A/4jzULpnJGBZWj9+xvG32MKkcpuVWdlSXM=;
-        b=fE2IkV4Uy7/oHv0lnKXnVzQg1uf1UJSqz15qS/1fNm505YD15SdozdN+58WsmhH+pv
-         0zp/7YSuqlgGVm3pNFGTRMVcLGWjujJ88t1wjtQtuPXJc4N6r1DFnKEuQqWxiJKBRRQr
-         KB7LVo4lBLE0TZDyGJ5JkdNdV/zT5RtikycUBFg5me7bx8yDi91ZmboL8in9q6EeLW2L
-         UUywoVJctLWdRuQkLzM+RIwVUarehwr96vWt4mHWhIdjx+jtohdiOcW1bUnkWljxxVfU
-         DG61pH9i6QMeDlM1Nl8mNAOLejQSRdxI6OV96ruUDgkZ2Fjof3q/G5dCjLEMr1hMLqjc
-         XO5w==
-X-Gm-Message-State: AOAM532o18BXKD0yQrnhrP46yDgSRRd97bDPDHuIX0k/pQRLermkqY3J
-        vc5v0D4WBqiFm9Hz4XOla0ifykJiIMc=
-X-Google-Smtp-Source: ABdhPJyece+DxLj9KBfPbB9lFqsE+uL3lHpuUd4cknxVn3tn1zmnooBETZkFi6+DV9KIZSzboK4JUw==
-X-Received: by 2002:ac2:5314:: with SMTP id c20mr6511390lfh.75.1591399407398;
-        Fri, 05 Jun 2020 16:23:27 -0700 (PDT)
-Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id x23sm1490942lfe.32.2020.06.05.16.23.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2020 16:23:26 -0700 (PDT)
-From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
-To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [GSoC Patch 1/3] commit: introduce helpers for generation slab
-References: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
-        <20200604072759.19142-2-abhishekkumar8222@gmail.com>
-Date:   Sat, 06 Jun 2020 01:23:25 +0200
-In-Reply-To: <20200604072759.19142-2-abhishekkumar8222@gmail.com> (Abhishek
-        Kumar's message of "Thu, 4 Jun 2020 12:57:57 +0530")
-Message-ID: <857dwlw102.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+        id S1728378AbgFEXYU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 19:24:20 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39044 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728316AbgFEXYU (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 5 Jun 2020 19:24:20 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DD9F360756;
+        Fri,  5 Jun 2020 23:24:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1591399459;
+        bh=iT6c21usHevvd6Fhqvet1ad854l/3/vsLDJtUzXGoxg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=g3ZMWn5EsC+AcYxVhTBZJY5L7diKd/0SXWyaEhvsw30JHmbUTSkNXMtUD9tbBB4qK
+         0tZCaUXVPAK5ovYqMBZJfGPmUvSQOAv1S1mqNKGLtmUDcNtxJkYAMTco1bF9rD/Yw8
+         Cea0zu9r6nu1Tj4ivanTgxJh/G+6/8VzFxHLLup+9gGeCNSatIR7G3w9E0Ulevhvf1
+         z87T///7Ig88pNAkeXUe0ESs/FL39KgVKEHUu0WkjI15Xj3ADjZxtsGGIIV/ltnqKx
+         USguIGej/iCbKMLwcuoUQmFEY9QnehMmQ86pvWxKv9zGBEKlci7h5UoR2P/IzU3MrN
+         r6o0YLzNk3OiFLiZUdRLEP/9XmUNxK6Rda+SgcaXCQ0yzKN/SRbR4H7RGFMHsFxhJn
+         M+Fuj2wuYG+NYzdiUnsVQS9OS2wt7Sp3iO6EpSgVKN/oaZW/y07NoCgEUuNrxuUEN4
+         ieGmPuCsFoJV4O+izmnNqDh9Gk5gV4H93u7JMwx0X/MQhdKlzwr
+Date:   Fri, 5 Jun 2020 23:24:13 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Varun Varada <varuncvarada@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Standardizing on Oxford English
+Message-ID: <20200605232413.GG6569@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
+References: <CAD2i4DCyovfV78rXwH+B+tNOeDM7rJCHWSCPFOiCv7mVR+56ew@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="TdkiTnkLhLQllcMS"
+Content-Disposition: inline
+In-Reply-To: <CAD2i4DCyovfV78rXwH+B+tNOeDM7rJCHWSCPFOiCv7mVR+56ew@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
 
-> The struct member generation refers to "generation number" (or more
+--TdkiTnkLhLQllcMS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Again, a minor thing: 'generation'.
+On 2020-06-05 at 05:34:21, Varun Varada wrote:
+> Hello,
+>=20
+> I noticed the Documentation/SubmittingPatches file reads:
+>=20
+> > We prefer to gradually reconcile the inconsistencies in favor of US Eng=
+lish
+>=20
+> May I ask why? US English is highly idiosyncratic, illogical, and used
+> by a minority of the English-speaking population of the world (see
+> https://en.wikipedia.org/wiki/American_and_British_English_spelling_diffe=
+rences).
+> Since British English has its own idiosyncrasies, why not use Oxford
+> English, the most international English that is used by millions of
+> the world? It is used by practically every international organization
+> (such as the UN, ISO, IEC, BIPM, NATO, etc.), taught in practically
+> every school in non-native-English-speaking countries (and even
+> native-English-speaking ones), and used by myriad publications (e.g.,
+> Nature) and people around the world. Given the inherently
+> international nature of the Git project, it makes complete sense to
+> follow suit.
 
-> broadly, a reachablity index value) used by commit-graph to reduce time
-> taken to walk commits. However, generation is not useful in other
-> contexts and bloats the struct.
->
-> Let's move it to a commit-slab and shrink the struct by four bytes.
+I should point out that many of your arguments about U.S. English are
+true of English in general.  As a native U.S. English speaker who also
+knows Spanish and French, I can confidently say that even French, which
+many find difficult, has a mostly regular correspondence between letters
+and sounds, and, overall, a reasonably consistent set of rules for verb
+conjugations, albeit with many irregular verbs.  English, in any form,
+has none of that.  It is, as languages go, highly irregular.
 
-It looks like the description is from earlier version of the commit,
-before it was split -- because this commit does not remove 'generation'
-member from the 'struct commit', actually.
+I didn't write the text in question, but I suspect the reason is
+practicality: most open source projects use U.S. English, and most
+contributors to Git are able to write the U.S. variety.  It's hard for
+me personally to write Oxford English because I have never written or
+spoken it, and when I need to consult a reference, the one I have is
+=66rom the University of Chicago, not Oxford.  I suspect many Canadians
+and second-language speakers from at least parts of the Americas are
+more likely to be familiar with the U.S. variety than Oxford or British
+English, although I don't know for certain.
 
-This commit is about creating helper functions.
+This isn't a defense of U.S. English (after all, I wrote the first
+paragraph), but just an acknowledgement of the way things are.  This
+project is all about practicality rather than purity; to quote from
+CodingGuidelines:
 
->
-> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> ---
->  commit-graph.c | 27 +++++++++++++++++++++++++++
->  commit-graph.h |  5 +++++
->  commit.h       |  3 ---
->  3 files changed, 32 insertions(+), 3 deletions(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index e3420ddcbf..63f419048d 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -87,6 +87,33 @@ static int commit_pos_cmp(const void *va, const void *=
-vb)
->  	       commit_pos_at(&commit_pos, b);
->  }
->=20=20
-> +define_commit_slab(generation_slab, uint32_t);
-> +static struct generation_slab generation_slab =3D COMMIT_SLAB_INIT(1, ge=
-neration_slab);
-
-All right, we need this for the following helper functions to work.
-
-We might want to encapsulate all commit-graph data together, in a single
-struct (e.g. as 'struct commit_graph_data' instead of uint32_t here).
-
-On the other hand other data is stored on slab often as separate
-scalar data (contains_cache, commit_seen, indegree_slab,
-author_date_slab, commit_base, commit_pos), but not always; sometimes it
-is a struct (bloom_filter_slab, buffer_slab, commit_rev_name), sometimes
-it is an array (commit_depth, ref_bitmap, commit_weight), and sometimes
-it is an array/list of structs or pointer to struct (commit_names,
-commit_name_slab, saved_parents, blame_suspects, commit_todo_item).
-
-> +
-> +uint32_t generation(const struct commit *c)
-> +{
-> +	uint32_t *gen =3D generation_slab_peek(&generation_slab, c);
-> +
-> +	return gen ? *gen : GENERATION_NUMBER_INFINITY;
-> +}
-
-All right, this is a synthetic getter using the fact that commits
-outside the commit-graph should get GENERATION_NUMBER_INFINITY (because
-[effective] commit-graph is closed under reachability, is full DAG).
-
-Should we have something like that for 'graph_pos' and
-COMMIT_NOT_FROM_GRAPH?
-
-> +
-> +static void set_generation(const struct commit *c, const uint32_t genera=
-tion)
-> +{
-> +	unsigned int i =3D generation_slab.slab_count;
-> +	uint32_t *gen =3D generation_slab_at(&generation_slab, c);
-> +
-> +	/*
-> +	 * commit-slab initializes with zero, overwrite this with
-> +	 * GENERATION_NUMBER_INFINITY
-> +	 */
-> +	for (; i < generation_slab.slab_count; ++i) {
-> +		memset(generation_slab.slab[i], GENERATION_NUMBER_INFINITY,
-> +		       generation_slab.slab_size * sizeof(uint32_t));
-> +	}
-> +
-> +	*gen =3D generation;
-> +}
-
-All right. I wonder if putting 'generation' and 'graph_pos' on the slab
-together, gathered in 'struct commit_graph_data' would make this helper
-more complex...
-
-> +
->  static int commit_gen_cmp(const void *va, const void *vb)
->  {
->  	const struct commit *a =3D *(const struct commit **)va;
-> diff --git a/commit-graph.h b/commit-graph.h
-> index 4212766a4f..653bd041ad 100644
-> --- a/commit-graph.h
-> +++ b/commit-graph.h
-> @@ -8,6 +8,10 @@
->  #include "object-store.h"
->  #include "oidset.h"
->=20=20
-> +#define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
-> +#define GENERATION_NUMBER_MAX 0x3FFFFFFF
-> +#define GENERATION_NUMBER_ZERO 0
-> +
->  #define GIT_TEST_COMMIT_GRAPH "GIT_TEST_COMMIT_GRAPH"
->  #define GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD "GIT_TEST_COMMIT_GRAPH_DIE_ON_=
-LOAD"
->  #define GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS "GIT_TEST_COMMIT_GRAPH_CHANG=
-ED_PATHS"
-> @@ -137,4 +141,5 @@ void free_commit_graph(struct commit_graph *);
->   */
->  void disable_commit_graph(struct repository *r);
->=20=20
-> +uint32_t generation(const struct commit *c);
->  #endif
-> diff --git a/commit.h b/commit.h
-> index 1b2dea5d85..cc610400d5 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -11,9 +11,6 @@
->  #include "commit-slab.h"
->=20=20
->  #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
-> -#define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
-> -#define GENERATION_NUMBER_MAX 0x3FFFFFFF
-> -#define GENERATION_NUMBER_ZERO 0
->=20=20
->  struct commit_list {
->  	struct commit *item;
-
-Why this change?
-
-Best,
+   Again, we live in the real world, and it is sometimes a
+   judgement call, the decision based more on real world
+   constraints people face than what the paper standard says.
 --=20
-Jakub Nar=C4=99bski
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--TdkiTnkLhLQllcMS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXtrUHQAKCRB8DEliiIei
+gfEbAQDL4h9vT6kZ84cNJ4bIRja4+sqEqi7SSTQJn6/m6M2ZngEAhgXmK199R5rJ
+B1ziAbyg1dJl3DGUjTwZL5nNlxRkOAQ=
+=C1EG
+-----END PGP SIGNATURE-----
+
+--TdkiTnkLhLQllcMS--
