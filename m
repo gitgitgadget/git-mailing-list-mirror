@@ -2,124 +2,113 @@ Return-Path: <SRS0=KQVw=7S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0AE8C433E1
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9358C433DF
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:44:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE4DF206FA
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:21:27 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v++ddj5k"
+	by mail.kernel.org (Postfix) with ESMTP id 825382077D
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:44:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1591386283;
+	bh=VHWh4EUQm/1NttCYVTFZYbN1EVvNKaOGP4nsVzEWNQ4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=C254I72Yy+pptCQg5jiw1IovOBOqeW9Kq/qx62ToK8nLhT2w48tu+x/JlD9hA+oAd
+	 EOacA+RiJdEVF2b9FsoX6Sukgywu6z8CE1X4IUgwdPzq4q7gkTCrtMqPPIG1B4q+zN
+	 xB/EtUYwuy7inK+Wg7m0w11Hx5fVPhfVQVz+C5hs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727813AbgFETV0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 15:21:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52594 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727081AbgFETV0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jun 2020 15:21:26 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3345694FD;
-        Fri,  5 Jun 2020 15:21:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MCm9jkmM+SSMECAvehFn4bh2MxA=; b=v++ddj
-        5kjdQ5yabYg0RvqjdNdhFylJNB58NOQvjn3Kp32JocQDT5UGyZNY2ZLVaDV9QFld
-        g0hDdIVzK2xQvR9hqEBxumqKdgQ4nlc+AQWK3lbMSXakNvcCm2GlWDUZJrQlL5dT
-        lpXp/fl9LDDlBG2okyf3XegttJ23hedDuocE0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aXOec1TW7WZ3Eq+UgTa4sXkaNnWI3xAO
-        n56AV18IbP2oHct0w90bMMUHxxRvut2rtSRay/Z30IxjQbAVyGuT29Qd324zSeJC
-        GPLpguDnps0gEVZOFLqP6xUDL9DhYG/DuqiilsKZcjn1hUS51+dX3pCqS4pU9adx
-        0Db/E5hxPXw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC1E1694FC;
-        Fri,  5 Jun 2020 15:21:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 73F1F694FB;
-        Fri,  5 Jun 2020 15:21:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Xin Li <delphij@google.com>
+        id S1727888AbgFETom (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 15:44:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43706 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727010AbgFETom (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jun 2020 15:44:42 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4811DC08C5C2
+        for <git@vger.kernel.org>; Fri,  5 Jun 2020 12:44:42 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id w90so9498585qtd.8
+        for <git@vger.kernel.org>; Fri, 05 Jun 2020 12:44:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ocILR4yjyGl2fxf7KUY6hRIUfGNRxA8n9O6A+XV5bTA=;
+        b=SRq9YNMUcwKpQO58I4i2CIgFMjJLQH2JiNu82qJ5YB3rGdwQTh99m+a7EjaHj03WBv
+         C1rOD1YMjMFxIhQIeCufVQ7IT9Hd+BAvo+xKTLBCCrsrvfXwFf0hgTlDnvnG4dJLnJyo
+         TLloVoSFgFnf9wpDAlI5L7yWtB+qL5f9wowyw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=ocILR4yjyGl2fxf7KUY6hRIUfGNRxA8n9O6A+XV5bTA=;
+        b=MVUzGOyVmo7kK/iu3b32j6ZqOhCiggOlXsde+flJ8ER6tb1hRf/xR6HM18iCd5f/Fa
+         51I7VCenIJnvjb/+t9N7kG+ql5bDBWA++m/bSwSSAB2HqRDHy7VdhafGvgJbd3ae3u+Y
+         uaKrBqDKYoHytoVzXboYFFs0qTAKJOzboBXIyX/S4Nc0w9jJhwnsxYUoIdQo5F7yB0yz
+         i0itaBPyTNyowv4O3W5F8BOAjtdPSq7K5AgVmydH4Lb77ZqO9c+AYHYvTiB7vn0J7iX3
+         C8dpNvGjw6OqIRlTFLNqaViE+LitJl76uSBQgE0sTA1amKOJ1BeuB52Kz6DJr8xToxEk
+         JZjg==
+X-Gm-Message-State: AOAM532laU0IyVQRLSUjB7ZkH8FEzwM2bZdwr8KnuABUahaz8dcA5Ays
+        hHI+FVixI9DW9LxMKXRbVif6Ow==
+X-Google-Smtp-Source: ABdhPJytZ5qwh9p7Jkhc1luQy9phj+qaR7/CLcDIKR0ZSPf3YDLHNRBM//rShbpXr7yUfPcc+0/KQA==
+X-Received: by 2002:ac8:4f46:: with SMTP id i6mr11571245qtw.317.1591386280108;
+        Fri, 05 Jun 2020 12:44:40 -0700 (PDT)
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id x205sm650667qka.12.2020.06.05.12.44.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2020 12:44:39 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Fri, 05 Jun 2020 15:44:37 -0400
+Date:   Fri, 5 Jun 2020 15:44:37 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Varun Varada <varuncvarada@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v6 3/4] sparse-checkout: upgrade repository to version 1 when enabling extension
-References: <20200528025359.20931-2-delphij@google.com>
-        <xmqqsgfk3xtd.fsf@gitster.c.googlers.com>
-        <20200528171924.GC58643@google.com>
-        <CAOhzdugK7FQSnWruUrX8gQ98AF6kGvNWqPfHmE+qjGjBgzvmiQ@mail.gmail.com>
-        <20200528191739.GA114915@google.com>
-        <20200529000432.146618-1-delphij@google.com>
-        <20200529010119.GE114915@google.com>
-        <xmqqk10uzkcd.fsf@gitster.c.googlers.com>
-        <20200605091004.208668-1-delphij@google.com>
-        <20200605091004.208668-4-delphij@google.com>
-Date:   Fri, 05 Jun 2020 12:21:21 -0700
-In-Reply-To: <20200605091004.208668-4-delphij@google.com> (Xin Li's message of
-        "Fri, 5 Jun 2020 02:10:03 -0700")
-Message-ID: <xmqqpnadmi8e.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Subject: Re: Standardizing on Oxford English
+Message-ID: <20200605194437.au5vcy2wpcwi65md@chatter.i7.local>
+Mail-Followup-To: Varun Varada <varuncvarada@gmail.com>,
+        git@vger.kernel.org
+References: <CAD2i4DCyovfV78rXwH+B+tNOeDM7rJCHWSCPFOiCv7mVR+56ew@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BDB8D51E-A761-11EA-8C3B-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD2i4DCyovfV78rXwH+B+tNOeDM7rJCHWSCPFOiCv7mVR+56ew@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Xin Li <delphij@google.com> writes:
+On Fri, Jun 05, 2020 at 12:34:21AM -0500, Varun Varada wrote:
+> Hello,
+> 
+> I noticed the Documentation/SubmittingPatches file reads:
+> 
+> > We prefer to gradually reconcile the inconsistencies in favor of US English
+> 
+> May I ask why? 
 
-> The 'extensions' configuration variable gets special meaning in the new
-> repository version, so when enabling the extension we should upgrade the
-> repository to version 1.
->
-> Signed-off-by: Xin Li <delphij@google.com>
-> ---
->  builtin/sparse-checkout.c  | 2 ++
->  t/t2404-worktree-config.sh | 4 +++-
->  2 files changed, 5 insertions(+), 1 deletion(-)
+Traditionally, the "GNU C" locale expects that the character set used 
+for all output should be in "us-ascii" -- a choice dictated by 
+historical encoding standards. The most logical language to use when 
+writing in something called "us-ascii" is "US English." :)
 
-The other place that "extensions.*" is referred to is in
-builtin/init-db.c::initialize_repository_version() and it already
-makes sure that extensions.objectformat is set only in a repository
-whose verseion is GIT_REPO_VERSION_READ (which is 1---by the way I
-suspect we want a better name than _READ for the symbol---it wants
-to use the highest version supported by this binary), so with this
-patch we covered everything, hopefully.
+This has little current day relevance, but projects with code histories 
+spanning decades tend to stick with whatever the expectation is for the 
+"C" locale as their default language.
 
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 95d0882417..95669815d4 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -249,6 +249,8 @@ static int set_config(enum sparse_checkout_mode mode)
->  {
->  	const char *config_path;
->  
-> +	if (upgrade_repository_format(1) < 0)
-> +		die(_("unable to upgrade repository format to enable worktreeConfig"));
->  	if (git_config_set_gently("extensions.worktreeConfig", "true")) {
->  		error(_("failed to set extensions.worktreeConfig setting"));
->  		return 1;
-> diff --git a/t/t2404-worktree-config.sh b/t/t2404-worktree-config.sh
-> index 286121d8de..9536d10919 100755
-> --- a/t/t2404-worktree-config.sh
-> +++ b/t/t2404-worktree-config.sh
-> @@ -23,8 +23,10 @@ test_expect_success 'config --worktree without extension' '
->  '
->  
->  test_expect_success 'enable worktreeConfig extension' '
-> +	git config core.repositoryformatversion 1 &&
->  	git config extensions.worktreeConfig true &&
-> -	test_cmp_config true extensions.worktreeConfig
-> +	test_cmp_config true extensions.worktreeConfig &&
-> +	test_cmp_config 1 core.repositoryformatversion
->  '
->  
->  test_expect_success 'config is shared as before' '
+> US English is highly idiosyncratic, illogical, and used
+> by a minority of the English-speaking population of the world (see
+> https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences).
+
+You could try being Canadian and sit on both of those chairs at the same 
+time. Then you can use both "colour" and "authorization" in the same 
+text. :)
+
+I think that since git was "born" in the US (courtesy of a 
+Swedish-speaking Finnish immigrant), it makes sense for it to continue 
+to use US-English as the internal default. There's already a way to 
+cause it to output your preferred version of English by setting your 
+locale appropriately.
+
+-K
