@@ -2,149 +2,167 @@ Return-Path: <SRS0=KQVw=7S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FEC7C433DF
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA69AC433DF
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:12:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 527362077D
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:01:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A50C6207D3
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 19:12:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XfQdVRpV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cfcfAyuF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726989AbgFETBC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 15:01:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726846AbgFETBA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jun 2020 15:01:00 -0400
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A99EC08C5C2
-        for <git@vger.kernel.org>; Fri,  5 Jun 2020 12:01:00 -0700 (PDT)
-Received: by mail-lj1-x244.google.com with SMTP id e4so13067816ljn.4
-        for <git@vger.kernel.org>; Fri, 05 Jun 2020 12:01:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ncVNZ/RMYpGow7tVF4PjbSfBXNR3RPPDZYOt05QzOsM=;
-        b=XfQdVRpVEcg8VQsAszKBq3rRHYTYv+RLhVW6hXUO4WEyVoX4qLErcv0Q6/UvchU0SW
-         PBTXTFyMJyqr6r5B+Nfj77DvCnaHTxgFgP6z2he/mIVrBK98iQEyeaEP05GplHXMym0U
-         CiszyMXVTuWXMqyyu9cAOObZNbzjP20wdQjcOG2MTMLeYUe2m7Ahtzsyy148HfjISCXy
-         grk0aW9i0ZBTNxZgWG5ijtS6ww5CVIiJs7TZn3H4KdZNkNwkVXA2SES/SVIB3BOSFS4g
-         tfWyVg0eUd2+YHtKLgU7dgg2EWOWXsBL+BBJbXawELelB+1aBwiSFzjoPRtzF3DdenOT
-         gA7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=ncVNZ/RMYpGow7tVF4PjbSfBXNR3RPPDZYOt05QzOsM=;
-        b=gfdMa1WVfqvaklsvuYjRE9JTQA+eaNx3rQ0edsQy6QA+vhS8P3J6MznLtic7OgYU+z
-         nJe1qRUXDNVd6kFeCSuCH05QWe81zuSshdk5N7e87XXPDLW+xCE9ZvDdhbtilX8OVVdo
-         ZHqoMX29FuZ0/61UFkm13KKHmnqbCysufPwr1BjxcJzOHjsQS1QV8wgBHag4QrzIHgFQ
-         B3Qn6GQRqfdnHWgITZBEdiwuBhCSBm1QAFd9ogWS8aRaBkLwRPtUfMqetQvleSrFZIpG
-         uGk9e3ulvfcaWsL+VtrkZYG3HZG13j4Iip6zOJe/bja+YNyDORjl13AAhfv4BOntav6M
-         0jnw==
-X-Gm-Message-State: AOAM530ThDNAw9cDaiaazKjHbUjuZZt163e0mNd+SHd3Kpzv2ilhZZos
-        uCtETIgHhxMaltoRWw1lvJs=
-X-Google-Smtp-Source: ABdhPJyioi6E9+Zwl4ifOkNk9hyfivLpgptcH+Y5leogfT9zhhEObgvHznne2eOz6xP46W/waLiGnQ==
-X-Received: by 2002:a2e:8290:: with SMTP id y16mr5662206ljg.340.1591383658326;
-        Fri, 05 Jun 2020 12:00:58 -0700 (PDT)
-Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id y4sm1104924ljd.111.2020.06.05.12.00.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2020 12:00:57 -0700 (PDT)
-From:   jnareb@gmail.com (Jakub =?utf-8?Q?Nar=C4=99bski?=)
-To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [GSoC Patch 0/3] Move generation, graph_pos to a slab
-References: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
-Date:   Fri, 05 Jun 2020 21:00:56 +0200
-In-Reply-To: <20200604072759.19142-1-abhishekkumar8222@gmail.com> (Abhishek
-        Kumar's message of "Thu, 4 Jun 2020 12:57:56 +0530")
-Message-ID: <85ftb9wd5j.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+        id S1727813AbgFETMS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 15:12:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58130 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726846AbgFETMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jun 2020 15:12:18 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 73AC36932C;
+        Fri,  5 Jun 2020 15:12:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aHkTW6XRtuVQlkP5WdJyhuhxjy8=; b=cfcfAy
+        uFKzjY1NDQykM1vaTKy3n4TSAzn3NxVxwzVaqPvHC20zcFRHc7J6bT4vh6GSBqN1
+        PWKedVsnLNo4o9vkCnICUu8KMVvrz9+SKg187LHRf8zHVF/JqSgMPBvCAa0Yym1C
+        mrD/3DOSICBSEulpNEAhEi+riklToyU0TVCTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LN7kMRsQ22EneEnGzfC898o+yOo2xd/z
+        a28+HiXzK8CkEyJ6UyCjI5RcYq47x492G74IPs1jj7EhgP4TT+7FJ0sFk0N+88XD
+        0EHg0MnREQev3ZEss7RlahLt5tiz1UUct0mIu/lQ8yhjEfde+VHK5QTh9dqXefYj
+        i/cAcTg72tI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 688A06932B;
+        Fri,  5 Jun 2020 15:12:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD1C76932A;
+        Fri,  5 Jun 2020 15:12:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Xin Li <delphij@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v6 1/4] repository: add a helper function to perform repository format upgrade
+References: <20200528025359.20931-2-delphij@google.com>
+        <xmqqsgfk3xtd.fsf@gitster.c.googlers.com>
+        <20200528171924.GC58643@google.com>
+        <CAOhzdugK7FQSnWruUrX8gQ98AF6kGvNWqPfHmE+qjGjBgzvmiQ@mail.gmail.com>
+        <20200528191739.GA114915@google.com>
+        <20200529000432.146618-1-delphij@google.com>
+        <20200529010119.GE114915@google.com>
+        <xmqqk10uzkcd.fsf@gitster.c.googlers.com>
+        <20200605091004.208668-1-delphij@google.com>
+        <20200605091004.208668-2-delphij@google.com>
+Date:   Fri, 05 Jun 2020 12:12:12 -0700
+In-Reply-To: <20200605091004.208668-2-delphij@google.com> (Xin Li's message of
+        "Fri, 5 Jun 2020 02:10:01 -0700")
+Message-ID: <xmqqy2p1minn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 761DC5A8-A760-11EA-952D-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+Xin Li <delphij@google.com> writes:
 
-> The struct commit is used in many contexts. However, members generation
-> and graph_pos are only used for commit-graph related operations and
-> otherwise waste memory.
+> In version 1 of repository format, "extensions" gained special meaning
+> and it is safer to avoid upgrading when there are pre-existing
+> extensions.
 
-Very minor nitpick: this sentence would read better if the names of
-`generation` and `graph_pos` fields (but especially the 'generation')
-were quoted.
+I am tempted to suggest s/upgrading/& from version 0/ but if we
+assume everybody knows there are only v0 and v1, that may be
+unnecessary.  I dunno.
 
+> Make list-objects-filter to use the helper function instead of setting
+> repository version directly as a prerequisite of exposing the upgrade
+> capability.
 >
-> This wastage would have been more pronounced as transistion to
-> generation number v2, which uses 64-bit generation number instead of
-> current 32-bits.
-
-Good.  Moving reachability index value into a commit slab was one of
-prerequisites to switching to the generation number v2, see [2]
-
-[2]: https://public-inbox.org/git/cfa2c367-5cd7-add5-0293-caa75b103f34@gmai=
-l.com/t/#u
-
-The other prerequisite was proper handling of commit-graph format
-change, either by using "metadata chunk" as more flexible replacement of
-mishandled format version field in the commit-graph file header, or as
-proposed in [3] (and subsequent posts), removing "CDAT" chunk and
-replacing it with "CDA2" chunk.
-
-[3]: https://public-inbox.org/git/xmqq369z7i1b.fsf@gitster.c.googlers.com/t=
-/#u
-
-
-Also, we should probably stop mishandling the format version field, that
-is do not error out [4] when commit-graph version of the file does not
-match version supported by git code running the command, but just simply
-not use the commit-graph (like it is done for Bloom filter chunks).
-
-[4]: https://github.com/git/git/blob/master/commit-graph.c#L253
-
+> Signed-off-by: Xin Li <delphij@google.com>
+> ---
+>  cache.h                       |  1 +
+>  list-objects-filter-options.c |  3 ++-
+>  repository.h                  |  6 ++++++
+>  setup.c                       | 29 +++++++++++++++++++++++++++++
+>  4 files changed, 38 insertions(+), 1 deletion(-)
 >
-> The third patch ("commit: convert commit->graph_pos to a slab",
-> 2020-06-04) is currently failing diff-submodule related tests (t4041,
-> t4059 and t4060) for gcc [1]. I am going to send a second version soon,
-> fixing that.
->
-> [1]: https://travis-ci.com/github/abhishekkumar2718/git/jobs/343441189
->
-> Abhishek Kumar (3):
->   commit: introduce helpers for generation slab
->   commit: convert commit->generation to a slab
->   commit: convert commit->graph_pos to a slab
->
->  alloc.c                             |   2 -
->  blame.c                             |   2 +-
->  bloom.c                             |   6 +-
->  commit-graph.c                      | 116 +++++++++++++++++++++-------
->  commit-graph.h                      |   8 ++
->  commit-reach.c                      |  50 ++++++------
->  commit.c                            |   6 +-
->  commit.h                            |   6 --
->  contrib/coccinelle/generation.cocci |  12 +++
->  contrib/coccinelle/graph_pos.cocci  |  12 +++
+> diff --git a/cache.h b/cache.h
+> index 0f0485ecfe..e5885cc9ea 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1042,6 +1042,7 @@ struct repository_format {
+>  	int worktree_config;
+>  	int is_bare;
+>  	int hash_algo;
+> +	int has_extensions;
+>  	char *work_tree;
+>  	struct string_list unknown_extensions;
+>  };
+> diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+> index 256bcfbdfe..3553ad7b0a 100644
+> --- a/list-objects-filter-options.c
+> +++ b/list-objects-filter-options.c
+> @@ -326,7 +326,8 @@ void partial_clone_register(
+>  
+>  	/* Check if it is already registered */
+>  	if (!promisor_remote_find(remote)) {
+> -		git_config_set("core.repositoryformatversion", "1");
+> +		if (upgrade_repository_format(1) < 0)
+> +			die(_("unable to upgrade repository format to support partial clone"));
 
-It is nice to see the use of Coccinelle scripts.
+The idea is that builtin/fetch.c calls this before the actual fetch
+operation happens, which sounds sensible.
 
->  revision.c                          |  16 ++--
->  11 files changed, 158 insertions(+), 78 deletions(-)
->  create mode 100644 contrib/coccinelle/generation.cocci
->  create mode 100644 contrib/coccinelle/graph_pos.cocci
 
-Best,
---=20
-Jakub Nar=C4=99bski
+The other caller of this function is in builtin/clone.c; at that
+point, we have set up our $GIT_DIR/config file enough to be able to
+write the refspec into it, so we should be able to tell what version
+number we wrote to the repository.  Could we have written version 0
+there in today's code, though (just being curious, as we should be
+able to upgrade it to version 1 with this code)?
+
+> +int upgrade_repository_format(int target_version)
+> +{
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct strbuf err = STRBUF_INIT;
+> +	struct strbuf repo_version = STRBUF_INIT;
+> +	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
+> +
+> +	strbuf_git_common_path(&sb, the_repository, "config");
+> +	read_repository_format(&repo_fmt, sb.buf);
+> +	strbuf_release(&sb);
+> +
+> +	if (repo_fmt.version >= target_version)
+> +		return 0;
+> +
+> +	if (verify_repository_format(&repo_fmt, &err) < 0 ||
+> +	    (!repo_fmt.version && repo_fmt.has_extensions)) {
+
+"If we do not understand the extensions, or if the original is v0
+and has any extensions, we shouldn't be upgrading"---makes sense.
+
+> +		warning("unable to upgrade repository format from %d to %d: %s",
+> +			repo_fmt.version, target_version, err.buf);
+> +		strbuf_release(&err);
+> +		return -1;
+> +	}
+> +
+> +	strbuf_addf(&repo_version, "%d", target_version);
+> +	git_config_set("core.repositoryformatversion", repo_version.buf);
+> +	strbuf_release(&repo_version);
+> +	return 1;
+> +}
+> +
+>  static void init_repository_format(struct repository_format *format)
+>  {
+>  	const struct repository_format fresh = REPOSITORY_FORMAT_INIT;
