@@ -5,65 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E9C6C433DF
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CA68C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8ABA206DB
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5ACB7206DB
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 13:00:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="urvWeY27"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwkdcyKD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726916AbgFENAu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 09:00:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36404 "EHLO
+        id S1726931AbgFENAw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 09:00:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbgFENAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jun 2020 09:00:42 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12222C08C5C4
-        for <git@vger.kernel.org>; Fri,  5 Jun 2020 06:00:42 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id d128so9030892wmc.1
-        for <git@vger.kernel.org>; Fri, 05 Jun 2020 06:00:42 -0700 (PDT)
+        with ESMTP id S1726897AbgFENAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jun 2020 09:00:45 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63AC0C08C5C5
+        for <git@vger.kernel.org>; Fri,  5 Jun 2020 06:00:44 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id t18so9675411wru.6
+        for <git@vger.kernel.org>; Fri, 05 Jun 2020 06:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=5y12Vv4tcA8nt2cWBn1HR41BrCvwx+6I06Aj7OsEFAo=;
-        b=urvWeY27FZhTnEmKDP/589NBCKKjCXGlZjwvKXezLTcEnmhHF6QSywuVDw0bh0zym2
-         Zp7XMsMhfTp3nqTcNi+dAfqSn4dloP7mdqnO+YOkprFiuzYUnlWyfP9LANanb+cRaRuc
-         pk9sfb58nHjP7UOcXlzVNreX1ap3/hA/+914nuJrepnO3W9tp2RUsxJgykXBMBLgG309
-         m4NE+imVG30PokMMmXVQuxQBffCl5vDTTnLK0gbqqZKK47rttLpBjgpvT7KAdsUBh3r8
-         8E5IHP86Fk9/xSLk+B2YPzEGsDueQBgk86aR6HF2IxsqWx2/NiAQ9kBt4rY7YyoDsEjT
-         K08Q==
+        bh=IOcRA5L6IF9PmXs61Ssx85ulJSbqtIkMPU2nhQvE9xA=;
+        b=DwkdcyKDWL2Ieq45GcpUgmQhLVhHfR91eOE7viv7d9crekBgk/wCt2G2G9esMGGClJ
+         G7ZFvzZPjvXBF9ncTbCa4y2derGSJVCgGzfJuXWB7EBJFtYr7QIOfIkZBOnEMzsZYMd0
+         UNKOkpvJvaEcp8jFDTt4V5vyNwodeweilDeXvC3Rx+QI4St1V/pLibdsCgt9893+Y4yd
+         k8EBAwUybXaCj1NmHyB7CAsJQYXXfWfczEwp/9Brplpn5jncgme6BAtCWP+nUoj574v4
+         O3akVv7OF24VFiJTd1pop71ex1tIk1UkoPR1fKAwqIzGy7EnLVQRJ57/HG5hII9XNava
+         DjRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=5y12Vv4tcA8nt2cWBn1HR41BrCvwx+6I06Aj7OsEFAo=;
-        b=jPbm7ufH2/h5B3HVbx3npIPkWznHNgZeAn5o5G6WVHQUfefhmGa2UDj/gbKkaPh/hH
-         fdUjyCxp0TckQM+xeyGKhGIupBMbrzq+8XgMmCXstRCFWlm6XDrvNC396ERNVm9mNNGY
-         CPHzDYfcuEk0PpijRAukVf6723ZU2arQqmclv7ynOd9S/DSlk9gsehrRk5UFqPe3kE2L
-         7n4WoqN02E+KRpEx7hIj8SV0gAy7kTQKcR2K4k805ZuVvI4y8yNlIs01uWnHM0WymhJH
-         rGRnXz516OX+bTyhbUjAxvUfM7zSmSZoVTMPWG1Akvb8U/gqBjyZYZZIFasRypBscU9j
-         +VMQ==
-X-Gm-Message-State: AOAM533SVf7tMjvSKhrmZrEM3z8F5sLegZ8xyI2Rdfj3aTSOlWrIKbUj
-        4i4IWVrc4eN8vNVyA1KscqM1mO1o
-X-Google-Smtp-Source: ABdhPJyNKYqEUtAb+fx+DfifKrXjBhRinoLqw3nBMrRTV6rLohZKD7wEF0RWI7Kzopkof0vhMbyY9Q==
-X-Received: by 2002:a1c:3d05:: with SMTP id k5mr2607098wma.160.1591362040424;
-        Fri, 05 Jun 2020 06:00:40 -0700 (PDT)
+        bh=IOcRA5L6IF9PmXs61Ssx85ulJSbqtIkMPU2nhQvE9xA=;
+        b=gqzH5wvj6GzxoY/n1ciWx53NSoQPqU9yIwuqLtoL6qNOkJdJlv/rVOSEPfAjJYxME7
+         lz1uSX+Tt5S1VA3ZlDPQW/BzCHPl/uwqtFsKd5Ki68oU8Xv05VHRz945FAnc7JukB6+m
+         Rtn/pUcEvrBnn77HE4WMysI+58z+E8YsWAllzEWv1sp8ctMn4cyiCszTLZjBaOZ2j5bx
+         bBNFeL4i6qP+TdJqItuWCb277SEADF8VAQtqVeo95thla+P75LDow9Uepaxt0fuZ2Tk+
+         r57/r72oy1jZGkCseFSwoMmGs0JkHfPoUE1acbbBKdOQlTF80VmOaAGakd/rXwgNwBcU
+         qLfg==
+X-Gm-Message-State: AOAM531p/RTvYHJOgNg9l+C9SUtPZJi8x8N2Kg4yveziqYvwb6jqMRIV
+        NQexJVErvGDTkHLKqxLuKSh65vyh
+X-Google-Smtp-Source: ABdhPJwLvT6m7rlaVZMb3ndjWkmnEkrFtD5tJBY9lQIYuPeX9IdoqVmnk9RwMJ9iikuj7bvoBuDqmA==
+X-Received: by 2002:a05:6000:1ce:: with SMTP id t14mr9535074wrx.300.1591362042594;
+        Fri, 05 Jun 2020 06:00:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z132sm12232874wmc.29.2020.06.05.06.00.39
+        by smtp.gmail.com with ESMTPSA id w10sm12112954wrp.16.2020.06.05.06.00.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2020 06:00:39 -0700 (PDT)
-Message-Id: <1a70ff05aea11cb479d9ba7529ccad6dcd79e23d.1591362033.git.gitgitgadget@gmail.com>
+        Fri, 05 Jun 2020 06:00:42 -0700 (PDT)
+Message-Id: <cd9e033d1b1b4cfb0d5fe485b8b37608c2227ec2.1591362033.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.650.git.1591362032.gitgitgadget@gmail.com>
 References: <pull.650.git.1591362032.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 05 Jun 2020 13:00:27 +0000
-Subject: [PATCH 05/10] diff.h: drop diff_tree_oid() & friends' return value
+Date:   Fri, 05 Jun 2020 13:00:29 +0000
+Subject: [PATCH 07/10] commit-graph: simplify parse_commit_graph() #1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,164 +81,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-ll_diff_tree_oid() has only ever returned 0 [1], so it's return value
-is basically useless.  It's only caller diff_tree_oid() has only ever
-returned the return value of ll_diff_tree_oid() as-is [2], so its
-return value is just as useless.  Most of diff_tree_oid()'s callers
-simply ignore its return value, except:
+While we iterate over all entries of the Chunk Lookup table we make
+sure that we don't attempt to read past the end of the mmap-ed
+commit-graph file, and check in each iteration that the chunk ID and
+offset we are about to read is still within the mmap-ed memory region.
+However, these checks in each iteration are not really necessary,
+because the number of chunks in the commit-graph file is already known
+before this loop from the just parsed commit-graph header.
 
-  - diff_root_tree_oid() is a thin wrapper around diff_tree_oid() and
-    returns with its return value, but all of diff_root_tree_oid()'s
-    callers ignore its return value.
+So let's check that the commit-graph file is large enough for all
+entries in the Chunk Lookup table before we start iterating over those
+entries, and drop those per-iteration checks.  While at it, take into
+account the size of everything that is necessary to have a valid
+commit-graph file, i.e. the size of the header, the size of the
+mandatory OID Fanout chunk, and the size of the signature in the
+trailer as well.
 
-  - rev_compare_tree() and rev_same_tree_as_empty() do look at the
-    return value in a condition, but, since the return value is always
-    0, the former's < 0 condition is never fulfilled, while the
-    latter's >= 0 condition is always fulfilled.
-
-So let's drop the return value of ll_diff_tree_oid(), diff_tree_oid()
-and diff_root_tree_oid(), and drop those conditions from
-rev_compare_tree() and rev_same_tree_as_empty() as well.
-
-[1] ll_diff_tree_oid() and its ancestors have been returning only 0
-    ever since it was introduced as diff_tree() in 9174026cfe (Add
-    "diff-tree" program to show which files have changed between two
-    trees., 2005-04-09).
-[2] diff_tree_oid() traces back to diff-tree.c:main() in 9174026cfe as
-    well.
+Note that this necessitates the change of the error message as well,
+and, consequently, have to update the 'detect incorrect chunk count'
+test in 't5318-commit-graph.sh' as well.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- diff.h      | 10 +++++-----
- revision.c  |  9 +++------
- tree-diff.c | 30 ++++++++++++++----------------
- 3 files changed, 22 insertions(+), 27 deletions(-)
+ commit-graph.c          | 16 +++++++++-------
+ t/t5318-commit-graph.sh |  3 ++-
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/diff.h b/diff.h
-index 9443dc1b003..e0c0af6286b 100644
---- a/diff.h
-+++ b/diff.h
-@@ -431,11 +431,11 @@ struct combine_diff_path *diff_tree_paths(
- 	struct combine_diff_path *p, const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt);
--int diff_tree_oid(const struct object_id *old_oid,
--		  const struct object_id *new_oid,
--		  const char *base, struct diff_options *opt);
--int diff_root_tree_oid(const struct object_id *new_oid, const char *base,
--		       struct diff_options *opt);
-+void diff_tree_oid(const struct object_id *old_oid,
-+		   const struct object_id *new_oid,
-+		   const char *base, struct diff_options *opt);
-+void diff_root_tree_oid(const struct object_id *new_oid, const char *base,
-+			struct diff_options *opt);
+diff --git a/commit-graph.c b/commit-graph.c
+index 6ed649388d6..9927762f18c 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -272,6 +272,15 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 	graph->data = graph_map;
+ 	graph->data_len = graph_size;
  
- struct combine_diff_path {
- 	struct combine_diff_path *next;
-diff --git a/revision.c b/revision.c
-index cbf4b61aa67..c644c660917 100644
---- a/revision.c
-+++ b/revision.c
-@@ -791,9 +791,7 @@ static int rev_compare_tree(struct rev_info *revs,
++	if (graph_size < GRAPH_HEADER_SIZE +
++			 (graph->num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH +
++			 GRAPH_FANOUT_SIZE + the_hash_algo->rawsz) {
++		error(_("commit-graph file is too small to hold %u chunks"),
++		      graph->num_chunks);
++		free(graph);
++		return NULL;
++	}
++
+ 	last_chunk_id = 0;
+ 	last_chunk_offset = 8;
+ 	chunk_lookup = data + 8;
+@@ -280,13 +289,6 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 		uint64_t chunk_offset;
+ 		int chunk_repeated = 0;
  
- 	tree_difference = REV_TREE_SAME;
- 	revs->pruning.flags.has_changes = 0;
--	if (diff_tree_oid(&t1->object.oid, &t2->object.oid, "",
--			   &revs->pruning) < 0)
--		return REV_TREE_DIFFERENT;
-+	diff_tree_oid(&t1->object.oid, &t2->object.oid, "", &revs->pruning);
- 
- 	if (!nth_parent)
- 		if (bloom_ret == 1 && tree_difference == REV_TREE_SAME)
-@@ -804,7 +802,6 @@ static int rev_compare_tree(struct rev_info *revs,
- 
- static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
- {
--	int retval;
- 	struct tree *t1 = get_commit_tree(commit);
- 
- 	if (!t1)
-@@ -812,9 +809,9 @@ static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
- 
- 	tree_difference = REV_TREE_SAME;
- 	revs->pruning.flags.has_changes = 0;
--	retval = diff_tree_oid(NULL, &t1->object.oid, "", &revs->pruning);
-+	diff_tree_oid(NULL, &t1->object.oid, "", &revs->pruning);
- 
--	return retval >= 0 && (tree_difference == REV_TREE_SAME);
-+	return tree_difference == REV_TREE_SAME;
- }
- 
- struct treesame_state {
-diff --git a/tree-diff.c b/tree-diff.c
-index f3d303c6e54..6ebad1a46f3 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -29,9 +29,9 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 	struct combine_diff_path *p, const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt);
--static int ll_diff_tree_oid(const struct object_id *old_oid,
--			    const struct object_id *new_oid,
--			    struct strbuf *base, struct diff_options *opt);
-+static void ll_diff_tree_oid(const struct object_id *old_oid,
-+			     const struct object_id *new_oid,
-+			     struct strbuf *base, struct diff_options *opt);
- 
- /*
-  * Compare two tree entries, taking into account only path/S_ISDIR(mode),
-@@ -679,9 +679,9 @@ static void try_to_follow_renames(const struct object_id *old_oid,
- 	q->nr = 1;
- }
- 
--static int ll_diff_tree_oid(const struct object_id *old_oid,
--			    const struct object_id *new_oid,
--			    struct strbuf *base, struct diff_options *opt)
-+static void ll_diff_tree_oid(const struct object_id *old_oid,
-+			     const struct object_id *new_oid,
-+			     struct strbuf *base, struct diff_options *opt)
- {
- 	struct combine_diff_path phead, *p;
- 	pathchange_fn_t pathchange_old = opt->pathchange;
-@@ -697,29 +697,27 @@ static int ll_diff_tree_oid(const struct object_id *old_oid,
- 	}
- 
- 	opt->pathchange = pathchange_old;
--	return 0;
- }
- 
--int diff_tree_oid(const struct object_id *old_oid,
--		  const struct object_id *new_oid,
--		  const char *base_str, struct diff_options *opt)
-+void diff_tree_oid(const struct object_id *old_oid,
-+		   const struct object_id *new_oid,
-+		   const char *base_str, struct diff_options *opt)
- {
- 	struct strbuf base;
--	int retval;
- 
- 	strbuf_init(&base, PATH_MAX);
- 	strbuf_addstr(&base, base_str);
- 
--	retval = ll_diff_tree_oid(old_oid, new_oid, &base, opt);
-+	ll_diff_tree_oid(old_oid, new_oid, &base, opt);
- 	if (!*base_str && opt->flags.follow_renames && diff_might_be_rename())
- 		try_to_follow_renames(old_oid, new_oid, &base, opt);
- 
- 	strbuf_release(&base);
+-		if (data + graph_size - chunk_lookup <
+-		    GRAPH_CHUNKLOOKUP_WIDTH) {
+-			error(_("commit-graph chunk lookup table entry missing; file may be incomplete"));
+-			free(graph);
+-			return NULL;
+-		}
 -
--	return retval;
- }
+ 		chunk_id = get_be32(chunk_lookup + 0);
+ 		chunk_offset = get_be64(chunk_lookup + 4);
  
--int diff_root_tree_oid(const struct object_id *new_oid, const char *base, struct diff_options *opt)
-+void diff_root_tree_oid(const struct object_id *new_oid,
-+			const char *base,
-+			struct diff_options *opt)
- {
--	return diff_tree_oid(NULL, new_oid, base, opt);
-+	diff_tree_oid(NULL, new_oid, base, opt);
- }
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 79e7fbcd40e..1073f9e3cf2 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -574,7 +574,8 @@ test_expect_success 'detect invalid checksum hash' '
+ 
+ test_expect_success 'detect incorrect chunk count' '
+ 	corrupt_graph_and_verify $GRAPH_BYTE_CHUNK_COUNT "\377" \
+-		"chunk lookup table entry missing" $GRAPH_CHUNK_LOOKUP_OFFSET
++		"commit-graph file is too small to hold [0-9]* chunks" \
++		$GRAPH_CHUNK_LOOKUP_OFFSET
+ '
+ 
+ test_expect_success 'git fsck (checks commit-graph)' '
 -- 
 gitgitgadget
 
