@@ -2,112 +2,89 @@ Return-Path: <SRS0=KQVw=7S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75697C433E0
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 22:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D7DBC433E0
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 22:53:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50B7F2074B
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 22:43:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5CBD2065C
+	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 22:53:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KImSDnOH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JDOTFOdY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728378AbgFEWnt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 18:43:49 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39038 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728256AbgFEWns (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 5 Jun 2020 18:43:48 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728296AbgFEWx5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 18:53:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58570 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728252AbgFEWx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jun 2020 18:53:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CBC8AD91EE;
+        Fri,  5 Jun 2020 18:53:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AE+y7iw9kqNR88eMSgS35FupAw8=; b=JDOTFO
+        dYui0xTfjeHu5vJ0X6sokDjbpW9eMhRtZGvc/67/pVmStrXgA+3zU6Npo+eQ3J/d
+        dYM/vlZoohymdTVWsjE0BXM6Z4ux9Z74zqoNIgUliiSWyFrm2M0LtAPx0l2eMUou
+        +etHp2nD1S7hRj/uNpxoEAv/mxw8HOm54limE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gwE2tRfW7Nvtp+SjQf0lQJT5tt+pGKSZ
+        VO9wzT58QTEFjicGUR4/IekbQkTFXdrVB4dd493pHB9jYGcGkIjPXKxngS6V2HVv
+        iTnUdU0vKrJiIzJW/bGqsDJM44Tb+oDjrtrIj3G+CnQ55Rb5T7utB+iNBfJS5zU0
+        bBCIoE6lDug=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B7E86D91ED;
+        Fri,  5 Jun 2020 18:53:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6FB776077B;
-        Fri,  5 Jun 2020 22:43:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1591397027;
-        bh=Q+zYNgBunA8xLDZgKoLpmte/QdbkzwVU502igci6EH0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=KImSDnOH7YWKmA2b39HpYgt8cUv4XTcwkmcVhMRgdpvXw9g2VCI+rByj6Sq76y0+5
-         YWYNFl8Sr91qErwdzotJW6hQWHqcZTNouDHVlHoOraT3EfLGdl7SW7RJcYRSB63ORJ
-         lcIha9IMRh2dTa13SxchR3orgGS5E22UTPrMcqgkUOYGmp1//vpp7PL6xcfVNICt7I
-         MoSPqMmWyvv2m2w46APCYWDcyfUalFKFe+mdVYZLZ6bR33ADAm4iUvO+1ubthy7bNO
-         yd9PGKTgU5JQrZOiontfXLIhUbIpYHu3jxjFeNSAbeTPgXpsscP29JBXnHk14d/F1e
-         vK5++coyBGGzNX11LzwuctHP5coq7PREqHVQULbrm/hxc5TyDw7+Arh20gmXrBz2C6
-         Cxh+3tu7I3E6xKKMiEK8uGBHuFNJEpyz+S6d7e5Aui2ATL5YOp92S0ZzuKaUPAXMrS
-         BMAtM1YpjHFTWynG+BKt/3ebI+cZGTrDpGqrvLG4OJr9aolNlyt
-Date:   Fri, 5 Jun 2020 22:43:42 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Billes Tibor <tbilles@gmx.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-fast-import out of memory
-Message-ID: <20200605224342.GF6569@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Billes Tibor <tbilles@gmx.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F187FD91EC;
+        Fri,  5 Jun 2020 18:53:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 20/24] fast-import: permit reading multiple marks files
+References: <20200222201749.937983-1-sandals@crustytoothpaste.net>
+        <20200222201749.937983-21-sandals@crustytoothpaste.net>
+        <xmqqimg5o5fq.fsf@gitster.c.googlers.com>
+        <xmqqeeqto4x1.fsf@gitster.c.googlers.com>
+        <20200605223910.GE6569@camp.crustytoothpaste.net>
+Date:   Fri, 05 Jun 2020 15:53:50 -0700
+In-Reply-To: <20200605223910.GE6569@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 5 Jun 2020 22:39:10 +0000")
+Message-ID: <xmqqlfl1m8e9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="TU+u6i6jrDPzmlWF"
-Content-Disposition: inline
-In-Reply-To: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6D064EE4-A77F-11EA-A540-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---TU+u6i6jrDPzmlWF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> We don't actually hit this case in any of the tests because we don't
+> have any tests that have 1024 marks in them.  I'm having trouble coming
+> up with a test even with a large number of marks because I don't think
+> we produce different behavior here; we just leak a lot of memory.
+>
+> This does fix the reported issue, as I suspected.
+>
+> Do you want to write this up into a patch with a commit message, or
+> should I?  If the latter, may I have your sign-off for it?
 
-On 2020-06-05 at 05:15:04, Billes Tibor wrote:
-> Can you help me fix this issue? I hope the information I gathered is
-> enough to
-> help you find the cause of this behavior. I'd be happy to provide more
-> information if needed or test patches.=C2=A0 Unfortunately the source cod=
-e I was
-> fetching is proprietary, I cannot post it.
+Sure, anything I write for this project you can assume to be signed
+off by me.  As I was just "fixing" what I thought was a botched
+conversion, without really figuring out where it actually leads to
+leaks, I'd need further work if I were to wrap it up with a sensible
+log message, so thanks for volunteering ;-)
 
-Hey, thanks for this report.  I can confirm this with git.git and the
-following commands:
-
-  git fast-export --all --reencode=3Dyes --signed-tags=3Dverbatim --tag-of-=
-filtered-object=3Ddrop >$TMP/git.fe
-  cd $TMP && rm -fr test-repo && git init test-repo &&
-    (cd test-repo && /usr/bin/time git fast-import --export-marks=3D$TMP/gi=
-t.marks < $TMP/git.fe &&
-    /usr/bin/time git fast-import --import-marks=3D$TMP/git.marks < $TMP/gi=
-t.fe)
-
-The latter fast-import command gets killed with SIGKILL due to using 16
-GiB of memory, which I would agree is unreasonable.
-
-It looks like with Junio's patch at
-<xmqqeeqto4x1.fsf@gitster.c.googlers.com>, the memory usage is down to
-1.4 GiB, which considering that a pack must be written, is much more
-reasonable.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---TU+u6i6jrDPzmlWF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXtrKngAKCRB8DEliiIei
-gfPkAQCXrM3m82hHMq8omaw1sR0HmcYZJP9cImxNXEqgAWRBpwEA2pL2K7v0DPQk
-fXB5bEXnBdJ9Rvm/3xAmXgmqYwQnZwY=
-=/eSg
------END PGP SIGNATURE-----
-
---TU+u6i6jrDPzmlWF--
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
