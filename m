@@ -1,187 +1,186 @@
-Return-Path: <SRS0=KQVw=7S=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=8AI5=7T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DF66C433DF
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 23:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A1E0C433DF
+	for <git@archiver.kernel.org>; Sat,  6 Jun 2020 00:23:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 505BE2064C
-	for <git@archiver.kernel.org>; Fri,  5 Jun 2020 23:30:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 151B8206FA
+	for <git@archiver.kernel.org>; Sat,  6 Jun 2020 00:23:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eMPRbEhu"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sxvrA0y5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728381AbgFEXa1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 19:30:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51062 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728330AbgFEXa1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jun 2020 19:30:27 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA46C08C5C2
-        for <git@vger.kernel.org>; Fri,  5 Jun 2020 16:30:26 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id x11so4288957plv.9
-        for <git@vger.kernel.org>; Fri, 05 Jun 2020 16:30:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=k99ecoMAkNXx8fgacp3sozpOuFRLnmOPoheTRCOTN4w=;
-        b=eMPRbEhu7o49VnIcL1UxuHKZRmAayzQIn/k72/W0JkvxGMXn+JAFymUf0KXtfLfEbo
-         meHMaBb26fDjcxtiwAvFsQgMdM0TVAY/t4Sy8WZbCLc2LwpXIvWbZkImJpgm2zMAZvO1
-         LMEpC7SzvLMbbixEm4ysVqCy7OHnkVXMBJFI+FcUXsuEUCoDX7yhfdhLGJ2/lwXIaRTM
-         B4azktluwcdECYxhhDpsUpPNWQzRtsPGjl93xEqZVeXlFw21LtymFAxZ0EMffWeuP9GJ
-         8/E5E9ZKxUsWOUCScYfd8nWV4iT3e8oXUV3hCa3L9K0qpPk8vlrnhLl34EazS9Lxignk
-         XvLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=k99ecoMAkNXx8fgacp3sozpOuFRLnmOPoheTRCOTN4w=;
-        b=KggPlbBvEVwqKtsMbGgrAstFBuI3OeEjFnXyBfqUFKvE98Fx9cFdnU+lvkxIxnq6w/
-         rWJRG5OHPTy2iBbXtPkSO3dakHCe/ryjV98O2b4yocNJF+wVdqvu/EbN9fY/cAGjFoCT
-         7D+rBgbJcCxdT/5WwPElaGYFjKIcBgOq7dC4nmlQnWq31aNxikmtPrvpSUoJkPGT3hiv
-         Pn2tH+pcHEvnRtROg4pLzljMgVx/4lC7/HgF+iYK1fso/dvWHj5+OkBN8ikwDedfPVg2
-         j7wFkSnzfGO7HyGQ3WiFMv8i9iLsI1DHHzMJHmn8tMpBAzk5qzwgJbOtww9uma4wpPUS
-         0GGA==
-X-Gm-Message-State: AOAM530EaBSEpdAwGVB5JVePAvOyw4gMFfwN6+8I5NGwgs0inRWCnz+6
-        hFLOLoYgbNINPzmV7irQIN+3Tw==
-X-Google-Smtp-Source: ABdhPJzXJBejR5G3ilG2xVTVZ1gmH5CF36srD365p3/GjVEUx+TujeX7LUa4K1enhbL+LnMZynRWXQ==
-X-Received: by 2002:a17:90a:fe83:: with SMTP id co3mr5381538pjb.204.1591399825812;
-        Fri, 05 Jun 2020 16:30:25 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:ece8:7fe:c1f1:a20f])
-        by smtp.gmail.com with ESMTPSA id q185sm590493pfb.82.2020.06.05.16.30.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2020 16:30:24 -0700 (PDT)
-Date:   Fri, 5 Jun 2020 16:30:19 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fuzz-commit-graph: properly free graph struct
-Message-ID: <20200605233019.GC65111@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-References: <35063a0ab4edbaa5bd5b0138e6a6a5b36a8664c5.1591397562.git.steadmon@google.com>
- <20200605230233.GA167014@google.com>
+        id S1728451AbgFFAXu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 20:23:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39066 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728275AbgFFAXu (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 5 Jun 2020 20:23:50 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1318160756;
+        Sat,  6 Jun 2020 00:23:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1591402999;
+        bh=XZI0tI/rZU/+CqUbAAwGLMA4Mqt7BNLlZEWOJRqHbgo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=sxvrA0y5ppVOZ1ZYw0fhKpH2WKt6Ei5UPqt5MwWZofuLUIsEHJxBS3F4tSvCqbdis
+         rSd9eYqHqqCvRuCmiUeqLi+KmIxnB/Iq3ScwRHk6pOCDOJYaFSJtxwqhPLFVaZHhXv
+         uXmsCJW+p4vpssRAXSRVzzYZO5DSp6k7690bBTuZk2KBrBVZ45WQhGK7swWNxdQeKp
+         ZpQW27duUWDWAWqGv2XCekRjDabCYV31wk3+hPifr950mbS2o/6xC6cpGPwDJf29xv
+         MKEDxTs9uQl8vSl2Ok4OZnDBg2QSVZJ3DPxhES/48RhhDJlCMaea3Y8hf+R8iE+GFC
+         vhAQIfjhFacim1bJzqfQR4x6TAFXcQbzLVHs+/bRK0xrrTibRLzvENGQFUig9h1VCN
+         rYb22qx/lnyLYa96QOWvMzqxzjz3CfDweWMFIOHPyp+/8LckJTpEB7WOs9gsBJHfHz
+         FbVj+6iXWdeLrYEcctnMdqSoO1FlpXtYQi9C0zDJSIMhmmrt9MV
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Billes Tibor <tbilles@gmx.com>
+Subject: [PATCH] fast-import: fix incomplete conversion with multiple mark files
+Date:   Sat,  6 Jun 2020 00:22:39 +0000
+Message-Id: <20200606002241.1578150-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
+In-Reply-To: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com>
+References: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="HcAYCG3uE/tztfnV"
-Content-Disposition: inline
-In-Reply-To: <20200605230233.GA167014@google.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When ddddf8d7e2 ("fast-import: permit reading multiple marks files",
+2020-02-22) converted fast-import to handle multiple marks files in
+preparation for submodule support, the conversion was incomplete.  With
+a large number of marks, we would actually modify the marks variable
+even though we had passed in a different variable to operate on.  In
+addition, we didn't consider the fact that the code can replace the mark
+set passed in, so when we did so we happened to leak quite a bit of
+memory, since we never reused the structure we created, instead
+reallocating a new one each time.
 
---HcAYCG3uE/tztfnV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+It doesn't appear from some testing that we actually produce incorrect
+results in this case, only that we leak a substantial amount of memory.
+To make things work properly and avoid leaking, pass a pointer to
+pointer to struct mark_set, which allows us to modify the set of marks
+when the number of marks is large.
 
-On 2020.06.05 16:02, Jonathan Nieder wrote:
-> Josh Steadmon wrote:
-> 
-> > Use the provided free_commit_graph() to properly free the commit graph
-> > in fuzz-commit-graph. Otherwise, the fuzzer itself leaks memory when the
-> > struct contains pointers to allocated memory.
-> >
-> > Signed-off-by: Josh Steadmon <steadmon@google.com>
-> > ---
-> >  fuzz-commit-graph.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> How can I reproduce this?
+With this patch, importing a dump of git.git with a set of exported
+marks goes from taking in excess of 15 GiB of memory (and being killed
+by the Linux OOM killer) to using a maximum of 1.4 GiB of memory.
 
-Building the fuzzer is dependent on the exact versions of clang &
-libFuzzer that you have installed; on my machine, with clang 9.0.1-10
-and libFuzzer 9, I build as follows:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ fast-import.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-$ make CC=clang \
-    CXX=clang++ \
-    CFLAGS="-fsanitize=fuzzer-no-link,address" \
-    LIB_FUZZING_ENGINE=/usr/lib/llvm-9/lib/libFuzzer.a \
-    fuzz-all
-
-Then you can run fuzz-commit-graph on the attached test case:
-
-$ ./fuzz-commit-graph /tmp/testcase-fuzzer-leak
-
-When built from master, I get a leak error:
-
-
-$ ./fuzz-commit-graph /tmp/testcase-fuzzer-leak
-INFO: Seed: 2332984289
-INFO: Loaded 1 modules   (70798 inline 8-bit counters): 70798 [0x15c8b82, 0x15da010), 
-INFO: Loaded 1 PC tables (70798 PCs): 70798 [0x12a7db8,0x13bc698), 
-./fuzz-commit-graph: Running 1 inputs 1 time(s) each.
-Running: /tmp/testcase-5725798091980800
-
-=================================================================
-==192153==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 12 byte(s) in 1 object(s) allocated from:
-    #0 0x49be6d in malloc (/usr/local/google/home/steadmon/src/git/fuzz-commit-graph+0x49be6d)
-    #1 0xc2ff15 in do_xmalloc (/usr/local/google/home/steadmon/src/git/fuzz-commit-graph+0xc2ff15)
-    #2 0xc2fe66 in xmalloc (/usr/local/google/home/steadmon/src/git/fuzz-commit-graph+0xc2fe66)
-    #3 0x5cfc4e in parse_commit_graph (/usr/local/google/home/steadmon/src/git/fuzz-commit-graph+0x5cfc4e)
-    #4 0x1085b39 in LLVMFuzzerTestOneInput (/usr/local/google/home/steadmon/src/git/fuzz-commit-graph+0x1085b39)
-    #5 0x109b41c in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/usr/local/google/home/steadmon/src/git/fuzz-commit-graph+0x109b41c)
-
-SUMMARY: AddressSanitizer: 12 byte(s) leaked in 1 allocation(s).
-
-INFO: a leak has been found in the initial corpus.
-
-INFO: to ignore leaks on libFuzzer side use -detect_leaks=0.
-
-
-When run with this patch, the fuzzer does not report a leak.
-
-
-> > diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
-> > index 9fd1c04edd..430817214d 100644
-> > --- a/fuzz-commit-graph.c
-> > +++ b/fuzz-commit-graph.c
-> > @@ -12,7 +12,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
-> >  	initialize_the_repository();
-> >  	g = parse_commit_graph((void *)data, size);
-> >  	repo_clear(the_repository);
-> > -	free(g);
-> > +	free_commit_graph(g);
-> 
-> In any event, the patch itself is sensible, so
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> 
-> Thanks.
-
---HcAYCG3uE/tztfnV
-Content-Type: application/octet-stream
-Content-Disposition: attachment; filename=testcase-fuzzer-leak
-Content-Transfer-Encoding: base64
-
-Q0dQSAEBNP9GREdOAAAAAAAAADpFREdFAAAAAAAAAARPSURGAAAAAAAAAANfS01MAAAAAAAA
-AE1PTkQ4AAAAAAAAAABCREFUAAAAAAAAAwBPSURMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDREFUAAAAAAAAAwBPLkRM
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAABCSURYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA
-AAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAABEs7pAAAAAAAAAAAAA/gAAAAAAAAAAAAAA
-AAAAAAAAPQAAAAAAAAAAAAAAAAAAAAAAAAAAQ0dQSAEBRwRGRElPAAAAAAAAAAFCRUFUAAAA
-AAAAAAAAAAAAAAAAAAAAAQAAAAAAEABPBAAAAAAAAAAAQklEWAAAAAAAAAAAAAAAACgAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADa2tra2tra2tra2tra2tra
-2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra
-2tra2tra2tra2tra2toAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAENEQVQA
-AAAAAAADAE8uREwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAADR0VZNACoAAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAABwAAAAAAAAAAAAAAAAAAAAA=
-
---HcAYCG3uE/tztfnV--
+diff --git a/fast-import.c b/fast-import.c
+index 0dfa14dc8c..ed87d6e380 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -150,7 +150,7 @@ struct recent_command {
+ 	char *buf;
+ };
+ 
+-typedef void (*mark_set_inserter_t)(struct mark_set *s, struct object_id *oid, uintmax_t mark);
++typedef void (*mark_set_inserter_t)(struct mark_set **s, struct object_id *oid, uintmax_t mark);
+ typedef void (*each_mark_fn_t)(uintmax_t mark, void *obj, void *cbp);
+ 
+ /* Configured limits on output */
+@@ -534,13 +534,15 @@ static char *pool_strdup(const char *s)
+ 	return r;
+ }
+ 
+-static void insert_mark(struct mark_set *s, uintmax_t idnum, struct object_entry *oe)
++static void insert_mark(struct mark_set **sp, uintmax_t idnum, struct object_entry *oe)
+ {
++	struct mark_set *s = *sp;
++
+ 	while ((idnum >> s->shift) >= 1024) {
+ 		s = mem_pool_calloc(&fi_mem_pool, 1, sizeof(struct mark_set));
+-		s->shift = marks->shift + 10;
+-		s->data.sets[0] = marks;
+-		marks = s;
++		s->shift = (*sp)->shift + 10;
++		s->data.sets[0] = (*sp);
++		(*sp) = s;
+ 	}
+ 	while (s->shift) {
+ 		uintmax_t i = idnum >> s->shift;
+@@ -958,7 +960,7 @@ static int store_object(
+ 
+ 	e = insert_object(&oid);
+ 	if (mark)
+-		insert_mark(marks, mark, e);
++		insert_mark(&marks, mark, e);
+ 	if (e->idx.offset) {
+ 		duplicate_count_by_type[type]++;
+ 		return 1;
+@@ -1156,7 +1158,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
+ 	e = insert_object(&oid);
+ 
+ 	if (mark)
+-		insert_mark(marks, mark, e);
++		insert_mark(&marks, mark, e);
+ 
+ 	if (e->idx.offset) {
+ 		duplicate_count_by_type[OBJ_BLOB]++;
+@@ -1731,7 +1733,7 @@ static void dump_marks(void)
+ 	}
+ }
+ 
+-static void insert_object_entry(struct mark_set *s, struct object_id *oid, uintmax_t mark)
++static void insert_object_entry(struct mark_set **s, struct object_id *oid, uintmax_t mark)
+ {
+ 	struct object_entry *e;
+ 	e = find_object(oid);
+@@ -1748,12 +1750,12 @@ static void insert_object_entry(struct mark_set *s, struct object_id *oid, uintm
+ 	insert_mark(s, mark, e);
+ }
+ 
+-static void insert_oid_entry(struct mark_set *s, struct object_id *oid, uintmax_t mark)
++static void insert_oid_entry(struct mark_set **s, struct object_id *oid, uintmax_t mark)
+ {
+ 	insert_mark(s, mark, xmemdupz(oid, sizeof(*oid)));
+ }
+ 
+-static void read_mark_file(struct mark_set *s, FILE *f, mark_set_inserter_t inserter)
++static void read_mark_file(struct mark_set **s, FILE *f, mark_set_inserter_t inserter)
+ {
+ 	char line[512];
+ 	while (fgets(line, sizeof(line), f)) {
+@@ -1786,7 +1788,7 @@ static void read_marks(void)
+ 		goto done; /* Marks file does not exist */
+ 	else
+ 		die_errno("cannot read '%s'", import_marks_file);
+-	read_mark_file(marks, f, insert_object_entry);
++	read_mark_file(&marks, f, insert_object_entry);
+ 	fclose(f);
+ done:
+ 	import_marks_file_done = 1;
+@@ -3242,7 +3244,7 @@ static void parse_alias(void)
+ 		die(_("Expected 'to' command, got %s"), command_buf.buf);
+ 	e = find_object(&b.oid);
+ 	assert(e);
+-	insert_mark(marks, next_mark, e);
++	insert_mark(&marks, next_mark, e);
+ }
+ 
+ static char* make_fast_import_path(const char *path)
+@@ -3340,7 +3342,7 @@ static void option_rewrite_submodules(const char *arg, struct string_list *list)
+ 	fp = fopen(f, "r");
+ 	if (!fp)
+ 		die_errno("cannot read '%s'", f);
+-	read_mark_file(ms, fp, insert_oid_entry);
++	read_mark_file(&ms, fp, insert_oid_entry);
+ 	fclose(fp);
+ }
+ 
