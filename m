@@ -2,185 +2,155 @@ Return-Path: <SRS0=8AI5=7T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A1E0C433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAAD3C433E0
 	for <git@archiver.kernel.org>; Sat,  6 Jun 2020 00:23:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 151B8206FA
+	by mail.kernel.org (Postfix) with ESMTP id B7D4B2074B
 	for <git@archiver.kernel.org>; Sat,  6 Jun 2020 00:23:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sxvrA0y5"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MB/OFrUW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728451AbgFFAXu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Jun 2020 20:23:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39066 "EHLO
+        id S1728499AbgFFAXw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Jun 2020 20:23:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39070 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728275AbgFFAXu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 5 Jun 2020 20:23:50 -0400
+        by vger.kernel.org with ESMTP id S1728390AbgFFAXv (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 5 Jun 2020 20:23:51 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1318160756;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0D8DB609CF;
         Sat,  6 Jun 2020 00:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1591402999;
-        bh=XZI0tI/rZU/+CqUbAAwGLMA4Mqt7BNLlZEWOJRqHbgo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=sxvrA0y5ppVOZ1ZYw0fhKpH2WKt6Ei5UPqt5MwWZofuLUIsEHJxBS3F4tSvCqbdis
-         rSd9eYqHqqCvRuCmiUeqLi+KmIxnB/Iq3ScwRHk6pOCDOJYaFSJtxwqhPLFVaZHhXv
-         uXmsCJW+p4vpssRAXSRVzzYZO5DSp6k7690bBTuZk2KBrBVZ45WQhGK7swWNxdQeKp
-         ZpQW27duUWDWAWqGv2XCekRjDabCYV31wk3+hPifr950mbS2o/6xC6cpGPwDJf29xv
-         MKEDxTs9uQl8vSl2Ok4OZnDBg2QSVZJ3DPxhES/48RhhDJlCMaea3Y8hf+R8iE+GFC
-         vhAQIfjhFacim1bJzqfQR4x6TAFXcQbzLVHs+/bRK0xrrTibRLzvENGQFUig9h1VCN
-         rYb22qx/lnyLYa96QOWvMzqxzjz3CfDweWMFIOHPyp+/8LckJTpEB7WOs9gsBJHfHz
-         FbVj+6iXWdeLrYEcctnMdqSoO1FlpXtYQi9C0zDJSIMhmmrt9MV
+        s=default; t=1591403000;
+        bh=p8Bq2wMbkFJl3PK8jd2HAfV/sHtjpRJ8ThrJmXorEYI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=MB/OFrUWq710Wj8fnkpU9WBRnIlBOSl8mMi711amWARbMxiFw3xgxsbz01Vva+fP8
+         XjdFcoCbnlipmjQA+EAJaOM+Uxam6BcuRsXwuIHVDHofTdMUfkfALAdb31TWh5lCMz
+         9l5JwYnddoz8+TvL76qvbEGMdmTsFWLNgUpIW2CKFDLpcEYDK+4a9G1nVmcPA8zqxB
+         +Lbn0gZUVmc3/cFMZo09bDln2x4wfKoIYL0JkfxTnNUPtDS1hZjrOsi+H3VRDUshcX
+         pgZQ2ANYPSQUaoaGfDBmltxb4lf5pSpA4mltvk7IJ806M9dHTfR1i/3e/adjrgkqD3
+         62B9l4fQhxKyc4cp9OhBi2sYGOXLw4mSJs4r22pNoaOdXrR1BhDHgepn0CoXEn10+j
+         2WSYMYaDWl3VZ7j4rDk/1lg0J/122zstq3xIC5uaEMPHnGuXDcJrjds1NQX+uu3q87
+         dbESZ0aTEsekT3wfS+oUGu1O2eb/PPqSgjlezqz+LVThDMZz1Ff
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Billes Tibor <tbilles@gmx.com>
-Subject: [PATCH] fast-import: fix incomplete conversion with multiple mark files
-Date:   Sat,  6 Jun 2020 00:22:39 +0000
-Message-Id: <20200606002241.1578150-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v2] exec: run final pipeline command in a subshell in sh mode
+Date:   Sat,  6 Jun 2020 00:22:41 +0000
+Message-Id: <20200606002241.1578150-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
-In-Reply-To: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com>
+In-Reply-To: <20200606002241.1578150-1-sandals@crustytoothpaste.net>
 References: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com>
+ <20200606002241.1578150-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When ddddf8d7e2 ("fast-import: permit reading multiple marks files",
-2020-02-22) converted fast-import to handle multiple marks files in
-preparation for submodule support, the conversion was incomplete.  With
-a large number of marks, we would actually modify the marks variable
-even though we had passed in a different variable to operate on.  In
-addition, we didn't consider the fact that the code can replace the mark
-set passed in, so when we did so we happened to leak quite a bit of
-memory, since we never reused the structure we created, instead
-reallocating a new one each time.
+zsh typically runs the final command in a pipeline in the main shell
+instead of a subshell.  However, POSIX requires that all commands in a
+pipeline run in a subshell, but permits zsh's behavior as an extension.
 
-It doesn't appear from some testing that we actually produce incorrect
-results in this case, only that we leak a substantial amount of memory.
-To make things work properly and avoid leaking, pass a pointer to
-pointer to struct mark_set, which allows us to modify the set of marks
-when the number of marks is large.
+Since zsh may be used as /bin/sh in some cases (such as macOS Catalina),
+it makes sense to have the POSIX behavior when emulating sh, so do that
+by checking for being the final item of a multi-item pipeline and
+creating a subshell in that case.
 
-With this patch, importing a dump of git.git with a set of exported
-marks goes from taking in excess of 15 GiB of memory (and being killed
-by the Linux OOM killer) to using a maximum of 1.4 GiB of memory.
+From the comment above execpline(), we know the following:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+  last1 is a flag that this command is the last command in a shell that
+  is about to exit, so we can exec instead of forking.  It gets passed
+  all the way down to execcmd() which actually makes the decision.  A 0
+  is always passed if the command is not the last in the pipeline. […]
+  If last1 is zero but the command is at the end of a pipeline, we pass
+  2 down to execcmd().
+
+So there are three cases to consider in this code:
+
+• last1 is 0, which means we are not at the end of a pipeline, in which
+  case we should not change behavior.
+• last1 is 1, which means we are effectively running in a subshell,
+  because nothing that happens due to the exec is going to affect the
+  actual shell, since it will have been replaced.  So there is nothing
+  to do here.
+• last1 is 2, which means our command is at the end of the pipeline, so
+  in sh mode we should create a subshell by forking.
+
+input is nonzero if the input to this process is a pipe that we've
+opened.  At the end of a multi-stage pipeline, it will necessarily be
+nonzero.
+
+Note that several of the tests may appear bizarre, since most developers
+do not place useless variable assignments directly at the end of a
+pipeline.  However, as the function tests demonstrate, there are cases
+where assignments may occur when a shell function is used at the end of
+a command.  The remaining assignment tests simply test additional cases,
+such as the use of local, that would otherwise be untested.
 ---
- fast-import.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ Src/exec.c           | 10 ++++++----
+ Test/B07emulate.ztst | 22 ++++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 0dfa14dc8c..ed87d6e380 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -150,7 +150,7 @@ struct recent_command {
- 	char *buf;
- };
+diff --git a/Src/exec.c b/Src/exec.c
+index 29f4fc5ca..f2650f311 100644
+--- a/Src/exec.c
++++ b/Src/exec.c
+@@ -2866,11 +2866,13 @@ execcmd_exec(Estate state, Execcmd_params eparams,
+ 	    pushnode(args, dupstring("fg"));
+     }
  
--typedef void (*mark_set_inserter_t)(struct mark_set *s, struct object_id *oid, uintmax_t mark);
-+typedef void (*mark_set_inserter_t)(struct mark_set **s, struct object_id *oid, uintmax_t mark);
- typedef void (*each_mark_fn_t)(uintmax_t mark, void *obj, void *cbp);
- 
- /* Configured limits on output */
-@@ -534,13 +534,15 @@ static char *pool_strdup(const char *s)
- 	return r;
- }
- 
--static void insert_mark(struct mark_set *s, uintmax_t idnum, struct object_entry *oe)
-+static void insert_mark(struct mark_set **sp, uintmax_t idnum, struct object_entry *oe)
- {
-+	struct mark_set *s = *sp;
+-    if ((how & Z_ASYNC) || output) {
++    if ((how & Z_ASYNC) || output ||
++	(last1 == 2 && input && EMULATION(EMULATE_SH))) {
+ 	/*
+-	 * If running in the background, or not the last command in a
+-	 * pipeline, we don't need any of the rest of this function to
+-	 * affect the state in the main shell, so fork immediately.
++	 * If running in the background, not the last command in a
++	 * pipeline, or the last command in a multi-stage pipeline
++	 * in sh mode, we don't need any of the rest of this function
++	 * to affect the state in the main shell, so fork immediately.
+ 	 *
+ 	 * In other cases we may need to process the command line
+ 	 * a bit further before we make the decision.
+diff --git a/Test/B07emulate.ztst b/Test/B07emulate.ztst
+index 7b1592fa9..45c39b51d 100644
+--- a/Test/B07emulate.ztst
++++ b/Test/B07emulate.ztst
+@@ -276,3 +276,25 @@ F:Some reserved tokens are handled in alias expansion
+ 0:--emulate followed by other options
+ >yes
+ >no
 +
- 	while ((idnum >> s->shift) >= 1024) {
- 		s = mem_pool_calloc(&fi_mem_pool, 1, sizeof(struct mark_set));
--		s->shift = marks->shift + 10;
--		s->data.sets[0] = marks;
--		marks = s;
-+		s->shift = (*sp)->shift + 10;
-+		s->data.sets[0] = (*sp);
-+		(*sp) = s;
- 	}
- 	while (s->shift) {
- 		uintmax_t i = idnum >> s->shift;
-@@ -958,7 +960,7 @@ static int store_object(
- 
- 	e = insert_object(&oid);
- 	if (mark)
--		insert_mark(marks, mark, e);
-+		insert_mark(&marks, mark, e);
- 	if (e->idx.offset) {
- 		duplicate_count_by_type[type]++;
- 		return 1;
-@@ -1156,7 +1158,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
- 	e = insert_object(&oid);
- 
- 	if (mark)
--		insert_mark(marks, mark, e);
-+		insert_mark(&marks, mark, e);
- 
- 	if (e->idx.offset) {
- 		duplicate_count_by_type[OBJ_BLOB]++;
-@@ -1731,7 +1733,7 @@ static void dump_marks(void)
- 	}
- }
- 
--static void insert_object_entry(struct mark_set *s, struct object_id *oid, uintmax_t mark)
-+static void insert_object_entry(struct mark_set **s, struct object_id *oid, uintmax_t mark)
- {
- 	struct object_entry *e;
- 	e = find_object(oid);
-@@ -1748,12 +1750,12 @@ static void insert_object_entry(struct mark_set *s, struct object_id *oid, uintm
- 	insert_mark(s, mark, e);
- }
- 
--static void insert_oid_entry(struct mark_set *s, struct object_id *oid, uintmax_t mark)
-+static void insert_oid_entry(struct mark_set **s, struct object_id *oid, uintmax_t mark)
- {
- 	insert_mark(s, mark, xmemdupz(oid, sizeof(*oid)));
- }
- 
--static void read_mark_file(struct mark_set *s, FILE *f, mark_set_inserter_t inserter)
-+static void read_mark_file(struct mark_set **s, FILE *f, mark_set_inserter_t inserter)
- {
- 	char line[512];
- 	while (fgets(line, sizeof(line), f)) {
-@@ -1786,7 +1788,7 @@ static void read_marks(void)
- 		goto done; /* Marks file does not exist */
- 	else
- 		die_errno("cannot read '%s'", import_marks_file);
--	read_mark_file(marks, f, insert_object_entry);
-+	read_mark_file(&marks, f, insert_object_entry);
- 	fclose(f);
- done:
- 	import_marks_file_done = 1;
-@@ -3242,7 +3244,7 @@ static void parse_alias(void)
- 		die(_("Expected 'to' command, got %s"), command_buf.buf);
- 	e = find_object(&b.oid);
- 	assert(e);
--	insert_mark(marks, next_mark, e);
-+	insert_mark(&marks, next_mark, e);
- }
- 
- static char* make_fast_import_path(const char *path)
-@@ -3340,7 +3342,7 @@ static void option_rewrite_submodules(const char *arg, struct string_list *list)
- 	fp = fopen(f, "r");
- 	if (!fp)
- 		die_errno("cannot read '%s'", f);
--	read_mark_file(ms, fp, insert_oid_entry);
-+	read_mark_file(&ms, fp, insert_oid_entry);
- 	fclose(fp);
- }
- 
++  emulate sh -c '
++  foo () {
++    VAR=foo &&
++    echo $VAR | bar &&
++    echo "$VAR"
++  }
++  bar () {
++    tr f b &&
++    VAR="$(echo bar | tr r z)" &&
++    echo "$VAR"
++  }
++  foo
++  '
++  emulate sh -c 'func() { echo | local def="abc"; echo $def;}; func'
++  emulate sh -c 'abc="def"; echo | abc="ghi"; echo $abc'
++0:emulate sh uses subshell for last pipe entry
++>boo
++>baz
++>foo
++>
++>def
