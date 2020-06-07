@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6FF2C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 09:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C5E8C433DF
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 10:21:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A936B20663
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 09:48:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4324A20663
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 10:21:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmwlXoVP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WYwdz+O4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726463AbgFGJsj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Jun 2020 05:48:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56850 "EHLO
+        id S1726452AbgFGKVX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Jun 2020 06:21:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726439AbgFGJsi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jun 2020 05:48:38 -0400
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ECB4C08C5C2
-        for <git@vger.kernel.org>; Sun,  7 Jun 2020 02:48:37 -0700 (PDT)
-Received: by mail-qt1-x842.google.com with SMTP id d27so12389149qtg.4
-        for <git@vger.kernel.org>; Sun, 07 Jun 2020 02:48:37 -0700 (PDT)
+        with ESMTP id S1726439AbgFGKVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jun 2020 06:21:17 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60668C08C5C2
+        for <git@vger.kernel.org>; Sun,  7 Jun 2020 03:21:16 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id y1so12385198qtv.12
+        for <git@vger.kernel.org>; Sun, 07 Jun 2020 03:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=PLrhIobyg7qPUD5ywtJziY54AkWghLsERboA0ayV0qQ=;
-        b=XmwlXoVPEImHjbaTeKeiSvytRHruycyp0H0xFd46Y+CS6BWJ37tqT8xBSQEmUUSBfB
-         Q+7LD9RcdoOon7942hUYq1yaQEBWpTAQEk4LxV/6mDNt93PD+YSUVYG9alW1S4v/RLIz
-         kaXF3UD9hyNE7DYPEZGodwd9TwCv313JiBY5GEpUO25iOI0DDazXGo/68h7db1EPSDo8
-         gowmWj344Fa7tQ2UUrDTdxNSOyqAVlbPbU3dJXzqKtmRBlMtTC1oVVkDSf+7jam+EQGV
-         LOtxeMXE/+OrnDNw5AHdcHWD8f5A9i4Y0i/0xr2OT5naW1ZdOxH3ktgnRZA+TUNSPzAz
-         1PRA==
+        bh=mjMnr0GpZS7TYETtlFK5d4k1NS7KXm71zDNbytvtx1A=;
+        b=WYwdz+O4SK5Vw7Sq7xUD9E+WuZvu6ZSDC+MiP5xZmohrBWqArBk5Eusko3r4r3M3S8
+         L2jylflREHJveVZxiwJS3bDFFPGy4v+EYl/cybiI90+rExU2gcz3/jQXZActBpVBRDdd
+         RsXVg9Jnq97SQyIw7EUuyfi1CcwjWr9SQeL91nxudK3rRxEVruFsUIcymIEHDwKrqVRg
+         oI31kJ9fawf0Q55vMELqJYy4CzaPBbcn6Vsno6wNarV8oCPL5dFDudCK7p0ZfbcmM4Pu
+         17492Ns+QGbk0MDLnZFa66PXodbz7jhoHa0cPPGVnuIXdG7kvvhdziWzq25ihgA5P6QX
+         3gng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=PLrhIobyg7qPUD5ywtJziY54AkWghLsERboA0ayV0qQ=;
-        b=VFkvsZm1AYCRGgHF3ayxTi1ZwXx73CX2dAPgTpQ+GLfX1KYltYxNKFeCO+y5ObUYSS
-         BFEGJdvtrAELjtTiaflPyVvfJ2KOdtBnLypz/FGRQ+yo3eYWgGS29OPFA950BXlJlu79
-         RV56VA24/o/dnb2ODsbxRNAcwlCXNNsN0Equg+WWaIuZbruuHxOHmyXiKAYavQ5z3KGT
-         Re/Oj1jLBLd+gnmmAvgjQyOk9S4EfLZZrTbfJT8FCgw8icpobsMS00C7A5oGYqYhXCRb
-         DUrDRb36uQq4BcNY44QWhlIoyXb4s4o6rojbhBC26LM+fSxmQufqT1ILaxeP5BXhC6+N
-         IQNw==
-X-Gm-Message-State: AOAM5306FT3X7OsRgf8IuaJKpzvxcNSLUmCuvP5P5oh8xh/DYSREE1rx
-        wJCpHMS2eElnPlLn/JoCzzr7/ieQ
-X-Google-Smtp-Source: ABdhPJwn+LYklVPDWH+Sy8lVXImClrHyPU0NfYrN7/1GG13Xcr0X8gDF0b583dcsllp3hfUFD9Cirg==
-X-Received: by 2002:ac8:1bd2:: with SMTP id m18mr18471404qtk.64.1591523316402;
-        Sun, 07 Jun 2020 02:48:36 -0700 (PDT)
+        bh=mjMnr0GpZS7TYETtlFK5d4k1NS7KXm71zDNbytvtx1A=;
+        b=oJsIyPOviDZk46zjEO+E/ALnEBcCSeSoCREALLCB2BnNhrV2g9DXb8ScDvRWCWrgxE
+         8jROYxc9QYrbabj86dBcZwlpMVjomwCJPE4qTKMI8Ac3ZuLZO/2wJeDZJDpZebJ+zHvo
+         BOUSbQiMPH3mKv+9Zxll2SQq4Gkh474ndmhBsvKDV702f1ZumAD8HaaAgJY2WF+bAjvX
+         dgrcqF4RmTHUxOMlFMVha6I8FTgCycUvJNxteUMamr1h3NX3lJuIYIhOz7DRfYHgm9Nf
+         uheQkGAj/7vJjVExF4cFfDOmi7JbbW9LFhBVkZ9dDz8/IcPA1gkPwwbRl6R08lztypvv
+         /foQ==
+X-Gm-Message-State: AOAM532Gu6VLVhvzoE/1n/DTPG5lvxh1Vi7Ihm8T4e2UZMAvi03i288D
+        STyx6UhKxdsailzzQZkZX5dD/WwW
+X-Google-Smtp-Source: ABdhPJwXpRc7N1e1Py7m2D5ZFZpiGHc9UbOJK2JparIeagIZJbQBM3QhaIxSTVNthtVjHXIZ4cNGFw==
+X-Received: by 2002:ac8:44b3:: with SMTP id a19mr18333614qto.285.1591525274490;
+        Sun, 07 Jun 2020 03:21:14 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id b53sm4848354qtc.65.2020.06.07.02.48.35
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id p11sm4599813qtq.75.2020.06.07.03.21.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2020 02:48:35 -0700 (PDT)
+        Sun, 07 Jun 2020 03:21:14 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH] t/README: avoid poor-man's small caps GIT
-Date:   Sun,  7 Jun 2020 05:48:26 -0400
-Message-Id: <6cbd5c34b5cba6087cf8ee900e3a8285d2af2603.1591523289.git.liu.denton@gmail.com>
+Cc:     Luke Diamand <luke@diamand.org>
+Subject: [PATCH] CodingGuidelines: specify Python 2.7 is the oldest version
+Date:   Sun,  7 Jun 2020 06:21:06 -0400
+Message-Id: <b5028351ca011bc7834444b05fb13d1a28dd088d.1591525231.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.27.0.107.g134631ef42
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -72,63 +72,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 48a8c26c62 (Documentation: avoid poor-man's small caps GIT,
-2013-01-21), the documentation was amended to spell Git's name as Git
-when talking about the system as a whole. However, t/README was skipped
-over when the treatment was applied.
-
-Bring t/README into conformance with the CodingGuidelines by casing
-"Git" properly.
-
-While we're at it, fix a small typo. Change "the git internal" to "the
-Git internals".
+In 0b4396f068 (git-p4: make python2.7 the oldest supported version,
+2019-12-13), git-p4 was updated to only support 2.7 and newer. Since
+Python 2.6 is pretty much ancient history, update CodingGuidelines to
+show that 2.7 is the oldest version supported.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/README | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/README b/t/README
-index cf863837ab..70ec61cf88 100644
---- a/t/README
-+++ b/t/README
-@@ -1,7 +1,7 @@
--Core GIT Tests
-+Core Git Tests
- ==============
+Notes:
+    This patch is somewhat conservative. Python 2.7 has been EOL'd (although
+    it's still in common use). Would it make sense, instead, to say that
+    Python 3.x (the earliest non-EOL'd version) is the minimum version we
+    support and it would be _nice_ to support 2.7 as well?
+    
+    On the topic of Python 3.x, 3.1 has been EOL'd since 2012. Would it make
+    sense to update this version to 3.5 which is the earliest supported
+    version of Python?
+
+ Documentation/CodingGuidelines | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 227f46ae40..45465bc0c9 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -489,16 +489,11 @@ For Python scripts:
  
--This directory holds many test scripts for core GIT tools.  The
-+This directory holds many test scripts for core Git tools.  The
- first part of this short document describes how to run the tests
- and read their output.
+  - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
  
-@@ -1117,21 +1117,21 @@ Tips for Writing Tests
- As with any programming projects, existing programs are the best
- source of the information.  However, do _not_ emulate
- t0000-basic.sh when writing your tests.  The test is special in
--that it tries to validate the very core of GIT.  For example, it
-+that it tries to validate the very core of Git.  For example, it
- knows that there will be 256 subdirectories under .git/objects/,
- and it knows that the object ID of an empty tree is a certain
- 40-byte string.  This is deliberately done so in t0000-basic.sh
- because the things the very basic core test tries to achieve is
--to serve as a basis for people who are changing the GIT internal
-+to serve as a basis for people who are changing the Git internals
- drastically.  For these people, after making certain changes,
- not seeing failures from the basic test _is_ a failure.  And
--such drastic changes to the core GIT that even changes these
-+such drastic changes to the core Git that even changes these
- otherwise supposedly stable object IDs should be accompanied by
- an update to t0000-basic.sh.
+- - As a minimum, we aim to be compatible with Python 2.6 and 2.7.
++ - As a minimum, we aim to be compatible with Python 2.7.
  
- However, other tests that simply rely on basic parts of the core
--GIT working properly should not have that level of intimate
--knowledge of the core GIT internals.  If all the test scripts
-+Git working properly should not have that level of intimate
-+knowledge of the core Git internals.  If all the test scripts
- hardcoded the object IDs like t0000-basic.sh does, that defeats
- the purpose of t0000-basic.sh, which is to isolate that level of
- validation in one place.  Your test also ends up needing
+  - Where required libraries do not restrict us to Python 2, we try to
+    also be compatible with Python 3.1 and later.
+ 
+- - When you must differentiate between Unicode literals and byte string
+-   literals, it is OK to use the 'b' prefix.  Even though the Python
+-   documentation for version 2.6 does not mention this prefix, it has
+-   been supported since version 2.6.0.
+-
+ Error Messages
+ 
+  - Do not end error messages with a full stop.
 -- 
 2.27.0.107.g134631ef42
 
