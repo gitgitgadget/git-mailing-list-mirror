@@ -2,122 +2,113 @@ Return-Path: <SRS0=8Spe=7U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A4D0C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 16:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36C9EC433DF
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 17:01:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 541AC206F6
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 16:26:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0969520659
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 17:01:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kW3/k2/2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DUuJNFwF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbgFGQ0g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Jun 2020 12:26:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39100 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726571AbgFGQ0g (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 7 Jun 2020 12:26:36 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726714AbgFGRBl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Jun 2020 13:01:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56173 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726683AbgFGRBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jun 2020 13:01:41 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A04B5BC1D;
+        Sun,  7 Jun 2020 13:01:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MS6ZZCoHoK5F6MekPbgAtcwOROI=; b=DUuJNF
+        wF/epIHhSJQvO43rB/x0eY+9NEuDxYidctPz6Hocd4ki5VTO9CfPoMUZV3XEaDoc
+        BMC51ZlrkA+HodojX8Nyi1mVZC52OTIIf9/8LQSbACJFZAtenu8j2JTAgLZY6dAc
+        KEnk3ZzN4X2g6iCxbUntII1KD2yT/KKg0tzGc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eJ6KxFo4B+T0yyqHoDgIf/thFyrQ/z3e
+        wVzTGBj1pVezMUl90VVEs1qSW8KbZJj4c3H3fXVMz1O3UtPoTFh81SESwb/asvNn
+        5hlExl6F+VXdVmK6Jz0sbn9yq/mMugBHFl0jdR622hnlWz7YOBrlRCQ+DbryCkBj
+        lBuPDloqP30=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 323415BC1B;
+        Sun,  7 Jun 2020 13:01:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 97BA260756;
-        Sun,  7 Jun 2020 16:26:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1591547164;
-        bh=2Zt3G7aa5B+xznlf+qJezXEvPBLzwBPJqWfympr+vFo=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=kW3/k2/2HWoLEff5AsSoYEoJjmZ1POanbTVN9ObQGcCYFfBtfOpMsUKprGRnkKRid
-         Sxc+svu3LOXSG2oq806K+klDdgGxrbVXOlWhPZgwf+yqSg9djef0KJjBoDHgPptTmY
-         XXWhQgbGehAVuqWfxkw3k//rb1ZSIBTH+xSH9sDxWrFWMrnH1sBfmqnyUEJtaotjUD
-         lZ5elyCpeR3BWRl+c2OXIETOB5FFdoOnS66SDtEt8pU0VEspIh507QIyTWPGLRE5WJ
-         DtWkulaVOpweTrYz2kNsgitopN9N0cmRO5qhlw9i067Cfwn3eNTQYV87neEkaMtBFh
-         pbYvJhma1A+3/qYV4i4VV9kfHu5mfUa+44x9IaBbk95IwcAVGCECeNQsUsTZEoFFjW
-         /4LYVc6SrJ5vWsB0rNS9Zy+29UQgWju0/v9/extt40Uk0yzFjo4L8+zm03r4Cmwnx3
-         2t7VcCioDyHNr+HzrHCqxLfO3ckiDf6lMXteH/NlmZL9EDkpptp
-Date:   Sun, 7 Jun 2020 16:25:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     John Lin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Lin <johnlinp@gmail.com>
-Subject: Re: [PATCH] Recommend "git gc --auto" instead of "git prune"
-Message-ID: <20200607162556.GJ6569@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        John Lin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, John Lin <johnlinp@gmail.com>
-References: <pull.651.git.1591546715913.gitgitgadget@gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B01EE5BC1A;
+        Sun,  7 Jun 2020 13:01:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Angel via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Angel <the.f8er@gmail.com>
+Subject: Re: [PATCH] doc: fix a typo inside `--bare` section
+References: <pull.649.git.1591445695220.gitgitgadget@gmail.com>
+Date:   Sun, 07 Jun 2020 10:01:38 -0700
+In-Reply-To: <pull.649.git.1591445695220.gitgitgadget@gmail.com> (Angel via
+        GitGitGadget's message of "Sat, 06 Jun 2020 12:14:55 +0000")
+Message-ID: <xmqqh7vmn72l.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="apbmkPN6Hu/1dI3g"
-Content-Disposition: inline
-In-Reply-To: <pull.651.git.1591546715913.gitgitgadget@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8D7101EE-A8E0-11EA-9FCF-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Angel via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---apbmkPN6Hu/1dI3g
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2020-06-07 at 16:18:35, John Lin via GitGitGadget wrote:
-> From: John Lin <johnlinp@gmail.com>
->=20
-> Signed-off-by: John Lin <johnlinp@gmail.com>
+> From: Mark Williams <the.f8er@gmail.com>
+>
+> Add a word `variable` and a `$` sign before variable's
+> name in `--bare` argument section. Without this word someone
+> might be confused.
+>
+> Signed-off-by: Mark Williams <the.f8er@gmail.com>
 > ---
->     Recommend "git gc --auto" instead of "git prune"
->    =20
->     Fix according to #642.
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-651%2Fj=
-ohnlinp%2Ffix-git-gc-warning-message-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-651/johnli=
-np/fix-git-gc-warning-message-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/651
->=20
->  builtin/gc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 8e0b9cf41b3..3833a3de332 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -692,7 +692,7 @@ int cmd_gc(int argc, const char **argv, const char *p=
-refix)
-> =20
->  	if (auto_gc && too_many_loose_objects())
->  		warning(_("There are too many unreachable loose objects; "
-> -			"run 'git prune' to remove them."));
-> +			"run 'git gc --auto' to remove them."));
+>     doc: fix a typo inside --bare section
+>     
+>     doc: fix a typo inside --bare section
+>     
+>     Add a word variable and a $ sign before variable's name in --bare 
+>     argument section. Without this word someone might be confused.
 
-I'm not sure this is correct.  If we have just expelled a large number
-of objects from a pack into loose objects because they're no longer
-referenced, it's possible we may trigger another git gc --auto on the
-next time we run a command.  If so, no amount of git gc --auto is going
-to help here; you really have to run git prune.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+A quick and dirty
 
---apbmkPN6Hu/1dI3g
-Content-Type: application/pgp-signature; name="signature.asc"
+  $ git grep 'GIT_[A-Z]*[^A-Za-z0-9] .*environment' Documentation/
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+tells us that adding "environment variable" is probably the right
+thing to do, but we should not add the variable dereference '$' in
+front (and fix some that do spell $GIT_PAGER etc. to lose '$').
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXt0VFAAKCRB8DEliiIei
-gR2VAP0fAkY8OsQt8P9qTLd385RiwnXxQbXExfyu49KJhSMLxQD+MUYsuGDMRqbO
-AQIfNMTpUWZudIxLA0JUXanNconniAY=
-=CIhe
------END PGP SIGNATURE-----
+In shell, $V is a notation to always name the value in the variable,
+and it is clearer to refer to the variable itself without the '$'
+sign.  '$V' means "the value that currently is in the variable V".
 
---apbmkPN6Hu/1dI3g--
+	V=newvalue
+	W="old value of $V"
+
+This is unlike C where using a variable as lvalue on the left hand
+side of assignment does not need different spelling as the variable
+is used as rvalue, e.g.
+
+	variable = newvalue;
+	another_variable = 2 * variable;
+
+> -Create a bare repository. If `GIT_DIR` environment is not set, it is set to the
+> -current working directory.
+> +Create a bare repository. If the `$GIT_DIR` environment variable is not set, it
+> +is set to the current working directory.
+>  
+>  --object-format=<format>::
+>  
+>
+> base-commit: 20514004ddf1a3528de8933bc32f284e175e1012
