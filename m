@@ -2,148 +2,153 @@ Return-Path: <SRS0=8Spe=7U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47C7FC433DF
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 20:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1849C433E0
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 20:33:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18D412073B
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 20:12:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 763762067B
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 20:33:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILJjs/aF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nyEZiPGW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726982AbgFGUMj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Jun 2020 16:12:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
+        id S1727055AbgFGUd3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Jun 2020 16:33:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726093AbgFGUMj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jun 2020 16:12:39 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E59EFC08C5C3
-        for <git@vger.kernel.org>; Sun,  7 Jun 2020 13:12:38 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id mb16so15968115ejb.4
-        for <git@vger.kernel.org>; Sun, 07 Jun 2020 13:12:38 -0700 (PDT)
+        with ESMTP id S1726093AbgFGUd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jun 2020 16:33:29 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59F1C08C5C3
+        for <git@vger.kernel.org>; Sun,  7 Jun 2020 13:33:28 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id y17so15218331wrn.11
+        for <git@vger.kernel.org>; Sun, 07 Jun 2020 13:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=xjeXjJTGFFqO/wyrm76ALjZB7QREBRqIs8mMB2X75Gs=;
-        b=ILJjs/aFwpkn+06gkq2E4tsZrXD7Ii4Uu3adI3u3LQh9+bfYU65rjUdfP0yJYBKpA+
-         6uThzaZJCg6cwKT2uGZoMEDH1WOBZvcA6ZMCGq+2lnZGTcTQkFu/pYms1W+vS45pxeci
-         LCM/QjExIKgh2VjONpBG84IV/YDmrKsEBeJlLlel0d+a3fcxjoWYiVIAuttf8iveAjrC
-         lV1mP8/koyj0/gxtUVfiZPZAZchDv9SULckJQ0bJS6rpC9Xityi2RiZuuALH+ZspgvNk
-         ZO9Dtnk/Ez/193YsjDxfAhvkJr2NgYryi9ehN1ZmJDnhhLI9eh5K9KMVFHk3yBL5ACvk
-         u2Xg==
+        bh=BVykrW13jGCsisRTIGsuWH589AEue8bvnQQUjRopGUQ=;
+        b=nyEZiPGW9NBy8G1qDRLGmkooFSwc3w919ryUCgmphOi/KC7rYc/MpvrgR8o0uetcOS
+         quLdYRHH0Ft6uWhVkZ3/Jfu2v8V7+lhgpzLzAPoMJ0ncA73ag9CqnNkE3abZ+tGgwRgS
+         odPMfT2Dm4GODwgJAMqpZ6iQfORnVXMpy1OEoLA5Lv1BfPzIh7cotg9D9xobtN4YwqLH
+         5dG3pc58wAvsjs6Mhokh/PEJaTw+sUOKDJyjSD7qpfaH7JIF3bEuMfAE07uwkhQUY4cn
+         M7eYEfgVq6HiNWwFpUfn09SjyQfnlUOwbvU6hJeKIoRcKnA0tsU4A5AkNUuKfUrXllza
+         SwwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xjeXjJTGFFqO/wyrm76ALjZB7QREBRqIs8mMB2X75Gs=;
-        b=O47x6an9gsLNqCn9r076zSimjeHBNGK/xMQbfvFZVcGSXxGScZcG+YNRDhS7h+Qwl+
-         xx3cKBVpdpKcst6pjVBp5FDx3G25WyFtAF4hwxBm2uLteEwYDZEaoUntQUbJ14hbEszY
-         ekRR4TXEPoQxZpG1Sp382U2UAon3/Tk9o6Lp+fGpT3CJbldRFzjF+tKVjNHetF4s+43n
-         LfX6biOe/WR18bL6OAWAmuGjQLurzl0r6gt+T0PoSCdhzaTq0uw39Y2vpf1OOMI9ePDY
-         zLWHiOXNqf5eSaAimJ4UbDj+f2qfGIV2BEusgVFw6TnqMURkEDW//qpHQVpy8bmuqg/E
-         O4qQ==
-X-Gm-Message-State: AOAM530KYBYEcf5i+P+AKuRhz3BZP3DndKHVf2pb6KfKE/uCqXAVGKls
-        5u7l52ROS/pzbCq+QvDMd/g=
-X-Google-Smtp-Source: ABdhPJyUDCVeyvhJX+Spw9EsGcY1qQvMYkpiH+ZcJbMXFEgIcTkPmSMpm+8gjE1A0LftvvmuUDqbyg==
-X-Received: by 2002:a17:906:f189:: with SMTP id gs9mr17704115ejb.203.1591560757315;
-        Sun, 07 Jun 2020 13:12:37 -0700 (PDT)
+        bh=BVykrW13jGCsisRTIGsuWH589AEue8bvnQQUjRopGUQ=;
+        b=RKbXnbgvFhWUr9kmRFpi7veBufvJUkyQZJzanBcGxVl7ZCOAmHq2fCddNRoPyg6Uj8
+         T07C0ZWFiAnjlmcmbmvKWYuB9nKCyY7AL3Vw2zjOanAcWpSjJe3lO9aLyS/0RHZJ7X1w
+         0cWLL31uZJPls+tRTA5Y87SWjSCkdkfgIneIH9YUOgSS8+YmcJKLyFvnnb8M51dBU33g
+         5EmFzyu59PgFTKlnE1lYzdBg+oAlesNJdG7SWj60x7GVaChCxHDw9qB5vHrvImppEc6F
+         xeDca416aPwqSoFxbUqXrEfq9eyz3yK9MNg/omihqka7NFtIum9Hgqn0c/RmuuQZ7r7a
+         sY8Q==
+X-Gm-Message-State: AOAM530++Ezt9LyPaamDL1CiG/XoW3+AZvkctXLAwADjSFRBfl9bfVV5
+        2BNmGYQj0pcFNh09R/cCW77MQZfn
+X-Google-Smtp-Source: ABdhPJx6kNX7c2eRvxWjFtEK3PVCrCsXUYWmsnlR/AbgBHHLnMOjdJhLn8GxbfFoLX20/unFSZZxuw==
+X-Received: by 2002:adf:ff8a:: with SMTP id j10mr19822251wrr.405.1591562007362;
+        Sun, 07 Jun 2020 13:33:27 -0700 (PDT)
 Received: from szeder.dev (78-131-14-185.pool.digikabel.hu. [78.131.14.185])
-        by smtp.gmail.com with ESMTPSA id a13sm8909766eju.59.2020.06.07.13.12.35
+        by smtp.gmail.com with ESMTPSA id f185sm10415048wmf.43.2020.06.07.13.33.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Jun 2020 13:12:36 -0700 (PDT)
-Date:   Sun, 7 Jun 2020 22:12:33 +0200
+        Sun, 07 Jun 2020 13:33:26 -0700 (PDT)
+Date:   Sun, 7 Jun 2020 22:33:23 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] refs: implement reference transaction hooks
-Message-ID: <20200607201233.GB8232@szeder.dev>
-References: <1d1a94426f95d842e0e3ea6a1569c0c45239229c.1591086316.git.ps@pks.im>
- <xmqq4krttl4k.fsf@gitster.c.googlers.com>
- <20200603112604.GA25644@tanuki.pks.im>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, jnareb@gmail.com,
+        garimasigit@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 1/3] revision: complicated pathspecs disable filters
+Message-ID: <20200607203323.GB11344@szeder.dev>
+References: <pull.609.v2.git.1586789126.gitgitgadget@gmail.com>
+ <pull.609.v3.git.1587068044.gitgitgadget@gmail.com>
+ <adc03eee4ac8a0911bfd2a7ae03364ef0e744ef0.1587068044.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200603112604.GA25644@tanuki.pks.im>
+In-Reply-To: <adc03eee4ac8a0911bfd2a7ae03364ef0e744ef0.1587068044.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 03, 2020 at 01:26:04PM +0200, Patrick Steinhardt wrote:
-> On Tue, Jun 02, 2020 at 10:47:55AM -0700, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> > > The above scenario is the motivation for a set of three new hooks that
-> > > reach directly into Git's reference transaction. Each of the following
-> > > new hooks (currently) doesn't accept any parameters and receives the set
-> > > of queued reference updates via stdin:
-> > 
-> > Do we have something (e.g. performance measurement) to convince
-> > ourselves that this won't incur unacceptable levels of overhead in
-> > null cases where there is no hook installed in the repository?
+On Thu, Apr 16, 2020 at 08:14:02PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> Not yet, but I'll try to come up with a benchmark in the next iteration.
-> I guess the best way to test is to directly exercise git-update-refs, as
-> it's nearly a direct wrapper around reference transactions.
+> The changed-path Bloom filters work only when we can compute an
+> explicit Bloom filter key in advance. When a pathspec is given
+> that allows case-insensitive checks or wildcard matching, we
+> must disable the Bloom filter performance checks.
 > 
-> > > +	proc.in = -1;
-> > > +	proc.stdout_to_stderr = 1;
-> > > +	proc.trace2_hook_name = hook_name;
-> > > +
-> > > +	code = start_command(&proc);
-> > > +	if (code)
-> > > +		return code;
-> > > +
-> > > +	sigchain_push(SIGPIPE, SIG_IGN);
-> > > +
-> > > +	for (i = 0; i < transaction->nr; i++) {
-> > > +		struct ref_update *update = transaction->updates[i];
-> > > +
-> > > +		strbuf_reset(&buf);
-> > > +		strbuf_addf(&buf, "%s %s %s\n",
-> > > +			    oid_to_hex(&update->old_oid),
-> > > +			    oid_to_hex(&update->new_oid),
-> > > +			    update->refname);
-> > > +
-> > > +		if (write_in_full(proc.in, buf.buf, buf.len) < 0)
-> > > +			break;
-> > 
-> > We leave the loop early when we detect a write failure here...
-> > 
-> > > +	}
-> > > +
-> > > +	close(proc.in);
-> > > +	sigchain_pop(SIGPIPE);
-> > > +
-> > > +	strbuf_release(&buf);
-> > > +	return finish_command(&proc);
-> > 
-> > ... but the caller does not get notified.  Intended?
+> By checking the pathspec in prepare_to_use_bloom_filters(), we
+> avoid setting up the Bloom filter data and thus revert to the
+> usual logic.
 > 
-> This is semi-intended. In case the hook doesn't fully consume stdin and
-> exits early, writing to its stdin would fail as we ignore SIGPIPE. We
-> don't want to force the hook to care about consuming all of stdin,
-> though.
+> Before this change, the following tests would fail*:
+> 
+> 	t6004-rev-list-path-optim.sh (Tests 6-7)
+> 	t6130-pathspec-noglob.sh (Tests 3-6)
+> 	t6131-pathspec-icase.sh (Tests 3-5)
+> 
+> *These tests would fail when using GIT_TEST_COMMIT_GRAPH and
+> GIT_TEST_COMMIT_GRAPH_BLOOM_FILTERS except that the latter
+> environment variable was not set up correctly to write the changed-
+> path Bloom filters in the test suite. That will be fixed in the
+> next change.
+> 
+> Helped-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  revision.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/revision.c b/revision.c
+> index 2b06ee739c8..f78c636e4d0 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -650,6 +650,20 @@ static void trace2_bloom_filter_statistics_atexit(void)
+>  	jw_release(&jw);
+>  }
+>  
+> +static int forbid_bloom_filters(struct pathspec *spec)
+> +{
+> +	if (spec->has_wildcard)
+> +		return 1;
+> +	if (spec->nr > 1)
+> +		return 1;
+> +	if (spec->magic & ~PATHSPEC_LITERAL)
 
-Why?  How could the prepared hook properly initialize the voting
-mechanism for the transaction without reading all the refs to be
-updated?
+Nit: spec->magic is the bitwise OR combination of all
+spec->items[i].magic, so checking the latter below is unnecessary.
 
-> We could improve error handling here by ignoring EPIPE, but making every
-> other write error fatal. If there's any other abnormal error condition
-> then we certainly don't want the hook to act on incomplete data and
-> pretend everything's fine.
-
-As I read v2 of this patch, a prepared hook can exit(0) early without
-reading all the refs to be updated, cause EPIPE in the git process
-invoking the hook, and that process would interpret that as success.
-I haven't though it through how such a voting mechanism would work,
-but I have a gut feeling that this can't be good.
-
+> +		return 1;
+> +	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
+> +		return 1;
+> +
+> +	return 0;
+> +}
+> +
+>  static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>  {
+>  	struct pathspec_item *pi;
+> @@ -659,7 +673,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>  	int len;
+>  
+>  	if (!revs->commits)
+> -	    return;
+> +		return;
+> +
+> +	if (forbid_bloom_filters(&revs->prune_data))
+> +		return;
+>  
+>  	repo_parse_commit(revs->repo, revs->commits->item);
+>  
+> -- 
+> gitgitgadget
+> 
