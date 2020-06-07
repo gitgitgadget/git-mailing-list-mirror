@@ -2,101 +2,138 @@ Return-Path: <SRS0=8Spe=7U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B2C6C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 18:54:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8C7BC433DF
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 19:34:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F9B62074B
-	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 18:54:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4E562073B
+	for <git@archiver.kernel.org>; Sun,  7 Jun 2020 19:34:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u3PI+c3T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a22XQFe+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726996AbgFGSyw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Jun 2020 14:54:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56700 "EHLO
+        id S1726844AbgFGTeb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Jun 2020 15:34:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726742AbgFGSyv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jun 2020 14:54:51 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6A6C061A0E
-        for <git@vger.kernel.org>; Sun,  7 Jun 2020 11:54:50 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id f7so15819294ejq.6
-        for <git@vger.kernel.org>; Sun, 07 Jun 2020 11:54:50 -0700 (PDT)
+        with ESMTP id S1726093AbgFGTeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jun 2020 15:34:31 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB08BC08C5C3
+        for <git@vger.kernel.org>; Sun,  7 Jun 2020 12:34:31 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id 64so694964pfv.11
+        for <git@vger.kernel.org>; Sun, 07 Jun 2020 12:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:subject:to:references:cc:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=NF85bY7CyCyms3kGHNrlup6BUr7VPZdFE3uy+G87pf4=;
-        b=u3PI+c3T1RpBG24hM98DfD/a+qnVGhMTpgxti0qX//qyQhvwt7CyLrtxfarIoO/F8y
-         r7DwMBVjsQ/ZnvD/wWP7zaW91oc8V6WrzGJae1Vm5wIjuGaBXvsyQ31VxBdHZft7BLDF
-         pJQWOEKDMoV3LjczuiqRvfkaZ3tpNvm4kXPuuW4O/ooZ4bHymj6mtn5IJPa8U9qdYul9
-         HWiagn7RpEE+bP+pwEG2hmYtwJkBOVe4DTAVmeoAoic9/0cIgvgjWiQjFBCcTPgiHv73
-         /EfmAhw5g6V7J5cT+ezkOgUXuCQMPXgf/sII4mZltOWNE3xwkWmKxnFf32GQI14/0Gvo
-         kZFw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KqwyX+3w7vrVkWsb3B/xln4OGXHs2KZdTpaM6HlRcOI=;
+        b=a22XQFe+VKHjvBvVAM4UDGBeDnb0KqNqrGvyn8znAvERq+nL06PbaJlj4dhcNqZFxG
+         LYHiBCfQT93IFsLpFJdE6U2X7BBGm5lf58nyGRC0XycqINnwje7GS15KvqSGZg4cYswJ
+         QTEem7OrfWEuE7snUqAC7mPMPPsITXPTJ+fOk/SMJd9F/K9kmD3tRpIGCakdhZLuQubG
+         +Q3Y+U8mC2jmnX/3sfxjaXCRtqR/Jr2+o4j5xwKtU9eE/EDrVqCRhyx3LYVjKqvWb97e
+         bH0xrrmzDjopCfjS8rcYdi1YA+8UYJVmkF51Bh8sq3I88hwSOw+7oWx1cBirEoLi6fZI
+         H6bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:references:cc:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=NF85bY7CyCyms3kGHNrlup6BUr7VPZdFE3uy+G87pf4=;
-        b=tIO42Dq9TAhjmcOO8TRvo/UhsxM0RT1XZzBEpqMI5YLcnegMIJjkUAPXOD+ACwRPHN
-         G/ddatZvq6x31NhCAxzQ4BE/aGBHUuGEbO8I0JjYH7R+/aKDtInE/U119oNc+zvHEQ0Z
-         fEb+HdXg33lZl3b4WgPpzE6MHlbUP34w4XspU4ENbgYu/8a1VWal2By9Xg1gF6wr2Lrf
-         uCCIwDhvSND+Gl/JRdsHRaRyaFBbnUBgdtXJnZG9yFQPtjeOxtTOXl8QSjIdnIrkxebB
-         mBhnyvfXc0jSvviMnWCDZ0OAK3KQxO7Bpf2ClIK9Kph2y6xkITmPKFRx0iKRblFUrUdQ
-         qT3g==
-X-Gm-Message-State: AOAM533pgaz94p7QD+ZTR8JsI9KcVCrnIunXU6kn2vdQBp6rI3mejseJ
-        opxz4fm5lXBB/1Maj8vMgX741D2r
-X-Google-Smtp-Source: ABdhPJyef2DEb1WXxTiPSNJoEHPbZIXJlJ6m/poEQ4keSFr0JzuM2PzgR2K3T9iIbvBCKtwEy734Aw==
-X-Received: by 2002:a17:906:4e57:: with SMTP id g23mr17499267ejw.522.1591556088971;
-        Sun, 07 Jun 2020 11:54:48 -0700 (PDT)
-Received: from [192.168.100.3] ([178.70.188.25])
-        by smtp.gmail.com with ESMTPSA id di14sm10126536edb.77.2020.06.07.11.54.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Jun 2020 11:54:48 -0700 (PDT)
-From:   F8ER <the.f8er@gmail.com>
-Subject: Re: [PATCH] doc: fix a typo inside `--bare` section
-To:     Junio C Hamano <gitster@pobox.com>
-References: <pull.649.git.1591445695220.gitgitgadget@gmail.com>
- <xmqqh7vmn72l.fsf@gitster.c.googlers.com>
-Cc:     git@vger.kernel.org, gitgitgadget@gmail.com, the.f8er@gmail.com
-Message-ID: <65cb716b-2766-e066-1d0e-21c899223060@gmail.com>
-Date:   Sun, 7 Jun 2020 20:54:46 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KqwyX+3w7vrVkWsb3B/xln4OGXHs2KZdTpaM6HlRcOI=;
+        b=k5NYgz1fG7FahRRHC9fmZWZfQLvt302W4jZG3eEBBjm8eS+ut+Ddm0d2krVL/8B2Kv
+         3vkFKS3ooDdG8Tm0fZQhUXbGHJQjGRMcBRme6kaiC+nQX0qGzQYT3mA52VnLKJ8WK829
+         x1gqbv2pefFLTx0cUgomo3zKRwkuZnACdJZbs3rIQQbv2sJQR0mUagSd1lVxMqI9JU/G
+         RcK52bWwTre5bGQ6gSllmwrGARH0xJ8PoBcpa2fPq2fntLK+dWJ4XoxrjrdY9Bg0a9oR
+         lqyZoHEQ7miBoetOhlH4tSvFa7AYrtqWEoOQSjalz+wI2nSnNWbiQemBeafcDWncoInC
+         CCNQ==
+X-Gm-Message-State: AOAM531AAQfiyqPe+oXCZaNFL3uIe3EroUMOjxKT3q7Q18SwuVbBvwuO
+        L6PBHRIaBBxOnSLI4OAYDCimKEPQ
+X-Google-Smtp-Source: ABdhPJzpXW0WhUUlK+p1J/iXRJWP066BHrHXJLWZhPX6w3Mzc4MELdQxX9mzxhvIgCXDlMJI18LX8A==
+X-Received: by 2002:a63:444a:: with SMTP id t10mr17897155pgk.149.1591558470417;
+        Sun, 07 Jun 2020 12:34:30 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4064:58e:925f:60d1:f386:43d2:4abb])
+        by smtp.gmail.com with ESMTPSA id n69sm158595pfd.171.2020.06.07.12.34.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Jun 2020 12:34:29 -0700 (PDT)
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     git@vger.kernel.org
+Cc:     jnareb@gmail.com, stolee@gmail.com
+Subject: [GSOC Patch v2 0/4] Move generation, graph_pos to a slab
+Date:   Mon,  8 Jun 2020 01:02:33 +0530
+Message-Id: <20200607193237.699335-1-abhishekkumar8222@gmail.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
+References: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqh7vmn72l.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: ru
-X-Antivirus: Avast (VPS 200606-0, 06/06/2020), Outbound message
-X-Antivirus-Status: Clean
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Junio C Hamano,
+The struct commit is used in many contexts. However, members
+`generation` and `graph_pos` are only used for commit graph related
+operations and otherwise waste memory.
 
-Thanks!
+This wastage would have been more pronounced as we transition to
+generation number v2, which uses 64-bite generation number instead of
+current 32-bits.
 
-On 6/7/2020 7:01 PM, Junio C Hamano wrote:
+Abhishek Kumar (4):
+  commit-graph: introduce commit_graph_data_slab
+  commit: move members graph_pos, generation to a slab
+  commit-graph: use generation directly when writing commit-graph
+  commit-graph: minimize commit_graph_data_slab access
 
-> tells us that adding "environment variable" is probably the right
-> thing to do,
-What should I do next? I mean, how to achieve this? This is the first 
-time me doing that.
-> but we should not add the variable dereference '$' in
-> front (and fix some that do spell $GIT_PAGER etc. to lose '$').
+ alloc.c                         |   2 -
+ blame.c                         |   2 +-
+ bloom.c                         |   7 +-
+ commit-graph.c                  | 127 ++++++++++++++++++++++++--------
+ commit-graph.h                  |  10 +++
+ commit-reach.c                  |  69 ++++++++++-------
+ commit.c                        |   8 +-
+ contrib/coccinelle/commit.cocci |  18 +++++
+ revision.c                      |  20 +++--
+ 9 files changed, 190 insertions(+), 73 deletions(-)
 
-Should I remove it from commit, if so, how to?
+-- 
+2.27.0
 
+Thanks to Dr. Stolee, Dr. Narebski and Junio for their excellent
+suggestions.
 
-Best regards,
+Changes in v2:
+- Introduce struct commit_graph_data.
+- Merge `graph_pos`, `generation` slabs into a single,
+  `commit_graph_data` slab.
+- Use graph position for an intermediate check for generation, saving
+  the cost of initializing generation numbers.
+- Add an follow-up patch caching results of slab access in local
+  variables.
+- Move coccinelle transformation to commit.coccinelle instead of
+  creating new scripts.
+- Elaborate on removing default values from init_commit_node().
+- Revert moving macro constants (e.g. COMMIT_NOT_FROM_GRAPH,
+  GENERATION_NUMBER_ZERO) from commit.h to commit-graph.h
 
-Mark
+About the failing diff-submodule related tests, I came up with a
+plausible explanation but could be wrong on this:
 
+Commit slabs rely on uniqueness of commit->index to access data. But
+submodules are repositories on their own, alloc_commit_index(), which
+relies on repository->parsed_objects->commit_count no longer returns
+unique values.
+
+A commit belong to super repo and another belonging to submodule might
+have the same index but different generation and graph positions.
+
+This could be fixed by defining commit index as maximum of commit index
+of all repositories + 1 but I have no idea how that would impact other
+code.
+
+Thoughts on this?
+
+Regards
+Abhishek
