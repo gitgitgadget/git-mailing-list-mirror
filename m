@@ -2,201 +2,102 @@ Return-Path: <SRS0=SopW=7V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39A8CC433DF
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 21:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D6D3C433E0
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 21:25:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0836C206D5
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 21:23:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E69AA206D5
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 21:25:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hle0yCcL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F/Hbpqwr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbgFHVXz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 17:23:55 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64363 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726740AbgFHVXz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 17:23:55 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 572AACB3B9;
-        Mon,  8 Jun 2020 17:23:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Norz0vv1ifLlxPS9BC3bCG0D5YY=; b=Hle0yC
-        cL+W3P1V6Mj2Sv+nbobdRk8/kxL5TxxYF6/N9LgwXTgz9Z26LN4Dhy6JUG8kJvd1
-        1P1vXWfrU6eJ+x0UjJe6qW1XVAd+jy8Rsc9JibDxhzaCclNp50H7NF9rNADJTQ3Q
-        YKtJw3oYV2za4G6qAD+3j7USn4xItuAh5yV+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cr5OFo8JNNzVBPwyDI+6AstSoCFRP6K9
-        sbFVV9IJdsbZWJW0MkLfNTGUcdMXNupwpTT+v2fNkwbk74XVCqh6eJ6wwwKehZ8/
-        cSPv4Su229ZctM0s3fdSWZnm4OOQCsB7v5UuVzWy19Dmwsnd5dPaIiQtSk7Dyl4W
-        FdoaNTKjuhw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FD78CB3B8;
-        Mon,  8 Jun 2020 17:23:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9215DCB3B7;
-        Mon,  8 Jun 2020 17:23:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Jonathan =?utf-8?Q?M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: [PATCH 2/8] worktree: prune corrupted worktree even if locked
-References: <20200608062356.40264-1-sunshine@sunshineco.com>
-        <20200608062356.40264-3-sunshine@sunshineco.com>
-Date:   Mon, 08 Jun 2020 14:23:44 -0700
-In-Reply-To: <20200608062356.40264-3-sunshine@sunshineco.com> (Eric Sunshine's
-        message of "Mon, 8 Jun 2020 02:23:50 -0400")
-Message-ID: <xmqqzh9djlpb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 56663A22-A9CE-11EA-B3DE-B0405B776F7B-77302942!pb-smtp20.pobox.com
+        id S1726755AbgFHVZJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Jun 2020 17:25:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726730AbgFHVZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 17:25:09 -0400
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59DF2C08C5C2
+        for <git@vger.kernel.org>; Mon,  8 Jun 2020 14:25:09 -0700 (PDT)
+Received: by mail-qv1-xf41.google.com with SMTP id r16so9085549qvm.6
+        for <git@vger.kernel.org>; Mon, 08 Jun 2020 14:25:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=mEEXrDPMqlrpaaVoTsusso4+wuxOUKPhSyFsfUkKvlI=;
+        b=F/HbpqwriOe4oZlJLp+mjH/E+SobEE6TRkR1bCp4475Q2StPlUZP+l36tYni5FNFiu
+         LTrBw5Qlr2ddorCw8MFZRnEFV55pNwh/L3lychdrXXVsfHWAmaQJDbiluxbbJqikej2Z
+         YKt2qR77WjV3NKs04HZewfS3kcu19Ue+FGz6vIjAMzJuml21yHuuy5uA9P63ndExMoEd
+         J2A0G+LtLdBD040ddDUPd0sVI8dfVcsYplN3m+AZDLyv8IXQcslanUTqOQB/znS4NBrL
+         Tg7nZIIFrti1h6c9SYyHgLnsunQW2qZcbwbvZM49WXWG3j1yfW5vjDcKOjSt59HQF1zP
+         O4HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=mEEXrDPMqlrpaaVoTsusso4+wuxOUKPhSyFsfUkKvlI=;
+        b=DJgJ6aYMFSTPUpu9jFMuHhgJoQ6JROsrQVj3GSzCSbX+KSMtXfpguNzQoTf9sm5ZBt
+         iPF9cRjp9Rzj6+Xd8B8aWfO9iu3068GBbmluN8DmuqXVEKOVpewGPhSzC2nKXbIA8+ma
+         J0DkRPD6+gWEdpKOStYRpqqi0eSWQ6wyfNuNcs5r4uSe5oWnmBILA0KPz6p/Ua2jWoXl
+         bWcViDqtdNwFmQq1FMQ+3FZIH/dRDrl+kDLeKbLMG0Bn+Fkr82XyjAYEpAh2j684dkrs
+         3u47Loz4iCJ8oLfxHZtCOuAINU8aaTfcK6D1YDSWJlgLyl+ZNndyKCVz5gUfeDPzA7sn
+         Puzg==
+X-Gm-Message-State: AOAM53132I6R1zUO+0AEh5wD8eJWiw5s1ocFFHj5IT4rEos8dQFNLhv2
+        qxgsJ/S/mvcj0wL5RBYQUqw=
+X-Google-Smtp-Source: ABdhPJy0oWdra9ShhWJoOg6gRAa4Fk9G0tEo2WE8+D8xlEeQyg7iyYBqR2H/+lA19FkIq36ycEYOGA==
+X-Received: by 2002:a0c:fd24:: with SMTP id i4mr698014qvs.69.1591651508502;
+        Mon, 08 Jun 2020 14:25:08 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id p4sm6567277qkf.53.2020.06.08.14.25.07
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Mon, 08 Jun 2020 14:25:07 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v2] docs: mention MyFirstContribution in more places
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <20200608211132.194267-1-emilyshaffer@google.com>
+Date:   Mon, 8 Jun 2020 17:25:05 -0400
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <6BD1731B-8D1D-4A07-BE23-70AEB740C455@gmail.com>
+References: <20200608211132.194267-1-emilyshaffer@google.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi Emily,
 
-> The .git/worktrees/<id>/locked file created by "git worktree lock" is
-> intended to prevent a missing worktree -- which might reside on a
-> removable device or network share -- from being pruned. It is not meant
-> to prevent a corrupt worktree from being pruned, yet it short-circuits
-> almost all "git worktree prune" corruption checks.
-
-The '.git/worktrees/<id>/locked' file is what 'It' in "It is not
-meant to" refers to, but the 'it' in "yet it short-circuits" cannot
-refer to the same thing---my reading hiccuped there.
-
-"Its presence causes most of the corruption checks skipped by 'git
-worktree prune'", perhaps.
-
-> This can make it
-> impossible[1] to prune a worktree which becomes corrupt after the lock
-> is placed since "git worktree prune" won't prune it, and it may not even
-> be possible to unlock it with "git worktree unlock", depending upon the
-> nature of the corruption.
-
-The latter is because... "worktree unlock" does not skip corruption
-check and refuses to unlock a corrupted worktree, or something?
-
-> Therefore, delay the check for .git/worktrees/<id>/locked until after
-> all forms of corruption have been checked so that it behaves as
-> originally intended (to wit: preventing pruning of a missing worktree
-> only).
-
-An alternative could be to allow unlocking a worktree even if it is
-corrupt, and with that, such an unprunable corrupt worktree can
-first be unlocked and then pruned?  A naive first thought is that
-might make it slightly safer, but the reason why this approach was
-taken is because the end user already said 'prune' so that should
-trump whatever ".git/worktrees/<id>/" has?
-
-But the intent of locking a worktree is "make sure that the end user
-is aware of the fact that it is locked before allowing the worktree
-to be pruned", isn't it?  Unless there is a way for a corruption to
-add the "locked" file the end-user did not intend to have, if we
-sense the "locked" file given to a worktree, shouldn't we honor that
-existing "locked" file's intent?
-
-I am growing skeptical about the approach taken by this step.  There
-must be something missing that I may become aware of after reading
-the remainder of the series.
-
-	... goes back and digs a bit ...
-
-This came from 23af91d1 (prune: strategies for linked checkouts,
-2014-11-30) which explains:
-
-    To prevent `git prune --worktrees` from deleting a
-    $GIT_DIR/worktrees entry (which can be useful in some
-    situations, such as when the entry's working tree is stored on a
-    portable device), add a file named 'locked' to the entry's
-    directory.
-
-Notice that "in some situations, such as" gives just one example,
-and it is clear that it is the only envisioned use case.
-
-It therefore feels more sensible to honor the "locked" file whether
-the actual worktree (or just a part of it) is accessible or not when
-"prune" gets exercised.  After all, if some parts of the actual
-worktree gets moved to removal media when not in use, such a partial
-removal may make the worktree appear as if it is "corrupt".  We do
-not want to declare that it is corrupt and we ignore the locked
-state, or do we?
-
-Thanks.
-
-> [1]: Impossible, that is, without manually mucking around with
->      .git/worktrees/<id>/ administrative files.
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> Le 8 juin 2020 =C3=A0 17:11, Emily Shaffer <emilyshaffer@google.com> a =
+=C3=A9crit :
+>=20
+> While the MyFirstContribution guide exists and has received some use =
+and
+> positive reviews, it is still not as discoverable as it could be. Add =
+a
+> reference to it from the GitHub pull request template, where many
+> brand-new contributors may look. Also add a reference to it in
+> SubmittingPatches, which is the central source of guidance for patch
+> contribution.
+>=20
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > ---
->  builtin/worktree.c        |  4 ++--
->  t/t2401-worktree-prune.sh | 14 ++++++++++++--
->  2 files changed, 14 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 9b15f19fc5..f7351413af 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -79,8 +79,6 @@ static int prune_worktree(const char *id, struct strbuf *reason)
->  		strbuf_addstr(reason, _("not a valid directory"));
->  		return 1;
->  	}
-> -	if (file_exists(git_path("worktrees/%s/locked", id)))
-> -		return 0;
->  	if (stat(git_path("worktrees/%s/gitdir", id), &st)) {
->  		strbuf_addstr(reason, _("gitdir file does not exist"));
->  		return 1;
-> @@ -121,6 +119,8 @@ static int prune_worktree(const char *id, struct strbuf *reason)
->  	path[len] = '\0';
->  	if (!file_exists(path)) {
->  		free(path);
-> +		if (file_exists(git_path("worktrees/%s/locked", id)))
-> +			return 0;
->  		if (stat(git_path("worktrees/%s/index", id), &st) ||
->  		    st.st_mtime <= expire) {
->  			strbuf_addstr(reason, _("gitdir file points to non-existent location"));
-> diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
-> index b7d6d5d45a..9be8e97d66 100755
-> --- a/t/t2401-worktree-prune.sh
-> +++ b/t/t2401-worktree-prune.sh
-> @@ -69,13 +69,23 @@ test_expect_success 'prune directories with gitdir pointing to nowhere' '
->  '
->  
->  test_expect_success 'not prune locked checkout' '
-> -	test_when_finished rm -r .git/worktrees &&
-> -	mkdir -p .git/worktrees/ghi &&
-> +	test_when_finished rm -fr .git/worktrees ghi &&
-> +	git worktree add ghi &&
->  	: >.git/worktrees/ghi/locked &&
-> +	rm -r ghi &&
->  	git worktree prune &&
->  	test -d .git/worktrees/ghi
->  '
->  
-> +test_expect_success 'prune corrupt despite lock' '
-> +	test_when_finished rm -fr .git/worktrees ghi &&
-> +	mkdir -p .git/worktrees/ghi &&
-> +	: >.git/worktrees/ghi/gitdir &&
-> +	: >.git/worktrees/ghi/locked &&
-> +	git worktree prune &&
-> +	! test -d .git/worktrees/ghi
-> +'
-> +
->  test_expect_success 'not prune recent checkouts' '
->  	test_when_finished rm -r .git/worktrees &&
->  	git worktree add jlm HEAD &&
+>=20
+> Since v1, only the tiny nit - took Philippe's advice to refer to a
+> "step-by-step" tutorial, instead of an "interactive" tutorial.
+>=20
+> Thanks.
+> - Emily
+
+Thanks. Looks good.=20
+
+Reviewed-by: Philippe Blain <levraiphilippeblain@gmail.com>=
