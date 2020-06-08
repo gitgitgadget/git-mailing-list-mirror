@@ -2,120 +2,100 @@ Return-Path: <SRS0=SopW=7V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3793C433E0
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 22:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C757C433DF
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 22:10:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 845DF206D5
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 22:07:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CE842076A
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 22:10:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UdzqxJEw"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PIba9aC0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726740AbgFHWHB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 18:07:01 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58157 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726723AbgFHWHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 18:07:01 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E3DB8CC1F9;
-        Mon,  8 Jun 2020 18:06:57 -0400 (EDT)
+        id S1726730AbgFHWKv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Jun 2020 18:10:51 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50385 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726598AbgFHWKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 18:10:51 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EF221C9778;
+        Mon,  8 Jun 2020 18:10:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TXo536u1/q5xlhUSXtyAg64mbQA=; b=UdzqxJ
-        EwWOsUwQOauFR06kHvHSu//ykSVmb3NcimwL5ZPv1QYaMZ1VAVeQ0H5BrkmRYd+e
-        AquZn/BvviXQr9/vWXD/VnbHmQ1z/Hn/vjHbwYMrs7q1m9Tcgwf49HvRjaBIK+uN
-        g0mv2qeU47u4f18wqPnD6jB7MGnSFxz5n2q1I=
+        :content-type; s=sasl; bh=kbclEE4Hwz1avcZ+q/mZ+ci76uA=; b=PIba9a
+        C0dWTZA9lQbDyWjyzWYriVl8VDKkpCbp0Wfrf3lFZKtjost14Kk8IaRXORH6OAH9
+        sPbS9E2LRxL/IiUA7zR07/zz5JLvZEwf6uIYlVStdZY9yMPa8BcmVEo1xoOjaOPm
+        qBCf/IMl0zLPhtVyDVzhfKc8XD6NXJPJTWGjc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Mp4MRk6KvIWslJEVWeRV5zrW2+Ano/uq
-        EHjaufj9OjmlU+Cc5Q93eOIG/xxL7QuoRo8opabVZLZM00UtPLAHnt8YuP4qsJy0
-        If4sdamhClh5mPziFch2xO/lSBIClRyOALeK6qpioFUzHvs9f5PQDnQUm7YT5cse
-        12RfTiiLVvg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DC142CC1F8;
-        Mon,  8 Jun 2020 18:06:57 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=DU6m4sIYd7Gr7K2oBQSBFqbovyq8lu9s
+        EsK/E3SMp/kDYIvY3d8AKu/motZ3WfvhgU9Hml8JQG8FOGGxaRZneIFy73jVHz/J
+        RSW+5ToNDRw8cV5n/pQU/joCl0MTLzscrOvVs2oaYM5MWopkjm9/B58DpO8eLtIH
+        8SBwO/p7ce4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E7CADC9777;
+        Mon,  8 Jun 2020 18:10:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 27AA1CC1F7;
-        Mon,  8 Jun 2020 18:06:55 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 39143C976B;
+        Mon,  8 Jun 2020 18:10:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Jonathan =?utf-8?Q?M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: [PATCH 8/8] worktree: make "move" refuse to move atop missing registered worktree
-References: <20200608062356.40264-1-sunshine@sunshineco.com>
-        <20200608062356.40264-9-sunshine@sunshineco.com>
-Date:   Mon, 08 Jun 2020 15:06:53 -0700
-In-Reply-To: <20200608062356.40264-9-sunshine@sunshineco.com> (Eric Sunshine's
-        message of "Mon, 8 Jun 2020 02:23:56 -0400")
-Message-ID: <xmqqeeqpjjpe.fsf@gitster.c.googlers.com>
+To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 2/8] cmake: generate the shell/perl/python scripts and templates, translations
+References: <pull.614.v2.git.1589302254.gitgitgadget@gmail.com>
+        <pull.614.v3.git.1590759624.gitgitgadget@gmail.com>
+        <f19794fdbc09cc3c57392dc522920f7b01691d88.1590759624.git.gitgitgadget@gmail.com>
+        <xmqqwo4uy20z.fsf@gitster.c.googlers.com>
+        <CAKiG+9Ue1fqrzqHduZY4Pnsh4q+Thqq618JymkonmVhGewmM1g@mail.gmail.com>
+        <CAKiG+9VcAx2xRFzrqQpXFc+sVuRZ2ydoVYTpCtWpi9z2Oa0fCw@mail.gmail.com>
+Date:   Mon, 08 Jun 2020 15:10:44 -0700
+In-Reply-To: <CAKiG+9VcAx2xRFzrqQpXFc+sVuRZ2ydoVYTpCtWpi9z2Oa0fCw@mail.gmail.com>
+        (Sibi Siddharthan's message of "Tue, 9 Jun 2020 01:37:56 +0530")
+Message-ID: <xmqqa71djjiz.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5D4DF54A-A9D4-11EA-9CE6-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E708E7A4-A9D4-11EA-8F2F-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
 
-> -	if (file_exists(dst.buf))
-> -		die(_("target '%s' already exists"), dst.buf);
-> +	check_candidate_path(dst.buf, force, worktrees, "move");
+> Hi Junio,
+>
+> I have done the suggested changes namely:
+> 1) Format code inside check_c_source_compiles/runs
+> 2) Moved the changelog of the patch series from the commit messages to
+> the cover letter
+> 3) parse for SCRIPT_LIB
+> 4) glob templates and po files
+> 5) add logic as to where the template file should be built.
+>
+> Any other changes I should do before I a new version of the patch series?
+>
+> Thank You,
+> Sibi Siddharthan
 
-OK.  Moving to a location that is already occupied by an existing
-file or a directory, even if that file or directory is not one of
-the existing worktree, used to die here, but check_candidate_path()
-performs that check and dies with almost the same message (it does
-not say 'target'), so there is no loss of safety here.  The check
-done in the check_candidate_path() helper is even better in that it
-allows an existing directory as long as it is empty.
+Sorry, but I read too many patch series that I do not remember
+glitches I pointed out in the previous round of individual topics.
 
-> diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
-> index 939d18d728..7035c9d72e 100755
-> --- a/t/t2403-worktree-move.sh
-> +++ b/t/t2403-worktree-move.sh
-> @@ -112,6 +112,27 @@ test_expect_success 'move locked worktree (force)' '
->  	git worktree move --force --force flump ploof
->  '
->  
-> +test_expect_success 'refuse to move worktree atop existing path' '
-> +	> bobble &&
-
-Style?
-
-> +	git worktree add --detach beeble &&
-> +	test_must_fail git worktree move beeble bobble
-> +'
-> +
-> +test_expect_success 'move atop existing but missing worktree' '
-> +	git worktree add --detach gnoo &&
-> +	git worktree add --detach pneu &&
-> +	rm -fr pneu &&
-> +	test_must_fail git worktree move gnoo pneu &&
-> +	git worktree move --force gnoo pneu &&
-> +
-> +	git worktree add --detach nu &&
-> +	git worktree lock nu &&
-> +	rm -fr nu &&
-> +	test_must_fail git worktree move pneu nu &&
-> +	test_must_fail git worktree --force move pneu nu &&
-> +	git worktree move --force --force pneu nu
-> +'
-> +
->  test_expect_success 'move a repo with uninitialized submodule' '
->  	git init withsub &&
->  	(
+So asking that question is waste of both of our times.  Just use the
+time necessary to compose that message to instead proofread one more
+time, scan the review thread of previous round and make sure you
+took everybody's input into consideration (you do not have to follow
+everything other people said---you just need to be able to solidly
+stand behind the decision you made to follow or not follow them in
+your latest version).
 
 Thanks.
