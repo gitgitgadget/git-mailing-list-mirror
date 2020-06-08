@@ -2,102 +2,174 @@ Return-Path: <SRS0=SopW=7V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E86C3C433E0
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 12:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD2F4C433DF
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 13:26:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C36CD2072F
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 12:40:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD2A82072F
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 13:26:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GtoI/rj8"
+	dkim=pass (2048-bit key) header.d=niceguyit.biz header.i=@niceguyit.biz header.b="N/M6fbmU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728591AbgFHMkU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 08:40:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53570 "EHLO
+        id S1729771AbgFHN0V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Jun 2020 09:26:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726660AbgFHMkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 08:40:14 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2964C08C5C2
-        for <git@vger.kernel.org>; Mon,  8 Jun 2020 05:40:12 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id s13so13460433otd.7
-        for <git@vger.kernel.org>; Mon, 08 Jun 2020 05:40:12 -0700 (PDT)
+        with ESMTP id S1728799AbgFHN0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 09:26:20 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34522C08C5C2
+        for <git@vger.kernel.org>; Mon,  8 Jun 2020 06:26:19 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id i74so15275227oib.0
+        for <git@vger.kernel.org>; Mon, 08 Jun 2020 06:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=TzBGVqMaRlWZMpqwJKf77wx0kZYHpHslKwqMy13kPE8=;
-        b=GtoI/rj8JUThK3smoAwkgjetMA2zmpd9eWdVAKwUmOlAC8ONpIdBz8Rz09GeX6VS0t
-         OFvHrsYKbnxmuUaw5NKEujoHmybKKRuG32KrgjXli+19Nohwa+mG96YUmdbWvClTmMwV
-         gSFpIIRpBhnmd+8ePDDqCMKww6pNljLMJ5ZratlSTCk4/bXLaf8cT0GgDtSaYKR8U0e3
-         OeMPdPGqcb+3aE/ucQkP/NzGlUnyIsUtbInh/42l2O+GWC+yA9qfpti3R9SYS/+QkIfg
-         IAOnAd2kS1NiEPG8QpmWjM/XDE76cM+WXCOA9wNk7HBKX+MBAIEJ3+yBqn3fDhum81VL
-         5XYQ==
+        d=niceguyit.biz; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=iU09kZGoEw1gKqG+wci7m7jN7h5/2D0F1HFKQb97PyU=;
+        b=N/M6fbmUxL0GZcmBHeNQwRLYMzWyj0EVLZMN1wSaIHWRVh160TYPXmsHDeBfkQmqgD
+         ASdC2YTgYRgARJCJ9b1p09uXsQrZFKPy/qWimt2BTuWNEoPvBABE4N6cLPkChDdynjHi
+         SRLXwv4xjP+FA4Zw6o3ke8SR4gLmuYp3yFuRR8ueKwvkIvP+vBrkigddYvJLyRCjWbgU
+         ByORXBhPv1yPLW1ECtFNbGuSkI4+CS7ehZ0ie9USwVbbq6LywbUnxkP4e9cEmljOxpKP
+         9NpjX7DwAMvM53fqFQ6mynu9lOeWCUrcxVjRkRw+mJUGomA5LPcMtZOesT9npd/7reaf
+         znOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=TzBGVqMaRlWZMpqwJKf77wx0kZYHpHslKwqMy13kPE8=;
-        b=YWw5aNPXT4XvPft3+bKboApixF0TOcvu9jhnw/lbvnWhewUQvONO03sw56GKa89Yxn
-         Oy1oe9dPG5r+6HtjqibmNWuPiliUgGlhp4l/cJsVjyhWyZQl8xDsOBtCY+x2QpTwtuI/
-         Fm4Kbr/G398OW7g1fctpHuMQck4+flEK//VpRbYqeNiPzZEaW7hFduxwtGe9Cpk4AaSc
-         ScOiDR4Dh566lousEwykHmeYAr98amgCbSTPwZBGrSO+u+Hm3yl+mMWokuIdWVmsxf5M
-         llMTIplPdYrTr7TWwp45BYwbcLKqwylswx4cOlDcjEo9RGpOlzB3Xn3yZ0Dk53AQx13s
-         IDKw==
-X-Gm-Message-State: AOAM532zKQZccYjF9+RDx/8xPBdHDE+jQu1vCjPTJX7Rbsg5gOGi8zBr
-        hFASwCF7kpYdlo2Vv1a+TPnVNwpP9XI=
-X-Google-Smtp-Source: ABdhPJwLm5mRAT13IFoAacWmqIrLv8u//bldXpGaLX5lOiS7Ee35rZO/+icGs5WsVjn0QWnNqGjynA==
-X-Received: by 2002:a9d:3f06:: with SMTP id m6mr3655807otc.65.1591620010792;
-        Mon, 08 Jun 2020 05:40:10 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id n187sm2460139oig.0.2020.06.08.05.40.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jun 2020 05:40:10 -0700 (PDT)
-Subject: Re: not sure if this is appropriate -- GH/Github question
-To:     bruce <badouglas@gmail.com>, git@vger.kernel.org
-References: <CAP16ngr=cTTUzSb8=beKu5wtaDCXL2tECUSUg8t+1HS12O972A@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0f59fdf8-25df-e4d8-c0a1-75e3b77d15f3@gmail.com>
-Date:   Mon, 8 Jun 2020 08:40:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
- Thunderbird/77.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=iU09kZGoEw1gKqG+wci7m7jN7h5/2D0F1HFKQb97PyU=;
+        b=Cc9WK62RaEKSI2YniFLYvnwnPkfI793PDKMRUhH2Qb4uN8MKodi3msmIh520swE1fW
+         3jHQws0GOLoPuHcfN2sTKnZ1AhqfQt1a2+4zTex0SnyfyKyArqByNsbG/9q1GhngFM6j
+         YrejUt4JTn+hphrQ1Gg6PLmrJ+QK11qGP3aG3tQryvqtZlPjkqhhn1wW9ap2pdUEbPtU
+         StmOc5wCGHKXgDBa7dTet+P7HQlOD0S8ataa7ec0jyszgchVhdQRJLt+MPG0VwA5e9SC
+         ZV7D1atnzYjwzkiL19e95p/+KPiK46a85JihrvJ6wiObNTN1YzHqG+nyonqUV6+dmNIM
+         1jZA==
+X-Gm-Message-State: AOAM532H2iiPgJMHqX82rj1O+GvYW8nyuG519WhWTJTxF0tfHEZf8Z5U
+        Ed4qiOwqd+ED/PA8XWYgTepGTHft1og6xE42hOKO5+0eEYA=
+X-Google-Smtp-Source: ABdhPJysa5v58d2Im5ZeNAiVoNMdWad73f0s5PP/g+OBlMCqbTLeMvt5iFS6q3boql+0+VhocHx94vsAr0JPrbu/hj4=
+X-Received: by 2002:aca:415:: with SMTP id 21mr10768654oie.112.1591622777980;
+ Mon, 08 Jun 2020 06:26:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAP16ngr=cTTUzSb8=beKu5wtaDCXL2tECUSUg8t+1HS12O972A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   "David Randall {Nice Guy IT}" <david@niceguyit.biz>
+Date:   Mon, 8 Jun 2020 09:26:07 -0400
+Message-ID: <CAKCYOsMTRm3Zb733OFWDEmBh+V_z1oU+KY568=b9U=tZqXaPfQ@mail.gmail.com>
+Subject: Trailing slash conflicts with url.<base>.insteadOf
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/6/2020 4:36 PM, bruce wrote:
-> Testing the "create fork" process using the "GH" Github cli.
+Hey everyone,
 
-You are correct, this is not the appropriate place. GitHub and
-Git are two different things. The most concise description I've
-seen is the following from StackOverflow [1]:
+I ran into an edge case with the url.<base>.insteadOf option and
+trailing slashes.
 
-> Git is a revision control system, a tool to manage your
-> source code history.
-> 
-> GitHub is a hosting service for Git repositories.
-> 
-> So they are not the same thing: Git is the tool, GitHub is
-> a service for projects that use Git.
+I can clone a git repo with a trailing slash.
+    $ git clone https://github.com/NiceGuyIT/git-test-parent/
+    Cloning into 'git-test-parent'...
+    remote: Enumerating objects: 4, done.
+    remote: Counting objects: 100% (4/4), done.
+    remote: Compressing objects: 100% (3/3), done.
+    remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+    Receiving objects: 100% (4/4), done.
 
-(Note: I edited "the service" with "a service".)
+Cloning with SSH and a trailing slash fails. This is expected.
+    $ git clone ssh://git@github.com/NiceGuyIT/git-test-parent/
+    Cloning into 'git-test-parent'...
+    ERROR: Repository not found.
+    fatal: Could not read from remote repository.
 
-[1] https://stackoverflow.com/a/13321586/127088
+    Please make sure you have the correct access rights
+    and the repository exists.
 
-Please create an issue at https://github.com/cli/cli instead
-for issues related to the GH client.
+Inside a repo, I can add a submodule with a trailing slash using HTTPS.
+    $ cd git-test-parent
+    $ git submodule add https://github.com/NiceGuyIT/git-test-child/
+    Cloning into
+'/home/user/Projects/git-test/git-test-parent/git-test-child'...
+    remote: Enumerating objects: 4, done.
+    remote: Counting objects: 100% (4/4), done.
+    remote: Compressing objects: 100% (3/3), done.
+    remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+    Receiving objects: 100% (4/4), done.
+    $ cat .gitmodules
+    [submodule "git-test-child"]
+            path = git-test-child
+            url = https://github.com/NiceGuyIT/git-test-child/
 
-Thanks,
--Stolee
+Adding a submodule with a trailing slash using SSH faills. Again, this
+is expected.
+    $ cd git-test-parent
+    $ git submodule add ssh://git@github.com/NiceGuyIT/git-test-child.git/
+    Cloning into
+'/home/user/Projects/git-test/git-test-parent/git-test-child'...
+    ERROR: Repository not found.
+    fatal: Could not read from remote repository.
+
+    Please make sure you have the correct access rights
+    and the repository exists.
+    fatal: clone of
+'ssh://git@github.com/NiceGuyIT/git-test-child.git/' into submodule
+path '/home/user/Projects/git-test/git-test-parent/git-test-child'
+failed
+
+The edge case comes from Golang's FAQ[1] why it uses HTTPS to clone a
+repo. Specifically, how to
+authenticate against private repos when using `go get`. I'm using the
+2nd option which uses git's
+`url.<base>.insteadOf` configuration to replace HTTPS URLs with SSH
+urls. I added this to my
+`~/.gitconfig`.
+    [url "ssh://git@github.com/"]
+        insteadOf = https://github.com/
+
+With this option configured, adding a submodule via HTTPS with a
+trailing slash fails. The fact this
+fails is not that surprising.
+    $ git submodule add https://github.com/NiceGuyIT/git-test-child/
+    Cloning into
+'/home/user/Projects/git-test/git-test-parent/git-test-child'...
+    ERROR: Repository not found.
+    fatal: Could not read from remote repository.
+
+    Please make sure you have the correct access rights
+    and the repository exists.
+    fatal: clone of 'https://github.com/NiceGuyIT/git-test-child/'
+into submodule path
+'/home/user/Projects/git-test/git-test-parent/git-test-child' failed
+
+The problem comes from working with other git repos where they do not
+have this option configured
+and add submodules with a trailing slash. As shown above, the trailing
+slash is included in
+`.gitmodules`. `git clone --recursive` will fail if submodules were
+added with trailing slashes and
+you have `insteadOf` configured to replace HTTPS with SSH. I ran into
+this problem[2] when trying to
+`git submodule update --init --recursive` and having it fail on some
+repos but not all repos.
+
+I'm using git version 2.26.2 on openSUSE Leap 15.1. I don't have the
+capacity to test a newer
+version or compile the latest version. I've added a submodule with a
+trailing slash to
+the above project. To reproduce this, add the `insteadOf` option
+mentioned above to your
+`~/.gitconfig` and perform a recursive clone. The parent repo will be
+cloned but not the submodules.
+    git clone --recursive https://github.com/NiceGuyIT/git-test-parent
+
+Is it possible to remove trailing slashes on HTTPS URLs before doing
+the URL rewrite?
+
+Thank you for providing great software!
+
+David
+
+
+[1]: https://golang.org/doc/faq#git_https
+[2]: https://github.com/purpleidea/mgmt/issues/602#issuecomment-640063867
