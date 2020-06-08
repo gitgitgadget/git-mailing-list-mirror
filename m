@@ -2,174 +2,198 @@ Return-Path: <SRS0=SopW=7V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD2F4C433DF
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 13:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 107C8C433DF
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 13:45:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD2A82072F
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 13:26:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6392206C3
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 13:45:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=niceguyit.biz header.i=@niceguyit.biz header.b="N/M6fbmU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uwEXVayd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729771AbgFHN0V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 09:26:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60776 "EHLO
+        id S1729771AbgFHNpQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Jun 2020 09:45:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728799AbgFHN0U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 09:26:20 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34522C08C5C2
-        for <git@vger.kernel.org>; Mon,  8 Jun 2020 06:26:19 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id i74so15275227oib.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2020 06:26:19 -0700 (PDT)
+        with ESMTP id S1729553AbgFHNpQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 09:45:16 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83057C08C5C2
+        for <git@vger.kernel.org>; Mon,  8 Jun 2020 06:45:15 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id p15so8305997qvr.9
+        for <git@vger.kernel.org>; Mon, 08 Jun 2020 06:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=niceguyit.biz; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=iU09kZGoEw1gKqG+wci7m7jN7h5/2D0F1HFKQb97PyU=;
-        b=N/M6fbmUxL0GZcmBHeNQwRLYMzWyj0EVLZMN1wSaIHWRVh160TYPXmsHDeBfkQmqgD
-         ASdC2YTgYRgARJCJ9b1p09uXsQrZFKPy/qWimt2BTuWNEoPvBABE4N6cLPkChDdynjHi
-         SRLXwv4xjP+FA4Zw6o3ke8SR4gLmuYp3yFuRR8ueKwvkIvP+vBrkigddYvJLyRCjWbgU
-         ByORXBhPv1yPLW1ECtFNbGuSkI4+CS7ehZ0ie9USwVbbq6LywbUnxkP4e9cEmljOxpKP
-         9NpjX7DwAMvM53fqFQ6mynu9lOeWCUrcxVjRkRw+mJUGomA5LPcMtZOesT9npd/7reaf
-         znOQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Y7qdWf9llGMfaH+bTh3mQjmF+9rR2BqBsaEXLBoiso4=;
+        b=uwEXVaydtpeIAoV19W6WJ8umhXJ20SM8D2gRsF+znKlb5z/BUxO4PWPeE1M5mwU3dn
+         dY9nacAe8UL/LyK48Gox9vul0Vzejvf8u5diRq6jwENYfz9pN/+rwtVIOxrRQ2hGFXV4
+         hBkj9GKel6ymnFjOt0MeTjUU+A91Hbw/DW31c178WCrGkagY9A3unDEO7ydEAyBTehhc
+         tLEEcDgCRYskBNO3bAs8SZzizQKZ0eE7AzLgcpYfdZ7smhySLt3i6hwF2J6Jqla4ESjc
+         LSQBwmoXCFkntZ46iGoQbBPw8xOonH5bNFYMeYGwKzn6op+U184pXXmrIGo4h/4LZx80
+         rroA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=iU09kZGoEw1gKqG+wci7m7jN7h5/2D0F1HFKQb97PyU=;
-        b=Cc9WK62RaEKSI2YniFLYvnwnPkfI793PDKMRUhH2Qb4uN8MKodi3msmIh520swE1fW
-         3jHQws0GOLoPuHcfN2sTKnZ1AhqfQt1a2+4zTex0SnyfyKyArqByNsbG/9q1GhngFM6j
-         YrejUt4JTn+hphrQ1Gg6PLmrJ+QK11qGP3aG3tQryvqtZlPjkqhhn1wW9ap2pdUEbPtU
-         StmOc5wCGHKXgDBa7dTet+P7HQlOD0S8ataa7ec0jyszgchVhdQRJLt+MPG0VwA5e9SC
-         ZV7D1atnzYjwzkiL19e95p/+KPiK46a85JihrvJ6wiObNTN1YzHqG+nyonqUV6+dmNIM
-         1jZA==
-X-Gm-Message-State: AOAM532H2iiPgJMHqX82rj1O+GvYW8nyuG519WhWTJTxF0tfHEZf8Z5U
-        Ed4qiOwqd+ED/PA8XWYgTepGTHft1og6xE42hOKO5+0eEYA=
-X-Google-Smtp-Source: ABdhPJysa5v58d2Im5ZeNAiVoNMdWad73f0s5PP/g+OBlMCqbTLeMvt5iFS6q3boql+0+VhocHx94vsAr0JPrbu/hj4=
-X-Received: by 2002:aca:415:: with SMTP id 21mr10768654oie.112.1591622777980;
- Mon, 08 Jun 2020 06:26:17 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Y7qdWf9llGMfaH+bTh3mQjmF+9rR2BqBsaEXLBoiso4=;
+        b=MWsXXgXeay/NWDbsWkF61Sh3Fu0RFHVArsMCJEsAmnErtrXmLWxq9/1ZpIh3BliF1P
+         uY7DbcS52okjnkC78eTIsoUm6RrvVFLpvRf4l/ZuL6gDuSxheCY1w4zf+EHYp+eRYH3w
+         ElPPJ7Z5m0xFlVgi3EK2PqkybGR010oZBO8qQ9prPXl2z/lQAxlnLln8pbOwiLKeMSaT
+         Z8R0mVH42TV/LegzHD8ShkbodER8NFh1pL0PBnBj0LAACU3h3HnItuOHhAz6XQNmd1gY
+         fjAQxlZAQCbbyrp14EtgBIRjt+VM/eNQww2PQb9gxxNti+SU74C7F+4X+CHmI1t509sB
+         5KGQ==
+X-Gm-Message-State: AOAM532zPU8bdlxml1Y9Zwj9gv+HkwBEhXXuE/3dHuPG7y2KzLQszvfV
+        7XyRxuteZwC5NjBaxy0sDLL8i4ae7jE=
+X-Google-Smtp-Source: ABdhPJx1nFy9yjHy+EE2jOheJ4T0U0p5q70yKQn+JDc/dSsSGIaQ6ZNITPzMahkAeGTVVtklCEVxXg==
+X-Received: by 2002:a05:6214:10cb:: with SMTP id r11mr22525387qvs.203.1591623913888;
+        Mon, 08 Jun 2020 06:45:13 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id j22sm7166946qke.117.2020.06.08.06.45.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2020 06:45:13 -0700 (PDT)
+Subject: Re: [GSoC Patch 0/3] Move generation, graph_pos to a slab
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     jnareb@gmail.com, git@vger.kernel.org
+References: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
+ <b850637d-a7ca-e8f9-5009-657096ea2975@gmail.com>
+ <20200607195347.GA8232@szeder.dev> <20200608054827.GA2054@Abhishek-Arch>
+ <20200608083615.GD8232@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <13db757a-9412-7f1e-805c-8a028c4ab2b1@gmail.com>
+Date:   Mon, 8 Jun 2020 09:45:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
+ Thunderbird/77.0
 MIME-Version: 1.0
-From:   "David Randall {Nice Guy IT}" <david@niceguyit.biz>
-Date:   Mon, 8 Jun 2020 09:26:07 -0400
-Message-ID: <CAKCYOsMTRm3Zb733OFWDEmBh+V_z1oU+KY568=b9U=tZqXaPfQ@mail.gmail.com>
-Subject: Trailing slash conflicts with url.<base>.insteadOf
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200608083615.GD8232@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey everyone,
+On 6/8/2020 4:36 AM, SZEDER Gábor wrote:
+> On Mon, Jun 08, 2020 at 11:18:27AM +0530, Abhishek Kumar wrote:
+>> On Sun, Jun 07, 2020 at 09:53:47PM +0200, SZEDER Gábor wrote:
+>>> On Thu, Jun 04, 2020 at 10:22:27AM -0400, Derrick Stolee wrote:
+>>>> On 6/4/2020 3:27 AM, Abhishek Kumar wrote:
+>>>>> The struct commit is used in many contexts. However, members generation
+>>>>> and graph_pos are only used for commit-graph related operations and
+>>>>> otherwise waste memory.
+>>>>>
+>>>>> This wastage would have been more pronounced as transistion to
+>>>>> generation number v2, which uses 64-bit generation number instead of
+>>>>> current 32-bits.
+>>>>
+>>>> Thanks! This is an important step, and will already improve
+>>>> performance in subtle ways.
+>>>
+>>> While the reduced memory footprint of each commit object might improve
+>>> performance, accessing graph position and generation numbers in a
+>>> commit-slab is more expensive than direct field accesses in 'struct
+>>> commit' instances.  Consequently, these patches increase the runtime
+>>> of 'git merge-base --is-ancestor HEAD~50000 HEAD' in the linux
+>>> repository from 0.630s to 0.940s.
+>>>
+>>
+>> Thank you for checking performance. Performance penalty was something we
+>> had discussed here [1]. 
+>>
+>> Caching the commit slab results in local variables helped wonderfully in v2 [2].
+>> For example, the runtime of 'git merge-base --is-ancestor HEAD~50000 HEAD'
+>> in the linux repository increased from 0.762 to 0.767s. Since this is a
+>> change of <1%, it is *no longer* a performance regression in my opinion.
+> 
+> Interesting, I measured 0.870s with v2, still a notable increase from
+> 0.630s.
 
-I ran into an edge case with the url.<base>.insteadOf option and
-trailing slashes.
+This is an interesting point. The --is-ancestor is critical to the
+performance issue (as measured on my machine).
 
-I can clone a git repo with a trailing slash.
-    $ git clone https://github.com/NiceGuyIT/git-test-parent/
-    Cloning into 'git-test-parent'...
-    remote: Enumerating objects: 4, done.
-    remote: Counting objects: 100% (4/4), done.
-    remote: Compressing objects: 100% (3/3), done.
-    remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
-    Receiving objects: 100% (4/4), done.
+For "git merge-base HEAD~50000 HEAD" on the Linux repo, I get
 
-Cloning with SSH and a trailing slash fails. This is expected.
-    $ git clone ssh://git@github.com/NiceGuyIT/git-test-parent/
-    Cloning into 'git-test-parent'...
-    ERROR: Repository not found.
-    fatal: Could not read from remote repository.
+v2.27.0:
+real    0m0.515s
+user    0m0.467s
+sys     0m0.048s
 
-    Please make sure you have the correct access rights
-    and the repository exists.
+v2 series:
+real    0m0.534s
+user    0m0.481s
+sys     0m0.053s
 
-Inside a repo, I can add a submodule with a trailing slash using HTTPS.
-    $ cd git-test-parent
-    $ git submodule add https://github.com/NiceGuyIT/git-test-child/
-    Cloning into
-'/home/user/Projects/git-test/git-test-parent/git-test-child'...
-    remote: Enumerating objects: 4, done.
-    remote: Counting objects: 100% (4/4), done.
-    remote: Compressing objects: 100% (3/3), done.
-    remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
-    Receiving objects: 100% (4/4), done.
-    $ cat .gitmodules
-    [submodule "git-test-child"]
-            path = git-test-child
-            url = https://github.com/NiceGuyIT/git-test-child/
+With "--is-ancestor" I see the following:
 
-Adding a submodule with a trailing slash using SSH faills. Again, this
-is expected.
-    $ cd git-test-parent
-    $ git submodule add ssh://git@github.com/NiceGuyIT/git-test-child.git/
-    Cloning into
-'/home/user/Projects/git-test/git-test-parent/git-test-child'...
-    ERROR: Repository not found.
-    fatal: Could not read from remote repository.
+v2.27.0:
+real    0m0.591s
+user    0m0.539s
+sys     0m0.052s
 
-    Please make sure you have the correct access rights
-    and the repository exists.
-    fatal: clone of
-'ssh://git@github.com/NiceGuyIT/git-test-child.git/' into submodule
-path '/home/user/Projects/git-test/git-test-parent/git-test-child'
-failed
+v2 series:
+real    0m0.773s
+user    0m0.733s
+sys     0m0.040s
 
-The edge case comes from Golang's FAQ[1] why it uses HTTPS to clone a
-repo. Specifically, how to
-authenticate against private repos when using `go get`. I'm using the
-2nd option which uses git's
-`url.<base>.insteadOf` configuration to replace HTTPS URLs with SSH
-urls. I added this to my
-`~/.gitconfig`.
-    [url "ssh://git@github.com/"]
-        insteadOf = https://github.com/
+The --is-ancestor option [1] says
 
-With this option configured, adding a submodule via HTTPS with a
-trailing slash fails. The fact this
-fails is not that surprising.
-    $ git submodule add https://github.com/NiceGuyIT/git-test-child/
-    Cloning into
-'/home/user/Projects/git-test/git-test-parent/git-test-child'...
-    ERROR: Repository not found.
-    fatal: Could not read from remote repository.
+    Check if the first <commit> is an ancestor of the second
+    <commit>, and exit with status 0 if true, or with status
+    1 if not. Errors are signaled by a non-zero status that
+    is not 1.
 
-    Please make sure you have the correct access rights
-    and the repository exists.
-    fatal: clone of 'https://github.com/NiceGuyIT/git-test-child/'
-into submodule path
-'/home/user/Projects/git-test/git-test-parent/git-test-child' failed
+[1] https://git-scm.com/docs/git-merge-base#Documentation/git-merge-base.txt---is-ancestor
 
-The problem comes from working with other git repos where they do not
-have this option configured
-and add submodules with a trailing slash. As shown above, the trailing
-slash is included in
-`.gitmodules`. `git clone --recursive` will fail if submodules were
-added with trailing slashes and
-you have `insteadOf` configured to replace HTTPS with SSH. I ran into
-this problem[2] when trying to
-`git submodule update --init --recursive` and having it fail on some
-repos but not all repos.
+This _should_ be faster than "git branch --contains HEAD~50000",
+but it is much much slower:
 
-I'm using git version 2.26.2 on openSUSE Leap 15.1. I don't have the
-capacity to test a newer
-version or compile the latest version. I've added a submodule with a
-trailing slash to
-the above project. To reproduce this, add the `insteadOf` option
-mentioned above to your
-`~/.gitconfig` and perform a recursive clone. The parent repo will be
-cloned but not the submodules.
-    git clone --recursive https://github.com/NiceGuyIT/git-test-parent
+$ time git branch --contains HEAD~50000
+real    0m0.068s
+user    0m0.061s
+sys     0m0.008s
 
-Is it possible to remove trailing slashes on HTTPS URLs before doing
-the URL rewrite?
+So, there is definitely something going on that slows the
+"--is-ancestor" path in this case. But, the solution is not
+to halt the current patch (which likely has memory footprint
+benefits when dealing with a lot of tree and blob objects)
+and instead fix the underlying algorithm.
 
-Thank you for providing great software!
+Let's add that to the list of things to do.
 
-David
+>>>  create mode 100644 contrib/coccinelle/generation.cocci
+>>>  create mode 100644 contrib/coccinelle/graph_pos.cocci
+>>
+>> I appreciate the Coccinelle scripts to help identify
+>> automatic fixes for other topics in-flight. However,
+>> I wonder if they would be better placed inside the
+>> existing commit.cocci file?
+>
+> We add Coccinelle scripts to avoid undesirable code patterns entering
+> our code base.  That, however, is not the case here: this is a
+> one-time conversion, and at the end of this series 'struct commit'
+> won't have a 'generation' field anymore, so once it's merged the
+> compiler will catch any new 'commit->generation' accesses.  Therefore
+> I don't think that these Coccinelle scripts should be added at all.
 
+I disagree. We _also_ add Coccinelle scripts when doing one-time
+refactors to avoid logical merge conflicts with other topics in
+flight. If someone else is working on a parallel topic that adds
+references to graph_pos or generation member, then the scripts provide
+an easy way for the maintainer to update those references in the merge
+commit. Alternatively, the contributor could rebase on top of this
+series and run the scripts themselves to fix their patches before
+submission.
 
-[1]: https://golang.org/doc/faq#git_https
-[2]: https://github.com/purpleidea/mgmt/issues/602#issuecomment-640063867
+For example, this was done carefully in the sha->object_id
+conversion using contrib/coccinelle/object_id.cocci.
+
+Thanks,
+-Stolee
