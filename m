@@ -7,119 +7,159 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB560C433E0
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 06:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A97D6C433E1
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 06:25:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B108B2067B
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 06:25:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7DB1D2067B
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 06:25:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="klZUnWRD"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iIdtuOm6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728955AbgFHGZK (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728958AbgFHGZK (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 8 Jun 2020 02:25:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51940 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728916AbgFHGZD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 02:25:03 -0400
-Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8DCC08C5C3
-        for <git@vger.kernel.org>; Sun,  7 Jun 2020 23:25:03 -0700 (PDT)
-Received: by mail-io1-xd41.google.com with SMTP id c8so17341794iob.6
-        for <git@vger.kernel.org>; Sun, 07 Jun 2020 23:25:03 -0700 (PDT)
+        with ESMTP id S1728334AbgFHGZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 02:25:06 -0400
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com [IPv6:2607:f8b0:4864:20::d44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 065FDC08C5C5
+        for <git@vger.kernel.org>; Sun,  7 Jun 2020 23:25:06 -0700 (PDT)
+Received: by mail-io1-xd44.google.com with SMTP id c8so17341895iob.6
+        for <git@vger.kernel.org>; Sun, 07 Jun 2020 23:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dduL+xqp+uc1hgwXRLnQEqd86DPk5wZs0F227Ak3BC4=;
-        b=klZUnWRDxVeZItoeOaffNW2siILJfY3Ug8uw+Wzd7TYN2VwMI6QGgUAZ/WUcM9FJC8
-         sxZCASCft6BfMhcSSt9IDLYfnQbsKLOb8ppLTg7agnuep7mvlp9xF1YYCwOoP/HMd4lI
-         3Ju7KS9fD4gEan0inuCjYIYZQQKMsf1OZ6tV1hA0aacJcR81dXtgp2K0fdBOT1QoPlsZ
-         Vz9Mj9wqhuk8JAeRXcVGFB1Bbn2B6gZKKlO++gFr/tPyoYPasnRrQkDVCjLXDTlYB+0o
-         Td+nC3+WO4sZxidm0w1oOLaAuhIeGjwqCT1PTpg33Ikn8Z/AjCbA38AwnSfhoxCZjzBu
-         1+KQ==
+        bh=WvrD21hbRCEn7XqvpiO3X9JAVgezsBtPd/GuDPEv73c=;
+        b=iIdtuOm64CRBT+zlsrPpMF+t5ikcIXHzcFrtmEGd7EU/pK6y4AfB2Prf1OBdHUTBSl
+         tIVBkZ46v0giJASkWT5iANI3+rGefqc0htWNzhUE0GdA9knr/EDcLIfakG8VKXj24din
+         PWQCERIP/jhCoxHXvhR+TPn4ho7cMFJVOMhkyrAYr/a7h6SdM9IflpEOiYTzF9SggoPz
+         X28wDyEIcAuP7BwdNsPNUZ8zOfaacbM20ipkU/AumbVbDvqmDLLfuiqLMVGqIjJ+I/dG
+         XhxuXRujjOVa/U1+/TWH+siLzvV+BzgDdHgJGHSMB4YxDTH3D2gnHM/fpLUZhKBI5B78
+         s/fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=dduL+xqp+uc1hgwXRLnQEqd86DPk5wZs0F227Ak3BC4=;
-        b=nLveLT0GNmZmy6pd2BHIwMNXhsZARe3ObBTVb8CHBXd/HuNwXgo0eurBNmDxRuF0PW
-         tHFHUQzpP51ER4BYjDPsAEoOE6V1wYsjNdH1oKYGVJ9s962LiaD0cxjudLs62CylL24X
-         p+6kmAHXMJYHRU9yZTHnNT5oUMICsj4YyXi2h4uMmieTmvE082wnmkFkFcQ3vvzQISrI
-         dhyTYqJlJjtuPwuAnScKMCyc+KTcChcbSz1Q2RWzfSkcPtOx+I8ywZK/kziD1lTpZgfl
-         78NO0oY9/nrxNRrdRtbMpjNLMiazJAFXR1zf7sZ/Gu5bgLnqDfbxpwgp26r78omlELHQ
-         9Hpw==
-X-Gm-Message-State: AOAM531vPjRyLtTIvsEhcveOq42NAcOy8FQ/XehRf4mdnMDy6cZoIOvN
-        jW9h82JISbahMVUGs4IzWJr8di5Okkw=
-X-Google-Smtp-Source: ABdhPJwa/d0K4zy41GegIL5CKsBGHPK7waUqEZ6dfu4Ofta+w9qLbYdcrYa7CN2+DbUdU9/6qR0lKQ==
-X-Received: by 2002:a05:6638:10b:: with SMTP id x11mr19835995jao.109.1591597502608;
-        Sun, 07 Jun 2020 23:25:02 -0700 (PDT)
+        bh=WvrD21hbRCEn7XqvpiO3X9JAVgezsBtPd/GuDPEv73c=;
+        b=L6yOtMFdm6oWtC1QfExWEODnlhPkTqfGELZ7+t/hsPGRK1me5JFhSEvjWiVl3wdWzD
+         Y9rcwiZ/QMMs/gUQimGMp8JL/rB3mk8Y/cPMuLeDIDEIHIeeJUc4PYB01qWr6I9azXSE
+         NG6IxnMw520SHTpgGnYMECylkGwlQ/LYceZg7IXjEsWDJSi6mUCpkVQAihbQgjMOu3xX
+         CHnYVNMWXf2Dy34g11rWwgxP5P3YGGfaaSWoDlU249NHj4mLynueixPG1CI0Co/fp9Xq
+         s6ck3k7KHovfGe0o32FqgHGQJIizmoO6yzdzu1oUEodUBbtaJDf2QJ+mab0AB0FM81yA
+         tInA==
+X-Gm-Message-State: AOAM53324tHA8AcPw9u4THIkLefuveJwH0B85DmOLUGoykD8c+b78reH
+        wRSz3gEYXACNRCXgIGjBNJFpo+3tkBI=
+X-Google-Smtp-Source: ABdhPJwIOMa6YyfLV0TpYyDJgehCIVh0YZUw/FDdVsGaTdGNmyiKYpl2p13xsZ/oPg/l93F3xgk2OA==
+X-Received: by 2002:a02:a895:: with SMTP id l21mr19635575jam.82.1591597504964;
+        Sun, 07 Jun 2020 23:25:04 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id s73sm7477948ilk.41.2020.06.07.23.25.01
+        by smtp.gmail.com with ESMTPSA id s73sm7477948ilk.41.2020.06.07.23.25.03
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Jun 2020 23:25:01 -0700 (PDT)
+        Sun, 07 Jun 2020 23:25:04 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?Jonathan=20M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
         Shourya Shukla <shouryashukla.oo@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 4/8] worktree: make high-level pruning re-usable
-Date:   Mon,  8 Jun 2020 02:23:52 -0400
-Message-Id: <20200608062356.40264-5-sunshine@sunshineco.com>
+Subject: [PATCH 6/8] worktree: prune linked worktree referencing main worktree path
+Date:   Mon,  8 Jun 2020 02:23:54 -0400
+Message-Id: <20200608062356.40264-7-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.27.0.290.gba653c62da
 In-Reply-To: <20200608062356.40264-1-sunshine@sunshineco.com>
 References: <20200608062356.40264-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The low-level logic for removing a worktree is well encapsulated in
-delete_git_dir(). However, high-level details related to pruning a
-worktree -- such as dealing with verbosity and dry-run mode -- are not
-encapsulated. Factor out this high-level logic into its own function so
-it can be re-used as new worktree corruption detectors are added.
+"git worktree prune" detects when multiple entries are associated with
+the same path and prunes the duplicates, however, it does not detect
+when a linked worktree points at the path of the main worktree.
+Although "git worktree add" disallows creating a new worktree with the
+same path as the main worktree, such a case can arise outside the
+control of Git even without the user mucking with .git/worktree/<id>/
+administrative files. For instance:
 
+    $ git clone foo.git
+    $ git -C foo worktree add ../bar
+    $ rm -rf bar
+    $ mv foo bar
+    $ git -C bar worktree list
+    .../bar deadfeeb [master]
+    .../bar deadfeeb [bar]
+
+Help the user recover from such corruption by extending "git worktree
+prune" to also detect when a linked worktree is associated with the path
+of the main worktree.
+
+Reported-by: Jonathan Müller <jonathanmueller.dev@gmail.com>
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- builtin/worktree.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ builtin/worktree.c        | 10 ++++++++++
+ t/t2401-worktree-prune.sh | 12 ++++++++++++
+ 2 files changed, 22 insertions(+)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 27681a1396..d0c046e885 100644
+index 2cb95f16d4..eebd77c46d 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -133,6 +133,14 @@ static int should_prune_worktree(const char *id, struct strbuf *reason)
- 	return 0;
- }
+@@ -153,6 +153,11 @@ static int prune_cmp(const void *a, const void *b)
  
-+static void prune_worktree(const char *id, const char *reason)
-+{
-+	if (show_only || verbose)
-+		printf_ln(_("Removing %s/%s: %s"), "worktrees", id, reason);
-+	if (!show_only)
-+		delete_git_dir(id);
-+}
-+
+ 	if ((c = fspathcmp(x->string, y->string)))
+ 	    return c;
++	/* paths same; main worktee (util==0) sorts above all others */
++	if (!x->util)
++		return -1;
++	if (!y->util)
++		return 1;
+ 	/* paths same; sort by .git/worktrees/<id> */
+ 	return strcmp(x->util, y->util);
+ }
+@@ -171,6 +176,7 @@ static void prune_dups(struct string_list *l)
  static void prune_worktrees(void)
  {
  	struct strbuf reason = STRBUF_INIT;
-@@ -146,12 +154,7 @@ static void prune_worktrees(void)
- 		strbuf_reset(&reason);
- 		if (!should_prune_worktree(d->d_name, &reason))
- 			continue;
--		if (show_only || verbose)
--			printf_ln(_("Removing %s/%s: %s"),
--				  "worktrees", d->d_name, reason.buf);
--		if (show_only)
--			continue;
--		delete_git_dir(d->d_name);
-+		prune_worktree(d->d_name, reason.buf);
++	struct strbuf main = STRBUF_INIT;
+ 	struct string_list kept = STRING_LIST_INIT_NODUP;
+ 	DIR *dir = opendir(git_path("worktrees"));
+ 	struct dirent *d;
+@@ -190,6 +196,10 @@ static void prune_worktrees(void)
  	}
  	closedir(dir);
- 	if (!show_only)
+ 
++	strbuf_add_absolute_path(&main, get_git_common_dir());
++	/* massage main worktree absolute path to match 'gitdir' content */
++	strbuf_strip_suffix(&main, "/.");
++	string_list_append(&kept, strbuf_detach(&main, 0));
+ 	prune_dups(&kept);
+ 	string_list_clear(&kept, 1);
+ 
+diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
+index 7694f25a16..5f3db93b31 100755
+--- a/t/t2401-worktree-prune.sh
++++ b/t/t2401-worktree-prune.sh
+@@ -114,4 +114,16 @@ test_expect_success 'prune duplicate (linked/linked)' '
+ 	! test -d .git/worktrees/w2
+ '
+ 
++test_expect_success 'prune duplicate (main/linked)' '
++	test_when_finished rm -fr repo wt &&
++	test_create_repo repo &&
++	test_commit -C repo x &&
++	git -C repo worktree add --detach ../wt &&
++	rm -fr wt &&
++	mv repo wt &&
++	git -C wt worktree prune --verbose >actual &&
++	test_i18ngrep "duplicate entry" actual &&
++	! test -d .git/worktrees/wt
++'
++
+ test_done
 -- 
 2.27.0.290.gba653c62da
 
