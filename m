@@ -2,148 +2,108 @@ Return-Path: <SRS0=SopW=7V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCE01C433E0
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 15:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13BB5C433E0
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 15:52:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9554F2074B
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 15:21:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF649206C3
+	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 15:52:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+OD0KoR"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="L6VTEZ2Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730249AbgFHPVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 11:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729668AbgFHPVr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 11:21:47 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAC7AC08C5C2
-        for <git@vger.kernel.org>; Mon,  8 Jun 2020 08:21:45 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id 82so10457206lfh.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2020 08:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=+VrOo5bpfwIEMKOTFfvXmn1N5jjXm5A+rmDAVsOJ90o=;
-        b=h+OD0KoR2fw28VIRh/kL88BGd8o3HN14XDIn1OHGL7Y+Nnjx48gLsnIM509RM24dK8
-         qi2RIeOQ6VJ2440Q5hvX7G8D6gcFU2iagOWYk4lX4u/iO7f7zbXCBMaTQ4VK/+IKPd+x
-         Sk8+UF2iQKPWmFCmgIMq/Ga5G1k3QgabzUoJqRYM3FElgMzhKmhjBaEAIVl2x3vbfKWn
-         kfnwuJ3ruBJ/eyYm+UHQDsGCEKP9z6w5+EDnxrwy/Ey2wa2Iizd7aMh92nG8Y8gjH35S
-         bWfl0IeDPt/cJPKWdjNKkkSTUcr5oKrgJ3uFOOvbl1o/t+sjygiKf/yY3Ty1XolmL4hV
-         Fsuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=+VrOo5bpfwIEMKOTFfvXmn1N5jjXm5A+rmDAVsOJ90o=;
-        b=szW4zbdCO0ZvS/tkoBPcagoQyCshHy+ot3S26SWI5I8dP2iIkwp0i/YdklepRPuf72
-         icf6RjTFm17pceMb/c0+XevL47nf6oYNyFg9upKMrmIYbjyuRbYd1Ybxbol9k6DFP6P8
-         ouou0tYfd6xEBmny9+nB/SBgIWVbGkgrJNxYhVpSyMzu57d2y1yuL0psjxEK5RIikn7+
-         YO0vD0gmJQCT4cuUlOzHhMlPhe7aYl1wh4uIcQPhRXY4XBnwZHgP47yN1cNMmvrvHR3Q
-         VxJgYMcoBbb0mFOSYOwnx/SN9drbtLn42oa39Zg2jokCcD762HhQGOB2gwfvTKxxptM0
-         tisQ==
-X-Gm-Message-State: AOAM532U6dz3l5w+dLbojPkZjSsB9nIi7o+uRMnCfDPDc0iSDHwSoPMU
-        IKMZaVqWj4rifqssNc4fBeZwNPJnj/M=
-X-Google-Smtp-Source: ABdhPJwGM261GbsAi55op9Raxin0amvoAMw4NesqFJhU2dTQV5jv3L1C+vi1S5XHcCiXnH+TYReNEg==
-X-Received: by 2002:ac2:48a3:: with SMTP id u3mr13035826lfg.115.1591629703895;
-        Mon, 08 Jun 2020 08:21:43 -0700 (PDT)
-Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id g24sm5095707lfh.90.2020.06.08.08.21.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 08:21:43 -0700 (PDT)
-From:   Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: [GSoC Patch 0/3] Move generation, graph_pos to a slab
-References: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
-        <b850637d-a7ca-e8f9-5009-657096ea2975@gmail.com>
-        <20200607195347.GA8232@szeder.dev> <20200608054827.GA2054@Abhishek-Arch>
-        <20200608083615.GD8232@szeder.dev>
-Date:   Mon, 08 Jun 2020 17:21:42 +0200
-In-Reply-To: <20200608083615.GD8232@szeder.dev> ("SZEDER \=\?utf-8\?Q\?G\=C3\=A1\?\=
- \=\?utf-8\?Q\?bor\=22's\?\= message of
-        "Mon, 8 Jun 2020 10:36:15 +0200")
-Message-ID: <85o8pttwft.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
+        id S1730336AbgFHPwh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Jun 2020 11:52:37 -0400
+Received: from mout.gmx.net ([212.227.15.15]:34097 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730281AbgFHPwg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 11:52:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1591631545;
+        bh=v1zG9KirOgzMAQKIzKd7/wisP5wcDxU02WKX6+hqfI4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=L6VTEZ2ZhbJtBcmkgdynz2a/kDZJzybXu3vzNxzh5X4vQLJhPawCCSwcLKqX+aPj0
+         36cgngjnpLHMKr9pNarkaA2u7B++1VWsJGt8dQ1IbNQ7QNOzvpNnz8eko5q7IlA8Ou
+         ssfvmBGUpFLnpZeJKA+9obl5kgPt8GQ/K3vbW/lc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.65.3] ([178.164.145.149]) by mail.gmx.com (mrgmx004
+ [212.227.17.184]) with ESMTPSA (Nemesis) id 1MzyuS-1ilWNr1lLC-00x0uf; Mon, 08
+ Jun 2020 17:52:25 +0200
+Date:   Mon, 8 Jun 2020 17:52:16 +0200 (CEST)
+From:   Tibor Billes <tbilles@gmx.com>
+X-X-Sender: tbilles@serpens
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import: fix incomplete conversion with multiple
+ mark files
+In-Reply-To: <20200606002241.1578150-1-sandals@crustytoothpaste.net>
+Message-ID: <alpine.DEB.2.21.2006081739520.9949@serpens>
+References: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com> <20200606002241.1578150-1-sandals@crustytoothpaste.net>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ebTXRgVJyWZqd1yAz8bkDGj0Oet8J8yVh4w3Hq+FpMsyXBK2O8K
+ lHi3CorImyVg1PoNkRp3luVTOEoc9EcXUld9Fpv5aH21VYnaMwyY4L1AqGXHs82DT5OeiTQ
+ X1GAuino88XnyrU4MN16OWcltyBEwJnbeYcWg1QLJLvj3zDwRalOLZsTBWEAcZ3pmdwHI71
+ VNeTWOO3A5GLYVR7pOoqQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+OSrTUtOlIE=:A0wS027M7qOCQwy2uewL/z
+ N0d/mUsZKBWK8geVnrSLu/C8K2TGHQQPrMaa8AKuGpXG33vDb3JdOzUqWKZb1YhOjcoH3ZSd9
+ D1YLQN8+a5HqRqScmH4oqStkuopaAp6AU1Iml232sFUOIW7RKqKubx/cEsE2tgP31wxw+fbHz
+ d2vbm0MNaUc7QyoDHhe7AYRQ2Q14QmTJNDZYHo4COaaq4SUaGnO3VLF3ZRGHMRpeUkrJQ87wI
+ 5NH1Tb77rmtzvUTIJEmIcutkTB3wY+/VNCgnG3Hs5jwivNSZvFtkVKfBUxBcP0ucCCeeSyt3Q
+ Htxwem7QEUk6hpi4UFmbpF2HVCARgwMJSTruIbBksx3rdWWLuFl+/2uk6vWinIENYXmA3lv+b
+ b/yga7PKTKz/FetAoNg8xKTg9+055FJf3HMGoznBj/6FLUw7Lo6LlNJaL8ucjslZ9T9vdzxDn
+ mOCxxGZ05pouj2lNEHPu29j9wXWARHfv4av+Y6iKM5+ZnIZsjmYf/hZ2vXqfN4Xejg9/A3C5T
+ 7L+6k6zx+OngRkdhqR2Glhub6cGI27CqHkph4eZU+/y4Xs1EGUdsEFpQYHc4KuNIkPSRf1Bbe
+ JSlmGGZMmEhzPoL9n1bsFHEHDTr2n4+RwE/FuCXd/XN2FltpGIIkmfVkCq7AfHHDQ2cF+r8ZS
+ q5L0SFQiOCxgLxArFs/S3aHNDuovE2Ew576W2/ogIoaHR54qv/RfMhipCDijr9XY66R1IrDHs
+ bn4zS1MnIWnt2ZgwNFu7bU9j13hTixc3mUPrGBv98XniDDPt9Eyw0jBLwTYWQKf1QQQZ29O/M
+ 7/l9txX0tjJdLWxfIrEhreX4S/VF3+VKvf1mgjz0F9UEvkI3ZEMhGbhvIvZmJ8FVOd8zNRxNn
+ wcgS+RCdSyL4hj1SsaQFOGVbiWBYaydUywTpL8KsFkJCBh/v5P6rd2MWF5NFLV89MV/DKXfx/
+ B4FlOrk1d4R4mSWEH+P2ed6c3B16WVzZHZJ0Z0F0kaLGCUhsOrxCrSQ+1yG8msXU2B/Wxr4wf
+ rIeV304bybv9eaI6ZnnTtF+lYu1p2b4zsTeDWd7ixqj0tbXbnmB7lGzTTQqH4lQ0JHk0RSHzC
+ Q5qfqVeIn/jCd4gac0/spgw3bCCJUUemWbmi5UAVeYUG+xdVKV67X/UNSL2lRJzeNhnx6IUDI
+ hD5dGS6bX9hzAeS5syDAQxrLBKJ8reBlEHxL9nC5IeXqzeYK2mbgKs7SbFyUT8/Lfq2XEBPK1
+ Z+U192u1sPAgN0d+0
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-> On Mon, Jun 08, 2020 at 11:18:27AM +0530, Abhishek Kumar wrote:
->> On Sun, Jun 07, 2020 at 09:53:47PM +0200, SZEDER G=C3=A1bor wrote:
->>> On Thu, Jun 04, 2020 at 10:22:27AM -0400, Derrick Stolee wrote:
->>>> On 6/4/2020 3:27 AM, Abhishek Kumar wrote:
+Hi,
 
->>>>> The struct commit is used in many contexts. However, members generati=
-on
->>>>> and graph_pos are only used for commit-graph related operations and
->>>>> otherwise waste memory.
->>>>>=20
->>>>> This wastage would have been more pronounced as transistion to
->>>>> generation number v2, which uses 64-bit generation number instead of
->>>>> current 32-bits.
->>>>=20
->>>> Thanks! This is an important step, and will already improve
->>>> performance in subtle ways.
->>>=20
->>> While the reduced memory footprint of each commit object might improve
->>> performance, accessing graph position and generation numbers in a
->>> commit-slab is more expensive than direct field accesses in 'struct
->>> commit' instances.  Consequently, these patches increase the runtime
->>> of 'git merge-base --is-ancestor HEAD~50000 HEAD' in the linux
->>> repository from 0.630s to 0.940s.=20
->>=20
->> Thank you for checking performance. Performance penalty was something we
->> had discussed here [1].=20
->>=20
->> Caching the commit slab results in local variables helped wonderfully in=
- v2 [2].
->> For example, the runtime of 'git merge-base --is-ancestor HEAD~50000 HEA=
-D'
->> in the linux repository increased from 0.762 to 0.767s. Since this is a
->> change of <1%, it is *no longer* a performance regression in my opinion.
->>
->> [1]: https://lore.kernel.org/git/9a15c7ba-8b55-099a-3c59-b5e7ff6124f6@gm=
-ail.com/
->> [2]: https://lore.kernel.org/git/20200607193237.699335-5-abhishekkumar82=
-22@gmail.com/
+On Sat, 6 Jun 2020, brian m. carlson wrote:
+
+> When ddddf8d7e2 ("fast-import: permit reading multiple marks files",
+> 2020-02-22) converted fast-import to handle multiple marks files in
+> preparation for submodule support, the conversion was incomplete.  With
+> a large number of marks, we would actually modify the marks variable
+> even though we had passed in a different variable to operate on.  In
+> addition, we didn't consider the fact that the code can replace the mark
+> set passed in, so when we did so we happened to leak quite a bit of
+> memory, since we never reused the structure we created, instead
+> reallocating a new one each time.
 >
-> Interesting, I measured 0.870s with v2, still a notable increase from
-> 0.630s [a change of +38%].
+> It doesn't appear from some testing that we actually produce incorrect
+> results in this case, only that we leak a substantial amount of memory.
+> To make things work properly and avoid leaking, pass a pointer to
+> pointer to struct mark_set, which allows us to modify the set of marks
+> when the number of marks is large.
+>
+> With this patch, importing a dump of git.git with a set of exported
+> marks goes from taking in excess of 15 GiB of memory (and being killed
+> by the Linux OOM killer) to using a maximum of 1.4 GiB of memory.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 
-I wonder what might be the cause for this difference.  Is it difference
-in hardware (faster memory, larger CPU cache?), difference in operating
-system, or difference in position of HEAD?
+Thanks for the quickly patching it! I tested the patch and I can confirm t=
+his
+solves the memory leak for me.
 
-On one hand it is large relative difference.  On the other hand it is
-almost unnoticeable absolute difference of 0.25s.
-
-
-I also wonder how the performance changes (with moving commit-graph data
-to the slab) for commands that do not use this data, like e.g.:
-
-  $ git -o core.commitGraph=3Dfalse merge-base --is-ancestor HEAD~50000 HEAD
-
-or
-
-  $ git gc
-
-
-Sidenote: I think the performance changes should be mentioned at least
-in the cover letter for the series, if not in commit message(s).
-
-Best,
---=20
-Jakub Nar=C4=99bski
+Thanks,
+Tibor Billes
