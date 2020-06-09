@@ -2,125 +2,96 @@ Return-Path: <SRS0=lPKc=7W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE03C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 03:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77F9CC433E1
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 05:07:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F7C7207C3
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 03:33:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3451B207F9
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 05:07:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=zoom.us header.i=@zoom.us header.b="CLNAJ3ft"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YwbdmGOw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727001AbgFIDdL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 23:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50324 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726937AbgFIDdL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 23:33:11 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D973C03E969
-        for <git@vger.kernel.org>; Mon,  8 Jun 2020 20:33:11 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id 185so9674505pgb.10
-        for <git@vger.kernel.org>; Mon, 08 Jun 2020 20:33:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zoom.us; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language;
-        bh=3KRbf/A4XaIfi4hGHgJtDJio2hLFpLnmc1YnBRPFpNA=;
-        b=CLNAJ3ft+eRIKPQU2VaOhPJVo6SgnrjDHtbBg5n9XcegpujGt29Fbwe4fsQhLP4fpS
-         UoTYYiYeVGBc/9qII3/NQJ5jIcMbPY2AX7YQHCqsitRxvFicQ0obytgHGO3fZK4rdTme
-         dOUQLI5ZTq317dGHl99SC9fI8SUb+0eWT03sY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language;
-        bh=3KRbf/A4XaIfi4hGHgJtDJio2hLFpLnmc1YnBRPFpNA=;
-        b=WFeKcSB4ur8+m2qvAJsr9amYDgMIi0jrAfrbyCKdxmf5WmWATIu1KUvfV8KacxBtBy
-         88mhXiEsWlgoQ3beG20danU5vMwZTtbKY/OvAyGDXjcH0t1FRn2B5MrkBtH+Yn5vohsa
-         vNOV+1nPnbPq9+qWh4hzrTOqvYlGMylDCPO4XVXVfRHd6971wRnZps/Jleg2/E29AVdH
-         TS/YYR8/9/xR8uQvL4MLhzOdopcS4CgeoQCjqXBwUTkMVHNSP6gM98DMKg2lgISkMYIK
-         +wFFCpxNY6ewPCz/JvpWgO0NcTNvZLN8Y1pHSrkT4UiCxMQ1oyCFyggho6lR2RxSuTw8
-         7Orw==
-X-Gm-Message-State: AOAM530MAD+N9BijLtCFKgL9lUEx7Je/dABRTSuBGyc+bT6T0m3wUyKG
-        qMdB9dEyeiWTeJVkB8n2QbRlK4/gNvxTMJl/Ak55kRCb3xsL4xpzq88Lgde88w98A9tvJj6jr/A
-        S5cc3qOpEI9vLwL2jO3a6DCh8AHbW+xVybLAboOyO29xJn9w8Vvzh0lVOYly3
-X-Google-Smtp-Source: ABdhPJx++t5fYU/c2XQlwr8vMfEch7FFAqdpG0A3QQBmB5OOxBHWEA5lYtqLhoYGa5Wv3yiSad86OQ==
-X-Received: by 2002:a63:f854:: with SMTP id v20mr23420378pgj.0.1591673590186;
-        Mon, 08 Jun 2020 20:33:10 -0700 (PDT)
-Received: from DESKTOPLINSUN ([38.99.100.2])
-        by smtp.gmail.com with ESMTPSA id f200sm8515814pfa.62.2020.06.08.20.33.07
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Jun 2020 20:33:09 -0700 (PDT)
-From:   <lin.sun@zoom.us>
-To:     "'Pratyush Yadav'" <me@yadavpratyush.com>,
-        "'sunlin via GitGitGadget'" <gitgitgadget@gmail.com>
-Cc:     <git@vger.kernel.org>, "'sunlin'" <sunlin7@yahoo.com>
-Subject: RE: [PATCH v2] Enable auto-merge for meld to follow the vim-diff beharior
-Date:   Tue, 9 Jun 2020 11:33:05 +0800
-Message-ID: <311401d63e0e$b1ffe490$15ffadb0$@zoom.us>
+        id S1726897AbgFIFHo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Jun 2020 01:07:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59510 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725770AbgFIFHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jun 2020 01:07:43 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 40E65D3049;
+        Tue,  9 Jun 2020 01:07:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dw6Ra0AXNJxKPN26ZwwjsEehytQ=; b=YwbdmG
+        OwLwGySGiEaYaKRucsRxUSfELoWuBhNHB/KeU3sRWsVSyokuk8SY2ZzFJtjglrBr
+        QOejp0peUOleb3hK4hi8lymLOMOpgCtThbJErWaP7/2Ge8nBHOzDVNFSbDQlciIX
+        en9C+E/jjnez/8MIfx/HTu7w/ZGfhYriddtbQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=r8Gw/D84GBw+P1vKpMHX261+Oq/niPeB
+        Ari+gbKBH/X9owVkniY+bQuSasq2G5qxh3Ym1NbVvYrtwZ9QJz/AJkCIcs54uGX3
+        pXv4rR+ixbEULIOJ4PfAfzjYc1tDEnIgnTOlIheFI2zgLXgsNEFdbi5gY/8LWfBM
+        lPJdJkunLCU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 264CFD3048;
+        Tue,  9 Jun 2020 01:07:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5A87AD3047;
+        Tue,  9 Jun 2020 01:07:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Lin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Lin <johnlinp@gmail.com>
+Subject: Re: [PATCH v2] gc: recommend `git gc --prune=now` instead of `git prune`
+References: <pull.652.git.1591581739031.gitgitgadget@gmail.com>
+        <pull.652.v2.git.1591662224566.gitgitgadget@gmail.com>
+Date:   Mon, 08 Jun 2020 22:07:36 -0700
+In-Reply-To: <pull.652.v2.git.1591662224566.gitgitgadget@gmail.com> (John Lin
+        via GitGitGadget's message of "Tue, 09 Jun 2020 00:23:44 +0000")
+Message-ID: <xmqqv9k0j087.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdY+Dq2gkD+SYjqlTCy+7U+/wexvoQ==
-Content-Language: en-us
+Content-Type: text/plain
+X-Pobox-Relay-ID: 236DECC8-AA0F-11EA-B660-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pratyush,
+"John Lin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yes, you're totally right, it's my typo, and it's fixed by my last =
-commit [PATCH v2].=20
-I tried git merge-tool with meld and found there is "auto-merge" option =
-for better experience.
-The "auto-merge" was added since meld 1.7 (Year 2012).
-Here're some documents for it.
-https://meldmerge.org/features.html
-https://lukas.zapletalovi.com/2012/09/three-way-git-merging-with-meld.htm=
-l
+> From: John Lin <johnlinp@gmail.com>
+>
+> `git prune` is a plumbing command and should not be run directly by
+> users. The corresponding porcelain command is `git gc`, which is
+> mentioned in the man page of `git prune`.
 
-Regards
-Lin
------Original Message-----
-From: Pratyush Yadav <me@yadavpratyush.com>=20
-Sent: Monday, June 8, 2020 17:50
-To: sunlin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org; sunlin <sunlin7@yahoo.com>; lin.sun =
-<lin.sun@zoom.us>
-Subject: Re: [PATCH] Enable auto-merge for meld to follow the vim-diff =
-beharior
+Much better than v1 that came without any justification ;-)
 
-Hi Lin,
+I however wouldn't say "should not"---that feels a bit too strong (I
+personally use "prune" from the command line once or twice every
+week and do not see why I should be forbidden from doing so [*1*]),
+but the users who see this message would not need such a precise
+control afforded by use of "git prune", so "gc --prune=now" is a
+better recommendation.
 
-I'm not familiar with the code so I'll let someone else comment on that. =
+Thanks.
 
-But...
+[Footnote]
 
-On 08/05/20 01:25AM, sunlin via GitGitGadget wrote:
-> From: "lin.sun" <lin.sun@zoom.us>
->=20
-> The mergetool "meld" does NOT merge the no-conflict changes, while the =
-
-> mergetool "vimdiff" will merge the no-conflict parts and highlight the =
-
-> conflict parts.
-> This patch will make the mergetool "meld" similar to "vimdiff",=20
-> auto-merge the no-conflict parts, highlight conflict parts.
->=20
-> Signed-off-by: Lin Sun <sunlin7@yahoo.com>
-
-... your name and email in "From:" and "Signed-off-by:" should be the =
-same. So either use "lin.sun" <lin.sun@zoom.us> in both places or use =
-Lin Sun <sunlin7@yahoo.com> in both.
-
---
-Regards,
-Pratyush Yadav
+*1* The command does not even produce a machine readable output.
+    The reason it is not recommended (but that is different from
+    "should not") to casual users over "git gc" is because it is a
+    very focused tool (it is only about removing loose objects and
+    does not touch other things) and applicable to a very specific
+    condition.  Those who can recognize that they are in that
+    situation should not be forbidden from using it with a dogmatic
+    "should not".
 
