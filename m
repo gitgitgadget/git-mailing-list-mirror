@@ -2,101 +2,459 @@ Return-Path: <SRS0=lPKc=7W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7610C433DF
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 21:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81166C433DF
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 21:49:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2BC920737
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 21:29:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B68020737
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 21:49:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=bocoup-com.20150623.gappssmtp.com header.i=@bocoup-com.20150623.gappssmtp.com header.b="wngCDm/y"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JE8hSt0K"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728032AbgFIV3e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Jun 2020 17:29:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47182 "EHLO
+        id S1728056AbgFIVtf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Jun 2020 17:49:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726888AbgFIV3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jun 2020 17:29:34 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125D8C05BD1E
-        for <git@vger.kernel.org>; Tue,  9 Jun 2020 14:29:34 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id v26so57873oof.7
-        for <git@vger.kernel.org>; Tue, 09 Jun 2020 14:29:34 -0700 (PDT)
+        with ESMTP id S1726992AbgFIVte (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jun 2020 17:49:34 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE501C05BD1E
+        for <git@vger.kernel.org>; Tue,  9 Jun 2020 14:49:32 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id d8so95849plo.12
+        for <git@vger.kernel.org>; Tue, 09 Jun 2020 14:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bocoup-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KDdkkNqSQCwn4zE1WxsGOkEJv7N2i/5Ez42MjE4KxR0=;
-        b=wngCDm/y1yRB3ddfLU210XEYrxEwhWqAASaG3/2WeZzqP2j+LsyCdwX9tkEVL5A67+
-         qgDtrCwODTXHYNaS6TjjM2T90qheEjGobPi4gSv94OqPxEvCX54LYbVJLuuzOrdnukfQ
-         S5puFnN0ot0QntQos0JVqu+zFYg02imMJdD6HijEH4p4WwEYW0yVpMknMF+nvNAV3yKu
-         ugrvW/A9QTgHmN/EmqRnqL5Vya6xIxBS0v5qZmWtZgIIBgBWYlsb2YM0EDcJZU2auJr5
-         +lgYNpmEx12to+yKPFXbQ2IEi1LuS21j/+YUjbr4k3uCjijuHN7rTKVwE2EtsScJXaK/
-         BMxw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=c6EPCFi6XKZgdPHURYo9ZWUJ+d77XvXEKd+f3At9rK0=;
+        b=JE8hSt0KMmOumht+yBEDs2lScr6N6Klm6zpAsvqiVYpBPRsDLOa9s63NwPEpNWDYTN
+         OnuCadW3xzZYrQvLruuTXasQzqLWmpgYXDz4QWij7O+KA5OFnN5n0ZXXNBmHuM7lS+cj
+         jr9q2jr5OTV3qshOVISjotKKd+w72uFyXM+urNn+UiwQrwb2w7QAyeWJ4XQnpR0a+Ic4
+         vlPTaMCbJa5UCthF9lwRSaAKgjY7rX2nF4x+y0xwZLXFHAX5s9C90FPyEZs2b2qiFLSV
+         hYvgR+5dkBxgmqm537D+i4PWG3vdwznUG2PnFJigaUi8Bu6lZ4lcn5tGTcBLlyll4mgx
+         7O8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KDdkkNqSQCwn4zE1WxsGOkEJv7N2i/5Ez42MjE4KxR0=;
-        b=RbZNT3/viSKITOWuJbbd8+68duRnvcqYMPcOuOYy3HoEaLUwOePhBK8L51R2uHW07m
-         EhRSj5fXGsyVSakVl2T7Aoe2N/bmNMEULDCPhT7ZQ8tvGVg5vXiYMhbHH5+x3as0cz3y
-         Y0cs6nEH0GAQMPuIlZgM5z1MbEwfizv5DgYgQDxYTf6H0tk8F4DHhiQBcP2qdvkSuGoG
-         6uUnOl0Ge6Odo975R0A25sO87vIBFGwMqU/+bpw/jYZt40suxi0C8l5+tKFonSaG1ffb
-         UL+PVF67DZoTPfRry2jxAnJ6BbFe2H/QSbo0PO4HVi6FRGLhSgUy0Aq2/chMaalJRF45
-         J1lg==
-X-Gm-Message-State: AOAM533A/gwKo8Ms+hwpHKllfdKfa31vc+x4bf1ANVdwCtYtMLEvURMq
-        DfD99Qaj0yfOM2MvPTTU523wOLx6TRROlTKh4ZRtnFZJFYCMtg==
-X-Google-Smtp-Source: ABdhPJyqX2H/FTQIkWo+5mlL8xJsvdIhU7KklYADcJjpiWUdLTj61dUNC/8xDtKqcv37Fur3oiq1GL2axG+9eM5zEqo=
-X-Received: by 2002:a4a:a785:: with SMTP id l5mr23096662oom.74.1591738173460;
- Tue, 09 Jun 2020 14:29:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=c6EPCFi6XKZgdPHURYo9ZWUJ+d77XvXEKd+f3At9rK0=;
+        b=QxBEaRAfHqQrhdFJAprYQlUwwKasR8DkXcHkD3i0pYNaJTtq9eLJDLP/RQEO3DYJpx
+         GG2ad2vdhQtB/1fmbXbIVewwZqmkYcMWgdF4qj03fbL2xhxxsRTOjj7nQa6QfaFqCi5P
+         tTvdO/BTIynWPgoPnLUDIefhSp1SxMxeV1DK6Julqv/7vbtH53tT7AjXShVHErYW/0tY
+         9MjnjCXir5R1daEapnouVqlrv7qmvXZEzPZwNVq1mQ0DsWuFVch2R8qGGqpffh02gniI
+         uaYhqfSZTHxpTpisZdqf9JJFF9Ha5BRXtGJYttIEP8qfPmaH/whmNzyyiU6sh8aRVeSm
+         WQHw==
+X-Gm-Message-State: AOAM53319glJ03Qm+DtQ5tLv81EjSyJM9P284gmqxVGLoU0FKHCHSD1S
+        y/3dVKnJrBiVICBSDBkIxyc3lLHwObY=
+X-Google-Smtp-Source: ABdhPJzjWXx2ZUNyqqKv3YHLSdW8GLgu6v4YvWJxUMi1uFPBZEL67iKqWGymLi6cZ5qRlNupEsg0Jw==
+X-Received: by 2002:a17:90a:bf0b:: with SMTP id c11mr7253059pjs.47.1591739371321;
+        Tue, 09 Jun 2020 14:49:31 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id gt22sm3885443pjb.2.2020.06.09.14.49.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jun 2020 14:49:30 -0700 (PDT)
+Date:   Tue, 9 Jun 2020 14:49:26 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] hook: add list command
+Message-ID: <20200609214926.GD148632@google.com>
+References: <20200521185414.43760-1-emilyshaffer@google.com>
+ <20200521185414.43760-4-emilyshaffer@google.com>
+ <41e4fcf3-5d39-71a2-35b2-ee143cd59033@gmail.com>
 MIME-Version: 1.0
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
- <20200505231641.GH6530@camp.crustytoothpaste.net> <CAOAHyQx=+fM1FpAv+g3M+j7j4MgLJA03=MGFmXLvZcfJKAEpGg@mail.gmail.com>
- <xmqqeeqoi5wc.fsf@gitster.c.googlers.com> <CAOAHyQzxG7Lc6+PLBtM6oe9vSoEEAmuXAaKF2VzO_phtkfGRVA@mail.gmail.com>
- <xmqqo8psgddz.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqo8psgddz.fsf@gitster.c.googlers.com>
-From:   Simon Pieters <simon@bocoup.com>
-Date:   Tue, 9 Jun 2020 23:29:22 +0200
-Message-ID: <CAOAHyQyn_ow7_nCJ+Jorr76_=1=_kuBAD1KhqReqVfRQQbmgiw@mail.gmail.com>
-Subject: Re: Rename offensive terminology (master)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, don@goodman-wilson.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <41e4fcf3-5d39-71a2-35b2-ee143cd59033@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 9, 2020 at 11:03 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> > I find this response not satisfactory:
->
-> And I find that response quite offensive.
+On Fri, May 22, 2020 at 11:27:44AM +0100, Phillip Wood wrote:
+> 
+> Hi Emily
+> 
+> On 21/05/2020 19:54, Emily Shaffer wrote:
+> > Teach 'git hook list <hookname>', which checks the known configs in
+> > order to create an ordered list of hooks to run on a given hook event.
+> > 
+> > Multiple commands can be specified for a given hook by providing
+> > multiple "hook.<hookname>.command = <path-to-hook>" lines. Hooks will be
+> > run in config order. If more properties need to be set on a given hook
+> > in the future, commands can also be specified by providing
+> > "hook.<hookname>.command = <hookcmd-name>", as well as a "[hookcmd
+> > <hookcmd-name>]" subsection; at minimum, this subsection must contain a
+> > "hookcmd.<hookcmd-name>.command = <path-to-hook>" line.
+> > 
+> > For example:
+> > 
+> >   $ git config --list | grep ^hook
+> >   hook.pre-commit.command=baz
+> >   hook.pre-commit.command=~/bar.sh
+> >   hookcmd.baz.command=~/baz/from/hookcmd.sh
+> > 
+> >   $ git hook list pre-commit
+> >   ~/baz/from/hookcmd.sh
+> >   ~/bar.sh
+> > 
+> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > ---
+> >  Documentation/git-hook.txt    | 37 +++++++++++++-
+> >  Makefile                      |  1 +
+> >  builtin/hook.c                | 55 +++++++++++++++++++--
+> >  hook.c                        | 90 +++++++++++++++++++++++++++++++++++
+> >  hook.h                        | 15 ++++++
+> >  t/t1360-config-based-hooks.sh | 51 +++++++++++++++++++-
+> >  6 files changed, 242 insertions(+), 7 deletions(-)
+> >  create mode 100644 hook.c
+> >  create mode 100644 hook.h
+> > 
+> > diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+> > index 2d50c414cc..e458586e96 100644
+> > --- a/Documentation/git-hook.txt
+> > +++ b/Documentation/git-hook.txt
+> > @@ -8,12 +8,47 @@ git-hook - Manage configured hooks
+> >  SYNOPSIS
+> >  --------
+> >  [verse]
+> > -'git hook'
+> > +'git hook' list <hook-name>
+> >  
+> >  DESCRIPTION
+> >  -----------
+> >  You can list, add, and modify hooks with this command.
+> >  
+> > +This command parses the default configuration files for sections "hook" and
+> > +"hookcmd". "hook" is used to describe the commands which will be run during a
+> > +particular hook event; commands are run in config order. "hookcmd" is used to
+> > +describe attributes of a specific command. If additional attributes don't need
+> > +to be specified, a command to run can be specified directly in the "hook"
+> > +section; if a "hookcmd" by that name isn't found, Git will attempt to run the
+> > +provided value directly. For example:
+> > +
+> > +Global config
+> > +----
+> > +  [hook "post-commit"]
+> > +    command = "linter"
+> > +    command = "~/typocheck.sh"
+> > +
+> > +  [hookcmd "linter"]
+> > +    command = "/bin/linter --c"
+> > +----
+> > +
+> > +Local config
+> > +----
+> > +  [hook "prepare-commit-msg"]
+> > +    command = "linter"
+> > +  [hook "post-commit"]
+> > +    command = "python ~/run-test-suite.py"
+> > +----
+> > +
+> > +COMMANDS
+> > +--------
+> > +
+> > +list <hook-name>::
+> > +
+> > +List the hooks which have been configured for <hook-name>. Hooks appear
+> > +in the order they should be run, and note the config scope where the relevant
+> > +`hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
+> > +
+> >  GIT
+> >  ---
+> >  Part of the linkgit:git[1] suite
+> > diff --git a/Makefile b/Makefile
+> > index fce6ee154e..b7bbf3be7b 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -894,6 +894,7 @@ LIB_OBJS += grep.o
+> >  LIB_OBJS += hashmap.o
+> >  LIB_OBJS += help.o
+> >  LIB_OBJS += hex.o
+> > +LIB_OBJS += hook.o
+> >  LIB_OBJS += ident.o
+> >  LIB_OBJS += interdiff.o
+> >  LIB_OBJS += json-writer.o
+> > diff --git a/builtin/hook.c b/builtin/hook.c
+> > index b2bbc84d4d..cfd8e388bd 100644
+> > --- a/builtin/hook.c
+> > +++ b/builtin/hook.c
+> > @@ -1,21 +1,68 @@
+> >  #include "cache.h"
+> >  
+> >  #include "builtin.h"
+> > +#include "config.h"
+> > +#include "hook.h"
+> >  #include "parse-options.h"
+> > +#include "strbuf.h"
+> >  
+> >  static const char * const builtin_hook_usage[] = {
+> > -	N_("git hook"),
+> > +	N_("git hook list <hookname>"),
+> >  	NULL
+> >  };
+> >  
+> > -int cmd_hook(int argc, const char **argv, const char *prefix)
+> > +static int list(int argc, const char **argv, const char *prefix)
+> >  {
+> > -	struct option builtin_hook_options[] = {
+> > +	struct list_head *head, *pos;
+> > +	struct hook *item;
+> > +	struct strbuf hookname = STRBUF_INIT;
+> > +
+> > +	struct option list_options[] = {
+> >  		OPT_END(),
+> >  	};
+> >  
+> > -	argc = parse_options(argc, argv, prefix, builtin_hook_options,
+> > +	argc = parse_options(argc, argv, prefix, list_options,
+> >  			     builtin_hook_usage, 0);
+> >  
+> > +	if (argc < 1) {
+> > +		usage_msg_opt("a hookname must be provided to operate on.",
+> > +			      builtin_hook_usage, list_options);
+> > +	}
+> > +
+> > +	strbuf_addstr(&hookname, argv[0]);
+> > +
+> > +	head = hook_list(&hookname);
+> > +
+> > +	if (!head) {
+> > +		printf(_("no commands configured for hook '%s'\n"),
+> > +		       hookname.buf);
+> > +		return 0;
+> > +	}
+> > +
+> > +	list_for_each(pos, head) {
+> > +		item = list_entry(pos, struct hook, list);
+> > +		if (item)
+> > +			printf("%s:\t%s\n",
+> > +			       config_scope_name(item->origin),
+> > +			       item->command.buf);
+> > +	}
+> > +
+> > +	clear_hook_list();
+> > +	strbuf_release(&hookname);
+> > +
+> >  	return 0;
+> >  }
+> > +
+> > +int cmd_hook(int argc, const char **argv, const char *prefix)
+> > +{
+> > +	struct option builtin_hook_options[] = {
+> > +		OPT_END(),
+> > +	};
+> > +	if (argc < 2)
+> > +		usage_with_options(builtin_hook_usage, builtin_hook_options);
+> > +
+> > +	if (!strcmp(argv[1], "list"))
+> > +		return list(argc - 1, argv + 1, prefix);
+> > +
+> > +	usage_with_options(builtin_hook_usage, builtin_hook_options);
+> > +}
+> > diff --git a/hook.c b/hook.c
+> > new file mode 100644
+> > index 0000000000..9dfc1a885e
+> > --- /dev/null
+> > +++ b/hook.c
+> > @@ -0,0 +1,90 @@
+> > +#include "cache.h"
+> > +
+> > +#include "hook.h"
+> > +#include "config.h"
+> > +
+> > +static LIST_HEAD(hook_head);
+> > +
+> > +void free_hook(struct hook *ptr)
+> > +{
+> > +	if (ptr) {
+> > +		strbuf_release(&ptr->command);
+> > +		free(ptr);
+> > +	}
+> > +}
+> > +
+> > +static void emplace_hook(struct list_head *pos, const char *command)
+> > +{
+> > +	struct hook *to_add = malloc(sizeof(struct hook));
+> > +	to_add->origin = current_config_scope();
+> > +	strbuf_init(&to_add->command, 0);
+> > +	strbuf_addstr(&to_add->command, command);
+> > +
+> > +	list_add_tail(&to_add->list, pos);
+> > +}
+> > +
+> > +static void remove_hook(struct list_head *to_remove)
+> > +{
+> > +	struct hook *hook_to_remove = list_entry(to_remove, struct hook, list);
+> > +	list_del(to_remove);
+> > +	free_hook(hook_to_remove);
+> > +}
+> > +
+> > +void clear_hook_list(void)
+> > +{
+> > +	struct list_head *pos, *tmp;
+> > +	list_for_each_safe(pos, tmp, &hook_head)
+> > +		remove_hook(pos);
+> > +}
+> > +
+> > +static int hook_config_lookup(const char *key, const char *value, void *hook_key_cb)
+> > +{
+> > +	const char *hook_key = hook_key_cb;
+> > +
+> > +	if (!strcmp(key, hook_key)) {
+> > +		const char *command = value;
+> > +		struct strbuf hookcmd_name = STRBUF_INIT;
+> > +		struct list_head *pos = NULL, *tmp = NULL;
+> > +
+> > +		/* Check if a hookcmd with that name exists. */
+> > +		strbuf_addf(&hookcmd_name, "hookcmd.%s.command", command);
+> > +		git_config_get_value(hookcmd_name.buf, &command);
+> 
+> This looks dodgy to me. This code is called by git_config() as it parses
+> the config files, so it has not had a chance to fully populate the
+> config cache used by git_config_get_value(). I think the test below
+> passes because the hookcmd setting is set in the global file and the
+> hook setting is set in the local file so when we have already parsed the
+> hookcmd setting when we come to look it up. The same comment applies to
+> the hypothetical ordering config mentioned below. I think it would be
+> better to collect the list of hook.<event>.command settings in this
+> callback and then look up any hookcmd settings for those hook commands
+> after we've finished reading all of the config files.
 
-I'm sorry I offended you.
+git_config_get_value() calls repo_read_config(the_repository) if the
+config hasn't been fully parsed yet, so I think what you're worrying
+about is not an issue. It's ugly, I agree, but since the new hotness
+(git_config_get_value() and friends) doesn't offer the same
+functionality as the old solution (config origin) this seemed like an
+okay approach. As I understand it, moving this hookcmd lookup section
+outside of the config callback will save us up to one additional pass
+through the configs, at the expense of a more convoluted code path.
 
-> I am not saying that there is any good replacement word, or there
-> shouldn't be one, or we shouldn't look for it.  If we can come up
-> with a single replacement word and everybody can agree on it, that
-> would be great.
+> 
+> > +
+> > +		if (!command)
+> > +			BUG("git_config_get_value overwrote a string it shouldn't have");
+> > +
+> > +		/*
+> > +		 * TODO: implement an option-getting callback, e.g.
+> > +		 *   get configs by pattern hookcmd.$value.*
+> > +		 *   for each key+value, do_callback(key, value, cb_data)
+> > +		 */
+> > +
+> > +		list_for_each_safe(pos, tmp, &hook_head) {
+> > +			struct hook *hook = list_entry(pos, struct hook, list);
+> > +			/*
+> > +			 * The list of hooks to run can be reordered by being redeclared
+> > +			 * in the config. Options about hook ordering should be checked
+> > +			 * here.
+> > +			 */
+> > +			if (0 == strcmp(hook->command.buf, command))
+> > +				remove_hook(pos);
+> > +		}
+> > +		emplace_hook(pos, command);
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +struct list_head* hook_list(const struct strbuf* hookname)
+> > +{
+> > +	struct strbuf hook_key = STRBUF_INIT;
+> > +
+> > +	if (!hookname)
+> > +		return NULL;
+> > +
+> > +	strbuf_addf(&hook_key, "hook.%s.command", hookname->buf);
+> > +
+> > +	git_config(hook_config_lookup, (void*)hook_key.buf);
+> > +
+> > +	return &hook_head;
+> > +}
+> > diff --git a/hook.h b/hook.h
+> > new file mode 100644
+> > index 0000000000..aaf6511cff
+> > --- /dev/null
+> > +++ b/hook.h
+> > @@ -0,0 +1,15 @@
+> > +#include "config.h"
+> > +#include "list.h"
+> > +#include "strbuf.h"
+> > +
+> > +struct hook
+> > +{
+> > +	struct list_head list;
+> > +	enum config_scope origin;
+> > +	struct strbuf command;
+> > +};
+> > +
+> > +struct list_head* hook_list(const struct strbuf *hookname);
+> > +
+> > +void free_hook(struct hook *ptr);
+> > +void clear_hook_list(void);
+> > diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
+> > index 34b0df5216..4e46d7dd4e 100755
+> > --- a/t/t1360-config-based-hooks.sh
+> > +++ b/t/t1360-config-based-hooks.sh
+> > @@ -4,8 +4,55 @@ test_description='config-managed multihooks, including git-hook command'
+> >  
+> >  . ./test-lib.sh
+> >  
+> > -test_expect_success 'git hook command does not crash' '
+> > -	git hook
+> > +test_expect_success 'git hook rejects commands without a mode' '
+> > +	test_must_fail git hook pre-commit
+> > +'
+> > +
+> > +
+> > +test_expect_success 'git hook rejects commands without a hookname' '
+> > +	test_must_fail git hook list
+> > +'
+> > +
+> > +test_expect_success 'setup hooks in global, and local' '
+> > +	git config --add --local hook.pre-commit.command "/path/ghi" &&
+> 
+> Can I make a plea for the use of test_config please. Writing tests which
+> rely on previous tests for their set-up creates a chain of hidden
+> dependencies that make it hard to add/alter tests later or run a subset
+> of the tests when developing a new patch. t3404-rebase-interactive.sh is
+> a prime example of this and I dread touching it.
 
-OK. I agree!
+Sure. I'll redo them.
 
-> I am just cautioning you that we may not be able to reach a single
-> word as a concensus, and you should plan with the possibility in
-> mind.
+> 
+> > +	git config --add --global hook.pre-commit.command "/path/def"
+> > +'
+> > +
+> > +test_expect_success 'git hook list orders by config order' '
+> > +	cat >expected <<-\EOF &&
+> > +	global:	/path/def
+> > +	local:	/path/ghi
+> > +	EOF
+> > +
+> > +	git hook list pre-commit >actual &&
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'git hook list dereferences a hookcmd' '
+> > +	git config --add --local hook.pre-commit.command "abc" &&
+> > +	git config --add --global hookcmd.abc.command "/path/abc" &&
+> > +
+> > +	cat >expected <<-\EOF &&
+> > +	global:	/path/def
+> > +	local:	/path/ghi
+> > +	local:	/path/abc
+> 
+> We should make it clear in the documentation that the config origin
+> applies to the hook setting, even though we display the hookcmd command
+> which is set globally here for the last hook.
 
-OK.
+One of the suggestions from our UX team last week was to make this list
+output clearer to indicate the origin of the command plus the origin of
+the hookcmd object; I'll try to straighten this out and make sure the
+doc agrees.
 
-> In any case, I wasn't responding to satisfy just you in particular
-> anyway ;-)
-
-Yeah, and indeed this issue is not about me. :-)
-
--- 
-Simon Pieters
-Bocoup https://bocoup.com/
+ - Emily
