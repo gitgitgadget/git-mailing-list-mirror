@@ -2,132 +2,85 @@ Return-Path: <SRS0=lPKc=7W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,URIBL_SBL,URIBL_SBL_A autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 620B5C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61532C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:02:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 427CB20737
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:01:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA30220737
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:02:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=goodman-wilson.com header.i=@goodman-wilson.com header.b="Kfc6inc0"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KNOkXbG8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730122AbgFITBu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Jun 2020 15:01:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728553AbgFITBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jun 2020 15:01:49 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD6E3C05BD1E
-        for <git@vger.kernel.org>; Tue,  9 Jun 2020 12:01:48 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id mb16so23600248ejb.4
-        for <git@vger.kernel.org>; Tue, 09 Jun 2020 12:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=goodman-wilson.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=6yjqXfm1OIBmLh2R6eLL0dPI24f3aHcoh0a5Vndvcgc=;
-        b=Kfc6inc0AlmRYjExjLvL1vzjwldsT4mAHIbqQUhY9QNeQlAkG7zFTro600vYp05yRt
-         hRj0WPCpEMiRL9ebpJh5tdQqMWKOreXxO2yo7wQ2uPbWlgIMXjW8tlsRCBykBa6carNo
-         DoiEKa3hEz3ZFEpmmDMNG+4y3f3SxKD14z6x/m2kGqR0jO3kHwBrsKAj9vRWJqHV7xCx
-         7wf7+RZlkyTf5H8238ihAd5sY/cH7GAKJuMuzz7oSsZKMohHUvr2OfaOEC8b85k0Eqro
-         m/yFptmrQvo70B2++WzK2WFMjS6Z6kd0be/GitP/Ojs+YHudZEjxlhodjD7+CpI+aYBv
-         qCLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=6yjqXfm1OIBmLh2R6eLL0dPI24f3aHcoh0a5Vndvcgc=;
-        b=oQnIzowuVA4mKCKnJpQtyhmnFlZvLvq/fnSrawE4um25H+Pu9t/BL33X4rCAbNYGxH
-         W2rIuIH052P5B/HhNS80MKzmPz+i+I4D8TLubVFMlSJfo8vz9nvSpdqn/oEl0wUHBj7Y
-         +iBKTsCHrrKACRLfPlxsVZaqZ3NlNl5AXBPTgqUKkit9K0jEg35eoPsXcjbg01r5lUof
-         XB3TX4TaXdVCbcC45k9hIFZPWh5SCKhhT+TpJsJxEhbxUopATkb6FzcIolTCDrHt/Pru
-         XRyXTTBP2T+vV414oqSIkvjlQaxc6ECjB5l+2r21BXsJbNB4k+kQFpuyM7mULqegy8N+
-         R7eA==
-X-Gm-Message-State: AOAM530+sxts+8VHCDXIfjIeG04EXi38SUJ59DpVUo5KYOgkPsqDHwmR
-        grHeWoR46Mm6lgCE1wjJBOjVpseUkj3K27c9swfxC2ThdLMAsw==
-X-Google-Smtp-Source: ABdhPJxPpmjvH4pR/E0Owtt5+O70hFmiggdfeb6svDSd9wX/HJbvWDIs4rPJATo5TqIxuni/Zuvz037UOsLcr+VYmAI=
-X-Received: by 2002:a17:906:fc06:: with SMTP id ov6mr28235052ejb.184.1591729307575;
- Tue, 09 Jun 2020 12:01:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
- <20200505231641.GH6530@camp.crustytoothpaste.net> <CAOAHyQx=+fM1FpAv+g3M+j7j4MgLJA03=MGFmXLvZcfJKAEpGg@mail.gmail.com>
- <20200609160650.7e74bcjksrto3rp6@chatter.i7.local>
-In-Reply-To: <20200609160650.7e74bcjksrto3rp6@chatter.i7.local>
-From:   Don Goodman-Wilson <don@goodman-wilson.com>
-Date:   Tue, 9 Jun 2020 21:01:36 +0200
-Message-ID: <CAGA3LAcDpQQhcmaQG3+s6XNnth54KmNC+padAXXYsc5C33p7kA@mail.gmail.com>
-Subject: Re: Rename offensive terminology (master)
-To:     Simon Pieters <simon@bocoup.com>,
+        id S1729793AbgFITCz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Jun 2020 15:02:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59512 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728553AbgFITCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jun 2020 15:02:53 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 144566E1F0;
+        Tue,  9 Jun 2020 15:02:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BpSUFXqom3V1jCMtLhtrnBN4bNQ=; b=KNOkXb
+        G8+FeluDFrwKC4hVwKf4bMvIiq9Qn4RsKh7BH4H60IuW5vYoNQ1KOBIATipi9tRI
+        wLZKEEnCVDerjiqXlpD+9xfVS7bYa4+PQzge4QiFbPT30LFRARtO1IhP0KS4MnOp
+        IsJBm2Emnj1bcGisuE2HjBVbbaioAqpZdJvU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZyDibusHrmUxlkIlIFwBI+nInSppJD2b
+        Eh4Mxn7yt8dBZnGVuQjCEgD1Wd7zlSwm2yzwMfD9fMBsS2K74jgx+LezA7Ot2jLX
+        B+6Gq4BcGF6vemVotRb+cp+pTkoSm5aF0t5TlVQyjv9iApmRQXiULKr4Ie70Gogo
+        v6xM2XaWeIg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 04A896E1EF;
+        Tue,  9 Jun 2020 15:02:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 596866E1EE;
+        Tue,  9 Jun 2020 15:02:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Simon Pieters <simon@bocoup.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org, don@goodman-wilson.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: Rename offensive terminology (master)
+References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+        <20200505231641.GH6530@camp.crustytoothpaste.net>
+        <CAOAHyQx=+fM1FpAv+g3M+j7j4MgLJA03=MGFmXLvZcfJKAEpGg@mail.gmail.com>
+        <xmqqeeqoi5wc.fsf@gitster.c.googlers.com>
+        <448e4f49-d1f8-94df-4fc7-64cd024e668f@kdbg.org>
+Date:   Tue, 09 Jun 2020 12:02:49 -0700
+In-Reply-To: <448e4f49-d1f8-94df-4fc7-64cd024e668f@kdbg.org> (Johannes Sixt's
+        message of "Tue, 9 Jun 2020 20:10:52 +0200")
+Message-ID: <xmqq5zc0hxk6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0826E7E-AA83-11EA-AE6B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-My feelings generally are: if you have to explain why it isn=E2=80=99t raci=
-st,
-then there=E2=80=99s probably a better alternative. But in this case it
-appears the roots really are in problematic terminology.
+> Am 09.06.20 um 18:02 schrieb Junio C Hamano:
+>> so it might be the matter of teaching "git
+>> init" (it uses 'master' by default) and "git clone" (it tries to use
+>> the name of the branch the HEAD at origin points at,...
+>
+> Don't forget the special treatment of "master" in fmt-merge-msg.c that
+> skips the " into 'foo'" part of  "Merge branch 'bar'".
 
-Anyway, you=E2=80=99ll be pleased to know that as a first step, my current
-work is focused on making the default branch name configurable via
-`git config` or environment variables. I=E2=80=99m working on a good clean
-patch for that functionality this week. I'll share more once the patch
-is looking better.
+Yup, that certainly needs to be taken into consideration in this
+topic.  There may be more that we are forgetting.
 
-Don Goodman-Wilson
-
-On Tue, Jun 9, 2020 at 6:06 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Tue, Jun 09, 2020 at 05:16:57PM +0200, Simon Pieters wrote:
-> > Thank you for your encouraging response, Brian, and the research of
-> > what the change entails for git.
-> >
-> > I've added Don to the cc, who started to work on implementing this chan=
-ge:
-> >
-> > https://twitter.com/DEGoodmanWilson/status/1269931743320182784
-> > https://github.com/git-for-windows/git/issues/2674
-> >
-> > Although I think it's reasonable to move away from 'master' regardless
-> > of its origin, today Tobie Langel pointed me to
-> > https://mail.gnome.org/archives/desktop-devel-list/2019-May/msg00066.ht=
-ml
-> > where, one year ago, Bastien Nocera made the case that git's 'master'
-> > is in fact a reference to master/slave.
->
-> Well, he pointed out that Bitkeeper used this terminology. Git doesn't
-> have any internal concept of "slave" -- the only time you see this word
-> used in the codebase is in the test suite, and we should absolutely
-> change that.
->
-> I am torn on this issue -- I certainly want the project to be inclusive
-> to all, but English has a lot of concepts that start with "master" and
-> do not trace their origin to subjugation of fellow human beings:
->
-> - masterpiece
-> - masterful
-> - master's degree
-> - master copy
->
-> Making this change in git seems like attacking the problem at the wrong
-> end.
->
-> Branch names are already fully arbitrary in Git -- you can have a repo
-> without a master branch. Perhaps the best way to address it is to
-> introduce a "default branch name" configuration variable, or just work
-> without any default branches and let the next step after "git init" be
-> "git branch".
->
-> -K
