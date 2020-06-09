@@ -2,135 +2,125 @@ Return-Path: <SRS0=lPKc=7W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DAA3C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 03:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE03C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 03:33:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED4752078C
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 03:19:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F7C7207C3
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 03:33:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qlsoJI3s"
+	dkim=pass (1024-bit key) header.d=zoom.us header.i=@zoom.us header.b="CLNAJ3ft"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726964AbgFIDTR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 23:19:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48194 "EHLO
+        id S1727001AbgFIDdL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Jun 2020 23:33:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726803AbgFIDTQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jun 2020 23:19:16 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56878C03E969
-        for <git@vger.kernel.org>; Mon,  8 Jun 2020 20:19:16 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id l11so19608106wru.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2020 20:19:16 -0700 (PDT)
+        with ESMTP id S1726937AbgFIDdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 23:33:11 -0400
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D973C03E969
+        for <git@vger.kernel.org>; Mon,  8 Jun 2020 20:33:11 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id 185so9674505pgb.10
+        for <git@vger.kernel.org>; Mon, 08 Jun 2020 20:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VOE7pYLGWGTSvf+fF5kbSYdJOLKLbB0VmxrdjcvSrRE=;
-        b=qlsoJI3sS7TtqjVPPBKBKGYOPFeKiRqKE7Gi92E15Rp19u+yVXfCo/UYIltgZZ5eG8
-         pPJewH27tgn16Kdzy59YFXXdsDXcPmAqekWFrFX8wlRH9MYbHrO58Gxy8G3MPN7kfIow
-         84GF/5aiMxuYG20qsVEVk67k6g2rkDcb2d9AY6oT27zSI2BKOWPGoqlbDeTFBqsqrYZh
-         REVSZ5TvhqUTLEEt8TA4UcR8CZS9X5fZVWbnf0w2rF9TLVZUnry4RFYl5FIOzG6BpnhY
-         kGe6aVeUiSM7ZPkZL0BEszAit8uQH0UqTAH/oSikiNpS6nOyDfHcI5CqT+HxFwkbByVl
-         ZE7w==
+        d=zoom.us; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding:thread-index:content-language;
+        bh=3KRbf/A4XaIfi4hGHgJtDJio2hLFpLnmc1YnBRPFpNA=;
+        b=CLNAJ3ft+eRIKPQU2VaOhPJVo6SgnrjDHtbBg5n9XcegpujGt29Fbwe4fsQhLP4fpS
+         UoTYYiYeVGBc/9qII3/NQJ5jIcMbPY2AX7YQHCqsitRxvFicQ0obytgHGO3fZK4rdTme
+         dOUQLI5ZTq317dGHl99SC9fI8SUb+0eWT03sY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VOE7pYLGWGTSvf+fF5kbSYdJOLKLbB0VmxrdjcvSrRE=;
-        b=Q0qK+n8aceKOFXl99jGk3FiLbj0dpugdTCuQokCAtcTxuC3gXNc/XDTm08qGuhYBvT
-         kUdIoYHKT9fSw4TcdPpnJPKowy7X1nz0QvCddpXakEyK7MQRLnyqEDcokL73kTYt3hG6
-         4M/uValPkwwopftcDEMsLOMKhFfSpdmdBAtW0LOZYJFSXs6H2lt7TPkvpnd1Jnw9a2yq
-         wlSC+wViZb7V5sWyQxKibOdBqffMhYShDJog8V3GNFgMCZspuCkoYs3eXDldKzM2AA0Q
-         6EV9MBKkwDa7Rgc8ONsLJo+XHA2tumXaKcgFpc4o6m1rhVkL/7GqHjJxPQI91NYMVd46
-         plCA==
-X-Gm-Message-State: AOAM532vPwXwidJB2YWG3tJfG8hqPnhnZ79b7JRfZaF95SQiRkzLEd4c
-        0gzVJrC0TZh/taLCYtm6GeWwmHSK
-X-Google-Smtp-Source: ABdhPJxe+dfo0xRgoDWUpNIWLZ36pWyhZ0YasQANe+x5mO2GoDIPs1SKdkYHcbJL8WE2T/Y5PAZ/Pg==
-X-Received: by 2002:a05:6000:1083:: with SMTP id y3mr1874261wrw.425.1591672754806;
-        Mon, 08 Jun 2020 20:19:14 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w3sm1385142wmg.44.2020.06.08.20.19.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2020 20:19:14 -0700 (PDT)
-Message-Id: <pull.781.v2.git.git.1591672753363.gitgitgadget@gmail.com>
-In-Reply-To: <pull.781.git.git.1588901124066.gitgitgadget@gmail.com>
-References: <pull.781.git.git.1588901124066.gitgitgadget@gmail.com>
-From:   "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 Jun 2020 03:19:12 +0000
-Subject: [PATCH v2] Enable auto-merge for meld to follow the vim-diff beharior
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding:thread-index:content-language;
+        bh=3KRbf/A4XaIfi4hGHgJtDJio2hLFpLnmc1YnBRPFpNA=;
+        b=WFeKcSB4ur8+m2qvAJsr9amYDgMIi0jrAfrbyCKdxmf5WmWATIu1KUvfV8KacxBtBy
+         88mhXiEsWlgoQ3beG20danU5vMwZTtbKY/OvAyGDXjcH0t1FRn2B5MrkBtH+Yn5vohsa
+         vNOV+1nPnbPq9+qWh4hzrTOqvYlGMylDCPO4XVXVfRHd6971wRnZps/Jleg2/E29AVdH
+         TS/YYR8/9/xR8uQvL4MLhzOdopcS4CgeoQCjqXBwUTkMVHNSP6gM98DMKg2lgISkMYIK
+         +wFFCpxNY6ewPCz/JvpWgO0NcTNvZLN8Y1pHSrkT4UiCxMQ1oyCFyggho6lR2RxSuTw8
+         7Orw==
+X-Gm-Message-State: AOAM530MAD+N9BijLtCFKgL9lUEx7Je/dABRTSuBGyc+bT6T0m3wUyKG
+        qMdB9dEyeiWTeJVkB8n2QbRlK4/gNvxTMJl/Ak55kRCb3xsL4xpzq88Lgde88w98A9tvJj6jr/A
+        S5cc3qOpEI9vLwL2jO3a6DCh8AHbW+xVybLAboOyO29xJn9w8Vvzh0lVOYly3
+X-Google-Smtp-Source: ABdhPJx++t5fYU/c2XQlwr8vMfEch7FFAqdpG0A3QQBmB5OOxBHWEA5lYtqLhoYGa5Wv3yiSad86OQ==
+X-Received: by 2002:a63:f854:: with SMTP id v20mr23420378pgj.0.1591673590186;
+        Mon, 08 Jun 2020 20:33:10 -0700 (PDT)
+Received: from DESKTOPLINSUN ([38.99.100.2])
+        by smtp.gmail.com with ESMTPSA id f200sm8515814pfa.62.2020.06.08.20.33.07
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jun 2020 20:33:09 -0700 (PDT)
+From:   <lin.sun@zoom.us>
+To:     "'Pratyush Yadav'" <me@yadavpratyush.com>,
+        "'sunlin via GitGitGadget'" <gitgitgadget@gmail.com>
+Cc:     <git@vger.kernel.org>, "'sunlin'" <sunlin7@yahoo.com>
+Subject: RE: [PATCH v2] Enable auto-merge for meld to follow the vim-diff beharior
+Date:   Tue, 9 Jun 2020 11:33:05 +0800
+Message-ID: <311401d63e0e$b1ffe490$15ffadb0$@zoom.us>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     sunlin <sunlin7@yahoo.com>, "lin.sun" <lin.sun@zoom.us>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdY+Dq2gkD+SYjqlTCy+7U+/wexvoQ==
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "lin.sun" <lin.sun@zoom.us>
+Hi Pratyush,
 
-The mergetool "meld" does NOT merge the no-conflict changes, while the
-mergetool "vimdiff" will merge the no-conflict parts and highlight the
-conflict parts.
-This patch will make the mergetool "meld" similar to "vimdiff",
-auto-merge the no-conflict parts, highlight conflict parts.
+Yes, you're totally right, it's my typo, and it's fixed by my last =
+commit [PATCH v2].=20
+I tried git merge-tool with meld and found there is "auto-merge" option =
+for better experience.
+The "auto-merge" was added since meld 1.7 (Year 2012).
+Here're some documents for it.
+https://meldmerge.org/features.html
+https://lukas.zapletalovi.com/2012/09/three-way-git-merging-with-meld.htm=
+l
 
-Signed-off-by: Lin Sun <lin.sun@zoom.us>
----
-    Enable auto-merge for meld to follow the vimdiff beharior
-    
-    Hi, the mergetool "meld" does NOT merge the no-conflict changes, while
-    the mergetool "vimdiff" will merge the no-conflict changes and highlight
-    the conflict parts. This patch will make the mergetool "meld" similar to
-    "vimdiff", auto-merge the no-conflict changes, highlight conflict parts.
+Regards
+Lin
+-----Original Message-----
+From: Pratyush Yadav <me@yadavpratyush.com>=20
+Sent: Monday, June 8, 2020 17:50
+To: sunlin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org; sunlin <sunlin7@yahoo.com>; lin.sun =
+<lin.sun@zoom.us>
+Subject: Re: [PATCH] Enable auto-merge for meld to follow the vim-diff =
+beharior
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-781%2Fsunlin7%2Fmaster-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-781/sunlin7/master-v2
-Pull-Request: https://github.com/git/git/pull/781
+Hi Lin,
 
-Range-diff vs v1:
+I'm not familiar with the code so I'll let someone else comment on that. =
 
- 1:  739e69e6631 ! 1:  6e98a10bfa9 Enable auto-merge for meld to follow the vim-diff beharior
-     @@ Commit message
-          This patch will make the mergetool "meld" similar to "vimdiff",
-          auto-merge the no-conflict parts, highlight conflict parts.
-      
-     -    Signed-off-by: Lin Sun <sunlin7@yahoo.com>
-     +    Signed-off-by: Lin Sun <lin.sun@zoom.us>
-      
-       ## mergetools/meld ##
-      @@ mergetools/meld: merge_cmd () {
+But...
 
+On 08/05/20 01:25AM, sunlin via GitGitGadget wrote:
+> From: "lin.sun" <lin.sun@zoom.us>
+>=20
+> The mergetool "meld" does NOT merge the no-conflict changes, while the =
 
- mergetools/meld | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> mergetool "vimdiff" will merge the no-conflict parts and highlight the =
 
-diff --git a/mergetools/meld b/mergetools/meld
-index 7a08470f883..318653cc9f7 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -10,10 +10,10 @@ merge_cmd () {
- 
- 	if test "$meld_has_output_option" = true
- 	then
--		"$merge_tool_path" --output="$MERGED" \
-+		"$merge_tool_path" --auto-merge --output="$MERGED" \
- 			"$LOCAL" "$BASE" "$REMOTE"
- 	else
--		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-+		"$merge_tool_path" --auto-merge "$LOCAL" "$MERGED" "$REMOTE"
- 	fi
- }
- 
+> conflict parts.
+> This patch will make the mergetool "meld" similar to "vimdiff",=20
+> auto-merge the no-conflict parts, highlight conflict parts.
+>=20
+> Signed-off-by: Lin Sun <sunlin7@yahoo.com>
 
-base-commit: 07d8ea56f2ecb64b75b92264770c0a664231ce17
--- 
-gitgitgadget
+... your name and email in "From:" and "Signed-off-by:" should be the =
+same. So either use "lin.sun" <lin.sun@zoom.us> in both places or use =
+Lin Sun <sunlin7@yahoo.com> in both.
+
+--
+Regards,
+Pratyush Yadav
+
