@@ -2,102 +2,106 @@ Return-Path: <SRS0=lPKc=7W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2C71C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 17:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F36A0C433DF
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 17:35:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC3DF20774
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 17:23:03 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WXDFVeXV"
+	by mail.kernel.org (Postfix) with ESMTP id DD83F20774
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 17:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731624AbgFIRXC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Jun 2020 13:23:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37216 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728499AbgFIRXC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jun 2020 13:23:02 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 394B1C05BD1E
-        for <git@vger.kernel.org>; Tue,  9 Jun 2020 10:23:02 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id l184so17667081qkb.2
-        for <git@vger.kernel.org>; Tue, 09 Jun 2020 10:23:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=JCozJmz70KXbSSUYLgwhnPOEH+9oy5Ia3J29tKk+mQY=;
-        b=WXDFVeXV47Sn6AGRF8ZIgTQ7ZGW8Fs0cvnxqtnuXiQFwZFpyH0WVfkO4g//MVpkvUN
-         ta/hmZ+Dhbl1hMHYlVJcKkhHo1uOdfVxgIUryo72bxqdvSoK4vZy34BvbnAXk51/D0I+
-         sOSfiDNaBI0cXNfSNlv08v8vk0gjXFqHtB2zxu789yrFUvSHP8nJs86NwDFkcmRIVrK0
-         0Zl2oAu2X7P1Px5kaNJ3Rbl6o0MxwjF8qw3ELcbdIo2+pDEBpYxzhFoWPZfL1mb7K7B8
-         aY6BapoUkZZkfXGY5mNS5nXUs5nXxdwRYqN8IDEXZ7AXjsrxweHazWHahXjpRta5/2FR
-         nRvg==
+        id S1731823AbgFIRfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Jun 2020 13:35:09 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40230 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726848AbgFIRfI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jun 2020 13:35:08 -0400
+Received: by mail-wm1-f68.google.com with SMTP id r15so3975375wmh.5
+        for <git@vger.kernel.org>; Tue, 09 Jun 2020 10:35:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=JCozJmz70KXbSSUYLgwhnPOEH+9oy5Ia3J29tKk+mQY=;
-        b=S8c85JVD91xsnrAEQd0YF2dned1NxbFQhaYA05TPfHp3QyMnaNlB7z6i3un3NEeVs5
-         g/+WAKAq5hJHFqLEaqEJFW4ss5Llgc8dhfu3irPS23ZiY6suhH8R86V0bD9ZIv0Z0iCT
-         qx9qHmkuRGnvtXYmFOw5cZyjHrsQxBAPhrqhP4ZVmUPEzPaNN75wRue/+mOhUUkv9gwT
-         n0WfZPeXFqW+Z+ap0VYBX50ldOkgII7q9Ot/dIvtFKZmPgDkRvcHc7v97u6g+08iAoe+
-         yq6nVCqsgTPStqLo1O3HqFj13j2FK7ymGXymKBU+ReSkjfCZe37VUQJRE7YFnTiuGly6
-         Uy9w==
-X-Gm-Message-State: AOAM533BkXrMkczVxkeG2naKW9YIJxXGb5TQ4SUxqciT3JkRCBeovPk2
-        vd9s3+XZY8/T87J8x4akjLfaDSb2P5w=
-X-Google-Smtp-Source: ABdhPJzTfRJubJG5Kto9X4/uHpC+6CTmea3F5xki3R2jlVyiKd7ZwTk0FazM6VtN4uegVsQ9Uqy14W2nc+o=
-X-Received: by 2002:a0c:fa47:: with SMTP id k7mr4917488qvo.132.1591723380711;
- Tue, 09 Jun 2020 10:23:00 -0700 (PDT)
-Date:   Tue,  9 Jun 2020 19:22:44 +0200
-In-Reply-To: <xmqq4krll544.fsf@gitster.c.googlers.com>
-Message-Id: <20200609172244.257392-1-hanwen@google.com>
-Mime-Version: 1.0
-References: <xmqq4krll544.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9-goog
-Subject: [PATCH] Fixup! Add t/helper/test-reftable.c
-From:   hanwen@google.com
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=M/fseRN+ZXbWWtQCEPTbCFxQgVQDoLFCJSVNARi1cd8=;
+        b=HE6Ju4zE6PZcY0pFt3857uRK8eJFn4E0XZR8snJxEh+vMKawzqXK8VoozMmcqz1zFl
+         q9erZ5TPLz7l1jkbNYGgLcwp9wqEtDIeI9Y3TFkahYZmO4xVWg1BdV/UI1wiv/9pwrCa
+         j+VobSacDiSnmONKY1bfxtiODKwJ/niJOIku1GKSnMyZL6h+OPjdJK8JHuXE3LVu/6TO
+         fv2wGVm/Uc/U4+sBBrKHp5FRPnFMd6bzw6d492khtMT8zltUD4r4jSACYGX/r4VB60MH
+         gWRKbu2wzmkqqGCKQkOFO0LbvPiN40FtICj7hi5kTJcT0WxDTB5SXHT0TjunxFkIDjU3
+         xYtw==
+X-Gm-Message-State: AOAM530yhtVfXleQuaD1lz3rPQuy/gCsTIDbi7YeTFXPFV9uOZqg+xSV
+        4beaIaR1/NfryQK6FFKRP6w7xT8HtJSuezdN7NM=
+X-Google-Smtp-Source: ABdhPJzFc8uf4ocq0UV4woEpiQ1JAN6X3lPfjBqmdLAtq5TdO4y3SMF3nwuSjE+36fLAPdhauFYDsTuE0xweVJ7IQ4k=
+X-Received: by 2002:a1c:dfd7:: with SMTP id w206mr5047585wmg.130.1591724106824;
+ Tue, 09 Jun 2020 10:35:06 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200608062356.40264-1-sunshine@sunshineco.com>
+ <20200608062356.40264-3-sunshine@sunshineco.com> <xmqqzh9djlpb.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqzh9djlpb.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 9 Jun 2020 13:34:55 -0400
+Message-ID: <CAPig+cRd1_U7MZ41LBcFSTaFGq_ENdY9JufV_jvwSX=AMV0NOQ@mail.gmail.com>
+Subject: Re: [PATCH 2/8] worktree: prune corrupted worktree even if locked
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?Q?Jonathan_M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+On Mon, Jun 8, 2020 at 5:24 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > The .git/worktrees/<id>/locked file created by "git worktree lock" is
+> > intended to prevent a missing worktree -- which might reside on a
+> > removable device or network share -- from being pruned. It is not meant
+> > to prevent a corrupt worktree from being pruned, yet it short-circuits
+> > almost all "git worktree prune" corruption checks.
+>
+> The '.git/worktrees/<id>/locked' file is what 'It' in "It is not
+> meant to" refers to, but the 'it' in "yet it short-circuits" cannot
+> refer to the same thing---my reading hiccuped there.
+>
+> "Its presence causes most of the corruption checks skipped by 'git
+> worktree prune'", perhaps.
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- t/helper/test-reftable.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 t/helper/test-reftable.c
+I can adopt that wording, but see below...
 
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-new file mode 100644
-index 0000000000..95d18ba1fa
---- /dev/null
-+++ b/t/helper/test-reftable.c
-@@ -0,0 +1,15 @@
-+#include "reftable/reftable-tests.h"
-+#include "test-tool.h"
-+
-+int cmd__reftable(int argc, const char **argv)
-+{
-+	block_test_main(argc, argv);
-+	merged_test_main(argc, argv);
-+	record_test_main(argc, argv);
-+	refname_test_main(argc, argv);
-+	reftable_test_main(argc, argv);
-+	slice_test_main(argc, argv);
-+	stack_test_main(argc, argv);
-+	tree_test_main(argc, argv);
-+	return 0;
-+}
--- 
-2.27.0.278.ge193c7cf3a9-goog
+> > This can make it
+> > impossible[1] to prune a worktree which becomes corrupt after the lock
+> > is placed since "git worktree prune" won't prune it, and it may not even
+> > be possible to unlock it with "git worktree unlock", depending upon the
+> > nature of the corruption.
+>
+> The latter is because... "worktree unlock" does not skip corruption
+> check and refuses to unlock a corrupted worktree, or something?
 
+That bit of the commit message was a late addition and somewhat
+intentionally hand-wavy. I don't think "git worktree unlock" will
+currently die or misbehave due to corruption, but was thinking that it
+someday might if additional checks are ever added. But, it's not
+worth pursuing since...
+
+> But the intent of locking a worktree is "make sure that the end user
+> is aware of the fact that it is locked before allowing the worktree
+> to be pruned", isn't it? Unless there is a way for a corruption to
+> add the "locked" file the end-user did not intend to have, if we
+> sense the "locked" file given to a worktree, shouldn't we honor that
+> existing "locked" file's intent?
+>
+> I am growing skeptical about the approach taken by this step. There
+> must be something missing that I may become aware of after reading
+> the remainder of the series.
+
+You're not the only person skeptical about this patch. I flip-flopped
+on it multiple times, first convincing myself it was the right thing
+to do, then convincing myself that the original code was correct, and
+so forth. That's a good indication that such a change overall is
+questionable.
+
+Aside from that, this patch is unrelated to the intent of this series.
+So, I'll drop it when I re-roll.
