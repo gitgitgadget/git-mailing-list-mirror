@@ -6,89 +6,109 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45111C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 16:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CCDEC433E2
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 16:03:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFFB220737
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 16:03:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27BAE2078C
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 16:03:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fuQ7lgGe"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V3AMEhud"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731021AbgFIQDZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Jun 2020 12:03:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63750 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731157AbgFIQDV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jun 2020 12:03:21 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD4AC7768E;
-        Tue,  9 Jun 2020 12:03:19 -0400 (EDT)
+        id S1731087AbgFIQCv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Jun 2020 12:02:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50972 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728888AbgFIQCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jun 2020 12:02:48 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6357F6B257;
+        Tue,  9 Jun 2020 12:02:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=E93LyZS+zoc9
-        Uxu5B4I/FfT0ZBs=; b=fuQ7lgGe4B730PBcMGTrAOScMRDGIHYHHYHNr+sDdXju
-        C5cz7j1QyssTpq3FGJbZQG13UK6qTKt1TlrW/a8HFiDAFBYRHXsnUfJFm3msFpCe
-        dYzLhQrg1nu4TuHVsILNppNquUAS3Lla1VYElWUqNq4Tws+UUYfx5CR/F+qIJ3A=
+        :content-type; s=sasl; bh=4x7z2+hbUTmkyCdhMzOPsychnuA=; b=V3AMEh
+        udvvd0Hh6cSUWhoRXoorUQuhGJtQZm2kQ77N2+D1HIK3wr6h+JB3WsHZiLfgA5ji
+        v/SB8htQzIqtRmTBA63vxhsFswlblNjdsS1CUykVxZIFBns4nwfWY3+Lo/tplV4t
+        KkQJbhb9A7REztNDsLfEAEYxcdHZuw3oRFaws=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PYdTdj
-        KHLa8UQligmbCfnMNXoZcmkH6apEAf6fly1hponHt/C9vVWMi0fcVKUY/FNi5kD8
-        4X3i7RldWduaGjVF9pa0rbMCZagVnmkhL4xWYLEzakawU91AlDsNRpwuC9p1dWOS
-        KnxFI5IryvPXHV4O1rRH/Fk1IQz7ErSDM58zQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4D987768D;
-        Tue,  9 Jun 2020 12:03:19 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=TEjpaZWaZ9S2W1f4S2xLppDP19H2aqbh
+        pNQ8jWzQqWydJcaga9iVGHkq1M9zoFURNwhpJNmQe/CQ6TuHg1b5eegs7zplJ826
+        BhEhrZ188DmjUMZcnqqYmHm9nLph9nuYYmf2+SrOJcEJ0WoezNnHWRJ7s/E8pn/P
+        fX8etYZnt58=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A6FD6B256;
+        Tue,  9 Jun 2020 12:02:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 30DAC7768C;
-        Tue,  9 Jun 2020 12:03:19 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CCD056B255;
+        Tue,  9 Jun 2020 12:02:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     John Lin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, John Lin <johnlinp@gmail.com>,
-        Jeff King <peff@peff.net>, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v2] gc: recommend `git gc --prune=now` instead of `git prune`
-References: <pull.652.git.1591581739031.gitgitgadget@gmail.com>
-        <pull.652.v2.git.1591662224566.gitgitgadget@gmail.com>
-        <87bllsa47u.fsf@evledraar.gmail.com>
-Date:   Tue, 09 Jun 2020 09:03:18 -0700
-In-Reply-To: <87bllsa47u.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 09 Jun 2020 13:06:13 +0200")
-Message-ID: <xmqqa71ci5vd.fsf@gitster.c.googlers.com>
+To:     Simon Pieters <simon@bocoup.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, don@goodman-wilson.com
+Subject: Re: Rename offensive terminology (master)
+References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+        <20200505231641.GH6530@camp.crustytoothpaste.net>
+        <CAOAHyQx=+fM1FpAv+g3M+j7j4MgLJA03=MGFmXLvZcfJKAEpGg@mail.gmail.com>
+Date:   Tue, 09 Jun 2020 09:02:43 -0700
+In-Reply-To: <CAOAHyQx=+fM1FpAv+g3M+j7j4MgLJA03=MGFmXLvZcfJKAEpGg@mail.gmail.com>
+        (Simon Pieters's message of "Tue, 9 Jun 2020 17:16:57 +0200")
+Message-ID: <xmqqeeqoi5wc.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: BC6558DE-AA6A-11EA-9E0C-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A75150F6-AA6A-11EA-A405-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Simon Pieters <simon@bocoup.com> writes:
 
-> On Tue, Jun 09 2020, John Lin via GitGitGadget wrote:
->
->> From: John Lin <johnlinp@gmail.com>
->>
->> `git prune` is a plumbing command and should not be run directly by
->> users. The corresponding porcelain command is `git gc`, which is
->> mentioned in the man page of `git prune`.
->
-> This change feels incomplete without a change to git-prune's
-> documentation, see 8d308b3540 ("Documentation: point git-prune users to
-> git-gc", 2008-04-29).
->
-> I.e. it still talks about "in most cases you shouldn't run this", but
-> here we are removing a case where it would otherwise make sense because
-> the user shouldn't use it directly.
->
-> I think instead the small change that makes the most sense here is to
-> just add "prune" to completions,...
+> If someone is interested in helping with this, please follow up with
+> Don. But I would like to ask again for git mainline to seriously
+> consider adopting this change, given the information presented above
+> and the ongoing movement against systemic racism.
 
-That's perfectly reasonable stance to take.
+I am OK in principle if a future version of Git, when used by a new
+user of Git who does not have any custom configuration, wrote a
+string other than 'master' in .git/HEAD when "git init" is run.
+
+Picking a good replacement word to mean the primary branch is
+tricky, though.  Just having a notion that one is special among
+many (i.e. the primary-ness of the thing being named with a word
+that will replace 'master') may already be offending to some folks.
+
+Also notice that the qualified statement above talks only about the
+plain vanilla experience---the change of the default should be
+designed to avoid harming workflows in existing repositories and
+tools built around them.
+
+So, I think there are two separate tasks that can run in parallel.
+
+ * Pick the new default word to replace 'master'; it may turn out
+   that the Git project choose not to pick any to avoid offending
+   anybody, in which case "git init" may force end users pick the
+   default they want to use and offer recording in the ~/.gitconfig
+   file.
+
+ * Engineering work that uses the word that replaces 'master' by
+   default (if one got chosen) when not configured, and use the word
+   the end user chose when configured (iow, allow users to override
+   the default word that will replace 'master').  This includes
+   design work to decide what to do in existing repositories (if
+   there is anything that needs to be done).
+
+Without digging deeply, I think we are pretty good about basing
+things on HEAD (e.g. "git branch -d" protects the branch by seeing
+if it is already merged to 'HEAD' or its @{upstream}, and not treats
+'master' any specially), so it might be the matter of teaching "git
+init" (it uses 'master' by default) and "git clone" (it tries to use
+the name of the branch the HEAD at origin points at, but falls back
+to 'master' when the branch name their HEAD points at cannot be
+determined).
+
