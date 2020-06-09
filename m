@@ -1,106 +1,109 @@
-Return-Path: <SRS0=SopW=7V=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=lPKc=7W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2E0EC433DF
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 22:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1A83C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 00:03:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 991A5206D5
-	for <git@archiver.kernel.org>; Mon,  8 Jun 2020 22:58:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88545207C3
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 00:03:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XdkrZLJM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNnG40+P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726803AbgFHW64 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Jun 2020 18:58:56 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39126 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726765AbgFHW64 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Jun 2020 18:58:56 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DC07060436;
-        Mon,  8 Jun 2020 22:58:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1591657105;
-        bh=FE6IDBhAmZ964RzyqlucveIuNqz+Q1CYMt6pxEP3DFE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=XdkrZLJMTdrICwTmUHtbiSumlGMNxnuvfD29ZRMUjzsTweXetileD9RbR9JlUa8iE
-         koqBy5/0B3X30JL2zKXeb3YkQBBFcIF+h4wVwyHtpAyRxKqHG5m2HgVUKHAkCeuL+i
-         bg/amde/oW7LCXlKtGAS7S7cy5ARMpgY4+KFtIpL6LQKOLHmueK/YQKlJjd8b3LAsr
-         /fM9qJ4gHlxG71DuTLL3/VJxQlZTnowo+RFzSDgqlb36RLLl7TZPI7OeywyI7Dir2F
-         C/z4BVr5aKUSS4GTpDHWIxNdcXO54VgP9wJleqyoAT13fvc83vPTD2C367SAJE3Y/K
-         Zcr8G7wyTFLPzFfWmqdi+VCgVmjnwIqYl9k9jDbMj59KH8oBbn0qPFSXTwdbarmE7Y
-         hOTnGrOwwxe9o8HMkhRFwEo7q2r9lMxkj3b3r50XzES8jswe8+5S68bkwZ8W7ZNfzi
-         x7v4m/d05zL3RBn3ub5qIG/jMLeWK/BOWLLeejabqyL3lHgIsQL
-Date:   Mon, 8 Jun 2020 22:58:20 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tibor Billes <tbilles@gmx.com>, git@vger.kernel.org
-Subject: Re: [PATCH] fast-import: fix incomplete conversion with multiple
- mark files
-Message-ID: <20200608225820.GM6569@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, Tibor Billes <tbilles@gmx.com>,
-        git@vger.kernel.org
-References: <c53bb69b-682d-3b47-4ed0-5f4559e69e37@gmx.com>
- <20200606002241.1578150-1-sandals@crustytoothpaste.net>
- <alpine.DEB.2.21.2006081739520.9949@serpens>
- <xmqqtuzlld1d.fsf@gitster.c.googlers.com>
+        id S2387997AbgFIADu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Jun 2020 20:03:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46300 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387925AbgFIADq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jun 2020 20:03:46 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7FD6C08C5C2
+        for <git@vger.kernel.org>; Mon,  8 Jun 2020 17:03:44 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id y17so19294091wrn.11
+        for <git@vger.kernel.org>; Mon, 08 Jun 2020 17:03:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=RhqA52o3yjmXQPfMVJGxstfmlE2DXrg4DdlHlps39ow=;
+        b=MNnG40+PZ0gslbW1gbaSHKth4ooOFnbpZhjFb1e9wot8w8ERWjyvcmMc5VFj2r9wtg
+         N6rY+paBdfJjAB8Mj6Qrm/OgYrBPrHzXEce9MYdRzfT2+gb1HUUS8svhslzgRPcsTpiL
+         ZDIm4Ir8i0MUpATmAWX3vaD5NjxxGmn7e0iqmd0IkBn67R3R1/hO6v4OHwv2IsSSH0jV
+         lovCAysJs1XXrKcStzDrHR9is0rdIKOl0ORsf3i+/2CCtBIrA0K1WRpw4NX7bflAtkjX
+         N+K6ieFIqEPZ+zCr+snfqxlgjRRJ4qqia3amzr+DMZXoIQ7VjtRjoiOChGC8C9hUq0HI
+         TNRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=RhqA52o3yjmXQPfMVJGxstfmlE2DXrg4DdlHlps39ow=;
+        b=UfjNYzV1cCzLdMmP9IclOwpANhZkzrbvAAj69UoTbcyWZmTnPFRbvPcDS85MkQSZEe
+         f24R2mTQmDLefgYbwSvVYhwx0qnYjEAgw4jdyNyckjLF1i0Fp9QI8eJsj0Z85proEHpG
+         HSGV6s3R3UYkMB9LamY0DyF2s5YnBBNEsHKi9iOvKjLgaTTNlgmtszBv6fiaUWxRMOIg
+         c41yEAgHW1NiHiI9Ym9FsBhlYozJfPpGCBjGzHneL7rHV2lzN5jyNkHiCG4ZuQ9bUb+0
+         SfkKbBTtN9h/viUeTrBTiUFwF7u4vfV9HBsSE1suNAYIk0BNZ0Eojcy7AFU86f/uTBUF
+         EoPg==
+X-Gm-Message-State: AOAM532EH7Wv7ELNOAnsURpmL8jvzHcv+JzG1m9v3q8IjqE2xzS6FIiF
+        hbSd0RZV199eBB3SdBFjKfSvG8/E
+X-Google-Smtp-Source: ABdhPJzikHwAmcxlKbqsrSn642be6oYrXlZs0HQ8EwZh+9t3Xw5EWV3LdrFdP9gxzvD/Rye8pLBNdQ==
+X-Received: by 2002:adf:e887:: with SMTP id d7mr1300259wrm.62.1591661022904;
+        Mon, 08 Jun 2020 17:03:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q128sm1008336wma.38.2020.06.08.17.03.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jun 2020 17:03:42 -0700 (PDT)
+Message-Id: <pull.804.git.git.1591661021.gitgitgadget@gmail.com>
+From:   "Chris Torek via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 09 Jun 2020 00:03:38 +0000
+Subject: [PATCH 0/3] improve git-diff documentation and A...B handling
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lRF4gxo9Z9M++D0O"
-Content-Disposition: inline
-In-Reply-To: <xmqqtuzlld1d.fsf@gitster.c.googlers.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+To:     git@vger.kernel.org
+Cc:     Chris Torek <chris.torek@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+git diff -h help is succinct, but perhaps too much so.
 
---lRF4gxo9Z9M++D0O
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The symmetric-diff syntax, git diff A...B, is defined by the documentation
+to compare the merge base of A and B to commit B. It does so just fine when
+there is a merge base. It compares A and B directly if there is no merge
+base, and it is overly forgiving of bad arguments after which it can produce
+nonsensical diffs.
 
-On 2020-06-08 at 16:47:58, Junio C Hamano wrote:
-> Brian, I notice that the singleton global "marks_set_count", even
-> though the number could be counted per instance of the mark_set
-> structure, is still singleton.  I didn't bother thinking about it
-> when I wrote my "perhaps along this line" patch, but now I read it
-> again, I think it is OK to leave it (and other stats counters) as
-> is, primarily because we don't have a need (yet) to show stats per
-> mark_set.  Did you leave it as a global for the same reason?  Just
-> sanity-checking.
+The first patch simply adjusts a test that will fail if the second patch is
+accepted. The second patch adds special handling for the symmetric diff
+syntax so that the option parsing works, plus a small test suite. The third
+patch just updates the SYNOPSIS section of the documentation and makes the
+help output more verbose (to match the SYNOPSIS and provide common diff
+options like git-diff-files, for instance).
 
-Yes, I did; sorry for not mentioning that in the commit message.  I
-think it's fine to count the total number of marks processed as a
-statistic, and that would be independent of how we processed them.  It's
-an interesting metric, but not so interesting that folks will have a
-need to see a detailed breakdown, I think.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Chris Torek (3):
+  t/t3430: avoid undocumented git diff behavior
+  git diff: improve A...B merge-base handling
+  Documentation: tweak git diff help slightly
 
---lRF4gxo9Z9M++D0O
-Content-Type: application/pgp-signature; name="signature.asc"
+ Documentation/git-diff.txt |   2 +
+ builtin/diff.c             | 138 ++++++++++++++++++++++++++++++++-----
+ t/t3430-rebase-merges.sh   |   2 +-
+ t/t4068-diff-symmetric.sh  |  81 ++++++++++++++++++++++
+ 4 files changed, 206 insertions(+), 17 deletions(-)
+ create mode 100755 t/t4068-diff-symmetric.sh
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXt7CjAAKCRB8DEliiIei
-gU3VAQDVBqiWMlkqO6oweonBId5anIqyFDwlxqlzhcHPXNXYywD+Jk8CmusRzpGK
-iT2lPKFMb603eS8jKmgfF16HDEUpuwM=
-=8upx
------END PGP SIGNATURE-----
-
---lRF4gxo9Z9M++D0O--
+base-commit: 20514004ddf1a3528de8933bc32f284e175e1012
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-804%2Fchris3torek%2Fcleanup-diff-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-804/chris3torek/cleanup-diff-v1
+Pull-Request: https://github.com/git/git/pull/804
+-- 
+gitgitgadget
