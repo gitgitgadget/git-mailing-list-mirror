@@ -2,85 +2,101 @@ Return-Path: <SRS0=lPKc=7W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,URIBL_SBL,URIBL_SBL_A autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61532C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22383C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:33:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA30220737
-	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:02:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5EF02076A
+	for <git@archiver.kernel.org>; Tue,  9 Jun 2020 19:33:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KNOkXbG8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PO2TTnbG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729793AbgFITCz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Jun 2020 15:02:55 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59512 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728553AbgFITCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jun 2020 15:02:53 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 144566E1F0;
-        Tue,  9 Jun 2020 15:02:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BpSUFXqom3V1jCMtLhtrnBN4bNQ=; b=KNOkXb
-        G8+FeluDFrwKC4hVwKf4bMvIiq9Qn4RsKh7BH4H60IuW5vYoNQ1KOBIATipi9tRI
-        wLZKEEnCVDerjiqXlpD+9xfVS7bYa4+PQzge4QiFbPT30LFRARtO1IhP0KS4MnOp
-        IsJBm2Emnj1bcGisuE2HjBVbbaioAqpZdJvU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZyDibusHrmUxlkIlIFwBI+nInSppJD2b
-        Eh4Mxn7yt8dBZnGVuQjCEgD1Wd7zlSwm2yzwMfD9fMBsS2K74jgx+LezA7Ot2jLX
-        B+6Gq4BcGF6vemVotRb+cp+pTkoSm5aF0t5TlVQyjv9iApmRQXiULKr4Ie70Gogo
-        v6xM2XaWeIg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 04A896E1EF;
-        Tue,  9 Jun 2020 15:02:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 596866E1EE;
-        Tue,  9 Jun 2020 15:02:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Simon Pieters <simon@bocoup.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, don@goodman-wilson.com
-Subject: Re: Rename offensive terminology (master)
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-        <20200505231641.GH6530@camp.crustytoothpaste.net>
-        <CAOAHyQx=+fM1FpAv+g3M+j7j4MgLJA03=MGFmXLvZcfJKAEpGg@mail.gmail.com>
-        <xmqqeeqoi5wc.fsf@gitster.c.googlers.com>
-        <448e4f49-d1f8-94df-4fc7-64cd024e668f@kdbg.org>
-Date:   Tue, 09 Jun 2020 12:02:49 -0700
-In-Reply-To: <448e4f49-d1f8-94df-4fc7-64cd024e668f@kdbg.org> (Johannes Sixt's
-        message of "Tue, 9 Jun 2020 20:10:52 +0200")
-Message-ID: <xmqq5zc0hxk6.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728533AbgFITdl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Jun 2020 15:33:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726424AbgFITdk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jun 2020 15:33:40 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9903FC05BD1E
+        for <git@vger.kernel.org>; Tue,  9 Jun 2020 12:33:39 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id e12so17320200eds.2
+        for <git@vger.kernel.org>; Tue, 09 Jun 2020 12:33:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=4g638HqqSaaOaq16OWBqJc/vpig+vIsgE0/h6pyQ8qo=;
+        b=PO2TTnbGZGXrWPwLi6V3ZN0lgs6zjGMiZ+FAdGwdlMGhDXkhICoe4IxlQGPcDPp+db
+         LP8tGfLapAy96A53zLLTx8liTSDkZ5wUCIxwumog08ZUamH863XVcQ1IoEyF6dvYqeC1
+         KGcIRWoLsF66i4so9SmcNU6rZFynVxT3UagW+kjEEEOoBk3eYCdsfSZHSZrVTJ9m+6Io
+         AtbZjWPrkvOjf8yM532vpdtyMQCsOvyxYuxBtULaN7VQWL0303P+7uMHQGvs3W9rnpok
+         CqtHuqsWHQT8QMf1N5+fI/RQi5q4mC6ECxdDN4vkIjkTE+fASVdelj9UA8W4YoBGOC3I
+         tUQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=4g638HqqSaaOaq16OWBqJc/vpig+vIsgE0/h6pyQ8qo=;
+        b=clmr69y3b/3nOnXw5MG4rpTcXKiyu7/bGT7UlPZjww4FOeej/Rjw23WpMYG5n6+K3p
+         kyHAY8+3K3WcP6D8YEft9mZ2y+0VvqAPo2+pu++BZbGhpOc5rvX5EUqQ685J/Kh0Jkvq
+         YrMJKaxwVhbV9zMtE3wncXvIA3Mf3V9gcHFEeTaTQfptGw3QKN02rDjKwt0nRgUGfXcY
+         y1pAIDDTSrKRCX3KwZwD8oxpKZ5zoXjjrYFBKNLAZWQl4nU/jdKOfgDA6tNAjeOAkcYw
+         HHfQwxMLKuT9hxLfjmeqp5YhuhpDKQHc6lHTBD5t4BX0SaafAWxCuuVAjuHPxHEXjYJs
+         ecjg==
+X-Gm-Message-State: AOAM530kNXC+u/nJ/k/3o/u+nCYGVmAU4POSeAj4MxaRkPYJzGgeB0MM
+        pdpq1UUkSqsJ7gcR3pLMYqqND0uU0+mcwmytcxdPoJxlSsM=
+X-Google-Smtp-Source: ABdhPJyEoZqgFYe2fX9Dr+6gTxZEehRlO/cSQgKLjkH65XMA/ts9Wqa/YqqLcz8pCHZ1twhENlcePqKUmEqnj6fkt+c=
+X-Received: by 2002:a50:951d:: with SMTP id u29mr29377850eda.333.1591731216353;
+ Tue, 09 Jun 2020 12:33:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D0826E7E-AA83-11EA-AE6B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+From:   Brian Malehorn <bmalehorn@gmail.com>
+Date:   Tue, 9 Jun 2020 12:33:00 -0700
+Message-ID: <CAJB88a39G-GkGu1LuRE8na45Pav_cWb3cJLQFJM+FuW3BnromA@mail.gmail.com>
+Subject: git stash --include-untracked walks ignored directories
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Hi,
 
-> Am 09.06.20 um 18:02 schrieb Junio C Hamano:
->> so it might be the matter of teaching "git
->> init" (it uses 'master' by default) and "git clone" (it tries to use
->> the name of the branch the HEAD at origin points at,...
->
-> Don't forget the special treatment of "master" in fmt-merge-msg.c that
-> skips the " into 'foo'" part of  "Merge branch 'bar'".
+Not sure if this is the right place to send this, but I'm here to
+report a performance regression with git stash --include-untracked.
 
-Yup, that certainly needs to be taken into consideration in this
-topic.  There may be more that we are forgetting.
+Here's a quick way to reproduce:
 
+1. make a directory with a lot of ignored files
+
+$ find ignored -type f | wc -l
+   50000
+
+$ cat .gitignore
+ignored
+
+2. touch foo
+
+3. time git stash --include-untracked
+
+git version 2.26.0:
+real    0m0.094s
+
+git version 2.27.0.83.g0313f36c6e:
+real    0m1.913s
+
+This is a much bigger pain point on my work repo, which has 1.4
+million ignored files(!). As you can imagine it takes a long time to
+run git stash. While it might be valid to question why anyone would
+need that many files for any purpose, the bottom line is that I told
+git to ignore this directory, and it didn't ignore it.
+
+In the meantime I've reverted to 2.26.0 which doesn't have this
+performance regression. Let me know if you want any other information
+related to this issue.
+
+Thanks,
+Brian
