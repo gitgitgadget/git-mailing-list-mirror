@@ -4,158 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC10C433DF
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 03:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 287CCC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 03:43:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A6B42072E
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 03:21:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 03EAC207F9
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 03:43:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rbDufp+4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tJteWUkV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726040AbgFJDVa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Jun 2020 23:21:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45072 "EHLO
+        id S1726089AbgFJDnW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Jun 2020 23:43:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725999AbgFJDV3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jun 2020 23:21:29 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F511C05BD1E
-        for <git@vger.kernel.org>; Tue,  9 Jun 2020 20:21:29 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id t25so796191oij.7
-        for <git@vger.kernel.org>; Tue, 09 Jun 2020 20:21:29 -0700 (PDT)
+        with ESMTP id S1725988AbgFJDnW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jun 2020 23:43:22 -0400
+Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A61DC05BD1E
+        for <git@vger.kernel.org>; Tue,  9 Jun 2020 20:43:21 -0700 (PDT)
+Received: by mail-io1-xd43.google.com with SMTP id y5so582288iob.12
+        for <git@vger.kernel.org>; Tue, 09 Jun 2020 20:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=E7HMmEWGqVlbS3k00F7KnTQSYqKrHrRN3IjbCYtC1Ww=;
-        b=rbDufp+4TjiFLD/V5D/7LmigkgbcXPpFrhsYls5XY2+ZPfCsjPA/uW+XjGarl1Pv5b
-         GnpIpTf//Mq2FlvCV7gw6GN4uIM29/qJOlamgpsF5635lZVWmCo8aLx3t1k8KbZo7gAn
-         gpJoD7h13oFqpPQQDdH959bA4hWExgD+IYehfKz27MtChg2Mgg9TneR/Vzj73ybyXwA4
-         pzDUn9DkSR116TW9Fsq5tH82YABPG9gHNXhKxQc8+l9kaeujbiA1Jk8J2WTUNZmPQNTm
-         5B2bypSOfNN1ed74UDRjkrGb8tIfakvwb1pIgNsf8MOqLReXilNWMeuE67qfqg7xrjSv
-         bUHw==
+         :cc:content-transfer-encoding;
+        bh=bwB7oemie52O6ZkgPXlMiWt9kykhoFnBXKjUD0VSfhM=;
+        b=tJteWUkVunlS7ZkmtdNR34ki6ZsdYEYaEBqnDLV+XtBgOUNUBbMjMxWJ5c969Eby5+
+         2a8w+Fs/hq3Jo7Z1FxKvWwZqc14LEHAqIkwuljiXQJDuX9nVKsZbRQX/HjOCSHtKHwf4
+         Zs3m9gJRkOoR+fCxqSaF7jIYytXp4h2nJd2Ynk/2/9J8ZI1MGVpDJdyA+CPb+1NBAgdi
+         OqDYnIGi9NDIGTcnHKI0nnxNI9FoEcahcJFtzX5gpIqQqM/+XY+vaUyBN8l/EDtl7j5o
+         fVrl8V69vJ4sAymFrCSu5X+1Zsf3826rtt/xPQ0D91ows9OHnCfti9Kaz0ym8aXU2i7n
+         KAJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=E7HMmEWGqVlbS3k00F7KnTQSYqKrHrRN3IjbCYtC1Ww=;
-        b=FCtHPFNUkEIUuU9g71qXEhBydZJiNWPCZvdcz0PbTcO0lvkvF0hCS+YtxFV8S0kmVm
-         YwzEmT3nsxhCSYwhBdCaSrv39Sovl8yi3JFFHcpBhlCw9mlXGT7h0vuR2RwhnXFtBXVR
-         ODVewdT/T7T9MTqZFwpQ7ksVpAPbt7VlhHWTgPBiBhy7Oljdm6iHJ4R9fuVSCOrmyBwR
-         l7SUgl9ZRZGLpbr511U+SgrDMj9PZco14f7WyDRM8mD9N0HaVdj4IgJvxkgYbrr6V5dX
-         61RjRYLsbcHTa4g8ZlBAa5rprsOk4nmMW+oRgfbSQnZTzv/kb3d7O1vOgWDIlc+NClLX
-         S9mA==
-X-Gm-Message-State: AOAM5300Y7LKHxwp8qXtpFK82afDSyAF2fK7aMoFzBVHOp3lnMrVIbZ4
-        Fbmm+Pg0es04Hl+lKPzMeyiRTTwCBni+ED67eqU=
-X-Google-Smtp-Source: ABdhPJxUUaB6uTCaaUEvEnEopfnXgbQD7N4VHIiIXE2kepMbTTnOehPRrcbSZqNpgULF9WEJAT+XkcxVJ01shzvkr84=
-X-Received: by 2002:a05:6808:4b:: with SMTP id v11mr1026995oic.31.1591759288590;
- Tue, 09 Jun 2020 20:21:28 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bwB7oemie52O6ZkgPXlMiWt9kykhoFnBXKjUD0VSfhM=;
+        b=Pvxtq+FCFb8q+1jUP29jSy96XkZo6hFoGQ+pK46us6eRjawn6zUuIikR7Xaoyd+79q
+         FWESZDGzZJWUUeRhLLGHrs3nSGQY6eYdwviK4hbabjkxJn7NA5xLms91/dEoGLRNrFr9
+         wF2NBv2rb1pSdAun9qLzoskcwFqnf/KY4/jMW6/5Y6jRSehim1/kyMGxKT9iFVLhXvER
+         OMaFNaTJgzv4loDZTNDA8297g/z+3zrbsCQYlNv1vvbLljlgQj/8UAgCN054VttuX9iH
+         2bKmwy1Jd1XDgdSfaDA5XUG6FJZoRt3ZCGRuMjUuJGiP+MWiOoV/375nolFEyHO6NAMb
+         +h4g==
+X-Gm-Message-State: AOAM533bzaOqFdVcdMNpM5MilqGqb+QqaqlrWmH0Bv/SLXr/onZy9f1O
+        VhIGi7+k2crsTAOqwM4P+OjPoLpDQ3A8Jg4v3Jw=
+X-Google-Smtp-Source: ABdhPJw+UbMZsMbV5G9+ZBwHcyLz/spyKc2MqR9A+Jkxced5JMGG0wRDoORFl55ayDnmAmsn5JvzLLOPjieOy02qcuk=
+X-Received: by 2002:a02:b782:: with SMTP id f2mr1293474jam.91.1591760600489;
+ Tue, 09 Jun 2020 20:43:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAJB88a39G-GkGu1LuRE8na45Pav_cWb3cJLQFJM+FuW3BnromA@mail.gmail.com>
-In-Reply-To: <CAJB88a39G-GkGu1LuRE8na45Pav_cWb3cJLQFJM+FuW3BnromA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 9 Jun 2020 20:21:17 -0700
-Message-ID: <CABPp-BHv+5XSXMpZ=-kM=a3C0Y+v=JY5m11s-QWj_krjCvvO4g@mail.gmail.com>
-Subject: Re: git stash --include-untracked walks ignored directories
-To:     Brian Malehorn <bmalehorn@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <pull.652.git.1591581739031.gitgitgadget@gmail.com>
+ <pull.652.v2.git.1591662224566.gitgitgadget@gmail.com> <87bllsa47u.fsf@evledraar.gmail.com>
+ <xmqqa71ci5vd.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqa71ci5vd.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?B?5p6X6Ieq5Z2H?= <johnlinp@gmail.com>
+Date:   Wed, 10 Jun 2020 11:43:09 +0800
+Message-ID: <CAKO26MuO6UR8c5U+WX0ayEJjmXEnsp9P=ujZGwasM7KbrUgcRw@mail.gmail.com>
+Subject: Re: [PATCH v2] gc: recommend `git gc --prune=now` instead of `git prune`
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        John Lin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Denton Liu <liu.denton@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 9, 2020 at 1:39 PM Brian Malehorn <bmalehorn@gmail.com> wrote:
->
-> Hi,
->
-> Not sure if this is the right place to send this, but I'm here to
-> report a performance regression with git stash --include-untracked.
->
-> Here's a quick way to reproduce:
->
-> 1. make a directory with a lot of ignored files
->
-> $ find ignored -type f | wc -l
->    50000
->
-> $ cat .gitignore
-> ignored
->
-> 2. touch foo
->
-> 3. time git stash --include-untracked
->
-> git version 2.26.0:
-> real    0m0.094s
->
-> git version 2.27.0.83.g0313f36c6e:
-> real    0m1.913s
->
-> This is a much bigger pain point on my work repo, which has 1.4
-> million ignored files(!). As you can imagine it takes a long time to
-> run git stash. While it might be valid to question why anyone would
-> need that many files for any purpose, the bottom line is that I told
-> git to ignore this directory, and it didn't ignore it.
->
-> In the meantime I've reverted to 2.26.0 which doesn't have this
-> performance regression. Let me know if you want any other information
-> related to this issue.
->
-> Thanks,
-> Brian
+Hi all,
 
-I seem to be missing some important step to reproduce; what else is
-needed?  Here's what I see:
+Thank you Bjarmason & Junio. If Denton doesn't have other concerns,
+I'll start working on adding bash completion for "git prune".
 
-<Set path to use git-2.26.0>
-$ ./repro.sh
-Number of files in ignored before: 50000
-Saved working directory and index state WIP on master: e2b0471 initial
+Best,
+John Lin
 
-real 0m0.029s
-user 0m0.014s
-sys 0m0.014s
-git version 2.26.0
-Number of files in ignored after: 50000
-
-<Set path to use git-2.27.0>
-$ ./repro.sh
-Number of files in ignored before: 50000
-Saved working directory and index state WIP on master: 5c596b8 initial
-
-real 0m0.052s
-user 0m0.014s
-sys 0m0.034s
-git version 2.27.0
-Number of files in ignored after: 50000
-
-
-Where repro.sh is:
-
-#!/bin/bash
-
-rm -rf stupid
-git init -q stupid
-cd stupid
-
-echo ignored >.gitignore
-seq 1 10 >numbers-tracked
-git add numbers-tracked .gitignore
-git commit -q -m initial
-
-seq 11 20 >>numbers-tracked
-seq 21 30 >numbers-untracked
-
-mkdir ignored
-cd ignored
-for i in $(seq 1 50000); do >$i; done
-cd ..
-
-echo "Number of files in ignored before: $(find ignored -type f | wc -l)"
-time git stash --include-untracked
-git --version
-echo "Number of files in ignored after: $(find ignored -type f | wc -l)"
+Junio C Hamano <gitster@pobox.com> =E6=96=BC 2020=E5=B9=B46=E6=9C=8810=E6=
+=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=8812:03=E5=AF=AB=E9=81=93=EF=BC=
+=9A
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+> > On Tue, Jun 09 2020, John Lin via GitGitGadget wrote:
+> >
+> >> From: John Lin <johnlinp@gmail.com>
+> >>
+> >> `git prune` is a plumbing command and should not be run directly by
+> >> users. The corresponding porcelain command is `git gc`, which is
+> >> mentioned in the man page of `git prune`.
+> >
+> > This change feels incomplete without a change to git-prune's
+> > documentation, see 8d308b3540 ("Documentation: point git-prune users to
+> > git-gc", 2008-04-29).
+> >
+> > I.e. it still talks about "in most cases you shouldn't run this", but
+> > here we are removing a case where it would otherwise make sense because
+> > the user shouldn't use it directly.
+> >
+> > I think instead the small change that makes the most sense here is to
+> > just add "prune" to completions,...
+>
+> That's perfectly reasonable stance to take.
