@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F162C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AA81C433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BEBA2072E
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3426F2072E
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o0ubuorY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gMFOzsyb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726364AbgFJVTn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 17:19:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42566 "EHLO
+        id S1726341AbgFJVTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 17:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726290AbgFJVTl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 17:19:41 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C995EC03E96B
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:40 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id u13so3161068wml.1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:40 -0700 (PDT)
+        with ESMTP id S1726276AbgFJVTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 17:19:40 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6EF8C08C5C1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:39 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id l10so3914248wrr.10
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8wj3R1dl3ZUsQbIszwYs/WQOqQca6NeSqMcBFVfSOXA=;
-        b=o0ubuorYWufTM/Kkp68eQRYSXNRS62C+4vHAO3qB6uuYtWV621edlpXeAnTboSv4J4
-         tqgo2eaJ6m9+ZtA8tpwQ3nMLwHHSC8tBSn6rMHxBAZ/Ltg0NmR58k/4D/cK5ONzZI48n
-         M4X60ektvECvv8q43AHYTc5uOCqlR3OaiINRTBBqpoq1z8/Bxk0RafYZ5VuglWwP6Wr4
-         qUnCa4QiY1Ti+qNRKonjOddrgFMz1oE9awUQm4ld9vHenxyBHPyZN9v9wKed04HTeRry
-         WwiM7MQnAttgQM/FVKxCoF7ev0auP3R96OqH1AoJzdh+k+vfHuRaM9OIQFBzm/XElndm
-         LKxQ==
+        bh=5o3q2tWwhvnrWyifnIX0snl/MPgguWm3X5nLgsAQexI=;
+        b=gMFOzsybvw+7PQ0SIca8CCvB45ZEc5tne1reCkQfcnV/Be1y9MGLe2O807lSpTksem
+         4DrW4I0EWloztwkXyiDTVdbF69i0Exqz3tXnAQTecGEQcO06wdUb7CnxUpnD45KmE4ly
+         61mR0WReU3jEtvlmeYeiVpnCXD4Nfzujwblzl+KSWonYMSpvkQ7u3Sm0drkJK3Y87vCB
+         15+SvAcDRilx509Ne3jEod1ayn2XzkV87HL2dvYaVmTzDu9SIvMo7ceK3rXJeB5vHq7w
+         C/SBC2oz4qqZf+cT22bnYhe6zMhRu9MsIpWMC5gXdTNJr7/kUT4z+5BCxQkzApQuvBA9
+         r7kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8wj3R1dl3ZUsQbIszwYs/WQOqQca6NeSqMcBFVfSOXA=;
-        b=GXM4bnxKwjEM0ab5B3pfxfzTMdrqN3FSZBfa9Nv1Gpkkhw2pb8doRto4j/WdOcMcBf
-         LB2D8dna2OJPNzP5CJuKcXFNtQ/rLfUyj6BtKhTo/tzjIGjnDfdbDivmCqklgILEQ2zI
-         tvwtLZ8VLQw4bDKGflfq68LvnAq7pqnPFAn/Emf13IsYG20RQalaxY4rbDKgJxak/O0z
-         G2z6WmeKC5Ju3kISse3VXHSWK12BN8WgSbCl5jGZHR2A6Hhxk73JfrtEDcPFBZluHkue
-         gyDvPEilFojomy+z9weHz2vddXPhhdtm8mLyZaQ96IXySpbMuhEtsWxYYyu+9BzXiIXU
-         4FWQ==
-X-Gm-Message-State: AOAM532r197WLUFfmoKNH4Q5KZB6VvBneBQ6fXWCTt/q7s0uhQCQe3pW
-        N8+k5m4DfjzUj1Xq5X8PE3lMzV9o
-X-Google-Smtp-Source: ABdhPJwOfiWeADheMUV7CPTgXf9qR5Y/Q23tjnYJOrnWileWfwskVuWlo9MKEoWgRHa8twqtT4gcGQ==
-X-Received: by 2002:a1c:6446:: with SMTP id y67mr5215889wmb.156.1591823979343;
-        Wed, 10 Jun 2020 14:19:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d2sm1523957wrs.95.2020.06.10.14.19.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=5o3q2tWwhvnrWyifnIX0snl/MPgguWm3X5nLgsAQexI=;
+        b=oaHnCNYJ5CJonwE4Tk53evXWkWKTctcQPFQk6JS5tifHvWDtsB/qhO35dV6wnF2xjt
+         4+OGJSeRjvxQPBtWYpmHWCTkAZV31qj6Gwwfoai8pOZjWoDVl5vZjfHOPV2tzZ9L1EGr
+         BRyVbCmmV6EbahIozswHieSZyv+9B5YgFOky3DHXQOSEckmzl5LqW+RPgQnBkJqLPoDQ
+         GyY6l45PZJ6lNIOMjAW7aUyJNcEhMaysCUgLjGeIEq0MOZ3f/iyI7dyRLRDxuBT2dbo7
+         8zpTX542/dDWn8T/MOo9upFytJVRwE9VTlIKowTTVCJcTgyYF0rFgK9qRRWaprQzQE13
+         nwlw==
+X-Gm-Message-State: AOAM5333w3t6Gm+9515FW6rRNr+1IpV7ZP3hY/XNmHKCAxHOcx6zxJW2
+        4WYEtV1d91X4a2w6gPL4WYm2mO8/
+X-Google-Smtp-Source: ABdhPJy1q7Juw7Qp+hCmKgme+fOWEmIPL1Ty0E1mQPT7lMBD6BgBocYzVt6jSiI6xzlSE0xg3pAtOw==
+X-Received: by 2002:adf:f512:: with SMTP id q18mr6227956wro.38.1591823978294;
         Wed, 10 Jun 2020 14:19:38 -0700 (PDT)
-Message-Id: <e849def4a8c5cc291839ef4514a386df0c148b2e.1591823971.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t8sm1448674wro.56.2020.06.10.14.19.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2020 14:19:37 -0700 (PDT)
+Message-Id: <cce86c06bbf459ecbfddf21b1417bacc12315e3e.1591823971.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Jun 2020 21:19:28 +0000
-Subject: [PATCH 7/9] fmt-merge-msg: learn about the possibly-configured
- default branch name
+Date:   Wed, 10 Jun 2020 21:19:27 +0000
+Subject: [PATCH 6/9] clone: learn about the possibly-configured default branch
+ name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,65 +81,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When formatting the commit message for merge commits, Git appends "into
-<branch-name>" unless the current branch is the default branch.
+When cloning a repository without any branches, Git chooses a default
+branch name for the as-yet unborn branch.
 
 Now that we can configure what the default branch name should be, we
-will want to respect that setting in that scenario rather than using the
-compiled-in default branch name.
+will want `git clone` to respect that setting.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fmt-merge-msg.c          | 6 ++++--
- t/t6200-fmt-merge-msg.sh | 8 ++++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ builtin/clone.c         | 14 +++++++++++---
+ t/t5609-clone-branch.sh |  9 +++++++++
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index 72d32bd73b1..5e5c1d86f1c 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -407,7 +407,7 @@ static void fmt_merge_msg_title(struct strbuf *out,
- 				const char *current_branch)
- {
- 	int i = 0;
--	char *sep = "";
-+	char *sep = "", *default_branch_name;
- 
- 	strbuf_addstr(out, "Merge ");
- 	for (i = 0; i < srcs.nr; i++) {
-@@ -451,10 +451,12 @@ static void fmt_merge_msg_title(struct strbuf *out,
- 			strbuf_addf(out, " of %s", srcs.items[i].string);
+diff --git a/builtin/clone.c b/builtin/clone.c
+index cb48a291caf..a21d3e99f82 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1263,9 +1263,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		remote_head_points_at = NULL;
+ 		remote_head = NULL;
+ 		option_no_checkout = 1;
+-		if (!option_bare)
+-			install_branch_config(0, "master", option_origin,
+-					      "refs/heads/master");
++		if (!option_bare) {
++			char *default_branch = git_default_branch_name(0);
++			const char *nick;
++
++			if (!skip_prefix(default_branch, "refs/heads/", &nick))
++				BUG("unexpected default branch '%s'",
++				    default_branch);
++			install_branch_config(0, nick, option_origin,
++					      default_branch);
++			free(default_branch);
++		}
  	}
  
--	if (!strcmp("master", current_branch))
-+	default_branch_name = git_default_branch_name(1);
-+	if (!strcmp(default_branch_name, current_branch))
- 		strbuf_addch(out, '\n');
- 	else
- 		strbuf_addf(out, " into %s\n", current_branch);
-+	free(default_branch_name);
- }
- 
- static void fmt_tag_signature(struct strbuf *tagbuf,
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index e4c2a6eca43..a23cd157ffd 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -158,6 +158,14 @@ test_expect_success 'setup FETCH_HEAD' '
- 	git fetch . left
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+diff --git a/t/t5609-clone-branch.sh b/t/t5609-clone-branch.sh
+index 6e7a7be0522..66af3ac2669 100755
+--- a/t/t5609-clone-branch.sh
++++ b/t/t5609-clone-branch.sh
+@@ -67,4 +67,13 @@ test_expect_success 'clone -b not allowed with empty repos' '
+ 	test_must_fail git clone -b branch empty clone-branch-empty
  '
  
-+test_expect_success 'with overridden default branch name' '
-+	test_config core.defaultBranchName default &&
-+	test_when_finished "git switch master" &&
-+	git switch -c default &&
-+	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-+	! grep "into default" actual
++test_expect_success 'chooses correct default branch name' '
++	GIT_TEST_DEFAULT_BRANCH_NAME= \
++		git -c core.defaultBranchName=up clone empty whats-up &&
++	test_write_lines refs/heads/up refs/heads/up >expect &&
++	git -C whats-up symbolic-ref HEAD >actual &&
++	git -C whats-up config branch.up.merge >>actual &&
++	test_cmp expect actual
 +'
 +
- test_expect_success 'merge.log=3 limits shortlog length' '
- 	cat >expected <<-EOF &&
- 	Merge branch ${apos}left${apos}
+ test_done
 -- 
 gitgitgadget
 
