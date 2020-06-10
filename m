@@ -2,92 +2,79 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5931FC433E0
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96FD3C433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:16:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 182712078D
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:15:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61AC8206F4
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:16:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=rams-colostate-edu.20150623.gappssmtp.com header.i=@rams-colostate-edu.20150623.gappssmtp.com header.b="hF3ghuk8"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S28HWXt+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726553AbgFJXPY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 19:15:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60342 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726350AbgFJXPW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 19:15:22 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB67C03E96B
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 16:15:21 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id c8so4282421iob.6
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 16:15:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rams-colostate-edu.20150623.gappssmtp.com; s=20150623;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=iA8WTHYosc5eJJngXy1YINjJDSeRqEXxPnix9HJN/yc=;
-        b=hF3ghuk8T7iBYVlzVfhklOH5/oVd/O8eHzBzrmSIT6sOn2HFmemhd+4bZnqB61/Pd/
-         CaBHv0xMV1tuY0ljMP+eVRxg1ZpswmO08WF6IV2I5Rh+ZSrTyyzB/z0xLwZuHsroBiAQ
-         nUT1zoO0AfvhaqsJWanlI+VNOOayjjeWCC2HZL95YY1kjSAZDIHIfxJac+9MSg/+/P6v
-         8yY5iv5Sp41jAfKO44jxFGr/h0GTg5IEqZMmOMQW+QpMGMbWWph8YuH0wtPS/l5HZ9rV
-         58qO5vQ1uyzjTEeEk4cWD6ZsTVDVgwWbO8KjOdwUbl2eZNnJQdo1SpxlOkgbVIUPC3IV
-         wfPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=iA8WTHYosc5eJJngXy1YINjJDSeRqEXxPnix9HJN/yc=;
-        b=gbKqmeVDbGWYX0hAaWCNcmRbGc754Pa/5rV0Ry2URyk/Urg0ajmATiikXpYv0rAwg2
-         yg3uUtNhQ5xK7XP2sFn70f/KJny//Vbf/z0Qu6A15bttY8ULmO0pbiSBYN2yfbXjIuV8
-         dg7zYV5uA9QcuROvNU0Vr2jLdvDkYB37b/kLMMshaPeVltq7Ozt53LUoJ9DwYf6wRGW6
-         53vlm6cotXRF4sYaJgPw1oqJciham8aKWcKvcTexvG4b/v79RwHdnlz9yJFXfsJgehmt
-         wwtfYHFlLJLzPWMt6mA9hK5D+0RcxmYi4q1E09HWP1iUaXhSUt6ZRjyFLeeQGDgYrGU/
-         4bMg==
-X-Gm-Message-State: AOAM530KUVMPepe0Td1MA4uXL4Ut4r0BaOffp17+o8T4D6ltpQoLwYLI
-        Y9ZvJ+dlpgUgNtT7PWIN56ETFwUWq6c=
-X-Google-Smtp-Source: ABdhPJwfWHisTrJ2V6+iKCjh68NOEDfcJFjNObWj9FyA5KEXrF9mZNpKWgk0kj3EGbXR0wmylIW8QA==
-X-Received: by 2002:a02:952f:: with SMTP id y44mr600146jah.128.1591830920705;
-        Wed, 10 Jun 2020 16:15:20 -0700 (PDT)
-Received: from [10.180.91.128] (host-110-24.cofcdis.ftcollins.co.us.clients.pavlovmedia.net. [68.180.110.24])
-        by smtp.gmail.com with ESMTPSA id n20sm650718ila.85.2020.06.10.16.15.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Jun 2020 16:15:20 -0700 (PDT)
-From:   Jimit Bhalavat <jimit@rams.colostate.edu>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: GPG Commit Signing Project 
-Message-Id: <E1FF93D8-514C-4559-A8DE-1845D0FD3479@rams.colostate.edu>
-Date:   Wed, 10 Jun 2020 17:11:39 -0600
+        id S1726669AbgFJXQu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 19:16:50 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60758 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726350AbgFJXQu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 19:16:50 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58939DDBF4;
+        Wed, 10 Jun 2020 19:16:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NzbcbbjLF4SviSv2+uSZ6ion0Bs=; b=S28HWX
+        t+TCkckwnep0oyDFHhHItsl0/oGvRq06kp5icDil9fUs+D08idNRJqin03Hy9RSu
+        HyhqG2v1+FtXM/cK5r0GsOtfCJuQCr9zKKG+DtQwWTvn1/xLMW5PngvBcGT72n/6
+        SRwjJrZqG3XNazgyCTPJDiLk/eMvJec4o0jFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Sy9x50TNYRZRuivSNUvCei6uwc2lJNcf
+        n0BT2ab0KFIGe1ZC+YUlXbSaiaEIO2FkucE8/RG1NWuAqY4NthX+wM6ieyNuv52V
+        I65X+pFXwNji3IwKwJ7L9tsWcpwHya/ztfFOXxhAgWoI0rulXI7JBJg2t5M341O9
+        ysHQ4dxPPaM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FE38DDBF3;
+        Wed, 10 Jun 2020 19:16:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 73091DDBF2;
+        Wed, 10 Jun 2020 19:16:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+Subject: Re: [PATCH v2 0/9] CDN offloading update
+References: <cover.1590789428.git.jonathantanmy@google.com>
+        <cover.1591821067.git.jonathantanmy@google.com>
+Date:   Wed, 10 Jun 2020 16:16:42 -0700
+In-Reply-To: <cover.1591821067.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Wed, 10 Jun 2020 13:57:14 -0700")
+Message-ID: <xmqqftb2eckl.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73277466-AB70-11EA-BBF0-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good Afternoon,=20
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Hope you are doing well. As you know, I have been selected by The Linux =
-Foundation to work on the Commit Signing Project. We are trying again to =
-make the signing subsystem generic so that we can use other signing =
-tools while preserving backward compatibility with existing .gitconfigs =
-and setups. The code changes are pretty significant.=20
+> Thanks, Junio, for taking a look at this.
+>
+> This version is based on cc/upload-pack-data-2. I thought of retaining
+> the base from the original version, but trying out the rebase showed
+> that there were some code movements that would clutter the range-diff
+> anyway, so I went ahead with the rebase.
 
-Do you think we should create a topic under the pu branch?=20
+I think rebasing is not just justifiable, but is the right thing to
+do in this case, as the topics fairly heavily steps each other's toe.
 
-The below link shows some of the topics currently in pu:
-
-https://github.com/git/git/commits/pu
-
-Thank you once again. I really appreciate all your help and guidelines.=20=
-
-
-Be well and Stay safe,
-Jimit Bhalavat.=
+Thanks.
