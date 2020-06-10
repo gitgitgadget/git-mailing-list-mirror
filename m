@@ -2,96 +2,120 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D19BC433DF
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B60C433E1
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:18:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47F842072E
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:16:12 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RHG8E2/m"
+	by mail.kernel.org (Postfix) with ESMTP id F10E42070B
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727998AbgFJRQL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 13:16:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51481 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726979AbgFJRQL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 13:16:11 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85D0A5AAC0;
-        Wed, 10 Jun 2020 13:16:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6RQ7OFIPtQJ9nBUBtU7NgYYZN50=; b=RHG8E2
-        /mcoVmZ0puqZbrJo8RIYSBulNXz07lekwju+T6HD4XdJWf80dZDbD87EpnG1iaGv
-        TynU4OV43BkqBped2B1b8/5/JPkrEsRE4phG8I/ICy4JFhfc9e+FOQ1cFIJTBM4Y
-        1Ygh6soyHd8ux8hR3HynqxF4lQ31WOhKiYA/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=V5GnlbOtDiBoglNqFZ9isY31EtRCitpy
-        XJv0Hmz0xW2I7uR/xXKExZMfAW2exQzpifnC0M6T+TDu+2J/oaAxjuZFTD9s2+t8
-        W55gR3WpCv9hiXrrqQJn5sTPHojQiVMJalGRMp4rBClPt5wtSq1mQ07qScYYyHTj
-        D+efjn5VrU4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D2645AABF;
-        Wed, 10 Jun 2020 13:16:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 100FF5AABE;
-        Wed, 10 Jun 2020 13:16:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/8] Documentation: add Packfile URIs design doc
-References: <xmqq5zcexoqi.fsf@gitster.c.googlers.com>
-        <20200610011406.178334-1-jonathantanmy@google.com>
-Date:   Wed, 10 Jun 2020 10:16:09 -0700
-In-Reply-To: <20200610011406.178334-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Tue, 9 Jun 2020 18:14:06 -0700")
-Message-ID: <xmqqeeqmg7ty.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729787AbgFJRSs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 13:18:48 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43816 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729778AbgFJRSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 13:18:47 -0400
+Received: by mail-wr1-f67.google.com with SMTP id l10so3152512wrr.10
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 10:18:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5LMQsZpDYBg8IM2tawVcSNE4mF+4MOlJ+O+H14cmfx8=;
+        b=TePSIGdCO06Ht5BFAdl3Q49coXkbK7WI/Jx+jfUuD+v7YPZZUXqoF/vjgTtLfmacmQ
+         L1XpkExcsEYOX002F9L8dpRxtNZFmoLXgnax8VJJN81ycIle4suCNkgYuBxGrKZufYNv
+         /QgHWljwfEOISk+8o5QQDYKTYtPLRw8OPoKpLB1hybQ5f4LhxqkPPqgMLmdzB0TtDGYx
+         Ze7q/R/cxiImRwNaiQ+AoUFYmKzpcapxvrkiLJW80NFhP/9wXllr6k1VDfisbTnuG8P1
+         +0lQmyfmRtX9t55e1bXiFN/YoCV2jB/glKdzp8+y6N7Gh2mg6VO38wUC5gDVadFuqOAP
+         5hVw==
+X-Gm-Message-State: AOAM530C80z3aegndBZEJK+iCg6CzucFEFRlzLLn5LlAegTq/PGi2dXM
+        vMMQU9g7WrFgaAvSze5b6ElyrfJtaN1xiQxCf7M=
+X-Google-Smtp-Source: ABdhPJxaNDm/l42Ik42NlaehBEN+EGled9aYZOYmFVe9RWn7iE+i/AQ8RpXRLdsZyj3QbcWJXu+QlpKYY/D1KQ4NjlU=
+X-Received: by 2002:a5d:6acf:: with SMTP id u15mr5147515wrw.277.1591809525312;
+ Wed, 10 Jun 2020 10:18:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 140AF4E4-AB3E-11EA-BF35-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <20200610063049.74666-1-sunshine@sunshineco.com>
+ <20200610063049.74666-7-sunshine@sunshineco.com> <20200610171153.GA39055@konoha>
+In-Reply-To: <20200610171153.GA39055@konoha>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 10 Jun 2020 13:18:34 -0400
+Message-ID: <CAPig+cSLwPmDbk8Wjqb06OrNGHfmTLDOHjs88C+q1FhLGqLrrQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] worktree: generalize candidate worktree path validation
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?Jonathan_M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
->> > @@ -349,6 +362,9 @@ header. Most sections are sent only when the packfile is sent.
->> >  		  *PKT-LINE(wanted-ref LF)
->> >      wanted-ref = obj-id SP refname
->> >  
->> > +    packfile-uris = PKT-LINE("packfile-uris" LF) *packfile-uri
->> > +    packfile-uri = PKT-LINE(40*(HEXDIGIT) SP *%x20-ff LF)
->> 
->> 40* 
+On Wed, Jun 10, 2020 at 1:12 PM Shourya Shukla
+<shouryashukla.oo@gmail.com> wrote:
+> On 10/06 02:30, Eric Sunshine wrote:
+> > "git worktree add" checks that the specified path is a valid location
+> > for a new worktree by ensuring that the path does not already exist and
+> > is not already registered to another worktree (a path can be registered
+> > but missing, for instance, if it resides on removable media). Since "git
+> > worktree add" is not the only command which should perform such
+> > validation ("git worktree move" ought to also), generalize the the
+> > validation function for use by other callers, as well.
 >
-> I'm almost ready to send out an updated version, but have one question:
-> what do you mean by this? If you mean that I should use "obj-id"
-> instead, I didn't want to because it's not the hash of an object, but
-> the hash of a packfile.
+> There is an extra 'the' after generalize.
 
-It clearly is not an object name, but it is a run of hexdigits whose
-length is the same as (hexadecimal representation of) the object name.
+Thanks for noticing. I'll fix it if I re-roll, otherwise it can stay
+(unless Junio happens to fix it when queuing).
 
-How is "obj-id" we see above in the precontext of that hunk defined?
-Does it use 40*(HEXDIGIT), too?  Do we plan to support non SHA-1 hashes
-in this design in the future, and if so how?
+> >    if (!wt)
+> > -       goto done;
+> > +       return;
+>
+> Should we do a 'return 1' on failure instead of just a blank 'return' so
+> that we can denote failure of finding a worktree?
 
-"We are only focused on SHA-1 hashes for now" is a perfectly
-acceptable answer, and then 40* here makes 100% sense, but then we'd
-need to say "for now this design only assumes SHA-1 hash" upfront, I
-would think, to remind ourselves that we need to consider this part
-of the system when we upgrade to SHA-256.
+This function is declared as returning 'void', so we can't "return 1".
+The function instead signals a problem by die()'ing.
 
-Thanks.
+Changing it to return a success or failure result rather than dying is
+a different matter which can be done later if someone wants to do so,
+but is outside the scope of this patch series which is only making the
+minimal necessary changes to adapt the function for wider use.
+
+> > -       die(_("'%s' is a missing but locked worktree;\nuse 'add -f -f' to override, or 'unlock' and 'prune' or 'remove' to clear"), path);
+> > +       die(_("'%s' is a missing but locked worktree;\nuse '%s -f -f' to override, or 'unlock' and 'prune' or 'remove' to clear"), cmd, path);
+>
+> Let's wrap this to 72 characters at maximum per line maybe? Meaning that
+> the error message gets split into 2 lines.
+
+I'm not sure what you want to see wrapped; the warning message itself
+or the source code line? As for the warning message, it already is
+wrapped (see the embedded "\n").
+
+At any rate, this patch makes the minimal change necessary to meet the
+goal of making the function re-usable. Anything beyond that (such as
+wrapping long lines) is outside the scope of the patch and would make
+it harder to reason about the changes. Wrapping the line is certainly
+something that someone can do later as a follow-up, but is not the
+goal of this series.
+
+> > -   validate_worktree_add(path, opts);
+> > +   worktrees = get_worktrees(0);
+> > +   check_candidate_path(path, opts->force, worktrees, "add");
+> > +   free_worktrees(worktrees);
+> > +   worktrees = NULL;
+>
+> It is necessary to call 'free_worktrees(worktrees)' at the end? The
+> 'get_worktrees()' states that
+>   The caller is responsible for freeing the memory from the returned
+>   worktree(s).
+
+This code _does_ call free_worktrees() as it should, so I'm not sure
+what you're asking or saying. (Perhaps you're confusing "caller" and
+"callee"?)
