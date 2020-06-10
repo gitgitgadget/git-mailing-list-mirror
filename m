@@ -2,120 +2,187 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B60C433E1
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ECF0C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:34:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F10E42070B
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:18:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0829206F4
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:34:40 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i871A82l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729787AbgFJRSs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 13:18:48 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43816 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729778AbgFJRSr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 13:18:47 -0400
-Received: by mail-wr1-f67.google.com with SMTP id l10so3152512wrr.10
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 10:18:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5LMQsZpDYBg8IM2tawVcSNE4mF+4MOlJ+O+H14cmfx8=;
-        b=TePSIGdCO06Ht5BFAdl3Q49coXkbK7WI/Jx+jfUuD+v7YPZZUXqoF/vjgTtLfmacmQ
-         L1XpkExcsEYOX002F9L8dpRxtNZFmoLXgnax8VJJN81ycIle4suCNkgYuBxGrKZufYNv
-         /QgHWljwfEOISk+8o5QQDYKTYtPLRw8OPoKpLB1hybQ5f4LhxqkPPqgMLmdzB0TtDGYx
-         Ze7q/R/cxiImRwNaiQ+AoUFYmKzpcapxvrkiLJW80NFhP/9wXllr6k1VDfisbTnuG8P1
-         +0lQmyfmRtX9t55e1bXiFN/YoCV2jB/glKdzp8+y6N7Gh2mg6VO38wUC5gDVadFuqOAP
-         5hVw==
-X-Gm-Message-State: AOAM530C80z3aegndBZEJK+iCg6CzucFEFRlzLLn5LlAegTq/PGi2dXM
-        vMMQU9g7WrFgaAvSze5b6ElyrfJtaN1xiQxCf7M=
-X-Google-Smtp-Source: ABdhPJxaNDm/l42Ik42NlaehBEN+EGled9aYZOYmFVe9RWn7iE+i/AQ8RpXRLdsZyj3QbcWJXu+QlpKYY/D1KQ4NjlU=
-X-Received: by 2002:a5d:6acf:: with SMTP id u15mr5147515wrw.277.1591809525312;
- Wed, 10 Jun 2020 10:18:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200610063049.74666-1-sunshine@sunshineco.com>
- <20200610063049.74666-7-sunshine@sunshineco.com> <20200610171153.GA39055@konoha>
-In-Reply-To: <20200610171153.GA39055@konoha>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 10 Jun 2020 13:18:34 -0400
-Message-ID: <CAPig+cSLwPmDbk8Wjqb06OrNGHfmTLDOHjs88C+q1FhLGqLrrQ@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] worktree: generalize candidate worktree path validation
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        id S1726545AbgFJRek (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 13:34:40 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58373 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbgFJRej (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 13:34:39 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BE232D823F;
+        Wed, 10 Jun 2020 13:34:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1lclTdterNyK17m3x/70yFatmiM=; b=i871A8
+        2lusPPcHI7VigvaTkVcRRm7feed4a8FNlxr4jZSJHbHOYmvjwJMo9DksCp8CB41G
+        EBQWPvvyETjUwV9sbVXMcGKiHTNoCr2YOQuSfrMPaLjdXalvtseXHjcq6DWGxPVt
+        CzIAWpQZiVHL0BeK+kd1wFIUqDaV/l7xz/aB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QELHr/QYAxhfJrXar+EQPxL6F6773GW2
+        +qIzyfgoP7rtlfjgYcFRTf8dR82dIu+vEnkaPG7OleNq32UR23f00tHEu0s2Rmqk
+        6GR6P4JvG8GVzpdsKNMd0ZQ8dmkEXF1r1w1rC3xLexC5ozD6hn2EhdXz0nnFzMIr
+        1oqsqEADovk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B0824D823E;
+        Wed, 10 Jun 2020 13:34:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6C635D823B;
+        Wed, 10 Jun 2020 13:34:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Shourya Shukla <shouryashukla.oo@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
         <pclouds@gmail.com>,
-        =?UTF-8?Q?Jonathan_M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Jonathan =?utf-8?Q?M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 4/7] worktree: prune duplicate entries referencing same worktree path
+References: <20200610063049.74666-1-sunshine@sunshineco.com>
+        <20200610063049.74666-5-sunshine@sunshineco.com>
+        <20200610115028.GA11750@konoha>
+        <CAPig+cQjR78+wanyRXhB33qsVwHqjSAc_c1O+CG6ZkJi6W3mDA@mail.gmail.com>
+Date:   Wed, 10 Jun 2020 10:34:32 -0700
+In-Reply-To: <CAPig+cQjR78+wanyRXhB33qsVwHqjSAc_c1O+CG6ZkJi6W3mDA@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 10 Jun 2020 11:21:11 -0400")
+Message-ID: <xmqqa71ag6zb.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A64E22C0-AB40-11EA-992C-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 10, 2020 at 1:12 PM Shourya Shukla
-<shouryashukla.oo@gmail.com> wrote:
-> On 10/06 02:30, Eric Sunshine wrote:
-> > "git worktree add" checks that the specified path is a valid location
-> > for a new worktree by ensuring that the path does not already exist and
-> > is not already registered to another worktree (a path can be registered
-> > but missing, for instance, if it resides on removable media). Since "git
-> > worktree add" is not the only command which should perform such
-> > validation ("git worktree move" ought to also), generalize the the
-> > validation function for use by other callers, as well.
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> On Wed, Jun 10, 2020 at 7:50 AM Shourya Shukla
+> <shouryashukla.oo@gmail.com> wrote:
+>> > +static int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath)
+>>
+>> What exactly is the role of 'wtpath' in here? Maybe this is explained in
+>> the later patches.
 >
-> There is an extra 'the' after generalize.
+> 'wtpath' holds the location of the worktree. It's used in this patch
+> by prune_worktrees() to collect a list of paths which haven't been
+> marked for pruning. Once it has the full list, it passes it to
+> prune_dups() for pruning duplicate entries.
 
-Thanks for noticing. I'll fix it if I re-roll, otherwise it can stay
-(unless Junio happens to fix it when queuing).
+"wt" being a fairly common abbreviation of "work(ing) tree" in the
+codebase may escape new readers of the code.  The comment before the
+function can explicitly mention the variable name in the description
+to help them, I would think.  For example ...
 
-> >    if (!wt)
-> > -       goto done;
-> > +       return;
+> +/*
+> + * Return true if worktree entry should be pruned, along with the reason for
+> + * pruning. Otherwise, return false and the worktree's path, or NULL if it
+
+... the first sentence makes it clear that the function returns two
+things (i.e. "true"---presumably is returned as its return value, and
+"the reason"---the readers are supposed to guess it is stuffed in
+the strbuf), and the second sentence also says the function returns
+two things (i.e. "false", and "the worktree's path"---it is not
+immediately obvious where NULL goes, though).
+
+> + * cannot be determined. Caller is responsible for freeing returned path.
+> + */
+
+	Determine if the worktree entry specified by its "id" should
+	be pruned.
+
+	When returning 'true', the caller-supplied strbuf "reason"
+	is filled with the reason why it should be pruned.  "wtpath"
+	is left intact.
+
+	When returning 'false', the string variable pointed by
+	"wtpath" receives the absolute path of the worktree; or NULL
+	if the location of the worktree cannot be determined.
+	"reason" is left intact.
+
+perhaps?  I didn't check what you do to *wtpath when you return
+true, so "left intact" may not be what you are doing, and I am *not*
+suggesting to leave it intact in that case---I am only suggesting
+that we should describe what happens.
+
+>> > +static int prune_cmp(const void *a, const void *b)
+>>
+>> Can we rename the function arguments better? 'a' and 'b' sound very
+>> naive to me. Maybe change these to something more like: 'firstwt' and
+>> 'secondwt'? Yeah even this sounds kiddish but you get the idea right? Or
+>> like 'wt' and 'wt_dup'?
 >
-> Should we do a 'return 1' on failure instead of just a blank 'return' so
-> that we can denote failure of finding a worktree?
-
-This function is declared as returning 'void', so we can't "return 1".
-The function instead signals a problem by die()'ing.
-
-Changing it to return a success or failure result rather than dying is
-a different matter which can be done later if someone wants to do so,
-but is outside the scope of this patch series which is only making the
-minimal necessary changes to adapt the function for wider use.
-
-> > -       die(_("'%s' is a missing but locked worktree;\nuse 'add -f -f' to override, or 'unlock' and 'prune' or 'remove' to clear"), path);
-> > +       die(_("'%s' is a missing but locked worktree;\nuse '%s -f -f' to override, or 'unlock' and 'prune' or 'remove' to clear"), cmd, path);
+> As with any language, C has its idioms, as does Git itself. Sticking
+> to idioms makes it easier for others to understand the code
+> at-a-glance. Short variable names, such as "i" and "j" for indexes,
+> "n" for counters, "s" and "t" for strings, are very common among
+> experienced programmers. Likewise, "a" and "b" are well-understood as
+> the arguments of a "comparison" function. There are many such examples
+> in the Git source code itself. Here are just a few:
 >
-> Let's wrap this to 72 characters at maximum per line maybe? Meaning that
-> the error message gets split into 2 lines.
+>     cmp_uint32(const void *a_, const void *b_)
+>     maildir_filename_cmp(const char *a, const char *b)
+>     tipcmp(const void *a_, const void *b_)
+>     cmp_by_tag_and_age(const void *a_, const void *b_)
+>     cmp_remaining_objects(const void *a, const void *b)
+>     version_cmp(const char *a, const char *b)
+>     diffnamecmp(const void *a_, const void *b_)
+>     spanhash_cmp(const void *a_, const void *b_)
+>     void_hashcmp(const void *a, const void *b)
+>     pathspec_item_cmp(const void *a_, const void *b_)
 
-I'm not sure what you want to see wrapped; the warning message itself
-or the source code line? As for the warning message, it already is
-wrapped (see the embedded "\n").
+While that is true, what happens in the funcion is a bit unusual.
 
-At any rate, this patch makes the minimal change necessary to meet the
-goal of making the function re-usable. Anything beyond that (such as
-wrapping long lines) is outside the scope of the patch and would make
-it harder to reason about the changes. Wrapping the line is certainly
-something that someone can do later as a follow-up, but is not the
-goal of this series.
+> +static int prune_cmp(const void *a, const void *b)
+> +{
+> +	const struct string_list_item *x = a;
+> +	const struct string_list_item *y = b;
 
-> > -   validate_worktree_add(path, opts);
-> > +   worktrees = get_worktrees(0);
-> > +   check_candidate_path(path, opts->force, worktrees, "add");
-> > +   free_worktrees(worktrees);
-> > +   worktrees = NULL;
+Usually we do
+
+	static int foo_cmp(const void *a_, const void *b_)
+	{
+		const true_type *a = a_;
+		const true_type *b = b_;
+
+		/* use a and b for comparison */
+
+without involving 'x' and 'y'.
+
+>> > +test_expect_success 'prune duplicate (linked/linked)' '
+>> > +   test_when_finished rm -fr .git/worktrees w1 w2 &&
+>>
+>> Nit: maybe make it 'rm -rf' as that's the popular way of doing it?
 >
-> It is necessary to call 'free_worktrees(worktrees)' at the end? The
-> 'get_worktrees()' states that
->   The caller is responsible for freeing the memory from the returned
->   worktree(s).
+> It's true that "-rf" has wider usage in Git tests than "-fr", though
+> the latter is heavily used, as well.
 
-This code _does_ call free_worktrees() as it should, so I'm not sure
-what you're asking or saying. (Perhaps you're confusing "caller" and
-"callee"?)
+I myself write "rm -rf" more often when I am casually programming
+out of inertia, but when consciously making a decision on how to
+spell the combination, I tend to go alphabetical, because there is
+no logical reason to write 'r' first, other than the fact that "-rf"
+visually looks prettier than "-fr".  
+
+If recursiveness of the removal is more important than forcedness,
+then favouring "-rf" over "-fr" would be justifiable, but I do not
+think that is the case here.
+
+And as you said, it is not something that justifies a reroll (or
+updating existing uses of "-rf") alone.
