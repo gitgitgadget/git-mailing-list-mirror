@@ -6,59 +6,54 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDE2AC433DF
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A331C433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:57:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCF8E206D9
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:54:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EC5120747
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:57:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BK/niDAG"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cTehB3le"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726956AbgFJXyO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 19:54:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39230 "EHLO
+        id S1726820AbgFJX5t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 19:57:49 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39236 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726722AbgFJXyO (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 10 Jun 2020 19:54:14 -0400
+        by vger.kernel.org with ESMTP id S1726777AbgFJX5t (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 Jun 2020 19:57:49 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D658E6048D;
-        Wed, 10 Jun 2020 23:53:42 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9FA7E6048A;
+        Wed, 10 Jun 2020 23:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1591833223;
-        bh=BIJKuH7tsYTYv8NHCsyo5sc/F4EVqtgnklv8vH7P4iQ=;
+        s=default; t=1591833437;
+        bh=Likdmc1gg+/QVpTIm4j7td3oe/hvt0HQ0akZiF5ZCUM=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=BK/niDAGElj+bgeIg/R5DNkpuBJD0YJKGtApG2bV1L+FY3MM+I+A6jDkH5wTxEkTh
-         WzEL8mS2DeIkrLOaqbp1mMq9MjfKpMZu7too70JrZyqApyvGBiToTIhUHZnglyCbY1
-         IRJMNlCgmARcpd1wL12SXB2xQqSCP0P/B12ClZuS/9ECiOiEH932o5+6EkYEgRgIzq
-         Xmr+r/PCxCw+fwarYPK8z76iOznMwOEB3Mu7E3PiAUahR4DAqNhKmlMEiTquHp+Xjk
-         kH/XJ9kUe575lhAsgTuXJ37AusGwQOpvdEvMyjiIyBX5jrf/zTQY0CS6h3vN07bsGW
-         NfECxE6j8eudQUDIBslr3RDogNUnS6v3guM567v1BuJeNRCy6DnO3TsYFMNITRsM9t
-         IzH9yr9xWj2vDitJI4K/O/JXAUw/XpVRVwQeo1DDqW0JmaaPLQwL39jMu6aj6LLZ2g
-         /3XTED1q7ZRXb/gqHxVlbaxRjsz/IjBGrRKpZdaynk1C9Zq9EuK
-Date:   Wed, 10 Jun 2020 23:53:37 +0000
+        b=cTehB3lenY04BLxBo0K5RHUK7baZuD+nSYygHtyumgBMBrX6ZKc2qhg9MpgwYa+Fp
+         vLnTZMc8BOxxesDz5CRmsFFKiefZh6+v2W7zGQjRlbPXZXulYbXqqKrDMxg/tEgG7c
+         sdp3N1lTnq3THv7eDx/9oeQW1HvUapo4N1WRtwfyFbMDL1nHf9/3frD7AWshVDeNSd
+         aqNGR2Ldn5Fq/xGWMHrmDqJPm1QTX0sz9HYEFCRI1AHV08YyOOtXnZ4+EOlgQDJaoE
+         AE+Djsfnk2C9QCoxy/Q/0lmRQVIVV0wxIsjXXbeb/SC0rn2DulYyehsqhzcoJ0zJ10
+         9sFtwEcMnZUdhPxRc0KuLfZOYWl4u5bbb2VyLIcBhE7QdFF3MG1PYDnMb10qxVVZN0
+         BLoFRQZiWQ8B3WZ4fJ/CYM7GAFpzYfCukXbM7rWW1gpti6VyiAUuHotz0Ir+vmpmfV
+         58l/MYBQJbkvCJY5MJ2Pf730O9VI+RKL1/FZKsErCx9KyIalRii
+Date:   Wed, 10 Jun 2020 23:57:13 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin Langhoff <martin.langhoff@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: osx autocrlf sanity?
-Message-ID: <20200610235337.GW6569@camp.crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2020, #02; Wed, 10)
+Message-ID: <20200610235713.GX6569@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin Langhoff <martin.langhoff@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CACPiFCJKvnDL9Xj1Xs0RCvuhymjDz4N0hT42dNtBQxp+TLiPaw@mail.gmail.com>
- <20200609231336.GQ6569@camp.crustytoothpaste.net>
- <CACPiFCK0h0LfdyE6Q=UJkuX+Qdb=rULcgDJwgxQ0w-1O0zpMew@mail.gmail.com>
- <20200610000358.GR6569@camp.crustytoothpaste.net>
- <CACPiFCKEGXK+TJtQiPub3dW6dYKJ7a=mXL+UCDP57N-3XtRYLg@mail.gmail.com>
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq7dweebnl.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KH9S6eoVXLBawpUJ"
+        protocol="application/pgp-signature"; boundary="lBR2yNlwcY132B3M"
 Content-Disposition: inline
-In-Reply-To: <CACPiFCKEGXK+TJtQiPub3dW6dYKJ7a=mXL+UCDP57N-3XtRYLg@mail.gmail.com>
+In-Reply-To: <xmqq7dweebnl.fsf@gitster.c.googlers.com>
 X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
  5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
@@ -67,57 +62,76 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---KH9S6eoVXLBawpUJ
+--lBR2yNlwcY132B3M
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2020-06-10 at 13:55:12, Martin Langhoff wrote:
-> On Tue, Jun 9, 2020 at 8:04 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > On 2020-06-09 at 23:31:23, Martin Langhoff wrote:
-> > > good question! There is a .gitattributes file, all the files affected
-> > > have these attributes
-> > >
-> > > *.py     text diff=3Dpython
-> >
-> > By default, Git will check out files with the text attribute with the
-> > native line ending, and it will check them in with LF endings.  That can
-> > be controlled by core.eol and core.autocrlf
+On 2020-06-10 at 23:36:30, Junio C Hamano wrote:
+> * bc/sha-256-part-2 (2020-05-27) 44 commits
+>  - remote-testgit: adapt for object-format
+>  - bundle: detect hash algorithm when reading refs
+>  - t5300: pass --object-format to git index-pack
+>  - t5704: send object-format capability with SHA-256
+>  - t5703: use object-format serve option
+>  - t5702: offer an object-format capability in the test
+>  - t/helper: initialize the repository for test-sha1-array
+>  - remote-curl: avoid truncating refs with ls-remote
+>  - t1050: pass algorithm to index-pack when outside repo
+>  - builtin/index-pack: add option to specify hash algorithm
+>  - remote-curl: detect algorithm for dumb HTTP by size
+>  - builtin/ls-remote: initialize repository based on fetch
+>  - t5500: make hash independent
+>  - serve: advertise object-format capability for protocol v2
+>  - connect: parse v2 refs with correct hash algorithm
+>  - connect: pass full packet reader when parsing v2 refs
+>  - Documentation/technical: document object-format for protocol v2
+>  - t1302: expect repo format version 1 for SHA-256
+>  - builtin/show-index: provide options to determine hash algo
+>  - t5302: modernize test formatting
+>  - packfile: compute and use the index CRC offset
+>  - t3200: mark assertion with SHA1 prerequisite
+>  - setup: set the_repository's hash algo when checking format
+>  - fetch-pack: parse and advertise the object-format capability
+>  - t5562: pass object-format in synthesized test data
+>  - builtin/clone: initialize hash algorithm properly
+>  - remote-curl: implement object-format extensions
+>  - transport-helper: implement object-format extensions
+>  - docs: update remote helper docs for object-format extensions
+>  - builtin/receive-pack: detect when the server doesn't support our hash
+>  - connect: detect algorithm when fetching refs
+>  - fetch-pack: detect when the server doesn't support our hash
+>  - connect: make parse_feature_value extern
+>  - send-pack: detect when the server doesn't support our hash
+>  - connect: add function to detect supported v1 hash functions
+>  - transport: add a hash algorithm member
+>  - pkt-line: add a member for hash algorithm
+>  - connect: add function to fetch value of a v2 server capability
+>  - connect: add function to parse multiple v1 capability values
+>  - remote: advertise the object-format capability on the server side
+>  - wrapper: add function to compare strings with different NUL termination
+>  - connect: have ref processing code take struct packet_reader
+>  - Documentation: document v1 protocol object-format capability
+>  - t1050: match object ID paths in a hash-insensitive way
 >=20
-> Why is core.autocrlf false not working for me?
+>  SHA-256 migration work continues.
 
-core.autocrlf to false means that it is disabled and has no effect.
-core.eol defaults to "lf" on Unix systems and "crlf" on Windows, and is
-used even when core.autocrlf is disabled.
-
-> I want to work on a repo that has a mix of newlines. I'd like git to
-> completely ignore them. Treat all files as a bag'o'bytes.
-
-Then you need to use plumbing commands like git cat-file.  You could
-also write a .git/info/attributes file that contains the following:
-
-    *.py !text
-
-or
-
-    * !text
-
-which will override the file in the repository.
+I assume you're waiting for something on this, and it's probably a
+review, but I didn't see a comment to that effect.  Am I correct?
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---KH9S6eoVXLBawpUJ
+--lBR2yNlwcY132B3M
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.20 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXuFygQAKCRB8DEliiIei
-gaOlAQCwlbnLeMU6K9PmKFRVIlVbUyyz6uwsHAYTefBEwYbLwAD/X1BL////0yoX
-cdH4cqcKiqLnHoFz49iLpijE6lLxwgc=
-=lcxv
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXuFzWQAKCRB8DEliiIei
+gcPkAPwKWLq2sYK6BHnm/XsJ3ytsSphtWHKCsg7zgIK+G1G+pQEA+MjPKcYMrq2k
+Z5usBvCW+6sNjPIcEmYfrs0piZKHhwc=
+=XnQy
 -----END PGP SIGNATURE-----
 
---KH9S6eoVXLBawpUJ--
+--lBR2yNlwcY132B3M--
