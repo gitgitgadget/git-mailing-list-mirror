@@ -2,82 +2,118 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65B1EC433E0
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69DD1C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:42:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 399E12072E
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:38:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DCF22072E
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 17:42:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZyQjG7to"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FjVK/8Tn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726482AbgFJRiW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 13:38:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55511 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726280AbgFJRiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 13:38:22 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D831F5B1B3;
-        Wed, 10 Jun 2020 13:38:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LHgsj2x83H2yoMgLqlOjXCQD6JU=; b=ZyQjG7
-        toPFn3GWbil7o+CZTmLf+wu2WlZ4ldWDFxncAIZ/iyJikW6eHuAi5qBM7P9BbKT4
-        rkU/k/Mgcq0GuZnslY54XwCZP73ggA7vTSrzACnfmDCNFJeWVB2pt5jn4MYuvp0c
-        DESVQ6I166A8vU9iO2epxnBj7QLIEOZEGmM38=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QYB8gzKO8UtSPzXZvWEp04wDU+wXr/oS
-        Rob7gXhsJzOJG+iCeY65k2AHPlnM1Ov0h/3hGD532yosAZz2iUMq30AheI9pDSdm
-        e4c9vVAZxVorKpvrqb5/Dgjia1E+g8Ap2RMYAZP7/icJFO792RrEg8jUBLrODjDV
-        zWpxaNMdBRU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D14115B1B2;
-        Wed, 10 Jun 2020 13:38:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D7655B1B1;
-        Wed, 10 Jun 2020 13:38:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwenn@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "hanwen\@google.com" <hanwen@google.com>
-Subject: Re: [PATCH v16 00/14] Reftable support git-core
-References: <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
-        <pull.539.v16.git.1591380199.gitgitgadget@gmail.com>
-        <xmqq7dwfhlwt.fsf@gitster.c.googlers.com>
-        <CAOw_e7ZzEyb+21QHcNGcj5A8N501-a5fF3HNL0Jq6uD8S37G6A@mail.gmail.com>
-        <xmqqimfyg84j.fsf@gitster.c.googlers.com>
-Date:   Wed, 10 Jun 2020 10:38:18 -0700
-In-Reply-To: <xmqqimfyg84j.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 10 Jun 2020 10:09:48 -0700")
-Message-ID: <xmqq5zbyg6t1.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726794AbgFJRmI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 13:42:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37068 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726254AbgFJRmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 13:42:07 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C363CC03E96B
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 10:42:07 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id v13so2375605otp.4
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 10:42:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LkFqK5Su2o/4KDN15TPjGZ537xMi651dEzdEJ35Svjc=;
+        b=FjVK/8TnwbtPb4Rxd0NPNRrgOrBozwwqqM34qPKM4dHiPWM8T1NszJMOOqZketvk6g
+         TfWN6mSuWVTDye5m4yaQoY2lFyDQFGoQwr4zo86+zNdwbzaHRVHOrWFel+GJWlmYUj4G
+         RjvwJ0Df3w/f2dAgbdliepJioZwtkCPH+E5jB0b6+vqymRW3Jt7gH++NzpNa/pAJ9EOu
+         ovIOtPm5Q25zg846ZvKIg/fhBEeuycL2OeBhcUv25yUly67a1CU45KvxUoSw9jpfvM/s
+         f6M4BGMa+tgLr+tXropDZwDC2Ce7bhg9K1oBtlpkNRqqhtiV2H+/4naOReAmzUGHwbxr
+         nTKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LkFqK5Su2o/4KDN15TPjGZ537xMi651dEzdEJ35Svjc=;
+        b=lnYNjWOJMoR1mR1O9QLYvp8qVxneSwF1TFrtx+V5ZBvqDYtbcrfxAF4tI4aJC0R+k4
+         CyuDRHSvQvua0GTzHUt5KUZauOVA6Ij+xBn2/ahXazmcbTL2sK8QdFPqlWLqCINPhxM5
+         ff1n9rEjLDmWt7BvPd2ObEliM6ilAslGcan/8jgh0US8ZIZ0IsCdVFopyQhSe4uu9z2p
+         igvYFHdzboOrVrDEeaQZrdz8Kw8ZXnHPP6WdadyTbKv7TOytIdVZEFYqx6pwVQ2CBn0w
+         nKyOrd4feO//SLyOof3hUwkr2F2Tv/KrPERHmL+GwyITQHdO1/HKkcQJOC1+Vt3RRNdz
+         3V9w==
+X-Gm-Message-State: AOAM533Ktz2BfFja5Y1/52gPLpUHMQRwqD6t4wRZNeBHuy66BxAzuukH
+        ng8Z1w5nPAR5nz0dKsMhaFQ=
+X-Google-Smtp-Source: ABdhPJys9vC4x1VpougqNMHRmuJZrFTwvKbpmv+8WTBrJzfWvuLtpknL3gV0f8jpTsz1QWTH8YSYGQ==
+X-Received: by 2002:a9d:1a7:: with SMTP id e36mr3530177ote.215.1591810926969;
+        Wed, 10 Jun 2020 10:42:06 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id i2sm132270otr.49.2020.06.10.10.42.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2020 10:42:06 -0700 (PDT)
+Subject: Re: [RFC PATCH v2 3/4] grep: honor sparse checkout patterns
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Elijah Newren <newren@gmail.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <CAHd-oW7_6+Jv+SQG3qh8eRjwJmqnRJKs=_bAV3WaC4-SKkoywg@mail.gmail.com>
+ <20200522142611.1217757-1-newren@gmail.com>
+ <562542d2-2a90-8683-a7fa-cbffb2e26bff@gmail.com>
+ <CAHd-oW7BXWzaWsvsh0dQt7NgeBcz0HSbcwKVYA7sPjUinarsng@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <909e19aa-9d96-a68a-eed0-d721948b9dbc@gmail.com>
+Date:   Wed, 10 Jun 2020 13:42:05 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101
+ Thunderbird/77.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2C615A26-AB41-11EA-B32A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <CAHd-oW7BXWzaWsvsh0dQt7NgeBcz0HSbcwKVYA7sPjUinarsng@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 6/10/2020 12:22 PM, Matheus Tavares Bernardino wrote:
+> On Wed, Jun 10, 2020 at 8:41 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 5/22/2020 10:26 AM, Elijah Newren wrote:
+>>> +This may mean that even if your sparsity patterns include or exclude
+>>> +submodules, until you manually initialize or deinitialize them, commands
+>>> +like grep that work on tracked files in the working copy will ignore "not
+>>> +yet initialized" submodules and pay attention to "left behind" ones.
+>>
+>> I don't think that "left behind" is a good phrase here. It feels like
+>> they've been _dropped_ instead of _persisted despite sparse-checkout
+>> changes_.
+>>
+>> Perhaps:
+>>
+>>   commands like `git grep` that work on tracked files in the working copy
+>>   will pay attention only to initialized submodules, regardless of the
+>>   sparse-checkout definition.
+> 
+> Hmm, I'm a little confused by the "regardless of the sparse-checkout
+> definition". The plan we discussed for grep was to not recurse into
+> submodules if they have the SKIP_WORKTREE bit set [1], wasn't it?
+> 
+> [1]: https://lore.kernel.org/git/CABPp-BE6M9ATDYuQh8f_r3S00dM2Cv9vM3T5j5W_odbVzhC-5A@mail.gmail.com/
 
-> I do not offhand know we also use fdopendir() elsewhere.  I strongly
-> suspect we do not.  Perhaps some platforms do POSIX.1-2001 but not
-> ready for POSIX.1-2008 or something silly like that?
+Thanks for correcting my misunderstanding. By introducing
+`git grep` into this documentation, I have also made it
+co-dependent on your series. Instead, Elijah was probably
+purposeful in his use of "grep" over "git grep".
 
-Searching "macos fdopendir" gives a few hits from other projects,
-all saying that before macOS 10.10 they did not have fdopendir()
-and their code failed to build on macs.
+If we revert that part of my change to use `grep` instead
+of `git grep`, then is my statement correct?
 
-
-
+Thanks,
+-Stolee
