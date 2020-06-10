@@ -2,239 +2,106 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39A81C433DF
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3450C433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:56:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15AD8207ED
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:32:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B67D120801
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:56:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tFib/155"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Clr0Md3u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726288AbgFJGcO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 02:32:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46066 "EHLO
+        id S1726277AbgFJG46 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 02:56:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726251AbgFJGcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 02:32:03 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 756FCC08C5C1
-        for <git@vger.kernel.org>; Tue,  9 Jun 2020 23:32:01 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id r2so928013ioo.4
-        for <git@vger.kernel.org>; Tue, 09 Jun 2020 23:32:01 -0700 (PDT)
+        with ESMTP id S1726254AbgFJG45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 02:56:57 -0400
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A1C3C03E96B
+        for <git@vger.kernel.org>; Tue,  9 Jun 2020 23:56:57 -0700 (PDT)
+Received: by mail-lj1-x242.google.com with SMTP id z9so1054080ljh.13
+        for <git@vger.kernel.org>; Tue, 09 Jun 2020 23:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VwHeaJTqJaoEYdbx4lhU8YbWZPxvvvv2zKngKjjXxsU=;
-        b=tFib/1553u/IFCDRAv6u3E+O45Bul4x7BCzsOvEKZd4chMweQ+iiltpc2j9ELWos24
-         v0P0W4cpCV72l4LiTxy8SeAJZLRw5CQiwPiNnZxAvWnoX1cPmSTMLY69BgnLg+nqhE63
-         Qe2yf44TYoqcZtQ7jpx6FfVQmTg3qOMZhnGi1iNBaY3o2GfNrBvVrsGDuAIyvzULCyoc
-         3UacOFUpkoOqZARwkSjXEUti+/YEeVMrCPdwhRPmCVVitnUujS6qZz7+yyzAA/XmEmt6
-         sANsDy1SsykNZYV/d5EdsYLHXNKR0p4ngYkH9cxAQC1Eryan6ONqSaMdcZU4AtADUK29
-         owNQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u7nl955LpHxJ6pRvW+dl/I1xHC3cRkiwRfkLNLCq9AY=;
+        b=Clr0Md3uhW2T4gKiLzqdBsqrPr3KRsYTpKsObOobxoaIuY6460zKj7iJ7l17ugMPwZ
+         I/yGFa5UBfCh/I4en3lmEF0kLy8vZcd27R6iPUBFGPhsPoGDY5HYZErW9NOhP3ZpS1ra
+         eiROISW/kfVSe1e9QVhQ5mcNmjbbDnoAYqHNko/aiz6/iHOtY3s1L4jEeqywDbAZwUMs
+         j18qUEA9hzlzAZhmUHfXUGwEwGI+7YIt3pv/tsb7ueEHbmRy/KOe1KoAa48z1Qq4+yYJ
+         k3tRF7sL49vPxmyE0HSDTA12xrF1vo/oqHTVl2FjGVmzfmh7c3xFlcnkxA8DE7cCfGjl
+         j+QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=VwHeaJTqJaoEYdbx4lhU8YbWZPxvvvv2zKngKjjXxsU=;
-        b=WaGsqyodUA/yna+Ee6OKkolnSPLpqC3gMoYFuF+lbI7dkvPNSkuegBHDrI9pLOTFaO
-         NqNyPPUWytHnlxGV/+NfGIbVEXrUrWlYQw8mVQnCBZxwl9tFVF8UwmKmxYT6+IFxKMty
-         HUaeqCajMRSfuFgOkPO52Fs3o6c1Y/jK3tGtfoXm/TJzZ2pUQxwSPPfymkXZEigutUYm
-         tGOJ0DF+QBGfBxOIWArLD7E0PExvDDgHewqfDImFbfhM+VU5RJ4/4MlG6Z6YCoJZtlg+
-         /f2dvOUX58tsArCjy/sXtY3l58qrOgLXCHRuZULnqvDW2WrJrPMq9bq/zGAKfq44GDAF
-         lvlw==
-X-Gm-Message-State: AOAM5314+vfuP0mxLKpBiVc+FE/T/Bp2tkGSV/rgiiA0LT/PEId1nnCK
-        J/hjAdc0B7Ldb+n/+hK6+QEUckjXK4w=
-X-Google-Smtp-Source: ABdhPJwnt/FRl+hdeCMfTnwwnriGgCXWlwSDrUkpOd9iCeLl6xU0GfFZaVYB2Br907t+V8QOJtLt/Q==
-X-Received: by 2002:a05:6602:2f0a:: with SMTP id q10mr1837071iow.134.1591770720135;
-        Tue, 09 Jun 2020 23:32:00 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id f22sm8497868iob.18.2020.06.09.23.31.59
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jun 2020 23:31:59 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?q?Jonathan=20M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/7] worktree: prune duplicate entries referencing same worktree path
-Date:   Wed, 10 Jun 2020 02:30:46 -0400
-Message-Id: <20200610063049.74666-5-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.27.0.90.gabb59f83a2
-In-Reply-To: <20200610063049.74666-1-sunshine@sunshineco.com>
-References: <20200610063049.74666-1-sunshine@sunshineco.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u7nl955LpHxJ6pRvW+dl/I1xHC3cRkiwRfkLNLCq9AY=;
+        b=gJQtlCfy92FJ3srhiIcdjvu6ScAatYVpFCzTRCnlAtodgc306YMxiuerpfYmU1rJzT
+         Dt1sFCGYuX4PwI8BrvRKnYPGMmVMNwZpFH328LYUNf/KvK8Y6oUtN+tzjHpL3+N5yS48
+         pOzND6D57eFF0jH15zyp71gWEuDed/WwS5WFluC/BcfZtXIw6tlf6IQ0RgtTazX77nq2
+         C1SjUjSVsp+4d/LWEOoL5NGEYmPZyfTko3hmQREP4UHmyiaf48hvzFFNxZRtGMHwkxtg
+         KaWtzZY7kqrKGlTYT0EjcEhQBR5SwlJrR8A+LbOAwh/MMbFm7F5SZoHbRNPpspDyxf2w
+         mEfA==
+X-Gm-Message-State: AOAM531ZpVgQhEgaXOIxZTqaJgpigdBkwa2Dx9n5PDFmoPVvoPP5vxt+
+        sS/wqsZq98elh2c0B0LFSM5Jd+JJKYpu+YsFRru0037WI+Y=
+X-Google-Smtp-Source: ABdhPJzUfMEJySlZOg2mZ2rTGWz9C3xg161w/kgLMSMJH6Z6TSE+Z2LCr/JDxtwbpEf2aB9tYT1dSm/raMd/kYpgw0g=
+X-Received: by 2002:a2e:81c5:: with SMTP id s5mr924227ljg.372.1591772215154;
+ Tue, 09 Jun 2020 23:56:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
+ <pull.539.v16.git.1591380199.gitgitgadget@gmail.com> <xmqq7dwfhlwt.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq7dwfhlwt.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwenn@gmail.com>
+Date:   Wed, 10 Jun 2020 08:56:43 +0200
+Message-ID: <CAOw_e7ZzEyb+21QHcNGcj5A8N501-a5fF3HNL0Jq6uD8S37G6A@mail.gmail.com>
+Subject: Re: [PATCH v16 00/14] Reftable support git-core
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, "hanwen@google.com" <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A fundamental restriction of linked working trees is that there must
-only ever be a single worktree associated with a particular path, thus
-"git worktree add" explicitly disallows creation of a new worktree at
-the same location as an existing registered worktree. Nevertheless,
-users can still "shoot themselves in the foot" by mucking with
-administrative files in .git/worktree/<id>/. Worse, "git worktree move"
-is careless[1] and allows a worktree to be moved atop a registered but
-missing worktree (which can happen, for instance, if the worktree is on
-removable media). For instance:
+On Wed, Jun 10, 2020 at 1:14 AM Junio C Hamano <gitster@pobox.com> wrote:
 
-    $ git clone foo.git
-    $ cd foo
-    $ git worktree add ../bar
-    $ git worktree add ../baz
-    $ rm -rf ../bar
-    $ git worktree move ../baz ../bar
-    $ git worktree list
-    .../foo beefd00f [master]
-    .../bar beefd00f [bar]
-    .../bar beefd00f [baz]
+> > Some issues:
+> >
+> >  * many tests inspect .git/{logs,heads}/ directly.
+> >  * worktrees broken.
+>
+> Are these with or without GIT_TEST_REFTABLE=1?
 
-Help users recover from this form of corruption by teaching "git
-worktree prune" to detect when multiple worktrees are associated with
-the same path.
+worktrees are broken with reftable, because HEAD is per-worktree ref,
+and I haven't decided how to handle those for reftable.
 
-[1]: A subsequent commit will fix "git worktree move" validation to be
-     more strict.
+> The patches (with the fix-up I saw today) applied on top of your
+> refs clean-up topic seems to pass the tests (without setting
+> GIT_TEST_REFTABLE) as the whole, but when merged at the tip of 'pu',
+> many tests fail (please see [*1*], for examples).  I suspect that
+> there may be some topics in flight that add more direct access to
+> the .git/refs/ hierarchy, and/or there may be stupid mismerges (I'd
+> especially appreciate it if you can spot any).
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- builtin/worktree.c        | 49 ++++++++++++++++++++++++++++++++++-----
- t/t2401-worktree-prune.sh | 12 ++++++++++
- 2 files changed, 55 insertions(+), 6 deletions(-)
+Curious; I'll have a look.
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 706ac68751..65492752a7 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -67,7 +67,12 @@ static void delete_worktrees_dir_if_empty(void)
- 	rmdir(git_path("worktrees")); /* ignore failed removal */
- }
- 
--static int should_prune_worktree(const char *id, struct strbuf *reason)
-+/*
-+ * Return true if worktree entry should be pruned, along with the reason for
-+ * pruning. Otherwise, return false and the worktree's path, or NULL if it
-+ * cannot be determined. Caller is responsible for freeing returned path.
-+ */
-+static int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath)
- {
- 	struct stat st;
- 	char *path;
-@@ -75,6 +80,7 @@ static int should_prune_worktree(const char *id, struct strbuf *reason)
- 	size_t len;
- 	ssize_t read_result;
- 
-+	*wtpath = NULL;
- 	if (!is_directory(git_path("worktrees/%s", id))) {
- 		strbuf_addstr(reason, _("not a valid directory"));
- 		return 1;
-@@ -120,16 +126,17 @@ static int should_prune_worktree(const char *id, struct strbuf *reason)
- 	}
- 	path[len] = '\0';
- 	if (!file_exists(path)) {
--		free(path);
- 		if (stat(git_path("worktrees/%s/index", id), &st) ||
- 		    st.st_mtime <= expire) {
- 			strbuf_addstr(reason, _("gitdir file points to non-existent location"));
-+			free(path);
- 			return 1;
- 		} else {
-+			*wtpath = path;
- 			return 0;
- 		}
- 	}
--	free(path);
-+	*wtpath = path;
- 	return 0;
- }
- 
-@@ -141,22 +148,52 @@ static void prune_worktree(const char *id, const char *reason)
- 		delete_git_dir(id);
- }
- 
-+static int prune_cmp(const void *a, const void *b)
-+{
-+	const struct string_list_item *x = a;
-+	const struct string_list_item *y = b;
-+	int c;
-+
-+	if ((c = fspathcmp(x->string, y->string)))
-+	    return c;
-+	/* paths same; sort by .git/worktrees/<id> */
-+	return strcmp(x->util, y->util);
-+}
-+
-+static void prune_dups(struct string_list *l)
-+{
-+	int i;
-+
-+	QSORT(l->items, l->nr, prune_cmp);
-+	for (i = 1; i < l->nr; i++) {
-+		if (!fspathcmp(l->items[i].string, l->items[i - 1].string))
-+			prune_worktree(l->items[i].util, "duplicate entry");
-+	}
-+}
-+
- static void prune_worktrees(void)
- {
- 	struct strbuf reason = STRBUF_INIT;
-+	struct string_list kept = STRING_LIST_INIT_NODUP;
- 	DIR *dir = opendir(git_path("worktrees"));
- 	struct dirent *d;
- 	if (!dir)
- 		return;
- 	while ((d = readdir(dir)) != NULL) {
-+		char *path;
- 		if (is_dot_or_dotdot(d->d_name))
- 			continue;
- 		strbuf_reset(&reason);
--		if (!should_prune_worktree(d->d_name, &reason))
--			continue;
--		prune_worktree(d->d_name, reason.buf);
-+		if (should_prune_worktree(d->d_name, &reason, &path))
-+			prune_worktree(d->d_name, reason.buf);
-+		else if (path)
-+			string_list_append(&kept, path)->util = xstrdup(d->d_name);
- 	}
- 	closedir(dir);
-+
-+	prune_dups(&kept);
-+	string_list_clear(&kept, 1);
-+
- 	if (!show_only)
- 		delete_worktrees_dir_if_empty();
- 	strbuf_release(&reason);
-diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
-index b7d6d5d45a..fd3916fee0 100755
---- a/t/t2401-worktree-prune.sh
-+++ b/t/t2401-worktree-prune.sh
-@@ -92,4 +92,16 @@ test_expect_success 'not prune proper checkouts' '
- 	test -d .git/worktrees/nop
- '
- 
-+test_expect_success 'prune duplicate (linked/linked)' '
-+	test_when_finished rm -fr .git/worktrees w1 w2 &&
-+	git worktree add --detach w1 &&
-+	git worktree add --detach w2 &&
-+	sed "s/w2/w1/" .git/worktrees/w2/gitdir >.git/worktrees/w2/gitdir.new &&
-+	mv .git/worktrees/w2/gitdir.new .git/worktrees/w2/gitdir &&
-+	git worktree prune --verbose >actual &&
-+	test_i18ngrep "duplicate entry" actual &&
-+	test -d .git/worktrees/w1 &&
-+	! test -d .git/worktrees/w2
-+'
-+
- test_done
+There is also:
+
+reftable/stack_test.c:27:7: error: incompatible pointer types
+initializing 'PREC_DIR *' with an expression of type 'DIR *'
+[-Werror,-Wincompatible-pointer-types]
+        DIR *dir = fdopendir(fd);
+
+on OSX. What is the proper dialect for reading out a directory within
+the git source code? opendir and fdopendir are POSIX, so I'm surprised
+this fails.
+
 -- 
-2.27.0.90.gabb59f83a2
-
+Han-Wen Nienhuys - hanwenn@gmail.com - http://www.xs4all.nl/~hanwen
