@@ -2,99 +2,127 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4BAFC433E0
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 22:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C101C433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 22:52:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B88372074B
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 22:48:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2B742074B
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 22:52:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gKRZqG1X"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kI4tRmwN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726669AbgFJWsK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 18:48:10 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51645 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726301AbgFJWsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 18:48:09 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9F5EEDD44F;
-        Wed, 10 Jun 2020 18:48:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8HTIQwM7qdmfjWNjPYpI6SsBgsQ=; b=gKRZqG
-        1Xn+iUS1vd9jdmDwl2+jPKkKBAi8BN/JPGgJZGbGXRjcot4/q3VmMDsJeROIcfRg
-        1gY6GCpc8ELtg8YRMwOtQm7e+5xftm4Hg8BBzEZKBgX5hoWBHNiLOWB1p+xKy+c/
-        es9Vk3ORnV7YpK/HATdgPhaTTFFxw4a5KvPl8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ioBqGjcF46YFdNB1vMIj8sQzfJXCzrYt
-        oOjr/krPCZARpsvyEU57BBActCnK924TtEdwfsIvdETlI3gBfz2qzL7KW/PULia2
-        Y/j4rpZaJAW2dljoJkPXrhtKRzEtcWGwL1tVIEi/9gvd7noBWOqfSdaA+dnUi6i2
-        nzG/6ThKWDQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 971FFDD44E;
-        Wed, 10 Jun 2020 18:48:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726506AbgFJWwO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 18:52:14 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39180 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726448AbgFJWwO (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 Jun 2020 18:52:14 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DEF53DD44B;
-        Wed, 10 Jun 2020 18:48:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CD8246048D;
+        Wed, 10 Jun 2020 22:51:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1591829503;
+        bh=gdHTmG96wD/Be5wvXD0OKfOUTTIiDPk1quR/zjX/HRY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=kI4tRmwNl3S+RPi3PPngC1CLNMTQ67kdRbXgLIbcpGnvkpAdIj2illib217FmhTrZ
+         68pCytNy7OHB4xc/bh1plyJvID8a2hsmUF8hmh4PZNz5biEFme5h/S32+lBAPTrr7F
+         B6CABVMpfwxP9YGt91U+DuDm0H7cs5wi6JbFSNVY9ogOUOMOIx5mQT3odIrb0Up81m
+         AqBn2jxqURRvEnqKzADRtp9iU2tLsi1gm4O+AVMooOm+fsuhYnJF43arn5jYIM+T4d
+         fLTbD5L+ywS6w/5R6SupWd2OJb3evgGe2mrgDSbWKbn1617r7M4pEQjtha9T6+uFe2
+         zQNOD7XkitPYuD+44/n7QFoQ8DANB5MM3XG2lsNpyRHvAvfy6IQvlUsZzbR4A0ZpSr
+         MU8IzDFnnrxwSADWcKLEGEn9VxI5RPESReJulYk1+m/JqU4x7X7Qpisbm7r8DivYlB
+         CohmzepZimhAJGpNuz7Xv9D7otKClGfWrCdAQbc0rWcEdIwcmtU
+Date:   Wed, 10 Jun 2020 22:51:37 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Simon Pieters <simon@bocoup.com>,
         Don Goodman-Wilson <don@goodman-wilson.com>,
         git@vger.kernel.org
-Subject: Re: Virtual Inclusion Summit
-References: <20200610222719.GE148632@google.com>
-Date:   Wed, 10 Jun 2020 15:48:03 -0700
-In-Reply-To: <20200610222719.GE148632@google.com> (Emily Shaffer's message of
-        "Wed, 10 Jun 2020 15:27:19 -0700")
-Message-ID: <xmqqwo4eedwc.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Subject: Re: Rename offensive terminology (master)
+Message-ID: <20200610225137.GS6569@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Simon Pieters <simon@bocoup.com>,
+        Don Goodman-Wilson <don@goodman-wilson.com>, git@vger.kernel.org
+References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+ <20200505231641.GH6530@camp.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2006091126540.482@ZVAVAG-DN14RQO.ybpnyqbznva>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 72378D10-AB6C-11EA-AA23-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="l4+/aJnPlhOv5JVj"
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2006091126540.482@ZVAVAG-DN14RQO.ybpnyqbznva>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
 
-> One note I'd like to make is that the Git community already suffers from
-> a lack of diversity; it will be hard for us to make meaningful changes
-> if just those of us who already contribute attend, because many of us -
-> myself included! - come from privilege and don't have much or any
-> firsthand experience with microaggressions (or overt discrimination). I
-> think it's a good idea to expand the attendance of this summit beyond
-> the current contributor base and try to include more diverse voices and
-> experts in building inclusive products.
->
-> To that end, I'm going to see what kind of interested parties we can
-> find to invite within Google - and I hope others will do the same within
-> their own network. I think the risk of us coming up with meaningless
-> changes far outweighs the risk of us having too many people in the Zoom
-> call. :)
+--l4+/aJnPlhOv5JVj
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is OK to have an optional meeting in the hope that a video
-meeting may have a better chance to keep those who easily become too
-aggressive and confrontational in text-only conversation in check
-and instead have civilized conversation.
+On 2020-06-10 at 21:30:31, Johannes Schindelin wrote:
+> Based on the above-mentioned patch series, I have an end-to-end
+> proof-of-concept (with one or two monster patches that still need to be
+> split up) to change the default branch name to `main`. It is complete in
+> the sense that it passes the test suite (also in SHA-256 mode when merging
+> the `bk/transition-stage-4` branch), but it has a couple of too-large
+> commits that still need to be split up:
+> https://github.com/gitgitgadget/git/pull/655
 
-But I am not sure if it is a good idea to call such a meeting a
-"Summit", given that there are those who prefer not to be seen,
-heard or recorded how they appear and how they sound in a video
-conference.  They would not be able to join the conversation held in
-such a "Summit" held only by those who are privileged enough to be
-able to attend.
+I appreciate you working on these patches and also your consideration
+for the SHA-256 work.
 
-Thanks.
+> Or maybe there are a couple more natural seams at which to partition
+> those patches better, to improve reviewability (and to reduce
+> reviewer fatigue).
+
+I think if you can split out the automated portions into their own
+patches, then it will be easier to review.  It sounds like you're
+already planning on doing that, so I don't have many other suggestions.
+I look forward to seeing the patches.
+
+> So let me make my intentions clear: I do care about inclusive language,
+> and even more so about inclusive culture, and I would like Git to be
+> changed accordingly.
+
+Thank you for saying this.  I agree wholeheartedly, and I feel very
+strongly that the words we use matter.
+
+> Tentatively, I would like to propose having this meeting in the coming
+> week, via Zoom, just like we did the Virtual Contributor Summit last
+> September.
+>=20
+> Could I ask all interested parties to reply to this email?
+
+I'm interested in participating as well.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--l4+/aJnPlhOv5JVj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXuFj+QAKCRB8DEliiIei
+gb05AP9asMfsoadp74VxvZQCu2x81Hpp5zuslzuned4hFvebbAD8DrX3fkJXRFGI
+Z4q1TMW3YT67AvENhg03R3Gyf4FrQgc=
+=P2q9
+-----END PGP SIGNATURE-----
+
+--l4+/aJnPlhOv5JVj--
