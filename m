@@ -2,95 +2,99 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F2B4C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 16:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1948CC433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 16:57:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 247072067B
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 16:57:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E127F2067B
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 16:57:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LI8zxsYP"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HPmEdPMc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727857AbgFJQ5Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 12:57:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60071 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726560AbgFJQ5Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 12:57:24 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C67775A591;
-        Wed, 10 Jun 2020 12:57:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=J0u/hhybGLis5ndJYGX2KkrKbXE=; b=LI8zxs
-        YPwFaLJi2pNEsYKv+EzDzpvqqoidS+QFq7YxnfInXqlLj1rhTGzXk0CrHacD+DOk
-        UkM00tg/4sHfxAM7IBRsy3USU5Wy25LdteSuf2yibY7ksMvWNeTWmyraEej41/UH
-        3MJKlLJIiXegqXS5dBGR6O/Pu5s2IbNsSMJ5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vP1gBsZabdoxNxn5WUYlOtvjUMaDlmGS
-        vItJowMCLOUbdINsC4PCudhzbzPgbuuV/fdzORyz03AzxzhjWRn81fHz9v2JTTy8
-        jw0oZmOTOZlAuLIzhDgp+ixHkgI/pKD842TPaMV8+9EpXo/f60GIKRTTi4FRmxt5
-        /MryP/cYBJw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BBBA05A58F;
-        Wed, 10 Jun 2020 12:57:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3910F5A58E;
-        Wed, 10 Jun 2020 12:57:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Luigi Cantoni <luigic@fgcint.com>,
-        David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-Subject: Re: Auto Rescan - as plain text
-References: <37bd22ee8bcb9c91969d68cbc5e6852a8a70ab36.camel@fgcint.com>
-        <bf895dc550881b35baea45cd269bf9b0518ade35.camel@fgcint.com>
-        <816ce248ab1708d41b5233abdb998ff2d4cb3400.camel@fgcint.com>
-        <36bd7dc26883017770c28da94a251be2d5019f75.camel@fgcint.com>
-        <xmqq3673hj11.fsf@gitster.c.googlers.com>
-        <20200610085902.uv7cxl6s5qnlniwm@yadavpratyush.com>
-Date:   Wed, 10 Jun 2020 09:57:20 -0700
-In-Reply-To: <20200610085902.uv7cxl6s5qnlniwm@yadavpratyush.com> (Pratyush
-        Yadav's message of "Wed, 10 Jun 2020 14:29:02 +0530")
-Message-ID: <xmqqv9jyg8pb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729216AbgFJQ5f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 12:57:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58384 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726560AbgFJQ5e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 12:57:34 -0400
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2FDC03E96B
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 09:57:34 -0700 (PDT)
+Received: by mail-vk1-xa42.google.com with SMTP id p187so762800vkf.0
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 09:57:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nOpiF6VYVjZnMsutRUC4SAkWgB3D67dmZFxjw6NMj1g=;
+        b=HPmEdPMc57GzIW/kvg52Ew2/KHgEa6JCmKtV2znE/ULnZjx7RFn4HHQnYjMN4b74oq
+         N1GRya1zS+IOcutdiyvhdx9iM2Ho+YZI/9VOVQW2D3OiqeuwziFslhnTjNmpRJvD2LC1
+         8/g4bxjdFrG/ItlhDexmCecKwVfnZIdjkzIr6owQiA+hHsdSXv3hPsP6O5UtSr58og4d
+         OKC2cUO6p/pBReh79/jK20bXdUu97ns/JBLj7VK6yuo8JR/3POngQHHmyz5lpPVYaJqb
+         TMkpmP29RezH9W98wPL98yHX1URgbIf7CJd2KVM9LblVXR27TFov3DW92TsoQxmFrmho
+         bmSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nOpiF6VYVjZnMsutRUC4SAkWgB3D67dmZFxjw6NMj1g=;
+        b=FPNNoQcLUK4EZuIaGhl5g1bVA1LbLsNW5h78xqB56Kqi/F+ipP5zXDFB9NBf6mpNmq
+         whA/TAsDctk7Hj0jK0rw+VfK3/0AWydBbVuzEU9hsbixLt0rP4AldzuCaVw+z157qoiF
+         kF4X2EvlTFLL07NLbiwKV5qhjT/X39CzN1s7vhwrWEeKjmfvdlibP0DCLZ3U/gNtue/Q
+         FsHjq8sn8IbsNNACnj6BPM0IqRZiGL/WsFOjP80t4Asx91bWa6Xno9LYV/12SLWRmCzX
+         cLLoqPsHrqrM8ix/uk4U0OIJLcCCAwPtKbC6WFd8krZaB1U6Mbiszt/t8nFVPqnMG+ZY
+         /5AQ==
+X-Gm-Message-State: AOAM5307r6Tvk3/etyGlthGK0K1qrdJJrWWGzwf1PXJa1toRq5J2nvup
+        tTUQM59WX3YUCEJwn0uWunIKrnly6L4Qtj2qlwcbM39xWto=
+X-Google-Smtp-Source: ABdhPJwMZyKLlh8+BDW8ZcQfQd8rv64bvq9C91j5KliDTIJejG1ln3D8QFOyx0ZSn7clT3mtn15BVzxnTpUB1sGOp9U=
+X-Received: by 2002:a1f:60d5:: with SMTP id u204mr3047510vkb.91.1591808253684;
+ Wed, 10 Jun 2020 09:57:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7334E0EA-AB3B-11EA-A0D4-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.539.v15.git.1590695209.gitgitgadget@gmail.com>
+ <pull.539.v16.git.1591380199.gitgitgadget@gmail.com> <xmqq7dwfhlwt.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq7dwfhlwt.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 10 Jun 2020 18:57:22 +0200
+Message-ID: <CAFQ2z_OqE0Hh8nqjCxzKYh6sC2G48z=49_njee_Z2219SiQf3A@mail.gmail.com>
+Subject: Re: [PATCH v16 00/14] Reftable support git-core
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
-
-> Hi Junio,
+On Wed, Jun 10, 2020 at 1:14 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On 09/06/20 05:16PM, Junio C Hamano wrote:
->> Luigi Cantoni <luigic@fgcint.com> writes:
->> 
->> > Hi All,
->> > I have been using git for several years now and using git-cola.
->> > I just started up git gui and that is quite self explanatory and all
->> > the functions I use with git-cola appear to be there.
->> 
->> We used to see the maintainer of that project around here quite
->> frequently but haven't seen him for a while [jch: David Cc'ed].
->> 
->> By reading https://git-cola.github.io/about.html it seems that they
->> prefer to see problem reports and feature requests at
->> https://github.com/git-cola/git-cola/issues and not on this list.
->
-> The feature request is for git-gui, asking for auto rescan in git-gui 
-> like git-cola has.
+> he patches (with the fix-up I saw today) applied on top of your
+> refs clean-up topic seems to pass the tests (without setting
+> GIT_TEST_REFTABLE) as the whole, but when merged at the tip of 'pu',
+> many tests fail (please see [*1*], for examples).  I suspect that
 
-Sorry for the noise, and thanks for your correction.
+they all say
+
+  warning: unable to upgrade repository format from 0 to 1:
+  fatal: unable to upgrade repository format to support XXX
+
+maybe a mismerge in the code in init-db.c that deals with the
+repository format version?
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
