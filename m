@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E685FC433E1
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5856AC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF2CC20760
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F0942072E
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCBmgwA0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SMas2+UH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726377AbgFJVTq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 17:19:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42560 "EHLO
+        id S1726374AbgFJVTp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 17:19:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726363AbgFJVTn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726362AbgFJVTn (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 10 Jun 2020 17:19:43 -0400
 Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D9CC03E96F
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:41 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id q11so3945303wrp.3
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8959EC03E96B
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:42 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id c3so3903947wru.12
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4TehjTYHnYPxGBg2m16YLZF/MTIB9KtqJyNEKuglwKU=;
-        b=NCBmgwA0e800ZmC6cGz4vuKrrqaEIHULqjCF/x74rbwg0o0kdJTHeBL+QRvCdon6Jj
-         NokXGQbJhBS9cUZ1U6L5FO2IH8gOD9WLtT2r1H6UQaFNvr/wThzIug8zUv/vUbMPZr+B
-         2KT2ka09KVLVooAJbPn8rG9NKDa0SCkHxU+xnsKew9qV0BhdIQKSXqcLaOpx0VvZXeJM
-         IHb6ZYJOoDoNHesVVMfrJNKKr1PvSRDd14FlX1ynftc1rAQMReao8fCBMILe8h2qTMMd
-         DKovM47nXFf7jk80WDLOUxsjSeN/iS7INzMc56VXwFj06Ia9kEXa6e20/l0nuCWqWLed
-         QggQ==
+        bh=cdxXOL6g6SoE1kibmxCg/3drSW0ta8hvQDe80NRLebQ=;
+        b=SMas2+UHodbKIQg3rYDYKqPTGSd6x8aG15Zy06qc7ZmGtWL73NggCc/XzOqz8BjPMG
+         7M503RCES2H3QAYC1pDEYRThFGhVuqzHgrADt6X8RmW2tWZvYQA/c9416J7SyZFLNlFx
+         AQxT6GdbY4yyi283bq+IybwxdiiEFJCWRvEXGMGv68l5QM8j3m8Oth9rJl/de9ZGiPPF
+         Bj+qwq98CRp+b2fS1OOzW/33cpr99ZLnDhIP/rbBBoNjxh62WqKCXw8LHRw9DvCA5NYW
+         LjFHGMF6LmEGEP9Lt8rn/sRMwD5LfsARWB6nyDNRHb0yK7uNK0f80q36iFLB6RU/VyVg
+         PYuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4TehjTYHnYPxGBg2m16YLZF/MTIB9KtqJyNEKuglwKU=;
-        b=a520qZN2hO6q2C7X+gYdRb5eZTQTgVy+tDZRlAoihZ7Yr8j8+yJ7WM/+4PdurogvvR
-         eVvonc52m0RvDG5fpwxmi2Y9RgzfahmEvrhJkTHB72SitvLULL8xVIu91Rj1YNqw6ZhN
-         CY12EOQ8LXP0A5mrfDs2WnGT1rgX0OH9y7ZXx7KkY9qITVrS0zmiT/42QCKemmB9MzSM
-         E06hORB3xYkwbSTqc43rwSqL95SifsJNvWnp97iiU9BvbFCAdvsxPLU9bW19U2woJHYF
-         PKCDCf9YvBV3ZMta4JgzETP4yGc7rtSRMTQBHOXnKK07ckscuAXK5NzSrvCiQeXcjV0i
-         8czA==
-X-Gm-Message-State: AOAM5324u+V2v27P89NeQOD2aXlFf6J1AcF3pmT//IXQHU4N+awtoD1G
-        SQE/D/EURJFsLjGJB5tL1yYf/hVs
-X-Google-Smtp-Source: ABdhPJzTTw4q8n12brS1zwVnEvCk1607WTnt5PcyBiKUpsOVq/TFtXsTHSeQwotu4unIlq69H+nSSA==
-X-Received: by 2002:adf:e78a:: with SMTP id n10mr6018872wrm.114.1591823980182;
-        Wed, 10 Jun 2020 14:19:40 -0700 (PDT)
+        bh=cdxXOL6g6SoE1kibmxCg/3drSW0ta8hvQDe80NRLebQ=;
+        b=N0vEDV3wVxdjwbAZLv9yPnG9X2A+fLHdHFBx4Czy31go9Y6ICqoyi6zsk4FoQWZpbL
+         lhgeP/v6k6kEQNV5yhYmB/7wTZ886u3E7ycdCY4nw5tBFvJ38ocijCcwyaIjFLdqRlrI
+         9ycjMIsWZ6OpfTe2N/UkZjtWIPYXLXR9Z2LlYpmrcyxqOuCypljZWlH4V0PGj/yau9yp
+         mjGKmXcelOo35GzztbmpdZmi0sOsnhXWk30rWvqQP7d0gj+bjUcICBbi3RmM7yS4NnCk
+         qxp+u5weVj9GnY2qXI9Fjpi+KZ99CxF5D2Bq8m7vEc6znsWkaBuAsomauQ/b5Q/YcfEi
+         H/+w==
+X-Gm-Message-State: AOAM533X0a3ijf8fKYNMQIpQ6LIYRV04ziWHq/Cp1ZQlZd/FYqGtuZih
+        LyivxxPg+b6KUjbous1r6pTVkphC
+X-Google-Smtp-Source: ABdhPJyZEZRyBKEiKWwvihwy7nBT1EtZHrblvNaJF/Wx8uyMYfFBX/K2esDONNUp068MjHldu3MSmg==
+X-Received: by 2002:a5d:4009:: with SMTP id n9mr5443037wrp.97.1591823981138;
+        Wed, 10 Jun 2020 14:19:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l17sm1083983wmi.3.2020.06.10.14.19.39
+        by smtp.gmail.com with ESMTPSA id y17sm1628807wrn.12.2020.06.10.14.19.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2020 14:19:39 -0700 (PDT)
-Message-Id: <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com>
+        Wed, 10 Jun 2020 14:19:40 -0700 (PDT)
+Message-Id: <f680e66dd6ddfc5294d04ddd11d4b2bd4ec1520c.1591823971.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Jun 2020 21:19:29 +0000
-Subject: [PATCH 8/9] fast-export: respect the possibly-overridden default
- branch name
+Date:   Wed, 10 Jun 2020 21:19:30 +0000
+Subject: [PATCH 9/9] Document how the default branch name can be overridden
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,43 +80,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When anonymizing commit history, we are careful to leave the branch name
-of the default branch alone.
+There is a `GIT_TEST_*` environment variable and a `core.` config
+setting (with the former taking precendence over the latter) to allow
+overriding what name Git uses by default as main branch of new
+repositories.
 
-When the default branch name is overridden via the config or via the
-environment variable, we will want `git fast-export` to use that
-overridden name instead.
+Now that all kinds of Git operations have learned to respect those,
+let's document them.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/fast-export.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ Documentation/config/core.txt | 4 ++++
+ t/README                      | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 85868162eec..028dd9969a2 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -515,13 +515,17 @@ static const char *anonymize_refname(const char *refname)
- 	};
- 	static struct hashmap refs;
- 	static struct strbuf anon = STRBUF_INIT;
-+	static char *default_branch_name;
- 	int i;
- 
- 	/*
--	 * We also leave "master" as a special case, since it does not reveal
--	 * anything interesting.
-+	 * We also leave the default branch name as a special case, since it
-+	 * does not reveal anything interesting.
- 	 */
--	if (!strcmp(refname, "refs/heads/master"))
-+	if (!default_branch_name)
-+		default_branch_name = git_default_branch_name(0);
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 74619a9c03b..a11e1abdf59 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -626,3 +626,7 @@ core.abbrev::
+ 	in your repository, which hopefully is enough for
+ 	abbreviated object names to stay unique for some time.
+ 	The minimum length is 4.
 +
-+	if (!strcmp(refname, default_branch_name))
- 		return refname;
++core.defaultBranchName::
++	Allows overriding the default branch name e.g. when initializing
++	a new repository or when cloning an empty repository.
+diff --git a/t/README b/t/README
+index cf863837ab9..b32f520a27f 100644
+--- a/t/README
++++ b/t/README
+@@ -421,6 +421,10 @@ GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=<boolean>, when true (which is
+ the default when running tests), errors out when an abbreviated option
+ is used.
  
- 	strbuf_reset(&anon);
++GIT_TEST_DEFAULT_BRANCH_NAME allows overriding the default branch name
++that is used for example when initializing new repositories, or when
++cloning a repository that has no branches yet.
++
+ Naming Tests
+ ------------
+ 
 -- 
 gitgitgadget
-
