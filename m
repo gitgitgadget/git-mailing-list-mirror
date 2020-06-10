@@ -6,101 +6,103 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71B3BC433E0
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBCE9C433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:25:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4825E20760
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:23:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C61320760
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 23:25:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XBeEa7DN"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mwVlQC2E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726842AbgFJXXX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 19:23:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39196 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726374AbgFJXXX (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 10 Jun 2020 19:23:23 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726597AbgFJXZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 19:25:58 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64048 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726374AbgFJXZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 19:25:58 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 63523DDE26;
+        Wed, 10 Jun 2020 19:25:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lp4192/8SYQ+mJb5sI+tuBL2rI8=; b=mwVlQC
+        2EnI7JP7equ5q60s1o3StcSX4wcr5PXj61/H1p/NQSUAxEIBb6rLVrt9Zur4v4/m
+        mB9gxMykpFAc08t3O41kKnbSIU3k+ntHLu4vkWZu7X7hjd/7OsGnZREEmAgIQlCf
+        nbAzIB9813+9FuGniQfP76ALGJ9VO+8vd3INg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IrNgz7vpp4qk7Mpb1GRo5/ht/4yG4PEe
+        9FdI+FpplvDzMI+wEGdLuM/D/kj9js3D6MEr++5Dpy95Vf+Ut3aWwB1peXfKNFmk
+        W2g7OOY39mtv6H/COdBupyIHe/R4U5jyT+26HovsVk/VOiYq6sBK7oKAJx6arKhy
+        ghzQdc5qrtw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5BC86DDE25;
+        Wed, 10 Jun 2020 19:25:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 524D66048D;
-        Wed, 10 Jun 2020 23:22:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1591831371;
-        bh=HiFsajb7LiyJvZpbe2HD5eyDXduiAvDkxhJo83Ys6Zg=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=XBeEa7DNbpZ77q2SwJfViwlokOuVju+dqeqcPkadAyKEKS8dttTtfV0OikhO0euKK
-         rqiMw0bDfc95Dgr/mxrlfVa0o1fcDFNgUwWqr6+Hsgcr4Q8YAnnwNcrcWVDoY2LFLE
-         xuP/OdvmKLJqfrlUq114smFelKsUrQvfhLYxTsJglHMlZDET/gi34K+EEkQGL+giWc
-         IecE27aoKU2AZTMKMELypeu11NvzyqI3h16Eo4cN1obp8q2WCtRcK2gworN+QRYpDa
-         msIGTyXyGy5/Jmz1hJPFNBmUi4eGGZ4BNXib7+pEI+dFGd2FBaRQi1S3rNhBQS7E8r
-         vBHWRHqcuGUq+mE02kkkbvXw7KjSi8kf2dqCcdcuYeiuczxZkvCiGTnX9JsSCqXAOo
-         DCLP2tcl0gfKOL8Y+m701SbGSV+TW8qW4q+KV33ZQoe9aAazUN22/tUbSYn+Exx+TA
-         d/W6Q4tHdz1SvLdc3Ye/4YpvVBF9DC5mIj3kwLLAAflIEU72sB/
-Date:   Wed, 10 Jun 2020 23:22:46 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
- new repositories
-Message-ID: <20200610232246.GT6569@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, Johannes Schindelin <johannes.schindelin@gmx.de>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A1716DDE24;
+        Wed, 10 Jun 2020 19:25:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matt Rogers <mattr94@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        don@goodman-wilson.com, stolee@gmail.com,
+        Jeff King <peff@peff.net>, sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 8/9] fast-export: respect the possibly-overridden default branch name
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
- <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
+        <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com>
+        <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com>
+Date:   Wed, 10 Jun 2020 16:25:52 -0700
+In-Reply-To: <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com>
+        (Matt Rogers's message of "Wed, 10 Jun 2020 17:54:01 -0400")
+Message-ID: <xmqqbllqec5b.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="+Yg8W10oK6rlW0RR"
-Content-Disposition: inline
-In-Reply-To: <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: BA7F8AB4-AB71-11EA-82C3-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Matt Rogers <mattr94@gmail.com> writes:
 
---+Yg8W10oK6rlW0RR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> -        * We also leave "master" as a special case, since it does not reveal
+>> -        * anything interesting.
+>> +        * We also leave the default branch name as a special case, since it
+>> +        * does not reveal anything interesting.
+>>          */
+> I feel this is a weird thing to do, since you're trying to anonymize the branch
+> name,and now the default branch is identifiable with your config file.  For
+> example, if the default branch contains the name of my project/repo then this
+> sounds like a recipe for accidentally sharing it. I feel a better
+> alternative would
+> be to exclude nothing from the anonymization or the proposed default default
+> branch name
 
-On 2020-06-10 at 21:19:22, Don Goodman-Wilson via GitGitGadget wrote:
-> +	/* prepend "refs/heads/" to the branch name */
-> +	prefixed =3D xstrfmt("refs/heads/%s", branch_name);
-> +	if (check_refname_format(prefixed, 0))
-> +		die(_("invalid default branch name: '%s'"), branch_name);
+I wonder if anything bad happens if we keep *no* refs intact in this
+function.  "Since it does not reveal anything interesting" is an
+excuse why not munging it may be OK, but it does not explain why we
+prefer not munging it actively.
 
-I'm glad to see this part and a check for it in the test below.  We
-wouldn't want a typo to create a broken branch name.
+If there is no reason to keep _some_ refs as-is, I agree that it is
+perfectly sensible not to have this special case at all.
 
-> +test_expect_success 'invalid custom default branch name' '
-> +	test_must_fail env GIT_TEST_DEFAULT_BRANCH_NAME=3D"with space" \
-> +		git init custom-invalid 2>err &&
-> +	test_i18ngrep "invalid default branch name" err
-> +'
-> +
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Thanks.
 
---+Yg8W10oK6rlW0RR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXuFrRQAKCRB8DEliiIei
-gWh3AQC72M5zaVgqd44QK6VjjLfyxiVHSfnOOSyV3a/g+9EozgD+M7TTfdk7K5r8
-OLAKBjiij42iFmjcqHG06qijbKVKpg4=
-=KA2m
------END PGP SIGNATURE-----
-
---+Yg8W10oK6rlW0RR--
+>> -       if (!strcmp(refname, "refs/heads/master"))
+>> +       if (!default_branch_name)
+>> +               default_branch_name = git_default_branch_name(0);
+>> +
+>> +       if (!strcmp(refname, default_branch_name))
+>>                 return refname;
+>>
+>>         strbuf_reset(&anon);
+>> --
+>> gitgitgadget
+>>
