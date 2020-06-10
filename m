@@ -5,64 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D2BFC433E0
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F162C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37E5B2072E
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BEBA2072E
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="olW8kmg7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o0ubuorY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726312AbgFJVTk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 17:19:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42542 "EHLO
+        id S1726364AbgFJVTn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 17:19:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbgFJVTh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 17:19:37 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC095C08C5C1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:35 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x13so3944008wrv.4
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:35 -0700 (PDT)
+        with ESMTP id S1726290AbgFJVTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 17:19:41 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C995EC03E96B
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:40 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id u13so3161068wml.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=24+EQLdEtdTw4Hh6W+l6EEDtsf8a/Ytytgm+i93Q6AU=;
-        b=olW8kmg7t8r3AYBXoTQDO8ZMf/UT2XSwl7yMEVYZVy6J7k8QvCw1jD5ixMXKxfAa3Q
-         JO3xd8AWQuQLnFxhY6WWBegnlHSxIkW6OehF3HnMFHpKES6JkCvsvsMIfeIWvfybDlKD
-         il19+iHbLhk5NqY2zt02mNqej6U87OoYQ2Aazm4m+7Gp/D1BoNX6bk56QkjchGS+q+i+
-         cT34g+jnG7MbsSAw15O72gg8vdUMRcv8xgb5mm6vi68N4DWOd0rbiiAuFC1jUk3NfheA
-         7DHVuCdLTvrBtA1jAra01oQ266rj7RetIV0t3O8hTHTPllVEQQZYE2ApEu9qYH6eQsT3
-         /2Kw==
+        bh=8wj3R1dl3ZUsQbIszwYs/WQOqQca6NeSqMcBFVfSOXA=;
+        b=o0ubuorYWufTM/Kkp68eQRYSXNRS62C+4vHAO3qB6uuYtWV621edlpXeAnTboSv4J4
+         tqgo2eaJ6m9+ZtA8tpwQ3nMLwHHSC8tBSn6rMHxBAZ/Ltg0NmR58k/4D/cK5ONzZI48n
+         M4X60ektvECvv8q43AHYTc5uOCqlR3OaiINRTBBqpoq1z8/Bxk0RafYZ5VuglWwP6Wr4
+         qUnCa4QiY1Ti+qNRKonjOddrgFMz1oE9awUQm4ld9vHenxyBHPyZN9v9wKed04HTeRry
+         WwiM7MQnAttgQM/FVKxCoF7ev0auP3R96OqH1AoJzdh+k+vfHuRaM9OIQFBzm/XElndm
+         LKxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=24+EQLdEtdTw4Hh6W+l6EEDtsf8a/Ytytgm+i93Q6AU=;
-        b=rxd/vza/JYZ3LAuSBtuhytNMKsuAGl5HtzadRdVPrRb2YeNjv8Tm0igzWqVQUy8o1L
-         TkOhkpE3PeveVdZ6r3bTfPiRXFrvnYp0hfPbMWvtS6FRHk45scj0534rY4ZbvpEcOZTM
-         y4SWqO3SjdRdmLe+Oad/rgPDUvjt/CNQ3wII6Tizj4wwK5GCKxR2WoNZOZAcia/ZZ+PQ
-         QA1x1drHxPvDiXyNtnYGon4IGhgFnoaW7T7jdBECjImc73xgospo9zj1O8rCeZK5OZDC
-         PXRjKB6bjkYO0jLBai72Ji0aHp9WCEwGtWKSWBylgqcQyEAnZY8C5nDMe4tINEchXj2v
-         zvIQ==
-X-Gm-Message-State: AOAM530Oeo1XLYS35Ind/MoTt5wzpdoYgyIZPsMrELb4gmhaU8LpKyK7
-        zCEaHDBocimXCO+52WKTVNMYyvQK
-X-Google-Smtp-Source: ABdhPJyvUMJJ8dk8q2sn6v85JoDUVXKAGg7I3wxmxXEnCGLnkQhka9sT0qGHHBQRyHv5RKIyv3BCUg==
-X-Received: by 2002:adf:fc81:: with SMTP id g1mr5901189wrr.156.1591823974537;
-        Wed, 10 Jun 2020 14:19:34 -0700 (PDT)
+        bh=8wj3R1dl3ZUsQbIszwYs/WQOqQca6NeSqMcBFVfSOXA=;
+        b=GXM4bnxKwjEM0ab5B3pfxfzTMdrqN3FSZBfa9Nv1Gpkkhw2pb8doRto4j/WdOcMcBf
+         LB2D8dna2OJPNzP5CJuKcXFNtQ/rLfUyj6BtKhTo/tzjIGjnDfdbDivmCqklgILEQ2zI
+         tvwtLZ8VLQw4bDKGflfq68LvnAq7pqnPFAn/Emf13IsYG20RQalaxY4rbDKgJxak/O0z
+         G2z6WmeKC5Ju3kISse3VXHSWK12BN8WgSbCl5jGZHR2A6Hhxk73JfrtEDcPFBZluHkue
+         gyDvPEilFojomy+z9weHz2vddXPhhdtm8mLyZaQ96IXySpbMuhEtsWxYYyu+9BzXiIXU
+         4FWQ==
+X-Gm-Message-State: AOAM532r197WLUFfmoKNH4Q5KZB6VvBneBQ6fXWCTt/q7s0uhQCQe3pW
+        N8+k5m4DfjzUj1Xq5X8PE3lMzV9o
+X-Google-Smtp-Source: ABdhPJwOfiWeADheMUV7CPTgXf9qR5Y/Q23tjnYJOrnWileWfwskVuWlo9MKEoWgRHa8twqtT4gcGQ==
+X-Received: by 2002:a1c:6446:: with SMTP id y67mr5215889wmb.156.1591823979343;
+        Wed, 10 Jun 2020 14:19:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d5sm1591898wrb.14.2020.06.10.14.19.33
+        by smtp.gmail.com with ESMTPSA id d2sm1523957wrs.95.2020.06.10.14.19.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2020 14:19:34 -0700 (PDT)
-Message-Id: <06a2cea051c01ebee38c9910425171f112daf41a.1591823971.git.gitgitgadget@gmail.com>
+        Wed, 10 Jun 2020 14:19:38 -0700 (PDT)
+Message-Id: <e849def4a8c5cc291839ef4514a386df0c148b2e.1591823971.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Jun 2020 21:19:23 +0000
-Subject: [PATCH 2/9] remote: respect `core.defaultBranchName`
+Date:   Wed, 10 Jun 2020 21:19:28 +0000
+Subject: [PATCH 7/9] fmt-merge-msg: learn about the possibly-configured
+ default branch name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,66 +81,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When guessing the default branch name of a remote, and there are no refs
-to guess from, we want to go with the preference specified by the user
-for the fall-back.
+When formatting the commit message for merge commits, Git appends "into
+<branch-name>" unless the current branch is the default branch.
+
+Now that we can configure what the default branch name should be, we
+will want to respect that setting in that scenario rather than using the
+compiled-in default branch name.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- remote.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fmt-merge-msg.c          | 6 ++++--
+ t/t6200-fmt-merge-msg.sh | 8 ++++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 534c6426f1e..95fa8cc78e0 100644
---- a/remote.c
-+++ b/remote.c
-@@ -256,7 +256,7 @@ static void read_remotes_file(struct remote *remote)
- 
- static void read_branches_file(struct remote *remote)
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 72d32bd73b1..5e5c1d86f1c 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -407,7 +407,7 @@ static void fmt_merge_msg_title(struct strbuf *out,
+ 				const char *current_branch)
  {
--	char *frag;
-+	char *frag, *default_branch_name = NULL;
- 	struct strbuf buf = STRBUF_INIT;
- 	FILE *f = fopen_or_warn(git_path("branches/%s", remote->name), "r");
+ 	int i = 0;
+-	char *sep = "";
++	char *sep = "", *default_branch_name;
  
-@@ -276,7 +276,7 @@ static void read_branches_file(struct remote *remote)
+ 	strbuf_addstr(out, "Merge ");
+ 	for (i = 0; i < srcs.nr; i++) {
+@@ -451,10 +451,12 @@ static void fmt_merge_msg_title(struct strbuf *out,
+ 			strbuf_addf(out, " of %s", srcs.items[i].string);
+ 	}
  
- 	/*
- 	 * The branches file would have URL and optionally
--	 * #branch specified.  The "master" (or specified) branch is
-+	 * #branch specified.  The default (or specified) branch is
- 	 * fetched and stored in the local branch matching the
- 	 * remote name.
- 	 */
-@@ -284,7 +284,7 @@ static void read_branches_file(struct remote *remote)
- 	if (frag)
- 		*(frag++) = '\0';
+-	if (!strcmp("master", current_branch))
++	default_branch_name = git_default_branch_name(1);
++	if (!strcmp(default_branch_name, current_branch))
+ 		strbuf_addch(out, '\n');
  	else
--		frag = "master";
-+		frag = default_branch_name = git_default_branch_name(1);
- 
- 	add_url_alias(remote, strbuf_detach(&buf, NULL));
- 	strbuf_addf(&buf, "refs/heads/%s:refs/heads/%s",
-@@ -299,6 +299,7 @@ static void read_branches_file(struct remote *remote)
- 	strbuf_addf(&buf, "HEAD:refs/heads/%s", frag);
- 	refspec_append(&remote->push, buf.buf);
- 	remote->fetch_tags = 1; /* always auto-follow */
+ 		strbuf_addf(out, " into %s\n", current_branch);
 +	free(default_branch_name);
- 	strbuf_release(&buf);
  }
  
-@@ -2099,7 +2100,10 @@ struct ref *guess_remote_head(const struct ref *head,
+ static void fmt_tag_signature(struct strbuf *tagbuf,
+diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+index e4c2a6eca43..a23cd157ffd 100755
+--- a/t/t6200-fmt-merge-msg.sh
++++ b/t/t6200-fmt-merge-msg.sh
+@@ -158,6 +158,14 @@ test_expect_success 'setup FETCH_HEAD' '
+ 	git fetch . left
+ '
  
- 	/* If refs/heads/master could be right, it is. */
- 	if (!all) {
--		r = find_ref_by_name(refs, "refs/heads/master");
-+		char *name = git_default_branch_name(0);
++test_expect_success 'with overridden default branch name' '
++	test_config core.defaultBranchName default &&
++	test_when_finished "git switch master" &&
++	git switch -c default &&
++	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
++	! grep "into default" actual
++'
 +
-+		r = find_ref_by_name(refs, name);
-+		free(name);
- 		if (r && oideq(&r->old_oid, &head->old_oid))
- 			return copy_ref(r);
- 	}
+ test_expect_success 'merge.log=3 limits shortlog length' '
+ 	cat >expected <<-EOF &&
+ 	Merge branch ${apos}left${apos}
 -- 
 gitgitgadget
 
