@@ -2,116 +2,177 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22AC1C433DF
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A166C433DF
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:32:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA96320801
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:02:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A81820760
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 06:32:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mail.de header.i=@mail.de header.b="A3cjz2t7"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IWyr+mCU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbgFJGCY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 02:02:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41508 "EHLO
+        id S1726109AbgFJGb7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 02:31:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbgFJGCV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 02:02:21 -0400
-Received: from shout02.mail.de (shout02.mail.de [IPv6:2001:868:100:600::217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A4ECC05BD1E
-        for <git@vger.kernel.org>; Tue,  9 Jun 2020 23:02:21 -0700 (PDT)
-Received: from postfix01.mail.de (postfix03.bt.mail.de [10.0.121.127])
-        by shout02.mail.de (Postfix) with ESMTP id 13FC1C014A;
-        Wed, 10 Jun 2020 08:02:17 +0200 (CEST)
-Received: from smtp04.mail.de (smtp04.bt.mail.de [10.0.121.214])
-        by postfix01.mail.de (Postfix) with ESMTP id EDA1380142;
-        Wed, 10 Jun 2020 08:02:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.de;
-        s=mailde201610; t=1591768937;
-        bh=JBiaL+ljJ96L5Zo0OCQPv5dxvdReNOlW4jiwScqFtCg=;
-        h=From:Subject:To:References:Date:In-Reply-To:From;
-        b=A3cjz2t70hsAcMC+EELZx87wMvuKXKO5SZ6yJFEh5M0onno+NTfUGuYu9qBuLHxS7
-         f5ES48BY3xmvTb61w6yohoSHrPTp31mlPjdp49GwSAGfZ9DFtaObUbLg9hcX9Pdtpd
-         rn4lV1zUu1f9hGvPEW/t7TRL8iAHGvBfvtNDL2R8=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by smtp04.mail.de (Postfix) with ESMTPSA id 777B8C00E8;
-        Wed, 10 Jun 2020 08:02:16 +0200 (CEST)
-From:   Stefan Moch <stefanmoch@mail.de>
-Subject: Re: git submodule question
-To:     Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <Wri_F6OxTiG7HZNvyVdFwGp7qrTWqC7Oipu214kLQ8gGMhna7SU6AXdm_m8tkDaPlMKtXGXc84TSACkN0tigR9satiLkrXn23bfM331g09U=@protonmail.ch>
-Message-ID: <02d1bf3e-0fc8-a02b-68d0-2982dc209c55@mail.de>
-Date:   Wed, 10 Jun 2020 08:02:08 +0200
+        with ESMTP id S1726072AbgFJGb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 02:31:57 -0400
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478D2C03E96F
+        for <git@vger.kernel.org>; Tue,  9 Jun 2020 23:31:57 -0700 (PDT)
+Received: by mail-io1-xd41.google.com with SMTP id y5so890991iob.12
+        for <git@vger.kernel.org>; Tue, 09 Jun 2020 23:31:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XPtcdgftzoBqPW91YoLmZSnHgjxijrfF1mPTpDpKyk0=;
+        b=IWyr+mCU2W9F0zEpgVo/K+lZwiT0j+kopa1XPjNBqsy1VaY4kMeP3SW+CopxqrXxNX
+         pL51LhP9ybXbAIrj87+t79opTGAg01nUcRT6lCugIPMTX3bNqFqDH73wbzx8kNJmtyIZ
+         42qMSNz/lchqlKIPgg/MfWjHg4GPyTKZouNYKnWTASNn5FWDbx8c1BC4hOBNIdoCUOb8
+         JF6dGRy3OMzTHAd9g8S+jjKOLfrDhDBomHFvlWHUc1DX1Xpw0YqUc8HqqCYlA38taIm3
+         MPa7B+QQFwNqxUlTbg9Fa/xjTFoIlFDR+1L8pWo7cGiBSC6kEa3t51KrthCYwS/jBLdA
+         gzVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=XPtcdgftzoBqPW91YoLmZSnHgjxijrfF1mPTpDpKyk0=;
+        b=pEPM+WTnyufqBHoyTeVMDPwFFBuYXY1h2Epn8O/D684mDXl5WM8Zx50TO2oxwIw1tr
+         Qrv0qgslTKyOWO/286FOTkoDAUg/Nn+uVC0MKowjclSWl4wKHrCR1ExKVbkX22paP7t0
+         8cRGb4DhMkFlI2FCo1NmfKygWE/scl2jqgxOv60tVTRh68LdcHoI7d1VUDAM6KCxjwGr
+         qGIDpiU6sVO4f4KyslTdvo4SPcT5vU59yFI2i0HjobpgcEfZfhW/kFwJVerMmrD3E4Cs
+         9vAovuOR8oaDR5cfDk65fBTi9+PJ3q6tNpUvDDlR3Uul5DJpvbY45kw0BNPMqPilMeb6
+         QYbA==
+X-Gm-Message-State: AOAM530FX2sfTPXbF0XNh2ux9fZhOqgSfDIZTf8oY52wBG1gqsdWaCiQ
+        R/rEIhkQzezBc3M0HCPUMiIaCklZno0=
+X-Google-Smtp-Source: ABdhPJwbsUEbcWXj8pbs07zx1gOWGhcJMznQxUM4RuULrAbSfHd/U5wu1RDkNmG/FEOh4t5EN79jtw==
+X-Received: by 2002:a6b:6414:: with SMTP id t20mr1832316iog.101.1591770716014;
+        Tue, 09 Jun 2020 23:31:56 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id f22sm8497868iob.18.2020.06.09.23.31.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 Jun 2020 23:31:55 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?q?Jonathan=20M=C3=BCller?= <jonathanmueller.dev@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 1/7] worktree: factor out repeated string literal
+Date:   Wed, 10 Jun 2020 02:30:43 -0400
+Message-Id: <20200610063049.74666-2-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.27.0.90.gabb59f83a2
+In-Reply-To: <20200610063049.74666-1-sunshine@sunshineco.com>
+References: <20200610063049.74666-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
-In-Reply-To: <Wri_F6OxTiG7HZNvyVdFwGp7qrTWqC7Oipu214kLQ8gGMhna7SU6AXdm_m8tkDaPlMKtXGXc84TSACkN0tigR9satiLkrXn23bfM331g09U=@protonmail.ch>
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-purgate: clean
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate-type: clean
-X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate: clean
-X-purgate-size: 2645
-X-purgate-ID: 154282::1591768936-00000568-55C241D1/0/0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Laura Smith wrote:
-> I'm using git submodule to pull some third-party config templates into my git tree, using the following:
->
-> git fetch  foobar-github master
-> git subtree pull --prefix software/files/perimiter_mail/foobar-github foobar-github master --squash
->
-> Now, the question is, when the upstream makes a new commit can I force pull that commit and make git overwrite any changes I've made in the subtree.
+For each worktree removed by "git worktree prune", it reports the reason
+for the removal. All reasons share the common prefix "Removing
+worktrees/%s:". As new removal reasons are added, this prefix needs to
+be duplicated, which is error-prone and potentially cumbersome.
+Therefore, factor out the common prefix.
 
-(Side node: there is `git submodule` as well as `git subtree`, they
-are similar in their goals, but work quite differently.)
+Although this change seems to increase the "sentence lego quotient", it
+should be reasonably safe, as the reason for removal is a distinct
+clause, not strictly related to the prefix. Moreover, the "worktrees" in
+"Removing worktrees/%s:" is a path literal which ought not be localized,
+so by factoring it out, we can more easily avoid exposing that path
+fragment to translators.
 
-I have not used subtree much, but from a first glance it seems to me
-one would have to either (a) revert the own changes or (b) commit
-checked out files from the last upstream version again prior to the
-`git subtree pull` to get git subtree merge/pull deliver exactly the
-files from new version the upstream repository into the subtree.
-That would lead at least to a untidy history with a back and forth
-of placeholders and replacements and scripting it could also be a
-bit cumbersome.
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ builtin/worktree.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-However, /not/ changing the template files would also be a
-possibility to generate your files:
-
-> At the moment I get bitter complaints from git, e.g. :
-> CONFLICT (content): Merge conflict in....
-> Automatic merge failed; fix conflicts and then commit the result.
->
-> Basically, I want to make myslef an update script that force-pulls the latest upstream repo and then the script will take care of making the necessary modifications (the upstream puts placeholders in their repo, so my script would take care of replacing the placeholders with the real values so that everything works again)
-
-If you are going to write a script that replaces the placeholders in
-the config templates, you could as well leave the whole subtree /as
-it is/ in upstream (i.e. without replacement of placeholders) and
-only use `git subtree pull` go get the upstream changes – without
-conflicts from now on. (Or maybe only make structural changes to the
-templates itself (e.g. added/removed blocks of text), if needed at
-all. That should probably lead to fewer conflicts than changing the
-placeholders in place.)
-
-You can then use your script to generate /another/ file (with
-replacement of placeholders) from each config template as part of
-your build process or whatever is run from this repository. The
-generated files may or may not be added to the repository (outside
-of the subtree). If their content is reproducible (with templates,
-script, and replacements), it is not necessarily needed to add them,
-just regenerate them if needed or if their corresponding template
-changed.
-
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index d99db35668..9b15f19fc5 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -76,19 +76,19 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 	ssize_t read_result;
+ 
+ 	if (!is_directory(git_path("worktrees/%s", id))) {
+-		strbuf_addf(reason, _("Removing worktrees/%s: not a valid directory"), id);
++		strbuf_addstr(reason, _("not a valid directory"));
+ 		return 1;
+ 	}
+ 	if (file_exists(git_path("worktrees/%s/locked", id)))
+ 		return 0;
+ 	if (stat(git_path("worktrees/%s/gitdir", id), &st)) {
+-		strbuf_addf(reason, _("Removing worktrees/%s: gitdir file does not exist"), id);
++		strbuf_addstr(reason, _("gitdir file does not exist"));
+ 		return 1;
+ 	}
+ 	fd = open(git_path("worktrees/%s/gitdir", id), O_RDONLY);
+ 	if (fd < 0) {
+-		strbuf_addf(reason, _("Removing worktrees/%s: unable to read gitdir file (%s)"),
+-			    id, strerror(errno));
++		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
++			    strerror(errno));
+ 		return 1;
+ 	}
+ 	len = xsize_t(st.st_size);
+@@ -96,8 +96,8 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 
+ 	read_result = read_in_full(fd, path, len);
+ 	if (read_result < 0) {
+-		strbuf_addf(reason, _("Removing worktrees/%s: unable to read gitdir file (%s)"),
+-			    id, strerror(errno));
++		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
++			    strerror(errno));
+ 		close(fd);
+ 		free(path);
+ 		return 1;
+@@ -106,15 +106,15 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 
+ 	if (read_result != len) {
+ 		strbuf_addf(reason,
+-			    _("Removing worktrees/%s: short read (expected %"PRIuMAX" bytes, read %"PRIuMAX")"),
+-			    id, (uintmax_t)len, (uintmax_t)read_result);
++			    _("short read (expected %"PRIuMAX" bytes, read %"PRIuMAX")"),
++			    (uintmax_t)len, (uintmax_t)read_result);
+ 		free(path);
+ 		return 1;
+ 	}
+ 	while (len && (path[len - 1] == '\n' || path[len - 1] == '\r'))
+ 		len--;
+ 	if (!len) {
+-		strbuf_addf(reason, _("Removing worktrees/%s: invalid gitdir file"), id);
++		strbuf_addstr(reason, _("invalid gitdir file"));
+ 		free(path);
+ 		return 1;
+ 	}
+@@ -123,7 +123,7 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ 		free(path);
+ 		if (stat(git_path("worktrees/%s/index", id), &st) ||
+ 		    st.st_mtime <= expire) {
+-			strbuf_addf(reason, _("Removing worktrees/%s: gitdir file points to non-existent location"), id);
++			strbuf_addstr(reason, _("gitdir file points to non-existent location"));
+ 			return 1;
+ 		} else {
+ 			return 0;
+@@ -147,7 +147,8 @@ static void prune_worktrees(void)
+ 		if (!prune_worktree(d->d_name, &reason))
+ 			continue;
+ 		if (show_only || verbose)
+-			printf("%s\n", reason.buf);
++			printf_ln(_("Removing %s/%s: %s"),
++				  "worktrees", d->d_name, reason.buf);
+ 		if (show_only)
+ 			continue;
+ 		delete_git_dir(d->d_name);
+-- 
+2.27.0.90.gabb59f83a2
 
