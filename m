@@ -2,87 +2,89 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 922B4C433DF
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 08:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77351C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 10:50:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 756352072E
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 08:59:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EA98206F7
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 10:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726955AbgFJI7L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 04:59:11 -0400
-Received: from relay7-d.mail.gandi.net ([217.70.183.200]:59447 "EHLO
-        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726908AbgFJI7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 04:59:11 -0400
-X-Originating-IP: 157.36.186.167
-Received: from localhost (unknown [157.36.186.167])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id D72B320009;
-        Wed, 10 Jun 2020 08:59:05 +0000 (UTC)
-Date:   Wed, 10 Jun 2020 14:29:02 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Luigi Cantoni <luigic@fgcint.com>,
-        David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-Subject: Re: Auto Rescan - as plain text
-Message-ID: <20200610085902.uv7cxl6s5qnlniwm@yadavpratyush.com>
-References: <37bd22ee8bcb9c91969d68cbc5e6852a8a70ab36.camel@fgcint.com>
- <bf895dc550881b35baea45cd269bf9b0518ade35.camel@fgcint.com>
- <816ce248ab1708d41b5233abdb998ff2d4cb3400.camel@fgcint.com>
- <36bd7dc26883017770c28da94a251be2d5019f75.camel@fgcint.com>
- <xmqq3673hj11.fsf@gitster.c.googlers.com>
+        id S1728264AbgFJKu0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 06:50:26 -0400
+Received: from cpanel7.indieserve.net ([199.212.143.8]:43337 "EHLO
+        cpanel7.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728149AbgFJKu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 06:50:26 -0400
+X-Greylist: delayed 3536 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jun 2020 06:50:25 EDT
+Received: from cpeac202e043973-cmac202e043970.sdns.net.rogers.com ([174.114.100.179]:33112 helo=localhost.localdomain)
+        by cpanel7.indieserve.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1jixOJ-002Xos-0z; Wed, 10 Jun 2020 05:51:27 -0400
+Date:   Wed, 10 Jun 2020 05:51:24 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Simon Pieters <simon@bocoup.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, don@goodman-wilson.com
+Subject: Re: Rename offensive terminology (master)
+In-Reply-To: <CAOAHyQzxG7Lc6+PLBtM6oe9vSoEEAmuXAaKF2VzO_phtkfGRVA@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.2006100549070.3771@localhost.localdomain>
+References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com> <20200505231641.GH6530@camp.crustytoothpaste.net> <CAOAHyQx=+fM1FpAv+g3M+j7j4MgLJA03=MGFmXLvZcfJKAEpGg@mail.gmail.com> <xmqqeeqoi5wc.fsf@gitster.c.googlers.com>
+ <CAOAHyQzxG7Lc6+PLBtM6oe9vSoEEAmuXAaKF2VzO_phtkfGRVA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq3673hj11.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel7.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel7.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel7.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, 9 Jun 2020, Simon Pieters wrote:
 
-On 09/06/20 05:16PM, Junio C Hamano wrote:
-> Luigi Cantoni <luigic@fgcint.com> writes:
-> 
-> > Hi All,
-> > I have been using git for several years now and using git-cola.
-> > I just started up git gui and that is quite self explanatory and all
-> > the functions I use with git-cola appear to be there.
-> 
-> We used to see the maintainer of that project around here quite
-> frequently but haven't seen him for a while [jch: David Cc'ed].
-> 
-> By reading https://git-cola.github.io/about.html it seems that they
-> prefer to see problem reports and feature requests at
-> https://github.com/git-cola/git-cola/issues and not on this list.
-
-The feature request is for git-gui, asking for auto rescan in git-gui 
-like git-cola has. So I think this is the right place for it. Though I 
-think its easy to miss that on a quick read of the email. I had to do a 
-double take too :-)
- 
-> > One thing I liked in git-cola was that it very quickly reflected my
-> > changes in its display window.
-> > I have looked in the options and I cannot see either a flag to set it
-> > to auto rescan or set a time for the auto rescan.
+> Hi Junio,
+>
+> On Tue, Jun 9, 2020 at 6:02 PM Junio C Hamano <gitster@pobox.com> wrote:
 > >
-> > Have I missed it and there is a way turn this on or give it a shorter
-> > time (if in fact it is does do it).
-> > If it is not offered could it become an option.
-> > I can see that some people may not feel the overhead for distributed
-> > system is worth having this on so they would want if off.
-> > It is not critical (just nice) as I know I can
-> > 1) rescan
-> > or 2) go off the file and back on again.
-> > It then displays the correct diff/updated contents.
+> > Simon Pieters <simon@bocoup.com> writes:
 > >
-> > Thanks for any advise or help.
+> > > If someone is interested in helping with this, please follow up with
+> > > Don. But I would like to ask again for git mainline to seriously
+> > > consider adopting this change, given the information presented above
+> > > and the ongoing movement against systemic racism.
+> >
+> > I am OK in principle if a future version of Git, when used by a new
+> > user of Git who does not have any custom configuration, wrote a
+> > string other than 'master' in .git/HEAD when "git init" is run.
+> >
+> > Picking a good replacement word to mean the primary branch is
+> > tricky, though.  Just having a notion that one is special among
+> > many (i.e. the primary-ness of the thing being named with a word
+> > that will replace 'master') may already be offending to some folks.
+>
+> I find this response not satisfactory:
 
--- 
-Regards,
-Pratyush Yadav
+  ... snip ...
+
+"I can't breathe ... I can't breathe ..."
+
+"Well, tell you what, what if we rename the initial default branch in
+a distributed version control system for you?"
+
+  *Now* do you understand how asinine all this sounds?
+
+rday
