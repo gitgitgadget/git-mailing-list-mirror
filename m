@@ -7,63 +7,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A835C433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D2BFC433E0
 	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 051E82072E
+	by mail.kernel.org (Postfix) with ESMTP id 37E5B2072E
 	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0Rwx1bg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="olW8kmg7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726317AbgFJVTk (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726312AbgFJVTk (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 10 Jun 2020 17:19:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42548 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726290AbgFJVTh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726276AbgFJVTh (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 10 Jun 2020 17:19:37 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01612C03E96B
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:37 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id j10so3926833wrw.8
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:36 -0700 (PDT)
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC095C08C5C1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:35 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id x13so3944008wrv.4
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7Nd4/W6P67eOLim7Hwc4v1JpBcEtKZpep65gLVkktDk=;
-        b=B0Rwx1bg90KCQ+n0mqPUTVDMNwtPN0S6z6B3rCSQiHXXvMmUimHsfUEqmmMnjmC5Gj
-         Ie2STyzl+OYG1AiDGpH+BDXl9T10RZFBKNRpuslhzkN7f0v6xNXERxO9iTpaRukpoBbF
-         EOsKhjOZz6DoSIGRi6iWeRl+YpWDtlrTur/4rO1a7lNd6E5VnYhNtJUk1YJE3u/VxM8D
-         xUvONcN0WwKKDGgimqZsXuIxLRZ1BA9PcBm8alNw7CFIGD6GGrnnVwLyBEbrpbL71SkF
-         YxgdZkdlj5YYAVdXw8437ed8HNvqpYzmtLQ0GsxkdfyK6l/k8a1Kp2kOYUiyQ2Hb7kmF
-         D6cg==
+        bh=24+EQLdEtdTw4Hh6W+l6EEDtsf8a/Ytytgm+i93Q6AU=;
+        b=olW8kmg7t8r3AYBXoTQDO8ZMf/UT2XSwl7yMEVYZVy6J7k8QvCw1jD5ixMXKxfAa3Q
+         JO3xd8AWQuQLnFxhY6WWBegnlHSxIkW6OehF3HnMFHpKES6JkCvsvsMIfeIWvfybDlKD
+         il19+iHbLhk5NqY2zt02mNqej6U87OoYQ2Aazm4m+7Gp/D1BoNX6bk56QkjchGS+q+i+
+         cT34g+jnG7MbsSAw15O72gg8vdUMRcv8xgb5mm6vi68N4DWOd0rbiiAuFC1jUk3NfheA
+         7DHVuCdLTvrBtA1jAra01oQ266rj7RetIV0t3O8hTHTPllVEQQZYE2ApEu9qYH6eQsT3
+         /2Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7Nd4/W6P67eOLim7Hwc4v1JpBcEtKZpep65gLVkktDk=;
-        b=W+j/Z2F8Jfwg7cSUTeWZpjDBr6aGNy+TqgNlS7YaEfiinl//IgooEBL65A/nK8d1CK
-         3vV8RBrsdJ79c2XljYzmt8lXv5mSDSGNvTqVnW7YFshAOIaW1oPDorArF+brG/IAlA16
-         8laof8SzDD1wmDuHm+R1ASA0hUZhw2X2F7olatsK3A5CjtiFDDytcqENOF24zNtSoK6s
-         P1+qZs9jFhDAg6JglKgihvngW5Q9sBMwanP8eqlujlqhaeCjEqOOt6n0MynPRgK537a4
-         KOK989YbdGitm/SwhgdxHWULxbUCow+13NKmqB4MFbZ2FL0ZEU2StH4vePVwgeZVzjE2
-         1N2w==
-X-Gm-Message-State: AOAM5310f8xu1ImhT98QMqKY8eVbik3oOZwciG5ZviN30NO/PpaTscFE
-        7tiBmblgONI2q0M8JFTOgNdiHd/S
-X-Google-Smtp-Source: ABdhPJwxK8/SF4ci5Khw+95hE48v2ACr3qxJAi9IAT++S5s6Y1DBkB/0/DobJ7+Hd1B3M5uutMjP2Q==
-X-Received: by 2002:adf:a1d3:: with SMTP id v19mr5693687wrv.245.1591823975576;
-        Wed, 10 Jun 2020 14:19:35 -0700 (PDT)
+        bh=24+EQLdEtdTw4Hh6W+l6EEDtsf8a/Ytytgm+i93Q6AU=;
+        b=rxd/vza/JYZ3LAuSBtuhytNMKsuAGl5HtzadRdVPrRb2YeNjv8Tm0igzWqVQUy8o1L
+         TkOhkpE3PeveVdZ6r3bTfPiRXFrvnYp0hfPbMWvtS6FRHk45scj0534rY4ZbvpEcOZTM
+         y4SWqO3SjdRdmLe+Oad/rgPDUvjt/CNQ3wII6Tizj4wwK5GCKxR2WoNZOZAcia/ZZ+PQ
+         QA1x1drHxPvDiXyNtnYGon4IGhgFnoaW7T7jdBECjImc73xgospo9zj1O8rCeZK5OZDC
+         PXRjKB6bjkYO0jLBai72Ji0aHp9WCEwGtWKSWBylgqcQyEAnZY8C5nDMe4tINEchXj2v
+         zvIQ==
+X-Gm-Message-State: AOAM530Oeo1XLYS35Ind/MoTt5wzpdoYgyIZPsMrELb4gmhaU8LpKyK7
+        zCEaHDBocimXCO+52WKTVNMYyvQK
+X-Google-Smtp-Source: ABdhPJyvUMJJ8dk8q2sn6v85JoDUVXKAGg7I3wxmxXEnCGLnkQhka9sT0qGHHBQRyHv5RKIyv3BCUg==
+X-Received: by 2002:adf:fc81:: with SMTP id g1mr5901189wrr.156.1591823974537;
+        Wed, 10 Jun 2020 14:19:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q11sm1482219wrv.67.2020.06.10.14.19.34
+        by smtp.gmail.com with ESMTPSA id d5sm1591898wrb.14.2020.06.10.14.19.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2020 14:19:35 -0700 (PDT)
-Message-Id: <c9c9c81068e24972e084956aa3b09a3ec0eb98c1.1591823971.git.gitgitgadget@gmail.com>
+        Wed, 10 Jun 2020 14:19:34 -0700 (PDT)
+Message-Id: <06a2cea051c01ebee38c9910425171f112daf41a.1591823971.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Jun 2020 21:19:24 +0000
-Subject: [PATCH 3/9] send-pack/transport-helper: respect
- `core.defaultBranchName`
+Date:   Wed, 10 Jun 2020 21:19:23 +0000
+Subject: [PATCH 2/9] remote: respect `core.defaultBranchName`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,52 +79,66 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When mentioning the default branch name in an error message, we want to
-go with the preference specified by the user.
+When guessing the default branch name of a remote, and there are no refs
+to guess from, we want to go with the preference specified by the user
+for the fall-back.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- send-pack.c        | 6 +++++-
- transport-helper.c | 6 +++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ remote.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index 0abee22283d..f7747bed1c9 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -405,8 +405,12 @@ int send_pack(struct send_pack_args *args,
- 	}
+diff --git a/remote.c b/remote.c
+index 534c6426f1e..95fa8cc78e0 100644
+--- a/remote.c
++++ b/remote.c
+@@ -256,7 +256,7 @@ static void read_remotes_file(struct remote *remote)
  
- 	if (!remote_refs) {
-+		char *branch_name = git_default_branch_name(1);
+ static void read_branches_file(struct remote *remote)
+ {
+-	char *frag;
++	char *frag, *default_branch_name = NULL;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	FILE *f = fopen_or_warn(git_path("branches/%s", remote->name), "r");
+ 
+@@ -276,7 +276,7 @@ static void read_branches_file(struct remote *remote)
+ 
+ 	/*
+ 	 * The branches file would have URL and optionally
+-	 * #branch specified.  The "master" (or specified) branch is
++	 * #branch specified.  The default (or specified) branch is
+ 	 * fetched and stored in the local branch matching the
+ 	 * remote name.
+ 	 */
+@@ -284,7 +284,7 @@ static void read_branches_file(struct remote *remote)
+ 	if (frag)
+ 		*(frag++) = '\0';
+ 	else
+-		frag = "master";
++		frag = default_branch_name = git_default_branch_name(1);
+ 
+ 	add_url_alias(remote, strbuf_detach(&buf, NULL));
+ 	strbuf_addf(&buf, "refs/heads/%s:refs/heads/%s",
+@@ -299,6 +299,7 @@ static void read_branches_file(struct remote *remote)
+ 	strbuf_addf(&buf, "HEAD:refs/heads/%s", frag);
+ 	refspec_append(&remote->push, buf.buf);
+ 	remote->fetch_tags = 1; /* always auto-follow */
++	free(default_branch_name);
+ 	strbuf_release(&buf);
+ }
+ 
+@@ -2099,7 +2100,10 @@ struct ref *guess_remote_head(const struct ref *head,
+ 
+ 	/* If refs/heads/master could be right, it is. */
+ 	if (!all) {
+-		r = find_ref_by_name(refs, "refs/heads/master");
++		char *name = git_default_branch_name(0);
 +
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
--			"Perhaps you should specify a branch such as 'master'.\n");
-+			"Perhaps you should specify a branch such as '%s'.\n",
-+			branch_name);
-+		free(branch_name);
- 		return 0;
++		r = find_ref_by_name(refs, name);
++		free(name);
+ 		if (r && oideq(&r->old_oid, &head->old_oid))
+ 			return copy_ref(r);
  	}
- 	if (args->atomic && !atomic_supported)
-diff --git a/transport-helper.c b/transport-helper.c
-index a46afcb69db..cc8ae5c67ca 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1044,9 +1044,13 @@ static int push_refs(struct transport *transport,
- 	}
- 
- 	if (!remote_refs) {
-+		char *branch_name = git_default_branch_name(1);
-+
- 		fprintf(stderr,
- 			_("No refs in common and none specified; doing nothing.\n"
--			  "Perhaps you should specify a branch such as 'master'.\n"));
-+			  "Perhaps you should specify a branch such as '%s'.\n"),
-+			branch_name);
-+		free(branch_name);
- 		return 0;
- 	}
- 
 -- 
 gitgitgadget
 
