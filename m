@@ -2,134 +2,152 @@ Return-Path: <SRS0=ZaJ6=7X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90EECC433DF
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48C90C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46F7B2072E
-	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:16:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D7E22072E
+	for <git@archiver.kernel.org>; Wed, 10 Jun 2020 21:19:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="H4UT5c6n"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aLGHrfdb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbgFJVQD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 17:16:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41992 "EHLO
+        id S1726289AbgFJVTg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 17:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726153AbgFJVQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 17:16:01 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B396FC03E96B
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:16:00 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id z206so2305170lfc.6
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:16:00 -0700 (PDT)
+        with ESMTP id S1726276AbgFJVTg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 17:19:36 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2E2C03E96B
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:34 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id x13so3943937wrv.4
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 14:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Wv3q/cXi1Nx0P6ygB7ulDEjRJRhp/8q3hZnzpovdZTc=;
-        b=H4UT5c6nQLsQJgWW0Cm0XZvh74gYRI94RKc5EMxWsJ0+hdXLYkvlgzu973Za5Xf5qM
-         +kR3oroFyGkjYjJmPHDOJ45c9h/ISeHveKvdQsjlppTpbGETc+KmBCbhd0kPGp6v/eil
-         nXou1lY12bSJ+z/lty56cKnubm4oosw0jbVn1REbt1bB2fF+x+n8SB+to6j5/byrLj1K
-         04HFVoh5Vti9kcAbHCbM3p7+BKijhhE2vYuDBPxoGSuaijRKSpHeoPUD4B7j63kfIhQI
-         g7lacM76YQJEv/kyWzqbGCQGjKWdMUxD/sTuLljBugppUKhcNHWRw3Xu6NqZ0ehUyfaf
-         EkXQ==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=UiozAg8WLzzoRbR215SaN5W4WbBkTjUqCBTzLr6sKag=;
+        b=aLGHrfdbx6qQnd7kELgxcFqIGI7sztCVqUv1MaVWVSVWvIkJA177onur6w0lDJHGbI
+         k0Zas4O3HKGaod/Ros4MZxcmXcKalotxFOfKUL6yupOp1gVLEVRifFnm0h2+Xzr2tJd3
+         F3umGs0DWom+bLyImM8C52ONwVsWMKiBZ2AhWBrPwkeJ+Z5l9Ep4GU6DPz7Rw/nTUGV3
+         5prpGeDOtl5fLIGf9dObeDpjkmy2p2duawTLtNKNu53x2hMXi/jmut4OuRmjSvecUxmY
+         6pY+WSpLY3q8WDYvMw9avq0q5IB34zHWctnhTbKX3mGIT+Ee2R3m4YO8opZy9Wppe5LB
+         KJzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Wv3q/cXi1Nx0P6ygB7ulDEjRJRhp/8q3hZnzpovdZTc=;
-        b=YrAUoZLNr/cPY7NEl6+pmu6w+1Vl8yj7Tt7U8WjhjhGLDHl6ma/3rOQYO9qjrCMTSJ
-         b5SeCR598vK231NPL4z6E9G+a6HEODHd7QpeiieC2VvPGz0IdulbsqValv6R7X15mvM6
-         jwdUJ+gdWYXybKxRPmozwQTUDEX2DjKHg0QRxIYsBcSCEHTw61SdIZjYjrGPNn6iNzKK
-         lerNbYWPZzyBk6m04Ts/KB2YXxWGENWOhoWEsV3rN++ch/ngSqgTeRR7y9lxub1PWiU2
-         kyk12kqBm2CnlAOW9GMEt6fQ2Opwq/+R8z9o35iDer712OIpjRsyrtlKxoLVXz5Zpzo9
-         l9aw==
-X-Gm-Message-State: AOAM531y4YcPcoeqeenoQvGJLDXDi2G7tG40xonGQNrBtiALci7x3KPZ
-        ONWd+Xu5yxxi/PWsBTGm+r0oH85/gN6OViUpBH2aZA==
-X-Google-Smtp-Source: ABdhPJxKY009VHwe5oUtWLwIZ/F6FAivs67pePjfjJpOMLKnt00RzGRk/td6WwzdHViJh9O5fTlDzo1IRwDURLO/BB8=
-X-Received: by 2002:a19:5206:: with SMTP id m6mr2616622lfb.144.1591823758860;
- Wed, 10 Jun 2020 14:15:58 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=UiozAg8WLzzoRbR215SaN5W4WbBkTjUqCBTzLr6sKag=;
+        b=AcVRG0gz5bFnSu9z4qI3ZPHonAMZinOxpRrtfoDnEVxmuxm3YNEmJANb1RuhZd28HI
+         zbmd/d4+KmoOTyBF0Joei8k4zm8sW067Rj5hSa+x1+b0FAuOCv25C/mWnTUDFrFXsuAn
+         lINxG4woqhsfNbqQ01fkCl87wGjRZsOjcAL8vLquXmpkSiw0fwyuLsYQDh9SLWVxrk/T
+         TyfL/zap4i0MH8aU8ikXktB30zmQvcfu0BQqsBvqqaUoddsbcdotLcoe3ejO8z7CkmYC
+         fcaMJVjQlL4RM85Z06m2vJmSgp3IA8iX3YuXJ53wqxRgz0hrOOYkEMwo0zsYWcyGieQX
+         yLgg==
+X-Gm-Message-State: AOAM530AIRwUm5YWsa8A9lfb04pz4Cb1RNBhNKercsyMIZ7iebBP4qNv
+        abRCT8CTHHG4RbcUZoP5GTp/BNYf
+X-Google-Smtp-Source: ABdhPJzMR8udlpVdjwrSyNrGthBuuDrah7V+KXb5ZdpDnW2ZLr3uK33JP+22FEXZHZ9FMNDehMIVuQ==
+X-Received: by 2002:a5d:4a0b:: with SMTP id m11mr5457057wrq.385.1591823972619;
+        Wed, 10 Jun 2020 14:19:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z8sm1548997wru.33.2020.06.10.14.19.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2020 14:19:31 -0700 (PDT)
+Message-Id: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 10 Jun 2020 21:19:21 +0000
+Subject: [PATCH 0/9] Allow overriding the default name of the default branch
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <cover.1590627264.git.matheus.bernardino@usp.br>
- <748b1e955ccdcf7cd897a180f4b4fe82d7bfcf00.1590627264.git.matheus.bernardino@usp.br>
- <CABPp-BHzHhBVGZ+vOgE4jTCT3HJzXo+gzZ+6SVGDUWWdfkL6Dw@mail.gmail.com>
- <CAHd-oW7b41hqfPXm_GL_sth+QRfx56ceMr4VM9B9xhj3_P9iGQ@mail.gmail.com> <CABPp-BH0d5WKz7bXLkFQGDBKXbd0tccS_+1_iNc1Wqr93h+KaQ@mail.gmail.com>
-In-Reply-To: <CABPp-BH0d5WKz7bXLkFQGDBKXbd0tccS_+1_iNc1Wqr93h+KaQ@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Wed, 10 Jun 2020 18:15:47 -0300
-Message-ID: <CAHd-oW5gqs1uG5L4=JaT6Jzs58StE1WO0goPJE2atumbyC3Wow@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] config: add setting to ignore sparsity patterns in
- some cmds
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     don@goodman-wilson.com, stolee@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 2, 2020 at 11:40 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Sun, May 31, 2020 at 9:46 PM Matheus Tavares Bernardino
-> <matheus.bernardino@usp.br> wrote:
-> >
->
-> Moving it to grep's manpage seems ideal to me.  grep's behavior should
-> be defined in grep's manual.
->
-> > sparse.restrictCmds::
-> > See complete definition in linkgit:git-config[1]. In grep, the
-> > restriction takes effect in three cases: with --cached; when a
-> > commit-ish is given; when searching a working tree where some paths
-> > excluded by the sparsity patterns are present (e.g. manually created
-> > paths or not removed submodules).
->
-> That looks more than a little confusing.  Could this definition be
-> something more like "See base definition in linkgit:git-config[1].
-> grep honors sparse.restrictCmds by limiting searches to the sparsity
-> paths in three cases: when searching the working tree, when searching
-> the index with --cached, or when searching a specified commit"
+A growing number of open source projects aims to avoid the branch name 
+master due to its negative connotation. See [1] for an existing discussion
+on this. The links [2], [3], and [4] describe community-driven ways for
+users to rename their default branches or use template edits to set a new
+default branch name.
 
-Yes, this looks better, thanks. I would only add a brief explanation
-on what we mean by limiting the search in the working tree case. Since
-the working tree should already contain only the sparse paths (in most
-cases), I think this sentence may sound a little confusing without
-some explanation. Even further, some users might expect that `git -c
-sparse.restrictCmds=false grep $pattern` would restore the previous
-behavior of falling back to the cache for non-present entries, which
-is not true.
+[1] 
+https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com/
 
-In particular, I would like to emphasize that the use for
-`sparse.restrictCmds=false` in the working tree case, is for
-situations like the one you described in [1]:
+[2] https://twitter.com/mislav/status/1270388510684598272
 
-* uses sparse-checkout to remove a bunch of files/directories they
-don't care about
-* creates a new file that happens to have the same name as an
-(unfortunately) generically worded filename that exists in the index
-(but is marked SKIP_WORKTREE and had previously been removed)
+[3] 
+https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMasterToMain.aspx
 
-In this situation, grep would ignore the said file by default, but
-search it with `sparse.restrictCmds=false`.
+[4] https://github.com/ethomson/retarget_prs
 
-So what do you think of the following:
+By necessity, existing repositories require a lot of manual work to move
+away from that branch name, but it should be much easier for new
+repositories.
 
-sparse.restrictCmds::
-See base definition in linkgit:git-config[1]. grep honors
-sparse.restrictCmds by limiting searches to the sparsity paths in
-three cases: when searching the working tree, when searching the index
-with --cached, and when searching a specified commit. Note: when this
-option is set to true (default), the working tree search will ignore
-paths that are present despite not matching the sparsity patterns.
-This can happen, for example, if you create a new file in a path that
-was previously removed by git-sparse-checkout. Or if you don't
-deinitialize a submodule that is excluded by the sparsity patterns
-(thus remaining in the working copy, anyway).
+This patch series allows overriding the branch name being used for new
+repositories' main branch. The main way to do this is the new 
+core.defaultBranchName config option. This first patch was contributed by
+newcomer Dan Goodman-Wilson. Thanks for the contribution!
 
-[1]: https://lore.kernel.org/git/CABPp-BE+BL3Nq=Co=-kNB_wr=6gqX8zcGwa0ega_pGBpk6xYsg@mail.gmail.com/
+The other patches follow other places where "master" is hard-coded and use
+the new git_default_branch_name() method to consume the config option before
+falling back to "master".
+
+The last patch updates documentation only after the config option is ready
+to apply to all of these scenarios.
+
+This series DOES NOT change the default automatically, but only provides an
+opt-in mechanism for interested users. It also presents a way forward for
+such a transition, if and when we decide to do so. Specifically, the new
+GIT_TEST_DEFAULT_BRANCH_NAME environment variable could be used to update
+test scripts on an individual basis instead of all-at-once.
+
+Don Goodman-Wilson (1):
+  init: allow overriding the default branch name for new repositories
+
+Johannes Schindelin (8):
+  remote: respect `core.defaultBranchName`
+  send-pack/transport-helper: respect `core.defaultBranchName`
+  testsvn: respect `core.defaultBranchName`
+  submodule: use the (possibly overridden) default branch name
+  clone: learn about the possibly-configured default branch name
+  fmt-merge-msg: learn about the possibly-configured default branch name
+  fast-export: respect the possibly-overridden default branch name
+  Document how the default branch name can be overridden
+
+ Documentation/config/core.txt |  4 ++++
+ builtin/clone.c               | 14 +++++++++++---
+ builtin/fast-export.c         | 10 +++++++---
+ builtin/init-db.c             |  8 +++++---
+ builtin/submodule--helper.c   | 10 ++++++++--
+ fmt-merge-msg.c               |  6 ++++--
+ refs.c                        | 34 ++++++++++++++++++++++++++++++++++
+ refs.h                        |  6 ++++++
+ remote-testsvn.c              | 11 ++++++++---
+ remote.c                      | 12 ++++++++----
+ send-pack.c                   |  6 +++++-
+ t/README                      |  4 ++++
+ t/t0001-init.sh               | 20 ++++++++++++++++++++
+ t/t5609-clone-branch.sh       |  9 +++++++++
+ t/t6200-fmt-merge-msg.sh      |  8 ++++++++
+ transport-helper.c            |  6 +++++-
+ 16 files changed, 146 insertions(+), 22 deletions(-)
+
+
+base-commit: 0313f36c6ebecb3bffe6f15cf25a4883100f0214
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-656%2Fdscho%2Fdefault-branch-name-option-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-656/dscho/default-branch-name-option-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/656
+-- 
+gitgitgadget
