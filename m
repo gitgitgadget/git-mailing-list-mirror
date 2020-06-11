@@ -2,126 +2,221 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PI_IMPORTANCE_HIGH,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 052F7C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 14:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC43C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 14:33:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60D662065C
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 14:31:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4156F2065C
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 14:33:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mavenir.com header.i=@mavenir.com header.b="Eh5b6+z3"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="LS4Daiza"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728240AbgFKOb5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Jun 2020 10:31:57 -0400
-Received: from mail-mw2nam12on2073.outbound.protection.outlook.com ([40.107.244.73]:43584
-        "EHLO NAM12-MW2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726386AbgFKOb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jun 2020 10:31:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b4b+nFecKGRsCeYL9v3q66V6jHTi1gmWFONahfWk5uQZbf2p5PQ4PI8ohx96QO29zcDKw6X4L3bLHEkZMwwFHHJF90WoFVMZE0Z5MN0rGFd/DU/VH02dms+uNDkWlJlfJf+sXLsH4SuXdvxSCpeHyJ7Nb6F0WhUfFxKPMh6ZkQvZhiLVOc2+StOn6Lk6Cjet8lNYuI1n2iSS2DKfA0yzrmUa0xwaFTQkGFKtXQAXuUlNX7dbF7NaoE3s/W52Qa0XRCunc0ejLoKPAyj74RBvTgoLDKnc4VF0x03F0ViJIBdv3pk7NcSEGOaPOe8Pa3ETM+orB25pWdDghwct/X20eA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CFtCIBYiiBTYZ3KfCT7rAxeZ22D9T4o7N7hzt1g2bHw=;
- b=LlDddh6ehJJXc9KVOjz7Az7PquNR8DPLQagAs2ha+w8KFYqRrJ77fbMDdGS8Uqeq6KVJlVcGibS3fVCwxs3OmEpOLU7STVIWOkr4vCqiUbspjxxIBEmVOH4WQtoppR8bcIggpuu5rPI5AXpUrHuiKA3VbihQV2cqF6QllmLz1xX1Iie10JwEH0N5OyuybbdB4+5z31RninS7tfa2FS2Qj15Evfdl15tPT6JyBhf8HTp//ghLilVymAWsfv9dOL3E3xuIKC2ti9+TRf2QIvzD+A1j1G+MHkJSJqneqPT7cj04hqgaJGJvVRkrWPtB1eEZ9zk0azPNxun6FhQYKZTsow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mavenir.com; dmarc=pass action=none header.from=mavenir.com;
- dkim=pass header.d=mavenir.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mavenir.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CFtCIBYiiBTYZ3KfCT7rAxeZ22D9T4o7N7hzt1g2bHw=;
- b=Eh5b6+z3/wPtzLvt4mL4WPSv6PAcNa/UgFQ6H2zWVbfuzrYWYKYYBCUGZy9pCQlq8NULUD1Wrx3L6Cz+adeovhoJf+XBu8vs4socVYa3XNhiD/52K4+kzjlmHI6y+56JkvH0a6AnYtAowPXqz8ofTKVvmRqzk8JjCUhuTxvRIo4=
-Received: from DM6PR11MB2795.namprd11.prod.outlook.com (2603:10b6:5:bf::24) by
- DM6PR11MB4139.namprd11.prod.outlook.com (2603:10b6:5:196::21) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3088.18; Thu, 11 Jun 2020 14:31:53 +0000
-Received: from DM6PR11MB2795.namprd11.prod.outlook.com
- ([fe80::9caf:c724:631e:b29c]) by DM6PR11MB2795.namprd11.prod.outlook.com
- ([fe80::9caf:c724:631e:b29c%7]) with mapi id 15.20.3066.023; Thu, 11 Jun 2020
- 14:31:53 +0000
-From:   Tiran Meltser <Tiran.Meltser@mavenir.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     Amir Yosef <Amir.Yosef@mavenir.com>
-Subject: Excluding files from Git merge
-Thread-Topic: Excluding files from Git merge
-Thread-Index: AdY/+aPcWx+IybP3QFixgHxiFuLlWg==
-Importance: high
-X-Priority: 1
-Date:   Thu, 11 Jun 2020 14:31:52 +0000
-Message-ID: <DM6PR11MB27959B6BE6ABDB1F79238126E5800@DM6PR11MB2795.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=mavenir.com;
-x-originating-ip: [109.186.30.54]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 5dcad7f1-7a54-4745-c9ed-08d80e142f72
-x-ms-traffictypediagnostic: DM6PR11MB4139:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM6PR11MB413944ABCB1356AAF07110FCE5800@DM6PR11MB4139.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5236;
-x-forefront-prvs: 0431F981D8
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: v3eVP2pNmGIYC7i0J5iFZm4DntjKodmTIZL+PoR+fulBFIeSnEwyQhG4EtjjhqJ4jVGCrE+BNNXc5zzKYwmNUF5wHdBa4GLVxMyZ4SCCkmhBRiiKuT/kJYACTjOxB0gtpjjYM2/8InQ3oiDOARoaR86oKH9PW3K5uvkxcz9nb57rqiGTk8OMZ+TfiGmyB3xmZW/CbC01sSEq63zc7iFc+Q8EgVlWMi9EeJLCRCBMcIujgdvxn27bZLBeeOhIFmNjHPnKlGkZWTmKxdYcolyRUZ3pPGQLaKexARHE49g2M4Ozcb6iPa4q5zi4CD78CVHiJhDJgzC3EVh0E1IGqQVB9A==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR11MB2795.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(346002)(376002)(39860400002)(396003)(136003)(366004)(52536014)(64756008)(71200400001)(66556008)(107886003)(66476007)(76116006)(66946007)(66446008)(83380400001)(6506007)(6916009)(8676002)(66574014)(55016002)(26005)(4326008)(478600001)(9686003)(316002)(2906002)(8936002)(5660300002)(86362001)(33656002)(186003)(7696005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata: 6vEMr0hfuUoQtp0/wFyXa3q8oYb+yqdDSkhnk97eYNsdKNPIaM7S80GHYll8Ptsp5gNUg0y1BVNPfjj9iBfK9Gn0oXUVtlwUQfOjvMKP7TgmMDjyqBFvLrXT506jEP+fKT05dtnJ9i7T6krAm2kUX59ojOSZpnVTOa0JTNNejN6NEWXfoyKM1foaVOiLUWGBfwpYvmfdptaaDq9eVwIfOIORKFvqjeB9JjkxDkiKLWhxE5nbung7fkMkBNDm4G2mDWpA6xr8IHRlcDCGCOCFdebCvRWVv3FkyNNce9Y96BRfA8XI6or2vYFq2RqfRfyt6VSHgUFh/5XhbfKlnrXrVFFw95UbwEfds984V8SvV83HtwZH6kPifSHkhNp0siWRXZHWjtrJKcQTVxDZ7rjaoXgZAXow5O2f7yCUS7qtn6M3/OeVnJjFuumT4iJohjKkp56zN+zgPuK/QyXe6+jVuMvh5SMH8/FMJA6l9AP/IRiyLOa1Wh4qlhbNIKcWa4PI
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1728304AbgFKOdu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Jun 2020 10:33:50 -0400
+Received: from mout.gmx.net ([212.227.17.21]:42189 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728243AbgFKOdt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jun 2020 10:33:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1591886016;
+        bh=N9gbBb7WL8iDTBLNioudrW4tSPUoMcDReIMRFR4QW1g=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LS4DaizaNWmSIOq80+qvDGV0M2zu3yovqZ1KoN6DUvzgb9J1KX4lNfxG4u12f9CYC
+         /+a4SYo5oq959RxPPSG+jDkjOz9wm9DKNKB+BtuAhE0lJTeZf1ajmO2Lholj5Cnc/M
+         hfVbgkd0gTHNyp3SNsGzSJSf07HAi6rWfyQHwNvo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.173.52] ([89.1.212.132]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M59GG-1jkUjc28vc-001Bnm; Thu, 11
+ Jun 2020 16:33:36 +0200
+Date:   Thu, 11 Jun 2020 16:33:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Taylor Blau <me@ttaylorr.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
+ branch
+In-Reply-To: <20200611010720.GA21728@syl.local>
+Message-ID: <nycvar.QRO.7.76.6.2006111610000.56@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <20200611010720.GA21728@syl.local>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-OriginatorOrg: mavenir.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5dcad7f1-7a54-4745-c9ed-08d80e142f72
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2020 14:31:52.9542
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7fa7d4ff-bf19-464b-89a6-a132b269d68c
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KJgCZHumxbYiHbQLTW7BI+0lg+FFfC1LsZOs2q362mOsfpOalsGBQQMDRzyfjWklPpmSOj3AY75j4YUz1z8NNtoTMr2i6Xc0MloRofgGCWs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB4139
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:gHpYW1kTFzfibWH1LYj0RnUvtPCbyLxupcEBmiYAt4FUgV3HYHx
+ PFxKXqqPiGDeLAQ8ndz/MgyeeE2gKucQ5hzFDNb3ceH/xT/SftL4kuZjMHp44rCZsQ3pzVI
+ Herg2+iJ4+6IdnnPaxvAiOiY1X9J4n0Nh5rq4w3okeHfouaZDOjpuXGfdUGhvn2hYzM+LWR
+ AF2aAic/88eeKdzfiaOUw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:peyqswBWhFA=:MZUQTt0oiq5Iv6rWL5+DsQ
+ gBmhun5NbFF90b5Zzva2YNWlBGwfrrv9ynFZbUESPJjRmq+xpGIm5EPs/vlstMTr0h41cERGs
+ uqE0RrBi2B/C2J4G2G0dBzAQkIvFpwhMGQuxknoOehJok1/uFUE4TkwI0YBwtYDJLaLaxxbbY
+ iklRk1WmOQNwTjb/pJEDFBwu878iyI8pfzvRs+SnKk6vZSYtOZvybUlTn1idMHyVph0TGN8tV
+ +50lQL0YuC0AAi6nPl8gniaNrahos0BJabrYd90ZH1sqIJ/pWsmW0GS0xSoJt7fb59dL/xgCn
+ g8SKz/fKfZE1cf0W80K38PvPWcphqIoRNVjS03Dbpw35NFwTR6GHeKdB+L+DnYM9x2kgDxj0w
+ vR5vYvJKoc7LdHqKBGLffS2YKWsojKhb5zU0mh5IAdgy0u8Y0u2FQDbrBZjgb7Hw1+swzk+0d
+ rPjrhCF9CCPE9mBLTjgr/piFd+calzbz6o90tGwKaJLNHjM6Mzabd7dDX/P4ktG3Py7HV4jlZ
+ iDG6GzTa7Ot5olrvvUichUhl7m1hOGxwJiEJKYS2mh9qt2Qvg15HxywpVblD0zzJMXoNjclaV
+ 4jqNFbUWE/wOL2sihwtiKItmG02RbJsGwEhFpaNkQVV+iPz3XYor8MSg/If8Gzr4R+KmS5riP
+ ZJ9V8j8nSjpBD2Zby+DrnraiV3z5yJRJMZZzvnpF/trrHSS377Gybj+tltTqcyrcn0mnxha6M
+ /HP6vYocXDQK9ctrcQMuwnLMK9G4C4XvmNPLW3MuExIKln15EnF8XziZC3V2zpdZF3idi7DOk
+ j8rVASniPu6OAWyvTLUKsuZ6BYxhMte1LMZy7+u0ubcQ7aQ9GzEFsrqn7m/b7vOl31/3oXj4p
+ LC0wZAWNv464ywL3I+VzAvb7eOwALPkBXnKIm4OV44Si//tc/Wr+91MJqzoFlVF2zsP2ZErim
+ m+Z/NFeUdIEwLZPmtM+h9f91mvBDSBVejHKUKAenTjOMLffZMvdIxrygTupMGuQ3lqcc9wETr
+ 8hVl4YnsGNZRn7aXFIaI8OfkksH2V6NbxWOcQPBXj3+b4r5SE4BSK3i+hQJayCFJPpyEB0ESM
+ LeFUSxRR1v57bhlh+vAJYVmwT6chHwzJkQyMR5BzmO3X/TDKCeBQz7Jd8F03XYY/Qg8GM76pQ
+ e/lA2RNGVFqWyms7PW2frjSrjBj/WIdyHj3VBBoplk4NXOpF03yjzr6m+xy1ejaCid4WnjQPH
+ 0hXL8zITv6vYYMiPm
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGksDQpUaGlzIHRvcGljIGlzIHF1aXRlIGNvbW1vbiBpbiB2YXJpb3VzIHVzZSBjYXNlcyAoZS5n
-LiBwcm9kdWN0aW9uIGNvbmZpZ3VyYXRpb24gdnMuIHN0YWdpbmcgb25lKSBhbmQgdGhlcmUgYXJl
-IHF1aXRlIGEgZmV3IHRhbGtzIGFib3V0IGl0IGluIHRoZSB3ZWIuDQpOZXZlcnRoZWxlc3MsIHRo
-ZXJlIGlzIG5vIHNwZWNpZmljIHNvbHV0aW9uIHRvIHRoaXMgcHJvYmxlbSwgb25seSBwYXJ0aWFs
-IHdvcmthcm91bmRzIChpbmNsdWRpbmcgdGhlIGZhbW91cyBtZXJnZSBkcml2ZXIg4oCcb3Vyc+KA
-nSkuDQoNCkkgd291bGQgbGlrZSB0byBzdWdnZXN0IGFkZGluZyB0aGUgZ2l0IGEgc2ltcGxlIGFu
-ZCBwcmVjaXNlIGhhbmRsaW5nIGZvciB0aGUgbmVlZCB0byBtYXJrIGZpbGUocykvZm9sZGVyKHMp
-IHRoYXQgYXJlIGJyYW5jaCBzcGVjaWZpYyBhbmQgc2hvdWxkIG5vdCBiZSBpbnZvbHZlZCBpbiBt
-ZXJnZSBvcGVyYXRpb24gYXQgYWxsLg0KDQoyIHN1Z2dlc3Rpb25zIEkgY2FuIHRoaW5rIG9mIGFy
-ZSAoYnV0IGFueSBnb29kIHNvbHV0aW9uIHdvdWxkIHN1ZmZpY2UpOg0K4oCiIEFkZGluZyBhZGRp
-dGlvbmFsIG1lcmdlIHN0cmF0ZWd5IGluZGljYXRpb24gdGhlIGZpbGUvZm9sZGVyIGlzIGV4Y2x1
-ZGVkIGZyb20gbWVyZ2VzIChlLmcuIG1lcmdlPWRpc2FibGVkL25vbmUvc2tpcC/igKYpDQrigKIg
-QWRkaW5nIGEgbmV3IGNvbmZpZ3VyYXRpb24gZmlsZSAobGlrZSAuZ2l0aWdub3JlKSBmb3IgdHJh
-Y2tpbmcgdGhlc2Ugc3BlY2lhbCBmaWxlcy9mb2xkZXJzLCBmb3IgZXhhbXBsZTogLmdpdGlzb2xh
-dGUvLmdpdHF1YXJhbnRpbmUvLmdpdGJyYW5jaHNwZWNpZmljLy5naXRzaWxvL+KApg0KDQpBbnkg
-Y29tbWVudCB3b3VsZCBiZSBhcHByZWNpYXRlZC4NCg0KDQoNClRpcmFuIE1lbHRzZXINClN5c3Rl
-bSBBcmNoaXRlY3QsIEdsb2JhbCBQcm9kdWN0cyAmIE9wZXJhdGlvbnMNCg0KDQoNCg0KDQp0ICAg
-dGVsOis0NDExODkzMDg4MjYNCm0gdGVsOis0NDc4OTQ2MDQwNDANCmUgIG1haWx0bzptYXJpYS5o
-dWRzb25AbWF2ZW5pci5jb20NCg0KDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0K
-VGhpcyBlLW1haWwgbWVzc2FnZSBtYXkgY29udGFpbiBjb25maWRlbnRpYWwgb3IgcHJvcHJpZXRh
-cnkgaW5mb3JtYXRpb24gb2YgTWF2ZW5pciBTeXN0ZW1zLCBJbmMuIG9yIGl0cyBhZmZpbGlhdGVz
-IGFuZCBpcyBpbnRlbmRlZCBzb2xlbHkgZm9yIHRoZSB1c2Ugb2YgdGhlIGludGVuZGVkIHJlY2lw
-aWVudChzKS4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCBvZiB0aGlzIG1l
-c3NhZ2UsIHlvdSBhcmUgaGVyZWJ5IG5vdGlmaWVkIHRoYXQgYW55IHJldmlldywgdXNlIG9yIGRp
-c3RyaWJ1dGlvbiBvZiB0aGlzIGluZm9ybWF0aW9uIGlzIGFic29sdXRlbHkgcHJvaGliaXRlZCBh
-bmQgd2UgcmVxdWVzdCB0aGF0IHlvdSBkZWxldGUgYWxsIGNvcGllcyBpbiB5b3VyIGNvbnRyb2wg
-YW5kIGNvbnRhY3QgdXMgYnkgZS1tYWlsaW5nIHRvIHNlY3VyaXR5QG1hdmVuaXIuY29tLiBUaGlz
-IG1lc3NhZ2UgY29udGFpbnMgdGhlIHZpZXdzIG9mIGl0cyBhdXRob3IgYW5kIG1heSBub3QgbmVj
-ZXNzYXJpbHkgcmVmbGVjdCB0aGUgdmlld3Mgb2YgTWF2ZW5pciBTeXN0ZW1zLCBJbmMuIG9yIGl0
-cyBhZmZpbGlhdGVzLCB3aG8gZW1wbG95IHN5c3RlbXMgdG8gbW9uaXRvciBlbWFpbCBtZXNzYWdl
-cywgYnV0IG1ha2Ugbm8gcmVwcmVzZW50YXRpb24gdGhhdCBzdWNoIG1lc3NhZ2VzIGFyZSBhdXRo
-b3JpemVkLCBzZWN1cmUsIHVuY29tcHJvbWlzZWQsIG9yIGZyZWUgZnJvbSBjb21wdXRlciB2aXJ1
-c2VzLCBtYWx3YXJlLCBvciBvdGhlciBkZWZlY3RzLiBUaGFuayBZb3UNCg==
+Hi Taylor,
+
+On Wed, 10 Jun 2020, Taylor Blau wrote:
+
+> On Wed, Jun 10, 2020 at 09:19:21PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > A growing number of open source projects aims to avoid the branch name
+> > master due to its negative connotation. See [1] for an existing discus=
+sion
+> > on this. The links [2], [3], and [4] describe community-driven ways fo=
+r
+> > users to rename their default branches or use template edits to set a =
+new
+> > default branch name.
+> >
+> > [1]
+> > https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeD=
+V=3D=3DapdWDg@mail.gmail.com/
+> >
+> > [2] https://twitter.com/mislav/status/1270388510684598272
+> >
+> > [3]
+> > https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMas=
+terToMain.aspx
+> >
+> > [4] https://github.com/ethomson/retarget_prs
+> >
+> > By necessity, existing repositories require a lot of manual work to mo=
+ve
+> > away from that branch name, but it should be much easier for new
+> > repositories.
+>
+> This is (somewhat) orthogonal to the topic here, but I wonder if we
+> could be doing anything to make this easier for users.
+>
+> Could servers remember that a branch has ``moved'' and alert users as
+> such when they pull? Even better, it would be nice if this alert from
+> the server could allow clients to automatically rename their refs
+> appropriately so that this transition is as easy as possible, even for
+> existing repositories.
+
+I would _love_ to have `git fetch origin master` work, spitting out a
+message `the main branch name changed to [...] please update your
+configuration`.
+
+And then maybe an easy way to update the configuration (`git remote
+set-main-branch <nick> <refname>` might make sense).
+
+As you say, it is orthogonal to this here patch series, but definitely
+related in spirit because we _want_ to make it easier for users to move
+away from the current main branch name.
+
+> > This patch series allows overriding the branch name being used for new
+> > repositories' main branch. The main way to do this is the new
+> > core.defaultBranchName config option. This first patch was contributed=
+ by
+> > newcomer Dan Goodman-Wilson. Thanks for the contribution!
+>
+> Welcome, Dan! This is a fantastic first contribution, and I would be
+> honored to help and move this forward in anyway that I can.
+
+Sorry, my typo: it's Don, not Dan ;-)
+
+> I should note that I am technically "out of office" (which normally
+> wouldn't mean much, but this time means that I am on a road-trip, and so
+> am only at my computer infrequently). I am catching up on just a few
+> emails here, but I'll be able to help out more (and would be honored to
+> do so) once I am really back next Monday.
+
+Well, go back enjoying your road trip! :-P See you on Monday.
+
+> > The other patches follow other places where "master" is hard-coded and=
+ use
+> > the new git_default_branch_name() method to consume the config option =
+before
+> > falling back to "master".
+> >
+> > The last patch updates documentation only after the config option is r=
+eady
+> > to apply to all of these scenarios.
+> >
+> > This series DOES NOT change the default automatically, but only provid=
+es an
+> > opt-in mechanism for interested users. It also presents a way forward =
+for
+> > such a transition, if and when we decide to do so. Specifically, the n=
+ew
+> > GIT_TEST_DEFAULT_BRANCH_NAME environment variable could be used to upd=
+ate
+> > test scripts on an individual basis instead of all-at-once.
+>
+> Provided that the eventual plan is to seriously evaluate a name other
+> than "master", I think that this is a good way forward that clears the
+> way for us to make this change easily, without forcing us to come to a
+> conclusion on what name will replace "master" today.
+
+That is exactly the intention of this patch series.
+
+I _do_ want to put my weight behind changing the default. Obviously, this
+will take quite a bit of time (but maybe less than I originally thought,
+as we are only talking about changing the default for _new_ repositories).
+
+Even if this endeavor fails, though, this here patch series will be good
+to have.
+
+> For what it's worth, I am completely in favor of abandoning this term.
+> My colleagues at GitHub (as has been mentioned previously on the list)
+> are in favor of this as well, and it is my understanding that other
+> providers feel similarly.
+
+=46rom what I read at https://gitlab.com/gitlab-org/gitlab/-/issues/221164=
+,
+GitLab is on board, too.
+
+> I would be in favor of any non-offensive name that we can reach
+> consensus on. "trunk" sounds nice to me, but I think that it may cause
+> problems for non-native English speakers, so perhaps "main" or
+> "default" would suffice (maybe "main" is better, since it retains muscle
+> memory for the first two characters without being offensive--at least,
+> as far as I can tell. If I am wrong, please correct me and we should
+> consider something else).
+
+My personal preference was "default" on Monday, and "main" ever since.
+
+> All of that said, I can't emphasize enough how little I care about
+> *what* name we replace "master" with, so long as it is (1) replaced with
+> a non-offensive term, (2) that that change is done uniformly throughout
+> the "Git Ecosystem" and (3) that the community can reach consensus on
+> the new term in a respectful, appropriate, and considerate way. I only
+> provided a few suggestions to get the conversation flowing, although I
+> suspect that my help isn't needed there.
+
+Indeed. I laid out the patch series in such a way that we should be able
+to pick a different default main branch name than "main", even if it is my
+current working hypothesis that this will prevail.
+
+As I said, my preference was "default", and that's how my big patch series
+looked like, so I know how much work it is to change to a different name
+(because I changed it to "main"). It is quite a bit of work, but
+manageable.
+
+Ciao,
+Dscho
