@@ -2,155 +2,96 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8360CC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE511C433DF
 	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 12:39:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5178620747
+	by mail.kernel.org (Postfix) with ESMTP id B834620747
 	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 12:39:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQqmkOFl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eGUXZ60s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727771AbgFKMjE (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727068AbgFKMjE (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 11 Jun 2020 08:39:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42896 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726868AbgFKMjE (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726581AbgFKMjE (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 Jun 2020 08:39:04 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3787AC08C5C3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:39:04 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id k26so4886907wmi.4
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:39:04 -0700 (PDT)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0880C08C5C2
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:39:03 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id c3so5964102wru.12
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:39:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=C6EvRzFuBwJOflnK1URyl96o6TiJfkCCV21wO3xyhnk=;
-        b=nQqmkOFlLcy9ZvOX7LKCE5XPNUnDHtwiPKQE55Wd/EbQdBoHmLF77bJPY57KT4CBCd
-         tjsPuQiNhT8ZFLp36Rzywq0EqxFSxOhcRk6Ku9e6CnEpG4aln3dd7voNFjewQ83McIkW
-         zxaXvqeLU2W8aaQ4mJ3pLBjbAkawpM1PAHNOxSu3uKtjgjjUOw8FooLDvgKuvfwmiQvm
-         ytQBv3ATVWC9QOzK9mkrEu7VyRXEEx4mWPINHxxGH5yZTkzd4+sN6Y6OtWqO7gqYbJWN
-         GCaTWAJkuYondRtzqB1g7EcshK2ihKWR6PPKZ2ZyI4j1tf2v+sU1zV4+FVkRdw3YBlE3
-         f1PA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=cQm3yJy48tmW/vLjSrBDZ96RfHvGILnQb1b4FGqtp9Q=;
+        b=eGUXZ60sbep91VXN1vo68XZxO4xfgWwskdCPf8vn6Oh4MAEgrWQ6zCZq/DB3VbIrjs
+         cJaoDb8zAjCWvjaKjE+DScBqbldl+ctgwtmFM4SR5+lV0oYmm+KkoeP9njdcZ8Z8tWiT
+         OaPCxkz/QkM0nfrAfn68pygGsPtnh+BPw9r5NeJFiRag+8up4hOXErSFVXG/CzVlOvor
+         yR+Xu4zbSx9jtcS2gGpo1OCnKvisHu4Tl9rgzIIUxtNZK75a+hyYc+qbaJyRPFfXr56t
+         78I8QJ8HIEKELlFa621uG6LW5VCeoc3w9rT4xv85Zbdc1hGOpq7bCy1Wzqtmx9grWSsq
+         X2tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=C6EvRzFuBwJOflnK1URyl96o6TiJfkCCV21wO3xyhnk=;
-        b=gs7jRaH2io/7CNFVO9Nm0e3Zn22ysoogzaHLaHAr6ZbDN/K1hfkugfskmh4GY0rrFl
-         fZxBKEYOXIpvQKjYG/XbJZGpLxxQ1gWOTP81cySta4mSaezAJo6vO+Q7kIL9HA96UK1C
-         abo4VrGlR2UCRGgzODJ9gXB1nKW/K7c9lCMQHFhN216Bpiro3trUFEbZNjEuhARIGMlw
-         F4ZWMxWWFzeBEQItPVEXxK+7h4PJ4TzUbNA5ncSEBa07JriyEoiss7KkVE9bc4lqTrpX
-         b9ZhnYPs/RdG0y4YKN3Vhsh2u/97/QM3VQW4ZHArFlMTBOLF8oEOGai/0nvlLQPIWLoO
-         BA7w==
-X-Gm-Message-State: AOAM530N5sKci+wKzd7P58X6GVBBUZoRbcLFBTf56mwqYHnWOgR6gVr7
-        Opi1IP8NJgMcWGDcUYWVOo5rGbuE
-X-Google-Smtp-Source: ABdhPJyWPLMWPClidrPJw1ERK3AMB9zzPXP9YHzKmyYQyUYBWqMBAjvN2kFQOWuj6IUKH88EpXZZbQ==
-X-Received: by 2002:a1c:6389:: with SMTP id x131mr7939768wmb.90.1591879142656;
-        Thu, 11 Jun 2020 05:39:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cQm3yJy48tmW/vLjSrBDZ96RfHvGILnQb1b4FGqtp9Q=;
+        b=NRLDRUgC0JU9g+CpGjMDlkS5e9UBqVVvnUsyI92uIjy6Ij+xG6E2ZNC2eZIW2hlIVg
+         pLCR5xg3WJ8A0FH2zxG3NyoDFbKqGVZcXTzDDNrisrv/1KVkS4RSfifY5cofkTRjTN7M
+         ZIEbr3qFN45RbM+b0WawovGg1SozT32g+XADNmO5nZHVV6DMTTTevg4tsjWnuZpT6uqE
+         0Uf5BkqwVvSMnYRFLNfqy03Er/UcQR3joqgMXNvAcpzUKkQ03d9ihFb2A6GY3byCMlr2
+         wcmQ8RkXM56CXPKa6+dGwbv/oDjLP1HGYPclkvogeIUr0mzWvIEu83MvAZVm0PKKdTvo
+         Blrw==
+X-Gm-Message-State: AOAM533nFtVLMa3egu1UGFWAA84wetcejqzKMrIi5HVx631y8wIczNxZ
+        2wRX6FhE0lnNNLXhoCHlLBNAM6qD
+X-Google-Smtp-Source: ABdhPJy+quPC7aTiJJjyDS6Rg9t9FVSgp2hCF6GOMGlJJIk6kh0V2A+Aj07180/TRzR/oqsJAHdmYQ==
+X-Received: by 2002:a05:6000:d:: with SMTP id h13mr9118987wrx.17.1591879140953;
+        Thu, 11 Jun 2020 05:39:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e12sm4896269wro.52.2020.06.11.05.39.02
+        by smtp.gmail.com with ESMTPSA id r4sm4564185wro.32.2020.06.11.05.39.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2020 05:39:02 -0700 (PDT)
-Message-Id: <6d423928512e62c91ef1ae9b469aa8cc361ed080.1591879139.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.654.git.1591879139.gitgitgadget@gmail.com>
-References: <pull.654.git.1591879139.gitgitgadget@gmail.com>
+        Thu, 11 Jun 2020 05:39:00 -0700 (PDT)
+Message-Id: <pull.654.git.1591879139.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Jun 2020 12:38:58 +0000
-Subject: [PATCH 2/3] diff-files --raw: handle intent-to-add files correctly
+Date:   Thu, 11 Jun 2020 12:38:56 +0000
+Subject: [PATCH 0/3] Fix difftool problem with intent-to-add files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This problem was reported in 
+https://github.com/git-for-windows/git/issues/2677, but the problem actually
+lies with git diff --raw, and it seems that the bug has been with us ever
+since--intent-to-add was introduced.
 
-In `run_diff_files()`, files that have been staged with the intention to
-add are queued without a valid OID in the `diff_filepair`.
+Johannes Schindelin (3):
+  diff-files: fix incorrect usage of an empty tree
+  diff-files --raw: handle intent-to-add files correctly
+  difftool -d: ensure that intent-to-add files are handled correctly
 
-When the output mode is, say, `DIFF_FORMAT_PATCH`, the
-`diff_fill_oid_info()` function, called from `run_diff()`, will remedy
-that situation by reading the file contents from disk.
-
-However, when the output mode is `DIFF_FORMAT_RAW`, that does not hold
-true, and the output will contain a bogus OID (and the flag `M` for
-"modified" instead of the correct `A` for "added").
-
-As a consequence, `git difftool -d` (which relies on `git diff-files
---raw`'s output) does not work correctly.
-
-Let's fix this specifically by imitating `diff_fill_oid_info()`.
-
-Note: we can only do that for diff formats that do not actually need the
-file contents, such as `DIFF_FORMAT_PATCH`: `run_diff()` would try to
-read the blob contents, but that blob might not have been written to
-Git's object database.
-
-This fixes https://github.com/git-for-windows/git/issues/2677
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- diff-lib.c             | 14 ++++++++++++++
+ diff-lib.c             | 16 +++++++++++++++-
  t/t4000-diff-format.sh | 10 ++++++++++
- 2 files changed, 24 insertions(+)
+ t/t7800-difftool.sh    |  8 ++++++++
+ 3 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 15bb45776e4..4af8f811ae8 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -223,6 +223,20 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 					       the_hash_algo->empty_blob, 0,
- 					       ce->name, 0);
- 				continue;
-+			} else if (ce_intent_to_add(ce) &&
-+				   !(revs->diffopt.output_format &
-+				     ~(DIFF_FORMAT_RAW | DIFF_FORMAT_NAME_STATUS))) {
-+				struct object_id oid;
-+				int ret = lstat(ce->name, &st);
-+
-+				if (ret < 0)
-+					oidclr(&oid);
-+				else
-+					ret = index_path(istate, &oid,
-+						 ce->name, &st, 0);
-+				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
-+					       &oid, ret >= 0, ce->name, 0);
-+				continue;
- 			}
- 
- 			changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
-diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
-index e5116a76a1c..48ff4e250b5 100755
---- a/t/t4000-diff-format.sh
-+++ b/t/t4000-diff-format.sh
-@@ -89,4 +89,14 @@ test_expect_success 'git diff-files --patch --no-patch does not show the patch'
- 	test_must_be_empty err
- '
- 
-+test_expect_success 'git diff-files --raw handles intent-to-add files correctly' '
-+	echo 123 >ita &&
-+	git add -N ita &&
-+	printf ":000000 100644 %s %s A\\tita\n" \
-+		$ZERO_OID $(git hash-object --stdin <ita) >expect &&
-+	git diff-files --raw ita >actual &&
-+	test_cmp expect actual
-+'
-+
-+
- test_done
+
+base-commit: b3d7a52fac39193503a0b6728771d1bf6a161464
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-654%2Fdscho%2Fdifftool-ita-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-654/dscho/difftool-ita-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/654
 -- 
 gitgitgadget
-
