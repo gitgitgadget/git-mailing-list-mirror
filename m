@@ -2,110 +2,94 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29EBBC433E0
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 19:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EF7AC433E0
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 20:05:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDF4B20792
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 19:42:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48A262073E
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 20:05:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xIae3i28"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Xcaunt7M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726679AbgFKTmA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Jun 2020 15:42:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63899 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725824AbgFKTl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jun 2020 15:41:59 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC77775288;
-        Thu, 11 Jun 2020 15:41:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zS3WJ+9YF8oyv+71iJ8nnjtLSuw=; b=xIae3i
-        28HSPcJpVNw16kVHQDUl3+cKNIsj7kG+9bcU6BurAsxkbK51LfbhyxmMS2IYQeCW
-        3t0z6ZKuXGRYNQyoMa7MzbSk/601nIM1h6ZQgPip6hCNV/UoCXaB88YkJVytCh/J
-        xWvtAf30zTMqq0SiOtItUpc/Fx+HgNqJTzAAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Vy1bv1mkwG+qNjDP2nTnTg8oGsYgbvYK
-        jEwgmkXEKRYEIV3i7MsougoLPFwkm3qz1ohBpz8xCgZESWcMyKAVDixVGdHuA2ZY
-        8uJ9ttiDmjuh0v3ZVp86y9x6qUQFgl0eCvUqBki1nXyQO7lv6LPZVBAb1RYyNT8u
-        WSd4p66o0Tw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A3DA175287;
-        Thu, 11 Jun 2020 15:41:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3159975286;
-        Thu, 11 Jun 2020 15:41:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] GIT-VERSION-GEN: update for the post 2.27 cycle
-References: <4946cf3650b95191455630f85f59e5f93156d0ac.1591883410.git.liu.denton@gmail.com>
-Date:   Thu, 11 Jun 2020 12:41:56 -0700
-In-Reply-To: <4946cf3650b95191455630f85f59e5f93156d0ac.1591883410.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Thu, 11 Jun 2020 09:50:20 -0400")
-Message-ID: <xmqq8sgtjsor.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9C27E318-AC1B-11EA-BAE1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+        id S1726119AbgFKUFB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Jun 2020 16:05:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55358 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725824AbgFKUFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jun 2020 16:05:00 -0400
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF758C08C5C1
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 13:05:00 -0700 (PDT)
+Received: by mail-qt1-x849.google.com with SMTP id o11so5817753qtm.7
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 13:05:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=v6nKYLSphnoI0RMkMX3Qp22qbeSf+zrat8owmwva2RE=;
+        b=Xcaunt7MsUNfTHglJv4NQEGw8cSkpE1n5b2LNMUmw6WPbhVA6mBnbjYsN0Sb8uFXAA
+         IEhAIHGhpqflXFYJKF9fTz2BG9OhkZRHb0HG79h6rFUciVZFJ4Qt6E+J6I9/sO+aSm/e
+         wGdrsq883Eo90FXik1JczR0OoZ4HebOBQ/3bkb8sbXqYMCqsou7+aNnrE2VkfQ7Q/p5o
+         CmWITccNu2J3/soMGk6UGrffmddJS7cNsFSRTR2iWWADOSReQOePutH/MWTHsBi6vBHn
+         ZwqgUzvNIpAycGPET9Xio4kT6TSxJR9VI4QsVPmNO4bnQc+E+pUZwhCmujPzLoLIysNr
+         dxOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=v6nKYLSphnoI0RMkMX3Qp22qbeSf+zrat8owmwva2RE=;
+        b=ECHFj/DkyrSis6ynUHp0hLZDlcKKDcxM8TxIU8HpTB2gA59b/f9cMdWUXpjLdG6m5b
+         aS7J4/BfZ/L/sJEcqrIxQW7Tky5xoDHWOeSdYqHiksvHD0idHyTeR9smtGobNJi+87U7
+         DFz8EwWz0XS9X6L901G4m160BlkpRgAf96r6wn3k+8p2wLBobElyUh4Vg2as994H131d
+         8ewY578bP44m9S7DQYJqJuZdpZj/xIMLESaOUp/Wiu5Krlu6VuVhku6GRYnncvAiZTuD
+         ESY5YFKZFruvSHhwxS/tUp5/cpI3xt083k4l03YEE3dalNxu/rFINGwTicADcLWiBd1D
+         phvA==
+X-Gm-Message-State: AOAM531B1O+V+WHpK41wUIzmVKb9xU4QRwkvFpxfVfc/gf7a8JcJsGnW
+        SLPDX7chrgafvKNGJZva/t+qTGJNEbWvNeEMEYo4
+X-Google-Smtp-Source: ABdhPJxJggNh2vJ70AYt8ke/nXbRaZAftzeDAgdQHM7ZA1zwfg6ZLiWFywAAKTfaRqBddjVcejBlvkzmTDBakRXARkGP
+X-Received: by 2002:ad4:4e86:: with SMTP id dy6mr9506968qvb.106.1591905899496;
+ Thu, 11 Jun 2020 13:04:59 -0700 (PDT)
+Date:   Thu, 11 Jun 2020 13:04:56 -0700
+In-Reply-To: <20200611120518.10771-1-chriscool@tuxfamily.org>
+Message-Id: <20200611200456.102655-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20200611120518.10771-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9-goog
+Subject: Re: [PATCH 00/14] upload-pack: use 'struct upload_pack_data'
+ thoroughly, part 3
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     christian.couder@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, dstolee@microsoft.com,
+        peff@peff.net, me@ttaylorr.com, jonathantanmy@google.com,
+        jrnieder@gmail.com, chriscool@tuxfamily.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+> This patch series is the third and last part of an effort to move all
+> static variables in 'upload-pack.c' into 'struct upload_pack_data'.
+> 
+> It is based on 'cc/upload-pack-data-2' which contains "part 2" of this
+> effort.
+> 
+> There are no static variables left in 'upload-pack.c' after this patch
+> series. Patch 14/14 is a small refactoring on top which can be left
+> out.
 
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  GIT-VERSION-GEN | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-> index 06a5333ee6..7b0cfeb92e 100755
-> --- a/GIT-VERSION-GEN
-> +++ b/GIT-VERSION-GEN
-> @@ -1,7 +1,7 @@
->  #!/bin/sh
->  
->  GVF=GIT-VERSION-FILE
-> -DEF_VER=v2.27.0
-> +DEF_VER=v2.27.GIT
+Thanks. Overall, I see that this patch set gives "struct
+upload_pack_data" to functions that use global variables (and in doing
+so, shrinks their parameter list), enabling global variables to be moved
+into that struct with a small diff. The changes are generally
+mechanical, and this patch set looks good to me.
 
-I have been thinking about stopping this transition from ".0" to
-".GIT" and left it at ".0" deliberately.
+As an aside, I have attempted rebasing my CDN offloading patches [1]
+from cc/upload-pack-data-2 onto this series, and the rebase succeeds
+with trivial work needed.
 
- - The target to create a tarball ("make dist") places the "version"
-   file that overrides whatever value is set here, so those who
-   build from a tarball will not care what the value described here
-   is.
-
- - Those who build from a repository would use "git describe".
-
- - In addition, I do not create tarballs and upload to public places
-   for a random version with .GIT suffix---I only do so for -rcX and
-   the releases.  If anybody else is doing so with "make dist",
-   there would be the "version" file included in the tarball,
-   recording what is obtained from "git describe HEAD".
-
-So there is no strong reason to care what this value is, and that
-was why I was experimenting with the idea of leaving it at ".0",
-in the hope of hearing from people who do want to see ".GIT" why
-they want it.
-
-Unfortunately, your patch does not say why, either, so it hasn't
-quite helped yet ;-)
-
-
-
+[1] https://lore.kernel.org/git/cover.1591821067.git.jonathantanmy@google.com/
