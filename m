@@ -2,197 +2,143 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D927C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 07:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F23FC433DF
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 08:58:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE14D2072F
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 07:01:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41FFD20656
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 08:58:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Znugccdc"
+	dkim=pass (2048-bit key) header.d=goodman-wilson.com header.i=@goodman-wilson.com header.b="Gib2JFf2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726583AbgFKHBE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Jun 2020 03:01:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46878 "EHLO
+        id S1726831AbgFKI6e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Jun 2020 04:58:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726547AbgFKHBD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jun 2020 03:01:03 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC472C08C5C1
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 00:01:02 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id t25so4521773oij.7
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 00:01:02 -0700 (PDT)
+        with ESMTP id S1726783AbgFKI6d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jun 2020 04:58:33 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119DCC03E96F
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 01:58:32 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id dr13so5653696ejc.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 01:58:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=goodman-wilson.com; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5/2LzODUXfjUgti3upNwi1KzM6GuRk8DoG7B7tGUers=;
-        b=ZnugccdcX0q7dm2aUHMbv6A3gcmMCt8cjr2l+mRVle86z5x4FhEOtgv6UAIzUViVVX
-         HoO33o88RNzbLVRkl/WNUGHjr14cBCzmHqm2jSw5tP4+xqmy2D7ZeIHDhfRqFMyuXKDp
-         Eogipe+F7wQgwv3Y0XeEAqHtOKKRA8p2Dtu2Nb8lLt8UtPz5nrr89h9qraSBmwzqzDZv
-         w3h9kDvZqDMPJrPrv7hqihs/YCdsEoU1BSf+CLEBK1klEW/SvzMQjqQTmWvNnCaCEU2X
-         sM0XWl4yEpE0hRNI7JXOQrW2TDXLMyZa8MjuSa413q526mBLYLsiejIpshs20rk9P/6h
-         cOZw==
+         :cc:content-transfer-encoding;
+        bh=SFHai455Du6WunIAL+dHh2opSBynHLrtyDlrpnzK+3A=;
+        b=Gib2JFf20H9NRuPO10M0OOvRYYXiF3GO2MO2zTTAC+/tVmT65uGXn2JbT79u6ooWi/
+         Gb9+W2vdCHyLqV2owaQjXB/SHNLdDVVZhL6yfpM9oCAnmBvMFcm4bXIH6BYOhpSOdI8u
+         Cd+WxrmsGVD+taZPt+8X4NHGVYQG7clDcBV/UJfW/1LSy/4WYv1MgzayEYUQSzH8mFN1
+         TLnMenJuVTxNXuxw4ZTgqBXTNJ2kgqdtZMBFr9le0MUbj2bQnRreHEv0PmhRFUjC0z24
+         X1YeWGptA2LVXcESiFyVraws46QLxGz4LXCkwYEHYebWSkW1gB1yDA2IqPh+Y54kcdY4
+         7SPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5/2LzODUXfjUgti3upNwi1KzM6GuRk8DoG7B7tGUers=;
-        b=Jx8o7pHYWd75k/QuoYuVtr5VXzvquAhgVssLWEgyaoArYjGbjUTiheias0T1Ii1TZj
-         krTo/yPUxz4ukoOJDqHG6qOsJ712UxmU0nfRD2UDKhZnoNADYtB+rdZtnqYDS8jAopcx
-         /1iqjpgNiEPowxZOUwT51/qqChOg4Xu7aeu7KtixUuUP8GRLc6ONriY1WGr21g16iW2X
-         2ztUd4Te8t5MNir1pU5OvwXTMQdLU9gdSBCXAzSWU7jlb9BOs2iC3BTD0MwI0uLF8rPu
-         IdGHIXexCxm54rbEkjctVKUDc76fm2WS+dEENhvswB1FihJsK35SBoVSrlGvgD939wMt
-         J7Jw==
-X-Gm-Message-State: AOAM531O8TsSex3q759EBZtu4QdHbeV+5OrElqysxwUmZU3+m2mk6D3R
-        LUPtuXcyJpNWKCKtW2jKCGkSyCL8KkQEHCJU2tA=
-X-Google-Smtp-Source: ABdhPJzureX9nPMQNCMaQScFHw8jm+IulrSegn+S/Gdy3tecqlae61LB1RuMuw4V82/cu7HJsK+R50+cYhlg+FGk7Lw=
-X-Received: by 2002:a05:6808:4b:: with SMTP id v11mr5103956oic.31.1591858861331;
- Thu, 11 Jun 2020 00:01:01 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SFHai455Du6WunIAL+dHh2opSBynHLrtyDlrpnzK+3A=;
+        b=MxgInpjFISJUh9kEBrhrM87/E3SjiveNsKcIzu9WkiicrC30WsLbzgnTELE2QTH6+v
+         W3bKdAzuYR11bUwh7alRQHkaJ+CCswmRTw7k8UQ/KVHxpNjpi8eh0P7AGnm8XRLK/SgY
+         zvJzUrucqNZHJJtNWquWcX9tqCG5jMLIOodUqH7eCUibihExFjZ49VoIq+XfRM7CWP93
+         /clDY/6AMjFCzqix8rhA5YwNexY9QNvSOOZxulW1HBwIXK/r8vjzs6khF7UDIWF85huu
+         zOax/X3yG12LVATcj51n9UIVWmkJqokUCbJcaUmfal5UURoNSWxoiuC1HUa1CywJUlDB
+         mwmA==
+X-Gm-Message-State: AOAM532TxfM/uyfriK6dY48fqk5lmvBzfC1ztHp4tdOZD1WtatpOWNzc
+        k9T1Tc9lYHQtiXvYK1VPcNXWfuaehB8xEwwfRuh76g==
+X-Google-Smtp-Source: ABdhPJyOCZyf/xydIa5bw9/micB9U+n7ZjleDVPABVNj/kJwGAz4qqOI1CWyZ6BMZ0p46hY6dY+X7xIrRpN7/WygiX4=
+X-Received: by 2002:a17:906:f6c2:: with SMTP id jo2mr7629216ejb.424.1591865910526;
+ Thu, 11 Jun 2020 01:58:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.805.git.git.1591831009762.gitgitgadget@gmail.com>
-In-Reply-To: <pull.805.git.git.1591831009762.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 11 Jun 2020 00:00:50 -0700
-Message-ID: <CABPp-BGVB3XNT=yrfnwX63V9ZbH-UxetDJ0ND3Or6TxBiMfHNw@mail.gmail.com>
-Subject: Re: [PATCH] git-sparse-checkout: clarify interactions with submodules
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <20200610222719.GE148632@google.com> <xmqqwo4eedwc.fsf@gitster.c.googlers.com>
+ <20200611011040.GB21728@syl.local> <xmqq7dwecpsp.fsf@gitster.c.googlers.com> <20200611023503.GA24130@syl.local>
+In-Reply-To: <20200611023503.GA24130@syl.local>
+From:   Don Goodman-Wilson <don@goodman-wilson.com>
+Date:   Thu, 11 Jun 2020 10:58:18 +0200
+Message-ID: <CAGA3LAdz21nZFeztkHp5XUQ4h-kWnqTzb8pDXjne7PqeMFhLRQ@mail.gmail.com>
+Subject: Re: Virtual Inclusion Summit
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 10, 2020 at 4:16 PM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Elijah Newren <newren@gmail.com>
->
-> Ignoring the sparse-checkout feature momentarily, if one has a submodule and
-> creates local branches within it with unpushed changes and maybe adds some
-> untracked files to it, then we would want to avoid accidentally removing such
-> a submodule.  So, for example with git.git, if you run
->    git checkout v2.13.0
-> then the sha1collisiondetection/ submodule is NOT removed even though it
-> did not exist as a submodule until v2.14.0.  Similarly, if you only had
-> v2.13.0 checked out previously and ran
->    git checkout v2.14.0
-> the sha1collisiondetection/ submodule would NOT be automatically
-> initialized despite being part of v2.14.0.  In both cases, git requires
-> submodules to be initialized or deinitialized separately.  Further, we
-> also have special handling for submodules in other commands such as
-> clean, which requires two --force flags to delete untracked submodules,
-> and some commands have a --recurse-submodules flag.
->
-> sparse-checkout is very similar to checkout, as evidenced by the similar
-> name -- it adds and removes files from the working copy.  However, for
-> the same avoid-data-loss reasons we do not want to remove a submodule
-> from the working copy with checkout, we do not want to do it with
-> sparse-checkout either.  So submodules need to be separately initialized
-> or deinitialized; changing sparse-checkout rules should not
-> automatically trigger the removal or vivification of submodules.
->
-> I believe the previous wording in git-sparse-checkout.txt about
-> submodules was only about this particular issue.  Unfortunately, the
-> previous wording could be interpreted to imply that submodules should be
-> considered active regardless of sparsity patterns.  Update the wording
-> to avoid making such an implication.  It may be helpful to consider two
-> example situations where the differences in wording become important:
->
-> In the future, we want users to be able to run commands like
->    git clone --sparse=moduleA --recurse-submodules $REPO_URL
-> and have sparsity paths automatically set up and have submodules *within
-> the sparsity paths* be automatically initialized.  We do not want all
-> submodules in any path to be automatically initialized with that
-> command.
->
-> Similarly, we want to be able to do things like
->    git -c sparse.restrictCmds grep --recurse-submodules $REV $PATTERN
-> and search through $REV for $PATTERN within the recorded sparsity
-> patterns.  We want it to recurse into submodules within those sparsity
-> patterns, but do not want to recurse into directories that do not match
-> the sparsity patterns in search of a possible submodule.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     git-sparse-checkout: clarify interactions with submodules
->
->     gitgitgadget is going to treat this like V1, but it's really V2. V1 was
->     an inline scissors patch.
->
->     Changes since V1:
+All,
 
-To make the record easier for those looking over the archives, V1 is
-over here: https://lore.kernel.org/git/20200522142611.1217757-1-newren@gmail.com/
+(First of all, it=E2=80=99s Don, rather than Dan; I think Johannes=E2=80=99=
+s
+auto-correct got the best of him at one point in his email :D )
 
+I think this is a wonderful idea.
 
->      * More wording clarifications in areas pointed out by Stolee, and using
->        some of his suggested wording.
->      * In particular, given that the final sentence from V1 was causing lots
->        of problems, I just stepped back and painted a very broad stroke for
->        end users that I think will make sense to them: we have two reasons
->        tracked files might be missing from the working copy, so there are
->        two things that might limit commands that search through tracked
->        files in the working copy. Greater detail about if or how they are
->        limited can be left to the manpages of individual subcommands.
+First, I am myself a white cis-het male; my participation in any such
+summit would be predicated on ensuring that we have a diversity of
+voices present, as I think it is foolish to have a conversation about
+inclusivity and equity with only white voices like mine speaking. I
+hope and expect that we are planning for that.
+
+Given the concerns about being recorded, perhaps my experience running
+Maintainerati events might be helpful. Maintainerati (if you hadn=E2=80=99t
+heard of it) is a series of events that gather open source maintainers
+into unconference-style conversations about the challenges they face,
+and finding solutions to those problems. The events are operated under
+Chattham House rules, ensuring the anonymity of participants who wish
+to remain so. Even so, the goal of the events is to not only document
+the conversations that happened, but to create a set of documents that
+allow the conversation to continue long after the event is over, as
+well as providing a blueprint for concrete action. It is not difficult
+to set up the necessary conditions to make this work, although we will
+need dedicated note-takers willing to undergo about 30 minutes of
+training. I would be happy to put in the effort to make this kind of
+thing happen, if this sounds helpful.
+
+Don Goodman-Wilson
+
+On Thu, Jun 11, 2020 at 4:35 AM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-805%2Fnewren%2Fsparse-submodule-interactions-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-805/newren/sparse-submodule-interactions-v1
-> Pull-Request: https://github.com/git/git/pull/805
+> On Wed, Jun 10, 2020 at 07:13:58PM -0700, Junio C Hamano wrote:
+> > Taylor Blau <me@ttaylorr.com> writes:
+> >
+> > >> It is OK to have an optional meeting in the hope that a video
+> > >> meeting may have a better chance to keep those who easily become too
+> > >> aggressive and confrontational in text-only conversation in check
+> > >> and instead have civilized conversation.
+> > >>
+> > >> But I am not sure if it is a good idea to call such a meeting a
+> > >> "Summit", given that there are those who prefer not to be seen,
+> > >> heard or recorded how they appear and how they sound in a video
+> > >> conference.  They would not be able to join the conversation held in
+> > >> such a "Summit" held only by those who are privileged enough to be
+> > >> able to attend.
+> > >
+> > > I think that this is a very reasonable concern, stated in a very
+> > > reasonable fashion. Let's call it something else, sure, and avoid
+> > > recording/publishing the event (as we have done in the past at other
+> > > in-person events--such as the last Git Merge--which seems like a
+> > > lifetime ago ;-).)
+> >
+> > I am not opposed to recording and publishing for wider dissemination
+> > of what was said and agreed on among participants, who join with the
+> > full understanding of how the video meeting will later be consumed.
+> >
+> > What I am hesitant to see is that such an opt-in meeting becomes
+> > "you got a chance to attend and have your voice heard---if you
+> > didn't come, that was your choice, and whatever objection you give
+> > after it does not count" summit.
 >
->  Documentation/git-sparse-checkout.txt | 30 +++++++++++++++++++++++----
->  1 file changed, 26 insertions(+), 4 deletions(-)
+> Ah, thanks for your clarification (and sorry for the misunderstanding).
+> I figure that any synchronous discussion should augment the on-list
+> discussion, not replace it.
 >
-> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-> index 1a3ace60820..c7feaeca110 100644
-> --- a/Documentation/git-sparse-checkout.txt
-> +++ b/Documentation/git-sparse-checkout.txt
-> @@ -200,10 +200,32 @@ directory.
->  SUBMODULES
->  ----------
->
-> -If your repository contains one or more submodules, then those submodules will
-> -appear based on which you initialized with the `git submodule` command. If
-> -your sparse-checkout patterns exclude an initialized submodule, then that
-> -submodule will still appear in your working directory.
-> +If your repository contains one or more submodules, then submodules
-> +are populated based on interactions with the `git submodule` command.
-> +Specifically, `git submodule init -- <path>` will ensure the submodule
-> +at `<path>` is present, while `git submodule deinit [-f] -- <path>`
-> +will remove the files for the submodule at `<path>` (including any
-> +untracked files, uncommitted changes, and unpushed history).  Similar
-> +to how sparse-checkout removes files from the working tree but still
-> +leaves entries in the index, deinitialized submodules are removed from
-> +the working directory but still have an entry in the index.
-> +
-> +Since submodules may have unpushed changes or untracked files,
-> +removing them could result in data loss.  Thus, changing sparse
-> +inclusion/exclusion rules will not cause an already checked out
-> +submodule to be removed from the working copy.  Said another way, just
-> +as `checkout` will not cause submodules to be automatically removed or
-> +initialized even when switching between branches that remove or add
-> +submodules, using `sparse-checkout` to reduce or expand the scope of
-> +"interesting" files will not cause submodules to be automatically
-> +deinitialized or initialized either.
-> +
-> +Further, the above facts mean that there are multiple reasons that
-> +"tracked" files might not be present in the working copy: sparsity
-> +pattern application from sparse-checkout, and submodule initialization
-> +state.  Thus, commands like `git grep` that work on tracked files in
-> +the working copy may return results that are limited by either or both
-> +of these restrictions.
->
->
->  SEE ALSO
->
-> base-commit: 87680d32efb6d14f162e54ad3bda4e3d6c908559
-> --
-> gitgitgadget
+> Thanks,
+> Taylor
