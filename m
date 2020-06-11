@@ -2,148 +2,155 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A30BCC433DF
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 12:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8360CC433E0
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 12:39:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7875A20760
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 12:06:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5178620747
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 12:39:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jgmw7fXS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQqmkOFl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728083AbgFKMGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Jun 2020 08:06:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37740 "EHLO
+        id S1727771AbgFKMjE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Jun 2020 08:39:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727979AbgFKMFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jun 2020 08:05:55 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9DAC08C5C5
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:05:54 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id q25so4808384wmj.0
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:05:54 -0700 (PDT)
+        with ESMTP id S1726868AbgFKMjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jun 2020 08:39:04 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3787AC08C5C3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:39:04 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id k26so4886907wmi.4
+        for <git@vger.kernel.org>; Thu, 11 Jun 2020 05:39:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nLlJTaNl6hMATl6VGkHQHEYRagKeJBNEb4tJvPE4YjY=;
-        b=jgmw7fXSe9dYX8LQmB/gvlpiMhTz5cNn4U3TkeuaAQTnqw4wBM9BhD+0FDpUavLlW+
-         Rz0geVIoHCyLEfKjHhV0W9Rr5o8nh9UbBNvADyYneWeAZwyzrxa3U7/lbb1uZEvIQOLh
-         iNppTyhBvoVJ8RajhzkmSEHFw4ot9OkzjNy+qnuEN11dSZYqTJmNaiNW05NsAazoBdt6
-         6YnA0wRvK8odlqRHcTgZxx6jtmhai/KQ9vsdD/Uj+JQ5HCDyoIELptCbQ9GxezbVkdf6
-         OJJ/XW7sE2hB9mYKasNxPDYsg42/UimkMaF9RsmQbhkNJXo5pPfYBOdaclIL/otezK0k
-         rd6Q==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=C6EvRzFuBwJOflnK1URyl96o6TiJfkCCV21wO3xyhnk=;
+        b=nQqmkOFlLcy9ZvOX7LKCE5XPNUnDHtwiPKQE55Wd/EbQdBoHmLF77bJPY57KT4CBCd
+         tjsPuQiNhT8ZFLp36Rzywq0EqxFSxOhcRk6Ku9e6CnEpG4aln3dd7voNFjewQ83McIkW
+         zxaXvqeLU2W8aaQ4mJ3pLBjbAkawpM1PAHNOxSu3uKtjgjjUOw8FooLDvgKuvfwmiQvm
+         ytQBv3ATVWC9QOzK9mkrEu7VyRXEEx4mWPINHxxGH5yZTkzd4+sN6Y6OtWqO7gqYbJWN
+         GCaTWAJkuYondRtzqB1g7EcshK2ihKWR6PPKZ2ZyI4j1tf2v+sU1zV4+FVkRdw3YBlE3
+         f1PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nLlJTaNl6hMATl6VGkHQHEYRagKeJBNEb4tJvPE4YjY=;
-        b=D3Iihf1F4xyuf3I/WQDLnKkpIGS2hNvNTV34wTAOe3I9a7aPc0k96Ymad5LOFRonq3
-         7asjHnrVgz1Kyq58Sz4kQjOrW2ueR2eQ9oUHAH5U70OUiPYyPTShnjV9/kRrZLTa6inD
-         0JdcMttX+/kUnYvbqguDLaPpE1W2R8aOb+ms2ML+cK2Av8NmLG2yeSVQOCGXOHTc+Hpw
-         JmKPlfT85pAAN+alL6Lg4x5Ravi9nkgU92GR4eVWWD/vHpePBnGN3Kbu4TMstSv8lse5
-         x1o8Zqcp4DVlDURrl8pp7zFfU2keOI8As7J+2xU5j78gFiqVeTWm5zNg/pG5PpCxEUzv
-         rZyA==
-X-Gm-Message-State: AOAM533ALlHr8PuzgX+LgG66uYqmgKFQ7+8zhtublru5kyXUHqOKgWbC
-        dkNKzQKh3d5Vvenx5JKuLuqD+afrgAU=
-X-Google-Smtp-Source: ABdhPJzcVFAQo+XR9Sycg07RF36+NH2fgI7UfBVEWYKdmr7r8/1IM9NbY3LAhi3GqRkp29ERPTGwzQ==
-X-Received: by 2002:a1c:2644:: with SMTP id m65mr7827584wmm.178.1591877152163;
-        Thu, 11 Jun 2020 05:05:52 -0700 (PDT)
-Received: from localhost.localdomain ([185.228.229.208])
-        by smtp.gmail.com with ESMTPSA id o8sm4047174wmb.20.2020.06.11.05.05.50
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=C6EvRzFuBwJOflnK1URyl96o6TiJfkCCV21wO3xyhnk=;
+        b=gs7jRaH2io/7CNFVO9Nm0e3Zn22ysoogzaHLaHAr6ZbDN/K1hfkugfskmh4GY0rrFl
+         fZxBKEYOXIpvQKjYG/XbJZGpLxxQ1gWOTP81cySta4mSaezAJo6vO+Q7kIL9HA96UK1C
+         abo4VrGlR2UCRGgzODJ9gXB1nKW/K7c9lCMQHFhN216Bpiro3trUFEbZNjEuhARIGMlw
+         F4ZWMxWWFzeBEQItPVEXxK+7h4PJ4TzUbNA5ncSEBa07JriyEoiss7KkVE9bc4lqTrpX
+         b9ZhnYPs/RdG0y4YKN3Vhsh2u/97/QM3VQW4ZHArFlMTBOLF8oEOGai/0nvlLQPIWLoO
+         BA7w==
+X-Gm-Message-State: AOAM530N5sKci+wKzd7P58X6GVBBUZoRbcLFBTf56mwqYHnWOgR6gVr7
+        Opi1IP8NJgMcWGDcUYWVOo5rGbuE
+X-Google-Smtp-Source: ABdhPJyWPLMWPClidrPJw1ERK3AMB9zzPXP9YHzKmyYQyUYBWqMBAjvN2kFQOWuj6IUKH88EpXZZbQ==
+X-Received: by 2002:a1c:6389:: with SMTP id x131mr7939768wmb.90.1591879142656;
+        Thu, 11 Jun 2020 05:39:02 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e12sm4896269wro.52.2020.06.11.05.39.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2020 05:05:51 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 13/14] upload-pack: move oldest_have to upload_pack_data
-Date:   Thu, 11 Jun 2020 14:05:17 +0200
-Message-Id: <20200611120518.10771-14-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.27.0.90.gabb59f83a2
-In-Reply-To: <20200611120518.10771-1-chriscool@tuxfamily.org>
-References: <20200515100454.14486-1-chriscool@tuxfamily.org>
- <20200611120518.10771-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
+        Thu, 11 Jun 2020 05:39:02 -0700 (PDT)
+Message-Id: <6d423928512e62c91ef1ae9b469aa8cc361ed080.1591879139.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.654.git.1591879139.gitgitgadget@gmail.com>
+References: <pull.654.git.1591879139.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 11 Jun 2020 12:38:58 +0000
+Subject: [PATCH 2/3] diff-files --raw: handle intent-to-add files correctly
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we cleanup 'upload-pack.c' by using 'struct upload_pack_data'
-more thoroughly, let's move the 'oldest_have' static variable
-into this struct.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It is used by both protocol v0 and protocol v2 code.
+In `run_diff_files()`, files that have been staged with the intention to
+add are queued without a valid OID in the `diff_filepair`.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+When the output mode is, say, `DIFF_FORMAT_PATCH`, the
+`diff_fill_oid_info()` function, called from `run_diff()`, will remedy
+that situation by reading the file contents from disk.
+
+However, when the output mode is `DIFF_FORMAT_RAW`, that does not hold
+true, and the output will contain a bogus OID (and the flag `M` for
+"modified" instead of the correct `A` for "added").
+
+As a consequence, `git difftool -d` (which relies on `git diff-files
+--raw`'s output) does not work correctly.
+
+Let's fix this specifically by imitating `diff_fill_oid_info()`.
+
+Note: we can only do that for diff formats that do not actually need the
+file contents, such as `DIFF_FORMAT_PATCH`: `run_diff()` would try to
+read the blob contents, but that blob might not have been written to
+Git's object database.
+
+This fixes https://github.com/git-for-windows/git/issues/2677
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- upload-pack.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ diff-lib.c             | 14 ++++++++++++++
+ t/t4000-diff-format.sh | 10 ++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 6729c17cf4..3d331bedfa 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -42,8 +42,6 @@
- #define ALL_FLAGS (THEY_HAVE | OUR_REF | WANTED | COMMON_KNOWN | SHALLOW | \
- 		NOT_SHALLOW | CLIENT_SHALLOW | HIDDEN_REF)
+diff --git a/diff-lib.c b/diff-lib.c
+index 15bb45776e4..4af8f811ae8 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -223,6 +223,20 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 					       the_hash_algo->empty_blob, 0,
+ 					       ce->name, 0);
+ 				continue;
++			} else if (ce_intent_to_add(ce) &&
++				   !(revs->diffopt.output_format &
++				     ~(DIFF_FORMAT_RAW | DIFF_FORMAT_NAME_STATUS))) {
++				struct object_id oid;
++				int ret = lstat(ce->name, &st);
++
++				if (ret < 0)
++					oidclr(&oid);
++				else
++					ret = index_path(istate, &oid,
++						 ce->name, &st, 0);
++				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
++					       &oid, ret >= 0, ce->name, 0);
++				continue;
+ 			}
  
--static timestamp_t oldest_have;
--
- /* Enum for allowed unadvertised object request (UOR) */
- enum allow_uor {
- 	/* Allow specifying sha1 if it is a ref tip. */
-@@ -74,6 +72,7 @@ struct upload_pack_data {
- 	int deepen_relative;
- 	int keepalive;
- 	int shallow_nr;
-+	timestamp_t oldest_have;
+ 			changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
+diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
+index e5116a76a1c..48ff4e250b5 100755
+--- a/t/t4000-diff-format.sh
++++ b/t/t4000-diff-format.sh
+@@ -89,4 +89,14 @@ test_expect_success 'git diff-files --patch --no-patch does not show the patch'
+ 	test_must_be_empty err
+ '
  
- 	unsigned int timeout;					/* v0 only */
- 	enum {
-@@ -414,8 +413,8 @@ static int got_oid(struct upload_pack_data *data,
- 			we_knew_they_have = 1;
- 		else
- 			o->flags |= THEY_HAVE;
--		if (!oldest_have || (commit->date < oldest_have))
--			oldest_have = commit->date;
-+		if (!data->oldest_have || (commit->date < data->oldest_have))
-+			data->oldest_have = commit->date;
- 		for (parents = commit->parents;
- 		     parents;
- 		     parents = parents->next)
-@@ -436,7 +435,7 @@ static int ok_to_give_up(struct upload_pack_data *data)
- 		return 0;
- 
- 	return can_all_from_reach_with_flag(&data->want_obj, THEY_HAVE,
--					    COMMON_KNOWN, oldest_have,
-+					    COMMON_KNOWN, data->oldest_have,
- 					    min_generation);
- }
- 
-@@ -1372,8 +1371,8 @@ static int process_haves(struct upload_pack_data *data, struct oid_array *common
- 				we_knew_they_have = 1;
- 			else
- 				o->flags |= THEY_HAVE;
--			if (!oldest_have || (commit->date < oldest_have))
--				oldest_have = commit->date;
-+			if (!data->oldest_have || (commit->date < data->oldest_have))
-+				data->oldest_have = commit->date;
- 			for (parents = commit->parents;
- 			     parents;
- 			     parents = parents->next)
++test_expect_success 'git diff-files --raw handles intent-to-add files correctly' '
++	echo 123 >ita &&
++	git add -N ita &&
++	printf ":000000 100644 %s %s A\\tita\n" \
++		$ZERO_OID $(git hash-object --stdin <ita) >expect &&
++	git diff-files --raw ita >actual &&
++	test_cmp expect actual
++'
++
++
+ test_done
 -- 
-2.27.0.90.gabb59f83a2
+gitgitgadget
 
