@@ -6,107 +6,83 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5F4DC433E0
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 15:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5684CC433E0
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 15:28:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1F94206C3
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 15:25:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6EE9206C3
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 15:28:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="E80pTuKr"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aNpk19rD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728422AbgFKPZc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Jun 2020 11:25:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55638 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728104AbgFKPZc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jun 2020 11:25:32 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD5255DA51;
-        Thu, 11 Jun 2020 11:25:31 -0400 (EDT)
+        id S1728583AbgFKP2S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Jun 2020 11:28:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63093 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728578AbgFKP2R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jun 2020 11:28:17 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C5F171169;
+        Thu, 11 Jun 2020 11:28:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WLkD8lXk57g4CijSm0c733zg9NY=; b=E80pTu
-        KrcDrD56ED66hImftnzQu4zR5JEARd7UcfPvziW15Nl7HpkyNM8ygecv1lWI8BJg
-        8HewRhyc8TPe0LEeXmI0IFT/gjbM8fzZYpdHSCL+mwwsEGG9hokikrUJ/ko64HQT
-        yjDZLA9wX8cF/a/tq1e9fTAfO4REBHh/B16PE=
+        :content-type; s=sasl; bh=vEimSuknEz0Un/IJ4+/ERr42AC4=; b=aNpk19
+        rDQ/kekkBJ7sGwXpj+0rIX9H+nN/bE+HA4VZ6JYleQv56abP8WTLxl3yGlvsohmp
+        KvMpqsY6tbfCZ8biT7H5fKV1+uLI+Lq5Ue5vw7Vg7xfZR134zeb2s5wgfP6msark
+        6426THjj9sZs8Ekwm2YWmDZbWIU1oPtQWI5Zg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hPrHLPXN26RBhID834tqKmiFgYeWpSYo
-        GZvXuTOp0rnL7ov9qMOHjj0Ky11hf2JAWUWr3KPSY8lPjtEHYbGgLeAwSk3tQGVV
-        p3lKE7RN8oPbKNwgEqi0wafsTc3PC6R3lNx/hDc4eynARYdDtPQbz0vI6TR/oOum
-        JKDfcIB9C0I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B29695DA50;
-        Thu, 11 Jun 2020 11:25:31 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=BAN0FQTFubo2RSjGASp47dneFo8W6Y2T
+        FRgQsBAYfzEmP/HQLd1/FKmx/w+xie6QjkI4rkTK4SVr5VOtsC1UGlU0SgSLtdJt
+        Afuqplk/7VWJ6NtSt4GDDlysmqrQ+bQOb79zS0DxPavJw6HVjKXTfpzvUyDskSKO
+        oMrK6CxHurM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 449DC71168;
+        Thu, 11 Jun 2020 11:28:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 156605DA4C;
-        Thu, 11 Jun 2020 11:25:31 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BE5B671167;
+        Thu, 11 Jun 2020 11:28:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
-        Don Goodman-Wilson <don@goodman-wilson.com>,
-        git@vger.kernel.org
-Subject: Re: Virtual Inclusion Summit
-References: <20200610222719.GE148632@google.com>
-        <xmqqwo4eedwc.fsf@gitster.c.googlers.com>
-        <20200611011040.GB21728@syl.local>
-        <xmqq7dwecpsp.fsf@gitster.c.googlers.com>
-        <20200611023503.GA24130@syl.local>
-Date:   Thu, 11 Jun 2020 08:25:30 -0700
-In-Reply-To: <20200611023503.GA24130@syl.local> (Taylor Blau's message of
-        "Wed, 10 Jun 2020 20:35:03 -0600")
-Message-ID: <xmqqh7vhbp5h.fsf@gitster.c.googlers.com>
+        Don Goodman-Wilson <don@goodman-wilson.com>
+Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for new repositories
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+        <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
+        <CAPig+cSnEvVB5vsffFXidG1-XNxDX10u2XhD9NqV3pwh8zyxxw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2006111607450.56@tvgsbejvaqbjf.bet>
+Date:   Thu, 11 Jun 2020 08:28:14 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2006111607450.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 11 Jun 2020 16:09:30 +0200 (CEST)")
+Message-ID: <xmqqd065bp0x.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C951A5FA-ABF7-11EA-982F-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2AE40506-ABF8-11EA-B375-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Wed, Jun 10, 2020 at 07:13:58PM -0700, Junio C Hamano wrote:
->> Taylor Blau <me@ttaylorr.com> writes:
+>> Overall, the internal logic regarding duplicating/freeing strings
+>> would probably be easier to grok if there were two separate functions:
 >>
->> >> It is OK to have an optional meeting in the hope that a video
->> >> meeting may have a better chance to keep those who easily become too
->> >> aggressive and confrontational in text-only conversation in check
->> >> and instead have civilized conversation.
->> ...
->> What I am hesitant to see is that such an opt-in meeting becomes
->> "you got a chance to attend and have your voice heard---if you
->> didn't come, that was your choice, and whatever objection you give
->> after it does not count" summit.
+>>     char *git_default_branch_name(void);
+>>     char *git_default_ref_name(void);
+>>
+>> but that's subjective.
 >
-> Ah, thanks for your clarification (and sorry for the misunderstanding).
-> I figure that any synchronous discussion should augment the on-list
-> discussion, not replace it.
+> For such a tiny nuance, I'd rather keep it as one function...
 
-By the way, if I sounded like I consider this "virtual summit" to be
-no more than just a place for people with heated head to deflate
-before having a civilized conversation, that was not my intention.
-
-I do agree that it is good to have some gathering (or perhaps a
-couple of them in shifting time to accomodate people from different
-parts of the world) to help make sure everybody is moving towards
-the same goal, and I have nothing against a virtual/video meeting
-for that purpose.
-
-Other than that it may be held on Zoom, where I do not particularly
-like to send people to, after seeing articles like [*1*], that is,
-but there may not be a viable alternative.  I dunno.
-
-
-[Reference]
-
-*1* https://www.ft.com/content/f24bc9c6-ed95-4b31-a011-9e3fcd9cf006
+And you'd need two functions, default and primary, possibly full and
+short.  Splitting these into two here would mean you'd need four.
