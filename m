@@ -6,85 +6,83 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DE7FC433DF
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 23:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1004C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 23:16:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E18852074B
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 23:14:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CDB420842
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 23:16:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SsXiLz1r"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RUp211JV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbgFKXOx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Jun 2020 19:14:53 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62928 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726251AbgFKXOw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jun 2020 19:14:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 00FA6C9A93;
-        Thu, 11 Jun 2020 19:14:51 -0400 (EDT)
+        id S1726349AbgFKXQi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Jun 2020 19:16:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55251 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726285AbgFKXQi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jun 2020 19:16:38 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19C6178849;
+        Thu, 11 Jun 2020 19:16:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iLUkUJZeRpgj5gxx5y2yO+y5LJw=; b=SsXiLz
-        1rHysxgOisbXCR6j75ImwvBWX4md/6BuDtchjxTDUKbwNznz0afnFbA4CQfjg5QN
-        CrNhfQ+Vo94akLja7b+j7ma2RfEBLFnZABpFLrMVNRSqieNMq4USnFYAJHRJ6QwB
-        SQBZDguEu3DUagAs7jFcht42uY39cyFqYchig=
+        :content-type:content-transfer-encoding; s=sasl; bh=V3hLONSzEeIS
+        QzJ/bhkHkrbWzMo=; b=RUp211JV74byxfKJfZE2gI6sgTd3YMBck284+QlIRu1r
+        oK/fDmGRTLhWkTz/GDxW5bWF3KrpW4FZTjcceMRYfT6/U0OnYslywu86LMI+Q2M7
+        6A9lPm/4EYSso0J1mjoCDB6D2B3DTEA3XPaIkUJGAOOav+CB0y7PMR3oG7bIDqc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=SP8Pf7AUmjZA93FT7m6onucrbGRjvAgs
-        cByEkOV+13ql63Ee1a3FgiBpuR9je+4qsf+BzCeM42kiBdZQ9FkWLftEH6rfnAr6
-        kBpRTnrr5SbnINwfUULE0nGl6vdTjupmMf+4O4DFUsQifEW+VbhOzkP0jNcU3LM1
-        2mlO1VUqe7I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED1D9C9A92;
-        Thu, 11 Jun 2020 19:14:50 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pSe2MI
+        vNhL+RCkO7lARG7/Gi6P5R52Sbmb7p3I+a2oM/6+ZFVG8RG/pdNDU1obf+soyIzM
+        czSx1aWhqqxh25IjGjHZBwGJyL4AaRfrC9qoZqkX2JrC5gH9BV4eRatSG3H+sK7/
+        SXIZQxfhu3yYjiM4U8v4Pr54cbnP6UciAndRA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 11DBB78848;
+        Thu, 11 Jun 2020 19:16:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3BC31C9A91;
-        Thu, 11 Jun 2020 19:14:48 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 966F078847;
+        Thu, 11 Jun 2020 19:16:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for new repositories
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
-        <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
-        <08e46af3-ff52-8bce-b75a-db8c390c9641@gmail.com>
-Date:   Thu, 11 Jun 2020 16:14:46 -0700
-In-Reply-To: <08e46af3-ff52-8bce-b75a-db8c390c9641@gmail.com> (Alban Gruin's
-        message of "Thu, 11 Jun 2020 12:23:51 +0200")
-Message-ID: <xmqqwo4di49l.fsf@gitster.c.googlers.com>
+To:     Ed Avis <ed.avis@qmaw.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git log --name-only improvement: show old file name in rename
+References: <BL0PR11MB3460BEB60550854661B5178B9D800@BL0PR11MB3460.namprd11.prod.outlook.com>
+Date:   Thu, 11 Jun 2020 16:16:34 -0700
+In-Reply-To: <BL0PR11MB3460BEB60550854661B5178B9D800@BL0PR11MB3460.namprd11.prod.outlook.com>
+        (Ed Avis's message of "Thu, 11 Jun 2020 11:19:14 +0000")
+Message-ID: <xmqqsgf1i46l.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 584AF91E-AC39-11EA-83BE-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 984A8EBC-AC39-11EA-937C-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
+Ed Avis <ed.avis@qmaw.com> writes:
 
-> Why adding yet another environment variable instead of relying only on a
-> config option?  I understand it's for the tests, but can't we add a
-> shell function in test-lib.sh (and friends) that tries to read
-> `GIT_TEST_DEFAULT_BRANCH_NAME', and, if it exists, sets
-> `core.defaultBranchName'?
+> The git-log manual page says
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0--name-only
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Show only names of changed fil=
+es.
+>
+> But when a file has been renamed, only the new name is printed, not the=
+=20
+> old.=C2=A0 I think it would be more useful and more correct to print bo=
+th=20
+> names.=20
 
-Can you produce such a patch that does it cleanly?  My knee jerk
-reaction is that I would suspect that you end up having to touch
-many places in the t/ scripts, but if you prove otherwise, that
-would certainly be appreciated.
+It is just you who thinks it would be more useful.
 
-And no, 
+Scripts written by people over the last 10 years that expect to see
+new name would certainly hate to see two names start appearing
+there.
 
-    git () { command git -c core.defaultBranchName=master "$@" }
-
-is not an acceptable solution.
-
+Perhaps you can use --summary at the same time?
