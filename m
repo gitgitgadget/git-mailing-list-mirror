@@ -2,202 +2,122 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91C2EC433DF
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D0A2C433DF
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:10:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42FDE2078D
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:07:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 169AE20747
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:10:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="v4Br4chj"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="KqS7IGqG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726339AbgFKBHX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 21:07:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
+        id S1726304AbgFKBKp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 21:10:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbgFKBHX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 21:07:23 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 086EBC08C5C1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 18:07:22 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id j1so1914159pfe.4
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 18:07:22 -0700 (PDT)
+        with ESMTP id S1726163AbgFKBKo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 21:10:44 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 918C6C08C5C1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 18:10:43 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d8so1651451plo.12
+        for <git@vger.kernel.org>; Wed, 10 Jun 2020 18:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=AXC8/nSBrDkH36ffwVLQZOnew0NkZvzFQwtuoIC/Iv4=;
-        b=v4Br4chjcK93YxZqs9M5y5mdGXMI7FWxZkWYVJ1cp898GrZb1lX/rWgKOzN1+GXWyc
-         jefUODJFb/is70Nz4bL2TAcq326+yGSZieQYXx83yWxZXqiE5ZfgFxS03/eAqCg5Nk1a
-         QGHVBFYaolOloTJ9TcoPxdqfINvlQZtUIYSip6zLRrCbqmmBTrdGysSizS0EaSZHcSJN
-         BCvtbGulk7Lr8p50AyHBQXEp42+0fE58kpi3Bov/pTsqljsL8oaP2+2xtKqmhGEoTmRW
-         nRfROsyzxesfd4mrej6b1qP56QNvDzIxHOW6dvrmbru5HAC/BewDvRzllSc39Kd2li7P
-         ++KA==
+        bh=Dhi2VROP4k3eMAD7Bne3TKWlTiFzPtlAUl44R13iK/4=;
+        b=KqS7IGqGZT+eqNhnEjqvB13gf9l2PSciM0yLwXsm2nxIjg6LvO6PZjA7Z3o0PM6hyr
+         cD316x5j6KQGYTVI1FzkhbnDRh8M2GCvKtJjg6TL67luvYByB7RfBvuGaJTxMH0HY7ao
+         rL1Rd8GUxcLM+R44SAESHo3yFfosDEx3PheAFMJCfs7ZWu/TbMUa3A82WNpxeC3qBg8C
+         AJ0kVciQfz8OpxequyeNRo4saX0mm+evL3kN2tgqRajRmDsPlWzKsvUCVRJBRRBN5oHU
+         Bg/3AmB9+HhSyxhyRN9cnTnaW9c6KCgIv9hnqg691SVfOzxyOgQzuLkd1DA1RyPvtUxd
+         kxpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AXC8/nSBrDkH36ffwVLQZOnew0NkZvzFQwtuoIC/Iv4=;
-        b=uRGqvlXsBFaU5UhaM7EpfUAiWnStrPnsICB2+Xo6U9uvdUrMgsp/sv19xcKmACsuJK
-         cc0gSee+j4MgOsZ/SR3+OWaJvH4W6sSRglZ8anKii2cVyKux89xFKzid8DFGanfxI+A5
-         YmuSoEOD/5KU6AezILD5LHho6o/rmCGXJ3+qX2zDcqz0bHnXR/aJVX7UTVIFptUMPL2+
-         Y7BsePRh5Sh7RbX1ul782ng3E6SuAp0uMR9hb1E8dxEqZmfkl7RFc52X/MoZIM8+tGVY
-         owLaQ9ej0vTw7sufSUlGSLRbVkftelEBjLANpDZoTYqPC0/v0atxLoX/bhgO7sRltedO
-         4I8g==
-X-Gm-Message-State: AOAM532+8Eo1pMHzNlF3dfXric2hCeQRKGjz2EY76B/CPzbNYZNkSIJa
-        2W4Gw55ABrP2q2REc6H29RIfPA==
-X-Google-Smtp-Source: ABdhPJyOTkICN4YqO6sBY9KVZKZwN4tZKj26B6Ouv61zvM8mNqCBCXzCiZKiaCYuSB7zFey8iigQIQ==
-X-Received: by 2002:a62:27c6:: with SMTP id n189mr5195386pfn.277.1591837642232;
-        Wed, 10 Jun 2020 18:07:22 -0700 (PDT)
+        bh=Dhi2VROP4k3eMAD7Bne3TKWlTiFzPtlAUl44R13iK/4=;
+        b=WWBMxOWNNkcgE9/L8mZfBsgL6552eu/J0CeBG1cbUkhy1/kzxEy0JX9UCTPyXsuZ5p
+         2EsCY7NAN3mLwCoiVU1BvBF1jh+a36jqXUhURmZ0KxC2AMkhQfJ4aCx9DGAaydxD2/qt
+         2hD+VOkl2Ay1PcKCPuOoymEcVp+TIrmWF/kkThWAWV9gfcPRI7N2JskMcKV9JgOSfFEN
+         LqVrcwACwNPWY9EWaukEWsyjPfjmVp2aDyyxETd3HVKU4F4Tw6T9/Vab61Iq1q3aglgI
+         f+zN2RXoexAt1xtOwXST7pX3lMPXW1n2+s6tsk47FKyu01cwB/8BFVWbYBp50XOHCp03
+         8tEA==
+X-Gm-Message-State: AOAM532LhvbPP0JkxEqAIbPH2ih0slSdTY1jQVL6nIOMyafPgUnis/o9
+        cmYfKHdAqm7mOQsNg8gFU/4xn+hZx7iJeg==
+X-Google-Smtp-Source: ABdhPJwZJ2CWAW1BgMCK/opFmy8BVoUyCZuon/zjcsqIGQ5mGJs6W7gVnIeUDWqH7VawBnT0NyVSFQ==
+X-Received: by 2002:a17:902:834b:: with SMTP id z11mr5212741pln.87.1591837842975;
+        Wed, 10 Jun 2020 18:10:42 -0700 (PDT)
 Received: from localhost ([63.239.199.7])
-        by smtp.gmail.com with ESMTPSA id n1sm1154969pfd.156.2020.06.10.18.07.21
+        by smtp.gmail.com with ESMTPSA id z85sm1133235pfc.66.2020.06.10.18.10.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2020 18:07:21 -0700 (PDT)
-Date:   Wed, 10 Jun 2020 19:07:20 -0600
+        Wed, 10 Jun 2020 18:10:41 -0700 (PDT)
+Date:   Wed, 10 Jun 2020 19:10:40 -0600
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
- branch
-Message-ID: <20200611010720.GA21728@syl.local>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>,
+        Don Goodman-Wilson <don@goodman-wilson.com>,
+        git@vger.kernel.org
+Subject: Re: Virtual Inclusion Summit
+Message-ID: <20200611011040.GB21728@syl.local>
+References: <20200610222719.GE148632@google.com>
+ <xmqqwo4eedwc.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqwo4eedwc.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes (and Dan)
-
-On Wed, Jun 10, 2020 at 09:19:21PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> A growing number of open source projects aims to avoid the branch name
-> master due to its negative connotation. See [1] for an existing discussion
-> on this. The links [2], [3], and [4] describe community-driven ways for
-> users to rename their default branches or use template edits to set a new
-> default branch name.
+On Wed, Jun 10, 2020 at 03:48:03PM -0700, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
 >
-> [1]
-> https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com/
+> > One note I'd like to make is that the Git community already suffers from
+> > a lack of diversity; it will be hard for us to make meaningful changes
+> > if just those of us who already contribute attend, because many of us -
+> > myself included! - come from privilege and don't have much or any
+> > firsthand experience with microaggressions (or overt discrimination). I
+> > think it's a good idea to expand the attendance of this summit beyond
+> > the current contributor base and try to include more diverse voices and
+> > experts in building inclusive products.
+> >
+> > To that end, I'm going to see what kind of interested parties we can
+> > find to invite within Google - and I hope others will do the same within
+> > their own network. I think the risk of us coming up with meaningless
+> > changes far outweighs the risk of us having too many people in the Zoom
+> > call. :)
+
+To Emily; I would be honored to attend. Please let me know if there is
+anything that I can do to help organize such a thing.
+
+> It is OK to have an optional meeting in the hope that a video
+> meeting may have a better chance to keep those who easily become too
+> aggressive and confrontational in text-only conversation in check
+> and instead have civilized conversation.
 >
-> [2] https://twitter.com/mislav/status/1270388510684598272
->
-> [3]
-> https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMasterToMain.aspx
->
-> [4] https://github.com/ethomson/retarget_prs
->
-> By necessity, existing repositories require a lot of manual work to move
-> away from that branch name, but it should be much easier for new
-> repositories.
+> But I am not sure if it is a good idea to call such a meeting a
+> "Summit", given that there are those who prefer not to be seen,
+> heard or recorded how they appear and how they sound in a video
+> conference.  They would not be able to join the conversation held in
+> such a "Summit" held only by those who are privileged enough to be
+> able to attend.
 
-This is (somewhat) orthogonal to the topic here, but I wonder if we
-could be doing anything to make this easier for users.
+I think that this is a very reasonable concern, stated in a very
+reasonable fashion. Let's call it something else, sure, and avoid
+recording/publishing the event (as we have done in the past at other
+in-person events--such as the last Git Merge--which seems like a
+lifetime ago ;-).)
 
-Could servers remember that a branch has ``moved'' and alert users as
-such when they pull? Even better, it would be nice if this alert from
-the server could allow clients to automatically rename their refs
-appropriately so that this transition is as easy as possible, even for
-existing repositories.
-
-> This patch series allows overriding the branch name being used for new
-> repositories' main branch. The main way to do this is the new
-> core.defaultBranchName config option. This first patch was contributed by
-> newcomer Dan Goodman-Wilson. Thanks for the contribution!
-
-Welcome, Dan! This is a fantastic first contribution, and I would be
-honored to help and move this forward in anyway that I can.
-
-I should note that I am technically "out of office" (which normally
-wouldn't mean much, but this time means that I am on a road-trip, and so
-am only at my computer infrequently). I am catching up on just a few
-emails here, but I'll be able to help out more (and would be honored to
-do so) once I am really back next Monday.
-
-> The other patches follow other places where "master" is hard-coded and use
-> the new git_default_branch_name() method to consume the config option before
-> falling back to "master".
->
-> The last patch updates documentation only after the config option is ready
-> to apply to all of these scenarios.
->
-> This series DOES NOT change the default automatically, but only provides an
-> opt-in mechanism for interested users. It also presents a way forward for
-> such a transition, if and when we decide to do so. Specifically, the new
-> GIT_TEST_DEFAULT_BRANCH_NAME environment variable could be used to update
-> test scripts on an individual basis instead of all-at-once.
-
-Provided that the eventual plan is to seriously evaluate a name other
-than "master", I think that this is a good way forward that clears the
-way for us to make this change easily, without forcing us to come to a
-conclusion on what name will replace "master" today.
-
-For what it's worth, I am completely in favor of abandoning this term.
-My colleagues at GitHub (as has been mentioned previously on the list)
-are in favor of this as well, and it is my understanding that other
-providers feel similarly.
-
-I would be in favor of any non-offensive name that we can reach
-consensus on. "trunk" sounds nice to me, but I think that it may cause
-problems for non-native English speakers, so perhaps "main" or
-"default" would suffice (maybe "main" is better, since it retains muscle
-memory for the first two characters without being offensive--at least,
-as far as I can tell. If I am wrong, please correct me and we should
-consider something else).
-
-All of that said, I can't emphasize enough how little I care about
-*what* name we replace "master" with, so long as it is (1) replaced with
-a non-offensive term, (2) that that change is done uniformly throughout
-the "Git Ecosystem" and (3) that the community can reach consensus on
-the new term in a respectful, appropriate, and considerate way. I only
-provided a few suggestions to get the conversation flowing, although I
-suspect that my help isn't needed there.
-
-> Don Goodman-Wilson (1):
->   init: allow overriding the default branch name for new repositories
->
-> Johannes Schindelin (8):
->   remote: respect `core.defaultBranchName`
->   send-pack/transport-helper: respect `core.defaultBranchName`
->   testsvn: respect `core.defaultBranchName`
->   submodule: use the (possibly overridden) default branch name
->   clone: learn about the possibly-configured default branch name
->   fmt-merge-msg: learn about the possibly-configured default branch name
->   fast-export: respect the possibly-overridden default branch name
->   Document how the default branch name can be overridden
->
->  Documentation/config/core.txt |  4 ++++
->  builtin/clone.c               | 14 +++++++++++---
->  builtin/fast-export.c         | 10 +++++++---
->  builtin/init-db.c             |  8 +++++---
->  builtin/submodule--helper.c   | 10 ++++++++--
->  fmt-merge-msg.c               |  6 ++++--
->  refs.c                        | 34 ++++++++++++++++++++++++++++++++++
->  refs.h                        |  6 ++++++
->  remote-testsvn.c              | 11 ++++++++---
->  remote.c                      | 12 ++++++++----
->  send-pack.c                   |  6 +++++-
->  t/README                      |  4 ++++
->  t/t0001-init.sh               | 20 ++++++++++++++++++++
->  t/t5609-clone-branch.sh       |  9 +++++++++
->  t/t6200-fmt-merge-msg.sh      |  8 ++++++++
->  transport-helper.c            |  6 +++++-
->  16 files changed, 146 insertions(+), 22 deletions(-)
->
->
-> base-commit: 0313f36c6ebecb3bffe6f15cf25a4883100f0214
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-656%2Fdscho%2Fdefault-branch-name-option-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-656/dscho/default-branch-name-option-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/656
-> --
-> gitgitgadget
+> Thanks.
 
 Thanks,
 Taylor
