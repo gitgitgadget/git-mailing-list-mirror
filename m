@@ -2,165 +2,158 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFDE6C433DF
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 16:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47317C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 16:44:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A22C3206DC
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 16:16:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C28E206A4
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 16:44:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DejVbT6e"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VrIHpkd3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725824AbgFKQQr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Jun 2020 12:16:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48376 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbgFKQQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jun 2020 12:16:47 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 428C5C08C5C1
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 09:16:47 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id b16so2860529pfi.13
-        for <git@vger.kernel.org>; Thu, 11 Jun 2020 09:16:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hygnNEMMb6SAVuOwG5optMgcW23WEFOR7vVsjinyryI=;
-        b=DejVbT6eV66WXlbIHgf1kFNE/V7UP03xRPHIs9NdNJiyy5718brHQw9T5tymKgvpSw
-         oZd50QB3uq1403uSVda3C+9g5ox9HPMu9urkgu+xMY72DtvBZRwxiTHc9JRczhKvu3RP
-         cG1n5o7m1BlK3LHiybL13ZDJJZuTUvftH7MlpyEad4nFvhmCkeVyfa+4xIKJFhyktGVq
-         YEzHvqF/ESFRSYjHNFD050rhduIUSUD80WOj4vrlHgfC3we1vm3Mp+5MNkDfaEgEk2vx
-         V5rk9B1uNZ9Hiw4mJbCdmYd4oJIX0egL7enFtgoQ5Eclr3k0IK49y28IJG6jiPZHnIbU
-         kfKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hygnNEMMb6SAVuOwG5optMgcW23WEFOR7vVsjinyryI=;
-        b=LHZvvYZrgNi3AMoln22xqV0Mzrzaz9PJ93NIsq/VgileNPWirIC6Xso3x6zL8Amui+
-         CM94k6cFHua8qXJFNno/D+ogQy9IYr5VDitJRFFz62Ad5sUUUSDEFLMP6v8KcJngQjTw
-         qRe0513g0TlffJRCBZizYi6fOYJcsHWBgtShS09eEAfzJxai29+5Ar+e720anrNkVmDj
-         NehzU9IZDMhEqBPZNgyrxxLzy/s4hC7Zw/FihPxoLDsk5PI0ZeHt0Wf7jPCrIqxSGRlO
-         4la0ix0TtJ0nLJJfMgFCR5+y3RLWGgQb2ZW+HJmizjRWeVVyZ6w8483xCECRT+3GzJ+q
-         pqRw==
-X-Gm-Message-State: AOAM530/sawXroluxH5CJLtPn8rjzNKAyXlckL7wD5fTB5UeL1aGbI1b
-        PYs8fQmpk7kgtgoHOgbDV0EwXhnT
-X-Google-Smtp-Source: ABdhPJy/xRJLqZjo6Sprj5npbgliNjTM+n4hIFSfjBE58RxUitHQx9tJRVFQWSnctJmjRbTsHIrstA==
-X-Received: by 2002:a65:5688:: with SMTP id v8mr2623686pgs.48.1591892206274;
-        Thu, 11 Jun 2020 09:16:46 -0700 (PDT)
-Received: from localhost.localdomain ([49.206.15.108])
-        by smtp.gmail.com with ESMTPSA id z14sm3669520pfj.64.2020.06.11.09.16.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Jun 2020 09:16:45 -0700 (PDT)
-From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: [PATCH] diff-files: treat "i-t-a" files as "not-in-index"
-Date:   Thu, 11 Jun 2020 21:46:40 +0530
-Message-Id: <20200611161640.52156-1-shrinidhi.kaushik@gmail.com>
-X-Mailer: git-send-email 2.27.0
+        id S1726569AbgFKQoY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Jun 2020 12:44:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52990 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbgFKQoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jun 2020 12:44:23 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5025E5F3D5;
+        Thu, 11 Jun 2020 12:44:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3fkIxO+AgE80yo2dTUfkihxMyfI=; b=VrIHpk
+        d3PAO6kMYhXPqb49M99+2Wd/pc+17FagDoHJlmXEQO2Wu+btxtLPZlu0DbAfn4AF
+        35pB1UOQNEPeFTcvrSDyEiWDn0/LDdVYvYrorb3ct8M+vgyw9twvCzQWJ4SVNRvp
+        9RY52oXATF82NqlbWndzdRYpanM0w7VyHEoSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=u2Be8GdiwVFsVdxurUyyE23Pd+K6hHC1
+        +jZF9G3c6VGtL4UXXUJR16UAtAtEB1rZcLoLVnXq22l5VUwh6l5fxqI3S0PJbO2K
+        rbymbliBBKc1oiZEzl46IXafnM57tWW8xTWkev0J82c0D3xg6z/ylfcv+iUCccsn
+        RLzeR0A+SdY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46A145F3D3;
+        Thu, 11 Jun 2020 12:44:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C10285F3D2;
+        Thu, 11 Jun 2020 12:44:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Matt Rogers <mattr94@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        don@goodman-wilson.com, stolee@gmail.com, Jeff King <peff@peff.net>
+Subject: Re: Re* [PATCH 8/9] fast-export: respect the possibly-overridden default branch name
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+        <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com>
+        <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com>
+        <20200610233912.GU6569@camp.crustytoothpaste.net>
+        <CAOjrSZvV6+ApfmOBa7rdXDPQJbExRsOfodO16i_1N5QjjhCB1w@mail.gmail.com>
+        <xmqq3672cgw8.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006111559300.56@tvgsbejvaqbjf.bet>
+        <xmqqpna5bq2l.fsf_-_@gitster.c.googlers.com>
+Date:   Thu, 11 Jun 2020 09:44:20 -0700
+In-Reply-To: <xmqqpna5bq2l.fsf_-_@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 11 Jun 2020 08:05:38 -0700")
+Message-ID: <xmqqtuzha6xn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: CC71527A-AC02-11EA-9DFE-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `diff-files' command and related commands which call `cmd_diff_files()',
-consider the "intent-to-add" files as a part of the index when comparing the
-work-tree against it. This was previously addressed in [1] and [2] by turning
-the option `--ita-invisible-in-index' (introduced in [3]) on by default.
+Junio C Hamano <gitster@pobox.com> writes:
 
-For `diff-files' (and `add -p' as a consequence) to show the i-t-a files as
-as new, `ita_invisible_in_index' will be enabled by default here as well.
+> But because the old solution would not work in the new world order
+> this topic created, a new solution needs to be found when you move
+> the world to the new order.
+>
+> An easy solution would be to reserve "ref0" for the primary branch
+> in the repository and anonymize other refs "ref1", "ref2", ...
+>
+> That can be done as a preparatory step regardless of the "'master'
+> may not be in the name of the primary branch in this repository"
+> topic.
+> ...
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index 85868162ee..a306a60d25 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -497,7 +497,7 @@ static void *anonymize_ref_component(const void *old, size_t *len)
+>  {
+>  	static int counter;
+>  	struct strbuf out = STRBUF_INIT;
+> -	strbuf_addf(&out, "ref%d", counter++);
+> +	strbuf_addf(&out, "ref%d", ++counter);
+>  	return strbuf_detach(&out, len);
+>  }
+>  
+> @@ -522,7 +522,7 @@ static const char *anonymize_refname(const char *refname)
+>  	 * anything interesting.
+>  	 */
+>  	if (!strcmp(refname, "refs/heads/master"))
+> -		return refname;
+> +		return "ref0";
 
-[1] 0231ae71d3 (diff: turn --ita-invisible-in-index on by default, 2018-05-26)
-[2] 425a28e0a4 (diff-lib: allow ita entries treated as "not yet exist in
-                index", 2016-10-24)
-[3] b42b451919 (diff: add --ita-[in]visible-in-index, 2016-10-24)
+This is obviously wrong.  It should return "refs/heads/ref0".
 
-Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
----
+But another thing we could do, which is probably more backward
+compatible, is to return "refs/heads/master" from here.  That way,
+consumers of "fast-export" stream that expect 'master' to be the
+primary branch would not get upset when the data source runs a newer
+version of Git that allows the primary branch name to be customized.
 
-Hello! This is my first patch in this project.
-This issue was mentioned in #leftoverbits on GitHub: [1], and this
-patch implements the change proposed in [2].
+Which means that, before such a change to allow the primary branch
+name to be customized happens, there is no need for such a
+preparatory patch, because the status quo is just fine.  So, I'm OK
+with retracting the above.  "ref0" is not special, so there is no
+need to have the first hunk above, either.
 
-[1] https://github.com/gitgitgadget/git/issues/647
-[2] https://lore.kernel.org/git/20200527230357.GB546534@coredump.intra.peff.net
+However, when the customization being discussed is implemented via
+the "get_default_branch_name()" and "get_primary_branch_name()"
+functions, we should update these lines like so:
 
+-	if (!strcmp(refname, "refs/heads/master"))
+-		return "refs/heads/master";
++	if (!strcmp(refname, get_primary_branch_name(DO_NOT_ABBREV)))
++		return get_default_branch_name(DO_NOT_ABBREV);
 
- builtin/diff-files.c  |  7 +++++++
- t/t2203-add-intent.sh | 25 ++++++++++++++++++++++++-
- 2 files changed, 31 insertions(+), 1 deletion(-)
+That is, the name of the "primary" branch used at the data source is
+replaced by the more generic "this is the default" branch name used
+in a random "git init" repository.
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 86ae474fbf..1e352dd8f7 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -28,6 +28,13 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	repo_init_revisions(the_repository, &rev, prefix);
- 	rev.abbrev = 0;
-+
-+	/*
-+	 * Consider "intent-to-add" files as new by default, unless
-+	 * explicitly specified in the command line or anywhere else.
-+	 */
-+	rev.diffopt.ita_invisible_in_index = 1;
-+
- 	precompose_argv(argc, argv);
- 
- 	argc = setup_revisions(argc, argv, &rev, NULL);
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 5bbe8dcce4..742f27a935 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -232,7 +232,7 @@ test_expect_success 'double rename detection in status' '
- 	)
- '
- 
--test_expect_success 'diff-files/diff-cached shows ita as new/not-new files' '
-+test_expect_success 'diff/diff-cached shows ita as new/not-new files' '
- 	git reset --hard &&
- 	echo new >new-ita &&
- 	git add -N new-ita &&
-@@ -243,6 +243,29 @@ test_expect_success 'diff-files/diff-cached shows ita as new/not-new files' '
- 	test_must_be_empty actual2
- '
- 
-+test_expect_success 'diff-files shows i-t-a files as new files' '
-+	git reset --hard &&
-+	touch empty &&
-+	content="foo" &&
-+	echo $content >not-empty &&
-+	git add -N empty not-empty &&
-+	git diff-files -p >actual &&
-+	hash_e=$(git hash-object empty) &&
-+	hash_n=$(git hash-object not-empty) &&
-+	cat >expect <<-EOF &&
-+	diff --git a/empty b/empty
-+	new file mode 100644
-+	index 0000000..$(git rev-parse --short $hash_e)
-+	diff --git a/not-empty b/not-empty
-+	new file mode 100644
-+	index 0000000..$(git rev-parse --short $hash_n)
-+	--- /dev/null
-+	+++ b/not-empty
-+	@@ -0,0 +1 @@
-+	+$content
-+	EOF
-+	test_cmp expect actual
-+'
- 
- test_expect_success '"diff HEAD" includes ita as new files' '
- 	git reset --hard &&
--- 
-2.27.0
+Imagine that there is a project that has an integration branch per
+each device type, named after the confidential device name, owned by
+a company.  An employee of the company works on one device type in
+his own clone of the repository, and the primary branch in the
+repository is set to that confidential device's name.
+
+The employee can create an anonymized output, replacing the
+confidential name with a generic "default" name that is not
+confidential, like 'main' in the new world order or 'master' in the
+backward compatible world order, with such an updated code.
+
+After having thought about it a bit longer, I actually do prefer to
+use the "ref0" approach, as it is possible for the employee in the
+above example to have the "default" branch name tied to the primary
+branch for the hardware type the emploee works on in the ~/.gitconfig
+so the "alternative" I suggested in this message will reveal the
+confidential name.
+
+So, I guess we should just fix the patch I am responding to to
+return "refs/heads/ref0" instead of "ref0", and queue it as one of
+the preparatory steps.
 
