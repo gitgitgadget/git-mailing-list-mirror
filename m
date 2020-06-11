@@ -2,122 +2,135 @@ Return-Path: <SRS0=QgeI=7Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D0A2C433DF
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41440C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:11:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 169AE20747
-	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:10:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE6702078D
+	for <git@archiver.kernel.org>; Thu, 11 Jun 2020 01:11:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="KqS7IGqG"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S3960wPv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726304AbgFKBKp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Jun 2020 21:10:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726163AbgFKBKo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jun 2020 21:10:44 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 918C6C08C5C1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 18:10:43 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id d8so1651451plo.12
-        for <git@vger.kernel.org>; Wed, 10 Jun 2020 18:10:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Dhi2VROP4k3eMAD7Bne3TKWlTiFzPtlAUl44R13iK/4=;
-        b=KqS7IGqGZT+eqNhnEjqvB13gf9l2PSciM0yLwXsm2nxIjg6LvO6PZjA7Z3o0PM6hyr
-         cD316x5j6KQGYTVI1FzkhbnDRh8M2GCvKtJjg6TL67luvYByB7RfBvuGaJTxMH0HY7ao
-         rL1Rd8GUxcLM+R44SAESHo3yFfosDEx3PheAFMJCfs7ZWu/TbMUa3A82WNpxeC3qBg8C
-         AJ0kVciQfz8OpxequyeNRo4saX0mm+evL3kN2tgqRajRmDsPlWzKsvUCVRJBRRBN5oHU
-         Bg/3AmB9+HhSyxhyRN9cnTnaW9c6KCgIv9hnqg691SVfOzxyOgQzuLkd1DA1RyPvtUxd
-         kxpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Dhi2VROP4k3eMAD7Bne3TKWlTiFzPtlAUl44R13iK/4=;
-        b=WWBMxOWNNkcgE9/L8mZfBsgL6552eu/J0CeBG1cbUkhy1/kzxEy0JX9UCTPyXsuZ5p
-         2EsCY7NAN3mLwCoiVU1BvBF1jh+a36jqXUhURmZ0KxC2AMkhQfJ4aCx9DGAaydxD2/qt
-         2hD+VOkl2Ay1PcKCPuOoymEcVp+TIrmWF/kkThWAWV9gfcPRI7N2JskMcKV9JgOSfFEN
-         LqVrcwACwNPWY9EWaukEWsyjPfjmVp2aDyyxETd3HVKU4F4Tw6T9/Vab61Iq1q3aglgI
-         f+zN2RXoexAt1xtOwXST7pX3lMPXW1n2+s6tsk47FKyu01cwB/8BFVWbYBp50XOHCp03
-         8tEA==
-X-Gm-Message-State: AOAM532LhvbPP0JkxEqAIbPH2ih0slSdTY1jQVL6nIOMyafPgUnis/o9
-        cmYfKHdAqm7mOQsNg8gFU/4xn+hZx7iJeg==
-X-Google-Smtp-Source: ABdhPJwZJ2CWAW1BgMCK/opFmy8BVoUyCZuon/zjcsqIGQ5mGJs6W7gVnIeUDWqH7VawBnT0NyVSFQ==
-X-Received: by 2002:a17:902:834b:: with SMTP id z11mr5212741pln.87.1591837842975;
-        Wed, 10 Jun 2020 18:10:42 -0700 (PDT)
-Received: from localhost ([63.239.199.7])
-        by smtp.gmail.com with ESMTPSA id z85sm1133235pfc.66.2020.06.10.18.10.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2020 18:10:41 -0700 (PDT)
-Date:   Wed, 10 Jun 2020 19:10:40 -0600
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
-        Don Goodman-Wilson <don@goodman-wilson.com>,
-        git@vger.kernel.org
-Subject: Re: Virtual Inclusion Summit
-Message-ID: <20200611011040.GB21728@syl.local>
-References: <20200610222719.GE148632@google.com>
- <xmqqwo4eedwc.fsf@gitster.c.googlers.com>
+        id S1726312AbgFKBLC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Jun 2020 21:11:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61236 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726163AbgFKBLB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jun 2020 21:11:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0A654DC68D;
+        Wed, 10 Jun 2020 21:11:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rukPymp9ABvmcJ9IhZZV9xOc3yc=; b=S3960w
+        Pv48fc9iGr81V56jLI+y55V7TIJC9ViEligqM7fA4BfKjJwwVtNyIPRidyPc9fip
+        RgGhBgC4DKV4SKcAYd8IRrC98QldqrOl4Xb9ISAoWUswg+1JoLWo2aPe3fz4bd9L
+        BR3X5Hz80eqNB3yH7YtDRoWYQSEGu3wr+0MmY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Wblx7dTRhxo3vvSYva6oCZk9OBUs0Vdh
+        raefCKIegeIlhjIOxyif7mVNLo16Z0HvKqu32wTnVVt8IGVQLKmESYDAT+73iIMY
+        Zdn6dVobjONCW9dGxSYji0eQUSFkckjpTazplSn6kMeuoWtx8kitYkLkMUF14Ohu
+        aLJQoEQnrkQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03188DC68C;
+        Wed, 10 Jun 2020 21:11:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 481DADC68B;
+        Wed, 10 Jun 2020 21:10:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/9] http: use --stdin when indexing dumb HTTP pack
+References: <cover.1590789428.git.jonathantanmy@google.com>
+        <cover.1591821067.git.jonathantanmy@google.com>
+        <d3b27394cad951a9f1412a04572439513d7e9f4d.1591821067.git.jonathantanmy@google.com>
+Date:   Wed, 10 Jun 2020 18:10:55 -0700
+In-Reply-To: <d3b27394cad951a9f1412a04572439513d7e9f4d.1591821067.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Wed, 10 Jun 2020 13:57:15 -0700")
+Message-ID: <xmqqsgf2csps.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwo4eedwc.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 67C17BFC-AB80-11EA-A1B5-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 10, 2020 at 03:48:03PM -0700, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
->
-> > One note I'd like to make is that the Git community already suffers from
-> > a lack of diversity; it will be hard for us to make meaningful changes
-> > if just those of us who already contribute attend, because many of us -
-> > myself included! - come from privilege and don't have much or any
-> > firsthand experience with microaggressions (or overt discrimination). I
-> > think it's a good idea to expand the attendance of this summit beyond
-> > the current contributor base and try to include more diverse voices and
-> > experts in building inclusive products.
-> >
-> > To that end, I'm going to see what kind of interested parties we can
-> > find to invite within Google - and I hope others will do the same within
-> > their own network. I think the risk of us coming up with meaningless
-> > changes far outweighs the risk of us having too many people in the Zoom
-> > call. :)
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-To Emily; I would be honored to attend. Please let me know if there is
-anything that I can do to help organize such a thing.
+> diff --git a/http.c b/http.c
+> index 62aa995245..39cbd56702 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2270,9 +2270,9 @@ int finish_http_pack_request(struct http_pack_request *preq)
+>  {
+>  	struct packed_git **lst;
+>  	struct packed_git *p = preq->target;
+> -	char *tmp_idx;
+> -	size_t len;
+>  	struct child_process ip = CHILD_PROCESS_INIT;
+> +	int tmpfile_fd;
+> +	int ret = 0;
+>  
+>  	close_pack_index(p);
+>  
+> @@ -2284,35 +2284,24 @@ int finish_http_pack_request(struct http_pack_request *preq)
+>  		lst = &((*lst)->next);
+>  	*lst = (*lst)->next;
+>  
+> -	if (!strip_suffix(preq->tmpfile.buf, ".pack.temp", &len))
+> -		BUG("pack tmpfile does not end in .pack.temp?");
+> -	tmp_idx = xstrfmt("%.*s.idx.temp", (int)len, preq->tmpfile.buf);
+> +	tmpfile_fd = xopen(preq->tmpfile.buf, O_RDONLY);
 
-> It is OK to have an optional meeting in the hope that a video
-> meeting may have a better chance to keep those who easily become too
-> aggressive and confrontational in text-only conversation in check
-> and instead have civilized conversation.
->
-> But I am not sure if it is a good idea to call such a meeting a
-> "Summit", given that there are those who prefer not to be seen,
-> heard or recorded how they appear and how they sound in a video
-> conference.  They would not be able to join the conversation held in
-> such a "Summit" held only by those who are privileged enough to be
-> able to attend.
+Shouldn't we catch the case where we cannot open the file for
+reading and return -1 to have the caller handle the error, just like
+the case where other errors are detected in this function?
 
-I think that this is a very reasonable concern, stated in a very
-reasonable fashion. Let's call it something else, sure, and avoid
-recording/publishing the event (as we have done in the past at other
-in-person events--such as the last Git Merge--which seems like a
-lifetime ago ;-).)
-
-> Thanks.
-
-Thanks,
-Taylor
+>  	argv_array_push(&ip.args, "index-pack");
+> -	argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
+> -	argv_array_push(&ip.args, preq->tmpfile.buf);
+> +	argv_array_push(&ip.args, "--stdin");
+>  	ip.git_cmd = 1;
+> -	ip.no_stdin = 1;
+> +	ip.in = tmpfile_fd;
+>  	ip.no_stdout = 1;
+>  
+>  	if (run_command(&ip)) {
+> -		unlink(preq->tmpfile.buf);
+> -		unlink(tmp_idx);
+> -		free(tmp_idx);
+> -		return -1;
+> -	}
+> -
+> -	unlink(sha1_pack_index_name(p->hash));
+> -
+> -	if (finalize_object_file(preq->tmpfile.buf, sha1_pack_name(p->hash))
+> -	 || finalize_object_file(tmp_idx, sha1_pack_index_name(p->hash))) {
+> -		free(tmp_idx);
+> -		return -1;
+> +		ret = -1;
+> +		goto cleanup;
+>  	}
+>  
+>  	install_packed_git(the_repository, p);
+> -	free(tmp_idx);
+> -	return 0;
+> +cleanup:
+> +	close(tmpfile_fd);
+> +	unlink(preq->tmpfile.buf);
+> +	return ret;
+>  }
+>  
+>  struct http_pack_request *new_http_pack_request(
