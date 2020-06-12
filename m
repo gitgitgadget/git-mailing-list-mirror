@@ -7,136 +7,126 @@ X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF8A2C433DF
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 14:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8957EC433DF
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 14:38:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C79A920835
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 14:33:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6597E20835
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 14:38:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="coYegU6B"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="VWweCBMc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726286AbgFLOdP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Jun 2020 10:33:15 -0400
-Received: from mout.gmx.net ([212.227.17.20]:57641 "EHLO mout.gmx.net"
+        id S1726535AbgFLOi5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Jun 2020 10:38:57 -0400
+Received: from mout.gmx.net ([212.227.15.18]:41263 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726268AbgFLOdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 10:33:15 -0400
+        id S1726089AbgFLOi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 10:38:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1591972382;
-        bh=2miohRxhN5zUCbAIwTdsTPkV6s4L8Wa8rpYVXP4jtX0=;
+        s=badeba3b8450; t=1591972724;
+        bh=dLrq/HjR9TkRqy4bZPSUlBFI5LtB7Cgrmm1bcPSsYkE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=coYegU6ByqS5xyF2g66XJl4OZzlXsbsBln9j/jhEy8viSPh59My6nDxTBJogVsHyU
-         uDu5d7PS+Cvul50u8wimXUlhgqBGbM1tIgiPsjKDnWXGLy2CrTHEXQVaOJOqrHlpd5
-         iJYFfFLO3nZNuzoGuSPg8iaKt8iHNwaBKo0gc1TU=
+        b=VWweCBMc8NKDvdNxW9cclsytgc+3LTHSJP2iJBngBMQdXB9P3LVdP11EIj/0jZsGt
+         Rk2rX5blnqBI4OrUKnqiwUkCEQir4Tb6W/mdFgODqbMC1dBKrP7KgoYDGZNMdrmzoe
+         QkaIMfLXuUFjFTgmY9mtvHz+CUMy9y2efvv2g3cI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.173.52] ([89.1.214.156]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M42nY-1jjkju2MJU-0005ai; Fri, 12
- Jun 2020 16:33:02 +0200
-Date:   Fri, 12 Jun 2020 16:33:05 +0200 (CEST)
+Received: from [172.19.173.52] ([89.1.214.156]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Ma24s-1jOwfw1fr2-00VuDA; Fri, 12
+ Jun 2020 16:38:44 +0200
+Date:   Fri, 12 Jun 2020 16:38:46 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Don Goodman-Wilson <don@goodman-wilson.com>
-cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Taylor Blau <me@ttaylorr.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>, git@vger.kernel.org
+        Simon Pieters <simon@bocoup.com>,
+        Don Goodman-Wilson <don@goodman-wilson.com>,
+        git@vger.kernel.org
 Subject: Re: Virtual Inclusion Summit
-In-Reply-To: <CAGA3LAdz21nZFeztkHp5XUQ4h-kWnqTzb8pDXjne7PqeMFhLRQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2006121525140.56@tvgsbejvaqbjf.bet>
-References: <20200610222719.GE148632@google.com> <xmqqwo4eedwc.fsf@gitster.c.googlers.com> <20200611011040.GB21728@syl.local> <xmqq7dwecpsp.fsf@gitster.c.googlers.com> <20200611023503.GA24130@syl.local>
- <CAGA3LAdz21nZFeztkHp5XUQ4h-kWnqTzb8pDXjne7PqeMFhLRQ@mail.gmail.com>
+In-Reply-To: <xmqqh7vhbp5h.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2006121637080.56@tvgsbejvaqbjf.bet>
+References: <20200610222719.GE148632@google.com> <xmqqwo4eedwc.fsf@gitster.c.googlers.com> <20200611011040.GB21728@syl.local> <xmqq7dwecpsp.fsf@gitster.c.googlers.com> <20200611023503.GA24130@syl.local> <xmqqh7vhbp5h.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-302581770-1591972387=:56"
-X-Provags-ID: V03:K1:eoLAo/I8VIMfuiJbjR/wLRNkIHtlsSYvq0SC3JVPxvhPv4Gwrep
- NJOp8fsJeiChOOLh6FhwPEFu/CY+OxS1SHntSxKj+YoHSNDX6K8Sm2G9G1HVg5EPMxObw7a
- DcBSmn8bDSJsf5CL8K0xuyicLsQzYnLiDlAn9HzfuOiQdQMesCT5DtgiLpEuRHCnxkHOd2C
- S0eC/celVh/w4ztN35Awg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YhSGNDTmq+E=:WgcUWjQTj1ezpAmXNAsUra
- fuMsstSSh6xtyxKDFneznSPSd0EFnc3w5TW/wKNK690HSMFSnnxbKmG7ea+ujq4nlZ+m14qkm
- +lR6BBRLKsYz696njxU+e/1OdL1HzeAyTkkaFBoKsXRvGcUCYwoxusOUgxZhJrCGNfZtxR2Ml
- gZWN3rzi0Msm9psRYQo6tx9TLhARyX0EykHktlOYCk7I+Z4sp+uk6HPJuPoZJnw/E4jo3lP4Q
- nJIWxKVUhx/bRqWy1H1HH1AgTmhozEL6cm4fxS500ULuSnssMk7j+nqXz68+5me5ijEmLW0Zo
- jQa6QMN2vXdenem/4AYjVnEUAJpj6SCYPaVJpDEpAWdtrPIuQ26kc+VJqhl8Mv0KQa6PXTGwJ
- 1ARD+Vcyn0yNEN8KEePOiZOPKo3TxDoVhimowkzabrIMLKqQKxwAdxwov5Wx3+Asd2OqhlW52
- ie/V59m6vSdXgyC6TH/1hVNSj0XVk0oHHjPsUQ9j+06XHWDTv8YrT18g3AeTtZ5u2YevkRh6C
- 9XlmhC6LCW+OXhNBOgyQmvmDUbibNjRcV2I27gD1KNDLsSls7sNbkPgZEXR6UTIgfcc6y0biW
- JemYmBAl0UdZBZobgyMMo+MNICUGkTCn7FYECXMqpUJR2Z9xMtddhts4IiJxagINgkE4tyHsL
- 1FShoYZGNwtQQsdkeJ5hEMK+7tQ+vYZsymIK5UgEKxfIALZggUzUVcIoT+cOpjNr434al4+Zn
- 27o0a8hSVHwX3HO+WrjCjap6bvOpdKf46WadllUi8JmZf7Xelg1d75sfQ2Nkk+B86Kj0aU6j+
- 10aI0MbPzfRoMF0r7ZSBD3mz3Q9SYL6zZNGgpKI110zfmmoy42h4hFqPYuAuWW3OKqrRGReRA
- 0fWJEVas2jlQUeVuOzO0lG3lm/o80FFKoNd0zzDiA4wcClEzWKLD4nx9TQYjVYSeR8dA0GniA
- 68/zqmRkAgndBSUu2+1+us9rEibPubVSR3uJAUeWRYtuAoGGki25CJig/mtjXKOemiFLf9h6p
- BUgkkUHPghdRSk6kXAJt5hLae6+/bAmTLn/HBqGE/lR/uuQ8dwdcbjF6212kr9lCWZOC3XxOn
- X9i2pyWouILkrLgIeWxJRahuaeHlWMayajQJR3ke92qjy1V737wXFsPPhadpzSv7Dzfqgc5cS
- PV2+etz3i3g1ZzXoGKVVhbXep0XS2+57VoYsgEiEQlJqS75w9nxgeeFiTTiyfShimEvpWewMc
- /8FBRfj44LyddEUf2
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:NQI45uHCcztMvw+TvRodx0r3w7wW88LFkCw5/Gj1H2ftxxWLryI
+ Dg/mGZK6CkItv8a2G0nZI1JUKP9eR7xG7SG92j7CRE/zFCsoVmatq3tS+sMGLYRLUW5rcDN
+ IsOLSguky/ZWSC6sh+OE77ZzuBazI61W3jKz7r25iGJU95s7cFDtx70qtaABVvBtw9rB8Np
+ db3fjMuQoNgZuFCXL6KgA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Y+mJ/QPoHgo=:KL5mNXNMxwpfH5vHR6Cvpp
+ TwVLKT+cgTrSPJSHZsko1uPuU43X/c/YKYpOD0pjW0Vumh+8RAB2Y7ZA13d+ppTf0WWRxMZs0
+ pxdO4G59UhuZ4vtmXuYQEUSt5s1Nq/h6xrV0CoXl1icUSFSp/4mmcI/jqmDG5d/hjydnnrcP2
+ e2SFvWjZTWK3DHvS760BAVa+6HtivEBi2sNVh0Y2JDNMJpzLGXrguTZrG6dpbxOISJXgAvf02
+ mNnKDxi2R6xTWJkjZ+Qf3FL2VF8f3ChC1ot1YKERNQIofyiVRBqNAjFJRFSUB2yi1YbsbcNsJ
+ 8rsveOi660wpyE+Up3bEFNay7Mni4ok+Ag8raHZv6DOMMpgrhZcPSGoSFBZVy0CCuJmYrLqck
+ IeuH/bK1CJQA6pLCcJHTxbmM0ql6HHElkgtjwtiriXbnUlJQKDkMcAFuxtqnO9pheaHf8DhXZ
+ lkk34U17B5zlNVHwIqN3YKpkkGfIX1MFbI8mVS+hmWSbrMepuPK7vCy+067mcsvwEj9SJ1UsS
+ 3RUHqF2o58MZ/+K+Yx1M88jNixlTsExAKKeAVJ5R+45L8HGeoLU5291Z3zK1GIhVwGN7KhdzW
+ gacBGxx41mA4G/0wrwdDfPWnLhMLirBHi7VQhlhUi2zMYB/x+wg6FEm8KaNHW2xbSzrpI/H9E
+ 0t7E830NBdjVZcirwig9N3JS1Hu8s4Ir1/FKH9/2qqSWja94COTsxfNXhYpJR5JpytFcJuY+n
+ vhoqKB/wuwS+sN90LRc3YEf/R3hqI59Ri0Zlt95fkNez+a/uZkyai8FDBQoESFh68SbcfObS1
+ Rg6GZYvQTufRovSEXpxzwEZ22tdNJt+54U4U7H9u3G9XljjvlNrMbmXAYnDP2gDIX1lBlyoA8
+ TnOn6l34TYYlkSeudU7z6enEduR9PerjpozCPlm2JlAWAi8EEOunLt9QP6/tgYvX43OOPKIoU
+ LKzb9jYNbjowTk8fXQWkIvgW0qlX1Z2IA9W/e323+aq04Z1wBKqea0xWqQ3D/qiLJyKRrtaOC
+ OybnEmZ06i6hJ9cJbQf6Y1LJkNkMq1Hiotzq5LuAHo3mNIsCYx+3CqH+ltlt7Craov+HWtfPf
+ 25dgCrG7DwaAEkBFSIRoI6U64TPcFCf66PM/6WRv1FUW9KthgNxhwAV52NvhHffsKNEFjUJ0l
+ aD/gyZt16qVI6MHy3TT1wnI/7h4DBtxKuLWA9upRv3M0IQdL7e89x4W+Qnthoe8cwQ1/Adswl
+ nhg05waqdZxqcs5ex
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-302581770-1591972387=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 11 Jun 2020, Junio C Hamano wrote:
 
-Hi Don,
-
-On Thu, 11 Jun 2020, Don Goodman-Wilson wrote:
-
-> (First of all, it=E2=80=99s Don, rather than Dan; I think Johannes=E2=80=
-=99s
-> auto-correct got the best of him at one point in his email :D )
-
-Yep, sorry for that!
-
-> I think this is a wonderful idea.
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> First, I am myself a white cis-het male; my participation in any such
-> summit would be predicated on ensuring that we have a diversity of
-> voices present, as I think it is foolish to have a conversation about
-> inclusivity and equity with only white voices like mine speaking. I
-> hope and expect that we are planning for that.
+> > On Wed, Jun 10, 2020 at 07:13:58PM -0700, Junio C Hamano wrote:
+> >> Taylor Blau <me@ttaylorr.com> writes:
+> >>
+> >> >> It is OK to have an optional meeting in the hope that a video
+> >> >> meeting may have a better chance to keep those who easily become t=
+oo
+> >> >> aggressive and confrontational in text-only conversation in check
+> >> >> and instead have civilized conversation.
+> >> ...
+> >> What I am hesitant to see is that such an opt-in meeting becomes
+> >> "you got a chance to attend and have your voice heard---if you
+> >> didn't come, that was your choice, and whatever objection you give
+> >> after it does not count" summit.
+> >
+> > Ah, thanks for your clarification (and sorry for the misunderstanding)=
+.
+> > I figure that any synchronous discussion should augment the on-list
+> > discussion, not replace it.
 >
-> Given the concerns about being recorded, perhaps my experience running
-> Maintainerati events might be helpful. Maintainerati (if you hadn=E2=80=
-=99t
-> heard of it) is a series of events that gather open source maintainers
-> into unconference-style conversations about the challenges they face,
-> and finding solutions to those problems. The events are operated under
-> Chattham House rules, ensuring the anonymity of participants who wish
-> to remain so. Even so, the goal of the events is to not only document
-> the conversations that happened, but to create a set of documents that
-> allow the conversation to continue long after the event is over, as
-> well as providing a blueprint for concrete action. It is not difficult
-> to set up the necessary conditions to make this work, although we will
-> need dedicated note-takers willing to undergo about 30 minutes of
-> training. I would be happy to put in the effort to make this kind of
-> thing happen, if this sounds helpful.
+> By the way, if I sounded like I consider this "virtual summit" to be
+> no more than just a place for people with heated head to deflate
+> before having a civilized conversation, that was not my intention.
+>
+> I do agree that it is good to have some gathering (or perhaps a
+> couple of them in shifting time to accomodate people from different
+> parts of the world) to help make sure everybody is moving towards
+> the same goal, and I have nothing against a virtual/video meeting
+> for that purpose.
+>
+> Other than that it may be held on Zoom, where I do not particularly
+> like to send people to, after seeing articles like [*1*], that is,
+> but there may not be a viable alternative.  I dunno.
 
-Thank you for the offer and describing your experience.
-
-I might be completely wrong, but in this instance, I have the impression
-that for the topic of changing the default main branch name, a Chattham
-House rules meeting might not even be _all_ that crucial. Let me explain
-why:
-
-The primary purpose of this meeting, from my point of view, is to align
-and coordinate, to set out goals that we want to agree on. Where "we" is
-"the core Git contributors".
-
-And from what I see, I am happy to report that I see a lot of alignment
-already. There was no "nah, why bother?" response, which made me very
-happy, personally.
-
-Every active contributor seems to agree that this is worth doing, and
-since I am doing the bulk work (with a lot of help from your side, thank
-you so much!), there is not even the question "but who will do it?".
+I heard that concern a couple times. The only reason why I suggested that
+platform is because we used it last September, and it worked reasonably
+well. And that really was the only reason.
 
 Ciao,
 Dscho
 
---8323328-302581770-1591972387=:56--
+>
+>
+> [Reference]
+>
+> *1* https://www.ft.com/content/f24bc9c6-ed95-4b31-a011-9e3fcd9cf006
+>
