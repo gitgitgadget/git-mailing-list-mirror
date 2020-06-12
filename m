@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71E55C433E1
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1986CC433DF
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C2FF207ED
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6216207F7
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f+lu6ZiP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f1e7mkLa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726416AbgFLS3n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Jun 2020 14:29:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36448 "EHLO
+        id S1726368AbgFLS3e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Jun 2020 14:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726338AbgFLS3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 14:29:37 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EDFC03E96F
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:36 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id t18so10691897wru.6
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:35 -0700 (PDT)
+        with ESMTP id S1726309AbgFLS3d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 14:29:33 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DDFC08C5C1
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:31 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id x13so10691431wrv.4
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+yIKfkBO3c69HhwjTlDrEkaXkd5cLfl6oKOdSa5UTWU=;
-        b=f+lu6ZiPMj/U3VB/tgThAT2ei4GBlIzCpTD1jSJFf7p4O5OFEvlIdds5UKqMO2kIBM
-         xQ/hfYeZFtSWKFkWCMDjOq62am5iMj3p32SnLxFS/BAC2mrY9HkBDum4ybmyR65VVn3d
-         6+AzfIy44gfgIpbXHROAkFeohUG6OyHY7azSMl1Tvo8b/vqikDW0eaxlqGiYESJ6V1fW
-         6eaqtqkkDlC9R+STU7EBqsC85VyLeg5yL/mekNj6by7kUTkcl1/WHlyEeaiSWHneNfYQ
-         OvOYjfMWfOMEjQOhNkDbetdPwRnlB8k344/Hn/vhg53MirzYs/ZPBnYmWGrmLIau7T9r
-         F/RQ==
+        bh=fM6k/y9r6L6+uhRJkQJTc0G/DZ9x2espfI9XgsEJX2g=;
+        b=f1e7mkLavqKHXc4QUg7ZjBymkbeV3G3hV08AHOIbrtJoG6meYBjNQ8D10iv0isShBh
+         Gimqbwxgq2Q3cBuZ6pzGS7LkVXTK/mi4SQGfn8OoDQpjjxq5aQmwnhW168PL0ThSdojf
+         cgVMxBmHZNzhbvBN2AIwIxNPHMkZGGWrC5eAiIrBHrpq29eV5CAlmo7RB8Ps0Z7DUvUY
+         NRoOfOQaqWxsms/VMP4Mqx2fwTuu4qIHqbq7f/5tjzpL7NHCEkHcQAvkqfZewZSDke2R
+         H9MAKImyQTZPXsgOFyfiYb/OdcQj4wi86WSfsTl8imjQxJv+X3cPnzEkSg9oXQCqukAQ
+         saag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+yIKfkBO3c69HhwjTlDrEkaXkd5cLfl6oKOdSa5UTWU=;
-        b=LiAT9P+N3i7Ddz758Nt20RrNhogr0uzJDzabHBzIWAuA7Zj7ZKFHf9pYN5BHMTrcJC
-         SoGm3O2xLwhOb8vtxE1TCtPXEex4mlAAWYZZ+U8MpNJfJWkX0MfK5p+dYcPx3NPT+qS+
-         9DgOiYJRxSNDT/o+Q1z8kelzKdXik1CbyYkztDcnVK9LIGy8rOccY5/PGdRqe1cA4f1t
-         /dNP1re52mIfIQTUqHmNNlvMiBEXcmrWl4hTk9fAL1R2uLzNKVClNDAhVJ7si5hy9Ydt
-         AeQoUKM0y9YLiuNGOd57Nul4rrQ6PY+JvWynGouph3/ZMSSD6Gc/Gp1HzOHTWAfhYzQq
-         xbcA==
-X-Gm-Message-State: AOAM532r+Ml8sdRufmK7kUatHv6fdJ10gXpXtcGh2bix/SwlInOU+oGM
-        L9LFrI+rM4KpvkFcmBOIdV9GqqwI
-X-Google-Smtp-Source: ABdhPJxLKL9lffdsvYmtQA+IX266nL2/LkRqx1qvX9iGlml8eNvsEBlZcakw2q6OuNktzKFU4elPUw==
-X-Received: by 2002:a5d:5449:: with SMTP id w9mr16595719wrv.106.1591986574371;
-        Fri, 12 Jun 2020 11:29:34 -0700 (PDT)
+        bh=fM6k/y9r6L6+uhRJkQJTc0G/DZ9x2espfI9XgsEJX2g=;
+        b=LjbJgKMd1fDeltU6QNJgTzqho94gzRj7nQtJc80u+yftoN2qwkwsqFb/6yUXJQzWTC
+         9SgitmIi7Qjwmm515Qd03Akje7KVF1JAuyMI/YFhkm/3EIVDNfJKio06QmXBt49T8zm+
+         TMti74ZUdGALGoW+HJQXQjiKE1tO+nwtvmk6i9xvpQwqk1kmul7CjSoOxzmb2EFliI/e
+         Z7yeL1pI19HTuUu7GCWKR2KdcLhNprE+Q0jkwbeT/NBiFLpl0vYr+lpI+C2lsUszPxkD
+         AwBhGc1mymKGPdpquoA5Jlu5JSHK82e+F/VuJ8xE5iCW4PBtuTtJTkNLKmmiioHoLhPU
+         AP/w==
+X-Gm-Message-State: AOAM532t/vJjx+Pcul/x9+k53O1zPifsQzy8nBibvzURgczxqZ6oJt+Y
+        Hte0xVen+0bXXTL70vdQTbL1OmX6
+X-Google-Smtp-Source: ABdhPJwiN5MfXGUZ7ktTjSpBTEbLddN8/N7PWS3Z1fCFFb4Frgls1HKQKez2ojVRssCGO3lwkKYg1A==
+X-Received: by 2002:adf:f7ce:: with SMTP id a14mr15952565wrq.362.1591986570340;
+        Fri, 12 Jun 2020 11:29:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z7sm11243363wrt.6.2020.06.12.11.29.33
+        by smtp.gmail.com with ESMTPSA id m24sm9825309wmi.14.2020.06.12.11.29.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2020 11:29:33 -0700 (PDT)
-Message-Id: <549f0cd5fffef38e8d85246a9aa2593674aad68c.1591986566.git.gitgitgadget@gmail.com>
+        Fri, 12 Jun 2020 11:29:29 -0700 (PDT)
+Message-Id: <abb9e6e1d585b34d55ec2b447a80f7ddf6dcb7da.1591986566.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
 References: <pull.614.v3.git.1590759624.gitgitgadget@gmail.com>
         <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Jun 2020 18:29:24 +0000
-Subject: [PATCH v4 6/8] cmake: support for building git on windows with mingw
+Date:   Fri, 12 Jun 2020 18:29:20 +0000
+Subject: [PATCH v4 2/8] cmake: generate the shell/perl/python scripts and
+ templates, translations
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,274 +79,161 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 
-This patch facilitates building git on Windows with CMake using MinGW
+Implement the placeholder substitution to generate scripted
+Porcelain commands, e.g. git-request-pull out of
+git-request-pull.sh
 
-NOTE: The funtions unsetenv and hstrerror are not checked in Windows
-builds.
-Reasons
-NO_UNSETENV is not compatible with Windows builds.
-lines 262-264 compat/mingw.h
+Generate shell/perl/python scripts and template using CMake instead of
+using sed like the build procedure in the Makefile does.
 
-compat/mingw.h(line 25) provides a definition of hstrerror which
-conflicts with the definition provided in
-git-compat-util.h(lines 733-736).
+The text translations are only build if `msgfmt` is found in your path.
 
-To use CMake on Windows with MinGW do this:
-cmake `relative-path-to-srcdir` -G "MinGW Makefiles"
+NOTE: The scripts and templates are generated during configuration.
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 121 ++++++++++++++++++++++------
- 1 file changed, 98 insertions(+), 23 deletions(-)
+ contrib/buildsystems/CMakeLists.txt | 110 +++++++++++++++++++++++++++-
+ 1 file changed, 109 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index f9976378d2d..9aff2b9f4f9 100644
+index 1e910d9df85..b3863bffee6 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -42,6 +42,10 @@ cmake_minimum_required(VERSION 3.14)
- set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
- 
- find_program(SH_EXE sh)
-+if(NOT SH_EXE)
-+	message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
-+			"On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
-+endif()
- 
- #Create GIT-VERSION-FILE using GIT-VERSION-GEN
- if(NOT EXISTS ${CMAKE_SOURCE_DIR}/GIT-VERSION-FILE)
-@@ -65,7 +69,9 @@ project(git
- 	VERSION ${git_version}
+@@ -66,7 +66,7 @@ project(git
  	LANGUAGES C)
  
-+
- #TODO gitk git-gui gitweb
-+#TODO Enable NLS on windows natively
- #TODO Add pcre support
  
- #macros for parsing the Makefile for sources and scripts
-@@ -104,6 +110,7 @@ find_package(EXPAT)
- find_package(Iconv)
- find_package(Intl)
+-#macros for parsing the Makefile for sources
++#macros for parsing the Makefile for sources and scripts
+ macro(parse_makefile_for_sources list_var regex)
+ 	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
+ 	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
+@@ -77,6 +77,16 @@ macro(parse_makefile_for_sources list_var regex)
+ 	list(REMOVE_ITEM ${list_var} "") #remove empty list elements
+ endmacro()
  
++macro(parse_makefile_for_scripts list_var regex lang)
++	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
++	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
++	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
++	string(REPLACE " " ";" ${list_var} ${${list_var}}) #convert string to a list
++	if(NOT ${lang}) #exclude for SCRIPT_LIB
++		list(TRANSFORM ${list_var} REPLACE "${lang}" "") #do the replacement
++	endif()
++endmacro()
 +
- if(NOT Intl_FOUND)
- 	add_compile_definitions(NO_GETTEXT)
- 	if(NOT Iconv_FOUND)
-@@ -125,6 +132,14 @@ if(Intl_FOUND)
+ include(CheckTypeSize)
+ include(CheckCSourceRuns)
+ include(CheckCSourceCompiles)
+@@ -112,6 +122,11 @@ if(Intl_FOUND)
  	include_directories(SYSTEM ${Intl_INCLUDE_DIRS})
  endif()
  
-+
-+if(WIN32)
-+	find_program(WINDRES_EXE windres)
-+	if(NOT WINDRES_EXE)
-+		message(FATAL_ERROR "Install windres on Windows for resource files")
-+	endif()
++find_program(MSGFMT_EXE msgfmt)
++if(NOT MSGFMT_EXE)
++	message(WARNING "Text Translations won't be build")
 +endif()
 +
- find_program(MSGFMT_EXE msgfmt)
- if(NOT MSGFMT_EXE)
- 	message(WARNING "Text Translations won't be build")
-@@ -156,11 +171,39 @@ add_compile_definitions(PAGER_ENV="LESS=FRX LV=-c"
- 			BINDIR="bin"
- 			GIT_BUILT_FROM_COMMIT="")
- 
--set(FALLBACK_RUNTIME_PREFIX /home/$ENV{USER})
--add_compile_definitions(FALLBACK_RUNTIME_PREFIX="${FALLBACK_RUNTIME_PREFIX}")
-+if(WIN32)
-+	set(FALLBACK_RUNTIME_PREFIX /mingw64)
-+	add_compile_definitions(FALLBACK_RUNTIME_PREFIX="${FALLBACK_RUNTIME_PREFIX}")
-+else()
-+	set(FALLBACK_RUNTIME_PREFIX /home/$ENV{USER})
-+	add_compile_definitions(FALLBACK_RUNTIME_PREFIX="${FALLBACK_RUNTIME_PREFIX}")
-+endif()
- 
--add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
--list(APPEND compat_SOURCES unix-socket.c)
+ #default behaviour
+ include_directories(${CMAKE_SOURCE_DIR})
+ add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
+@@ -590,3 +605,96 @@ add_custom_command(OUTPUT ${git_links} ${git_http_links}
+ 		COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/CreateLinks.cmake
+ 		DEPENDS git git-remote-http)
+ add_custom_target(git-links ALL DEPENDS ${git_links} ${git_http_links})
 +
-+#Platform Specific
-+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-+	include_directories(${CMAKE_SOURCE_DIR}/compat/win32)
-+	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_UNIX_SOCKETS WIN32
-+				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
-+				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
-+				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
-+				UNICODE _UNICODE HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET)
-+	list(APPEND compat_SOURCES compat/mingw.c compat/winansi.c compat/win32/path-utils.c
-+		compat/win32/pthread.c compat/win32mmap.c compat/win32/syslog.c
-+		compat/win32/trace2_win32_process_info.c compat/win32/dirent.c
-+		compat/nedmalloc/nedmalloc.c compat/strdup.c)
-+	set(NO_UNIX_SOCKETS 1)
 +
-+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-+	add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
-+	list(APPEND compat_SOURCES unix-socket.c)
-+endif()
++#creating required scripts
++set(SHELL_PATH /bin/sh)
++set(PERL_PATH /usr/bin/perl)
++set(LOCALEDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
++set(GITWEBDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
++set(INSTLIBDIR ${FALLBACK_RUNTIME_PREFIX}/share/perl5)
 +
-+if(WIN32)
-+	set(EXE_EXTENSION .exe)
-+else()
-+	set(EXE_EXTENSION)
-+endif()
- 
- #header checks
- check_include_file(libgen.h HAVE_LIBGEN_H)
-@@ -223,7 +266,12 @@ endif()
- #function checks
- set(function_checks
- 	strcasestr memmem strlcpy strtoimax strtoumax strtoull
--	setenv mkdtemp poll pread memmem unsetenv hstrerror)
-+	setenv mkdtemp poll pread memmem)
++#shell scripts
++parse_makefile_for_scripts(git_sh_scripts "SCRIPT_SH" ".sh")
++parse_makefile_for_scripts(git_shlib_scripts "SCRIPT_LIB" "")
++set(git_shell_scripts
++	${git_sh_scripts} ${git_shlib_scripts} git-instaweb)
 +
-+#unsetenv,hstrerror are incompatible with windows build
-+if(NOT WIN32)
-+	list(APPEND function_checks unsetenv hstrerror)
-+endif()
- 
- foreach(f ${function_checks})
- 	string(TOUPPER ${f} uf)
-@@ -444,7 +492,13 @@ unset(CMAKE_REQUIRED_INCLUDES)
- #programs
- set(PROGRAMS_BUILT
- 	git git-bugreport git-credential-store git-daemon git-fast-import git-http-backend git-sh-i18n--envsubst
--	git-shell git-remote-testsvn git-credential-cache git-credential-cache--daemon)
-+	git-shell git-remote-testsvn)
++foreach(script ${git_shell_scripts})
++	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.sh content NEWLINE_CONSUME)
++	string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" content "${content}")
++	string(REPLACE "@@DIFF@@" "diff" content "${content}")
++	string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
++	string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" content "${content}")
++	string(REPLACE "@@NO_CURL@@" "" content "${content}")
++	string(REPLACE "@@USE_GETTEXT_SCHEME@@" "" content "${content}")
++	string(REPLACE "# @@BROKEN_PATH_FIX@@" "" content "${content}")
++	string(REPLACE "@@PERL@@" "${PERL_PATH}" content "${content}")
++	string(REPLACE "@@SANE_TEXT_GREP@@" "-a" content "${content}")
++	string(REPLACE "@@PAGER_ENV@@" "LESS=FRX LV=-c" content "${content}")
++	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
++endforeach()
 +
-+if(NO_UNIX_SOCKETS)
-+	list(APPEND excluded_progs git-credential-cache git-credential-cache--daemon)
-+else()
-+	list(APPEND PROGRAMS_BUILT git-credential-cache git-credential-cache--daemon)
-+endif()
- 
- if(NOT CURL_FOUND)
- 	list(APPEND excluded_progs git-http-fetch git-http-push)
-@@ -516,15 +570,34 @@ parse_makefile_for_sources(libvcs-svn_SOURCES "VCSSVN_OBJS")
- list(TRANSFORM libvcs-svn_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
- add_library(vcs-svn STATIC ${libvcs-svn_SOURCES})
- 
-+#add git.rc for gcc
-+if(WIN32)
-+	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
-+			COMMAND ${WINDRES_EXE} -O coff -DMAJOR=${PROJECT_VERSION_MAJOR} -DMINOR=${PROJECT_VERSION_MINOR}
-+				-DMICRO=${PROJECT_VERSION_PATCH} -DPATCHLEVEL=0 -DGIT_VERSION="\\\"${PROJECT_VERSION}.GIT\\\""
-+				-i ${CMAKE_SOURCE_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
-+			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-+			VERBATIM)
-+	add_custom_target(git-rc DEPENDS ${CMAKE_BINARY_DIR}/git.res)
-+endif()
++#perl scripts
++parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
 +
- #link all required libraries to common-main
- add_library(common-main OBJECT ${CMAKE_SOURCE_DIR}/common-main.c)
--target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES} pthread rt)
++#create perl header
++file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
++string(REPLACE "@@PATHSEP@@" ":" perl_header "${perl_header}")
++string(REPLACE "@@INSTLIBDIR@@" "${INSTLIBDIR}" perl_header "${perl_header}")
 +
-+target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES})
- if(Intl_FOUND)
- 	target_link_libraries(common-main ${Intl_LIBRARIES})
- endif()
- if(Iconv_FOUND)
- 	target_link_libraries(common-main ${Iconv_LIBRARIES})
- endif()
-+if(WIN32)
-+	target_link_libraries(common-main ws2_32 ntdll ${CMAKE_BINARY_DIR}/git.res)
-+	add_dependencies(common-main git-rc)
-+	target_link_options(common-main PUBLIC -municode -Wl,--nxcompat -Wl,--dynamicbase -Wl,--pic-executable,-e,mainCRTStartup)
-+elseif(UNIX)
-+	target_link_libraries(common-main pthread rt)
++foreach(script ${git_perl_scripts})
++	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.perl content NEWLINE_CONSUME)
++	string(REPLACE "#!/usr/bin/perl" "#!/usr/bin/perl\n${perl_header}\n" content "${content}")
++	string(REPLACE "@@GIT_VERSION@@" "${PROJECT_VERSION}" content "${content}")
++	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
++endforeach()
++
++#python script
++file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
++string(REPLACE "#!/usr/bin/env python" "#!/usr/bin/python" content "${content}")
++file(WRITE ${CMAKE_BINARY_DIR}/git-p4 ${content})
++
++#perl modules
++file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
++
++foreach(pm ${perl_modules})
++	string(REPLACE "${CMAKE_SOURCE_DIR}/perl/" "" file_path ${pm})
++	file(STRINGS ${pm} content NEWLINE_CONSUME)
++	string(REPLACE "@@LOCALEDIR@@" "${LOCALEDIR}" content "${content}")
++	string(REPLACE "@@NO_PERL_CPAN_FALLBACKS@@" "" content "${content}")
++	file(WRITE ${CMAKE_BINARY_DIR}/perl/build/lib/${file_path} ${content})
++#test-lib.sh requires perl/build/lib to be the build directory of perl modules
++endforeach()
++
++
++#templates
++file(GLOB templates "${CMAKE_SOURCE_DIR}/templates/*")
++list(TRANSFORM templates REPLACE "${CMAKE_SOURCE_DIR}/templates/" "")
++list(REMOVE_ITEM templates ".gitignore")
++list(REMOVE_ITEM templates "Makefile")
++
++list(REMOVE_ITEM templates "branches--")
++file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/branches) #create branches
++
++#templates have @.*@ replacement so use configure_file instead
++foreach(tm ${templates})
++	string(REPLACE "--" "/" blt_tm ${tm})
++	string(REPLACE "this" "" blt_tm ${blt_tm})# for this--
++	configure_file(${CMAKE_SOURCE_DIR}/templates/${tm} ${CMAKE_BINARY_DIR}/templates/blt/${blt_tm} @ONLY)
++endforeach()
++
++
++#translations
++if(MSGFMT_EXE)
++	file(GLOB po_files "${CMAKE_SOURCE_DIR}/po/*.po")
++	list(TRANSFORM po_files REPLACE "${CMAKE_SOURCE_DIR}/po/" "")
++	list(TRANSFORM po_files REPLACE ".po" "")
++	foreach(po ${po_files})
++		file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
++		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
++				COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
++		list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
++	endforeach()
++	add_custom_target(po-gen ALL DEPENDS ${po_gen})
 +endif()
- 
- #git
- parse_makefile_for_sources(git_SOURCES "BUILTIN_OBJS")
-@@ -575,11 +648,13 @@ endif()
- add_executable(git-remote-testsvn ${CMAKE_SOURCE_DIR}/remote-testsvn.c)
- target_link_libraries(git-remote-testsvn common-main vcs-svn)
- 
--add_executable(git-credential-cache ${CMAKE_SOURCE_DIR}/credential-cache.c)
--target_link_libraries(git-credential-cache common-main)
-+if(NOT NO_UNIX_SOCKETS)
-+	add_executable(git-credential-cache ${CMAKE_SOURCE_DIR}/credential-cache.c)
-+	target_link_libraries(git-credential-cache common-main)
- 
--add_executable(git-credential-cache--daemon ${CMAKE_SOURCE_DIR}/credential-cache--daemon.c)
--target_link_libraries(git-credential-cache--daemon common-main)
-+	add_executable(git-credential-cache--daemon ${CMAKE_SOURCE_DIR}/credential-cache--daemon.c)
-+	target_link_libraries(git-credential-cache--daemon common-main)
-+endif()
- 
- 
- set(git_builtin_extra
-@@ -591,16 +666,16 @@ set(git_builtin_extra
- foreach(s ${git_SOURCES} ${git_builtin_extra})
- 	string(REPLACE "${CMAKE_SOURCE_DIR}/builtin/" "" s ${s})
- 	string(REPLACE ".c" "" s ${s})
--	file(APPEND ${CMAKE_BINARY_DIR}/CreateLinks.cmake "file(CREATE_LINK git git-${s})\n")
--	list(APPEND git_links ${CMAKE_BINARY_DIR}/git-${s})
-+	file(APPEND ${CMAKE_BINARY_DIR}/CreateLinks.cmake "file(CREATE_LINK git${EXE_EXTENSION} git-${s}${EXE_EXTENSION})\n")
-+	list(APPEND git_links ${CMAKE_BINARY_DIR}/git-${s}${EXE_EXTENSION})
- endforeach()
- 
- if(CURL_FOUND)
- 	set(remote_exes
- 		git-remote-https git-remote-ftp git-remote-ftps)
- 	foreach(s ${remote_exes})
--		file(APPEND ${CMAKE_BINARY_DIR}/CreateLinks.cmake "file(CREATE_LINK git-remote-http ${s})\n")
--		list(APPEND git_http_links ${CMAKE_BINARY_DIR}/${s})
-+		file(APPEND ${CMAKE_BINARY_DIR}/CreateLinks.cmake "file(CREATE_LINK git-remote-http${EXE_EXTENSION} ${s}${EXE_EXTENSION})\n")
-+		list(APPEND git_http_links ${CMAKE_BINARY_DIR}/${s}${EXE_EXTENSION})
- 	endforeach()
- endif()
- 
-@@ -721,20 +796,20 @@ set(bin_links
- 	git-receive-pack git-upload-archive git-upload-pack)
- 
- foreach(b ${bin_links})
--install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git ${CMAKE_INSTALL_PREFIX}/bin/${b})")
-+install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git${EXE_EXTENSION} ${CMAKE_INSTALL_PREFIX}/bin/${b}${EXE_EXTENSION})")
- endforeach()
- 
--install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git)")
--install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git-shell ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git-shell)")
-+install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git${EXE_EXTENSION} ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git${EXE_EXTENSION})")
-+install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git-shell${EXE_EXTENSION} ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git-shell${EXE_EXTENSION})")
- 
- foreach(b ${git_links})
- 	string(REPLACE "${CMAKE_BINARY_DIR}" "" b ${b})
--	install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git ${CMAKE_INSTALL_PREFIX}/libexec/git-core/${b})")
-+	install(CODE "file(CREATE_LINK ${CMAKE_INSTALL_PREFIX}/bin/git${EXE_EXTENSION} ${CMAKE_INSTALL_PREFIX}/libexec/git-core/${b}${EXE_EXTENSION})")
- endforeach()
- 
- foreach(b ${git_http_links})
- 	string(REPLACE "${CMAKE_BINARY_DIR}" "" b ${b})
--	install(CODE "file(CREATE_LINK  ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git-remote-http ${CMAKE_INSTALL_PREFIX}/libexec/git-core/${b})")
-+	install(CODE "file(CREATE_LINK  ${CMAKE_INSTALL_PREFIX}/libexec/git-core/git-remote-http${EXE_EXTENSION} ${CMAKE_INSTALL_PREFIX}/libexec/git-core/${b}${EXE_EXTENSION})")
- endforeach()
- 
- install(PROGRAMS ${git_shell_scripts} ${git_perl_scripts} ${CMAKE_BINARY_DIR}/git-p4
-@@ -783,14 +858,14 @@ set(wrapper_test_scripts
- foreach(script ${wrapper_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
- 	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
--	string(REPLACE "@@PROG@@" "${script}" content "${content}")
-+	string(REPLACE "@@PROG@@" "${script}${EXE_EXTENSION}" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
- endforeach()
- 
- foreach(script ${wrapper_test_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
- 	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
--	string(REPLACE "@@PROG@@" "t/helper/${script}" content "${content}")
-+	string(REPLACE "@@PROG@@" "t/helper/${script}${EXE_EXTENSION}" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
- endforeach()
- 
-@@ -856,7 +931,7 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PTHREADS='${NO_PTHREADS}'\
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_UNIX_SOCKETS='${NO_UNIX_SOCKETS}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PAGER_ENV='${PAGER_ENV}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DC_SHA1='${DC_SHA1}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X=''\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X='${EXE_EXTENSION}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
 -- 
 gitgitgadget
 
