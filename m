@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 939C1C433DF
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 15:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04314C433E1
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 15:45:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6571F2074B
+	by mail.kernel.org (Postfix) with ESMTP id D38452074B
 	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 15:45:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="wxpvoKyX"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="hZ1/brKQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbgFLPpX (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726269AbgFLPpX (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 12 Jun 2020 11:45:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39418 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726258AbgFLPpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 11:45:22 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36319C08C5C1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 08:45:22 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id 205so9402332qkg.3
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 08:45:22 -0700 (PDT)
+        with ESMTP id S1726053AbgFLPpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 11:45:20 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06726C03E96F
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 08:45:20 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id b27so9376102qka.4
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 08:45:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/pNbhv6GQ2n+kU3QExekfGe2Z498pHT8VVSaNM4Vskg=;
-        b=wxpvoKyXTy65bne3gpOGoT4hoT9mdju3wjjiVJKHPEmNl4oXFds5qumnVwfmFkDdEW
-         vENPKM6audAuYkpPCOeIZlJKJZ4WkjAkJeKZGBXm8ZHcjcyKvHayiQqwGdV2GsubdVwR
-         sRpQZNZr2CzgV6gRm2N08a+yJDoi2XNHiyzDhgOiW1uyPIDwa4Iw8P+ELakCUccHbm3h
-         Sdm+ibLmNhrUE2nhy25fEkbVx9NeYMT+z9yuwt1dm74ARlPdiBxcwOdCU949Md3GdDmP
-         X5LMogZKx1U9WXbRYR1VhSXFhLWUScybc9RVRusxMWw0fxCFhSRSqVhkosu9KV0XMt+b
-         xt4w==
+        bh=gUU3kG2njJdwu6kxo7ucxWl6Z9P+M9pcu/vz3EAnCTc=;
+        b=hZ1/brKQvbQFPZxM30jwcextOPoyIE4PSzWihNTY2TeO0xq14ovOSWer11qskFGX7j
+         LJx1FO/WeliUaTYkM2rhVmBaGJIlBPaqy0801IuQggpE0sYqXKi9WJr8V4828wJULC38
+         Nd4mPnTASVaXfDG89XlvMI31263VD/Hvxoair/N6hCAvYrhHAcrU7E8axb2eOGF3RqoU
+         5vJhwftNd8tM7W5k5Y4Jix6wmfRcjv1r+k6RB1uMzRge+wcJjynC85ZAsq98cHNtW5mv
+         Z2OpU6Kf43Zab4D5CVj3YhtsNsAena435jv7qC0xDAcNmwHW7RwnNjS2Bt1xrR0Phpq7
+         X/NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/pNbhv6GQ2n+kU3QExekfGe2Z498pHT8VVSaNM4Vskg=;
-        b=B2AFttLdQgpO2MMdSuKZPn5TJam8TJbHXBuMohODTY0ALxQBpCf78ZLP49s9yuE89r
-         7wAJ8K173lbh2wWmG/JaearEpDaNCnME+EcE7V8L2dOrPhgGHzt7wbmAn0kASoq04W6H
-         ozPu6peUc8np9rhj0oq3ZtY6Tx1CXeJ+sFHonkcLxnbQnDdl7KLtLxv4NN6IkEf7xMmP
-         6sIKWHsZeZts6n27D1I8KSwJ7PqukwhYwi8EElJrinfbzWpHJUWddezzSYZ/WZFrzxRp
-         //Lcraq8/I8nq1bbzFM5XtPBVsxqR2R8lmdNvLU2ZOoD6OVOxUVXD14ilj1Ke0L+wrFj
-         /9jg==
-X-Gm-Message-State: AOAM531FlWY/tbKWJmR8lmoSwtMEBWid6VCzM9kPSbQtV6jw2xpm9kel
-        RkBC6TwfPNayA0YaBnYA5ejZ4iROzxSsNg==
-X-Google-Smtp-Source: ABdhPJy+B+jI8XHSDtEeetT8qsNpIcyvYCdHt36PmIIJaPMuKltSn+JxkSk5AJYvMz9V/NLc/x1Uvg==
-X-Received: by 2002:ae9:e813:: with SMTP id a19mr3629565qkg.264.1591976720922;
-        Fri, 12 Jun 2020 08:45:20 -0700 (PDT)
+        bh=gUU3kG2njJdwu6kxo7ucxWl6Z9P+M9pcu/vz3EAnCTc=;
+        b=JXQMb9MtjjqLrSN3prgMAaprjHW5pDHrBd/BOcHXdjwLLFvNP5cqN4tgfnny+vsYHf
+         eatLiSPTWKDkvQ3hUyI5tqyVY3sdGJViEPuiR/it4EHPN2EWIUDNzzv4c0iSe8x9tLQW
+         Cwy1aX+504+dKL0p/WPcBjpN2G4yJeKKAnl9806emYUqrLX1siXV7hZCh7uE3N5EL0wa
+         DT1wJMgXLrj4jS7PYyhfxnGXmFkVD/1GIs0VCYBZNAORmjWEGbcHBUCsglOqvIHHyn6v
+         sgf99Nd8QedNqtp/7f9D7lrz8D/zAIGVys1gtUlqVbBwGl1KRGB2mJC3NlgKRnfpWZU9
+         yYnA==
+X-Gm-Message-State: AOAM530YH14PD7So0NpyLOev891BtXRSemSNr6qOkrk8XN4+w9tJpvzO
+        Mas3OvSNX7GVTYCqYpQVy/F1nRzhGfh5gw==
+X-Google-Smtp-Source: ABdhPJzsuHvn6XruNZeqVfwSGZongSl+nS96N3g2il0J4xZF0MMAShC3rCwxVH+GTaMeKFhRIz3d3g==
+X-Received: by 2002:a37:50c2:: with SMTP id e185mr3751917qkb.140.1591976718501;
+        Fri, 12 Jun 2020 08:45:18 -0700 (PDT)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:9a16::3])
-        by smtp.gmail.com with ESMTPSA id r37sm4988157qtk.34.2020.06.12.08.45.18
+        by smtp.gmail.com with ESMTPSA id r37sm4988157qtk.34.2020.06.12.08.45.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2020 08:45:20 -0700 (PDT)
+        Fri, 12 Jun 2020 08:45:17 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, stolee@gmail.com, newren@gmail.com,
         jonathantanmy@google.com
-Subject: [PATCH v4 2/6] t/helper/test-config: return exit codes consistently
-Date:   Fri, 12 Jun 2020 12:45:00 -0300
-Message-Id: <85c429ac6924fefcd6b93ccefbdd52903929bb02.1591974940.git.matheus.bernardino@usp.br>
+Subject: [PATCH v4 1/6] doc: grep: unify info on configuration variables
+Date:   Fri, 12 Jun 2020 12:44:59 -0300
+Message-Id: <99cf2124f349a98b10fc603137e10d38c7ea533a.1591974940.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <cover.1591974940.git.matheus.bernardino@usp.br>
 References: <cover.1591974940.git.matheus.bernardino@usp.br>
@@ -74,204 +74,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test-config helper may exit with a variety of at least four
-different codes, to reflect the status of the requested operations.
-These codes are sometimes checked in the tests, but not all of the codes
-are returned consistently by the helper: 1 will usually refer to a
-"value not found", but usage errors can also return 1 or 128. Moreover,
-128 is also expected on errors within the configset functions. These
-inconsistent uses of the exit codes can lead to false positives in the
-tests. Although all tests which expect errors and check the helper's
-exit code currently also check the output, it's still better to
-standardize the exit codes and avoid future problems in new tests.
-While we are here, let's also check that we have the expected argc for
-configset_get_value and configset_get_value_multi, before trying to use
-argv.
-
-Note: this change is implemented with the unification of the exit
-labels. This might seem unnecessary, for now, but it will benefit the
-next patch, which will increase the cleanup section.
+Explanations about the configuration variables for git-grep are
+duplicated in "Documentation/git-grep.txt" and
+"Documentation/config/grep.txt", which can make maintenance difficult.
+The first also contains a definition not present in the latter
+(grep.fullName). To avoid problems like this, let's unify the
+information in the second file and include it in the first.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- t/helper/test-config.c | 76 ++++++++++++++++++++++--------------------
- 1 file changed, 40 insertions(+), 36 deletions(-)
+ Documentation/config/grep.txt | 10 ++++++++--
+ Documentation/git-grep.txt    | 36 ++++++-----------------------------
+ 2 files changed, 14 insertions(+), 32 deletions(-)
 
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 234c722b48..1c8e965840 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -30,6 +30,14 @@
-  * iterate -> iterate over all values using git_config(), and print some
-  *            data for each
-  *
-+ * Exit codes:
-+ *     0:   success
-+ *     1:   value not found for the given config key
-+ *     2:   config file path given as argument is inaccessible or doesn't exist
-+ *     129: test-config usage error
-+ *
-+ * Note: tests may also expect 128 for die() calls in the config machinery.
-+ *
-  * Examples:
-  *
-  * To print the value with highest priority for key "foo.bAr Baz.rock":
-@@ -64,35 +72,42 @@ static int early_config_cb(const char *var, const char *value, void *vdata)
- 	return 0;
- }
+diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
+index 44abe45a7c..dd51db38e1 100644
+--- a/Documentation/config/grep.txt
++++ b/Documentation/config/grep.txt
+@@ -16,8 +16,14 @@ grep.extendedRegexp::
+ 	other than 'default'.
  
-+enum test_config_exit_code {
-+	TC_SUCCESS = 0,
-+	TC_VALUE_NOT_FOUND = 1,
-+	TC_CONFIG_FILE_ERROR = 2,
-+	TC_USAGE_ERROR = 129,
-+};
+ grep.threads::
+-	Number of grep worker threads to use.
+-	See `grep.threads` in linkgit:git-grep[1] for more information.
++	Number of grep worker threads to use. See `--threads`
++ifndef::git-grep[]
++	in linkgit:git-grep[1]
++endif::git-grep[]
++	for more information.
 +
- int cmd__config(int argc, const char **argv)
- {
- 	int i, val;
- 	const char *v;
- 	const struct string_list *strptr;
- 	struct config_set cs;
-+	enum test_config_exit_code ret = TC_SUCCESS;
++grep.fullName::
++	If set to true, enable `--full-name` option by default.
  
- 	if (argc == 3 && !strcmp(argv[1], "read_early_config")) {
- 		read_early_config(early_config_cb, (void *)argv[2]);
--		return 0;
-+		return TC_SUCCESS;
- 	}
+ grep.fallbackToNoIndex::
+ 	If set to true, fall back to git grep --no-index if git grep
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index a7f9bc99ea..9bdf807584 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -41,34 +41,8 @@ characters.  An empty string as search expression matches all lines.
+ CONFIGURATION
+ -------------
  
- 	setup_git_directory();
- 
- 	git_configset_init(&cs);
- 
--	if (argc < 2) {
--		fprintf(stderr, "Please, provide a command name on the command-line\n");
--		goto exit1;
--	} else if (argc == 3 && !strcmp(argv[1], "get_value")) {
-+	if (argc < 2)
-+		goto print_usage_error;
-+
-+	if (argc == 3 && !strcmp(argv[1], "get_value")) {
- 		if (!git_config_get_value(argv[2], &v)) {
- 			if (!v)
- 				printf("(NULL)\n");
- 			else
- 				printf("%s\n", v);
--			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			goto exit1;
-+			ret = TC_VALUE_NOT_FOUND;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
- 		strptr = git_config_get_value_multi(argv[2]);
-@@ -104,41 +119,38 @@ int cmd__config(int argc, const char **argv)
- 				else
- 					printf("%s\n", v);
- 			}
--			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			goto exit1;
-+			ret = TC_VALUE_NOT_FOUND;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_int")) {
- 		if (!git_config_get_int(argv[2], &val)) {
- 			printf("%d\n", val);
--			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			goto exit1;
-+			ret = TC_VALUE_NOT_FOUND;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
- 		if (!git_config_get_bool(argv[2], &val)) {
- 			printf("%d\n", val);
--			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			goto exit1;
-+			ret = TC_VALUE_NOT_FOUND;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_string")) {
- 		if (!git_config_get_string_const(argv[2], &v)) {
- 			printf("%s\n", v);
--			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			goto exit1;
-+			ret = TC_VALUE_NOT_FOUND;
- 		}
--	} else if (!strcmp(argv[1], "configset_get_value")) {
-+	} else if (argc >= 3 && !strcmp(argv[1], "configset_get_value")) {
- 		for (i = 3; i < argc; i++) {
- 			int err;
- 			if ((err = git_configset_add_file(&cs, argv[i]))) {
- 				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
--				goto exit2;
-+				ret = TC_CONFIG_FILE_ERROR;
-+				goto out;
- 			}
- 		}
- 		if (!git_configset_get_value(&cs, argv[2], &v)) {
-@@ -146,17 +158,17 @@ int cmd__config(int argc, const char **argv)
- 				printf("(NULL)\n");
- 			else
- 				printf("%s\n", v);
--			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			goto exit1;
-+			ret = TC_VALUE_NOT_FOUND;
- 		}
--	} else if (!strcmp(argv[1], "configset_get_value_multi")) {
-+	} else if (argc >= 3 && !strcmp(argv[1], "configset_get_value_multi")) {
- 		for (i = 3; i < argc; i++) {
- 			int err;
- 			if ((err = git_configset_add_file(&cs, argv[i]))) {
- 				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
--				goto exit2;
-+				ret = TC_CONFIG_FILE_ERROR;
-+				goto out;
- 			}
- 		}
- 		strptr = git_configset_get_value_multi(&cs, argv[2]);
-@@ -168,27 +180,19 @@ int cmd__config(int argc, const char **argv)
- 				else
- 					printf("%s\n", v);
- 			}
--			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			goto exit1;
-+			ret = TC_VALUE_NOT_FOUND;
- 		}
- 	} else if (!strcmp(argv[1], "iterate")) {
- 		git_config(iterate_cb, NULL);
--		goto exit0;
-+	} else {
-+print_usage_error:
-+		fprintf(stderr, "Invalid syntax. Usage: test-tool config <cmd> [args]\n");
-+		ret = TC_USAGE_ERROR;
- 	}
- 
--	die("%s: Please check the syntax and the function name", argv[0]);
+-grep.lineNumber::
+-	If set to true, enable `-n` option by default.
 -
--exit0:
--	git_configset_clear(&cs);
--	return 0;
+-grep.column::
+-	If set to true, enable the `--column` option by default.
 -
--exit1:
--	git_configset_clear(&cs);
--	return 1;
+-grep.patternType::
+-	Set the default matching behavior. Using a value of 'basic', 'extended',
+-	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
+-	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
+-	value 'default' will return to the default matching behavior.
 -
--exit2:
-+out:
- 	git_configset_clear(&cs);
--	return 2;
-+	return ret;
- }
+-grep.extendedRegexp::
+-	If set to true, enable `--extended-regexp` option by default. This
+-	option is ignored when the `grep.patternType` option is set to a value
+-	other than 'default'.
+-
+-grep.threads::
+-	Number of grep worker threads to use. If unset (or set to 0), Git will
+-	use as many threads as the number of logical cores available.
+-
+-grep.fullName::
+-	If set to true, enable `--full-name` option by default.
+-
+-grep.fallbackToNoIndex::
+-	If set to true, fall back to git grep --no-index if git grep
+-	is executed outside of a git repository.  Defaults to false.
+-
++:git-grep: 1
++include::config/grep.txt[]
+ 
+ OPTIONS
+ -------
+@@ -269,8 +243,10 @@ providing this option will cause it to die.
+ 	found.
+ 
+ --threads <num>::
+-	Number of grep worker threads to use.
+-	See `grep.threads` in 'CONFIGURATION' for more information.
++	Number of grep worker threads to use. If not provided (or set to
++	0), Git will use as many worker threads as the number of logical
++	cores available. The default value can also be set with the
++	`grep.threads` configuration.
+ 
+ -f <file>::
+ 	Read patterns from <file>, one per line.
 -- 
 2.26.2
 
