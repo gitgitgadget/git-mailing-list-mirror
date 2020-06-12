@@ -2,83 +2,134 @@ Return-Path: <SRS0=soZh=7Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EA75C433E0
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 23:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA9C5C433E0
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 23:16:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9CF9206D7
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 23:15:00 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vfu1wIFI"
+	by mail.kernel.org (Postfix) with ESMTP id C9336206D7
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 23:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726309AbgFLXOu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Jun 2020 19:14:50 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62001 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726302AbgFLXOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 19:14:50 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 51E63DFC94;
-        Fri, 12 Jun 2020 19:14:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=63ErJMM0wiNlCp5uBTGQ87Yyn/E=; b=Vfu1wI
-        FIzwoBPW7B3WD/7nMeEVdM7KU+xCI+TEkhwrCrF90w7Ebza7ivt5md3fJOl8OZwT
-        e55YvZhc4wPgZBSrcWEJVS5cT3sRymjLu6GXfsGxoFXHcacyk940bdrVEr8l9//P
-        LtZK1bfFJLA6vuFfg74SLhYpYHJrBiP/MFk9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=x1GigP6fKT97HO2a1j6fW10fARs6ulyV
-        iqlJQv4Oh29seuOD2vSc9chT1YfQnPtyXCf72tM5IDfcqN+/8F+zlDhYGiJSt5Wd
-        JeOrdGRmpv/9zBmqVlG+ktZHzqKzxmRcIL2CMGvBvptsmUXbEaLhKGLGbMxFaKiq
-        x44DmfyyaKg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A6F5DFC93;
-        Fri, 12 Jun 2020 19:14:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726428AbgFLXQ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Jun 2020 19:16:57 -0400
+Received: from dovecot.mat.umk.pl ([158.75.2.81]:59972 "EHLO
+        poczta1.mat.umk.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726310AbgFLXQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 19:16:56 -0400
+Received: from dovecot.mat.umk.pl (localhost.localdomain [127.0.0.1])
+        by poczta1.mat.umk.pl (Postfix) with ESMTP id 118F79568B9;
+        Sat, 13 Jun 2020 01:16:54 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mat.umk.pl
+Received: from poczta1.mat.umk.pl ([127.0.0.1])
+        by dovecot.mat.umk.pl (poczta1.mat.umk.pl [127.0.0.1]) (amavisd-new, port 10024)
+        with LMTP id If8O4nvTaI1q; Sat, 13 Jun 2020 01:16:53 +0200 (CEST)
+Received: from [192.168.0.2] (host-89-229-7-83.dynamic.mm.pl [89.229.7.83])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 97117DFC92;
-        Fri, 12 Jun 2020 19:14:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] GIT-VERSION-GEN: update for the post 2.27 cycle
-References: <4946cf3650b95191455630f85f59e5f93156d0ac.1591883410.git.liu.denton@gmail.com>
-        <xmqq8sgtjsor.fsf@gitster.c.googlers.com>
-        <20200612005217.GA3964@generichostname>
-Date:   Fri, 12 Jun 2020 16:14:43 -0700
-In-Reply-To: <20200612005217.GA3964@generichostname> (Denton Liu's message of
-        "Thu, 11 Jun 2020 20:52:17 -0400")
-Message-ID: <xmqq4krf27x8.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        (Authenticated sender: jnareb)
+        by poczta1.mat.umk.pl (Postfix) with ESMTPSA id 26F509568B7;
+        Sat, 13 Jun 2020 01:16:53 +0200 (CEST)
+Cc:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 1/4] alloc: introduce parsed_commits_count
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org
+References: <20200612184014.1226972-1-abhishekkumar8222@gmail.com>
+ <20200612184014.1226972-2-abhishekkumar8222@gmail.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <8b0facef-c85d-c25c-d49d-2bc1a3836e77@gmail.com>
+Date:   Sat, 13 Jun 2020 01:16:51 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 81231082-AD02-11EA-846D-8D86F504CC47-77302942!pb-smtp21.pobox.com
+In-Reply-To: <20200612184014.1226972-2-abhishekkumar8222@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On 12.06.2020, Abhishek Kumar wrote:
 
-> Thanks for the explanation, it makes sense.
->
->> Unfortunately, your patch does not say why, either, so it hasn't
->> quite helped yet ;-)
->
-> I tried looking on the list but I didn't find any mention about this
-> experiment so I assumed that you unintentionally forgot to update the
-> version. Good to know that it was done deliberately :)
+> Commit slab relies on uniqueness of commit->index to access data. As
+> submodules are repositories on their own, alloc_commit_index() (which
+> depends on repository->parsed_objects->commit_count) no longer
+> returns unique values.
+> 
+> This would break tests once we move `generation` and `graph_pos` into a
+> commit slab, as commits of supermodule and submodule can have the same
+> index but must have different graph positions.
 
-Well having said all that, I do not have a strong reason not to
-update it.  Perhaps when the next batch of topics graduates and
-cause the release notes to be updated, I'll update it as well.
+First, commits of supermodule and of submodule are in different graphs,
+so I don't see why they have to be in the same serialized commit-graph
+file.
 
-Thanks.
+Second, Git stores many different types of information on slab already.
+How comes that we have not had any problems till now?  
+
+There is contains_cache, commit_seen, indegree_slab, author_date_slab,
+commit_base, commit_pos, bloom_filter_slab, buffer_slab, commit_rev_name,
+commit_names, commit_name_slab, saved_parents, blame_suspects,
+commit_todo_item.
+
+> 
+> Let's introduce a counter variable, `parsed_commits_count` to keep track
+> of parsed commits so far.
+
+All right, thought it might be worth mentioning that it is a global
+variable, or rather a static variable in a function.
+
+> 
+> 
+> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> ---
+> 
+> CI Build for the failing tests:
+> https://travis-ci.com/github/abhishekkumar2718/git/jobs/345413840
+
+The failed tests are, from what I see:
+- t4060-diff-submodule-option-diff-format.sh
+- t4041-diff-submodule-option.sh
+- t4059-diff-submodule-not-initialized.sh
+
+
+> 
+>   alloc.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/alloc.c b/alloc.c
+> index 1c64c4dd16..29f0e3aa80 100644
+> --- a/alloc.c
+> +++ b/alloc.c
+> @@ -101,7 +101,9 @@ void *alloc_object_node(struct repository *r)
+>   
+>   static unsigned int alloc_commit_index(struct repository *r)
+>   {
+> -	return r->parsed_objects->commit_count++;
+> +	static unsigned int parsed_commits_count = 0;
+> +	r->parsed_objects->commit_count++;
+
+Do we use r->parsed_objects->commit_count anywhere?
+
+> +	return parsed_commits_count++;
+
+Does it matter that it is not thread safe, because it is not atomic?
+Shouldn't it be
+
+  +	static _Atomic unsigned int parsed_commits_count = 0;
+
+or
+
+  +	static _Atomic unsigned int parsed_commits_count = ATOMIC_VAR_INIT(0);
+
+(If it is allowed).
+
+>   }
+>   
+>   void init_commit_node(struct repository *r, struct commit *c)
+> 
+
