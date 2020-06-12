@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6EDAC433DF
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 22:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F9F2C433E0
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 22:20:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78CBA20789
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 22:00:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36023206C3
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 22:20:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KKcMUw3M"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ceCUd2AK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726319AbgFLWAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Jun 2020 18:00:48 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55807 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726268AbgFLWAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 18:00:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BCE45C36A6;
-        Fri, 12 Jun 2020 18:00:43 -0400 (EDT)
+        id S1726340AbgFLWUY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Jun 2020 18:20:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64583 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbgFLWUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 18:20:23 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE8D67BD67;
+        Fri, 12 Jun 2020 18:20:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=V+b/3Oo9pAcRwDgr6CAfBIpfwMI=; b=KKcMUw
-        3Mdqpi3/i6QJnVEvv02RynlXrOEqvUAm/m7ubANOyq/QLk3yZKujnv9WxXHUfH9L
-        uww77DyFeWU0+OgUrvBN6jc/TebLVY2FoCS+8IbEt/vycCQl2oE9ihUiHX6df2CF
-        6RwW6p5s6gH+d7WvlOKFkDGs+8XgT/F4U5Uvc=
+        :content-type; s=sasl; bh=tIKcacn7EqtKs+N0Ol1LN9wG+p8=; b=ceCUd2
+        AKrs30U92tgg7IM17VGmauFa+bdEYTcl8A/f56Llbiz68+e43E5AGeRx5JDixp8e
+        itnpPOP8K3Iv1bL6879sBGpvsjlfRUb0lH+QN2AXxP8Pxbfqu0xXkrI/5QgLV1ER
+        bhKK3wIeyGWBc5cl66M1sjtkPFT8Pu/uVzW8g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fOMATKTZFdq3yqX916aitm/lCp8JOjiA
-        a4Ipy3Z6x92y8oOAmEAvEXrH8CxtwVn0+w9iXx05mXTUA3XJTVJpnS296q2emj7v
-        JL2UNtyqN+JgCWmCLXvWZVlpvs4VmW5077t8De5mmSSjIoQCuPh+9FMZuCOJCPEF
-        k7idzgFedro=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B453DC36A5;
-        Fri, 12 Jun 2020 18:00:43 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=as8njMk2G0TT7YaOrwYmp2lmC4hD+CgJ
+        sVLQLx95Q9cKIMifze1osXVOIFfkVkWfDH5TbJBq67YrmIHpK/x3oGMLc18sV0gI
+        jC5ugH+iFDkNzmcrJUpUE2xT+HzNLhppczaqkmgZaQIQrJxHOqQd29U0s8Yg69XA
+        6UpmuKwc1QU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D43817BD66;
+        Fri, 12 Jun 2020 18:20:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EE4A2C36A3;
-        Fri, 12 Jun 2020 18:00:40 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3C2B47BD61;
+        Fri, 12 Jun 2020 18:20:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
@@ -54,14 +54,15 @@ Subject: Re: [PATCH v3 1/4] alloc: introduce parsed_commits_count
 References: <20200612184014.1226972-1-abhishekkumar8222@gmail.com>
         <20200612184014.1226972-2-abhishekkumar8222@gmail.com>
         <xmqqtuzg11zv.fsf@gitster.c.googlers.com>
-Date:   Fri, 12 Jun 2020 15:00:39 -0700
-In-Reply-To: <xmqqtuzg11zv.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 12 Jun 2020 13:08:04 -0700")
-Message-ID: <xmqqpna40ws8.fsf@gitster.c.googlers.com>
+        <xmqqpna40ws8.fsf@gitster.c.googlers.com>
+Date:   Fri, 12 Jun 2020 15:20:18 -0700
+In-Reply-To: <xmqqpna40ws8.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 12 Jun 2020 15:00:39 -0700")
+Message-ID: <xmqqlfks0vvh.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 27EC90A6-ACF8-11EA-931F-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E63AFFC8-ACFA-11EA-B903-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,47 +70,45 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
->
->>  static unsigned int alloc_commit_index(struct repository *r)
->>  {
->> -	return r->parsed_objects->commit_count++;
->> +	static unsigned int parsed_commits_count = 0;
->> +	r->parsed_objects->commit_count++;
->> +	return parsed_commits_count++;
->>  }
->
-> Hmph, ugly.  
->
-> The need for this hack, which butchers the function that explicitly
-> takes a repository as its parameter so that parsed commits can be
-> counted per repository to not count commits per repository, makes
-> the whole thing smell fishy.
->
-> There shouldn't be a reason why a commit in the superproject and
-> another commit in the submodule need to be in the same commit graph
-> in the first place.
->
-> Instead of breaking the function like this, the right "fix" may be
-> to make the commit slab per repository, because the commit index are
-> taken from the separate namespace per repository.
+> Back when 14ba97f8 (alloc: allow arbitrary repositories for alloc
+> functions, 2018-05-15) made the count per repository (which you are
+> reverting with this patch), there must have been a reason why it did
+> so.  We know that commit slab code wants you to count globally and
+> that is why you wrote this patch, but don't other parts of the code
+> expect and rely on the commits being counted per repository?  In
+> other words, with this change, who are you breaking to help the
+> commit slab code?
 
-Given a commit object (i.e. "struct commit *"), currently there is
-no way to tell from which repository it came from.  So from that
-point of view, we cannot identify which commit slab to use, unless
-we add a back-pointer that says from which repository each commit
-object came from, but that makes the commit object even heavier.
+I did a bit more digging, as I had a bit of time after pushing
+today's integration result out, and it turns out that in the today's
+code, c->index is the only thing that uses this counter.  It is set
+in init_commit_node() function, which is called from object.c when
+an in-core commit object is created.  The callchain looks like this:
 
-Back when 14ba97f8 (alloc: allow arbitrary repositories for alloc
-functions, 2018-05-15) made the count per repository (which you are
-reverting with this patch), there must have been a reason why it did
-so.  We know that commit slab code wants you to count globally and
-that is why you wrote this patch, but don't other parts of the code
-expect and rely on the commits being counted per repository?  In
-other words, with this change, who are you breaking to help the
-commit slab code?
+object_as_type(struct repository *, struct object *, enum object_type, int quiet)
+  -> init_commit_node(struct repository *, struct commit *)
+       -> alloc_commit_index(struct repository *)
 
-Cc'ing SZEDER who also have touched this and made the function
-static early last year.
+What is interesting is that object_as_type() takes the parameter
+"struct repository *" ONLY BECAUSE it needs to pass something to
+init_commit_node(), which in turn takes it ONLY BECAUSE the
+alloc_commit_index() wants one to be passed.
+
+Since the ONLY reason why there needs a monotorically increasing
+counter of in-core commit objects is because we need to be able to
+index into the commit slab, and because we cannot make commit slabs
+per-repository due to the lack of backpointer from an in-core commit
+object to the repository it belongs to, reverting 14ba97f8 (alloc:
+allow arbitrary repositories for alloc functions, 2018-05-15) is a
+reasonable thing to do, but then since the only reason the above
+three functions in the callchain take "struct repository *" is
+because the bottom-most alloc_commit_index() wants it WHEN IT DOES
+NOT USE IT, it would be good to get rid of the "struct repository"
+parameter from the functions involved in the callchain altogether.
+
+Then we won't have to ask the "who are we breaking with this change"
+question.  At that point it would be clear that everybody would be
+OK with a single counter to ensure uniqueness of in-core commit
+across all the in-core repository instances.
 
 Thanks.
