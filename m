@@ -7,233 +7,180 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1986CC433DF
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E61BC433E0
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6216207F7
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BC41207ED
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f1e7mkLa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Slhb84mM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726368AbgFLS3e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Jun 2020 14:29:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36430 "EHLO
+        id S1726424AbgFLS3r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Jun 2020 14:29:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726309AbgFLS3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 14:29:33 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DDFC08C5C1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:31 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id x13so10691431wrv.4
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:31 -0700 (PDT)
+        with ESMTP id S1726391AbgFLS3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 14:29:39 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9901DC08C5C2
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:38 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id l17so9036085wmj.0
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fM6k/y9r6L6+uhRJkQJTc0G/DZ9x2espfI9XgsEJX2g=;
-        b=f1e7mkLavqKHXc4QUg7ZjBymkbeV3G3hV08AHOIbrtJoG6meYBjNQ8D10iv0isShBh
-         Gimqbwxgq2Q3cBuZ6pzGS7LkVXTK/mi4SQGfn8OoDQpjjxq5aQmwnhW168PL0ThSdojf
-         cgVMxBmHZNzhbvBN2AIwIxNPHMkZGGWrC5eAiIrBHrpq29eV5CAlmo7RB8Ps0Z7DUvUY
-         NRoOfOQaqWxsms/VMP4Mqx2fwTuu4qIHqbq7f/5tjzpL7NHCEkHcQAvkqfZewZSDke2R
-         H9MAKImyQTZPXsgOFyfiYb/OdcQj4wi86WSfsTl8imjQxJv+X3cPnzEkSg9oXQCqukAQ
-         saag==
+        bh=8hlCeeeA1xBL/WLzRQxCKomKYoXQbzPf8f7GW2TZSjA=;
+        b=Slhb84mMsOXfD6lF6a3PC8yEE2Wz3WYxNo0IesedOW/x89NF0IZzK4uVYyn7QJvHu7
+         aR5SDTQemcuEngnmq915nf5fqsn6mdT1weSnNWy245xDbU2qmn+ELiqJwvh1Jtvz/fJE
+         lidbp/IR0DSxIlKcEuhMm8l/j6s+YQidu1SmwDpnKyp8q5OE0GOz+cCe3wlllsyzNFTl
+         bJBX5HIhJyuLyZayvznwE/k3BsFzWhMXXe6O2ceVeQoSEmc/1WC2pyYYOUcWRG73qmoY
+         hTN7q5L4wq9IT6JiURrRMY+tz3pG1pZ6Tr4xNr+LNJBa/IHm3sb3SlQxknYA/kOwc+bu
+         VRvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fM6k/y9r6L6+uhRJkQJTc0G/DZ9x2espfI9XgsEJX2g=;
-        b=LjbJgKMd1fDeltU6QNJgTzqho94gzRj7nQtJc80u+yftoN2qwkwsqFb/6yUXJQzWTC
-         9SgitmIi7Qjwmm515Qd03Akje7KVF1JAuyMI/YFhkm/3EIVDNfJKio06QmXBt49T8zm+
-         TMti74ZUdGALGoW+HJQXQjiKE1tO+nwtvmk6i9xvpQwqk1kmul7CjSoOxzmb2EFliI/e
-         Z7yeL1pI19HTuUu7GCWKR2KdcLhNprE+Q0jkwbeT/NBiFLpl0vYr+lpI+C2lsUszPxkD
-         AwBhGc1mymKGPdpquoA5Jlu5JSHK82e+F/VuJ8xE5iCW4PBtuTtJTkNLKmmiioHoLhPU
-         AP/w==
-X-Gm-Message-State: AOAM532t/vJjx+Pcul/x9+k53O1zPifsQzy8nBibvzURgczxqZ6oJt+Y
-        Hte0xVen+0bXXTL70vdQTbL1OmX6
-X-Google-Smtp-Source: ABdhPJwiN5MfXGUZ7ktTjSpBTEbLddN8/N7PWS3Z1fCFFb4Frgls1HKQKez2ojVRssCGO3lwkKYg1A==
-X-Received: by 2002:adf:f7ce:: with SMTP id a14mr15952565wrq.362.1591986570340;
-        Fri, 12 Jun 2020 11:29:30 -0700 (PDT)
+        bh=8hlCeeeA1xBL/WLzRQxCKomKYoXQbzPf8f7GW2TZSjA=;
+        b=QyBbnfSNk6pWBm/Yn0bZiAKCpk1DNDlLWVvKm/mzoAOeSxg41kZunJtpBXImM0E4Wz
+         KQhc0S4Imvqtai0xO5fDzUSyV7IcUirKzYaSWpoYGZsZ3hTSuSW7079qQpPfhH4CgRk0
+         IGqJ8EKa98kl65zY1OXV6pwXimBVGrnCp5yVM0aDToW4Na2BmvdAsRPK89RpMcRELEFO
+         ZqFgkKFIH3+iR+wur3MQnsn2a1QHaqlIeeUQLw0V69k/ChA0e6pTHelud8AQ1KadOvCP
+         enszMeHSTrpVDQBrOKFok2c+WblYf/PsNw/X/ZPQFxHnNz4YfcoRRvaSuPo00CtestyA
+         S5oA==
+X-Gm-Message-State: AOAM530ZvlH5ZY+lUHzF2jvgEA9XYd+3sZA2KWHDbNr8KCtHGXesGJhg
+        1zdqMNwkzYCtyWJFbhkwDeYeHUpX
+X-Google-Smtp-Source: ABdhPJwpdt3FyCN0W6b2X0YDFpkQjjUQzzkol4HwIFamz5QUkatPEV54NoRr2Px2fIOWq9B32HiTiw==
+X-Received: by 2002:a1c:5411:: with SMTP id i17mr215188wmb.137.1591986576772;
+        Fri, 12 Jun 2020 11:29:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m24sm9825309wmi.14.2020.06.12.11.29.29
+        by smtp.gmail.com with ESMTPSA id h29sm12186541wrc.78.2020.06.12.11.29.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2020 11:29:29 -0700 (PDT)
-Message-Id: <abb9e6e1d585b34d55ec2b447a80f7ddf6dcb7da.1591986566.git.gitgitgadget@gmail.com>
+        Fri, 12 Jun 2020 11:29:35 -0700 (PDT)
+Message-Id: <2f7cf41e08fd995c544fa4a60bb5d22cf7144b76.1591986566.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
 References: <pull.614.v3.git.1590759624.gitgitgadget@gmail.com>
         <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Jun 2020 18:29:20 +0000
-Subject: [PATCH v4 2/8] cmake: generate the shell/perl/python scripts and
- templates, translations
+Date:   Fri, 12 Jun 2020 18:29:26 +0000
+Subject: [PATCH v4 8/8] ci: modification of main.yml to use cmake for vs-build
+ job
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+        Sibi Siddharthan <sibisiv.siddharthan@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+From: Sibi Siddharthan <sibisiv.siddharthan@gmail.com>
 
-Implement the placeholder substitution to generate scripted
-Porcelain commands, e.g. git-request-pull out of
-git-request-pull.sh
+Teach .github/workflows/main.yml to use CMake for VS builds.
 
-Generate shell/perl/python scripts and template using CMake instead of
-using sed like the build procedure in the Makefile does.
+Modified the vs-test step to match windows-test step. This speeds
+up the vs-test. Calling git-cmd from powershell and then calling git-bash
+to perform the tests slows things down(factor of about 6). So git-bash
+is directly called from powershell to perform the tests using prove.
 
-The text translations are only build if `msgfmt` is found in your path.
+NOTE: Since GitHub keeps the same directory for each job
+(with respect to path) absolute paths are used in the bin-wrapper
+scripts.
 
-NOTE: The scripts and templates are generated during configuration.
+GitHub has switched to CMake 3.17.1 which changed the behaviour of
+FindCURL module. An extra definition (-DCURL_NO_CURL_CMAKE=ON) has been
+added to revert to the old behaviour.
+
+In the configuration phase CMake looks for the required libraries for
+building git (eg zlib,libiconv). So we extract the libraries before we
+configure.
+
+To check for ICONV_OMITS_BOM libiconv.dll needs to be in the working
+directory of script or path. So we copy the dlls before we configure.
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 110 +++++++++++++++++++++++++++-
- 1 file changed, 109 insertions(+), 1 deletion(-)
+ .github/workflows/main.yml | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 1e910d9df85..b3863bffee6 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -66,7 +66,7 @@ project(git
- 	LANGUAGES C)
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 84a5dcff7a0..77fbb08fd31 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -145,13 +145,6 @@ jobs:
+         ## Unzip and remove the artifact
+         unzip artifacts.zip
+         rm artifacts.zip
+-    - name: generate Visual Studio solution
+-      shell: powershell
+-      run: |
+-        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+-          make NDEBUG=1 DEVELOPER=1 vcxproj
+-        "@
+-        if (!$?) { exit(1) }
+     - name: download vcpkg artifacts
+       shell: powershell
+       run: |
+@@ -163,6 +156,14 @@ jobs:
+         Remove-Item compat.zip
+     - name: add msbuild to PATH
+       uses: microsoft/setup-msbuild@v1.0.0
++    - name: copy dlls to root
++      shell: powershell
++      run: |
++        & compat\vcbuild\vcpkg_copy_dlls.bat release
++        if (!$?) { exit(1) }
++    - name: generate Visual Studio solution
++      shell: bash
++      run: cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows -DMSGFMT_EXE=`pwd`/git-sdk-64-minimal/mingw64/bin/msgfmt.exe -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
+     - name: MSBuild
+       run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
+     - name: bundle artifact tar
+@@ -171,8 +172,6 @@ jobs:
+         MSVC: 1
+         VCPKG_ROOT: ${{github.workspace}}\compat\vcbuild\vcpkg
+       run: |
+-        & compat\vcbuild\vcpkg_copy_dlls.bat release
+-        if (!$?) { exit(1) }
+         & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+           mkdir -p artifacts &&
+           eval \"`$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts 2>&1 | grep ^tar)\"
+@@ -203,7 +202,7 @@ jobs:
+     - name: extract build artifacts
+       shell: bash
+       run: tar xf artifacts.tar.gz
+-    - name: test (parallel)
++    - name: test
+       shell: powershell
+       env:
+         MSYSTEM: MINGW64
+@@ -214,12 +213,19 @@ jobs:
+           # Let Git ignore the SDK and the test-cache
+           printf '%s\n' /git-sdk-64-minimal/ /test-cache/ >>.git/info/exclude
  
- 
--#macros for parsing the Makefile for sources
-+#macros for parsing the Makefile for sources and scripts
- macro(parse_makefile_for_sources list_var regex)
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
- 	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
-@@ -77,6 +77,16 @@ macro(parse_makefile_for_sources list_var regex)
- 	list(REMOVE_ITEM ${list_var} "") #remove empty list elements
- endmacro()
- 
-+macro(parse_makefile_for_scripts list_var regex lang)
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
-+	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
-+	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
-+	string(REPLACE " " ";" ${list_var} ${${list_var}}) #convert string to a list
-+	if(NOT ${lang}) #exclude for SCRIPT_LIB
-+		list(TRANSFORM ${list_var} REPLACE "${lang}" "") #do the replacement
-+	endif()
-+endmacro()
-+
- include(CheckTypeSize)
- include(CheckCSourceRuns)
- include(CheckCSourceCompiles)
-@@ -112,6 +122,11 @@ if(Intl_FOUND)
- 	include_directories(SYSTEM ${Intl_INCLUDE_DIRS})
- endif()
- 
-+find_program(MSGFMT_EXE msgfmt)
-+if(NOT MSGFMT_EXE)
-+	message(WARNING "Text Translations won't be build")
-+endif()
-+
- #default behaviour
- include_directories(${CMAKE_SOURCE_DIR})
- add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
-@@ -590,3 +605,96 @@ add_custom_command(OUTPUT ${git_links} ${git_http_links}
- 		COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/CreateLinks.cmake
- 		DEPENDS git git-remote-http)
- add_custom_target(git-links ALL DEPENDS ${git_links} ${git_http_links})
-+
-+
-+#creating required scripts
-+set(SHELL_PATH /bin/sh)
-+set(PERL_PATH /usr/bin/perl)
-+set(LOCALEDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
-+set(GITWEBDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
-+set(INSTLIBDIR ${FALLBACK_RUNTIME_PREFIX}/share/perl5)
-+
-+#shell scripts
-+parse_makefile_for_scripts(git_sh_scripts "SCRIPT_SH" ".sh")
-+parse_makefile_for_scripts(git_shlib_scripts "SCRIPT_LIB" "")
-+set(git_shell_scripts
-+	${git_sh_scripts} ${git_shlib_scripts} git-instaweb)
-+
-+foreach(script ${git_shell_scripts})
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.sh content NEWLINE_CONSUME)
-+	string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" content "${content}")
-+	string(REPLACE "@@DIFF@@" "diff" content "${content}")
-+	string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
-+	string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" content "${content}")
-+	string(REPLACE "@@NO_CURL@@" "" content "${content}")
-+	string(REPLACE "@@USE_GETTEXT_SCHEME@@" "" content "${content}")
-+	string(REPLACE "# @@BROKEN_PATH_FIX@@" "" content "${content}")
-+	string(REPLACE "@@PERL@@" "${PERL_PATH}" content "${content}")
-+	string(REPLACE "@@SANE_TEXT_GREP@@" "-a" content "${content}")
-+	string(REPLACE "@@PAGER_ENV@@" "LESS=FRX LV=-c" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
-+endforeach()
-+
-+#perl scripts
-+parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
-+
-+#create perl header
-+file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
-+string(REPLACE "@@PATHSEP@@" ":" perl_header "${perl_header}")
-+string(REPLACE "@@INSTLIBDIR@@" "${INSTLIBDIR}" perl_header "${perl_header}")
-+
-+foreach(script ${git_perl_scripts})
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.perl content NEWLINE_CONSUME)
-+	string(REPLACE "#!/usr/bin/perl" "#!/usr/bin/perl\n${perl_header}\n" content "${content}")
-+	string(REPLACE "@@GIT_VERSION@@" "${PROJECT_VERSION}" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
-+endforeach()
-+
-+#python script
-+file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
-+string(REPLACE "#!/usr/bin/env python" "#!/usr/bin/python" content "${content}")
-+file(WRITE ${CMAKE_BINARY_DIR}/git-p4 ${content})
-+
-+#perl modules
-+file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
-+
-+foreach(pm ${perl_modules})
-+	string(REPLACE "${CMAKE_SOURCE_DIR}/perl/" "" file_path ${pm})
-+	file(STRINGS ${pm} content NEWLINE_CONSUME)
-+	string(REPLACE "@@LOCALEDIR@@" "${LOCALEDIR}" content "${content}")
-+	string(REPLACE "@@NO_PERL_CPAN_FALLBACKS@@" "" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/perl/build/lib/${file_path} ${content})
-+#test-lib.sh requires perl/build/lib to be the build directory of perl modules
-+endforeach()
-+
-+
-+#templates
-+file(GLOB templates "${CMAKE_SOURCE_DIR}/templates/*")
-+list(TRANSFORM templates REPLACE "${CMAKE_SOURCE_DIR}/templates/" "")
-+list(REMOVE_ITEM templates ".gitignore")
-+list(REMOVE_ITEM templates "Makefile")
-+
-+list(REMOVE_ITEM templates "branches--")
-+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/branches) #create branches
-+
-+#templates have @.*@ replacement so use configure_file instead
-+foreach(tm ${templates})
-+	string(REPLACE "--" "/" blt_tm ${tm})
-+	string(REPLACE "this" "" blt_tm ${blt_tm})# for this--
-+	configure_file(${CMAKE_SOURCE_DIR}/templates/${tm} ${CMAKE_BINARY_DIR}/templates/blt/${blt_tm} @ONLY)
-+endforeach()
-+
-+
-+#translations
-+if(MSGFMT_EXE)
-+	file(GLOB po_files "${CMAKE_SOURCE_DIR}/po/*.po")
-+	list(TRANSFORM po_files REPLACE "${CMAKE_SOURCE_DIR}/po/" "")
-+	list(TRANSFORM po_files REPLACE ".po" "")
-+	foreach(po ${po_files})
-+		file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
-+		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
-+				COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
-+		list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
-+	endforeach()
-+	add_custom_target(po-gen ALL DEPENDS ${po_gen})
-+endif()
+-          cd t &&
+-          PATH=\"`$PWD/helper:`$PATH\" &&
+-          test-tool.exe run-command testsuite --jobs=10 -V -x --write-junit-xml \
+-                  `$(test-tool.exe path-utils slice-tests \
+-                          ${{matrix.nr}} 10 t[0-9]*.sh)
++          ci/run-test-slice.sh ${{matrix.nr}} 10
+         "@
++    - name: ci/print-test-failures.sh
++      if: failure()
++      shell: powershell
++      run: |
++        & .\git-sdk-64-minimal\usr\bin\bash.exe -lc ci/print-test-failures.sh
++    - name: Upload failed tests' directories
++      if: failure() && env.FAILED_TEST_ARTIFACTS != ''
++      uses: actions/upload-artifact@v1
++      with:
++        name: failed-tests-windows
++        path: ${{env.FAILED_TEST_ARTIFACTS}}
+   regular:
+     needs: ci-config
+     if: needs.ci-config.outputs.enabled == 'yes'
 -- 
 gitgitgadget
-
