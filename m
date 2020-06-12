@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D2B3C433E1
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B86BC433E2
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69AC920801
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45544207ED
+	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 18:29:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clVAMyRv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nlLCGCWN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726403AbgFLS3m (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726398AbgFLS3m (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 12 Jun 2020 14:29:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36444 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726371AbgFLS3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 14:29:35 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6242C03E96F
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:34 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id e1so10701342wrt.5
-        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:34 -0700 (PDT)
+        with ESMTP id S1726390AbgFLS3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 14:29:37 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F9FC08C5C1
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:37 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id r15so9152247wmh.5
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 11:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lig3s9AWgywdUyWpCTRvL9K8bsPccbZcjhlpnmmTzN0=;
-        b=clVAMyRvQX63ZQVEz1YjsxMN4hJ9UB4FOoEnEzgwxdkroKcpl+yHgxF0f+M3r1Pz16
-         NWSxGtdk7T4yHxAF/4pHQiVzJgPX6YdT9jP2spjQ2YVn4zu6Wzb2TnKFxeXjlNXNcvnI
-         Iz8jdPCOke1C3kdyj2Vwe3sIEH1xkbk+YQ4NB8t/i4G8pEjxcVV/10I+HcLRQAnPm5/g
-         4UVH/L3su8C1dyeph/AEyptUcMF7wPOrxxAkcKKS/FI8aeH4NMx6ivb4T9qr1nfEH1mj
-         h9TZdfIr8cANSE712djlYCk9kD+6DFjn6X2KZYcr6nDXHG+cRAhsiRcB+tk2lPMmkBju
-         scbw==
+        bh=0XPPft8r4Xra+F4c0Y5/B3YzjOeaiPpJXgsH7VeZvsQ=;
+        b=nlLCGCWNR8/juix/RMzMoJIPCAFz0PBLIjTWfz8AXsXGQuJvdnTzwhWKO0i2404NwV
+         rCDKoQmIJY6Ge4jY+9ivEftZwMRPuqY0sDZnWagGzA5Pn/HaY7urv72txaRrgxTQLoOe
+         gsMmmRpyO0b9CeLtwMM9x3SayNMY7AV1ZxPZYLuCfn0VMxfylosgoEod+cpNIyt8GAWW
+         RM5/mOLUx8g2QpW3CQLj4tmQQOnTIiqxgke+4LBzShjxMskXQj19XDTC9ayHWZgpxbF2
+         f3y3CA5RhXQhZcMOK2fUDAqEeM9KBmpPROeic92Ms6Na4Pfp0oCPmMeUOBjq4bgmSJG6
+         woXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lig3s9AWgywdUyWpCTRvL9K8bsPccbZcjhlpnmmTzN0=;
-        b=XEyap5MC5TWoZ8SkupvFj+r+SgloN12eL9sGzfQYna2YklXA9A8q1Fg8BmHubGiYlI
-         uapLk+m+wWVcxmTJIvGVI0/JTDaKsxX/C787cvHHWIx6srf7ivDGQEU0bERGJC9QE6nN
-         mUOA7SyVpiKWqXylq9mEPCTm1vjoogDPIH5iUfa6hlBjAxOPF/tKJp8+LA/2C5CULBwW
-         dPi8+9tBAH8GvnhzJnQMirf4IotGjs2tcNpfBPNZ97oyOrQMp5OwnGSLlq6Wm6F5wzNJ
-         UrMqXRxItU1GRShrfYiBrPJdPcBFrW25FURaa/U6JlEb+Nk7lrCZ+qkK473GC7o7CYZE
-         +uGA==
-X-Gm-Message-State: AOAM5331HKPR9yXqDlG+lKSdghy/ACwabMRgqdijhjWCdyo1B/teeK5w
-        e+x04j7xW4rdsd10BU2SaLK+erZw
-X-Google-Smtp-Source: ABdhPJzprNaUJ4yPQ+vWTwkyqLfWhJF7mXCD6+0fP56yKDg8AaabzSsHVPVV8Fz7NMYlYucuwdc4Cg==
-X-Received: by 2002:a5d:5084:: with SMTP id a4mr16679525wrt.416.1591986573448;
-        Fri, 12 Jun 2020 11:29:33 -0700 (PDT)
+        bh=0XPPft8r4Xra+F4c0Y5/B3YzjOeaiPpJXgsH7VeZvsQ=;
+        b=odTN/7cLjazsz3wTsiADLkIjWHGu+g+4q9A6bJaG1mGOhzy+CZ+LN0bV9dIw6GpcJm
+         EnPD025idPoYoIchxPsMkVX20Iczt3q9soOmuwFn73l1wcHuJXjgihtVMU+/l5O6+W2r
+         MXP5SavfkxlEu0Zq+UNDAYXmNU0YY9IUnlUy0qqDQJoB73jhTeMxu+npMECkmjOCdTye
+         TBy8eWw9AqRtXTLhpFTShzdLhsn7QHkNY0BFIKUGNXmlGCGGznsdPf0YMZzMbhSFcq0k
+         7F879P9C2mzxuotOrtOzQvLlUw4+QNp8P3Q/gD36KY0tBPhjtVGYh8JC4/CTFq76EI/g
+         YG6Q==
+X-Gm-Message-State: AOAM531g5zcqJFFx+zjto+GV0Ne/q7qSX82IfmVwhJz2EpWkP8QiM/tn
+        kFbkTAqi78E7+daC8etn8vhtM86x
+X-Google-Smtp-Source: ABdhPJz835s3o3zLgLhKm9k+jqf/dzyx5mlu+u1q9M2A7eXdy0qV4CvrVxLBtIHWL0zc0OgDuDUZwg==
+X-Received: by 2002:a1c:4487:: with SMTP id r129mr256405wma.14.1591986575564;
+        Fri, 12 Jun 2020 11:29:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o9sm10013175wmh.37.2020.06.12.11.29.32
+        by smtp.gmail.com with ESMTPSA id 104sm11974245wrl.25.2020.06.12.11.29.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2020 11:29:32 -0700 (PDT)
-Message-Id: <17e7f3e9de65f7275b56f47e7ae727c7f3e1b34d.1591986566.git.gitgitgadget@gmail.com>
+        Fri, 12 Jun 2020 11:29:34 -0700 (PDT)
+Message-Id: <f85ea0ac0ca5160a23a0a4ea26b7090638bcaf11.1591986566.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
 References: <pull.614.v3.git.1590759624.gitgitgadget@gmail.com>
         <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Jun 2020 18:29:23 +0000
-Subject: [PATCH v4 5/8] cmake: support for testing git when building out of
- the source tree
+Date:   Fri, 12 Jun 2020 18:29:25 +0000
+Subject: [PATCH v4 7/8] cmake: support for building git on windows with msvc
+ and clang.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,59 +79,155 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 
-This patch allows git to be tested when performin out of source builds.
+This patch adds support for Visual Studio and Clang builds
 
-This involves changing GIT_BUILD_DIR in t/test-lib.sh to point to the
-build directory. Also some miscellaneous copies from the source directory
-to the build directory.
-The copies are:
-t/chainlint.sed needed by a bunch of test scripts
-po/is.po needed by t0204-gettext-rencode-sanity
-mergetools/tkdiff needed by t7800-difftool
-contrib/completion/git-prompt.sh needed by t9903-bash-prompt
-contrib/completion/git-completion.bash needed by t9902-completion
-contrib/svn-fe/svnrdump_sim.py needed by t9020-remote-svn
+The minimum required version of CMake is upgraded to 3.15 because
+this version offers proper support for Clang builds on Windows.
 
-NOTE: t/test-lib.sh is only modified when tests are run not during
-the build or configure.
-The trash directory is still srcdir/t
+Libintl is not searched for when building with Visual Studio or Clang
+because there is no binary compatible version available yet.
+
+NOTE: In the link options invalidcontinue.obj has to be included.
+The reason for this is because by default, Windows calls abort()'s
+instead of setting errno=EINVAL when invalid arguments are passed to
+standard functions.
+This commit explains it in detail:
+4b623d80f73528a632576990ca51e34c333d5dd6
+
+On Windows the default generator is Visual Studio,so for Visual Studio
+builds do this:
+
+cmake `relative-path-to-srcdir`
+
+NOTE: Visual Studio generator is a multi config generator, which means
+that Debug and Release builds can be done on the same build directory.
+
+For Clang builds do this:
+
+On bash
+CC=clang cmake `relative-path-to-srcdir` -G Ninja
+		-DCMAKE_BUILD_TYPE=[Debug or Release]
+
+On cmd
+set CC=Clang
+cmake `relative-path-to-srcdir` -G Ninja
+		-DCMAKE_BUILD_TYPE=[Debug or Release]
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ contrib/buildsystems/CMakeLists.txt | 55 +++++++++++++++++++++++------
+ 1 file changed, 45 insertions(+), 10 deletions(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 1d57ac86772..f9976378d2d 100644
+index 9aff2b9f4f9..8367b73e947 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -861,6 +861,26 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n"
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
+@@ -108,8 +108,11 @@ find_package(ZLIB REQUIRED)
+ find_package(CURL)
+ find_package(EXPAT)
+ find_package(Iconv)
+-find_package(Intl)
  
-+#Make the tests work when building out of the source tree
-+get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
-+if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
-+	file(RELATIVE_PATH BUILD_DIR_RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/CMakeCache.txt)
-+	string(REPLACE "/CMakeCache.txt" "" BUILD_DIR_RELATIVE ${BUILD_DIR_RELATIVE})
-+	#Setting the build directory in test-lib.sh before running tests
-+	file(WRITE ${CMAKE_BINARY_DIR}/CTestCustom.cmake
-+		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh GIT_BUILD_DIR_REPL REGEX \"GIT_BUILD_DIR=(.*)\")\n"
-+		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh content NEWLINE_CONSUME)\n"
-+		"string(REPLACE \"\${GIT_BUILD_DIR_REPL}\" \"GIT_BUILD_DIR=\\\"$TEST_DIRECTORY\\\"/../${BUILD_DIR_RELATIVE}\" content \"\${content}\")\n"
-+		"file(WRITE ${CMAKE_SOURCE_DIR}/t/test-lib.sh \${content})")
-+	#misc copies
-+	file(COPY ${CMAKE_SOURCE_DIR}/t/chainlint.sed DESTINATION ${CMAKE_BINARY_DIR}/t/)
-+	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DIR}/po/)
-+	file(COPY ${CMAKE_SOURCE_DIR}/mergetools/tkdiff DESTINATION ${CMAKE_BINARY_DIR}/mergetools/)
-+	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-prompt.sh DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
-+	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-completion.bash DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
-+	file(COPY ${CMAKE_SOURCE_DIR}/contrib/svn-fe/svnrdump_sim.py DESTINATION ${CMAKE_BINARY_DIR}/contrib/svn-fe/)
++#Don't use libintl on Windows Visual Studio and Clang builds
++if(NOT (WIN32 AND (CMAKE_C_COMPILER_ID STREQUAL "MSVC" OR CMAKE_C_COMPILER_ID STREQUAL "Clang")))
++	find_package(Intl)
++endif()
+ 
+ if(NOT Intl_FOUND)
+ 	add_compile_definitions(NO_GETTEXT)
+@@ -133,7 +136,7 @@ if(Intl_FOUND)
+ endif()
+ 
+ 
+-if(WIN32)
++if(WIN32 AND NOT MSVC)#not required for visual studio builds
+ 	find_program(WINDRES_EXE windres)
+ 	if(NOT WINDRES_EXE)
+ 		message(FATAL_ERROR "Install windres on Windows for resource files")
+@@ -145,6 +148,13 @@ if(NOT MSGFMT_EXE)
+ 	message(WARNING "Text Translations won't be build")
+ endif()
+ 
++#Force all visual studio outputs to CMAKE_BINARY_DIR
++if(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
++	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR})
++	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR})
++	add_compile_options(/MP)
 +endif()
 +
- file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
+ #default behaviour
+ include_directories(${CMAKE_SOURCE_DIR})
+ add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
+@@ -182,6 +192,10 @@ endif()
  
- #test
+ #Platform Specific
+ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
++	if(CMAKE_C_COMPILER_ID STREQUAL "MSVC" OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
++		include_directories(${CMAKE_SOURCE_DIR}/compat/vcbuild/include)
++		add_compile_definitions(_CRT_SECURE_NO_WARNINGS _CRT_NONSTDC_NO_DEPRECATE)
++	endif()
+ 	include_directories(${CMAKE_SOURCE_DIR}/compat/win32)
+ 	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_UNIX_SOCKETS WIN32
+ 				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
+@@ -570,14 +584,22 @@ parse_makefile_for_sources(libvcs-svn_SOURCES "VCSSVN_OBJS")
+ list(TRANSFORM libvcs-svn_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+ add_library(vcs-svn STATIC ${libvcs-svn_SOURCES})
+ 
+-#add git.rc for gcc
+ if(WIN32)
+-	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
+-			COMMAND ${WINDRES_EXE} -O coff -DMAJOR=${PROJECT_VERSION_MAJOR} -DMINOR=${PROJECT_VERSION_MINOR}
+-				-DMICRO=${PROJECT_VERSION_PATCH} -DPATCHLEVEL=0 -DGIT_VERSION="\\\"${PROJECT_VERSION}.GIT\\\""
+-				-i ${CMAKE_SOURCE_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
+-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+-			VERBATIM)
++	if(NOT MSVC)#use windres when compiling with gcc and clang
++		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
++				COMMAND ${WINDRES_EXE} -O coff -DMAJOR=${PROJECT_VERSION_MAJOR} -DMINOR=${PROJECT_VERSION_MINOR}
++					-DMICRO=${PROJECT_VERSION_PATCH} -DPATCHLEVEL=0 -DGIT_VERSION="\\\"${PROJECT_VERSION}.GIT\\\""
++					-i ${CMAKE_SOURCE_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
++				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
++				VERBATIM)
++	else()#MSVC use rc
++		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
++				COMMAND ${CMAKE_RC_COMPILER} /d MAJOR=${PROJECT_VERSION_MAJOR} /d MINOR=${PROJECT_VERSION_MINOR}
++					/d MICRO=${PROJECT_VERSION_PATCH} /d PATCHLEVEL=0 /d GIT_VERSION="${PROJECT_VERSION}.GIT"
++					/fo ${CMAKE_BINARY_DIR}/git.res ${CMAKE_SOURCE_DIR}/git.rc
++				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
++				VERBATIM)
++	endif()
+ 	add_custom_target(git-rc DEPENDS ${CMAKE_BINARY_DIR}/git.res)
+ endif()
+ 
+@@ -594,7 +616,13 @@ endif()
+ if(WIN32)
+ 	target_link_libraries(common-main ws2_32 ntdll ${CMAKE_BINARY_DIR}/git.res)
+ 	add_dependencies(common-main git-rc)
+-	target_link_options(common-main PUBLIC -municode -Wl,--nxcompat -Wl,--dynamicbase -Wl,--pic-executable,-e,mainCRTStartup)
++	if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
++		target_link_options(common-main PUBLIC -municode -Wl,--nxcompat -Wl,--dynamicbase -Wl,--pic-executable,-e,mainCRTStartup)
++	elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang")
++		target_link_options(common-main PUBLIC -municode -Wl,-nxcompat -Wl,-dynamicbase -Wl,-entry:wmainCRTStartup -Wl,invalidcontinue.obj)
++	elseif(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
++		target_link_options(common-main PUBLIC /IGNORE:4217 /IGNORE:4049 /NOLOGO /ENTRY:wmainCRTStartup /SUBSYSTEM:CONSOLE invalidcontinue.obj)
++	endif()
+ elseif(UNIX)
+ 	target_link_libraries(common-main pthread rt)
+ endif()
+@@ -847,6 +875,13 @@ target_link_libraries(test-tool common-main)
+ set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
+ 			PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/helper)
+ 
++if(MSVC)
++	set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
++				PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/t/helper)
++	set_target_properties(test-fake-ssh test-line-buffer test-svn-fe test-tool
++				PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/t/helper)
++endif()
++
+ #wrapper scripts
+ set(wrapper_scripts
+ 	git git-upload-pack git-receive-pack git-upload-archive git-shell git-remote-ext)
 -- 
 gitgitgadget
 
