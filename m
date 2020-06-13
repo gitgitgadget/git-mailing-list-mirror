@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFFA8C433DF
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 08:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13356C433E0
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 08:52:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83028207DD
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 08:11:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7BAE20739
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 08:52:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTIUCBUc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cOo8gsIy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726408AbgFMIJ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Jun 2020 04:09:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48282 "EHLO
+        id S1726367AbgFMIws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Jun 2020 04:52:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbgFMIJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jun 2020 04:09:56 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ED4BC03E96F
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 01:09:55 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id c35so8019319edf.5
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 01:09:55 -0700 (PDT)
+        with ESMTP id S1726290AbgFMIws (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jun 2020 04:52:48 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDA15C03E96F
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 01:52:47 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id d15so8041140edm.10
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 01:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=0JIGjNJXciXnqHZPs5ZAhVS6PNnK+z9UGNn24KWxwPY=;
-        b=JTIUCBUc4Uo8MIidx1xAcWph85od8KDHNTHndTtM+zKDQiDyTq+RTHiyhfGL3VYTca
-         DgZu5g7eLXu2RPfvi39IHy39DHVS8w5nOuDYtm5IgQ8vk0B7ZwkI2cZ62EynZfuZMVcS
-         wst96u4EHnqQnbNo4xUO5l0IwSbLIakC7xHCwSC5biaQgE3ZnUOkR1qaYYRHBoSAI8NA
-         cFqXFdgTphqO0OKEn6bBoXu/oXOaasilet0sXPO5wiL7dPht4AYthMMq7A8ePuPBeoFP
-         0TTZy8dNVglzRR+j0kwidWAaA3FXIqK+P7Doxn7aCVEFL9I1Xr3jjlp1RlS7+qdPyIgd
-         /S2Q==
+        bh=4Autvi8PbyBvagKh13SMO/iOZapobG1h+TonbtdCIA0=;
+        b=cOo8gsIyJLPKA2IPs0x+tJ8yv3qguNJ3aNE1l37mX7Jl8thwC/azBpIEJyNRKBZjMl
+         CdlatvliaW3PAPWDEDtDJ9XgTuXzl7pwassulH2dTJLRCAP6G8rABsLyGdnvOUTTYdG/
+         +AoIaj2v8Mp+QOiC/3K32C6/g8509iK+ZRm1NcaP1PfRJbEIbGHnwOogHOAx01nyF3f6
+         6sR89AUkF0/1NnJq8sKVvf7eLkWhLgxw0rDdQgmXgHHW+hbTmMz4nj2f6K94AMrkW0Yl
+         mJbhl8DcvznDjmuaB1nMd3glFWnP59zSM0DpolJo12+nflK5Cm74yaPWNAp0KKBeIc3m
+         p3PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=0JIGjNJXciXnqHZPs5ZAhVS6PNnK+z9UGNn24KWxwPY=;
-        b=q6PTaIaP7q2zGhDjCyJLfAG8lWghRcrnldDewHAzChurrpvXh0tDUdk3FsUXYk2lIq
-         NDnIQOGh5zePCvqD0s2wRsaLtyUD9+d4tZDK77r9yP7SFQWw9Xb2n0Ymywrv0T2iSNtK
-         2h34oogKr4iFwwG9gIn/D3u7A2ObvslA40vrPxs9I0bBykQlWS7diIa9bOhpIafrnXJm
-         a9JILy67vTZuPyMyssA1mP72EfCuOb6saSWGRBy0UTCYYHACDzzAS3rtQZsCgFqKLcBm
-         VD9uXyml63Vr9ULmtmk9ZIYwD7grid3UleQ+wuvrg2jWYM2Hl06/SjZUrgtiN87gNUiW
-         XYyw==
-X-Gm-Message-State: AOAM532NT5w1rh00agXK2mebA3Al07EFN4n8H0Tu0m7gTfnN6bP0WfO5
-        EFFUlP35qVj91b1eQ0lzppUHcD+O0nYdN3SXEhw=
-X-Google-Smtp-Source: ABdhPJwHtRkeWGWbmGi8znO0xAN3UEfreI6aCig3weRDQDkIqFphLc8bvYKn7uVUMNeqjauS1a1WwW0mTeFYXnX+4/Y=
-X-Received: by 2002:a50:954b:: with SMTP id v11mr15449146eda.273.1592035793984;
- Sat, 13 Jun 2020 01:09:53 -0700 (PDT)
+        bh=4Autvi8PbyBvagKh13SMO/iOZapobG1h+TonbtdCIA0=;
+        b=pv94UihjqG2yqcq5mYcKABit97MXke7+yTh5l1b5hB2oxEtDaNvhPg0lPRC+tl9D+6
+         yFj37U2rf9fOx/qPDpDbVvDktQl/MTZ12YQt4vBxbmSsMeddpUOiIJA+0ZiJDBlb6vJr
+         S12/fCaeLDgkyEaQkkMSFU3/IJsN07hzZ7DOW1/AqWADBpikgSDSYgqLHb1Xz47TnUvh
+         UQ4IMaPHimCBLBkUCfK760WB8qdbDWaMBHjVJJ12VbSrTJY4LhurYDD+Jq5yG/1sFET+
+         bvRhc7fLBliG5TIXhc9MtQA2+6+SYOy2npgtGEJjmfP8oN5C1Je3nmScdJvJJ4yb5oEq
+         0Ozw==
+X-Gm-Message-State: AOAM532byKoI6yMcOvTmjWzkEFX8JDli1VqwyKVn6ceg/XfIobh1vBUE
+        1QlOKprGjxnF3Yy8NCpjzvtroK6J1XyTFPcXu6I=
+X-Google-Smtp-Source: ABdhPJwcUmgRjONkAHsHrmklub7i2KFdT9J0uOtfucI5NbcPCpICPrcNiPzksSlfaH65EJ9wG1LvilG9FAEZeOngzbo=
+X-Received: by 2002:a05:6402:1153:: with SMTP id g19mr14967136edw.127.1592038366466;
+ Sat, 13 Jun 2020 01:52:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200505104849.13602-1-alban.gruin@gmail.com> <20200505104849.13602-2-alban.gruin@gmail.com>
-In-Reply-To: <20200505104849.13602-2-alban.gruin@gmail.com>
+References: <20200505104849.13602-1-alban.gruin@gmail.com> <20200505104849.13602-3-alban.gruin@gmail.com>
+In-Reply-To: <20200505104849.13602-3-alban.gruin@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 13 Jun 2020 10:09:41 +0200
-Message-ID: <CAP8UFD38UUjaHQ5xdTbCpTLJSpJJmwigr3OcNViiq62cxEiUxg@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 1/6] stash: mark `i_tree' in reset_tree() const
+Date:   Sat, 13 Jun 2020 10:52:34 +0200
+Message-ID: <CAP8UFD1aT4dmuNkEz95eDFTE7sY+4eK_TwbTD-Vw8U7KyyZ-DA@mail.gmail.com>
+Subject: Re: [RFC PATCH v1 2/6] stash: remove the second index in stash_working_tree()
 To:     Alban Gruin <alban.gruin@gmail.com>
 Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -72,23 +72,45 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, May 5, 2020 at 12:56 PM Alban Gruin <alban.gruin@gmail.com> wrote:
 >
-> As reset_tree() does not change the value pointed by `i_tree', and that
-> it will be provided with `the_hash_algo->empty_tree' which is a
-> constant, it is changed to be a pointer to a constant.
+> This removes the second index used in stash_working_tree() to simplify
+> the code.  It also help to avoid issues with the split-index: when
 
-[...]
+s/help/helps/
 
-> -static int reset_tree(struct object_id *i_tree, int update, int reset)
-> +static int reset_tree(const struct object_id *i_tree, int update, int reset)
+> stash_working_tree() is called, the index is at `i_tree', and this tree
+> is extracted in a second index for use in a subcommand.  This is not a
+> problem in the non-split-index case, but in the split-index case, if the
+> shared index file has expired and is removed by a subcommand, the main
+> index contains a reference to a file that no longer exists.
 
-Yeah, in rest_tree() it is only used like this:
+As this is fixing a bug and there is no test, it might help if you can
+at least give an example of something that used to fail before this
+patch and doesn't after it. You are talking about stash subcommands
+but it is not very clear which one for example can trigger the bug.
 
-        tree = parse_tree_indirect(i_tree);
+> The calls to set_alternative_index_output() are dropped to extract
+> `i_tree' to the main index, and `GIT_INDEX_FILE' is no longer set before
+> starting `update-index'.  When it exits, the index has changed, and must
+> be discarded.
 
-and parse_tree_indirect() takes a 'const struct object_id *'.
+That makes sense.
 
+> The call to reset_tree() becomes useless:
 
+Your patch doesn't remove any call to reset_tree(), but actually adds
+one. So the above is difficult to understand.
 
-> --
-> 2.26.2
+Do you want to say that in a later patch it will be possible to remove
+the call to reset_tree()? Or do you want to say that the call to
+write_index_as_tree() becomes useless?
+
+> the only caller of
+> stash_working_tree() is do_create_stash(), which creates `i_tree' from
+> its index, calls save_untracked_files() if requested (but as it also
+> works on a second index, it is unaffected), then calls
+> stash_working_tree().  But when save_untracked_files() will be modified
+> to stop using another index, it won't reset the tree, because
+> stash_patch() wants to work on a different tree (`b_tree') than
+> stash_working_tree().
 >
+> At the end of the function, the tree is reset to `i_tree'.
