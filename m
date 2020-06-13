@@ -2,94 +2,112 @@ Return-Path: <SRS0=iF2w=72=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20D21C433DF
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 19:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35945C433DF
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 19:41:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA2F12074D
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 19:34:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B3B820789
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 19:41:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hZVSyeCG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CrVVwMoT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726605AbgFMTeq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Jun 2020 15:34:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50770 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726304AbgFMTep (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jun 2020 15:34:45 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 85A3968AF9;
-        Sat, 13 Jun 2020 15:34:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GQpy50Iha4uNd2S8SfS5mhiHspk=; b=hZVSye
-        CGSRoMgU9ejh4mjonAN1BuK/b++5lQP1rBKeeuvlg76t0A7VCb4KtMiNIgOcwWBu
-        +f5/EiJOnqxRnAf1ASuZkf8GIP1kidYeylzi7x4q9MXxViu74Vha2/YphJG8JOK1
-        /fIBoqDStFFrE38hIA9FCZzZOpQ7XIIGl6b8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ff6N/+2lmjXhxXuvSiPIw2RqiPYOvynF
-        c0aCKbFukDQbl8WhyssjD7N+h4NA0yJf2GAlQdxdn3yxdkRug/mBiq9DqEt0ZXg2
-        4mZmet+bM8LaosGZY4rSeiOGHoFG91tW1x73Yuo7/ELXHJeFXbw5WLidjYfU5nLf
-        C7F1LZ2piFw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CB5868AF8;
-        Sat, 13 Jun 2020 15:34:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C44FF68AF7;
-        Sat, 13 Jun 2020 15:34:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     "Curtin\, Eric" <Eric.Curtin@dell.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "Geary\, Niall" <Niall.Geary@dell.com>,
-        "rowlands\, scott" <Scott.Rowlands@dell.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Collaborative conflict resolution feature request
-References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
-        <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
-        <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
-        <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
-        <xmqqa716zs7w.fsf@gitster.c.googlers.com>
-Date:   Sat, 13 Jun 2020 12:34:42 -0700
-In-Reply-To: <xmqqa716zs7w.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 13 Jun 2020 12:22:11 -0700")
-Message-ID: <xmqq366yzrn1.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726378AbgFMTl4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Jun 2020 15:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40986 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbgFMTlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jun 2020 15:41:55 -0400
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ACD3C03E96F
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 12:41:55 -0700 (PDT)
+Received: by mail-ej1-x641.google.com with SMTP id q19so13371882eja.7
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 12:41:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=x6OB8aseJOxwXkbgJPnGNqNw8N1IAHjzJp88D/UWNJg=;
+        b=CrVVwMoT6RMDMmMvYjfSDv1MPUvd+fRlldloFk7b9HU3Rf5DzbYt9gfxMZgVwtDcRM
+         dw7/nEkYExFE5iIoAJq+DtNbRCad+VcZksF1fRa+RjHlqOyVtMLGZf//MOETJO/6CYyu
+         MX6Gt9CgZ5DW3fhACRMaHhzVElHj9DfXXmrtVesNVqgxWARDYLMwoyRtGZSxEi6XNl3Y
+         CR5oHFrvmZ83jxJAS+C3yb8TWu4c+Bw9rV+lE8zDrWJK/66Urfl6HlG8M9PmWBlN3GQG
+         Oi3/2XQyEHU1RQNKMlLLeSJakq9SEUyvFtSqw6E3mzPPrPrM+3KR1guf4n+jTICcW927
+         NrvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=x6OB8aseJOxwXkbgJPnGNqNw8N1IAHjzJp88D/UWNJg=;
+        b=tZgqJpfuZl8Xm1y8k73fVP1CVY916p6C03aETX5KFSwF4CH/SHN4xzIq6uG55kNEEv
+         zYU3ied7de70qqaj0MWIWUW1pqkOEM61fORGC13eWQUXXdUrzvZseI1BaM8uwcmI9CsN
+         6GhA4JdKweJopfU93L54biRAZHrmdMN0nQeg5qABAsLYVZAh3pN55PCE/srNpchMCeTs
+         3tQIHIyNS1/M4HQiPvKKtBhP/vTpBu1SQsBLUEqWiwfF9ilUpmN08y0wezu0zcM0hqO6
+         zHJc2dO0ozUf8qKw2OPsMK9tRJkNs5BHHN1klwvUaP6CMez2UPsx6gZMvBYA1gzZc1AQ
+         KUgA==
+X-Gm-Message-State: AOAM533niUWpLrC5vh/lyVXMsnqEt4DxdWObR8CoGzQLUSal+CRfz9f5
+        BtUN7khEL24rfnpF38hcCBsUJ1klkt3ou+j2zg8=
+X-Google-Smtp-Source: ABdhPJx55RC5YcFaaTVcAmSZHhzvZsT5LMxwC/S8q0wBMnTigx/+LyGWOf8YCTRV1d1YQAK8QlohqjijRLvKm+UvuXs=
+X-Received: by 2002:a17:906:7f02:: with SMTP id d2mr6640860ejr.211.1592077313664;
+ Sat, 13 Jun 2020 12:41:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EE0FAED0-ADAC-11EA-B5FA-C28CBED8090B-77302942!pb-smtp1.pobox.com
+References: <20200505104849.13602-1-alban.gruin@gmail.com> <20200505104849.13602-6-alban.gruin@gmail.com>
+In-Reply-To: <20200505104849.13602-6-alban.gruin@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 13 Jun 2020 21:41:42 +0200
+Message-ID: <CAP8UFD02QdZeq4Y4cGpLL3H6xeW1qUFXw-=9ONn3s8n9vRL8sA@mail.gmail.com>
+Subject: Re: [RFC PATCH v1 5/6] stash: remove the second index in restore_untracked()
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, May 5, 2020 at 12:56 PM Alban Gruin <alban.gruin@gmail.com> wrote:
 
-> ...  Luckily, most end users would get their Git from
-> packagers and they are good at doing the bundling (i.e. the
-> "git-core" package may "suggest" the "git-imerge" package).
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index cbe37cd24b..1eafc1fe8d 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -359,29 +359,16 @@ static int restore_untracked(struct object_id *u_tree)
+>         int res;
+>         struct child_process cp = CHILD_PROCESS_INIT;
 >
-> So...
+> -       /*
+> -        * We need to run restore files from a given index, but without
+> -        * affecting the current index, so we use GIT_INDEX_FILE with
+> -        * run_command to fork processes that will not interfere.
+> -        */
+> -       cp.git_cmd = 1;
+> -       argv_array_push(&cp.args, "read-tree");
+> -       argv_array_push(&cp.args, oid_to_hex(u_tree));
+> -       argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s",
+> -                        stash_index_path.buf);
+> -       if (run_command(&cp)) {
+> -               remove_path(stash_index_path.buf);
+> +       if (reset_tree(u_tree, 0, 0))
+>                 return -1;
+> -       }
+>
+>         child_process_init(&cp);
 
-So my answer to your idea/opinion is that we shouldn't waste
-engineering effort to "have something like imerge integrated into
-git itself", but we should help distro packages to do the bundling
-of "git" itself and all the good things around it.  One way of doing
-it may be by keeping an official curated list of "third-party things
-we find good" somewhere (it can be in-tree in my release tarballs,
-but it does not have to be---some page on git-scm.com could just be
-fine; as long as the quality of the list is maintained to our
-standards, where the packagers and end users see it does not really
-matter).
+Is this still necessary?
 
-And such a list would also help those who prefer to build and
-install things by hand.
+>         cp.git_cmd = 1;
+>         argv_array_pushl(&cp.args, "checkout-index", "--all", NULL);
+> -       argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s",
+> -                        stash_index_path.buf);
+>
+>         res = run_command(&cp);
+> -       remove_path(stash_index_path.buf);
+> +       discard_cache();
+> +
+>         return res;
+>  }
