@@ -2,114 +2,110 @@ Return-Path: <SRS0=iF2w=72=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 351DCC433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AD70C433E0
 	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 07:57:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11F7B207DD
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 07:57:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF7EE206D7
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 07:57:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rrym7bWE"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Q45reSxt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726381AbgFMHwa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Jun 2020 03:52:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbgFMHwa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jun 2020 03:52:30 -0400
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2DECC03E96F
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 00:52:29 -0700 (PDT)
-Received: by mail-ed1-x543.google.com with SMTP id x93so7991716ede.9
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 00:52:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/OsFE9CgSstE0OBzSh5ZKxlmEvmlK3YiZ6lPcE8foaQ=;
-        b=Rrym7bWE/LZvXrZIXKFW9AEtZiefMr1+UsfIKgbNxmRHqSLKBYKwKkIJQu1od91oRK
-         qYiVASJUvykpaD8eaMzA0kumZNDlEd2mG4ZzKesV0wzlTZRyJ+itCqZRdtlRiVpTQJHw
-         P1NxZ3PIQGgaQQABCECmXNOcGqWuilstm4owD6BGgqW1K2+2Or/b/a8Jpk35kTVhV40/
-         wrfE1UyEh6B84IeataV4ns46N/Q8kXfEXBdgji7c4hynW/VRBOG/M6wt/WCEHEJKcqhS
-         nCDVIBoQUWzkKiKsWPKCgaLwUv5GH5XvAbLPSeL8NpPBopgVOSonMudDCzFLNoTSx/be
-         +9HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/OsFE9CgSstE0OBzSh5ZKxlmEvmlK3YiZ6lPcE8foaQ=;
-        b=bjdcN9cwemEdcxnqefo5hMxH028DtsS7ON9re3c40moXCwrcklP8pZqBpPm44Q0Kkp
-         GgF79XENlQ9wzByT6RjFtwKS4gy7jCBUBBGtUDlBI/KOyTF4Hz8acTbMhN5OSSoYyZTC
-         GVTMLQr9Fffz7aBJTZLZkAJfpe92WS/trQuaUvvZJ82/Jpb7ybVvFDWGX7zYvSg/Lu0g
-         wiNXVCiNkB72qp+jqqRAWgu+BnftUHhqxMx61Xw0A3js4VDzxWy+gIMBwezdxQphhPR4
-         Qs8RPG+vepf4exTF9DHmFnnKphF4TZNjaJND10nIGwziOeURqJJH31FDzJK4eW3ZO+TJ
-         Wi+A==
-X-Gm-Message-State: AOAM532n3YCajIpj1hWBBATIiXlVcTyr3uhOol8nkZzJBUqyAHOVwr17
-        5/yD9PKYmxE4//JlWHXGGR7BCb/dDU00Uh/KCNg=
-X-Google-Smtp-Source: ABdhPJyEW/YI9q2aDz1nrmaatA4RX5Oh8I1E2f+6gOq5CvTSCnhI5ArC/X6l/J7ziiNTsSj7/sFWa3qqGFJZVkEV5a0=
-X-Received: by 2002:a05:6402:1153:: with SMTP id g19mr14816147edw.127.1592034747545;
- Sat, 13 Jun 2020 00:52:27 -0700 (PDT)
+        id S1726349AbgFMHsM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Jun 2020 03:48:12 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57381 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725783AbgFMHsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jun 2020 03:48:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1592034473;
+        bh=YoAE6OXZOz2dM5ikhzIKUeEBnZVL+SM7YJzSI0st5nA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Q45reSxtd6ho+dN6cyEbRnw1U/T1bKCJ4aXFK4Vfez+ZT+Jtf8hoW3IFwDDzovJt5
+         n9kxczGydcnVdEOkKIOmOGhTBR/Gai8R88NVTshhqu9ioz2FY6x0EjoKb/7GrmX+7i
+         y9/KlGvT6saT3ihQIrAewIyjA2rwLM9P0KVIq9mE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.173.52] ([89.1.215.108]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfpOT-1jHZxo2Ikz-00gI8B; Sat, 13
+ Jun 2020 09:47:53 +0200
+Date:   Sat, 13 Jun 2020 07:00:16 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Matt Rogers <mattr94@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        don@goodman-wilson.com, stolee@gmail.com, Jeff King <peff@peff.net>
+Subject: Re: Re* [PATCH 8/9] fast-export: respect the possibly-overridden
+ default branch name
+In-Reply-To: <xmqqpna42tt3.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2006130658330.56@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com> <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com> <20200610233912.GU6569@camp.crustytoothpaste.net>
+ <CAOjrSZvV6+ApfmOBa7rdXDPQJbExRsOfodO16i_1N5QjjhCB1w@mail.gmail.com> <xmqq3672cgw8.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2006111559300.56@tvgsbejvaqbjf.bet> <xmqqpna5bq2l.fsf_-_@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2006121451100.56@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2006121518160.56@tvgsbejvaqbjf.bet> <xmqqtuzg2twq.fsf@gitster.c.googlers.com> <xmqqpna42tt3.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20200505104849.13602-1-alban.gruin@gmail.com>
-In-Reply-To: <20200505104849.13602-1-alban.gruin@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 13 Jun 2020 09:52:15 +0200
-Message-ID: <CAP8UFD0bfTEDQaA0rQEBW76niF0T7f_4HS_N1tkRPh-0ZW7-Gw@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 0/6] stash: drop usage of a second index
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:PiYOcqusZ7pIZDOQ8xwuosrVDlxr5mPt8Vla1SThr41yTOWiOaM
+ dRzSCgb+6+z+dC0Ygou9OTms4rBe1eI6kE92FnNBNceIQzwg/4RZRn+kg9iIoc23YEQrPJm
+ J7d7ZrOPwygjfMiMHe3t6+/0j0kGXQXFJhfyW5LNP74gQJgrxN4qdGpSqhUkQxeuLlIHfVL
+ l2T5gh3Ss0eCwjT0fJ8dg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kOLi7SqFYQQ=:vUjiVhZNt62BBXptZOJzlw
+ 3uz09VWKusA5A1hjdDZXcwJg5n+X3m8E1lGzmaYg7biwpqtFPJ9KvQFl2ymRXwOWhYzTid5r0
+ MiNZH599amF5/Fh+ZJOtGUV9Z/Ms2TYFUfaOcRpKpipZuP9YLfi/EiIf3Skqa7mcbMfzzdW4i
+ 7DL0Ruwb38rEqxnRYAJz2PuT0htEkLS0fHgSR13W9fvVQlXqFQ96iAJcEJq+kNcNuh7udnm2z
+ DYH6dcgvL9yr9d/MT1iU/WWilTvbCF2kMHA7T+WDrbje1bc6cODKkD/DLtYPzNP5uOJvem10Q
+ j1CJpnPTJReYQrI2m9+9lJqm2ShcgAF+Sx3kxv6fNAjeM1/dbE7hrUvdwCF8u80euGmTts1cM
+ BGd7+++Bjsh6HvES4LyMZKknyeU5a3wpNzipwkSb9LaViJiveNMEuVmtZY7fATHZsRkDhOWAv
+ sSdwtkjf628lEbYZplzQN8CInF106tnWJk3JfIKxhW8x6cQCwm5roJIA1pR2/hNu5qb5BfeyX
+ TvZP0dlRmUVufMc1FdN0pjd/kX6am6qvK6M74uD/sOTduAlGO+siSuVRfJBBhTPnAWKCzJDOO
+ 0m9BPujjZKKbKgGkuaflPhWlqJq6f+Zl/YyCpuxlvr3BZS60NQzwFIgKvOdSKLhJ4XdlXgVX/
+ I5rHxVwnJy0MQw18obvlJFThBYKM+ejYQCZ4VrlK8U9QjuJT2Jl4KIrmXr56b14XfpU/V++8f
+ 3lU8OhSsnrQaTCMPtPvpL1RvjSb7IMQ6ISOQIYcVo474+Tjdjt9g4ulp6t+5dYK5++kwt1tfS
+ X/tHfIrGomzUFTjiVWOdJD18c4JjNMnlWOHsRTZekhYBqxfVpRGihwYNVwVCudptJqoyl/ONW
+ 33tt2+TvUrWV9v1aOKUnnzSfFgc3rN4tMGkQ0ELOCRQCpowYmIJEXUjp/ImUaldMJLEQW52yN
+ uYMuOClC5GBqqO6H0zEUcrEmFrMWJCZts3igsLaN7KNI1yG7Xxg4ib86i/t2CM26cPBuVUuup
+ XBFgAOorpgt3AUtExly3QMQB7O2t4x09aQZLz9TLxGec+IFxN1DeCz+pOFNtiBzQZMYRO6IKe
+ Pex3WiIjBzFBV5/Sg0l6b48C1OSa7vMzW6ScTGDSUhXx4hHzVqQZUS8vg/LCydRwBzifGlcEP
+ ewfO3t/Vrpqjl2DusL5csjlT/YfBbJXuz1YBQMBHADmlMv8xQAZpFgWTGbz20xkspyYTAd1gx
+ pNEWBVzLW7W3+zJaC
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-On Tue, May 5, 2020 at 12:56 PM Alban Gruin <alban.gruin@gmail.com> wrote:
+On Fri, 12 Jun 2020, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> The old scripted `git stash' used to create a second index to save
-> modified and untracked files, and restore untracked files, without
-> affecting the main index.  This behaviour was carried on when it was
-> rewritten in C, and here, most operations performed on the second index
-> are done by forked commands (ie. `read-tree' instead of reset_tree(),
-> etc.).  This works most of the time, except in some edge case with the
-> split-index when the split file has expired and is deleted by a forked
-> command: the main index may still contain a reference to the now-deleted
-> file, and subsequent operations on the index will fail [0].
-
-Thanks for working on this! I agree that it would be nice to fix split
-index issues as it could help for sure with huge repositories. Sorry
-also that this patch series fell through the cracks.
-
-I am adding Son Luong Ngoc in Cc as he reported the issue that this
-series fixes.
-
-> The goal of this series is to modernise (a bit) builtin/stash.c, and to
-> fix the aforementionned edge case.
+> > As I said already, I personally do not think that this needs to be a
+> > preparatory patch to anonymize 'master' that cannot be configured to
+> > something else into 'ref0'.  This will become necessary when we make
+> > the primary branch configurable, so I think it is easier to replace
+> > the counterpart to your [PATCH 8/9] in the original series with it
+> > in the v2 series.
 >
-> I have to admit that I don't really know how to test this.
-> GIT_TEST_SPLIT_INDEX failed on me (gdb showed me that it does not enable
-> the split-index at all, at least in `git stash' and its forks),
+> Ah, I forgot to say, if you think it is easier to manage the main
+> set of patches for the topic to eject as much preparatory changes as
+> possible, I do not at all mind treating this as one of the
+> preparatory step and queue it separately, making the main series
+> depend on it.  I just wanted to say that it is not necessary, even
+> though it does not hurt.
 
-It should have worked when it was introduced, though maybe not for `git stash`.
+Due to the need to adjust t9351, I think it is clearer if it is a two-part
+change: one to introduce the "main branch -> ref0" change, and another one
+to respect `core.mainBranch`. Those are separate concerns in my mind.
 
-> and I'm
-> reluctant to add explicits tests on `git stash' about the split-index,
-> when nothing in its code explicitly does unusual things with the index
-> once this series is applied.  If anyone wants to share opinions about
-> this, I would be happy to read them.
-
-I understand. I think the good way forward would be to fix
-GIT_TEST_SPLIT_INDEX and find a way to ensure that it keeps working in
-the future.
+I moved the first one to the beginning of the patch series so that you're
+still at liberty to take it early vs keeping it within the topic branch.
 
 Thanks,
-Christian.
+Dscho
