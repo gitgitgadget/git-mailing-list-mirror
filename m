@@ -2,400 +2,262 @@ Return-Path: <SRS0=iF2w=72=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD096C433DF
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 14:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1E55C433DF
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 14:25:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 739AF20792
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 14:23:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87214207BC
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 14:25:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fKxyTNtN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MjMahsNO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726398AbgFMOXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Jun 2020 10:23:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48794 "EHLO
+        id S1726280AbgFMOZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Jun 2020 10:25:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726102AbgFMOXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jun 2020 10:23:11 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B2BC03E96F
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 07:23:10 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id x22so5695383pfn.3
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 07:23:10 -0700 (PDT)
+        with ESMTP id S1726102AbgFMOZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jun 2020 10:25:28 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030F7C03E96F
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 07:25:27 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id q8so11712662qkm.12
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 07:25:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BERT1Og07NmboBlTm+FymC1fUVujavSPh2WEBlKVBP0=;
-        b=fKxyTNtNPW8YVKLKBpONracJcJgSqf8T55MbmP805PgQFf6j/sGjrkDAwW8IayHbQa
-         BL4nJKr171M+hi0HkUOEO+3wVm57wLyWrHt/FG2cpswhmtog6ML4A672Gjcp/4fEO/kG
-         L6P4tzn/rPdCbJfsw47KA+VWcuMNKrRM5khsFUfzTBZCT8bQMg1qPDbatKF+v7zLeTxW
-         Evj1NYVE6QWqEoiB1Xt7nXevUGE2yOzhnZKHaHqEEcQrMhUHwh1vqi8joaGs8ya9YagE
-         67CD0atDXna9PE4uEC1x+fmIR9mZihiuKJPwWygH2RFzJHhTCKK3wCPPOzQDgL8y9YOw
-         Oupw==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DghuTSbX4zxMdv4AE3Dx+fuWr8PHfn3QrPhRR6s/d90=;
+        b=MjMahsNOYe7zBv9b+B9wv5ai/L7G04tOjuqnjuDR9VyQBPmP026INHWb2Nb6ui1xSh
+         VC4iXiJT6F76Ma3IGs4QnO4tfx9bK+5SiTkiY/wPFsk01yL0XL4MIfuCMAsaLmNgTnJg
+         V09ZbY9b/hlCJD7PieVYFTvwkSELuS8rneBjWmqtXVdqDy/yxnTM7G+DvG70hTT/b8/y
+         G44tfkgFX+gOqDgJALMDGBDTw3msKe3FeuUrqtxrRKrIRTxcye+/tgasLdCw43HFyFcT
+         f3gqmpwKfdYerFpaIB2ZBDYWEigUnSWM8dXydaskDdVWkTewnbhdyHtpThZmHkte4M93
+         lpYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BERT1Og07NmboBlTm+FymC1fUVujavSPh2WEBlKVBP0=;
-        b=KAb7a50sRzfY1MMlbSpAYIMZpazStZlPQzZJd0tQGHDRtHxXbSGNxRsMXpi0CCiyCk
-         JA9uPEI5ONRZsnE3+GvT40+bvmyCheWhB0jup0Q6IShdcAgo+cgsGdnCYKvCL4SJoOfu
-         0lmPyUOXlwhwYLHmsFtn2aUrQRZ1zQgzoeDQFgNqJeQkFWo+1Kb2b2vmq0FV4xSxZ2LC
-         qyXTy6MUN+R3Y4Btq/xKmmrjX7HSvBul98k1zeHCM42Jxa83x7mktjVdR0tot7WfbiVe
-         ov1cNCN6W50MfsDcVoFPal/+W1VapnPhUeMS32XTSHirbS4lD/xo0OLZMOnOorrbrzMm
-         aX7w==
-X-Gm-Message-State: AOAM533tLPFCGokOHQHtxn3iPnPx0dIFu/34lWeZzLDZGnAkSrXdUBDz
-        0ZJPcRE6qErXx7yfZFZ4hq4=
-X-Google-Smtp-Source: ABdhPJyx6Zlw49GS3glttzJfkMCrz7qryuX5mHkLo7ra0Snd98mKvV4SWM/TRA8YzRCobUrxuv8PmQ==
-X-Received: by 2002:a63:c004:: with SMTP id h4mr14976789pgg.385.1592058188985;
-        Sat, 13 Jun 2020 07:23:08 -0700 (PDT)
-Received: from localhost ([2402:800:6374:3bd0:871b:497e:ae48:68fa])
-        by smtp.gmail.com with ESMTPSA id m14sm8044741pgt.6.2020.06.13.07.23.07
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=DghuTSbX4zxMdv4AE3Dx+fuWr8PHfn3QrPhRR6s/d90=;
+        b=K9ElpxE+hhSimYO8/N7jYyS0YDM1IYH9CnR4TWCXho8SswiozJyOnjGEUfCH+++Yqf
+         znbpY41osaEwsZMlnpNQ4XcBYaE/VckhiefVf7UT3ZmmX5ndyrykZWNWNxb1q9zcfnoG
+         JG/BO+YVaSOL0MXDsFiAQIXqtJ5YFqsvrgGqbgDmYqlvTGLgEBYUlNmHVmOpQdBA7w60
+         kqYngYLrqDrJaKgRuCdel2y6k5WdDhfk5HiMVsqSUjBZj5Oyl6u/U8QiuhztDG3T6rLc
+         DXsdnsvrQ3Sq0BwcOROESdM5qJH/mf7liq9L9Hb2tcN80lkyQGOmEAvl3py+tCQ6w5R8
+         3ggA==
+X-Gm-Message-State: AOAM5317Kd2AFZkSst3Xi+T3SO6AL2Ss3toywwsfoBuXbzOCnD1+QXBP
+        IDanYxPMb/EBi/mDBmjBOp1uy2QKAWU=
+X-Google-Smtp-Source: ABdhPJzTfktEqtWlPPpbv9lZJ8wmKYZ4nU7ijdTUET3CN3N0W1EgmWMdnP5R5zG/FgaqzVfgyhNrQQ==
+X-Received: by 2002:a37:a648:: with SMTP id p69mr7842561qke.190.1592058326747;
+        Sat, 13 Jun 2020 07:25:26 -0700 (PDT)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id x36sm7144232qtd.97.2020.06.13.07.25.25
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jun 2020 07:23:08 -0700 (PDT)
-Date:   Sat, 13 Jun 2020 21:23:06 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pkt-line: extract out PACKET_HEADER_SIZE
-Message-ID: <20200613142306.GA4680@danh.dev>
-References: <7e803a2ba9458ce35c657e67323edfe4409205ec.1592055716.git.liu.denton@gmail.com>
+        Sat, 13 Jun 2020 07:25:26 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] checkout: teach --worktree
+Date:   Sat, 13 Jun 2020 10:25:12 -0400
+Message-Id: <d10cb03dd8ce00cb6033c61ff9b9b30bbf5f9c89.1592058281.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.27.0.132.g321788e831
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7e803a2ba9458ce35c657e67323edfe4409205ec.1592055716.git.liu.denton@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-06-13 09:43:22-0400, Denton Liu <liu.denton@gmail.com> wrote:
-> In pkt-line and remote-curl, we have many instances of magic `4`
-> literals floating around which represent the number of bytes in the
-> packet line length header. Instead of using these magic numbers, replace
-> them with constant expressions.
-> 
-> In most cases, replace the `4` with `PACKET_HEADER_SIZE`. However, in
-> the case where there's a `char array[PACKET_HEADER_SIZE]`  and we are
-> reading data into it, replace the `4` with a `sizeof(array)` so that
-> it's clear that the logic has something to do with that array.
-> 
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  pkt-line.c    | 50 +++++++++++++++++++++++++-------------------------
->  pkt-line.h    |  6 ++++--
->  remote-curl.c | 30 +++++++++++++++---------------
->  3 files changed, 44 insertions(+), 42 deletions(-)
-> 
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 8f9bc68ee2..245a56712f 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -87,43 +87,43 @@ static void packet_trace(const char *buf, unsigned int len, int write)
->   */
->  void packet_flush(int fd)
->  {
-> -	packet_trace("0000", 4, 1);
-> -	if (write_in_full(fd, "0000", 4) < 0)
-> +	packet_trace("0000", PACKET_HEADER_SIZE, 1);
-> +	if (write_in_full(fd, "0000", PACKET_HEADER_SIZE) < 0)
+A complaint that has come up frequently in the past is that it is not
+possible to checkout files directly into a worktree without modifying
+the index. Even though this could be worked around by redirecting the
+output of `git show` to overwrite files, this was not feasible if one
+wanted to use patch mode.
 
-I think the magic number 4 is easier to follow than some macro
-PACKET_HEADER_SIZE defined elsewhere. Because reader may judge that is
-the size of "0000"
+Since `git restore` was implemented, this has since been possible using
+the `--worktree` option. However, some long-time users of Git still
+prefer to use `git checkout` over `git restore` and would like to see
+the functionality ported over.
 
-How about (this ugly code):
+Teach `git checkout --worktree`, allowing users to checkout files
+directly into the worktree without affecting the index.
 
-	packet_trace("0000", sizeof "0000" - 1, 1);
-	if (write_in_full(fd, "0000", sizeof "0000" - 1) < 0)
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/git-checkout.txt | 22 ++++++++++-----
+ builtin/checkout.c             | 17 ++++++++++++
+ t/t2028-checkout-worktree.sh   | 51 ++++++++++++++++++++++++++++++++++
+ t/t9902-completion.sh          |  1 +
+ 4 files changed, 84 insertions(+), 7 deletions(-)
+ create mode 100755 t/t2028-checkout-worktree.sh
 
-
->  		die_errno(_("unable to write flush packet"));
->  }
->  
->  void packet_delim(int fd)
->  {
-> -	packet_trace("0001", 4, 1);
-> -	if (write_in_full(fd, "0001", 4) < 0)
-> +	packet_trace("0001", PACKET_HEADER_SIZE, 1);
-> +	if (write_in_full(fd, "0001", PACKET_HEADER_SIZE) < 0)
->  		die_errno(_("unable to write delim packet"));
->  }
->  
->  void packet_response_end(int fd)
->  {
-> -	packet_trace("0002", 4, 1);
-> -	if (write_in_full(fd, "0002", 4) < 0)
-> +	packet_trace("0002", PACKET_HEADER_SIZE, 1);
-> +	if (write_in_full(fd, "0002", PACKET_HEADER_SIZE) < 0)
->  		die_errno(_("unable to write stateless separator packet"));
->  }
->  
->  int packet_flush_gently(int fd)
->  {
-> -	packet_trace("0000", 4, 1);
-> -	if (write_in_full(fd, "0000", 4) < 0)
-> +	packet_trace("0000", PACKET_HEADER_SIZE, 1);
-> +	if (write_in_full(fd, "0000", PACKET_HEADER_SIZE) < 0)
->  		return error(_("flush packet write failed"));
->  	return 0;
->  }
->  
->  void packet_buf_flush(struct strbuf *buf)
->  {
-> -	packet_trace("0000", 4, 1);
-> -	strbuf_add(buf, "0000", 4);
-> +	packet_trace("0000", PACKET_HEADER_SIZE, 1);
-> +	strbuf_add(buf, "0000", PACKET_HEADER_SIZE);
->  }
->  
->  void packet_buf_delim(struct strbuf *buf)
->  {
-> -	packet_trace("0001", 4, 1);
-> -	strbuf_add(buf, "0001", 4);
-> +	packet_trace("0001", PACKET_HEADER_SIZE, 1);
-> +	strbuf_add(buf, "0001", PACKET_HEADER_SIZE);
->  }
->  
->  void set_packet_header(char *buf, int size)
-> @@ -153,7 +153,7 @@ static void format_packet(struct strbuf *out, const char *prefix,
->  		die(_("protocol error: impossibly long line"));
->  
->  	set_packet_header(&out->buf[orig_len], n);
-> -	packet_trace(out->buf + orig_len + 4, n - 4, 1);
-> +	packet_trace(out->buf + orig_len + PACKET_HEADER_SIZE, n - PACKET_HEADER_SIZE, 1);
->  }
->  
->  static int packet_write_fmt_1(int fd, int gently, const char *prefix,
-> @@ -199,13 +199,13 @@ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
->  	static char packet_write_buffer[LARGE_PACKET_MAX];
->  	size_t packet_size;
->  
-> -	if (size > sizeof(packet_write_buffer) - 4)
-> +	if (size > sizeof(packet_write_buffer) - PACKET_HEADER_SIZE)
->  		return error(_("packet write failed - data exceeds max packet size"));
->  
->  	packet_trace(buf, size, 1);
-> -	packet_size = size + 4;
-> +	packet_size = size + PACKET_HEADER_SIZE;
->  	set_packet_header(packet_write_buffer, packet_size);
-> -	memcpy(packet_write_buffer + 4, buf, size);
-> +	memcpy(packet_write_buffer + PACKET_HEADER_SIZE, buf, size);
->  	if (write_in_full(fd_out, packet_write_buffer, packet_size) < 0)
->  		return error(_("packet write failed"));
->  	return 0;
-> @@ -313,7 +313,7 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
->  	return ret;
->  }
->  
-> -int packet_length(const char lenbuf_hex[4])
-> +int packet_length(const char lenbuf_hex[PACKET_HEADER_SIZE])
->  {
->  	int val = hex2chr(lenbuf_hex);
->  	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
-> @@ -325,9 +325,9 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  						int options)
->  {
->  	int len;
-> -	char linelen[4];
-> +	char linelen[PACKET_HEADER_SIZE];
->  
-> -	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0) {
-> +	if (get_packet_data(fd, src_buffer, src_len, linelen, sizeof(linelen), options) < 0) {
->  		*pktlen = -1;
->  		return PACKET_READ_EOF;
->  	}
-> @@ -337,22 +337,22 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  	if (len < 0) {
->  		die(_("protocol error: bad line length character: %.4s"), linelen);
->  	} else if (!len) {
-> -		packet_trace("0000", 4, 0);
-> +		packet_trace("0000", PACKET_HEADER_SIZE, 0);
->  		*pktlen = 0;
->  		return PACKET_READ_FLUSH;
->  	} else if (len == 1) {
-> -		packet_trace("0001", 4, 0);
-> +		packet_trace("0001", PACKET_HEADER_SIZE, 0);
->  		*pktlen = 0;
->  		return PACKET_READ_DELIM;
->  	} else if (len == 2) {
-> -		packet_trace("0002", 4, 0);
-> +		packet_trace("0002", PACKET_HEADER_SIZE, 0);
->  		*pktlen = 0;
->  		return PACKET_READ_RESPONSE_END;
-> -	} else if (len < 4) {
-> +	} else if (len < PACKET_HEADER_SIZE) {
->  		die(_("protocol error: bad line length %d"), len);
->  	}
->  
-> -	len -= 4;
-> +	len -= sizeof(linelen);
->  	if ((unsigned)len >= size)
->  		die(_("protocol error: bad line length %d"), len);
->  
-> @@ -370,7 +370,7 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  
->  	if ((options & PACKET_READ_DIE_ON_ERR_PACKET) &&
->  	    starts_with(buffer, "ERR "))
-> -		die(_("remote error: %s"), buffer + 4);
-> +		die(_("remote error: %s"), buffer + PACKET_HEADER_SIZE);
->  
->  	*pktlen = len;
->  	return PACKET_READ_NORMAL;
-> diff --git a/pkt-line.h b/pkt-line.h
-> index 5b373fe4cd..d6121b8044 100644
-> --- a/pkt-line.h
-> +++ b/pkt-line.h
-> @@ -5,6 +5,8 @@
->  #include "strbuf.h"
->  #include "sideband.h"
->  
-> +#define PACKET_HEADER_SIZE 4
-> +
->  /*
->   * Write a packetized stream, where each line is preceded by
->   * its length (including the header) as a 4-byte hex number.
-> @@ -82,7 +84,7 @@ int packet_read(int fd, char **src_buffer, size_t *src_len, char
->   * If lenbuf_hex contains non-hex characters, return -1. Otherwise, return the
->   * numeric value of the length header.
->   */
-> -int packet_length(const char lenbuf_hex[4]);
-> +int packet_length(const char lenbuf_hex[PACKET_HEADER_SIZE]);
->  
->  /*
->   * Read a packetized line into a buffer like the 'packet_read()' function but
-> @@ -211,7 +213,7 @@ enum packet_read_status packet_reader_peek(struct packet_reader *reader);
->  
->  #define DEFAULT_PACKET_MAX 1000
->  #define LARGE_PACKET_MAX 65520
-> -#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
-> +#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - PACKET_HEADER_SIZE)
->  extern char packet_buffer[LARGE_PACKET_MAX];
->  
->  struct packet_writer {
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 75532a8bae..bac295c5bc 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -536,7 +536,7 @@ struct rpc_state {
->  	unsigned initial_buffer : 1;
->  
->  	/*
-> -	 * Whenever a pkt-line is read into buf, append the 4 characters
-> +	 * Whenever a pkt-line is read into buf, append the PACKET_HEADER_SIZE characters
->  	 * denoting its length before appending the payload.
->  	 */
->  	unsigned write_line_lengths : 1;
-> @@ -556,7 +556,7 @@ struct rpc_state {
->   * rpc->buf and rpc->len if there is enough space. Returns 1 if there was
->   * enough space, 0 otherwise.
->   *
-> - * If rpc->write_line_lengths is true, appends the line length as a 4-byte
-> + * If rpc->write_line_lengths is true, appends the line length as a PACKET_HEADER_SIZE-byte
->   * hexadecimal string before appending the result described above.
->   *
->   * Writes the total number of bytes appended into appended.
-> @@ -569,8 +569,8 @@ static int rpc_read_from_out(struct rpc_state *rpc, int options,
->  	int pktlen_raw;
->  
->  	if (rpc->write_line_lengths) {
-> -		left = rpc->alloc - rpc->len - 4;
-> -		buf = rpc->buf + rpc->len + 4;
-> +		left = rpc->alloc - rpc->len - PACKET_HEADER_SIZE;
-> +		buf = rpc->buf + rpc->len + PACKET_HEADER_SIZE;
->  	} else {
->  		left = rpc->alloc - rpc->len;
->  		buf = rpc->buf + rpc->len;
-> @@ -582,7 +582,7 @@ static int rpc_read_from_out(struct rpc_state *rpc, int options,
->  	*status = packet_read_with_status(rpc->out, NULL, NULL, buf,
->  			left, &pktlen_raw, options);
->  	if (*status != PACKET_READ_EOF) {
-> -		*appended = pktlen_raw + (rpc->write_line_lengths ? 4 : 0);
-> +		*appended = pktlen_raw + (rpc->write_line_lengths ? PACKET_HEADER_SIZE : 0);
->  		rpc->len += *appended;
->  	}
->  
-> @@ -593,13 +593,13 @@ static int rpc_read_from_out(struct rpc_state *rpc, int options,
->  				die(_("shouldn't have EOF when not gentle on EOF"));
->  			break;
->  		case PACKET_READ_NORMAL:
-> -			set_packet_header(buf - 4, *appended);
-> +			set_packet_header(buf - PACKET_HEADER_SIZE, *appended);
->  			break;
->  		case PACKET_READ_DELIM:
-> -			memcpy(buf - 4, "0001", 4);
-> +			memcpy(buf - PACKET_HEADER_SIZE, "0001", PACKET_HEADER_SIZE);
->  			break;
->  		case PACKET_READ_FLUSH:
-> -			memcpy(buf - 4, "0000", 4);
-> +			memcpy(buf - PACKET_HEADER_SIZE, "0000", PACKET_HEADER_SIZE);
->  			break;
->  		case PACKET_READ_RESPONSE_END:
->  			die(_("remote server sent stateless separator"));
-> @@ -682,7 +682,7 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
->  #endif
->  
->  struct check_pktline_state {
-> -	char len_buf[4];
-> +	char len_buf[PACKET_HEADER_SIZE];
->  	int len_filled;
->  	int remaining;
->  };
-> @@ -691,7 +691,7 @@ static void check_pktline(struct check_pktline_state *state, const char *ptr, si
->  {
->  	while (size) {
->  		if (!state->remaining) {
-> -			int digits_remaining = 4 - state->len_filled;
-> +			int digits_remaining = sizeof(state->len_buf) - state->len_filled;
->  			if (digits_remaining > size)
->  				digits_remaining = size;
->  			memcpy(&state->len_buf[state->len_filled], ptr, digits_remaining);
-> @@ -699,16 +699,16 @@ static void check_pktline(struct check_pktline_state *state, const char *ptr, si
->  			ptr += digits_remaining;
->  			size -= digits_remaining;
->  
-> -			if (state->len_filled == 4) {
-> +			if (state->len_filled == sizeof(state->len_buf)) {
->  				state->remaining = packet_length(state->len_buf);
->  				if (state->remaining < 0) {
->  					die(_("remote-curl: bad line length character: %.4s"), state->len_buf);
->  				} else if (state->remaining == 2) {
->  					die(_("remote-curl: unexpected response end packet"));
-> -				} else if (state->remaining < 4) {
-> +				} else if (state->remaining < sizeof(state->len_buf)) {
->  					state->remaining = 0;
->  				} else {
-> -					state->remaining -= 4;
-> +					state->remaining -= sizeof(state->len_buf);
->  				}
->  				state->len_filled = 0;
->  			}
-> @@ -804,7 +804,7 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
->  	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, NULL);
->  	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, "0000");
-> -	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4);
-> +	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, PACKET_HEADER_SIZE);
->  	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
->  	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
->  	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buf);
-> @@ -1469,7 +1469,7 @@ int cmd_main(int argc, const char **argv)
->  			parse_fetch(&buf);
->  
->  		} else if (!strcmp(buf.buf, "list") || starts_with(buf.buf, "list ")) {
-> -			int for_push = !!strstr(buf.buf + 4, "for-push");
-> +			int for_push = !!strstr(buf.buf + PACKET_HEADER_SIZE, "for-push");
->  			output_refs(get_refs(for_push));
->  
->  		} else if (starts_with(buf.buf, "push ")) {
-> -- 
-> 2.27.0.132.g321788e831
-> 
-
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 5b697eee1b..ba9c0a900c 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -12,9 +12,9 @@ SYNOPSIS
+ 'git checkout' [-q] [-f] [-m] --detach [<branch>]
+ 'git checkout' [-q] [-f] [-m] [--detach] <commit>
+ 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+-'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
+-'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
+-'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
++'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [--worktree] [<tree-ish>] [--] <pathspec>...
++'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [--worktree] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
++'git checkout' (-p|--patch) [--worktree] [<tree-ish>] [--] [<pathspec>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -79,14 +79,16 @@ be used to detach `HEAD` at the tip of the branch (`git checkout
+ +
+ Omitting `<branch>` detaches `HEAD` at the tip of the current branch.
+ 
+-'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...::
+-'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]::
++'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [--worktree] [<tree-ish>] [--] <pathspec>...::
++'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [--worktree] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]::
+ 
+ 	Overwrite the contents of the files that match the pathspec.
+ 	When the `<tree-ish>` (most often a commit) is not given,
+ 	overwrite working tree with the contents in the index.
+ 	When the `<tree-ish>` is given, overwrite both the index and
+-	the working tree with the contents at the `<tree-ish>`.
++	the working tree with the contents at the `<tree-ish>` unless
++	`--worktree` is given in which case _only_ the working tree is
++	overwritten.
+ +
+ The index may contain unmerged entries because of a previous failed merge.
+ By default, if you try to check out such an entry from the index, the
+@@ -96,7 +98,7 @@ specific side of the merge can be checked out of the index by
+ using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
+ file can be discarded to re-create the original conflicted merge result.
+ 
+-'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]::
++'git checkout' (-p|--patch) [--worktree] [<tree-ish>] [--] [<pathspec>...]::
+ 	This is similar to the previous mode, but lets you use the
+ 	interactive interface to show the "diff" output and choose which
+ 	hunks to use in the result.  See below for the description of
+@@ -264,6 +266,12 @@ When switching branches with `--merge`, staged changes may be lost.
+ 	"merge" (default) and "diff3" (in addition to what is shown by
+ 	"merge" style, shows the original contents).
+ 
++-W::
++--worktree::
++	When writing contents, only modify files in the worktree. Do not
++	modify the index. This option is essentially a no-op when used
++	without a `<tree-ish>`.
++
+ -p::
+ --patch::
+ 	Interactively select hunks in the difference between the
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index af849c644f..a2ade85ad5 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1741,6 +1741,20 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 		return checkout_branch(opts, &new_branch_info);
+ }
+ 
++static int handle_worktree_opt(const struct option *opt, const char *arg, int unset)
++{
++	struct checkout_opts *opts = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	BUG_ON_OPT_ARG(arg);
++
++	opts->checkout_index = 0;
++	opts->checkout_worktree = 1;
++
++	return 0;
++}
++
++
+ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ {
+ 	struct checkout_opts opts;
+@@ -1750,6 +1764,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 			   N_("create and checkout a new branch")),
+ 		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
+ 			   N_("create/reset and checkout a branch")),
++		OPT_CALLBACK_F('W', "worktree", &opts, NULL,
++			   N_("restore the working tree (default)"),
++			   PARSE_OPT_NOARG | PARSE_OPT_NONEG, handle_worktree_opt),
+ 		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
+ 		OPT_BOOL(0, "guess", &opts.dwim_new_local_branch,
+ 			 N_("second guess 'git checkout <no-such-branch>' (default)")),
+diff --git a/t/t2028-checkout-worktree.sh b/t/t2028-checkout-worktree.sh
+new file mode 100755
+index 0000000000..7ba36277c9
+--- /dev/null
++++ b/t/t2028-checkout-worktree.sh
+@@ -0,0 +1,51 @@
++#!/bin/sh
++
++test_description='checkout --worktree'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo first >file1 &&
++	echo file2 >file2 &&
++	git add file1 file2 &&
++	git commit -m first &&
++
++	echo second >file1 &&
++	git commit -am second &&
++	git tag tip
++'
++
++test_expect_success 'checkout --worktree on a commit' '
++	test_when_finished "git reset --hard tip" &&
++	git diff HEAD HEAD~ >expect &&
++	git checkout --worktree HEAD~ file1 &&
++	git diff >actual &&
++	test_cmp expect actual &&
++	git diff --cached --exit-code &&
++	test_cmp_rev HEAD tip
++'
++
++test_expect_success 'checkout --worktree with no commit' '
++	test_when_finished "git reset --hard tip" &&
++	echo worktree >file1 &&
++	git checkout --worktree file1 &&
++	git diff --exit-code &&
++	test_cmp_rev HEAD tip
++'
++
++test_expect_success 'checkout --no-worktree fails' '
++	test_must_fail git checkout --no-worktree
++'
++
++test_expect_success PERL 'git checkout -p --worktree' '
++	test_when_finished "git reset --hard tip" &&
++	echo changed >file2 &&
++	git diff -R --src-prefix=b/ --dst-prefix=a/ >expect &&
++	git commit -am file12 &&
++	test_write_lines n y | git checkout --worktree -p HEAD~2 &&
++	git diff >actual &&
++	test_cmp expect actual &&
++	git diff --cached --exit-code
++'
++
++test_done
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 3c44af6940..1db0bb3a31 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1481,6 +1481,7 @@ test_expect_success 'double dash "git checkout"' '
+ 	--quiet Z
+ 	--detach Z
+ 	--track Z
++	--worktree Z
+ 	--orphan=Z
+ 	--ours Z
+ 	--theirs Z
 -- 
-Danh
+2.27.0.132.g321788e831
+
