@@ -1,135 +1,115 @@
-Return-Path: <SRS0=soZh=7Z=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=iF2w=72=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA9C5C433E0
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 23:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3022C433DF
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 00:25:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9336206D7
-	for <git@archiver.kernel.org>; Fri, 12 Jun 2020 23:16:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7607D20739
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 00:25:18 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=schrab.com header.i=@schrab.com header.b="yDzAVNoX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726428AbgFLXQ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Jun 2020 19:16:57 -0400
-Received: from dovecot.mat.umk.pl ([158.75.2.81]:59972 "EHLO
-        poczta1.mat.umk.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726310AbgFLXQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jun 2020 19:16:56 -0400
-Received: from dovecot.mat.umk.pl (localhost.localdomain [127.0.0.1])
-        by poczta1.mat.umk.pl (Postfix) with ESMTP id 118F79568B9;
-        Sat, 13 Jun 2020 01:16:54 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mat.umk.pl
-Received: from poczta1.mat.umk.pl ([127.0.0.1])
-        by dovecot.mat.umk.pl (poczta1.mat.umk.pl [127.0.0.1]) (amavisd-new, port 10024)
-        with LMTP id If8O4nvTaI1q; Sat, 13 Jun 2020 01:16:53 +0200 (CEST)
-Received: from [192.168.0.2] (host-89-229-7-83.dynamic.mm.pl [89.229.7.83])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jnareb)
-        by poczta1.mat.umk.pl (Postfix) with ESMTPSA id 26F509568B7;
-        Sat, 13 Jun 2020 01:16:53 +0200 (CEST)
-Cc:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 1/4] alloc: introduce parsed_commits_count
-To:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org
-References: <20200612184014.1226972-1-abhishekkumar8222@gmail.com>
- <20200612184014.1226972-2-abhishekkumar8222@gmail.com>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <8b0facef-c85d-c25c-d49d-2bc1a3836e77@gmail.com>
-Date:   Sat, 13 Jun 2020 01:16:51 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1726390AbgFMAZR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Jun 2020 20:25:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726377AbgFMAZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jun 2020 20:25:17 -0400
+X-Greylist: delayed 501 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 12 Jun 2020 17:25:16 PDT
+Received: from pug.qqx.org (pug.qqx.org [IPv6:2600:3c02:e000:5::3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6067C03E96F
+        for <git@vger.kernel.org>; Fri, 12 Jun 2020 17:25:16 -0700 (PDT)
+Received: by pug.qqx.org (Postfix, from userid 1000)
+        id D24861E8B5; Fri, 12 Jun 2020 20:16:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schrab.com; s=mail;
+        t=1592007414; bh=m7v4Cja9fCTGdQakcX/Guk+xeGl38sgr9hhO5ROhY8I=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=yDzAVNoXYNmaOk7MnpzPlslZ1soaeAYx2yTtG442rrHK99PCyE02hnNe1Rdv596Be
+         OIE9wmILFzhL4aK5mUjWxRXy5KH2OQX5+sO7mhpWAu3U1baDItjwdBqqfKMY1kmPXg
+         a58HEm16A89R6LCE7e+AymsOmXcrxpDH1YEhKfpq/QTIJzcLk+kzLAD3ugiHU/bdcj
+         6AupwIv05KNn+tx4SngZbOD6xEECxlJNeSz9bM0n/sqlUKSHbnBqUD3xCIaUf92Bmt
+         l6wMPPkXEBM8sFP0UtSyUtBxeBu/jenQX9HoVzEN/g2mtO2wMOB0kOmC21zSQfvrV3
+         ffkafJZeEvkjw==
+Date:   Fri, 12 Jun 2020 20:16:54 -0400
+From:   Aaron Schrab <aaron@schrab.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Shreya Malviya <shreya.malviya@gmail.com>, git@vger.kernel.org
+Subject: Re: Question: Setting the Email Address in ~/.gitconfig
+Message-ID: <20200613001654.GA190001@pug.qqx.org>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Shreya Malviya <shreya.malviya@gmail.com>, git@vger.kernel.org
+References: <CAEqpqjGNANrCX0wMDUP+dZ+_PdMveSJf6XFyiCpJdUH5t6jXvw@mail.gmail.com>
+ <20200611225216.GZ6569@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-In-Reply-To: <20200612184014.1226972-2-abhishekkumar8222@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3V7upXqbjpZ4EhLz"
+Content-Disposition: inline
+In-Reply-To: <20200611225216.GZ6569@camp.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12.06.2020, Abhishek Kumar wrote:
 
-> Commit slab relies on uniqueness of commit->index to access data. As
-> submodules are repositories on their own, alloc_commit_index() (which
-> depends on repository->parsed_objects->commit_count) no longer
-> returns unique values.
-> 
-> This would break tests once we move `generation` and `graph_pos` into a
-> commit slab, as commits of supermodule and submodule can have the same
-> index but must have different graph positions.
+--3V7upXqbjpZ4EhLz
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-First, commits of supermodule and of submodule are in different graphs,
-so I don't see why they have to be in the same serialized commit-graph
-file.
+At 22:52 +0000 11 Jun 2020, "brian m. carlson" <sandals@crustytoothpaste.ne=
+t> wrote:
+>On 2020-06-11 at 21:25:45, Shreya Malviya wrote:
+>> My question:
+>> It would be much easier if git didn't allow changing the email address
+>> so easily. Why hasn't git implemented OAuth, or something of that
+>> sort, for every time that the email address is changed in
+>> ~/.gitconfig, yet?
+>
+>This is a local configuration file, so asking someone to implement OAuth
+>to change a local configuration file wouldn't be helpful.  Many Git
+>servers are, for example, SSH only, and so OAuth isn't even a
+>possibility.
 
-Second, Git stores many different types of information on slab already.
-How comes that we have not had any problems till now?  
+Beyond that, even if git *did* somehow provide strong authentication of=20
+the configured email address for commits, it's open source software so=20
+people could still quite easily disable that authentication to spoof=20
+commits as other people. They could also use some other software=20
+(possibly that they write themselves) that manipulates a repository=20
+without doing that authentication.
 
-There is contains_cache, commit_seen, indegree_slab, author_date_slab,
-commit_base, commit_pos, bloom_filter_slab, buffer_slab, commit_rev_name,
-commit_names, commit_name_slab, saved_parents, blame_suspects,
-commit_todo_item.
+While the data is entirely on an untrusted system (however you want to=20
+define trusted), the operator of that system will always be able to=20
+manipulate that data.
 
-> 
-> Let's introduce a counter variable, `parsed_commits_count` to keep track
-> of parsed commits so far.
+The alternative to this would be to require all commits to be=20
+cryptographically signed. But, most projects consider that to be too=20
+much of a burden. After all that only covers who made the changes, while=20
+for many things the content of the changes is much more important.
 
-All right, thought it might be worth mentioning that it is a global
-variable, or rather a static variable in a function.
+--3V7upXqbjpZ4EhLz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 
-> 
-> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> ---
-> 
-> CI Build for the failing tests:
-> https://travis-ci.com/github/abhishekkumar2718/git/jobs/345413840
+-----BEGIN PGP SIGNATURE-----
 
-The failed tests are, from what I see:
-- t4060-diff-submodule-option-diff-format.sh
-- t4041-diff-submodule-option.sh
-- t4059-diff-submodule-not-initialized.sh
+iQJiBAABCgBMFiEE/uA+7ZsNcEQXIOCzxrrvXm21xyUFAl7kGu4uFIAAAAAAFQAQ
+cGthLWFkZHJlc3NAZ251cGcub3JnYWFyb25Ac2NocmFiLmNvbQAKCRDGuu9ebbXH
+JWO3D/0cy+/blRTY8Bfk+BKhTlOI5wRYlQi9TyJbx5s7a5FwXvvSiqHFLtPhAg4B
+Y0xRS5vGyg5oWg8YnJGdrea7b5eVIb+YhVB4JYNC6NpsqJJP2Km91ZlNbB9OMt6w
+fhRzMC2DGWJeK4mpotkLTo6p1D7rVVOxf2lgkG7TI4gylo59Kb0F6VJN/NsnS4Vz
+XGKu3jMnLiRLbvrWRgmJ81YZp5B5yQY4xvaLe3stQKpamEeC812nGBv0+0T+Cnb+
+8Auv7Zk8910wQzIHZuw1xbO2Y73XMST5oOBDp0zZywfhM7pgGSrJ9Dqjsr617UJq
+3ROJ6Dmfvwuih68HXI1sPH/Z0Z+ZPL8gmm0gDQX540rBQm/ZD3iVBGYN9inlB95k
+NhVLs0oegA2VMbqd2ulTB4xeTdYDn9gYZ5mES6fXS8oyUlQlCMtyST9BzK3MFPmV
+C595+CLamWhMx/2HuWTNro/XXIOJfpuEeeeA5xM/a1XB4lOk482goTTs1tukLHD/
+tkmKp/dHDugfeWBKCAi4fTWUYj76RiOEn3l8OyZ0cnLFBwt3McuAPuhHh+RmZG82
+CoRf4mUmLeQZOsg1C9XMhe+0y/Vvp1OsON1GrDCq0kjuTGWYMhtsagnZtXhGiegI
+XBds57Idw7YgKVH6iB1fdMmS/w+QcVtGhZ/TcKaxA5HXuHE4iw==
+=IO4t
+-----END PGP SIGNATURE-----
 
-
-> 
->   alloc.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/alloc.c b/alloc.c
-> index 1c64c4dd16..29f0e3aa80 100644
-> --- a/alloc.c
-> +++ b/alloc.c
-> @@ -101,7 +101,9 @@ void *alloc_object_node(struct repository *r)
->   
->   static unsigned int alloc_commit_index(struct repository *r)
->   {
-> -	return r->parsed_objects->commit_count++;
-> +	static unsigned int parsed_commits_count = 0;
-> +	r->parsed_objects->commit_count++;
-
-Do we use r->parsed_objects->commit_count anywhere?
-
-> +	return parsed_commits_count++;
-
-Does it matter that it is not thread safe, because it is not atomic?
-Shouldn't it be
-
-  +	static _Atomic unsigned int parsed_commits_count = 0;
-
-or
-
-  +	static _Atomic unsigned int parsed_commits_count = ATOMIC_VAR_INIT(0);
-
-(If it is allowed).
-
->   }
->   
->   void init_commit_node(struct repository *r, struct commit *c)
-> 
-
+--3V7upXqbjpZ4EhLz--
