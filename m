@@ -7,66 +7,68 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E59A2C433DF
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42285C433DF
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:01:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3278207DD
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:00:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B831207DD
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:01:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F0p/VTfi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t/nwEKcF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726837AbgFMSAz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Jun 2020 14:00:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53766 "EHLO
+        id S1726850AbgFMSBH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Jun 2020 14:01:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726827AbgFMSAv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jun 2020 14:00:51 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21E04C03E96F
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 11:00:51 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id x13so13035583wrv.4
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 11:00:51 -0700 (PDT)
+        with ESMTP id S1726851AbgFMSBG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jun 2020 14:01:06 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EED1EC03E96F
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 11:01:05 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id x6so12990347wrm.13
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 11:01:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EQWrsx+BZlcczE6DOLw9Lyn8xq2mhTE/YjDJmO5bGw0=;
-        b=F0p/VTfivMWGcpWBnpArK+riRlETpINGa4tB5+z7Hhbkc67a+pPn+T9CiO2HGM5RJ4
-         eL3Ogiecg9DTAGcLE29YIS3I8c8GNmLAU40us3FfLX5cTAC0MXl2qiSPkfDLhbicade+
-         q3vTJDPMmVYX2vMqoWX0kueoeuUsaYLzUeSYsSKs2h3SEI5ps1W3zxqDnAHqKmnXshH0
-         gaGTLHG03v7Z3WEBqwScU8bhpJ3z/XufnfTeKvf7NGfKnDMjTpzqMsx2eVgl8CrrLUXn
-         DeQSG0MgmCs+N5eduUU5YEElYD3y0aquYxY6nrBqts4fmc8eBswSeklbhypSGfhTVwdE
-         tX1g==
+        bh=/wudoVy8a/7rUL/Qdmd89HVtyM+2KgmJvLjiuArMupc=;
+        b=t/nwEKcFImCzJwGQJa8G9v1TSr+nqOr/Ej9bsblFWFPQBlXgS5yX7zTCLHeWfUxfan
+         DurNf+i4gnV4G0bLzXPdTBnVX4bEveEq1f5MAGUWB17vHR6auzuKqkLur+b2ifh2A3cz
+         68y+eNTEfyiDMBv68JM++WwSjgK0U3kmgyyhcuyr943XYoi6SNMZawGVHqWhd2HCK62m
+         0Jvu5z7dRDzPrJGSdGABiUKEzpMD9L04fjPAD2Hdq6c/tpcy4dUhmjbNsM9AGfKSNF4k
+         dTDr8CuJOewUAeDBFa1rW9f61++cV9TlkHDYEKX2bLocPt4aPNZ7lFFIm0+80jYLKoWA
+         d+dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=EQWrsx+BZlcczE6DOLw9Lyn8xq2mhTE/YjDJmO5bGw0=;
-        b=bmQJ0Wx3EMZB0v/vKKcrW0MtBiVMvPdy/Xiv5lFjNwrQTTedeCrag2ogSAD1MFNI3x
-         FerfGTRqjic4rQjB/2v28LIhuc1tECz7krJpWhAkivrOWR5P52wY2Sr0baYK5HLDbOZF
-         d1tgQ3BqR/Ey8u0ncQadQtnjyNXckpuPZItKwg0IuentNRmN9js6bG14/Zdci6NewQtS
-         ONeg5o8r4zi1WhhfmXeUEYFLGhJgKzLq4yJd5SBpO4SS8LxiEYb8BNYcy+XUiXl7/JKe
-         SeRJj+uAiHPIhV2KqHA0TMYOsrLyEfCKk5CzuKE+rqzrBWp3OM5lz/n5l3moYs9UN5O5
-         jPTQ==
-X-Gm-Message-State: AOAM5334d8Md5gLczM1KDKtEZ1eJdZ0pYpikj2O6hzn6OBSCh7uZcJMg
-        D1Al8V68JHKiYb6sYTNN2hRRghdq
-X-Google-Smtp-Source: ABdhPJw+MIfE3UxvmVM5GM9+GIm1x0x6HPUV2bgGXcul0lgS44/yLc8J1RDTvXCYFkeKfLdy8/ifiw==
-X-Received: by 2002:adf:dd46:: with SMTP id u6mr19478581wrm.44.1592071247860;
-        Sat, 13 Jun 2020 11:00:47 -0700 (PDT)
+        bh=/wudoVy8a/7rUL/Qdmd89HVtyM+2KgmJvLjiuArMupc=;
+        b=BYA4R38lczd39B1nU2XNTPVKtnRMu+9TzPGM6GA7WnPJYV8fRWJrEZWG5U55SvBYdH
+         YyEMyPtgJRKBtI7OvxbNjT8/RI+vGzcsUSNTDZpmzdEFd1LTkn6QwnwWMCViVzhGrMGT
+         1/mRSquaZjRdunuXa6VGLQ4CrT98Su9VjlQJGkbI5wGg4EaVDnQByyMuNrt9hdEdrks8
+         oDnEhYWpBnmSd/FRY+K1NtaJUrrCK6eFKcRuf+YIR9bNatwn8GQh4+3TXGYUjQn0h+/X
+         y6AfgHtmrDaeh2ctN8dh9V9Ygrn1qjCOn3syZTzStNVWb4awC0SjGoZATWTMusmcqY5p
+         T4JA==
+X-Gm-Message-State: AOAM531J4ngaw864egbavJr9kgr6hZDSAdPfQHrD78U8iP2v4+yDePbd
+        txyHI+gcKrPcqUWUr32RagM=
+X-Google-Smtp-Source: ABdhPJx65yirN4vSnN6Lnvir08LxgVDQOmZUGe931D6wHeLW7se5qo8YZBL4cwW8Ffl6bsw/qshHwg==
+X-Received: by 2002:a5d:4446:: with SMTP id x6mr20118225wrr.119.1592071264273;
+        Sat, 13 Jun 2020 11:01:04 -0700 (PDT)
 Received: from [192.168.0.104] (abayonne-651-1-44-79.w92-156.abo.wanadoo.fr. [92.156.149.79])
-        by smtp.gmail.com with ESMTPSA id y5sm16502663wrs.63.2020.06.13.11.00.46
+        by smtp.gmail.com with ESMTPSA id h7sm15174096wml.24.2020.06.13.11.01.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Jun 2020 11:00:47 -0700 (PDT)
-Subject: Re: [RFC PATCH v1 2/6] stash: remove the second index in
- stash_working_tree()
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20200505104849.13602-1-alban.gruin@gmail.com>
- <20200505104849.13602-3-alban.gruin@gmail.com>
- <CAP8UFD1aT4dmuNkEz95eDFTE7sY+4eK_TwbTD-Vw8U7KyyZ-DA@mail.gmail.com>
+        Sat, 13 Jun 2020 11:01:03 -0700 (PDT)
+Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
+ new repositories
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+ <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
+ <08e46af3-ff52-8bce-b75a-db8c390c9641@gmail.com>
+ <xmqqwo4di49l.fsf@gitster.c.googlers.com>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  mQINBFcsWp4BEAC6dalBNr/CZCvvfeARylnjAaZCxMPwUHXAyf4xotA59sNcyVmaFQ6KxQEs
@@ -92,12 +94,12 @@ Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  VHdV1G86d++CdipKqe9iDNBGNa/5Q9IvYEKK6vj4wLS5ZaOwLGfApbsOcDJvFA1ll/KeHvzx
  Ig9dhUnNCtYXKJ1npChigwRbAiAADoTFI2rI69g6ZTTzBd0+9GM4z6RcOJvtGLnViO4tOCmy
  sbwbxA==
-Message-ID: <2158eec0-9332-fe10-3636-95550a66f05d@gmail.com>
-Date:   Sat, 13 Jun 2020 20:00:29 +0200
+Message-ID: <731205c8-7d4b-d87a-17d1-520fdec7375d@gmail.com>
+Date:   Sat, 13 Jun 2020 20:01:02 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD1aT4dmuNkEz95eDFTE7sY+4eK_TwbTD-Vw8U7KyyZ-DA@mail.gmail.com>
+In-Reply-To: <xmqqwo4di49l.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -106,63 +108,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Hi Junio,
 
-Le 13/06/2020 à 10:52, Christian Couder a écrit :
-> On Tue, May 5, 2020 at 12:56 PM Alban Gruin <alban.gruin@gmail.com> wrote:
->>
->> This removes the second index used in stash_working_tree() to simplify
->> the code.  It also help to avoid issues with the split-index: when
+Le 12/06/2020 à 01:14, Junio C Hamano a écrit :
+> Alban Gruin <alban.gruin@gmail.com> writes:
 > 
-> s/help/helps/
+>> Why adding yet another environment variable instead of relying only on a
+>> config option?  I understand it's for the tests, but can't we add a
+>> shell function in test-lib.sh (and friends) that tries to read
+>> `GIT_TEST_DEFAULT_BRANCH_NAME', and, if it exists, sets
+>> `core.defaultBranchName'?
 > 
->> stash_working_tree() is called, the index is at `i_tree', and this tree
->> is extracted in a second index for use in a subcommand.  This is not a
->> problem in the non-split-index case, but in the split-index case, if the
->> shared index file has expired and is removed by a subcommand, the main
->> index contains a reference to a file that no longer exists.
+> Can you produce such a patch that does it cleanly?  My knee jerk
+> reaction is that I would suspect that you end up having to touch
+> many places in the t/ scripts, but if you prove otherwise, that
+> would certainly be appreciated.
 > 
-> As this is fixing a bug and there is no test, it might help if you can
-> at least give an example of something that used to fail before this
-> patch and doesn't after it. You are talking about stash subcommands
-> but it is not very clear which one for example can trigger the bug.
+> And no, 
 > 
->> The calls to set_alternative_index_output() are dropped to extract
->> `i_tree' to the main index, and `GIT_INDEX_FILE' is no longer set before
->> starting `update-index'.  When it exits, the index has changed, and must
->> be discarded.
+>     git () { command git -c core.defaultBranchName=master "$@" }
 > 
-> That makes sense.
-> 
->> The call to reset_tree() becomes useless:
-> 
-> Your patch doesn't remove any call to reset_tree(), but actually adds
-> one. So the above is difficult to understand.
-> 
-> Do you want to say that in a later patch it will be possible to remove
-> the call to reset_tree()? Or do you want to say that the call to
-> write_index_as_tree() becomes useless?
+> is not an acceptable solution.
 > 
 
-No, I meant that with this commit, reset_tree() does not need to be
-called at the beginning of stash_working_tree(), because it is only
-called by do_create_stash(), which sets the index at `i_tree', and
-save_untracked_files() does not change the main index.  But it will
-become useful again down the line, when save_untracked_file() will be
-rewritten to use the "main" index, so I did not remove it.
+I wanted to to do something like this:
 
-I hope it makes more sense now.
+  if test -n "$GIT_TEST_DEFAULT_BRANCH_NAME";
+  then
+      git config core.defaultBranchName "$GIT_TEST_DEFAULT_BRANCH_NAME"
+  fi
 
->> the only caller of
->> stash_working_tree() is do_create_stash(), which creates `i_tree' from
->> its index, calls save_untracked_files() if requested (but as it also
->> works on a second index, it is unaffected), then calls
->> stash_working_tree().  But when save_untracked_files() will be modified
->> to stop using another index, it won't reset the tree, because
->> stash_patch() wants to work on a different tree (`b_tree') than
->> stash_working_tree().
->>
->> At the end of the function, the tree is reset to `i_tree'.
+But since we do not have a repository to store the config, it won't
+work.  Sorry for the noise.
 
 Alban
 
