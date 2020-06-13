@@ -2,144 +2,153 @@ Return-Path: <SRS0=iF2w=72=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42285C433DF
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 004E8C433E0
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:50:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B831207DD
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:01:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88F8520789
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 18:50:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t/nwEKcF"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="se2WLYJ4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726850AbgFMSBH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Jun 2020 14:01:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53808 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726851AbgFMSBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jun 2020 14:01:06 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EED1EC03E96F
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 11:01:05 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id x6so12990347wrm.13
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 11:01:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/wudoVy8a/7rUL/Qdmd89HVtyM+2KgmJvLjiuArMupc=;
-        b=t/nwEKcFImCzJwGQJa8G9v1TSr+nqOr/Ej9bsblFWFPQBlXgS5yX7zTCLHeWfUxfan
-         DurNf+i4gnV4G0bLzXPdTBnVX4bEveEq1f5MAGUWB17vHR6auzuKqkLur+b2ifh2A3cz
-         68y+eNTEfyiDMBv68JM++WwSjgK0U3kmgyyhcuyr943XYoi6SNMZawGVHqWhd2HCK62m
-         0Jvu5z7dRDzPrJGSdGABiUKEzpMD9L04fjPAD2Hdq6c/tpcy4dUhmjbNsM9AGfKSNF4k
-         dTDr8CuJOewUAeDBFa1rW9f61++cV9TlkHDYEKX2bLocPt4aPNZ7lFFIm0+80jYLKoWA
-         d+dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=/wudoVy8a/7rUL/Qdmd89HVtyM+2KgmJvLjiuArMupc=;
-        b=BYA4R38lczd39B1nU2XNTPVKtnRMu+9TzPGM6GA7WnPJYV8fRWJrEZWG5U55SvBYdH
-         YyEMyPtgJRKBtI7OvxbNjT8/RI+vGzcsUSNTDZpmzdEFd1LTkn6QwnwWMCViVzhGrMGT
-         1/mRSquaZjRdunuXa6VGLQ4CrT98Su9VjlQJGkbI5wGg4EaVDnQByyMuNrt9hdEdrks8
-         oDnEhYWpBnmSd/FRY+K1NtaJUrrCK6eFKcRuf+YIR9bNatwn8GQh4+3TXGYUjQn0h+/X
-         y6AfgHtmrDaeh2ctN8dh9V9Ygrn1qjCOn3syZTzStNVWb4awC0SjGoZATWTMusmcqY5p
-         T4JA==
-X-Gm-Message-State: AOAM531J4ngaw864egbavJr9kgr6hZDSAdPfQHrD78U8iP2v4+yDePbd
-        txyHI+gcKrPcqUWUr32RagM=
-X-Google-Smtp-Source: ABdhPJx65yirN4vSnN6Lnvir08LxgVDQOmZUGe931D6wHeLW7se5qo8YZBL4cwW8Ffl6bsw/qshHwg==
-X-Received: by 2002:a5d:4446:: with SMTP id x6mr20118225wrr.119.1592071264273;
-        Sat, 13 Jun 2020 11:01:04 -0700 (PDT)
-Received: from [192.168.0.104] (abayonne-651-1-44-79.w92-156.abo.wanadoo.fr. [92.156.149.79])
-        by smtp.gmail.com with ESMTPSA id h7sm15174096wml.24.2020.06.13.11.01.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Jun 2020 11:01:03 -0700 (PDT)
-Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
- new repositories
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1726335AbgFMSuC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Jun 2020 14:50:02 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50784 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726102AbgFMSuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jun 2020 14:50:01 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 605B4D85D1;
+        Sat, 13 Jun 2020 14:49:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FBC7Fcq/qBGvgIEfZl4MLNLPKFA=; b=se2WLY
+        J4SNJPXwGyCeb6vtEbsCkw3cbjlQJwKQsmEYWec2giL79dEZpD/Z0ab/Sfb5lZ4o
+        3ZyQBXLm+/Ek8CmwvHBF/IXaPzXG0iBe1dR/RNERzcro5QNjHZTEedq+SV1M39+D
+        SI+myRGj0bjVHvH/I5s1OH4qcOsrg6DjSrhJU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=O01hRZEvqoEb7sWxUhRWdTc4n0Deo23w
+        wxI0DHFHR3aRi9aQ4wTMMeNP/N64HUAyJhIxbnwBgf98gsLbSzow6YwcRscoD7Lo
+        L+v+PYs8jjsIj3EebrbAsSJaX0IbTMS92NYQL0lPmOOzIZAzW4KGBLntaDEgEblj
+        24d7cxemf3o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 57BF0D85CF;
+        Sat, 13 Jun 2020 14:49:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9E87AD85CD;
+        Sat, 13 Jun 2020 14:49:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Matt Rogers <mattr94@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        don@goodman-wilson.com, stolee@gmail.com, Jeff King <peff@peff.net>
+Subject: Re: Re* [PATCH 8/9] fast-export: respect the possibly-overridden default branch name
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
- <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
- <08e46af3-ff52-8bce-b75a-db8c390c9641@gmail.com>
- <xmqqwo4di49l.fsf@gitster.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- mQINBFcsWp4BEAC6dalBNr/CZCvvfeARylnjAaZCxMPwUHXAyf4xotA59sNcyVmaFQ6KxQEs
- R20CSJhO6HqCh4bR9/994vdc4cGuNaWf82eYRYzqCzwFWvFJHj83QgDR2cjtz4frKpj3jSFJ
- No3KBlMmpU8yvSnYaCxjqHxBB+fZwkmmONj/57KdFRU83DvDllQdAxXfxEavL3qUKjVbld29
- o82M2xsN8ZN5KTw7rAMHcigYVnlrgP50euxz3WvfrV+Mky2W7q7m5rTK7eXqOKhewsKcxo0I
- AP+H0Nt91YTmMIAX2Ba25IfHI99kUCLpbHX9xdvj5UH1SZsG84APahdI3CXYibfYIS+qssoo
- 72qj7eBIoCFbVS4Q5AINxojio32orGBDE8CaCy3EzTF+vwJ+h4uUKrTX4wyUMy8nXS0UxZqD
- aQsS7Di6LdAHu+4uf064mXdgjehJ2uHAydFnCThMoxckRoSZ70iCPwgconhNrnuTmunJ43BF
- YjAurjg8y3WrMPJuJaI42q0sYbAX21XeayyMI8dzoNwyG6s+v0Udb/uxdYnHhsGx1oXjYCeR
- nyBdVwdMLWFP4XmJH7JueGUZ37TLh719ME6HYRpfM3sh915ywPxKxQYmGC9iXRThXdGK7ipq
- hJM5RtMq4QPGg+/ShgTZaDdFuMnG8Zrq6W+O29h9NB5rQ/UvBwARAQABtCNBbGJhbiBHcnVp
- biA8YWxiYW4uZ3J1aW5AZ21haWwuY29tPokCcAQTAQIAWgIbAwIeAQIXgAULBwgJCgQVCAkK
- BRYAAQIDHxhoa3A6Ly9wb29sLnNrcy1rZXlzZXJ2ZXJzLm5ldC8CGQEWIQS1T1bLFrFdtpxn
- TIMOC58lWpNWKgUCWRSuYAAKCRAOC58lWpNWKoCfEACHmff95NF5OrBKN+GPYo3TOojjgjio
- CREt9BNIU1ltbks33N/84QF1ifjFF5xjK1XpNhZdk2Nxk+Uf3ByAS24i0b7/BM58RX3sJMHd
- mklCbqBGLBTS+bO/3nc+1snb7FPmjoi3IXznQ25ZXiV/9MUABUBZi7odwNhxeI3Hd2PaX/x5
- ZM0BApqhmBrueUd0JKqY7f/7a+0rTJ8fIHV9ml3cVWf72t2BVnxJMeNLSAIT1FaL8Okp8ViO
- t7RfjF0JZsYZouhCcw2fx7U0VxXGu6bONdVGxu07I7G3+vjhd2C/ld0dgRRjx8viA5HecUSf
- bwbviEXlc44TVo8D6tkrKOezctqNTLII498C7gIQZjc+6HmIIQrOzzLX/C27JQbXch+6KtHO
- ThYGzmD0d7EttTRtXnFJFTMbQMMFnc2X+Rh1ubvfp4Zp2U3a7Nh1//4+ikqIAPV8poJcEdQ0
- A6CaGD8pTCMdExDovizfJRU0ZN3AU9UgFsZWkMK7MFyJneRObUf26oXCQH8zVuJEJHrEsYPk
- VHdV1G86d++CdipKqe9iDNBGNa/5Q9IvYEKK6vj4wLS5ZaOwLGfApbsOcDJvFA1ll/KeHvzx
- Ig9dhUnNCtYXKJ1npChigwRbAiAADoTFI2rI69g6ZTTzBd0+9GM4z6RcOJvtGLnViO4tOCmy
- sbwbxA==
-Message-ID: <731205c8-7d4b-d87a-17d1-520fdec7375d@gmail.com>
-Date:   Sat, 13 Jun 2020 20:01:02 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com>
+        <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com>
+        <20200610233912.GU6569@camp.crustytoothpaste.net>
+        <CAOjrSZvV6+ApfmOBa7rdXDPQJbExRsOfodO16i_1N5QjjhCB1w@mail.gmail.com>
+        <xmqq3672cgw8.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006111559300.56@tvgsbejvaqbjf.bet>
+        <xmqqpna5bq2l.fsf_-_@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006121451100.56@tvgsbejvaqbjf.bet>
+        <xmqqy2os2u55.fsf@gitster.c.googlers.com>
+        <405521ec-aed7-ff76-5b48-70e9d11018e6@kdbg.org>
+        <xmqqv9jvylt7.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006131645380.56@tvgsbejvaqbjf.bet>
+Date:   Sat, 13 Jun 2020 11:49:53 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2006131645380.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Sat, 13 Jun 2020 16:47:59 +0200 (CEST)")
+Message-ID: <xmqqeeqiztpq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqwo4di49l.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: AC6453D8-ADA6-11EA-9951-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Le 12/06/2020 à 01:14, Junio C Hamano a écrit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
-> 
->> Why adding yet another environment variable instead of relying only on a
->> config option?  I understand it's for the tests, but can't we add a
->> shell function in test-lib.sh (and friends) that tries to read
->> `GIT_TEST_DEFAULT_BRANCH_NAME', and, if it exists, sets
->> `core.defaultBranchName'?
-> 
-> Can you produce such a patch that does it cleanly?  My knee jerk
-> reaction is that I would suspect that you end up having to touch
-> many places in the t/ scripts, but if you prove otherwise, that
-> would certainly be appreciated.
-> 
-> And no, 
-> 
->     git () { command git -c core.defaultBranchName=master "$@" }
-> 
-> is not an acceptable solution.
-> 
+>> A corrected code should return a hardwired constant 'main' (it
+>> probably gets behind a C preprocessor macro, but the point is that
+>> we do not want end-user customization) for the reason stated in that
+>> message.
+>
+> I like `ref0` better, for two reasons:
+>
+> - it is more consistent to just have all anonymized branches be named
+>   `ref<N>`, and
+>
+> - using `main` both for an original `main` and an original `master` can be
+>   a bit confusing, as the reader might assume that this branch name (as it
+>   does not follow the `ref<N>` convention) was _not_ anonymized, when it
+>   very well might have been.
 
-I wanted to to do something like this:
+A pro for keeping a hardcoded 'master' is that it is compatible with
+the current world order, and flipping it to hardcoded 'main' upon
+transition is just to use the moral equivalent, so we do not need to
+immediately have to change anything.  The _new_ consistency across
+ref<N> does feel attractive, but because it is new, there always is
+a pushback not to "fix" what is not broken.
 
-  if test -n "$GIT_TEST_DEFAULT_BRANCH_NAME";
-  then
-      git config core.defaultBranchName "$GIT_TEST_DEFAULT_BRANCH_NAME"
-  fi
+I am personally OK either way.  
 
-But since we do not have a repository to store the config, it won't
-work.  Sorry for the noise.
+By the way, we'd need to devise a transition plan for switching the
+default branch name (i.e. the name used for the primary branch in a
+newly created repository unless the user configures it to some other
+value) to 'main' (oh, I just found one reason why I will not want to
+use that name in my project(s)---it is too close to 'maint').  
 
-Alban
+It might roughly go like:
+
+ 1. We introduce core.defaultBranchName; when it is not set, its
+    value defaults to 'master' in the 1st phase of the transition.
+    "git init" and "git clone" however issue a warning that says
+    "unless you configure core.defaultBranchName, we use 'master'
+    for now for backward compatibility but we will start using
+    'main' in three major releases of Git in the future".  These
+    commands use the default branch name when creating a new
+    repository in the 1st phase, and set core.primaryBranchName to
+    that name in the resulting repository.
+
+    This is to encourage early adopters to set it to 'maint'^W'main'
+    (eek, see, I again made that typo), while allowing those who
+    have toolset that depends more heavily on the current default
+    branch name than other people to set it to 'master' for
+    stability.
+
+    In the 1st phase, a few commands that care about what the
+    primary branch is in a repository (i.e. fmt-merge-msg and
+    fast-export are the two we have identified so far) pay attention
+    to the core.primaryBranchName configuration, and default to
+    'master' if the configuration does not exist.  
+
+    These commands issue a warning that says "unless you configure
+    core.primaryBranchName in the repository, we use 'master' for
+    now but we will start using 'main' in three major releases of
+    Git in the future".
+
+    The above two warning messages will be squelched once the user
+    sets respective configuration variable.
+
+ 2. We flip the default for the two variables from 'master' to
+    'main' in three major releases of Git (i.e. 24-30 weeks from the
+    1st phase).  The two warning messages added for the 1st phase
+    will be reworded for the updated default.  We no longer need to
+    say "in three major releases" in there.
+
+ 3. After long time passes, remove the warning.
 
