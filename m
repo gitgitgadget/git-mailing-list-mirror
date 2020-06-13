@@ -7,68 +7,68 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB858C433E0
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 23:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA409C433E0
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 23:57:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 703DE2065D
-	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 23:53:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC74220825
+	for <git@archiver.kernel.org>; Sat, 13 Jun 2020 23:57:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PedLeKxq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k9v1ujy6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726507AbgFMXxc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Jun 2020 19:53:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51062 "EHLO
+        id S1726820AbgFMX5B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Jun 2020 19:57:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbgFMXxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jun 2020 19:53:31 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96703C03E96F
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 16:53:31 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id l17so12502244qki.9
-        for <git@vger.kernel.org>; Sat, 13 Jun 2020 16:53:31 -0700 (PDT)
+        with ESMTP id S1726272AbgFMX5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jun 2020 19:57:00 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 752FDC03E96F
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 16:56:59 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id f18so12574765qkh.1
+        for <git@vger.kernel.org>; Sat, 13 Jun 2020 16:56:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=to:cc:references:subject:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=ajMm5jJKNH3nSQCxyMYEAJVJRh7+ID4CF698pnRKVrY=;
-        b=PedLeKxqmaQkuH0X8pRwH/utYNSLWZXtUvJ0pEt3XAqoH+GJE+tBDA81vAMfjyGCdb
-         t6iZufFKUao1ASH72xD1m/GpC85MPC4AXYfExLNC4iMf0hDSbrJPXQklDWdOZPOj9iDf
-         zdHQAec78o3yuqzHKl/D3JTsTM/YsDEJ/69ckamXfoYRYHaApaVXmeBRAuvLRwr4GAX0
-         RxCsoDP6nFnuoP6TEjT63EKDtFL2rhH3ry0SCulWtgc9jnCTwv3ALZYTtOrf2W4hiqPj
-         +kZlQuTw+oEs+t06mvgcqKDK4tluIvgsPMef3cVwmAFWWw4So6qN5u3JjxHXXGYgU6mX
-         RibA==
+        bh=MCWgztMISq8fDS0A8rZ1TThgz6S3sYm8S9gmXqAuhH0=;
+        b=k9v1ujy6yGDEJ1FOrtSTRI+iSsVuZPsfB2Lm93WUBG7sePJrONBZfKOaYw1KF+YoQm
+         4sA1oSbbYwOxD2T5NG9zjjV9WxAHUjyoXwfWn0X8bN5skB4oivG74mh0EFxH1W6td4Ql
+         0eTpVHWhyFx8S0VhffBKebeLKOSX25Vyt3lTyEp63VFBbZ2TfO/UuiVIYNurpM1GZRAG
+         r8gzxiiHcsjCImCgNSfA8PRn0aYbrBgiDcGG4aVbAaQOZTf4JgEX6GHUvSpO6u4IUfRa
+         s3fFZpHIa7Yg+a5DH4wBrHS325LXqpA0ibXIucrQm+vzMPDWFKZi8QPPfl7hATICwBuJ
+         k35A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:to:cc:references:subject:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=ajMm5jJKNH3nSQCxyMYEAJVJRh7+ID4CF698pnRKVrY=;
-        b=bN3BSWIsSBoR0AKQH7SOGefUIpeJIcl9erhtQCFXGOvAm8/1E8gcXF7pjSZ1PV2ZT/
-         MKV9lMhxAHoC/NKi9aKpomdGJ4Hqfu0B6qxb1zdn8SRAxSAxjnHAMmlNk6ALPmUXKJ8R
-         E1ppcI2Jhpb5jtTzXd9wtCnS5IURUeCnerL9NrcQefr7G97E+vpOoWnLQFtoLnQKGm4y
-         mgZsKmLbepFZY3tb4pJF5AsTAJOn372tcwBQEbcDdWWvTDh5JgfM/rSY9qvMuEgSiVqF
-         WQpWV48mVEYbTKGnoGG50C6JIx0QrR04wu5l0rQjyW40tJ/ViuUFzUd2CQrpBKB2UUop
-         a4xw==
-X-Gm-Message-State: AOAM531cvbBru79Su+7oylChzj07/h58QY2A8nMUvd6E0iJD1Y0W40Tn
-        gXSqxkv8uTiYpmfL5YIEn36iMBtX
-X-Google-Smtp-Source: ABdhPJyNLixmBBGuiaLrf8gOlyTS9XLyFpoMpQppDGbjZctI2GXahqNrcGiacxPavmM7rgsSNwIsfQ==
-X-Received: by 2002:a05:620a:24c:: with SMTP id q12mr9487961qkn.172.1592092410037;
-        Sat, 13 Jun 2020 16:53:30 -0700 (PDT)
+        bh=MCWgztMISq8fDS0A8rZ1TThgz6S3sYm8S9gmXqAuhH0=;
+        b=ecj+Zrnyxc3G/8g8GzDOYOdDpxG1ncP+wtxq651gK9ZyLOofknvu/bMXwj4sjLyNCN
+         d8BAHX0dcvtxxYkOBeq8fW28KYmdA4t7byhvc8oD5U/y6AIQ4QY9l6pBxuoJ7pamh4eK
+         SSbANeqPNwFCZSrNawDST/zUBSVUi0VqwXeyRThQhmCo0D2tjCi2BP3olD85lJc3Zis4
+         I1OfLDaokmQL2D5ddFnKehp2l/K5+Pkjuf4fDYC/9UWmCztACElAmfByHoSWeZ3onxg+
+         HzwdiivwVrCTPJIatfUbYmvcOcmNMPcuox0DkieHeXG0y8AFZ6vX9auHQHlcfT+RiXkB
+         ZtXQ==
+X-Gm-Message-State: AOAM533F1BAHo6XSJlAGYR4FbfrPRD1btu1CA65uagjCRRHqP2rGlsYV
+        e871z5/JUHpCq9vfXTdBvwkH7Ls8KsY=
+X-Google-Smtp-Source: ABdhPJx0mSrvV7Z9lSFGaL2TWl7jlslhTSZzwHvHhpjQ6QxznodKs8vkzceNAY1cg+nmtA6gcNFZvg==
+X-Received: by 2002:a37:4852:: with SMTP id v79mr9112536qka.132.1592092618221;
+        Sat, 13 Jun 2020 16:56:58 -0700 (PDT)
 Received: from [10.0.10.179] ([170.79.184.212])
-        by smtp.gmail.com with ESMTPSA id i40sm8939225qte.67.2020.06.13.16.53.28
+        by smtp.gmail.com with ESMTPSA id 130sm7416749qko.113.2020.06.13.16.56.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Jun 2020 16:53:29 -0700 (PDT)
-To:     simon@bocoup.com
-Cc:     git@vger.kernel.org
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+        Sat, 13 Jun 2020 16:56:57 -0700 (PDT)
+To:     sandals@crustytoothpaste.net
+Cc:     git@vger.kernel.org, simon@bocoup.com
+References: <20200505231641.GH6530@camp.crustytoothpaste.net>
 Subject: Re: Rename offensive terminology (master)
 From:   =?UTF-8?Q?S=c3=a9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>
-Message-ID: <9accf436-4b7a-2de2-de79-e81ec090dfc9@gmail.com>
-Date:   Sat, 13 Jun 2020 20:53:26 -0300
+Message-ID: <ae1d72d3-ecfb-f2be-5a68-486c159f0931@gmail.com>
+Date:   Sat, 13 Jun 2020 20:56:55 -0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+In-Reply-To: <20200505231641.GH6530@camp.crustytoothpaste.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -77,6 +77,6 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The perpetually offended strikes again. It's very problematic to let 
-people police other's language. This is something literally out of 1984.
-
+There will always someone that will take offense to literally anything. 
+It's absurd to try and sanitize everything with fear that someone, 
+somewhere, someday will just get offended by something.
