@@ -6,90 +6,82 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9524C433E0
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 10:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 313EDC433DF
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 11:05:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD035206D7
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 10:54:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11AC3204EC
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 11:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726785AbgFNKyV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Jun 2020 06:54:21 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:8490 "EHLO smtp.hosts.co.uk"
+        id S1727018AbgFNLF0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 07:05:26 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:46840 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725265AbgFNKyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 06:54:21 -0400
+        id S1726998AbgFNLFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jun 2020 07:05:17 -0400
 Received: from host-89-243-191-101.as13285.net ([89.243.191.101] helo=[192.168.1.37])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1jkQHL-0001rL-7S; Sun, 14 Jun 2020 11:54:19 +0100
-Subject: Re: Rename offensive terminology (master)
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Don Goodman-Wilson <don@goodman-wilson.com>,
-        =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
- <20200505231641.GH6530@camp.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2006091126540.482@ZVAVAG-DN14RQO.ybpnyqbznva>
- <20200611115215.GQ21462@kitsune.suse.cz>
- <CAGA3LAfpoXDQryOPGg3g-4brpUcSAhL_2VOw8oy6D2ffp64hag@mail.gmail.com>
- <f27450d8-59a1-dc0b-f741-c8c883b95fe0@gmail.com>
- <bef39243-806f-7c4a-c3d1-f3500ec377be@iee.email>
- <CABPp-BHF7KDLw7_VtSokpOuOr_tX2DTNu31B58P83R3HK=YVvA@mail.gmail.com>
+        id 1jkQRv-000346-B1; Sun, 14 Jun 2020 12:05:15 +0100
+Subject: Re: Collaborative conflict resolution feature request
+To:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>
+Cc:     "Curtin, Eric" <Eric.Curtin@dell.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Geary, Niall" <Niall.Geary@dell.com>,
+        "rowlands, scott" <Scott.Rowlands@dell.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
+ <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
+ <xmqqa716zs7w.fsf@gitster.c.googlers.com>
+ <xmqq366yzrn1.fsf@gitster.c.googlers.com>
 From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <9d3d3888-55e5-61f0-1541-9854a70fb233@iee.email>
-Date:   Sun, 14 Jun 2020 11:54:17 +0100
+Message-ID: <1dd94931-83ac-4036-2317-0f3aa166d61c@iee.email>
+Date:   Sun, 14 Jun 2020 12:05:13 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHF7KDLw7_VtSokpOuOr_tX2DTNu31B58P83R3HK=YVvA@mail.gmail.com>
+In-Reply-To: <xmqq366yzrn1.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/06/2020 01:41, Elijah Newren wrote:
-> On Fri, Jun 12, 2020 at 6:23 AM Philip Oakley <philipoakley@iee.email> wrote:
->> On 11/06/2020 13:52, Derrick Stolee wrote:
->>> On 6/11/2020 7:59 AM, Don Goodman-Wilson wrote:
->>>> On Thu, Jun 11, 2020 at 1:52 PM Michal Suchánek <msuchanek@suse.de> wrote:
->>>>> Indeed, the flexibility to choose the name of the default branch can be
->>>>> helpful for projects with specific naming, especially non-english
->>>>> speaking projects.
->>>>>
->>>>> To that end I would suggest adding -b argument to git init to be able to
->>>>> choose the default branch name per project. This should select the
->>>>> initial branch name and also write the it as the default branch name in
->>>>> the repo configuration (if git continues to treat the default branch
->>>>> specially).
->>>>>
->>>>> This can be used in documentation to use the new name immediately
->>>>> without breaking existing workflows that rely on the 'master' branch.
->>>> I _really_ like this idea (and your reasoning). Seconded.
->>> Yes, adding a -b|--branch option would be an excellent addition to
->>> the config option.
->>>
->>>
->> Is their also an option to also add an option to `git clone` to (re)set
->> the default branch name offered by the upstream to that provided?
+On 13/06/2020 20:34, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> ...  Luckily, most end users would get their Git from
+>> packagers and they are good at doing the bundling (i.e. the
+>> "git-core" package may "suggest" the "git-imerge" package).
 >>
->> Alternatively provide a `--no-checkout` option for the clone so that
->> either no actual checkout is performed, or maybe that a detached head
->> checkout is performed so that users can name their default branch
->> appropriately.
-> Good news: git clone already has a `--no-checkout` option (with `-n`
-> being the short option form for it).
-Thanks. The man description "and creates and checks out an initial
-branch that is forked from the cloned repository’s currently active
-branch" had me initially fooled.
+>> So...
+> So my answer to your idea/opinion is that we shouldn't waste
+> engineering effort to "have something like imerge integrated into
+> git itself", but we should help distro packages to do the bundling
+> of "git" itself and all the good things around it.  One way of doing
+> it may be by keeping an official curated list of "third-party things
+> we find good" somewhere (it can be in-tree in my release tarballs,
+> but it does not have to be---some page on git-scm.com could just be
+> fine; as long as the quality of the list is maintained to our
+> standards, where the packagers and end users see it does not really
+> matter).
+>
+> And such a list would also help those who prefer to build and
+> install things by hand.
 
-I did see the option after posting, but IIUC there is still the default
-branch name linkage that could be resolved.
+For the imerge tool, it may be worth having an extra sub-heading (Merge
+Tools?) within the "HOW TO RESOLVE CONFLICTS" section of the git-merge
+man page.
+
+The merge.guitool configuration does list a lot of pre-configured tools
+(the list could be moved to the mergetool man page?)
+
+Curating the list of tools maybe could be done in the same way the
+config entries are now being done, i.e. by area, so they can be included
+in the relevant man pages, with just a single source of 'nice tools'.
 
 Philip
