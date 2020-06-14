@@ -2,111 +2,78 @@ Return-Path: <SRS0=22YV=73=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97DDFC433E0
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 15:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28110C433E0
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 15:52:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C699206A4
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 15:35:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEEE52071A
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 15:52:00 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=jorgechamorro-com.20150623.gappssmtp.com header.i=@jorgechamorro-com.20150623.gappssmtp.com header.b="zEfGc6zZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726925AbgFNPfu convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 14 Jun 2020 11:35:50 -0400
-Received: from felt-1.demon.nl ([82.161.237.226]:35220 "EHLO felt-1.demon.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727011AbgFNPfu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 11:35:50 -0400
-X-Greylist: delayed 1573 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Jun 2020 11:35:28 EDT
-Received: from [192.168.129.40] (x040.home.local [192.168.129.40])
-        by felt-1.demon.nl (AIX7.1/8.14.4/8.14.4) with ESMTP id 05EF97i89502778;
-        Sun, 14 Jun 2020 15:09:07 GMT
+        id S1726922AbgFNPv7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 11:51:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726717AbgFNPv7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jun 2020 11:51:59 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C6AC05BD43
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 08:51:58 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id y20so12413627wmi.2
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 08:51:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jorgechamorro-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=98jpeWcRSlU1e6ci+JNV2MRCR6hw0L4Y6v0IIt+e+Ws=;
+        b=zEfGc6zZM4CwW1ZxCQ6mXz7eIekqBhCyacCVorE29OsTlIdo4oBs3lphhY23lrTw/w
+         kRz8921QSnh4L8AAn678iIjCs+BzzZJCAFF17wYvojBtow5vKShoe/X7aRNXIUoiKK3D
+         +lYeRbluUp0JVaXxY8QM4cHeC4k3lUcM9oF81DqgnHEJBmfNzoMgWjQT0AIiZrgbbJr6
+         sluXn4lCSI/4Tit3kNx7N4u39r33l7aNmKJEaKJ8sXjAz5eb+YxEWuGGqfP47M5H0qPT
+         zbNakLWZ0qHGGvapdXLpJt0OzDr93+2nLnLGdML/6Mn34JeYhcdi5QXQtS0dpeC4fsf7
+         RMUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=98jpeWcRSlU1e6ci+JNV2MRCR6hw0L4Y6v0IIt+e+Ws=;
+        b=avqefNmU1mJ6BIK+auIT+PlDJ6xLyCN64r78nXq11t9jo7C0AaUv5GoK9387t5dvui
+         kK7ILcOWlMJnP7fiKLcBVeG9jSGZDVopuVNRPa7mj1w8sGX7HlhxczudSARUvCwCpFjR
+         QuM3a84oEmzv1gAmTPgxKJR4W39EZpivA/994V60+mTfMJ1+lfCsyAxj61cScMPqMs7f
+         WyhpQ+rnu8yOjburqhjA51dr81/u80cE67pm/IrSqi3pe3Mm6K/6phIlYD6zTGfJMJ7t
+         Wx8QjlPZa/LTHcKtetMJy/caZjWE3LHn/nzkU96Z7/zxWtWQpF8UlD0lUER87Qx65dNL
+         73ig==
+X-Gm-Message-State: AOAM531K2zyndJ+Cx8Z16MeaVhDjv06EUHhID+LRZqOHeG5QiPDfPajl
+        kvsKTZJ5TlD1f1avhjJRu1XW2VN1C3xZpg==
+X-Google-Smtp-Source: ABdhPJyKbAr/LB3hrQ1RNNWtz4XFeXJAGh2PehNm4Fd1xAG+fAMaAIZrELHZhQNQVvuqMEC89IAKrA==
+X-Received: by 2002:a7b:c11a:: with SMTP id w26mr8659144wmi.0.1592149915521;
+        Sun, 14 Jun 2020 08:51:55 -0700 (PDT)
+Received: from [192.168.10.50] (20.red-79-156-187.staticip.rima-tde.net. [79.156.187.20])
+        by smtp.gmail.com with ESMTPSA id p9sm18320484wma.48.2020.06.14.08.51.54
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 14 Jun 2020 08:51:54 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-From:   "Michael Felt (aixtools)" <aixtools@felt.demon.nl>
-Mime-Version: 1.0 (1.0)
-Subject: Re:    Rename offensive terminology (master)
-Message-Id: <0AC9821C-19F4-424A-8771-DF932E6C5038@felt.demon.nl>
-Date:   Sun, 14 Jun 2020 17:09:06 +0200
-Cc:     =?utf-8?Q?S=C3=A9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>,
-        philipoakley@iee.email,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org,
-        =?utf-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
-        newren@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>, stolee@gmail.com
-To:     Don Goodman-Wilson <don@goodman-wilson.com>
-X-Mailer: iPhone Mail (17F80)
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+Subject: Re: Rename offensive terminology (master)
+From:   George Of The Jungle <jorge@jorgechamorro.com>
+In-Reply-To: <0795A4A3-4D5B-4AAF-B032-499700DFFFA5@felt.demon.nl>
+Date:   Sun, 14 Jun 2020 17:51:53 +0200
+Cc:     Thomas Adam <thomas@xteddy.org>, Simon Pieters <simon@bocoup.com>,
+        Git Users <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <431DBCD7-FFFE-4AD1-8BC9-0416F1F5668E@jorgechamorro.com>
+References: <CAOhcEPZ6Ygm5fpiYpR1VnHv8ZrvMtOtjc+DwW2QZZy47JE45yA@mail.gmail.com> <0795A4A3-4D5B-4AAF-B032-499700DFFFA5@felt.demon.nl>
+To:     "Michael Felt (aixtools)" <aixtools@felt.demon.nl>
+X-Mailer: Apple Mail (2.2104)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-﻿How does the saying go...
-
-You can please some of the people all of the time,  ..., but you cannot please all of the people all of the time. 
-
-I learned as a child that my choice of certain words was influenced by words used by people i trusted. Words that I clearly did not understand completely because when I (tried) to use them, with no negative intention, but saw the use of a word shocked the people who heard me. 
-
-Does that mean I was a racist, or am a racist, because I used a word that others considered racist. Yes, I was naive. But I learned words can offend, regardless of intent. 
-
-And I feel that is what is missing here. Using a term that someone else takes offense to does not mean any offense was ever intended. But I tire of hearing that I am responsible for knowing what offends “them”. And since I am one of the unlucky, not clearly belonging to a “minority “ of some kind, I may never complain. 
-
-But I was well above 40, and learning from my own children,  before I learned to deal with all the persecution i had to live through in my early years. 
-
-Racism is a powerful word, and it exists everywhere. Sometimes it is intentional - and we need to address that. But do not make the mistake that it is always intentional. 
-
-A git “master” or “main” - who really cares. Do not seek offence where none is intended. You only make your own life miserable. 
-
-Compare that with teasing (not as horrible as racism it seems). Just remember, teasing is always intentional, the object and objective of teasing is always clear. 
-
-The intent of a word choice is not always how it is received. 
-
-If “master” offends you, I feel for you. If “main” makes you happy, I am happy for you. 
-
-I am saddened that people feel that “master” in git is an expression of racism. It is not. I am saddened that people feel it must be changed because someone takes offense. 
-
-I also know my opinion does not matter. The fear of the many becomes the “ring that rules them all”. 
-
-
-
-Sent from my iPhone
-
-> On 14 Jun 2020, at 15:58, Don Goodman-Wilson <don@goodman-wilson.com> wrote:
-> 
-> ﻿
->> MASTER IS NOT INHERENTLY RELATED TO MASTER-SLAVE RELATIONS.
-> 
-> 1) There is a great deal of evidence that that claim is simply not true.
-> https://twitter.com/tobie/status/1270290278029631489
-> https://twitter.com/jpaulreed/status/1272064807345115137
-> 
-> 2) It's beside the point. Many problematic words and phrases have
-> perfectly benign origins, but take on new meanings in new contexts.
-> 
-> I personally reject the kind of moral relativism that is being
-> espoused here. In fact, I believe that there is such a thing as
-> justice, and that we each have a responsibility to seek it out and
-> create it in every corner of our activities, big and small. You can
-> abdicate that responsibility, I can't force anyone to do otherwise nor
-> would I want to. But history judges harshly those who would throw
-> others aside. Of course there are more people in the world than just
-> Americans. But there are also Americans, and in particular Black
-> Americans. Precisely because git is the tool of choice for open source
-> and so much other development work, I believe we have a responsibility
-> to build a tool that reflects the values of _all_ that we want to
-> welcome into these communities. If you would rather exclude Black
-> Americans or others descended from generations of colonial slavery,
-> that's your choice, but you need to own the fact that it is an
-> inherently racist choice.
-> 
-> Don Goodman-Wilson
-> 
->> On Sun, Jun 14, 2020 at 2:20 PM Sérgio Augusto Vianna
->> <sergio.a.vianna@gmail.com> wrote:
->> There's nothing to be resolved because there is no problem. If someone
->> reads "master" and gets triggered because all they can think of is
->> racism, that person needs therapy.
-
+You say this =E2=80=9Cmaster=E2=80=9D has anything to do with slavery? =
+Then be more explicit and true to history, and instead of master call it =
+white. Sorted! If not please stop this nonsense thanks.=
