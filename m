@@ -7,111 +7,133 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEDF1C433E0
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD06C433E1
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:31:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABC7A20714
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:03:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA2DA206B7
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:31:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OGHVouOX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epVnmHij"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726745AbgFNIDC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Jun 2020 04:03:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40754 "EHLO
+        id S1726387AbgFNIbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 04:31:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbgFNIDC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 04:03:02 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 391C3C03E969
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:02:58 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id c14so12918087qka.11
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:02:58 -0700 (PDT)
+        with ESMTP id S1725815AbgFNIbg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jun 2020 04:31:36 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E305C03E969
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:31:35 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id 23so6428428pfw.10
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:31:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Q/ar2y65Vy2T+5ueMLrp+FNavhX7pbcUWM5/RxnhmLQ=;
-        b=OGHVouOXfYtIERp4D3DIMNVR7SGN7b7LPW3cmKfHR1fyeKG6E4DujUPxwV/WkaabJx
-         HGJd8SUd4MJvm/Bw+LERmd6IzScDR7tjocb8bBa7gaO1i2ah4xAlQSvesrp2pVZw7zRC
-         T1LNJ2MBViyMsw8H2TBwEKgkAU8UNwathD52B3a7C5voe3BnLyJtreH6gJc/wcqEQ1uf
-         g2pGFXrJ9aFwGXq5Mi7Q/P9c9ete/uXiNG1hnmqt+nEHUsdTR0/4O/C2SPNzKWRxQ/Zp
-         JWLEAHVQ0Q6rWTF2QmOvz++dB/G2lC/UDzzll5hGBuGEcTwag3N4b5kapM5W4myEr2vI
-         Shgw==
+        bh=P91jMj5vvUrmarkZNG7WrD+nIHwkSPKaBSUcOzh1KXw=;
+        b=epVnmHij12AY5foATd4Obr4gqI8u6Ojtf4UV10+aDyY5wa6hTlTC0e/eFZWDh6jc5t
+         5FHp59XJ49iDdgTuGrM4rR5me/4TaJ+znLmuuybiOB90r/f4uZcANFBXWWf2rTPUwdC8
+         o5h0LFaFs/PxDnc/iZQo/e7C7qKA21F1l2qWpvhjhofnHaX3TXIgyqb99+q3+Iap/PP7
+         QFna3YBm1o+MMaGZ35DOVk6+X9Sdsa6pGmdzasxyAZHgT89mbxbzUetOCGLnb1VotHSi
+         oPj7lPB0GHs6lSqhJLcUpy0AYXMJ5JH7lTp6uVymsuV+DxcLYK7HyC6F2pwATxBscs6T
+         wmNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Q/ar2y65Vy2T+5ueMLrp+FNavhX7pbcUWM5/RxnhmLQ=;
-        b=SDev95moZGPE63GBggjbiTaEPFOVSRPl3P8jjNgvXJDYz/0ES3wJEvQkCOAVraczqr
-         Bdzg2J/yW0W+/fVlPeOely5Ayh3ZNSzblaB+dboQNhcOiMv8W2vB6mWVpAlEWwE9HoWb
-         NY1xdZ8LMFaO9KOu+gVZx7FOUFT0VQkRsenFZOuMgr1ILmDOC0aMVEpG6GtGKhmFvB84
-         TVkkKInf2Q1ROIJM0NCojINWCvA+eq3rCyLTkH94B/G7RVcAHK5ntU58erdxHx4sGRL6
-         Hs4o9eNlzC1TNdIw/aIIk7UEB3gteHuzk/qshHoNJyIw0nMHNIJao/5TdlVoD3zxbwUQ
-         45DQ==
-X-Gm-Message-State: AOAM532pG/3jFUCAP30OBXrbzu2TbNoIpt6SinYNG9sq53wdGJvzSlLB
-        IHw5IX29MPzgzkU6yR1BDY9YvGIuwMk=
-X-Google-Smtp-Source: ABdhPJxxzyXYh0DUFsWWKoNxuEi1PCbDnWEf3aTRvBv2Ws8N/wo+j8F6PePwhJjoXi/AkBmdcUHqVw==
-X-Received: by 2002:a37:bfc1:: with SMTP id p184mr10222760qkf.207.1592121776571;
-        Sun, 14 Jun 2020 01:02:56 -0700 (PDT)
-Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id k26sm9665447qtk.55.2020.06.14.01.02.55
+        bh=P91jMj5vvUrmarkZNG7WrD+nIHwkSPKaBSUcOzh1KXw=;
+        b=HInJ/+s9Mtq4mVnFGQ4FnrQHHcuj11c7YsZbrnPggtVDHIcEPfpDPkAjVv14C46c1p
+         6mbL95b+dTekM1tpyuO8obSA8JfvuZYMM5lAHkog2Ze0gAeQD+QYGzLsNEfwek1JoKbp
+         qaw/PBNqM9PrUUEyJPfHGkfSoRVazmWr77lihqIr0G75ME3DVrdLgbhmIBPApFRc6Csr
+         LVo8wHUUhjY9zG6Ol/vBxvlPplBE7gZUlDTWGgyL3/H5sEo8o9+ftfNgimVbtkUNA4qD
+         fZxOByLlNwHBDXNLFkmmt8siRTCK/7oKnp+u3wALmgpO/flJd0saNCVggbaNaicORgqz
+         KnmA==
+X-Gm-Message-State: AOAM530BMblQ9zhvKakTc9zqQ5v+JXnaaqt8Rsz4UVi3L4BPKJrQR/Q5
+        ZbmYuq9LLCipx/SanrlWCMo=
+X-Google-Smtp-Source: ABdhPJzRSW9ZTIIUwSfR7LBTCz2HFGxDa3qLZXEZbc87+OmX89f0Nk2/WmOLYC2P+AAIoH37wrUuUw==
+X-Received: by 2002:a62:194d:: with SMTP id 74mr19513800pfz.21.1592123494341;
+        Sun, 14 Jun 2020 01:31:34 -0700 (PDT)
+Received: from localhost ([2402:800:6374:3bd0:871b:497e:ae48:68fa])
+        by smtp.gmail.com with ESMTPSA id q2sm2701509pgn.11.2020.06.14.01.31.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Jun 2020 01:02:56 -0700 (PDT)
-Date:   Sun, 14 Jun 2020 04:02:54 -0400
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] checkout: teach --worktree
-Message-ID: <20200614080254.GA1202945@generichostname>
-References: <d10cb03dd8ce00cb6033c61ff9b9b30bbf5f9c89.1592058281.git.liu.denton@gmail.com>
- <CAPig+cQ_G+N=mYqO+=7UaAYft27MhZ2_3v8=QzYpDn5hQySp+A@mail.gmail.com>
- <20200614074439.GA617439@generichostname>
+        Sun, 14 Jun 2020 01:31:33 -0700 (PDT)
+Date:   Sun, 14 Jun 2020 15:31:31 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/3] pkt-line: use string versions of functions
+Message-ID: <20200614083131.GD3405@danh.dev>
+References: <7e803a2ba9458ce35c657e67323edfe4409205ec.1592055716.git.liu.denton@gmail.com>
+ <cover.1592119902.git.liu.denton@gmail.com>
+ <d1b79c7734f0609fcac5e523644c3093f538bccf.1592119902.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200614074439.GA617439@generichostname>
+In-Reply-To: <d1b79c7734f0609fcac5e523644c3093f538bccf.1592119902.git.liu.denton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 14, 2020 at 03:44:39AM -0400, Denton Liu wrote:
-> Hi Eric,
+On 2020-06-14 03:31:59-0400, Denton Liu <liu.denton@gmail.com> wrote:
+> We have many cases where we are writing a control packet as a string
+> constant out and we need to specify the length of the string. Currently,
+> the length is specified as a magical `4` literal.
 > 
-> On Sat, Jun 13, 2020 at 10:51:47PM -0400, Eric Sunshine wrote:
-> > On Sat, Jun 13, 2020 at 10:25 AM Denton Liu <liu.denton@gmail.com> wrote:
-> > > [...]
-> > > Teach `git checkout --worktree`, allowing users to checkout files
-> > > directly into the worktree without affecting the index.
-> > >
-> > > Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> > > ---
-> > > diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> > > @@ -264,6 +266,12 @@ When switching branches with `--merge`, staged changes may be lost.
-> > > +-W::
-> > > +--worktree::
-> > > +       When writing contents, only modify files in the worktree. Do not
-> > > +       modify the index. This option is essentially a no-op when used
-> > > +       without a `<tree-ish>`.
-> > 
-> > Why a no-op rather than actually diagnosing that --worktree makes no
-> > sense in that case and erroring out?
+> Change these instances to use a function that calls strlen() to
+> determine the length of the string removing the need to specify the
+> length at all. Since these functions are inline, the strlen()s should be
+> replaced with constants at compile-time so this should not result in any
+> performance penalty.
 > 
-> I decided on this behaviour because I assumed that an empty
-> `git checkout` has `git restore` behaviour but I guess I was mistaken.
-> I'll change it to error out.
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  pkt-line.c | 46 ++++++++++++++++++++++++++++------------------
+>  1 file changed, 28 insertions(+), 18 deletions(-)
+> 
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 8f9bc68ee2..72c6c29e03 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -81,49 +81,59 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+>  	strbuf_release(&out);
+>  }
+>  
+> +static inline void packet_trace_str(const char *buf, int write)
+> +{
+> +	packet_trace(buf, strlen(buf), write);
+> +}
+> +
+> +static inline void control_packet_write(int fd, const char *s, const char *type)
+> +{
+> +	packet_trace_str(s, 1);
+> +	if (write_str_in_full(fd, s) < 0)
+> +		die_errno(_("unable to write %s packet"), type);
 
-...Disregard the above. I misread your comments.
+This will create i10n problems:
+- Translators don't have enough context to know what does %s mean.
+  In some languages, depend on value of %s, it will be translated to
+  different phases by the order of words, word choices, gender.
+- `type' won't be translated with this marker
 
-I thought about it some more and I think that the real bug is in how I
-phrased it in the documentation. I meant that --worktree itself was
-essentially no-op, not the whole checkout operation.
+I think it's better to pass full translated phase into this
+function. Something like:
 
-I think that it makes sense to allow this behaviour. The documentation
-states that we only modify files in the worktree. So if we do
-`git checkout --worktree <path>`, we should overwrite the worktree with the
-index. This should be exactly the same as running `git checkout <path>`.
+	static inline void control_packet_write(int fd, const char *s, const char *errstr)
+	{
+		...
+		if (...)
+			die_errno(errstr);
+	}
 
-However, one additonal behaviour I should implement is running
-`git checkout --worktree` should behave like running `git checkout .`.
-So this would make --worktree not a no-op without a tree-ish.
+and call the function with:
+
+	control_packet_write(fd, "0000", _("unable to write flush packet"));
+
+Other than that, I like the idea of using preprocessor to check
+compile time constant string, but I'm not sure how to write it with
+standard C
+
+-- 
+Danh
