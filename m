@@ -2,111 +2,112 @@ Return-Path: <SRS0=22YV=73=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90E1FC433DF
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 19:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 463ECC433DF
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 19:17:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B47820739
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 19:09:02 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CHvvTGWe"
+	by mail.kernel.org (Postfix) with ESMTP id 188C5206D7
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 19:17:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1592162221;
+	bh=F52cdG4uG03hmNLX7S3ed6TAlJvOqInyiBxyt8ooczY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=E17ELRFyLyosvq1Q8ZkZjS9UdBtn9cT1zuqZJtwy+5QfE0APDQ644aoJV9MNDaHMu
+	 GfOKnYb2CUit1JN9ngiWqIF7yQPwmiBcmIyB1RskPtYf0f5GLf3EHaViYo+ANYabtw
+	 QHSqc65t65hgfjkiDzAQ+vmsWX/xMyz9auzsi0TA=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727120AbgFNTJB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Jun 2020 15:09:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57636 "EHLO
+        id S1727101AbgFNTRA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 15:17:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbgFNTJA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 15:09:00 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C224C08C5C2
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 12:08:59 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id v79so13750543qkb.10
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 12:08:59 -0700 (PDT)
+        with ESMTP id S1726648AbgFNTQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jun 2020 15:16:59 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9377FC08C5C2
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 12:16:58 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id j32so10984204qte.10
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 12:16:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:cc:references:subject:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=lOHRDGBtzpQbJRxyTv61dHFsuEQ/wOgwCgQQNSPYMNk=;
-        b=CHvvTGWeGRN9ouiv51UO1hJJHlYCjPGCM3qiLPG14g1ABquFWtWC0O7DJ+WblcHiiJ
-         FfEbp4/ao48oDpladUqXZEvj52+TpImhetJ1/vaKoqgNdss1KiVi00WEb/nK4bIWpJTL
-         wdJesqQx8bI52jsLTaLfX1OHEsNW+pmp3XlO74vkY0dvkN4ljTbSwwh65Yhsa8Gyg2jn
-         /fEMDbOf1Kvse6lN3vKA9LCcSLBefR8uwgAjBuuWrj1sx7SEKhn6nS8xbUMzcn0V54lq
-         qnm/RWBuS3/Ckasnp1SedrrGYMq5bkAHCTQDQCUHWpUQi9YB1RB0ShCZaXxk/UEQFLxN
-         ogyA==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=h/gP1/ashVwOwufFHsq71NT6S09vv9/ynj0qjn4VUxM=;
+        b=N1O9pi2Dh6izwk9EsInJHzSudqgXxq+LqhYRBb9V7EIkpPR5mTseScsjEHsHRKMMjv
+         CTqo0MHLwBCLKN4G4+87tifPnvLdmfQyzVrBjvqdE4EULp+FZ+UhH4jsx09N/jxeWO1O
+         VWCDaD+sTIKsIh1BZiO5M83XYdNd/QFOidV3s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:subject:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=lOHRDGBtzpQbJRxyTv61dHFsuEQ/wOgwCgQQNSPYMNk=;
-        b=q5kiNldKO9wWxuxVBsM31czaAAv6GYA9mt+utUDUAlh4zY6e2D5uRS3kbCPX78Y8JE
-         5PcxQsbpvNMt6rmjocNU0CD5nAOY/KcxfQIPBsOhMzKSn/53GNJTlJAEBDZgDLiG4UR1
-         Laigoz7NikH3jX7Iq/29Z2cVkU5fW2TvBaMl71YpKGIagrzy5KKqgM7xWgL78YstaBsw
-         fFqYa4nZghmHflE1mVKSNcbVI/WgpfFMpJ+DvFs7bQOA1ALqEA/eUhAlc+vE7+RONZ0G
-         7srjTZohuK+exfEFV/LGqU/VPZJB6jTEnhOHX0KgqHN/t08np2PTCYjbENvKKCTnrucg
-         /Jrw==
-X-Gm-Message-State: AOAM533JUgpN7MC3UiC/xuSYuFGfavo7Nb9Iv2MxP+xHl2IpD50e0wBJ
-        uunAHFENyBYCqvZ5DU5LDOuMolZPUH0=
-X-Google-Smtp-Source: ABdhPJyU7UK6whXVEwaTjNBNjISBiAhWi2bJSbcCRf1GwAAG8vhGTcQGaqnr3fqf6YFPsNXzK5o77w==
-X-Received: by 2002:a37:9ed2:: with SMTP id h201mr12187222qke.280.1592161738376;
-        Sun, 14 Jun 2020 12:08:58 -0700 (PDT)
-Received: from [10.0.10.179] ([170.79.184.212])
-        by smtp.gmail.com with ESMTPSA id x36sm9957009qtd.97.2020.06.14.12.08.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 Jun 2020 12:08:57 -0700 (PDT)
-To:     konstantin@linuxfoundation.org
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=h/gP1/ashVwOwufFHsq71NT6S09vv9/ynj0qjn4VUxM=;
+        b=phcjZ9fb7vzSY2tnHZ3ysAVsWV1eeuCBhdUY+TZKBuj6qajyj7dFzn442kxD6u0muS
+         HjkoSNrhFLbxoTNwmMm50hHzObhmUOXNBjGZ9uYe6KwM3bsYrk1oIzJ9zcWT28hL1hgE
+         j48bhFpzAJlR48qYndWZ49JjCWmoDiW5ewnrHvqmXIdNaUlkCv/+BdcnccyqDy5+Dxs6
+         nXbVhYkoCR2xT8aRs8v+pNOJGIMhnudtFM2g3sPex0pqwLV2qCgcgWQBGqmaHBzBC4NI
+         4slNgwjkH84T1bX5nxsnXzKY5XQfEPXtyXt8G2AgqN+PDRt+Jv4rmvv0LUZ0P4mlXs93
+         jujg==
+X-Gm-Message-State: AOAM532BIjEwmCZ2o74tp8kJpsKdme1wz15lSophhhLh1XsQyfMFDxYO
+        xFue60QwCRT17xRM6PiCjiIodVxRSaQ=
+X-Google-Smtp-Source: ABdhPJw4Xx3ZmYwaKgRxC8ixIsPVE9o82s8J13WjMMQ/qYzaN+ByIKN94kpx+hSfJQztQc9i6UJBFw==
+X-Received: by 2002:aed:3608:: with SMTP id e8mr12752335qtb.186.1592162217835;
+        Sun, 14 Jun 2020 12:16:57 -0700 (PDT)
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id z4sm9169462qkj.131.2020.06.14.12.16.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Jun 2020 12:16:56 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Sun, 14 Jun 2020 15:16:55 -0400
+Date:   Sun, 14 Jun 2020 15:16:55 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     =?utf-8?Q?S=C3=A9rgio?= Augusto Vianna <sergio.a.vianna@gmail.com>
 Cc:     Johannes.Schindelin@gmx.de, don@goodman-wilson.com,
         git@vger.kernel.org, msuchanek@suse.de, newren@gmail.com,
         philipoakley@iee.email, sandals@crustytoothpaste.net,
-        sergio.a.vianna@gmail.com, simon@bocoup.com, stolee@gmail.com
-References: <20200614190400.bk22inkkz2w6f2sg@chatter.i7.local>
+        simon@bocoup.com, stolee@gmail.com
 Subject: Re: Rename offensive terminology (master)
-From:   =?UTF-8?Q?S=c3=a9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>
-Message-ID: <18018f12-1376-9b17-e1b4-a2e5c59e711a@gmail.com>
-Date:   Sun, 14 Jun 2020 16:08:53 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+Message-ID: <20200614191655.qoug6lnxi332g5jk@chatter.i7.local>
+Mail-Followup-To: =?utf-8?Q?S=C3=A9rgio?= Augusto Vianna <sergio.a.vianna@gmail.com>,
+        Johannes.Schindelin@gmx.de, don@goodman-wilson.com,
+        git@vger.kernel.org, msuchanek@suse.de, newren@gmail.com,
+        philipoakley@iee.email, sandals@crustytoothpaste.net,
+        simon@bocoup.com, stolee@gmail.com
+References: <20200614190400.bk22inkkz2w6f2sg@chatter.i7.local>
+ <18018f12-1376-9b17-e1b4-a2e5c59e711a@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200614190400.bk22inkkz2w6f2sg@chatter.i7.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <18018f12-1376-9b17-e1b4-a2e5c59e711a@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- >I just did. "Master" is not descriptive enough because it implies that 
-a branch with this name carries some special status over all other 
-branches, whereas in reality it doesn't.
+On Sun, Jun 14, 2020 at 04:08:53PM -0300, Sérgio Augusto Vianna wrote:
+> >Well, then nothing really changes then, does it?
+> 
+> Did you read what I said? I said it would be chaotic for everyone to deal
+> with this change. It won't change anything for the people who WANT the
+> change. They are just forcing everyone else to use what they want.
 
-No, you presented a contrived explanation. I wanted to see a real word 
-case where someone had issues understanding it.
+No, you "presented a contrived example," to use your own words. If you 
+show me a "real word case" of how it would be "chaotic for everyone," 
+then we can have a reasonable conversation.
 
+> >False. Efforts to remove the usage of "master" traces back over half 
+> >a
+> decade
+> 
+> There will always be people that adopt fringe ideologies. In the 1960 there
+> were feminists that accused every single straight woman of being a gender
+> traitor, for example. Yes, I said "literally no one", and that was
+> hyperbole. I'm sorry if that went over your head so easily.
 
- >Well, then nothing really changes then, does it?
+Oh look, I'm all out of cringe now. I'm sorry, but I'm going to have to 
+end it here.
 
-Did you read what I said? I said it would be chaotic for everyone to 
-deal with this change. It won't change anything for the people who WANT 
-the change. They are just forcing everyone else to use what they want.
-
-
- >Nobody should have to fix anything. If you already have an existing 
-repository, then literally nothing changes for you.
-
-Except git flow. And any software that deals with new git repositories 
-being created. The world doesn't revolve around you.
-
-
- >False. Efforts to remove the usage of "master" traces back over half a 
-decade
-
-There will always be people that adopt fringe ideologies. In the 1960 
-there were feminists that accused every single straight woman of being a 
-gender traitor, for example. Yes, I said "literally no one", and that 
-was hyperbole. I'm sorry if that went over your head so easily.
-
+-K
