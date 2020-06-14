@@ -2,253 +2,168 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB721C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91360C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:59:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A82D5206B7
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69A4F2068E
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:59:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KA4+ZCMZ"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="leS0Ib9q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729534AbgFOK55 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 06:57:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729354AbgFOK5t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 06:57:49 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C252C08C5C2
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:49 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id f7so16931606ejq.6
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=r43m2yxYlbGAKJwzgsddPndCXqdlS15ECGuS7g+K0+4=;
-        b=KA4+ZCMZuR71tl3RrKYaXgrtOcSZATDT9wnZC2CfQBBMJcMbAcnuf7GKXhrRueSEjx
-         dB+mn9UCUFkTFHISycjMph0g0XwTyC5kxqFmOCdNWTzAL6UmZei6e9sm+bMp51Z/g/T5
-         M94UYN5hpNjVDq3rv54mC/NISlHMqF8ofJwYABj6n73w2e5oNhW9zbXk3MEq84exHkqU
-         ip9+QKZUD1WHpn11Q7+IFKocohV+uCBjBi4mr85xjFtMbrwB30OVjxpC3rQSySjXY9UP
-         pf1qJ0MKLcE63zEl3UG+nN//SunANMBwFMStIpTf0kN1fkidxFRaWWfcSwfAsKncZ30L
-         LODA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=r43m2yxYlbGAKJwzgsddPndCXqdlS15ECGuS7g+K0+4=;
-        b=sq87hUkm0AMZ3oWX045JvHT244PeyG66TkyaFbc+/EMvMN+hHVH4RWcbgCiwRwCCP/
-         5eEgR6fVc1i3L6VNwvPvr8ZcBQU+o3jQ4CykTfYJHOhlCgQItDN5gzurq3D9PPJuyuA1
-         wF4C6xIWsWupTSrk4iRRcuboW69cklQq2QOi8j57KhDKrWd2yhGGWMGBvHoYChh8AwKq
-         g5mthvpYnusLLqDezjFw6JlqSksSuOdCZeP62e2G7ah6PR3HK0OY+rBmYVPTeS54S0sO
-         ccxHe47aVNJ7e87MOyN0BUFS9tbJ6dKwhsit4oiEbfIDQZ7qHWaSgDG3HlL6dL8ZNRtK
-         4WoA==
-X-Gm-Message-State: AOAM533PoUAoOhOwJ3/J7w45tty46mEkxfgixFxTJ9ebRZzI1MC3UV5P
-        FkMztNwq9MZA/isPKz1csQa3wxem
-X-Google-Smtp-Source: ABdhPJwneSF2D2PeNoOStYBuk8LWJFO1ds+BOAG+YVnr2ka7GQpCC1HZ/xO5a/oJv+cDoIsGdsZQ9w==
-X-Received: by 2002:a17:907:4240:: with SMTP id oi24mr24342674ejb.127.1592218667603;
-        Mon, 15 Jun 2020 03:57:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id oq28sm8881774ejb.12.2020.06.15.03.57.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 03:57:47 -0700 (PDT)
-Message-Id: <a83270485be2bebb1ce77be55ff73d136b735922.1592218662.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.658.git.1592218662.gitgitgadget@gmail.com>
-References: <pull.658.git.1592218662.gitgitgadget@gmail.com>
-From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 10:57:42 +0000
-Subject: [PATCH 5/5] pretty-lib: print commits using ref-filters logic
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729615AbgFOK7a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 06:59:30 -0400
+Received: from mout.gmx.net ([212.227.15.19]:38111 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729280AbgFOK73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 06:59:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1592218758;
+        bh=sfWNVsMp1FidrwSxZUfr3APKOBWQCd5aLuvvuECLUws=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=leS0Ib9qeHnt17Wovv3OIM9h59rB6hJS0xcn+WrAOZkz2Uh6Mb1j16qGlIsbcg/uI
+         H0NRQOdHawOx8VgqVztfkEvYn5vmfsjcqx1WzeEtoroiUkt478it9dBp0YODtyareR
+         eWvTob/ViGOu6hbSnzcfTMqtlyoTRzGSMtwzjMCw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.173.52] ([213.196.213.210]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MplXz-1j8Aq83gXl-00qBE7; Mon, 15
+ Jun 2020 12:59:17 +0200
+Date:   Mon, 15 Jun 2020 00:26:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
+ branch
+In-Reply-To: <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.2006150011360.56@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Hariom Verma <hariom18599@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:RQLNxVJhRf83hML95v/pv3bJ+xBKDp5w0n3yzBYBJ69Y44sz1Dv
+ baEqwTyTrfRLBS4jYZYtaSdkwzOzvQpLYuDEkN6RI+TTdhd5NN3nJDm0P7eimshYz+lV9Ak
+ l3VCexeGwyeEmmEupIbXu0AX0gnfos67NC4d5MMApL8JWcJnqK4gYm7YJhXqoTKgnClc68C
+ hWbh/h0Y+uY63VD2ybDhQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Kx6H0/ln0/8=:RCR9UpCHrIcAJqSx7B0P/L
+ 3SrpuH+ghyDuhBoQeanCc2ZtOIJ/6DKwKkf1JC2JLKPEv5sgeRVKwUgrvB308mYeqRHIfKaMy
+ qVLEyZyh2CFTTb7JD2/eTkZSMRkQ8iGkSKRBGlcHn0JdwBwQggG9kJFku4qvlANJx3GH+SX2H
+ f2nrL33fXpEJarbkkiAk2+m9eBIbAyaHwJYF2i7+pmqh10m4v9KPtPov2fnJWVCgFF3VHofGZ
+ tY84r9E1yCJh8NGrZT8Ywq5k7yV0iX21n/ijJKNArjU868HaNMZCP8GLmo9fvJPMcQENq4BNa
+ n4dlSUbLTyv6BcXDitbSfsuNjsP+NNOJvFs7ohbB4mVMG0S5xeeVHvAOll4lNM8AN9vBC50Hr
+ VXyNUl+6tjb/yrhzNtSuYmzHAq/IQvS/HDFQ22cJ6uD9IRnwSRK+psmMieSrs10G9NsN7uZzf
+ vmHJAvIqYDoELFfh9H+OsDja4ZrE7+Fb3zfIhWMUT2/2+GeKGA68ZkYFyC6djPHYTtmNzhbAz
+ U00L0dSQnwP3vnCJQqGPj2tppllCgoGEInfW6VOjAnCiynE5O/7PDPWgf4jagiI6Zd2JfV9fj
+ LPngSpOjqWY5TzbHS3Gb7dSrWV+gY/EjjhndipbSTnO+aoTe2OUTqYSNwv/5a3BDTzWlCiHXF
+ 3TnWE3fneErKk4QAHAYeTovJQ2Nh6dlTrvqFnMZU0iwQap84N6VFhSlqYOJhtvk6m0UY7j9x9
+ qI1kDE8dF+FRIc2Fya+OP9rbbdj9j4xGmi7LPMsVcWHjxXeh5gYnE1Djb/mZMhJxp8l7fbGqt
+ Plr0ddyAD0MdJSWC2ZIYgmRI24Wqj+2P3dL+q6GxqI7VY4fOcVeYcdc1SGlEwIaSG0MvSgEI8
+ CcqAuAFxrVVWdjOgCfHHm/do0PI3f3pgUWOeBw0JJibWi0ll2X6Jp2pFt1tkirVEHlauR6j4T
+ 4yWXIxVUNTCBWoFmzrnr0ATjpsqQM6rpt1vLIQgW3Njsg3Wb/aw6j8hvLKBiIL7q25gmKLTC9
+ jzHV4Wx6kK3mLoyYSNFsnMtLJMR6U/hnnuHWadiWi/SRO5ReDdtBWf750y8/RkKk7C1B8EC5G
+ HpnyTEve6Eau+nrdsE7ciDT1gB7+7ffWsf6Z7/uQWi1AIXTckX4CcECjzaUMaUCmvMUA7y+yG
+ stVxTGx5PMBibHhq4pyQZnPoupOhaPFCxviB17vYI+Kpa9FhTbtS0dbDqTW7ULEO6/y51vOxp
+ vggxwC8MIQMKX/viq
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Hariom Verma <hariom18599@gmail.com>
+Hi Pratyush,
 
-This change intends to use ref-filters logic to print commits.
+On Mon, 15 Jun 2020, Pratyush Yadav wrote:
 
-Add `ref_pretty_print_commit()` which might be a future possible replacement
-for `pretty_print_commit()`.
+> On 10/06/20 09:19PM, Johannes Schindelin via GitGitGadget wrote:
+>
+> > This series DOES NOT change the default automatically, but only provid=
+es an
+> > opt-in mechanism for interested users. It also presents a way forward =
+for
+> > such a transition, if and when we decide to do so. Specifically, the n=
+ew
+> > GIT_TEST_DEFAULT_BRANCH_NAME environment variable could be used to upd=
+ate
+> > test scripts on an individual basis instead of all-at-once.
+>
+> Many people have expressed reservations against this change.
 
-This is an introductory commit. Some features of `git log` might not work.
+=46rom what you wrote below, I take it that you are not talking about this
+patch series, nor the follow-up one(s) to change the default main branch
+name for new repositories.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Heba Waly <heba.waly@gmail.com>
-Signed-off-by: Hariom Verma <hariom18599@gmail.com>
----
- Makefile     |  1 +
- log-tree.c   |  7 ++++-
- pretty-lib.c | 84 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- pretty-lib.h | 21 +++++++++++++
- 4 files changed, 112 insertions(+), 1 deletion(-)
- create mode 100644 pretty-lib.c
- create mode 100644 pretty-lib.h
+> One argument from those in favor of this change is that it doesn't
+> affect you if you don't care about the default branch name. You can just
+> go on using 'master' for all _your_ repos. I'd like to highlight the
+> "your" here. Sure, I can keep on using 'master' if I so prefer, but I
+> don't just use my repos. I also pull repos from other people, and I have
+> no control over what they call their main/primary/master branch (I'll
+> use "main" for the rest of the email). The cost here is that people now
+> need to update their scripts and workflow to account for other people's
+> naming preferences.
 
-diff --git a/Makefile b/Makefile
-index 372139f1f24..bcc65e87827 100644
---- a/Makefile
-+++ b/Makefile
-@@ -943,6 +943,7 @@ LIB_OBJS += pathspec.o
- LIB_OBJS += pkt-line.o
- LIB_OBJS += preload-index.o
- LIB_OBJS += pretty.o
-+LIB_OBJS += pretty-lib.o
- LIB_OBJS += prio-queue.o
- LIB_OBJS += progress.o
- LIB_OBJS += promisor-remote.o
-diff --git a/log-tree.c b/log-tree.c
-index 55a68d0c610..663056664f9 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -17,6 +17,7 @@
- #include "help.h"
- #include "interdiff.h"
- #include "range-diff.h"
-+#include "pretty-lib.h"
- 
- static struct decoration name_decoration = { "object names" };
- static int decoration_loaded;
-@@ -756,7 +757,11 @@ void show_log(struct rev_info *opt)
- 		ctx.from_ident = &opt->from_ident;
- 	if (opt->graph)
- 		ctx.graph_width = graph_width(opt->graph);
--	pretty_print_commit(&ctx, commit, &msgbuf);
-+
-+	if (opt->use_ref_filter)
-+		ref_pretty_print_commit(&ctx, commit, &msgbuf);
-+	else
-+		pretty_print_commit(&ctx, commit, &msgbuf);
- 
- 	if (opt->add_signoff)
- 		append_signoff(&msgbuf, 0, APPEND_SIGNOFF_DEDUP);
-diff --git a/pretty-lib.c b/pretty-lib.c
-new file mode 100644
-index 00000000000..abe4228290b
---- /dev/null
-+++ b/pretty-lib.c
-@@ -0,0 +1,84 @@
-+#include "commit.h"
-+#include "ref-filter.h"
-+#include "pretty-lib.h"
-+
-+static size_t convert_format(struct strbuf *sb, const char *start, void *data)
-+{
-+	/* TODO - Add support for more formatting options */
-+	switch (*start) {
-+	case 'H':
-+		strbuf_addstr(sb, "%(objectname)");
-+		return 1;
-+	case 'h':
-+		strbuf_addstr(sb, "%(objectname:short)");
-+		return 1;
-+	case 'T':
-+		strbuf_addstr(sb, "%(tree)");
-+		return 1;
-+	case 'P':
-+		strbuf_addstr(sb, "%(parent)");
-+		return 1;
-+	case 'a':
-+		if (start[1] == 'n')
-+			strbuf_addstr(sb, "%(authorname)");
-+		else if (start[1] == 'e')
-+			strbuf_addstr(sb, "%(authoremail)");
-+		else if (start[1] == 'd')
-+			strbuf_addstr(sb, "%(authordate)");
-+		else
-+			die(_("invalid formatting option '%c'"), *start);
-+		return 2;
-+	case 'c':
-+		if (start[1] == 'n')
-+			strbuf_addstr(sb, "%(committername)");
-+		else if (start[1] == 'e')
-+			strbuf_addstr(sb, "%(committeremail)");
-+		else if (start[1] == 'd')
-+			strbuf_addstr(sb, "%(committerdate)");
-+		else
-+			die(_("invalid formatting option '%c'"), *start);
-+		return 2;
-+	case 's':
-+		strbuf_addstr(sb, "%(subject)");
-+		return 1;
-+	case 'b':
-+		strbuf_addstr(sb, "%(body)");
-+		return 1;
-+	case 'n':
-+		strbuf_addstr(sb, "\n");
-+		return 1;
-+	default:
-+		die(_("invalid formatting option '%c'"), *start);
-+	}
-+}
-+
-+void ref_pretty_print_commit(struct pretty_print_context *pp,
-+			 const struct commit *commit,
-+			 struct strbuf *sb)
-+{
-+	struct ref_format format = REF_FORMAT_INIT;
-+	struct strbuf sb_fmt = STRBUF_INIT;
-+	const char *name = "refs";
-+	const char *usr_fmt = get_user_format();
-+
-+	if (pp->fmt == CMIT_FMT_USERFORMAT) {
-+		strbuf_expand(&sb_fmt, usr_fmt, convert_format, NULL);
-+		format.format = sb_fmt.buf;
-+	} else if (pp->fmt == CMIT_FMT_DEFAULT || pp->fmt == CMIT_FMT_MEDIUM) {
-+		format.format = "Author: %(authorname) %(authoremail)\nDate:\t%(authordate)\n\n%(subject)\n\n%(body)";
-+	} else if (pp->fmt == CMIT_FMT_ONELINE) {
-+		format.format = "%(subject)";
-+	} else if (pp->fmt == CMIT_FMT_SHORT) {
-+		format.format = "Author: %(authorname) %(authoremail)\n\n\t%(subject)\n";
-+	} else if (pp->fmt == CMIT_FMT_FULL) {
-+		format.format = "Author: %(authorname) %(authoremail)\nCommit: %(committername) %(committeremail)\n\n%(subject)\n\n%(body)";
-+	} else if (pp->fmt == CMIT_FMT_FULLER) {
-+		format.format = "Author:\t\t%(authorname) %(authoremail)\nAuthorDate:\t%(authordate)\nCommit:\t\t%(committername) %(committeremail)\nCommitDate:\t%(committerdate)\n\n%(subject)\n\n%(body)";
-+	}
-+
-+	format.need_newline_at_eol = 0;
-+
-+	verify_ref_format(&format);
-+	pretty_print_ref(name, &commit->object.oid, &format);
-+	strbuf_release(&sb_fmt);
-+}
-diff --git a/pretty-lib.h b/pretty-lib.h
-new file mode 100644
-index 00000000000..324499b1150
---- /dev/null
-+++ b/pretty-lib.h
-@@ -0,0 +1,21 @@
-+#ifndef PRETTY_LIB_H
-+#define PRETTY_LIB_H
-+
-+/**
-+ * This is a possibly temporary interface between
-+ * ref-filter and pretty. This interface may disappear in the
-+ * future if a way to use ref-filter directly is found.
-+ * In the meantime, this interface would enable us to
-+ * step by step replace the formatting code in pretty by the
-+ * ref-filter code.
-+*/
-+
-+/**
-+ * Possible future replacement for "pretty_print_commit()".
-+ * Uses ref-filter's logic.
-+*/
-+void ref_pretty_print_commit(struct pretty_print_context *pp,
-+			const struct commit *commit,
-+			struct strbuf *sb);
-+
-+#endif /* PRETTY_LIB_H */
--- 
-gitgitgadget
+This talks about the scenario where a project you use decides to change
+their main branch name.
+
+While this is a scenario that my patch series tries to support (by
+introducing the concept of `core.mainBranch`), it is not something my
+patch series _causes_.
+
+All _this_ patch series does is to _allow_ changing the main branch name
+(manually) in an existing repository, and to change the default main
+branch name to use in new repositories.
+
+Even the follow-up patch series I plan on contributing that changes the
+hard-coded default for the default main branch name to use in new
+repositories won't affect any existing repository.
+
+So I think this example...
+
+> For example, my vim plugins are submodules in the '~/.vim/bundle'
+> directory. When I want to update them, I run:
+>
+>   git submodule foreach 'git remote update && git reset --hard origin/ma=
+ster'
+>
+> With this change hitting a Git release, more and more people would call
+> their main branch different names they like. So what is the recommended
+> way to do something like this now? How do I checkout the tip of the main
+> branch? How do I push to the main branch? How do I pull from the main
+> branch? And so on...
+
+... has less to do with a new Git release, but more with the decision of
+an existing project to change their main branch name.
+
+That's something users already had to deal with, of course. For example,
+projects switching to the Git Flow model will start to use the main branch
+name `development`.
+
+GitHub Desktop changed their main branch name to `development`, and it did
+not require any new Git release.
+
+GitHub CLI changed their main branch name to `trunk`.
+
+Chrome and node.js stated their intention to change their main branch name
+to `main`.
+
+And https://github.com/microsoft/git uses `vfs-<version>` where
+`<version>` corresponds to the Git (for Windows) version on which it is
+based, therefore the main branch name changes whenever there is a new Git
+version.
+
+These challenges have existed for every project that chooses to change
+their main branch name, for whatever reason.
+
+In other words, I think you are talking about a challenge that is
+orthogonal (if related, on a high level) to the subject this patch series
+tries to address.
+
+Ciao,
+Johannes
