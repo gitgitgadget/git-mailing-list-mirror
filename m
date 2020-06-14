@@ -2,138 +2,139 @@ Return-Path: <SRS0=22YV=73=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD06C433E1
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BABEC433E0
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:49:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA2DA206B7
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:31:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7749320714
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 08:49:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epVnmHij"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I0dmqex1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726387AbgFNIbg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Jun 2020 04:31:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45106 "EHLO
+        id S1726091AbgFNIrb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 04:47:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbgFNIbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 04:31:36 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E305C03E969
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:31:35 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id 23so6428428pfw.10
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:31:34 -0700 (PDT)
+        with ESMTP id S1725267AbgFNIrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jun 2020 04:47:31 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD57EC03E969
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:47:30 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id x18so15605368lji.1
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 01:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=P91jMj5vvUrmarkZNG7WrD+nIHwkSPKaBSUcOzh1KXw=;
-        b=epVnmHij12AY5foATd4Obr4gqI8u6Ojtf4UV10+aDyY5wa6hTlTC0e/eFZWDh6jc5t
-         5FHp59XJ49iDdgTuGrM4rR5me/4TaJ+znLmuuybiOB90r/f4uZcANFBXWWf2rTPUwdC8
-         o5h0LFaFs/PxDnc/iZQo/e7C7qKA21F1l2qWpvhjhofnHaX3TXIgyqb99+q3+Iap/PP7
-         QFna3YBm1o+MMaGZ35DOVk6+X9Sdsa6pGmdzasxyAZHgT89mbxbzUetOCGLnb1VotHSi
-         oPj7lPB0GHs6lSqhJLcUpy0AYXMJ5JH7lTp6uVymsuV+DxcLYK7HyC6F2pwATxBscs6T
-         wmNw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8y2f+YZAdntv5Z+HWYZGOeD6FOsiwSJNVCYQeS/cJfo=;
+        b=I0dmqex1L8u7so+OcP8iuBsqgQEvHAc8ZzeSYfg91oz2T7XWwlDsoSzdPHmzqtkMPq
+         ClfIBtP2yoZJgM7PNYXedDhuiFkmkpNcA5jZpNGEiy6aGaB7bPoeaqCJTPDrmuNBhVY1
+         ob986e72nPAXM5M/qDKw9BWP2WUOf4BbFQhi86m9N9kf0/7C8Vcv/kX61Ef73JHB81dP
+         LxYw/fvGdUoOvUbZHj4qtB/nyvABt8+BjHexvMtozS/JYHdoFGdQvuWaVEQZ0ytwQCdd
+         bUvOrREs6ggKeDong2FcES+v+PeaNVbOBecp/FVQ+6qOS2VOW84LKJF+AYPuD8X6lHsg
+         w90w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=P91jMj5vvUrmarkZNG7WrD+nIHwkSPKaBSUcOzh1KXw=;
-        b=HInJ/+s9Mtq4mVnFGQ4FnrQHHcuj11c7YsZbrnPggtVDHIcEPfpDPkAjVv14C46c1p
-         6mbL95b+dTekM1tpyuO8obSA8JfvuZYMM5lAHkog2Ze0gAeQD+QYGzLsNEfwek1JoKbp
-         qaw/PBNqM9PrUUEyJPfHGkfSoRVazmWr77lihqIr0G75ME3DVrdLgbhmIBPApFRc6Csr
-         LVo8wHUUhjY9zG6Ol/vBxvlPplBE7gZUlDTWGgyL3/H5sEo8o9+ftfNgimVbtkUNA4qD
-         fZxOByLlNwHBDXNLFkmmt8siRTCK/7oKnp+u3wALmgpO/flJd0saNCVggbaNaicORgqz
-         KnmA==
-X-Gm-Message-State: AOAM530BMblQ9zhvKakTc9zqQ5v+JXnaaqt8Rsz4UVi3L4BPKJrQR/Q5
-        ZbmYuq9LLCipx/SanrlWCMo=
-X-Google-Smtp-Source: ABdhPJzRSW9ZTIIUwSfR7LBTCz2HFGxDa3qLZXEZbc87+OmX89f0Nk2/WmOLYC2P+AAIoH37wrUuUw==
-X-Received: by 2002:a62:194d:: with SMTP id 74mr19513800pfz.21.1592123494341;
-        Sun, 14 Jun 2020 01:31:34 -0700 (PDT)
-Received: from localhost ([2402:800:6374:3bd0:871b:497e:ae48:68fa])
-        by smtp.gmail.com with ESMTPSA id q2sm2701509pgn.11.2020.06.14.01.31.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Jun 2020 01:31:33 -0700 (PDT)
-Date:   Sun, 14 Jun 2020 15:31:31 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/3] pkt-line: use string versions of functions
-Message-ID: <20200614083131.GD3405@danh.dev>
-References: <7e803a2ba9458ce35c657e67323edfe4409205ec.1592055716.git.liu.denton@gmail.com>
- <cover.1592119902.git.liu.denton@gmail.com>
- <d1b79c7734f0609fcac5e523644c3093f538bccf.1592119902.git.liu.denton@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8y2f+YZAdntv5Z+HWYZGOeD6FOsiwSJNVCYQeS/cJfo=;
+        b=sTNuevPqqxfcWY6N0RoK7xN++39g+XidQBSFCY1uTI0A5F1DWHd7PqJ1XL7dFzKGjf
+         Mk1G3wrYR0JeFLKFg5Se4fWrqaRPoAIBHxIVxXhoAPAdxsD5eBRKkpkEC3e2joxsMTvh
+         z39zSYUeApIzB/J0c/1CLLFX4AEQ9Q2eIREuT4Mii06JyWfZviFJIl6km5Tnuwg3IPRQ
+         Fk5M6oPn7sPKNFGoqSb/w0BaRERzWDSe2+gHouvtXK+19nD4hvRqzkzGKwMvXyUFGwsf
+         76wKJ/XjMJQaWNCc6S08cnd9eXsrqC9hwWD2fWIoFaVa/DhnkDd5i/2D0J2uAXQCy6zC
+         zC2g==
+X-Gm-Message-State: AOAM530G/NdalF+7Xddf2NXfOeIq6LuxaDeT/s3pAx+QeXeRJdyfqlgf
+        rZ0oe0MyzZiFV9+HBTeZZ6/FzBTeAEFQXXvYSoQ=
+X-Google-Smtp-Source: ABdhPJyirzt0J/nm+Bhr64P0D1I809Pn0oPhtY12vDiKBb4QKTglLRvManzLr8ti1NVsMlk2mddjCfhAJsDAaEBAZ10=
+X-Received: by 2002:a2e:1413:: with SMTP id u19mr10497371ljd.64.1592124448876;
+ Sun, 14 Jun 2020 01:47:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d1b79c7734f0609fcac5e523644c3093f538bccf.1592119902.git.liu.denton@gmail.com>
+References: <xmqqy2oqxyp3.fsf@gitster.c.googlers.com> <0dd6b6c2-4ea4-498d-4481-7f65988db293@gmail.com>
+ <CAGA3LAeXzYokcpU8RnFdF7N5vC-geOdJSY5_Mjc-yssvbpjmgw@mail.gmail.com> <CAGA3LAcZa76oSovMYS7kKt9YwbYe74YgEscQKKs5qd5_KCneNQ@mail.gmail.com>
+In-Reply-To: <CAGA3LAcZa76oSovMYS7kKt9YwbYe74YgEscQKKs5qd5_KCneNQ@mail.gmail.com>
+From:   Sergey Lapin <slapinid@gmail.com>
+Date:   Sun, 14 Jun 2020 11:47:16 +0300
+Message-ID: <CAFZPMoanA6fW5YGO5Jxxd3_py=dBCqNxmU1ikUGuYopXWwofyA@mail.gmail.com>
+Subject: Re: Rename offensive terminology (master)
+To:     Don Goodman-Wilson <don@goodman-wilson.com>
+Cc:     =?UTF-8?Q?S=C3=A9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-06-14 03:31:59-0400, Denton Liu <liu.denton@gmail.com> wrote:
-> We have many cases where we are writing a control packet as a string
-> constant out and we need to specify the length of the string. Currently,
-> the length is specified as a magical `4` literal.
-> 
-> Change these instances to use a function that calls strlen() to
-> determine the length of the string removing the need to specify the
-> length at all. Since these functions are inline, the strlen()s should be
-> replaced with constants at compile-time so this should not result in any
-> performance penalty.
-> 
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  pkt-line.c | 46 ++++++++++++++++++++++++++++------------------
->  1 file changed, 28 insertions(+), 18 deletions(-)
-> 
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 8f9bc68ee2..72c6c29e03 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -81,49 +81,59 @@ static void packet_trace(const char *buf, unsigned int len, int write)
->  	strbuf_release(&out);
->  }
->  
-> +static inline void packet_trace_str(const char *buf, int write)
-> +{
-> +	packet_trace(buf, strlen(buf), write);
-> +}
-> +
-> +static inline void control_packet_write(int fd, const char *s, const char *type)
-> +{
-> +	packet_trace_str(s, 1);
-> +	if (write_str_in_full(fd, s) < 0)
-> +		die_errno(_("unable to write %s packet"), type);
+Americans' perpetual offendedness with everything is what leads to what was
+written in Fahrenheit 451. Constant obsession with offendedness and constan=
+t
+valuing of everyone else about "should I be offended now?" is so much
+American now it became really concerning among all this PC culture.
+Won't you stop your great self-destruction guys?
 
-This will create i10n problems:
-- Translators don't have enough context to know what does %s mean.
-  In some languages, depend on value of %s, it will be translated to
-  different phases by the order of words, word choices, gender.
-- `type' won't be translated with this marker
-
-I think it's better to pass full translated phase into this
-function. Something like:
-
-	static inline void control_packet_write(int fd, const char *s, const char *errstr)
-	{
-		...
-		if (...)
-			die_errno(errstr);
-	}
-
-and call the function with:
-
-	control_packet_write(fd, "0000", _("unable to write flush packet"));
-
-Other than that, I like the idea of using preprocessor to check
-compile time constant string, but I'm not sure how to write it with
-standard C
-
--- 
-Danh
+On Sun, Jun 14, 2020 at 9:36 AM Don Goodman-Wilson
+<don@goodman-wilson.com> wrote:
+>
+> (Sorry, I meant "many (if not most) non-native English speakers DON'T
+> realize just how explosive certain English locutions can be to
+> American native speakers.")
+>
+> On Sun, Jun 14, 2020 at 8:32 AM Don Goodman-Wilson
+> <don@goodman-wilson.com> wrote:
+> >
+> > I am an American living in Europe. Let me offer an analogy. Like all
+> > analogies, this one is imperfect, but I think it will serve to make my
+> > point.
+> >
+> > As an American, I don't understand French humor. It's simply beyond
+> > me. I've had it explained to me numerous times, but of course
+> > explaining a joke can't impart its inherent humor. But none of this
+> > should come as a surprise to anyone, as humor is a deeply cultural
+> > artifact, something that can only truly be understood by those raised
+> > within that culture. Even so, we can all appreciate the concept of
+> > humor generally. More to the point, I certainly don't go around
+> > denying that French humor exists, on the basis that I don't get it.
+> >
+> > In the same way, something I've learned living in Europe is that many
+> > (if not most) non-native English speakers realize just how explosive
+> > certain English locutions can be to American native speakers. That's
+> > totally understanable as, like French humor, you have to have been
+> > raised in the culture to really understand that fact. Like humor, we
+> > all have a sense of what offensiveness means, and like humor, this
+> > explosive content is a deeply cultural artifact, something that can
+> > only truly be understood by those raised within that culture. The
+> > visceral feeling of explosive content will probably always be beyond
+> > grasping, just as French humor will probably never make me laugh.
+> >
+> > But to deny that explosive content on the basis that you don't
+> > personally feel it, that you've never experienced it? To claim that it
+> > is "meaningless", that some people are "perpetually offended"? That's
+> > willful ignorance on your part, a bad-faith effort to engage in
+> > serious intellectual conversation about what is good and right, and
+> > has no place in a discussion about creating an inclusive space for all
+> > developers, let alone trying to bring about a more just world.
+> >
+> > Don Goodman-Wilson
+> >
+> > On Sun, Jun 14, 2020 at 2:50 AM S=C3=A9rgio Augusto Vianna
+> > <sergio.a.vianna@gmail.com> wrote:
+> > >
+> > > Then why create all this disruption by changing the default from mast=
+er
+> > > to "main" if you will offer a feature to set the default on creation?
+> > > Americans were discussing trump's tiny hands last week and will have
+> > > moved on to any other meaningless subject the next one. You can
+> > > literally never please the perpetually offended. Taking this kind of
+> > > slacktivism and creating problems for other people is a disgusting le=
+vel
+> > > of entitlement that only americans display. You really care about
+> > > others? Remember there's other countries in the world.
+> > >
