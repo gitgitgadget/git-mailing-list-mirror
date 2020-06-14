@@ -2,384 +2,235 @@ Return-Path: <SRS0=22YV=73=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 152E0C433DF
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 07:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03F19C433DF
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 07:32:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4512206D7
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 07:32:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1C42206D7
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 07:32:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oSZdAWET"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCFOcU3k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbgFNHcJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Jun 2020 03:32:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36050 "EHLO
+        id S1726790AbgFNHcN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 03:32:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbgFNHcJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 03:32:09 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A380C03E96F
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 00:32:08 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id w90so10314828qtd.8
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 00:32:08 -0700 (PDT)
+        with ESMTP id S1725379AbgFNHcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jun 2020 03:32:10 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF9AC03E96F
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 00:32:10 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id e2so6363129qvw.7
+        for <git@vger.kernel.org>; Sun, 14 Jun 2020 00:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MY9mb7o0hG5P32ksMLk25mmmYtiiWDj7ux1mjalmJG8=;
-        b=oSZdAWETpZO0BVxcCgKmZqvJHTjC3ehq+KIZ/112u9nJ1vJY5L7JifVWPp4e74r6+b
-         hCvA0ZiJWuAgqboZMK5pSR037zf9tjbaUCexiQtiwC5U9snf82TKOnwyHSlDItdaUP+K
-         YbQwO5djPvOI0zUuU+t3cj+/nlHBzn7Umaz5sQd8jMxQFJsH1ebVOikbYjEmdeFTeFKP
-         MX2gxwl4nIvVQCFWpRJVFEYWgOvtz3lEfTS/FsoMYrSi6wJSVv3NZ89aTiBF3Bl7yIsy
-         kAHoqJazc9YFRm1ciTkilmz/AxL7tbPFz8+RvAV4dAtz6l3SADTXsF9XvXtDzd+yF6G2
-         KHKw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EkyLT5s0aT+WT5dDtGzFepyerMsf3FomxlFUygRwe7M=;
+        b=kCFOcU3kXTEoFtrk6MQyyg4R9LF7Sa1oGfU2yQHG2sDnhSYI07p4pEWTcvfmp5/Eyi
+         4YvFqS9CSrLVaCXY7bUr8/4U3QUp0/gB57KRiJZmc/R/npGgCYp5I1SFBQHUHCYJRgIT
+         BSviyj7cr4u5pYzyfDIPeLLFvqBOR3TlYZ97M0UidpkoYAd65itEWS9IAa9BLBpzVIyx
+         7602KsxIabgkuXtyhvgfFr4zJrdPqcaX6PMymw9CRG0LPjVdJyrKF6wyN6E1uSAiWDgJ
+         d5DG75aOqkrQ3/Aqf8mZhDqEkqIV+ZkQsL9+tGj+k0VXpbNrWXcu72xtT1kkLk2DkIU/
+         R0cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MY9mb7o0hG5P32ksMLk25mmmYtiiWDj7ux1mjalmJG8=;
-        b=jLXK8NYXYBnZU/R7Jghgj0C5C9EDA3vbzxu4Gg31NQ5lVSJi/aXoCZt+D7i75U6tWb
-         LLfORdYLT1FX6+deza/xTpdAUP6lFYaM747u47cwSkToiwvvulRDV3oUmn4tbT/ZMNUJ
-         uZ4AO+Gy9k0f0wy6zH67Awwxititb+jbgF+riwPMa+v1UtdlYWWnAoo/ijwrzK9Kcvfr
-         G16u1KLZuuk3tguymdvEAlhtpoFe4p5Ur4cZGgqzLkkt1dIvnad21Ws35ifN5gppB3qe
-         ainol4gbMSFVdXnfiqubcreglZuEC5xPTQKMz6VvKxp8HA792Gofb8yZr2jn+Ni/oj8k
-         nNwg==
-X-Gm-Message-State: AOAM532hf7yJ00zubFxXc+hdZBOMqZbUg8d6Y76ilQcBRlnUATCEdbIN
-        CPc6Ut9Xp0VJ4kewVnC5U7Y/OHb1uaM=
-X-Google-Smtp-Source: ABdhPJzqEtoG6lPKOS4NXAVItotQBoWpeR3KJN4tgC44vRkIiBGPN2Jz7FKmJ+XtpYJ3L3QrzGdwdw==
-X-Received: by 2002:ac8:198e:: with SMTP id u14mr10839482qtj.290.1592119927541;
-        Sun, 14 Jun 2020 00:32:07 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EkyLT5s0aT+WT5dDtGzFepyerMsf3FomxlFUygRwe7M=;
+        b=JsgUr7HOAowd3Bt9lHBS+GQ+i3Soc5gaFEpkII39+v/FBtlV7slDG/wWEy8dCdiX1G
+         de0ZR6zraeagrUw2cbJapX6CzsRxdTVWS5YXrsKCrgWUmB6nPmic9XNUPliEYHFf7e31
+         s9nVB1T8kWEX3a6O8VxlQ1AeGoCkyZNuVasZN/q0hKo5tuqoS2INWQd4KMM7EtqnK4Q+
+         Q0UHrxMe8meY49TP8KySwqwI25GXjlfp8Kb4BnhC49QS28uScYCZaBjfznZ1ynDJpeB3
+         c9D7dwx9JmZRVUn3DCF4mN/BeDXKJfSyXYxbVixhGjbjU4VjCrJ1pJf+kCVo18td1kCe
+         LlHw==
+X-Gm-Message-State: AOAM531TAETLjniZJsY7biy+frQwqFzWO5+ngCmun24/YdLUAoUfzi/L
+        +RPWfMyXNSjJagw91i3Us0m7xY0DwlU=
+X-Google-Smtp-Source: ABdhPJx51kEAReQfzewMm8VFkENRfyjABF7Qy/yiFIQiYlZORHjOqVI0YS1n3IPArECtf4uS7yBboQ==
+X-Received: by 2002:a0c:aed6:: with SMTP id n22mr20007486qvd.70.1592119928664;
+        Sun, 14 Jun 2020 00:32:08 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id a82sm8834341qkb.29.2020.06.14.00.32.06
+        by smtp.gmail.com with ESMTPSA id a82sm8834341qkb.29.2020.06.14.00.32.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 14 Jun 2020 00:32:07 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH] pkt-line: extract out PACKET_HEADER_SIZE
-Date:   Sun, 14 Jun 2020 03:31:56 -0400
-Message-ID: <7e803a2ba9458ce35c657e67323edfe4409205ec.1592055716.git.liu.denton@gmail.com>
+Subject: [PATCH v2 0/3] pkt-line: war on magical `4` literal
+Date:   Sun, 14 Jun 2020 03:31:57 -0400
+Message-Id: <cover.1592119902.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.27.0.132.g321788e831
+In-Reply-To: <7e803a2ba9458ce35c657e67323edfe4409205ec.1592055716.git.liu.denton@gmail.com>
+References: <7e803a2ba9458ce35c657e67323edfe4409205ec.1592055716.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Message-ID: <20200614073156.HaSu_AiutUZJqYCD0a97ewYeDnAXGLPgFCdc517UvwQ@z>
 
-In pkt-line and remote-curl, we have many instances of magic `4`
-literals floating around which represent the number of bytes in the
-packet line length header. Instead of using these magic numbers, replace
-them with constant expressions.
+There are many instances of the literal `4` in packet line-related code.
+This series replaces these instances with either functions that can
+generate the number or an appropriately-named constant.
 
-In most cases, replace the `4` with `PACKET_HEADER_SIZE`. However, in
-the case where there's a `char array[PACKET_HEADER_SIZE]`  and we are
-reading data into it, replace the `4` with a `sizeof(array)` so that
-it's clear that the logic has something to do with that array.
+Changes since v1:
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- pkt-line.c    | 50 +++++++++++++++++++++++++-------------------------
- pkt-line.h    |  6 ++++--
- remote-curl.c | 30 +++++++++++++++---------------
- 3 files changed, 44 insertions(+), 42 deletions(-)
+* Introduce patch 1-2 so that the string length is used to generate the
+  `4` where appropriate
 
+Denton Liu (3):
+  remote-curl: use strlen() instead of magic numbers
+  pkt-line: use string versions of functions
+  pkt-line: extract out PACKET_HEADER_SIZE
+
+ pkt-line.c    | 66 +++++++++++++++++++++++++++++----------------------
+ pkt-line.h    |  6 +++--
+ remote-curl.c | 35 ++++++++++++++-------------
+ 3 files changed, 60 insertions(+), 47 deletions(-)
+
+Interdiff against v1:
 diff --git a/pkt-line.c b/pkt-line.c
-index 8f9bc68ee2..245a56712f 100644
+index 245a56712f..f1fe0888c1 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -87,43 +87,43 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+@@ -81,49 +81,59 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+ 	strbuf_release(&out);
+ }
+ 
++static inline void packet_trace_str(const char *buf, int write)
++{
++	packet_trace(buf, strlen(buf), write);
++}
++
++static inline void control_packet_write(int fd, const char *s, const char *type)
++{
++	packet_trace_str(s, 1);
++	if (write_str_in_full(fd, s) < 0)
++		die_errno(_("unable to write %s packet"), type);
++}
++
+ /*
+  * If we buffered things up above (we don't, but we should),
+  * we'd flush it here
   */
  void packet_flush(int fd)
  {
--	packet_trace("0000", 4, 1);
--	if (write_in_full(fd, "0000", 4) < 0)
-+	packet_trace("0000", PACKET_HEADER_SIZE, 1);
-+	if (write_in_full(fd, "0000", PACKET_HEADER_SIZE) < 0)
- 		die_errno(_("unable to write flush packet"));
+-	packet_trace("0000", PACKET_HEADER_SIZE, 1);
+-	if (write_in_full(fd, "0000", PACKET_HEADER_SIZE) < 0)
+-		die_errno(_("unable to write flush packet"));
++	control_packet_write(fd, "0000", "flush");
  }
  
  void packet_delim(int fd)
  {
--	packet_trace("0001", 4, 1);
--	if (write_in_full(fd, "0001", 4) < 0)
-+	packet_trace("0001", PACKET_HEADER_SIZE, 1);
-+	if (write_in_full(fd, "0001", PACKET_HEADER_SIZE) < 0)
- 		die_errno(_("unable to write delim packet"));
+-	packet_trace("0001", PACKET_HEADER_SIZE, 1);
+-	if (write_in_full(fd, "0001", PACKET_HEADER_SIZE) < 0)
+-		die_errno(_("unable to write delim packet"));
++	control_packet_write(fd, "0001", "delim");
  }
  
  void packet_response_end(int fd)
  {
--	packet_trace("0002", 4, 1);
--	if (write_in_full(fd, "0002", 4) < 0)
-+	packet_trace("0002", PACKET_HEADER_SIZE, 1);
-+	if (write_in_full(fd, "0002", PACKET_HEADER_SIZE) < 0)
- 		die_errno(_("unable to write stateless separator packet"));
+-	packet_trace("0002", PACKET_HEADER_SIZE, 1);
+-	if (write_in_full(fd, "0002", PACKET_HEADER_SIZE) < 0)
+-		die_errno(_("unable to write stateless separator packet"));
++	control_packet_write(fd, "0002", "stateless separator");
  }
  
  int packet_flush_gently(int fd)
  {
--	packet_trace("0000", 4, 1);
--	if (write_in_full(fd, "0000", 4) < 0)
-+	packet_trace("0000", PACKET_HEADER_SIZE, 1);
-+	if (write_in_full(fd, "0000", PACKET_HEADER_SIZE) < 0)
+-	packet_trace("0000", PACKET_HEADER_SIZE, 1);
+-	if (write_in_full(fd, "0000", PACKET_HEADER_SIZE) < 0)
++	packet_trace_str("0000", 1);
++	if (write_str_in_full(fd, "0000") < 0)
  		return error(_("flush packet write failed"));
  	return 0;
  }
  
++static inline void control_packet_buf_write(struct strbuf *buf, const char *s)
++{
++	packet_trace_str(s, 1);
++	strbuf_addstr(buf, s);
++}
++
  void packet_buf_flush(struct strbuf *buf)
  {
--	packet_trace("0000", 4, 1);
--	strbuf_add(buf, "0000", 4);
-+	packet_trace("0000", PACKET_HEADER_SIZE, 1);
-+	strbuf_add(buf, "0000", PACKET_HEADER_SIZE);
+-	packet_trace("0000", PACKET_HEADER_SIZE, 1);
+-	strbuf_add(buf, "0000", PACKET_HEADER_SIZE);
++	control_packet_buf_write(buf, "0000");
  }
  
  void packet_buf_delim(struct strbuf *buf)
  {
--	packet_trace("0001", 4, 1);
--	strbuf_add(buf, "0001", 4);
-+	packet_trace("0001", PACKET_HEADER_SIZE, 1);
-+	strbuf_add(buf, "0001", PACKET_HEADER_SIZE);
+-	packet_trace("0001", PACKET_HEADER_SIZE, 1);
+-	strbuf_add(buf, "0001", PACKET_HEADER_SIZE);
++	control_packet_buf_write(buf, "0001");
  }
  
  void set_packet_header(char *buf, int size)
-@@ -153,7 +153,7 @@ static void format_packet(struct strbuf *out, const char *prefix,
- 		die(_("protocol error: impossibly long line"));
- 
- 	set_packet_header(&out->buf[orig_len], n);
--	packet_trace(out->buf + orig_len + 4, n - 4, 1);
-+	packet_trace(out->buf + orig_len + PACKET_HEADER_SIZE, n - PACKET_HEADER_SIZE, 1);
- }
- 
- static int packet_write_fmt_1(int fd, int gently, const char *prefix,
-@@ -199,13 +199,13 @@ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
- 	static char packet_write_buffer[LARGE_PACKET_MAX];
- 	size_t packet_size;
- 
--	if (size > sizeof(packet_write_buffer) - 4)
-+	if (size > sizeof(packet_write_buffer) - PACKET_HEADER_SIZE)
- 		return error(_("packet write failed - data exceeds max packet size"));
- 
- 	packet_trace(buf, size, 1);
--	packet_size = size + 4;
-+	packet_size = size + PACKET_HEADER_SIZE;
- 	set_packet_header(packet_write_buffer, packet_size);
--	memcpy(packet_write_buffer + 4, buf, size);
-+	memcpy(packet_write_buffer + PACKET_HEADER_SIZE, buf, size);
- 	if (write_in_full(fd_out, packet_write_buffer, packet_size) < 0)
- 		return error(_("packet write failed"));
- 	return 0;
-@@ -313,7 +313,7 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
- 	return ret;
- }
- 
--int packet_length(const char lenbuf_hex[4])
-+int packet_length(const char lenbuf_hex[PACKET_HEADER_SIZE])
- {
- 	int val = hex2chr(lenbuf_hex);
- 	return (val < 0) ? val : (val << 8) | hex2chr(lenbuf_hex + 2);
-@@ -325,9 +325,9 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 						int options)
- {
- 	int len;
--	char linelen[4];
-+	char linelen[PACKET_HEADER_SIZE];
- 
--	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0) {
-+	if (get_packet_data(fd, src_buffer, src_len, linelen, sizeof(linelen), options) < 0) {
- 		*pktlen = -1;
- 		return PACKET_READ_EOF;
- 	}
-@@ -337,22 +337,22 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
+@@ -337,15 +347,15 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
  	if (len < 0) {
  		die(_("protocol error: bad line length character: %.4s"), linelen);
  	} else if (!len) {
--		packet_trace("0000", 4, 0);
-+		packet_trace("0000", PACKET_HEADER_SIZE, 0);
+-		packet_trace("0000", PACKET_HEADER_SIZE, 0);
++		packet_trace_str("0000", 0);
  		*pktlen = 0;
  		return PACKET_READ_FLUSH;
  	} else if (len == 1) {
--		packet_trace("0001", 4, 0);
-+		packet_trace("0001", PACKET_HEADER_SIZE, 0);
+-		packet_trace("0001", PACKET_HEADER_SIZE, 0);
++		packet_trace_str("0001", 0);
  		*pktlen = 0;
  		return PACKET_READ_DELIM;
  	} else if (len == 2) {
--		packet_trace("0002", 4, 0);
-+		packet_trace("0002", PACKET_HEADER_SIZE, 0);
+-		packet_trace("0002", PACKET_HEADER_SIZE, 0);
++		packet_trace_str("0002", 0);
  		*pktlen = 0;
  		return PACKET_READ_RESPONSE_END;
--	} else if (len < 4) {
-+	} else if (len < PACKET_HEADER_SIZE) {
- 		die(_("protocol error: bad line length %d"), len);
- 	}
- 
--	len -= 4;
-+	len -= sizeof(linelen);
- 	if ((unsigned)len >= size)
- 		die(_("protocol error: bad line length %d"), len);
- 
-@@ -370,7 +370,7 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 
- 	if ((options & PACKET_READ_DIE_ON_ERR_PACKET) &&
- 	    starts_with(buffer, "ERR "))
--		die(_("remote error: %s"), buffer + 4);
-+		die(_("remote error: %s"), buffer + PACKET_HEADER_SIZE);
- 
- 	*pktlen = len;
- 	return PACKET_READ_NORMAL;
-diff --git a/pkt-line.h b/pkt-line.h
-index 5b373fe4cd..d6121b8044 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -5,6 +5,8 @@
- #include "strbuf.h"
- #include "sideband.h"
- 
-+#define PACKET_HEADER_SIZE 4
-+
- /*
-  * Write a packetized stream, where each line is preceded by
-  * its length (including the header) as a 4-byte hex number.
-@@ -82,7 +84,7 @@ int packet_read(int fd, char **src_buffer, size_t *src_len, char
-  * If lenbuf_hex contains non-hex characters, return -1. Otherwise, return the
-  * numeric value of the length header.
-  */
--int packet_length(const char lenbuf_hex[4]);
-+int packet_length(const char lenbuf_hex[PACKET_HEADER_SIZE]);
- 
- /*
-  * Read a packetized line into a buffer like the 'packet_read()' function but
-@@ -211,7 +213,7 @@ enum packet_read_status packet_reader_peek(struct packet_reader *reader);
- 
- #define DEFAULT_PACKET_MAX 1000
- #define LARGE_PACKET_MAX 65520
--#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
-+#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - PACKET_HEADER_SIZE)
- extern char packet_buffer[LARGE_PACKET_MAX];
- 
- struct packet_writer {
+ 	} else if (len < PACKET_HEADER_SIZE) {
 diff --git a/remote-curl.c b/remote-curl.c
-index 75532a8bae..bac295c5bc 100644
+index bac295c5bc..7ba1280a41 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -536,7 +536,7 @@ struct rpc_state {
+@@ -536,8 +536,8 @@ struct rpc_state {
  	unsigned initial_buffer : 1;
  
  	/*
--	 * Whenever a pkt-line is read into buf, append the 4 characters
-+	 * Whenever a pkt-line is read into buf, append the PACKET_HEADER_SIZE characters
- 	 * denoting its length before appending the payload.
+-	 * Whenever a pkt-line is read into buf, append the PACKET_HEADER_SIZE characters
+-	 * denoting its length before appending the payload.
++	 * Whenever a pkt-line is read into buf, append the PACKET_HEADER_SIZE
++	 * characters denoting its length before appending the payload.
  	 */
  	unsigned write_line_lengths : 1;
-@@ -556,7 +556,7 @@ struct rpc_state {
+ 
+@@ -556,8 +556,9 @@ struct rpc_state {
   * rpc->buf and rpc->len if there is enough space. Returns 1 if there was
   * enough space, 0 otherwise.
   *
-- * If rpc->write_line_lengths is true, appends the line length as a 4-byte
-+ * If rpc->write_line_lengths is true, appends the line length as a PACKET_HEADER_SIZE-byte
-  * hexadecimal string before appending the result described above.
+- * If rpc->write_line_lengths is true, appends the line length as a PACKET_HEADER_SIZE-byte
+- * hexadecimal string before appending the result described above.
++ * If rpc->write_line_lengths is true, appends the line length as a
++ * PACKET_HEADER_SIZE-byte hexadecimal string before appending the result
++ * described above.
   *
   * Writes the total number of bytes appended into appended.
-@@ -569,8 +569,8 @@ static int rpc_read_from_out(struct rpc_state *rpc, int options,
- 	int pktlen_raw;
- 
- 	if (rpc->write_line_lengths) {
--		left = rpc->alloc - rpc->len - 4;
--		buf = rpc->buf + rpc->len + 4;
-+		left = rpc->alloc - rpc->len - PACKET_HEADER_SIZE;
-+		buf = rpc->buf + rpc->len + PACKET_HEADER_SIZE;
- 	} else {
- 		left = rpc->alloc - rpc->len;
- 		buf = rpc->buf + rpc->len;
-@@ -582,7 +582,7 @@ static int rpc_read_from_out(struct rpc_state *rpc, int options,
- 	*status = packet_read_with_status(rpc->out, NULL, NULL, buf,
- 			left, &pktlen_raw, options);
- 	if (*status != PACKET_READ_EOF) {
--		*appended = pktlen_raw + (rpc->write_line_lengths ? 4 : 0);
-+		*appended = pktlen_raw + (rpc->write_line_lengths ? PACKET_HEADER_SIZE : 0);
- 		rpc->len += *appended;
- 	}
- 
-@@ -593,13 +593,13 @@ static int rpc_read_from_out(struct rpc_state *rpc, int options,
- 				die(_("shouldn't have EOF when not gentle on EOF"));
- 			break;
- 		case PACKET_READ_NORMAL:
--			set_packet_header(buf - 4, *appended);
-+			set_packet_header(buf - PACKET_HEADER_SIZE, *appended);
+  */
+@@ -596,10 +597,10 @@ static int rpc_read_from_out(struct rpc_state *rpc, int options,
+ 			set_packet_header(buf - PACKET_HEADER_SIZE, *appended);
  			break;
  		case PACKET_READ_DELIM:
--			memcpy(buf - 4, "0001", 4);
-+			memcpy(buf - PACKET_HEADER_SIZE, "0001", PACKET_HEADER_SIZE);
+-			memcpy(buf - PACKET_HEADER_SIZE, "0001", PACKET_HEADER_SIZE);
++			memcpy(buf - strlen("0001"), "0001", strlen("0001"));
  			break;
  		case PACKET_READ_FLUSH:
--			memcpy(buf - 4, "0000", 4);
-+			memcpy(buf - PACKET_HEADER_SIZE, "0000", PACKET_HEADER_SIZE);
+-			memcpy(buf - PACKET_HEADER_SIZE, "0000", PACKET_HEADER_SIZE);
++			memcpy(buf - strlen("0000"), "0000", strlen("0000"));
  			break;
  		case PACKET_READ_RESPONSE_END:
  			die(_("remote server sent stateless separator"));
-@@ -682,7 +682,7 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
- #endif
- 
- struct check_pktline_state {
--	char len_buf[4];
-+	char len_buf[PACKET_HEADER_SIZE];
- 	int len_filled;
- 	int remaining;
- };
-@@ -691,7 +691,7 @@ static void check_pktline(struct check_pktline_state *state, const char *ptr, si
- {
- 	while (size) {
- 		if (!state->remaining) {
--			int digits_remaining = 4 - state->len_filled;
-+			int digits_remaining = sizeof(state->len_buf) - state->len_filled;
- 			if (digits_remaining > size)
- 				digits_remaining = size;
- 			memcpy(&state->len_buf[state->len_filled], ptr, digits_remaining);
-@@ -699,16 +699,16 @@ static void check_pktline(struct check_pktline_state *state, const char *ptr, si
- 			ptr += digits_remaining;
- 			size -= digits_remaining;
- 
--			if (state->len_filled == 4) {
-+			if (state->len_filled == sizeof(state->len_buf)) {
- 				state->remaining = packet_length(state->len_buf);
- 				if (state->remaining < 0) {
- 					die(_("remote-curl: bad line length character: %.4s"), state->len_buf);
- 				} else if (state->remaining == 2) {
- 					die(_("remote-curl: unexpected response end packet"));
--				} else if (state->remaining < 4) {
-+				} else if (state->remaining < sizeof(state->len_buf)) {
- 					state->remaining = 0;
- 				} else {
--					state->remaining -= 4;
-+					state->remaining -= sizeof(state->len_buf);
- 				}
- 				state->len_filled = 0;
- 			}
-@@ -804,7 +804,7 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
- 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, NULL);
- 	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, "0000");
--	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4);
-+	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, PACKET_HEADER_SIZE);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buf);
-@@ -1469,7 +1469,7 @@ int cmd_main(int argc, const char **argv)
- 			parse_fetch(&buf);
- 
- 		} else if (!strcmp(buf.buf, "list") || starts_with(buf.buf, "list ")) {
--			int for_push = !!strstr(buf.buf + 4, "for-push");
-+			int for_push = !!strstr(buf.buf + PACKET_HEADER_SIZE, "for-push");
- 			output_refs(get_refs(for_push));
- 
- 		} else if (starts_with(buf.buf, "push ")) {
 -- 
 2.27.0.132.g321788e831
 
