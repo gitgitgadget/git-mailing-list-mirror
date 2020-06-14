@@ -7,190 +7,164 @@ X-Spam-Status: No, score=-1.2 required=3.0 tests=DATE_IN_PAST_12_24,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F31EEC433E0
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 21:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25DD9C433DF
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 21:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C773E2065C
-	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 21:23:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECEEA2065C
+	for <git@archiver.kernel.org>; Sun, 14 Jun 2020 21:29:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Ux5yUHHT"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="eVTwJN4O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727830AbgFNVXT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Jun 2020 17:23:19 -0400
-Received: from mout.gmx.net ([212.227.15.15]:44127 "EHLO mout.gmx.net"
+        id S1726896AbgFNV3B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 17:29:01 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53437 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726648AbgFNVXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 17:23:18 -0400
+        id S1726648AbgFNV3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jun 2020 17:29:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592169789;
-        bh=7zuKtmRCdPahAMlYpUmwDp1d2/1TS1IVK8/jkDz+X4Y=;
+        s=badeba3b8450; t=1592170125;
+        bh=G3Ur/WWZ6X/IGkjSM9uhAN/WSZAp6cp8+P/nNQ4QKGU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ux5yUHHT2Uk62UDBZvIdZmdD3s/ZE9mEJCRcMvGuakVq3PoH6d0uIiz8AAwBQVYH1
-         zkdXjYI5FQTihUqnqivpVGcbMRXD8o+kKNOFJeV72F32OeBaqhj6gyWZ/x8KFQaXes
-         V6H05+IME92dgFOm6Mh1uvKEcfldNqF3PWDX3P/4=
+        b=eVTwJN4OhwAzeB3x6uIwaq5mXaXneSt7n2qu0zy99sytvPqWYPCm6qNLIh/rCsUe+
+         WAjL6DIp0lEhbIycnuGODNmBUtJTBwLsp+9XI7gagph4uD5wQ+WfUNdJCfvdw4WpY2
+         T988ZrR8BpUekQlefHHfZ6rdlukZhN/V5ZFB5Ppg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.173.52] ([89.1.215.43]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N6KYl-1irofM17Bx-016hFq; Sun, 14
- Jun 2020 23:23:09 +0200
-Date:   Sun, 14 Jun 2020 10:49:54 +0200 (CEST)
+Received: from [172.19.173.52] ([89.1.215.43]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MjS9I-1j48d43Epm-00kvi7; Sun, 14
+ Jun 2020 23:28:44 +0200
+Date:   Sun, 14 Jun 2020 10:55:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     =?UTF-8?Q?S=C3=A9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>,
-        don@goodman-wilson.com, git@vger.kernel.org, simon@bocoup.com
-Subject: Re: Rename offensive terminology (master)
-In-Reply-To: <20200614190842.GC6531@camp.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.2006141035480.56@tvgsbejvaqbjf.bet>
-References: <CAGA3LAcDpQQhcmaQG3+s6XNnth54KmNC+padAXXYsc5C33p7kA@mail.gmail.com> <fcad8e8f-e853-d754-e3f7-644a5c717f84@gmail.com> <20200614190842.GC6531@camp.crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Sixt <j6t@kdbg.org>, Matt Rogers <mattr94@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        don@goodman-wilson.com, stolee@gmail.com, Jeff King <peff@peff.net>
+Subject: Re: Re* [PATCH 8/9] fast-export: respect the possibly-overridden
+ default branch name
+In-Reply-To: <xmqqeeqiztpq.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2006141053170.56@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com> <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com> <20200610233912.GU6569@camp.crustytoothpaste.net>
+ <CAOjrSZvV6+ApfmOBa7rdXDPQJbExRsOfodO16i_1N5QjjhCB1w@mail.gmail.com> <xmqq3672cgw8.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2006111559300.56@tvgsbejvaqbjf.bet> <xmqqpna5bq2l.fsf_-_@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2006121451100.56@tvgsbejvaqbjf.bet>
+ <xmqqy2os2u55.fsf@gitster.c.googlers.com> <405521ec-aed7-ff76-5b48-70e9d11018e6@kdbg.org> <xmqqv9jvylt7.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2006131645380.56@tvgsbejvaqbjf.bet> <xmqqeeqiztpq.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1920614261-1592124596=:56"
-X-Provags-ID: V03:K1:zfCl6c7NC/ZJBGgX6FN5FCS4MqpKIEhTIcfEpbB8wBr/GVTGoAQ
- 4gTvpKL/VY9kbyTlmpjbCbMENkmE4lLBLsPKKwyZjB7PurimYmzCXi2Twl9UA9f+7D09xgq
- ySaEzEa/QT6ekYqN6vuamst3PsIRbQU/r7A25F1VwSMOO3FYR7FRB8GGskW+JAVtNfOwvbC
- lWi6a7fl/uGyBZxFe8tcA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SDpjpiHCCQE=:Zlyc3MGcqCRX5tK7rlQwG5
- rFKuIdFFzsI4xZ2eokQW++dd+Z54FFc/5MNAH34RgEXQLT6TLtDgFomW0VJsDCXY/21IztMae
- pbij6djjh/PIupHe1iWtaOCjKopXEtLLrPKSASQ61DGJJfa32GLOe8nCvgp/VE3G2MW66JfUm
- mditW22cv3ypli7jEI2noMSxio9PvYkEQMZI0eZwCysHsNzrehmlvDrBt/vMiBPhvcPjFjflo
- L03YeCacDi/jYk99T+WN/fT5LHgnOQYoAv1CCY54IZRT3kPOdMVYifALmLfKdsdnESvU6iRk8
- tQhGSdfJn36kRXnuoaa38mtDHaWw/CM+nTSqtQBHMYVo6qIatRKngFf7deoGmtDqawJ5Fz6xw
- Vxr4oMqveU/KMcKoZYXpMKpd0H52N+ce8amZ3wi7YROHXEqBjz/7uH2ef30oQTuvtxBAKwmH5
- Hd98CNjKSejOhCfnV7GyNnBCIULUm0NpkXz0eJrYL3QPsgaw3Zs321ELh43a96pskzS7+a2Nt
- IGQ9nhOgkVTp6bawSn+YdPDhwQvKlLItbNOk6KxRz2gW0ig/tvy2bwJ7HeVVKUOpqklx9E/kd
- Wg/FGPzfPL0LanV6n/yYvK6zDYgNvFvUCYlStW2MZFv5HmbC2pydKxl6gJ1T2l/Omqo0o47sP
- gwAVZLgIMoW6jrcfkg57wm+1ADN5kHPUd+eMp4pdWVJq8hoU3BDJS+Qe134ZC5nGkSce6sd9a
- syTKTvJurgJEwNPDOxw57s6847bDmHh8mRgIiaUKo7ITs4+ysK40gIFIi6gJZBugBGMPdrnUc
- 7zN4c37/ZfM+C+uhGgMcvDlzg9YKsn5rUk8hGn7Nj9b106nkAFhisIwEdGxYnGkZ9n/i4Og6x
- TetYixDO4kSVsWJUw7zUDAXsD3WeJh/8bkl3+vxxRnDO5VjsWD4jQdd5Cnow7HgoIFKivq2sk
- /qQZEmWE29o5ZeOFT/wUcF+Kg9sKPXqe44OnD5D6/rjpz2qot5z6gbqLSoWEKPLyXJHc0LxS8
- k30x+FYSpmqs8NbYFcD0W72xZ3UrwM86IuOD9tzwwxorpioYRra8eFEWPzXdaauvl4n0NwqtI
- rDmlO+etNvZ+5IHccL3118A37xVqV3f6sbw1/Jc5IILlr8itNhzo1GqX7QJdHpwsM8hZkPhZc
- ZnhQmmXj/vgt02Xxxv+ZXJ+IXkVrf5H5y0aGSJ+mZfqHkcn3qrS7bVOyfxKqAIqIry5TyOXtO
- AZ9Q4a5bVAYRPR75L
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7spRtj+jq3fIL+meWYvloEwJRbQ24P0Ad3fr+W/Kvkz/bJbg9ZX
+ NhCZhsB4cSBj8GgyBQCIrUz5NnMfSyrw65npUwoafdGahnqYK+x7Gx/yCdjpLB6DX55/xPM
+ Q2jcBo66K+9gs2Fi8oGk0PoUHnLMva4obD/4p3SmelU3yg2s43SAhPlGl6NRf0BFZPwuMhs
+ Z6QBEfAYJa8xislnhatCw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Cch1uLzw2sw=:1Yct1BBWKRI6MGXG7yUS5l
+ jATbY8ImlHgRPNM5LVkxziBvuiaXHuz0MH7FSiLpOJWEPAPWPtDC3cFaafegaaDk8FeaceMea
+ q34KRFf4gewM6/daIogFaULt6i4Je/bymzc1L7J4hMZhWKNeBmGsn+hO6leMHHCiXqkWDX8MP
+ k3rF4Ru8Zi9lSGuX4sAf7J8ei8F2PZRDV8a4/urMO9tGQSPitbCfXdFm6aDp/mDe4/VWhYvR5
+ d8uM53heH8Jdm19F3xfhWiJTNL2MeCr9kXTwGciV1pISw2WnNLJUFLekyCJVrW7zh+vZudJ0S
+ 3tUhRUB5TuSGPCKjJ8P9C9sosXz6bLwmRcadRPfHwq2zp12dNusFdbg0R+sUjV3CV73zArkHO
+ kqg2vrUwWdecfz9dTODeMLExKJZ6M/68n5eWOJUxip7JhyLbglrc7wsjRks5Utr4pITIm93Yf
+ KeeOyOphb4mHgJb8CMSUYes4SeWAk/55XC7tvgwyPKt0THnr1TF5BFSxth6SsyChUj0TysbEI
+ s9Gj6WQfUlqvC0OzroTwHkyQdKLHLTdh0DvObc6WYzD/qRjxsSNspyS1+u3gSWi0m8wI1zzX/
+ He56AXxF61WWn/lGfErbUb80DgpoAIvfBytZ8yaPwifhYTUlKjLDov3u9Uj+5iX6PKzV+4qAI
+ VakVwwcr++2w4X/tM5373Wqk8MrY9ZNmJgU+l0fC5HCRKU5xVRgGau+NhyOs9iTXCsUpFLMUT
+ cxuR+78P5PjmSvG8eJeHNF9gQ2pKqkeSYrOhMGAlqCh7JqjDY6I/7EW08lGWnCAvLPDqXH62F
+ zsCAMT0TS7Y9nVmPZh8fU2jztU6BcltmY9Eh1E8TvelEeQfTy9hR30WatV/Zbe3qJllo21rBI
+ PZtXispAR6pVYh+90dqQRwpbxpP2BBtkwYQ8BbHqF8pbbkZswuhHH6sfUl2h7VAGjmp1HQF6F
+ P0e1xS4mHKCU8Waoc3BYZvJ6Q9Jkyvz3eA3fkp1AtOJHqbmqyBaVs9z+U1eG8kKlhPy5W3dwr
+ zlODSHcoyitl+kZXrY13zchMukthVi0UzY0HZEI53SvqeA6KIzUgmonu8or4f37knbC0oPFct
+ g9zs/nLdPy8vCfmQRIQja1exkJbg20lEwaXOgUk/F/b70MR1mK6llwqctoa8Fk+Qr3+Xc3DJK
+ 8tPSMHvclHfFayb5hXs3UbrcaVzjWSUV/5KdqAl8brseXNqYKVJQiIpZ6RlSfC2aE+WArByXC
+ 346AIJQnoSC3/iNDB
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-1920614261-1592124596=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sat, 13 Jun 2020, Junio C Hamano wrote:
 
-Hi brian,
-
-On Sun, 14 Jun 2020, brian m. carlson wrote:
-
-> On 2020-06-14 at 00:05:33, S=C3=A9rgio Augusto Vianna wrote:
-> > No one here has to explain why something not racist is racist. The
-> > problem are the perpetually offended that see racism in literally
-> > everywhere. Specially when there's virtue signaling points in the
-> > table.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> I want to take a second to respond to this because I think there's
-> something this discussion may be missing that I want to make explicit.
+> >> A corrected code should return a hardwired constant 'main' (it
+> >> probably gets behind a C preprocessor macro, but the point is that
+> >> we do not want end-user customization) for the reason stated in that
+> >> message.
+> >
+> > I like `ref0` better, for two reasons:
+> >
+> > - it is more consistent to just have all anonymized branches be named
+> >   `ref<N>`, and
+> >
+> > - using `main` both for an original `main` and an original `master` ca=
+n be
+> >   a bit confusing, as the reader might assume that this branch name (a=
+s it
+> >   does not follow the `ref<N>` convention) was _not_ anonymized, when =
+it
+> >   very well might have been.
 >
-> When we use language, that language has a context.  Part of that is
-> situational and part of it is based on how the receiver perceives it.
-> Very little of it actually comes from what the actual intent of the
-> sender is, because we can't be 100% certain of the sender's actual
-> intent without explicitly asking them (and not always even then).  Even
-> if we can, that doesn't usually change the perception of the receiver,
-> so it doesn't change the message that was received.  And it's important
-> to note that the message that was sent and the one that was received can
-> be very different.
+> A pro for keeping a hardcoded 'master' is that it is compatible with
+> the current world order, and flipping it to hardcoded 'main' upon
+> transition is just to use the moral equivalent, so we do not need to
+> immediately have to change anything.  The _new_ consistency across
+> ref<N> does feel attractive, but because it is new, there always is
+> a pushback not to "fix" what is not broken.
 >
-> There is nothing we can do to avoid this context because it's inherent
-> in language and in the enormity of human experience.  We can only
-> control what context we deliver to others by being aware of how other
-> people perceive our words.
+> I am personally OK either way.
 >
-> I'd like to illustrate this with an example from my own experience.  In
-> Britain, the word "faggot" refers to a type of meatball which many
-> people enjoy.  In many English-speaking countries, it's also a slur for
-> a gay, bisexual, or queer man.  Even if, when I hear that word in a
-> culinary context, I can objectively tell myself that the word is meant
-> with neutral intentions, it still brings to mind the fact that I and
-> many of my friends have been called that and with that, my experiences
-> of discrimination and harassment.  One could say that I'm just easily
-> offended, but whether I want to be reminded of those experiences or not,
-> I am.  My mind just goes there.  The context here has nothing to do with
-> the sender, who probably meant well, but the message I received in, for
-> example, reading a restaurant menu, was a negative one.
+> By the way, we'd need to devise a transition plan for switching the
+> default branch name (i.e. the name used for the primary branch in a
+> newly created repository unless the user configures it to some other
+> value) to 'main' (oh, I just found one reason why I will not want to
+> use that name in my project(s)---it is too close to 'maint').
+
+Yes, the trouble with `maint` did cross my mind, but I try not to
+"overfit" to git/git. :-)
+
+> It might roughly go like:
 >
-> A reasonable person who wants to communicate well will be aware of this
-> context and will choose to use a different phrase if they don't want to
-> communicate that negative context.  For example, the restaurateur may
-> choose to use the phrase "savory ducks" on their menu instead.  If they
-> choose not to, then we may draw conclusions about their intent when they
-> use the language they use.
+>  1. We introduce core.defaultBranchName; when it is not set, its
+>     value defaults to 'master' in the 1st phase of the transition.
+>     "git init" and "git clone" however issue a warning that says
+>     "unless you configure core.defaultBranchName, we use 'master'
+>     for now for backward compatibility but we will start using
+>     'main' in three major releases of Git in the future".  These
+>     commands use the default branch name when creating a new
+>     repository in the 1st phase, and set core.primaryBranchName to
+>     that name in the resulting repository.
 >
-> Similarly, when we use the words "master" or "slave", even in contexts
-> where they have different meanings, we send context along with that use.
-> Black people, although able to objectively distinguish the two contexts,
-> may receive a reminder that they or people like them have been subject
-> to bondage, inequality, oppression, or discrimination.  If that is not
-> the context we wish to send to them, then we should consider using
-> different language.  Nothing prevents us from using those words except
-> for our desire to communicate or not communicate a certain context.
+>     This is to encourage early adopters to set it to 'maint'^W'main'
+>     (eek, see, I again made that typo), while allowing those who
+>     have toolset that depends more heavily on the current default
+>     branch name than other people to set it to 'master' for
+>     stability.
 >
-> And while I admit that in this discussion one may say that one word is
-> an obvious slur and one is not, that doesn't mean that the context the
-> receiver receives is necessarily that different.  It may vary in its
-> intensity, but the underlying negative context may still be there.
-
-Thank you for sharing your perspective with us; As it contains very
-personal parts, I am particularly grateful that you chose to write it
-out in public.
-
-And also: I cannot agree more with you.
-
-Ultimately, it is the empathy that matters. If a certain term does not
-offend me, but is hurting other people, then changing that term is not
-about me. My involvement in this comes from my desire to offer my support.
-
-> I do want to underscore that free software is not exempt from this
-> phenomenon because we use language, and all communication with words is
-> subject to these same limitations and to the human experience.
+>     In the 1st phase, a few commands that care about what the
+>     primary branch is in a repository (i.e. fmt-merge-msg and
+>     fast-export are the two we have identified so far) pay attention
+>     to the core.primaryBranchName configuration, and default to
+>     'master' if the configuration does not exist.
 >
-> The proposed patch series makes the branch name configurable, so you may
-> choose to use a default branch name which suits you.  It sounds like you
-> may choose to stay with "master", and you are welcome to make that
-> decision.  However, as with all language, that comes with context, and
-> others will receive and interpret that context and draw their own
-> conclusions about your intentions.
+>     These commands issue a warning that says "unless you configure
+>     core.primaryBranchName in the repository, we use 'master' for
+>     now but we will start using 'main' in three major releases of
+>     Git in the future".
+>
+>     The above two warning messages will be squelched once the user
+>     sets respective configuration variable.
+>
+>  2. We flip the default for the two variables from 'master' to
+>     'main' in three major releases of Git (i.e. 24-30 weeks from the
+>     1st phase).  The two warning messages added for the 1st phase
+>     will be reworded for the updated default.  We no longer need to
+>     say "in three major releases" in there.
+>
+>  3. After long time passes, remove the warning.
 
-I feel the exact same.
+Yes, that's what I had in my mind, too (modulo the concrete part about the
+three major versions, which is something I would have asked about at some
+stage, thank you for answering that question already!).
 
-When I originally read Simon's initial mail, and one of the responses,
-I felt that the analogy to the music industry made a lot of sense. And
-that the amount of work to change a default that has been with us for
-fifteen years was just too much. I guess I am not very alone in this.
-
-In the meantime, I had many private conversations that clarified the big
-picture for me. I cannot in good conscience continue to use the current
-default main branch name, and am actively working toward changing it in
-all of my repositories.
-
-> On a final, slightly different note, I also want to remind folks that
-> are here that we have a code of conduct, which encourages us to use
-> welcoming and inclusive language and be respectful of differing
-> viewpoints and experiences, and to refrain from insulting or derogatory
-> comments.  I know that this isn't always easy, but I encourage community
-> members to consider their comments carefully with that in mind,
-> especially when feelings are as strong as they are here.  If you want to
-> take some time to remind yourself of what it says, it's available as
-> CODE_OF_CONDUCT.md in the root of the repository.
-
-I am glad that you brought this up. There has been overwhelming support
-for this code of conduct by the active contributors to this project. It is
-ultimately benefitting the project that we chose to make that code
-explicit.
-
-Ciao,
+Thank you,
 Dscho
-
---8323328-1920614261-1592124596=:56--
