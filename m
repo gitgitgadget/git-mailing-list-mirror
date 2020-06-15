@@ -2,143 +2,102 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E611C433DF
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C88D9C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:46:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AECC20707
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:34:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0F8720663
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:46:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="JPxFAYuK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLfSg99V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728428AbgFOKeB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 06:34:01 -0400
-Received: from mout.gmx.net ([212.227.17.21]:48737 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728369AbgFOKd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 06:33:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592217219;
-        bh=pO/bbem5H2bfsMNe3nXOH7VHclSxCkheArnuOmK7QbE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JPxFAYuKv2TEibHJtgNJ/v/LNxbz+RFQt9QM9dYx/Ax8sfWIu/ZpC2uTKIV+TMY/r
-         5GNU2kxy793QtNeUPlrEOLbcOsefpxkw541aCYTJg9p+lf8Pq3Ax8UoqftByll8OwF
-         kpwo8lTIXYLI8OuDzHdsKQFF3Ys5uYBURHi58n0M=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.173.52] ([213.196.213.210]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvsJ5-1is7c53A2x-00svSN; Mon, 15
- Jun 2020 12:33:38 +0200
-Date:   Mon, 15 Jun 2020 00:00:24 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net
-Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
- new repositories
-In-Reply-To: <xmqqlfks2pod.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2006142350580.56@tvgsbejvaqbjf.bet>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com> <be09ffbb-4e38-5b67-54da-0b60d5e2d8c3@gmail.com> <nycvar.QRO.7.76.6.2006121308030.56@tvgsbejvaqbjf.bet>
- <xmqqlfks2pod.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729073AbgFOKqr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 06:46:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59886 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728860AbgFOKqq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 06:46:46 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA76C061A0E
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:46:45 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id 205so15223971qkg.3
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:46:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YaQzS7+9Pvw7IClE5SsiVQODznv+tHo+rFYLa3HIsME=;
+        b=mLfSg99Ve2J7VS/Ie6m0l+gtDdn1zkNWUeQuC+bVkfcuxaiyYovThxsTbecV77Ipj9
+         Mwusi0bCbfffpa9ma/axRwvlB0VqLckwOAvR9MoIIojdct4mNxWMdzbHgJDc9RqvAwll
+         RRtYUPqhpsY4+CBLxuI7XJhmOfNgEaohctjJ3x5TxBS8ZQxLUChP9+LQBXjZmu37sqCu
+         ID/ajQSN4d43R0O6CwvhLV1G/Z7MkmvV76Sy8G75uVLdiAg4HtocF1porWRethPZAyLI
+         hFpoXd3SfFqLs6eGtmK0ngjjVd374aT0OepWuhd+GKjVYBNFCLmv8bcp/uNpyApcWQE2
+         IHDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YaQzS7+9Pvw7IClE5SsiVQODznv+tHo+rFYLa3HIsME=;
+        b=rS6pStW02dIf7/iUNJBlUQUgoREGArg6Fi7tnh3td1eta904uZRelZx3oENWjsY6+R
+         u0ePOp95+RG5iZiH+PVHST5rWE6OxD3sx3egjYkOgzich56nIOEG2GMRLNaHZxYe944P
+         h+BrkMPwNOM6fJ7Ee4I5d4A4aXfvgM+sU0zgZEr0ZEdFkstXB92xG4hk0E/I5g4dovrj
+         h7BuPLUsd+6WYKCbmeJNI8L5m1F4cqzpcHwhUk4zF+twXs8fOnwH1u3LhJqrkZow6HIv
+         LEbpSahRLEDLW2mUqdiVe/QxMVghQyXhqZlz+p0c77l0ZUGzoPCQuNTFLCpyg4mEypvf
+         y/KQ==
+X-Gm-Message-State: AOAM532xwygcwqkykHbnqFTrJaPO/2fGNSu+xmXAF3l/2oWwD3Vp4Jls
+        I4/+8ZwhuHG9jeeakUEaeeY=
+X-Google-Smtp-Source: ABdhPJwodTPvCpl3zQJVQDmuMGs0xhbtPm6cZ8naKvbL3Huc/fUjCsHZiBRpKJXmyJlz4v1BjT73VA==
+X-Received: by 2002:ae9:ef0e:: with SMTP id d14mr14632990qkg.416.1592218004787;
+        Mon, 15 Jun 2020 03:46:44 -0700 (PDT)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id k26sm12483749qtk.55.2020.06.15.03.46.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2020 03:46:44 -0700 (PDT)
+Date:   Mon, 15 Jun 2020 06:46:41 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 5/9] submodule: use the (possibly overridden) default
+ branch name
+Message-ID: <20200615104641.GA54462@generichostname>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+ <06ef42052d534a668bf5227e79f1ca3b5c6aa2c1.1591823971.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Jysb8vywPlvfm9CQW8+QrVx8afBY/rHmfcJv3BkEdNrfydmpmeg
- c762joIKjgsPcK+Jsp0I1dNWCOsuNGcl/MBevFS17XBnK2LNnelQvLwezq5GRMbpBA86+x3
- QRNo56qnQ/RTr1ZUe9xwjmc6TnrsDlyZ8lFNyx98/izXCjMr7BKnicSzsr/lgqO8e3XQdzc
- AJ4m/4UCVnu95jOtXkpuw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MjNrBEp+ULc=:HTM+yA9HXA6QewLXgpM1oI
- yP1G5vuhiyTeweJqjgZC1bHPd60Q7mRrEnWclnAhzq1oCZ8+9JTeAwdEdwBozOkR5AQLInblJ
- OEIHsz4K/c4XF+o6fiijdEvuSovHJ0+7nGQnPjKDYBvGvl5mw9jXwumFZo2M/DmYGSQ45zkzd
- /qDVe6ln+7T5rWdzAcg+rtxSXiikRkHfo9kJ1E6ZtuRAG7e0l0gOWG+h29i2tOHiRqkIaGM6u
- FlZ7FWNp0qjXHzaBMlqgymdxtBkVky89mMT0MAxlDZZzbJV4BFtj1Q8O7LXpQIOTOfZqAObiH
- g+VXSOnVtI2eJUVwF4cSuAuAEyZ7US0YrVmLZaB3b65UuIPlarsjQdXhqnd8VGYPuDFtCJt5C
- /Bux9fzminoSG5s/e/ep8zKmOkiaky6aP/BZrVofUmOKUtkcgcruxeMpUWbX8rRvVMJXd/a0d
- 6rPLsP9+0qYfFluU7en4tdsxa6DJNhQ725veoafvzt43k1niR0YEy1wZxA92OCoCT98jTShuw
- xOdl5kn1nk381Kf+LDfPz/W8uaSwI/GpMSSYsTc9k39MWl98cmROnFvMgyfDasZOB4IuvutwT
- IcC9Tc3DC9iN4Zp7LR29VBxtDYD8bsRAcqqsGuVuKdFHbtmjbXnsvcsQdMdyv9lEzNCZg2Bv7
- G1V1WJxMohXCsudTHJcqUisPSIkf8CdOPUEuDDt3FwyE3kebU6+LBGoNIG89wI3NuTqZP072O
- /RrqJj4YcZRuV5JzyBU6yALGfXnc14YBA3/2wDgnqtFpcJH6U8cUjIXM2CNzhpDbP/oKrqoqw
- MhaWBbDMKuf/jH+CU0cB9qJy9My4fR/NGJsaM2iHlYWSv1r71xtL5+lw8KsOPhB2EcRiRHxls
- QqMVUtOj8G4wid4hVGCX8L6ObHcljf2YQ9ETTFJi9af+l5ewv/4/ViG/8Qp/Eq8z9A73gro+S
- 1mV9qHaORWrdopRkValkTL05/ZV5qahswa0qr+oLDiKBUhvXf1qubb9Z7PkKdLM8FR191svRX
- xzTf8EUpzT3mG3mbgN1/PJkXaDIpEXDdjCIMPlE3q2nSkCec7q2O0lySwX1A+RyLszy4SvOBd
- UoLXChayI1n8k0Loy2eYZC/j7J862+bTUOtXR6eVgM0Sw/fLNOTng40GYq4STIbggoWwUJ7Gg
- GaMqh5YNlmXUG4/m00kfOXQueW+3l5csHtThCckTCfPBiNsU1PjEL9d2KLOgoecCP3yj1fp7I
- gDonpdlCzRznSGyok
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <06ef42052d534a668bf5227e79f1ca3b5c6aa2c1.1591823971.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Wed, Jun 10, 2020 at 09:19:26PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> To allow for overriding the default branch name, we have introduced a
+> config setting. With this patch, the `git submodule` command learns
+> about this, too.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Fri, 12 Jun 2020, Junio C Hamano wrote:
+One thing to consider: in the future, if we move away from "master"
+or even allow the value to be configurable, we're gonna end up breaking
+a lot of repositories this way.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > I added a _brief_ extension to the context to the first commit's commi=
-t
-> > message. However, I do not want to go into details here because _this_
-> > patch series is only about empowering users to change their default ma=
-in
-> > branch name.
->
-> Sensible.
->
-> And I do not think the planned follow-up work to rename 'master' to
-> something else needs to be defended with lengthy history lessons.
+If a developer regularly pulls in submodule updates via
+`git submodule update --remote`, when the default branch name changes,
+this will suddenly stop working. This will require developers who use
+submodules to "fix" their .gitmodules file.
 
-Yes, I agree. It is probably sufficient to just point at a couple
-high-profile projects that already made the switch to `main`.
+If it's configurable, this problem might be even worse. It could lead to
+scenarios where one developer might go "works for me" while another
+developer (who may set the configuration and forget about it) would be
+confused about why it's not working for them.
 
-> Sufficiently large part of the user population are unhappy with the
-> use of the word 'master' as the default name of the primary branch
-> in a newly created repository, and the mere fact that we are aware
-> of that is good enough justification to move _away_ from 'master'.
-
-Yes, even Pasky says he regrets the choice of term (see
-https://twitter.com/xpasky/status/1271477451756056577):
-
-	I picked the names "master" (and "origin") in the early Git tooling
-	back in 2005.
-
-	(this probably means you shouldn't give much weight to my name
-	preferences :) )
-
-	I have wished many times I would have named them "main" (and
-	"upstream") instead.
-
-> In other words, we do not have to explain why 'master' was bad, as
-> it does not have to be bad for everybody to be replaced.
->
-> But you need to defend that the new word you picked is something
-> everybody is happy with.  That is much harder ;-).
-
-To be honest, I stopped looking for got arguments in favor of one
-name after a couple days, and instead focused on the consensus I
-saw: Chrome [*1*] and node.js [*2*] apparently stated publicly that
-they want to change their main branches to `main`, and GitLab [*3*]
-and GitHub [*4*] seem to intend to change the default for new
-repositories accordingly.
-
-It is not like we have to decide for the community (as we did back
-in 2005). I am actually quite relieved about that.
-
-Ciao,
-Dscho
-
-URL *1*: https://twitter.com/Una/status/1271180494944829441
-URL *2*: https://github.com/nodejs/node/issues/33864
-URL *3*: https://gitlab.com/gitlab-org/gitlab/-/issues/221164
-URL *4*: https://twitter.com/natfriedman/status/1271253144442253312
-(this is not really a public announcement, I agree, but it is a
-public Tweet by the CEO)
+Just a couple thoughts I had while looking at this patch.
