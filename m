@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DB34C433DF
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34DE1C433E3
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49096206B7
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1329820739
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XvviaWSq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xg/FqFNQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730023AbgFOMul (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 08:50:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50696 "EHLO
+        id S1730049AbgFOMuj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 08:50:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729981AbgFOMu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729977AbgFOMu3 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 15 Jun 2020 08:50:29 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 786B1C061A0E
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56AC6C05BD43
         for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:28 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id y20so14699359wmi.2
+Received: by mail-wr1-x436.google.com with SMTP id j10so16987841wrw.8
         for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rAzvm0XOxsf7t0W8bPxhM8ar8h3+3XWAPQwSN/S9xWo=;
-        b=XvviaWSqyfBQuKmAiNZvThyN41iAsBruwDY8iqdbBlGgL/twlX73t5E+ZTEE4TY9Dq
-         NXrxIQbMq+a3Srq3/maQ9j27wLzYUpMvfEsofWvzn9ly9kHHVWR/owfhGP0/F7+pKtwK
-         WapyMSjdc7fH7omrBlggTelwCHUgJHy7Ku0Bz5NkeKC2g7ioWVBoOBTKHmkCmrAuOIJG
-         NXXdO7u+pkE0YkLRqUE9fKplpbQOc4780Vc1anH94x/qv3xuSKIHDi9nis6cxwMig0Z1
-         5inqyKJ1XAyIEe2zklnWXb3mL6becdEQHuY83lVSH5QRnltF+hTnlLMcDVUAV7ck4aP0
-         yWUw==
+        bh=KUSW/LMfErEU+o+bgmyqi28zwkmpMAEYMhtQnAQ6sn0=;
+        b=Xg/FqFNQUmTdZBuwHeQ5UGXdXVpCPMHLZZPGwYNOxiAraXPJU93VUcN+DA4E2BJvVp
+         qfINwz0GNPx9dKwg1Y4e4hKVLbeHguqGFsXDTG9oJP3EOGWFLH6PtQe8irvEX4gbfKHS
+         K28X3wCTxL9jSJp6ipBFPDiI8lyYMMaAOtZd1BMHFOYyp0oWr6lJxqlSfW3X93ndwlBK
+         OGIaNqdcdS9stDQpNz7q5Go2/WLD8uJXYKOfMcnT/vFtMnyQhAA9dUUbHiknk+T5bfIF
+         mdv6drtFFu9OB8CnDOEUK/PRi9h2B2+xXN9OIrxbjzCp+PZwxb+nSFz5KJfvNyrA9OaO
+         B7Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rAzvm0XOxsf7t0W8bPxhM8ar8h3+3XWAPQwSN/S9xWo=;
-        b=GAcUP99Am9q5/5BJQ981LBmNIguoHzUfGilbGl7BOYaGzAH1DjOYZ3Bl8VkV1Mnvdu
-         +i9MTRBXjQcBecUz1fLcOKjtV8fzjKcsoervcPXI/JGyh+xO4+GfqAzD5xquY38LoSeN
-         0hKRdNGiYtmITFa2RTDwj9+PXgRl9wTF+iGnVth1oDS6EwX9uJUKQOp1NDQHiWrBSyI6
-         bwxsPLz3U5ydhXY2Ayhg1tifWcHASTZiUE4O2gZLALA8yD0+rD8Yhv2UNDpdTXRDRzEb
-         jRC0VL0zt/hwKRHXMZh58Ht6Nsi9jvTsPRxo2PJQnuDml0DAGZ7ZzrpH6iNNo8V7LvcO
-         mjmg==
-X-Gm-Message-State: AOAM532/04drNonZ+TxLghbbyNIUOMoK/H5F/ACJetQ2fLiN7I6hM4mF
-        JdgyoAcefexaNalkFDQvsmPrLNbq
-X-Google-Smtp-Source: ABdhPJxIjg56pg+B5Fp7d6Ufukakc7QwtW/9NkKlFcoXlnnpDZ5+8fkNJmeE56XZw+fTZ9qQURBkCA==
-X-Received: by 2002:a1c:80d4:: with SMTP id b203mr13032414wmd.138.1592225426064;
+        bh=KUSW/LMfErEU+o+bgmyqi28zwkmpMAEYMhtQnAQ6sn0=;
+        b=KV538oZuboTDKZcF8sQWfRork2mE+jBW6QdquAfdeTQCO4hmIdIAj23kGyfPfmngWo
+         0y0tdSsZk0eprEQNDNBYE9R0lbHvc7C/H45dgg6ALcpzhKjTWmhBbJ+690FjRHMqDZAQ
+         i+5hYtFH1cg839m+3s07m1as3qdmHBvLL9S5dcsa51w5OxOmU41qgKg/JNu84t3MF3Ax
+         iCDj94G2F5Lcopkknj2+w64dmk2IQ/mxIrpeaEJA74LVhH7FEPcti2c5AUordBQisVde
+         aGmRSKlSBVJcLF9Mb7emXjMeRJJcG6MW2F3qcHcPzSmXqcvt9Jmv2HfHV5YsFHT2cwow
+         A4EQ==
+X-Gm-Message-State: AOAM533BWdP4KVJVrahXq+OhBgVGu53Q151iWuocNER95YXxQYxifJPB
+        T57n2BNaefL/RnRtsdrHA173tEJ2
+X-Google-Smtp-Source: ABdhPJwjXnsIwZ07/pQAaifR7NwmURZs/6pAPQAEfQf5tGoWktmk+R6IS+GsZ1LcXxIUsHbkLTg/bg==
+X-Received: by 2002:adf:feca:: with SMTP id q10mr26631823wrs.380.1592225426869;
         Mon, 15 Jun 2020 05:50:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c81sm23214639wmd.42.2020.06.15.05.50.25
+        by smtp.gmail.com with ESMTPSA id k12sm24574873wrn.42.2020.06.15.05.50.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 05:50:25 -0700 (PDT)
-Message-Id: <c711eba7e760b4f80ab8ef69ed1d69d9710d85c7.1592225416.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2020 05:50:26 -0700 (PDT)
+Message-Id: <0e59b6181699abe17eb46fe3ca5a48ce71889780.1592225416.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
         <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
-From:   "Don Goodman-Wilson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 12:50:12 +0000
-Subject: [PATCH v2 08/12] init: allow overriding the default main branch name
- via the config
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 15 Jun 2020 12:50:13 +0000
+Subject: [PATCH v2 09/12] clone: handle overridden main branch names
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,131 +77,103 @@ Cc:     don@goodman-wilson.com, stolee@gmail.com, peff@peff.net,
         Alban Gruin <alban.gruin@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Don Goodman-Wilson <don@goodman-wilson.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Don Goodman-Wilson <don@goodman-wilson.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We just introduced the command-line option `--main-branch=<branch-name>`
-to allow initializing a new repository with a different initial branch
-than the hard-coded one.
+When cloning a repository without any branches, Git chooses a default
+branch name for the as-yet unborn branch.
 
-To allow users to override the default main branch name more permanently
-(i.e. without having to specify the name manually for each and every
-`git init` invocation), let's introduce the `init.defaultBranch` config
-setting.
+As part of the implicit initialization of the local repository, Git
+just learned to respect `init.defaultBranch` to choose a different main
+branch name. We now really want that branch name to be used as a
+fall-back.
 
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Helped-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Don Goodman-Wilson <don@goodman-wilson.com>
+At the same time, we also want to make sure that `core.mainBranch` is
+set correctly, reflecting the name of the main branch. In case we detect
+a main branch, we do have to do that explicitly, otherwise `init_db()`
+will already have done that for us.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config/init.txt |  4 ++++
- builtin/init-db.c             |  6 ++++--
- refs.c                        |  7 +++++--
- refs.h                        |  4 ++++
- t/t0001-init.sh               | 16 ++++++++++++++++
- 5 files changed, 33 insertions(+), 4 deletions(-)
+ Documentation/config/init.txt |  4 ++--
+ builtin/clone.c               | 16 +++++++++++++---
+ t/t5606-clone-options.sh      | 17 +++++++++++++++++
+ 3 files changed, 32 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/config/init.txt b/Documentation/config/init.txt
-index 46fa8c6a082..6ae4a38416e 100644
+index 6ae4a38416e..dc77f8c8446 100644
 --- a/Documentation/config/init.txt
 +++ b/Documentation/config/init.txt
-@@ -1,3 +1,7 @@
- init.templateDir::
- 	Specify the directory from which templates will be copied.
+@@ -3,5 +3,5 @@ init.templateDir::
  	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
+ 
+ init.defaultBranch::
+-	Allows overriding the default branch name when initializing
+-	a new repository.
++	Allows overriding the default branch name e.g. when initializing
++	a new repository or when cloning an empty repository.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 487b0a42d75..755fcaeb0ba 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -718,6 +718,7 @@ static void update_head(const struct ref *our, const struct ref *remote,
+ 		/* Local default branch link */
+ 		if (create_symref("HEAD", our->name, NULL) < 0)
+ 			die(_("unable to update HEAD"));
++		git_config_set("core.mainbranch", head);
+ 		if (!option_bare) {
+ 			update_ref(msg, "HEAD", &our->old_oid, NULL, 0,
+ 				   UPDATE_REFS_DIE_ON_ERR);
+@@ -1264,9 +1265,18 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		remote_head_points_at = NULL;
+ 		remote_head = NULL;
+ 		option_no_checkout = 1;
+-		if (!option_bare)
+-			install_branch_config(0, "master", option_origin,
+-					      "refs/heads/master");
++		if (!option_bare) {
++			char *main_branch =
++				git_main_branch_name(MAIN_BRANCH_FULL_NAME);
++			const char *nick;
 +
-+init.defaultBranch::
-+	Allows overriding the default branch name when initializing
-+	a new repository.
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 287cdafaab1..d09c9dc7845 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -266,10 +266,11 @@ static int create_default_files(const char *template_path,
- 	reinit = (!access(path, R_OK)
- 		  || readlink(path, junk, sizeof(junk)-1) != -1);
- 	if (!reinit) {
--		char *ref;
-+		char *ref, *fall_back = NULL;
++			if (!skip_prefix(main_branch, "refs/heads/", &nick))
++				BUG("unexpected default branch '%s'",
++				    main_branch);
++			install_branch_config(0, nick, option_origin,
++					      main_branch);
++			free(main_branch);
++		}
+ 	}
  
- 		if (!main_branch)
--			main_branch = "master";
-+			main_branch = fall_back =
-+				git_main_branch_name(MAIN_BRANCH_FOR_INIT);
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 9e24ec88e67..98b2d8527f6 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -35,4 +35,21 @@ test_expect_success 'redirected clone -v does show progress' '
  
- 		ref = xstrfmt("refs/heads/%s", main_branch);
- 		if (check_refname_format(ref, 0) < 0)
-@@ -280,6 +281,7 @@ static int create_default_files(const char *template_path,
- 		free(ref);
- 
- 		git_config_set("core.mainbranch", main_branch);
-+		free(fall_back);
- 	} else if (main_branch)
- 		warning(_("re-init: ignoring --main-branch=%s"), main_branch);
- 
-diff --git a/refs.c b/refs.c
-index 7da3ac178c4..4b0e5b14062 100644
---- a/refs.c
-+++ b/refs.c
-@@ -563,8 +563,11 @@ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix)
- char *repo_main_branch_name(struct repository *r, int flags)
- {
- 	int full_name = flags & MAIN_BRANCH_FULL_NAME;
--	const char *config_key = "core.mainbranch";
--	const char *config_display_key = "core.mainBranch";
-+	int for_init = flags & MAIN_BRANCH_FOR_INIT;
-+	const char *config_key = for_init ?
-+		 "init.defaultbranch" : "core.mainbranch";
-+	const char *config_display_key = for_init ?
-+		 "init.defaultBranch" : "core.mainBranch";
- 	const char *fall_back = "master";
- 	char *name = NULL, *ret;
- 
-diff --git a/refs.h b/refs.h
-index 96472f9a9f5..c801d08490c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -158,10 +158,14 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
-  * Retrieves the name of the main (or: primary) branch of the given
-  * repository.
-  *
-+ * To obtain the default for newly-initialized repositories, pass the flag
-+ * `MAIN_BRANCH_FOR_INIT`.
-+ *
-  * The result is an allocated string. Unless the flags ask for a short name, it
-  * will be prefixed with "refs/heads/".
-  */
- #define MAIN_BRANCH_FULL_NAME (1<<0)
-+#define MAIN_BRANCH_FOR_INIT   (1<<1)
- char *git_main_branch_name(int flags);
- char *repo_main_branch_name(struct repository *r, int flags);
- 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 5d8e321a703..fbf02066940 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -479,4 +479,20 @@ test_expect_success '--main-branch' '
- 	grep hello actual
  '
  
-+test_expect_success 'overridden default main branch name (config)' '
-+	test_config_global init.defaultBranch nmb &&
-+	git init main-branch-config &&
-+	git -C main-branch-config symbolic-ref HEAD >actual &&
-+	grep nmb actual &&
-+	git -C main-branch-config config core.mainBranch >actual &&
-+	echo nmb >expect &&
-+	test_cmp expect actual
++test_expect_success 'chooses correct default main branch name' '
++	git init --bare empty &&
++	git -c init.defaultBranch=up clone empty whats-up &&
++	test refs/heads/up = $(git -C whats-up symbolic-ref HEAD) &&
++	test up = $(git -C whats-up config core.mainBranch) &&
++	test refs/heads/up = $(git -C whats-up config branch.up.merge)
 +'
 +
-+test_expect_success 'invalid default branch name' '
-+	test_config_global init.defaultBranch "with space" &&
-+	test_must_fail git init main-branch-invalid 2>err &&
-+	test_i18ngrep "invalid branch name" err
++test_expect_success 'guesses main branch name correctly' '
++	git init --main-branch=guess main-branch &&
++	test_commit -C main-branch no-spoilers &&
++	git -C main-branch branch abc guess &&
++	git clone main-branch is-it &&
++	test guess = $(git -C is-it config core.mainBranch) &&
++	test refs/heads/guess = $(git -C is-it symbolic-ref HEAD)
 +'
 +
  test_done
