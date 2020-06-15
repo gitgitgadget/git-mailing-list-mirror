@@ -2,100 +2,71 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69917C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 11:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2FC9C433DF
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 11:31:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4562F20707
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 11:15:22 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eo+0aFAl"
+	by mail.kernel.org (Postfix) with ESMTP id 889C920663
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 11:31:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728582AbgFOLPU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 07:15:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36046 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728304AbgFOLPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 07:15:20 -0400
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5123EC061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 04:15:19 -0700 (PDT)
-Received: by mail-qv1-xf44.google.com with SMTP id di13so7502359qvb.12
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 04:15:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kzT435fDSRn0U0QRqGqbBu4GNpBa5CWR7ZEf3SCFrrc=;
-        b=eo+0aFAlbLkD5u9Ap8pzb/dEJhMuKhhSiZUDOUWwyKia1JTAiSaX6LEJDoOAyT/WWa
-         FUmCluWshU+jKJUxB0lMVNYlIl6z31oVhwDWyec+orc79e+Rp4p34V96pdkPV7GEXgmi
-         LMWqd5TfIryX9k0JqEhKM1qll1ocPyZYVDzQyzqFuHeYtVEe3Xm36J9XwFxWcZnty0NQ
-         GVu3aCbQh4vz947MYi2FKYF893Fw0hoZ3B6z0+t5MN9ZI2xKeFsWRTcmPdfpN0AuBDg9
-         RPi/Mie2ifPidD6nuDRnI310ptlDzn54rKo2YgdNyIKtIU7SH7mHLN5XgaQntyp3W485
-         ZVzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kzT435fDSRn0U0QRqGqbBu4GNpBa5CWR7ZEf3SCFrrc=;
-        b=bxk9Bh0xJ+qxRPwP8PJkfaVGtKgDsZSm9unYOsuOHQgnvc8BeAmNCZBAiBItVfxzvG
-         jdI2TLSX/ft+y2404Zb1M6LjRtozpqUiLvX6t8iNXKtwhZfl8EnbwZPtMMQtRTGzsXOw
-         t764xmk1nfPQCH+Y+viC0o2p8JF1JrwstaC0fZXUeMq2OpLTCxQJRODdaShI5OvHBT+0
-         O8KipkZQVPRuvWpj7uoRgD7veCytO14Nvd2/LhJi8RODXCjjr/OuQmzPbfjEB4Q9p+4a
-         c4hJurb3LOBhAI6ctKJ3BmZ5ZUmMh2Bb49MaDIuHnUoxe6DPBn6rco36YmsplRR6/6Az
-         nkug==
-X-Gm-Message-State: AOAM532RZZYxM+nVwFhHBuPA1R61VV576YdXCf1qH1Sr65xxFdEG4Fxo
-        3wfWaN5SurMqmY6qHRPxb3aXwVfc2+M=
-X-Google-Smtp-Source: ABdhPJwNGcsWWNo/jdJ5ZpRyOp9VjFGKku54SdDviGTJAk9N5y+hENNFOJuNEZO19axNXN4oW85RjQ==
-X-Received: by 2002:ad4:4a6e:: with SMTP id cn14mr23254089qvb.79.1592219717758;
-        Mon, 15 Jun 2020 04:15:17 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id h77sm11350788qke.37.2020.06.15.04.15.16
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 04:15:17 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH] builtin/diff: fix incorrect comment
-Date:   Mon, 15 Jun 2020 07:15:07 -0400
-Message-Id: <a9aea5dbb821544eea636bc5de9fe8185bb603fb.1592219700.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.132.g321788e831
+        id S1729623AbgFOLbw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 07:31:52 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:32291 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728304AbgFOLbw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 07:31:52 -0400
+Received: from host-89-243-191-101.as13285.net ([89.243.191.101] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1jknLC-0007SP-Dt; Mon, 15 Jun 2020 12:31:50 +0100
+Subject: Re: Collaborative conflict resolution feature request
+To:     "Curtin, Eric" <Eric.Curtin@dell.com>,
+        Konstantin Tokarev <annulen@yandex.ru>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Geary, Niall" <Niall.Geary@dell.com>,
+        "rowlands, scott" <Scott.Rowlands@dell.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        "Coveney, Stephen" <Stephen.Coveney@Dell.com>
+References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
+ <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
+ <xmqqa716zs7w.fsf@gitster.c.googlers.com> <30661592138737@mail.yandex.ru>
+ <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <c4ebf430-a69d-3d46-bfb9-37c9ece9f519@iee.email>
+Date:   Mon, 15 Jun 2020 12:31:48 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A comment in cmd_diff() states that if one tree-ish and no blobs are
-provided, it would provide a diff between the tree and the cache. This
-is incorrect because a diff happens between the tree-ish and the working
-tree. Remove the `--cached` in the comment so that the correct behavior
-is shown.
+On 15/06/2020 10:28, Curtin, Eric wrote:
+> I think in order to create collaborative distributed conflict resolution,
+> you'd probably need a new type of commit a "partial-merge" commit,
+> that is like a pseudo-commit that you can push and doesn't break
+> builds. It would be a neat feature, at least for my team!
+One thing I did note, from your prompting, is that merge doesn't take
+any `-- <files>` options which could allow a quick way of selecting just
+the few files that you, or the specific dev, is able to merge, so as to
+create a partial merge on your side branch, and leave behind the
+remaining difficult conflicts to be resolved later by the appropriate
+dev in a sequence of rolling partial merges.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- builtin/diff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It could be effectively a special strategy. IIUC the '--' separator is
+already supported by the underlying parser code, so may not be that
+hard? (perhaps a local contribution to the codebase;-). Just a thought.
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 8537b17bd5..1ebab58c55 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -276,7 +276,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	 *	compare a blob with a working tree file.
- 	 *
- 	 * N=1, M=0:
--	 *      tree vs cache (diff-index --cached)
-+	 *      tree vs files (diff-index)
- 	 *
- 	 * N=2, M=0:
- 	 *      tree vs tree (diff-tree)
--- 
-2.27.0.132.g321788e831
-
+Philip
