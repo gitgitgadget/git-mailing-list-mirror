@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE8CEC433E0
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB721C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DE8220707
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A82D5206B7
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IUy6Z7yj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KA4+ZCMZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729617AbgFOK5y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 06:57:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33350 "EHLO
+        id S1729534AbgFOK55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 06:57:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729599AbgFOK5t (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729354AbgFOK5t (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 15 Jun 2020 06:57:49 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1265C05BD1E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:48 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id q19so16918207eja.7
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:48 -0700 (PDT)
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C252C08C5C2
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:49 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id f7so16931606ejq.6
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fl55+w0m7vzo2xduM/elUX34+DvIdqum/I5CP31l3Gw=;
-        b=IUy6Z7yjAsQd63zzqllC5OWG+rOn0cf3l/3wFVH4yWILSQMEy2hjRDaKr41462Rokh
-         WNecCENo4/gWS6tCQO3StdEHYUdX3rnawETD2uoJsOfbw8Quckk5CKYFQi+rdiv0DKHM
-         ZfrAYopy0JFvxO2DztP35RgAVxRQkjZmyt/fQL699EPyCv8xaZcDqARUJvUe/gj11Dn4
-         YR2Rzaa3lS/xsGJYFBj/OLErnIX1bAqo6aZUe2EPy1oYuE2zf7AiuDKBv/ZWicikymcI
-         MFcFqe27pLvP+pLYZpd8fGRqNnEFD/ufW8fmdstdbM9uu9GZIIMmT9CvlwQFf9lJyEnN
-         ap4Q==
+        bh=r43m2yxYlbGAKJwzgsddPndCXqdlS15ECGuS7g+K0+4=;
+        b=KA4+ZCMZuR71tl3RrKYaXgrtOcSZATDT9wnZC2CfQBBMJcMbAcnuf7GKXhrRueSEjx
+         dB+mn9UCUFkTFHISycjMph0g0XwTyC5kxqFmOCdNWTzAL6UmZei6e9sm+bMp51Z/g/T5
+         M94UYN5hpNjVDq3rv54mC/NISlHMqF8ofJwYABj6n73w2e5oNhW9zbXk3MEq84exHkqU
+         ip9+QKZUD1WHpn11Q7+IFKocohV+uCBjBi4mr85xjFtMbrwB30OVjxpC3rQSySjXY9UP
+         pf1qJ0MKLcE63zEl3UG+nN//SunANMBwFMStIpTf0kN1fkidxFRaWWfcSwfAsKncZ30L
+         LODA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fl55+w0m7vzo2xduM/elUX34+DvIdqum/I5CP31l3Gw=;
-        b=EDf7Nx1zgQawKU2tjU5qDOYudXpOD/TrkmNHid0U372DRcVqqHIRReCm/wVBMkCQOE
-         rOBwQqQ8OfwB1Y4R9H/Mm9xTpHoEwsA4WODaQHvOzTdxZlGh5Zk5LmXH1u4JLDyDZOWM
-         pT09MgS8wIqk3wxnO/vX7k4hlOPV/sPBR0cWWYaGqwNNBuoEZswiTLkjHZo6DGuJgTeM
-         OuGfiPydyfvFix23kL+A+/WipLEFfxpTqElsy33SEshYqF2mOw3ZPPUJshq3NxCRB+Aw
-         7GwDnOchT3H1qdP2oKFF+cfKH4qPnMGgexnaJ4aJrgqJ59VDMcFeHUvrt6KgHarT0e4/
-         AIWg==
-X-Gm-Message-State: AOAM5334G1OJ2sfxu9BFclYk0DvLU1K7Vn7+quVKKyMgCKLrSFGgwfgK
-        iqN6YFsTjYOcNlvIJYmFEnGOBGa2
-X-Google-Smtp-Source: ABdhPJwA67HY/gzZhphQHrD+kcU9zvXQ7BRi7+n3ng1sGta3/lWPJLZMCSdustN3Z13J0Bnj5q25ww==
-X-Received: by 2002:a17:906:328a:: with SMTP id 10mr5912778ejw.265.1592218664519;
-        Mon, 15 Jun 2020 03:57:44 -0700 (PDT)
+        bh=r43m2yxYlbGAKJwzgsddPndCXqdlS15ECGuS7g+K0+4=;
+        b=sq87hUkm0AMZ3oWX045JvHT244PeyG66TkyaFbc+/EMvMN+hHVH4RWcbgCiwRwCCP/
+         5eEgR6fVc1i3L6VNwvPvr8ZcBQU+o3jQ4CykTfYJHOhlCgQItDN5gzurq3D9PPJuyuA1
+         wF4C6xIWsWupTSrk4iRRcuboW69cklQq2QOi8j57KhDKrWd2yhGGWMGBvHoYChh8AwKq
+         g5mthvpYnusLLqDezjFw6JlqSksSuOdCZeP62e2G7ah6PR3HK0OY+rBmYVPTeS54S0sO
+         ccxHe47aVNJ7e87MOyN0BUFS9tbJ6dKwhsit4oiEbfIDQZ7qHWaSgDG3HlL6dL8ZNRtK
+         4WoA==
+X-Gm-Message-State: AOAM533PoUAoOhOwJ3/J7w45tty46mEkxfgixFxTJ9ebRZzI1MC3UV5P
+        FkMztNwq9MZA/isPKz1csQa3wxem
+X-Google-Smtp-Source: ABdhPJwneSF2D2PeNoOStYBuk8LWJFO1ds+BOAG+YVnr2ka7GQpCC1HZ/xO5a/oJv+cDoIsGdsZQ9w==
+X-Received: by 2002:a17:907:4240:: with SMTP id oi24mr24342674ejb.127.1592218667603;
+        Mon, 15 Jun 2020 03:57:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bt11sm1374807edb.48.2020.06.15.03.57.43
+        by smtp.gmail.com with ESMTPSA id oq28sm8881774ejb.12.2020.06.15.03.57.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 03:57:44 -0700 (PDT)
-Message-Id: <a5ce1235a03a49ad394da8d227f5abf52ef3179a.1592218662.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2020 03:57:47 -0700 (PDT)
+Message-Id: <a83270485be2bebb1ce77be55ff73d136b735922.1592218662.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.658.git.1592218662.gitgitgadget@gmail.com>
 References: <pull.658.git.1592218662.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 10:57:38 +0000
-Subject: [PATCH 1/5] builtin/log: new config log.useRefFilter
+Date:   Mon, 15 Jun 2020 10:57:42 +0000
+Subject: [PATCH 5/5] pretty-lib: print commits using ref-filters logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,57 +77,178 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-Add a new boolean config variable "log.useRefFilter"
-for `log` command, allowing log to switch to use ref-filters
-logic.
+This change intends to use ref-filters logic to print commits.
 
-*experimental*
+Add `ref_pretty_print_commit()` which might be a future possible replacement
+for `pretty_print_commit()`.
+
+This is an introductory commit. Some features of `git log` might not work.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- Documentation/config/log.txt | 4 ++++
- builtin/log.c                | 7 +++++++
- 2 files changed, 11 insertions(+)
+ Makefile     |  1 +
+ log-tree.c   |  7 ++++-
+ pretty-lib.c | 84 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pretty-lib.h | 21 +++++++++++++
+ 4 files changed, 112 insertions(+), 1 deletion(-)
+ create mode 100644 pretty-lib.c
+ create mode 100644 pretty-lib.h
 
-diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
-index 208d5fdcaa6..603f635df86 100644
---- a/Documentation/config/log.txt
-+++ b/Documentation/config/log.txt
-@@ -48,3 +48,7 @@ log.mailmap::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `--use-mailmap`, otherwise
- 	assume `--no-use-mailmap`. True by default.
-+
-+log.useRefFilter::
-+	[EXPERIMENTAL] If true, forces `git log` to use ref-filter's logic.
-+	Is `false` by default.
-diff --git a/builtin/log.c b/builtin/log.c
-index d104d5c6889..4eb13d1ef88 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -39,6 +39,9 @@
- #define MAIL_DEFAULT_WRAP 72
- #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
+diff --git a/Makefile b/Makefile
+index 372139f1f24..bcc65e87827 100644
+--- a/Makefile
++++ b/Makefile
+@@ -943,6 +943,7 @@ LIB_OBJS += pathspec.o
+ LIB_OBJS += pkt-line.o
+ LIB_OBJS += preload-index.o
+ LIB_OBJS += pretty.o
++LIB_OBJS += pretty-lib.o
+ LIB_OBJS += prio-queue.o
+ LIB_OBJS += progress.o
+ LIB_OBJS += promisor-remote.o
+diff --git a/log-tree.c b/log-tree.c
+index 55a68d0c610..663056664f9 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -17,6 +17,7 @@
+ #include "help.h"
+ #include "interdiff.h"
+ #include "range-diff.h"
++#include "pretty-lib.h"
  
-+/* Set true to use ref-filter's logic in git log */
-+static int log_use_ref_filter;
+ static struct decoration name_decoration = { "object names" };
+ static int decoration_loaded;
+@@ -756,7 +757,11 @@ void show_log(struct rev_info *opt)
+ 		ctx.from_ident = &opt->from_ident;
+ 	if (opt->graph)
+ 		ctx.graph_width = graph_width(opt->graph);
+-	pretty_print_commit(&ctx, commit, &msgbuf);
 +
- /* Set a default date-time format for git log ("log.date" config variable) */
- static const char *default_date_mode = NULL;
++	if (opt->use_ref_filter)
++		ref_pretty_print_commit(&ctx, commit, &msgbuf);
++	else
++		pretty_print_commit(&ctx, commit, &msgbuf);
  
-@@ -489,6 +492,10 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 		default_show_signature = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "log.usereffilter")) {
-+		log_use_ref_filter = git_config_bool(var, value);
-+		return 0;
+ 	if (opt->add_signoff)
+ 		append_signoff(&msgbuf, 0, APPEND_SIGNOFF_DEDUP);
+diff --git a/pretty-lib.c b/pretty-lib.c
+new file mode 100644
+index 00000000000..abe4228290b
+--- /dev/null
++++ b/pretty-lib.c
+@@ -0,0 +1,84 @@
++#include "commit.h"
++#include "ref-filter.h"
++#include "pretty-lib.h"
++
++static size_t convert_format(struct strbuf *sb, const char *start, void *data)
++{
++	/* TODO - Add support for more formatting options */
++	switch (*start) {
++	case 'H':
++		strbuf_addstr(sb, "%(objectname)");
++		return 1;
++	case 'h':
++		strbuf_addstr(sb, "%(objectname:short)");
++		return 1;
++	case 'T':
++		strbuf_addstr(sb, "%(tree)");
++		return 1;
++	case 'P':
++		strbuf_addstr(sb, "%(parent)");
++		return 1;
++	case 'a':
++		if (start[1] == 'n')
++			strbuf_addstr(sb, "%(authorname)");
++		else if (start[1] == 'e')
++			strbuf_addstr(sb, "%(authoremail)");
++		else if (start[1] == 'd')
++			strbuf_addstr(sb, "%(authordate)");
++		else
++			die(_("invalid formatting option '%c'"), *start);
++		return 2;
++	case 'c':
++		if (start[1] == 'n')
++			strbuf_addstr(sb, "%(committername)");
++		else if (start[1] == 'e')
++			strbuf_addstr(sb, "%(committeremail)");
++		else if (start[1] == 'd')
++			strbuf_addstr(sb, "%(committerdate)");
++		else
++			die(_("invalid formatting option '%c'"), *start);
++		return 2;
++	case 's':
++		strbuf_addstr(sb, "%(subject)");
++		return 1;
++	case 'b':
++		strbuf_addstr(sb, "%(body)");
++		return 1;
++	case 'n':
++		strbuf_addstr(sb, "\n");
++		return 1;
++	default:
++		die(_("invalid formatting option '%c'"), *start);
 +	}
- 
- 	if (grep_config(var, value, cb) < 0)
- 		return -1;
++}
++
++void ref_pretty_print_commit(struct pretty_print_context *pp,
++			 const struct commit *commit,
++			 struct strbuf *sb)
++{
++	struct ref_format format = REF_FORMAT_INIT;
++	struct strbuf sb_fmt = STRBUF_INIT;
++	const char *name = "refs";
++	const char *usr_fmt = get_user_format();
++
++	if (pp->fmt == CMIT_FMT_USERFORMAT) {
++		strbuf_expand(&sb_fmt, usr_fmt, convert_format, NULL);
++		format.format = sb_fmt.buf;
++	} else if (pp->fmt == CMIT_FMT_DEFAULT || pp->fmt == CMIT_FMT_MEDIUM) {
++		format.format = "Author: %(authorname) %(authoremail)\nDate:\t%(authordate)\n\n%(subject)\n\n%(body)";
++	} else if (pp->fmt == CMIT_FMT_ONELINE) {
++		format.format = "%(subject)";
++	} else if (pp->fmt == CMIT_FMT_SHORT) {
++		format.format = "Author: %(authorname) %(authoremail)\n\n\t%(subject)\n";
++	} else if (pp->fmt == CMIT_FMT_FULL) {
++		format.format = "Author: %(authorname) %(authoremail)\nCommit: %(committername) %(committeremail)\n\n%(subject)\n\n%(body)";
++	} else if (pp->fmt == CMIT_FMT_FULLER) {
++		format.format = "Author:\t\t%(authorname) %(authoremail)\nAuthorDate:\t%(authordate)\nCommit:\t\t%(committername) %(committeremail)\nCommitDate:\t%(committerdate)\n\n%(subject)\n\n%(body)";
++	}
++
++	format.need_newline_at_eol = 0;
++
++	verify_ref_format(&format);
++	pretty_print_ref(name, &commit->object.oid, &format);
++	strbuf_release(&sb_fmt);
++}
+diff --git a/pretty-lib.h b/pretty-lib.h
+new file mode 100644
+index 00000000000..324499b1150
+--- /dev/null
++++ b/pretty-lib.h
+@@ -0,0 +1,21 @@
++#ifndef PRETTY_LIB_H
++#define PRETTY_LIB_H
++
++/**
++ * This is a possibly temporary interface between
++ * ref-filter and pretty. This interface may disappear in the
++ * future if a way to use ref-filter directly is found.
++ * In the meantime, this interface would enable us to
++ * step by step replace the formatting code in pretty by the
++ * ref-filter code.
++*/
++
++/**
++ * Possible future replacement for "pretty_print_commit()".
++ * Uses ref-filter's logic.
++*/
++void ref_pretty_print_commit(struct pretty_print_context *pp,
++			const struct commit *commit,
++			struct strbuf *sb);
++
++#endif /* PRETTY_LIB_H */
 -- 
 gitgitgadget
-
