@@ -2,93 +2,123 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B15FBC433DF
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30DF6C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:10:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8417C206B7
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:00:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0816F2068E
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:10:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="fWbvGpVT"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pbXTLdP4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726447AbgFOXA2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 19:00:28 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:57492 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725960AbgFOXA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 19:00:27 -0400
-Received: from [10.0.2.15] ([217.32.115.138])
-        by smtp with ESMTPA
-        id ky5VjREEu0wwMky5WjEVNo; Tue, 16 Jun 2020 00:00:25 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1592262025; bh=XQX2pEwnuFpXV457nPBhISZ22y4PgZlrqEwX4Z9XEuo=;
-        h=To:Cc:From:Subject:Date;
-        b=fWbvGpVT7bu6LgQ6QKwLrnpw/5xctbmHcHUq1RZuB3hSjs7k6J0wHvz8Ylyf2wq38
-         /DJWBeWA4Y+ggr8WGNBLyd9otNY9BItGzyptw5vj2XWViFf7+RGOS3yZfkwl5qGuxG
-         84j9d/HuVYiRplHs0aKOwXcxQnozQS/OJTxLbnPLvSS3Gzmrz/0revtAqHM4hfREPi
-         Gs0xaj4NNtgZOB4O+UncH6Opcxbycp6xZ8518LOcfVdGLaKZ0zof4HQ7ueYP2ifbXU
-         fPueSYZe+HcB1lX7Jx3ng1XWK369BfSMqNNj+tqXDPfSgJ+Mc/hjFg+S2sRQWaMqUY
-         obpKX48Sr6qzg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=b/4pHuOx c=1 sm=1 tr=0
- a=T9WNts+jH3PhiGdS1gtV5Q==:117 a=T9WNts+jH3PhiGdS1gtV5Q==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=QMTOO-xQpH9P0Wc2a6AA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] upload-pack: fix a sparse '0 as NULL pointer' warning
-Message-ID: <494e000a-17a5-b730-b032-1fc0e8690c07@ramsayjones.plus.com>
-Date:   Tue, 16 Jun 2020 00:00:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1726651AbgFOXK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 19:10:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39322 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725960AbgFOXK4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 15 Jun 2020 19:10:56 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5F6316048A;
+        Mon, 15 Jun 2020 23:10:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1592262656;
+        bh=dUklA8aUBBAjrQaRbbQoc6juJzz9RjvdB0YxCXiehjM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=pbXTLdP4wLwWf4jE/yzEaRx00J62y9li4VwSequXPDJ35o9TpphneC3Dvp6RSrTFO
+         XI81KngfcQ1/aFTkyi93Z5mBGgNEAaQnbiZ6//bsSRg3Z1LUzHX30ySHIk9a2Qeioq
+         GbdmrkZBR5fsv4Lkd3M1ipR8fGPMV7zsImxAfRF85k8v69gxx2NzB5HyIWAtMqoH2L
+         ubsML9BAdidu68Fh6xcjNtXpTPjtYxNpUsDrVjCkpuW/BuZOH1DG5PexQhyKdujk4p
+         xsxht0LPHXuVa4+Gz+clChd00ka3nRxuY1Vt+mhg5FeCJ40jj479SXj+14zYAyqnja
+         fCsY0T3LPaudqDjC5Sgg7q7YeHNESuA4ZASUAHh1mbZ1DPtX7gbXyXLGstD11R2FKQ
+         HWXhchEpBBY2HpFsBOArp/5wUXKHb+qia/jFxWvHc+zm1ITArdnU6fb8fauZtGacQG
+         ctPb0dAN9+pnpSVf+WQ3qhvPLq/tMHZHceiktg8gXXcDnrJBvuY
+Date:   Mon, 15 Jun 2020 23:10:49 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
+ branch
+Message-ID: <20200615231049.GE6531@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+ <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfC24aNLEFyrFPTJaUKgMxc2Xsj7uwmKE0zlo4IoKuB7JBZafJZPQUh5gjcDdGQFOK0mYmYe3yJNFYUhiSMZsxijIoC6GHQdO+T4v06uMqRaGtr4fWfKG
- 8/SuokxbTBdFQgCgEbpsYwmDNnZDPG2jZOpDZhJyzd2gJzUyzsXXVGQK0kqy9u0M3jsYFsFyEgh5uw==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="DqhR8hV3EnoxUkKN"
+Content-Disposition: inline
+In-Reply-To: <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+--DqhR8hV3EnoxUkKN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jonathan,
+On 2020-06-15 at 10:03:27, Pratyush Yadav wrote:
+> For example, my vim plugins are submodules in the '~/.vim/bundle'
+> directory. When I want to update them, I run:
+>=20
+>   git submodule foreach 'git remote update && git reset --hard origin/mas=
+ter'
+>=20
+> With this change hitting a Git release, more and more people would call
+> their main branch different names they like. So what is the recommended
+> way to do something like this now? How do I checkout the tip of the main
+> branch? How do I push to the main branch? How do I pull from the main
+> branch? And so on...
 
-If you need to re-roll your 'jt/cdn-offload' branch, could you please
-squash this into the relevant patch (commit dd4b732df7 (upload-pack: send
-part of packfile response as uri, 2020-06-10)).
+This is a common issue that's long existed but may become more common as
+people change their branches.  I believe when you clone that it by
+default pulls down a HEAD reference for the remote.  So you can use
+origin/HEAD (a symref) in this case to use the correct default branch,
+whatever it may be called.  Then your code doesn't have to care about
+the actual name, which is probably better anyway.
 
-Thanks!
+If you want to know the actual name, you can use this: git rev-parse
+--abbrev-ref origin/HEAD.
 
-ATB,
-Ramsay Jones
+If the owner of the repository chooses to change that name or if you
+lack the HEAD reference for a remote, you can fix it with "git remote
+set-head origin -a".
 
- upload-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'll see if I can find time this week to work up a FAQ entry about how
+to do this, since it seems to be a common question folks have.  I myself
+wasn't aware of "git remote set-head" until the other day, so I don't
+expect others to be familiar with it, either.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-diff --git a/upload-pack.c b/upload-pack.c
-index b4fd85fb9a..951a2b23aa 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1246,7 +1246,7 @@ void upload_pack(struct upload_pack_options *options)
- 		receive_needs(&data, &reader);
- 		if (data.want_obj.nr) {
- 			get_common_commits(&data, &reader);
--			create_pack_file(&data, 0);
-+			create_pack_file(&data, NULL);
- 		}
- 	}
- 
--- 
-2.27.0
+--DqhR8hV3EnoxUkKN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXuf/+QAKCRB8DEliiIei
+gW6TAPsF9kTNTGAZEVwRANRMHC9YVXssN/iITCs9REp7l2mPDgD/fuNWJU2yn77C
+iwuhEgJb5MyZMjZbfKyP371KM6uh0wA=
+=yn56
+-----END PGP SIGNATURE-----
+
+--DqhR8hV3EnoxUkKN--
