@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88A05C433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED42EC433E0
 	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DEC82074D
+	by mail.kernel.org (Postfix) with ESMTP id CC2AA206B7
 	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGg2pJrT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gx/14rRw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729997AbgFOMu3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 08:50:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50674 "EHLO
+        id S1729999AbgFOMua (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 08:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729822AbgFOMuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 08:50:23 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18E74C061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:22 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id y17so16964639wrn.11
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:22 -0700 (PDT)
+        with ESMTP id S1729973AbgFOMu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 08:50:26 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A4CEC08C5C2
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:24 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id l17so14528728wmj.0
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5eciXjP3A0kZgZdCkbG3UajYVXze7AY+JNBAkYkxsJM=;
-        b=cGg2pJrTT8yzDxUEp+rosJenOVi43RSLZ3oPdTNQhOdQreCVo7YJYdusseCDNWVNgd
-         /2LJE1WVxThTBNQUOZ5iD4stw9bwVWkut+b1kCeWVlp4rrJc586leGiGkjdy1eyPYAgP
-         swolbHg8bx/TIxuX2n/mnByh8R+G7IgeDAKqaD/dSIxOPqjT6J0hzW2pFMfOxCTWOnrR
-         RBu54Ej+rYlGIPW75pCIgvUu+kU3WVP7lcl0ynPT6Yc+VZ9IV3YUbQBjqMQ1Qko/fZ/R
-         E4B9PiHPftP3MIFI+UEosk41XJv1nryIyec3P4MdBZ4bXb/ToVydHlv4y3rS1/rbXThZ
-         WHKw==
+        bh=pB4Zzq+iSN46ZNzJn6oMCB4ZWQ4ZpdYh9fLS2uFvHro=;
+        b=gx/14rRwmlMJi79bIqoljsNEPZraaGOCN3gpLVpKnAsre4r6ZXZ+ED8JaclhpD8OgV
+         A6CrX+nSsw0DxQQc8eyNTRbhklLSXuJ9u22nHw6aCwNORHKnALxceT4tI2kcJCAPtFQ6
+         yJn09g7cEQuCwhecrHIYv1Pph+vM9dIn2XTc+1JoVsdlORJjO5j1DEoJTFJ5VkaTPQS/
+         sJ/KhvfwtVgm7HXS1H6EuIJ7TSBRUhzJ/zbBhQXxglOjuJHxX0aQUhDsA+xQI3VY0DHR
+         h7sNrMhrE3dbZ5dZSiv4YUK93imTyLHMP/IfvBSLHspKzkNcnQl+yhdkyAgZVF4DGOxe
+         FmKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5eciXjP3A0kZgZdCkbG3UajYVXze7AY+JNBAkYkxsJM=;
-        b=kpSBUhBptKqPOzzS3C21ggMP7fApg6j9elvmu4YqDFkG4dc2rNzINiarvkPrt9XtcY
-         kM/Y7ZvDPw/DzmK4GDyTpj9LtOCuTANPI+JKGbGqZarw+fc8qtX99bNanP2+p3mqa8ma
-         FWfasp7IleL3/XXJzCh37Ql4oB0YnvTzeOYYi8ARcX128YJw2KrtjuGYkfxXGIdwOeQl
-         5GRjbgow8xiT4U4EztfU+uBLTvnaRKKWLaWTZQxvxLdYvmZCyjvTiQC0erO/flKn5Nee
-         qBvfFOn2H7rLGIN9C3SQBfmvvnfzTKO/s93g9jsGQFz/SFNPQqM+KwL/rGHE4mAwfxKw
-         y8Kg==
-X-Gm-Message-State: AOAM531l9ujizwpDbnewqtZSX+WcWNowuHNr67SBd0MthCJgxUHv1aWO
-        De+as0WEjap2W4wXZSO4J3GvyLpL
-X-Google-Smtp-Source: ABdhPJxgC4/tbUw883BqKh+K7fZFMq5urafAJjaeFDQ4HiA2HaPp6Ei5NA0VMZYxViSTbYgZXRcX9A==
-X-Received: by 2002:a5d:6750:: with SMTP id l16mr28658307wrw.295.1592225420584;
-        Mon, 15 Jun 2020 05:50:20 -0700 (PDT)
+        bh=pB4Zzq+iSN46ZNzJn6oMCB4ZWQ4ZpdYh9fLS2uFvHro=;
+        b=S3hv5RnxsWDeBZVBZE60WMUcRTR/ffPd1tUz/P/VzPOfq5h+q82gze3lZcdp4X1nrr
+         McLh+qxynPk/yVWEYDx8NYUWrQVLK1Lned3CpAmKMEJe/lxrdFjDqAvLp8dfoAeEjqqh
+         uPc4l7norWelmPX7MGQVLIlvzuGlbxoYSyJ4QFzWy2ao550NBedIv3CWntLex4XBQmzE
+         7qMJdD/QqJP8sWJP9ddIH3Gn/7crGKDEBCd495dF2OHUitOkN2m47M9qKCOieD3OLtiD
+         Gyp96tHDhJHdbVBy229SJKyGnvKvfBnzHWC4gBlmi51KOQFVitMmFx/koxgpF/2jcv8M
+         IXPw==
+X-Gm-Message-State: AOAM532bi/PdK5tpKUhRPAMK8l0AVlQg6WEzPqSQBQYpXsVBHx1dmWF2
+        D87T/shSDdcsgi6i8Z+KxRvKZjGp
+X-Google-Smtp-Source: ABdhPJyovDNAveuirDs9vidZptDXquTyrNTiIEmrhvAnhgByYNRmaeSD7NLVs+7RfytauR3ggjadGQ==
+X-Received: by 2002:a7b:cb05:: with SMTP id u5mr7125907wmj.169.1592225423147;
+        Mon, 15 Jun 2020 05:50:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c6sm23670828wma.15.2020.06.15.05.50.19
+        by smtp.gmail.com with ESMTPSA id z7sm23928571wrt.6.2020.06.15.05.50.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 05:50:19 -0700 (PDT)
-Message-Id: <f4d547391537e5c3b0b4a07adb41b6aa56541fc3.1592225416.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2020 05:50:22 -0700 (PDT)
+Message-Id: <a3be4f39aa240e614a2e12756e1ea864c35137a2.1592225416.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
         <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 12:50:06 +0000
-Subject: [PATCH v2 02/12] fmt-merge-msg: introduce a way to override the main
- branch name
+Date:   Mon, 15 Jun 2020 12:50:09 +0000
+Subject: [PATCH v2 05/12] fast-export: handle overridden main branch names
+ correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,150 +86,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-There is a growing number of projects and companies desiring to change
-the main branch name of their repositories (see e.g.
-https://twitter.com/mislav/status/1270388510684598272 for background on
-this).
+When anonymizing commit history, we are careful to translate the main
+branch name to `ref0`.
 
-However, there are a couple of hard-coded spots in Git's source code
-that make this endeavor harder than necessary. For example, when
-formatting the commit message for merge commits, Git appends "into
-<branch-name>" unless the current branch is the `master` branch.
-
-Clearly, this is not what one wants when already having gone through all
-the steps to manually rename the main branch (and taking care of all the
-fall-out such as re-targeting existing Pull Requests).
-
-Let's introduce a way to override Git's hard-coded default:
-`core.mainBranch`.
-
-We will start supporting this config option in the `git fmt-merge-msg`
-command and successively adjust all other places where the main branch
-name is hard-coded.
+When the main branch name is overridden via the config, we will want
+`git fast-export` to use that overridden name instead.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config/core.txt |  5 +++++
- fmt-merge-msg.c               |  6 ++++--
- refs.c                        | 27 +++++++++++++++++++++++++++
- refs.h                        |  7 +++++++
- t/t6200-fmt-merge-msg.sh      |  7 +++++++
- 5 files changed, 50 insertions(+), 2 deletions(-)
+ builtin/fast-export.c            | 11 ++++++++++-
+ t/t9351-fast-export-anonymize.sh |  6 ++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 74619a9c03b..32bb5368ebb 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -626,3 +626,8 @@ core.abbrev::
- 	in your repository, which hopefully is enough for
- 	abbreviated object names to stay unique for some time.
- 	The minimum length is 4.
-+
-+core.mainBranch::
-+	The name of the main (or: primary) branch in the current repository.
-+	For historical reasons, `master` is used as the fall-back for this
-+	setting.
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index 72d32bd73b1..43f4f829242 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -407,7 +407,7 @@ static void fmt_merge_msg_title(struct strbuf *out,
- 				const char *current_branch)
- {
- 	int i = 0;
--	char *sep = "";
-+	char *sep = "", *main_branch;
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 1072bbf041f..deeb01b6937 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -515,14 +515,23 @@ static const char *anonymize_refname(const char *refname)
+ 	};
+ 	static struct hashmap refs;
+ 	static struct strbuf anon = STRBUF_INIT;
++	static char *main_branch;
+ 	int i;
  
- 	strbuf_addstr(out, "Merge ");
- 	for (i = 0; i < srcs.nr; i++) {
-@@ -451,10 +451,12 @@ static void fmt_merge_msg_title(struct strbuf *out,
- 			strbuf_addf(out, " of %s", srcs.items[i].string);
- 	}
+ 	/*
+ 	 * In certain circumstances, it might be interesting to be able to
+ 	 * identify the main branch. For that reason, let's force its name to
+ 	 * be anonymized to `ref0`.
++	 *
++	 * While the main branch name might often be `main` for new
++	 * repositories (and `master` for aged ones), and such well-known names
++	 * may not necessarily need anonymizing, it could be configured to use
++	 * a secret word that the user may not want to reveal.
+ 	 */
+-	if (!strcmp(refname, "refs/heads/master"))
++	if (!main_branch)
++		main_branch = git_main_branch_name(MAIN_BRANCH_FULL_NAME);
++
++	if (!strcmp(refname, main_branch))
+ 		return "refs/heads/ref0";
  
--	if (!strcmp("master", current_branch))
-+	main_branch = git_main_branch_name();
-+	if (!strcmp(main_branch, current_branch))
- 		strbuf_addch(out, '\n');
- 	else
- 		strbuf_addf(out, " into %s\n", current_branch);
-+	free(main_branch);
- }
- 
- static void fmt_tag_signature(struct strbuf *tagbuf,
-diff --git a/refs.c b/refs.c
-index 224ff66c7bb..f1854cffa2f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -560,6 +560,33 @@ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix)
- 		argv_array_pushf(prefixes, *p, len, prefix);
- }
- 
-+char *repo_main_branch_name(struct repository *r)
-+{
-+	const char *config_key = "core.mainbranch";
-+	const char *config_display_key = "core.mainBranch";
-+	const char *fall_back = "master";
-+	char *name = NULL, *ret;
-+
-+	if (repo_config_get_string(r, config_key, &name) < 0)
-+		die(_("could not retrieve `%s`"), config_display_key);
-+
-+	ret = name ? name : xstrdup(fall_back);
-+
-+	if (check_refname_format(ret, REFNAME_ALLOW_ONELEVEL))
-+		die(_("invalid branch name: %s = %s"),
-+		    config_display_key, name);
-+
-+	if (name != ret)
-+		free(name);
-+
-+	return ret;
-+}
-+
-+char *git_main_branch_name(void)
-+{
-+	return repo_main_branch_name(the_repository);
-+}
-+
- /*
-  * *string and *len will only be substituted, and *string returned (for
-  * later free()ing) if the string passed in is a magic short-hand form
-diff --git a/refs.h b/refs.h
-index a92d2c74c83..a207ef01348 100644
---- a/refs.h
-+++ b/refs.h
-@@ -154,6 +154,13 @@ int repo_dwim_log(struct repository *r, const char *str, int len, struct object_
- int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
- int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
- 
-+/*
-+ * Retrieves the name of the main (or: primary) branch of the given
-+ * repository.
-+ */
-+char *git_main_branch_name(void);
-+char *repo_main_branch_name(struct repository *r);
-+
- /*
-  * A ref_transaction represents a collection of reference updates that
-  * should succeed or fail together.
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index e4c2a6eca43..7a873f4a05c 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -158,6 +158,13 @@ test_expect_success 'setup FETCH_HEAD' '
- 	git fetch . left
+ 	strbuf_reset(&anon);
+diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
+index 2415f0ec213..f42be635c2f 100755
+--- a/t/t9351-fast-export-anonymize.sh
++++ b/t/t9351-fast-export-anonymize.sh
+@@ -31,6 +31,12 @@ test_expect_success 'stream translates master to ref0' '
+ 	! grep master stream
  '
  
-+test_expect_success 'with overridden default branch name' '
-+	test_when_finished "git switch master" &&
-+	git switch -c default &&
-+	git -c core.mainBranch=default fmt-merge-msg <.git/FETCH_HEAD >actual &&
-+	! grep "into default" actual
++test_expect_success 'respects configured main branch' '
++	git -c core.mainBranch=does-not-exist \
++		fast-export --anonymize --all >stream-without-ref0 &&
++	! grep ref0 stream-without-ref0
 +'
 +
- test_expect_success 'merge.log=3 limits shortlog length' '
- 	cat >expected <<-EOF &&
- 	Merge branch ${apos}left${apos}
+ test_expect_success 'stream omits other refnames' '
+ 	! grep other stream &&
+ 	! grep mytag stream
 -- 
 gitgitgadget
 
