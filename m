@@ -2,110 +2,112 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8FD9C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 00:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B70A0C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 00:34:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A470F20768
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 00:02:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C6F0206D7
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 00:34:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="quZ5l7DT"
+	dkim=pass (2048-bit key) header.d=jramsay.com.au header.i=@jramsay.com.au header.b="EZRk6JC9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uuJ0MrB4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728069AbgFOACy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Jun 2020 20:02:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728039AbgFOACy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jun 2020 20:02:54 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8EB9C05BD43
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 17:02:53 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id k22so11299667qtm.6
-        for <git@vger.kernel.org>; Sun, 14 Jun 2020 17:02:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:cc:references:subject:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=HmLDwyGp9g2tXjiy93kN9s6vH+EteTPCnzuBppOMR7w=;
-        b=quZ5l7DTkqQxu9ZAPyTfnTSYcWbudGuoxz22I1I66BQj03A+OQRftqJhCMQNrVB4aM
-         NKNx9uzdqBjYtr1jPqSrhe9UBtiYWivEphCQkcoFOxumBu8EJVJyP9OJzzOwmetiYxWN
-         iCmU40JsVjPxfnreJAYt2n1lMDsgEWBmIII7wT6q77bBJhu7T3qLDKlwTXZBglYL6QmI
-         49gVpvjH4Snpx3gqKNnftVzX4KN6XWqVnBxBVreq7B3xnDW/sTAP8gu/3pTPNSaq0FCR
-         baMskR4zjnG4IBen6Jron7OHTWZLKbEdv2yDOhItU5cQla/H8rfN8riPqhZh/xst1RMX
-         mH7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:subject:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=HmLDwyGp9g2tXjiy93kN9s6vH+EteTPCnzuBppOMR7w=;
-        b=dnS3ef+RIvYolPb+GCcn2qS2PJlH6KYk87BAOGY3wijD7cJ3cw4pUSQzSdU1OM358r
-         z3mQm0tNg2Fomf7WgQW0TEVhKP3yr54E7bSqdE/PW3JucRJf6+Kth/luoxK78iZcPlgD
-         RDCzcg3c8bsIEjZwANTCyfv4/EWvbNe0EZ3ZG2l46qWHcOxwVGg+Rv74O1oAdg7gHUqR
-         YJNWaYlXyt2m3ZviUZSQZC3p3NDd0aUtUoWjCku0tKxB87jhd6idvPEw80mqHrQo2Zvx
-         BNK6+b/04LM1IhWMFB8Ol0HehxoTw/0kSHqlvjkkHo49Hy3hMU+b14s/dJok7o8LQAZM
-         nLFA==
-X-Gm-Message-State: AOAM533Iu+p7ePf2FDI2TGOBXHSi3xeAc7WhWPuMFWi95HSUXSDGYzIv
-        rVdd2Oy7xR1lH58lJQESpkD5Jp98DWI=
-X-Google-Smtp-Source: ABdhPJwvztZGYcS2c9AWtWNspi37/jiZyKqyJFoUScmDi/KJ0G0hd77YSs5uvQ7q5WLCZW/eUqd6UQ==
-X-Received: by 2002:ac8:1ab9:: with SMTP id x54mr12926505qtj.371.1592179372728;
-        Sun, 14 Jun 2020 17:02:52 -0700 (PDT)
-Received: from [10.0.10.179] ([170.79.184.212])
-        by smtp.gmail.com with ESMTPSA id v69sm9676506qkb.96.2020.06.14.17.02.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 Jun 2020 17:02:52 -0700 (PDT)
-To:     simon@bocoup.com
-Cc:     git@vger.kernel.org
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+        id S1728014AbgFOAeh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Jun 2020 20:34:37 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:51679 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727951AbgFOAeg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 14 Jun 2020 20:34:36 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id AE4315C004F;
+        Sun, 14 Jun 2020 20:34:35 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Sun, 14 Jun 2020 20:34:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jramsay.com.au;
+         h=from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-type; s=fm1; bh=yEuU1s+KUcslXg0Df13B4RWfmu
+        +OVuYDn9T2cm+kHOc=; b=EZRk6JC9VEpJo7pNKQnAjvblaYOAXb/wTYKHgDI0Rw
+        tNApKeXg6hxTg726lOrbUtYuz8VC4U1WqtSZllB+6Ur7RKBCZcZTdywwT36tDI/2
+        VCAb1g6PhukdYYiB5rIbsVCCVxFUa8BVqEXYXFzkxi2w62n4xUOOH+c8fhBuvVA/
+        DMvgSwXDBIQEtYbBhSATH8EzUMP1sNHZV3ziQWvx+6UUitYHUNP7wV8ldNfJLOsR
+        tEcJIVbPT/JnD+TwXG32h1humkzUwkE8CMA1Q7ZaiBbJhik3UZ0p7GxS8/WdwOlM
+        je1z430rmibUXC6cSOltm/kQs/Q4odsYCBcC/eflZp/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=yEuU1s
+        +KUcslXg0Df13B4RWfmu+OVuYDn9T2cm+kHOc=; b=uuJ0MrB4ROURNc9nrGUjtj
+        ZIWUIVymSlu+twIArrT5xXgSgPhO4L7JCcqeaIDsqtHKLptxI3PHg8ollKWBh6TA
+        KvNqn3eCMtOmNmAAsbZk4nmx0rDrmTDKY7kJpT9RJcTfyjLpH5iCxiP2F3vxnZ5r
+        ULoPPzSgUIM2DI6VnI1dnzvgK3mxGGaUPXDZXye9nxXV0d6suKnuILYhKh5N7ubB
+        dDjIOtuFvvVlqjHF739rPHDO3UjPEU8vs07APVEXKTZka33tQX4NfvzPj7Un+WKY
+        qxWBNIHJ6uCZKWFTmK56STPNLVpLAuw8kPPl9XuG2wnUDe19KooHDvMqlbtMnaBw
+        ==
+X-ME-Sender: <xms:G8LmXqcmIyVp7KSjrgNTFhNh04z9nPtWrxD-wfO9poTGG4RPWh8UUg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudeijedgfeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvufffoffkjghfgggtsehttdhmtdertddtnecuhfhrohhmpedflfgrmhgv
+    shcutfgrmhhsrgihfdcuoehjrghmvghssehjrhgrmhhsrgihrdgtohhmrdgruheqnecugg
+    ftrfgrthhtvghrnhepvdegueekffehfedtkeduleejleelkeetieethfehfeekfedvkefh
+    vdehfedugeegnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpghhithhlrggsrdgtoh
+    hmnecukfhppeduvddurddvtddtrdeirdduuddtnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepjhgrmhgvshesjhhrrghmshgrhidrtghomhdrrg
+    hu
+X-ME-Proxy: <xmx:G8LmXkObmyBvZAbL-djXF5KpRea_XeGln1agfs9WLpUjJapt3oztEQ>
+    <xmx:G8LmXril4-IhXollEGvTYJCzip-plFA2NU4GE4BqUtlmxIf6V-KniQ>
+    <xmx:G8LmXn9LVLxuD5nm_EUBsR7hBhjyA0SudJKzyB6qRlOmpnwt-j4zTA>
+    <xmx:G8LmXrWnc4dPrXkzMOrNWcfd-QSbGRbNnLzwisoLduEg_3yGCdANhA>
+Received: from [192.168.1.38] (121-200-6-110.79c806.syd.nbn.aussiebb.net [121.200.6.110])
+        by mail.messagingengine.com (Postfix) with ESMTPA id A8A8F3280059;
+        Sun, 14 Jun 2020 20:34:33 -0400 (EDT)
+From:   "James Ramsay" <james@jramsay.com.au>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Simon Pieters" <simon@bocoup.com>,
+        "Don Goodman-Wilson" <don@goodman-wilson.com>, git@vger.kernel.org
 Subject: Re: Rename offensive terminology (master)
-From:   =?UTF-8?Q?S=c3=a9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>
-Message-ID: <a34e4244-835e-976a-8fb4-7fc766d100bd@gmail.com>
-Date:   Sun, 14 Jun 2020 21:02:50 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+Date:   Mon, 15 Jun 2020 10:34:29 +1000
+X-Mailer: MailMate (1.13.1r5671)
+Message-ID: <42EBA147-1034-4CA2-8A85-AAF023FE3781@jramsay.com.au>
+In-Reply-To: <nycvar.QRO.7.76.6.2006091126540.482@ZVAVAG-DN14RQO.ybpnyqbznva>
+References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+ <20200505231641.GH6530@camp.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2006091126540.482@ZVAVAG-DN14RQO.ybpnyqbznva>
 MIME-Version: 1.0
-In-Reply-To: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; format=flowed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Someone sent me these points for me to use in this discussion. But to be 
-fair, I'm kind of done so I will just paste what he sent me directly:
+> As mentioned elsewhere in this thread, Don (Cc:ed) and I started 
+> working
+> on this, and I just submitted it:
+> https://lore.kernel.org/git/pull.656.git.1591823971.gitgitgadget@gmail.com/
+> That patch series adds a config variable allowing to override the 
+> default
+> name of the default branch.
 
-Don Goodman-Wilson said:
+Thanks Johannes and Don for your work on the patch! And Billy for 
+sharing your investigations and thoughts on naming.
 
- > My feelings generally are: if you have to explain why it isn’t
- > racist, then there’s probably a better alternative.
+> Billy then shared this information with James Ramsay of GitLab to
+> discuss how GitHub and GitLab can coordinate on changing the default
+> branch name in new repositories. Here is the GitLab ticket to track
+> their progress: https://gitlab.com/gitlab-org/gitlab/-/issues/220906
 
-Now this is already problematic as there is the idea of reversing the
-burden of proof: he shouldn't point out that you have to explain why
-it isn't racist, instead he should explain and prove himself that it's
-racist and offensive, since he's the one making that claim and asking
-for change in the first place.
+Yes, we are investigating the changes needed to support changing the 
+default branch name of new projects created in GitLab.
 
-All the sources I've seen linked in the thread are either Wikipedia,
-that anyone can edit, or Twitter, where anyone can post anything, or
-unspecified and unverifiable anecdotal evidence of the type "I've seen
-people getting offended by it." This is not okay.
+> Tentatively, I would like to propose having this meeting in the coming
+> week, via Zoom, just like we did the Virtual Contributor Summit last
+> September.
+>
+> Could I ask all interested parties to reply to this email?
 
-Perhaps the best argument you could make is that if and before changing
-the name "master", there needs to be measurable proof of how many and
-how much people are actually offended by the use of "master", and an
-assessment of how many people would be offended by other proposed terms
-or by the new chosen name, and a measurable assessment that changing the
-name would actually reduce the amount of offended people, and have a
-positive impact worth the effort.
-
-In software development, people often say that if you can't measure that
-your change in the code actually makes a difference and has an impact
-going in the right direction, then you shouldn't bother writing that
-code to begin with.
-
+Great idea - thanks Emily! Please include me in the invitation.
