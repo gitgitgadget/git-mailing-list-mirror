@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB214C433DF
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE8CEC433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7BAC2068E
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DE8220707
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:57:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a2FY/yBc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IUy6Z7yj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729614AbgFOK5w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 06:57:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33348 "EHLO
+        id S1729617AbgFOK5y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 06:57:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729591AbgFOK5s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 06:57:48 -0400
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 472BCC05BD43
+        with ESMTP id S1729599AbgFOK5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 06:57:49 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1265C05BD1E
         for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:48 -0700 (PDT)
-Received: by mail-ej1-x643.google.com with SMTP id o15so16904844ejm.12
+Received: by mail-ej1-x629.google.com with SMTP id q19so16918207eja.7
         for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RQBXikzfLzcYGiX/f3FHQ6WOpsHy4OdS8ad4tVUcLC8=;
-        b=a2FY/yBcYk+E/TwfnT/6lZMzomr/GWFDR24rA/uqsrB2/BGNQARQ3Yf/f52k4P0lWb
-         11tCO4Qsaj8QdbRFfyuaGz8ty7E8ryO1iI8QCghsMl8l8aeOQh0pM19SO6nelZdIB1e3
-         WDMyovpqYxlfkRUfwsYd2R0GkFvsMrlAVoiawxPKa7Q57s3sTbse25J+vCSEj6jolDB1
-         KREUtFUsafqDrV9AHIZ1v5/t9ZqPCFyETo9y6cEV0af6j9IpJFrn1DGiBihsxL+KIr/r
-         FDa7i8PTt19dAsV7SPd/PlH37VFvb+wZi+SXwSeaQfY2n2sBjUHw6Zf8pcLxee6b6Ein
-         ccdw==
+        bh=fl55+w0m7vzo2xduM/elUX34+DvIdqum/I5CP31l3Gw=;
+        b=IUy6Z7yjAsQd63zzqllC5OWG+rOn0cf3l/3wFVH4yWILSQMEy2hjRDaKr41462Rokh
+         WNecCENo4/gWS6tCQO3StdEHYUdX3rnawETD2uoJsOfbw8Quckk5CKYFQi+rdiv0DKHM
+         ZfrAYopy0JFvxO2DztP35RgAVxRQkjZmyt/fQL699EPyCv8xaZcDqARUJvUe/gj11Dn4
+         YR2Rzaa3lS/xsGJYFBj/OLErnIX1bAqo6aZUe2EPy1oYuE2zf7AiuDKBv/ZWicikymcI
+         MFcFqe27pLvP+pLYZpd8fGRqNnEFD/ufW8fmdstdbM9uu9GZIIMmT9CvlwQFf9lJyEnN
+         ap4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RQBXikzfLzcYGiX/f3FHQ6WOpsHy4OdS8ad4tVUcLC8=;
-        b=rtsxIZg12JqHISWhnsiEXwNvKUAna5qr/sHvtW7y1LlFPJByquKw3nPhgVaJSiKyHJ
-         wBeKE5gmIx7T973TmKNhwwWXy6ZMBEP4WHRSSAygysBUxo8zvVY/qRHvkI6siGs8jN5i
-         kpKXH+e1Nknif3zNT+D6O+GcQ0mVMPAwJFs62ELbJsGPSx2ACMj77PXBFORmP8uWC/ch
-         W8NzM/LBz0GmFO5fMCDXELI9X+96Q/4jkJETba9Q4Yo/O00ptpRx3ytqqiEjriqpY+7A
-         qwwoEeWBRQDOQGYX2rEChBSAjrM2k9dS3rkU+I4M+BnRlyhlrmmGybEb/ONLCqVsjEzv
-         O9JA==
-X-Gm-Message-State: AOAM532+/qcvBFzzSdy2yBZITriMAVnpVifKk8NRewIdAIN9MjDpusCe
-        0rhtVgicAPlC/tnF5LqBz74ibbf1
-X-Google-Smtp-Source: ABdhPJzDWFs2f1HqXlsel69P36WlrjrZ3BY+JYe+c3cf2KqQkbDBhgc9GzSH5Qpicq3kxYxtk5/sqg==
-X-Received: by 2002:a17:906:178c:: with SMTP id t12mr24104191eje.464.1592218666876;
-        Mon, 15 Jun 2020 03:57:46 -0700 (PDT)
+        bh=fl55+w0m7vzo2xduM/elUX34+DvIdqum/I5CP31l3Gw=;
+        b=EDf7Nx1zgQawKU2tjU5qDOYudXpOD/TrkmNHid0U372DRcVqqHIRReCm/wVBMkCQOE
+         rOBwQqQ8OfwB1Y4R9H/Mm9xTpHoEwsA4WODaQHvOzTdxZlGh5Zk5LmXH1u4JLDyDZOWM
+         pT09MgS8wIqk3wxnO/vX7k4hlOPV/sPBR0cWWYaGqwNNBuoEZswiTLkjHZo6DGuJgTeM
+         OuGfiPydyfvFix23kL+A+/WipLEFfxpTqElsy33SEshYqF2mOw3ZPPUJshq3NxCRB+Aw
+         7GwDnOchT3H1qdP2oKFF+cfKH4qPnMGgexnaJ4aJrgqJ59VDMcFeHUvrt6KgHarT0e4/
+         AIWg==
+X-Gm-Message-State: AOAM5334G1OJ2sfxu9BFclYk0DvLU1K7Vn7+quVKKyMgCKLrSFGgwfgK
+        iqN6YFsTjYOcNlvIJYmFEnGOBGa2
+X-Google-Smtp-Source: ABdhPJwA67HY/gzZhphQHrD+kcU9zvXQ7BRi7+n3ng1sGta3/lWPJLZMCSdustN3Z13J0Bnj5q25ww==
+X-Received: by 2002:a17:906:328a:: with SMTP id 10mr5912778ejw.265.1592218664519;
+        Mon, 15 Jun 2020 03:57:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id nw22sm8862394ejb.48.2020.06.15.03.57.46
+        by smtp.gmail.com with ESMTPSA id bt11sm1374807edb.48.2020.06.15.03.57.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 03:57:46 -0700 (PDT)
-Message-Id: <0eecb653d21355d7d2ab3dd209cfdb3c24365417.1592218662.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2020 03:57:44 -0700 (PDT)
+Message-Id: <a5ce1235a03a49ad394da8d227f5abf52ef3179a.1592218662.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.658.git.1592218662.gitgitgadget@gmail.com>
 References: <pull.658.git.1592218662.gitgitgadget@gmail.com>
 From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 10:57:41 +0000
-Subject: [PATCH 4/5] ref_format: add option to skip `\n` at eol
+Date:   Mon, 15 Jun 2020 10:57:38 +0000
+Subject: [PATCH 1/5] builtin/log: new config log.useRefFilter
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,51 +77,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Hariom Verma <hariom18599@gmail.com>
 
-We might always need a `\n` at end of line in the case of
-`git for-each-ref`. But as we intend to use ref-filter's logic
-in pretty, having an option to skip `\n` will be useful.
+Add a new boolean config variable "log.useRefFilter"
+for `log` command, allowing log to switch to use ref-filters
+logic.
+
+*experimental*
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Heba Waly <heba.waly@gmail.com>
 Signed-off-by: Hariom Verma <hariom18599@gmail.com>
 ---
- ref-filter.c | 3 ++-
- ref-filter.h | 4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ Documentation/config/log.txt | 4 ++++
+ builtin/log.c                | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index bf7b70299b4..0e2fecbda4c 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2410,7 +2410,8 @@ void show_ref_array_item(struct ref_array_item *info,
- 	fwrite(final_buf.buf, 1, final_buf.len, stdout);
- 	strbuf_release(&error_buf);
- 	strbuf_release(&final_buf);
--	putchar('\n');
-+	if(format->need_newline_at_eol)
-+		putchar('\n');
- }
- 
- void pretty_print_ref(const char *name, const struct object_id *oid,
-diff --git a/ref-filter.h b/ref-filter.h
-index 8ecc33cdfa5..410446dc412 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -81,11 +81,13 @@ struct ref_format {
- 	int quote_style;
- 	int use_color;
- 
-+	int need_newline_at_eol;
+diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
+index 208d5fdcaa6..603f635df86 100644
+--- a/Documentation/config/log.txt
++++ b/Documentation/config/log.txt
+@@ -48,3 +48,7 @@ log.mailmap::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `--use-mailmap`, otherwise
+ 	assume `--no-use-mailmap`. True by default.
 +
- 	/* Internal state to ref-filter */
- 	int need_color_reset_at_eol;
- };
++log.useRefFilter::
++	[EXPERIMENTAL] If true, forces `git log` to use ref-filter's logic.
++	Is `false` by default.
+diff --git a/builtin/log.c b/builtin/log.c
+index d104d5c6889..4eb13d1ef88 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -39,6 +39,9 @@
+ #define MAIL_DEFAULT_WRAP 72
+ #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
  
--#define REF_FORMAT_INIT { NULL, 0, -1 }
-+#define REF_FORMAT_INIT { NULL, 0, -1, 1 }
++/* Set true to use ref-filter's logic in git log */
++static int log_use_ref_filter;
++
+ /* Set a default date-time format for git log ("log.date" config variable) */
+ static const char *default_date_mode = NULL;
  
- /*  Macros for checking --merged and --no-merged options */
- #define _OPT_MERGED_NO_MERGED(option, filter, h) \
+@@ -489,6 +492,10 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		default_show_signature = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "log.usereffilter")) {
++		log_use_ref_filter = git_config_bool(var, value);
++		return 0;
++	}
+ 
+ 	if (grep_config(var, value, cb) < 0)
+ 		return -1;
 -- 
 gitgitgadget
 
