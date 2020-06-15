@@ -2,119 +2,115 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 709C3C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAC74C433DF
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:03:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C7752068E
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:01:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rAksuk4y"
+	by mail.kernel.org (Postfix) with ESMTP id 8AD86206D7
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729065AbgFOKBI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 06:01:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbgFOKBA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 06:01:00 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D44A4C061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:00:58 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id o8so4557981wmh.4
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 03:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qqgNXyK+9u5Dqx+Y1ipmBRXDsYkk+V1FlXTEWDTo/wQ=;
-        b=rAksuk4y0+aCAnrc286zoS/A/7kJ+tHRjS646CgnIzVFNqzIc3t58cbhi2fq2B0TQa
-         U/IHwg5SFd08cf9yXEmHuFFPr5vulQJxl9I1+LJQuFfthMsJzSG76bJDINNABS/GayFQ
-         OkbnaEp7bwNoTQ+ZKeRUMGxnIRcPFfNUbxoy5WVK3F+VAjKVqjQXcxQfL+K7TB3X4epI
-         5X67VuVK0T5QOvwPU5Ll/IG8EjTp8x7Dkc7AQ2Ez+nohWBhX1EMfJzKNMFXQZ2byVjDJ
-         7XXE1meuVHvve3kEgDAmiFHGmdyAMsM/U01ycLKmUwbikGgURmZra27caDFkrYZRWeT/
-         ssjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=qqgNXyK+9u5Dqx+Y1ipmBRXDsYkk+V1FlXTEWDTo/wQ=;
-        b=DVeXEzBtze6R4ucHbMkb+4n/GLzGbmHxFTbSaAqwI8yLBns617LPi1cLNB4hmM5G3O
-         ZdlKZBAVEkTU2fLPyIFyudRE4E+/fhtQlZjYbKFKG0mR36UZ5RBiaXUTrPy/yctJdjNm
-         XQAAsH+a5anMY3Tw0vZ9hVCHqZbDurpWTP767iArhUftnPuYhNCIuveeR3XwZXLZrVuT
-         M306w1gLjUhHwnaIolb0AFRoMQZjngN1EAi2MkjID68v4uLgH19hxU16c+REwM6AQ2W+
-         Zde1Z2ZrFOG+Fu+1jOCF9U5K9zUSBROVWvgBYZCkK2CsAcJigFgknjTaOISelxAeB/WM
-         CS/g==
-X-Gm-Message-State: AOAM533xyuIV4bNBGMgTy7XqtWycTIiQuaEC4AuPZqJCaXay4TPRh/QF
-        1B+PNrQdK8lRXAc/MRKwSq6+fCC+
-X-Google-Smtp-Source: ABdhPJzcgVZDWw5RWeapi2ANi1lRfifOrybP6RjyToDPUAa/JkdsvistsN9QeFJbiQCKi0lyqvha1Q==
-X-Received: by 2002:a1c:38c2:: with SMTP id f185mr12755806wma.79.1592215257628;
-        Mon, 15 Jun 2020 03:00:57 -0700 (PDT)
-Received: from [192.168.1.201] (226.20.198.146.dyn.plus.net. [146.198.20.226])
-        by smtp.googlemail.com with ESMTPSA id k17sm23989530wrl.54.2020.06.15.03.00.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2020 03:00:56 -0700 (PDT)
-Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
- new repositories
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net
+        id S1729587AbgFOKDf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 06:03:35 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:50537 "EHLO
+        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729585AbgFOKDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 06:03:35 -0400
+X-Originating-IP: 157.36.11.232
+Received: from localhost (unknown [157.36.11.232])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 369E5E001D;
+        Mon, 15 Jun 2020 10:03:30 +0000 (UTC)
+Date:   Mon, 15 Jun 2020 15:33:27 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
+ branch
+Message-ID: <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
- <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
- <be09ffbb-4e38-5b67-54da-0b60d5e2d8c3@gmail.com>
- <nycvar.QRO.7.76.6.2006121308030.56@tvgsbejvaqbjf.bet>
- <xmqqlfks2pod.fsf@gitster.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <27936112-a29b-92d5-b506-3f88688cc5d3@gmail.com>
-Date:   Mon, 15 Jun 2020 11:00:55 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqlfks2pod.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.656.git.1591823971.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/06/2020 17:51, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
+
+On 10/06/20 09:19PM, Johannes Schindelin via GitGitGadget wrote:
+> A growing number of open source projects aims to avoid the branch name 
+> master due to its negative connotation. See [1] for an existing discussion
+> on this. The links [2], [3], and [4] describe community-driven ways for
+> users to rename their default branches or use template edits to set a new
+> default branch name.
 > 
->> I added a _brief_ extension to the context to the first commit's commit
->> message. However, I do not want to go into details here because _this_
->> patch series is only about empowering users to change their default main
->> branch name.
+> [1] 
+> https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com/
 > 
-> [...]
+> [2] https://twitter.com/mislav/status/1270388510684598272
 > 
-> Sufficiently large part of the user population are unhappy with the
-> use of the word 'master' as the default name of the primary branch
-> in a newly created repository, and the mere fact that we are aware
-> of that is good enough justification to move _away_ from 'master'.
-> In other words, we do not have to explain why 'master' was bad, as
-> it does not have to be bad for everybody to be replaced.
-
-This expresses what I was trying to get at with my comments much more
-clearly than I managed - Thank you
-
+> [3] 
+> https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMasterToMain.aspx
 > 
-> But you need to defend that the new word you picked is something
-> everybody is happy with.  That is much harder ;-).
+> [4] https://github.com/ethomson/retarget_prs
+> 
+> By necessity, existing repositories require a lot of manual work to move
+> away from that branch name, but it should be much easier for new
+> repositories.
+> 
+> This patch series allows overriding the branch name being used for new
+> repositories' main branch. The main way to do this is the new 
+> core.defaultBranchName config option. This first patch was contributed by
+> newcomer Dan Goodman-Wilson. Thanks for the contribution!
+> 
+> The other patches follow other places where "master" is hard-coded and use
+> the new git_default_branch_name() method to consume the config option before
+> falling back to "master".
+> 
+> The last patch updates documentation only after the config option is ready
+> to apply to all of these scenarios.
+> 
+> This series DOES NOT change the default automatically, but only provides an
+> opt-in mechanism for interested users. It also presents a way forward for
+> such a transition, if and when we decide to do so. Specifically, the new
+> GIT_TEST_DEFAULT_BRANCH_NAME environment variable could be used to update
+> test scripts on an individual basis instead of all-at-once.
 
-Indeed, though I am more optimistic about that having seen a couple of
-people have indicated that they don't mind too much what we choose so
-long as it unlikely to cause future problems.
+Many people have expressed reservations against this change. Some on the 
+list here, others in private conversation. I personally don't have a 
+strong opinion on either side. So I'll refrain from saying too much on 
+the issue. Reading through the list, I sense that the Git maintainer has 
+already decided it is something good for the project. And so I think 
+this change has a high chance of making it in a near future Git release.  
 
-Best Wishes
+One argument from those in favor of this change is that it doesn't 
+affect you if you don't care about the default branch name. You can just 
+go on using 'master' for all _your_ repos. I'd like to highlight the 
+"your" here. Sure, I can keep on using 'master' if I so prefer, but I 
+don't just use my repos. I also pull repos from other people, and I have 
+no control over what they call their main/primary/master branch (I'll 
+use "main" for the rest of the email). The cost here is that people now 
+need to update their scripts and workflow to account for other people's 
+naming preferences.
 
-Phillip
+For example, my vim plugins are submodules in the '~/.vim/bundle' 
+directory. When I want to update them, I run:
 
+  git submodule foreach 'git remote update && git reset --hard origin/master'
 
+With this change hitting a Git release, more and more people would call 
+their main branch different names they like. So what is the recommended 
+way to do something like this now? How do I checkout the tip of the main 
+branch? How do I push to the main branch? How do I pull from the main 
+branch? And so on...
+
+-- 
+Regards,
+Pratyush Yadav
