@@ -2,239 +2,363 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 384C0C433DF
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18BE0C433E3
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:15:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 048D220756
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:05:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA48C206F1
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:14:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M6RtdvDl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qcpsNj1X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730596AbgFOUE7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 16:04:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33560 "EHLO
+        id S1730135AbgFOUO6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 16:14:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730095AbgFOUE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 16:04:58 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF323C061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:04:58 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id n11so17031515qkn.8
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:04:58 -0700 (PDT)
+        with ESMTP id S1729692AbgFOUO5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 16:14:57 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF69CC061A0E
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:14:56 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id r15so855720wmh.5
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5MuJhecy1KAW3Pwg0fl/iW4xbdQXlQwR7is8ap2GHiU=;
-        b=M6RtdvDlgEESJngxdtmSm1cNqhMT5rsrtUsJp9nd9ndgI9PBSIcfU45eGbVyTxnXx3
-         u1Gt52EvB6Zn4ZSg4Imq93QAlIEn47NKSmt5ejrWH5ON9M7VRdC4vtutnAAo31fMLW0P
-         Nxxe1opaRObbKo2PLaJ3s+65ESu37SaGYbeOFIqeWggiKAGjdxxp4Bw+bXWEkidCbiYN
-         IDQbFMDakgJ4E9LYwSOdJoOanJtfZXQBKaeqceW/uSdMhiihQZQj3uMgz9t24hKK7Pao
-         70UIAMt/rDlQi3ggO8uUSX86PzILPgr+83cFFUUjr/aWgieel5X27w7wKJzOe9+G3ofZ
-         Vxbw==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=j6ivDCxC5U8C7/9bJ9G66og3l4XFJZqIXhyehYxPET8=;
+        b=qcpsNj1X3qRr4dkxBL6EV3ExolhlhfiS7Ay0gfB9urDvxcdeXKQQu97YVEn34t4QiN
+         70YVCdHrQdn9dlXk5lcJH464EKY2/fTXOXDQyedtqJaId4NF48Skh2sPpjWW44TKEmeG
+         NtK9NG04j9EdiOpI2kY/l522MQcI6LQuVGxMzWzScJtU9L9l8vwkdUq9cjXAO0mvOrXs
+         ijlZM7HRN0dXldok1eWtHdr8OSWjU4X9CrfMRBQM5Uz7b8fdtdgh9apeUQlJ7hw65qI5
+         7MHGPu5vyUb5TYyDDRWHGuQMxdaDP2JgKxnqYBaJpAVDmmeRpjfCxEmlv696hnjfuRUK
+         NCQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5MuJhecy1KAW3Pwg0fl/iW4xbdQXlQwR7is8ap2GHiU=;
-        b=YFFz60GqkKohraNwDzkdYSjY2ExRAjmlF8fKB6sciqmYXWz4/1xn4jPc03+qlRb4Pr
-         7N2l4DvMBVqRLs0475a9MWoDFpqLpIt1TzVbbgUsbEVoIpFVA+s+kTbBmEF/g5SiZsF4
-         ho+BpFrAnAuBjg1+m4MC2mO1atO8LWKH+uGhwJG0TDARerUI9WkR6ac5XA3VcqyzT1IE
-         ETcTDJG9wsvDOSU2naH/8Gkmr2bp95mWgH3ruDdDNAAFFW36LzqmRtJQ5AZ4dGBZ22NP
-         17B2eK42hbvWz49TMal3/dhujvvBr0oswucMejmc36yKSGUTef42PXcFZSefx39KthF4
-         robA==
-X-Gm-Message-State: AOAM532p6Xc3eOrDdpRjrBHRcZ1cAmJ75YwViw68syzauXdEAwdfugcX
-        CD0NbkzS2y60IJz6UxEk+ykY/JT8HpFDiQsLPao=
-X-Google-Smtp-Source: ABdhPJxu9bDC1Hlg6vosf6CeN29XLlQieLZfFyn0GLwZZL5VUvPjxhtRa7szmy+MPNTgUSUwB3YhftcOj8+u5Mz+jp4=
-X-Received: by 2002:a05:620a:1525:: with SMTP id n5mr16906156qkk.328.1592251497869;
- Mon, 15 Jun 2020 13:04:57 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=j6ivDCxC5U8C7/9bJ9G66og3l4XFJZqIXhyehYxPET8=;
+        b=VRX0udbw3oZlrVMn+ZX9B3SmgYNzZQzgb3fBPUzePjtjHTFb+Cx/yo10EywmPzBqag
+         qPhAv3x5b2MJw9u3qJpXUXv4LSc8fqAfobWTRbI5eMBhTA76PcgeLcnS3tDXrPgInUPl
+         xboHdKe4HqKTrEXngyBZRjtwj1ZzVzVlu8DlEIb9bPMJETFbVm1XyFv5MiPRgTaZO4p+
+         fU/0yMa2vpe2QQKOWcUuKxhXT6DDugCUW/8haAqzD5O/RSIFl4+bPA9l93vLE+4Hhb/k
+         rKnYIQPz/sRfq2Ltn7QwGqgZGJPGKVWtk+oDN0AL+p+zdKkJihxJcmt3du/pd8SIAvrh
+         at/w==
+X-Gm-Message-State: AOAM532ZD1KPJahK/uU471WmqpzdiZkCx796ytbpshNcfR3QOCGUH3g6
+        imjPUGenq8bnp0EKqnrbM985zTXP
+X-Google-Smtp-Source: ABdhPJyiQpwTaULD1kRiD2ATID1WQYSBS5IbZ0f9onWkMA+O6vtES9LoNF0WV49vLKiMGbMOgF5q7A==
+X-Received: by 2002:a1c:188:: with SMTP id 130mr1003325wmb.93.1592252094965;
+        Mon, 15 Jun 2020 13:14:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t14sm27187007wrb.94.2020.06.15.13.14.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2020 13:14:54 -0700 (PDT)
+Message-Id: <pull.659.git.1592252093.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 15 Jun 2020 20:14:45 +0000
+Subject: [PATCH 0/8] More commit-graph/Bloom filter improvements
 MIME-Version: 1.0
-References: <c4e1ba74464cfae882cde646d3c79778244b8f5e.1591986566.git.gitgitgadget@gmail.com>
- <20200615140049.1647-1-oystwa@gmail.com>
-In-Reply-To: <20200615140049.1647-1-oystwa@gmail.com>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Tue, 16 Jun 2020 01:34:46 +0530
-Message-ID: <CAKiG+9U8mVASyM-wcooFk69diYPmHMpymAQyLJcEL1N8X_Awuw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/8] Introduce CMake support for configuring Git
-To:     =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-Cc:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, szeder.dev@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 15, 2020 at 7:31 PM =C3=98ystein Walle <oystwa@gmail.com> wrote=
-:
->
-> Hi,
->
-> I haven't been able to pay much attention lately. I see this is v4 of thi=
-s
-> patch series and thought I took a quick look and didn't find anything, it=
-'s
-> possible some of this has been addressed already. If so I apologize.
->
-> > So let's start building CMake support for Git.
->
-> Yay!
->
-> > +
-> > +Instructions to run CMake:
-> > +
-> > +cmake `relative-path-to-CMakeLists.txt` -DCMAKE_BUILD_TYPE=3DRelease
-> > +Eg.
-> > +From the root of git source tree
-> > +     `cmake contrib/buildsystems/ `
-> > +This will build the git binaries at the root
-> > +
-> > +For out of source builds, say build in 'git/git-build/'
-> > +     `mkdir git-build;cd git-build; cmake ../contrib/buildsystems/`
-> > +This will build the git binaries in git-build directory
-> > +
->
-> Since the mininum required version is sufficiently high I suggest you
-> recommend the following as well:
->
->     cmake -B build-dir -S contrib/buildsystems
->
-> This might be easier for scripted tasks (packaging and whatnot) since cd
-> and mkdir aren't necessary.
->
+This builds on sg/commit-graph-cleanups, which took several patches from
+Szeder's series [1] and applied them almost directly to a more-recent
+version of Git [2].
 
-We could do that.
+[1] https://lore.kernel.org/git/20200529085038.26008-1-szeder.dev@gmail.com/
+[2] 
+https://lore.kernel.org/git/pull.650.git.1591362032.gitgitgadget@gmail.com/
 
-> > +#set the source directory to root of git
-> > +set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
->
-> See if you can avoid this. This this will break if another project includ=
-es Git
-> as part of itself with add_subdirectory() or the ExternalProject module. =
-If all
-> you use it for is paths to other files then you might as well do this:
->
->     set(repo_root "${CMAKE_CURRENT_LIST_DIR}/../..")
->
-> and use ${repo_root} the places you use ${CMAKE_SOURCE_DIR} now.
->
-> AFAIK the places CMake accepts relative paths it's usually relative to
-> CMAKE_CURRENT_SOURCE_DIR and not CMAKE_SOURCE_DIR, anyway. I don't think =
-it's
-> automagically updated when CMAKE_SOURCE_DIR is changed.
->
+This series adds a few extra improvements, several of which are rooted in
+Szeder's original series. I maintained his authorship and sign-off, even
+though the patches did not apply or cherry-pick at all.
 
-Since we are using a single list file, it is fine.
-I understand your concern that git is included as part of another
-project things might break, but that is really rare.
-I will try to fix these issues after adding support for BSD and APPLE syste=
-ms.
-The main priority for this patch series is to help git-for-windows
-developers for now.
+ 1. commit-graph: place bloom_settings in context
+ 2. commit-graph: unify the signatures of all write_graph_chunk_*()
+    functions
+ 3. commit-graph: simplify chunk writes into loop
+ 4. commit-graph: check chunk sizes after writing
+ 5. commit-graph: check all leading directories in changed path Bloom
+    filters
 
-> > +include_directories(SYSTEM ${ZLIB_INCLUDE_DIRS})
-> > +if(CURL_FOUND)
-> > +     include_directories(SYSTEM ${CURL_INCLUDE_DIRS})
-> > +endif()
->
-> This is better handled like this these days:
->
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/C=
-MakeLists.txt
-> index 8367b73e94..ca1f90e58c 100644
-> --- a/contrib/buildsystems/CMakeLists.txt
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -121,10 +121,6 @@ if(NOT Intl_FOUND)
->         endif()
->  endif()
->
-> -include_directories(SYSTEM ${ZLIB_INCLUDE_DIRS})
-> -if(CURL_FOUND)
-> -       include_directories(SYSTEM ${CURL_INCLUDE_DIRS})
-> -endif()
->  if(EXPAT_FOUND)
->         include_directories(SYSTEM ${EXPAT_INCLUDE_DIRS})
->  endif()
-> @@ -606,7 +602,7 @@ endif()
->  #link all required libraries to common-main
->  add_library(common-main OBJECT ${CMAKE_SOURCE_DIR}/common-main.c)
->
-> -target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES})
-> +target_link_libraries(common-main libgit xdiff ZLIB::ZLIB)
->  if(Intl_FOUND)
->         target_link_libraries(common-main ${Intl_LIBRARIES})
->  endif()
-> @@ -659,17 +655,17 @@ if(CURL_FOUND)
->         add_library(http_obj OBJECT ${CMAKE_SOURCE_DIR}/http.c)
->
->         add_executable(git-imap-send ${CMAKE_SOURCE_DIR}/imap-send.c)
-> -       target_link_libraries(git-imap-send http_obj common-main ${CURL_L=
-IBRARIES})
-> +       target_link_libraries(git-imap-send http_obj common-main CURL::li=
-bcurl)
->
->         add_executable(git-http-fetch ${CMAKE_SOURCE_DIR}/http-walker.c $=
-{CMAKE_SOURCE_DIR}/http-fetch.c)
-> -       target_link_libraries(git-http-fetch http_obj common-main ${CURL_=
-LIBRARIES})
-> +       target_link_libraries(git-http-fetch http_obj common-main CURL::l=
-ibcurl)
->
->         add_executable(git-remote-http ${CMAKE_SOURCE_DIR}/http-walker.c =
-${CMAKE_SOURCE_DIR}/remote-curl.c)
-> -       target_link_libraries(git-remote-http http_obj common-main ${CURL=
-_LIBRARIES} )
-> +       target_link_libraries(git-remote-http http_obj common-main CURL::=
-libcurl)
->
->         if(EXPAT_FOUND)
->                 add_executable(git-http-push ${CMAKE_SOURCE_DIR}/http-pus=
-h.c)
-> -               target_link_libraries(git-http-push http_obj common-main =
-${CURL_LIBRARIES} ${EXPAT_LIBRARIES})
-> +               target_link_libraries(git-http-push http_obj common-main =
-CURL::libcurl ${EXPAT_LIBRARIES})
->         endif()
->  endif()
->
-> With this change we're feeding proper CMake targets to target_link_librar=
-ies()
-> instead of just a bunch of strings. CMake can know a lot about a target, =
-such
-> as it's dependencies, required macros and so on[1]. This means some boile=
-rplate
-> code can be removed: Notice that the manual handling of Zlib's include pa=
-th is
-> gone. The same can perhaps be done for the other libraries as well but I
-> haven't checked that.
->
+Patch 1 is a new preparation patch to then apply Szeder's ideas in the next
+four. Some are refactoring or defensive programming, but Patch 5 presents a
+meaningful performance improvement. By creating bloom_keys for each leading
+directory in a path, we can greatly improve the false-positive rate.
 
-It depends on the implementation of the CMake modules. We can do as
-you suggested for Zlib and curl.
-Iconv added exported targets recently.
-Intl still does not have this syntax yet.
-Using ${*_LIBRARIES} works all across the board.
+ 6. bloom: enforce a minimum size of 8 bytes
 
-Thank You
-Sibi Siddharthan
+Patch 6 is based on a comment of Szeder's that since we are using 1-byte
+alignment in the filters, that some small filters do not fit the theoretical
+analysis that calculated the expected false-positive rate. By increasing the
+minimum (non-zero) filter size, we can gain significant performance benefits
+while increasing the file size a small amount.
 
-> > +include_directories(${CMAKE_SOURCE_DIR})
-> > +(...)
-> > +include_directories(${CMAKE_BINARY_DIR})
->
-> See if CMAKE_INCLUDE_CURRENT_DIR[2] makes this unneeded. It might not sin=
-ce you
-> overwrite CMAKE_SOURCE_DIR manually.
->
-> =C3=98sse
->
-> [1]: https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html#p=
-roperties-on-targets
-> [2]: https://cmake.org/cmake/help/latest/variable/CMAKE_INCLUDE_CURRENT_D=
-IR.html
+ 7. commit-graph: change test to die on parse, not load
+ 8. commit-graph: persist existence of changed-paths
+
+The final two patches handle the unresolved usability issue: if a user
+writes a commit-graph with --changed-paths, the next write will probably
+clear them out. Think about gc.writeCommitGraph or fetch.writeCommitGraph,
+which do not allow for the --changed-paths option directly. Another idea is
+to add a config option, but I will leave that to others [3].
+
+[3] https://github.com/gitgitgadget/git/pull/633
+
+Here is an analysis of the range-diff between this series and Szeder's PoC
+submission.
+
+These patches either are part of sg/commit-graph-cleanups or were discarded
+as unnecessary.
+
+ 1:  7a8dbfba53a <  -:  ----------- tree-walk.c: don't match submodule entries for 'submod/anything'
+ 2:  df25e984c58 <  -:  ----------- commit-graph: fix parsing the Chunk Lookup table
+ 3:  598f7f9a978 <  -:  ----------- commit-graph-format.txt: all multi-byte numbers are in network byte order
+ 4:  b29e5d39ed6 <  -:  ----------- commit-slab: add a function to deep free entries on the slab
+ 5:  18f4db7bfb9 <  -:  ----------- diff.h: drop diff_tree_oid() & friends' return value
+ 6:  bf336f109e6 <  -:  ----------- commit-graph: clean up #includes
+ 7:  b7f0f831bcf <  -:  ----------- commit-graph: simplify parse_commit_graph() #1
+ 8:  f2752000052 <  -:  ----------- commit-graph: simplify parse_commit_graph() #2
+ 9:  4e184b8743c <  -:  ----------- commit-graph: simplify write_commit_graph_file() #1
+10:  344dd337da5 <  -:  ----------- commit-graph: simplify write_commit_graph_file() #2
+11:  56e3c4f57b3 <  -:  ----------- commit-graph: allocate the 'struct chunk_info' array dinamically
+
+This first patch enables the next refactoring patch.
+
+ -:  ----------- >  1:  c966969071b commit-graph: place bloom_settings in context
+
+This patch is recognized as similar, but all differences are due to
+whitespace corrections and the new write_graph_chunk_*() methods.
+
+12:  28fb1b5bdfe !  2:  65eb15221c8 commit-graph: unify the signatures of all write_graph_chunk_*() functions
+    @@ Commit message
+         This opens up the possibility for further cleanups and foolproofing in
+         the following two patches.
+
+         Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+    +    Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+
+      ## commit-graph.c ##
+     @@ commit-graph.c: struct write_commit_graph_context {
+    -     const struct split_commit_graph_opts *split_opts;
+    +     struct bloom_filter_settings bloom_settings;
+      };
+
+     -static void write_graph_chunk_fanout(struct hashfile *f,
+    +-                     struct write_commit_graph_context *ctx)
+     +static int write_graph_chunk_fanout(struct hashfile *f,
+    -                      struct write_commit_graph_context *ctx)
+    ++                    struct write_commit_graph_context *ctx)
+      {
+          int i, count = 0;
+    +     struct commit **list = ctx->commits.list;
+     @@ commit-graph.c: static void write_graph_chunk_fanout(struct hashfile *f,
+
+              hashwrite_be32(f, count);
+          }
+    ++
+     +    return 0;
+      }
+
+     -static void write_graph_chunk_oids(struct hashfile *f, int hash_len,
+    +-                   struct write_commit_graph_context *ctx)
+     +static int write_graph_chunk_oids(struct hashfile *f,
+    -                    struct write_commit_graph_context *ctx)
+    ++                  struct write_commit_graph_context *ctx)
+      {
+          struct commit **list = ctx->commits.list;
+          int count;
+          for (count = 0; count < ctx->commits.nr; count++, list++) {
+              display_progress(ctx->progress, ++ctx->progress_cnt);
+     -        hashwrite(f, (*list)->object.oid.hash, (int)hash_len);
+    -+        hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
+    ++        hashwrite(f, (*list)->object.oid.hash, (int)the_hash_algo->rawsz);
+          }
+    ++
+     +    return 0;
+      }
+
+    @@ commit-graph.c: static const unsigned char *commit_to_sha1(size_t index, void *t
+      }
+
+     -static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+    +-                   struct write_commit_graph_context *ctx)
+     +static int write_graph_chunk_data(struct hashfile *f,
+    -                    struct write_commit_graph_context *ctx)
+    ++                  struct write_commit_graph_context *ctx)
+      {
+          struct commit **list = ctx->commits.list;
+    +     struct commit **last = ctx->commits.list + ctx->commits.nr;
+     @@ commit-graph.c: static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+                  die(_("unable to parse commit %s"),
+                      oid_to_hex(&(*list)->object.oid));
+    @@ commit-graph.c: static void write_graph_chunk_data(struct hashfile *f, int hash_
+
+              list++;
+          }
+    ++
+     +    return 0;
+      }
+
+     -static void write_graph_chunk_extra_edges(struct hashfile *f,
+    +-                      struct write_commit_graph_context *ctx)
+     +static int write_graph_chunk_extra_edges(struct hashfile *f,
+    -                       struct write_commit_graph_context *ctx)
+    ++                     struct write_commit_graph_context *ctx)
+      {
+          struct commit **list = ctx->commits.list;
+    +     struct commit **last = ctx->commits.list + ctx->commits.nr;
+     @@ commit-graph.c: static void write_graph_chunk_extra_edges(struct hashfile *f,
+
+              list++;
+          }
+    ++
+    ++    return 0;
+    + }
+    + 
+    +-static void write_graph_chunk_bloom_indexes(struct hashfile *f,
+    +-                        struct write_commit_graph_context *ctx)
+    ++static int write_graph_chunk_bloom_indexes(struct hashfile *f,
+    ++                       struct write_commit_graph_context *ctx)
+    + {
+    +     struct commit **list = ctx->commits.list;
+    +     struct commit **last = ctx->commits.list + ctx->commits.nr;
+    +@@ commit-graph.c: static void write_graph_chunk_bloom_indexes(struct hashfile *f,
+    +     }
+    + 
+    +     stop_progress(&progress);
+    ++    return 0;
+    + }
+    + 
+    +-static void write_graph_chunk_bloom_data(struct hashfile *f,
+    +-                     struct write_commit_graph_context *ctx)
+    ++static int write_graph_chunk_bloom_data(struct hashfile *f,
+    ++                    struct write_commit_graph_context *ctx)
+    + {
+    +     struct commit **list = ctx->commits.list;
+    +     struct commit **last = ctx->commits.list + ctx->commits.nr;
+    +@@ commit-graph.c: static void write_graph_chunk_bloom_data(struct hashfile *f,
+    +     }
+    + 
+    +     stop_progress(&progress);
+     +    return 0;
+      }
+
+      static int oid_compare(const void *_a, const void *_b)
+     @@ commit-graph.c: static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+    -             chunks_nr * ctx->commits.nr);
+    +             num_chunks * ctx->commits.nr);
+          }
+          write_graph_chunk_fanout(f, ctx);
+     -    write_graph_chunk_oids(f, hashsz, ctx);
+    @@ commit-graph.c: static int write_commit_graph_file(struct write_commit_graph_con
+     +    write_graph_chunk_data(f, ctx);
+          if (ctx->num_extra_edges)
+              write_graph_chunk_extra_edges(f, ctx);
+    -     if (ctx->num_commit_graphs_after > 1 &&
+    +     if (ctx->changed_paths) {
+
+These patches follow the same intent, but are significantly different
+because they are updated with split commit-graphs and the existing
+changed-path Bloom filters.
+
+13:  1e1e59e2592 <  -:  ----------- commit-graph: simplify write_commit_graph_file() #3
+ -:  ----------- >  3:  3d24b9802df commit-graph: simplify chunk writes into loop
+14:  6f0d912e4b8 <  -:  ----------- commit-graph: check chunk sizes after writing
+ -:  ----------- >  4:  bdca834e6da commit-graph: check chunk sizes after writing
+24:  dc96f0d9822 <  -:  ----------- commit-graph: check all leading directories in modified path Bloom filters
+ -:  ----------- >  5:  9975fc96f12 commit-graph: check all leading directories in changed path Bloom filters
+
+These three patches are a few valuable improvements of my own design:
+
+ -:  ----------- >  6:  2a5f1e17528 bloom: enforce a minimum size of 8 bytes
+ -:  ----------- >  7:  60bbc15d24a commit-graph: change test to die on parse, not load
+ -:  ----------- >  8:  db5b8fe8439 commit-graph: persist existence of changed-paths
+
+At this point, we have updated the existing changed-path Bloom filter
+implementation to be on even terms with Szeder's modified-path Bloom filter
+implementation.
+
+The next batch of patches contain Szeder's implementation. These implement a
+completely different file format, so they are not intended as ways to move
+forward. If there is a significant improvement to be found by using this
+file format instead of the established one (comparing the old implementation
+with these patches), then we could consider swapping the optional chunks for
+those that he proposes.
+
+While I had the motivation and energy to defend the current implementation
+by applying Szeder's (excellent) ideas to the existing format, I do not have
+intent to go through the effort to compare the file formats explicitly at
+this point. I would be interested to read a performance analysis, if someone
+were to provide one now.
+
+15:  0ab955aac32 <  -:  ----------- commit-graph-format.txt: document the modified path Bloom filter chunks
+16:  4c128d51dfe <  -:  ----------- Add a generic and minimal Bloom filter implementation
+17:  41f02bc38f7 <  -:  ----------- Import a streaming-capable Murmur3 hash function implementation
+18:  e5fd1da48d4 <  -:  ----------- commit-graph: write "empty" Modified Path Bloom Filter Index chunk
+19:  2dd882ec601 <  -:  ----------- commit-graph: add commit slab for modified path Bloom filters
+20:  f30e495c2b0 <  -:  ----------- commit-graph: fill the Modified Path Bloom Filter Index chunk
+21:  e904cb58301 <  -:  ----------- commit-graph: load and use the Modified Path Bloom Filter Index chunk
+22:  c71647ca374 <  -:  ----------- commit-graph: write the Modified Path Bloom Filters chunk
+23:  50898d42291 <  -:  ----------- commit-graph: load and use the Modified Path Bloom Filters chunk
+25:  7cbf1bc6b66 <  -:  ----------- commit-graph: check embedded modified path Bloom filters with a mask
+26:  3951fdedf6a <  -:  ----------- commit-graph: deduplicate modified path Bloom filters
+27:  5aba19a2766 <  -:  ----------- commit-graph: load modified path Bloom filters for merge commits
+28:  93fc6af1d2f <  -:  ----------- commit-graph: write Modified Path Bloom Filter Merge Index chunk
+29:  f87b37bf08e <  -:  ----------- commit-graph: extract init and free write_commit_graph_context
+30:  943b0d9554c <  -:  ----------- commit-graph: move write_commit_graph_reachable below write_commit_graph
+31:  47b26ea61aa <  -:  ----------- t7007-show: make the first test compatible with the next patch
+32:  9201b71071c <  -:  ----------- PoC commit-graph: use revision walk machinery for '--reachable'
+33:  5c72d97e5e9 <  -:  ----------- commit-graph: write modified path Bloom filters in "history order"
+
+This patch is likely worth investigating again:
+
+34:  8b40ec4cd30 <  -:  ----------- commit-graph: use modified path Bloom filters with wildcards, if possible
+
+Thanks, -Stolee
+
+Derrick Stolee (4):
+  commit-graph: place bloom_settings in context
+  bloom: enforce a minimum size of 8 bytes
+  commit-graph: change test to die on parse, not load
+  commit-graph: persist existence of changed-paths
+
+SZEDER Gábor (4):
+  commit-graph: unify the signatures of all write_graph_chunk_*()
+    functions
+  commit-graph: simplify chunk writes into loop
+  commit-graph: check chunk sizes after writing
+  commit-graph: check all leading directories in changed path Bloom
+    filters
+
+ Documentation/git-commit-graph.txt |   5 +-
+ bloom.c                            |   4 ++
+ builtin/commit-graph.c             |   5 +-
+ commit-graph.c                     | 112 ++++++++++++++++++++---------
+ commit-graph.h                     |   3 +-
+ revision.c                         |  35 ++++++---
+ revision.h                         |   6 +-
+ t/t4216-log-bloom.sh               |   4 +-
+ t/t5318-commit-graph.sh            |   2 +-
+ 9 files changed, 124 insertions(+), 52 deletions(-)
+
+
+base-commit: 7fbfe07ab4d4e58c0971dac73001b89f180a0af3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-659%2Fderrickstolee%2Fbloom-2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-659/derrickstolee/bloom-2-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/659
+-- 
+gitgitgadget
