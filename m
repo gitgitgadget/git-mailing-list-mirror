@@ -2,115 +2,101 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAC74C433DF
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6903CC433DF
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:07:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AD86206D7
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:03:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28C26206B7
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 10:07:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729587AbgFOKDf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 06:03:35 -0400
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:50537 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729585AbgFOKDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 06:03:35 -0400
-X-Originating-IP: 157.36.11.232
-Received: from localhost (unknown [157.36.11.232])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 369E5E001D;
-        Mon, 15 Jun 2020 10:03:30 +0000 (UTC)
-Date:   Mon, 15 Jun 2020 15:33:27 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
- branch
-Message-ID: <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+        id S1728899AbgFOKHj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 06:07:39 -0400
+Received: from mx2.suse.de ([195.135.220.15]:50390 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726111AbgFOKHj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 06:07:39 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id F4154ACBD;
+        Mon, 15 Jun 2020 10:07:40 +0000 (UTC)
+Date:   Mon, 15 Jun 2020 12:07:35 +0200
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Don Goodman-Wilson <don@goodman-wilson.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>, git@vger.kernel.org
+Subject: Re: Rename offensive terminology (master)
+Message-ID: <20200615100735.GV21462@kitsune.suse.cz>
+References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
+ <20200505231641.GH6530@camp.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2006091126540.482@ZVAVAG-DN14RQO.ybpnyqbznva>
+ <20200611115215.GQ21462@kitsune.suse.cz>
+ <CAGA3LAfpoXDQryOPGg3g-4brpUcSAhL_2VOw8oy6D2ffp64hag@mail.gmail.com>
+ <f27450d8-59a1-dc0b-f741-c8c883b95fe0@gmail.com>
+ <xmqqlfktbpnf.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2006140458200.56@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2006140458200.56@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, Jun 14, 2020 at 04:59:32AM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 11 Jun 2020, Junio C Hamano wrote:
+> 
+> > Derrick Stolee <stolee@gmail.com> writes:
+> >
+> > > On 6/11/2020 7:59 AM, Don Goodman-Wilson wrote:
+> > >> On Thu, Jun 11, 2020 at 1:52 PM Michal Suchánek <msuchanek@suse.de> wrote:
+> > >>> Indeed, the flexibility to choose the name of the default branch can be
+> > >>> helpful for projects with specific naming, especially non-english
+> > >>> speaking projects.
+> > >>>
+> > >>> To that end I would suggest adding -b argument to git init to be able to
+> > >>> choose the default branch name per project. This should select the
+> > >>> initial branch name and also write the it as the default branch name in
+> > >>> the repo configuration (if git continues to treat the default branch
+> > >>> specially).
+> > >>>
+> > >>> This can be used in documentation to use the new name immediately
+> > >>> without breaking existing workflows that rely on the 'master' branch.
+> > >>
+> > >> I _really_ like this idea (and your reasoning). Seconded.
+> > >
+> > > Yes, adding a -b|--branch option would be an excellent addition to
+> > > the config option.
+> >
+> > In the ideal world, users should be able to just set
+> > init.defaultBranchName in ~/.gitconfig once and forget about it.
+> > But it is expected that some projects and their tools may heavily
+> > depend on the assumption that the primary branch is called 'master'.
+> > Giving a command line override like "init -b" (and do not forget to
+> > do the same for "clone" as necessary) is a good escape hatch for
+> > members of such projects.
+> 
+> I agree, and I incorporated this already in the latest version I pushed to
+> https://github.com/gitgitgadget/git/pull/656.
 
-On 10/06/20 09:19PM, Johannes Schindelin via GitGitGadget wrote:
-> A growing number of open source projects aims to avoid the branch name 
-> master due to its negative connotation. See [1] for an existing discussion
-> on this. The links [2], [3], and [4] describe community-driven ways for
-> users to rename their default branches or use template edits to set a new
-> default branch name.
-> 
-> [1] 
-> https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com/
-> 
-> [2] https://twitter.com/mislav/status/1270388510684598272
-> 
-> [3] 
-> https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMasterToMain.aspx
-> 
-> [4] https://github.com/ethomson/retarget_prs
-> 
-> By necessity, existing repositories require a lot of manual work to move
-> away from that branch name, but it should be much easier for new
-> repositories.
-> 
-> This patch series allows overriding the branch name being used for new
-> repositories' main branch. The main way to do this is the new 
-> core.defaultBranchName config option. This first patch was contributed by
-> newcomer Dan Goodman-Wilson. Thanks for the contribution!
-> 
-> The other patches follow other places where "master" is hard-coded and use
-> the new git_default_branch_name() method to consume the config option before
-> falling back to "master".
-> 
-> The last patch updates documentation only after the config option is ready
-> to apply to all of these scenarios.
-> 
-> This series DOES NOT change the default automatically, but only provides an
-> opt-in mechanism for interested users. It also presents a way forward for
-> such a transition, if and when we decide to do so. Specifically, the new
-> GIT_TEST_DEFAULT_BRANCH_NAME environment variable could be used to update
-> test scripts on an individual basis instead of all-at-once.
+Why should everyone use the same branch names?
 
-Many people have expressed reservations against this change. Some on the 
-list here, others in private conversation. I personally don't have a 
-strong opinion on either side. So I'll refrain from saying too much on 
-the issue. Reading through the list, I sense that the Git maintainer has 
-already decided it is something good for the project. And so I think 
-this change has a high chance of making it in a near future Git release.  
+It makes more sense for people to name their branches in a way that
+makes sense in the context of their project/workflow/language.
 
-One argument from those in favor of this change is that it doesn't 
-affect you if you don't care about the default branch name. You can just 
-go on using 'master' for all _your_ repos. I'd like to highlight the 
-"your" here. Sure, I can keep on using 'master' if I so prefer, but I 
-don't just use my repos. I also pull repos from other people, and I have 
-no control over what they call their main/primary/master branch (I'll 
-use "main" for the rest of the email). The cost here is that people now 
-need to update their scripts and workflow to account for other people's 
-naming preferences.
+Showing the use of -b with init in tutorials and examples would
+facilitate that.
 
-For example, my vim plugins are submodules in the '~/.vim/bundle' 
-directory. When I want to update them, I run:
+Thanks
 
-  git submodule foreach 'git remote update && git reset --hard origin/master'
-
-With this change hitting a Git release, more and more people would call 
-their main branch different names they like. So what is the recommended 
-way to do something like this now? How do I checkout the tip of the main 
-branch? How do I push to the main branch? How do I pull from the main 
-branch? And so on...
-
--- 
-Regards,
-Pratyush Yadav
+Michal
