@@ -2,92 +2,107 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78919C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 19:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9500EC433DF
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 19:37:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C73D20714
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 19:37:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pbq2GtEe"
+	by mail.kernel.org (Postfix) with ESMTP id 78AC420714
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 19:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729097AbgFOThg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 15:37:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57462 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728773AbgFOThg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 15:37:36 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA46C061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 12:37:35 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id c185so16940361qke.7
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 12:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=aSR+w0KjBw6hspREt4cuCG6+zOOVh6ZeAIgc9AhbmfQ=;
-        b=Pbq2GtEe/H1PgPtWLMxpk46w8fdA8xoNVh2bxwH15gLofXG/6boefiUg+pGqXwAwsu
-         oMkpEnJJ7zgqXIdQjtXMXZ3W/z0zPM9cNWYMOtx8C5LgHqrQZGH4uXxrBtf/E1TA1Js3
-         72lUcVSPDd5z/GStuvcnLWeTk5WREWQ6x8uiSF5VYBCAtEMOkLaTJiaYdlGGTZBHDawH
-         ixWZVsplQ46Njgoh4lmhaEG/zikgw/JKfi6EPyWHwiQU9uXkFtI+Ae/viYo0V9pwO2kc
-         /iqdZXZ83LsDDlUttFCul2z22tKMuLiv1IVP0ZyfwAeIcEtVKw16jaGzQr9+ZkYi5mXX
-         71NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=aSR+w0KjBw6hspREt4cuCG6+zOOVh6ZeAIgc9AhbmfQ=;
-        b=ExyakcCHXWOwRhDtuVXEtgPbpFYtSpF6Kze5ZIrDyuEsZeeMUyxhpQ9NVF7EWnuWAt
-         wOe9QGwkEqNdvuVl9fpi9q431/OvtNon46XEo+JShzf+HSoI4M6RvARdvfYb0Yb+6Fnp
-         jUspdN0YQFNuyOIqEjbSESKic5BcnUp62mSpA3CTxZeRbVti9BTjztEkhwNLn8Z7bL1c
-         O3CUkG2fBrEy8TxgrBIQGT/u8CtFOfqMcrnq6QadVc4YDSyGVoor9OX1yFy+O+tYvvSr
-         pbS/84Oq8VEhgEaHlnYgESDXknehp64LBmpO3mQYU8IPnJlbwl5azHpc8HDfhUQCSuxK
-         oDtg==
-X-Gm-Message-State: AOAM5318660vtlXepwFQJxp4nz72JCyICXOx6PX2LJc0f2jY7EP7ALkx
-        Rt0EGC7HDdtj2nu/GLl5ATl0R+4dJ3M=
-X-Google-Smtp-Source: ABdhPJw0TxkpUKydnoAlNMohIHUkkjjXx2wZUrHjHTDoeScJXw0OY/lzhVnyBRgBbPs1a+kob5xRmw==
-X-Received: by 2002:a37:65c3:: with SMTP id z186mr17827517qkb.368.1592249855063;
-        Mon, 15 Jun 2020 12:37:35 -0700 (PDT)
-Received: from [10.0.10.179] ([170.79.184.212])
-        by smtp.gmail.com with ESMTPSA id s70sm12390798qke.80.2020.06.15.12.37.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2020 12:37:34 -0700 (PDT)
-Subject: Re: Rename offensive terminology (master)
-To:     =?UTF-8?Q?Alexandru_P=c4=83tr=c4=83nescu?= <drealecs@gmail.com>
-Cc:     jrnieder@gmail.com, johannes.schindelin@gmx.de,
-        don@goodman-wilson.com, git@vger.kernel.org, msuchanek@suse.de,
-        newren@gmail.com, philipoakley@iee.email,
-        sandals@crustytoothpaste.net, simon@bocoup.com, stolee@gmail.com
-References: <20200615180744.GB135968@google.com>
- <3cef6084-e632-c9ce-c0da-a2c250c2f512@gmail.com>
- <CAAwdEzDgJuoQJAZsrT0piuZPVP6nJTSB9RCbcuXO03-BYTnmOQ@mail.gmail.com>
-From:   =?UTF-8?Q?S=c3=a9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>
-Message-ID: <8f9193aa-43bf-2ad3-d067-6330385e1788@gmail.com>
-Date:   Mon, 15 Jun 2020 16:37:30 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1729644AbgFOThh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 15:37:37 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:28196 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728571AbgFOThh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 15:37:37 -0400
+Received: from host-89-243-191-101.as13285.net ([89.243.191.101] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1jkuvG-0005oh-8G; Mon, 15 Jun 2020 20:37:34 +0100
+Subject: Re: Collaborative conflict resolution feature request
+To:     Junio C Hamano <gitster@pobox.com>,
+        "Curtin, Eric" <Eric.Curtin@dell.com>
+Cc:     Konstantin Tokarev <annulen@yandex.ru>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Geary, Niall" <Niall.Geary@dell.com>,
+        "rowlands, scott" <Scott.Rowlands@dell.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        "Coveney, Stephen" <Stephen.Coveney@Dell.com>
+References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
+ <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
+ <xmqqa716zs7w.fsf@gitster.c.googlers.com> <30661592138737@mail.yandex.ru>
+ <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <c4ebf430-a69d-3d46-bfb9-37c9ece9f519@iee.email>
+ <xmqq1rmgxo67.fsf@gitster.c.googlers.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <8b0e65ec-02c1-a1c7-b363-e81f37f3fe7e@iee.email>
+Date:   Mon, 15 Jun 2020 20:37:33 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <CAAwdEzDgJuoQJAZsrT0piuZPVP6nJTSB9RCbcuXO03-BYTnmOQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+In-Reply-To: <xmqq1rmgxo67.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- >But the people that contribute to the code and to an open-source 
-project are the owner of that project so they get to get the calls.
+Hi Junio,
+On 15/06/2020 17:57, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.email> writes:
+>
+>> It could be effectively a special strategy. IIUC the '--' separator is
+>> already supported by the underlying parser code, so may not be that
+>> hard? (perhaps a local contribution to the codebase;-). Just a thought.
+> Assuming that there are paths A and B that would leave conflict in
+> an attempted merge between commits X and Y,
+Are we confusing the file merge X.A and Y.A with X.B and Y.B?
 
-Ignoring everyone else's opinions and needs and just exerting your 
-authority is the very definition of authoritarianism. Yes, they do have 
-the right. But if they ignore the users, they can just use a fork that 
-does what they want. Have anyone considered that a breaking change in 
-git might very well result in a fork?
+The scenario envisaged is that dev.a has responsibility over the .A file
+merge, while dev.b will handle the merge for .B merge (e.g. different
+parts of the driver code).
+
+>  you somehow resolve the
+> conflict in A and leave B unresolved,
+So dev.a has resolved the .A conflicts, and the .B file(s) is still in
+the .ours state - no conflict (i.e. we have an 'ours' strategy for all
+files not in the A path(s)).
+
+>  what would you pass to the
+> other person and ask to resolve the conflicts in B?
+Yes the merge that dev.a has performed is passed onto dev.b to complete
+a second merge, apparently of the same commit, which is essentially
+similar to cherry picking the .B files from the .theirs commit [1].
+
+>   It cannot be a
+> merge commit that records X and Y as its parents and a single tree
+> object as the result, because the whole point of this is that you do
+> not even know what to record for B.
+if no merge is attempted for paths not in the A set then the other B set
+are never 'in conflict'. As I understand Eric's conundrum, it's that a
+plain merge throws too many conflicts at the one developer. This
+suggestion would be the way to reduce the number of conflicts just to
+the paths the one dev can handle. A lot will depend on how Eric's
+problem is partitioned and the depth of the overlaps.
+>
+> I think the most important and useful part of this is to design the
+> data format used for that task of passing from you to the other
+> person.  The way to specify which paths are yours etc. are much less
+> interesting and trivial part of the story, I would think.
+A list of un-merged paths (i.e. not attempted) is one such format, surely?
+
+Philip
+
+[1] actually, it's more like a soft checkout or restore of those files
+from the merging branch. (exchange format becomes list of merged
+paths...).  Which  then leads easily to the available `git checkout`
+options (assuming the approach has validity for Eric's scenario).
 
