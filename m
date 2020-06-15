@@ -2,106 +2,129 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF14BC433DF
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2CFAC433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:33:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D5FD20707
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:02:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D9622076A
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:33:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X6h+zATK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="koZTCw3K"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729732AbgFOMCe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 08:02:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43312 "EHLO
+        id S1729903AbgFOMdB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 08:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729685AbgFOMCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 08:02:34 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1765FC061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:02:33 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id gl26so17095819ejb.11
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:02:33 -0700 (PDT)
+        with ESMTP id S1728773AbgFOMdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 08:33:01 -0400
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF1C9C061A0E
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:33:00 -0700 (PDT)
+Received: by mail-pf1-x443.google.com with SMTP id z63so6835041pfb.1
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PiMLhnGOUXicoKRZ1k0wreuAnulWjWJg2uPDUQONRck=;
-        b=X6h+zATKCp1xfa4wTlenWhTnPkKCmxl4jHW9WzU2M+R9EAWjqnh38YPzH6Bt2m+D5G
-         hnDMAavz7+EVBZn/CLGPqTPrHB7SfaLvGs5qqKfK94sGWPJ9KSxS8Pz6eCCt3on0Tr8F
-         nmi8dnpuDh9vtGGw8TW9zEufu8UqptLhWcGCMmwf5/h1x9dhtKvYalE2cHNrvsT9toUN
-         41qcW2j+V11iwgmngojMzwnmZbGLZ3t0/yqoPK6x48cPuvqmkxHmWGBSu4H4rVUg5FOM
-         BMIUz4VUWTqjQEiSNga+i/pGY4D4hlPnJiThQMBj8K18ifEdIpCgVqGA/oAsLUBUFgUp
-         LAeA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=v+2D6FPNC6oBfc8bPrMzCrbMNVO8Kdm6GZYEXroCb50=;
+        b=koZTCw3KBs98OcmJ/DP3+DMwV9FHeiTjKVa++1KMf23A4Kn8MnEZ2woJTqz0obqPOp
+         vOi33RAC0HBsBf1JFfnmxIwQW+v1oz/E5oTgYHjK4WytdqmY5TzKOlouwPprpIYmyrKB
+         syl9HfI7xvzagtKpVyg4PQFgzgNsTIdrjbz7WT1UQbve0KhTAs1sFb6QizQkunsmd26P
+         XXqXHS9k4JWtWNpv3/H+/GcN6gzZS8ov9z287CeJ2mso9fEtZsPaRXmEi2+rCxBVeJfd
+         Z6SRHNJnovVAou4R4qzYc7l8U0tWYfO//68AzNXkJVKLOQQC6w/TIaC3sooK+cIyUtYg
+         C4pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PiMLhnGOUXicoKRZ1k0wreuAnulWjWJg2uPDUQONRck=;
-        b=Z7lSNCtBuFhVyhZXegLGqKLFxOcY09a24I8lf/El1UOGleSAAiGGBqTNh6cVY/RMd7
-         PFCZOPdkognlqTa89nhyUrh38wgrIgNsOoDrxsj9rns3gzjvzhwL71SaLy1DJMcQWxfr
-         Moogb4YWnUEBFFF4C3uhvPnQNJ4ZPoRvbDsSmGK6BheI78WdVb4r/kixGyfEXJC4oFez
-         4TlZt7lF+1g1j0/pPTdB44eKNfyG/PJjfgmMTcimzhqRGJvpg28VL311xm7mOq1weJUZ
-         TeMrhMKT1F37d9096WtvhLaYzJ8vcplas2qol0SkBpbB32aJjfcrBbrOrf+MsiZKNLRR
-         S5vQ==
-X-Gm-Message-State: AOAM530M2TxXLgegA7qXDT9mc34ouEI2Si0NgXRNqc7A/t7jMzyHU3Mg
-        TXIF6HOQxeYhalhiO4WwkqhIFAJuTfG60teeo+g=
-X-Google-Smtp-Source: ABdhPJwGpBvRMnCbtUKz8SDuVtDMggJoRZhN34sG0B2AuSTSlPfEPlY0sJz5lklErWDWVn3XdZumNBcOCZVz03TKoro=
-X-Received: by 2002:a17:907:685:: with SMTP id wn5mr26633147ejb.283.1592222551748;
- Mon, 15 Jun 2020 05:02:31 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=v+2D6FPNC6oBfc8bPrMzCrbMNVO8Kdm6GZYEXroCb50=;
+        b=HDS6/l8HUQ5iECvDzTF72pTi4YHPziK95JlEkv3uQyGxF76J6TZTW8w8wTGIdveoIs
+         iQzBBhQL2dSF1D8tcW9kfMr7FqxGHR7dSYJmV8ig2Zs49LZTFXO7+7kApGBd5S+x1PkC
+         5rBT3kZOR668fIYZCA/BadkocRjZeXuFkw18IbONgYyVNdZvAAIP2FaJ+/7yInQAeYNJ
+         2o6fpA2nOALWD7eu+i/OPJEojeXW0PZcfDgL4CvZAYQHwTbuNU2+eh7GyioUtDb8E7Lw
+         vuKaYYEZum3bzznsIVUhcR6fWrETFYZ6v6vhHhQ0cLhovM/5gj7NRwRyazD9fQmutrnm
+         d/qQ==
+X-Gm-Message-State: AOAM530yPbLCPqLeSibL0Uf28eaEGKBlKtZzp/pPOSib5KKhJ5GSoMJ5
+        7kUZXGogq9dOh0Ev1nf3cA0=
+X-Google-Smtp-Source: ABdhPJzWHWJdm7YX4IFb4I0GPC3m0clIAAibA2YduJYFOgjcV1o4ejolptyIEo/sDRTYB4fewm6ySw==
+X-Received: by 2002:a62:2ad2:: with SMTP id q201mr22924326pfq.323.1592224380013;
+        Mon, 15 Jun 2020 05:33:00 -0700 (PDT)
+Received: from localhost ([2402:800:6374:3bd0:871b:497e:ae48:68fa])
+        by smtp.gmail.com with ESMTPSA id i19sm12959667pjz.4.2020.06.15.05.32.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2020 05:32:59 -0700 (PDT)
+Date:   Mon, 15 Jun 2020 19:32:57 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] pkt-line: use string versions of functions
+Message-ID: <20200615123257.GA20389@danh.dev>
+References: <20200614083131.GD3405@danh.dev>
+ <da9ba5fb2d0fb9481f81ce525cbabaedd722858d.1592125442.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-References: <20200505104849.13602-1-alban.gruin@gmail.com> <20200505104849.13602-3-alban.gruin@gmail.com>
- <CAP8UFD1aT4dmuNkEz95eDFTE7sY+4eK_TwbTD-Vw8U7KyyZ-DA@mail.gmail.com> <2158eec0-9332-fe10-3636-95550a66f05d@gmail.com>
-In-Reply-To: <2158eec0-9332-fe10-3636-95550a66f05d@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 15 Jun 2020 14:02:19 +0200
-Message-ID: <CAP8UFD05hdVHsPYPF71xsyU+MOexj7AaSQuezMzy_7GqkOGHMQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 2/6] stash: remove the second index in stash_working_tree()
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git <git@vger.kernel.org>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <da9ba5fb2d0fb9481f81ce525cbabaedd722858d.1592125442.git.liu.denton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 13, 2020 at 8:00 PM Alban Gruin <alban.gruin@gmail.com> wrote:
->
-> Le 13/06/2020 =C3=A0 10:52, Christian Couder a =C3=A9crit :
-> > On Tue, May 5, 2020 at 12:56 PM Alban Gruin <alban.gruin@gmail.com> wro=
-te:
+On 2020-06-14 05:07:54-0400, Denton Liu <liu.denton@gmail.com> wrote:
+> Hi Đoàn,
 
-> >> The call to reset_tree() becomes useless:
-> >
-> > Your patch doesn't remove any call to reset_tree(), but actually adds
-> > one. So the above is difficult to understand.
-> >
-> > Do you want to say that in a later patch it will be possible to remove
-> > the call to reset_tree()? Or do you want to say that the call to
-> > write_index_as_tree() becomes useless?
-> >
->
-> No, I meant that with this commit, reset_tree() does not need to be
-> called at the beginning of stash_working_tree(), because it is only
-> called by do_create_stash(), which sets the index at `i_tree', and
-> save_untracked_files() does not change the main index.  But it will
-> become useful again down the line, when save_untracked_file() will be
-> rewritten to use the "main" index, so I did not remove it.
->
-> I hope it makes more sense now.
+Sorry for this late reply, I have another stuff to work on.
 
-Yeah, it makes more sense with an explanation like the above. Instead
-of "down the line" though, you might want to say something like "in a
-later commit", as I think it will make it clearer for reviewers that
-the commit when it will become useful again should be part of the same
-series.
+> Perhaps something like this?
 
-Thanks,
-Christian.
+This looks better, but ...
+
+> 
+>  pkt-line.c | 48 ++++++++++++++++++++++++++++++------------------
+>  1 file changed, 30 insertions(+), 18 deletions(-)
+> 
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 8f9bc68ee2..022376f00f 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -81,49 +81,61 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+>  	strbuf_release(&out);
+>  }
+>  
+> +static inline void packet_trace_str(const char *buf, int write)
+> +{
+> +	packet_trace(buf, strlen(buf), write);
+> +}
+> +
+> +#define control_packet_write(fd, s, errstr) \
+> +	do { \
+> +		(void)s"is a string constant"; \
+
+If we are going to not wrap s inside () here,
+
+> +		packet_trace_str((s), 1); \
+
+I see no point in wrapping it here.
+And wrapping around "string" is not standard C,
+some (or most) compilers support it as an extension.
+
+See USE_PARENS_AROUND_GETTEXT_N
+
+Can we just put it straight?
+
+	packet_trace(s, strlen(s), 1);
+
+> +		if (write_str_in_full((fd), (s)) < 0) \
+> +			die_errno((errstr)); \
+> +	} while (0)
+> +
+
+-- 
+Danh
