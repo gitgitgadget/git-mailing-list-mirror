@@ -7,158 +7,180 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A35A4C433E4
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 048DCC433E6
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:15:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 784F4207DD
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:15:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5F4C206F1
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 20:15:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cJc/XAj/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IFI9Xqdf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731142AbgFOUPD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 16:15:03 -0400
+        id S1731116AbgFOUPC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 16:15:02 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731106AbgFOUPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 16:15:01 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5560EC061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:15:01 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id x14so18470005wrp.2
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:15:01 -0700 (PDT)
+        with ESMTP id S1729943AbgFOUPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 16:15:00 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D0FC061A0E
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:14:58 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id y20so872658wmi.2
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 13:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=J/uB/z76jqtUk6HPuj0n2256DOcU3cQKE03S/1ECveg=;
-        b=cJc/XAj/ZO18t3Hajp/8rkMFRdO9jBvh/GcZKpMQgyrZphj9G9kC5tv2DuuBXfyyPd
-         XupVA4AIZYJ+DIQ+CWeCByOMWGftB0KMwgBU/7ywO/1M028GqwHrIn9E3bkDYXBlpb5j
-         nqLBbNO5kpF3Oldo7wLASQu4wO+OA1MjZT/ZIN/UFfmCGfDH7VMB56uCNpTSsGAAM2Ia
-         IwBcJeftN7NIX+tmh2e8CCpkCPRLu3AryUjKql8gFvbpitkSP2+7tQ4OIUKYsD5sRdGz
-         5FqEuOVZsfa46C4tznv/DtdsyVoJZ8LxcV2aGM+yq+jpR/AeOnMdrvsfsihPOV0TJcU9
-         2LFw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=PpxyZHsz8lsbQZXZV1lE0xMtLxuGm6QGVb2pCrSf8sw=;
+        b=IFI9Xqdf8aQma8VDu/Q5DeZJIybC+lz2WIwpNYXxjQAIR3fPfCPaT87Tcl7WdA25e/
+         MdEns6bdpRuY18Nhj1j2Mr7lZBRdGRgrBOlG1AcxYGNMF7no0di/17ct7IsY/Z9dDmk1
+         fb8xMg4igBsORwMomU5LxEnaDuxZo6CEi+u0405FKceSOupmOE29R4fDytyOTCI4jTP4
+         mo2TNHg35brKnYBiEzLoMeuz+jYGhUvc6Ah210O8PRghkPPI1t+g4RqUvH4Dtux/AdjB
+         /+VCvzVOc3CfltDG3SPa+0X0IxBjEAoJ+ljdwLTXZapqbPSPnokSA6ZmchMFOFdHbz2I
+         E9tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=J/uB/z76jqtUk6HPuj0n2256DOcU3cQKE03S/1ECveg=;
-        b=Q8ehyXaupG+OOp6YiwA411ciziyb9E0I+I7ccol7e8nxgSPem/Xu2nO/PfINJW/Fit
-         ThDe8BJJZ/5wkoaPlWxQ96sRbF/mNJbWiEjMM1vGYZW5vyexraLc+KuamUp9dKNK2bEl
-         gX33LRJmLydJ0MSq9Ss6+jIYrmpavm54hASoIpLv7Ejj2M2bGzkC8rR8a1NLvGEygcCX
-         26M0AIkLvuLlc76a+igILu1waGf5467D1R4g32vBwEMlOTSLkVWm9ICQskYkCpZzRSXz
-         zMkLUGBmWCdn4Tv7rpZrmCOFvUk5thcWjJ5gQJ8TGmG5cLcPs5g6An83XYRPrzjidZPy
-         SCpg==
-X-Gm-Message-State: AOAM531Q33YvUawA/L8ftJY7mTY817ykniBStlmRXHPusaA7ShmQVr4M
-        dB+TCUc5GQ7xyQb3kyqezN/5995O
-X-Google-Smtp-Source: ABdhPJwmzaY5Dxlwt7zOAcUS4uHvPKP6Bpt42BvdkYIhrgkInIRje3Bwv0rLrlmTHvVt6MCQecGE1Q==
-X-Received: by 2002:adf:e7ce:: with SMTP id e14mr32781438wrn.217.1592252099774;
-        Mon, 15 Jun 2020 13:14:59 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=PpxyZHsz8lsbQZXZV1lE0xMtLxuGm6QGVb2pCrSf8sw=;
+        b=PeUOHrQjHiGYTpvzYqooILRMcariA1iIyYpCxlvuqhFTI0A9ozSDBIB8CV0QLfEAIG
+         pAaUwXEuaafhMVaLzz7+VQPq6izCChk+1dtlnBiXKNBwDYyV6AfU6fgLgBuZVtl0O11P
+         lO8wWMh4kw6Oxh6gdnupxLJ61WS1Eh+HX6QvaQkxFBJbvcHt2oFsGyIKZJj2h0GJfGdB
+         kPNBG5gmzdcb5gffiCY8MaXy5+IGnsViRvXrruaBt5iuU+CX7xrZGdhP63ocMvxc56MJ
+         57KycIN+fQNwQI/0SlozlJl3gHBY01KFNlYJ0QwOpoF4S1asoTUUqbnFKBY80Skydw+D
+         Hdyw==
+X-Gm-Message-State: AOAM532R743QYtoqcIuuoM4yaQ03QTPMebA7SerMUZ4iCduU8KQHBizI
+        2/1r1pG3TRKkLH8dkL0mKDcWzN+9
+X-Google-Smtp-Source: ABdhPJy+o5uk5VFNZXWdDc3QJiBn8m5YrjD3GTrEHeQ8gQkTcKbfCl+VGYLBCq4+de8mk0ykCuFTEQ==
+X-Received: by 2002:a1c:9a57:: with SMTP id c84mr1009169wme.62.1592252097337;
+        Mon, 15 Jun 2020 13:14:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d9sm25600960wre.28.2020.06.15.13.14.59
+        by smtp.gmail.com with ESMTPSA id a14sm26824966wrv.20.2020.06.15.13.14.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 13:14:59 -0700 (PDT)
-Message-Id: <2a5f1e1752869e54203d7db609b4510a75d8de74.1592252093.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2020 13:14:56 -0700 (PDT)
+Message-Id: <3d24b9802df3d1fe8c670ba602890c95df96f2f5.1592252093.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.659.git.1592252093.gitgitgadget@gmail.com>
 References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 20:14:51 +0000
-Subject: [PATCH 6/8] bloom: enforce a minimum size of 8 bytes
-Fcc:    Sent
+From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Mon, 15 Jun 2020 20:14:48 +0000
+Subject: [PATCH 3/8] commit-graph: simplify chunk writes into loop
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, szeder.dev@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-The original design of changed-path Bloom filters included an 8-byte
-block size for filter lengths. This was changed mid-way through the
-submission process, and now the length stored in the commit-graph has
-one-byte granularity.
+In write_commit_graph_file() we now have one block of code filling the
+array of 'struct chunk_info' with the IDs and sizes of chunks to be
+written, and an other block of code calling the functions responsible
+for writing individual chunks.  In case of optional chunks like Extra
+Edge List an Base Graphs List there is also a condition checking
+whether that chunk is necessary/desired, and that same condition is
+repeated in both blocks of code. Other, newer chunks have similar
+optional conditions.
 
-This can cause some issues for very small filters. The analysis for
-false positive rates assume large filters, so rounding errors become
-less important at that scale. When there are only a few paths changed,
-a filter that has size only a few bytes could have very different
-behavior. In fact, this is evidenced in the Git repository due to the
-code organization and careful patch creation that leads to many commits
-with very small filters. These small filters frequently have
-false-positive rates in the 8-10% range or higher.
+Eliminate these repeated conditions by storing the function pointers
+responsible for writing individual chunks in the 'struct chunk_info'
+array as well, and calling them in a loop to write the commit-graph
+file.  This will open up the possibility for a bit of foolproofing in
+the following patch.
 
-The previous change improved the false-positive rate using multiple
-Bloom keys when the path has multiple directory components. However,
-that does not help at all for files at root. It is typical to have
-several commits that change only the README at root, and those commits
-would be likely to have these artificially high false-positive rates.
-
-Correct this issue by creating a minimum filters size of 8 bytes. This
-requires the very small commits (with fewer than six changes, including
-non-root directories) to have a larger filter. In principle, this
-violates the bits_per_entry value of struct bloom_filter_settings.
-However, it does not actually create a functional problem.
-
-As for compatibility, this only affects new versions writing filters for
-commits that do not yet have a filter. Old version will write the
-smaller filters and this version will persist and properly read that
-data. Now, the new files will be generated slightly larger.
-
-               Bytes before   Bytes after  Difference
-  --------------------------------------------------
-  git             4,021,078    4,275,311   +6.32%
-  linux          72,212,101   73,909,286   +2.35%
-  tensorflow      7,596,359    7,691,646   +1.25%
-
-This has a measurable improvement in the false-positive rate and the
-end-to-end run time for these repos. The table below compares the average
-false-positive rate and runtime of
-
-  git rev-list HEAD -- "$path"
-
-before and after this change for 5000+ randomly* selected paths from
-each repository:
-
-                    Average false           Average        Average
-                    positive rate           runtime        runtime
-                  before     after     before     after   difference
-  ------------------------------------------------------------------
-  git             0.786%     0.227%    0.0387s    0.0289s -25.5%
-  linux           0.0296%    0.0174%   0.0766s    0.0706s  -7.8%
-  tensorflow      0.6977%    0.0268%   0.0420s    0.0384s  -8.5%
-
-*Path selection was done with the following pipeline:
-
-        git ls-tree -r --name-only HEAD | sort -R | head -n 5000
-
-These relatively-small increases in file size appear to be a fair price
-to pay for these performance improvements.
-
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- bloom.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ commit-graph.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index c38d1cff0c6..875e3853c2c 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -258,6 +258,10 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 		}
+diff --git a/commit-graph.c b/commit-graph.c
+index 3bae1e52ed0..78e023be664 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1532,9 +1532,13 @@ static int write_graph_chunk_base(struct hashfile *f,
+ 	return 0;
+ }
  
- 		filter->len = (hashmap_get_size(&pathmap) * settings.bits_per_entry + BITS_PER_WORD - 1) / BITS_PER_WORD;
++typedef int (*chunk_write_fn)(struct hashfile *f,
++			      struct write_commit_graph_context *ctx);
 +
-+		if (filter->len && filter->len < 8)
-+			filter->len = 8;
-+
- 		filter->data = xcalloc(filter->len, sizeof(unsigned char));
+ struct chunk_info {
+ 	uint32_t id;
+ 	uint64_t size;
++	chunk_write_fn write_fn;
+ };
  
- 		hashmap_for_each_entry(&pathmap, &iter, e, entry) {
+ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+@@ -1591,27 +1595,34 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 
+ 	chunks[0].id = GRAPH_CHUNKID_OIDFANOUT;
+ 	chunks[0].size = GRAPH_FANOUT_SIZE;
++	chunks[0].write_fn = write_graph_chunk_fanout;
+ 	chunks[1].id = GRAPH_CHUNKID_OIDLOOKUP;
+ 	chunks[1].size = hashsz * ctx->commits.nr;
++	chunks[1].write_fn = write_graph_chunk_oids;
+ 	chunks[2].id = GRAPH_CHUNKID_DATA;
+ 	chunks[2].size = (hashsz + 16) * ctx->commits.nr;
++	chunks[2].write_fn = write_graph_chunk_data;
+ 	if (ctx->num_extra_edges) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_EXTRAEDGES;
+ 		chunks[num_chunks].size = 4 * ctx->num_extra_edges;
++		chunks[num_chunks].write_fn = write_graph_chunk_extra_edges;
+ 		num_chunks++;
+ 	}
+ 	if (ctx->changed_paths) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMINDEXES;
+ 		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
++		chunks[num_chunks].write_fn = write_graph_chunk_bloom_indexes;
+ 		num_chunks++;
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMDATA;
+ 		chunks[num_chunks].size = sizeof(uint32_t) * 3
+ 					  + ctx->total_bloom_filter_data_size;
++		chunks[num_chunks].write_fn = write_graph_chunk_bloom_data;
+ 		num_chunks++;
+ 	}
+ 	if (ctx->num_commit_graphs_after > 1) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_BASE;
+ 		chunks[num_chunks].size = hashsz * (ctx->num_commit_graphs_after - 1);
++		chunks[num_chunks].write_fn = write_graph_chunk_base;
+ 		num_chunks++;
+ 	}
+ 
+@@ -1647,19 +1658,15 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			progress_title.buf,
+ 			num_chunks * ctx->commits.nr);
+ 	}
+-	write_graph_chunk_fanout(f, ctx);
+-	write_graph_chunk_oids(f, ctx);
+-	write_graph_chunk_data(f, ctx);
+-	if (ctx->num_extra_edges)
+-		write_graph_chunk_extra_edges(f, ctx);
+-	if (ctx->changed_paths) {
+-		write_graph_chunk_bloom_indexes(f, ctx);
+-		write_graph_chunk_bloom_data(f, ctx);
+-	}
+-	if (ctx->num_commit_graphs_after > 1 &&
+-	    write_graph_chunk_base(f, ctx)) {
+-		return -1;
++
++	for (i = 0; i < num_chunks; i++) {
++		if (chunks[i].write_fn(f, ctx)) {
++			error(_("failed writing chunk with id %"PRIx32""),
++			      chunks[i].id);
++			return -1;
++		}
+ 	}
++
+ 	stop_progress(&ctx->progress);
+ 	strbuf_release(&progress_title);
+ 
 -- 
 gitgitgadget
 
