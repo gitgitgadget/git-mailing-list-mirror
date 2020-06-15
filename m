@@ -2,89 +2,98 @@ Return-Path: <SRS0=FGj8=74=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F772C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A76C5C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:24:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 060952068E
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:15:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 738B12074D
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 23:24:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u0BAHZQi"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="1MsBKnQ3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726662AbgFOXPu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 19:15:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34746 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725960AbgFOXPt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 19:15:49 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 285A7C08C5C2
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 16:15:49 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id l17so17492696qki.9
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 16:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:cc:references:subject:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=8r16dI0iGv9FcRaSmEGLp9LaW8FQ+9v7GLDCKH6mpR4=;
-        b=u0BAHZQi8h/wo0lz6ThwKsdtNlfaVBiyFb9zWmucxzofrI3EIHbK8lYBchsBv0dnyb
-         lKLVI2qUhdr+gemyrMRJM4CokPw0HhJUW3Nt77eYrCMsbCv+CYiY048yxWpuhGe9A4JS
-         A9HD86NKGVBWmt8iGPdn0SfoMlwu2tvanykCVYb7H4bSInDk876bTm+wAC2h2vBckq3I
-         L6fYiSU5Alt8VMKYV/G7V0mc3+7pC49JvnZFMwwPd4ndLqydLc/w7wqjbIQAkCF14vsI
-         f9HpeSDJ+9OFOFukVkukUdANzAsDc8QSPColF0Q7iDZ8YI9yTC28VX26Rt97WvHkwdh2
-         PqSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:subject:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=8r16dI0iGv9FcRaSmEGLp9LaW8FQ+9v7GLDCKH6mpR4=;
-        b=ilNIkj6r8kvXwy2PBNsS7hsFZJ/xB1vBetVjf9v8APOAXzpLEbfiluwHcMi5ca0kdN
-         NDP1lwhLEjF9l8sgmdGdAJkRkVIrYhUM4b6MjXL4qBlMnbhHtoU9JEKGmB5AbhbesPXS
-         oWEMDxPW/SHkBi3jASZpWcvhXUAB2v0CtRrpPK2urmenJzOgJyFwDlN15k3OCwPqqwKn
-         tgCRM7zEmhGuB5WXplpuFIa8+u20pZb4EGMudR2Q3hBeknvDtDsdUkVF69W5/fkqH41P
-         4CGMzBz0EI5YMXMVNJZiCtxpl3yHZJBttbyOPibLsFX1qZf/+n+C+3k2IeaWVZs3GdcS
-         kuyw==
-X-Gm-Message-State: AOAM532lqfWLEsKXdxSFKzC4UjkKWi+9at/N6zbss6ksBXKFInILqa1W
-        2S2Nx3QHAXYlXrxjKowtrg+ldxzCVbM=
-X-Google-Smtp-Source: ABdhPJwUTh2N7My6Cfytg/Rh4+U5QO8s2pZM9UeieCkutuSGCt+fWM9ljv21ZPsRbfo8303RR9cuFA==
-X-Received: by 2002:a37:45cc:: with SMTP id s195mr16822703qka.433.1592262947929;
-        Mon, 15 Jun 2020 16:15:47 -0700 (PDT)
-Received: from [10.0.10.179] ([170.79.184.212])
-        by smtp.gmail.com with ESMTPSA id k2sm12351223qkh.42.2020.06.15.16.15.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2020 16:15:47 -0700 (PDT)
-To:     simon@bocoup.com
-Cc:     git@vger.kernel.org
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-Subject: Re: Rename offensive terminology (master)
-From:   =?UTF-8?Q?S=c3=a9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>
-Message-ID: <126c85da-cca5-a0e7-39bb-982fe63ffbdb@gmail.com>
-Date:   Mon, 15 Jun 2020 20:15:45 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1726681AbgFOXYb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 19:24:31 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39332 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726313AbgFOXYb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 15 Jun 2020 19:24:31 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7594F6048A;
+        Mon, 15 Jun 2020 23:24:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1592263469;
+        bh=7NA9lTMHOudrn6BueyP6CWFZb+a3Xa0+NDyjYNBsbdY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=1MsBKnQ3ScvFHA9pDBGqC+6apYfH0V+ubaItzX5VOnPHWViQbT67n9Q9SjMlGzFW8
+         pPJbjwoqbl83CjO0BDP8LICcG8/EAanF67ZHWl1KnqolURlIvsacgKBr56AYGAF/+q
+         Iu+4RTRuvia6KwgSTgpDWWsNvk96pyGJgWwj6id9bppE0jiaqW2wDC+v04jnoObeCI
+         9Cc96ww2f01dxnh199zVOaXKAC4VdkKca+tzpIt0XvOEn6ERBa7r9CR46pxhJa0M/L
+         clNRxDqYLT8gcnzi2FlPA0CxFG37E1TnWmdWUHf1eMVgPaaHNpwdnG6RcVW40cAybJ
+         EBeL0gi5ckM9etSTkLlu3dzhF+OLC6F02lHJs5cJybNqEBtYH4d5jyexY1KJOT74IR
+         VdKsfzdPEGPvwDpatdSQBsVD7Ys1b3oWdA8yMjYWgqiP/voYjRU/QhIynz0hoXQk4Y
+         oIQLKLJLlwzc0TpJKx5Gfe02GmsHINPbzfETOQITDxk8dvdSCLE
+Date:   Mon, 15 Jun 2020 23:24:24 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        James Ramsay <james@jramsay.com.au>,
+        Bryan Turner <bturner@atlassian.com>
+Subject: Re: Consensus on a new default branch name
+Message-ID: <20200615232424.GF6531@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, James Ramsay <james@jramsay.com.au>,
+        Bryan Turner <bturner@atlassian.com>
+References: <20200615205722.GG71506@syl.local>
 MIME-Version: 1.0
-In-Reply-To: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ni93GHxFvA+th69W"
+Content-Disposition: inline
+In-Reply-To: <20200615205722.GG71506@syl.local>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By the way, I just found out about this issue:
 
-https://github.com/git-for-windows/git/issues/2674
+--ni93GHxFvA+th69W
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-76 upvotes against 490 downvotes and that's because it was shut down. If 
-that's anything to go by, this proposal is WILDLY unpopular. Unless 
-anyone has any other metric, going through with it seems that will 
-disregard what the actual users want by a great, great margin and be 
-just what I said earlier: an authoritarian display of power.
+On 2020-06-15 at 20:57:22, Taylor Blau wrote:
+> My interpretation thus far is that 'main' is the planned replacement for
+> 'master'. Consensus seems to have formed around this name [5], but if tha=
+t's
+> incorrect--or there are yet-unvoiced opinions that you would like to shar=
+e--now
+> is the time to discuss further.
 
+I think "main" is a fine choice.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--ni93GHxFvA+th69W
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXugDKAAKCRB8DEliiIei
+gRMeAQD1oPWKKdGffQQh/1YNKWTz5R91JgFFfIy6zUgp19H+UgEAsK5SdA7hHaSv
+RrQ/S7xl8pgutE1++PupI934ryo7AAA=
+=IlJw
+-----END PGP SIGNATURE-----
+
+--ni93GHxFvA+th69W--
