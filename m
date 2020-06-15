@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B76F8C433E3
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87AA6C433E4
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9256C20739
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 654EA206B7
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BnAT5JWd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eF/F9zlh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730011AbgFOMub (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 08:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50682 "EHLO
+        id S1730020AbgFOMuc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 08:50:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729825AbgFOMuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 08:50:25 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAD16C05BD1E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:23 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id y20so14699075wmi.2
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:23 -0700 (PDT)
+        with ESMTP id S1729975AbgFOMu2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 08:50:28 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD2CCC08C5C5
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:25 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id e1so17020394wrt.5
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Nba56dVUR5Dnd+7OUTZMvAAvtt8ioGbpIrIGmaG/97A=;
-        b=BnAT5JWdvuotp5dyr1EbW6oxXkprRUFltJpp3JZ4RtbEeMIFrQZ3BxIOZ0FbT5OuUs
-         vf30uIihsJ8fJSS1ieXd5hmA2x1oWP/sN7uv7IwndB9wRVgOd8H3J2RbdDD86stl3AOt
-         OqvNP4DxWVfkArT4kFyjkNkio1IBebP9whfPHk1zhos6muKARSNp+1lfc4QhK/2i7FCp
-         lHKZWI6DKwoItYeKL0gLpJIdoksXZqwlwRwoc16uuGDEkc5HATcKgbH2nzm9LlU1WLiX
-         abcSH96mGL5JPPpBD3Q/08jUsYozgToAAEIFrBk3jzg1lMPExtH4Xo4IQAYwFmjN2l6j
-         ARAg==
+        bh=Tdb8wznzgbK9hLYQnagv7iZh78WbTR3kMXjfkkQImgk=;
+        b=eF/F9zlhlsMHfbJi2o64SVmA0L16ljCehnXXAToZtD7+itBwSnpgCMvQZNgMEn17lC
+         TyqNsoVs+VCyXvVsH0p0nbZlSQ8yHoVAzv1ugUEpVKuB504k8OTIxV7myAHPApOAaIiW
+         Vze3sm39I//+pofYzB+vVa1VpYi/V+AQjKBpUUr5x4YHtLjEaq60bcybANRyKDTSDGlN
+         SDse7A0cFEfMW0UiuCnKzJQuyABUg8Ef/fGrloGRWxqyFOJDK05XPumtBDtTdGNR8mIL
+         7YnfY19x9TO6ij0qz5Z3eNXhRWoi7ZeJmTBypJhcALTl9J0RzdT3wxJmtclcVi3n8FLe
+         vcMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Nba56dVUR5Dnd+7OUTZMvAAvtt8ioGbpIrIGmaG/97A=;
-        b=e6f0AP3xjrhqio4gyqnWhxhDpHsr/C4+ZMWZzZgm9DYsErLEau8GAfuxCuSy6bmg/V
-         lw+paIUfK5uzlNolJXjvBPuyCNjkkqXnYtJKS/Ds7o/lmYyJIYU3RpufSGYN0wmKwHFN
-         +fewkc1kgpcNngBQ3ZdLNBz7ljwJFW+magLkEJl0jWKcFhEEIc003E+BFdFG3a2E1T49
-         FQea8p4bf970J2mKakFGq5ojrw99zj03C37Xnqr5qgfMracCN3MO0CnSUj11xqQjlknG
-         FV4nB07UrXmu8ZnZAwobPBM6hII37CV7t45L2i5SX51eBasQQTkUzaT7VQNhCuHWmHg+
-         LqDw==
-X-Gm-Message-State: AOAM5333zHLw8ooZRkhs1eQNkdpAQVUpZ68++Vy8KfG3IPgbxUGCyHfC
-        0B+4ol48vrsRlMjXI9Zr/sfiT7af
-X-Google-Smtp-Source: ABdhPJwwVyTtNEzh3rhFK+YwXOKtRfxsxFOAvvi1Q8GNXdeu1SnukNdnGQH6mjWArJ7b2Wm6jmA7sA==
-X-Received: by 2002:a1c:a943:: with SMTP id s64mr12764838wme.103.1592225421513;
-        Mon, 15 Jun 2020 05:50:21 -0700 (PDT)
+        bh=Tdb8wznzgbK9hLYQnagv7iZh78WbTR3kMXjfkkQImgk=;
+        b=r6z1shNK1SNLII4qisD/+D3DrmuYSp3ZtLH/dzFLX+OjLHi0jxymxKi1IqIZTeQ5hY
+         Zdq19GS4wAZxCTi5Y9wdt+RJy1dj+X0UnqWKHFgZ/+dKTmv0nG17tJ88/kJRIkwxwYif
+         C/HsIn3oyIDhKHd9vAZDitEHQ2Zwp6B/cqAdYwL//uXwwLa47EhI+Wi9/nsbZema3wXT
+         ieiSp/MxlDPJkG5acqZ2va/9hZQRbVgUU6zanO6PhNTSCVS5724ecpfOUHId13WuRzbk
+         AfpRy9zGZtyFGUrbP7qKxiB4wgMEb3NHWkN+cdy4BbI5hiw5f8CuexvmwQfSM0s6SSri
+         B54Q==
+X-Gm-Message-State: AOAM5308jBxJTst4QlahRaaenSOcp5ZuFKtPQ4gGRgqAggTik2UP9XJI
+        ROWwW61iWyX6CvJhbbc71VfE76Bt
+X-Google-Smtp-Source: ABdhPJyv41v6AY+iwCvjX3/oybgeRc5n3scadr65piE3OEHRTHQzlkgcGjBRudLxTcsunyW93WchgA==
+X-Received: by 2002:adf:fd49:: with SMTP id h9mr29400763wrs.67.1592225424092;
+        Mon, 15 Jun 2020 05:50:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l1sm27312427wrb.31.2020.06.15.05.50.20
+        by smtp.gmail.com with ESMTPSA id a126sm22822788wme.28.2020.06.15.05.50.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 05:50:21 -0700 (PDT)
-Message-Id: <bd8af3755ad2a1e2cfe84fed939c9e23585b8c7f.1592225416.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2020 05:50:23 -0700 (PDT)
+Message-Id: <933e314813df34aafca1a47bfc1fcba389dd5364.1592225416.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
         <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 12:50:07 +0000
-Subject: [PATCH v2 03/12] send-pack/transport-helper: respect
- `core.mainBranch`
+Date:   Mon, 15 Jun 2020 12:50:10 +0000
+Subject: [PATCH v2 06/12] branch -m: adjust `core.mainBranch` if necessary
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,72 +85,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When mentioning the main branch name in an error message, we want to go
-with the preference specified by the user, only falling back to Git's
-own, hard-coded default when none was configured explicitly.
+When renaming the main branch (as possibly identified by the
+`core.mainBranch` setting), we will want to record that the main branch
+now has a different name.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- send-pack.c             | 6 +++++-
- t/t5528-push-default.sh | 7 +++++++
- transport-helper.c      | 6 +++++-
- 3 files changed, 17 insertions(+), 2 deletions(-)
+ builtin/branch.c  | 9 +++++++++
+ t/t3200-branch.sh | 9 +++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/send-pack.c b/send-pack.c
-index 0abee22283d..2532864c812 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -405,8 +405,12 @@ int send_pack(struct send_pack_args *args,
- 	}
+diff --git a/builtin/branch.c b/builtin/branch.c
+index accb61b1aae..62f8db5fb05 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -556,6 +556,15 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	    replace_each_worktree_head_symref(oldref.buf, newref.buf, logmsg.buf))
+ 		die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
  
- 	if (!remote_refs) {
-+		char *branch_name = git_main_branch_name();
++	if (!copy) {
++		char *main_branch = git_main_branch_name(0);
 +
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
--			"Perhaps you should specify a branch such as 'master'.\n");
-+			"Perhaps you should specify a branch such as '%s'.\n",
-+			branch_name);
-+		free(branch_name);
- 		return 0;
- 	}
- 	if (args->atomic && !atomic_supported)
-diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
-index 4d1e0c363ea..f7583b20f87 100755
---- a/t/t5528-push-default.sh
-+++ b/t/t5528-push-default.sh
-@@ -98,6 +98,13 @@ test_expect_success 'push from/to new branch with upstream, matching and simple'
- 	test_push_failure upstream
++		if (!strcmp(interpreted_oldname, main_branch))
++		    git_config_set("core.mainbranch", interpreted_newname);
++
++		free(main_branch);
++	}
++
+ 	strbuf_release(&logmsg);
+ 
+ 	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 411a70b0ce9..328544f2736 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -467,6 +467,15 @@ EOF
+ 	test_cmp expect actual
  '
  
-+test_expect_success '"matching" fails if none match' '
-+	git init --bare empty &&
-+	test_must_fail git -c core.mainBranch=unmatch push empty : 2>actual &&
-+	needle="Perhaps you should specify a branch such as '\''unmatch'\''" &&
-+	test_i18ngrep "$needle" actual
++test_expect_success 'renaming the main branch modifies core.mainBranch' '
++	git init rename-main &&
++	test_commit -C rename-main initial &&
++	git -C rename-main branch -m trunk &&
++	git -C rename-main config core.mainBranch >actual &&
++	echo trunk >expect &&
++	test_cmp expect actual
 +'
 +
- test_expect_success 'push ambiguously named branch with upstream, matching and simple' '
- 	git checkout -b ambiguous &&
- 	test_config branch.ambiguous.remote parent1 &&
-diff --git a/transport-helper.c b/transport-helper.c
-index a46afcb69db..8c8f40e322d 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1044,9 +1044,13 @@ static int push_refs(struct transport *transport,
- 	}
- 
- 	if (!remote_refs) {
-+		char *branch_name = git_main_branch_name();
-+
- 		fprintf(stderr,
- 			_("No refs in common and none specified; doing nothing.\n"
--			  "Perhaps you should specify a branch such as 'master'.\n"));
-+			  "Perhaps you should specify a branch such as '%s'.\n"),
-+			branch_name);
-+		free(branch_name);
- 		return 0;
- 	}
- 
+ test_expect_success 'git branch -c dumps usage' '
+ 	test_expect_code 128 git branch -c 2>err &&
+ 	test_i18ngrep "branch name required" err
 -- 
 gitgitgadget
 
