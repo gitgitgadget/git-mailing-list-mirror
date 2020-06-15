@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 349F0C433E1
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70F6CC433E0
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11CD2206B7
-	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F5EA206B7
+	for <git@archiver.kernel.org>; Mon, 15 Jun 2020 12:50:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y2Wi+QdN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="frNwZWtv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730008AbgFOMua (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 08:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50686 "EHLO
+        id S1730032AbgFOMuf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 08:50:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729884AbgFOMuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 08:50:25 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C03B2C08C5C3
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:24 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id y17so16964736wrn.11
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:24 -0700 (PDT)
+        with ESMTP id S1729996AbgFOMu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 08:50:29 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4604FC08C5C2
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:29 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id b82so5991663wmb.1
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 05:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=W/m6HY9KQHDha+1BHPlpIM4OyWS0ZCoBQlE87VpXdr4=;
-        b=Y2Wi+QdNXPhcp7AvXl/FBeRrh9nO2V9RwULLzRuVhxP/JE+QhrWBtwCQ3ZB+ZqxRYe
-         CvO1/KX5etaLu9oRe2cJcY/TdyW4aY+a+5Gas2Tr4tAN3raR/QAmZH1xFtCQ3+jXDId5
-         JfAzEjcBeAOOHYq+cE4yxCD/JpqXvd5Q4be30tzgtXn7tp2ZykLzRLfwg9CDUh17kg+k
-         dFuFuRGvvOzAzUQSmXCVwGsam2aJddD38CqnfG4Qgp9EFLI5pIjkI5bTYGpWg0kCkpeG
-         kTJXt+O12gkWfwYdaYHdVAIvbBIpwgCPMa52d+NT0Cso//zbYyi/J+jwd9qAPmkX4hpc
-         2ckg==
+        bh=S0CMFVB1e1YXOFVZJe4be2qV6eCJOxF5msCtstwq5gE=;
+        b=frNwZWtvQpxYprNefa0xToU2r8WetCCthuU/OlWQxYhSx+Zw3YRV9mIC3x1xQ5UKzX
+         e+71iDRPW5D/sd5PxSZmdWp6PMARKum3CzLQF3tS+AuzvozLLbaqj5DT/q+bsJiQ0m+I
+         kPQIRL7V5RwvdMaIOr7yhH1jDaUNy8ijfyo0wGu4s92RgN48YL9jl0pcGYJ8FQr1MW7q
+         GVTMdj7TdoBuUUVuwOwx4HKMCxg34Jd1LNOB78wojb6Dppee2gC7G5WlWOPkpK+1tOgn
+         FwxCDCNLAA5mP6+D3OH6JoNEtGeEXE3+Ljnk0vLRezrqijhKyXeAdUxsiSOzIauif5kZ
+         KIiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=W/m6HY9KQHDha+1BHPlpIM4OyWS0ZCoBQlE87VpXdr4=;
-        b=muDnmZ1WehEj7YYhmkZ/XhCtEtH8u1kWLdaxskqqTR2ECpabTSsNpGEGAvSTbUsyun
-         A35WHKzULo0EvA47AFBm7U0aviEbXQYbvhUC/ifMXHSsA/Vwo7ndksBHr67qKyHvxZVq
-         sAH9FDg2XDPSIUzMkrTy5ArxDbMhosk57cVM4TcW9ylVQPO0U0kPBfakO2sxOv5zfBlm
-         YNWGWnDb8K5wOIPKlfsWP3gRgQi5bL9BkguArwA2rBvmjIR2dfYeqQ6frbVi9tfmwsDv
-         MnZn0UGu+qGKzPLdSu+pj4rqcSMCpmF42QZsNA51YH9ps78znk8l8qs34wyfifmBzjAH
-         Owag==
-X-Gm-Message-State: AOAM530a9CT31WLWp5dvms5pbpgxEInTDRxyHAMUXhp2E8IjNIt+BTMW
-        oyfhSm3ffVS9p4Fgj/KPRcqOEMoG
-X-Google-Smtp-Source: ABdhPJxnrP6ds+9Cp9eiFAkSCUwNxl34OlgpcGRidJ0rwADJVqoXa8uhIZCaDu1yMfpSD00bSfMK6g==
-X-Received: by 2002:a5d:5389:: with SMTP id d9mr30733356wrv.77.1592225422241;
-        Mon, 15 Jun 2020 05:50:22 -0700 (PDT)
+        bh=S0CMFVB1e1YXOFVZJe4be2qV6eCJOxF5msCtstwq5gE=;
+        b=MLD9khKmF00Izj63QtokLjR2Xt64I837YZ1jUTTkJG/VZPePFvujsqwNK1sxx2vyuC
+         2gSpR4QHVvP0Y6X7VfHo336Kk7GzvS19kawPj0Hu/S5eAGQkXsDFNDXVwojxjbnJuAGI
+         2jNyfGbFM48Ul2EwgRWpKyoS3ysgeWWHjl8I1Zm2VWK88vG2YfkWjrlBpz+mklIZOyvQ
+         5+nz8M3CsvJMcfH3scLb7maVpnNRG/YCoebdjUCNtYqHo9eahSylrizkfbyE/klwBw3T
+         10Qgx72Xao749TV4ublvujMkEM+8f4VB0gyZtsoe0fqzOBF4TRCe9Xl2OzYzG19bd835
+         hYcA==
+X-Gm-Message-State: AOAM5312+A/2QYy6UbpW6VbRjsCmIieZjmnO181kkCcfFADXsxLo9tPE
+        IZ0SlF0ON/aXhCcJlRmPRg4rxcpi
+X-Google-Smtp-Source: ABdhPJzxmRaCKSCptsg4QfgPtvogmOYytfhwqjM+uqkgGFGRwt1OilGworLU0LoJnmc9QHnPuxOkog==
+X-Received: by 2002:a7b:c1d4:: with SMTP id a20mr12526770wmj.153.1592225427796;
+        Mon, 15 Jun 2020 05:50:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c81sm23214363wmd.42.2020.06.15.05.50.21
+        by smtp.gmail.com with ESMTPSA id s8sm25401813wrg.50.2020.06.15.05.50.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2020 05:50:21 -0700 (PDT)
-Message-Id: <ca1c63c3e012edde26b4f0c67175ca53f4d29e08.1592225416.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2020 05:50:27 -0700 (PDT)
+Message-Id: <59b8f4cfbb278b1bcb9c189e5c57e37d98db3fbe.1592225416.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
         <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Jun 2020 12:50:08 +0000
-Subject: [PATCH v2 04/12] git_main_branch_name(): optionally report the full
- ref name
+Date:   Mon, 15 Jun 2020 12:50:14 +0000
+Subject: [PATCH v2 10/12] remote: learn about the possibly-overridden default
+ main branch name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,120 +86,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We are about to introduce the first caller of that function (`git
-fast-export`) that wants a full ref name instead of the short branch
-name.
-
-To make this change easier to review, let's refactor the function
-accordingly without mixing in the actual first call using the new flag.
+When guessing the default branch name of a remote, and there are no refs
+to guess from, we want to go with the preference specified by the user
+for the fall-back, i.e. the default name to be used for the main branch
+of new repositories (because as far as the user is concerned, a remote
+that has no branches yet is a new repository).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fmt-merge-msg.c    |  2 +-
- refs.c             | 12 ++++++++----
- refs.h             |  8 ++++++--
- send-pack.c        |  2 +-
- transport-helper.c |  2 +-
- 5 files changed, 17 insertions(+), 9 deletions(-)
+ remote.c                 | 15 ++++++++++-----
+ t/t5606-clone-options.sh | 11 ++++++++++-
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index 43f4f829242..03dba905643 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -451,7 +451,7 @@ static void fmt_merge_msg_title(struct strbuf *out,
- 			strbuf_addf(out, " of %s", srcs.items[i].string);
- 	}
+diff --git a/remote.c b/remote.c
+index 534c6426f1e..2dcf4ac6d15 100644
+--- a/remote.c
++++ b/remote.c
+@@ -256,7 +256,7 @@ static void read_remotes_file(struct remote *remote)
  
--	main_branch = git_main_branch_name();
-+	main_branch = git_main_branch_name(0);
- 	if (!strcmp(main_branch, current_branch))
- 		strbuf_addch(out, '\n');
+ static void read_branches_file(struct remote *remote)
+ {
+-	char *frag;
++	char *frag, *main_branch = NULL;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	FILE *f = fopen_or_warn(git_path("branches/%s", remote->name), "r");
+ 
+@@ -276,7 +276,7 @@ static void read_branches_file(struct remote *remote)
+ 
+ 	/*
+ 	 * The branches file would have URL and optionally
+-	 * #branch specified.  The "master" (or specified) branch is
++	 * #branch specified.  The main (or specified) branch is
+ 	 * fetched and stored in the local branch matching the
+ 	 * remote name.
+ 	 */
+@@ -284,7 +284,7 @@ static void read_branches_file(struct remote *remote)
+ 	if (frag)
+ 		*(frag++) = '\0';
  	else
-diff --git a/refs.c b/refs.c
-index f1854cffa2f..7da3ac178c4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -560,8 +560,9 @@ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix)
- 		argv_array_pushf(prefixes, *p, len, prefix);
+-		frag = "master";
++		frag = main_branch = git_main_branch_name(MAIN_BRANCH_FOR_INIT);
+ 
+ 	add_url_alias(remote, strbuf_detach(&buf, NULL));
+ 	strbuf_addf(&buf, "refs/heads/%s:refs/heads/%s",
+@@ -299,6 +299,7 @@ static void read_branches_file(struct remote *remote)
+ 	strbuf_addf(&buf, "HEAD:refs/heads/%s", frag);
+ 	refspec_append(&remote->push, buf.buf);
+ 	remote->fetch_tags = 1; /* always auto-follow */
++	free(main_branch);
+ 	strbuf_release(&buf);
  }
  
--char *repo_main_branch_name(struct repository *r)
-+char *repo_main_branch_name(struct repository *r, int flags)
- {
-+	int full_name = flags & MAIN_BRANCH_FULL_NAME;
- 	const char *config_key = "core.mainbranch";
- 	const char *config_display_key = "core.mainBranch";
- 	const char *fall_back = "master";
-@@ -570,7 +571,10 @@ char *repo_main_branch_name(struct repository *r)
- 	if (repo_config_get_string(r, config_key, &name) < 0)
- 		die(_("could not retrieve `%s`"), config_display_key);
+@@ -2097,9 +2098,13 @@ struct ref *guess_remote_head(const struct ref *head,
+ 	if (head->symref)
+ 		return copy_ref(find_ref_by_name(refs, head->symref));
  
--	ret = name ? name : xstrdup(fall_back);
-+	if (full_name)
-+		ret = xstrfmt("refs/heads/%s", name ? name : fall_back);
-+	else
-+		ret = name ? name : xstrdup(fall_back);
- 
- 	if (check_refname_format(ret, REFNAME_ALLOW_ONELEVEL))
- 		die(_("invalid branch name: %s = %s"),
-@@ -582,9 +586,9 @@ char *repo_main_branch_name(struct repository *r)
- 	return ret;
- }
- 
--char *git_main_branch_name(void)
-+char *git_main_branch_name(int flags)
- {
--	return repo_main_branch_name(the_repository);
-+	return repo_main_branch_name(the_repository, flags);
- }
- 
- /*
-diff --git a/refs.h b/refs.h
-index a207ef01348..96472f9a9f5 100644
---- a/refs.h
-+++ b/refs.h
-@@ -157,9 +157,13 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
- /*
-  * Retrieves the name of the main (or: primary) branch of the given
-  * repository.
-+ *
-+ * The result is an allocated string. Unless the flags ask for a short name, it
-+ * will be prefixed with "refs/heads/".
-  */
--char *git_main_branch_name(void);
--char *repo_main_branch_name(struct repository *r);
-+#define MAIN_BRANCH_FULL_NAME (1<<0)
-+char *git_main_branch_name(int flags);
-+char *repo_main_branch_name(struct repository *r, int flags);
- 
- /*
-  * A ref_transaction represents a collection of reference updates that
-diff --git a/send-pack.c b/send-pack.c
-index 2532864c812..898720511d0 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -405,7 +405,7 @@ int send_pack(struct send_pack_args *args,
+-	/* If refs/heads/master could be right, it is. */
++	/* If a remote branch exists with the main branch name, let's use it. */
+ 	if (!all) {
+-		r = find_ref_by_name(refs, "refs/heads/master");
++		char *name = git_main_branch_name(MAIN_BRANCH_FULL_NAME |
++						  MAIN_BRANCH_FOR_INIT);
++
++		r = find_ref_by_name(refs, name);
++		free(name);
+ 		if (r && oideq(&r->old_oid, &head->old_oid))
+ 			return copy_ref(r);
  	}
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 98b2d8527f6..61ce9c09920 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -49,7 +49,16 @@ test_expect_success 'guesses main branch name correctly' '
+ 	git -C main-branch branch abc guess &&
+ 	git clone main-branch is-it &&
+ 	test guess = $(git -C is-it config core.mainBranch) &&
+-	test refs/heads/guess = $(git -C is-it symbolic-ref HEAD)
++	test refs/heads/guess = $(git -C is-it symbolic-ref HEAD) &&
++
++	git -c init.defaultBranch=none init --bare no-head &&
++	git -C main-branch push ../no-head guess abc &&
++	git clone no-head is-it2 &&
++	test_must_fail git -C is-it2 symbolic-ref refs/remotes/origin/HEAD &&
++	git -C no-head update-ref --no-deref HEAD refs/heads/guess &&
++	git -c init.defaultBranch=guess clone no-head is-it3 &&
++	test refs/remotes/origin/guess = \
++		$(git -C is-it3 symbolic-ref refs/remotes/origin/HEAD)
+ '
  
- 	if (!remote_refs) {
--		char *branch_name = git_main_branch_name();
-+		char *branch_name = git_main_branch_name(0);
- 
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
- 			"Perhaps you should specify a branch such as '%s'.\n",
-diff --git a/transport-helper.c b/transport-helper.c
-index 8c8f40e322d..7a54e5b2fb2 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1044,7 +1044,7 @@ static int push_refs(struct transport *transport,
- 	}
- 
- 	if (!remote_refs) {
--		char *branch_name = git_main_branch_name();
-+		char *branch_name = git_main_branch_name(0);
- 
- 		fprintf(stderr,
- 			_("No refs in common and none specified; doing nothing.\n"
+ test_done
 -- 
 gitgitgadget
 
