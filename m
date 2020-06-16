@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57EACC433E2
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 19:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7421CC433DF
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 19:21:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29E8E20776
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 19:21:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41D8F20776
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 19:21:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0K/15GE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7brNVHd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730757AbgFPTVA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 15:21:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
+        id S1730793AbgFPTVD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 15:21:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730575AbgFPTUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 15:20:52 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ECC9C0613EF
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 12:20:52 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id l17so3943783wmj.0
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 12:20:52 -0700 (PDT)
+        with ESMTP id S1730730AbgFPTU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 15:20:59 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD103C061755
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 12:20:58 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id l11so21966577wru.0
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 12:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pOs6eMd+RC2vCLBLhB9pmRACQnnoM2tWyOisjR62G7U=;
-        b=Y0K/15GEq/E/KNi8WBLzEVVQndn8bCpsZ3fokHlNSX9UJOnkHDTnPuE9uvPVjgC+Pg
-         73yA7eBg+YKbAeX58aTxZJyefg8+cehZDg4Rh3YZE2bM+a2TMEnvIiB/cq5FB8K78YEB
-         U8rJqoYRnM5gaqFQ03L5ZbToFbA/eKo4XtR4Osb+MGPzrvuLo5MpSscxLhQXfeGgyvFL
-         tTbmWxJhAMxDDxLPKjGy6qRdbqOkXrYGZ0dnAQMqPyX2mbVHcMS7ycQiMAxPhd+hlp1e
-         f6PIc/NLyRirupFIyBkc4wxCcX6um3Ldr6rJymST5A577RhNViG54G8iZdKeg1R6ZW85
-         XXRA==
+        bh=jxeLNbvjxI9czDM/P3o7kTqJWm8wwTkkCRnHOc3t/Ok=;
+        b=U7brNVHdjd26q23b1UDIdKeBPmEjs1BPlCsDFKlc5rxOiEYGjtqDZUlajLuSN/FEBZ
+         ST2nb6GphutkfgPCuDrfHwsSDv4oYqzrTGXmsVUsIPAq3gkag8PDAhvgLMFGAzsWXY1c
+         IaTaq82pVuINnTJ1AJ7U+YQ6LfvtGJ1bOjnjG/PNPBaWuEktYsRffJvjEyd0XyRFTVQo
+         /OMX8/8/5ClbKuQL7zPTcXyo1ciC0ulWtKBnmVNdQo0qS7XNlFK1HtewuAHbG1ROtRzu
+         Lhn4iRRzvJx6KjM3IfF62iRwAcCrTaoGHS6U47ls3jQXkweYc1hC/DE4kLJR6eMjz7Q9
+         Hs9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pOs6eMd+RC2vCLBLhB9pmRACQnnoM2tWyOisjR62G7U=;
-        b=NT/6HsBUMQmsFroPoUrZtwqMTSAranHEGWsMFr4nOdKtYCg0LThK3Wtp+yYWu5Rg9F
-         RaGJiqpwKPJhDr0EH4UodERx5nkEy4jgLUZcUgd9wvUt6uIeY2A/YeJY2jmUUbim14RR
-         4KbimuBShf7RBDeWlKR8lLPoWhtT8QFVaBhSSfBUmyeHc1d1tDcLpxjFRhG1u3k6XSBA
-         nQE/tcZn7JGenEoKkwcjlMrpeUKjvxxlAs+UrcXrFQYc1eeihZSr303NAoKjUpfg+uVI
-         JD2sh6SYq2jFcU+6l0hTGIY713BUE3gGJYzbndAN2M73LseGsbw1SFKCyKFU1EwOTOkV
-         ILFg==
-X-Gm-Message-State: AOAM5329BxrGMVakGrZ6T0FTCr8/zap3leALPG3NwE1U0b/p8xbZDNTE
-        gIJ9POtQ/wdvPW/Hey7Bd2LWaSN8
-X-Google-Smtp-Source: ABdhPJwOEfF58g5/nwKc18JonSB7UjXvi+m73hO+i3pTs5e98lkF4XSifqRPes9HZGlOJuX/1fO7KQ==
-X-Received: by 2002:a7b:cb18:: with SMTP id u24mr4839183wmj.67.1592335250768;
-        Tue, 16 Jun 2020 12:20:50 -0700 (PDT)
+        bh=jxeLNbvjxI9czDM/P3o7kTqJWm8wwTkkCRnHOc3t/Ok=;
+        b=JvYTPUlm5THvNAenAdZti77a4+k276UCyhhl+NC7U7COJ7b7y7ZXTdvhg36lVeVxmt
+         yn6yaz/KbTQS/nyAYEp/7JBALNyJjtuZ09oMlw4Uh5EeTze9r9t3cScfEOF/g9lP1+/9
+         t5EK8DBfFQUDkye/KEghCeEWJ6CQp9qXpGKpdruoNWXxammQdXYnu3v0I2/7NIy2fDdH
+         jnmmu6JPCDYAZNsk3tZYJ7gqTiebM9WXBqDLH2Wr9NNFeNpsqX7+7DW2c8Aj+zb4cANU
+         LoE8ALIrHOxoxbZF9cw3fxD5RnmkRMQoAT/Jxn+X23nAcbMYmNBMMZUW7ZHpQzD2JTHJ
+         ibOg==
+X-Gm-Message-State: AOAM530xkftZeNnz+Cm2o/JlcCIuMdUSX28fUZxZKU8YyT14lYuK4bYh
+        ayzodMzQ8vq6b18qahmOgO/FTN0X
+X-Google-Smtp-Source: ABdhPJy6z+A0DBd3it7jj+fIK2QRYxujSElDhc6ugMKV7l733ZPR+vbXsf5K9amFlePOYffVxUPjHw==
+X-Received: by 2002:adf:e887:: with SMTP id d7mr4525423wrm.62.1592335257095;
+        Tue, 16 Jun 2020 12:20:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n204sm5577597wma.5.2020.06.16.12.20.49
+        by smtp.gmail.com with ESMTPSA id u3sm5277490wmg.38.2020.06.16.12.20.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2020 12:20:50 -0700 (PDT)
-Message-Id: <3f18475d0d37f9771146d49ba409bf99af2fd358.1592335242.git.gitgitgadget@gmail.com>
+        Tue, 16 Jun 2020 12:20:56 -0700 (PDT)
+Message-Id: <88640ea13f92e9b24458d1de3188bf7233ba166d.1592335243.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v17.git.1592335242.gitgitgadget@gmail.com>
 References: <pull.539.v16.git.1591380199.gitgitgadget@gmail.com>
         <pull.539.v17.git.1592335242.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Jun 2020 19:20:32 +0000
-Subject: [PATCH v17 07/17] Treat REVERT_HEAD as a pseudo ref
+Date:   Tue, 16 Jun 2020 19:20:39 +0000
+Subject: [PATCH v17 14/17] Add GIT_DEBUG_REFS debugging mechanism
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,129 +78,450 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+When set in the environment, GIT_DEBUG_REFS makes git print operations and
+results as they flow through the ref storage backend. This helps debug
+discrepancies between different ref backends.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- path.c      |  1 -
- path.h      |  8 +++-----
- sequencer.c | 16 +++++++++-------
- wt-status.c |  2 +-
- 4 files changed, 13 insertions(+), 14 deletions(-)
+ Makefile              |   1 +
+ refs.c                |   3 +
+ refs/debug.c          | 358 ++++++++++++++++++++++++++++++++++++++++++
+ refs/refs-internal.h  |   6 +
+ t/t0033-debug-refs.sh |  18 +++
+ 5 files changed, 386 insertions(+)
+ create mode 100644 refs/debug.c
+ create mode 100755 t/t0033-debug-refs.sh
 
-diff --git a/path.c b/path.c
-index 783cc2ae819..7b385e5eb28 100644
---- a/path.c
-+++ b/path.c
-@@ -1528,7 +1528,6 @@ char *xdg_cache_home(const char *filename)
- 	return NULL;
+diff --git a/Makefile b/Makefile
+index feb2e52ad22..9c71bbdcbb8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -961,6 +961,7 @@ LIB_OBJS += rebase.o
+ LIB_OBJS += ref-filter.o
+ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += refs.o
++LIB_OBJS += refs/debug.o
+ LIB_OBJS += refs/files-backend.o
+ LIB_OBJS += refs/reftable-backend.o
+ LIB_OBJS += refs/iterator.o
+diff --git a/refs.c b/refs.c
+index 4409080dfd8..bd1f3cc0e45 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1750,6 +1750,9 @@ struct ref_store *get_main_ref_store(struct repository *r)
+ 						 r->ref_storage_format :
+ 						 DEFAULT_REF_STORAGE,
+ 					 REF_STORE_ALL_CAPS);
++	if (getenv("GIT_DEBUG_REFS")) {
++		r->refs_private = debug_wrap(r->refs_private);
++	}
+ 	return r->refs_private;
  }
  
--REPO_GIT_PATH_FUNC(revert_head, "REVERT_HEAD")
- REPO_GIT_PATH_FUNC(squash_msg, "SQUASH_MSG")
- REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
- REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
-diff --git a/path.h b/path.h
-index 8941c018a99..e7e77da6aaa 100644
---- a/path.h
-+++ b/path.h
-@@ -170,7 +170,6 @@ void report_linked_checkout_garbage(void);
- 	}
+diff --git a/refs/debug.c b/refs/debug.c
+new file mode 100644
+index 00000000000..c33e684f5fc
+--- /dev/null
++++ b/refs/debug.c
+@@ -0,0 +1,358 @@
++
++#include "refs-internal.h"
++
++struct debug_ref_store {
++	struct ref_store base;
++	struct ref_store *refs;
++};
++
++extern struct ref_storage_be refs_be_debug;
++struct ref_store *debug_wrap(struct ref_store *store);
++
++struct ref_store *debug_wrap(struct ref_store *store)
++{
++	struct debug_ref_store *res = malloc(sizeof(struct debug_ref_store));
++	res->refs = store;
++	base_ref_store_init((struct ref_store *)res, &refs_be_debug);
++	return (struct ref_store *)res;
++}
++
++static int debug_init_db(struct ref_store *refs, struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	int res = drefs->refs->be->init_db(drefs->refs, err);
++	return res;
++}
++
++static int debug_transaction_prepare(struct ref_store *refs,
++				     struct ref_transaction *transaction,
++				     struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	int res;
++	transaction->ref_store = drefs->refs;
++	res = drefs->refs->be->transaction_prepare(drefs->refs, transaction,
++						   err);
++	return res;
++}
++
++static void print_update(int i, const char *refname,
++			 const struct object_id *old_oid,
++			 const struct object_id *new_oid, unsigned int flags,
++			 unsigned int type, const char *msg)
++{
++	char o[200] = "null";
++	char n[200] = "null";
++	if (old_oid)
++		oid_to_hex_r(o, old_oid);
++	if (new_oid)
++		oid_to_hex_r(n, new_oid);
++
++	type &= 0xf; /* see refs.h REF_* */
++	flags &= REF_HAVE_NEW | REF_HAVE_OLD | REF_NO_DEREF |
++		 REF_FORCE_CREATE_REFLOG | REF_LOG_ONLY;
++	printf("%d: %s %s -> %s (F=0x%x, T=0x%x) \"%s\"\n", i, refname, o, n,
++	       flags, type, msg);
++}
++
++static void print_transaction(struct ref_transaction *transaction)
++{
++	printf("transaction {\n");
++	for (int i = 0; i < transaction->nr; i++) {
++		struct ref_update *u = transaction->updates[i];
++		print_update(i, u->refname, &u->old_oid, &u->new_oid, u->flags,
++			     u->type, u->msg);
++	}
++	printf("}\n");
++}
++
++static int debug_transaction_finish(struct ref_store *refs,
++				    struct ref_transaction *transaction,
++				    struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	int res;
++	transaction->ref_store = drefs->refs;
++	res = drefs->refs->be->transaction_finish(drefs->refs, transaction,
++						  err);
++	print_transaction(transaction);
++	printf("finish: %d\n", res);
++	return res;
++}
++
++static int debug_transaction_abort(struct ref_store *refs,
++				   struct ref_transaction *transaction,
++				   struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	int res;
++	transaction->ref_store = drefs->refs;
++	res = drefs->refs->be->transaction_abort(drefs->refs, transaction, err);
++	return res;
++}
++
++static int debug_initial_transaction_commit(struct ref_store *refs,
++					    struct ref_transaction *transaction,
++					    struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	int res;
++	transaction->ref_store = drefs->refs;
++	res = drefs->refs->be->initial_transaction_commit(drefs->refs,
++							  transaction, err);
++	return res;
++}
++
++static int debug_pack_refs(struct ref_store *ref_store, unsigned int flags)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->pack_refs(drefs->refs, flags);
++	return res;
++}
++
++static int debug_create_symref(struct ref_store *ref_store,
++			       const char *ref_name, const char *target,
++			       const char *logmsg)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->create_symref(drefs->refs, ref_name, target,
++						 logmsg);
++	printf("create_symref: %s -> %s \"%s\": %d\n", ref_name, target, logmsg,
++	       res);
++	return res;
++}
++
++static int debug_delete_refs(struct ref_store *ref_store, const char *msg,
++			     struct string_list *refnames, unsigned int flags)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res =
++		drefs->refs->be->delete_refs(drefs->refs, msg, refnames, flags);
++	return res;
++}
++
++static int debug_rename_ref(struct ref_store *ref_store, const char *oldref,
++			    const char *newref, const char *logmsg)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->rename_ref(drefs->refs, oldref, newref,
++					      logmsg);
++	printf("rename_ref: %s -> %s \"%s\": %d\n", oldref, newref, logmsg,
++	       res);
++	return res;
++}
++
++static int debug_copy_ref(struct ref_store *ref_store, const char *oldref,
++			  const char *newref, const char *logmsg)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res =
++		drefs->refs->be->copy_ref(drefs->refs, oldref, newref, logmsg);
++	printf("copy_ref: %s -> %s \"%s\": %d\n", oldref, newref, logmsg, res);
++	return res;
++}
++
++static int debug_write_pseudoref(struct ref_store *ref_store,
++				 const char *pseudoref,
++				 const struct object_id *oid,
++				 const struct object_id *old_oid,
++				 struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->write_pseudoref(drefs->refs, pseudoref, oid,
++						   old_oid, err);
++	char o[100] = "null";
++	char n[100] = "null";
++	if (oid)
++		oid_to_hex_r(o, oid);
++	if (old_oid)
++		oid_to_hex_r(n, old_oid);
++	printf("write_pseudoref: %s, %s => %s, err %s: %d\n", pseudoref, o, n,
++	       err->buf, res);
++	return res;
++}
++
++static int debug_delete_pseudoref(struct ref_store *ref_store,
++				  const char *pseudoref,
++				  const struct object_id *old_oid)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->delete_pseudoref(drefs->refs, pseudoref,
++						    old_oid);
++	char hex[100] = "null";
++	if (old_oid)
++		oid_to_hex_r(hex, old_oid);
++	printf("delete_pseudoref: %s (%s): %d\n", pseudoref, hex, res);
++	return res;
++}
++
++static struct ref_iterator *
++debug_ref_iterator_begin(struct ref_store *ref_store, const char *prefix,
++			 unsigned int flags)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	struct ref_iterator *res =
++		drefs->refs->be->iterator_begin(drefs->refs, prefix, flags);
++	return res;
++}
++
++static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
++			      struct object_id *oid, struct strbuf *referent,
++			      unsigned int *type)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = 0;
++
++	oidcpy(oid, &null_oid);
++	res = drefs->refs->be->read_raw_ref(drefs->refs, refname, oid, referent,
++					    type);
++
++	if (res == 0) {
++		printf("read_raw_ref: %s: %s (=> %s) type %x: %d\n", refname,
++		       oid_to_hex(oid), referent->buf, *type, res);
++	} else {
++		printf("read_raw_ref: %s err %d\n", refname, res);
++	}
++	return res;
++}
++
++static struct ref_iterator *
++debug_reflog_iterator_begin(struct ref_store *ref_store)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	struct ref_iterator *res =
++		drefs->refs->be->reflog_iterator_begin(drefs->refs);
++	printf("for_each_reflog_iterator_begin\n");
++	return res;
++}
++
++struct debug_reflog {
++	const char *refname;
++	each_reflog_ent_fn *fn;
++	void *cb_data;
++};
++
++static int debug_print_reflog_ent(struct object_id *old_oid,
++				  struct object_id *new_oid,
++				  const char *committer, timestamp_t timestamp,
++				  int tz, const char *msg, void *cb_data)
++{
++	struct debug_reflog *dbg = (struct debug_reflog *)cb_data;
++	int ret;
++	char o[100] = "null";
++	char n[100] = "null";
++	if (old_oid)
++		oid_to_hex_r(o, old_oid);
++	if (new_oid)
++		oid_to_hex_r(n, new_oid);
++
++	ret = dbg->fn(old_oid, new_oid, committer, timestamp, tz, msg,
++		      dbg->cb_data);
++	printf("reflog_ent %s (ret %d): %s -> %s, %s %ld \"%s\"\n",
++	       dbg->refname, ret, o, n, committer, (long int)timestamp, msg);
++	return ret;
++}
++
++static int debug_for_each_reflog_ent(struct ref_store *ref_store,
++				     const char *refname, each_reflog_ent_fn fn,
++				     void *cb_data)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	struct debug_reflog dbg = {
++		.refname = refname,
++		.fn = fn,
++		.cb_data = cb_data,
++	};
++
++	int res = drefs->refs->be->for_each_reflog_ent(
++		drefs->refs, refname, &debug_print_reflog_ent, &dbg);
++	printf("for_each_reflog: %s: %d\n", refname, res);
++	return res;
++}
++
++static int debug_for_each_reflog_ent_reverse(struct ref_store *ref_store,
++					     const char *refname,
++					     each_reflog_ent_fn fn,
++					     void *cb_data)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	struct debug_reflog dbg = {
++		.refname = refname,
++		.fn = fn,
++		.cb_data = cb_data,
++	};
++	int res = drefs->refs->be->for_each_reflog_ent_reverse(
++		drefs->refs, refname, &debug_print_reflog_ent, &dbg);
++	printf("for_each_reflog_reverse: %s: %d\n", refname, res);
++	return res;
++}
++
++static int debug_reflog_exists(struct ref_store *ref_store, const char *refname)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->reflog_exists(drefs->refs, refname);
++	printf("reflog_exists: %s: %d\n", refname, res);
++	return res;
++}
++
++static int debug_create_reflog(struct ref_store *ref_store, const char *refname,
++			       int force_create, struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->create_reflog(drefs->refs, refname,
++						 force_create, err);
++	return res;
++}
++
++static int debug_delete_reflog(struct ref_store *ref_store, const char *refname)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->delete_reflog(drefs->refs, refname);
++	return res;
++}
++
++static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
++			       const struct object_id *oid, unsigned int flags,
++			       reflog_expiry_prepare_fn prepare_fn,
++			       reflog_expiry_should_prune_fn should_prune_fn,
++			       reflog_expiry_cleanup_fn cleanup_fn,
++			       void *policy_cb_data)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	int res = drefs->refs->be->reflog_expire(drefs->refs, refname, oid,
++						 flags, prepare_fn,
++						 should_prune_fn, cleanup_fn,
++						 policy_cb_data);
++	return res;
++}
++
++struct ref_storage_be refs_be_debug = {
++	NULL,
++	"debug",
++	NULL,
++	debug_init_db,
++	debug_transaction_prepare,
++	debug_transaction_finish,
++	debug_transaction_abort,
++	debug_initial_transaction_commit,
++
++	debug_pack_refs,
++	debug_create_symref,
++	debug_delete_refs,
++	debug_rename_ref,
++	debug_copy_ref,
++
++	debug_write_pseudoref,
++	debug_delete_pseudoref,
++
++	debug_ref_iterator_begin,
++	debug_read_raw_ref,
++
++	debug_reflog_iterator_begin,
++	debug_for_each_reflog_ent,
++	debug_for_each_reflog_ent_reverse,
++	debug_reflog_exists,
++	debug_create_reflog,
++	debug_delete_reflog,
++	debug_reflog_expire,
++};
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 7afe4c28310..5417623c86e 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -713,4 +713,10 @@ struct ref_store {
+ void base_ref_store_init(struct ref_store *refs,
+ 			 const struct ref_storage_be *be);
  
- struct path_cache {
--	const char *revert_head;
- 	const char *squash_msg;
- 	const char *merge_msg;
- 	const char *merge_rr;
-@@ -181,12 +180,11 @@ struct path_cache {
- 	const char *shallow;
- };
- 
--#define PATH_CACHE_INIT                                              \
--	{                                                            \
--		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL \
-+#define PATH_CACHE_INIT                                        \
-+	{                                                      \
-+		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL \
- 	}
- 
--const char *git_path_revert_head(struct repository *r);
- const char *git_path_squash_msg(struct repository *r);
- const char *git_path_merge_msg(struct repository *r);
- const char *git_path_merge_rr(struct repository *r);
-diff --git a/sequencer.c b/sequencer.c
-index 26286ec8d08..25ef9fc773d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2317,8 +2317,10 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
- 		need_cleanup = 1;
- 	}
- 
--	if (file_exists(git_path_revert_head(r))) {
--		if (!unlink(git_path_revert_head(r)) && verbose)
-+	if (refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD")) {
-+		if (!refs_delete_pseudoref(get_main_ref_store(r), "REVERT_HEAD",
-+					   NULL) &&
-+		    verbose)
- 			warning(_("cancelling a revert in progress"));
- 		opts.action = REPLAY_REVERT;
- 		need_cleanup = 1;
-@@ -2677,7 +2679,7 @@ static int create_seq_dir(struct repository *r)
- 	const char *in_progress_error = NULL;
- 	const char *in_progress_advice = NULL;
- 	unsigned int advise_skip =
--		file_exists(git_path_revert_head(r)) ||
-+		refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") ||
- 		refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD");
- 
- 	if (!sequencer_get_last_command(r, &action)) {
-@@ -2778,7 +2780,7 @@ static int rollback_single_pick(struct repository *r)
- 	struct object_id head_oid;
- 
- 	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
--	    !file_exists(git_path_revert_head(r)))
-+	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
- 		return error(_("no cherry-pick or revert in progress"));
- 	if (read_ref_full("HEAD", 0, &head_oid, NULL))
- 		return error(_("cannot resolve HEAD"));
-@@ -2872,7 +2874,7 @@ int sequencer_skip(struct repository *r, struct replay_opts *opts)
- 	 */
- 	switch (opts->action) {
- 	case REPLAY_REVERT:
--		if (!file_exists(git_path_revert_head(r))) {
-+		if (!refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD")) {
- 			if (action != REPLAY_REVERT)
- 				return error(_("no revert in progress"));
- 			if (!rollback_is_safe())
-@@ -4210,7 +4212,7 @@ static int continue_single_pick(struct repository *r)
- 	const char *argv[] = { "commit", NULL };
- 
- 	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
--	    !file_exists(git_path_revert_head(r)))
-+	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
- 		return error(_("no cherry-pick or revert in progress"));
- 	return run_command_v_opt(argv, RUN_GIT_CMD);
- }
-@@ -4390,7 +4392,7 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
- 		/* Verify that the conflict has been resolved */
- 		if (refs_ref_exists(get_main_ref_store(r),
- 				    "CHERRY_PICK_HEAD") ||
--		    file_exists(git_path_revert_head(r))) {
-+		    refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD")) {
- 			res = continue_single_pick(r);
- 			if (res)
- 				goto release_todo_list;
-diff --git a/wt-status.c b/wt-status.c
-index 96302be030b..81b768504a1 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1642,7 +1642,7 @@ void wt_status_get_state(struct repository *r,
- 		oidcpy(&state->cherry_pick_head_oid, &oid);
- 	}
- 	wt_status_check_bisect(NULL, state);
--	if (!stat(git_path_revert_head(r), &st) &&
-+	if (refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") &&
- 	    !get_oid("REVERT_HEAD", &oid)) {
- 		state->revert_in_progress = 1;
- 		oidcpy(&state->revert_head_oid, &oid);
++/*
++ * Print out ref operations as they occur. Useful for debugging alternate ref
++ * backends.
++ */
++struct ref_store *debug_wrap(struct ref_store *store);
++
+ #endif /* REFS_REFS_INTERNAL_H */
+diff --git a/t/t0033-debug-refs.sh b/t/t0033-debug-refs.sh
+new file mode 100755
+index 00000000000..ed76c2c84a1
+--- /dev/null
++++ b/t/t0033-debug-refs.sh
+@@ -0,0 +1,18 @@
++#!/bin/sh
++#
++# Copyright (c) 2020 Google LLC
++#
++
++test_description='cross-check reftable with files, using GIT_DEBUG_REFS output'
++
++. ./test-lib.sh
++
++test_expect_success 'GIT_DEBUG_REFS' '
++	git init --ref-storage=files files &&
++	git init --ref-storage=reftable reftable &&
++	(cd files && GIT_DEBUG_REFS=1 test_commit message file) > files.txt &&
++	(cd reftable && GIT_DEBUG_REFS=1 test_commit message file) > reftable.txt &&
++	test_cmp files.txt reftable.txt
++'
++
++test_done
 -- 
 gitgitgadget
 
