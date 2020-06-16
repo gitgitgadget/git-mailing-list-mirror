@@ -2,134 +2,96 @@ Return-Path: <SRS0=RX4d=75=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E403C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 08:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5CB6C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 08:37:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 767902074D
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 08:02:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25915206F7
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 08:37:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p+tCYHcL"
+	dkim=pass (1024-bit key) header.d=rambler.ru header.i=@rambler.ru header.b="GKIZBNH2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727038AbgFPICL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 04:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726261AbgFPICG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 04:02:06 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE20C05BD43
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 01:02:06 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id er17so9053935qvb.8
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 01:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0FaczZKI5/lTd0UsQOLrvEk43A/IkGx3A376Z9arq80=;
-        b=p+tCYHcLr+nrTrfgjs4nfVZvy4hAHQhjluiuiD3f1BwkvjZKrLjcyVa0d/XTgZmpPe
-         QDJnucTMDTHoefDD6vN+MPIUHmwMHj0ArB8oRLVY2G8Qlp1+fUa8rsHzjShsVsuXrMFx
-         xmjgT1hjHm4d0ljxkJSxJN3m96wRiMl1+pmzcD9SzpVwIsOnRcyQrUBsoTIpspj+lqJd
-         FBhILcXexvdlPsi3ZD3LP2+CcAj9u7esPPSEar/yJBDhJ8aXNP2fWphyTcU0ipdtYVKZ
-         1JskukoawTFAVp1oK8UhwEpHaFmKwySVzogOX+BTzJ++MpxLWYN/5L3dbvI2kPu44843
-         Updw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0FaczZKI5/lTd0UsQOLrvEk43A/IkGx3A376Z9arq80=;
-        b=ceSIvJEvTSL34Ej33XsIa+9MU1ltk9agn4hRwV4j/mVYgpApJi2WrFJcIqTtu2OjeS
-         5WKXczQyYFjwJy07amTkQYxaXjkKiwRq0t9hbRX6JxYnxe9NL3HTJq/QsMW1RPgfyM4k
-         BLIUsTqHcMXJU3ErOMFl+ZDU31puLWVLeAS5M1BcHBv7t5lvpIZUMajc42Sl1jULW1vQ
-         tZTmCDsm5iufzPXG+lG2uzPRXQb6pobnz3lT9+NHRiC9Fe0AtqGP73Z/8WF8OqV64sHT
-         fbDfYjZJHxhsMfbKKcScmCa1Bys8qmDp9KxZ0k9XWgPtfHADysXJM/4zkiV0cjiwrKAU
-         bUvQ==
-X-Gm-Message-State: AOAM5338446g+VgUsb/rfBCvaPM960YVrCR6sztI4O76o7zwAg5rGxUa
-        f1+VagQyOG/sYt5NGGUcGh5InI2kbp+xNseN8Ps=
-X-Google-Smtp-Source: ABdhPJyq37aUtpJU4mBHPolCgPHGMB/i99tJwtZ+53ihuJ3NCHuL9JfzntewQUbbsYzyC2CW0RPgud9gk+TUSNTngBM=
-X-Received: by 2002:ad4:54c8:: with SMTP id j8mr978939qvx.111.1592294525911;
- Tue, 16 Jun 2020 01:02:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
- <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com> <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
- <20200616074316.GA21462@kitsune.suse.cz>
-In-Reply-To: <20200616074316.GA21462@kitsune.suse.cz>
-From:   demerphq <demerphq@gmail.com>
-Date:   Tue, 16 Jun 2020 10:01:54 +0200
-Message-ID: <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
+        id S1726856AbgFPIhI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 04:37:08 -0400
+Received: from huan9.mail.rambler.ru ([81.19.78.8]:47242 "EHLO
+        huan9.mail.rambler.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726064AbgFPIhG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 04:37:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rambler.ru;
+         s=mail; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+        References:Reply-To:Message-ID:Subject:To:From:Date;
+        bh=sMeT2j3Yb1ppa1zMl+HEFmBCZlQ3FP5OZo0heRJPJX8=; b=GKIZBNH2M0p/1/9tYGYbo2v6Oy
+        ukamSd6X7QehrfnIzFSFS3MVUED4EVXKAA1oFB0I11Pw/89eZEa79ttIlHAVCOIXc+LrQO+4Qma08
+        49Cx/PHFdi9FGzqND06pRi0Oe51+1uLeQ2AGKG6YLPN1ATe6cgbe4tCOrf4wzEiHAYp8=;
+Received: from [UNAVAILABLE] ([194.190.114.28]:34894 helo=localhost)
+        by huan9.mail.rambler.ru with esmtpa (Exim 4.86_2)
+        (envelope-from <lego_12239@rambler.ru>)
+        id 1jl75d-0003Si-5d
+        for git@vger.kernel.org; Tue, 16 Jun 2020 11:37:05 +0300
+Date:   Tue, 16 Jun 2020 11:38:46 +0300
+From:   Oleg <lego_12239@rambler.ru>
+To:     Git <git@vger.kernel.org>
 Subject: Re: Rename offensive terminology (master)
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     =?UTF-8?Q?S=C3=A9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>,
-        konstantin@linuxfoundation.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        don@goodman-wilson.com, Git <git@vger.kernel.org>,
-        newren@gmail.com, philipoakley@iee.email,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <20200616083405.GA17381@legohost>
+Reply-To: Oleg <lego_12239@rambler.ru>
+References: <xmqqy2oqxyp3.fsf@gitster.c.googlers.com>
+ <0dd6b6c2-4ea4-498d-4481-7f65988db293@gmail.com>
+ <CAGA3LAeXzYokcpU8RnFdF7N5vC-geOdJSY5_Mjc-yssvbpjmgw@mail.gmail.com>
+ <CANgJU+Vs-hzU-Fg+iWAn349_azb3k_6PCzyY+S2C_5ZUTv7o=A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANgJU+Vs-hzU-Fg+iWAn349_azb3k_6PCzyY+S2C_5ZUTv7o=A@mail.gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+X-Rambler-User: lego_12239@rambler.ru/194.190.114.28
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 16 Jun 2020 at 09:43, Michal Such=C3=A1nek <msuchanek@suse.de> wrot=
-e:
->
-> On Tue, Jun 16, 2020 at 09:36:59AM +0200, demerphq wrote:
-> > On Sun, 14 Jun 2020 at 20:24, S=C3=A9rgio Augusto Vianna
-> > <sergio.a.vianna@gmail.com> wrote:
-> > >
-> > > Ok, can you show me a single instance where "master" was confusing or
-> > > not descriptive enough?
-> >
-> > A: "No you need to fetch master from the remote, then you need to
-> > merge it to your local master and then push it to the master master".
-> > B: "remote master, local master and master master. wtf kind of master i=
-s that?"
-> Which falls on the wording of the FAQ, not the terminology itself. If
-> you were confused I am sure there are ways to bring this up and even
-> submit changes.
+On Tue, Jun 16, 2020 at 09:31:43AM +0200, demerphq wrote:
+> On Sun, 14 Jun 2020 at 08:35, Don Goodman-Wilson <don@goodman-wilson.com> wrote:
+> > But to deny that explosive content on the basis that you don't
+> > personally feel it, that you've never experienced it? To claim that it
+> > is "meaningless", that some people are "perpetually offended"? That's
+> > willful ignorance on your part, a bad-faith effort to engage in
+> > serious intellectual conversation about what is good and right, and
+> > has no place in a discussion about creating an inclusive space for all
+> > developers, let alone trying to bring about a more just world.
+> 
+> Well said sir. I might quote that sometime.
 
-I think you missed my point entirely. Sergio asked how "master" might
-be confusing, and I gave an example where real people found it
-confusing. I have had the conversation I just outlined multiple times
-while teaching devs to use git on repos with "master" as the default
-branch. In fact at work we renamed "master" to "trunk" when we
-migrated our old CVS to git about a decade ago exactly to avoid this
-kind of confusion. Consider how this conversation goes for us:
+No. The stupid idea. The stupid discussion. All world use this terminology
+and it disturb nobody with sane mind. And why we must change it? Because someone
+is completely mad and takes this as an insult to himself? There are many
+*real* problems in the world - famine, wars, drought, diseases, etc. What do
+you know about this? Where is you HELP? Fucking hypocrites. All of you have
+well-fed life - you know nothing about real problems. Do you think you can
+just rename something in you fucking code(JUST REPLACE ONE LETTERS WITH
+ANOTHER ONE) and this helps somebody? Are you all really so stupid? If you
+want to help, just lift your ass from a chair, toss a hamburger and go to
+the street, find someone who need help and HELP HIM. Just help somebody! But
+this is so hard. Real things are always hard. Every day you need to do something
+to make this world better. This is not what we want. We want just to sent $10
+sometime to some charity organization or change several letters in our computers.
+Yes? This is so simple. Just do it and feel better, liers.
 
-A: "No you need to fetch trunk from the remote, then you need to merge
-it to your local trunk and then push it to the master trunk".
-B: "Ok."
+Whole technical world look at you now and think:
 
-Similarly when the perl project migrated to git we renamed "master" to
-"blead" to reduce the possibility "master master" confusion.
+"These men are comlete idiots. They really think that changing letters will change
+something in real life".
 
-So I would say there is ample evidence that reasonable people consider
-the "master" branch name a bit confusing. Furthermore, claiming that
-the existence of a FAQ somehow makes this term not confusing is a bit
-strange, as I would say that if you need a FAQ to explain something it
-is not very obvious to start with so you are essentially proving my
-point for me.
+If some of you don't want to write a code and want to do some politics, just
+leave and dedicate your life to politics. Why should we all suffer from someone's
+polical program? This is not the property of someone. This program is used all over
+the world. Did you ask somebody outside of your sandbox, boys? Do you really
+understand the responsibility?
 
-Personally *I* have no problem understanding what the "master" branch
-is, I am pretty deeply familiar with how git works, I just think it is
-an inherently bad choice of default name for a distributed version
-control system for reasons entirely unrelated to it being also a term
-related to slavery. The latter to me just makes changing the default
-and/or providing easy ways to customize it all the better a move as
-ultimately it will produce less confusing and more inclusive software
-with little to no real cost to anyone else.
-
-cheers,
-Yves
-
-
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+-- 
+Олег Неманов (Oleg Nemanov)
