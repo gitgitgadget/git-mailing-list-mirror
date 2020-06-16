@@ -6,106 +6,97 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F7D1C433DF
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AC17C433DF
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00BAD2067B
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:32:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48E19214D8
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1592328752;
-	bh=tpzoT1+24VSEkhkSgfFQbQlb7Q7T11qK8yn4Gm7sPkc=;
+	s=default; t=1592329333;
+	bh=oNBoH9WacdwodEhOLxu9rXNoy3ewr4t+FGwPUSsXSRc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=zdcQ22TH1Fdl9bfbbXIN4xBrsEPvyzlPcCMaI/tINx70Ao//uPbXrUAwWPu73OFJH
-	 XUCj0GtJVa6RbZp7fY76uTbZOd770P1Y+KqQ1132UIMd8zwMu1Q90qTcg4t4WwlwaN
-	 ARgqqM2MME7yE0QZ6k9BS9rXxa8gp/04DNrgQjkM=
+	b=UI4A7ybUib99hv+PurB/BrhuLGwCsKfoUnC46EReNW3IrKdFiLwfdKspUc0CRY1Aw
+	 EiIR/eDGWbpnUR0rwWsKVGx7J0O2GpPvmzuaVszokTHrH1Hu9RrfngshIeuTArM6dT
+	 w1PAJsp06MSL+B3M7UhBexAcEqOoKAYiKE3NJQGs=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729236AbgFPRcb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 13:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34622 "EHLO
+        id S1729272AbgFPRmM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 13:42:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728271AbgFPRca (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 13:32:30 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6143BC061573
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 10:32:30 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id k22so16108290qtm.6
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 10:32:30 -0700 (PDT)
+        with ESMTP id S1729090AbgFPRmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 13:42:11 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8067FC061573
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 10:42:11 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id x16so9894487qvr.3
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 10:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linuxfoundation.org; s=google;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uWNzIVoJCcLjRgqEJRaXauCyewNtYolRt53qDyjZQVA=;
-        b=aiabG4IJCqeAnC6twJeaPCzQXhvSckrPJzsH/ZQ7lzdndvmeQsREUjnacrtiMP5ETz
-         Lzl8qlViD/bxcyvonusSHMGsJk1q2zTWZQ7RbwK+OItpRKkUrjjOnMWrA4pw5KmZdINT
-         pDv9Gsako9AuI+bpA68wfYCtFpkKW3yDigBZg=
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ZIIiGmjrpuWiQ4YIpVhcRQ6QM+q8VGNYrW6tjF0p64s=;
+        b=C/WzRbILLkX5mUL5IxXWKrlM5z6jLGPnSzOX/RM4+9currT+vrl2IJJNQ1YCPErlKQ
+         1Uhvdlj2Bq8OcwzcfyvM1jPMv98fZRUqyKVd06ZvgtsmNmxsmXkwqK8q00qq/t5xkxC+
+         Tp0xIAyaI7mQNMq28GeBXdNcbxR9oH7oCtmWY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id
          :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=uWNzIVoJCcLjRgqEJRaXauCyewNtYolRt53qDyjZQVA=;
-        b=DHKLvb3IyT46+2jklCGPjym6kv2LN+YXMAVtbcPTKHtAIDMjAWrVgEmD2zuDQQQql4
-         4fVrqE1LollvZZXI7rYPG6P4SXZXDGlPOvWHkA/aG4uBlvXLMzfngLPBI5pV4FahWa3q
-         aIVRsI0fhJxgOpYtxrt5T0nyJdksK7FFDml4qrUjc+MR7QLW/nbzbVPdRHFXYM1JAJKi
-         M/f1D0KyOIX2LB4PwmoJh4anaVBPpl4KVEz0tWQgb+XgmbXwtfhlcrwiONx/odEyGOxQ
-         4YkxYiFAiVwb8gIEuUCpv4dC+U/1ifK3BMWUuraM9fypeKyhnjuqA+3xCS2fWsCQiFBA
-         4RLA==
-X-Gm-Message-State: AOAM532b08TIbJfMDGEecYmtMIIBLFNLxuh16Tvdb8R5UJepbA/Vx+CB
-        EtjgmuNEOEc8lOqyKXU6ppRxygeIq6k=
-X-Google-Smtp-Source: ABdhPJwd8qSG4Pwv+ZRv6w80IzzxkVvMrpwGZ5KU5LcB3WXGQGJZc2EbqKaITkmxmziwk8FFm4gwdQ==
-X-Received: by 2002:ac8:3066:: with SMTP id g35mr21854679qte.193.1592328749499;
-        Tue, 16 Jun 2020 10:32:29 -0700 (PDT)
+         :content-transfer-encoding:in-reply-to;
+        bh=ZIIiGmjrpuWiQ4YIpVhcRQ6QM+q8VGNYrW6tjF0p64s=;
+        b=lRr98w6OfkvYEZl8IYihd31Swa1GgByRc4N/jPDqkQ2kaD+9P7Tiqmg4iYDfsVyWYj
+         0/o6PSMu/htH3OahKnjjG1JaP6dbFh5jfkEga57Eer/yWh95swKOkWvi5/zXDvSQKed+
+         MQ/09Q9/+eikKAPrtuq+TK5Q1uqZ06pJe6nDUmyE4+vSZyGW9vGdNOSZ1oFHFet5w+YT
+         h9LAXcKORvVR0fy1QuoCEhsJbD8xyTYQ3q2c+lNLJlyPmmkenV6OkhPe3RGLvf5dl+Y3
+         HSl7pORw9NszlYfa7buS8O9/PRYo08yR+NzhYjuGD+BZU2k1VgpeNyP2WaiFk91uGnoa
+         SVPQ==
+X-Gm-Message-State: AOAM533mwGwFigbyszHorlXW2wnVQ7e+O1E0pxgQvlDUsmkn/UdAbHUN
+        WYLgmeii+NfZBSj/ErDZmFi3BYvagZ4=
+X-Google-Smtp-Source: ABdhPJwpzPYeeIsdX2PrLtwoiZJfTsT41BTFVdUkfxaKzGiHAeiZcqL9L+qB/B8/kIT+9gvCfW5WLw==
+X-Received: by 2002:a0c:e9cd:: with SMTP id q13mr3566721qvo.23.1592329329113;
+        Tue, 16 Jun 2020 10:42:09 -0700 (PDT)
 Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id v59sm15629636qte.96.2020.06.16.10.32.27
+        by smtp.gmail.com with ESMTPSA id n130sm14294903qke.77.2020.06.16.10.42.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2020 10:32:28 -0700 (PDT)
-Received: by i7.mricon.com (sSMTP sendmail emulation); Tue, 16 Jun 2020 13:32:27 -0400
-Date:   Tue, 16 Jun 2020 13:32:27 -0400
+        Tue, 16 Jun 2020 10:42:08 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Tue, 16 Jun 2020 13:42:06 -0400
+Date:   Tue, 16 Jun 2020 13:42:06 -0400
 From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To:     Oleg <lego_12239@rambler.ru>
 Cc:     git@vger.kernel.org
-Subject: Re: Consensus on a new default branch name
-Message-ID: <20200616173227.inexk4clqilojg36@chatter.i7.local>
+Subject: Re: Rename offensive terminology (master)
+Message-ID: <20200616174206.oana33736jkemyqs@chatter.i7.local>
 Mail-Followup-To: Oleg <lego_12239@rambler.ru>, git@vger.kernel.org
-References: <20200615205722.GG71506@syl.local>
- <20200615212154.GA79696@syl.local>
- <20200616143107.GL666057@coredump.intra.peff.net>
- <20200616145207.GA13998@legohost>
- <20200616160005.GB667151@coredump.intra.peff.net>
- <20200616171048.GA18874@legohost>
+References: <20200616100424.39718-1-alexsmith@gmail.com>
+ <c0c2d9ad-1d67-8ebe-0063-524005ca97fe@whinis.com>
+ <3cd5d8b9-a9f8-fbd1-f218-622f70e45566@whinis.com>
+ <20200616133054.2caiwqwp5mlmb54a@chatter.i7.local>
+ <20200616142651.GA27946@legohost>
+ <20200616160349.t65we3jkpq7hqwra@chatter.i7.local>
+ <20200616172749.GB18874@legohost>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200616171048.GA18874@legohost>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200616172749.GB18874@legohost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 16, 2020 at 08:11:01PM +0300, Oleg wrote:
-> > I think it's clear that this _is_ a politically-driven change. It is 
-> > not
-> > helping the software in any technical way to change the name. The
+On Tue, Jun 16, 2020 at 08:27:49PM +0300, Oleg wrote:
+> > Russian sites use .рф domain names. If someone wants to make all 
+> > their branch names in Cyrillic, why should we prevent them from 
+> > doing so?
 > 
-> Yes. You are absolutely right.
-> 
-> > question is whether the more abstract benefits to people are worth the
-> > potential costs.
-> 
-> Of course, not. This is obvious.
+> Because there are no such people. You try to fix non-existent problem.
 
-Oleg, that doesn't make it an invalid discussion point. If Git was 
-written in German and the lead branch was called "refs/heads/fuhrer" 
-(German word for "leader"), you'd be on the opposite side of the 
-barricades arguing that this needs to be changed because it's offensive 
-to many people whose immediate family members died in WW2.
+We can reasonably expect that there will be a government decree coming 
+out tomorrow that will make it illegal to use non-cyrillic terminology 
+in government projects. You know this is entirely possible.
 
-And someone else would be reasonably pointing out that "fuhrer" doesn't 
-mean "The Fuhrer" and nobody is even alive since then anymore, and omg, 
-why is this even a discussion topic -- isn't there something more 
-important everyone could work on?
-
-Yes, it's a politically motivated change, but it's clearly important to 
-quite a few people right now and their views should not be disregarded.
+(Heck, every time we promote "pu" to "master" it can be seen as 
+politically charged commentary on current Russian events.)
 
 -K
