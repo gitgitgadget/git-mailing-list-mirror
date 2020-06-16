@@ -2,111 +2,92 @@ Return-Path: <SRS0=RX4d=75=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C0BBC433E0
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 22:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 859FFC433E0
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 22:32:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AC932075E
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 22:20:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54B90207D3
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 22:32:03 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KlGgm3j4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725901AbgFPWSS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 18:18:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33996 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725790AbgFPWSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 18:18:18 -0400
-Received: (qmail 27959 invoked by uid 109); 16 Jun 2020 22:18:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jun 2020 22:18:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18179 invoked by uid 111); 16 Jun 2020 22:18:17 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jun 2020 18:18:17 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 16 Jun 2020 18:18:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Oleg <lego_12239@rambler.ru>
-Cc:     git@vger.kernel.org
-Subject: Re: Consensus on a new default branch name
-Message-ID: <20200616221817.GC685107@coredump.intra.peff.net>
-References: <20200615205722.GG71506@syl.local>
- <20200615212154.GA79696@syl.local>
- <20200616143107.GL666057@coredump.intra.peff.net>
- <20200616145207.GA13998@legohost>
- <20200616160005.GB667151@coredump.intra.peff.net>
- <20200616171048.GA18874@legohost>
+        id S1726414AbgFPWcC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 18:32:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52964 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725849AbgFPWcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 18:32:01 -0400
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E018C061573
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 15:32:00 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id g5so55445otg.6
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 15:32:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=le3qfX3py9rdoQEqkOB2Ui5dsPii7OGyjRFtfpSAIHY=;
+        b=KlGgm3j4H6RJidDxYZDVHqZtBvQfxEcTgW2o6JpjUoP+GzzO9Y9hk0uYJ0VuDY1cit
+         ZmQ9KZHMush2/FGvl5Ux35YiZBD62nliWD+Pv0Anhb1523B+9xlkubvrEYDV4q8Xy8J8
+         QAqL0QExj8ldLt6XqZOGru5kLjrnfUtzPjuY78sE6kayem0smsUfzVrfc3nebrqKDY3B
+         y2ae/+uXHjk8xCz/2BJ+hQXN6QgKFwSr3et7V9yRqZX4Ze5sOQAAN1uQMRjLKeuZxj78
+         OPl5B0+2Z0iiCqsyMJAxcDKDOVl9/boz0ny3+hv6HtyHQJu/duImuEeQzIyPcX0gLbdF
+         aOwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=le3qfX3py9rdoQEqkOB2Ui5dsPii7OGyjRFtfpSAIHY=;
+        b=YfaaFkrohhr/DoFDxtyEIQohL7sMtYUSTCgjC48VzMeUjjeYbbaIaRqawlNH7pS9fF
+         yJDsJlgjbwKfwtlFbK//b9ZSYOeL4ECtTJyaLtWFFOVCUQS+gS+mb2RSTCtIsLBRs5LV
+         x1KTsSYw/Gx9PaSE3+bazlouqRwdWqBW4+facQ54Nhq3oAbCB6I0cb1hulenXHrwZzrg
+         MaVFyYYYcZojUlw8g/q9IVit5QsRDJSym8szSDH0q8zVYxCtKiEyhwGZ/cPQGpiTe+Po
+         Dz7rdAiMB4rm2yX+HGtKs/ozbJVzDIiy7rkV45WBIgjCVjx+GdiYmDTyFq+YEsk5Udkd
+         TQQg==
+X-Gm-Message-State: AOAM533zanMAKqiP90naGfHg3gMTuy5LH2tRTbClXzzB8bVu16Mj8phR
+        ++2lERekcVcKF60G/Qz+dk+39DXGgLo+SR4yMpk=
+X-Google-Smtp-Source: ABdhPJyVAXYvwFZc9vtP3UphQ5850RQknOHeMIm64oyiwoxLp6lTE66PO2v1T8jsxm9TF6TexIsjaNn5LJNJmFyQ8gk=
+X-Received: by 2002:a05:6830:1d8c:: with SMTP id y12mr4421188oti.162.1592346719764;
+ Tue, 16 Jun 2020 15:31:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200616171048.GA18874@legohost>
+References: <cover.1590627264.git.matheus.bernardino@usp.br> <cover.1591974940.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1591974940.git.matheus.bernardino@usp.br>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 16 Jun 2020 15:31:48 -0700
+Message-ID: <CABPp-BEJsY6ut0Xqk+vD++0wuqgu=oG_xRA-D7tO4Fsu-piujg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] grep: honor sparse checkout and add option to
+ ignore it
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 16, 2020 at 08:11:01PM +0300, Oleg wrote:
+On Fri, Jun 12, 2020 at 8:45 AM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
+>
+> This series makes git-grep restrict its output to the present sparsity
+> patterns. A new global option is added to toggle this behavior in grep
+> and hopefully more commands in the future.
 
-> > Not statistics, but anecdotally, many major projects and communities
-> > have expressed interest in switching. Some of them are listed here:
-> > 
-> >   https://www.zdnet.com/article/github-to-replace-master-with-alternative-term-to-avoid-slavery-references/
-> 
-> This is not "many", Jeff :-D. There is info just about *few* major projects
-> (i counted not more than *15*!), that also politically biased and are
-> intimidated.
+You've cleaned up all the issues (or corrected my understanding) from
+my comments in the previous iterations of this series; I didn't spot
+any additional issues in reading over this latest version of the
+series.
 
-I didn't count them. 15 who have already said they are interested does
-seem like "many" to me, especially as I'd expect more to do so as the
-issue gets more attention. I don't think it matters if they're
-politically biased or not. I just said they expressed interest in
-switching.
+However, I would like someone more familiar with submodules and/or
+config to take a look at the changes to do_git_config_sequence() in
+patch 4, as I commented on there, if we can find someone to do so.
 
-But anyway. You asked what I based my statement on. I told you.
+Thanks for working on this; nice work!
 
-> > I don't think 100 million is the right number to think about. Many of
-> > those aren't active, or aren't collaborative. A project like Chrome
-> > changing their branch name has a much bigger impact than somebody's
-> > homework repo with three commits.
-> 
-> Jeff, this is a discrimination ;-). And no. This isn't right. How many
-> repos on github is inactive? May be 20 millions? Add to 80 millions gitlab and
-> all another git repos from the world. I think we can easily collect around
-> 150-200 million of active repos. Do you really think that count of developers of
-> these all projects be less than count of Chrome developers? Why do 15 projects
-> (politically biased) outweighs 200 millions of projects? Is this example of
-> democracy or rationale mind? May be some there is corruption :-)?
-
-Please stop making strawmen. I never said that the number of Chrome
-developers was higher than the number of other developers. The original
-claim I made that started this portion of the thread was only that
-projects have expressed interest in changing, so tools are going to deal
-with seeing non-master branches (and in fact already have been).
-
-> And even so - 6% :-D. Jeff, this is really needed thing! :-D
-
-Again, my point wasn't that a majority of people have changed or even
-would change.My point was just that a significant enough percentage of
-repos use the non-default name that it's a thing tools will need to deal
-with. Perhaps you think 6% isn't enough to say so, but we may just agree
-to disagree there.
-
-> > question is whether the more abstract benefits to people are worth the
-> > potential costs.
-> 
-> Of course, not. This is obvious.
-
-You're asserting your position without providing any argument here.
-Clearly other people feel the opposite way.
-
-To be honest, I am not sure if it the benefits outweigh the costs or
-not, and I am skeptical that any kind of accurate data gathering (e.g.,
-a poll of opinions) could be done at this point, both because of the
-vagueness of the task and because the issue has become so charged (not
-just within Git, but in the greater world). But I'm inclined to err on
-the side of empathy, especially if we can keep the cost side relatively
-low.
-
--Peff
+Elijah
