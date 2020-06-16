@@ -2,113 +2,177 @@ Return-Path: <SRS0=RX4d=75=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DC34C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 23:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC6AC433DF
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 23:33:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6E9C2085B
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 23:09:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5972F20810
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 23:33:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AE/WumQ/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YMagjSpv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726025AbgFPXJl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 19:09:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58736 "EHLO
+        id S1726407AbgFPXdi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 19:33:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725849AbgFPXJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 19:09:41 -0400
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2E9AC061573
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 16:09:40 -0700 (PDT)
-Received: by mail-vk1-xa44.google.com with SMTP id t23so117952vkt.5
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 16:09:40 -0700 (PDT)
+        with ESMTP id S1726044AbgFPXdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 19:33:37 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43AA2C06174E
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 16:33:37 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id c3so353229wru.12
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 16:33:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=41Bjmm9ESXQ+8F6kWgJEW49hds67NItjgnOsLd5MEmU=;
-        b=AE/WumQ/z68VVcY0GcSO3UDuIvgDB0r2dd1sBZIT88+LFP7GhPpIOUW4SHADXCRxhg
-         YrvhdDyYi93j29/QPZ3EbBked/y3ygxOpWBec/hJzgLky3Dmg5rxtZDUY3ua0X6X5Inv
-         /HErefuQwBlrFyaVwx5m6+zX/2y5Xw/IQj9cpsEgnKEp9B1K968CgwivKTLWVjObLDER
-         9G3AwZqw5FRlkecQPdel7a91hI5cM/Tzfmfej6dXEFADzGtzH80i8bJIJkYNcJ79VEqk
-         CXsK4oQ3C9l2kT2YAj+/y33XElFk8+8yPlgNcIoU02EGCSZfSBbs8iPQhHWsixETg5Le
-         +Hxw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=zwjIwj9WPhgsGQcvQ0LZqsWtYblPSmGeaGNkKgHjv9E=;
+        b=YMagjSpvdTJah6UqAsOuwWFBq2edas29H9esa9HzOkhYzKFZ/hA0RJ5UOIr/H30X/b
+         /in1GORai4rlSazfD+VkeGjAc5Us7LfGE3nENSGuLFYjz5wSScMO/2ZLEaVeE3ZJEQ/o
+         YoGgERtzGG1r0CwSUA2KFK8Nfnr50q0B/ESKIFJ77c5p5Yox5yYk0gpJfeSDczfNEAun
+         9ZoFB8rjSCpuAT3Sf/fqi15uQLcH6FJxgAWk2PXCX8PQKSQJxTe6Dob3nF8L8ZAaXBnI
+         rA+T+4t2tZPsqwWuIYOyTVXw3lo9/HllLeAU4wOX7T7f0XeDDKYxsh0zBNFvWHOD461C
+         loPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=41Bjmm9ESXQ+8F6kWgJEW49hds67NItjgnOsLd5MEmU=;
-        b=lUxIZWMOVMeqmmumWAd4Jx1acc4/yIMhdxKGadgSQlZDzEw2JjR9Zo4kUVQRMmL5/I
-         urB4v6n4V+uI3k1sMD2int4qSBhUT0mf+MMNMMLk4JOmGxcKAVEN6ZyjuLdHaWfdYcOz
-         Exb8yN9rDV5ZcKkA1j3TieAsgvRJVwZef6Ypnimavs1WHmzy9RDO94PZ/fAKMbxkn6dG
-         UaVaA16dkebHUSJiBn29BcZ1J05RVXLxusTeqsUquiVqgAY7LplTG9EXBRDRRxA6raJj
-         YAPCUKYFkWDYyRw/LhG/KXm5EAhGXLqP9lJld/vUeBRV0J/mTHN5rQTUxpWSY85kO+dY
-         hn7g==
-X-Gm-Message-State: AOAM530NmJBe/1gJbrMmkHZG0l7efFpFCK4PH1vZeTsUYrW3psA5ienW
-        YOko3p0PuhEGTjSiAS8+kI7FjqvDvuPUSGbu1wMOy1VUsds=
-X-Google-Smtp-Source: ABdhPJwZEDfppJBUtKIjAUNDvAbzaO242+hmWQq7z77KLy26ADCFAi5/XhR1137nFtcc/waSj4SOK7Z5uAwaYt9vhN4=
-X-Received: by 2002:a1f:b202:: with SMTP id b2mr3757112vkf.86.1592348979517;
- Tue, 16 Jun 2020 16:09:39 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=zwjIwj9WPhgsGQcvQ0LZqsWtYblPSmGeaGNkKgHjv9E=;
+        b=BMf1sovFaua69OkXhPrdBIeKzyTNjdtP0DQ2CbgJgpH7/ljHZBVMA6apxAHwImRCfL
+         c+BuRkyRUdifj+L2Sk95mjCk3eRcb/eWFauue1bZeOPdefhidnP+ePJpwFEbys1N8soz
+         NwzqfxQ9zDWjEyr4N8rKdIFw4DQRYmx5XuHyOCUtV2rnJO3mtK20ugz+GHN35vwbfeU3
+         xpe/nj7Pl7wJVq4w6ri9jOg8wXWCoSxo6YmHQKNZ7A79j27tACQzvkVFylDrAnb/mAen
+         oEGJAMrc8GDABG1EhpRGTankwSa3DJDaqObsJaUoPDawPM2IspxTS2YPWQOWS5TOHXJg
+         Dq0g==
+X-Gm-Message-State: AOAM532oXXUmDeESNy4qqnQvzQhinUKjtWv8oySN2pLWPzSGYefL+VoP
+        f5pCKzz+CUggWtUxuE0hoP4e0wQm
+X-Google-Smtp-Source: ABdhPJxPc/SxtTrkiwlACJuLvPplGBcVPZLwIRo+6zFT5C6rXKkuC48M42VQ7iNr5WMLP/S2syWfhQ==
+X-Received: by 2002:a5d:628c:: with SMTP id k12mr5287316wru.211.1592350415912;
+        Tue, 16 Jun 2020 16:33:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x14sm2145394wrt.60.2020.06.16.16.33.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jun 2020 16:33:35 -0700 (PDT)
+Message-Id: <462cee857ef30c413eda0abe655b123f32b3877e.1592350413.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.808.git.git.1592350413.gitgitgadget@gmail.com>
+References: <pull.808.git.git.1592350413.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 16 Jun 2020 23:33:32 +0000
+Subject: [PATCH 1/2] [RFC] wt-status: show sparse checkout status as well
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   Kaue Doretto Grecchi <kauedg@gmail.com>
-Date:   Tue, 16 Jun 2020 20:09:28 -0300
-Message-ID: <CAMWmj-xA2f0rT=NZqkR8iE-o4k7=Y20mSev_D_rdmzUfOOeyKA@mail.gmail.com>
-Subject: Re: git-for-windows supporting public shaming and repressing
- community's opinion
-To:     peff@peff.net
-Cc:     git@vger.kernel.org, kauedg@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     dstolee@microsoft.com, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I agree about the "he did it first" point and that's not what I'm
-bringing up here. The discussion is
-drifting from the main statement: the git-for-windows maintainers were
-biased and blocked (by *selectively* applying the CoC) people who
-disagreed on politically motivated changes, to which the community has
-clearly manifested against.
+From: Elijah Newren <newren@gmail.com>
 
-> I do notice you've also been blocked from the project.
-A very, very disproportional action. Hiding my comment *when it was
-made* would be enough. People are allowed to make mistakes and defend
-themselves.
+Some of the early feedback of folks trying out sparse-checkouts at
+$dayjob is that sparse checkouts can sometimes be disorienting; users
+can forget that they had a sparse-checkout and then wonder where files
+went.  Add some output to 'git status' in the form of a simple line that
+states:
 
-> AFAICT the hiding of comments and the blocking of people happened more or less at the same time (from the perspective of the commenters).
-> Maintainers of projects aren't reading comments in real-time.
-The repo's crew had plenty of time and opportunity to act on bad
-behaviour and when they did, it was selective. If a comment goes
-against the CoC, it doesn't go against it *after other comments* or
-when the debate gets heated. I understand that the timing of the
-events can't be clearly demonstrated from a plain-text message but I'm
-very sure of what happened there.
+    You are in a sparse checkout with 35% of files present.
 
-> I'm open to the notion that a maintainer is abusing their power and silencing dissent under the guise of the CoC. But I don't really see evidence of that here.
-Just consider that the user mlvzk wasn't blocked or banned from the
-project. He did not even have his comment deleted, even it suggesting
-some nazi-like actions (come on, icons to identify dangerous people?
-What about a yellow star?). And his comment wasn't hidden until some
-time after people were blocked. I'd be glad to get the list of users
-who liked his comment but it's blocked.
+where, obviously, the exact figure changes depending on what percentage
+of files from the index do not have the SKIP_WORKTREE bit set.
 
-Isn't it disproportional, considering that user A suggests an open
-witch hunt and user B uses mild "bad language"?
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ wt-status.c | 35 +++++++++++++++++++++++++++++++++++
+ wt-status.h |  1 +
+ 2 files changed, 36 insertions(+)
 
+diff --git a/wt-status.c b/wt-status.c
+index 98dfa6f73f9..687d2ab1ba1 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1484,6 +1484,16 @@ static void show_bisect_in_progress(struct wt_status *s,
+ 	wt_longstatus_print_trailer(s);
+ }
+ 
++static void show_sparse_checkout_in_use(struct wt_status *s,
++					const char *color)
++{
++	if (s->state.sparse_checkout_percentage != -1)
++		status_printf_ln(s, color,
++				 _("You are in a sparse checkout with %d%% of tracked files present."),
++				 s->state.sparse_checkout_percentage);
++	wt_longstatus_print_trailer(s);
++}
++
+ /*
+  * Extract branch information from rebase/bisect
+  */
+@@ -1623,6 +1633,27 @@ int wt_status_check_bisect(const struct worktree *wt,
+ 	return 0;
+ }
+ 
++static void wt_status_check_sparse_checkout(struct repository *r,
++					    struct wt_status_state *state)
++{
++	int skip_worktree = 0;
++	int i;
++
++	if (!core_apply_sparse_checkout) {
++		state->sparse_checkout_percentage = -1;
++		return;
++	}
++
++	for (i = 0; i < r->index->cache_nr; i++) {
++		struct cache_entry *ce = r->index->cache[i];
++		if (ce_skip_worktree(ce))
++			skip_worktree++;
++	}
++
++	state->sparse_checkout_percentage =
++		100 - (100 * skip_worktree)/r->index->cache_nr;
++}
++
+ void wt_status_get_state(struct repository *r,
+ 			 struct wt_status_state *state,
+ 			 int get_detached_from)
+@@ -1658,6 +1689,7 @@ void wt_status_get_state(struct repository *r,
+ 	}
+ 	if (get_detached_from)
+ 		wt_status_get_detached_from(r, state);
++	wt_status_check_sparse_checkout(r, state);
+ }
+ 
+ static void wt_longstatus_print_state(struct wt_status *s)
+@@ -1681,6 +1713,9 @@ static void wt_longstatus_print_state(struct wt_status *s)
+ 		show_revert_in_progress(s, state_color);
+ 	if (state->bisect_in_progress)
+ 		show_bisect_in_progress(s, state_color);
++
++	if (state->sparse_checkout_percentage != -1)
++		show_sparse_checkout_in_use(s, state_color);
+ }
+ 
+ static void wt_longstatus_print(struct wt_status *s)
+diff --git a/wt-status.h b/wt-status.h
+index 73ab5d4da1c..4550004003a 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -90,6 +90,7 @@ struct wt_status_state {
+ 	int bisect_in_progress;
+ 	int revert_in_progress;
+ 	int detached_at;
++	int sparse_checkout_percentage; /* -1 == not in sparse checkout */
+ 	char *branch;
+ 	char *onto;
+ 	char *detached_from;
+-- 
+gitgitgadget
 
-> OK. Thank you for making us aware of your viewpoint. It sounds like there's no specific action you're asking to be taken, so I'll leave it at this response for now.
-I think it was clear that the repo's maintainers, or at least one of
-them, is willingly ignoring the community's manifestation using the
-CoC as muzzle to enforce his/their political beliefs. This is what my
-first message is about. There were 490 downvotes on the first issue's
-message and 133 "pro" manifestations. The issue should be closed in
-respect to the community.
-
-> I'm not sure what you're asking here.
-That the git-for-windows team (or member) should be reprehended for
-not accepting the community's decision and opinion and being selective
-on their bannings. Their (his) actions send a very nasty message to
-the community, that, basically, we don't matter in the discussion. And
-that it reflects on git's reputation.
