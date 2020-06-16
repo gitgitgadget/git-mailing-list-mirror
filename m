@@ -7,134 +7,165 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC672C433DF
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 00:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97703C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 00:20:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8151F2074D
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 00:16:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74DD120786
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 00:20:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NDzoVdbF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kXkn59LQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726489AbgFPAQ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 20:16:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44012 "EHLO
+        id S1726538AbgFPAUA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 20:20:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725960AbgFPAQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 20:16:25 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69249C061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 17:16:24 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id b5so7416994pgm.8
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 17:16:24 -0700 (PDT)
+        with ESMTP id S1725960AbgFPAUA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 20:20:00 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15ABFC061A0E
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 17:20:00 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id d82so452075qkc.10
+        for <git@vger.kernel.org>; Mon, 15 Jun 2020 17:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=AaT1t8OGFzlKx7MkMQFD2hj/wixCSlTo3qTCWDzdVKM=;
-        b=NDzoVdbFOP7cBZe+Olgkaow9Kfk7AeB3/vtJLY98pWWbHwSa/fcIBSYpQsD4BSMuYh
-         QNL7ZD+O5HwlKkw7nBbEnGAX9mF/iN8OSzfVc/Yu1T/xtBMMsKpC6UHcwj859rTq0Tvd
-         arZ4YMKJCXXi88aHuGytLw4JESQs66CpK6KOZgD5C9q1MN5sVIVX+wrIeihSO/i+COkZ
-         2ag3+LoDLUccNW4EWhz3MLENP9wrOheq9jNTrT8iW4USguRkUvXSham1qPQFpZwxxu5j
-         BjVL7vBa64qgK32SVPfLWeyQvn/WuV644YjNd7gMgcHSsRt5fILsZU2S/AV4DedSECmw
-         05Qg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yZ8XFU99V1RxJsDfNddbn7qIEVjAnVQ9i6hP+d3bF0U=;
+        b=kXkn59LQ9qeHXQzCjIwjzhEjyDFgkCkYgMswumReuVdFIXypSiIA6impv2x0zZicEw
+         S7vs+83ixdrgidy4qjffqH1tJv760aKSyI9wr/ptsPrqsVKQ6HigkHN97x1bUEv8ggF0
+         tSADzDBeE9/piwNbiUiulEEHU0nGZRH7agJjvVc9flHSj1rm3an53QFOKI+bBPF6nWjS
+         xk+MiyM+nUm6jR5zE7PX7Z0W32cZKiwCb+RTEdGOKW/TBTGWsSqkGxyTt/Dtj6eIDESd
+         X1QgeiBkHHej+tzq+cAzt20XrSOOd0LUaUBMMyvA1P5J1iWZT6V5yyYD7fxLCS6wTtE+
+         TeKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=AaT1t8OGFzlKx7MkMQFD2hj/wixCSlTo3qTCWDzdVKM=;
-        b=aPKScOIGcEDzouKhlfl7djIc7SfcQxzWr41RCWyJJXVPmJiMArODPhUJxIuKCzW6mX
-         8eM6g6N0/Jv5ohlxqb2ZA4k1AlKHcqNb5iA2uOrG4uy9uzo2wpjM7O3wdvZIxICa9xg5
-         bY/syjMouFopT7/O1aupO0+VxuWsayjuE6xF2WyZqpEz+szZcmr0UZgPjf1+/xevorrU
-         lk8J4gmlmZ/o6olRoTZfPd3XVG/tVM5Y2YHELftKtZ7Bd56MqX35jBAAWJkbNmoPJ+sm
-         v9/lL6ZBeseWI0UKteZh6XVUgUO4i2DN5NpbaaTLSrsPM3BLVuyMrpdxFXMQc0UQYPyD
-         AAmw==
-X-Gm-Message-State: AOAM531j2FxkXDXuy94RCO+iOPS/72prU4lttG7u054YjO8hLYzyn/Uo
-        ZT/ZpJYb9l7SKnTNzCPr28esZf4yWnU=
-X-Google-Smtp-Source: ABdhPJx2JwFKBfTEy8tam8RskHceISFv0DELs5czrxWTSrjGB0bZtxp/Pyu5ajOPF+HFwZ8UxqIzvw==
-X-Received: by 2002:a63:8dc4:: with SMTP id z187mr60795pgd.199.1592266583676;
-        Mon, 15 Jun 2020 17:16:23 -0700 (PDT)
-Received: from [192.168.0.32] (S0106bcd165660845.vs.shawcable.net. [96.55.138.35])
-        by smtp.gmail.com with ESMTPSA id 74sm11907512pgd.40.2020.06.15.17.16.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jun 2020 17:16:23 -0700 (PDT)
-From:   Abram Wiebe <ethanpet113@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.5\))
-Subject: Re: Rename offensive terminology (master)
-Message-Id: <F17A9CF6-E020-45BA-863B-D85F098691B1@gmail.com>
-Date:   Mon, 15 Jun 2020 17:16:22 -0700
-Cc:     git@vger.kernel.org
-To:     simon@bocoup.com
-X-Mailer: Apple Mail (2.3445.9.5)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yZ8XFU99V1RxJsDfNddbn7qIEVjAnVQ9i6hP+d3bF0U=;
+        b=Qb+nhxvR6d2K9sINpRQwvNZavrfbi8i0k47H7JIHm2p20T7mK2M+2qUh8GcF3wugZ/
+         yHZlpJAaA30meLRAyAk4cIYu3B7MeJJ6MafSC4lPLzzelFhuUX4D8bTCFVYU31gUBFjb
+         GGzhTLOnicMlWr9CI2+uuyLII+jbN9awRC24pnA1IqKwi+qOamQGnkpuDlCzHtQbRFiL
+         wu2+QJrDbzwl9kYEkO+nZOeXD3eg5vIc6pHqnPWwN0ybRiRAYS4rrpWpup+vXakVtAL3
+         8aG5q7WwEiOEhrc3QgoFf/FJDsqSyDxIljHF/Mzc6G4/KDIgxyfs2JISs5p+Vzh7N4o3
+         wvbw==
+X-Gm-Message-State: AOAM532SgkYkuxaYgHp4onZEXQi4uKhYYPGosoatHQBR5xP5MY4jzTfK
+        2XwjlQ1qfw8EgkrKNMvgvdM=
+X-Google-Smtp-Source: ABdhPJy3yn50930Nz8SiGbJ2oHEIF2yjoiK9x7LBbHKIO/XQ/3H3RCosaORyfuCtOrBgFQRM0Ob9aQ==
+X-Received: by 2002:a37:64c2:: with SMTP id y185mr18585287qkb.186.1592266798994;
+        Mon, 15 Jun 2020 17:19:58 -0700 (PDT)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id g140sm13026632qke.98.2020.06.15.17.19.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2020 17:19:58 -0700 (PDT)
+Date:   Mon, 15 Jun 2020 20:19:55 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
+ branch
+Message-ID: <20200616001955.GA686455@generichostname>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+ <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.2006150011360.56@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2006150011360.56@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tl;dr It sounds like you mean well- but that has the potential to break =
-a lot of things that expect the name master, so I=E2=80=99m not sure =
-it=E2=80=99s a good plan.
+Hi Dscho,
 
-I am against this as a default for technical reasons, and as an aside =
-because as others have mentioned master is the in the context of a =
-**Gold Master** meaning a product which is ready to ship. I=E2=80=99m =
-sure your intent is well meaning but this does not appear to have the =
-connotations you are ascribing to it.  Given that I am against it purely =
-because I see it being confusing and a maintenance/backwards =
-compatibility headache to change.
+On Mon, Jun 15, 2020 at 12:26:03AM +0200, Johannes Schindelin wrote:
+> > For example, my vim plugins are submodules in the '~/.vim/bundle'
+> > directory. When I want to update them, I run:
+> >
+> >   git submodule foreach 'git remote update && git reset --hard origin/master'
+> >
+> > With this change hitting a Git release, more and more people would call
+> > their main branch different names they like. So what is the recommended
+> > way to do something like this now? How do I checkout the tip of the main
+> > branch? How do I push to the main branch? How do I pull from the main
+> > branch? And so on...
+> 
+> ... has less to do with a new Git release, but more with the decision of
+> an existing project to change their main branch name.
+> 
+> That's something users already had to deal with, of course. For example,
+> projects switching to the Git Flow model will start to use the main branch
+> name `development`.
 
-Someone said you can create whatever kind of _git init template_ you =
-want and I think that is probably the best course of action who continue =
-to take issue with what I think most consider pretty innocuous =
-terminology.
+I brought this concern up in a parallel thread but I'll bring it up here
+too since it's relevant. Currently, in the .gitmodules file, if the
+branch is not specified, it defaults to 'master'.
 
-----
-Now for the technical problems that could arise from changing such a =
-thing on a whim.
+When I want to update my vim plugins, I run
+`git submodule update --remote` which pulls in all of my submodules'
+'master' branches. By convention, a lack of `branch` key in .gitmodules
+conventionally means 'master'.
 
-In software there is a concept of a known value which is expected to =
-exist for min(lifetimeOfProduct,HEAD_DEATH_OF_UNIVERSE),
-and no matter how much you want to get out from under it you always have =
-unforeseen consequences.
-It=E2=80=99s not quite as strong as a hardcoded constant, but it=E2=80=99s=
- effectively a convention everyone follows kind of like a system=E2=80=99s=
- environment variables.
+With your change, it becomes the value of git_main_branch_name(), which
+is fine for now. However, if this value changes to something else, then
+when I update my Git, suddenly `git submodule update --remote` will be
+broken for me as all of the new repositories that I pull will be for an
+incorrect (and possibly missing) branch.
 
-In this case I can already see a few things that will go wrong:
+This leaves us in a scenario where one developer running an older
+version of Git would have submodule updates work perfectly fine while a
+developer with a newer version would have it suddenly broken. This might
+be hard to debug, especially for someone who doesn't follow the release
+notes around Git and doesn't realise why the default has suddenly
+changed.
 
-1) Any utility that augments git and treats master as a special default =
-branch (regardless of the note in the docs that there is nothing special =
-about master except that it is created by default) is going to break or =
-need to be reconfigured.
+This problem gets much worse if we allow the main branch name to be
+configurable as then the *private* configurations that a developer has
+may have an effect on the *publicly visible* behaviour of a repository.
 
-	1A)There are infrequently modified code bases with small teams =
-that will have to unpick this,and may do so slowly=20
-	causing their package to be semi broken for some time
+I think I see three possible solutions to this:
 
-		1A.1)Any codebase which pulls dependencies form those =
-repose will cascade into failure. goto (1A)
+	1. Special case 'master' in submodules to retain backwards
+	compatibility.
 
-2)Any automation written by a user which expects the branch master to =
-exist will break.
-3)People who have already checked out the master ref may accidentally =
-cause a divergent master history as habit causes them to merge into =
-master rather than say main.
-4)Any documentation of git either in official git documentation or in =
-professional training materials will become considerably more confusing =
-to new users as there are at present 15 years of archived documentation =
-that refer to this branch as master.
+	I don't think this is very appealing as if the change is made to
+	use another default branch name, then the "default" branch for
+	submodules would be "master" even though the new default
+	everywhere else would be different. And in the future, someone
+	who doesn't know the context behind all of this would be very
+	confused where there are two different default branch names.
 
-We run into this kind of issue in software all the time, which is why =
-you see packages like PHP deprecate interfaces=E2=80=A6 but then still =
-need to keep them around for decades, simply out of fear of how much =
-would break if they actually took them out.
+	2. Disable 'update --remote' support for submodules that don't
+	specify a branch.
 
-Probably there will be more issues that we can=E2=80=99t predict without =
-testing it (which again I am personally against doing unless it=E2=80=99s =
-you=E2=80=99re own repo with your own template and your own rules).
+	If Git detects that a branch key is missing when trying to do an
+	'update --remote', it should just quit out and refuse to do
+	anything. Of course, this a very backwards incompatible change
+	and it would require several release cycles to implement where
+	we warn users about this impending change before we actually
+	make it happen.
 
-It will probably be a maintainability nightmare that isn=E2=80=99t worth =
-the fuss and I don=E2=80=99t even want to think of the aggregate lost =
-man hours.=
+	3. Make 'update --remote' get HEAD.
+
+	I argue that this is how it always should've been implemented
+	but, alas, I can't go back in time and fix it. Regardless, it
+	might be good to flip this to be the default if we're going to
+	be making the change anyway.
+
+	Unfortunately, this suffers from both the problems of 1 and 2.
+	As with 1, we'll end up in a situation where users with
+	different versions of Git may experience different behaviours
+	given the same public repository and I think this is definitely
+	undesirable. With 2, this change will also require a long
+	deprecation period which I don't think it compatible with how
+	people seem to want the default branch switch to happen this
+	release.
+
+So I dunno. I think my opinion leans on not changing the default branch
+at all. Since it seems like the consensus is generally that it _will_
+change, I think I would prefer options 3, 2 and 1 in that order.
+
+Thoughts?
