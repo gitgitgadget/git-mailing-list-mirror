@@ -2,102 +2,156 @@ Return-Path: <SRS0=RX4d=75=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36F5AC433DF
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 01:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01558C433DF
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 02:07:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15BC12074D
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 01:38:07 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TJjohj3q"
+	by mail.kernel.org (Postfix) with ESMTP id DBFAC2071A
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 02:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbgFPBiF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Jun 2020 21:38:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56532 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725891AbgFPBiE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jun 2020 21:38:04 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FDCC061A0E
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 18:38:03 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id w1so17771348qkw.5
-        for <git@vger.kernel.org>; Mon, 15 Jun 2020 18:38:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:cc:references:subject:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=SXrCf2mH+cmUTuA3pPnyR4vOuDxdRGFqI57nMojrwNw=;
-        b=TJjohj3ql64h7JcjhusE6Gr5cBWpmq5AatOTbIpkSeFeGUsp+0Hw6JyVZgXtSjIeHw
-         G+DIvFWNPJ5sLRckVTPNJ4lme8Yf9dxnX7dBbs7HwoKFREGngdUVfCVYpJJ5ksakChe6
-         drq7ErTu/yU/4TxaKSYkCRWQZwFv5fOF5mJxixTNT7rwHEPvmNi/ngxL0dZMRX6RZB+i
-         spG6b+JlAsd2Pua7/E8DKCxKOC6t2l27LTyU5lTZlnywjr6FtjkAjuUmLurFb2hG2eq2
-         0UoC5TnM2BhQGw3HLElAg3WxsIzQT9gfDrUyMCarFi+K1JJiSX5QlyMrHBWDQ+x0PzWS
-         IgEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:subject:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=SXrCf2mH+cmUTuA3pPnyR4vOuDxdRGFqI57nMojrwNw=;
-        b=pV2zEfBf6MBdPTFQULAEPt6NQPNISLn9ouivIZ0G2sWR7cKWDHdmaCCNsIDaSR+Zk1
-         aOq1sg7JGAOJcw/ASsRKEPzrL6e1Y+/LyEFoyGjBdwLlgOqjx973sDCV0veKIbVb3TfL
-         5RO1iri2l4sfBROOuC7K9iWC9+mAXbc6pWvCwOjDBtCtr4pOiJC2PrPBwmh52G0ZSIMI
-         Ebh5l4D6Edl1aGQh/2NSwra1pqmqy8znxso8beq1jszTmO1hv8imvQ/E5dtfpoaUxu7L
-         zsdFdiP/clRPo9rg7d7u90mMLiF4xjNzhKkGP4ohF8PFgWP1167aD5hRyAjJsqM+eanD
-         6LjQ==
-X-Gm-Message-State: AOAM530xtt/0lqnHSGALy//Isoz41W/BOqWiYC+/GetVVkSkWtG6aF1O
-        Q/Id8aLMjf1eM2OCs5nX0wKEUSj96N4=
-X-Google-Smtp-Source: ABdhPJwNpsxvucYyrg12U6dUVYWRbPp4/JV8AWgE2EvLmNQNlDHk4XUG2SuYraF5o+0r6PcYndSjRA==
-X-Received: by 2002:a05:620a:13c6:: with SMTP id g6mr17651966qkl.453.1592271482549;
-        Mon, 15 Jun 2020 18:38:02 -0700 (PDT)
-Received: from [10.0.10.179] ([170.79.184.212])
-        by smtp.gmail.com with ESMTPSA id v189sm12711655qkb.64.2020.06.15.18.38.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2020 18:38:02 -0700 (PDT)
-To:     simon@bocoup.com
-Cc:     git@vger.kernel.org
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-Subject: Re: Rename offensive terminology (master)
-From:   =?UTF-8?Q?S=c3=a9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>
-Message-ID: <e198b1a5-e104-d0e5-8904-37ce3937316d@gmail.com>
-Date:   Mon, 15 Jun 2020 22:38:00 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+        id S1726482AbgFPCHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Jun 2020 22:07:07 -0400
+Received: from sewer.dizum.com ([194.109.206.211]:39875 "EHLO sewer.dizum.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725978AbgFPCHH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jun 2020 22:07:07 -0400
+X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Jun 2020 22:07:06 EDT
+Received: by sewer.dizum.com (Postfix, from userid 1001)
+        id 306635FCB0; Tue, 16 Jun 2020 03:58:11 +0200 (CEST)
+From:   Nomen Nescio <nobody@dizum.com>
+Comments: This message did not originate from the Sender address above.
+        It was remailed automatically by anonymizing remailer software.
+        Please report problems or inappropriate use to the
+        remailer administrator at <abuse@dizum.com>.
+To:     git@vger.kernel.org
+Subject: Re: Consensus on a new default branch name
+Message-ID: <6b6f161981a07070871633fe02c4c3f9@dizum.com>
+Date:   Tue, 16 Jun 2020 03:58:11 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Over the past few days or so, there has been significant discussion
+> [1] and patches [2] about changing the name of the default branch away
+> from 'master' and towards something else.
 
-I'd like to bring the opinion of someone that's black in this issue:
+> A related question is whether or not we plan to change the default
+> value of 'core.defaultBranchName' at all (once Johannes' patches land,
+> of course). That seems to be the intent in [4], but forming consensus
+> around this would be good, too.
+> 
+> So, I would like to form some consensus here as to what the new name
+> should be,
 
-https://twitter.com/Speedkicks/status/1272283853617459200
+Some interesting consensus this is trying to form... Let's look at it.
 
- >Reading a thread of white people, including the CEO of GitHub, 
-advocating changing the name of the "Master" branch to make black devs 
-more comfortable... is the most racially uncomfortable I've ever felt 
-about GitHub.
+git-for-windows [1]: 76 upvotes, 490 downvotes, overwhelming consensus
+in the comments rejecting the proposed change as unwarranted. Result:
+comments massively moderated, even though they weren't even in majority
+abusive; many dissenters blocked; thread locked, preventing further
+input.
 
+GitLab [2]: 23 upvotes, 145 downvotes, rejection in the comments.
+Result: thread locked, preventing further input, and an online poll,
+that doesn't even offer the option to voice support for keeping the
+"master" name.
 
-https://twitter.com/Speedkicks/status/1272291128000167937
- >Reasoning: Living as a black person is not to constantly remember how 
-different you are but how different other people believe you are and how 
-that changes your experience.
+And in this mailing list: very few people from the community on behalf
+of which this is done participating to give their actual opinion on
+the issue, and even fewer of them actually supporting the claim that
+"master" offends them and should be changed; unspecified people who
+apparently believe that "master" offends people, apparently voicing
+their opinions in private, which are then apparently not even relayed
+but merely vaguely mentioned to us; and on the other side, people who
+feel compelled to hide behind others or post anonymously to disagree,
+even as their opinion is respectful and attempts to be constructive.
 
- >Now I can't even say "push to master" w/o the paranoia everyone around 
-me's thinking about me being black.
-So congratulations, white saviors, you just made things awkward for 
-actual black people in the community. You keep treating minorities as if 
-they are children. You don't actually respect them. You don't actually 
-listen to them. This is what you do, you just create a greater divide. 
-You just single them out.
+So not just some consensus here, quite some inclusiveness too, this
+is achieving: this is put forward in the name of making things more
+inclusive, but fails to bring to the table first-hand, people actually
+offended by the issue, and makes disagreeing people feel unwelcome - or
+enforces them and their input as unwelcome.
+
+Several people are working on the assumption that this change would
+surely make a positive impact, even if little, and would be some step
+in the right direction. Several people have put forward the argument
+explaining to skeptics that it can be difficult to relate to the
+struggle of people from a different community without walking in their
+shoes, and difficult to understand how they can feel about a certain
+issue. Do people putting forward this argument, or the claim that
+this community is offended by "master", are themselves part of this
+community? If not, how can they be so sure to understand properly
+whether and how much this truly offends that community, that they feel
+in a position to best speak on their behalf?
+
+Taylor, how do you propose to build this consensus you're talking about
+on the name change? Guesswork? What sounds like it has a good ring
+to it? Going with the most popular name - i.e., letting the decision
+process degenerate into a popularity contest? Whoever yells the loudest,
+whatever group or project has most clout? Can you propose a consensus
+process that reconciles with the loud majority of commenters who
+downvoted this proposal, or justifies why their arguments are not the
+right decision criteria?
+
+I know you mean well, and my question is sincere. The stated purpose is
+to avoid offending people, based on the premise that some terms offend
+people, so I would propose that this would be an important aspect to
+correctly assess; in order to base the renaming decision on a real
+assessment of what actually offends people, rather than on what some
+group says could be offensive, or on some possible drawback with such or
+such name that someone did or didn't think to foresee.
+
+So, and this would follow good software development and release
+management practices, but even just for the sake of appeasement with
+people who think this is not a real issue, and for the sake of going
+forward with a constructive process on solid grounds, I would love to
+see some data that backs up, details, clarifies and quantifies the claim
+that the current "master" name offends people.
+
+I haven't seen any such data so far. All I've seen is a popular trend,
+and mentions of groups or projects who have got on board with that trend
+- which as I said, is hardly relevant to the merits of its premise. I
+haven't seen first-hand accounts of people being offended, anecdotal
+or not. I haven't seen serious studies being linked. I haven't seen
+representative surveys; opinion polls, especially online, can be
+completely skewed and nearly worthless, but I haven't even seen one of
+those getting brought forward in support of the name change. I haven't
+seen expert or authoritative opinions being brought to the debate as
+such.
+
+So I haven't seen any assessment of people being offended by "master",
+which could be solved by moving from it; and I haven't seen either
+any assessment of whether the change itself would in turn offend and
+alienate people who think it is unwarranted, ridiculous, outrageous
+and whatnot. I haven't seen any assessment of whether people who find
+this proposal offensive are a loud reactionary minority, or a silent
+majority. And given the stated purpose of avoiding offending people,
+that would seem important to assess too.
+
+So again, I would love to see data that backs up the claim that this
+change is necessary to solve a fathomable problem, and will have the
+intended impact. I would preferably love measurable and verifiable data,
+but any if possible.
+
+I have to assume that people driving this forward would care to make
+sure to effect change that actually helps. If not, then you may want
+to do some soul-searching; if you don't care to determine whether your
+effort actually helps, then you may want to double-check that this isn't
+more about virtue signalling, or slacktivism only making yourself feel
+good.
+
+And either way, as this is all happening on the public place, putting
+forward that data and even just addressing these concerns and processing
+this proposal properly would help to reconcile the software community
+dividing over this, and strengthen the trust and credibility that
+important tools and platforms hold among it.
+
+So please show me the data.
+
+[1]: https://github.com/git-for-windows/git/issues/2674
+[2]: https://gitlab.com/gitlab-org/gitlab/-/issues/221164
 
