@@ -6,109 +6,96 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 558C6C433DF
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA458C433DF
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:36:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 310E6207C4
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:26:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 986E62071A
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726799AbgFPM0A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 08:26:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32966 "EHLO cloud.peff.net"
+        id S1728657AbgFPMgB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 08:36:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33000 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725901AbgFPM0A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 08:26:00 -0400
-Received: (qmail 21420 invoked by uid 109); 16 Jun 2020 12:25:59 -0000
+        id S1725901AbgFPMgA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 08:36:00 -0400
+Received: (qmail 21473 invoked by uid 109); 16 Jun 2020 12:36:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jun 2020 12:25:59 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jun 2020 12:36:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12645 invoked by uid 111); 16 Jun 2020 12:25:59 -0000
+Received: (qmail 12719 invoked by uid 111); 16 Jun 2020 12:35:59 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jun 2020 08:25:59 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jun 2020 08:35:59 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 16 Jun 2020 08:25:59 -0400
+Date:   Tue, 16 Jun 2020 08:35:59 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Alban Gruin <alban.gruin@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
- new repositories
-Message-ID: <20200616122559.GA666057@coredump.intra.peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        sandals@crustytoothpaste.net,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/9] remote: respect `core.defaultBranchName`
+Message-ID: <20200616123559.GB666057@coredump.intra.peff.net>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
- <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
- <08e46af3-ff52-8bce-b75a-db8c390c9641@gmail.com>
- <xmqqwo4di49l.fsf@gitster.c.googlers.com>
- <731205c8-7d4b-d87a-17d1-520fdec7375d@gmail.com>
- <nycvar.QRO.7.76.6.2006141055510.56@tvgsbejvaqbjf.bet>
+ <06a2cea051c01ebee38c9910425171f112daf41a.1591823971.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2006141055510.56@tvgsbejvaqbjf.bet>
+In-Reply-To: <06a2cea051c01ebee38c9910425171f112daf41a.1591823971.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 14, 2020 at 10:57:41AM +0200, Johannes Schindelin wrote:
+On Wed, Jun 10, 2020 at 09:19:23PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> > >> Why adding yet another environment variable instead of relying only on a
-> > >> config option?  I understand it's for the tests, but can't we add a
-> > >> shell function in test-lib.sh (and friends) that tries to read
-> > >> `GIT_TEST_DEFAULT_BRANCH_NAME', and, if it exists, sets
-> > >> `core.defaultBranchName'?
-> > >
-> > > Can you produce such a patch that does it cleanly?  My knee jerk
-> > > reaction is that I would suspect that you end up having to touch
-> > > many places in the t/ scripts, but if you prove otherwise, that
-> > > would certainly be appreciated.
-> > >
-> > > And no,
-> > >
-> > >     git () { command git -c core.defaultBranchName=master "$@" }
-> > >
-> > > is not an acceptable solution.
-> > >
-> >
-> > I wanted to to do something like this:
-> >
-> >   if test -n "$GIT_TEST_DEFAULT_BRANCH_NAME";
-> >   then
-> >       git config core.defaultBranchName "$GIT_TEST_DEFAULT_BRANCH_NAME"
-> >   fi
-> >
-> > But since we do not have a repository to store the config, it won't
-> > work.  Sorry for the noise.
-> 
-> We actually would have `~/.gitconfig` because `HOME` is set to `t/trash
-> directory.<test-name>/`.
-> 
-> However, that would cause all kinds of issues when test scripts expect the
-> directory to be pristine, containing only `.git/` but not `.gitconfig`.
+> @@ -2099,7 +2100,10 @@ struct ref *guess_remote_head(const struct ref *head,
+>  
+>  	/* If refs/heads/master could be right, it is. */
+>  	if (!all) {
+> -		r = find_ref_by_name(refs, "refs/heads/master");
+> +		char *name = git_default_branch_name(0);
+> +
+> +		r = find_ref_by_name(refs, name);
+> +		free(name);
+>  		if (r && oideq(&r->old_oid, &head->old_oid))
+>  			return copy_ref(r);
+>  	}
 
-Putting:
+You'd perhaps want to update the comment above, too.
 
-  GIT_CONFIG_PARAMETERS="'core.defaultBranchName=...'"
+However, I think we should be a bit more lenient on the "reading" side
+default names. Just because "foo" is _my_ default branch name, does not
+mean it is the default on the remote side. We cannot know what the other
+side's default preference is, but in a world where we have 15 years of
+repos that may have been created with "master", it is probably still a
+good guess.
 
-into the environment would work (and yes, you need the single quotes
-embedded in the variable), and solves all of the complaints above.
-Further "git -c" invocations properly append to it. But:
+I.e., I think this probably ought to check the preferred name, and then
+fall back to the existing behavior, like:
 
-  - there are a few tests which explicitly tweak that variable
+  if (!all) {
+	  char *name;
 
-  - it technically changes any tests of "-c" because now we'd never
-    cover the case where we start without the variable defined
+          /* try the user's preferred default branch name */
+	  name = git_default_branch_name(0);
+	  r = find_ref_by_name(refs, name);
+	  free(name);
+	  if (r && oideq(&r->old_oid, &head->old_oid))
+	          return copy_ref(r);
 
-I think baking in a special environment variable like you have is not so
-bad. If this did become too common a pattern, though (special test-only
-environment variables that do have a separate config option), I wouldn't
-be opposed to a GIT_TEST_CONFIG_PARAMETERS which takes precedence over
-other config, and comes with a big warning label that it shouldn't be
-relied upon outside the test suite. That's equally ugly to
-GIT_TEST_DEFAULT_BRANCH_NAME, but at least solves the problem once for
-all of them. I'm just not sure we have enough "all of them" to make it
-worth doing.
+	  /* otherwise, try "master", which is the historical default */
+	  r = find_ref_by_name(refs, "refs/heads/master");
+	  if (r && oideq(&r->old_oid, &head->old_oid))
+	          return copy_ref(r);
+  }
+
+That will help minimize fallout when git_default_branch_name() changes,
+either by user config or if we switch the baked-in default. In the
+latter case, we might also consider hard-coding that as a guess between
+the user's preferred name and the historical "master".
+
+Hopefully this would not matter _too_ much either way, as most servers
+would support the symref extension these days. But I still think we
+should do our best to minimize spots where the user may see a
+regression.
 
 -Peff
