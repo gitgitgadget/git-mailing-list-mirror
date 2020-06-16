@@ -2,118 +2,83 @@ Return-Path: <SRS0=RX4d=75=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C9CBC433DF
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 15:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA0D3C433E2
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 15:59:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DDE521532
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 15:56:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 891CF21532
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 15:59:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTbZurOt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ocO5nSxR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733007AbgFPP4o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 11:56:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47860 "EHLO
+        id S1732104AbgFPP7u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 11:59:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733173AbgFPP4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 11:56:39 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F337C061573
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 08:56:38 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id l11so21341750wru.0
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 08:56:38 -0700 (PDT)
+        with ESMTP id S1729948AbgFPPxb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 11:53:31 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8171C061573
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 08:53:30 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id e16so15850075qtg.0
+        for <git@vger.kernel.org>; Tue, 16 Jun 2020 08:53:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gN2NOwJn4HnMbtaBnWN7jdx6IowTO+BvI9ECyb6iUvg=;
-        b=fTbZurOtTD0+E3Z21WiBs20uPYe2thh5NYOz1MZZYA9o5rNstSscWNL+6cb1oCOafB
-         mPTFpU/2acvJKLuqqI76LirvR3+RTqf9cpFFjKQWnaq1AoFjbKnzeSnfYpW5dydOtnMX
-         XGtUsfCh1eNjglliN3tbDcOKOWeGdPUDQ9OvbwLFWzoTObuz36U4NxCwhhJSjIVFmb/5
-         Dt3nrNB081fAd/Mm5xtRZuvn21XSSjjjVVvkPk+LE/DvSPehIoTThkBh/4SRfd1Nm1LM
-         TyxZqCI+NBOqe7bUeTA4l6azsMBvVFMFfotpTWa1Sk/M8nQGAoBbExQLhjO7Det3VSLh
-         K/gg==
+        h=to:cc:references:subject:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=EG528eK0ey47OXJwHGD/9/0zabqmu40SK1OQK4shTFI=;
+        b=ocO5nSxRodYrEkoOyfqH5LrBcufGVUTS9be+/uJCgRA4AcAOOtFu4VLuEbQGb/jsOk
+         XkRqvaadfRxr88j6GSKtj7cYs1sTF/4TvET1i6BPha8BP0NTwGwz4iqhyJuKbeBfen8O
+         ivtBoKg0OXAQQTDaQu2Ax8eBxdob+xzRnQmscrNU2qAZ1c5ZglXPnyknrOcCmlBZyZNF
+         RTY86j7HyDq2bQ4WN+mK58K2Kyu5RgD1Pn2puFEvc1WiNJq8meagu6tqArqJ2YIleuUY
+         5KxvsdO4YA7eF06ca9hAI4CuUnqRGusb6Hoy6f51DFuwY2xq5sUsuneN1jD2XL0G2Sgu
+         qJ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gN2NOwJn4HnMbtaBnWN7jdx6IowTO+BvI9ECyb6iUvg=;
-        b=avf8swEZ7JEQNnnrTtmc9i2QJd0v8cABPGhnMYxR4YgHCJY7QJr+UM499wW8sseQEb
-         xXaCN36wXVWoUKc5UR5J7uRwEUIM2ZtT0v+eCRCN5OSwK5K4rj3BRXgmVbJlkAhbBTb7
-         RxfX4dsI29ybBa2OOLBI0WkKVafxZpsOF4lmkU0+bvk8VcjkXsF2dMLBeDIBNd3m+27J
-         OVKah3NWi/xdFGn8Sam5hze7N7/NQ8dFN4d4RJ7nfkCfXd0o+CMkeDEo01PwH9W6SrTH
-         XOezC8T6eyoLfDFCdbn4YmhWFJJfl+GrAdkVqSrlm+eGqzzQNjaLuceHJRrJVgGCytI4
-         2Pow==
-X-Gm-Message-State: AOAM533rPybZn+xomzTMVsXATczfLTUnHI77sqDfmgJvew1q98FUVfLw
-        /zG4mq57gHyoM5bL8684Y6PV7/s2f2sq/9uo+qg=
-X-Google-Smtp-Source: ABdhPJzLjOdwsrigtNuNSi29CtxJXvozrwbUBC5Yu1ZfrUEMYctSNc0HI+f5bJ2oWRZav+G4gANQy2k7nYfR2OyMWH0=
-X-Received: by 2002:a5d:514b:: with SMTP id u11mr1172484wrt.50.1592322997024;
- Tue, 16 Jun 2020 08:56:37 -0700 (PDT)
+        h=x-gm-message-state:to:cc:references:subject:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=EG528eK0ey47OXJwHGD/9/0zabqmu40SK1OQK4shTFI=;
+        b=GP9okxC45FyM4kA2irS1+AsqRZCTwsIZJAfwJMrLuOl1ZpuldcP5sMlrNsVhD5+2wv
+         tKE7uicL/RjOjPgRGt5UNCrrmGDI5DPkbqJzn+lcDf8k2EbDIAsTMzk1PLBgurzRlo/s
+         muZw8atUO2xm2y52jFvpVLRG/EpDDfbtMj7TY9LliKj48eV99JjiUgt+s7LNvxipOH/J
+         qE17yXV1MeDq8ToGfeFpjMc//iHXXCwvhV1wfpQSGVTOSO6BoyyTPZP3RpaePBTsS37K
+         drZ5Jow9VcKfHKMdAAHonEjxeuPwA88xkWAoELoYC+4irPHRFoAeugFk4vyP1EM+V0qj
+         CH1w==
+X-Gm-Message-State: AOAM533Y5R0mldKt2L4JwjtsxxiUMsCpKavAGla9PfBpwDjbkBPWAvHI
+        7dtPt+kjBd69ubK2EdA9nX/08T/Zcps=
+X-Google-Smtp-Source: ABdhPJzFtXX8sMJmgrspGzFp9RKll14x7us9qS+21Cel/+cOoXSDybNQ+eI40mGIvyJd4/yl31H88w==
+X-Received: by 2002:ac8:440b:: with SMTP id j11mr21500567qtn.134.1592322809657;
+        Tue, 16 Jun 2020 08:53:29 -0700 (PDT)
+Received: from [10.0.10.179] ([170.79.184.212])
+        by smtp.gmail.com with ESMTPSA id g185sm14519555qke.122.2020.06.16.08.53.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jun 2020 08:53:29 -0700 (PDT)
+To:     konstantin@linuxfoundation.org
+Cc:     ethanpet113@gmail.com, git@vger.kernel.org, jrnieder@gmail.com,
+        simon@bocoup.com
+References: <20200616125415.xnnxp5jnlkszorum@chatter.i7.local>
+Subject: Re: Rename offensive terminology (master)
+From:   =?UTF-8?Q?S=c3=a9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>
+Message-ID: <84e99d71-ce9a-9762-60a0-18958eddc099@gmail.com>
+Date:   Tue, 16 Jun 2020 12:53:26 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
- <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
- <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
- <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
- <xmqqa716zs7w.fsf@gitster.c.googlers.com> <30661592138737@mail.yandex.ru>
- <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>
- <c4ebf430-a69d-3d46-bfb9-37c9ece9f519@iee.email> <xmqq1rmgxo67.fsf@gitster.c.googlers.com>
- <CAPx1GvdT6sZRtu8q1R9=fA-mE9pi1Ag-gKEzQfwbGap+KqSoSg@mail.gmail.com>
-In-Reply-To: <CAPx1GvdT6sZRtu8q1R9=fA-mE9pi1Ag-gKEzQfwbGap+KqSoSg@mail.gmail.com>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Tue, 16 Jun 2020 08:56:26 -0700
-Message-ID: <CAPx1Gvf5R6b1NoUWHkaqLMaj6dr51hERVvuVe1X9k3NEafnBhg@mail.gmail.com>
-Subject: Re: Collaborative conflict resolution feature request
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        "Curtin, Eric" <Eric.Curtin@dell.com>,
-        Konstantin Tokarev <annulen@yandex.ru>,
-        Christian Couder <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Geary, Niall" <Niall.Geary@dell.com>,
-        "rowlands, scott" <Scott.Rowlands@dell.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        "Coveney, Stephen" <Stephen.Coveney@dell.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200616125415.xnnxp5jnlkszorum@chatter.i7.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 15, 2020 at 10:32 AM Chris Torek <chris.torek@gmail.com> wrote:
-> I've thought about this (some) myself in the past.  It seems to me that w=
-hat
-> is needed is the ability to pass the complete unmerged state on.
+Why do you keep pivoting this around the setting that allows to change 
+the default? The whole issue is changing the default from master to 
+something else. You are being intellectually dishonest.
 
-A few further thoughts:
-
- * Given one or more saved merges and either a clean state or an
-   ongoing merge, we need a tool to combine these.  There are a lot of
-   corner cases here but in general, if merge X has file F in conflict and
-   merge Y has file F resolved, we can take the resolution from Y.
-
- * Partial merges (in the work-tree copy of a file) that are not yet added
-   may be the trickiest.  A simple heuristic would be to look for the
-   conflict markers and see if one work-tree copy has a resolution
-   where another work-tree copy has a conflict.  Or, though this is
-   harder, use the ours/theirs copies in the saved index trees to find
-   actual conflicted regions and compare this to the work-tree copy
-   to find resolved regions.
-
- * There is also an obvious question about what to do when combining
-   two different proposed resolutions where the stage-zero and/or
-   work-tree copies of the files don't match.
-
-None of these preclude the basic ability to save and restore=E2=80=94and of
-course transport, through fetch/push=E2=80=94the unmerged state, which I th=
-ink
-is the required enabling technology.  The ideas above are more for
-combining parallel merge efforts.  If it's acceptable for dev A to merge
-his/her part and pass the result to dev B, who merges theirs, and so
-on, the above is not required.
-
-Chris
