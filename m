@@ -2,94 +2,113 @@ Return-Path: <SRS0=RX4d=75=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C17ACC433DF
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 558C6C433DF
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:26:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 873EE20776
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:15:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rambler.ru header.i=@rambler.ru header.b="BaPmc1uf"
+	by mail.kernel.org (Postfix) with ESMTP id 310E6207C4
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 12:26:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726526AbgFPMPM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 08:15:12 -0400
-Received: from huan10.mail.rambler.ru ([81.19.78.9]:33914 "EHLO
-        huan10.mail.rambler.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725843AbgFPMPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 08:15:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rambler.ru;
-         s=mail; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
-        References:Reply-To:Message-ID:Subject:To:From:Date;
-        bh=Zyt2VOCf5sf0ZYonLbV6BuQrgOsbEOZePXOGPPnT1Oc=; b=BaPmc1ufYwQ2rPj//F2idxuVqN
-        maZgvNNmL+NM5gSzFGotB6dPV5iLMpnO/lpSV0jmmcyhxzPziyxR5EzHaVPrDeafeX+TwQk0cdmBX
-        MwQ8xJRTIijQx8s+BBqMzUqtQkZixlu9yh8z763a6DW/EaM+3xSP8eSJX+mUsJOrV/pY=;
-Received: from [UNAVAILABLE] ([194.190.114.28]:46700 helo=localhost)
-        by huan10.mail.rambler.ru with esmtpa (Exim 4.86_2)
-        (envelope-from <lego_12239@rambler.ru>)
-        id 1jlAUf-0006Mm-Sr
-        for git@vger.kernel.org; Tue, 16 Jun 2020 15:15:10 +0300
-Date:   Tue, 16 Jun 2020 15:16:51 +0300
-From:   Oleg <lego_12239@rambler.ru>
-To:     git@vger.kernel.org
-Subject: Re: Rename offensive terminology (master)
-Message-ID: <20200616121631.GA26959@legohost>
-Reply-To: Oleg <lego_12239@rambler.ru>
-References: <20200616100424.39718-1-alexsmith@gmail.com>
- <c0c2d9ad-1d67-8ebe-0063-524005ca97fe@whinis.com>
- <3cd5d8b9-a9f8-fbd1-f218-622f70e45566@whinis.com>
+        id S1726799AbgFPM0A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 08:26:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32966 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725901AbgFPM0A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 08:26:00 -0400
+Received: (qmail 21420 invoked by uid 109); 16 Jun 2020 12:25:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jun 2020 12:25:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12645 invoked by uid 111); 16 Jun 2020 12:25:59 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jun 2020 08:25:59 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 16 Jun 2020 08:25:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Alban Gruin <alban.gruin@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        sandals@crustytoothpaste.net
+Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
+ new repositories
+Message-ID: <20200616122559.GA666057@coredump.intra.peff.net>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+ <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com>
+ <08e46af3-ff52-8bce-b75a-db8c390c9641@gmail.com>
+ <xmqqwo4di49l.fsf@gitster.c.googlers.com>
+ <731205c8-7d4b-d87a-17d1-520fdec7375d@gmail.com>
+ <nycvar.QRO.7.76.6.2006141055510.56@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3cd5d8b9-a9f8-fbd1-f218-622f70e45566@whinis.com>
-User-Agent: Mutt/1.12.1 (2019-06-15)
-X-Rambler-User: lego_12239@rambler.ru/194.190.114.28
+In-Reply-To: <nycvar.QRO.7.76.6.2006141055510.56@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 16, 2020 at 07:38:33AM -0400, Whinis wrote:
-> > Whether or not any patch would be accepted, the damage is already done.
-> >  From now on, people will judge you if you dare to use the name "master" anywhere
-> > and this is incredibly sad. These people are literally bullying us into
-> > submission in the name of political correctness where no harm was actually
-> > done.
+On Sun, Jun 14, 2020 at 10:57:41AM +0200, Johannes Schindelin wrote:
+
+> > >> Why adding yet another environment variable instead of relying only on a
+> > >> config option?  I understand it's for the tests, but can't we add a
+> > >> shell function in test-lib.sh (and friends) that tries to read
+> > >> `GIT_TEST_DEFAULT_BRANCH_NAME', and, if it exists, sets
+> > >> `core.defaultBranchName'?
+> > >
+> > > Can you produce such a patch that does it cleanly?  My knee jerk
+> > > reaction is that I would suspect that you end up having to touch
+> > > many places in the t/ scripts, but if you prove otherwise, that
+> > > would certainly be appreciated.
+> > >
+> > > And no,
+> > >
+> > >     git () { command git -c core.defaultBranchName=master "$@" }
+> > >
+> > > is not an acceptable solution.
+> > >
 > >
-> > This sickens me.
-> Not just that, any twitter use can complain and get entire communities 
-> to throw out all rules on changes to appear to be on the "right" side. 
-> If anyone submitted a patch to change any functioning name without good 
-> reason, especially one assumed to never change and would likely break a 
-> significant number of external processes it would be denied without 
-> second thought. Here the entire thread didn't ask should we change it 
-> but instead started on the premise, even though this is documented 
-> throughout the world and millions or even billions of scripts and 
-> programs assume it to be constant, it must change without discussion.
+> > I wanted to to do something like this:
+> >
+> >   if test -n "$GIT_TEST_DEFAULT_BRANCH_NAME";
+> >   then
+> >       git config core.defaultBranchName "$GIT_TEST_DEFAULT_BRANCH_NAME"
+> >   fi
+> >
+> > But since we do not have a repository to store the config, it won't
+> > work.  Sorry for the noise.
+> 
+> We actually would have `~/.gitconfig` because `HOME` is set to `t/trash
+> directory.<test-name>/`.
+> 
+> However, that would cause all kinds of issues when test scripts expect the
+> directory to be pristine, containing only `.git/` but not `.gitconfig`.
 
-Some people don't think about it. They not engeeners, they are linguistic
-racist. May be it time to fork git... and place it somewhere where people
-are better educated, more democratic and not so totalitarian to words.
+Putting:
 
-> Not just that the entire process has become a laughing stock that the 
-> tech community seriously believes anyone has a problem with 'master' but 
-> even worse that it will somehow fix something in the world. You can find 
-> no shortages of post on forums and websites of people wondering what 
-> exactly is trying to be accomplished.While not done here presumably due
+  GIT_CONFIG_PARAMETERS="'core.defaultBranchName=...'"
 
-I'll tell you more. On almost every non-english forum you can see that
-users wonder about this incredibly stupid process :-).
-And you are right. Anywhere in the world, outside US, this looks like a laughing
-stock :-). All people just sit near their monitors with popcorn and looking
-what else crazy white americans will do with all production stuff to which they
-have access.
+into the environment would work (and yes, you need the single quotes
+embedded in the variable), and solves all of the complaints above.
+Further "git -c" invocations properly append to it. But:
 
-Actually, it's sad like any obscurantism.
+  - there are a few tests which explicitly tweak that variable
 
--- 
-Олег Неманов (Oleg Nemanov)
+  - it technically changes any tests of "-c" because now we'd never
+    cover the case where we start without the variable defined
+
+I think baking in a special environment variable like you have is not so
+bad. If this did become too common a pattern, though (special test-only
+environment variables that do have a separate config option), I wouldn't
+be opposed to a GIT_TEST_CONFIG_PARAMETERS which takes precedence over
+other config, and comes with a big warning label that it shouldn't be
+relied upon outside the test suite. That's equally ugly to
+GIT_TEST_DEFAULT_BRANCH_NAME, but at least solves the problem once for
+all of them. I'm just not sure we have enough "all of them" to make it
+worth doing.
+
+-Peff
