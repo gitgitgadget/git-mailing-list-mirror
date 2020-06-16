@@ -2,139 +2,107 @@ Return-Path: <SRS0=RX4d=75=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12FDCC433E0
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E94CEC433DF
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:26:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2F6A20B1F
-	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:17:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8B3020707
+	for <git@archiver.kernel.org>; Tue, 16 Jun 2020 17:26:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mail.de header.i=@mail.de header.b="goCakhkp"
+	dkim=pass (1024-bit key) header.d=rambler.ru header.i=@rambler.ru header.b="HTtn+p9Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728014AbgFPRR2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Jun 2020 13:17:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60474 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727962AbgFPRR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jun 2020 13:17:27 -0400
-Received: from shout02.mail.de (shout02.mail.de [IPv6:2001:868:100:600::217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51842C061573
-        for <git@vger.kernel.org>; Tue, 16 Jun 2020 10:17:26 -0700 (PDT)
-Received: from postfix01.mail.de (postfix02.bt.mail.de [10.0.121.126])
-        by shout02.mail.de (Postfix) with ESMTP id D1EE8C0225;
-        Tue, 16 Jun 2020 19:17:22 +0200 (CEST)
-Received: from smtp02.mail.de (smtp02.bt.mail.de [10.0.121.212])
-        by postfix01.mail.de (Postfix) with ESMTP id ADD65A007A;
-        Tue, 16 Jun 2020 19:17:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.de;
-        s=mailde201610; t=1592327842;
-        bh=AUPN1vAH8VDY1bW0nKXMwzmySAQ9APeP3AxPpnqaS+4=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=goCakhkpYDVlSWbHMak+eYfMpA73+29krKbbTTEtW2BbR72FqDBbmKsd7+tKBqcf8
-         DFpFY32AX57yhIVHHhtd2LyQ4huwDL2rUVvmrMPnj9BkHV6xkzxaVDfKbdSo/bKbJ3
-         b/EJBulqLUIK+4jn2AwlltPklCkudcHL8N1OQKCo=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by smtp02.mail.de (Postfix) with ESMTPSA id 1ED5FA3B97;
-        Tue, 16 Jun 2020 19:17:21 +0200 (CEST)
-Subject: Re: Collaborative conflict resolution feature request
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        "Curtin, Eric" <Eric.Curtin@dell.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Geary, Niall" <Niall.Geary@dell.com>,
-        "rowlands, scott" <Scott.Rowlands@dell.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
- <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
- <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
- <432b9e0b-eedf-6d39-ebc0-0416f8574afc@iee.email> <87zh943bda.fsf@osv.gnss.ru>
- <39c45b18-194c-0ff1-4a6d-1db8dee788c7@iee.email>
-From:   Stefan Moch <stefanmoch@mail.de>
-Message-ID: <fe2cd745-29a7-3341-d321-4199b184bc96@mail.de>
-Date:   Tue, 16 Jun 2020 19:17:14 +0200
+        id S1729648AbgFPR0K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Jun 2020 13:26:10 -0400
+Received: from huan5.mail.rambler.ru ([81.19.78.4]:39048 "EHLO
+        huan5.mail.rambler.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726840AbgFPR0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jun 2020 13:26:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rambler.ru;
+         s=mail; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+        References:Reply-To:Message-ID:Subject:To:From:Date;
+        bh=7D3S4hwFhfrmUizz6KgAY81MMTyHevvtQLfCs+G+4vI=; b=HTtn+p9ZWRLsd+yLbXP28KiXsI
+        pAZTx5VrRxaMyUjA5kLWvogtx9qtjfjSNZOaUhCwnVj31x/r3HGY/ATzyr/LZJIlcvNwfCx2sS4Rh
+        +fNVB1za7CGT8QTJjceoZ33W7lACPsVpGoNImjaJhlDIksSbUBEk7K+vqr4JPWOJAzps=;
+Received: from [UNAVAILABLE] ([194.190.114.28]:44494 helo=localhost)
+        by huan5.mail.rambler.ru with esmtpa (Exim 4.86_2)
+        (envelope-from <lego_12239@rambler.ru>)
+        id 1jlFLc-0006CR-K7
+        for git@vger.kernel.org; Tue, 16 Jun 2020 20:26:08 +0300
+Date:   Tue, 16 Jun 2020 20:27:49 +0300
+From:   Oleg <lego_12239@rambler.ru>
+To:     git@vger.kernel.org
+Subject: Re: Rename offensive terminology (master)
+Message-ID: <20200616172749.GB18874@legohost>
+Reply-To: Oleg <lego_12239@rambler.ru>
+References: <20200616100424.39718-1-alexsmith@gmail.com>
+ <c0c2d9ad-1d67-8ebe-0063-524005ca97fe@whinis.com>
+ <3cd5d8b9-a9f8-fbd1-f218-622f70e45566@whinis.com>
+ <20200616133054.2caiwqwp5mlmb54a@chatter.i7.local>
+ <20200616142651.GA27946@legohost>
+ <20200616160349.t65we3jkpq7hqwra@chatter.i7.local>
 MIME-Version: 1.0
-In-Reply-To: <39c45b18-194c-0ff1-4a6d-1db8dee788c7@iee.email>
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-purgate: clean
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate-type: clean
-X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate: clean
-X-purgate-size: 3030
-X-purgate-ID: 154282::1592327842-0000058E-DD0DD540/0/0
+In-Reply-To: <20200616160349.t65we3jkpq7hqwra@chatter.i7.local>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+X-Rambler-User: lego_12239@rambler.ru/194.190.114.28
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley wrote:
-> On 15/06/2020 10:51, Sergey Organov wrote:
->> Philip Oakley <philipoakley@iee.email> writes:
->>
->>
->> [...]
->>
->>> Also look at 'rerere'.
->> 'rerere' is a superb feature, but isn't it local? If so, how could it
->> help for collaboration? What's the idea? Is there a way to share
->> 'rerere'?
-> I saw this (rerere) is two parts. First was to ensure Eric was aware of
-> it as a possible capability for use by the 'merge manager', and others,
-> so that they didn't loose sight of their conflict resolutions for the
-> time when the 'big merge window' came around. E.g. So a dev could do a
-> local fix based on their rerere database and then send a patch to the
-> merge manager indication their approach to the resolution.
->
-> Meanwhile, second, at the moment the rerere database is 'local', mainly,
-> as I understand it because of the number of context lines a local user
-> has chosen (hence not immediately portable).
->
-> I personally believe that it should be possible to some how exchange
-> resolutions without that pre-optimisation of the context line choice. I
-> had a look back at the old rerere script and that had small fingerprints
-> of each resolution stored in the database (at least as I read it).
-> However when I look at the modern rerere database it looks like it has
-> full pre & post images, rather than just the conflicts, so I'm not yet
-> sure what's really happening (i.e. I haven't dived into the c code).
->
-> A possibly more sensible approach (to exchanging resolutions) is simply
-> to do the merge, without commit, then save that merge as if it's a
-> single side commit (with the other merge parent listed in the commit
-> message), and that commit can then be pushed/pulled etc and a variant of
-> `rerere train` can be used to recreate the local database. In a sense
-> the fake merge (why not a proper merge) is a variant of a stash where
-> you aren't wanting to pollute the branch trees with this extra 'flotsam'.
+On Tue, Jun 16, 2020 at 12:03:49PM -0400, Konstantin Ryabitsev wrote:
+> It doesn't matter how few repositories need it. If you've been on this 
+> list, you would have seen patches being submitted and accepted that fix 
+> bugs in corner cases that can't possibly be experienced by the vast 
+> majority of Git users.
 
-There is a `contrib/rerere-train.sh` script in git's repository,
-that can recreate rerere resolutions from existing merge commits.
+"master" branch is not the bug. There is nothing to fix here. There is
+need to fix something in somebody heads, not in the code.
 
-Extending the options Eric outlined, a collaborative conflict
-resolution workflow might thus be:
+> For the same reason any other useful feature didn't appear earlier.  
+> Nobody has brought it up or spent enough time considering it.
 
-  * developers do test merges on temporary branches between their
-    feature branch and the main development – or other feature
-    branches if necessary (maybe create test merges on a regular
-    basis to minimize the new conflicts)
-  * these temporary branches get pushed, but not merged to other
-    branches
-  * the branch manager fetches these branches and uses
-    `rerere-train.sh` to fill the local rerere database with
-    conflict resolutions from the test merges
-  * the temporary branches get deleted
-  * the recorded resolutions get reused when needed (keep in mind
-    rerere's gc config, see gc.rerereResolved and gc.rerereUnresolved)
+This feature isn't considered enough time. It like a rocket.
 
-The last discussion on rerere-train.sh on this list was here:
+> > No. They wann't. Tell you as cyrillic user, some conventions exist that
+> > branches and tags should be in ASCII(no one with a sane mind want to
+> > not to do so). And if you want to make a public repo and collaborate
+> > with others you will use ASCII in any case. Otherwise nobody understand you.
+> 
+> 1C scripting language is written entirely in Russian. Many official
 
-https://lore.kernel.org/git/BZAQIE4YND2I.Z7BFCW7BLH3K@penguin/
+1C is a bad example and you know this :-).
 
+> Russian sites use .рф domain names. If someone wants to make all their 
+> branch names in Cyrillic, why should we prevent them from doing so?
+
+Because there are no such people. You try to fix non-existent problem.
+
+> > May be they assume this, because about 15 years master branch was *always*
+> > here, didn't think about it :-D? And nobody told that somebody will come and
+> > break it somewhen.
+> 
+> Very soon we'll break git hashes from being sha1 by default. Just 
+> because they've been sha1 for the past 15 years doesn't mean we 
+> shouldn't or can't do it.
+
+Hm. No. Replacing of sha1 have technical reasons and this change have not.
+If "master" name will stay as a default, this change will make at least
+some sense.
+
+Somebody, may be you, told here that this "amazing feature" can be easily
+configured with help of configuration files in any distros. So, let's
+set "master" name a default and github(i'm shure it have at least one competent
+admin that can edit a config file of git) change this setting by itself.
+It's logically correct to set default to a value that *most* users want and
+give a minority a way to change this setting.
+
+-- 
+Олег Неманов (Oleg Nemanov)
