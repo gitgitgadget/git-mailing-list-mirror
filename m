@@ -2,136 +2,87 @@ Return-Path: <SRS0=YePV=76=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEA82C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CF21C433DF
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:13:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 974F8206DB
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:10:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4E9B21532
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:13:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rXFWvDE+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aGvUt6bI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726952AbgFQUKn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 16:10:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55706 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726809AbgFQUKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:10:41 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6A1C06174E
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 13:10:41 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id v14so1828708pgl.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 13:10:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xsglgFSVpZiFqXQvSHVQHCtwqLW1tLEXxZEZG/hV9o0=;
-        b=rXFWvDE+VluLjZcXDGj+lh2SUnj2dlH9wCqXhRv7aNe1epObd2LBMXqJ+DMdfp5CAM
-         Y3fsBrQHuL7QkMTyt6+IZB2VBTLFuGJ3bWaogJwnZEcCqlK30lSYgSVGe8ZwO/OUJ4M9
-         wFsFYXk3010/PTjkPC1ov2T6ZEd2dfdQMdtA/YJz+32lZHBpM8lSbd1kP6Kc7wAvlWGX
-         5i7MD4vNtBNYN/nvsK5AM/Hp8gHQQPIWvLFnl6uHbmb1rbpnJKliK9v3PcAxlDiMsO+C
-         VyOuLhF/dSzhM0jCYvfUzHIrdzJ1LqaGunVRn3giDnprLTrMN1HduQb4JUkfireIHw4d
-         +xmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xsglgFSVpZiFqXQvSHVQHCtwqLW1tLEXxZEZG/hV9o0=;
-        b=PuiVYvVqVR0p0G/WyIu6q25UZlylz6eOdKs4j/wEs97P1xq81zu/MqkVdjdVsk83Vg
-         2c/Foe3YObny8KRmJlcEkBRqnKm60ezaFIcum1LKzga7XA5kq2g9mEu441Nn5wx+bls0
-         sm9U2J3l96LyM01Ji+T4xZ2QKQ2yoyk/Zy4+ZceOhZBYT+u9n2OzvRuSDEdzVT9DHXs9
-         BWRF/bxRW2GZiFYzJo39rXexAXXjHkCJhX/8hpr8P7iLQ+JjnS89CyYsG8b2+UiKyxua
-         MIzBTpZwxFBxVVGu1BmxTPcFC6/E3AlxeLYYJZE0wB2/pOxjsZPWBKscjWib8wcNcr6Z
-         62Jw==
-X-Gm-Message-State: AOAM533hN+7Q1ypE3q6MjL4IrfF1Uaq6j1OwdH9BITffWvKC0sMzS77v
-        r/E9sUStuDlPV5rXtquajdgG0bzb
-X-Google-Smtp-Source: ABdhPJwUdl54QjPHvruFkTY/hO/tkoPqsXMSnTEsb/u+6YyVYxsEWo+J2dK1a4CzO37XrrdGq9QDdw==
-X-Received: by 2002:a63:4d53:: with SMTP id n19mr488387pgl.60.1592424640254;
-        Wed, 17 Jun 2020 13:10:40 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id o207sm662511pfd.56.2020.06.17.13.10.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 13:10:39 -0700 (PDT)
-Date:   Wed, 17 Jun 2020 13:10:37 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     demerphq <demerphq@gmail.com>,
-        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
-        =?utf-8?Q?S=C3=A9rgio?= Augusto Vianna 
-        <sergio.a.vianna@gmail.com>, konstantin@linuxfoundation.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        don@goodman-wilson.com, Git <git@vger.kernel.org>,
-        newren@gmail.com, philipoakley@iee.email,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: Rename offensive terminology (master)
-Message-ID: <20200617201037.GA86579@google.com>
-References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
- <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com>
- <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
- <20200616074316.GA21462@kitsune.suse.cz>
- <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
- <xmqq5zbpv53g.fsf@gitster.c.googlers.com>
+        id S1726845AbgFQUNu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 16:13:50 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50432 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbgFQUNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 16:13:50 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D07CCC1998;
+        Wed, 17 Jun 2020 16:13:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZtT4O3G5A/W9MtWB27k7b5CIjDA=; b=aGvUt6
+        bIKaZTu8bFTIyUwedCiR3a2+R+BAf9TuJCnBTW/iP0vkr6ujgh5t4QCgdJ9ph9gf
+        1ErHoJPpB0on90khWs6Q5a6Y//mczvgPaqcY2R6ZFdk/t4HeoQXNLRNTziXdkOzN
+        7EHhOsxEqezUBx5pvbEEaBgladLfJTTYx0Ztc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eM7nlPPgKO01QKRj0yAaDFD6nlRk00LJ
+        7jKE8lZOQI1bnzXFFKmBofFNt1S8U30E5AC9NsLra1Z0e1OsZg6yiYebQ4kFNOtA
+        zdsZPgHXH3JGdFrvMukIeRMJ5Ge8F9gYgCbjcVSbv7OKjXqI0PPurSZp4bGz6VbX
+        LZ8F8be8AIA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C7C87C1997;
+        Wed, 17 Jun 2020 16:13:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 12800C1991;
+        Wed, 17 Jun 2020 16:13:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        James Ramsay <jramsay.com.au@syl.local>,
+        Bryan Turner <bturner@atlassian.com>
+Subject: Re: Consensus on a new default branch name
+References: <20200615205722.GG71506@syl.local>
+        <CABPp-BE3UAeMKCtwnTf-5ifVhveRPzQfT1T+sHsm_LDOubCHCQ@mail.gmail.com>
+        <20200616143202.GM666057@coredump.intra.peff.net>
+Date:   Wed, 17 Jun 2020 13:13:44 -0700
+In-Reply-To: <20200616143202.GM666057@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 16 Jun 2020 10:32:02 -0400")
+Message-ID: <xmqqpn9xtpqf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5zbpv53g.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0C69C14A-B0D7-11EA-B1DB-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Junio C Hamano wrote:
-> demerphq <demerphq@gmail.com> writes:
+> Thanks for writing this out (I'm still catching up on list email after a
+> vacation, so I missed the earlier thread). It really cemented for me
+> that "main" is better than "default".
 
->> kind of confusion. Consider how this conversation goes for us:
->>
->> A: "No you need to fetch trunk from the remote, then you need to merge
->> it to your local trunk and then push it to the master trunk".
->> B: "Ok."
->
-> Hmph, why isn't the last one "trunk trunk"?
->
->> Similarly when the perl project migrated to git we renamed "master" to
->> "blead" to reduce the possibility "master master" confusion.
->
-> Or put it differently, "your local master?  remote master?  or the
-> primary master?" would be a way to state the phrase A asked in the
-> example without renaming the name for the primary branch to 'trunk'.
->
-> What I am trying to get at is, after changing the name that is given
-> by default to the primary branch in a newly created repositories by
-> "git init" to 'main' (which I am OK with, and it seems that the
-> major projects and repository hosting services will be doing anyway
-> with or without getting themselves in this discussion on this list),
-> wouldn't we risk the same "master master" confusion caused by and to
-> those newer users who learn 'main' is the word given to the primary
-> thing?
+In any case, it makes sense to use separate words for the concept
+("default" --- as in "the name given to the first branch created in
+the repository by default") and the actualy value chosen for the
+entity (master or main in this case).  
 
-I think Yves's point is that when the tool you are building has a
-component named $FOO, it's confusing to also have a branch named $FOO.
+The statement:
 
-So for example, if we were in the habit of calling main.c 'main' and
-frequently referring to it, this could be a reason to avoid also using
-'main' as the name of the primary development branch.  When someone
-says "that's fixed in main", it could prompt a moment of confusion ---
-did they mean that there's a fix in main.c, or that the fix has landed
-in the main branch?
+    I configure in ~/.gitconfig that the default branch name for all my
+    repositories to be 'main'
 
-In particular when building distributed systems, historically it has
-been common to have one of the components being built be named
-'master'.
-
-Fortunately in this context, I haven't heard 'main' used frequently
-that way.  (I suppose it helps that main() functions are often short.)
-
-Thanks,
-Jonathan
+is much easier to read than the last 'main' replaced with 'default'.
