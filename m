@@ -6,67 +6,103 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D75C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 19:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44CD9C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 19:56:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28021206F1
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 19:15:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E83F2207DD
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 19:56:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="UG2IH602"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nAk3h+Wn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbgFQTPS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 15:15:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726496AbgFQTPQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 15:15:16 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83463C06174E
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 12:15:14 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id r15so3203744wmh.5
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 12:15:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=6aHOPSKjWLWt7/LA1Fcf9n7HJASYYBDNtuTJd7y2faU=;
-        b=UG2IH602lfiOoprKUGb377dvBcwAgBTl5hluzk6SRdRgO0hqsxEqLGA9RHXhfz4IUd
-         NZ+maUjnw/+Tg8w7WBjsc2vZvyy1HA8PBV+Hdk7nF5/x8qjqfgtcI/Jvomrt1a/kAXYN
-         qL/An4MW2WXg3EnoCu9xtzQt2Uj01yauLMrQY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=6aHOPSKjWLWt7/LA1Fcf9n7HJASYYBDNtuTJd7y2faU=;
-        b=U3E3bsiLx0LHQHrqWEb2oIBbL/cpPo/t6a8HPqCSzZfK8vvyyKCmfSoWq0e9ia2ywW
-         p4MiB1DTvLyDMsgtk9E+Ken4R3zww504/LhY0KgoIsuBXNPxJ1Eh/Z3j46l1za0xLYJ2
-         4jidKLNFkdC3gazcRoFhJ3CODHggyz7qSKUR2ItB02LPNINJQ32tRdp92WwGYgKPYmLr
-         iWbjBMFxepOV3pLsIbkO+nqXjQxexKvnyS5a4hTgk9UoI6HWa2F6BPcJkuidwIn3I69b
-         +flz0IR0DMov8Tg5i2z7I0GUYm4yVeF7ZciH8gaWmipnY+YQr+dRV747BrJi/YB+uB/a
-         AdwQ==
-X-Gm-Message-State: AOAM5316c8HMIHPMSrGZJfPYf8hWKdQOlxR34YGgPkXlKg8QvRZDoHzd
-        PVmo11+yMmknNapAncD0m+I60m2CGFk0LctZWb9eLnIuz0k=
-X-Google-Smtp-Source: ABdhPJzqcXeA5H0nQfcAeSn1oZbF5tNQjgYAHdnc1d2Ey+N4lSIAOqrMeZxLlMCPwThA+sHDwkuRmE8sENLI1Z/+bRc=
-X-Received: by 2002:a1c:9ec4:: with SMTP id h187mr219946wme.27.1592421311182;
- Wed, 17 Jun 2020 12:15:11 -0700 (PDT)
+        id S1726763AbgFQT4m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 15:56:42 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52424 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbgFQT4m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 15:56:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 46363E2BCA;
+        Wed, 17 Jun 2020 15:56:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0TQ57p2w6vHZ8iBOxC7O94Wpglk=; b=nAk3h+
+        Wn7cLpmu1XEpj1cKw4uxxWBlyDXuPXJGSx/WSzEznrlwd7gRxFyVWkRn+zIYGP17
+        8miiI8hZjLdl2iObhdkwvwnK/BI2/Jj2PUqKb6r1W7C6C47p+ireCG9h5ZeD0fQz
+        NKoiVWbQxc7nxnBgmEf5GSo7M79B6Hnb38Zl0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PdMaKoCoZZOwVwRy0/wD6WYt81j8J2Gw
+        37Vx6eSdmAVlspvB6e09oEkye/mJCC2dViHZvBF1VlFNQ8o7phA70KKsONigK2Z3
+        vDexr8kJUEWCf9tLbg1WPLYwju4xCraorPeT+ZaekSDWEqM/47sGW2c0dZ9+9Q5a
+        25hpkomawDo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C6F0E2BC9;
+        Wed, 17 Jun 2020 15:56:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 83E3EE2BC8;
+        Wed, 17 Jun 2020 15:56:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     demerphq <demerphq@gmail.com>
+Cc:     Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
+        =?utf-8?Q?S?= =?utf-8?Q?=C3=A9rgio?= Augusto Vianna 
+        <sergio.a.vianna@gmail.com>, konstantin@linuxfoundation.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        don@goodman-wilson.com, Git <git@vger.kernel.org>,
+        newren@gmail.com, philipoakley@iee.email,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Rename offensive terminology (master)
+References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
+        <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com>
+        <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
+        <20200616074316.GA21462@kitsune.suse.cz>
+        <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
+Date:   Wed, 17 Jun 2020 12:56:35 -0700
+In-Reply-To: <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
+        (demerphq@gmail.com's message of "Tue, 16 Jun 2020 10:01:54 +0200")
+Message-ID: <xmqq5zbpv53g.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 17 Jun 2020 20:14:59 +0100
-Message-ID: <CAE5ih79vZDzKQ1TSNTrL_64XjZH-DJTPqdPH5NMwOrsbaH=n+g@mail.gmail.com>
-Subject: git clone --filter=blob:limit=X interaction with submodules?
-To:     Git Users <git@vger.kernel.org>
-Cc:     Andrew Oakley <andrew@adoakley.name>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: A75BA11C-B0D4-11EA-95D3-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I noticed that if I do git clone with submodules, using
-"--filter=blob:limit=whatever" that the filter is applied in the super
-project, but appears to be ignored in the sub modules.
+demerphq <demerphq@gmail.com> writes:
 
-Is that expected behaviour? Or am I just doing it wrong?
+> kind of confusion. Consider how this conversation goes for us:
+>
+> A: "No you need to fetch trunk from the remote, then you need to merge
+> it to your local trunk and then push it to the master trunk".
+> B: "Ok."
 
-I'm using git 2.27.0.90.geebb51ba8c.
+Hmph, why isn't the last one "trunk trunk"?
 
-Thanks
-Luke
+> Similarly when the perl project migrated to git we renamed "master" to
+> "blead" to reduce the possibility "master master" confusion.
+
+Or put it differently, "your local master?  remote master?  or the
+primary master?" would be a way to state the phrase A asked in the
+example without renaming the name for the primary branch to 'trunk'.
+
+What I am trying to get at is, after changing the name that is given
+by default to the primary branch in a newly created repositories by
+"git init" to 'main' (which I am OK with, and it seems that the
+major projects and repository hosting services will be doing anyway
+with or without getting themselves in this discussion on this list),
+wouldn't we risk the same "master master" confusion caused by and to
+those newer users who learn 'main' is the word given to the primary
+thing?
+
+Wouldn't you teach your users to fetch 'main' from the remote, merge
+it to the local 'main' and then push it to the 'main' main?
+
+
