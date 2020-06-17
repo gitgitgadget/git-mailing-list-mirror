@@ -6,103 +6,77 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44CD9C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 19:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F7FC433DF
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:04:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E83F2207DD
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 19:56:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19A0020897
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:04:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nAk3h+Wn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KsqIa/Wq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726763AbgFQT4m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 15:56:42 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52424 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726496AbgFQT4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 15:56:42 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 46363E2BCA;
-        Wed, 17 Jun 2020 15:56:40 -0400 (EDT)
+        id S1726815AbgFQUEe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 16:04:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57452 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbgFQUEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 16:04:33 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EBC67C756;
+        Wed, 17 Jun 2020 16:04:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0TQ57p2w6vHZ8iBOxC7O94Wpglk=; b=nAk3h+
-        Wn7cLpmu1XEpj1cKw4uxxWBlyDXuPXJGSx/WSzEznrlwd7gRxFyVWkRn+zIYGP17
-        8miiI8hZjLdl2iObhdkwvwnK/BI2/Jj2PUqKb6r1W7C6C47p+ireCG9h5ZeD0fQz
-        NKoiVWbQxc7nxnBgmEf5GSo7M79B6Hnb38Zl0=
+        :content-type:content-transfer-encoding; s=sasl; bh=TEPKM+a1XQBd
+        thyL/t+7D6TGvlg=; b=KsqIa/WqOSwNI4tM9p00Qekv5Ovsr2L3jxEs/omhGZfW
+        At2L8qdbU1D2uOaPK1XeEIL6rEY/xFyzFMj7Q2CgAUtxk3cLMdFu4gjoFxjXcpnr
+        CxD3d+mKI0QemZLK70z1huK5zuv+qByjkoTLyTRYM9Vzjf7GOQ2448w7EtCmhzk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PdMaKoCoZZOwVwRy0/wD6WYt81j8J2Gw
-        37Vx6eSdmAVlspvB6e09oEkye/mJCC2dViHZvBF1VlFNQ8o7phA70KKsONigK2Z3
-        vDexr8kJUEWCf9tLbg1WPLYwju4xCraorPeT+ZaekSDWEqM/47sGW2c0dZ9+9Q5a
-        25hpkomawDo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C6F0E2BC9;
-        Wed, 17 Jun 2020 15:56:40 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=gwxrlF
+        quqN8zHYooGasR8okQSyIar+Ft2AUFCP6SBYFy5ox0xyrprqhx/wL5iA7uz0NX30
+        uEUyjphtqCpEUnmgTQ9UlnHa6zJ8M9T0z1NWRmGuQtY/1SnCOXOsWPyiU1JGnTM0
+        KjxWGxusHF/rCuNHDoAMCEQWMCCu/POOpz4q4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 563437C755;
+        Wed, 17 Jun 2020 16:04:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 83E3EE2BC8;
-        Wed, 17 Jun 2020 15:56:37 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCCA17C754;
+        Wed, 17 Jun 2020 16:04:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     demerphq <demerphq@gmail.com>
-Cc:     Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
-        =?utf-8?Q?S?= =?utf-8?Q?=C3=A9rgio?= Augusto Vianna 
-        <sergio.a.vianna@gmail.com>, konstantin@linuxfoundation.org,
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
+        Thomas Gummerer <t.gummerer@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        don@goodman-wilson.com, Git <git@vger.kernel.org>,
-        newren@gmail.com, philipoakley@iee.email,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: Rename offensive terminology (master)
-References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
-        <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com>
-        <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
-        <20200616074316.GA21462@kitsune.suse.cz>
-        <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
-Date:   Wed, 17 Jun 2020 12:56:35 -0700
-In-Reply-To: <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
-        (demerphq@gmail.com's message of "Tue, 16 Jun 2020 10:01:54 +0200")
-Message-ID: <xmqq5zbpv53g.fsf@gitster.c.googlers.com>
+        Son Luong Ngoc <sluongng@gmail.com>
+Subject: Re: [RFC PATCH v1 0/6] stash: drop usage of a second index
+References: <20200505104849.13602-1-alban.gruin@gmail.com>
+        <20200615152715.GD2898@szeder.dev> <20200615215020.GE2898@szeder.dev>
+        <20200616070645.GF2898@szeder.dev>
+Date:   Wed, 17 Jun 2020 13:04:30 -0700
+In-Reply-To: <20200616070645.GF2898@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Tue, 16 Jun 2020 09:06:45 +0200")
+Message-ID: <xmqq1rmdv4q9.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A75BA11C-B0D4-11EA-95D3-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C177FF04-B0D5-11EA-A9EE-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-demerphq <demerphq@gmail.com> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> kind of confusion. Consider how this conversation goes for us:
->
-> A: "No you need to fetch trunk from the remote, then you need to merge
-> it to your local trunk and then push it to the master trunk".
-> B: "Ok."
+> On Mon, Jun 15, 2020 at 11:50:20PM +0200, SZEDER G=C3=A1bor wrote:
+>> On Mon, Jun 15, 2020 at 05:27:15PM +0200, SZEDER G=C3=A1bor wrote:
+>> >       - Should we even allow 'splitIndex.sharedIndexExpire=3Dnow'?
 
-Hmph, why isn't the last one "trunk trunk"?
-
-> Similarly when the perl project migrated to git we renamed "master" to
-> "blead" to reduce the possibility "master master" confusion.
-
-Or put it differently, "your local master?  remote master?  or the
-primary master?" would be a way to state the phrase A asked in the
-example without renaming the name for the primary branch to 'trunk'.
-
-What I am trying to get at is, after changing the name that is given
-by default to the primary branch in a newly created repositories by
-"git init" to 'main' (which I am OK with, and it seems that the
-major projects and repository hosting services will be doing anyway
-with or without getting themselves in this discussion on this list),
-wouldn't we risk the same "master master" confusion caused by and to
-those newer users who learn 'main' is the word given to the primary
-thing?
-
-Wouldn't you teach your users to fetch 'main' from the remote, merge
-it to the local 'main' and then push it to the 'main' main?
-
-
+Good analysis.  The most conservative might end up to be to disable
+splitindex altogether but perhaps we can first set a reasonable
+minimum to the expiration to say 10min?
