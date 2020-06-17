@@ -6,106 +6,85 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31562C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A4FC433DF
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:30:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0263921532
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:28:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7233F20720
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:30:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="czXkBgre"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FZWxjSHn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726959AbgFQU2R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 16:28:17 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51099 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726948AbgFQU2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:28:15 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 55929C1F10;
-        Wed, 17 Jun 2020 16:28:12 -0400 (EDT)
+        id S1726854AbgFQUam (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 16:30:42 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54214 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbgFQUam (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 16:30:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 56C4CE3434;
+        Wed, 17 Jun 2020 16:30:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PWotY5PRdXLQ
-        1u5hjPtpJK89Rco=; b=czXkBgreLcTb/72Wzicse16ddy9LeQdO7vNlxmwb1aHg
-        2YXi8hjSy/5cnTPYxAAJKA1aq7al8Vc3/FpP+qxKNwaFaZV1OHmp44xjxBc6H7hE
-        PFCvz6lGT0NASL4lGgjr2643Z61lHGWtsGKmUdp0vn30blRDWIN9qG3nAzXCMH0=
+        :content-type; s=sasl; bh=YI3rWdMF6nWjZ9zZq0TS4NVHtrI=; b=FZWxjS
+        HnRBOn1Ika2fcxmhYuWsrswmmff6abFgmH1UpkxxB7SsZAFXGCJMVsUR9GR2RZ7U
+        TNtKyr60OMKMhVh6W+TGbSWReftSHUq4KAlFZtE6SoA28ChTaZs+N4g0VoN8jIEA
+        rc8ish/GXmaFkRsku68AoLz6niXb1lfRyT/ok=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=EhktMr
-        pUedAYx3s6iyzFaoRunrgeUmUkf6UDSTLYJQ2Ghuh8aOYnRYW/KXzMX00LYRoZHf
-        yoYtPKVqeNpzOfm7b50BCoo2IU36elhuThKzfRfg2LmfFQTKjhfzRwluzlZmkhBk
-        XE75TNruZVboKOnLH3N2MpFeGXg3stfIQ5rps=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4DF77C1F0F;
-        Wed, 17 Jun 2020 16:28:12 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=J1BsYwJ4aMWRTO2tMyMH2O/aGwHj0YJs
+        m9gTIOD/8uwSeuKA0l688ecPdLlelpdYe0aLhFrk0oZYlNFAaLRVJMM7wIfrWG+9
+        4oh4GaExu4tXV7P+mUQIrCNIfskK/lfQget+lJfE64M1+uupzhKrvA7zOMIqhwp6
+        V6hGJjwnoyU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F8AFE3433;
+        Wed, 17 Jun 2020 16:30:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 90B10C1F0E;
-        Wed, 17 Jun 2020 16:28:09 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 99B95E3432;
+        Wed, 17 Jun 2020 16:30:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/9] Allow overriding the default name of the default branch
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
-        <875zbrcpgh.fsf@evledraar.gmail.com>
-Date:   Wed, 17 Jun 2020 13:28:07 -0700
-In-Reply-To: <875zbrcpgh.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 16 Jun 2020 11:47:10 +0200")
-Message-ID: <xmqqd05xtp2g.fsf@gitster.c.googlers.com>
+To:     Ed Avis <ed.avis@qmaw.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git switch error message tweak
+References: <BL0PR11MB34603334FD8AF4B662A74C3A9D9D0@BL0PR11MB3460.namprd11.prod.outlook.com>
+Date:   Wed, 17 Jun 2020 13:30:36 -0700
+In-Reply-To: <BL0PR11MB34603334FD8AF4B662A74C3A9D9D0@BL0PR11MB3460.namprd11.prod.outlook.com>
+        (Ed Avis's message of "Tue, 16 Jun 2020 06:47:03 +0000")
+Message-ID: <xmqq8sgltoyb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0F1BC846-B0D9-11EA-8CF0-B0405B776F7B-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 675832A6-B0D9-11EA-9A87-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Ed Avis <ed.avis@qmaw.com> writes:
 
->  1. The special case in fmt-merge-msg we always had for "master" sucked
->     in terms of producing more verbose merge messages for those of us
->     who had repos where the main branch wasn't "master", but at least i=
-t
->     was consistent.
+> To help those migrating from 'git checkout' to the newer 'git switch'
+> and 'git restore', this error message could be improved:
 >
->     Now we've created a situation where a user's local config impacts
->     what we put in the machine-generated commit messages.
+> % git switch baa022666d26a5d40e86c0b6349eb7435033e80a
+> fatal: a branch is expected, got commit 'baa022666d26a5d40e86c0b6349eb7435033e80a'
 >
->     Now, these messages were never "plumbing", and other users could us=
-e
->     different git frontends than "core git" etc, but it's a really
->     useful property we've tried to maintain that a user's local
->     configuration doesn't change what we put in these messages. It's wh=
-y
->     we've left them out of the i18n mechanism.
+> It could print additionally
+>
+> To switch to this commit in 'detached HEAD' mode, use --detach.
+>
+> as long as it was indeed a commit that was given.
 
-I doubt the last sentence reflects the reality.  As the person who
-invented the fmt-merge-msg's mechanism (including it special casing
-of 'master'), I know that it was the sentence lego that made it
-impossible to localize and left the code pretty much intact since
-the days it was introduced.
+Excellent.
 
-Having said that, I am personally inclined to vote for getting rid
-of the special casing of any branch by "git fmt-merge-msg" and "git
-fast-export --anonymize".  We still need a mechanism to let users
-configure the word used by "git init" to give the first branch it
-creates as its name, but that is merely the first branch created in
-the repository and does not have to be the primary.
+> I note also that while git checkout prints a spiel about "You are in
+> 'detached HEAD' state", git switch --detach does not. Was this
+> deliberate, on the assumption that if you pass --detach you know what
+> you are doing?
 
->  2. The whole core.mainBranch thing rubs me the wrong way. So now if we
->     rename a branch we munge it, but if you've got an older git version
->     or whatever you get different results and the config isn't carried
->     forward.
-
-And we can get rid of this worry at the same time by doing so.
-
+I'd say you are correct---one who passes "--detach" knows enough to
+want to be in the detached HEAD state and knows enough that the
+state is nothing to be worried about.
