@@ -6,77 +6,88 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F7FC433DF
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 578CBC433E0
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:06:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19A0020897
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:04:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F34CA207E8
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:06:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KsqIa/Wq"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IfWpu8z8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726815AbgFQUEe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 16:04:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57452 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726496AbgFQUEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:04:33 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EBC67C756;
-        Wed, 17 Jun 2020 16:04:31 -0400 (EDT)
+        id S1726949AbgFQUGS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 16:06:18 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62528 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726809AbgFQUGR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 16:06:17 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DD7E9E2DDF;
+        Wed, 17 Jun 2020 16:06:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TEPKM+a1XQBd
-        thyL/t+7D6TGvlg=; b=KsqIa/WqOSwNI4tM9p00Qekv5Ovsr2L3jxEs/omhGZfW
-        At2L8qdbU1D2uOaPK1XeEIL6rEY/xFyzFMj7Q2CgAUtxk3cLMdFu4gjoFxjXcpnr
-        CxD3d+mKI0QemZLK70z1huK5zuv+qByjkoTLyTRYM9Vzjf7GOQ2448w7EtCmhzk=
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=yrTXas9kN360j1aGkdNF1tuFEEM=; b=IfWpu8z8qPVCyxAqPnr3
+        WPr3qIJfQqQxOEQchNeeU759J2kgMyhmZn3ckGcGW5i1wAssO8D/BGKoE9y4vcGj
+        7PKH7KY8x11MDvY8Z4aGzOUEOJFVhoq3y6ux4Z4WfHj1btV90wW/xG4ijW4TSgkP
+        an35zqI7Vm9e+f9e7Bh79TA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=gwxrlF
-        quqN8zHYooGasR8okQSyIar+Ft2AUFCP6SBYFy5ox0xyrprqhx/wL5iA7uz0NX30
-        uEUyjphtqCpEUnmgTQ9UlnHa6zJ8M9T0z1NWRmGuQtY/1SnCOXOsWPyiU1JGnTM0
-        KjxWGxusHF/rCuNHDoAMCEQWMCCu/POOpz4q4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 563437C755;
-        Wed, 17 Jun 2020 16:04:31 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=bQ6e39nIa7f/Er1s3Rajm2NtSBYr7WkTtIGKOO+ctgB0Rx
+        akQr1twansxrpQSxwMEcDWJr/SR38Os/yH1v/xcEAg0noAaVkNuP8sCu6sLlm7ob
+        T0DKF4ZfhYpOLUf3MRnVXW8hVkr0hPYeZKGtD20Drvd9jddvsBif1uNdU6vmE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D484CE2DDE;
+        Wed, 17 Jun 2020 16:06:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCCA17C754;
-        Wed, 17 Jun 2020 16:04:30 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 295A7E2DDB;
+        Wed, 17 Jun 2020 16:06:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Subject: Re: [RFC PATCH v1 0/6] stash: drop usage of a second index
-References: <20200505104849.13602-1-alban.gruin@gmail.com>
-        <20200615152715.GD2898@szeder.dev> <20200615215020.GE2898@szeder.dev>
-        <20200616070645.GF2898@szeder.dev>
-Date:   Wed, 17 Jun 2020 13:04:30 -0700
-In-Reply-To: <20200616070645.GF2898@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Tue, 16 Jun 2020 09:06:45 +0200")
-Message-ID: <xmqq1rmdv4q9.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Matt Rogers <mattr94@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        don@goodman-wilson.com, stolee@gmail.com, Jeff King <peff@peff.net>
+Subject: Re: Re* [PATCH 8/9] fast-export: respect the possibly-overridden default branch name
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+        <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com>
+        <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com>
+        <20200610233912.GU6569@camp.crustytoothpaste.net>
+        <CAOjrSZvV6+ApfmOBa7rdXDPQJbExRsOfodO16i_1N5QjjhCB1w@mail.gmail.com>
+        <xmqq3672cgw8.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006111559300.56@tvgsbejvaqbjf.bet>
+        <xmqqpna5bq2l.fsf_-_@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006121451100.56@tvgsbejvaqbjf.bet>
+        <xmqqy2os2u55.fsf@gitster.c.googlers.com>
+        <405521ec-aed7-ff76-5b48-70e9d11018e6@kdbg.org>
+        <xmqqv9jvylt7.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006131645380.56@tvgsbejvaqbjf.bet>
+        <xmqqeeqiztpq.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006141053170.56@tvgsbejvaqbjf.bet>
+Date:   Wed, 17 Jun 2020 13:06:11 -0700
+Message-ID: <xmqqtuz9tq30.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C177FF04-B0D5-11EA-A9EE-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: FE75780A-B0D5-11EA-974D-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Mon, Jun 15, 2020 at 11:50:20PM +0200, SZEDER G=C3=A1bor wrote:
->> On Mon, Jun 15, 2020 at 05:27:15PM +0200, SZEDER G=C3=A1bor wrote:
->> >       - Should we even allow 'splitIndex.sharedIndexExpire=3Dnow'?
+> Yes, the trouble with `maint` did cross my mind, but I try not to
+> "overfit" to git/git. :-)
 
-Good analysis.  The most conservative might end up to be to disable
-splitindex altogether but perhaps we can first set a reasonable
-minimum to the expiration to say 10min?
+I do not think it is overfitting; if the solution cannot even
+support the originating project well, there is something wrong.
+
+Most likely, I'd be tempted to rename it myself away from any name
+that is too similar to 'maint'; perhaps to 'stable' (or 'devo', h/t
+tla ;-).
+
