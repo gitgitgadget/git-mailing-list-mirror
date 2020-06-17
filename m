@@ -2,98 +2,105 @@ Return-Path: <SRS0=YePV=76=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8492C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0855DC433DF
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:43:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AF8021475
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:41:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7951C21475
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:43:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kz7/Bj41"
+	dkim=pass (1024-bit key) header.d=rambler.ru header.i=@rambler.ru header.b="ZYgRfPjE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725979AbgFQHlo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 03:41:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52386 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725894AbgFQHlo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 03:41:44 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1289C061573
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 00:41:43 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id p5so1184174wrw.9
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 00:41:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=OoPzNKC9YwgNiAjEK/OkOcza1C9WEpDv9fSbsvT0K5g=;
-        b=kz7/Bj41RMb+p1xTODLu9RQIxilSf4vEib16vafzP2ViH3zZdULRA0lVW9J3Uz2D/G
-         H0r7JvFqCdQhA76Cs0naEWvSfwCedHRyXgsoNehxn4ZZZ8AcTdE+0uwA08EbsCCZ6VJL
-         lZ3Qcnm6jppKYh1mKoSkdIMF+MYP2NbhjA+CBAQZ/wyq1H0/KwcfwRw1JraxddCjORzC
-         e+Qbc9T2PEVIhz1sOEbTVPiTm/Uou81xe08J6IeM8DDz3IiljONeYBO+Zp3SUupycXBw
-         JP6fPf0Kt7zTtNlTNEt+dsjzfgBvhTrlmjwqGO/XMLhWt45EbJFqzf7tOl/HAt37YA62
-         ubmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=OoPzNKC9YwgNiAjEK/OkOcza1C9WEpDv9fSbsvT0K5g=;
-        b=Znzu2jZGcEaQ7LePD80jRYRG8tzOWjwr8Vy4qDF9/g6esfphuacvgizmGdiHmazyvs
-         ZJuo5cUYOw7+rZRKVHnIbW2otEba+sCejRcIYb2kvDZlkOTMcnPDxyP+hBIt0MbGmh4m
-         is6Kbh8e1GNlkf3Pq5UZPxQcq4ZQLofGXMQEtv4u3bDaPDz2HcI7ypFTe1Q5t6TK4t9E
-         pmECyM6cze6f0MrVV7dkUcYSlulofd9Lomh80LVt/iQG+DI+Dyg/r0SUcCczDE7jXrh7
-         wqddsbpBblhkhi58WPo3rErzhiUcfODDSL4aQzgYVHpbWsHMNJ7QE3pQ7dxt31XCsA70
-         WJnQ==
-X-Gm-Message-State: AOAM533uMXSOoByKOEY9quDPFh49v92AYj8MSiBqTJ+OP6uRJ2zXVqL1
-        P/zXkKqbm8frPNIxUqrNjrObr6yV
-X-Google-Smtp-Source: ABdhPJy30SCGIiUhTjVtK0UaBpKO910d5zNd0TZaugDTM3m8KMRgmSsfNyGIhAjaXyQdC1eDp/bZSg==
-X-Received: by 2002:adf:9c12:: with SMTP id f18mr7603861wrc.105.1592379701667;
-        Wed, 17 Jun 2020 00:41:41 -0700 (PDT)
-Received: from [192.168.101.24] (102-182-251-152.ip.afrihost.co.za. [102.182.251.152])
-        by smtp.gmail.com with ESMTPSA id s72sm7380033wme.35.2020.06.17.00.41.40
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2020 00:41:41 -0700 (PDT)
-To:     Git List <git@vger.kernel.org>
-From:   Noel Grandin <noelgrandin@gmail.com>
-Subject: filtering on git fetch?
-Message-ID: <f6c1377f-6945-b04f-07cf-887c4b7c9f76@gmail.com>
-Date:   Wed, 17 Jun 2020 09:41:37 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1726572AbgFQHnm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 03:43:42 -0400
+Received: from huan5.mail.rambler.ru ([81.19.78.4]:60878 "EHLO
+        huan5.mail.rambler.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725894AbgFQHnm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 03:43:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rambler.ru;
+         s=mail; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+        References:Reply-To:Message-ID:Subject:To:From:Date;
+        bh=RgSeOHeEhEzsxa7dsEl6vuBCpSm6lYuCx4SxQ0TaAho=; b=ZYgRfPjEAqf3UImvmXzerKgi2u
+        5vH8tccI8h2CXtNfIrJrt9Pr/fNXx1xLSngylFxEI1sQ/j+Oh3/P69Piw3YAnKU899LLRoLlvTczm
+        LrlBheLGNv+T33IVPMF1ZVXlMQ/OaSnsU2sHnmzPT4whC6LaceV/uJE00uR3vJKWc2z0=;
+Received: from [UNAVAILABLE] ([194.190.114.28]:38116 helo=localhost)
+        by huan5.mail.rambler.ru with esmtpa (Exim 4.86_2)
+        (envelope-from <lego_12239@rambler.ru>)
+        id 1jlSjU-0008Pl-8Y
+        for git@vger.kernel.org; Wed, 17 Jun 2020 10:43:40 +0300
+Date:   Wed, 17 Jun 2020 10:45:21 +0300
+From:   Oleg <lego_12239@rambler.ru>
+To:     Git <git@vger.kernel.org>
+Subject: Re: Rename offensive terminology (master)
+Message-ID: <20200617074521.GA18445@legohost>
+Reply-To: Oleg <lego_12239@rambler.ru>
+References: <xmqqy2oqxyp3.fsf@gitster.c.googlers.com>
+ <0dd6b6c2-4ea4-498d-4481-7f65988db293@gmail.com>
+ <CAGA3LAeXzYokcpU8RnFdF7N5vC-geOdJSY5_Mjc-yssvbpjmgw@mail.gmail.com>
+ <CANgJU+Vs-hzU-Fg+iWAn349_azb3k_6PCzyY+S2C_5ZUTv7o=A@mail.gmail.com>
+ <20200616083405.GA17381@legohost>
+ <CABPp-BGV-CVZ5swYNQpF-su3+yc1=P96g-tKxKtcrgvxhA+AYA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BGV-CVZ5swYNQpF-su3+yc1=P96g-tKxKtcrgvxhA+AYA@mail.gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+X-Rambler-User: lego_12239@rambler.ru/194.190.114.28
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+On Tue, Jun 16, 2020 at 12:33:18PM -0700, Elijah Newren wrote:
+> Please stop.
 
-Setup
+ok, but what do you talk about, Elijah? Here ault men talk about serious
+things. If you have something to say on the topic, you are welcome. You can do
+it in any form - we will try to understand you. Otherwise, please don't waste
+our time. The ethics club is elsewhere.
 
-(*) I'm fetching across a transatlantic link (RTT in the 300ms range on a good day)
-(*) I'm fetching from a gerrit server
+> Bringing up reasons why proposed changes would or even
+> might cause harm are perfectly welcome, especially if details and
+> examples can be provided.  (In fact, it would be a lot more helpful
+> than simply asserting that the change would be very harmful.)  Name
 
-$ GIT_PACKET_TRACE=true git fetch
+Elijah, it would be a lot more helpful if you read the thread. Here
+not only me already wrote about various reasons why this change is bad.
+And we didn't see at least one technical reason why this is good.
+Just politics speaches.
 
-shows tons and tons of
+Two really important reasons:
 
-09:39:43.355675 pkt-line.c:80           packet:        fetch< 3a7ad7ee5d7daa0c93a80fbb32a677597d81ac75 
-refs/changes/00/9000/3
-09:39:43.355684 pkt-line.c:80           packet:        fetch< 6cacf1db5311f6b250ebaa12c71419a8ff9b747e 
-refs/changes/00/9000/meta
-09:39:43.355693 pkt-line.c:80           packet:        fetch< 849a43434a5ede9ce9b70da14231f34edb2593fb 
-refs/changes/00/90100/1
+1. This setting need to *very-very small* count of people.
+2. The future default value of this setting will break *many* projects and
+   people stable workflow.
+ 
+So, why we need this? Because now one country have some *internal* troubles
+(this is sad, but the code isn't to blame for this)? And why the whole world
+need to suffer from this situation? I think some people here don't understand
+the moment. Don't understand the consequences. This project is not your
+personal project, Elijah. It isn't even american. Why billions of people
+should to suffer? Because of white american's chauvinism? I think some people
+here don't understand the responsibility to the world for their actions.
 
-type stuff before it starts fetching the updates to master that I am interested in.
+If anybody is intrested in git users opinion(not github PR-man or PR-man of
+any other monster company), then he can simply read it here:
 
-Is there any way to tell the remote git server that I'm only interested in a subset of stuff?
+https://www.change.org/p/github-do-not-rename-the-default-branch-from-master-to-main
 
-Thanks, Noel Grandin
+> Emails like this one from you are not wanted and not welcome within
+> this project.  Please go read the project's Code of Conduct
+> (https://git.kernel.org/pub/scm/git/git.git/tree/CODE_OF_CONDUCT.md)
+
+Elijah, my english is bad, i can't understand this document. Sorry. I think
+this is a discrimination of non-english speakers. Why no translations?
+
+
+-- 
+Олег Неманов (Oleg Nemanov)
