@@ -2,175 +2,196 @@ Return-Path: <SRS0=YePV=76=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0C40C433DF
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED6E3C433DF
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:58:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80AC92089D
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:24:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1DAA21707
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:58:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oEPpHYr6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9VK6+3B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726926AbgFQRYh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 13:24:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58294 "EHLO
+        id S1726959AbgFQR64 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 13:58:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726854AbgFQRYg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 13:24:36 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC82C06174E
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 10:24:35 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id c3so3171436wru.12
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 10:24:34 -0700 (PDT)
+        with ESMTP id S1726890AbgFQR6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 13:58:55 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D0DC061755
+        for <git@vger.kernel.org>; Wed, 17 Jun 2020 10:58:54 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id x25so2713143edr.8
+        for <git@vger.kernel.org>; Wed, 17 Jun 2020 10:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=xZ7etHJFI6V7aTuvdBoofGc/M+gcK1FR+i84kcWaLI0=;
-        b=oEPpHYr6gbdYialWlAdL8ZdrjcWhNwIvpwt+lsL361h3sQ8+xJA/dd5XUWPQZsoP99
-         3fWlp4rSVvtaurTIlavpaN7DUdYCnNJ8AUsLfJClfTJAj5KyaUIn9aYLsFKR0LPtSjfc
-         BnC4AS3O/+qtr9sKf9oMX3hwFpvKLLjq84g97irKhw+wVUy3qzEfMU9QttOp4q/Zdrgg
-         NDzUvjTMdUiu4bhFo9Ou9tmMiP1ETJjEVafM04nXEIBAgPc11sinovM6a3aBqTWFKEiH
-         DM+wrPlx9OjS7RSb4GqZqcCPRl/LXJGt69k3JzH/GPd98yMbIq/2gioB0zsXE4jEa58T
-         dm2A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=d/gOlvx6vPp/yc4UESFusaHlIs2k6Zp2+i7zli3ZOvA=;
+        b=h9VK6+3B0pmBssyiTB/7nm7ffIuXwyt2pok2cSHqSaUiOpsF+bfpZ5mMjBTeWWe6KG
+         GUND/E7josiNmiuOzVQeB3VLI45iwm9QVgLgkUlwHE78ZGlpMn9X1qWoxd805MXMRGp/
+         FEscY0bNSE9tt2v0Zka4K3XzGrzzpnMoWQbH6aOhvLUSy5Tjfp0OLQUbB8DBIZUAcP7J
+         3oUqwQVx1W1eneXTNdWdKk532f5lo9yd9jbAPKuccZihMKE+OV774/e2r8pz/kxyILlx
+         C7ancB+K7FlihFGEgcUqmwCRTtc0gUnvg8z/KS0LTkfiCc8HyJ9tARUGui4Mslz7YTrH
+         YF/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=xZ7etHJFI6V7aTuvdBoofGc/M+gcK1FR+i84kcWaLI0=;
-        b=ogHS/D0FshZIxHoQlsigv/Kvia6ua8H3qSWhud30ydMRGwFvPQRLHONBhqkCx85Cid
-         cNqVwnadHv4rQLF6wqzkh4wgZPGDrM9DvpcDEJSL99Efp5RcDf0nij7L/IWosJ7j3hzt
-         0WMAueIOQniP6SuaaUEtzuBMCj/ZaSvlGLR2KExNkDGT/7+pJQkZ1RezfynBGXX1YkXF
-         VH2/vgr7l7K9YaBBG18Ttds2nuVDfDyQKUhQy54/sc+SZgtW2oSyC+603xkUSj5CD2XK
-         90zh/JMVUR9Z13lo7aCFGLbblhQUVGXND83VqRB63+sKazdUM1psheJm36Em1WwHq8/+
-         Ve5Q==
-X-Gm-Message-State: AOAM531OsMSq4BfJF0rEWAqLC+Y59dHWSNzYWb2DsQMGnEUaZooFH+61
-        7rBVPUyHZD3+fSPMmmKZGswoUDaj
-X-Google-Smtp-Source: ABdhPJyke767lhz2Jp7sGxaUWvPlWbiEZrCc/ZgdnC+l03Rr+dbHhxkjYsOuVxSox30d2wKpA10pmg==
-X-Received: by 2002:adf:8b47:: with SMTP id v7mr312609wra.238.1592414673599;
-        Wed, 17 Jun 2020 10:24:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c70sm415815wme.32.2020.06.17.10.24.32
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=d/gOlvx6vPp/yc4UESFusaHlIs2k6Zp2+i7zli3ZOvA=;
+        b=EhNBx70KmAGWvs9IfuCOvroJZfh1bXld+5y+S+gjfcaZtjNYg8w3rU/NW4lb//4+tq
+         06fGldLtWzFJQRpqNq7YWcHKALmzGySDsbuE0qfHWMfL8lIcdL4YgNzntoEhz4+wbKBO
+         EbzGyI4M5doHWbzN+kJAt9gw/kAdUljbH+2QeMKDIhNzmBDmc0KgsU4IyqiAoEiFplXJ
+         iwNCl77nGUz/Q/RMhStYEA/MGyCkLPDcmklXEg5q/7Gm2/HxL+FsYpEufLF1akWu2IpD
+         EbCejfBGgXFoBbaCvEs7vM9FEYM2ID5rqa0GwhqWxwuZ5N4W1IclUPBNMtj3vW+pxl6Y
+         FKaA==
+X-Gm-Message-State: AOAM533lRMaIoWm9hacizCK7pjeuOryfjs1Vh0ak8r2UN4g9IvUthXHv
+        lGIXvq+hNRXSiHYbWKar5Ug=
+X-Google-Smtp-Source: ABdhPJyTX9a2o+TQbecFhj/TcuVFpZFGE5E81xwieL3AVuyjLPCzDspRrPO2TppPd9r504M57khkZg==
+X-Received: by 2002:a05:6402:312a:: with SMTP id dd10mr357556edb.320.1592416733305;
+        Wed, 17 Jun 2020 10:58:53 -0700 (PDT)
+Received: from C02YX140LVDN.corpad.adbkng.com ([2a02:a210:ca2:9c00:a0e3:4489:832f:5f61])
+        by smtp.gmail.com with ESMTPSA id h16sm476174ejq.62.2020.06.17.10.58.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 10:24:33 -0700 (PDT)
-Message-Id: <ead5a0d9bd3b5c4a8c3fde970941c0e4a10025ab.1592414670.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.664.git.1592414670.gitgitgadget@gmail.com>
-References: <pull.664.git.1592414670.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Jun 2020 17:24:29 +0000
-Subject: [PATCH 2/2] commit-reach: use fast logic in repo_in_merge_base
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     szeder.dev@gmail.com, avarab@gmail.com,
-        abhishekkumar8222@gmail.com, me@ttaylorr.com,
+        Wed, 17 Jun 2020 10:58:52 -0700 (PDT)
+Date:   Wed, 17 Jun 2020 19:58:50 +0200
+From:   Son Luong Ngoc <sluongng@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] Sparse checkout status
+Message-ID: <20200617175850.GA57254@C02YX140LVDN.corpad.adbkng.com>
+References: <CAL3xRKf+rQuq=j_4NJpNbRq4Rdxz7MjQaxi3c9usS+c615k19Q@mail.gmail.com>
+ <CABPp-BHyc=aYqY+YuvNRsFsrMPL6+O=CX37jzXx38_-SXw5gLA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BHyc=aYqY+YuvNRsFsrMPL6+O=CX37jzXx38_-SXw5gLA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Elijah,
 
-The repo_is_descendant_of() method is aware of the existence of the
-commit-graph file. It checks for generation_numbers_enabled() before
-deciding on using can_all_from_reach() or repo_in_merge_bases()
-depending on the situation. The reason here is that can_all_from_reach()
-uses a depth-first search that is limited by the minimum generation
-number of the target commits, and that algorithm can be very slow when
-generation numbers are not present. The alternative uses
-paint_down_to_common() which will walk the entire merge-base boundary,
-which is typically slower.
+On Wed, Jun 17, 2020 at 09:48:22AM -0700, Elijah Newren wrote:
+> 
+> Well, there is `git sparse-checkout list`, assuming users know they
+> are in a sparse-checkout, but the whole point of my suggested change
+> is that they sometimes don't.
 
-This method is used by commands like "git tag --contains" and "git
-branch --contains" for very fast results when a commit-graph file
-exists. Unfortunately, it is _not_ used in commands like "git merge-base
---is-ancestor" which is doing an even simpler request.
+Ah thats true.
+This was added recently and definitely slipped my mind often.
 
-This issue was raised recently [1] with respect to a change to how
-generation numbers are stored, but was also reported much earlier [2]
-before commit-reach.c existed to simplify these reachability queries.
+> 
+> This surprises me; I considered performance while writing it and kept
+> it simple on that basis.  In particular:
+>   * This does not cause any reading or writing of any extra files; it
+> is done solely with information that is already loaded.
+>   * If users aren't in a sparse-checkout, their performance overhead
+> is a single if-check, which I doubt anyone can measure.
+>   * If they are in a sparse-checkout, then they'd get one extra loop
+> over files in the index to check the SKIP_WORKTREE bit.
+> 
+> In which cases would performance implications be a concern?  For a
+> very simple point of reference, in a sparse-checkout of the linux
+> kernel (using --cone mode and only selecting the drivers/ directory),
+> I see the following timings for 'git status' in a clean checkout:
+> 
+> Without my change:
+> [newren@tiger linux-stable (hwmon-updates|SPARSE)]$ hyperfine --warmup
+> 1 'git status'
+> Benchmark #1: git status
+>   Time (mean ± σ):      78.8 ms ±   2.8 ms    [User: 48.9 ms, System: 76.9 ms]
+>   Range (min … max):    74.0 ms …  84.0 ms    38 runs
+> 
+> With my change:
+> [newren@eenie linux-stable (hwmon-updates|SPARSE)]$ hyperfine --warmup
+> 1 'git status'
+> Benchmark #1: git status
+>   Time (mean ± σ):      79.8 ms ±   2.7 ms    [User: 49.3 ms, System: 77.7 ms]
+>   Range (min … max):    74.8 ms …  84.5 ms    37 runs
+> 
+> I know the linux kernel is tiny compared to repos like Windows or
+> Office, but the relative scaling considerations are identical: it's
+> one extra loop through the cached entries checking a bit for each
+> entry.  If people are worried about the "extra loop", I could find an
+> existing loop to modify and just add an extra if-block in it so that
+> we have the same number of loops.  (I'm doubtful that'd actually help,
+> but if the concern is an extra loop, it'd certainly avoid that.)
+> Anyway, if you've got more information about it being too costly, I'm
+> happy to listen.  Otherwise, the overhead seems pretty small to me and
+> it's only paid by those who would benefit from the information.
+> 
+> However, all that said, I have good news: Peff already implemented the
+> flag users can use to avoid this extra output, and did so back in
+> September of 2009.  It's called "--porcelain".  Automated commands
+> should already be using it, and if they aren't, they are what needs
+> fixing -- not the long form status output.
 
-[1] https://lore.kernel.org/git/20200607195347.GA8232@szeder.dev/
-[2] https://lore.kernel.org/git/87608bawoa.fsf@evledraar.gmail.com/
+When I wrote my initial reaction, the idea of having more than just a
+percentage reported back stuck in my mind, specifically with using the
+in-tree checkout that I mentioned.
 
-The root cause is that builtin/merge-base.c has a method
-handle_is_ancestor() that calls in_merge_bases(), an older version of
-repo_in_merge_bases(). It would be better if we have every caller to
-in_merge_bases() use the logic in can_all_from_reach() when possible.
+But yeah, that's something down the line to address, you are absolutely
+correct that the current patch has no performance impact. Thanks for the
+reminder about '--porcelain'.
 
-This is where things get a little tricky: repo_is_descendant_of() calls
-repo_in_merge_bases() in the non-generation numbers enabled case! If we
-simply update repo_in_merge_bases() to call repo_is_descendant_of()
-instead of repo_in_merge_bases_many(), then we will get a recursive call
-loop. Thankfully, this is caught by the test suite in the default mode
-(i.e. GIT_TEST_COMMIT_GRAPH=0).
+> 
+> I think having a 'git sparse-checkout status' would be a fine
+> subcommand, and output like the above -- possibly also including other
+> bits Stolee or I mentioned elsewhere in this thread -- would be cool
+> and would be helpful; it'd complement what I'm doing here quite
+> nicely.
+> 
+> But you're solving a related problem rather than the one I was
+> focusing on, and you have left the issue I was focusing on
+> unaddressed.  In particular, if users forgot that they sparsified in
+> the first place, how are they going to know to run `git
+> sparse-checkout status [--all]`?
+> 
+> I think having a simple line of output in `git status` would remind
+> them.  With that reminder, they could today then go run 'git
+> sparse-checkout list' or 'gvfs health' (as Stolee mentioned he uses
+> internally) or './sparsify --info' (as I use internally) to get more
+> info.  In the future we could provide additional things for them as
+> well, such as your 'git sparse-checkout status'.
+> 
 
-The trick, then, is to make the non-generation number case for
-repo_is_descendant_of() call repo_in_merge_bases_many() directly,
-skipping the non-_many version. This allows us to take advantage of this
-faster code path, when possible.
+I do concede that this point could be a separate problem set and addressed
+separately in the future.
 
-The easiest way to measure the performance impact is to test the
-following command on the Linux kernel repository:
+> 
+> An aside, though, since you linked to the in-tree sparse-checkout
+> definitions: When I reviewed that series, the possibility of merge
+> conflicts and not knowing what sparse-checkout should have checked out
+> when the in-tree defintions themselves were in a conflicted state
+> seemed to me to be a pretty tough sticking point.  I'm hoping someone
+> has a clever solution, but I still don't yet.  Do you?
 
-	git merge-base --is-ancestor <A> <B>
+I am no clever person, but I often take great pleasure in reading up
+works of smarter people. One of which is the Google's and Facebook's Mercurial
+extension sets that they opensourced a while ago to support large repos.
 
-  | A    | B    | Time Before | Time After |
-  |------|------|-------------|------------|
-  | v3.0 | v5.7 | 0.459s      | 0.028s     |
-  | v4.0 | v5.7 | 0.267s      | 0.021s     |
-  | v5.0 | v5.7 | 0.074s      | 0.013s     |
+The test suite for FB's 'sparse' extension[1] may address your concerns?
 
-Note that each of these samples return success. The old code performed
-the same operation when <A> and <B> are swapped. However,
-can_all_from_reach() will return immediately if the generation numbers
-show that <A> has larger generation number than <B>. Thus, the time for
-the swapped case is universally 0.004s in each case.
+The 'sparse' extension defines the sparse checkout definition of a
+working repository. It supports '--enable-profile' which take in definition
+files ('.sparse'). These profiles are often checked into the root dir 
+of the repo.
 
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-reach.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+> 
+> Thanks,
+> Elijah
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 13722430aa5..43e303d5f25 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -303,7 +303,7 @@ static int repo_is_descendant_of(struct repository *r,
- 
- 			other = with_commit->item;
- 			with_commit = with_commit->next;
--			if (repo_in_merge_bases(r, other, commit))
-+			if (repo_in_merge_bases_many(r, other, 1, &commit))
- 				return 1;
- 		}
- 		return 0;
-@@ -355,7 +355,15 @@ int repo_in_merge_bases(struct repository *r,
- 			struct commit *commit,
- 			struct commit *reference)
- {
--	return repo_in_merge_bases_many(r, commit, 1, &reference);
-+	int res;
-+	struct commit_list *list = NULL;
-+	struct commit_list **next = &list;
-+
-+	next = commit_list_append(commit, next);
-+	res = repo_is_descendant_of(r, reference, list);
-+	free_commit_list(list);
-+
-+	return res;
- }
- 
- struct commit_list *reduce_heads(struct commit_list *heads)
--- 
-gitgitgadget
+Regards,
+Son Luong.
+
+[1]: https://bitbucket.org/facebook/hg-experimental/src/05ed5d06b353aca69551f3773f56a99994a1a6bf/tests/test-sparse-profiles.t#lines-115
+
