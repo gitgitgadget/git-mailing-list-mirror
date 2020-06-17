@@ -2,107 +2,84 @@ Return-Path: <SRS0=YePV=76=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE40FC433E0
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 08:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98134C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 08:27:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B628920679
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 08:14:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n0cXFBck"
+	by mail.kernel.org (Postfix) with ESMTP id 7491B2085B
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 08:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726044AbgFQIO3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 04:14:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57428 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725967AbgFQIO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 04:14:29 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F66C061573
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 01:14:29 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id d66so739959pfd.6
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 01:14:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xG3rartFlyyBWeIhg9IlDCaYJQwyz8UX1EbEDhvy7uk=;
-        b=n0cXFBckH/E1nydzhjKIRrAC9WS2JDRm4Xt0HT2hxquw9aCW+X+x8JXYO/p6TJGQxv
-         DqTJe28qUnQtDRS/220NuISOUn9z4+uTPqoXoYxvb6DQ0EwM8CdpjDUI2jgWjwqiOItZ
-         3NegTOBy7M23kzHnCAqRV/gzvn82WTJFZRUOVNaAzNpNLRXZiAHu5x560TnfQzt+5LnM
-         dAQNtNbHdiy/MCOKFO30nYZ4LdahdqMQYBXXRcDdR15s/MMKShTGAtOTnVUgXZWerQLA
-         mxU2JDtDZ+DpzUY8OXP1zUqeJ+/QL+SslOaJwTl07auOu2QM1oKVto2XkxKwb0tt96x9
-         Y8uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xG3rartFlyyBWeIhg9IlDCaYJQwyz8UX1EbEDhvy7uk=;
-        b=bpjYckEOsTxT8Dr820PjmCF/Xo5RRV0J2E/UR1+HUMPAiERW7i8sWZylqv/zx8CsfE
-         EeXWX1f7OC8rKiXhNJnhGNtqcMv06ZZhjLgh4uDSNGuHcYq0nsNM0HDHAlXx5tWIo5K6
-         Os/sYiomZ3t23NlPjo1m1HJMfEnRYPXGa7Pl61KowszKxDUhYVIitNtCN8zFQOzqis2E
-         o2vtf4kgINICmhUBf3isqU2+XskqoYY+FQQ99WWvWTzIwl1+28AMr/c9moygMq1CK57l
-         wikbmUF8romhxMwaaOkz6iMUN1X7M8l5bN12Gb8YEqJlqCq71jxpgsfaEIO8cWiU8ZOe
-         UpxA==
-X-Gm-Message-State: AOAM530OQ8KSCH7gj9NlG8GWqT0CsHarKxObAqZ9UTl0Pu8jz+Dph3f4
-        zGZCys7GkWaIsXXl3es4dbI=
-X-Google-Smtp-Source: ABdhPJzPtbDWHwnWtxCoMmTcNk+4wnRHTHpASGBUS5GTNFwjwFpt0ZS9R0JgrvyhEg5GJlZ5yxcrJg==
-X-Received: by 2002:a63:541c:: with SMTP id i28mr5638869pgb.344.1592381668794;
-        Wed, 17 Jun 2020 01:14:28 -0700 (PDT)
-Received: from [192.168.208.37] ([49.207.128.224])
-        by smtp.gmail.com with ESMTPSA id c9sm20046519pfr.72.2020.06.17.01.14.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2020 01:14:28 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Jun 2020, #02; Wed, 10)
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>, gitster@pobox.com
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-References: <20200617080740.GA11006@konoha>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <c360cc01-939d-11fb-b462-21dae3d7badc@gmail.com>
-Date:   Wed, 17 Jun 2020 13:44:25 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1726331AbgFQI1v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 04:27:51 -0400
+Received: from mx2.suse.de ([195.135.220.15]:46174 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726025AbgFQI1v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 04:27:51 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 71B52AC46;
+        Wed, 17 Jun 2020 08:27:53 +0000 (UTC)
+Date:   Wed, 17 Jun 2020 10:27:47 +0200
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     Don Goodman-Wilson <don@goodman-wilson.com>
+Cc:     =?iso-8859-1?Q?S=E9rgio?= Augusto Vianna 
+        <sergio.a.vianna@gmail.com>, philipoakley@iee.email,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, newren@gmail.com,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>, stolee@gmail.com
+Subject: Re: Rename offensive terminology (master)
+Message-ID: <20200617082747.GL21462@kitsune.suse.cz>
+References: <9d3d3888-55e5-61f0-1541-9854a70fb233@iee.email>
+ <d020d05f-5e36-2959-3eae-d7e21bf51178@gmail.com>
+ <CAGA3LAfqzBsn91YTYaCT5y9XLeNLY_0B_7b1f3fdc6X4JOU81A@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200617080740.GA11006@konoha>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGA3LAfqzBsn91YTYaCT5y9XLeNLY_0B_7b1f3fdc6X4JOU81A@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17-06-2020 13:37, Shourya Shukla wrote:
-> Hello Junio!
+On Sun, Jun 14, 2020 at 03:58:33PM +0200, Don Goodman-Wilson wrote:
+> > MASTER IS NOT INHERENTLY RELATED TO MASTER-SLAVE RELATIONS.
 > 
->> * ss/submodule-set-branch-in-c (2020-06-02) 1 commit
->>  - submodule: port subcommand 'set-branch' from shell to C
+> 1) There is a great deal of evidence that that claim is simply not true.
+> https://twitter.com/tobie/status/1270290278029631489
+> https://twitter.com/jpaulreed/status/1272064807345115137
 > 
->> Rewrite of parts of the scripted "git submodule" Porcelain command
->> continues; this time it is "git submodule set-branch" subcommand's
->> turn.
+> 2) It's beside the point. Many problematic words and phrases have
+> perfectly benign origins, but take on new meanings in new contexts.
 > 
->> Almost there.
->> cf. <1b851e49-3bb1-3b59-7f24-b903c5514391@gmail.com>
-> 
-> I think we are done with the porting of 'set_branch'
-> https://lore.kernel.org/git/20200602163523.7131-1-shouryashukla.oo@gmail.com/
->
+> I personally reject the kind of moral relativism that is being
+> espoused here. In fact, I believe that there is such a thing as
+> justice, and that we each have a responsibility to seek it out and
+> create it in every corner of our activities, big and small. You can
+> abdicate that responsibility, I can't force anyone to do otherwise nor
+> would I want to. But history judges harshly those who would throw
+> others aside. Of course there are more people in the world than just
+> Americans. But there are also Americans, and in particular Black
+> Americans. Precisely because git is the tool of choice for open source
+As far as I know using the word 'black' when referring to people is
+considered racist. Of course, it is completely benign word that might
+have taken on new meanings in new contexts. Last time I heard the
+'politically correct' term was Afro-American. Of course, that might have
+also taken on new meanings in new contexts I am not aware of.
 
-A more relevant reference that addresses the mail mentioned by (cf.)
-Junio would be:
+The kettle calling the pot black.
 
-https://lore.kernel.org/git/92bad281-dd38-aef2-9910-659b41cdd830@gmail.com/
+Of course, I have also seen patches to remove the occurences of 'black'
+referring to the constant rgb(0,0,0). The word can be considered racist
+in some circumstances so we have to remove all occurences in all
+contexts, right?
 
-... I believe.
+Fortunately the ones I am aware of are not accepted.
 
-> Could you move it to 'next' please?
-> 
+Thanks
 
--- 
-Sivaraam
+Michal
