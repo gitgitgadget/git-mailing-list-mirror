@@ -2,196 +2,140 @@ Return-Path: <SRS0=YePV=76=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED6E3C433DF
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6367AC433E0
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:58:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1DAA21707
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:58:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A737217D8
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 17:58:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9VK6+3B"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="h7OHadqY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726959AbgFQR64 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 13:58:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726890AbgFQR6z (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726950AbgFQR6z (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 17 Jun 2020 13:58:55 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D0DC061755
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35352 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbgFQR6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 13:58:55 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7568FC06174E
         for <git@vger.kernel.org>; Wed, 17 Jun 2020 10:58:54 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id x25so2713143edr.8
+Received: by mail-lj1-x243.google.com with SMTP id c17so3966384lji.11
         for <git@vger.kernel.org>; Wed, 17 Jun 2020 10:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=d/gOlvx6vPp/yc4UESFusaHlIs2k6Zp2+i7zli3ZOvA=;
-        b=h9VK6+3B0pmBssyiTB/7nm7ffIuXwyt2pok2cSHqSaUiOpsF+bfpZ5mMjBTeWWe6KG
-         GUND/E7josiNmiuOzVQeB3VLI45iwm9QVgLgkUlwHE78ZGlpMn9X1qWoxd805MXMRGp/
-         FEscY0bNSE9tt2v0Zka4K3XzGrzzpnMoWQbH6aOhvLUSy5Tjfp0OLQUbB8DBIZUAcP7J
-         3oUqwQVx1W1eneXTNdWdKk532f5lo9yd9jbAPKuccZihMKE+OV774/e2r8pz/kxyILlx
-         C7ancB+K7FlihFGEgcUqmwCRTtc0gUnvg8z/KS0LTkfiCc8HyJ9tARUGui4Mslz7YTrH
-         YF/w==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=k7S8GRkTif6Ma8B2Kdsin9azpJCrLO3vU0f/cutI//0=;
+        b=h7OHadqY4kkeZ6Dd0QTx9x67cGNb/mmeqHwu3sRJRAb75/3gux43YRjPad0XOxLCeV
+         TRigg9zh2WtO0h31ko8mdjw9S0RKUeWQ/pwadUyFccyq6LPV6OUFjVVTiHHJU/g3gwfp
+         bMrSaSZLhQH4hDzbEhvK44wW/m4WwSr+gFm8q/ZFfZVK2jAS680H1RGXPvf5m6wjuT6W
+         rOU2Lwh/pXIslA3cygYFg7m73xIKzPYzz8dVi3ITSwDP1FEqIf2i36lvnOCixxXNJaUw
+         DbKjZBWQSeWqTCc4FxBNtKbX0G0Hb5iHaYbKlZDKtHqAkUtiouE38pOwzjtVMqErp5Ry
+         EcAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=d/gOlvx6vPp/yc4UESFusaHlIs2k6Zp2+i7zli3ZOvA=;
-        b=EhNBx70KmAGWvs9IfuCOvroJZfh1bXld+5y+S+gjfcaZtjNYg8w3rU/NW4lb//4+tq
-         06fGldLtWzFJQRpqNq7YWcHKALmzGySDsbuE0qfHWMfL8lIcdL4YgNzntoEhz4+wbKBO
-         EbzGyI4M5doHWbzN+kJAt9gw/kAdUljbH+2QeMKDIhNzmBDmc0KgsU4IyqiAoEiFplXJ
-         iwNCl77nGUz/Q/RMhStYEA/MGyCkLPDcmklXEg5q/7Gm2/HxL+FsYpEufLF1akWu2IpD
-         EbCejfBGgXFoBbaCvEs7vM9FEYM2ID5rqa0GwhqWxwuZ5N4W1IclUPBNMtj3vW+pxl6Y
-         FKaA==
-X-Gm-Message-State: AOAM533lRMaIoWm9hacizCK7pjeuOryfjs1Vh0ak8r2UN4g9IvUthXHv
-        lGIXvq+hNRXSiHYbWKar5Ug=
-X-Google-Smtp-Source: ABdhPJyTX9a2o+TQbecFhj/TcuVFpZFGE5E81xwieL3AVuyjLPCzDspRrPO2TppPd9r504M57khkZg==
-X-Received: by 2002:a05:6402:312a:: with SMTP id dd10mr357556edb.320.1592416733305;
-        Wed, 17 Jun 2020 10:58:53 -0700 (PDT)
-Received: from C02YX140LVDN.corpad.adbkng.com ([2a02:a210:ca2:9c00:a0e3:4489:832f:5f61])
-        by smtp.gmail.com with ESMTPSA id h16sm476174ejq.62.2020.06.17.10.58.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 10:58:52 -0700 (PDT)
-Date:   Wed, 17 Jun 2020 19:58:50 +0200
-From:   Son Luong Ngoc <sluongng@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] Sparse checkout status
-Message-ID: <20200617175850.GA57254@C02YX140LVDN.corpad.adbkng.com>
-References: <CAL3xRKf+rQuq=j_4NJpNbRq4Rdxz7MjQaxi3c9usS+c615k19Q@mail.gmail.com>
- <CABPp-BHyc=aYqY+YuvNRsFsrMPL6+O=CX37jzXx38_-SXw5gLA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=k7S8GRkTif6Ma8B2Kdsin9azpJCrLO3vU0f/cutI//0=;
+        b=JgPAVWXlxi3g6ooqSHpivgKXyY+/WsjOtqv1/hnvX1avLaKMVBqimwMzRozwIPGM0A
+         S2S/wWqFn7HSUxpbObBn2mRhHhIajqnYgyHDzUabR3Yw8LIfFQWOkOdqkK3AzunwQO9z
+         7Jui+M2NpmwqyE4oRwpxn2KkBOuEt1apOlkANW5Nz9RRpouv75l6WJkTYCl27i+unAG2
+         cyefFxAySjTckruf2jKJFkqCvw5aAMxNSB5xFueyICGciS42QWFycol0OX2BjIyveA8o
+         W4HHC3aKS8m/4YHzjs+0g4Q7LpLYiQoFCgBNpHnebPD33pDQdvWigNZWcksZTfK3ELRZ
+         meog==
+X-Gm-Message-State: AOAM532dOwTEksJm5MK17gdzn9U/WaIohEcPQ1uwQs3lNd4PSsl1Prmj
+        6LvnGAGtVM1cS1cSFMq2nHr7VNGs7kj4FEWOqIt30A==
+X-Google-Smtp-Source: ABdhPJz0EZ0Stif57foVEJqwvqwX0EPGMJ5+c9TT6Iq+c5o3t+JTNpdNgWvJmUY0rCQn6YSATTDFOC2MXmHTdQt5D+Y=
+X-Received: by 2002:a2e:9cc:: with SMTP id 195mr205781ljj.107.1592416732844;
+ Wed, 17 Jun 2020 10:58:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BHyc=aYqY+YuvNRsFsrMPL6+O=CX37jzXx38_-SXw5gLA@mail.gmail.com>
+References: <pull.809.git.git.1592356884310.gitgitgadget@gmail.com>
+In-Reply-To: <pull.809.git.git.1592356884310.gitgitgadget@gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 17 Jun 2020 14:58:41 -0300
+Message-ID: <CAHd-oW5gTJO=6pYXvg3v=JfjffcajPyMpsUOoqXnozwYrg3WwQ@mail.gmail.com>
+Subject: Re: [PATCH] unpack-trees: do not set SKIP_WORKTREE on submodules
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+On Tue, Jun 16, 2020 at 10:21 PM Elijah Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Elijah Newren <newren@gmail.com>
+>
+> As noted in commit e7d7c73249 ("git-sparse-checkout: clarify
+> interactions with submodules", 2020-06-10), sparse-checkout cannot
+> remove submodules even if they don't match the sparsity patterns,
+> because doing so would risk data loss -- unpushed, uncommitted, or
+> untracked changes could all be lost.  That commit also updated the
+> documentation to point out that submodule initialization state was a
+> parallel, orthogonal reason that entries in the index might not be
+> present in the working tree.
+>
+> However, sparsity and submodule initialization weren't actually fully
+> orthogonal yet.  The SKIP_WORKTREE handling in unpack_trees would
+> attempt to set the SKIP_WORKTREE bit on submodules when the submodule
+> did not match the sparsity patterns.  This resulted in innocuous but
+> potentially alarming warning messages:
+>
+>     warning: unable to rmdir 'sha1collisiondetection': Directory not empty
+>
+> It could also make things confusing since the entry would be marked as
+> SKIP_WORKTREE in the index but actually still be present in the working
+> tree:
+>
+>     $ git ls-files -t | grep sha1collisiondetection
+>     S sha1collisiondetection
+>     $ ls -al sha1collisiondetection/ | wc -l
+>     13
+>
+> Submodules have always been their own form of "partial checkout"
+> behavior, with their own "present or not" state determined by running
+> "git submodule [init|deinit|update]".  Enforce that separation by having
+> the SKIP_WORKTREE logic not touch submodules and allow submodules to
+> continue using their own initialization state for determining if the
+> submodule is present.
 
-On Wed, Jun 17, 2020 at 09:48:22AM -0700, Elijah Newren wrote:
-> 
-> Well, there is `git sparse-checkout list`, assuming users know they
-> are in a sparse-checkout, but the whole point of my suggested change
-> is that they sometimes don't.
+Makes sense to me.
 
-Ah thats true.
-This was added recently and definitely slipped my mind often.
+I'm just thinking about the possible implications in grep (with
+mt/grep-sparse-checkout). As you mentioned in [1], users might think
+of "git grep $rev $pat" as an optimized version of "git checkout $rev
+&& git grep $pat". And, in this sense, they probably expect the output
+of these two operations to be equal. But if we don't set the
+SKIP_WORKTREE bit for submodules they might diverge.
 
-> 
-> This surprises me; I considered performance while writing it and kept
-> it simple on that basis.  In particular:
->   * This does not cause any reading or writing of any extra files; it
-> is done solely with information that is already loaded.
->   * If users aren't in a sparse-checkout, their performance overhead
-> is a single if-check, which I doubt anyone can measure.
->   * If they are in a sparse-checkout, then they'd get one extra loop
-> over files in the index to check the SKIP_WORKTREE bit.
-> 
-> In which cases would performance implications be a concern?  For a
-> very simple point of reference, in a sparse-checkout of the linux
-> kernel (using --cone mode and only selecting the drivers/ directory),
-> I see the following timings for 'git status' in a clean checkout:
-> 
-> Without my change:
-> [newren@tiger linux-stable (hwmon-updates|SPARSE)]$ hyperfine --warmup
-> 1 'git status'
-> Benchmark #1: git status
->   Time (mean ± σ):      78.8 ms ±   2.8 ms    [User: 48.9 ms, System: 76.9 ms]
->   Range (min … max):    74.0 ms …  84.0 ms    38 runs
-> 
-> With my change:
-> [newren@eenie linux-stable (hwmon-updates|SPARSE)]$ hyperfine --warmup
-> 1 'git status'
-> Benchmark #1: git status
->   Time (mean ± σ):      79.8 ms ±   2.7 ms    [User: 49.3 ms, System: 77.7 ms]
->   Range (min … max):    74.8 ms …  84.5 ms    37 runs
-> 
-> I know the linux kernel is tiny compared to repos like Windows or
-> Office, but the relative scaling considerations are identical: it's
-> one extra loop through the cached entries checking a bit for each
-> entry.  If people are worried about the "extra loop", I could find an
-> existing loop to modify and just add an extra if-block in it so that
-> we have the same number of loops.  (I'm doubtful that'd actually help,
-> but if the concern is an extra loop, it'd certainly avoid that.)
-> Anyway, if you've got more information about it being too costly, I'm
-> happy to listen.  Otherwise, the overhead seems pretty small to me and
-> it's only paid by those who would benefit from the information.
-> 
-> However, all that said, I have good news: Peff already implemented the
-> flag users can use to avoid this extra output, and did so back in
-> September of 2009.  It's called "--porcelain".  Automated commands
-> should already be using it, and if they aren't, they are what needs
-> fixing -- not the long form status output.
+As an example, if we have a repository like:
+.
+|-- A
+|   `-- sub
+`-- B
 
-When I wrote my initial reaction, the idea of having more than just a
-percentage reported back stuck in my mind, specifically with using the
-in-tree checkout that I mentioned.
+And the [cone-mode] sparsity rules:
+/*
+!/*/
+/B/
 
-But yeah, that's something down the line to address, you are absolutely
-correct that the current patch has no performance impact. Thanks for the
-reminder about '--porcelain'.
+Then, "git grep --recurse-submodules $rev $pat" would search only in B
+(as A doesn't match the sparsity patterns and thus, is not recursed
+into). But "git checkout $rev && git grep --recurse-submodules $pat"
+would search in both B and A/sub (as the latter would not have the
+SKIP_WORKTREE bit set).
 
-> 
-> I think having a 'git sparse-checkout status' would be a fine
-> subcommand, and output like the above -- possibly also including other
-> bits Stolee or I mentioned elsewhere in this thread -- would be cool
-> and would be helpful; it'd complement what I'm doing here quite
-> nicely.
-> 
-> But you're solving a related problem rather than the one I was
-> focusing on, and you have left the issue I was focusing on
-> unaddressed.  In particular, if users forgot that they sparsified in
-> the first place, how are they going to know to run `git
-> sparse-checkout status [--all]`?
-> 
-> I think having a simple line of output in `git status` would remind
-> them.  With that reminder, they could today then go run 'git
-> sparse-checkout list' or 'gvfs health' (as Stolee mentioned he uses
-> internally) or './sparsify --info' (as I use internally) to get more
-> info.  In the future we could provide additional things for them as
-> well, such as your 'git sparse-checkout status'.
-> 
+This might be a problem for git-grep, not git-sparse-checkout. But I'm
+not sure how we could solve it efficiently, as the submodule might be
+deep down in a path whose first dir was already ignored for not
+matching the sparsity patterns. Is this a problem we should consider,
+or is it OK if the outputs of these two operations diverge?
 
-I do concede that this point could be a separate problem set and addressed
-separately in the future.
-
-> 
-> An aside, though, since you linked to the in-tree sparse-checkout
-> definitions: When I reviewed that series, the possibility of merge
-> conflicts and not knowing what sparse-checkout should have checked out
-> when the in-tree defintions themselves were in a conflicted state
-> seemed to me to be a pretty tough sticking point.  I'm hoping someone
-> has a clever solution, but I still don't yet.  Do you?
-
-I am no clever person, but I often take great pleasure in reading up
-works of smarter people. One of which is the Google's and Facebook's Mercurial
-extension sets that they opensourced a while ago to support large repos.
-
-The test suite for FB's 'sparse' extension[1] may address your concerns?
-
-The 'sparse' extension defines the sparse checkout definition of a
-working repository. It supports '--enable-profile' which take in definition
-files ('.sparse'). These profiles are often checked into the root dir 
-of the repo.
-
-> 
-> Thanks,
-> Elijah
-
-Regards,
-Son Luong.
-
-[1]: https://bitbucket.org/facebook/hg-experimental/src/05ed5d06b353aca69551f3773f56a99994a1a6bf/tests/test-sparse-profiles.t#lines-115
-
+[1]: https://lore.kernel.org/git/CABPp-BFKHivKffBPO0M_s-JtpiLyEMLZr+sX9_yZk9ZX7ULtbw@mail.gmail.com/
