@@ -4,107 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54310C433E1
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9171CC433E0
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:40:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32D7821475
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:27:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D5A620663
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 07:40:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bS6Nd1/w"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oLCWAi8E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725967AbgFQH1x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 03:27:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50260 "EHLO
+        id S1726134AbgFQHkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 03:40:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbgFQH1w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 03:27:52 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B2FC061573
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 00:27:52 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id n23so1599106ljh.7
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 00:27:52 -0700 (PDT)
+        with ESMTP id S1725894AbgFQHke (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 03:40:34 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 550AEC061573
+        for <git@vger.kernel.org>; Wed, 17 Jun 2020 00:40:34 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id o15so1201175ejm.12
+        for <git@vger.kernel.org>; Wed, 17 Jun 2020 00:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=NuK4R83Ig2ERGKLbG5Fr3VLtqyy/fMxexDSuVnkVdCM=;
-        b=bS6Nd1/wg+nVR2x78tmUrs3bmKymXkYjKQxCCAoAXG0VzUw0MjfTB2q0W7e0ZJyqK1
-         QaxX2eqMEtqrxAkFPp55cZZO02U6xlrV58mi8hYJ4rUhqzB03g2JR/VCbLsWb2KIdGA4
-         rjCyBqFOepyj9JFiDE8FolpTFX3v2kT9XOZvslm7C6Cbjbwrf4eM9EcM29A9ugD48PDF
-         2EXBse3sYHHBu1l4XsRstPu9NkQIHXs4dDZBxvJtNZmmKZqAyz9fNq2aSc/pxU9z5cy7
-         yCIkfL8Fj4A5zp5FE6Ib9Cf0IjY50Fy9SpCWkkalAVFgMt7ZQqhFgmemXGwkUSLbUpe/
-         Racg==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=T0ThxPcNiXL5+uHY0QcjyPovpuDBU4nSb/5T5gATrhA=;
+        b=oLCWAi8E5Bgcwn9Bw3NSrVVgW2VBrxvvt/pqs7iUekUBmPMYukicfXcMgqQ30+YulH
+         bMonaKFoEfVLPeVteNOJsyEv2hsFkzfGv0lwaFKIMAIfH+UItaZvl9ZDHGgwDTGr9bQF
+         uYuw3x9ZVhcSpjH26R4srQZQPFMdbrU2O1FSvHuONxXH+oxieLV6e+VBr1iHe7C7l4M5
+         eJEXBuL2F6pi8mjS83eSNqN8PoIQTmZ/qOqhg3g9B87B7k9oicYEdy7bYgn24zxEKeql
+         sx06rqOcYWBGZCi8peKXj4Q8OdV7QwpQn943viXQC+wlqDZ23FI0I9D6QEmKcMhhp5KZ
+         DJ9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=NuK4R83Ig2ERGKLbG5Fr3VLtqyy/fMxexDSuVnkVdCM=;
-        b=uh73syyhmXXakAyVv2atiHQQIj/kSyVQtuPYunlAyhwVcbTKxqNmf8y5k0C6XtGUJg
-         vVAv8dG6/TU3gOWyy2x/82hjsG0kkPDQcHXsbaqHDVQe3tZHNvciYMFEwatKYvrGwt3x
-         /mSNScEJAA6PWsq7eb8jo8q20+MlOXRnsSoU4u1yDitRUraedc5QWNt2F7+itevYXq5U
-         TsHOzau+fyIqVmyEoyMMEAMRLqRU3vXkyTrR4xXCF5EKz57jFi5ROf9rP2sWFmmYxuH9
-         XXqPtWt3ythaeajxRTSHjwyE4jz/C4hRhmHzglofYkXlFyEOuMjXLBrxQRYMTGivMuAG
-         SWKg==
-X-Gm-Message-State: AOAM531NkE1/OMVfS6WO4+YCPuk0ytEtNktcrIqy1boRRFIjEvH+lg1q
-        6UtNR8nfpJBdxqhuxBBMuaU=
-X-Google-Smtp-Source: ABdhPJy4BuAKgM5hgDFWnM/+9Wn16Ijo+5WSSwiqemYFrs3ZX2ZKupazMp5Utj75a2hkcViNi7GOdg==
-X-Received: by 2002:a2e:7016:: with SMTP id l22mr3563658ljc.284.1592378869765;
-        Wed, 17 Jun 2020 00:27:49 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id u26sm3620286lfq.72.2020.06.17.00.27.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2020 00:27:49 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Konstantin Tokarev <annulen@yandex.ru>
-Cc:     Alex Smith <alexsmith@gmail.com>,
-        "sergio.a.vianna@gmail.com" <sergio.a.vianna@gmail.com>,
-        "don@goodman-wilson.com" <don@goodman-wilson.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
-        "simon@bocoup.com" <simon@bocoup.com>
-Subject: Re: Rename offensive terminology (master)
-References: <0dd6b6c2-4ea4-498d-4481-7f65988db293@gmail.com>
-        <20200616100424.39718-1-alexsmith@gmail.com>
-        <1109121592306913@mail.yandex.ru>
-Date:   Wed, 17 Jun 2020 10:27:48 +0300
-In-Reply-To: <1109121592306913@mail.yandex.ru> (Konstantin Tokarev's message
-        of "Tue, 16 Jun 2020 14:29:49 +0300")
-Message-ID: <87lfkm9mob.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=T0ThxPcNiXL5+uHY0QcjyPovpuDBU4nSb/5T5gATrhA=;
+        b=PYzaJFp1KsMhJPvmmGERqdahBD9XkC8hUd7XeV8iCZKrn5eU++cw9yQqUkFDypsnRU
+         OPvaty8eWeakIdavIqd1BbfWUrJttiVVHW0PweZiqfnYwLsLJyRWs/NICY8BERTRKisF
+         1uJh2hPZc5EwJly1moI0+Amf/fj2Ws77qDpcckwJ+rG8Yk4ssgSua41wfpcJr2WmKNF7
+         OzbvM4zF+zuDTWTRrSIxDZKMurG9wJUAJrqX2fQWiTsGQAxqs4pb62pgyzNOZOEzp8zD
+         Kwue7uBkil9CkiOQ6L6gyWZn/iA2sV/o0/jr1m0pMsHoTzZkf74utZNNQqFUwFjKUBBg
+         DVAQ==
+X-Gm-Message-State: AOAM5338WunhXERVtIUIi8hS01Y347SVpyaH4tw0ynXpGUyGeDrCVnCJ
+        VS64VgSoSu5YcwN0dgZcq0qTJz6RDpSAp6SEb3dO9saS/d8=
+X-Google-Smtp-Source: ABdhPJzajO+vjgb4MNLABO3DlERsjA8mZlWuke5CM6Ug67PMjS6eH7VyCUZRgQ0Lt93fOldxl7qb/XxOSE8I22TbClA=
+X-Received: by 2002:a17:906:8684:: with SMTP id g4mr6012235ejx.431.1592379632974;
+ Wed, 17 Jun 2020 00:40:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Son Luong Ngoc <sluongng@gmail.com>
+Date:   Wed, 17 Jun 2020 09:40:22 +0200
+Message-ID: <CAL3xRKf+rQuq=j_4NJpNbRq4Rdxz7MjQaxi3c9usS+c615k19Q@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Sparse checkout status
+To:     gitgitgadget@gmail.com
+Cc:     dstolee@microsoft.com, git@vger.kernel.org, newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Tokarev <annulen@yandex.ru> writes:
+Hi Elijah,
 
-> 16.06.2020, 13:31, "Alex Smith" <alexsmith@gmail.com>:
->> Whether or not any patch would be accepted, the damage is already done.
->> From now on, people will judge you if you dare to use the name
->> "master" anywhere
->> and this is incredibly sad. These people are literally bullying us into
->> submission in the name of political correctness where no harm was actually
->> done.
->>
->> This sickens me.
->
-> I guess their next move might be to force sound engineers to rename
-> master channel and derived term "mastering" into something more
-> politically correct.
+> Some of the feedback of folks trying out sparse-checkouts at $dayjob is that
+> sparse checkouts can sometimes be disorienting; users can forget that they
+> had a sparse-checkout and then wonder where files went.
 
-There is even better target:
+I agree with this observation: that the current 'git sparse-checkout' experience
+could be a bit 'lost' for end users, who may or may not be familiar
+with git's 'arcane magic'.
 
-$ cd src/linux
-$ find . -name '*.[ch]' | xargs grep -i '(master)\|(slave)' | wc -l
-40506
+Currently the only way to verify what's going on is to either run
+'tree <repo-root-dir>'
+or 'cat .git/info/sparse-checkout' (human-readable but not easy).
 
-... and then they'll finally be on the right track to win the war
-against it.
+> This series adds some output to 'git status' and modifies git-prompt slightly as an attempt
+> to help.
 
--- Sergey
+This is a great idea but I suggest to put a config/flag to let users
+enable/disable this.
+
+Git status is often utilized in automated commands (IDE, shell prompt,
+etc...) and there may be
+performance implications down the line not being able to skip this bit
+of information out.
+
+> For reference, I suspect that in repositories that are large enough that
+> people always use sparse-checkouts (e.g. windows or office repos), that this
+> isn't a problem. But when the repository is approximately
+> linux-kernel-sized, then it is reasonable for some folks to have a full
+> checkout. sparse-checkouts, however, can provide various build system and
+> IDE performance improvements, so we have a split of users who have
+> sparse-checkouts and those who have full checkouts. It's easy for users who
+> are bridging in between the two worlds or just trying out sparse-checkouts
+> for the first time to get confused.
+
+One of our users noted that the experience is improved when combining
+'git worktree' with sparse-checkout.
+That way you get the correct sparsity for the topic that you are working on.
+
+In a way, the current sparse-checkout experience is similar to a user
+running 'git checkout <rev>' directly
+instead of checking out a branch.
+It does not feel tangible and reproducible.
+
+I was hoping that these concerns will be addressed once the In-Tree
+Sparse-Checkout Definition RFC[1] patch landed.
+We should then be able to print out which Definition File(s) (we often
+call it manifests) were used,
+and ideally, only the top most file(s) in the inheritance tree.
+
+So the ideal experience, in my mind, is something of this sort:
+
+    git sc init --cone
+
+    # assuming a inherited from b and c
+    git sc add --in-tree manifest-dir/module-a.manifest
+    git sc add --in-tree manifest-dir/module-d.manifest
+
+    git sc status
+        Your sparse checkout includes following definition(s):
+        (1) manifest-dir/module-a.manifest
+        (2) manifest-dir/module-d.manifest
+
+    git sc status --all
+        Your sparse checkout includes following definition(s):
+        (1) manifest-dir/module-a.manifest
+        (2) manifest-dir/module-d.manifest
+        (3) manifest-dir/module-b.manifest (included by 1)
+        (4) manifest-dir/module-c.manifest (included by 1)
+
+I have a feeling that the current file skipped percentage prompt is
+not that useful or actionable to end-users,
+and they would still end up feeling lost/disoriented at the end.
+
+Thanks,
+Son Luong.
+
+[1]: https://lore.kernel.org/git/pull.627.git.1588857462.gitgitgadget@gmail.com/T/#u
