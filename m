@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64F8FC433DF
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3267AC433E0
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:52:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F301212CC
-	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:49:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EB972073E
+	for <git@archiver.kernel.org>; Wed, 17 Jun 2020 20:52:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ojOIZO9i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s/9N9hE3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbgFQUtz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Jun 2020 16:49:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
+        id S1726965AbgFQUwe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Jun 2020 16:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726496AbgFQUtz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jun 2020 16:49:55 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADCBC06174E
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 13:49:54 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id x25so3161010edr.8
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 13:49:54 -0700 (PDT)
+        with ESMTP id S1726809AbgFQUwe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jun 2020 16:52:34 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B906C06174E
+        for <git@vger.kernel.org>; Wed, 17 Jun 2020 13:52:34 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id x25so3165738edr.8
+        for <git@vger.kernel.org>; Wed, 17 Jun 2020 13:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to;
         bh=xR3v8wuLVfwRYG/YwBGpL3pZirEb7vNOsH+pqNnNpno=;
-        b=ojOIZO9iX+ptu5Dy+KdHV6D3fniXp6bJPP4/ho861yPw/zF2v8R/3dqFIbHzkbVcWt
-         xdvEcTEEBu8NC9cGN3CHTYAjYTLJrYhKytPqwePA5ZfbXpTmXNxzRg5NCqcDEz9H5L+v
-         QazoYHnQtyX6IOj/eINSy+142ipFP799iVOn1juo7u4PE6yp+Z9fO2MzBVxc4okVgYxs
-         NEB1qI0POagAslRm3A6zIhyGmTzOlLYHk5gEfPrHqMgSvB5nQMuoF8mRDXyyFJ1ixLwS
-         y7KxuBW1cbHOGoYPrARCqoigFUmchSnV1Q/sSxsFXQsjcTKZGWgDBEpsvYtivTPkXkwL
-         NE9g==
+        b=s/9N9hE3byvIiP6OgbYw+O3EZFjUYeTCVqvryfhvwy9uKZq9jUHfjR60uDhQRaajaj
+         HeklZnkJ1fMsLDgzUpnMN9s/E6pgAznAtdAFknoPxxf6blSF1lcGK61YfwHQ4Z63Im6j
+         c928JLSHVgvfwxulSIGzhApYwrb8fhvdrMwMD8mW3dWTLM+6uNLERJixYze+mP2DoRdL
+         D5TXswE7Y1YeBUW4+aydvPOO+QAal92KCuaZWEwkULrbtiOURJd8XGXUGbJ/OlE0YHvh
+         IV8a2+YM/LU0t32+nFgxRPjlxbdGKDiqk/K7OhOseE/CkX7VWMFHNRcFxQgheyDt62n5
+         LyqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to;
         bh=xR3v8wuLVfwRYG/YwBGpL3pZirEb7vNOsH+pqNnNpno=;
-        b=kpRJZ0dlermxZ5QbDk5aZ7rwJ0vOIv7l/vtdx83xxCesdlyYJV17egg53ya8BqObF4
-         OJEpsIbbhemeQA5EyhtqmcEd4/fW2nnUnfuLpQaYabQ76OFE+uIs87KrNgHNRbV0gRhD
-         2KmNNslFUqxuXJpLl21uaekF5fSxuCasyPHEFunv5pYrBduPm414jL2GB/x9/5lZ1TrV
-         4FjU3hMY2aafJmjTVnhpCnXQ0Q8+SfqlolPqDhu5E1iRDgq89/razTD/cOQEeUiVIaw6
-         OR+eOKrYSRa/dyE7sQi28kgCaLbW9/KCOR3Jmr4j0vn7Y1baDoW1i6U2PAMl1j0Pj2Ky
-         0GoA==
-X-Gm-Message-State: AOAM530wgT5cx+Cs/jM4iqNYlOjPVwZY2rXXnhb6Hb9GDPE4MjKsee4i
-        BoZ2tRvPV1XmiAfjlzgdeOE=
-X-Google-Smtp-Source: ABdhPJzKPQrUbJivTGbXG+MThfT+E3R4Ag1WuKFNu0gEV8LrXdqyDd/dU2BhWVSZ1NQpmZCy4ykS4g==
-X-Received: by 2002:a50:d75e:: with SMTP id i30mr964372edj.305.1592426993018;
-        Wed, 17 Jun 2020 13:49:53 -0700 (PDT)
+        b=iv5mbXQhwktQr1mub+GpPfM0Yc2Rejz1Qvfzh9uzhUiDxD0U9gleRuhqL343fJPF75
+         sW2k2r/CQKdSRqnziFh2EWCM9p+h2uTmxbX7oaQ+udsEftY1x2sN2VFhc+JjoxVKD+t5
+         WRxHo1qm+rUDG2hZk7CkdXVwHtepmqooAHhPDBxE85CeWkfouGeMPbhAr9F82VWT2Wa4
+         9q0ONQqEQHlbc7a/nB4tNdBqnLvG5xuvZ+JkUqNWwxHYRd1vCd72eYe2WwGCcV9PKdWp
+         TJFlToVr3dKUNyEd7k7piB7+TPcGoXFa5CRwX6uzSmwPi95kMFmo3bUJpzIYK4awxjQr
+         ojgA==
+X-Gm-Message-State: AOAM5319vwITblOx4KYhITPNE63C6aEQpe5jzPtTKilg7kIEGywb04Cf
+        UNtp8dr8noM1iCxW7qamIPk=
+X-Google-Smtp-Source: ABdhPJyVOj1Ga8Lrn34A6KTEar9OmUvHNgpAxWdqTFv46R5pHjTqpShqd22lU8zXxaLWX9wgA1O2zg==
+X-Received: by 2002:a50:f19d:: with SMTP id x29mr967371edl.215.1592427152591;
+        Wed, 17 Jun 2020 13:52:32 -0700 (PDT)
 Received: from localhost.localdomain (ptr-uhky5bq0ghslncy72e.18120a2.ip6.access.telenet.be. [2a02:1810:1c39:a800:a975:5a77:183c:f046])
-        by smtp.gmail.com with ESMTPSA id kt10sm705606ejb.54.2020.06.17.13.49.52
+        by smtp.gmail.com with ESMTPSA id p13sm478825edi.74.2020.06.17.13.52.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 17 Jun 2020 13:49:52 -0700 (PDT)
+        Wed, 17 Jun 2020 13:52:32 -0700 (PDT)
 From:   ZeeVriend <zeevriend@gmail.com>
 To:     lego_12239@rambler.ru
 Cc:     git@vger.kernel.org, Zee Vriend <zeevriend@gmail.com>
 Subject: Re: Rename offensive terminology (master)
-Date:   Wed, 17 Jun 2020 22:48:42 +0200
-Message-Id: <20200617204842.23344-1-zeevriend@gmail.com>
+Date:   Wed, 17 Jun 2020 22:52:07 +0200
+Message-Id: <20200617205207.8240-1-zeevriend@gmail.com>
 X-Mailer: git-send-email 2.11.1.windows.1
 In-Reply-To: <20200617074940.GB18445@legohost>
 References: <20200617074940.GB18445@legohost>
