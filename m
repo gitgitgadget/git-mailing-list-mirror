@@ -6,81 +6,71 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65BD5C433DF
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 11:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 566B2C433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 11:50:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 434C6207E8
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 11:45:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35DBB20706
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 11:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728471AbgFRLpd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 07:45:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35912 "EHLO cloud.peff.net"
+        id S1729016AbgFRLua (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 07:50:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35948 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727784AbgFRLpc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 07:45:32 -0400
-Received: (qmail 18042 invoked by uid 109); 18 Jun 2020 11:45:31 -0000
+        id S1729004AbgFRLua (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 07:50:30 -0400
+Received: (qmail 18092 invoked by uid 109); 18 Jun 2020 11:50:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jun 2020 11:45:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jun 2020 11:50:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12681 invoked by uid 111); 18 Jun 2020 11:45:30 -0000
+Received: (qmail 12722 invoked by uid 111); 18 Jun 2020 11:50:29 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Jun 2020 07:45:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Jun 2020 07:50:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 18 Jun 2020 07:45:30 -0400
+Date:   Thu, 18 Jun 2020 07:50:28 -0400
 From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Junio C Hamano via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Don Goodman-Wilson <don@goodman-wilson.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 01/12] fast-export: do anonymize the primary branch
- name
-Message-ID: <20200618114530.GA41345@coredump.intra.peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        sandals@crustytoothpaste.net
+Subject: Re: [PATCH 2/9] remote: respect `core.defaultBranchName`
+Message-ID: <20200618115028.GB41345@coredump.intra.peff.net>
 References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
- <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
- <ebd10f73cd73a8fca84d1862e5a4b7b62a549bcd.1592225416.git.gitgitgadget@gmail.com>
- <20200616125833.GE666057@coredump.intra.peff.net>
- <xmqqmu51v9qy.fsf@gitster.c.googlers.com>
- <20200617212333.GB2809@coredump.intra.peff.net>
- <CABPp-BETyMYm=5APqAA3D1JmkurDFNkKLDrcF4MUgEfqEuVKFA@mail.gmail.com>
+ <06a2cea051c01ebee38c9910425171f112daf41a.1591823971.git.gitgitgadget@gmail.com>
+ <20200616123559.GB666057@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2006181218270.54@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BETyMYm=5APqAA3D1JmkurDFNkKLDrcF4MUgEfqEuVKFA@mail.gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2006181218270.54@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 17, 2020 at 07:06:26PM -0700, Elijah Newren wrote:
+On Thu, Jun 18, 2020 at 12:21:30PM +0200, Johannes Schindelin wrote:
 
-> > That leaves us in the interim with a "fast-export --anonymize" that is a
-> > little harder to use (you have no way to know which branch was which).
+> > Hopefully this would not matter _too_ much either way, as most servers
+> > would support the symref extension these days. But I still think we
+> > should do our best to minimize spots where the user may see a
+> > regression.
 > 
-> Why does fast-export special case on "master" rather than on HEAD?
-> Isn't it more relevant to know the active branch than what _might_
-> have been the initial branch?  It kind of feels like a bug to me that
-> HEAD isn't the special case construct.
+> Sure, we could just leave this alone, or we can just ditch the
+> special-casing of `master` here.
+> 
+> As you say, this does not affect any modern Git version, and IIRC the code
+> after that special-casing tries to find any remote ref that matches the
+> remote `HEAD`.
 
-I don't really remember my exact thought at the time, but it was
-probably along the lines of: "master" is special not because it's
-inherently special, but because revealing it doesn't compromise the
-anonymity, since it's not a user-selected name.
+I think we need to be a little careful with "any modern Git", because a
+modern client against an old (or perhaps an alternative implementation)
+server might still use it. I have to imagine it's pretty rare, but I
+think it's still useful to return _some_ value.
 
-That's not true of other names we might see in HEAD. But if we're
-turning it into "ref0" or some other special name anyway, then we
-haven't revealed anything.
-
-That said, I still lean towards just being able to dump the whole
-mapping by request. That solves this problem and many more.
+But as you note, even without a symref extension, we already try to
+guess based on a unique branch. Probably even choosing the first one
+alphabetically would be reasonable. But I'd rather err on the side of
+historical compatibility if we can do so easily. Looking for
+init.mainBranch, followed by master, accomplishes that and isn't many
+lines of code.
 
 -Peff
