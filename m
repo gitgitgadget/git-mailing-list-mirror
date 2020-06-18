@@ -2,83 +2,109 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BEAFC433E0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 16:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0125BC433E1
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 17:52:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 010C2208C7
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 16:48:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C455620734
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 17:52:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZYNKEHPm"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0Sn8p/Fl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732102AbgFRQsY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 12:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730373AbgFRQsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 12:48:20 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A551AC06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 09:48:20 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id b5so3028587pfp.9
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 09:48:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mrOpbZXuYTMZV85/VVYg9R4lwdDwP/SYp390EWTnXKM=;
-        b=ZYNKEHPm+r/FBuiEIfQpCDpfIVd5kv7InyOCOC6FDgpvTsBFw2Mg2pTdmdIl1uhpED
-         8nMRkkLPUrFoQdPPHGerIZaCB2pV9/ZGJVUtFvfjCx4nfXpSjdHYWrVNIWQOYzOzXqAV
-         qcBsujN7hyEg/O9y1Sj9EvvTGnJSuFRZj9NPO+pRI2jET1bFMBk8yzp0hWUAgXTD0nA5
-         AdiVe63iJBwLuQ1Nn1qxlJcYPFOBj4dDFYY+eTszYDCq4rNV/wUXBjLdjgdtmV+Bk1FW
-         sqKk3733gsDJdv94VsmMxPTGue7uYws84PZT1e2EHfQVUDzbMXOLEoMZpt3/GD2f0+8E
-         bGsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mrOpbZXuYTMZV85/VVYg9R4lwdDwP/SYp390EWTnXKM=;
-        b=LCjRKSTHMzN5icMmgqJSja4ddDuPuQR6XHm7+n+w1tLHJUs2a5+d39o6+iiXuySZxz
-         Nd3FQkn2B1AYU+wlBqaJrIJp1r1kd8urAUVhig/cjFEvOuSDkvmiJZrBy/N3fXoODect
-         jXmRNLktAmHOddUqLS0lLdJvXt+0q8FdroZ3MGnb8whjsoWFD42RnEsaHmTQKmbV8RGf
-         ihh5VC+r/gJLYPyZuOi70UH02C77SLtKo8QvNej16teqiGhl5Qky1lTVdveR5AGlbI+Y
-         9ABRVQsxk+UfnM5OeS09TwGfIXRIUzw+C0x/AkdkgLFSJEzV/ulc5hNRBD/9L5wk/FWF
-         B68w==
-X-Gm-Message-State: AOAM533iADIgIQhqe6b4KpcnuFGCteTj3D/vH2YjvhgJvq87DtBA3swF
-        Af5PQGze7YKcS+Mxz2NqmCVpyVtcdiLTGN60mrd1Lo1d
-X-Google-Smtp-Source: ABdhPJxYDdIvwqg+NbE2dUS33PKX4N8i25Xd1f7EmGvFoPIygw8VsnqkwFbTSZqgpzJw0jcLmhIgoCpsMc3SXXTaW4M=
-X-Received: by 2002:a63:4911:: with SMTP id w17mr3957573pga.13.1592498899378;
- Thu, 18 Jun 2020 09:48:19 -0700 (PDT)
+        id S1732324AbgFRRwj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 13:52:39 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39380 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728621AbgFRRwj (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 18 Jun 2020 13:52:39 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A5AE06048A;
+        Thu, 18 Jun 2020 17:52:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1592502757;
+        bh=Z57+OtNRT7Yr5FPiL/uaskFvlqduAcEUuvClZxjLAU4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=0Sn8p/FlSBHEid9z8v9272BXyD6NlrzcZ3CvDh8vX7XMn0sTnLxZKRbphYryKtAiT
+         /Zv7o6gbrtROtJpFSvQNcugNN7QOH2RI9uCTuNv/HfAmdZuzFGb26URGcRGtYZVnLn
+         8Fv4WewxSM0W8QOU3MOOequeOQgka6ODFHZu624/Y9Wr2kg0CZLCuDhKi9UZ77OMfy
+         0w0G3liHNLU254n7tEwIVRZRqGP/3jlTvHzxpVMmeCSPQHcDGjRTwXs5U//iAYHsZ+
+         AiIxCb3w7GwTpX7sHtkBaJvRVvIFzopFX/uJnMppb+SOvf+H2tsVqaO7S78YmE2s77
+         MlNs/ob829fWM0rz3SuWCVgQoXWkY2OjVr1YnQJxR4Gt5Zt1vj6DNV3I3s8BEgzkPg
+         gy3O7pLT7nNjAw6B/LJaHbHpw+b3e6Ak8QUQzBPCE9iPJtNDy4TfDUbg/l88X8SphB
+         sptSwTvtV/7/9iO8luHTLUUD9uxN2MQmLVej1K9W6HPyhbMcgZH
+Date:   Thu, 18 Jun 2020 17:52:32 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     sopq0asmppc9@online.de
+Cc:     git@vger.kernel.org
+Subject: Re: Git commands throw error
+Message-ID: <20200618175232.GI6531@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        sopq0asmppc9@online.de, git@vger.kernel.org
+References: <01af01d6452d$1a91b590$4fb520b0$@online.de>
 MIME-Version: 1.0
-From:   =?UTF-8?B?SGVucsOpIEJvdGhh?= <henrebotha@gmail.com>
-Date:   Thu, 18 Jun 2020 18:48:08 +0200
-Message-ID: <CAHbriek39i9NSHRw6DZm0dftk-GkeAYR74c0xyss0vbeDHu1Hw@mail.gmail.com>
-Subject: git init --separate-git-dir doesn't play nice with linked working trees
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="zgY/UHCnsaNnNXRx"
+Content-Disposition: inline
+In-Reply-To: <01af01d6452d$1a91b590$4fb520b0$@online.de>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have identified two potential problems when using git init
---separate-git-dir with a repo that has linked working trees (created
-using git worktree add).
-1. Moving the gitdir of a main working tree doesn't inform linked
-working trees that their gitdir has moved. It seems to me that if I do
-cd main-worktree && git init --separate-git-dir=.git_repo, the git
-init command should go to all the linked working trees and change
-their Git links to point at main-worktree/.git_repo. But perhaps
-there's some use case I'm not aware of where you'd want to change only
-the gitdir path of the main working tree, and not those of linked
-working trees.
-2. Attempting to move the gitdir of a linked working tree breaks the
-linked working tree entirely.
-It seems to me that if I do cd linked-worktree && git init
---separate-git-dir=.git_repo, it should fail, or warn, or do something
-other than break the linked working tree. (I note that
-linked-worktree/{.git,.git_repo/commondir,.git_repo/gitdir} all point
-at the wrong thing after this operation; manually fixing them restores
-functionality, though it loses the link to the main working tree.)
+
+--zgY/UHCnsaNnNXRx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2020-06-18 at 04:58:27, sopq0asmppc9@online.de wrote:
+> Hi!
+>=20
+> I recently upgraded my GIT installation to git version 2.27.0.windows.1
+
+You're probably going to have a better time here reporting this to the
+Git for Windows folks at https://github.com/git-for-windows/git.
+
+> I have all my repositories on a NAS and now I get errors with all command=
+s, e.g.
+> git status ->  fatal: failed to stat '=E2=80=99: Function not implemented
+> git pull ->  fatal: failed to stat '=E2=80=99: Function not implemented
+>=20
+> Setting fscache to false (globally or locally) does not help. Please fix =
+it quickly =F0=9F=98=89
+
+When you report this, you'll need to mention which file system you're
+using on your NAS, since it's probably related here.  You may also be
+running into filename length problems and you could try turning on long
+path support.
+
+Finally, something else you could try is to see if some other process is
+using these files and if so, kill it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--zgY/UHCnsaNnNXRx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXuup3wAKCRB8DEliiIei
+gY6gAP0QWInF5cSed489Hdgsip1MZUgIQPm/HELwyOSwv16qJgEAlEjx+fiU+wUk
+vjGFqVbidt5qFBBxaDHtnmo/FzN3owY=
+=WFqN
+-----END PGP SIGNATURE-----
+
+--zgY/UHCnsaNnNXRx--
