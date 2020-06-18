@@ -2,611 +2,181 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16B5FC433E1
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3BEBC433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:54:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAA7D20EDD
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:49:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9004F20B1F
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:54:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nSGWW/xz"
+	dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b="qT6zZd1t";
+	dkim=pass (1024-bit key) header.d=Dell.onmicrosoft.com header.i=@Dell.onmicrosoft.com header.b="MUsuJVv1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728848AbgFRIth (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 04:49:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728536AbgFRItZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 04:49:25 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E6C5C06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:49:24 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id n11so4785336qkn.8
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:49:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hoJ5L/cpVvZZya6E3/t97Fn1SyQb2g02GzuIaYY9L2w=;
-        b=nSGWW/xzIFTS0F12OtYIXriTWBeP0U3saR9ngONy1j8hYG6KLGoALLl0lYCKFgg97B
-         nimY94DMzA3q88hlSoOVKyyV52VIo/OYleIH5ao0J/5hXPMfIGpq0ZM8aItUCBYD68ZG
-         b0fKiDMwsWhM5Ub0hcIHxxk/cipuVmJHRV1Rf87bO6YeypKAuYF4hBw57TbI7Z/aMuSl
-         wUBiDg83w36PYcmC3twEnTKYUxn4RtiMx9jczQyvW1QOgM8G+4fdObd80pwu2KYhSfku
-         R5R3ktoJGJRAa/C2uTkB5tFKOn1ZK7QwZBTKDiha/+cvNWMaxHKYu+1Vb/KjYqTR2qPz
-         AP/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hoJ5L/cpVvZZya6E3/t97Fn1SyQb2g02GzuIaYY9L2w=;
-        b=Y6Jwb/G+JTlKwKtx7+f9N/feOFLhpoU0VTC5HDVfPO3bfaYGt5RuyLHwXhMfOUj1q3
-         VdekfvQY30fonBwdxl6rOIW+nXqoyuWATFT46CF40tCUR747Mp3GA0PEn1GS/jBKBqEX
-         +7uqs3a9TaIoeAzZJvujzn7Px7L35fXW0P8WSiJ7b0GLeGR4s+bp/8mY7fEdPLTv5xcJ
-         Hap50xpRjjKm45vGvnC8/BQffp3d3NM1KyupuuocsqVPShhYPj5yFmxHIXdyrAZjLqSq
-         oRdvys5QtWMx+S+IelGu862Js+ZCAPCX8mB9kBzIrYmRWRjdvbjglo0gPIbEZ2XFbpOB
-         O8AA==
-X-Gm-Message-State: AOAM533iQagmSJ3m++vutAM4ltZJN+SGRl/r4IqxIJn3o2pilBh1GHny
-        6j14AyqMxPGBKNAy2TDSrKIj2DLKvK8=
-X-Google-Smtp-Source: ABdhPJxJUOjIbFPAIgl8cWp2wg2xuvtNHPG0cPvGbkBPwR/qxmshu2DzXHBhO0AQtcQBVD/rJqJ9mg==
-X-Received: by 2002:ae9:c10c:: with SMTP id z12mr2664253qki.212.1592470162884;
-        Thu, 18 Jun 2020 01:49:22 -0700 (PDT)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id p11sm2733082qtb.4.2020.06.18.01.49.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2020 01:49:22 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v4 4/4] lib-submodule-update: use callbacks in test_submodule_switch_common()
-Date:   Thu, 18 Jun 2020 04:49:14 -0400
-Message-Id: <35d07117e637edf5f9a148a50da6b2294ec0f87f.1592470068.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.132.g321788e831
-In-Reply-To: <cover.1592470068.git.liu.denton@gmail.com>
-References: <cover.1591897173.git.liu.denton@gmail.com> <cover.1592470068.git.liu.denton@gmail.com>
+        id S1728931AbgFRIye (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 04:54:34 -0400
+Received: from mx0a-00154904.pphosted.com ([148.163.133.20]:20410 "EHLO
+        mx0a-00154904.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728823AbgFRIyA (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 18 Jun 2020 04:54:00 -0400
+Received: from pps.filterd (m0170391.ppops.net [127.0.0.1])
+        by mx0a-00154904.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 05I8plW8006302;
+        Thu, 18 Jun 2020 04:53:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=smtpout1;
+ bh=ovdigHnPZKYg177HwToxla16RsxKo2tgtYj//mABeJA=;
+ b=qT6zZd1toZ4MbbO0n1QEhoLIduUUfUd193Duh8XyurDa6TOL9+BK9o+q3zKVqYYKz34S
+ oulkiuuyKr+SQxSyhWVUTqcNWpTYJ62Z0IT79jOr263oB9swdyWQ6mV8wOenYxAM0gUu
+ jY5f/9D9tUzXPMm+R3fAdZ6YdPIt3ooIU3KcR1L+b0ldF1OPh7V32vpRN7tl0bCYim2I
+ vCaZkXXMvcvDJfhrlYkhY0eOh003EanaNaBY1K3jLHBxoRnHFEhOlQFTfWK6aEiQO61d
+ dtcW4jfCIWAt/2dqKwzgXgnN53IGVVsmnlatfnRq0HNkihtmZnSmJiswo7qxs8Q9eiU5 jQ== 
+Received: from mx0b-00154901.pphosted.com (mx0b-00154901.pphosted.com [67.231.157.37])
+        by mx0a-00154904.pphosted.com with ESMTP id 31q67xwuu5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 Jun 2020 04:53:55 -0400
+Received: from pps.filterd (m0144104.ppops.net [127.0.0.1])
+        by mx0b-00154901.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 05I8mOG4139559;
+        Thu, 18 Jun 2020 04:53:54 -0400
+Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2173.outbound.protection.outlook.com [104.47.59.173])
+        by mx0b-00154901.pphosted.com with ESMTP id 31q66dg18g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 18 Jun 2020 04:53:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=T4Y42Pn55SWrll1vGR8Eoqh0qdULG7ddHG7S6Gc0pbhIRs3+xW+OO8GW4Pns20I9S9Odp/gl103OiWvgVD27Ljy7eXzEGjlxluAXhA8MQYidnDbE3iwcdsgkDrjUCVlsTDaxGN926uLIHYixfxqb9YvjUvuu53udHCwYd3HmYtKyEqWMG9bBnQjZpxigf9Kl5moy8ywpF+7g2ovIj+HMyy/XqK1rmOOcZZXRDxTzvi8ysFM/QV/9iN4W40SMqfdfu/TB2cvH3BzHo/hbKvb7s3mEvXu/liwmQacFydjOQKJHO6FguvroqbNkGUWgbb7Fe5DHtsukZ0aS7x23VqriFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ovdigHnPZKYg177HwToxla16RsxKo2tgtYj//mABeJA=;
+ b=FiZUtvlVwWGNQ7i6fkBpazUVZp3tqi38NyS8rRu2mO7jD5TjL58YXMQE3z1nYFjWARgjVijDEjuUWlDSdGj5DkXmmcJ/4ORwgImOdPteg3GzMVqNlUcuF4y4GubocUiF8Q8hLsNBqzVm7uzWsASNCgfuvRlcW+KBXpQ1J6qrD4XhUsh03QwQ0jM0ow7NjpIWjAzTmukN2pXXQftJWYZKiDA+n0uV2voH7WLPSzU1FiFts4ELMdVqxv6AreA6A+T8f/6LPQI/mUEMwgPEFEXN5JNjWmRUPfOtmMkU1vZ3ptoSNLuO7m/N1/rP0bNTo17oYZb98gN49KaQXoLFqUztoQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
+ dkim=pass header.d=dell.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Dell.onmicrosoft.com;
+ s=selector1-Dell-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ovdigHnPZKYg177HwToxla16RsxKo2tgtYj//mABeJA=;
+ b=MUsuJVv1RNhE/eDmRfABRFN6CrOX/4sgwumjm3NoWTJbdKBQ7bFdaLrt9hsHuLHyzajW0byTONVlUTEldXy+0WDOEar8ID5Iz8V+sbHpY2odqm1a+wVHCv6tTB2PYqWaBKxFISYSDcsnpvVIL4D/FGojGfc2yP1zJMLdRxXinr8=
+Received: from BY5PR19MB3400.namprd19.prod.outlook.com (2603:10b6:a03:181::26)
+ by BY5PR19MB3490.namprd19.prod.outlook.com (2603:10b6:a03:1c2::32) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3088.25; Thu, 18 Jun
+ 2020 08:53:52 +0000
+Received: from BY5PR19MB3400.namprd19.prod.outlook.com
+ ([fe80::2008:3bcd:b8ea:126b]) by BY5PR19MB3400.namprd19.prod.outlook.com
+ ([fe80::2008:3bcd:b8ea:126b%5]) with mapi id 15.20.3109.021; Thu, 18 Jun 2020
+ 08:53:52 +0000
+From:   "Curtin, Eric" <Eric.Curtin@dell.com>
+To:     demerphq <demerphq@gmail.com>
+CC:     Konstantin Tokarev <annulen@yandex.ru>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Geary, Niall" <Niall.Geary@dell.com>,
+        "rowlands, scott" <Scott.Rowlands@dell.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        "Coveney, Stephen" <Stephen.Coveney@Dell.com>
+Subject: Re: Collaborative conflict resolution feature request
+Thread-Topic: Collaborative conflict resolution feature request
+Thread-Index: AQHWQMCn0onLmOAyQEGi/GXRui4z8qjWdTOAgAAG3/+AAE1tgIAAJXiKgAEnG4CAAVRHkIAEpDkAgAAFwVY=
+Date:   Thu, 18 Jun 2020 08:53:52 +0000
+Message-ID: <BY5PR19MB3400CD5482C8837E41DFEAF2909B0@BY5PR19MB3400.namprd19.prod.outlook.com>
+References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
+ <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
+ <xmqqa716zs7w.fsf@gitster.c.googlers.com> <30661592138737@mail.yandex.ru>
+ <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>,<CANgJU+WfW4mKotMwFS+2Kaq1pDysgJutJ2NhUvyvGgowk8JXsg@mail.gmail.com>
+In-Reply-To: <CANgJU+WfW4mKotMwFS+2Kaq1pDysgJutJ2NhUvyvGgowk8JXsg@mail.gmail.com>
+Accept-Language: en-IE, en-GB, en-US
+Content-Language: en-IE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=dell.com;
+x-originating-ip: [78.17.145.223]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 2c953906-2343-4663-540b-08d81365201b
+x-ms-traffictypediagnostic: BY5PR19MB3490:
+x-ld-processed: 945c199a-83a2-4e80-9f8c-5a91be5752dd,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR19MB3490A8240C78E9D7880ADFD1909B0@BY5PR19MB3490.namprd19.prod.outlook.com>
+x-exotenant: 2khUwGVqB6N9v58KS13ncyUmMJd8q4
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-forefront-prvs: 0438F90F17
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Hf8ULrQnq2LFKiP7KXFXUWRs/I2LZ3qVMlFavifUca7t4aAeIE2+Q1o1DvdT2/hUOyYFhQwiXKMyAt+si/wojHmftKFe+UlQUzIYeT/2nh2M0h4QwOnusW0ei1ROpCcbEWR5B2jO0J3QGrS6Krt4a3pgGPO1hf4es/K7HFoU9NJqcvtUX/5RuNAZGfJFRAfLEzzxNjnMSJ5m+dJoc1wD15GF+xIv/7KX/N8Wqv3VX7ySNhrs4YH69LpyjUt5BCKO56Jf7XkYsi0YSGAQBj+IUtV/w85NnwvH1Fd/zVpeNk+WzCqTEvRmzsF5ucn4+XqyUjWMlD5It5OSF9nIukePyQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR19MB3400.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(376002)(396003)(366004)(136003)(346002)(39860400002)(2906002)(6916009)(7696005)(6506007)(66946007)(8676002)(64756008)(66476007)(76116006)(91956017)(26005)(66556008)(478600001)(66446008)(83380400001)(8936002)(33656002)(186003)(71200400001)(4326008)(5660300002)(54906003)(9686003)(52536014)(786003)(55016002)(316002)(86362001)(107886003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: /9NK1DeFhAMk1on/rLDhvRxkSPW2lSFS+/B02m2OlXpIOo8ZJcMQtLy/+k8Z0mmb4LG/XStDN6vRO4sekCEctlie6v1AWiE6PqNHBEwT6D7tX6Fe/WNG8v/sFB98M4GT0D6t4zyt7BRYPtVZaeNdWzkYyUF3GKKl1aTJoAHSTLZcYOuYbgasYo7T2IKEpVS4ebVWIVcD9LxaERGgvdgYAJerCdeFUPBDiwByCOY3n8JjmrRIjsZIK/hyCMwou2A6mZcRyz0VFlfWcb7czMD4rKiCMm4g6qmqKGNpEITvty3PdPjL+8GcquFWLsc889OQQsb8gK5HsmaMfkjCC6xkNPnTUNNvx6k0PFDRGjPyj3+RNBJiUfEE/bqKQRhVp+CGHBfEih8hrt7LyWv7lJh7SPW7ITw1aQcT7dAuo8SWZoxF5aCrn3KPcrLenXIXFDKeY5vXr8sEZ0AaU9UFfso4eto9G/bi48Mwgxj7bMfB4pc=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: Dell.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2c953906-2343-4663-540b-08d81365201b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Jun 2020 08:53:52.2612
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: sPsymBy7xj7AG7ngcSKFD5aR/J93E42KevAEGlXi+wBvd3xuIuppsq7knYseZcB0hIIotiSQ2hQp47vGcl1rYQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR19MB3490
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216,18.0.687
+ definitions=2020-06-18_04:2020-06-17,2020-06-18 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ priorityscore=1501 cotscore=-2147483648 phishscore=0 mlxlogscore=999
+ suspectscore=1 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2006180067
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 adultscore=0 phishscore=0
+ suspectscore=1 mlxlogscore=999 spamscore=0 malwarescore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2006180068
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we run a test helper function in test_submodule_switch_common(), we
-sometimes specify a whole helper function as the $command. When we do
-this, in some test cases, we just mark the whole function with
-`test_must_fail`. However, it's possible that the helper function might
-fail earlier or later than expected due to an introduced bug. If this
-happens, then the test case will still report as passing but it should
-really be marked as failing since it didn't actually display the
-intended behaviour.
-
-Instead of invoking $command as one monolithic helper function, break it
-up into three parts:
-
-	1. $command which is always a git command.
-	2. $before which is a callback function that runs just prior to
-	   $command.
-	3. $after which is a callback function that runs just after
-	   $command.
-
-If the command requires a filename argument, specify it as `\$arg` since
-that variable will be set and the whole $command string will be eval'd.
-Unfortunately, there is no way to get rid of the eval as some of the
-commands that are passed (such as the `git pull` tests) require that no
-additional arguments are passed so we must have some mechanism for the
-caller to specify whether or not it wants the filename argument.
-
-The $before and $after callback functions will be passed the filename as
-the first arg. These callback functions are optional and, if missing,
-will be replaced with `true`. Also, in the case where we have a
-`test_must_fail` test, $after will not be executed, similar to how the
-helper functions currently behave when the git command fails and exits
-the &&-chain.
-
-Finally, as an added bonus, `test_must_fail` will only run on $command
-which is guaranteed to be a git command.
-
-An alternate design was considered where $OVERWRITING_FAIL is set from
-test_submodule_switch_common() and exposed to the helper function. This
-approach was considered too difficult to understand due to the fact that
-using a signalling magic environment variable might be too indirect.
-
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/lib-submodule-update.sh   | 117 ++++++++++++++++++++++++++++--------
- t/t3426-rebase-submodule.sh |  10 ++-
- t/t3513-revert-submodule.sh |  10 +--
- t/t3906-stash-submodule.sh  |  10 +--
- t/t4137-apply-submodule.sh  |  12 ++--
- t/t4255-am-submodule.sh     |  12 ++--
- t/t5572-pull-submodule.sh   |  28 ++-------
- t/t6041-bisect-submodule.sh |  10 +--
- 8 files changed, 125 insertions(+), 84 deletions(-)
-
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 7c3ba1be00..3401a59ad8 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -306,11 +306,21 @@ test_submodule_content () {
- # Removing a submodule containing a .git directory must fail even when forced
- # to protect the history!
- #
-+# $1: The git command to be eval'd and tested. The submodule being operated on
-+# will be available as $arg.
-+#
-+# $2: The function that will run before the git command. It will be passed the
-+# submodule being operated on as the only argument. This argument is optional.
-+#
-+# $3: The function that will run after $1. It will be passed the submodule
-+# being operated on as the only argument. This argument is optional. It will
-+# not be run when testing a case where the git command is expected to fail.
- 
- # Internal function; use test_submodule_switch_func(), test_submodule_switch(),
- # or test_submodule_forced_switch() instead.
- test_submodule_switch_common () {
--	command="$1"
-+	command="$1" before="${2:-true}" after="${3:-true}"
-+
- 	######################### Appearing submodule #########################
- 	# Switching to a commit letting a submodule appear creates empty dir ...
- 	if test "$KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES" = 1
-@@ -326,7 +336,10 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t add_sub1 origin/add_sub1 &&
--			$command add_sub1 &&
-+			arg=add_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/add_sub1 &&
- 			test_dir_is_empty sub1 &&
- 			git submodule update --init --recursive &&
-@@ -341,7 +354,10 @@ test_submodule_switch_common () {
- 			cd submodule_update &&
- 			mkdir sub1 &&
- 			git branch -t add_sub1 origin/add_sub1 &&
--			$command add_sub1 &&
-+			arg=add_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/add_sub1 &&
- 			test_dir_is_empty sub1 &&
- 			git submodule update --init --recursive &&
-@@ -356,7 +372,10 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t replace_file_with_sub1 origin/replace_file_with_sub1 &&
--			$command replace_file_with_sub1 &&
-+			arg=replace_file_with_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/replace_file_with_sub1 &&
- 			test_dir_is_empty sub1 &&
- 			git submodule update --init --recursive &&
-@@ -380,7 +399,10 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t replace_directory_with_sub1 origin/replace_directory_with_sub1 &&
--			$command replace_directory_with_sub1 &&
-+			arg=replace_directory_with_sub1  &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/replace_directory_with_sub1 &&
- 			test_dir_is_empty sub1 &&
- 			git submodule update --init --recursive &&
-@@ -402,7 +424,10 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t remove_sub1 origin/remove_sub1 &&
--			$command remove_sub1 &&
-+			arg=remove_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/remove_sub1 &&
- 			test_submodule_content sub1 origin/add_sub1
- 		)
-@@ -415,7 +440,10 @@ test_submodule_switch_common () {
- 			cd submodule_update &&
- 			git branch -t remove_sub1 origin/remove_sub1 &&
- 			replace_gitfile_with_git_dir sub1 &&
--			$command remove_sub1 &&
-+			arg=remove_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/remove_sub1 &&
- 			test_git_directory_is_unchanged sub1 &&
- 			test_submodule_content sub1 origin/add_sub1
-@@ -443,7 +471,9 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
--			test_must_fail $command replace_sub1_with_directory &&
-+			arg=replace_sub1_with_directory &&
-+			$before "$arg" &&
-+			eval test_must_fail $command &&
- 			test_superproject_content origin/add_sub1 &&
- 			test_submodule_content sub1 origin/add_sub1
- 		)
-@@ -456,7 +486,9 @@ test_submodule_switch_common () {
- 			cd submodule_update &&
- 			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
- 			replace_gitfile_with_git_dir sub1 &&
--			test_must_fail $command replace_sub1_with_directory &&
-+			arg=replace_sub1_with_directory &&
-+			$before "$arg" &&
-+			eval test_must_fail $command &&
- 			test_superproject_content origin/add_sub1 &&
- 			test_git_directory_is_unchanged sub1 &&
- 			test_submodule_content sub1 origin/add_sub1
-@@ -470,7 +502,9 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
--			test_must_fail $command replace_sub1_with_file &&
-+			arg=replace_sub1_with_file &&
-+			$before "$arg" &&
-+			eval test_must_fail $command &&
- 			test_superproject_content origin/add_sub1 &&
- 			test_submodule_content sub1 origin/add_sub1
- 		)
-@@ -484,7 +518,9 @@ test_submodule_switch_common () {
- 			cd submodule_update &&
- 			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
- 			replace_gitfile_with_git_dir sub1 &&
--			test_must_fail $command replace_sub1_with_file &&
-+			arg=replace_sub1_with_file &&
-+			$before "$arg" &&
-+			eval test_must_fail $command &&
- 			test_superproject_content origin/add_sub1 &&
- 			test_git_directory_is_unchanged sub1 &&
- 			test_submodule_content sub1 origin/add_sub1
-@@ -508,7 +544,10 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t modify_sub1 origin/modify_sub1 &&
--			$command modify_sub1 &&
-+			arg=modify_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/modify_sub1 &&
- 			test_submodule_content sub1 origin/add_sub1 &&
- 			git submodule update &&
-@@ -523,7 +562,10 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t invalid_sub1 origin/invalid_sub1 &&
--			$command invalid_sub1 &&
-+			arg=invalid_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/invalid_sub1 &&
- 			test_submodule_content sub1 origin/add_sub1 &&
- 			test_must_fail git submodule update &&
-@@ -538,7 +580,10 @@ test_submodule_switch_common () {
- 		(
- 			cd submodule_update &&
- 			git branch -t valid_sub1 origin/valid_sub1 &&
--			$command valid_sub1 &&
-+			arg=valid_sub1 &&
-+			$before "$arg" &&
-+			eval $command &&
-+			$after "$arg" &&
- 			test_superproject_content origin/valid_sub1 &&
- 			test_dir_is_empty sub1 &&
- 			git submodule update --init --recursive &&
-@@ -559,17 +604,34 @@ test_submodule_switch_common () {
- # conditions, set the appropriate KNOWN_FAILURE_* variable used in the tests
- # below to 1.
- #
--# Use as follows:
-+# $1: The git command to be eval'd and tested. The submodule being operated on
-+# will be available as $arg. Do not include the leading "git".
- #
--# my_func () {
-+# $2: The function that will run before the git command. It will be passed the
-+# submodule being operated on as the only argument. This argument is optional.
-+#
-+# $3: The function that will run after $1. It will be passed the submodule
-+# being operated on as the only argument. This argument is optional. It will
-+# not be run when testing a case where the git command is expected to fail.
-+#
-+# The following example uses `git some-command` as an example command to be
-+# tested. It updates the worktree and index to match a target, but not any
-+# submodule directories.
-+#
-+# my_func_before () {
- #   target=$1
--#   # Do something here that updates the worktree and index to match target,
--#   # but not any submodule directories.
-+#   # Prepare for git some-command to be run
- # }
--# test_submodule_switch_func "my_func"
-+# my_func_after () {
-+#   target=$1
-+#   # Check the state after git some-command is run
-+# }
-+# test_submodule_switch_func "some-command \$arg" "my_func_before" "my_func_after"
- test_submodule_switch_func () {
--	command="$1"
--	test_submodule_switch_common "$command"
-+	command="git $1"
-+	before="$2"
-+	after="$3"
-+	test_submodule_switch_common "$command" "$before" "$after"
- 
- 	# An empty directory does not prevent the creation of a submodule of
- 	# the same name, but a file does.
-@@ -580,7 +642,9 @@ test_submodule_switch_func () {
- 			cd submodule_update &&
- 			git branch -t add_sub1 origin/add_sub1 &&
- 			>sub1 &&
--			test_must_fail $command add_sub1 &&
-+			arg=add_sub1 &&
-+			$before "$arg" &&
-+			eval test_must_fail $command &&
- 			test_superproject_content origin/no_submodule &&
- 			test_must_be_empty sub1
- 		)
-@@ -588,15 +652,15 @@ test_submodule_switch_func () {
- }
- 
- test_submodule_switch () {
--	test_submodule_switch_func "git $1"
-+	test_submodule_switch_func "$1 \$arg"
- }
- 
- # Same as test_submodule_switch(), except that throwing away local changes in
- # the superproject is allowed.
- test_submodule_forced_switch () {
--	command="$1"
-+	command="git $1 \$arg"
- 	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
--	test_submodule_switch_common "git $command"
-+	test_submodule_switch_common "$command"
- 
- 	# When forced, a file in the superproject does not prevent creating a
- 	# submodule of the same name.
-@@ -607,7 +671,8 @@ test_submodule_forced_switch () {
- 			cd submodule_update &&
- 			git branch -t add_sub1 origin/add_sub1 &&
- 			>sub1 &&
--			$command add_sub1 &&
-+			arg=add_sub1 &&
-+			eval $command &&
- 			test_superproject_content origin/add_sub1 &&
- 			test_dir_is_empty sub1
- 		)
-diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
-index 788605ccc0..d31e6487bd 100755
---- a/t/t3426-rebase-submodule.sh
-+++ b/t/t3426-rebase-submodule.sh
-@@ -16,11 +16,10 @@ git_rebase () {
- 	git revert HEAD &&
- 	git status -su >actual &&
- 	ls -1pR * >>actual &&
--	test_cmp expect actual &&
--	git rebase "$1"
-+	test_cmp expect actual
- }
- 
--test_submodule_switch_func "git_rebase"
-+test_submodule_switch_func "rebase \$arg" "git_rebase"
- 
- git_rebase_interactive () {
- 	git status -su >expect &&
-@@ -34,11 +33,10 @@ git_rebase_interactive () {
- 	ls -1pR * >>actual &&
- 	test_cmp expect actual &&
- 	set_fake_editor &&
--	echo "fake-editor.sh" >.git/info/exclude &&
--	git rebase -i "$1"
-+	echo "fake-editor.sh" >.git/info/exclude
- }
- 
--test_submodule_switch_func "git_rebase_interactive"
-+test_submodule_switch_func "rebase -i \$arg" "git_rebase_interactive"
- 
- test_expect_success 'rebase interactive ignores modified submodules' '
- 	test_when_finished "rm -rf super sub" &&
-diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
-index 95a7f64471..994cdc40f0 100755
---- a/t/t3513-revert-submodule.sh
-+++ b/t/t3513-revert-submodule.sh
-@@ -11,11 +11,13 @@ test_description='revert can handle submodules'
- # first so we can restore the work tree test setup after doing the checkout
- # and revert.  We test here that the restored work tree content is identical
- # to that at the beginning. The last revert is then tested by the framework.
--git_revert () {
-+git_revert_before () {
- 	git status -su >expect &&
- 	ls -1pR * >>expect &&
--	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
--	git checkout "$1" &&
-+	tar cf "$TRASH_DIRECTORY/tmp.tar" *
-+}
-+
-+git_revert_after () {
- 	git revert HEAD &&
- 	rm -rf * &&
- 	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
-@@ -26,6 +28,6 @@ git_revert () {
- }
- 
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
--test_submodule_switch_func "git_revert"
-+test_submodule_switch_func "checkout \$arg" "git_revert_before" "git_revert_after"
- 
- test_done
-diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
-index 6a7e801ca0..358a625124 100755
---- a/t/t3906-stash-submodule.sh
-+++ b/t/t3906-stash-submodule.sh
-@@ -5,10 +5,12 @@ test_description='stash can handle submodules'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
--git_stash () {
-+git_stash_before () {
- 	git status -su >expect &&
--	ls -1pR * >>expect &&
--	git read-tree -u -m "$1" &&
-+	ls -1pR * >>expect
-+}
-+
-+git_stash_after () {
- 	git stash &&
- 	git status -su >actual &&
- 	ls -1pR * >>actual &&
-@@ -19,7 +21,7 @@ git_stash () {
- KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES=1
- KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
--test_submodule_switch_func "git_stash"
-+test_submodule_switch_func "read-tree -u -m \$arg" "git_stash_before" "git_stash_after"
- 
- setup_basic () {
- 	test_when_finished "rm -rf main sub" &&
-diff --git a/t/t4137-apply-submodule.sh b/t/t4137-apply-submodule.sh
-index b645e303a0..fe5ebeaa41 100755
---- a/t/t4137-apply-submodule.sh
-+++ b/t/t4137-apply-submodule.sh
-@@ -5,16 +5,12 @@ test_description='git apply handling submodules'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
--apply_index () {
--	git diff --ignore-submodules=dirty "..$1" | git apply --index -
-+create_diff () {
-+	git diff --ignore-submodules=dirty "..$1" >diff
- }
- 
--test_submodule_switch_func "apply_index"
-+test_submodule_switch_func "apply --index diff" "create_diff"
- 
--apply_3way () {
--	git diff --ignore-submodules=dirty "..$1" | git apply --3way -
--}
--
--test_submodule_switch_func "apply_3way"
-+test_submodule_switch_func "apply --3way diff" "create_diff"
- 
- test_done
-diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
-index 1b179d5f45..5305280dfd 100755
---- a/t/t4255-am-submodule.sh
-+++ b/t/t4255-am-submodule.sh
-@@ -5,18 +5,14 @@ test_description='git am handling submodules'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
--am () {
--	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am -
-+create_patch () {
-+	git format-patch --stdout --ignore-submodules=dirty "..$1" >patch
- }
- 
--test_submodule_switch_func "am"
--
--am_3way () {
--	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am --3way -
--}
-+test_submodule_switch_func "am patch" "create_patch"
- 
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
--test_submodule_switch_func "am_3way"
-+test_submodule_switch_func "am --3way patch" "create_patch"
- 
- test_expect_success 'setup diff.submodule' '
- 	test_commit one &&
-diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-index f911bf631e..3b37853537 100755
---- a/t/t5572-pull-submodule.sh
-+++ b/t/t5572-pull-submodule.sh
-@@ -11,36 +11,16 @@ reset_branch_to_HEAD () {
- 	git branch --set-upstream-to="origin/$1" "$1"
- }
- 
--git_pull () {
--	reset_branch_to_HEAD "$1" &&
--	git pull
--}
--
- # pulls without conflicts
--test_submodule_switch_func "git_pull"
-+test_submodule_switch_func "pull" "reset_branch_to_HEAD"
- 
--git_pull_ff () {
--	reset_branch_to_HEAD "$1" &&
--	git pull --ff
--}
-+test_submodule_switch_func "pull --ff" "reset_branch_to_HEAD"
- 
--test_submodule_switch_func "git_pull_ff"
--
--git_pull_ff_only () {
--	reset_branch_to_HEAD "$1" &&
--	git pull --ff-only
--}
--
--test_submodule_switch_func "git_pull_ff_only"
--
--git_pull_noff () {
--	reset_branch_to_HEAD "$1" &&
--	git pull --no-ff
--}
-+test_submodule_switch_func "pull --ff-only" "reset_branch_to_HEAD"
- 
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
--test_submodule_switch_func "git_pull_noff"
-+test_submodule_switch_func "pull --no-ff" "reset_branch_to_HEAD"
- 
- test_expect_success 'pull --recurse-submodule setup' '
- 	test_create_repo child &&
-diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
-index 0e0cdf638d..b99e81d55d 100755
---- a/t/t6041-bisect-submodule.sh
-+++ b/t/t6041-bisect-submodule.sh
-@@ -5,12 +5,14 @@ test_description='bisect can handle submodules'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
--git_bisect () {
-+git_bisect_before () {
- 	git status -su >expect &&
- 	ls -1pR * >>expect &&
- 	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
--	GOOD=$(git rev-parse --verify HEAD) &&
--	git checkout "$1" &&
-+	GOOD=$(git rev-parse --verify HEAD)
-+}
-+
-+git_bisect_after () {
- 	echo "foo" >bar &&
- 	git add bar &&
- 	git commit -m "bisect bad" &&
-@@ -27,6 +29,6 @@ git_bisect () {
- 	git bisect bad $BAD
- }
- 
--test_submodule_switch_func "git_bisect"
-+test_submodule_switch_func "checkout \$arg" "git_bisect_before" "git_bisect_after"
- 
- test_done
--- 
-2.27.0.132.g321788e831
-
+> And after that you change your workflows so the rule is that whomever=0A=
+> pushes first to the "trunk branch" wins, and the other guy has to do=0A=
+> the conflict resolution. People will start merging earlier and more=0A=
+> often so they can keep the conflicts to a minimum. :-) In other words=0A=
+> I second what Philip Oakley said about bad workflows. Merge early,=0A=
+> merge often, rollout early, rollout often, vote early, vote often. :-)=0A=
+=0A=
+I understand what you guys are saying, I agree merge early, merge often=0A=
+does work best and it's what I've most often used. Our branching strategy=
+=0A=
+is split by subsystem (and sometimes specific features). So contributors ar=
+e=0A=
+not merging to the same long-term branches. So merge early, merge often,=0A=
+doesn't help with conflicts.=0A=
+=0A=
+Why? We don't have so much automated tests, etc. And that's not an=0A=
+easy problem to solve although we are trying to improve in this area. For u=
+s=0A=
+to make worthwhile tests, we would have to emulate a lot of hardware=0A=
+from external vendors. Out test hardware is often shared among many.=0A=
+So branching ensures that if we hit problems, it most likely came from=0A=
+within our group, in the area of the code we are most knowledgeable=0A=
+about.=0A=
+=0A=
+And when your branching strategy is like this, it ends up being the=0A=
+branch managers merging and having to fix conflicts, not the individual=0A=
+contributors. In our git repo you will see broken commits with these=0A=
+delimiters in (<<<< =3D=3D=3D=3D >>>>) in order to "fake" this kind of=0A=
+collaborative conflict resolution feature as described in the initial email=
+.=0A=
+=0A=
+Regards,=0A=
+=0A=
+Eric Curtin=0A=
+=0A=
+Software Engineer=0A=
+Ovens Campus,=0A=
+Cork,=0A=
+Ireland=0A=
+=0A=
+Dell EMC=0A=
