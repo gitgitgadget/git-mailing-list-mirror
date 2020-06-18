@@ -2,94 +2,72 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C6A9C433DF
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 04:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20824C433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 04:59:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2473217A0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 04:43:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wu+rBdzd"
+	by mail.kernel.org (Postfix) with ESMTP id 04A152186A
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 04:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726899AbgFREns (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 00:43:48 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62551 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726382AbgFREnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 00:43:46 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B867ECB146;
-        Thu, 18 Jun 2020 00:43:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=kJ6M5H2y9TOf
-        Mfgemjkafmxz550=; b=Wu+rBdzdHxEoW/PAMPC0tFD0kYU/ALzqmFAP6SRalReY
-        Cq3DAmXq2STLV8Xyj0sKXtMfFrZFPQZ/yVjmiGV1L6k987MBSATT821Ws2txBO1X
-        bfMfM9Kffw5b8xCzquc/HBszykQ6nFcAlCoaiwhFb356ERQawL8jtpiJT7APEdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tlnJhf
-        N0DI2NFYI5sg+XlDzG1yeGWpwmdNbdDAw2Fu9zRzDRjDjN/93cJBkybE5joyhrpI
-        qEbmQMWTxRm6NDnmSJszDAJpDUTOXCqhQtbVqjkGJn2NT1p6Frp4iUiMPxOspC7E
-        1CNyGtGqWou9z2Ug2AwDiiIVHg0VJ+h1Z+V8Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B08A4CB144;
-        Thu, 18 Jun 2020 00:43:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 01241CB143;
-        Thu, 18 Jun 2020 00:43:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Cc:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4 6/8] cmake: support for building git on windows with mingw
-References: <549f0cd5fffef38e8d85246a9aa2593674aad68c.1591986566.git.gitgitgadget@gmail.com>
-        <20200615140349.1783-1-oystwa@gmail.com>
-        <CAKiG+9X66yf_F8F3XuYFdFyBWiFRZ_rf0Y1mE5LVCjsi-AzKbg@mail.gmail.com>
-Date:   Wed, 17 Jun 2020 21:43:40 -0700
-In-Reply-To: <CAKiG+9X66yf_F8F3XuYFdFyBWiFRZ_rf0Y1mE5LVCjsi-AzKbg@mail.gmail.com>
-        (Sibi Siddharthan's message of "Tue, 16 Jun 2020 01:17:08 +0530")
-Message-ID: <xmqq8sglq8zn.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726193AbgFRE60 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 18 Jun 2020 00:58:26 -0400
+Received: from mout.kundenserver.de ([217.72.192.75]:57963 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725892AbgFRE60 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 00:58:26 -0400
+Received: from ThorstensPC ([109.250.247.238]) by mrelayeu.kundenserver.de
+ (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MMXcP-1jUwIp3xlH-00JeSN for <git@vger.kernel.org>; Thu, 18 Jun 2020 06:58:25
+ +0200
+From:   <sopq0asmppc9@online.de>
+To:     <git@vger.kernel.org>
+References: 
+In-Reply-To: 
+Subject: AW: Git commands throw error
+Date:   Thu, 18 Jun 2020 06:58:27 +0200
+Message-ID: <01af01d6452d$1a91b590$4fb520b0$@online.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4902132C-B11E-11EA-A9EB-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGVGxHpUbvxRIbKwyCHtdsnVORiWKlgI2bg
+Content-Language: de
+X-Provags-ID: V03:K1:B45J7Y5Y67psPeg6pRCGd+0urQ3TSzGH7hb6yl5f1UZKQl5YGfy
+ 5+TFL4rsIoBSSuWsle5F+E2TVAUlrlZUBwVHl1z/C53avLj1lVDqr7yrS0iWT+qbOBM9Ju+
+ SA4KZinZz6eSCV41KbjWBotKImNn9xW+0aGvIvS5S9Okpv+n+xgUevu001R7Tnasm6G6D32
+ om2o/XCbUxf5ZBjN04UYw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3HElyQ0Ha74=:cELf7q6yw4PNQQHKPIsZdD
+ y/Ew0VD5TdKmOa9H6JKu30u0g3S1Q+PK2PcV8wUE6r3a9Gs9oooLKb/tzDqvgpHlsvFDVAJEi
+ uNPKUXcKIyBxyAk1j975DaWY0MMjG88yia5LLHuKt3zte+5pRmopaVYWqNJn4QNfZe2jAvW3c
+ 77uRo8UJXDrpA0Dn1et73zPk/A1fzLtQrKOV6R9VZkZ2RZKXr+freFIhxR+Km3lvhfZJ3qdZn
+ b98LYx6fGNyZpsvZq9bA+d7bkmbm9kVT/h6fjDImUmR8xpBbDIeLtcrfPltR/IZCtf0TQ96oQ
+ h9uTsNvULpqao3XiFvBvZVNnAqOTYQqsF4z7kKUlqf/+JAndo2HixN7yFiWA+jAyMoRviUDLD
+ XuS7pp6cICmiAwhU+b1Qztb06cfIdlcG5GF5zSpdL0hBKQ8eL+YCmk8E0Hi3+QWxVa8AXX+4l
+ U/R6NlBzVnt4v5NhXIyt8/z2SDYr40f2xZjRI4vdw5d+yNYG1bos1APGvfZLCAEdrsS4kvyRx
+ v4RqPPtzn+7Oqb654bLHXFRNK7YJi9N4GON/t1ehsaKsTDrXyZZAorGlSWheVimRNI0anwfJV
+ eYcIC2pAP/wJCUiwheVoRS9FpGaGMbdlfQ5YLD4SVjwH1/MJuqHfH//A5knHubdJNohaNRvqM
+ dww5PPx0762KL9bZM/Ry9UxwTHS8O0ubZ8YujL5A7sLDvnPVB0BnVkJCRms69daLhpWJtvb4I
+ UAKXZPS94HS4OzHEUEkpQe3aVzP2nHJ6IDd3+p4OhBds1TPgBzH9KRw+pYJ/65p1CdKQBEjh5
+ j+Lmt/l7xGNgAuqS4QC5B/3ZU+fDALcIOhPBcX8vDxCCJ2FNPDqslwEzPSIyu1EDAXvTmoU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+Hi!
 
-> On Mon, Jun 15, 2020 at 7:33 PM =C3=98ystein Walle <oystwa@gmail.com> w=
-rote:
->>
->> > +if(WIN32)
->> > +     set(EXE_EXTENSION .exe)
->> > +else()
->> > +     set(EXE_EXTENSION)
->> > +endif()
->>
->> You can probably use CMAKE_EXECUTABLE_SUFFIX here. See:
->> https://cmake.org/cmake/help/latest/variable/CMAKE_EXECUTABLE_SUFFIX.h=
-tml
->>
->
-> Could have done it that way, will try to change it once the patch
-> series gets merged with next or master.
+I recently upgraded my GIT installation to git version 2.27.0.windows.1 
 
-If it is something that makes the result even simpler than the above
-quoted 5 lines, I do not see a reason to postpone it and use that
-simpler way from the beginning.
+I have all my repositories on a NAS and now I get errors with all commands, e.g. 
+git status ->  fatal: failed to stat '’: Function not implemented
+git pull ->  fatal: failed to stat '’: Function not implemented
 
-Thanks.
+Setting fscache to false (globally or locally) does not help. Please fix it quickly 😉
+
+Regards, Thorsten
+
+
