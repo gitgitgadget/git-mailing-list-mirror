@@ -2,126 +2,99 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0421C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B40BCC433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:41:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BB59208C3
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:40:59 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tDZ4CaFM"
+	by mail.kernel.org (Postfix) with ESMTP id 8B79C208C3
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731950AbgFRUk6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 16:40:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56150 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731484AbgFRUky (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 16:40:54 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5577EC06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 13:40:54 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id v19so3129501qtq.10
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 13:40:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9qmG856c1JOfLjRIJWk9NW0Wgo/y31J3WNP86H1pL+M=;
-        b=tDZ4CaFM15NNDCjzR0y6ydpmz0BKV/mdaU4i3mSD10WXBp2kyZ1bmfMw9yUPgq2oO8
-         WJ0swcgsa5t4O61rhiBOSqBkLW24G14lJD+RzC2q4RLC7YOwXNyfq8OiAhYPdvJrYDi6
-         rlksMosr1S6OfG94LCFiRUu4JjKXlx1k776EzgQ+NoIvM4uHk29c349pXfwZj95XRp6p
-         tldfKUZY5l1zk06zx9SeAXJ0s39FL3P24w4BMP2PWMlv5J+npqdzFCSW/AHN1474EqYo
-         C+1Qlmzystiaz1e3821yDvN1WUTWUR9S+bMGNzuU+c42obmarxOvTNK/rj9V19wOgpSb
-         7+jw==
+        id S1731971AbgFRUkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 16:40:20 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:42898 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731613AbgFRUkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 16:40:14 -0400
+Received: by mail-pl1-f194.google.com with SMTP id k6so2937603pll.9
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 13:40:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9qmG856c1JOfLjRIJWk9NW0Wgo/y31J3WNP86H1pL+M=;
-        b=YKC4D4mHGOg1mC3+1I6cXPhTA9OT39XVUhr/V6sws+U8S/i32YOhATH4c1oTphtquJ
-         mqk5A5TJW0kGEnvU67IcLr3QKLoW759kfqnYgadu3F5yvcKEdya9vr2U/6IfXnpVd7gn
-         ktR0FlGBwaI4D7PSnTM0V5U67V8gFfHUkFYuxGuAwyDCgxiBq1b30OzwueLYHpHCR6a6
-         cZj34F8tfSv7m1lYKzzxsAGyEwoV6N/0jdNq0pu/sbzlpZKQFN5u6WdN5o37P13Tdn1o
-         N7Qo08+U4Bmsdmb827dJC2OdKPAsM1sJTemhFz3kEICCs1vWyk0m45dUbWFMEFdnNDRw
-         Vk+Q==
-X-Gm-Message-State: AOAM5317t4AGIFbnoFXw1jGIrXbxfnYGCzW6A9756C17VsC663rjYgDO
-        bY4m8BLXqX4zvCN3tUF8EkWMB9ucwiAb47ze6CK6kg==
-X-Google-Smtp-Source: ABdhPJwqDv86f++lI7xMly54aYeKjS369tofTIwO/reGDtoCLS14m9Fdt+c5w7ENCJMq8/4mAlVoZaZD0gzvyi9pRfw=
-X-Received: by 2002:ac8:4243:: with SMTP id r3mr27302qtm.225.1592512853584;
- Thu, 18 Jun 2020 13:40:53 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:from:to:references:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=HuIyO7lH2+gvWNcKcqB18EuiJNUX7b0DpeMAsprGlCM=;
+        b=C6o5d9ExpeD0aditZueIQZkMzc+Y4zOiGDx/52KXucjyL0EnbAQx4+HdqLheJVIiBo
+         uuSK7/0EUqgUoOjvFwjMovHtPTDpJSLAxtvA1QqlKumU0Lzidndqr3KnAJ7Tdo3es6MV
+         RuO9CCrI5H1kuqsRAOxgPaiStLq4aSM++0snb1nJcHH32Wwcp++/KYBdOK6etJhHdmxj
+         3bNVVepq6ymwBUzXdLS/ttRJ4CAAz1VRXywLhDTSkc41ms/wWPDQ2HNNv6SfWMbAUscS
+         c2TCtltxVHniSObd0L5PzgXv5Lqb1pQ1h2OMT2IoIQUz39S+Ts/9A5gI6ogNKD/aAiie
+         5zzw==
+X-Gm-Message-State: AOAM531Eu2zOJR8EmQCaCei0jAbkrH0oL27QjidkQqJ9WqeRY55s7TCh
+        X/rGF0zNgpoDZHpqM/ODzBwfwkSwEwM=
+X-Google-Smtp-Source: ABdhPJxlOs2EtEnzKdeR0RJ3nwOJ+61m/Gk0iO64rOnzbPz3lf2pwip2ij2/nUy4cHpjpbCmOKk2zQ==
+X-Received: by 2002:a17:90b:3842:: with SMTP id nl2mr114677pjb.111.1592512812465;
+        Thu, 18 Jun 2020 13:40:12 -0700 (PDT)
+Received: from ?IPv6:2601:647:4902:640:5dd6:323c:6306:86b1? ([2601:647:4902:640:5dd6:323c:6306:86b1])
+        by smtp.gmail.com with ESMTPSA id y7sm3203152pjy.21.2020.06.18.13.40.11
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jun 2020 13:40:11 -0700 (PDT)
+Reply-To: pss@acm.org
+Subject: Re: git config not following include paths by default
+From:   "Paul S. Strauss" <pss@acm.org>
+To:     git@vger.kernel.org
+References: <6aab7843-7ece-5499-c074-a5fa8ef68beb@acm.org>
+Message-ID: <b9f47155-e6ef-5868-898d-f5a703e2fd94@acm.org>
+Date:   Thu, 18 Jun 2020 13:40:11 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <549f0cd5fffef38e8d85246a9aa2593674aad68c.1591986566.git.gitgitgadget@gmail.com>
- <20200615140349.1783-1-oystwa@gmail.com> <CAKiG+9X66yf_F8F3XuYFdFyBWiFRZ_rf0Y1mE5LVCjsi-AzKbg@mail.gmail.com>
- <xmqq8sglq8zn.fsf@gitster.c.googlers.com> <CAKiG+9VZUqDi=EbbqY2vLAiD6LEFMfR_2UHE+gbt_RpKNanUCA@mail.gmail.com>
- <xmqqk104nnll.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk104nnll.fsf@gitster.c.googlers.com>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Fri, 19 Jun 2020 02:10:42 +0530
-Message-ID: <CAKiG+9UqvrxyMQufuG=oAP6Yo7+YSoicwqZBJjsZZFQT-Bscjw@mail.gmail.com>
-Subject: Re: [PATCH v4 6/8] cmake: support for building git on windows with mingw
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <6aab7843-7ece-5499-c074-a5fa8ef68beb@acm.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 19, 2020 at 1:38 AM Junio C Hamano <gitster@pobox.com> wrote:
+Update:
+
+The problem is related to my having GIT_CONFIG set to a file other than 
+~/.gitconfig - when I unset GIT_CONFIG and copied my config file to 
+~/.gitconfig, the include worked as expected.
+
+So, to reproduce:
+
+    Do NOT have a ~/.gitconfig file
+    Set GIT_CONFIG to a configuration file with [include] statements
+    Then the behavior I mentioned will occur
+
+
+
+On 6/18/20 1:25 PM, Paul S. Strauss wrote:
+> Using git version 2.25.1 in a bash shell on Ubuntu 20.04 (focal).
 >
-> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+> My global git config file has an [include] with path set to additional 
+> configuration.
 >
-> > Since this patch series has been merged with pu, I didn't know whether
-> > I should wait till the patch gets merged into 'next' or do the change
-> > immediately.
+> "git config --list --show-origin --includes" shows all of my configuration, 
+> including items from the included file.
 >
-> Ah, OK.  Being in 'pu' does not mean no more than that the patch was
-> sent to the list and I happened to have seen it.  If it were ready
-> to be merged to 'next', I may have marked it as such in the "What's
-> cooking" report, but otherwise, the default is to be polished until
-> it gets ready.
+> "git config --list --show-origin" shows only the items in my main config file. 
+> Not sure why "--no-includes" is the default, but not a huge deal either way.
 >
-> > One more thing, there is an issue with the scripts' permissions when
-> > run in Linux. They don't have execute permissions.
+> What is a big deal is that none of the configuration in my included config 
+> file is available to me. I have lots of aliases and other settings in the 
+> included file, but none of them work.
 >
-> What script?  Your scripts you add in the patch series?  What is the
-> reason why they lack execute permissions?  Forgot to "chmod +x"?
->
-> It sounds like, in addition to issues pointed out during the review
-> cycle, you have identified more issues that can be solved to make
-> the series more complete yourself, which is a very good thing.  It
-> is hard for anyone to review one's own patches and find issues, and
-> you seem to be getting the hang of it.  These are all good thing to
-> address before the topic becomes ready for 'next'.
+> This can't be the expected behavior, can it? If so, then including config 
+> files is pretty useless.
 >
 
-Danh was the one who pointed this out, credit goes to him.
-The reason I deferred modifying in PATCH v4 was because there was no
-easy way(cross platform)
-to change file permissions. The workaround is to juggle the files to a
-temporary directory, and then copy them
-to where they are intended to be with the required permissions. This
-added quite a bit of code.
-Since Windows platform was the priority, I did not address this issue.
+-- 
+Paul S. Strauss                                  pss@acm.org
 
-I know that this issue needs to be addressed to make the script more
-complete, so will have a UNIX conditional block for addressing this
-issue.
-
-Thank You,
-Sibi Siddharthan
-
-> And there is no need to hurry.  If you do not want to waste time in
-> repeated rewrite and review cycle, the best way may be to go slowly
-> and carefully to avoid "this was known to be suboptimal even when I
-> wrote it, but I didn't bother fixing it before sending it out, but
-> it was noticed during the review so I have to update it and send a
-> new round".
->
-> Thanks.
