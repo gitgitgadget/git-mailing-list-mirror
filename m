@@ -2,88 +2,128 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C15D2C433DF
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 18:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF683C433E0
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 18:15:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0DF520C09
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 18:08:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QOAl8sDs"
+	by mail.kernel.org (Postfix) with ESMTP id D528F207DD
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 18:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729903AbgFRSIJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 14:08:09 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54268 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726196AbgFRSII (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 14:08:08 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0FF50D8E06;
-        Thu, 18 Jun 2020 14:08:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bhTlvsTbfn1s0oHfTTK7e9t4kv4=; b=QOAl8s
-        DsUZrQox4GZx29nNmu0BJmxxEdwWdD0SqcC+rc6Q2+fq0Bd658vUlRnyILwVcU4B
-        z8miRClO/cnLWgV14peI0c2HOBamUpRZViDsNVeWV3clF03cXdLyDhi8UgZGhfag
-        nTFA/yhORs8mish178ZwIfgZvgGQj9kFJkEw4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QXo2D9SDfE1sb1ziumvsgjQ59MNjJCAz
-        EQp+9R8sDrPrRfCxcJJrNiL+8hxnMvpGhTSYJ94UvcMVQYiU/rv8NOo1o5AZ4heH
-        82mUPHU+XFyE+JrSfJ2Rn2Qkw/Qc7tSclI7ez6Mlk5NabiD37Hxb7hXLxtGlHBZu
-        WLlDH+Qy510=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 07898D8E05;
-        Thu, 18 Jun 2020 14:08:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 51228D8E04;
-        Thu, 18 Jun 2020 14:08:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org,
-        Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] tests: do not use "slave branch" nomenclature
-References: <20200618163843.22181-1-bonzini@gnu.org>
-        <20200618164554.GA616157@coredump.intra.peff.net>
-Date:   Thu, 18 Jun 2020 11:08:01 -0700
-In-Reply-To: <20200618164554.GA616157@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 18 Jun 2020 12:45:54 -0400")
-Message-ID: <xmqqwo44nt6m.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728855AbgFRSPf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 14:15:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36406 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728157AbgFRSPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 14:15:34 -0400
+Received: (qmail 20826 invoked by uid 109); 18 Jun 2020 18:15:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jun 2020 18:15:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17732 invoked by uid 111); 18 Jun 2020 18:15:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Jun 2020 14:15:34 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 18 Jun 2020 14:15:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 4/4] lib-submodule-update: use callbacks in
+ test_submodule_switch_common()
+Message-ID: <20200618181533.GA633383@coredump.intra.peff.net>
+References: <cover.1591897173.git.liu.denton@gmail.com>
+ <cover.1592470068.git.liu.denton@gmail.com>
+ <35d07117e637edf5f9a148a50da6b2294ec0f87f.1592470068.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A6FFA078-B18E-11EA-BFFB-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <35d07117e637edf5f9a148a50da6b2294ec0f87f.1592470068.git.liu.denton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jun 18, 2020 at 04:49:14AM -0400, Denton Liu wrote:
 
-> On Thu, Jun 18, 2020 at 06:38:43PM +0200, Paolo Bonzini wrote:
->
->> From: Paolo Bonzini <pbonzini@redhat.com>
->> 
->> Git does not have slave branches and has never had.  Independent
->> of any future change to the naming of branches, remove the sole
->> appearance of the term.
->
-> I think this is a sensible change, though note that something simpler
-> was proposed recently:
->
->   https://lore.kernel.org/git/20200610165441.iktvzuwz44sbytfg@chatter.i7.local/
->
-> and the review suggested using a name that is even more meaningful to
-> the test case (so we not just remove the unwanted names, but make the
-> test easier to follow).
+> Instead of invoking $command as one monolithic helper function, break it
+> up into three parts:
+> 
+> 	1. $command which is always a git command.
+> 	2. $before which is a callback function that runs just prior to
+> 	   $command.
+> 	3. $after which is a callback function that runs just after
+> 	   $command.
 
-Thanks for spotting that both versions share the same issue.  We'd
-just need a single one that is fixed up ;-).
+Thanks for reworking it in this way. I do think it's less confusing than
+the original.
+
+> If the command requires a filename argument, specify it as `\$arg` since
+> that variable will be set and the whole $command string will be eval'd.
+> Unfortunately, there is no way to get rid of the eval as some of the
+> commands that are passed (such as the `git pull` tests) require that no
+> additional arguments are passed so we must have some mechanism for the
+> caller to specify whether or not it wants the filename argument.
+
+We didn't need that "\$arg" thing before because we were passing whole
+functions (which then decided to pass the arg or not). Can we just keep
+doing that (using functions)?
+
+That puts the onus on callers who want to ignore the arg to wrap any
+commands in a function, but saves ones who _do_ want to use the arg from
+having to do anything. So it's a tradeoff, but I think an extra function
+wrapper is less magical than the "\$arg" eval (plus from skimming the
+diff, I think most callers do use it).
+
+So for example, this:
+
+> +test_submodule_switch_func "apply --3way diff" "create_diff"
+
+becomes:
+
+  apply_diff () {
+          git apply --3way diff
+  }
+  test_submodule_switch_func apply_diff create_diff
+
+Obviously that requires dropping the implicit "git" from $command (but
+I'd argue that makes things less magical, too).
+
+> @@ -326,7 +336,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t add_sub1 origin/add_sub1 &&
+> -			$command add_sub1 &&
+> +			arg=add_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+
+This block gets repeated a lot, and I wondered if a helper function
+could make it better. But:
+
+  1. We'd have to pass in a bunch of variables (or consider them as
+     magic globals).
+
+  2. Some callers want test_must_fail and other's don't.
+
+So I think it would be something like:
+
+  do_command () {
+    $before "$1" &&
+    "$2" $command "$1" &&
+    $after "$1"
+  }
+
+  ...
+  do_command add_sub1 &&
+  ...
+
+There's definitely still some magic there, but at least it's all
+contained within the one script. I could go either way on it.
+
+-Peff
