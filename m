@@ -2,119 +2,104 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB14C433DF
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 19:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A79BC433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:08:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38CAB20786
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 19:55:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36646207E8
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:08:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m4Ue/A6g"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NfJSdBGc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730345AbgFRTzh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 15:55:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49108 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730193AbgFRTze (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 15:55:34 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB3CC06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 12:55:34 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id u17so5502374qtq.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 12:55:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gW6mWKQzWC8/OGz+wh2E82aOy1ys1X8qu9B86WtO+Cs=;
-        b=m4Ue/A6g4Xq4muuysjErPv+CYuqYPMjPLewW3KgSNRTRIC0ht8QRu/4VpBUuYjCGdn
-         XnhfYsIN3FeLwz07htKmzUp3OR6ymt2BBjwrzIBwVLqW+K/ebXkVh3ppnYL0rxitgMkb
-         rff22bjhZlWSw5w/MEFNQ630vkrotwPXEEBLjg1Sjt95LlUCb32Wngqev+dkJbK5qnzv
-         AnlLbht5XsMXkxjjil7lA1PlcWeBwQIenixuXdY7cQh5g1uHFoY2XJKiaBUJelQ4a+ll
-         gouvCY+lKp1E9567OK3LUeBJW71AmJlSHpJkakb4qYXlElfsfjvMk+HQn85D7HSh346Q
-         6XUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gW6mWKQzWC8/OGz+wh2E82aOy1ys1X8qu9B86WtO+Cs=;
-        b=RsLq2pKxs9c4wfCGIQXPrIacw9NEU+iU/SVFOxLYStOPvj5927OCMzoMEQoJzgwDeb
-         NVnki5aqu/XWutqXX0JORNpxKRC9ANFKLqkY5Z8Kdd5rHPbMiaWflDDoFE/8m2Lyo8Me
-         2dtr4k5+8RCmTkBvqCNYztMrIgZWBRz1mExEYddiQSc5G5Sz5az4sYawE5MV6uDrlK0D
-         C0tmJgjwiORU/LhC2HnfHsS3GanBonU9vRFI4I/fFpbGD0TXW4+JdaEVPn28JZFQu7Vz
-         F0BydrrULqUqOZlWyRLAGdDL8TJC45f0wBwQMMBOm2DDoocOa3LuD1cq3OmueiarQ7Km
-         PJUA==
-X-Gm-Message-State: AOAM532m4/fVpBZ64ev653HKNwuPWcjtjfaxgUwwxrfgY4uz53aY30MC
-        0VQWXS+Tjm+fbCtzHyGhlgcblidhGvbzrQCNW5g=
-X-Google-Smtp-Source: ABdhPJwmKY/WKHEaXox32yxPBygjXxJiKZ2HCpfptqg78JsCHjv98iJoBMdS9XWYaCjviI7VRfbPjhQZzvI8pDZu5/8=
-X-Received: by 2002:ac8:2bc4:: with SMTP id n4mr6241772qtn.222.1592510133173;
- Thu, 18 Jun 2020 12:55:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <549f0cd5fffef38e8d85246a9aa2593674aad68c.1591986566.git.gitgitgadget@gmail.com>
- <20200615140349.1783-1-oystwa@gmail.com> <CAKiG+9X66yf_F8F3XuYFdFyBWiFRZ_rf0Y1mE5LVCjsi-AzKbg@mail.gmail.com>
- <xmqq8sglq8zn.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq8sglq8zn.fsf@gitster.c.googlers.com>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Fri, 19 Jun 2020 01:25:22 +0530
-Message-ID: <CAKiG+9VZUqDi=EbbqY2vLAiD6LEFMfR_2UHE+gbt_RpKNanUCA@mail.gmail.com>
-Subject: Re: [PATCH v4 6/8] cmake: support for building git on windows with mingw
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>,
+        id S1729578AbgFRUIo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 16:08:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61133 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726533AbgFRUIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 16:08:44 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A17B6DAEA3;
+        Thu, 18 Jun 2020 16:08:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iiAxVbxqh/VxT77hQaSp6EyUxlk=; b=NfJSdB
+        GcOO1aLCXXfEW6Jl7cxJ+FdAR+fq2GE90XFbegKOmUpqvZbbGhMABG+B2bF/12ox
+        Qh7CekDQqVnr/7jeAQn5g2B6HZepdpl5DwJsTFvUBXLGF2BRnE/kfUHAmEFwQV5G
+        Ihvk8/E2TAFU9B+JRuzoR2VcVzG1A4cRjsfok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wMmhTIoVZE7f1rhdeTtv9xciSVv/U5R8
+        JtnX03tYIjALyTiGADjM6lQQAAZ9ribPGMhqjH0lHZTwsqxpfA37bqPjJu7zjpSH
+        HLT2i7IuyPihgTMie8OB5OnJbFlO95RLAg4awfw+eD3pZRb4EH6zldCfWqNrNeiG
+        aZteYEpalG8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99205DAEA2;
+        Thu, 18 Jun 2020 16:08:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E2915DAEA1;
+        Thu, 18 Jun 2020 16:08:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Cc:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
         Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 6/8] cmake: support for building git on windows with mingw
+References: <549f0cd5fffef38e8d85246a9aa2593674aad68c.1591986566.git.gitgitgadget@gmail.com>
+        <20200615140349.1783-1-oystwa@gmail.com>
+        <CAKiG+9X66yf_F8F3XuYFdFyBWiFRZ_rf0Y1mE5LVCjsi-AzKbg@mail.gmail.com>
+        <xmqq8sglq8zn.fsf@gitster.c.googlers.com>
+        <CAKiG+9VZUqDi=EbbqY2vLAiD6LEFMfR_2UHE+gbt_RpKNanUCA@mail.gmail.com>
+Date:   Thu, 18 Jun 2020 13:08:38 -0700
+In-Reply-To: <CAKiG+9VZUqDi=EbbqY2vLAiD6LEFMfR_2UHE+gbt_RpKNanUCA@mail.gmail.com>
+        (Sibi Siddharthan's message of "Fri, 19 Jun 2020 01:25:22 +0530")
+Message-ID: <xmqqk104nnll.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 80590D68-B19F-11EA-8B99-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 18, 2020 at 10:13 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
->
-> > On Mon, Jun 15, 2020 at 7:33 PM =C3=98ystein Walle <oystwa@gmail.com> w=
-rote:
-> >>
-> >> > +if(WIN32)
-> >> > +     set(EXE_EXTENSION .exe)
-> >> > +else()
-> >> > +     set(EXE_EXTENSION)
-> >> > +endif()
-> >>
-> >> You can probably use CMAKE_EXECUTABLE_SUFFIX here. See:
-> >> https://cmake.org/cmake/help/latest/variable/CMAKE_EXECUTABLE_SUFFIX.h=
-tml
-> >>
-> >
-> > Could have done it that way, will try to change it once the patch
-> > series gets merged with next or master.
->
-> If it is something that makes the result even simpler than the above
-> quoted 5 lines, I do not see a reason to postpone it and use that
-> simpler way from the beginning.
->
+Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
 
-Since this patch series has been merged with pu, I didn't know whether
-I should wait till the patch gets merged into 'next' or do the change
-immediately.
-If I do this change should I fixup the commit that introduced
-EXE_EXTENSION or commit on top of HEAD? Please tell. I will do the
-changes immediately and submit another PATCH series.
+> Since this patch series has been merged with pu, I didn't know whether
+> I should wait till the patch gets merged into 'next' or do the change
+> immediately.
 
-One more thing, there is an issue with the scripts' permissions when
-run in Linux. They don't have execute permissions.
-Since the main focus of the CMake build is to help windows devs,
-should I defer this modification until a later time, or should I do
-them immediately.
-The changes will involve adding a line of code to each of the script
-varieties(sh,perl,python) so 3 more lines of extra code.
+Ah, OK.  Being in 'pu' does not mean no more than that the patch was
+sent to the list and I happened to have seen it.  If it were ready
+to be merged to 'next', I may have marked it as such in the "What's
+cooking" report, but otherwise, the default is to be polished until
+it gets ready.
 
-Thank You,
-Sibi Siddharthan
+> One more thing, there is an issue with the scripts' permissions when
+> run in Linux. They don't have execute permissions.
 
-> Thanks.
+What script?  Your scripts you add in the patch series?  What is the
+reason why they lack execute permissions?  Forgot to "chmod +x"?
+
+It sounds like, in addition to issues pointed out during the review
+cycle, you have identified more issues that can be solved to make
+the series more complete yourself, which is a very good thing.  It
+is hard for anyone to review one's own patches and find issues, and
+you seem to be getting the hang of it.  These are all good thing to
+address before the topic becomes ready for 'next'.
+
+And there is no need to hurry.  If you do not want to waste time in
+repeated rewrite and review cycle, the best way may be to go slowly
+and carefully to avoid "this was known to be suboptimal even when I
+wrote it, but I didn't bother fixing it before sending it out, but
+it was noticed during the review so I have to update it and send a
+new round".
+
+Thanks.
