@@ -2,159 +2,589 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24ABAC433E0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 05:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F20D4C433E0
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 06:11:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F062221883
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 05:03:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C16D8217A0
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 06:11:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sk0UhljZ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="u5fXHzPB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726927AbgFRFDX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 01:03:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52664 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725892AbgFRFDW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 01:03:22 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AF8CC06174E
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 22:03:21 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id x202so3940444oix.11
-        for <git@vger.kernel.org>; Wed, 17 Jun 2020 22:03:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BIDh4J+zTlSxePzOWp66aw0kp0VQetdJJAopqYlkrnc=;
-        b=sk0UhljZUy/GbZrMH6kwfJ0yBWDcWUSyR+mqQ1qG6Quwt58GRqMcZVz+6kFk2OWfZj
-         pjWGnq2VrYa2ZfacWe1aQxRf01+Z6Yht0d9VjYWmRz5ksGw2wApkkzt55A/d5I/macWN
-         EMND5W88PLbUpjpnMxog7sRUN30t4UWPpBWicLUHQW3aexAmoFcsqzw/Xa4YMkjUOLaF
-         r0kF9A+Ayhx552Wvb7SR0gnZzTQ4BaA/J4UdRQFdwmh2WtuxUz2JCeXhhYgU4IaQ6JFM
-         CiLFhKzb4hBqAxalo8TkRcDWkw6vaQ9VR+PR0y7RI3rFEXHmzxY/nBLLABRAysau5ULO
-         m3LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BIDh4J+zTlSxePzOWp66aw0kp0VQetdJJAopqYlkrnc=;
-        b=OcpH5Nyppw5Q4dCkhv2Tttr9vgcZA5B1fX6g2JmUiERXYvm/4seHDjFbLIyqmoV7z+
-         0z6Ua0DoBoanRW2h1H76yMliknAJ6Rut78T2qoD7l/FGSZP5pRoIW2/Fs+LjhjnZX3vo
-         g86eG063js48EdNRqGaY6UKnwphXBra6c3Wnxdmf2A+/A8MVLywV/yXhecfGzAgS6gx+
-         iH8aovYkU8HgJ2oICDOwj7+Rxx3KN/krBxBwmLkG7/UUUqfL8778FkixEjtXNGDnFnz7
-         G1q8AP0ysWl1fd/B7i3otYWutlOJLlXBXM21io2u4JpdEMuFaAMoo1yBTc0Qet1MrksW
-         hDJg==
-X-Gm-Message-State: AOAM533OARbB48Mcbgp7kZdgpzPtr6dl91mprZGWj2mHtdUxE5uLGXOT
-        dh/SR52G2niSz/VzH+Tx4x26NMaPCyXjXyA7iQ0=
-X-Google-Smtp-Source: ABdhPJzglgCXc40cKH+SxqWcyveX2n5yURw6wQgxF6GjEwIyodSn4Xa3jiLhZw8vLQXqiH9DceGOvlNZML67x8YxRsk=
-X-Received: by 2002:aca:2b0d:: with SMTP id i13mr1671714oik.39.1592456600830;
- Wed, 17 Jun 2020 22:03:20 -0700 (PDT)
+        id S1726950AbgFRGL3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 02:11:29 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58670 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbgFRGL1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 02:11:27 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3A9E7CCA6D;
+        Thu, 18 Jun 2020 02:11:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=u4QFTd02wpJwvo7sWKdRWTX8OKw=; b=u5fXHz
+        PBJwKv0ydSVCDE0baymQxTlnNmEXKoUpJwU4fPWEn73x4x+TyVBgTtCOKQrqSyCv
+        u3bAhniUHe9CaRMh+hHUeCJfPG1LHZ5mL1sGiKjoxLidVYbEjFRK9mnghQc8DT1k
+        rKb0BQ16mED7X8wdQBHDCnOmBIFwQZIFuMcnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ipdsf2sk7g0V43TU5RsB3A8sx7lsf2wu
+        0cdJcYmUPv/O5yhiXLgyXY8/LWquD0HaHy/VUFxPlqKdO8vHLUlHpq9ybv/ia1Rv
+        9TYhUGQ3kQSpE8CgUE3XkuOEjqE9g7ZMoJQojORGo7fwRx27gro5d9uYxxfSzdRM
+        koBRRdU2oSA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 32794CCA6C;
+        Thu, 18 Jun 2020 02:11:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 76459CCA6B;
+        Thu, 18 Jun 2020 02:11:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v3 4/4] lib-submodule-update: use callbacks in test_submodule_switch_common()
+References: <cover.1588162842.git.liu.denton@gmail.com>
+        <cover.1591897173.git.liu.denton@gmail.com>
+        <74e6086da451a4ce2ac52b04a2399ef332d61047.1591897173.git.liu.denton@gmail.com>
+Date:   Wed, 17 Jun 2020 23:11:13 -0700
+In-Reply-To: <74e6086da451a4ce2ac52b04a2399ef332d61047.1591897173.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Thu, 11 Jun 2020 13:41:50 -0400")
+Message-ID: <xmqq4kr8rji6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.627.git.1588857462.gitgitgadget@gmail.com>
- <CABPp-BET86K_N5_W1pXMWeFccbUdxU8+vNvi+m-i6PX0MrXknw@mail.gmail.com>
- <64d477b6-7bf2-fa0d-b9b4-821285af386e@gmail.com> <CABPp-BFDcM+QSx_YSAAazkN9AoTPWVYV+ZpSQBPTihVM=gP-qw@mail.gmail.com>
- <2ee11a3c-9785-fa29-afa4-9eeac2248972@gmail.com>
-In-Reply-To: <2ee11a3c-9785-fa29-afa4-9eeac2248972@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 17 Jun 2020 22:03:09 -0700
-Message-ID: <CABPp-BHqPqEyf_US9GXB1bqC_ks0Xt5xLcDAwdKE=GhC6CAHZw@mail.gmail.com>
-Subject: Re: [PATCH 00/10] [RFC] In-tree sparse-checkout definitions
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 845321E4-B12A-11EA-BBB6-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 17, 2020 at 8:01 PM Derrick Stolee <stolee@gmail.com> wrote:
+Denton Liu <liu.denton@gmail.com> writes:
+
+> When we run a test helper function in test_submodule_switch_common(), we
+> sometimes specify a whole helper function as the $command. When we do
+> this, in some test cases, we just mark the whole function with
+> `test_must_fail`. However, it's possible that the helper function might
+> fail earlier or later than expected due to an introduced bug. If this
+> happens, then the test case will still report as passing but it should
+> really be marked as failing since it didn't actually display the
+> intended behaviour.
 >
-> On 6/17/2020 9:59 PM, Elijah Newren wrote:
-> > On Wed, Jun 17, 2020 at 6:42 PM Derrick Stolee <stolee@gmail.com> wrote:
-> >>
-> >> On 6/17/2020 7:14 PM, Elijah Newren wrote:
-> >> You mentioned in another thread that it is a bit unwieldy for a user
-> >> to rely on a committed (or staged?) file, so adding the ability to
-> >> check the working directory first is interesting. I wonder how the
-> >> timing comes into play when changing HEAD to a new commit? Seems
-> >> tricky, but solvable.
-> >
-> > Isn't that essentially the same timing issue that comes into play if
-> > you only look at the index, and are changing HEAD to a new commit?
+> Instead of invoking $command as one monolithic helper function, break it
+> up into three parts:
 >
-> It adds to the complexity. We can inspect the new index for the
-> in-tree definition and update the skip-worktree bits before actually
-> changing the working directory to match the new index. However, if
-> we trust the working directory copy over the index copy, then we
-> need to also decide if the working directory copy _would_ change
-> in this move before using it.
+> 	1. $command which is always a git command.
+> 	2. $before which is a callback function that runs just prior to
+> 	   $command.
+> 	3. $after which is a callback function that runs just after
+> 	   $command.
 >
-> Of course, maybe I'm making it over-complicated. I still know so
-> little about the index. I got into this feature due to a simple
-> pattern-matching problem that I could understand, but now I'm
-> getting lost in index states and dirty statuses. ;)
+> If the command requires a filename argument, specify it as `\$arg` since
+> that variable will be set and the whole $command string will be eval'd.
+> Unfortunately, there is no way to get rid of the eval as some of the
+> commands are passed (such as the `git pull` tests) require that no
+> additional arguments are passed so we must have some mechanism for the
+> caller to specify whether or not it wants the filename argument.
+>
+> The $before and $after callback functions will be passed the filename as
+> the first arg. These callback functions are optional and, if missing,
+> will be replaced with `true`. Also, in the case where we have a
+> `test_must_fail` test, $after will not be executed, similar to how the
+> helper functions currently behave when the git command fails and exits
+> the &&-chain.
+>
+> Finally, as an added bonus, `test_must_fail` will only run on $command
+> which is guaranteed to be a git command.
+>
+> An alternate design was considered where the $OVERWRITING_FAIL is set
+> from the test_submodule_switch_common() function and passed to the
+> helper function. This approach was considered too difficult to
+> understand due to the fact that using a signalling magic environment
+> variable might be too indirect.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
 
-Honestly, I think your first cut for switching branches with this new
-feature should just be:
-  1) Do a switch/checkout exactly the way it's done today already:
-    1a) Load the index and existing sparsity rules (from worktree then
-index), according to what existed before the branch switch
-    1b) Do the appropriate 1-way or 2-way merge from unpack_trees() to
-move to the right branch (as builtin/checkout.c already does)
-  2) *If* using in-tree sparsity feature, re-load the sparsity rules
-(from worktree then index) and run the equivalent of `sparse-checkout
-reapply`
+Peff, I think the previous round of this had all-caps OVERWRITING_FAIL
+but the reversal of the role to feed the actual code that gets run
+before and after the tested snippet by the caller was made in
+response to your sugestion <20200521182928.GA1308647@coredump.intra.peff.net>.
 
-Not only does this avoid messing up any code for the normal case, I'm
-pretty sure this gets the behavior the user expects in all the special
-cases.  There is one big downside, and a little downside.  The big
-downside is that it'll have two progress meters instead of just one
-(much like sparse-checkout init && sparse-checkout set do today).  The
-little downside is that this isn't optimal from a performance
-standpoint, for two reasons:
-(a) some files may be updated in the working tree in step 1b despite
-the fact that they'll be removed in step 2.
-(b) step 2 may just be an expensive no-op, in fact I suspect it will
-be most the time
+I think I've already said that the helper function in the early part
+can be vastly simplified but in any case the calling sideprobably
+has become somewhat easier to follow (but not all that much, I am
+afraid).  
 
-The reason I think the performance isn't a big deal is because:
-C) the fact that (b) is a problem means (a) is not often an issue --
-the sparsity patterns are usually the same.
-D) Even if the sparsity patterns differ, it's often the case that
-files within the tree won't change (people tend to only modify a few
-files per commit, after all, so even switching branches only updates a
-subset of all files).
-E) Even if the sparsity patterns differ and files differ and have to
-be updated, it's still proportional at most to the number of files
-selected by the sparsity patterns, so it won't feel excessive or slow
-to the user.
-F) `sparse-checkout reapply` is pretty cheap, especially if called as
-a function instead of as a subprocess
+Is there anything else we missed?
 
+Thanks.
 
-In my opinion, other than the unfortunate dual progress meters, the
-only place where this new feature gets hairy is that `git
-sparse-checkout reapply` (or its libified variant) now needs to know
-how to "read your new form of sparsity rules".  That sounds easy at
-first but in my opinion it is a bit of a mess.  The user could have
-written garbage to the file and I don't know what to do with garbage,
-but I think we have to do something sane.  (Give up and checkout
-everything?  Give up and checkout nothing but the toplevel directory?
-Ignore each line we don't understand and treat the rest as stuff that
-needs to be checked out?  Can that last one even be done with the .ini
-reader?)  I don't think saying "well, tough luck the user should know
-better" works because we already know that merges or rebases or
-checkout -m could have written garbage to those files (in the form of
-conflict markers), and users will say that *we* were the ones that
-filled the file with garbage.  So we have to handle it intelligently
-in some fashion.
-
-Thoughts?
+>  t/lib-submodule-update.sh   | 95 +++++++++++++++++++++++++++++--------
+>  t/t3426-rebase-submodule.sh | 10 ++--
+>  t/t3513-revert-submodule.sh | 10 ++--
+>  t/t3906-stash-submodule.sh  | 10 ++--
+>  t/t4137-apply-submodule.sh  | 12 ++---
+>  t/t4255-am-submodule.sh     | 12 ++---
+>  t/t5572-pull-submodule.sh   | 28 ++---------
+>  t/t6041-bisect-submodule.sh | 10 ++--
+>  8 files changed, 108 insertions(+), 79 deletions(-)
+>
+> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+> index 7c3ba1be00..988d85bd7d 100755
+> --- a/t/lib-submodule-update.sh
+> +++ b/t/lib-submodule-update.sh
+> @@ -310,7 +310,20 @@ test_submodule_content () {
+>  # Internal function; use test_submodule_switch_func(), test_submodule_switch(),
+>  # or test_submodule_forced_switch() instead.
+>  test_submodule_switch_common () {
+> -	command="$1"
+> +	command="$1" # should be a git command
+> +	before="$2"
+> +	after="$3"
+> +
+> +	if test -z "$before"
+> +	then
+> +		before=true
+> +	fi
+> +
+> +	if test -z "$after"
+> +	then
+> +		after=true
+> +	fi
+> +
+>  	######################### Appearing submodule #########################
+>  	# Switching to a commit letting a submodule appear creates empty dir ...
+>  	if test "$KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES" = 1
+> @@ -326,7 +339,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t add_sub1 origin/add_sub1 &&
+> -			$command add_sub1 &&
+> +			arg=add_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_dir_is_empty sub1 &&
+>  			git submodule update --init --recursive &&
+> @@ -341,7 +357,10 @@ test_submodule_switch_common () {
+>  			cd submodule_update &&
+>  			mkdir sub1 &&
+>  			git branch -t add_sub1 origin/add_sub1 &&
+> -			$command add_sub1 &&
+> +			arg=add_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_dir_is_empty sub1 &&
+>  			git submodule update --init --recursive &&
+> @@ -356,7 +375,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t replace_file_with_sub1 origin/replace_file_with_sub1 &&
+> -			$command replace_file_with_sub1 &&
+> +			arg=replace_file_with_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/replace_file_with_sub1 &&
+>  			test_dir_is_empty sub1 &&
+>  			git submodule update --init --recursive &&
+> @@ -380,7 +402,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t replace_directory_with_sub1 origin/replace_directory_with_sub1 &&
+> -			$command replace_directory_with_sub1 &&
+> +			arg=replace_directory_with_sub1  &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/replace_directory_with_sub1 &&
+>  			test_dir_is_empty sub1 &&
+>  			git submodule update --init --recursive &&
+> @@ -402,7 +427,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t remove_sub1 origin/remove_sub1 &&
+> -			$command remove_sub1 &&
+> +			arg=remove_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/remove_sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1
+>  		)
+> @@ -415,7 +443,10 @@ test_submodule_switch_common () {
+>  			cd submodule_update &&
+>  			git branch -t remove_sub1 origin/remove_sub1 &&
+>  			replace_gitfile_with_git_dir sub1 &&
+> -			$command remove_sub1 &&
+> +			arg=remove_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/remove_sub1 &&
+>  			test_git_directory_is_unchanged sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1
+> @@ -443,7 +474,9 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+> -			test_must_fail $command replace_sub1_with_directory &&
+> +			arg=replace_sub1_with_directory &&
+> +			$before "$arg" &&
+> +			eval test_must_fail $command &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1
+>  		)
+> @@ -456,7 +489,9 @@ test_submodule_switch_common () {
+>  			cd submodule_update &&
+>  			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+>  			replace_gitfile_with_git_dir sub1 &&
+> -			test_must_fail $command replace_sub1_with_directory &&
+> +			arg=replace_sub1_with_directory &&
+> +			$before "$arg" &&
+> +			eval test_must_fail $command &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_git_directory_is_unchanged sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1
+> @@ -470,7 +505,9 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+> -			test_must_fail $command replace_sub1_with_file &&
+> +			arg=replace_sub1_with_file &&
+> +			$before "$arg" &&
+> +			eval test_must_fail $command &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1
+>  		)
+> @@ -484,7 +521,9 @@ test_submodule_switch_common () {
+>  			cd submodule_update &&
+>  			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+>  			replace_gitfile_with_git_dir sub1 &&
+> -			test_must_fail $command replace_sub1_with_file &&
+> +			arg=replace_sub1_with_file &&
+> +			$before "$arg" &&
+> +			eval test_must_fail $command &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_git_directory_is_unchanged sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1
+> @@ -508,7 +547,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t modify_sub1 origin/modify_sub1 &&
+> -			$command modify_sub1 &&
+> +			arg=modify_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/modify_sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1 &&
+>  			git submodule update &&
+> @@ -523,7 +565,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t invalid_sub1 origin/invalid_sub1 &&
+> -			$command invalid_sub1 &&
+> +			arg=invalid_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/invalid_sub1 &&
+>  			test_submodule_content sub1 origin/add_sub1 &&
+>  			test_must_fail git submodule update &&
+> @@ -538,7 +583,10 @@ test_submodule_switch_common () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t valid_sub1 origin/valid_sub1 &&
+> -			$command valid_sub1 &&
+> +			arg=valid_sub1 &&
+> +			$before "$arg" &&
+> +			eval $command &&
+> +			$after "$arg" &&
+>  			test_superproject_content origin/valid_sub1 &&
+>  			test_dir_is_empty sub1 &&
+>  			git submodule update --init --recursive &&
+> @@ -568,8 +616,10 @@ test_submodule_switch_common () {
+>  # }
+>  # test_submodule_switch_func "my_func"
+>  test_submodule_switch_func () {
+> -	command="$1"
+> -	test_submodule_switch_common "$command"
+> +	command="git $1"
+> +	before="$2"
+> +	after="$3"
+> +	test_submodule_switch_common "$command" "$before" "$after"
+>  
+>  	# An empty directory does not prevent the creation of a submodule of
+>  	# the same name, but a file does.
+> @@ -580,7 +630,9 @@ test_submodule_switch_func () {
+>  			cd submodule_update &&
+>  			git branch -t add_sub1 origin/add_sub1 &&
+>  			>sub1 &&
+> -			test_must_fail $command add_sub1 &&
+> +			arg=add_sub1 &&
+> +			$before "$arg" &&
+> +			eval test_must_fail $command &&
+>  			test_superproject_content origin/no_submodule &&
+>  			test_must_be_empty sub1
+>  		)
+> @@ -588,15 +640,15 @@ test_submodule_switch_func () {
+>  }
+>  
+>  test_submodule_switch () {
+> -	test_submodule_switch_func "git $1"
+> +	test_submodule_switch_func "$1 \$arg"
+>  }
+>  
+>  # Same as test_submodule_switch(), except that throwing away local changes in
+>  # the superproject is allowed.
+>  test_submodule_forced_switch () {
+> -	command="$1"
+> +	command="git $1 \$arg"
+>  	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
+> -	test_submodule_switch_common "git $command"
+> +	test_submodule_switch_common "$command"
+>  
+>  	# When forced, a file in the superproject does not prevent creating a
+>  	# submodule of the same name.
+> @@ -607,7 +659,8 @@ test_submodule_forced_switch () {
+>  			cd submodule_update &&
+>  			git branch -t add_sub1 origin/add_sub1 &&
+>  			>sub1 &&
+> -			$command add_sub1 &&
+> +			arg=add_sub1 &&
+> +			eval $command &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_dir_is_empty sub1
+>  		)
+> diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
+> index 788605ccc0..d31e6487bd 100755
+> --- a/t/t3426-rebase-submodule.sh
+> +++ b/t/t3426-rebase-submodule.sh
+> @@ -16,11 +16,10 @@ git_rebase () {
+>  	git revert HEAD &&
+>  	git status -su >actual &&
+>  	ls -1pR * >>actual &&
+> -	test_cmp expect actual &&
+> -	git rebase "$1"
+> +	test_cmp expect actual
+>  }
+>  
+> -test_submodule_switch_func "git_rebase"
+> +test_submodule_switch_func "rebase \$arg" "git_rebase"
+>  
+>  git_rebase_interactive () {
+>  	git status -su >expect &&
+> @@ -34,11 +33,10 @@ git_rebase_interactive () {
+>  	ls -1pR * >>actual &&
+>  	test_cmp expect actual &&
+>  	set_fake_editor &&
+> -	echo "fake-editor.sh" >.git/info/exclude &&
+> -	git rebase -i "$1"
+> +	echo "fake-editor.sh" >.git/info/exclude
+>  }
+>  
+> -test_submodule_switch_func "git_rebase_interactive"
+> +test_submodule_switch_func "rebase -i \$arg" "git_rebase_interactive"
+>  
+>  test_expect_success 'rebase interactive ignores modified submodules' '
+>  	test_when_finished "rm -rf super sub" &&
+> diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
+> index 95a7f64471..994cdc40f0 100755
+> --- a/t/t3513-revert-submodule.sh
+> +++ b/t/t3513-revert-submodule.sh
+> @@ -11,11 +11,13 @@ test_description='revert can handle submodules'
+>  # first so we can restore the work tree test setup after doing the checkout
+>  # and revert.  We test here that the restored work tree content is identical
+>  # to that at the beginning. The last revert is then tested by the framework.
+> -git_revert () {
+> +git_revert_before () {
+>  	git status -su >expect &&
+>  	ls -1pR * >>expect &&
+> -	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
+> -	git checkout "$1" &&
+> +	tar cf "$TRASH_DIRECTORY/tmp.tar" *
+> +}
+> +
+> +git_revert_after () {
+>  	git revert HEAD &&
+>  	rm -rf * &&
+>  	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
+> @@ -26,6 +28,6 @@ git_revert () {
+>  }
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+> -test_submodule_switch_func "git_revert"
+> +test_submodule_switch_func "checkout \$arg" "git_revert_before" "git_revert_after"
+>  
+>  test_done
+> diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
+> index 6a7e801ca0..358a625124 100755
+> --- a/t/t3906-stash-submodule.sh
+> +++ b/t/t3906-stash-submodule.sh
+> @@ -5,10 +5,12 @@ test_description='stash can handle submodules'
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-submodule-update.sh
+>  
+> -git_stash () {
+> +git_stash_before () {
+>  	git status -su >expect &&
+> -	ls -1pR * >>expect &&
+> -	git read-tree -u -m "$1" &&
+> +	ls -1pR * >>expect
+> +}
+> +
+> +git_stash_after () {
+>  	git stash &&
+>  	git status -su >actual &&
+>  	ls -1pR * >>actual &&
+> @@ -19,7 +21,7 @@ git_stash () {
+>  KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES=1
+>  KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+> -test_submodule_switch_func "git_stash"
+> +test_submodule_switch_func "read-tree -u -m \$arg" "git_stash_before" "git_stash_after"
+>  
+>  setup_basic () {
+>  	test_when_finished "rm -rf main sub" &&
+> diff --git a/t/t4137-apply-submodule.sh b/t/t4137-apply-submodule.sh
+> index b645e303a0..fe5ebeaa41 100755
+> --- a/t/t4137-apply-submodule.sh
+> +++ b/t/t4137-apply-submodule.sh
+> @@ -5,16 +5,12 @@ test_description='git apply handling submodules'
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-submodule-update.sh
+>  
+> -apply_index () {
+> -	git diff --ignore-submodules=dirty "..$1" | git apply --index -
+> +create_diff () {
+> +	git diff --ignore-submodules=dirty "..$1" >diff
+>  }
+>  
+> -test_submodule_switch_func "apply_index"
+> +test_submodule_switch_func "apply --index diff" "create_diff"
+>  
+> -apply_3way () {
+> -	git diff --ignore-submodules=dirty "..$1" | git apply --3way -
+> -}
+> -
+> -test_submodule_switch_func "apply_3way"
+> +test_submodule_switch_func "apply --3way diff" "create_diff"
+>  
+>  test_done
+> diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
+> index 1b179d5f45..5305280dfd 100755
+> --- a/t/t4255-am-submodule.sh
+> +++ b/t/t4255-am-submodule.sh
+> @@ -5,18 +5,14 @@ test_description='git am handling submodules'
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-submodule-update.sh
+>  
+> -am () {
+> -	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am -
+> +create_patch () {
+> +	git format-patch --stdout --ignore-submodules=dirty "..$1" >patch
+>  }
+>  
+> -test_submodule_switch_func "am"
+> -
+> -am_3way () {
+> -	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am --3way -
+> -}
+> +test_submodule_switch_func "am patch" "create_patch"
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+> -test_submodule_switch_func "am_3way"
+> +test_submodule_switch_func "am --3way patch" "create_patch"
+>  
+>  test_expect_success 'setup diff.submodule' '
+>  	test_commit one &&
+> diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+> index f911bf631e..3b37853537 100755
+> --- a/t/t5572-pull-submodule.sh
+> +++ b/t/t5572-pull-submodule.sh
+> @@ -11,36 +11,16 @@ reset_branch_to_HEAD () {
+>  	git branch --set-upstream-to="origin/$1" "$1"
+>  }
+>  
+> -git_pull () {
+> -	reset_branch_to_HEAD "$1" &&
+> -	git pull
+> -}
+> -
+>  # pulls without conflicts
+> -test_submodule_switch_func "git_pull"
+> +test_submodule_switch_func "pull" "reset_branch_to_HEAD"
+>  
+> -git_pull_ff () {
+> -	reset_branch_to_HEAD "$1" &&
+> -	git pull --ff
+> -}
+> +test_submodule_switch_func "pull --ff" "reset_branch_to_HEAD"
+>  
+> -test_submodule_switch_func "git_pull_ff"
+> -
+> -git_pull_ff_only () {
+> -	reset_branch_to_HEAD "$1" &&
+> -	git pull --ff-only
+> -}
+> -
+> -test_submodule_switch_func "git_pull_ff_only"
+> -
+> -git_pull_noff () {
+> -	reset_branch_to_HEAD "$1" &&
+> -	git pull --no-ff
+> -}
+> +test_submodule_switch_func "pull --ff-only" "reset_branch_to_HEAD"
+>  
+>  KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+>  KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+> -test_submodule_switch_func "git_pull_noff"
+> +test_submodule_switch_func "pull --no-ff" "reset_branch_to_HEAD"
+>  
+>  test_expect_success 'pull --recurse-submodule setup' '
+>  	test_create_repo child &&
+> diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
+> index 0e0cdf638d..b99e81d55d 100755
+> --- a/t/t6041-bisect-submodule.sh
+> +++ b/t/t6041-bisect-submodule.sh
+> @@ -5,12 +5,14 @@ test_description='bisect can handle submodules'
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-submodule-update.sh
+>  
+> -git_bisect () {
+> +git_bisect_before () {
+>  	git status -su >expect &&
+>  	ls -1pR * >>expect &&
+>  	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
+> -	GOOD=$(git rev-parse --verify HEAD) &&
+> -	git checkout "$1" &&
+> +	GOOD=$(git rev-parse --verify HEAD)
+> +}
+> +
+> +git_bisect_after () {
+>  	echo "foo" >bar &&
+>  	git add bar &&
+>  	git commit -m "bisect bad" &&
+> @@ -27,6 +29,6 @@ git_bisect () {
+>  	git bisect bad $BAD
+>  }
+>  
+> -test_submodule_switch_func "git_bisect"
+> +test_submodule_switch_func "checkout \$arg" "git_bisect_before" "git_bisect_after"
+>  
+>  test_done
