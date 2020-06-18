@@ -2,125 +2,125 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 907B9C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 14:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A743CC433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 15:23:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 681D4207E8
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 14:34:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="l4qYrpNS"
+	by mail.kernel.org (Postfix) with ESMTP id 845BA20888
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 15:23:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1592493792;
+	bh=ZshX0G+QE8m0hUJRc4ZJX5XdaHcfYA0MFAjuiAFoBAY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
+	b=dq910ppeKNwTg+6Iny1l2qwJoLUsIihv1ossrUgdI9vTDV4CIe+00J2feI50dMX02
+	 LB6fa6rQlRe0+zriRxz7JfSJCT0DTN8NpsAHq8ma8PmtQ8fJHmnOvW2LVkzEa0d+0w
+	 w2/OTv2TVlSDAcSTVCDz7ydyHRa+Vh3Wi1mYwjYc=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730818AbgFROe3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 10:34:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55850 "EHLO
+        id S1731423AbgFRPXL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 11:23:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728161AbgFROe1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 10:34:27 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55D0CC06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 07:34:25 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id u25so3635836lfm.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 07:34:25 -0700 (PDT)
+        with ESMTP id S1729418AbgFRPXF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 11:23:05 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E382FC06174E
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 08:23:04 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id q14so4688104qtr.9
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 08:23:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dUW4QhE6NFuGX9+2hFShonxTz1Fe9H3JB4WfgKlaNv8=;
-        b=l4qYrpNS4/nk1GTt6TCwI2DOxaS4K6i1QD0pXe5WNLWgkLyaiRxhHRia8ekbPSMToX
-         /efcVNdF9TseamPyuF7En2QFdn7X4sAeWZa/pwoDYonkPHKt5fSB6P8Y5UlBAMydnMwG
-         k6qymfh/+6wlgzdmrAJMIS6KMG3ckH8K9pHh69XI0TW/shURyzjSWvCl4Rg+WLHuqXer
-         7TdSRgAk5HgwfGrW1hUVC60puPP6LhRZ0wjbH8GXpskQITRVKfEzzM2crLfTvKTOhhSw
-         fresDlQfvPavrCYz3H4FDF61S9ZM8jYH1KuOqIyA0uhwflq0UokUObuZ37S1ff359Jqw
-         rSqQ==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=iatYzrowbGgOUfCWIIPtOTK0UXOTekJVMpzbOWOp1WY=;
+        b=cfoSGiaqm2zO6qreZCq4mRqS8vKBDPG76kKrb+TK0DL5EHfMV9XyRql5Yo8fidTm8A
+         p/n+1ak5aX5FQUWIyeK0GNL5zhlTje/l2lK39JSH8VlWj/QHlzORHFBmhKSavjrApoOD
+         WA9XIC1Bs2W69puCEIMRwb2tYhmrn/7005CWM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dUW4QhE6NFuGX9+2hFShonxTz1Fe9H3JB4WfgKlaNv8=;
-        b=nHQIpVbJPP2QlfqnZ9XpzMPw1C6J05q/Nd3inJTYPw2E/oUOdbAU60iVXNLahcziI4
-         hjT3WtQW9slaqa3opCpUd0D57S3uPJZ1xVUupSgoQTeAi8K3U4sAJM+Z75s2NarqTM8e
-         NuEUODjbCdTsiaZ6QqfZtrHusDStf2nxJNEDGsV5UKenG2BOIn580kxyeliUgZfvnUCZ
-         9mnUPbEpXvqrFc/NyaT1/I1UysPbZyPVK/Q4M+syy4lGzm0JqlJRMVBSL0SAzFc70DiB
-         3Xc81p15BWFNB/kibqD2gl78mukCBqGrUolWUoeR7zl7QQczo37kMK1wj5Lz8dL1yxOM
-         b+7w==
-X-Gm-Message-State: AOAM531kLYz6nviEtWeBa2xlqMWkprqNMDBEyNhjsmpGxozwmJVO56zW
-        wPDZ/62eToR1wYtMEtgu8DbOwBTiwB08mtk65wW2Zw==
-X-Google-Smtp-Source: ABdhPJwMJFTk/pSykeiPDNOpqPElsJP1Y+Sh5aDD51MhTAG+/0S54Ly429I4eXUPSVc+LhiZsqtRQBAdbZ2zLUzl4BM=
-X-Received: by 2002:a19:8389:: with SMTP id f131mr2494666lfd.16.1592490863779;
- Thu, 18 Jun 2020 07:34:23 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=iatYzrowbGgOUfCWIIPtOTK0UXOTekJVMpzbOWOp1WY=;
+        b=FezfNrsiYI1cKzUQzh7WP32EVyj/m0Vn5HvcrtTqoQfy0nguQeyWueW+Vco7eIcRcH
+         cOwOrhnUHa6kNoDA1YbP53pR5pTuCGuo/wL2pJQDjjPUy81lRidk5Shv26BHxMZlUts1
+         zlzTXQOmiPkQe4WeB9YpKpD4x12hLKOaoFvAL+ZuPX4AW6rbPj2zxcOOcnTmMwUUq297
+         MMjPUUIFIgf2xkqcwhmbD/5GqCt7uWtDe/tkLmvHC6uRG5ZLVJy4dqmA+ljnm0WvP8zX
+         9v5zDxLLlfSUndr7kkjrZSksbD0yYZRTpE9C6LMVeEZY5ZJNhHmE1gKDDZrFbU9rwkG+
+         1DLw==
+X-Gm-Message-State: AOAM532EhQyxyRdwb/CsU13YOz5R+Q40Lz3Auwdnc4n25ETCmPb39oz8
+        VFc8dA0TnxWT1/yRl0EYSrgCIg==
+X-Google-Smtp-Source: ABdhPJxvFdKbhQxII2q/Qc35edHyC270ZfhJ3CRmEkYa/8BS1o3NNB40FmwuXkhMOFJMo0pKyUM91w==
+X-Received: by 2002:ac8:1742:: with SMTP id u2mr5067229qtk.341.1592493783948;
+        Thu, 18 Jun 2020 08:23:03 -0700 (PDT)
+Received: from i7.mricon.com (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
+        by smtp.gmail.com with ESMTPSA id x30sm2324893qte.70.2020.06.18.08.23.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2020 08:23:02 -0700 (PDT)
+Received: by i7.mricon.com (sSMTP sendmail emulation); Thu, 18 Jun 2020 11:23:00 -0400
+Date:   Thu, 18 Jun 2020 11:23:00 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     demerphq <demerphq@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+        =?utf-8?Q?S=C3=A9rgio?= Augusto Vianna 
+        <sergio.a.vianna@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>,
+        Git <git@vger.kernel.org>, newren@gmail.com,
+        philipoakley@iee.email,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Rename offensive terminology (master)
+Message-ID: <20200618152300.cw7teo2jmxyfsl2l@chatter.i7.local>
+Mail-Followup-To: demerphq <demerphq@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+        =?utf-8?Q?S=C3=A9rgio?= Augusto Vianna <sergio.a.vianna@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>,
+        Git <git@vger.kernel.org>, newren@gmail.com, philipoakley@iee.email,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Simon Pieters <simon@bocoup.com>, Derrick Stolee <stolee@gmail.com>
+References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
+ <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com>
+ <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
+ <20200616074316.GA21462@kitsune.suse.cz>
+ <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
+ <xmqq5zbpv53g.fsf@gitster.c.googlers.com>
+ <20200617201037.GA86579@google.com>
+ <20200617201709.GB86579@google.com>
+ <CANgJU+WbPgSTxQ=G3sFSvNFQ1cL3onYk5yKLBR=3AqWeEUCfZQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.809.git.git.1592356884310.gitgitgadget@gmail.com>
- <CAHd-oW5gTJO=6pYXvg3v=JfjffcajPyMpsUOoqXnozwYrg3WwQ@mail.gmail.com> <CABPp-BHtwifTHXxoxTKvz0mx45e2N-4SBTTfoRePcmMFAn1O2g@mail.gmail.com>
-In-Reply-To: <CABPp-BHtwifTHXxoxTKvz0mx45e2N-4SBTTfoRePcmMFAn1O2g@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 18 Jun 2020 11:34:11 -0300
-Message-ID: <CAHd-oW7tT7GhHz7mCH9Y66B=kriBKv8ZyrTXT-VTJgcXGa1Jzw@mail.gmail.com>
-Subject: Re: [PATCH] unpack-trees: do not set SKIP_WORKTREE on submodules
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANgJU+WbPgSTxQ=G3sFSvNFQ1cL3onYk5yKLBR=3AqWeEUCfZQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 17, 2020 at 9:24 PM Elijah Newren <newren@gmail.com> wrote:
->
-> If someone were
-> to try do change their sparsity patterns or even just run a "git
-> sparse-checkout reapply" when they had the above issues, they'd see
-> something like:
->
->     $ git sparse-checkout reapply
->     warning: The following paths are unmerged and were left despite
-> sparse patterns:
->             filename_with_conflicts
->
->     After fixing the above paths, you may want to run `git
-> sparse-checkout reapply`.
->
-> This basically suggests that we consider uncommitted and unmerged
-> files to be "unclean" in some way (sparse-checkout wants to set the
-> SKIP_WORKTREE bit on all files that do not match the sparsity
-> specification, so "clean" means sparse-checkout is able to do so).  So
-> I could amend my earlier comparison and say that IF the user has a
-> clean directory, then "git grep --recurse-submodules $REVISION
-> $PATTERN" should be equivalent to "git checkout $REVISION && git grep
-> --recurse-submodules $PATTERN".  I could also say that given the big
-> warnings we give users when we can't set the SKIP_WORKTREE bit, that
-> we expect it to be a transient state and thus that we expect them to
-> more likely than not clear it out by the time they do switch branches.
-> That would lead us to the follow-up rule that if the user does not
-> have a clean directory then "git grep --recurse-submodules $REVISION
-> $PATTERN" should be equivalent to what you would get if the unclean
-> entries were ignored (expecting them to be cleaned before the any `git
-> checkout` could be run) and you then otherwise ran "git checkout
-> $REVISION && git grep --recurse-submodules $PATTERN".
+On Thu, Jun 18, 2020 at 09:57:42AM +0200, demerphq wrote:
+> > Of course I missed the other point --- hostnames like master.<domain>
+> > (e.g., a hypothetical master.kernel.org), refering to the source of
+> > truth for something that then gets replicated.
+> >
+> > I don't think we're likely to see hostnames like main.kernel.org
+> > because it's just *so generic* as a word.
+> 
+> Yep, you summarized my point well. I would say master.kernel.org is a
+> correct use of the term "master copy", and the use in the branch name
+> is simply not. My "master branch" for git.git is NOT *the* master.
 
-Makes sense, thanks! We haven't mentioned "git grep --cached" yet, but
-it would behave in the same way of the worktree grep, in this case.
-(I.e. searching the submodules, as their SKIP_WORTREE bit was not
-set.) So I guess it should be fine, as well.
+This is actually an important philosophical point with software like 
+git. There is no such thing as master.kernel.org for the very specific 
+reason that we position kernel.org to be merely a convenient place where 
+to get a *copy* of Linux. The "master copy" of the mainline tree exists 
+only in once place -- on Linus's computer.
 
-> That suggests that grep's implementation we agreed on earlier is still
-> correct (when given a $REVISION ignore submodulees that do not match
-> the sparsity patterns), but that unpack-trees/sparse-checkout still
-> need an update:
->
-> When we notice an initialized submodule that does not match the
-> sparsity patterns, we should print a warning just like we do for
-> unmerged and dirty entries.
-
-Yeah, seems like a good approach. Thanks for the explanations. Some of
-the test cases in mt/grep-sparse-checkout will have to be adjusted
-with this change. Should I reroll the series based on the patch you
-will send or do you prefer to adjust them in your patch (and make it
-dependent on mt/grep-sparse-checkout)?
-
-Thanks,
-Matheus
+-K
