@@ -7,140 +7,107 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F86CC433E0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 07:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5A6DC433E0
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:11:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8F91208D5
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 07:57:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FFF320884
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:11:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d4zLNaSi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pU7VDiqX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728398AbgFRH55 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 03:57:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51114 "EHLO
+        id S1728507AbgFRILe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 04:11:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728218AbgFRH5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 03:57:55 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7AFC06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 00:57:55 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id v19so1273117qtq.10
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 00:57:55 -0700 (PDT)
+        with ESMTP id S1728397AbgFRILa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 04:11:30 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85F3AC06174E
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:11:29 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id p15so2350248qvr.9
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=liEQ1ucRMtGZ58Kfbs4/tFGRiGPd/EJ/V/gDBNx//uM=;
-        b=d4zLNaSiGIvhYSVl2llapNIK7wjAuqb74uHndix0AeKzPM6zP9ahNkEDi2JxIUf1XD
-         YwHuqlTp3lBaLZWgnEteTM7ZNhCuDuMwYdBD32yOhkHfyR1WbnfzEddQNBNLNy0LaeOb
-         KcQ6e8mvRcZEicLIe9Axmi0SQ6NLZBekqVVw62Rc+PmDXpEFmmyiI/wcSqIMLnKBoE+s
-         0DcN1XVJWhQ/QGbzSVhOp5J319ijfhI/DSwx3BB6QrIJQaZbd3nnjsZQqsyDL2WqYnOJ
-         3zZWT+dh/UCs1p+uX08Au+QCwjFGYXn//XZA8KhXMV4k5wMyHKaB4IqzPFD9qND2ClNL
-         Vp+Q==
+        bh=cLdMJ8hneX7fvcYwMgqPSUMGloXlhaIpwAIivjC764A=;
+        b=pU7VDiqXKkFJc8oKQYeEotfFdbWVVDte+dBMVJYoA8+xtihfvZuiwZXaGzYwrM7mzt
+         DUf+/YS1vfz8opUHvxmQaKONMLjouz3Iz3t4KhEOAe14zPeYEJsaNZVq28v8LfJywgZS
+         gg3Thpg32ZOV0Lmaejm6rys2SZa9xTbZPxpdVehpSNBR9eZsqjP88P60U6ZHke8spenw
+         vTq5yC+cNLQuUTIRJUYELJgcaIqOB0kFWB19a3W1tSpBsri4PxaAuUeHowm+RP+/Z+5K
+         Q0BSaDOf6DjgxxakfgT3w9kM5O/pRurV56eeLWjTXChW7D2lP3InyeKLQSKIvjBnf8DN
+         HUVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=liEQ1ucRMtGZ58Kfbs4/tFGRiGPd/EJ/V/gDBNx//uM=;
-        b=mIuDt7Ob4cLBUzENbAcmzLHgPySgrPvLLtPszveoifSRbvv3H3bUxbI2OIGvnfXUT6
-         S8QfD62AACl3fcbkGHEXNtVZh5yn1bvorV1bpmjZVaDwMhoimvEt3oUg9ybOI/q+G0qi
-         sP9fZHGGhPuCC8tpTOmO+MOr12f7R6Nl2T84xocIgIRGmhnS4Ur4u897XOgCSXcb3EqC
-         2gTWdKV94Wf4E8HXsLT+Ehv9yJkvNTL7nhg7fLBOSxwaMvwQ+MYN97pq+rxK5ecQi2vX
-         ZP0UjIeiFkWexA2sBHrabOTmc2mp/4JBvK5/q4Y9pIlhDO23VoTs8Ck3H+omwi5MVlj7
-         oWPQ==
-X-Gm-Message-State: AOAM533KMFUd2Ht1rja/vT4mWvJ3+YgU7zAIeQsXTVtPbifVoIWeh6z0
-        kkcWjbWhcnG4o4mwPzG7kRNEBgdbecPoAVWC2G0=
-X-Google-Smtp-Source: ABdhPJwHqPjEI94NVlPYOotDeqC79Ec+mfnQQ386e6YKX8YuK9bDCCBEuDJ8S6uSHXw8FOF3UcsvtnafQ9SpSUJiuw8=
-X-Received: by 2002:ac8:664a:: with SMTP id j10mr2971940qtp.85.1592467073813;
- Thu, 18 Jun 2020 00:57:53 -0700 (PDT)
+        bh=cLdMJ8hneX7fvcYwMgqPSUMGloXlhaIpwAIivjC764A=;
+        b=p8cDwWzDbK121tsZ97w7kVeEgDTCVnh0UeCWkwhA3lyCoRZyWA1KKAoQnQxvtUOnom
+         jF/khd+IK9cfhkw72bH7V8WnVNSHtGeo6lR8BJLiJAATcWya5ryYRvUE31wRWX7V/qBO
+         wPccAIBt25+OZGCVPCa/1wb8pEMHNWOywHaR+X8M6XAoL5u5+4yLiOlhJSdIuxKKzX9E
+         zkVVXXjCERmDjKz7aTrds+84MCPgaYjgXUPFGhNByhTcjyhb3EmP1fRTir2/JuvtD1h7
+         +Pwpg4wwRT/Y+fPATDX2iimh084bNUNl2ij7KrgCBtNUK+wFjwvZ8m0mXdfbMeyny9AV
+         pqeQ==
+X-Gm-Message-State: AOAM5324Rt1iL54cP5WW3lwYFXktoBFtOvs9M5+J1zRj7VLT1YFBNdBe
+        SMBQlL5k57GWJ1A8jj/wTdQjZk6VxfrT8O8XSHM=
+X-Google-Smtp-Source: ABdhPJyoWsIWHuLubbw4LjSFizbZhGm65BStJcKIcZ9PIIfQ0jUisbs5FP97kPWGZmSnWa7xhs9wOzpMq3wBDDKwcd0=
+X-Received: by 2002:a05:6214:144:: with SMTP id x4mr2430985qvs.229.1592467887555;
+ Thu, 18 Jun 2020 01:11:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
- <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com> <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
- <20200616074316.GA21462@kitsune.suse.cz> <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
- <xmqq5zbpv53g.fsf@gitster.c.googlers.com> <20200617201037.GA86579@google.com> <20200617201709.GB86579@google.com>
-In-Reply-To: <20200617201709.GB86579@google.com>
+References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
+ <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
+ <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
+ <xmqqa716zs7w.fsf@gitster.c.googlers.com> <30661592138737@mail.yandex.ru> <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>
+In-Reply-To: <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>
 From:   demerphq <demerphq@gmail.com>
-Date:   Thu, 18 Jun 2020 09:57:42 +0200
-Message-ID: <CANgJU+WbPgSTxQ=G3sFSvNFQ1cL3onYk5yKLBR=3AqWeEUCfZQ@mail.gmail.com>
-Subject: Re: Rename offensive terminology (master)
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
-        =?UTF-8?Q?S=C3=A9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Don Goodman-Wilson <don@goodman-wilson.com>,
-        Git <git@vger.kernel.org>, newren@gmail.com,
-        philipoakley@iee.email,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Simon Pieters <simon@bocoup.com>,
-        Derrick Stolee <stolee@gmail.com>
+Date:   Thu, 18 Jun 2020 10:11:16 +0200
+Message-ID: <CANgJU+WfW4mKotMwFS+2Kaq1pDysgJutJ2NhUvyvGgowk8JXsg@mail.gmail.com>
+Subject: Re: Collaborative conflict resolution feature request
+To:     "Curtin, Eric" <Eric.Curtin@dell.com>
+Cc:     Konstantin Tokarev <annulen@yandex.ru>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Geary, Niall" <Niall.Geary@dell.com>,
+        "rowlands, scott" <Scott.Rowlands@dell.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        "Coveney, Stephen" <Stephen.Coveney@dell.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 17 Jun 2020 at 22:17, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Mon, 15 Jun 2020 at 11:30, Curtin, Eric <Eric.Curtin@dell.com> wrote:
 >
-> Jonathan Nieder wrote:
-> > Junio C Hamano wrote:
-> >> demerphq <demerphq@gmail.com> writes:
+> > An aside that probably would not directly help Eric, but I know the
+> > above workflow helps reasonably well.  The 'pu' branch is rebuilt
+> > not on top of 'next', but is rebuilt with all topics (including
+> > those already in 'next') in flight directly on top of 'master',
+> > which serves as a way to anticipate conflicts that will require
+> > resolution in the future before the topics can enter 'next' branch.
 >
-> >>> kind of confusion. Consider how this conversation goes for us:
-> >>>
-> >>> A: "No you need to fetch trunk from the remote, then you need to merge
-> >>> it to your local trunk and then push it to the master trunk".
-> >>> B: "Ok."
-> >>
-> >> Hmph, why isn't the last one "trunk trunk"?
-> [...]
-> >> What I am trying to get at is, after changing the name that is given
-> >> by default to the primary branch in a newly created repositories by
-> >> "git init" to 'main' (which I am OK with, and it seems that the
-> >> major projects and repository hosting services will be doing anyway
-> >> with or without getting themselves in this discussion on this list),
-> >> wouldn't we risk the same "master master" confusion caused by and to
-> >> those newer users who learn 'main' is the word given to the primary
-> >> thing?
-> >
-> > I think Yves's point is that when the tool you are building has a
-> > component named $FOO, it's confusing to also have a branch named $FOO.
-> [...]
-> > In particular when building distributed systems, historically it has
-> > been common to have one of the components being built be named
-> > 'master'.
->
-> Of course I missed the other point --- hostnames like master.<domain>
-> (e.g., a hypothetical master.kernel.org), refering to the source of
-> truth for something that then gets replicated.
->
-> I don't think we're likely to see hostnames like main.kernel.org
-> because it's just *so generic* as a word.
+> Out of all the currently available options this solution helps. Thanks
+> Junio! I played with incremental merge techniques this weekend.
+> One problem with incrementally merging is that you start fixing
+> conflicts that are later invalidated by subsequent commits. So it
+> seems you end up doing more conflict resolution than necessary.
+> Unless I'm misusing the technique.
 
-Yep, you summarized my point well. I would say master.kernel.org is a
-correct use of the term "master copy", and the use in the branch name
-is simply not. My "master branch" for git.git is NOT *the* master. It
-doesn't make sense to call something "master" and say it means "master
-copy" when there are actually multiple copies of the master. That
-isn't what "master copy" means.
+I find that the solution in these cases is to first use interactive
+rebase to squash and reorganize the commits in the branches so you
+have a nice clean patch sequence. Once you have the branches cleaned
+up and squashed into a sequence of reasonable topic based chunks you
+then merge, sometimes it even means you dont get conflicts at all, git
+merge is pretty smart.
 
-So I would say that since in practice very often there will exist a
-repo which is considered to be *the* master copy of the repo having
-"master" as a default branch name is unhelpful.
-
-And as you say "main" does not have this problem to quite the same
-extent. Although frankly I could see "main" being a common term in
-more distributed development processes where there might not be the
-same concept of a "master" repo, but there might be a "main" repo
-where people commonly share their work.
-
-Ultimately if I was the decision maker here I would be choosing terms
-that are as workflow agnostic as I can find. "main", "master" and
-"primary" are not workflow agnostic, they are if anything a bit
-workflow opinionated. "trunk" on the other hand seems pretty
-self-descriptive and doesn't have much baggage. It's bark is worse
-than its byte however. :-)
+And after that you change your workflows so the rule is that whomever
+pushes first to the "trunk branch" wins, and the other guy has to do
+the conflict resolution. People will start merging earlier and more
+often so they can keep the conflicts to a minimum. :-) In other words
+I second what Philip Oakley said about bad workflows. Merge early,
+merge often, rollout early, rollout often, vote early, vote often. :-)
 
 cheers,
 Yves
