@@ -7,175 +7,175 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EE88C433DF
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 07:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53E13C433E0
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 07:40:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73D7921924
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 07:14:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 287CE207E8
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 07:40:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b3OVUNdN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mU7jw0hN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727891AbgFRHOG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 03:14:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44388 "EHLO
+        id S1728127AbgFRHkv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 03:40:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727115AbgFRHOF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 03:14:05 -0400
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89AE9C06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 00:14:05 -0700 (PDT)
-Received: by mail-ot1-x341.google.com with SMTP id g7so3721759oti.13
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 00:14:05 -0700 (PDT)
+        with ESMTP id S1727930AbgFRHku (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 03:40:50 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1C40C06174E
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 00:40:49 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id g18so3671230qtu.13
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 00:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yucPwN+byLnxc+7ID+Ii2h7QVC1DDkgl/VvdAyenbh8=;
-        b=b3OVUNdNBAYOBxlUw21noFEqQldtjV2eitfcxKh35Q/fUEkaoXfDCNriv/+5bn/FsF
-         dDV+GTIfWK0NoTNfAS90x/PgOGjHn7nWhxd3/ocJaK6OM9/Vvqs42Jaf7izqKojhSts8
-         McbZdEaQlp662dOVTE6iSca9uUw53jKHlN+MU1MVlWQz+x5oJ1yXHqzWpIeyWuTeO6Bd
-         iRakdRbQOphHSDWDr9n8XmQ57DrZf4vFyC5mJLjPZYlZ2d57KuTNeQ34jhn8/70apG9G
-         J62Uq4rUrE7WLGLm0+BziQUtAzYXcI0YEZIGhHPo43EuNhHlwQiWM6OtZFEn98oJS1t+
-         54pA==
+        bh=TuaMD20pyCpQrqL0cYutJMZndNiwWO3z7l98gTOXqAU=;
+        b=mU7jw0hNb18PX0LzNT+VYTswuoa0V9Y+OdOAKjivcPdoXKQoi+lFjSm0mwZTnINFEL
+         Q8lAcrzSd+HuQs3cGs9xkpNlFEEuzeyjvF8Lc5fiO15DaQvk75iZcNL7zb57F+QzDJAh
+         ijZoOpDEZ04+14vhvCjVgntMIm3IQhLmnQzksanXovJWfF+AQ3mpE5rBabLzS3qUJYsm
+         8gqeF1p6TWWdVi0b0Y2wHD57y1y9G2rQlWo4aZU/dDT1F3Su4OAfOdSCnHWOYulDUGYS
+         9UUY7agdGbup/3kvlXV/rotgW3JT8sPrx6Vp96CTPPL/l/M0rtCbrQ9aHp3iQan3cCoN
+         Sh/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yucPwN+byLnxc+7ID+Ii2h7QVC1DDkgl/VvdAyenbh8=;
-        b=PAkkH7W8RbuKirlN3REjjma5rKYQ2zLnNHUjYyxZRSFjDeFCEki2nKCwRaG+0lvr2n
-         P7lBGNgD+sbLvHY6ayNaAPNlZcmIOKEWDe0G+pswe0ykhdGDZVbaGEo1+OXr/X+CHLZd
-         LEKQRzMwngBwWLd1h6CGEooQvEagu+q793LPXxfZ5dF//Veg2HZFSW1tOY4ZmxSZ8ON5
-         Vh8oi0pGbpw7is9yEL2NpBidJMpsVZTD5N3NL955z+ZspQjruYuKuK4w0zUahRAJ5+5t
-         zWtx3vDnE7oRtN4Ib+XxNtwfrTpaj7qLzRKByA2guL+HmiBaBsZsCZOrR8O3pyech+L0
-         iZnA==
-X-Gm-Message-State: AOAM532Dt4mtQVDA8kqIAdqbAHyrBCMdMN9mgWsuWpZLnU8g4MFi3BHZ
-        Vej3mT2HEZTMhg07CoRomLPOISwdQD03H7UFi4Q=
-X-Google-Smtp-Source: ABdhPJwkUrdx2uHdr7+Tp4mxKqbHYNvSiFq1BJRN/2ZQDK/3G5Yhf8OKLB/WIMLziFGMiJxtC7E9UyHriotM+pcOVkY=
-X-Received: by 2002:a9d:7606:: with SMTP id k6mr2385884otl.316.1592464444753;
- Thu, 18 Jun 2020 00:14:04 -0700 (PDT)
+        bh=TuaMD20pyCpQrqL0cYutJMZndNiwWO3z7l98gTOXqAU=;
+        b=VUSUDbkjAIRYja9k8VUCRqHRlhiwdmP9Ocq99HfE8fzaZDhlJogu5Lh1wlkxwFKj0q
+         dNz39l2FT0K0G74F2NysTCuCjlENwC3c4q638L0Usd5GV8CI4fMULWbJC2NW6AtIZre8
+         mqvmHn0s5s17m1rTKcoCn2qzTLljUf67+LaGOTXYOTkLP2iB/XV5vQufsMAXBEnoMV0C
+         cZDled6C9MlJjnMtq6bRVZhKN9RgGoTk/Iy6Tkx0QzMovonPiTgfUB1PsqLtP1GvKEnS
+         BqdJ645OcRxotnyzPGzZmmB8HkZesH7bpCfrAJv98O/5pb1AXdOJgx6hnYRTGBej3QCO
+         WdqQ==
+X-Gm-Message-State: AOAM533AtHehHNmgvzelZOi55Htq1iD4+rDaw4/nmE7TlgKnzX7Rwlnk
+        EdI/EibPyeDzVB1gZVR5AXwOs6OBITiBt0GAXxQ=
+X-Google-Smtp-Source: ABdhPJzPfUfrXYzhjSey9c67ijTS/rBrHJqR2pLVwX9dqQAzyJ27KC42uHqg6FQIuY19HfQDqEg0RGOVh6pDR1jqZho=
+X-Received: by 2002:ac8:664a:: with SMTP id j10mr2930426qtp.85.1592466048736;
+ Thu, 18 Jun 2020 00:40:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
- <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <ebd10f73cd73a8fca84d1862e5a4b7b62a549bcd.1592225416.git.gitgitgadget@gmail.com>
- <20200616125833.GE666057@coredump.intra.peff.net> <xmqqmu51v9qy.fsf@gitster.c.googlers.com>
- <20200617212333.GB2809@coredump.intra.peff.net> <CABPp-BETyMYm=5APqAA3D1JmkurDFNkKLDrcF4MUgEfqEuVKFA@mail.gmail.com>
- <xmqqzh90q414.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqzh90q414.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 18 Jun 2020 00:13:53 -0700
-Message-ID: <CABPp-BHB_WQqvRBKyA3bGy0L8FZhnN2CL2jHepDBrkjUDNrE=Q@mail.gmail.com>
-Subject: Re: [PATCH v2 01/12] fast-export: do anonymize the primary branch name
+References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
+ <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com> <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
+ <20200616074316.GA21462@kitsune.suse.cz> <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
+ <xmqq5zbpv53g.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq5zbpv53g.fsf@gitster.c.googlers.com>
+From:   demerphq <demerphq@gmail.com>
+Date:   Thu, 18 Jun 2020 09:40:37 +0200
+Message-ID: <CANgJU+Ut+ANPHud1JQw1Wo+zb37_=EWx-vgap6FGC+T=-dzn4A@mail.gmail.com>
+Subject: Re: Rename offensive terminology (master)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Junio C Hamano via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+Cc:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
+        =?UTF-8?Q?S=C3=A9rgio_Augusto_Vianna?= <sergio.a.vianna@gmail.com>,
+        konstantin@linuxfoundation.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Don Goodman-Wilson <don@goodman-wilson.com>,
-        Derrick Stolee <stolee@gmail.com>,
+        Git <git@vger.kernel.org>, newren@gmail.com,
+        philipoakley@iee.email,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Simon Pieters <simon@bocoup.com>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, Jun 17, 2020 at 11:30 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, 17 Jun 2020 at 21:56, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Elijah Newren <newren@gmail.com> writes:
+> demerphq <demerphq@gmail.com> writes:
 >
-> >> That leaves us in the interim with a "fast-export --anonymize" that is a
-> >> little harder to use (you have no way to know which branch was which).
+> > kind of confusion. Consider how this conversation goes for us:
 > >
-> > Why does fast-export special case on "master" rather than on HEAD?
-> > Isn't it more relevant to know the active branch than what _might_
-> > have been the initial branch?  It kind of feels like a bug to me that
-> > HEAD isn't the special case construct.
+> > A: "No you need to fetch trunk from the remote, then you need to merge
+> > it to your local trunk and then push it to the master trunk".
+> > B: "Ok."
 >
-> I am torn on that one.  Surely HEAD is often the branch that has our
-> current attention.  It may well be what we are exporting and we may
-> want to see the topology formed by other refs relative to it.
+> Hmph, why isn't the last one "trunk trunk"?
+
+What I described was someone pulling from a box they have code on
+(which does not have access to the master repository) to the local
+repo on their laptop so they can push it to the master repo.
+
+We have a master repo at $work. We use a mixture of centralized and
+decentralized dev models. To get your code into production it must hit
+the master repository, and it must be in the trunk branch in the
+master repository. I imagine this is a relatively common
+configuration, and problem in a professional context. Eg, I might be
+testing or debugging code on a node that is not allowed write access
+to the master repo for security reasons, so I need to pull the code
+from there to my local workstation and then push from there to the
+master repository. And all too often our people don't use topic
+branches for this stuff and just hack on their local copy of trunk. So
+from my point of view what I said was absolutely correct.
+
+> > Similarly when the perl project migrated to git we renamed "master" to
+> > "blead" to reduce the possibility "master master" confusion.
 >
-> On the other hand, the current branch may not necessarily be what we
-> are exporting.  Historically a project has a single branch that is
-> the focus of most users' attention when they talk about the general
-> state of the project's progress, so it is understandable to expect
-> that the topology may want to be seen relative to that one central
-> line of development.
+> Or put it differently, "your local master?  remote master?  or the
+> primary master?" would be a way to state the phrase A asked in the
+> example without renaming the name for the primary branch to 'trunk'.
 
-I'm trying to understand here, but I feel like I'm missing something.
-Let me try to explain what I understand and hopefully you can figure
-out what I'm not seeing...
+Well, "primary" is not a terrible replacement term for "master", but
+it isn't ideal either, as it also suggests the existence of a usable
+secondary, which isn't a correct mental model (for us). Personally I
+would eschew "primary" when there isn't a "secondary".
 
+> What I am trying to get at is, after changing the name that is given
+> by default to the primary branch in a newly created repositories by
+> "git init" to 'main' (which I am OK with, and it seems that the
+> major projects and repository hosting services will be doing anyway
+> with or without getting themselves in this discussion on this list),
+> wouldn't we risk the same "master master" confusion caused by and to
+> those newer users who learn 'main' is the word given to the primary
+> thing?
 
-Regardless of what is mainline and whether or not it is important,
-users probably trigger their bug when a certain branch is checked out.
-Their bug may also trigger on other branches, but it at least triggers
-on one, and some bugs will only trigger on one branch.  It seems
-logical to me that we would want to have the same branch checked out
-(it's the one most likely to trigger the same issue), and thus
-identifying the HEAD branch is generally important.  (Mainline may be
-too, I'm merely asserting that HEAD is important at this point.)
+Yeah I think it will still cause problems. If it was my call I would
+not choose "main" either. Having said that I do think it is a bit
+better than "master" however, as it leaves the term "master"
+unambiguously about repositories, and it leaves the term "main"
+unambiguously about branches.
 
-If users trigger their bug by providing various revision
-specifications on the command line that compare multiple branches or
-something, then we're already in the situation of needing to know how
-to map more than one reference to anonymized ones in order to be able
-to replicate their issue.  However, knowing the mainline might not
-even help in this case; we instead need to know the anonymized form of
-the references they are using, whatever those are, and mainline is
-only useful if it happens to be one of them.
+Also I would argue it is more etymologically correct. I would argue
+that the "master" branch in git terminology is NOT really the "master"
+unless it is in the "master" repository. "master" in the content of
+"master copy" implies "one" (it has to, what do you do if you have two
+masters and they aren't the same!), but using it in a distributed
+sense for a branch name doesn't imply one, it implies many, so it
+really doesn't make a lot of sense.
 
-So, I think HEAD is always useful.  Additional references would
-sometimes be useful, but it's not clear to me that mainline is one of
-those additional references.  Maybe I'm just being dense, and I
-apologize if so, but under what circumstances does knowing the
-mainline help with debugging a user issue where an anonymized
-fast-export is provided?
+> Wouldn't you teach your users to fetch 'main' from the remote, merge
+> it to the local 'main' and then push it to the 'main' main?
 
-> > (Speaking as someone whose company a number of years ago had most
-> > their big repos and lots of little repos switch their main branch to
-> > be named "develop", and in some of those repos deleted "master" but
-> > didn't in others.  If I had needed some steps to reproduce a problem,
-> > and hadn't been on the inside, any special casing from fast-export
-> > would make more sense to me to apply to "develop" than to "master".)
->
-> Yes, absolutely.  You either check "develop" out temporarily just to
-> take anonymized export to make "develop" discoverable in the output,
+Unfortunately we call our main repo "main.git", so for my workplace
+"main" as a default branch name would be suboptimal. We chose "trunk"
+because "main", "master", "primary" all have these double meanings. On
+the other hand "trunk" is the standard word for the things that
+branches grow out of, and in some trees, the branches even can merge
+back into the trunk![1] Thus I find it weird it isn't perceived as the
+"obvious" choice to solve this problem. That the bulk of the
+population chose "main" suggests to me a lack of imagination more than
+a reasoned and thought through decision.
 
-That makes sense; if the bug triggers while they are on develop then
-I'd expect them to be on develop when they export.  If it triggers on
-some other branch, I'd expect them to stay on that other branch when
-they export even if "develop" is the mainline.
+Anyway, personally I would say "main" and "master" are both bad
+choices for the default *branch* in a tool that is as workflow
+agnostic as git is and seems to intend to be. It is relatively
+unfriendly to scenarios where there is in fact a "main repo" or
+"master repo" . Many people will in practice use git in a relatively
+centralized way with at least one repo designated the "main" or
+"master" repo for the project, and so you end up with two "master" or
+two "main" things that are very different with very different
+properties.
 
-> or you would have set core.primaryBranch to "develop" once sometime
-> in the past to tell Git that "develop" is that special one, not
-> "master", so you can take such an export from any branch.
+So yeah, I would say that "main" is slightly better than "master" but
+is still suboptimal from a comprehension point of view, and it is
+downright unhelpful for my $workplace (but I recognize that isn't a
+problem you should be considering in this discussion.)
 
-This doesn't make sense to me.  The person who changed the primary
-branch to "develop" for some repository did so years ago.  That
-individual might not even still be at the company, and even if they
-are, may well be working on a totally different project (and
-repository) today.  Perhaps that individual set core.primaryBranch at
-the time, but git-config settings aren't copied by fetch/clone/push,
-so I don't see how this one helps at all.  We could tell all future
-developers who clone any of these repositories that they also need to
-set core.primaryBranch when they clone the repo, but that seems super
-lame to me especially since the odds that any one of them will ever
-need or benefit from it are approximately 0.  And yet, it'll be one of
-these developers who joined the project long after the switchover who
-runs into problems and provides fast-export dumps.
+Thank you for your time and efforts in dealing with this subject.
 
+cheers,
+Yves
+[1] https://www.reddit.com/r/mildlyinteresting/comments/25xkg2/a_tree_branch_grows_back_into_the_tree/
 
-It feels like I'm probably just missing something obvious, but I
-really don't see how the mainline is special here.  Please do point
-out what I'm missing.
-
-Thanks,
-Elijah
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
