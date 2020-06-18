@@ -2,138 +2,132 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88D4CC433E0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 17:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 889A1C433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 17:58:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D808207DD
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 17:56:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6552720734
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 17:58:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AL0zQtKb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t3NjK8l0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728795AbgFRR4U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 13:56:20 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39386 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728109AbgFRR4T (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 18 Jun 2020 13:56:19 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 21CB76048A;
-        Thu, 18 Jun 2020 17:55:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592502948;
-        bh=Aj5pW5jYTZt4gpRaXT9QDjSBiTlmakWiOCIZ5GamNJk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=AL0zQtKbkFvYxcHTFU3Siicfu5fkAi+3lzEY9hfbzmlNBCK0svlsxhZfLLAPuVEs1
-         q8Ky8ysay+Qo6JvvgWMvCLtovBSDZDpW/noCM7Pz339g/M0lTTJwS5/S+IV5wvfOwf
-         i7rPUTWlA8nh7Ap+fEdCz5NjyuYZW20xUR66ZaNbY0o0aglFiAZ6LGKf33yF22AuDK
-         C1zgUprrjVob0DyK7vq9/NmHxwHonY5kzppQn9on5Cpv9UV0uDwbT4cRK90EzxuT6J
-         VdJzgTOGZwcgGJrb8lbBDgsdzw0lrLCaBGaFbhbfKgOmM92C1zowqzOr2LVjHdm+Fw
-         F57CJeo51U/wBujyx443QZBfGFhHr3FtTbtDxIAddMzUkeqywp5hsAkLM4ukieGSK3
-         IWzRQ+h3b8U3YOQsEUU+HwnMlqxHTrTuR0fz69JvYswGD/nBTaADVTsqZkeZirHOUX
-         FLVvew72dGJ1lH7vfT2Oe96JT/wftVyD7a+AaRNNFhOr+QQsDI8
-Date:   Thu, 18 Jun 2020 17:55:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1729255AbgFRR6R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 13:58:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59268 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727093AbgFRR6R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 13:58:17 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15567C06174E
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 10:58:16 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id f18so6464606qkh.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 10:58:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Udu+8hjym+ADwkC3pp95PnAfHDN+CWDGXGhlqk9Mvik=;
+        b=t3NjK8l0JIQFe4cr8FmZwyavnSSGUmjdUEVOcBx2MPwFIwEsa2HCVDZwNRoumv0tbZ
+         3YffV6iAgFOeGiX2MUfb9ALGrnpgEWK/OTXJe6tHB5Yjr7GTN0t83uNTl24g47vEZbfY
+         aKoVAt3VBhXTZ08IFSySRwIoCkQ75F/DXP7WM9ciiN2MWW6XFgi7qyl0FrVZvNLkmMJz
+         01BDIGzAus0eDW0Q/YSC4y/IxZwSeANQ0EjLJb6R5mi6KGVmTymmWIt9INctb2vYIgHn
+         +ipXUmVvzoffnB8IrLbC5kCQ+fxfTZEn07RCa0pgQMbtEbfsB6/U3wPPCJHz+zy2bQFn
+         1iCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Udu+8hjym+ADwkC3pp95PnAfHDN+CWDGXGhlqk9Mvik=;
+        b=SAW3zP8JGRE4GYHfoyJnEtZGmJ7ixDcpe3j4ObfCDF6U0plGOVEcZzO0inQFsyjt3U
+         i7Q0fRocDqj6DFQ/PU/MmTSuO32CgOrYIPgtaaoEKcHz/kIQ0590q2Dzjt4cfDmpqGZk
+         Gurs3dYCjYOfKWgdA0vC2ejDCrLtCHDxTKL8vfVnt/CRYmLFUyGi7zvRjG2OF4Ig7AAK
+         MYvcVwpzJA1GlVyxQ+dWr8tdhcFON0Z94SL9ePEgfUfeqSixGh4JNq6PL9SeNe760OWp
+         9gzq/Aq+gvqFMDwWE/oVqenB3dIsCgVqgHAoWrGf999vMwJYx7aQ5TTVMJnY2JUZunGf
+         JMmw==
+X-Gm-Message-State: AOAM530WfQPxH46AKVHz4rfNouhU6LISk3EEZCG2pyBYaYFGhCRbcwM6
+        IV7TCyWOSygf0V01qTV6BjpmngG2y5o=
+X-Google-Smtp-Source: ABdhPJz1CVJfcxLO7EIfrYjxfwW42Clq2o0+vb2fO31p4ctJjy07E+sIGJ0KRe5c2X0+nPmm+3r+nA==
+X-Received: by 2002:a05:620a:538:: with SMTP id h24mr19558qkh.13.1592503095214;
+        Thu, 18 Jun 2020 10:58:15 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([49.206.10.129])
+        by smtp.gmail.com with ESMTPSA id u205sm3601864qka.81.2020.06.18.10.58.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2020 10:58:14 -0700 (PDT)
+Date:   Thu, 18 Jun 2020 23:28:08 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2020, #03; Wed, 17)
-Message-ID: <20200618175544.GJ6531@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqpn9wq3tl.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH] diff-files: treat "i-t-a" files as "not-in-index"
+Message-ID: <20200618175808.GA36733@mail.clickyotomy.dev>
+References: <20200611161640.52156-1-shrinidhi.kaushik@gmail.com>
+ <xmqq4krhjql1.fsf@gitster.c.googlers.com>
+ <20200611232851.GA55419@death-star>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="u3bvv0EcKsvvYeex"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqpn9wq3tl.fsf@gitster.c.googlers.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+In-Reply-To: <20200611232851.GA55419@death-star>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
+Is there any update on this patch?
+Please let me know if I missed anything.
 
---u3bvv0EcKsvvYeex
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks!
 
-On 2020-06-18 at 06:35:18, Junio C Hamano wrote:
-> * bc/sha-256-part-2 (2020-05-27) 44 commits
->  - remote-testgit: adapt for object-format
->  - bundle: detect hash algorithm when reading refs
->  - t5300: pass --object-format to git index-pack
->  - t5704: send object-format capability with SHA-256
->  - t5703: use object-format serve option
->  - t5702: offer an object-format capability in the test
->  - t/helper: initialize the repository for test-sha1-array
->  - remote-curl: avoid truncating refs with ls-remote
->  - t1050: pass algorithm to index-pack when outside repo
->  - builtin/index-pack: add option to specify hash algorithm
->  - remote-curl: detect algorithm for dumb HTTP by size
->  - builtin/ls-remote: initialize repository based on fetch
->  - t5500: make hash independent
->  - serve: advertise object-format capability for protocol v2
->  - connect: parse v2 refs with correct hash algorithm
->  - connect: pass full packet reader when parsing v2 refs
->  - Documentation/technical: document object-format for protocol v2
->  - t1302: expect repo format version 1 for SHA-256
->  - builtin/show-index: provide options to determine hash algo
->  - t5302: modernize test formatting
->  - packfile: compute and use the index CRC offset
->  - t3200: mark assertion with SHA1 prerequisite
->  - setup: set the_repository's hash algo when checking format
->  - fetch-pack: parse and advertise the object-format capability
->  - t5562: pass object-format in synthesized test data
->  - builtin/clone: initialize hash algorithm properly
->  - remote-curl: implement object-format extensions
->  - transport-helper: implement object-format extensions
->  - docs: update remote helper docs for object-format extensions
->  - builtin/receive-pack: detect when the server doesn't support our hash
->  - connect: detect algorithm when fetching refs
->  - fetch-pack: detect when the server doesn't support our hash
->  - connect: make parse_feature_value extern
->  - send-pack: detect when the server doesn't support our hash
->  - connect: add function to detect supported v1 hash functions
->  - transport: add a hash algorithm member
->  - pkt-line: add a member for hash algorithm
->  - connect: add function to fetch value of a v2 server capability
->  - connect: add function to parse multiple v1 capability values
->  - remote: advertise the object-format capability on the server side
->  - wrapper: add function to compare strings with different NUL termination
->  - connect: have ref processing code take struct packet_reader
->  - Documentation: document v1 protocol object-format capability
->  - t1050: match object ID paths in a hash-insensitive way
->=20
->  SHA-256 migration work continues.
->=20
->  Ready???
-
-I found one slight bug in this with regard to cloning empty repositories
-with the dumb HTTP protocol and will send out a v3 before Monday.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---u3bvv0EcKsvvYeex
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXuuqoAAKCRB8DEliiIei
-gfTFAP0QWLXdNXFCwPt/bWx9oFUFLZHq1bpSHKXMJcDJ6LemvQD+M+hgCjwfudei
-VPM1zmVrCntLGX3xfOkPXqZq7MkPaQk=
-=hRR7
------END PGP SIGNATURE-----
-
---u3bvv0EcKsvvYeex--
+On 06/12/2020 04:58, Srinidhi Kaushik wrote:
+> Thanks for replying!
+> 
+> On Thu, Jun 11, 2020 at 01:27:22PM -0700, Junio C Hamano wrote:
+> > Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
+> > 
+> > > The `diff-files' command and related commands which call `cmd_diff_files()',
+> > > consider the "intent-to-add" files as a part of the index when comparing the
+> > > work-tree against it. This was previously addressed in [1] and [2] by turning
+> > > the option `--ita-invisible-in-index' (introduced in [3]) on by default.
+> > >
+> > > For `diff-files' (and `add -p' as a consequence) to show the i-t-a files as
+> > > as new, `ita_invisible_in_index' will be enabled by default here as well.
+> > >
+> > > [1] 0231ae71d3 (diff: turn --ita-invisible-in-index on by default, 2018-05-26)
+> > > [2] 425a28e0a4 (diff-lib: allow ita entries treated as "not yet exist in
+> > >                 index", 2016-10-24)
+> > > [3] b42b451919 (diff: add --ita-[in]visible-in-index, 2016-10-24)
+> > 
+> > Is there any place where we still run the internal diff machinery to
+> > compare the index and the working tree without setting the
+> > ita_invisible_in_index bit on with this patch applied, and if so,
+> > why?  Does the justification why that other place needs to leave
+> > the bit off apply to this codepath as well?
+> 
+> Yes, I believe that there exist some use cases for `ita_invisible_in_index'
+> to be unset. For instance, `index_differs_from' which is used in a quite a
+> few places -- like "commit", "revert", and "rebase" -- which require a
+> "no change" to be returned.
+> 
+> This commit: [1] addressed the issue where the cache-tree was producing
+> the same tree as the current commit when it involved "intent-to-add"
+> entries, instead of aborting.
+> 
+> [1] 018ec3c820 (commit: fix empty commit creation when there's no changes
+>                 but ita entries, 2016-10-24) 
+> 
+> > What I am trying to get at is if this is helping only one usecase
+> > for "diff-files" while breaking other usecases.
+> 
+> Currently, `run_add_p' (for "add"; which this patch addresses
+> the fix), and `push_to_deploy' (in "receive-pack"; where this
+> is the intended behavior), call "diff-files" as a subprocess,
+> in which case the `ita_invisible_in_index' bit is explicitly
+> set. For all other cases, calls are made directly
+> to `run_diff_files' and will be unaffected by this change.
+>  
+> > On the other hand, if there is no longer anybody who wants
+> > ita_invisible_in_index off, perhaps we can get rid of the bit and
+> > lose many conditionals.
