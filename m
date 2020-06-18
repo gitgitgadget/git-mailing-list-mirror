@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 946CAC433E1
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89473C433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:49:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FA552186A
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:49:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BC9F20EDD
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 08:49:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WOs7MxNd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WVhMzilc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728786AbgFRItZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 04:49:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59150 "EHLO
+        id S1728829AbgFRItc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 04:49:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728536AbgFRItU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 04:49:20 -0400
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5056CC0613ED
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:49:20 -0700 (PDT)
-Received: by mail-qv1-xf44.google.com with SMTP id y9so2405233qvs.4
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:49:20 -0700 (PDT)
+        with ESMTP id S1728579AbgFRItV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 04:49:21 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65E40C0613EE
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:49:21 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id z2so1748984qts.5
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 01:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=03T/1SBccsrL8MxzlNoP+D0VvWFvUBc8YCfO8LcdObA=;
-        b=WOs7MxNdGRP7EAlcJWIU3K1As7APfH8lFCc0SNBvEHsLdY9BVVQERi5oRr+Vl5OfOG
-         /fYmfyz1volc/Pe6vSycqCBQUDI8xntfQaZpfCYw4brD2Rk2PSaK4Rq8zMOz+NiTxpZv
-         /5nvis8LKbWDeecjmR41vUXnxyqYnrqfqs8kTB/Vk4ASDMwbYtdsSZ8wIdUd6OJzGQkl
-         YjtIE2ePf8VmYZuNXW9O1WzW0aSnfigj3mh+S44N43YlVeR3brxZQtcAxDvQPv8hP4kC
-         EFyTBUWAwHmrQZyh67Qlz9Rp8CxfXbxBDVCLZicACGGqw+WabJLw/MeBfo7nhFAuMbSU
-         +8XA==
+        bh=y2y7mFB0gE9guERvhw+Ck90cqDpvNTnrJ078+V80sl4=;
+        b=WVhMzilcvB09rKd5TQ3sCIJFXxXTB8ZSM0hDuAkHY1v4n11gbAyhUcCblUNf1nTeE6
+         iZVZE7VYbcPj4MMMrhzaqO6GWBynL6COYpF7Ba2pRqVyx7vkVHCPaBJ/ukLyjZXfZUEG
+         iAz16sPH23R65lZ3IvUF2ITnuZwpUgp+V8mMOW3pFnr1z6P8w8XDnwhy2f8fdG1YTsVy
+         i9bhBG3DVQfuyTMaJtWIIrDD8Q//qbI1ler90Ff/dPqa9lQr34z43rdw5HJdQyPonchz
+         F0A/aO16HuDTqzCvRBD4m/krwFDHn24fZPc4YiNjP6+yigXzmtB79r7ukOXBmJaUYRu1
+         88Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=03T/1SBccsrL8MxzlNoP+D0VvWFvUBc8YCfO8LcdObA=;
-        b=e8f0iKnLTFIAp6aPQuXPAE2UXaXIV+cez8e9olIBkNbnGMWJu/Gq6MdhUxjhQvxZWW
-         l/yUH/jBZMCPeqJpyv/+7nJgmVvawmXDbvIUwtxwLRZLpv/us/8e2c2Q9sAvlvcHvXnh
-         KTXXxjb5hK9d72XbQrk4Oo8Qm5aS9quoQYCWpoFhlBo16jwx7hfVK9SIeUh0Bj5IzcwH
-         K1dpCnIpfoBuqszRo73/pAm9mBQxBL7fgVjUCfLGfPCk0eQA1xw+z+CCw/SIBSLGCcYQ
-         QWTAzUjpyRv6+KZh3te30pd0rDwcVN7PiohjkpJKu6i0DYZl13SH3Cku6UQQimejRFUP
-         r66Q==
-X-Gm-Message-State: AOAM532ZtSrABN4smBC9MFYQp+LKSyqCs1syrGQrFv5e3ui0GRNYK3kY
-        FloCJCYZnkhHvhN05dhMyhS8Q2x3z5w=
-X-Google-Smtp-Source: ABdhPJzW2PcvVisOFV1k45LJGvamKyUt+coUEUnhjrqzo1IARdTt/jQ/PlA8yEzCqonvEFUtCdz0pQ==
-X-Received: by 2002:ad4:5485:: with SMTP id q5mr2697639qvy.62.1592470159298;
-        Thu, 18 Jun 2020 01:49:19 -0700 (PDT)
+        bh=y2y7mFB0gE9guERvhw+Ck90cqDpvNTnrJ078+V80sl4=;
+        b=QESWYTDQMf9m8aSmr0lb5/jtdEerC5BamHkOL/RQxUIdQc4uDHFBUJX5/2rytjD+XH
+         A3X3YDpLDv7eo73WaShoHfWEnrIi/mHdTeJ0MN7nuskGwdgBIeQdrPadeQL+jTeqr7Sl
+         EGMFvTdVK+5q88NW1zB1uIcU2nHBmzoPuccBVI08XMHOMq6q4SsuCWQhMtMjut8uCKXR
+         icqKGLMFMjPcolxbiajp+A6aguyLQkQebLTydTyFuOmDoyD5UrZVUb/Yzz6bm2CwXrre
+         7GHkeruepELyBO/oInrq9gh8a9mGWSCNT4lymrL7LeElzxJvdOtwee04iFXOwiOQLoQT
+         SIxw==
+X-Gm-Message-State: AOAM532wxRZW86ZdGrTCkWagbnCtdv973tfPwRwFErRkouSKmU5YmyZt
+        hagZmasVxJm+ekb7agV7ac81c9fDKZE=
+X-Google-Smtp-Source: ABdhPJwYWK8YXkxSxa3wjysQWapYNLxVIJkRzabxMR4zb4Mv0Tbw2lhWg9Lqq7MEU/G9pgIHWem7mw==
+X-Received: by 2002:aed:3fa4:: with SMTP id s33mr3411839qth.148.1592470160451;
+        Thu, 18 Jun 2020 01:49:20 -0700 (PDT)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id p11sm2733082qtb.4.2020.06.18.01.49.18
+        by smtp.gmail.com with ESMTPSA id p11sm2733082qtb.4.2020.06.18.01.49.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2020 01:49:18 -0700 (PDT)
+        Thu, 18 Jun 2020 01:49:19 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH v4 1/4] lib-submodule-update: add space after function name
-Date:   Thu, 18 Jun 2020 04:49:11 -0400
-Message-Id: <ba2f642e0f505730d5d740207128036448787c8c.1592470068.git.liu.denton@gmail.com>
+Subject: [PATCH v4 2/4] lib-submodule-update: consolidate --recurse-submodules
+Date:   Thu, 18 Jun 2020 04:49:12 -0400
+Message-Id: <16d0a3eb9ac8dcda701433a9e67cde5103949432.1592470068.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.27.0.132.g321788e831
 In-Reply-To: <cover.1592470068.git.liu.denton@gmail.com>
 References: <cover.1591897173.git.liu.denton@gmail.com> <cover.1592470068.git.liu.denton@gmail.com>
@@ -77,9 +77,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the shell scripts in this codebase, the usual style is to include a
-space between the function name and the (). Add these missing spaces to
-conform to the usual style of the code.
+Both test_submodule_switch_recursing_with_args() and
+test_submodule_forced_switch_recursing_with_args() call the internal
+function test_submodule_recursing_with_args_common() with the final
+argument of `--recurse-submodules`. Consolidate this duplication by
+appending the argument in test_submodule_recursing_with_args_common().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
@@ -87,36 +89,36 @@ Signed-off-by: Denton Liu <liu.denton@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 1dd17fc03e..122554acd6 100755
+index 122554acd6..bb36287803 100755
 --- a/t/lib-submodule-update.sh
 +++ b/t/lib-submodule-update.sh
-@@ -183,7 +183,7 @@ test_git_directory_is_unchanged () {
- 	)
- }
- 
--test_git_directory_exists() {
-+test_git_directory_exists () {
- 	test -e ".git/modules/$1" &&
- 	if test -f sub1/.git
- 	then
-@@ -309,7 +309,7 @@ test_submodule_content () {
- 
- # Internal function; use test_submodule_switch() or
- # test_submodule_forced_switch() instead.
--test_submodule_switch_common() {
-+test_submodule_switch_common () {
- 	command="$1"
- 	######################### Appearing submodule #########################
- 	# Switching to a commit letting a submodule appear creates empty dir ...
-@@ -629,7 +629,7 @@ test_submodule_forced_switch () {
- 
+@@ -630,7 +630,7 @@ test_submodule_forced_switch () {
  # Internal function; use test_submodule_switch_recursing_with_args() or
  # test_submodule_forced_switch_recursing_with_args() instead.
--test_submodule_recursing_with_args_common() {
-+test_submodule_recursing_with_args_common () {
- 	command="$1"
+ test_submodule_recursing_with_args_common () {
+-	command="$1"
++	command="$1 --recurse-submodules"
  
  	######################### Appearing submodule #########################
+ 	# Switching to a commit letting a submodule appear checks it out ...
+@@ -809,7 +809,7 @@ test_submodule_recursing_with_args_common () {
+ # test_submodule_switch_recursing_with_args "$GIT_COMMAND"
+ test_submodule_switch_recursing_with_args () {
+ 	cmd_args="$1"
+-	command="git $cmd_args --recurse-submodules"
++	command="git $cmd_args"
+ 	test_submodule_recursing_with_args_common "$command"
+ 
+ 	RESULTDS=success
+@@ -927,7 +927,7 @@ test_submodule_switch_recursing_with_args () {
+ # away local changes in the superproject is allowed.
+ test_submodule_forced_switch_recursing_with_args () {
+ 	cmd_args="$1"
+-	command="git $cmd_args --recurse-submodules"
++	command="git $cmd_args"
+ 	test_submodule_recursing_with_args_common "$command"
+ 
+ 	RESULT=success
 -- 
 2.27.0.132.g321788e831
 
