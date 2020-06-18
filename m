@@ -2,97 +2,153 @@ Return-Path: <SRS0=1Nmv=77=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4A1DC433DF
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D593CC433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:30:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A142F206D7
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:30:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AEB64207DD
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 20:30:49 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="dJpcSl6M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731186AbgFRUa0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 16:30:26 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:64184 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731179AbgFRUaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 16:30:22 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 05IKUEqB039639
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 18 Jun 2020 16:30:14 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Riddell, Matthew A'" <mriddell@paychex.com>
-Cc:     <git@vger.kernel.org>
-References: <MN2PR02MB66232254F5F4BE27F21C441CD89B0@MN2PR02MB6623.namprd02.prod.outlook.com> <xmqqsgesns22.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqsgesns22.fsf@gitster.c.googlers.com>
-Subject: RE: Git config command ignores explicitly set file permissions
-Date:   Thu, 18 Jun 2020 16:30:08 -0400
-Message-ID: <022601d645af$45d0e640$d172b2c0$@nexbridge.com>
+        id S1731271AbgFRUas (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 16:30:48 -0400
+Received: from mout.web.de ([217.72.192.78]:37325 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727793AbgFRUar (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 16:30:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1592512241;
+        bh=8DMFruPiiG9P/gn545uhf8ZpKWW7khqM2k4NVHPyIO8=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=dJpcSl6MNiKWFMC6brj+93mxcsUMHlae0GVIgH9FZzYmfGnFnsXWGRNts+QDichYy
+         7kDT9spL8R/AAuewOUfHtpxWx3Rsbn3HqT88eWQDIX32XJ0SEHbaGWCcV65UfoFxAM
+         WqMxZ4XuQ5anlxNUiOkHkvvVM+5psSLJeHXfbdfg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MfHsM-1jW0Sp29gQ-00Oqdh; Thu, 18
+ Jun 2020 22:30:41 +0200
+Subject: Re: [PATCH 1/8] commit-graph: place bloom_settings in context
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     me@ttaylorr.com, szeder.dev@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
+ <c966969071bf0ba135d304bbc0d5c16fbcbedc1e.1592252093.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <4a7fbd99-c581-fb30-90b3-e78c30708ff2@web.de>
+Date:   Thu, 18 Jun 2020 22:30:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIGtzZYQAdvEZ0Lx+m5fkirg6t9UwJ0Pw7DqGpNEbA=
-Content-Language: en-ca
+In-Reply-To: <c966969071bf0ba135d304bbc0d5c16fbcbedc1e.1592252093.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:mudcu7y5Zwp13Jc3zg1z+PA454L2CImjEjSLhpPseF2gnwggNXa
+ 0b4teXwkxqfxqLhC8jC9/ehQYkFGaNB6AG4ZHIhB6bHT/fyDXDk+/9WIZZiTxv0NKkvFeUs
+ x2pUHvmAWqJqt3zSScudbtQ2kng6hpOUcaVh4rozGNiFDyZOB8z8FB4MEEzDqTWL29YBqhn
+ IeThpdl8A6lcG5+5s1QSQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zxudb9PG6hA=:yiR90x27HDVwfhkMy2YGAW
+ zuq/0hrfdwR7hVc44yQXoOGBKD474nbgtBbPH2wEXcib4wvqGfRuAGmEu1GZzjJn2RPcuQjTp
+ u19wRJad71FfipcKl7+854hSAOZTTVdad6pCH0uIDXJe1WmNBW/aqCZfhUgOULkpgMqcdjBZe
+ 4AEoZCQY4mMke+2iYrFcccrI18l+RM3XHFXRG1u3RRYapyH30YMLJwU+j7rz6sTweLrUQ7y9Z
+ Kwj8j9qk4raTcGEDIANyHFH4wDXm+U76hnS1B08Wa+3+bIlShyX/szbkG0GW5PBROtSiMrl/e
+ LdL2UizYQvVCpWZkeewwl7kpUjbkcga+gTruHerrdiW64hXyGwoI9ZxeLFpR3k2n4Jn6DcFXc
+ EGYSVfKBZh9xMhYATQr3BsuUwX9YWXJPTIQQB7AgzUekbFNvC3yiw2Nk47utAJMFwIcn4opZ3
+ QCVvyMIPWeWJj/5/KUzvslf0E/VKgCnHzslnYF7bHR6ao4q/Ldh8L7OWZ3gP+PmSCbMLs+hhG
+ hg6oSvovHi69zgymAHK5gP1V/pbaHXikn9XkbmVFrd9MmlO2jPbtx1Lj6KLYnoUkpWkTaG3QG
+ QnrhofN2w/6BaFTTV2hl2z8i034hYlhKWmyyOHlW6DkAWniVM+DE4Fnj1bDLR4AwOnBNBIJ9C
+ 6eyAqfwhxkPzyLzs9ChV0QjSQAZ7Il/ioRaQdjIps4rQb154DVLOSTDdk/HmBCp/70UhDRJxZ
+ nqmkt2Jy28WEP68itwDJ42p4xbwiaRC3xC5oxnn8OJdSUM8HRZ/56ZL9NF0gL0EScwFXfPDAG
+ 2fQ+0sATYJVKBiD4lmnkn/xbaRAsKHHKF+vRkjNpth8odLKfpgVIjKigqVsZElnJfdPL2xk+j
+ oEhH1ll+MIVa7IelV3IPwhJRPkssTw4/P0fncSvd0d1cnOhN2YV7kN16mhqXy9jzse5u0bKJy
+ DpNaycKwXIb0HGWdyksRNeY65Rt5LuJZqH7enGrpqF7kfEwyKS+z8s7X/MVPJl2gQWcV/p2JM
+ fb+x14Aj1/mYFby432py1n5NK7Pep784X2WjM58tMRjO5xLK4D/TCjuRo6r3RKajKV1v9mVQk
+ UEkSrr6S4X+4P1rEXnUJFb+3IWzanTpXMag68sl54DMf1AMs5vqWIKhwZngywrU1L877ofVfB
+ tdDhtqPqX3dRuULxsjgctfwIqZUTPItb5dVcYWOLw4cynLXs9KZI2HfWxjyqsvVgk+uUc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On June 18, 2020 2:32 PM, Junio C Hamano wrote:
-> "Riddell, Matthew A" <mriddell@paychex.com> writes:
-> > I noticed while working with Git that the file permissions on the
-> > gitconfig file is ignored and the parent folder permissions are used
-> > instead to update the file.  An example is as follows:
-> >
-> > Before running git config ensure the user running the command is not
-> > able to edit the file but has read access to the file. Ensure the User
-> > has full access to the parent folder.  After running any git config
-> > command the user previously without edit permissions on a file can now
-> > edit the config file.
+Am 15.06.20 um 22:14 schrieb Derrick Stolee via GitGitGadget:
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> Place an instance of struct bloom_settings into the struct
+> write_commit_graph_context. This allows simplifying the function
+> prototype of write_graph_chunk_bloom_data(). This will allow us
+> to combine the function prototypes and use function pointers to
+> simplify write_commit_graph_file().
+>
+> Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  commit-graph.c | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 887837e8826..05b7035d8d5 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -882,6 +882,7 @@ struct write_commit_graph_context {
+>
+>  	const struct split_commit_graph_opts *split_opts;
+>  	size_t total_bloom_filter_data_size;
+> +	struct bloom_filter_settings bloom_settings;
 
-Forgive me to asking, but is this an attempt at replicating what other VCS
-systems do? ClearCase is an example where files are forced to read-only and
-if the user wants to modify it, then they have to ask nicely for a lock on
-the file. The use of "read only" is a semi-guarantee that a user will not
-modify code and interfere with other users. In git, the rules are quite
-different, where modification resolution occurs later in the process.
+That structure is quite busy already, so adding one more member wouldn't
+matter much.
 
-> That is pretty much how things are intended to work on a filesystem and is
-> not limited to Git.  Your arrangement, contrary to what you said, does not
-> "ensure the user running the command is not able to edit but has read
-> access".
-> 
->     mkdir newdir
->     chmod +rwx newdir
->     >newdir/file
->     chmod a-w newdir/file
-> 
-> would not forbid you from doing
-> 
->     rm -f newdir/file
->     ehco new >newdir/file
-> 
-> In other words, if you allow your user to write to a directory, you cannot
-> forbid the user from creating and removing files in it.
+Passing so many things to lots of functions makes it harder to argue
+about them, though, as all of them effectively become part of their
+signature, and you have to look at their implementation to see which
+pseudo-parameters they actually use.  It's like a God object.
 
-Just inquiring about this, as git operational decisions are fundamentally
-different from older systems.
+>  };
+>
+>  static void write_graph_chunk_fanout(struct hashfile *f,
+> @@ -1103,8 +1104,7 @@ static void write_graph_chunk_bloom_indexes(struct=
+ hashfile *f,
+>  }
+>
+>  static void write_graph_chunk_bloom_data(struct hashfile *f,
+> -					 struct write_commit_graph_context *ctx,
+> -					 const struct bloom_filter_settings *settings)
+> +					 struct write_commit_graph_context *ctx)
+>  {
+>  	struct commit **list =3D ctx->commits.list;
+>  	struct commit **last =3D ctx->commits.list + ctx->commits.nr;
+> @@ -1116,9 +1116,9 @@ static void write_graph_chunk_bloom_data(struct ha=
+shfile *f,
+>  			_("Writing changed paths Bloom filters data"),
+>  			ctx->commits.nr);
+>
+> -	hashwrite_be32(f, settings->hash_version);
+> -	hashwrite_be32(f, settings->num_hashes);
+> -	hashwrite_be32(f, settings->bits_per_entry);
+> +	hashwrite_be32(f, ctx->bloom_settings.hash_version);
+> +	hashwrite_be32(f, ctx->bloom_settings.num_hashes);
+> +	hashwrite_be32(f, ctx->bloom_settings.bits_per_entry);
+>
+>  	while (list < last) {
+>  		struct bloom_filter *filter =3D get_bloom_filter(ctx->r, *list, 0);
+> @@ -1541,6 +1541,8 @@ static int write_commit_graph_file(struct write_co=
+mmit_graph_context *ctx)
+>  	struct object_id file_hash;
+>  	const struct bloom_filter_settings bloom_settings =3D DEFAULT_BLOOM_FI=
+LTER_SETTINGS;
+>
+> +	ctx->bloom_settings =3D bloom_settings;
 
-Regards,
-Randall
+So we use the defaults, no customization?  Then you could simply move
+the declaration of bloom_settings from write_commit_graph_file() to
+write_graph_chunk_bloom_data().  Glancing at pu I don't see additional
+uses there, so no need to put it into the context (yet?).
 
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+Ren=C3=A9
