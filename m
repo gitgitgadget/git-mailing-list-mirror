@@ -4,120 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAA42C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 10:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D1C9C433DF
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 10:17:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DC7C21D6C
-	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 10:14:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 681F420732
+	for <git@archiver.kernel.org>; Thu, 18 Jun 2020 10:17:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fO1Knyag"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GkpZ5U02"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728377AbgFRKOv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Jun 2020 06:14:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44052 "EHLO
+        id S1727884AbgFRKR2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Jun 2020 06:17:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728231AbgFRKOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jun 2020 06:14:47 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D08F3C06174E
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 03:14:46 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id z1so3968821qtn.2
-        for <git@vger.kernel.org>; Thu, 18 Jun 2020 03:14:46 -0700 (PDT)
+        with ESMTP id S1727815AbgFRKRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jun 2020 06:17:18 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D50E2C06174E
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 03:17:16 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id l17so4930660qki.9
+        for <git@vger.kernel.org>; Thu, 18 Jun 2020 03:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=VVkgXQKYF30BnW/0ZNlY0omnqktdbH6w5r/2YIlZLAQ=;
-        b=fO1KnyagkdldkjMko7JV6BrgG/I1AcYCDdQvnqYiNu5YSj6IABmM5I4LkV+bs+0SBw
-         i5LxuCSQRbxyPT8ff5YO9BO3Zab6k9pf2RcQRT4v/1eGt+rBbFEPtpCoOHP+gbceG0ys
-         wLXJEXFYYDUyayj/zvfNMfCO5ytg0h0JyiZzjyS9n4/ZN8yMFX/chLPa0tpsmwToYI8m
-         vVPJ6ovlMtCl7owf9PRVWv7HfTmGgdsXig7JTHuCc6OMkk4Lqu9yBAx+O0Rn/41IAju8
-         VNmZClJqgyTxCYgGdehWKKsb8Zf9J/yV5Q/t5IY6sv8q+r8UmH4WnWCemNAE6K7CrWaw
-         LIEg==
+        bh=9ARUHRDMUxsP/StW/U8aJ+aPUeVU5PkScFmz4NDD+Yo=;
+        b=GkpZ5U02TPBayIq2sHrat1Gh3t5ZrKt12qp7IvqgmZ3OGTh6d5KZLulunOfoNaHBa7
+         rLOGsNdX15884XNNdmsJGe0ZO1IqVSIcchW5IVI4ZZ0oQ7HSJKjGjvvo14hfgh29jAem
+         7/6M9r2mykoppc+cGVjteY/io3CwKV9Dul0itWffDW06uBuRNurt/da+w+xlpgAhWFYo
+         10usE+K2odyDXHVSyhGFyKlT9b91cC/uINvXpann9UdIcqFnw0rrIdA1/VyDKPxhRNb9
+         45Jps9w4lOGbuYRipY0P0lgWzmDRQsWOpwpY947/2n1ogpq7aX1+FrXg5Nnj/M3ThX+i
+         +zqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=VVkgXQKYF30BnW/0ZNlY0omnqktdbH6w5r/2YIlZLAQ=;
-        b=OiYpQoaL5xMEfKmL4NAc88FAdtrsnDxFfZSxsXoCu4RG+4Gia+g/FBAe1EKjQOxwdJ
-         t2+HAlbW+xNJkAWvAewdjX+liBX7y9f5M47qJ4hWSdhpAzDrlX6BaS2TxfZssI8FFJYc
-         7YJDKXYvpijiN4AeQ6QGGSQ3zMkHZjBBJVzbZcs7Pt3safCeoJAgkHQjL0MLDymLL1HP
-         6Ovp2iOfenodyOHtQz/CuYvRAyeRDyWL0RCVlzRFqVfbpMSMb5zsXcHih/qoV4KwbcQm
-         eUB6Up6KQCNXK9J2STj2QCmsGTbjUEA2xUzOM7FWUKXEbpiap3Py0+qD3s/CMxdqrbdz
-         zVbQ==
-X-Gm-Message-State: AOAM530LyBw5DUcooDi31TLPpRkNzdKb70BktCdjSv6N1nimjJqe7WRO
-        0OkCe7BV6INFB9NPatdc6K/3rViinQb51KXN1O8=
-X-Google-Smtp-Source: ABdhPJwArOb8F+ohCoWmLvyje/DJUA5kBPtc02eHWbVRMIUouuJBjkUeooA1B9IE3D13169+wubVZliPPINfieVwiSw=
-X-Received: by 2002:ac8:31f3:: with SMTP id i48mr3627341qte.128.1592475284367;
- Thu, 18 Jun 2020 03:14:44 -0700 (PDT)
+        bh=9ARUHRDMUxsP/StW/U8aJ+aPUeVU5PkScFmz4NDD+Yo=;
+        b=EaWbUq6aMgDhxYySw9CkHFy4V+rHq4eeVwrRROar8bJGmTSQ3hsHm+YUB0VKQnh9Ua
+         T/LWS4OhQTWCHIUsTYWQEPWakah9wetMZRrPmGSFboabiVJkNv2BfOQKqvxmqAg6WAVz
+         7/2Dk2K62dX2+8rTPtel1xTRDO8DNWM9y/o1XIAWy1JnFs+6Hr0qzPRj6nKpCKc7Mehu
+         MKWakKBzqPPr1grl2B14c39hVW5quXNTF0xTn3OrBHwL3Gr+6Lh5dyqL7y/Fx3E6RWbF
+         /SI0EZ33KibN/yA4rFefie4fzlME74fa+j7uP/MGepmSQawCA77iWf1ZNvJyaeFTJZtw
+         jlNw==
+X-Gm-Message-State: AOAM532Gmi315K1XBAg6TztGOOSfDgFc3oAHfiN/XEqbj7TDN0z3Xluh
+        MrDz9VmhbIyuFP8//0mM6n+vGxH2RwZ2CO8ef/A=
+X-Google-Smtp-Source: ABdhPJxq+TKGkTyn33ITQZT6r5tYWmFlWaKHgzE/rBQWnhwstXww2cqWuUfIJc4HoAGVMzsZW3jCNg3rtu6wCTm80KI=
+X-Received: by 2002:a37:e107:: with SMTP id c7mr2798325qkm.483.1592475435540;
+ Thu, 18 Jun 2020 03:17:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <BY5PR19MB3400EB9AD87DFE612AFD5CC390810@BY5PR19MB3400.namprd19.prod.outlook.com>
- <CAP8UFD3m9ANt6UOyOoMDy2haTJjhzL5ctFiki46ktgH3RLPqjA@mail.gmail.com>
- <BY5PR19MB3400AE170C9F5FF501D27B18909E0@BY5PR19MB3400.namprd19.prod.outlook.com>
- <CAP8UFD0aoNQNcNJytJBazoKj0jvWwykntHHgnYoCBXr6OmGOnQ@mail.gmail.com>
- <xmqqa716zs7w.fsf@gitster.c.googlers.com> <30661592138737@mail.yandex.ru>
- <BY5PR19MB34007DEED68D13003C614F5F909C0@BY5PR19MB3400.namprd19.prod.outlook.com>
- <CANgJU+WfW4mKotMwFS+2Kaq1pDysgJutJ2NhUvyvGgowk8JXsg@mail.gmail.com>
- <BY5PR19MB3400CD5482C8837E41DFEAF2909B0@BY5PR19MB3400.namprd19.prod.outlook.com>
- <BY5PR19MB34004D9F72F6B66376F8E986909B0@BY5PR19MB3400.namprd19.prod.outlook.com>
-In-Reply-To: <BY5PR19MB34004D9F72F6B66376F8E986909B0@BY5PR19MB3400.namprd19.prod.outlook.com>
+References: <20200614181906.u42tuny3eipvhd46@chatter.i7.local>
+ <b82bdf57-840d-f9c2-0e42-95a93d9336b7@gmail.com> <CANgJU+WoGNKuvZHAtLAfNAUfFdoLWHiDis_rSV-AfT9WspmHgA@mail.gmail.com>
+ <20200616074316.GA21462@kitsune.suse.cz> <CANgJU+XzD9Nnnu4qWExpOUBy+u1=23SRCQy-=6aAVFJAowkjYg@mail.gmail.com>
+ <xmqq5zbpv53g.fsf@gitster.c.googlers.com> <20200617201037.GA86579@google.com>
+ <20200617201709.GB86579@google.com> <CANgJU+WbPgSTxQ=G3sFSvNFQ1cL3onYk5yKLBR=3AqWeEUCfZQ@mail.gmail.com>
+ <20200618083825.GB20837@legohost>
+In-Reply-To: <20200618083825.GB20837@legohost>
 From:   demerphq <demerphq@gmail.com>
-Date:   Thu, 18 Jun 2020 12:14:33 +0200
-Message-ID: <CANgJU+V7MUC85n-=_yQG05w6MOmSG_ZvmQBJVTk2qRyk=7giZQ@mail.gmail.com>
-Subject: Re: Collaborative conflict resolution feature request
-To:     "Curtin, Eric" <Eric.Curtin@dell.com>
-Cc:     Konstantin Tokarev <annulen@yandex.ru>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Geary, Niall" <Niall.Geary@dell.com>,
-        "rowlands, scott" <Scott.Rowlands@dell.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        "Coveney, Stephen" <Stephen.Coveney@dell.com>
+Date:   Thu, 18 Jun 2020 12:17:04 +0200
+Message-ID: <CANgJU+WFEC_Z9mUF5NLq5FD_YL1Y9+Z5hGXi0M30p1nehBL94A@mail.gmail.com>
+Subject: Re: Rename offensive terminology (master)
+To:     Oleg <lego_12239@rambler.ru>
+Cc:     Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 18 Jun 2020 at 11:28, Curtin, Eric <Eric.Curtin@dell.com> wrote:
+On Thu, 18 Jun 2020 at 11:57, Oleg <lego_12239@rambler.ru> wrote:
 >
-> > What I'd like to stress though is that there is a pitfall here: is it
-> > feasible to try to support concurrent conflict resolution, or is it to
-> > be sequential (even if in multiple turns)? I incline to the latter.
+> On Thu, Jun 18, 2020 at 09:57:42AM +0200, demerphq wrote:
+> > Ultimately if I was the decision maker here I would be choosing terms
+> > that are as workflow agnostic as I can find. "main", "master" and
+> > "primary" are not workflow agnostic, they are if anything a bit
+> > workflow opinionated. "trunk" on the other hand seems pretty
+> > self-descriptive and doesn't have much baggage. It's bark is worse
+> > than its byte however. :-)
 >
-> > Concurrent conflict resolution would lead to conflicts in conflict
-> > resolutions, that already sounds too complex to be useful for my taste,
-> > and we already are in recursion that must be stopped somewhere, so it's
-> > tempting to stop it one level up.
->
-> I think concurrent doesn't make sense, only sequential.
->
-> > I find that the solution in these cases is to first use interactive
-> > rebase to squash and reorganize the commits in the branches so you
-> > have a nice clean patch sequence. Once you have the branches cleaned
-> > up and squashed into a sequence of reasonable topic based chunks you
-> > then merge, sometimes it even means you dont get conflicts at all, git
-> > merge is pretty smart.
->
-> Again, as said in the initial email, anything that rewrites history,
-> recreates SHA's (such as rebase, squash, etc.) on a remote
-> branch is not allowed in our repo. Of course with unpushed
-> commits you can do some of these things as the remote end
-> knows no different.
+> The most workflow agnostic name is "branch". it is so neutral that you want to
+> change it ASAP :-).
 
-Ah I see, I missed that detail. We have a similar rule at work but
-only for the "trunk" branch (what most people call "master"), topic
-branches are allowed to change before the merge to trunk.
+I suppose I should have said "least confusing/ambiguous while most
+workflow agnostic". :-)
 
-I guess there is no way to convince your policy makers that if commit
-A and B are different but have the same tree hash they refer to the
-same state on the disk? I have had audit conversations like that.
-
-Anyway, sorry my reply wasn't helpful. Good luck.
-
-cheers,
 Yves
+
+
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
