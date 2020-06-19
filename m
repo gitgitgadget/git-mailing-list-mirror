@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7177BC433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53CDEC433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4334B20776
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2FE5D20786
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pT0ZQv9g"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MG2DJUHT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394079AbgFSR4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:56:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39552 "EHLO
+        id S2404644AbgFSR4l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 13:56:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39560 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2404378AbgFSR4c (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:32 -0400
+        by vger.kernel.org with ESMTP id S1732259AbgFSR4d (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:33 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C1B7260A71;
-        Fri, 19 Jun 2020 17:56:23 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 71D4060A75;
+        Fri, 19 Jun 2020 17:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592589384;
-        bh=c1M2lsVO9QupQR/ILz768yfVAsI0fSyuIBI+dEuXceU=;
+        s=default; t=1592589386;
+        bh=KCNvkesVvwvNQy/hd5h5tkTw+MplM9cz3ZpWZNGYF3U=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=pT0ZQv9ga1Rq0v3Zw2QdKxjHitjd716UNJVN1yN9Ij2HyEGLyoUp5caONFA9KgDJ9
-         2/rbsuGopRzte8aqREwQuf2hE6t6s8fzX1Qq6+oCwsa4BanLNhMVZXPsguOhUmJSOI
-         jsDFQA0C5ATP5l6jY20AhhKTbc9QLugJ3auhoYqZvZXkEJ6fWubpWYCARgBaK5g/sY
-         HLh1HUmpAynkosN0kxUZeTtv31tEHf1tNGocUWJjk94ytNsB+lD6+3ilu7TS7eJ8Z0
-         dP/LN5TNWn0ibUZSRkFbHJQUSSLrxvB9UDHqvb2UE8K/ZVjCxuUaNq1VP4vJwB+lSd
-         anxUpx55GCckhDRIu3sEodivq1ZGgjwfVV8FtfJC4MNoVgcZKTRpt5bP98JqXwxDWO
-         qVw7Dhyvvbq3ef0j1JydARSBBhPMjhd93DhG4/GzTlVOnphBeKKZxUi3Kp2K91bxoK
-         EXZ5b5MPRJhce0ehJSljYzQLctlB+U0hVGb1AGAIXmbCrtlK7Yf
+        b=MG2DJUHTEIiSIgr4CWVIKNL1aOyKPZrV6A5ayyWE+20NWceCIi0OPSFj+aB/mycUx
+         GrodMJPf34iWGoZsI50Er0N8CMVP5ioGUY+ZNRtpiCMUIhJIzCRcQVdkhkYM5DGMwI
+         pzJDt9AoS55ZZkhGoVtWBppDbVDMKGNd8M0b5cdI9qTzdlkaFxXcqCd4dtPl61qk5c
+         Ifh+nkxROxJhMA5QwYXRcaoGHzWQWldXjJk5KPCAOD9M2H1k3NIu0rvc2myA0mvtCf
+         4/NuG3n5mfpP8bjm5h3RJFJudntUdb5YYdaKIFCXp0kIg1Lbavo5/2CoqaPv0jUm50
+         +GeZvMebid4CriUd1PEfihGoNDmzTeXmSghsWnzw7hCrvb7UZJ2jd3b7euaLYjiwbe
+         0IX0BunhqcDj0NWPWqKr0VRALeNesZIdkkMpPe+8p3LBkjF0r+qBLuLR9vyyB0G2Zu
+         MHDQKkckWEmSJTOO1w4ekFgI1+Z/fgfvfswuuCGBvjbaFL+F9hz
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 21/44] fetch-pack: parse and advertise the object-format capability
-Date:   Fri, 19 Jun 2020 17:55:38 +0000
-Message-Id: <20200619175601.569856-22-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 26/44] builtin/show-index: provide options to determine hash algo
+Date:   Fri, 19 Jun 2020 17:55:43 +0000
+Message-Id: <20200619175601.569856-27-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200619175601.569856-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -58,41 +58,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Parse the server's object-format capability and respond accordingly,
-dying if there is a mismatch.
+show-index is capable of reading any possible index file whether or not
+the index is inside a repository.  However, because our index files lack
+metadata about the hash algorithm in use, it's not possible to
+autodetect the algorithm that a particular index file is using.
+
+In order to allow us to read index files of any algorithm, let's set up
+the .git directory gently so that we default to the algorithm for the
+current repository, and add an --object-format option to allow users to
+override this setting and continue to run show-index outside of a
+repository altogether.  Let's also document this new option so that
+people can find it and use it.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fetch-pack.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ Documentation/git-show-index.txt | 11 ++++++++++-
+ builtin/show-index.c             | 29 ++++++++++++++++++++++++-----
+ git.c                            |  2 +-
+ 3 files changed, 35 insertions(+), 7 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index c090030680..7e58f295f5 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1180,6 +1180,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 			      int sideband_all, int seen_ack)
+diff --git a/Documentation/git-show-index.txt b/Documentation/git-show-index.txt
+index 424e4ba84c..39b1d8eaa1 100644
+--- a/Documentation/git-show-index.txt
++++ b/Documentation/git-show-index.txt
+@@ -9,7 +9,7 @@ git-show-index - Show packed archive index
+ SYNOPSIS
+ --------
+ [verse]
+-'git show-index'
++'git show-index' [--object-format=<hash-algorithm>]
+ 
+ 
+ DESCRIPTION
+@@ -36,6 +36,15 @@ Note that you can get more information on a packfile by calling
+ linkgit:git-verify-pack[1]. However, as this command considers only the
+ index file itself, it's both faster and more flexible.
+ 
++OPTIONS
++-------
++
++--object-format=<hash-algorithm>::
++	Specify the given object format (hash algorithm) for the index file.  The
++	valid values are 'sha1' and (if enabled) 'sha256'.  The default is the
++	algorithm for the current repository (set by `extensions.objectFormat`), or
++	'sha1' if no value is set or outside a repository..
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/builtin/show-index.c b/builtin/show-index.c
+index 0826f6a5a2..8106b03a6b 100644
+--- a/builtin/show-index.c
++++ b/builtin/show-index.c
+@@ -1,9 +1,12 @@
+ #include "builtin.h"
+ #include "cache.h"
+ #include "pack.h"
++#include "parse-options.h"
+ 
+-static const char show_index_usage[] =
+-"git show-index";
++static const char *const show_index_usage[] = {
++	"git show-index [--object-format=<hash-algorithm>]",
++	NULL
++};
+ 
+ int cmd_show_index(int argc, const char **argv, const char *prefix)
  {
- 	int ret = 0;
-+	const char *hash_name;
- 	struct strbuf req_buf = STRBUF_INIT;
- 
- 	if (server_supports_v2("fetch", 1))
-@@ -1194,6 +1195,17 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 					 args->server_options->items[i].string);
- 	}
- 
-+	if (server_feature_v2("object-format", &hash_name)) {
-+		int hash_algo = hash_algo_by_name(hash_name);
-+		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
-+			die(_("mismatched algorithms: client %s; server %s"),
-+			    the_hash_algo->name, hash_name);
-+		packet_write_fmt(fd_out, "object-format=%s", the_hash_algo->name);
-+	} else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1) {
-+		die(_("the server does not support algorithm '%s'"),
-+		    the_hash_algo->name);
+@@ -11,10 +14,26 @@ int cmd_show_index(int argc, const char **argv, const char *prefix)
+ 	unsigned nr;
+ 	unsigned int version;
+ 	static unsigned int top_index[256];
+-	const unsigned hashsz = the_hash_algo->rawsz;
++	unsigned hashsz;
++	const char *hash_name = NULL;
++	int hash_algo;
++	const struct option show_index_options[] = {
++		OPT_STRING(0, "object-format", &hash_name, N_("hash-algorithm"),
++			   N_("specify the hash algorithm to use")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, show_index_options, show_index_usage, 0);
++
++	if (hash_name) {
++		hash_algo = hash_algo_by_name(hash_name);
++		if (hash_algo == GIT_HASH_UNKNOWN)
++			die(_("Unknown hash algorithm"));
++		repo_set_hash_algo(the_repository, hash_algo);
 +	}
 +
- 	packet_buf_delim(&req_buf);
- 	if (args->use_thin_pack)
- 		packet_buf_write(&req_buf, "thin-pack");
++	hashsz = the_hash_algo->rawsz;
+ 
+-	if (argc != 1)
+-		usage(show_index_usage);
+ 	if (fread(top_index, 2 * 4, 1, stdin) != 1)
+ 		die("unable to read header");
+ 	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
+diff --git a/git.c b/git.c
+index a2d337eed7..2f021b97f3 100644
+--- a/git.c
++++ b/git.c
+@@ -574,7 +574,7 @@ static struct cmd_struct commands[] = {
+ 	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
+ 	{ "show", cmd_show, RUN_SETUP },
+ 	{ "show-branch", cmd_show_branch, RUN_SETUP },
+-	{ "show-index", cmd_show_index },
++	{ "show-index", cmd_show_index, RUN_SETUP_GENTLY },
+ 	{ "show-ref", cmd_show_ref, RUN_SETUP },
+ 	{ "sparse-checkout", cmd_sparse_checkout, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
