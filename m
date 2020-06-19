@@ -2,80 +2,104 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2275C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 20:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACE85C433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 20:58:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91C7721532
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 20:51:47 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oKml2GYT"
+	by mail.kernel.org (Postfix) with ESMTP id 91F0320B80
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 20:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391227AbgFSUvq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 16:51:46 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64967 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391103AbgFSUvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 16:51:45 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 71A7ECB94D;
-        Fri, 19 Jun 2020 16:51:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eNISAVhPNR5d4aND1LIwiVOs4yg=; b=oKml2G
-        YTf6xy0+Q8CYq7xdLorvA6dWzTNHIorc0BPNbjtwwlG5g6+6M01g1OeYzyKFZtVH
-        4zPr4L/vU5taEJt6khaII0Vyz8F5OBOv1D8rtqB1VDWWtP+mlII7P3s0c7z/hFUh
-        Jr4PV258vZSRjoUrj0Ps3Warnl8bEn7BDENDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=n/aHUMS4zohRdLHCBV8NyFtqjXnF+MJd
-        ozwnh6mKgbRaU//R7RFPsQqpYiATXREKnSIHrwc/++Qp60W8INYKMXNpQgEqEOhB
-        /6LZphdd4G1ZIChXD6lj9aSjny5xbd50MaI6/gtVhqOWWsslZPjLsHVbb7ajF71T
-        Fn+XN1wFbnk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6ABA7CB94C;
-        Fri, 19 Jun 2020 16:51:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B3BBBCB947;
-        Fri, 19 Jun 2020 16:51:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     randall.s.becker@rogers.com
-Cc:     git@vger.kernel.org,
-        "Randall S. Becker" <randall.becker@nexbridge.ca>
-Subject: Re: [Patch v2 0/2] Replace strbuf_write_fd with write_in_full
-References: <20200619202320.4619-1-randall.s.becker.ref@rogers.com>
-        <20200619202320.4619-1-randall.s.becker@rogers.com>
-Date:   Fri, 19 Jun 2020 13:51:39 -0700
-In-Reply-To: <20200619202320.4619-1-randall.s.becker@rogers.com> (randall
-        s. becker's message of "Fri, 19 Jun 2020 16:23:18 -0400")
-Message-ID: <xmqqo8peg4o4.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2394974AbgFSU6D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 16:58:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54638 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394715AbgFSU6D (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 16:58:03 -0400
+X-Greylist: delayed 1267 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 19 Jun 2020 13:58:03 PDT
+Received: from vuizook.err.no (vuizook.err.no [IPv6:2a02:20c8:2640::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5651CC06174E
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 13:58:03 -0700 (PDT)
+Received: from [2400:4160:1877:2b00:468:8d6c:8b64:977a] (helo=glandium.org)
+        by vuizook.err.no with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <mh@glandium.org>)
+        id 1jmNki-0002oH-5w; Fri, 19 Jun 2020 20:36:48 +0000
+Received: from glandium by goemon.lan with local (Exim 4.92)
+        (envelope-from <mh@glandium.org>)
+        id 1jmNkd-000Qvq-67; Sat, 20 Jun 2020 05:36:39 +0900
+Date:   Sat, 20 Jun 2020 05:36:39 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org
+Subject: Re: Annoyance wrt ref@{1} and reflog expiry
+Message-ID: <20200619203639.i5jto4i52ptsihrs@glandium.org>
+References: <xmqqzh8zgcfp.fsf@gitster.c.googlers.com>
+ <87o8pe3ou6.fsf@osv.gnss.ru>
+ <xmqqwo42g5ld.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD0AF158-B26E-11EA-9F5B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwo42g5ld.fsf@gitster.c.googlers.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-randall.s.becker@rogers.com writes:
+On Fri, Jun 19, 2020 at 01:31:42PM -0700, Junio C Hamano wrote:
+> Sergey Organov <sorganov@gmail.com> writes:
+> 
+> >> But then if you do
+> >>
+> >>     $ git reflog expire --expire=now refs/heads/newbranch
+> >>     $ git commit --allow=empty -m two
+> >>     $ git show -s newbranch@{1}
+> >> ...
+> >> And it is unintuitive.  It is understandable to the users that all
+> >> the ref history before "reflog expire" is lost---it was what the end
+> >> user asked Git to do.  But after creating one commit on the state
+> >> (or do anything else that moves the ref) and finding it regrettable,
+> >> "git reset --hard @{1}" should be a viable way to recover from the
+> >> mistake made _after_ the reflog entries were expired.
+> 
+> And the expiration does not have to be --expire=now; what happens
+> more often is when I expire entries older than (say) a week, the
+> reflog for a topic branch that hasn't seen any activity may become
+> empty.  Then I "git am" the new round on the same base, compare and
+> then update, perhaps like so:
+> 
+>     ... git reflog expire has emptied the log for so/topic ...
+>     $ git checkout so/topic
+>     $ git log master.. ;# remind myself what the previous round had
+>     $ git checkout master... ;# detach HEAD at the previous base
+>     $ git am -s ./+so-v2-topic ;# apply
+>     $ git range-diff @{-1}... ;# compare
+>     $ git checkout -B so/topic
+> 
+> Now, I'm used to see this work after the above:
+> 
+>     $ git range-diff @{1}... ;# compare again just to be sure
+> 
+> but because there is only one entry in the reflog, which was created
+> when the last "checkout -B" updated the so/topic branch, "there is
+> only one entry" error kicks in.
+> 
+> > Makes sense. The first solution that comes to mind is immediately record
+> > current state after "reflog expire", so that there will be 2 entries for
+> > the case in question.
+> 
+> Perhaps.  
+> 
+> Or we could change the lookup side to use the value of the ref
+> itself when asked for @{0}, and use the "old" side of the only entry
+> when asked for @{1}.  That way, we do not need to play games with an
+> artificial entry at all, which may be a better solution.
 
-> From: "Randall S. Becker" <randall.becker@nexbridge.ca>
->
-> The strbuf_write_fd method does not check whether the buffer exceeds
-> MAX_IO_SIZE on the target platform. This fix replaces the use of that
-> method with write_in_full, which does. Since this is the only use of
-> strbuf_write_fd, and since the method was unsafe, it has been removed
-> from strbuf.c and strbuf.h.
+Or more generally, use the old side from @{n} when asked for @{n+1} when
+there are only n entries in the reflog.
 
-Excellent.  Thanks.
-
-Will queue.
+Mike
