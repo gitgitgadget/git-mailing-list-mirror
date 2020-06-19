@@ -2,109 +2,98 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F45FC433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 18:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A64DC433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 18:03:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7434D206B7
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 18:01:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E73B214D8
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 18:03:59 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KCnAu9qk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733154AbgFSSBB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 14:01:01 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33569 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732986AbgFSSBA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 14:01:00 -0400
-Received: by mail-wr1-f65.google.com with SMTP id l11so10565375wru.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 11:00:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d3Vv68l5PB4YEJcbq+pWWGku00CZZaWcENMhUOZXS80=;
-        b=ITVzyRh2xrx763AZpxJzWc/A6qo5VU9SAIQ+UoYnZllG3YU/XLHLipEGfoy+fDyvYT
-         dtMLKktsT+y3j72pipT4x36wJbXEfIRP+UMUH8cRiEqjpYn+14I6SohNDC3VEVu21zcn
-         9pMOnXS/NDVNhKfXFKbMeW1tGoieoqlTsWHvlLWl0XAU4CGPqPqQ4LCJAuz8hFzdp7de
-         guDfqy0Gem3xDmE6/lFmz+UPGgaXu5I8dBwg9ix6YAKm4sfXT3wvR2jQu1kIKWBifm53
-         R4Ze0cF6PkNGkx+ChE3sRmCi2A/2OdOTjSp9fSql3bgL3bf4SHks4czbFZ07Wn+BKM73
-         QGiQ==
-X-Gm-Message-State: AOAM533enX1A2UpvMHKW5sJdx99FUJbgFlkqu658HwCP1HB5OcvnhhNS
-        CUAxJLbGYbYTJH89miNbCJpPvpam2Q3K6QVLZDQ=
-X-Google-Smtp-Source: ABdhPJzrDMfUWgMxCvXBonYedX9vj0r/pSMD9fHfGMH0sdRatmFVtu3/A89dlU1muI/BnMytGjmIi84xvSovVHMb1a0=
-X-Received: by 2002:adf:e2ce:: with SMTP id d14mr5383031wrj.415.1592589658406;
- Fri, 19 Jun 2020 11:00:58 -0700 (PDT)
+        id S1733254AbgFSSD6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 14:03:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62617 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727003AbgFSSD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 14:03:57 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 811DD615D9;
+        Fri, 19 Jun 2020 14:03:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=1
+        WMEFEpcou5PWr72ojh3JECHDQ4=; b=KCnAu9qk1EOEf6gRwr4vhDwU5aWoIzN31
+        IN2qtcUoJ2zq5Dt/pPca/fFSpwJWf+izozdnwCxjxRhVOKkB+KgeSVgcz+4CdX2R
+        5TS/Ukfd+3l3E/EYI7krxxMKl7F/gZ/FGqR8pPF0JZNwUC9vd1cFrl/Zh29W9jcy
+        uxHCaNYPn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=did
+        OkXOsbUnwBaXrV+/dbVP/hz8RBE0m4WjFuh+n8CFgc23yF/Mdg75BOTCaNnrdaGg
+        IZqL1b6ng833jlpgRdc5oDUtCMAb08s+fK+8PTurqxL0FbkkifBaYocnMuPhoJNq
+        lllAyIiwqD5V/o8dnb9t+W/2zFw05jA6+VM85oec=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 79BA8615D8;
+        Fri, 19 Jun 2020 14:03:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E64BF615D7;
+        Fri, 19 Jun 2020 14:03:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: Annoyance wrt ref@{1} and reflog expiry
+Date:   Fri, 19 Jun 2020 11:03:54 -0700
+Message-ID: <xmqqzh8zgcfp.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200619132304.GA2540657@coredump.intra.peff.net>
- <20200619132546.GA2540774@coredump.intra.peff.net> <CAPig+cRNem-S5LGX=v=1Tid64sXWBxNyWH4ffgLgF0o1yN=mtw@mail.gmail.com>
- <20200619160129.GA1843858@coredump.intra.peff.net> <20200619161816.GA9205@flurp.local>
- <20200619174551.GA2123813@coredump.intra.peff.net>
-In-Reply-To: <20200619174551.GA2123813@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 19 Jun 2020 14:00:47 -0400
-Message-ID: <CAPig+cQxoz1AcS51qhtBr6oaTs9KTDamofCyN3qy_EARUi7oFQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] fast-export: allow dumping the refname mapping
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3D5CC7F8-B257-11EA-8D8A-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 19, 2020 at 1:45 PM Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 19, 2020 at 12:18:16PM -0400, Eric Sunshine wrote:
-> > Hmph, that shouldn't have failed. Did you quote the $(wc -l refs)
-> > invocation? Quoting it would cause it to fail.
->
-> Nope (and indeed, I was wary of the issue and made sure I didn't use
-> quotes). My original was:
->
-> test_expect_success 'refname mapping can be dumped' '
->        [...]
->        expected_count=$(git for-each-ref | wc -l) &&
->        expected_count=$((expected_count - 1)) &&
->        test_line_count = "$expected_count" refs.out &&
->
-> So I guess I did quote the variable later.  It works fine on Linux, but
-> one of the osx ci jobs failed:
->
-> ++ expected_count='       7'
-> ++ test_line_count = '       7' refs.out
-> ++ test 7 = '       7'
-> ++ echo 'test_line_count: line count for refs.out !=        7'
->
-> so the whitespace is eaten not when "wc" is run, but rather when the
-> variable is expanded.
+I have been disturbed by this for a long time, but not strongly
+enough to do anything to it.
 
-Not something that should be done by this series (more a
-left-over-bitty thing, perhaps), but this almost suggests that
-test_line_count() deserves a tweak to make it more robust against that
-sort of thing:
+This sequence works
 
-    test_line_count () {
-        if test $# != 3
-        then
-            BUG "not 3 parameters to test_line_count"
-        elif ! test $(wc -l <"$3") "$1" "$2"
-        then
-            echo "test_line_count: line count for $3 !$1 $2"
-            cat "$3"
-            return 1
-        fi
-    }
+    $ git checkout -b newbranch
+    $ git commit --allow-empty -m one
+    $ git show -s newbranch@{1}
 
-If we drop the quotes around $2 from the 'test':
+and shows the state that was immediately after the newbranch was
+created.
 
-    elif ! test $(wc -l <"$3") "$1" $2
+But then if you do
 
-then your code would have worked as expected.
+    $ git reflog expire --expire=now refs/heads/newbranch
+    $ git commit --allow=empty -m two
+    $ git show -s newbranch@{1}
 
-My only worry about that is that a poorly written caller would get a
-weird and unhelpful error message:
+you'd be scolded with
 
-    test_line_count = 4 4
-    --> sh: test: too many arguments
+    fatal: log for 'newbranch' only has 1 entries
+
+While it is true that it has only 1 entry, we have enough
+information in that single entry that records the transition between
+the state in which the tip of the branch was pointing at commit
+'one' to the new commit 'two' built on it, so we should be able to
+answer "what object newbranch was pointing at?".  But we refuse to
+do so.  
+
+And it is unintuitive.  It is understandable to the users that all
+the ref history before "reflog expire" is lost---it was what the end
+user asked Git to do.  But after creating one commit on the state
+(or do anything else that moves the ref) and finding it regrettable,
+"git reset --hard @{1}" should be a viable way to recover from the
+mistake made _after_ the reflog entries were expired.
+
+Opinions?
+
