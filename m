@@ -2,139 +2,126 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E1C4C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECF22C433E1
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:19:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBE93217A0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:15:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBAB12168B
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:19:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EosbqSbn"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="osnsGrXv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404422AbgFSQPl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 12:15:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39064 "EHLO
+        id S2405642AbgFSQTZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 12:19:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391182AbgFSQPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 12:15:34 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75C7C06174E
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 09:15:32 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id l11so10261359wru.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 09:15:32 -0700 (PDT)
+        with ESMTP id S2404421AbgFSQSX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 12:18:23 -0400
+Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92781C06174E
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 09:18:23 -0700 (PDT)
+Received: by mail-io1-xd43.google.com with SMTP id f23so6529767iof.6
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 09:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=s8hcaGuHq9hYgdKwNl/ktMfUu2qKNLKHgci7irv18Ro=;
-        b=EosbqSbnz1i6xn2S6OWJq758iiqjW6sj84lEYXoqkKc9si7ca5UgTJX0Y3U9+5+FEz
-         xx/4V0wZQsQb+JlnbKx+/q07K/8K0KRZ95EIfSnZ5tkpkugANIKxGZReU0TfhuYHzXw8
-         5J1CMtsrLt97ir9yNVxNxMrdIB6+oCvnMyGbFCHZSV2FFbrtuP+/15RDMgz6E2AUZ3v2
-         I5GAwd7PdKh3dZt6lFGg/fVvtvAwBLBzmvV8f4WC5t1T74lInIxZajw4XPNUFlKM+/3g
-         OyTwfprnQ0TGLZvMdjhR+aup0ACbHPmU8/GVUts5DRraEar1PAM9K57IKefOoY0eC+bv
-         LKHA==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SZUajVNIgV7hU7O/sn6umrWjvEMqW4J8YWT1q5IgUwM=;
+        b=osnsGrXv2OGUqz6fN3pPbT8gL6J50Ycb1cloOEuQmWET0I01YyShKLSjhv5A/P+FA5
+         ubmrIatLf+x+U0qrKnEZ2tujI22sFnBNk7Vf8Orw8w0GOGnMGQHrhGdaEGfeeu7f9kmv
+         dpXje9doxTnyz6BSVIcKBREno6F3Qu8Pzcs3Mz1w6w/itwb3HW5TbxEfTJ/uU5v+oI/R
+         5o8U/w4d5vILwkMjv2gkf3xCGARqnPzSkuG2A7XZzS6sRtEwJ/KY1DWVe/zbLRP4i7nK
+         aYxaeYrgm2uFs4H7NPt/nKin2p1SIn2I23Hfi/8uWhiqdOBjI7oPxrUq5JiDJMRZckx9
+         uIDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=s8hcaGuHq9hYgdKwNl/ktMfUu2qKNLKHgci7irv18Ro=;
-        b=geHrY+U3klmlcNdTnReOkeyqiwLqeRJRb41G3zIy5z3moQa8bWIzmSh1/NbqC6A5mh
-         fLj4D1OlN7rLMEBWmOY7teq8Fmcdpth+N2zUx9hbSBEQXjA26rllZQTvT7w9tDZ06ZTX
-         kB6cmkmiRDpA0Sl6KMzBRrfAck6pGfvmuMDzBWTqGOwdjjduEkSNyQuJk/r4ybYgQ6IZ
-         9JXvlf23NEEfbms9VMuQIu72Dc7mgwqFhxfthhlWYEiRBJ1bfGEdMtXeGP9tGdjhcYz4
-         ZpkEV9ub1ZLQHbXAOlpLJrXaE/gOSioyTW1EQr6MmO9vuXX05Ujl6eisOg9Iytrx9Clm
-         ItKQ==
-X-Gm-Message-State: AOAM533ffeIRMoienDNvei5ZoHsEFmXC/EIbGTb7PriJc1ABFOwSFAGj
-        ufWUp9Sxb5L0+rhgrL/wIAc=
-X-Google-Smtp-Source: ABdhPJzNSej/j3YTJd4c7/IDTlBUy5i05I3UjIyzATu5VwiVyFi8vP3q9lIcfB1y6kjyfTWvW1KZTQ==
-X-Received: by 2002:adf:dec5:: with SMTP id i5mr5150244wrn.16.1592583331566;
-        Fri, 19 Jun 2020 09:15:31 -0700 (PDT)
-Received: from szeder.dev (62-165-236-97.pool.digikabel.hu. [62.165.236.97])
-        by smtp.gmail.com with ESMTPSA id s2sm7066483wmh.15.2020.06.19.09.15.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Jun 2020 09:15:30 -0700 (PDT)
-Date:   Fri, 19 Jun 2020 18:15:28 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/2] git-prompt: include sparsity state as well
-Message-ID: <20200619161528.GI2898@szeder.dev>
-References: <pull.808.git.git.1592350413.gitgitgadget@gmail.com>
- <pull.808.v2.git.git.1592513398.gitgitgadget@gmail.com>
- <17254b30a5bcbbe3e14dd47272dfcb4c867030dd.1592513398.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=SZUajVNIgV7hU7O/sn6umrWjvEMqW4J8YWT1q5IgUwM=;
+        b=oEa9X3eJUDDx2UMOPlK8j1EQATQcE48nEpjV0qoIw1oTW1P4Hd0AfuAlJ4a3T4bp46
+         8782A4Z5n5SQey9ID3bvItPXy+kYNHUy4zEbMVlJU3r4BAraMvzqGfT4vSXRO5pHVNoO
+         Q/qiyEuRnWTFiQCNwCRphX8gcclermKSrMqtOS2Zgk/j1ZnoFWUXLZ+b+2wRyLQMMV6E
+         JdSr2DojFH20ouVRbgBeYFYReOWu+WyMXleAsI3K8CYwUkgQpeVvEKZHGgJz8ntbGF41
+         QyGh2ot7E10HolXiQUpOndraCKb8rk9NYKlvB0fLhlVoXqRW5lwkIDk/Sq/f4m/2nDXU
+         Obbw==
+X-Gm-Message-State: AOAM533yYH2LqM7nY0qAkBoRRMyFDiDtFp7ADfHRJ/NwpUCfbFZIEmud
+        zWFNvjXKaQEeFU2sp7/CdXc=
+X-Google-Smtp-Source: ABdhPJwtb9H8QuHHXvBxlEHP79jYC56qyupJb0yccLlIAnI9tzzYbdwB2I0az41R8TAMGorvz4TI5Q==
+X-Received: by 2002:a02:cd1b:: with SMTP id g27mr4371247jaq.61.1592583502750;
+        Fri, 19 Jun 2020 09:18:22 -0700 (PDT)
+Received: from flurp.local (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id n4sm3722459ioc.8.2020.06.19.09.18.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jun 2020 09:18:22 -0700 (PDT)
+Date:   Fri, 19 Jun 2020 12:18:16 -0400
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] fast-export: allow dumping the refname mapping
+Message-ID: <20200619161816.GA9205@flurp.local>
+References: <20200619132304.GA2540657@coredump.intra.peff.net>
+ <20200619132546.GA2540774@coredump.intra.peff.net>
+ <CAPig+cRNem-S5LGX=v=1Tid64sXWBxNyWH4ffgLgF0o1yN=mtw@mail.gmail.com>
+ <20200619160129.GA1843858@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <17254b30a5bcbbe3e14dd47272dfcb4c867030dd.1592513398.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20200619160129.GA1843858@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 18, 2020 at 08:49:58PM +0000, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> The current git prompt includes a lot of possible state information from
-> cherry-picks, merges, bisects, and various flavors of rebases.  Add
-> sparsity as another state flavor (though one which can be present
-> simultaneously with any of rebase/cherry-pick/merge/bisect).  This extra
-> state is shown with an extra
->     |SPARSE
-> substring before the other states, providing a prompt that looks like:
->     (branchname|SPARSE|REBASE 6/10)
-> 
-> The reason for showing the "|SPARSE" substring before other states is to
-> emphasize those other states.  Sparsity is probably not going to change
-> much within a repository, while temporary operations will.  So we want
-> the state changes related to temporary operations to be listed last, to
-> make them appear closer to where the user types and make them more
-> likely to be noticed.
+On Fri, Jun 19, 2020 at 12:01 PM Jeff King <peff@peff.net> wrote:
+> On Fri, Jun 19, 2020 at 11:51:06AM -0400, Eric Sunshine wrote:
+> > That is, have the caller do this instead:
+> >
+> >   if (anonymized_refnames_handle)
+> >     dump_anon(anonymized_refnames_handle, ...);
+>
+> <shrug> The names were long enough that I thought it was more clear not
+> to repeat myself. [...]
 
-I understand why some users prefer to be reminded when they are in a
-repository that uses sparse checkout.  However, perhaps not all users
-want to be reminded, and I'm sure that not all users want to increase
-the width of their prompt by 7 characters (e.g. in standard-width
-terminals).
+Indeed, it's a minor point and subjective. Certainly not worth a
+re-roll or even worrying about it.
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  contrib/completion/git-prompt.sh | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 014cd7c3cfc..3e7344a4014 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -421,6 +421,11 @@ __git_ps1 ()
->  		return $exit
->  	fi
->  
-> +	local sparse=""
-> +	if [ "$(git config --bool core.sparseCheckout)" == "true" ]; then
-> +	    sparse="|SPARSE"
+> > This hard-coded "6" seems rather fragile, causing the test to break if
+> > other refs are ever added or removed. Perhaps just count the refs
+> > dynamically?
+> >
+> >   git show-ref >refs &&
+> >   nrefs=$(wc -l refs) &&
+> >   # Note that master is not anonymized, and so not included
+> >   # in the mapping.
+> >   nrefs=$((nrefs - 1))
+> >   test_line_count = $nrefs refs.out &&
+> >
+> That's exactly what I wrote originally, but it failed on macos due to
+> extra spaces in the "wc" output.
 
-Nit: indentation.
+Hmph, that shouldn't have failed. Did you quote the $(wc -l refs)
+invocation? Quoting it would cause it to fail.
 
-> +	fi
-> +
->  	local r=""
->  	local b=""
->  	local step=""
-> @@ -543,7 +548,7 @@ __git_ps1 ()
->  	fi
->  
->  	local f="$w$i$s$u"
-> -	local gitstring="$c$b${f:+$z$f}$r$p"
-> +	local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
->  
->  	if [ $pcmode = yes ]; then
->  		if [ "${__git_printf_supports_v-}" != yes ]; then
-> -- 
-> gitgitgadget
+I just applied this atop your patch and it worked fine on Mac OS:
+
+diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
+index 0c5dd2a4fb..849192b1b0 100755
+--- a/t/t9351-fast-export-anonymize.sh
++++ b/t/t9351-fast-export-anonymize.sh
+@@ -52,9 +52,12 @@ test_expect_success 'refname mapping can be dumped' '
+ 	# we make no guarantees of the exact anonymized names,
+ 	# so just check that we have the right number and
+ 	# that a sample line looks sane.
++	git show-ref >refs &&
++	nrefs=$(wc -l <refs) &&
+ 	# Note that master is not anonymized, and so not included
+ 	# in the mapping.
+-	test_line_count = 6 refs.out &&
++	nrefs=$((nrefs - 1)) &&
++	test_line_count = $nrefs refs.out &&
+ 	grep "^refs/heads/other refs/heads/" refs.out
+ '
