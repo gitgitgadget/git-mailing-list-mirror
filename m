@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0769C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEC01C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF79920776
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DBB120DD4
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="g4NgoqiP"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0vkz0LMd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404059AbgFSR5q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:57:46 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39508 "EHLO
+        id S2404146AbgFSR41 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 13:56:27 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39458 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2404163AbgFSR42 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:28 -0400
+        by vger.kernel.org with ESMTP id S2393718AbgFSR4Z (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:25 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AF5ED60A6F;
-        Fri, 19 Jun 2020 17:56:22 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9E4F560A6A;
+        Fri, 19 Jun 2020 17:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592589383;
-        bh=C0FilukGeoJOoC7fEq9AzoHQHWIHaLoxTcro18B7DmU=;
+        s=default; t=1592589380;
+        bh=kxdnbajG1wJnUj09iiv6Qr7Gsgj4V99GqZeQ8laS6MM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=g4NgoqiPijwSVRSK7ou1FLZ+qGtn+lXfyN/7abSM2OiIXZUpEQ0TWMWmn1SIlhDb7
-         qvHbJMdHrNdB2lg7CjinCX6+TZ8WCMxxlQvg4JfETrYvpbNmGfL5OspDYfhYptDg5T
-         ITallqmExo+ZFAgOjbTrGvvGutvss5osiLSAgUO9Km/0XgzqtyfeHHbcB3TN70UT2R
-         +Q7kbrhlGcD9av0dkpqbMtr6lgAbRxdCzuH44eV97roTRWg8NL5R7V/abJQI7QHIbQ
-         qdNFXFbVEzOp1ybWRJYPN8aK6EKzJh4g3mCT94D+GMtvWJ1DE7DtiWkwmT35oUQKG3
-         9+BCPkVDG6GeA657kie4cA+tqItfevU2/NyBanH5sq45u7amCiWIz/ELbeJ2jNmx4o
-         S50dY9NRRdZ+vKpymAtyi8bY7xXpn4E9Ttkh3dzFgyOWqBhZCClyvpMykTuOxPQNKD
-         A2zrfErf4bfX5icy/sHxwhS7uX8L67pxNa4Xir0Muc5IPoiEMWC
+        b=0vkz0LMdUX9LyCH91NFRQdM3NpDyreHoG88NjEImj8xHxh1ISnRquS0RITPE+TKtI
+         fSGfKW887Ktx7PO+zEVNTQxELN5Kf/NvSoXfom6guj7/QVvrayB9Tb0dsLV4lAycWD
+         n1MMF9t3wwto7PFJEjSXxHke/8nZjRt02PKxNHy2rBnKbq9+wOvEo27Gml9Z+PWgik
+         z0qRfcRd3d2CaCFFYA9WFOf6tx7aryDHZWPptnBpWNM54ryi05uFJXxucV5IMvPz74
+         iUQGq/UU4NlYhm85RqGFReAHb+BrIP4Ylqq5QHNxCKvGy8Vkj9xmF/ZfkOaZOURsJn
+         BC5yDjyx3SJZzVlh0aUpn4u5AEFSvRPnwq3xSwUHmXO+8M2jSnMKyitO91YGlAbBTf
+         BNQRhr1m0Dg7ESZW4RSCzma3puP1Huik5/S2yrfbnJkQgnaRzpoMTvgNYtUN9LoomT
+         l4Fp2X+alVkhpFqv7O+eaJMYC5jPQkOvXYwAVThD7uiUfrT8OC5
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 19/44] builtin/clone: initialize hash algorithm properly
-Date:   Fri, 19 Jun 2020 17:55:36 +0000
-Message-Id: <20200619175601.569856-20-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 13/44] fetch-pack: detect when the server doesn't support our hash
+Date:   Fri, 19 Jun 2020 17:55:30 +0000
+Message-Id: <20200619175601.569856-14-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200619175601.569856-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -58,36 +58,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When performing a clone, we don't know what hash algorithm the other end
-will support.  Currently, we don't support fetching data belonging to a
-different algorithm, so we must know what algorithm the remote side is
-using in order to properly initialize the repository.  We can know that
-only after fetching the refs, so if the remote side has any references,
-use that information to reinitialize the repository with the correct
-hash algorithm information.
+Detect when the server doesn't support our hash algorithm and abort.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/clone.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fetch-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 2a8e3aaaed..e3519a8355 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1220,6 +1220,15 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	refs = transport_get_remote_refs(transport, &ref_prefixes);
+diff --git a/fetch-pack.c b/fetch-pack.c
+index d8bbf45ee2..c090030680 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1040,6 +1040,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		print_verbose(args, _("Server supports %s"), "deepen-relative");
+ 	else if (args->deepen_relative)
+ 		die(_("Server does not support --deepen"));
++	if (!server_supports_hash(the_hash_algo->name, NULL))
++		die(_("Server does not support this repository's object format"));
  
- 	if (refs) {
-+		int hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
-+
-+		/*
-+		 * Now that we know what algorithm the remote side is using,
-+		 * let's set ours to the same thing.
-+		 */
-+		initialize_repository_version(hash_algo);
-+		repo_set_hash_algo(the_repository, hash_algo);
-+
- 		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
- 		/*
- 		 * transport_get_remote_refs() may return refs with null sha-1
+ 	if (!args->no_dependents) {
+ 		mark_complete_and_common_ref(negotiator, args, &ref);
