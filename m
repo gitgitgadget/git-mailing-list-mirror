@@ -2,177 +2,145 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E2AC433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 12:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8577C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:01:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F4252083B
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 12:59:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 816CB2080C
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:01:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DGxlhsom"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QuQBK+cX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732805AbgFSM7A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 08:59:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36836 "EHLO
+        id S1730300AbgFSNBE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 09:01:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732765AbgFSM65 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 08:58:57 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B98C06174E
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 05:58:56 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id q8so8728004qkm.12
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 05:58:56 -0700 (PDT)
+        with ESMTP id S1728606AbgFSNBC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 09:01:02 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31890C06174E
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:01:02 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id s23so4397872pfh.7
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=p5mfGOZe1e5BkNt0FJLidJfS5QBZsIB3xlZ7FUGDzj0=;
-        b=DGxlhsomSwKDefs1T2lbRiAkJgLYmuqaOtPkg8pk9egM4sjokjfQsUv6dV6Jc9CHFV
-         kD8SnIiVK5gZylSFUOzM09CkTwJ9Wu+E+uIS3wGuJqfFzfkwqmpAT3ZEtAokID13z9z8
-         05Uaj9ALQNnlLPD9jnJSKcLQvgkc3ku3+wxACCwP4KAENLsXn5OT8KgRZ7RJ0ONE17zd
-         R/7+zXFYcS4xquN43RYnXxiCIcEzJi9KegODUHrvzfF7P/W45skihsdSHK/oMdj+eZrR
-         SdfZD9do0J1mzuGgKsWNBnBtFQJrpFdgYLAxjIANyPJuKq3gG7YHcYWjWgy7aXSJFUj9
-         5kYQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=74ADLmi2ClfgJUJ9o/MAQV+gCOEEk7wBHw/8ROWeWTs=;
+        b=QuQBK+cXw2Yw0yHTpNBtPz30xZQYqihH7NJrq6+GHqa1Tx8kD0clDQwfx4MVPdwNq/
+         69Gx4AyJPozH87cN9zhLHCReEoZ12xhbaiIwjtPdu7Z/QGs1oWlq3kSXwT1KJVf9E1P0
+         LUCwoNzUApsVPc/QtjEjrac1VnGxYch5l1YMy7b7lgMFWnCIrmKi7MKIBGr1hPzSdUKV
+         AcjK/pXPF6Ger8zXB3VXdoukKMGKf9hyUEjQri4W6jXhsCdj4fytM9P9vi73T4naCOVA
+         LKsRWmyd1BbS1t/2BETmW5XENqE+MkV1yzKONQI91Urct3N5XEWv7e3yOoOl4t2A/wzZ
+         au1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=p5mfGOZe1e5BkNt0FJLidJfS5QBZsIB3xlZ7FUGDzj0=;
-        b=RPMd2uPPqyYBdkSjaXrO3qU4fttxt8gUaG3yi3ZzoFGZi7cCmBL3eQgc2yWCQ7Tryr
-         eqyL7bD8k7sDWcX//sbDxfp7DKzLMQqfVL2xyRlflp33ry/RvOyL7i1ZFMDVgDlVRmiV
-         jFtN9xbMIGMwEl6O8aUGNmxTyslpBuefLRaVuM7PwSEFznLpY4lyBpHXCjCQCpTtU4Yn
-         azQ2pBb2D/lQPldlfbqfXPp4cV7cRXQBnoO18sPk+XgIlEpgniB58b89HbWtuHe0SHcC
-         hspTMM1vA8yL+WAREPFSheKAh9gNawcldwfQmamAvMD6ZElHzW68RBYhPIDGCbOp8Wrk
-         /Bhw==
-X-Gm-Message-State: AOAM532vn/MxAzdxE/viud36Gd/VeJpHo8X6kB01JHknsIeET1uZp2qR
-        4b/GrRT+LDdk+XFSCTKKnMs=
-X-Google-Smtp-Source: ABdhPJybMxedtIt01PBpftNu0uKBjpp6OdoxrDGmdHIU52xI0JNbFOfoefDEHl8sXNCEMk6IqalCUg==
-X-Received: by 2002:a37:9f46:: with SMTP id i67mr3041063qke.303.1592571535699;
-        Fri, 19 Jun 2020 05:58:55 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id e9sm5507355qkm.7.2020.06.19.05.58.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jun 2020 05:58:55 -0700 (PDT)
-Subject: Re: [PATCH 1/8] commit-graph: place bloom_settings in context
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     me@ttaylorr.com, szeder.dev@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
- <c966969071bf0ba135d304bbc0d5c16fbcbedc1e.1592252093.git.gitgitgadget@gmail.com>
- <4a7fbd99-c581-fb30-90b3-e78c30708ff2@web.de>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <38a8ba15-7fed-8eec-41bf-ccae068335af@gmail.com>
-Date:   Fri, 19 Jun 2020 08:58:54 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=74ADLmi2ClfgJUJ9o/MAQV+gCOEEk7wBHw/8ROWeWTs=;
+        b=tDWI8WlMJPyC1IhvYjz8/RkQrjtQkEiZdc+80r6LOJMnoTal1f6yNTAOQRNXPA6rtN
+         JHBXPDsb72VlwV39ivUvBv1pqMiM7sT4WNQJhL8N1jVpa4/SGglwuo5sjeFY6G7MrVCo
+         PBpnuhQq7DT+oCDmHm56ngiqcnYkmnSjpc6MQtThPmSBk61le3XNQb2JiSnNRqbJRZNI
+         gIAS1mlYDEVMjbnovV38MdBcrddMdsXN7HBUifhkpMb7+YNy4Y7DqBHZ9G6yxh+UjW2K
+         4kgaZ5zeftr1U3sYQFiGUgTUXDyGg+hHL7rXs++ECmTTgUgi0PuFT9Fj4GPto3HuV1dT
+         65Ig==
+X-Gm-Message-State: AOAM532kxA1V4nzBOB0VhDM6BIkb9hD2swDXkRN2pb6imwRRgKMHbMmf
+        1+wC1iVMLU0GIAzaheXhdkQ=
+X-Google-Smtp-Source: ABdhPJyPcOlFuBkIswcUzXNbOYvx45CR8YM8p2QnCqn6VUopB81fluhYA2KGPizEHuLf4Gr06yPkDA==
+X-Received: by 2002:a65:534d:: with SMTP id w13mr2897970pgr.18.1592571661650;
+        Fri, 19 Jun 2020 06:01:01 -0700 (PDT)
+Received: from localhost ([2402:800:6375:a18c:ce1a:d70b:8a27:2927])
+        by smtp.gmail.com with ESMTPSA id q1sm6379711pfk.132.2020.06.19.06.01.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jun 2020 06:01:01 -0700 (PDT)
+Date:   Fri, 19 Jun 2020 20:00:58 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Paolo Bonzini <pbonzini@redhat.com>
+Cc:     git@vger.kernel.org, msuchanek@suse.de,
+        Till Maas <tmaas@redhat.com>
+Subject: Re: [PATCH v2] tests: do not use "slave branch" nomenclature
+Message-ID: <20200619130058.GA5027@danh.dev>
+References: <20200619093210.31289-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <4a7fbd99-c581-fb30-90b3-e78c30708ff2@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200619093210.31289-1-pbonzini@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/18/2020 4:30 PM, René Scharfe wrote:
-> Am 15.06.20 um 22:14 schrieb Derrick Stolee via GitGitGadget:
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> Place an instance of struct bloom_settings into the struct
->> write_commit_graph_context. This allows simplifying the function
->> prototype of write_graph_chunk_bloom_data(). This will allow us
->> to combine the function prototypes and use function pointers to
->> simplify write_commit_graph_file().
->>
->> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>  commit-graph.c | 14 ++++++++------
->>  1 file changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/commit-graph.c b/commit-graph.c
->> index 887837e8826..05b7035d8d5 100644
->> --- a/commit-graph.c
->> +++ b/commit-graph.c
->> @@ -882,6 +882,7 @@ struct write_commit_graph_context {
->>
->>  	const struct split_commit_graph_opts *split_opts;
->>  	size_t total_bloom_filter_data_size;
->> +	struct bloom_filter_settings bloom_settings;
+On 2020-06-19 11:32:10+0200, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> Git branches have been qualified as topic branches, integration branches,
+> development branches, feature branches, release branches and so on.
+> Git has a branch that is the master *for* development, but it is not
+> the master *of* any "slave branch": Git does not have slave branches,
+> and has never had, except for a single testcase that claims otherwise. :)
+
+reading this text and the change may give the impression that this is
+used for feature branch only.
+
+I think common terminology in Git's test is this kind of branch is side.
+In this inaccurate comparison:
+
+	git grep -E '(branch|checkout|switch).* side '
+	git grep -E '(branch|checkout|switch).* feature'
+
+The former yields more result than the latter.
+The latter shows only t1090 and t3420.
+
+If I were writing this patch, I would go with the former.
+
+<xmqqr1umg8fp.fsf@gitster.c.googlers.com> seems to prefer side, too.
+
+Other than that, the patch looks good to me.
+
 > 
-> That structure is quite busy already, so adding one more member wouldn't
-> matter much.
+> Independent of any future change to the naming of the "master" branch,
+> removing this sole appearance of the term is a strict improvement: it
+> avoids divisive language, and talking about "feature branch" clarifies
+> which developer workflow the test is trying to emulate.
 > 
-> Passing so many things to lots of functions makes it harder to argue
-> about them, though, as all of them effectively become part of their
-> signature, and you have to look at their implementation to see which
-> pseudo-parameters they actually use.  It's like a God object.
-
-Correct. The write_commit_graph_context _is_ a God object for the
-commit-graph write. The good news is that it is limited only to
-commit-graph.c and the write operations therein. Hopefully, the
-code organization benefits enough from this structure to justify
-the massive struct.
-
-In contrast, it's still smaller and more contained than
-"struct rev_info"!
-
->>  };
->>
->>  static void write_graph_chunk_fanout(struct hashfile *f,
->> @@ -1103,8 +1104,7 @@ static void write_graph_chunk_bloom_indexes(struct hashfile *f,
->>  }
->>
->>  static void write_graph_chunk_bloom_data(struct hashfile *f,
->> -					 struct write_commit_graph_context *ctx,
->> -					 const struct bloom_filter_settings *settings)
->> +					 struct write_commit_graph_context *ctx)
->>  {
->>  	struct commit **list = ctx->commits.list;
->>  	struct commit **last = ctx->commits.list + ctx->commits.nr;
->> @@ -1116,9 +1116,9 @@ static void write_graph_chunk_bloom_data(struct hashfile *f,
->>  			_("Writing changed paths Bloom filters data"),
->>  			ctx->commits.nr);
->>
->> -	hashwrite_be32(f, settings->hash_version);
->> -	hashwrite_be32(f, settings->num_hashes);
->> -	hashwrite_be32(f, settings->bits_per_entry);
->> +	hashwrite_be32(f, ctx->bloom_settings.hash_version);
->> +	hashwrite_be32(f, ctx->bloom_settings.num_hashes);
->> +	hashwrite_be32(f, ctx->bloom_settings.bits_per_entry);
->>
->>  	while (list < last) {
->>  		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
->> @@ -1541,6 +1541,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
->>  	struct object_id file_hash;
->>  	const struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
->>
->> +	ctx->bloom_settings = bloom_settings;
+> Reported-by: Till Maas <tmaas@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  t/t4014-format-patch.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> So we use the defaults, no customization?  Then you could simply move
-> the declaration of bloom_settings from write_commit_graph_file() to
-> write_graph_chunk_bloom_data().  Glancing at pu I don't see additional
-> uses there, so no need to put it into the context (yet?).
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 575e079cc2..958c2da56e 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -81,16 +81,16 @@ test_expect_success 'format-patch --ignore-if-in-upstream handles tags' '
+>  '
+>  
+>  test_expect_success "format-patch doesn't consider merge commits" '
+> -	git checkout -b slave master &&
+> +	git checkout -b feature master &&
+>  	echo "Another line" >>file &&
+>  	test_tick &&
+> -	git commit -am "Slave change #1" &&
+> +	git commit -am "Feature branch change #1" &&
+>  	echo "Yet another line" >>file &&
+>  	test_tick &&
+> -	git commit -am "Slave change #2" &&
+> +	git commit -am "Feature branch change #2" &&
+>  	git checkout -b merger master &&
+>  	test_tick &&
+> -	git merge --no-ff slave &&
+> +	git merge --no-ff feature &&
+>  	git format-patch -3 --stdout >patch &&
+>  	grep "^From " patch >from &&
+>  	test_line_count = 3 from
+> -- 
+> 2.25.4
+> 
 
-It certainly is not customized by a user (yet). However, you do make an
-excellent point that I need to be more careful here! Patch 8
-(commit-graph: persist existence of changed-paths) needs to load the
-bloom_filter_settings from the existing commit-graph so we can be
-future-proof from a future version customizing the settings inside the
-commit-graph file!
-
-This means that in v2 I'll move patches 7 & 8 to be after patch 1 and
-add a test to verify the filter settings are preserved (after manually
-changing the data in the file).
-
-Thanks!
--Stolee
+-- 
+Danh
