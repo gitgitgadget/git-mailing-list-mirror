@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCCE2C433DF
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 22:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E03AC433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 22:51:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B204A223BE
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 22:51:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5078F223BE
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 22:51:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hPMSXA3g"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xUGcCoK9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729709AbgFSWve (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 18:51:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39726 "EHLO
+        id S1729736AbgFSWvg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 18:51:36 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39744 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726900AbgFSWve (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 18:51:34 -0400
+        by vger.kernel.org with ESMTP id S1729714AbgFSWvf (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 18:51:35 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AD00E60A5E;
-        Fri, 19 Jun 2020 22:51:32 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 45B4A60A60;
+        Fri, 19 Jun 2020 22:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1592607093;
-        bh=PFwsn2BGLChsioOxqyEXOQRSkXGQIrT4VC6X5k/0YUU=;
+        bh=mIcA5gOf7x6V4CtJBabDCzptsnGtuqXE3ouDLrU4xOM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=hPMSXA3g7fxGLxcEYxqXFE9D59D2bB5BytmfgbnsFCT51BsQDySDgwDIYNaaNIzly
-         jjxtT6kQBTE+JSaRu2CCvwcmyCOQrUlcPSSKS5ZL+v3cWQCAgv9dUDhW5i7IfgDZZf
-         f1biL5Db4gl8RJ5Jzyo4Qh/dChLaBI+kRO90D5ECu/8P715DLH6nonjVpywauyeUF9
-         2tPCFK87kdVrIp/PR/9desFh3nCIxzZsN/MMoUfdJHmz1dBwDqiCsyPIw7rOzUulwf
-         l5Fn7x6lKhBQk2GnlM/eO8kwQTp4GV/vPnbf1OUdMhzCoOMFRCS79ostZnuBjjV1u2
-         NizBaoOD0571Hh2JiRVCfJ8T2pq/XyJjPSf6QhwTjohg0V7Wz+UKnrrI78ySTPrL5Y
-         ZhQao9gf7nxu0McIasBdwI2t361b/OMLXfgBRS70Ciy2DB97BDUQzz2J4X4mOL+fTS
-         u6YqteyMffDPI1HXV9jtEBXrbH1gqgszNrZnNVyCFe9i2yJ4MNH
+        b=xUGcCoK9qDUZ0fsclDngr611zFvWpqC2Dm1CpgX1spDl2ffsfFfXrJxx+KF/JIko3
+         3pxD7GdeDt23NkXNYU9rUP3JaxbR8YWS5ibZNAsLY2GDdI7bvB3Ode+X/t6mn/B7hQ
+         0qkUW/1DL9sYUqqqy85QZ+qHGtjWmHl1huZ2+gToQnVkiTAFGz7NCuh34CrZbM4tvK
+         Bx6IQZ4kujJ0Jv5acWqtTO4SzeIQgQmbbf0I6M/jLDrIrzFBtfDciYg81VjnCwDdzz
+         JgKpH+TDZuetZ3aH79YzDQgU2IRTIG2M/noPNRBjvroqAUS8+4V8vuXt7QH4m6aPXP
+         Ao/4KllFRQhSiVIucvGyAHKN7+TdT8/nm0mN+M3J8euE+wxGHC/npz2idO45q18ZN/
+         2cB7whnlohsKfYEKBJxZXCClAXz+ClyxbCPbeLRxQX6MwJS/Wi2Zemw92600KNdYMN
+         b0vax8t4ShJ5EFBTiU9wmxv4s5AeebhDymr5YEfp+7Xp/s1XnLa
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Matthew DeVore <matvore@google.com>, Eric Wong <e@80x24.org>,
         Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH 04/14] t9100: make test work with SHA-256
-Date:   Fri, 19 Jun 2020 22:39:37 +0000
-Message-Id: <20200619223947.947067-5-sandals@crustytoothpaste.net>
+Subject: [PATCH 05/14] t9104: make hash size independent
+Date:   Fri, 19 Jun 2020 22:39:38 +0000
+Message-Id: <20200619223947.947067-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200619223947.947067-1-sandals@crustytoothpaste.net>
 References: <20200619223947.947067-1-sandals@crustytoothpaste.net>
@@ -57,50 +57,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compute the relevant tree objects for SHA-256 and use those when
-appropriate instead of using the SHA-1 ones.
+The size of a record in the database used by git svn is four bytes plus
+the length of the binary hash.  Instead of hard-coding 24, compute this
+value based on the size of the hash in use.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9100-git-svn-basic.sh | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ t/t9104-git-svn-follow-parent.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-index 2c309a57d9..9f2d19ecc4 100755
---- a/t/t9100-git-svn-basic.sh
-+++ b/t/t9100-git-svn-basic.sh
-@@ -208,9 +208,10 @@ name='check imported tree checksums expected tree checksums'
- rm -f expected
- if test_have_prereq UTF8
- then
--	echo tree dc68b14b733e4ec85b04ab6f712340edc5dc936e > expected
-+	echo tree dc68b14b733e4ec85b04ab6f712340edc5dc936e > expected.sha1
-+	echo tree b95b55b29d771f5eb73aa9b9d52d02fe11a2538c2feb0829f754ce20a91d98eb > expected.sha256
- fi
--cat >> expected <<\EOF
-+cat >> expected.sha1 <<\EOF
- tree c3322890dcf74901f32d216f05c5044f670ce632
- tree d3ccd5035feafd17b030c5732e7808cc49122853
- tree d03e1630363d4881e68929d532746b20b0986b83
-@@ -220,8 +221,20 @@ tree 149d63cd5878155c846e8c55d7d8487de283f89e
- tree d667270a1f7b109f5eb3aaea21ede14b56bfdd6e
- tree 8f51f74cf0163afc9ad68a4b1537288c4558b5a4
- EOF
-+cat >> expected.sha256 <<\EOF
-+tree 8d12756699d0b5b110514240a0ff141f6cbf8891fd69ab05e5594196fb437c9f
-+tree 8187168d33f7d4ccb8c1cc6e99532810aaccb47658f35d19b3803072d1128d7a
-+tree 74e535d85da8ee25eb23d7b506790c5ab3ccdb1ba0826bd57625ed44ef361650
-+tree 6fd7dd963e3cdca0cbd6368ed3cfcc8037cc154d2e7719d9d369a0952364fd95
-+tree 1fd6cec6aa95102d69266e20419bb62ec2a06372d614b9850ef23ff204103bb4
-+tree 6fd7dd963e3cdca0cbd6368ed3cfcc8037cc154d2e7719d9d369a0952364fd95
-+tree deb2b7ac79cd8ce6f52af6a5a0a08691e94ba74a2ed55966bb27dbec551730eb
-+tree 59e2e936761188476a7752034e8aa0a822b34050c8504b0dfd946407f4bc9215
-+EOF
+diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
+index 5e0ad19177..67eed2fefc 100755
+--- a/t/t9104-git-svn-follow-parent.sh
++++ b/t/t9104-git-svn-follow-parent.sh
+@@ -161,6 +161,7 @@ test_expect_success "track initial change if it was only made to parent" '
+ 	'
  
--test_expect_success POSIXPERM,SYMLINKS "$name" "test_cmp expected a"
-+test_expect_success POSIXPERM,SYMLINKS "$name" '
-+	test_cmp expected.$(test_oid algo) a
-+'
- 
- test_expect_success 'exit if remote refs are ambigious' '
-         git config --add svn-remote.svn.fetch \
+ test_expect_success "follow-parent is atomic" '
++	record_size=$(($(test_oid rawsz) + 4)) &&
+ 	(
+ 		cd wc &&
+ 		svn_cmd up &&
+@@ -186,7 +187,7 @@ test_expect_success "follow-parent is atomic" '
+ 	mkdir -p "$GIT_DIR"/svn/refs/remotes/flunk@18 &&
+ 	rev_map=$(cd "$GIT_DIR"/svn/refs/remotes/stunk && ls .rev_map*) &&
+ 	dd if="$GIT_DIR"/svn/refs/remotes/stunk/$rev_map \
+-	   of="$GIT_DIR"/svn/refs/remotes/flunk@18/$rev_map bs=24 count=1 &&
++	   of="$GIT_DIR"/svn/refs/remotes/flunk@18/$rev_map bs=$record_size count=1 &&
+ 	rm -rf "$GIT_DIR"/svn/refs/remotes/stunk &&
+ 	git svn init --minimize-url -i flunk "$svnrepo"/flunk &&
+ 	git svn fetch -i flunk &&
