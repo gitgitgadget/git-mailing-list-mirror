@@ -2,114 +2,107 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE3BC433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 14:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4971FC433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 14:24:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32E9B208C7
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 14:24:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 208C5208C7
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 14:24:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="G6WBB1ZW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HfTeySg2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733017AbgFSOYH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 10:24:07 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:56690 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727848AbgFSOYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 10:24:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1592576645;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=2JOhi8M5zb/Kv/uadhtLcPJzdJMULo8FvLOb0MZ+nQg=;
-        b=G6WBB1ZWCES2wjw5cb2bTO9bp9XdA3mlV7uKDrpwBus1YN/oFXMfppVVvYeNIRk5BrLJHq
-        Z2tyhQooIDBi7N1Zh0cE5/PKnLO9wydB7ESXwZrAuZK/e/RzxLRCJRzz8iDQjN5zlPwHdn
-        kTo9YENpG7MovOjWkOYkpvcXvx2zK1Y=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-462-eK6iNWKuNXiKTalhjqnRWg-1; Fri, 19 Jun 2020 10:24:00 -0400
-X-MC-Unique: eK6iNWKuNXiKTalhjqnRWg-1
-Received: by mail-wr1-f69.google.com with SMTP id d6so4343048wrn.1
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 07:24:00 -0700 (PDT)
+        id S1733132AbgFSOYe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 10:24:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726757AbgFSOYc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 10:24:32 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DDA9C06174E
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 07:24:32 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id o11so2169260wrv.9
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 07:24:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hGPkYGcJm3yXpCBLPc/hFItc1ZVEOGY5kgIlsHVFyaw=;
+        b=HfTeySg20rbly0IIHOE+i+b0PqMMj3UXXqYN+pgCbo47XFcGB2cxodZGR0Z6vL216U
+         JSPxNiMN4J2nt5YqxR5wecewPHhnk8p6AQtKdimYw/HSKKyeb0B8Q4XY8GDkLtfsS+2U
+         5lnjkDKRkafkd9Y+cFz3FdEW/AXlCdIDNsGCc8myPq/j7RaYR0yNkTob1wt159FeXvFf
+         NIVq8sHfLqVjIoX+y+nd3DeDODum+xMVPAkx+vtC0ehGtH0vyfCjwNl76U7iu4ez+15j
+         FaLcotzXY7E7mRas9Fm2DpuGJ+m3P0J5nB+q6o/FLELHFGOD0kD36VyvCDMe+GT2xO6L
+         0TDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2JOhi8M5zb/Kv/uadhtLcPJzdJMULo8FvLOb0MZ+nQg=;
-        b=EcyM06GjhX3Swk/CP3Se8upY4AOJlY9sNMHlyBMO8NHBQmmLeIRtkanzQVYzixZA/I
-         lWwtiOC2a8KLyYEQ3fcWrEVpS13rhIZes6GKuGvWlESCTK7WsRw6sj9CT+Bd9S2iX7h4
-         nwrj0zSHmbv9IN3XiHue1FjY3gS+xH6ILi0zSKeQJvgx3OnbpVWSXg1cm2Ew7EuzeHcl
-         vMOmzaD8AZ1LEDAs9x73tkZItxk3j98CdLS3qwT79RS5DjEmGwAvXUAtcHIq1nDPuom6
-         gSi3T2D4leNohH+MknW4lBftCkj2a6wS/yboR4MEaTjITEThljwXBU0mfSBwNfUfxB2K
-         hYrA==
-X-Gm-Message-State: AOAM532qdPzT3tzcORhbaWz8tXlHkNwN3DeL+sLSqlRAiySdiqOjYPf/
-        4SV/UL1S6N1NuwL7aeVRO1LpWNfAfw3dNTaG9yKLcWVWEQ5tPVKuf2crTeahjfY0jAthDqw31+x
-        OOm/Uu7/3OWf4
-X-Received: by 2002:a5d:6751:: with SMTP id l17mr4660415wrw.179.1592576638895;
-        Fri, 19 Jun 2020 07:23:58 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxtsUV9zeW7ZYrflB8IVohQTcd3XJh7DGhy1GE3Prry4oiwHeNn1+9OxS0qxRrrWe0bitukfw==
-X-Received: by 2002:a5d:6751:: with SMTP id l17mr4660392wrw.179.1592576638637;
-        Fri, 19 Jun 2020 07:23:58 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:e1d2:138e:4eff:42cb? ([2001:b07:6468:f312:e1d2:138e:4eff:42cb])
-        by smtp.gmail.com with ESMTPSA id x5sm1771547wmg.2.2020.06.19.07.23.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jun 2020 07:23:58 -0700 (PDT)
-Subject: Re: [PATCH v2] tests: do not use "slave branch" nomenclature
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, msuchanek@suse.de,
-        Till Maas <tmaas@redhat.com>
-References: <20200619093210.31289-1-pbonzini@redhat.com>
- <20200619130058.GA5027@danh.dev>
-From:   Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <e7611e0f-3d62-fc92-7f35-5abcc11f2fd8@redhat.com>
-Date:   Fri, 19 Jun 2020 16:23:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hGPkYGcJm3yXpCBLPc/hFItc1ZVEOGY5kgIlsHVFyaw=;
+        b=Xk13xpgH99uT3UH8ykaCvyw2UOan/jVaNdHKsqi+jFNgDvMrUXXIOQ8kf9tQVT7Q+y
+         Xal4XQtDbBZdfA7O0uRjN5tWHxEvMX88I3Lrut09+0wRghnmmaU2S+sNWmtQ4fg9ja/i
+         A6HPVkhOEJqh610lpxkL1lSW21actjy0pxpZ4UkiW51WWYL23GJ4qvPum3ohG4x6K67q
+         PUPjq5DMBV2+cbJ7rFyXq1QbzzCxDJIVc7jzYbCo4RKirGQrd+tFhHTEDDert4PfXoLZ
+         DBJzEox0Apn3wujBVVA3QXuIEEfXhWl3rr+sksrbohmXgJbl4hnKXTkxCNUuVDS65xQN
+         xIAw==
+X-Gm-Message-State: AOAM530s/6ZFW12QrazZ02xiiiOwAMfoWN970dbq+bW+Nhp9E05d87mx
+        Pi+tr+RyVe8h9uDvxrT6gBI=
+X-Google-Smtp-Source: ABdhPJzth1mWLipu8ZjWTKvcytfykCCLFNa8pTHbAWfsU9TDZ+3SwBBjfK4Vdl4yzWoK3UlqrCOskg==
+X-Received: by 2002:a5d:468d:: with SMTP id u13mr4648346wrq.73.1592576671251;
+        Fri, 19 Jun 2020 07:24:31 -0700 (PDT)
+Received: from szeder.dev (62-165-236-97.pool.digikabel.hu. [62.165.236.97])
+        by smtp.gmail.com with ESMTPSA id g82sm7148320wmf.1.2020.06.19.07.24.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 Jun 2020 07:24:30 -0700 (PDT)
+Date:   Fri, 19 Jun 2020 16:24:28 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v17 12/17] Reftable support for git-core
+Message-ID: <20200619142428.GG2898@szeder.dev>
+References: <pull.539.v16.git.1591380199.gitgitgadget@gmail.com>
+ <pull.539.v17.git.1592335242.gitgitgadget@gmail.com>
+ <e1b019274545f36949d73436e23e6f292433b922.1592335243.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20200619130058.GA5027@danh.dev>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <e1b019274545f36949d73436e23e6f292433b922.1592335243.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19/06/20 15:00, Đoàn Trần Công Danh wrote:
-> I think common terminology in Git's test is this kind of branch is side.
-> In this inaccurate comparison:
-> 
-> 	git grep -E '(branch|checkout|switch).* side '
-> 	git grep -E '(branch|checkout|switch).* feature'
+On Tue, Jun 16, 2020 at 07:20:37PM +0000, Han-Wen Nienhuys via GitGitGadget wrote:
+> +static int reftable_init_db(struct ref_store *ref_store, struct strbuf *err)
+> +{
+> +	struct git_reftable_ref_store *refs =
+> +		(struct git_reftable_ref_store *)ref_store;
+> +	struct strbuf sb = STRBUF_INIT;
+> +
+> +	safe_create_dir(refs->reftable_dir, 1);
+> +
+> +	strbuf_addf(&sb, "%s/HEAD", refs->repo_dir);
+> +	write_file(sb.buf, "ref: refs/.invalid");
 
-Side branch is the name that git uses for "parents other than the first
-one in a merge commit", for example
+The "Backward compatibility" section of the specs says:
 
-	Verify that the tip commit of the side branch being merged is
-	signed with a valid key
+  * `.git/HEAD`, a regular file containing `ref: refs/heads/.invalid`.
 
-Feature branch is what you call branches in a workflow that does feature
-development in a dedicated branch instead of the master branch.  In
-addition to the two that you point out, there are other occurrences of
-"feature branch".  For example in t5520-push.sh:
+not "refs/.invalid".
 
-# add a feature branch, keep-merge, that is merged into master, so the
-# test can try preserving the merge commit (or not) with various
-# --rebase flags/pull.rebase settings.
-
-and that has some resemblance with the format-patch test.  (However,
-t5520-push.sh doesn't call its branch "feature"
-
-So I think both terms are acceptable.  Certainly "feature branch" is
-used a lot by git users (and was suggested in the v1 review) even though
-it's not as prevalent in the source code.
-
-Paolo
-
+> +	strbuf_reset(&sb);
+> +
+> +	strbuf_addf(&sb, "%s/refs", refs->repo_dir);
+> +	safe_create_dir(sb.buf, 1);
+> +	strbuf_reset(&sb);
+> +
+> +	strbuf_addf(&sb, "%s/refs/heads", refs->repo_dir);
+> +	write_file(sb.buf, "this repository uses the reftable format");
+> +
+> +	return 0;
+> +}
