@@ -2,135 +2,174 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92EC3C433E1
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C192C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:29:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CDA420DD4
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:29:03 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZYNdTZo"
+	by mail.kernel.org (Postfix) with ESMTP id 7A48320DD4
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:29:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732887AbgFSN2r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 09:28:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731738AbgFSN17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 09:27:59 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF01C0613EE
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:27:58 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id n9so3940369plk.1
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:27:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0qgNr6iP/aaJbjxdjzgkiUHZGIeJ2f7u8oAlGSik8G4=;
-        b=gZYNdTZocWtHxocJnp5h63f59/KOFEgMIULA1FC27hIbaT8/IORITE1JP9RX5227Sp
-         zZmC8LNsnY4opGKGWL0imxowWGCAG83t5zpu/dXSxGelcoTHrYr63Ud0oOIGEBTXM1zB
-         u5vytvSxPwv4ftP4VKm7kRfNhSI/cvaQCZ/jzOIcutJ47/cgAdrQ7chAH5kaDwurnoUX
-         sPmG13jB8eZvm53xPB2sGEU6o/BBARb6jjVLjJlBM5wkg72/Vuf3CeX5j9Ie6lqLLtGs
-         cYJWZl9QwERCwVf6LbKuLyBt71vx7/3fB6sbabDeI0oSg25geaW4CtaZ/kHJkCKjKHcn
-         RIXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=0qgNr6iP/aaJbjxdjzgkiUHZGIeJ2f7u8oAlGSik8G4=;
-        b=lANGgtMJtUs9YEqT8HcTWU+NGUZKBliz/evryRlVkjDrbQc7LrvFAmWtuGL2IKnlen
-         kBj3V6+ZDrtuy8RKChzKnzSLhmSGC/AVrjSQaMkCRBM8eCmP/88czoK91/N1oRFADqqi
-         5ANOTYxkZ802yc3Bi/xQSvnxKcx9SSMzEFTiL886J3dKZW1abBzT6y0XvaPXp2Rkjcv4
-         Vpsko9syb+hGgWe/zMlyJ2JzxTNZaQqYJqgdgo8RLv73k6N0cruhxsx3AhXwAvLO+f78
-         oTKqgpiK+qXOc2sqO10BiDNSfYyRbhJomQcBWHkykKDMcZtgJ+IA7Rb/3Ehp78DB3QcL
-         iZwg==
-X-Gm-Message-State: AOAM531DANOlGnr4CyATptXxDt8Nwcgwc78DjMpT2i6+xL5gvyzzvBe8
-        0OFcWiSCUoNoFdge/7EbqVjI/VSl
-X-Google-Smtp-Source: ABdhPJz0lTOnhLDbeXtKnxbJwVLPWHs/lpIfpUvpj4wGkdA3fNBU93kE/P5UkU8VeTng8vBMgSTp7g==
-X-Received: by 2002:a17:90a:1308:: with SMTP id h8mr3844064pja.22.1592573278295;
-        Fri, 19 Jun 2020 06:27:58 -0700 (PDT)
-Received: from [192.168.208.37] ([49.207.136.53])
-        by smtp.gmail.com with ESMTPSA id p19sm6068583pff.116.2020.06.19.06.27.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jun 2020 06:27:57 -0700 (PDT)
-Subject: Re: [PATCH v2] tests: do not use "slave branch" nomenclature
-To:     Paolo Bonzini <pbonzini@redhat.com>
-Cc:     git@vger.kernel.org, msuchanek@suse.de,
-        Till Maas <tmaas@redhat.com>
-References: <20200619093210.31289-1-pbonzini@redhat.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <8f2bf041-1a04-55cb-05fd-a3802fbfb09d@gmail.com>
-Date:   Fri, 19 Jun 2020 18:57:54 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1732317AbgFSN30 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 09:29:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37152 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729080AbgFSN3Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 09:29:25 -0400
+Received: (qmail 2731 invoked by uid 109); 19 Jun 2020 13:29:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Jun 2020 13:29:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14651 invoked by uid 111); 19 Jun 2020 13:29:23 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Jun 2020 09:29:23 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 19 Jun 2020 09:29:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 3/3] fast-export: allow dumping the path mapping
+Message-ID: <20200619132923.GA2540897@coredump.intra.peff.net>
+References: <20200619132304.GA2540657@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20200619093210.31289-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <20200619132304.GA2540657@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19-06-2020 15:02, Paolo Bonzini wrote:
-> Git branches have been qualified as topic branches, integration branches,
-> development branches, feature branches, release branches and so on.
-> Git has a branch that is the master *for* development, but it is not
-> the master *of* any "slave branch": Git does not have slave branches,
-> and has never had, except for a single testcase that claims otherwise. :)
->
+When working with an anonymized repo, it can be useful to be able to
+refer to particular paths. E.g., reproducing a bug with "git rev-list --
+foo.c" in the original repo would need to replace "foo.c" with its
+anonymized counterpart to produce the same effect.
 
-I wonder if "claims" is too strong a word here. "... hints otherwise"
-sounds better to me.
+We recently taught fast-export to dump the refname mapping. Let's do the
+same thing for paths, which can reuse most of the same infrastructure.
+Note that the output format isn't unambiguous here (because paths could
+contain spaces). That's OK because this is meant to be examined by a
+human.
 
-> Independent of any future change to the naming of the "master" branch,
-> removing this sole appearance of the term is a strict improvement: it
-> avoids divisive language, and talking about "feature branch" clarifies
-> which developer workflow the test is trying to emulate.
-> 
-> Reported-by: Till Maas <tmaas@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+We could also just introduce a "dump mapping" file that shows every
+mapping we make. But it would be a bit more awkward to work with, as the
+user would have to sort through more data to find the parts they're
+interested in (and there are likely to be many more paths than refnames,
+making it annoying for people who just want to dump the refnames).
 
-Other than that and the comment by Danh elsewhere this patch looks
-good to me.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-fast-export.txt | 10 ++++++++++
+ builtin/fast-export.c             | 12 ++++++++++++
+ t/t9351-fast-export-anonymize.sh  |  8 ++++++++
+ 3 files changed, 30 insertions(+)
 
-> ---
->  t/t4014-format-patch.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index 575e079cc2..958c2da56e 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -81,16 +81,16 @@ test_expect_success 'format-patch --ignore-if-in-upstream handles tags' '
->  '
->  
->  test_expect_success "format-patch doesn't consider merge commits" '
-> -	git checkout -b slave master &&
-> +	git checkout -b feature master &&
->  	echo "Another line" >>file &&
->  	test_tick &&
-> -	git commit -am "Slave change #1" &&
-> +	git commit -am "Feature branch change #1" &&
->  	echo "Yet another line" >>file &&
->  	test_tick &&
-> -	git commit -am "Slave change #2" &&
-> +	git commit -am "Feature branch change #2" &&
->  	git checkout -b merger master &&
->  	test_tick &&
-> -	git merge --no-ff slave &&
-> +	git merge --no-ff feature &&
->  	git format-patch -3 --stdout >patch &&
->  	grep "^From " patch >from &&
->  	test_line_count = 3 from
-> 
-
+diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+index e809bb3f18..c63f109f1d 100644
+--- a/Documentation/git-fast-export.txt
++++ b/Documentation/git-fast-export.txt
+@@ -125,6 +125,12 @@ by keeping the marks the same across runs.
+ 	the output stream, with the original refname, a space, and its
+ 	anonymized counterpart. See the section on `ANONYMIZING` below.
+ 
++--dump-anonymized-paths=<file>::
++	Output the mapping of real paths to anonymized paths to <file>.
++	The output will contain one line per path that appears in the
++	output stream, with the original path, a space, and its
++	anonymized counterpart. See the section on `ANONYMIZING` below.
++
+ --reference-excluded-parents::
+ 	By default, running a command such as `git fast-export
+ 	master~5..master` will not include the commit master{tilde}5
+@@ -261,6 +267,10 @@ refs/tags/v2.0 refs/tags/ref50
+ which tells you that `git rev-list ref31..ref50` may produce the same
+ bug in the re-imported anonymous repository.
+ 
++Likewise, `--dump-anonymized-paths` may be useful for a bug that
++involves pathspecs. E.g., `git rev-list v1.0..v2.0 -- foo.c` requires
++knowing the path corresponding to `foo.c` in the result.
++
+ LIMITATIONS
+ -----------
+ 
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index cd0174d514..ed1f8daa7f 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -47,6 +47,7 @@ static struct string_list tag_refs = STRING_LIST_INIT_NODUP;
+ static struct refspec refspecs = REFSPEC_INIT_FETCH;
+ static int anonymize;
+ static FILE *anonymized_refnames_handle;
++static FILE *anonymized_paths_handle;
+ static struct revision_sources revision_sources;
+ 
+ static int parse_opt_signed_tag_mode(const struct option *opt,
+@@ -211,6 +212,9 @@ static void anonymize_path(struct strbuf *out, const char *path,
+ 			   struct hashmap *map,
+ 			   void *(*generate)(const void *, size_t *))
+ {
++	static struct seen_set seen;
++	const char *full_path = path;
++
+ 	while (*path) {
+ 		const char *end_of_component = strchrnul(path, '/');
+ 		size_t len = end_of_component - path;
+@@ -220,6 +224,8 @@ static void anonymize_path(struct strbuf *out, const char *path,
+ 		if (*path)
+ 			strbuf_addch(out, *path++);
+ 	}
++
++	maybe_dump_anon(anonymized_paths_handle, &seen, full_path, out->buf);
+ }
+ 
+ static inline void *mark_to_ptr(uint32_t mark)
+@@ -1170,6 +1176,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	     *import_filename = NULL,
+ 	     *import_filename_if_exists = NULL;
+ 	const char *anonymized_refnames_file = NULL;
++	const char *anonymized_paths_file = NULL;
+ 	uint32_t lastimportid;
+ 	struct string_list refspecs_list = STRING_LIST_INIT_NODUP;
+ 	struct string_list paths_of_changed_objects = STRING_LIST_INIT_DUP;
+@@ -1206,6 +1213,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "dump-anonymized-refnames",
+ 			   &anonymized_refnames_file, N_("file"),
+ 			   N_("output anonymized refname mapping to <file>")),
++		OPT_STRING(0, "dump-anonymized-paths",
++			   &anonymized_paths_file, N_("file"),
++			   N_("output anonymized path mapping to <file>")),
+ 		OPT_BOOL(0, "reference-excluded-parents",
+ 			 &reference_excluded_commits, N_("Reference parents which are not in fast-export stream by object id")),
+ 		OPT_BOOL(0, "show-original-ids", &show_original_ids,
+@@ -1244,6 +1254,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 
+ 	if (anonymized_refnames_file)
+ 		anonymized_refnames_handle = xfopen(anonymized_refnames_file, "w");
++	if (anonymized_paths_file)
++		anonymized_paths_handle = xfopen(anonymized_paths_file, "w");
+ 
+ 	if (use_done_feature)
+ 		printf("feature done\n");
+diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
+index 88847b0f60..3607b9b972 100755
+--- a/t/t9351-fast-export-anonymize.sh
++++ b/t/t9351-fast-export-anonymize.sh
+@@ -53,6 +53,14 @@ test_expect_success 'refname mapping can be dumped' '
+ 	grep "^refs/heads/other refs/heads/" refs.out
+ '
+ 
++test_expect_success 'path mapping can be dumped' '
++	git fast-export --anonymize --all \
++		--dump-anonymized-paths=paths.out >/dev/null &&
++	# do not assume a particular anonymization scheme or order;
++	# just sanity check that a sample line looks sensible.
++	grep "^foo " paths.out
++'
++
+ # NOTE: we chdir to the new, anonymized repository
+ # after this. All further tests should assume this.
+ test_expect_success 'import stream to new repository' '
 -- 
-Sivaraam
+2.27.0.480.g4f98dbcb10
