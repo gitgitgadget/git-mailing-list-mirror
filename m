@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D0B0C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7C09C433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43ACD20B80
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91B6E20786
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:56:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="W1coQgEz"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Lj8UJAX+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403903AbgFSR4Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:56:25 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39458 "EHLO
+        id S2404547AbgFSR4f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 13:56:35 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39446 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2391253AbgFSR4V (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:21 -0400
+        by vger.kernel.org with ESMTP id S2393840AbgFSR41 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:27 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 27C5460A67;
-        Fri, 19 Jun 2020 17:56:18 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ADCB960A6D;
+        Fri, 19 Jun 2020 17:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592589378;
-        bh=ORMmguZtrHvCLzay+DZGDcwD5Tww9WG4e4A+bbiby4g=;
+        s=default; t=1592589382;
+        bh=z/hbO9Pa9kw3i3ydW7bPReUQR2B2iix4X60keH+Bypw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=W1coQgEzoJjFNYESwXYZCo+eBCt7h4bvNXHNg5bX7kimrDd+EaCa7+1Y0chz9GaP3
-         8eDfsi5lDL2E3vS91e+pTLn/GoD1HjDD7QPiITiFUTMZ9Yf/vs6jESsK2ZHfQ7o2I3
-         mB0M+m/9CgTj+L05V642WJLQqQoX3rDP+MtUvTEvHA+VDoma8zcjHdAkPUHkvInDwg
-         RXC/qsuIT2U5RuIxKNMpiNgB656AtXLSNfaC7opbzxBJN+4L51LoSfGcjEHCUSEzYe
-         iPND/MuwA9oxg5/UwkwrZ52ZLs3yRmVSs9QpJVU3hu0+UotU8vglT+adPauWCoyTLa
-         gmJNFNJlnnsKKJGZsjryBrojoK1RU/yRIb0WUTO2SUMP5yvv7ZzQKGDHKGaJJWmJGK
-         R8hIClf/ceNxoPRvdASp7tyGzt64z+a6hubrmRd8Ja8kQcg3nG0wMwZS1ISqqeJHSK
-         RyWy+LT++UQmy7+0QUm95EvgOf9TP54LndgfoMfrhGhGkDn2IHB
+        b=Lj8UJAX++WYB0FVPztFOWzVWb/VOYhNgu5InsfA7cdf4ayulYTp/evDwsV8ZAeOEi
+         ownh8WtGba34MJZhNlG3Z62NUTn5STvP+nC4GtDS3vIJr9Xt9arwXGHjvEA/lG+1SH
+         18+tdxt3EjrO7rM3k6hmmicQz1DOdVQVaQiolOhjj7KV1TAj1ywfch16SLfBhzmWDt
+         C0FcJbWRmjX51bZg8IdoOhCGn4dfxJGq2fu/wOjU/cPnCjMQJiZmO7Yd8w7VCUBoLA
+         UK2Sddv0XTQoQ37KQ32AWoKLwn5VYeBjT2gLjb9mJBx4LaAByyCh7XgycOIAQLiq3A
+         ZuJ9+B/ofcm8OvhiR8olLiw5YcNkdCl1uK5eUS5RxcLZ6lyOo/UPVYntOFMmIBnIuW
+         DUe4ug4v7Ymqs/Y4qNdcjp0cwqVKOo8WVc8yUtavYlfSBbBMh/JoG/rfYELZYo8JJG
+         jDf47Y3utgn/BwKDciG7JXke9Ga21poz5n+421gq7M21FQel8PZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 10/44] connect: add function to detect supported v1 hash functions
-Date:   Fri, 19 Jun 2020 17:55:27 +0000
-Message-Id: <20200619175601.569856-11-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 17/44] transport-helper: implement object-format extensions
+Date:   Fri, 19 Jun 2020 17:55:34 +0000
+Message-Id: <20200619175601.569856-18-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200619175601.569856-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -58,57 +58,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a function, server_supports_hash, to see if the remote server
-supports a particular hash algorithm when speaking protocol v1.
+Implement the object-format extensions that let us determine the hash
+algorithm in use when pushing or pulling data.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- connect.c | 22 ++++++++++++++++++++++
- connect.h |  1 +
- 2 files changed, 23 insertions(+)
+ transport-helper.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index 2cded78b0a..a52b038865 100644
---- a/connect.c
-+++ b/connect.c
-@@ -527,6 +527,28 @@ static const char *parse_feature_value(const char *feature_list, const char *fea
- 	return NULL;
- }
+diff --git a/transport-helper.c b/transport-helper.c
+index a46afcb69d..ae33b0eea7 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -32,7 +32,8 @@ struct helper_data {
+ 		signed_tags : 1,
+ 		check_connectivity : 1,
+ 		no_disconnect_req : 1,
+-		no_private_update : 1;
++		no_private_update : 1,
++		object_format : 1;
  
-+int server_supports_hash(const char *desired, int *feature_supported)
-+{
-+	int offset = 0;
-+	int len;
-+	const char *hash;
-+
-+	hash = next_server_feature_value("object-format", &len, &offset);
-+	if (feature_supported)
-+		*feature_supported = !!hash;
-+	if (!hash) {
-+		hash = hash_algos[GIT_HASH_SHA1].name;
-+		len = strlen(hash);
-+	}
-+	while (hash) {
-+		if (!xstrncmpz(desired, hash, len))
-+			return 1;
-+
-+		hash = next_server_feature_value("object-format", &len, &offset);
-+	}
-+	return 0;
-+}
-+
- int parse_feature_request(const char *feature_list, const char *feature)
- {
- 	return !!parse_feature_value(feature_list, feature, NULL, NULL);
-diff --git a/connect.h b/connect.h
-index 88702fdd17..c53976f7ec 100644
---- a/connect.h
-+++ b/connect.h
-@@ -18,6 +18,7 @@ int url_is_local_not_ssh(const char *url);
- struct packet_reader;
- enum protocol_version discover_version(struct packet_reader *reader);
+ 	/*
+ 	 * As an optimization, the transport code may invoke fetch before
+@@ -207,6 +208,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 			data->import_marks = xstrdup(arg);
+ 		} else if (starts_with(capname, "no-private-update")) {
+ 			data->no_private_update = 1;
++		} else if (starts_with(capname, "object-format")) {
++			data->object_format = 1;
+ 		} else if (mandatory) {
+ 			die(_("unknown mandatory capability %s; this remote "
+ 			      "helper probably needs newer version of Git"),
+@@ -1103,6 +1106,12 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+ 	data->get_refs_list_called = 1;
+ 	helper = get_helper(transport);
  
-+int server_supports_hash(const char *desired, int *feature_supported);
- int server_supports_v2(const char *c, int die_on_error);
- int server_feature_v2(const char *c, const char **v);
- int server_supports_feature(const char *c, const char *feature,
++	if (data->object_format) {
++		write_str_in_full(helper->in, "option object-format\n");
++		if (recvline(data, &buf) || strcmp(buf.buf, "ok"))
++			exit(128);
++	}
++
+ 	if (data->push && for_push)
+ 		write_str_in_full(helper->in, "list for-push\n");
+ 	else
+@@ -1115,6 +1124,17 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+ 
+ 		if (!*buf.buf)
+ 			break;
++		else if (buf.buf[0] == ':') {
++			const char *value;
++			if (skip_prefix(buf.buf, ":object-format ", &value)) {
++				int algo = hash_algo_by_name(value);
++				if (algo == GIT_HASH_UNKNOWN)
++					die(_("unsupported object format '%s'"),
++					    value);
++				transport->hash_algo = &hash_algos[algo];
++			}
++			continue;
++		}
+ 
+ 		eov = strchr(buf.buf, ' ');
+ 		if (!eov)
+@@ -1127,7 +1147,7 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+ 		if (buf.buf[0] == '@')
+ 			(*tail)->symref = xstrdup(buf.buf + 1);
+ 		else if (buf.buf[0] != '?')
+-			get_oid_hex(buf.buf, &(*tail)->old_oid);
++			get_oid_hex_algop(buf.buf, &(*tail)->old_oid, transport->hash_algo);
+ 		if (eon) {
+ 			if (has_attribute(eon + 1, "unchanged")) {
+ 				(*tail)->status |= REF_STATUS_UPTODATE;
