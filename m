@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4FA2C433DF
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 15:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C4AC433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 15:55:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 882B220771
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 15:55:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3FE820771
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 15:55:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A8G0Iv47"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRGmdkMO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392016AbgFSPzj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 11:55:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58878 "EHLO
+        id S2405353AbgFSPzk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 11:55:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388837AbgFSPVS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2392836AbgFSPVS (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 19 Jun 2020 11:21:18 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8EA5C06174E
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 08:21:17 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id e1so10076698wrt.5
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 08:21:17 -0700 (PDT)
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA829C0613F0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 08:21:16 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id f185so9472687wmf.3
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 08:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Mc2jmf+pB18IKojxE0rQ4C8yvcUz6rVQMqN4xExd7O0=;
-        b=A8G0Iv47epsMO+1NxTX7wIz4fVzysF2z5hpqbtzoDVHIgvU0T+/K/HHHeDA/aFfy0b
-         vMKf0hyftPI92d0AyO/R3iwJkF1FRoiDyfE+E96XHL39CGRjLCUroBb+7rB4Lh9tuC/4
-         UmR/JUdqCS9AgdNuPg1/oIDxKDAYixpinBEQpMZCJyeQdYQyepbQ51lyWccJ94u3cn2B
-         yi2+PkJhMj+cL9NySCh+r+JQIyfX/1gu2IvGuYaoUCe2e1HkmrqI5lEMruEooOLdCrYX
-         bBviMslBhNF0qSYPKahoWdURsuwFZusGRJhdt2oJTzqjsUV6P3kTCZ8hjiX6lejT+eEk
-         hr7A==
+        bh=She8SLUBVexCyT2wdw5ZzfdUPxNkxXz2qt7g2es+G10=;
+        b=gRGmdkMOH35YRPhAkWz7XPa6sgOngEmm4zvJecnno5UtLl+dxFC9GU0+W18o6AjP9x
+         r6FukLEW2YARhqgAyze25lwarEuEyDJZhRL3H61OHsQBd3IvEntQ+Nj3aEBjmVSwGhqI
+         vuFq/a6wFJ6f6zFZOd2XI3OOI02RrlNiQOUbDLHCOSlXplakKCw2oWFTyPBoNapkIRuw
+         /TntRpiPjAxASOQQQBK8Wo+QTZcfGWdqvLyHw4Sx5cN3ROfSAMCFwCGFQXDZzkGAZ+yB
+         d5EZdxiQTd2V/kN4vN6VIt0nrGx3iJsNKul6StxaS5mUykEm22nPizINx/+ORI92ubMI
+         RJoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Mc2jmf+pB18IKojxE0rQ4C8yvcUz6rVQMqN4xExd7O0=;
-        b=aadAqNBYXdWIJH/yMzbBQ6rc7rhWwwMBe7eqFKEx236i5Bg46pCw+y2NXkuGi+rPMn
-         iSmUULOtcxklZhQaU7gpKT5hHJj3BrCxbfMo6He1/FdF13G/QrPUNItYgj4Y2BGBk9i9
-         kt3/1fjX2UMSGJfe5hyvahs4F35O2K4m0lIh/lDM2t2/shKZO3MJQlnEb+MVBZ81d913
-         e47XEOPhSel2ftgfa2V0zLExEQ66JGzH0RfqAiwnXMitBUnI4vqwpW7DtDXrXBWFFQ5l
-         B2Y2CFEk7KIYf5h1ETrxsL5SKeViCPV+cpR1FE/RWgYJul+D7l0My9ay66BOcqvF7Y9c
-         15+g==
-X-Gm-Message-State: AOAM532tpW7AiLaoifWcoP3q2K0Jx/rFJZg2Gc4s+5AaVJdU3JDmaXjm
-        IW7vlic1NNp7MwDkafw6oDrr36sg
-X-Google-Smtp-Source: ABdhPJyVYZm1Wt5RQR5QhfBvNmTipM1h52Fz8omHtn8WlpYTzWw9SA9id1AKqWGSojh5jSHvtJH9sA==
-X-Received: by 2002:adf:f350:: with SMTP id e16mr2837639wrp.43.1592580075520;
-        Fri, 19 Jun 2020 08:21:15 -0700 (PDT)
+        bh=She8SLUBVexCyT2wdw5ZzfdUPxNkxXz2qt7g2es+G10=;
+        b=sRLHdjRhdBM2vmgJVdPsVvVAqE0pxpAVeXyfyoUuqaw88j+zaphlTb+rBEQZfSa06C
+         sOMm22/YIv7bnqkSEvy1itqE8WcOPQsixR8KHMYl7kDQj5UJxZvhLf/iYvqYBwLPNgcJ
+         cEEm+TXRaXIfY8U2c5mR2AelR3wNjxXLu37aEOdXmoGWhnGW2VMFoEFVysCVTfR7y0iF
+         zzVB7TV1AvObimcb7AvnAmn5qOcH0QDKoFAW9zxbgPq8QR2vG7Fr9aVnV7ZPQJzyvG8T
+         4eWS245bsYYEqHizYm+Iz1RtVvhlouykBBdRPsReDkSPv4KoJypdzgmDpieBrz0q3t8W
+         IIjw==
+X-Gm-Message-State: AOAM532dmX9fvCY3aYDQRQ2Ntrxw2aVonVU8AOUurRDSggxF3WdVZZkH
+        eHc7/8L4PfTsjqu3Jkg+JjEgyrWQ
+X-Google-Smtp-Source: ABdhPJwd5FnR0SxSxqP6fhHiTtt0NgMGCt5LBQ1mn8zaMzi+XmZwjTHpx39/QDvP66sWyKDVpEUatA==
+X-Received: by 2002:a1c:7d4c:: with SMTP id y73mr4191982wmc.188.1592580074832;
+        Fri, 19 Jun 2020 08:21:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n19sm6894846wmi.33.2020.06.19.08.21.14
+        by smtp.gmail.com with ESMTPSA id a16sm7357506wrx.8.2020.06.19.08.21.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2020 08:21:15 -0700 (PDT)
-Message-Id: <48d361f44e2aed025a6b55b3b7440b9bc9301322.1592580071.git.gitgitgadget@gmail.com>
+        Fri, 19 Jun 2020 08:21:14 -0700 (PDT)
+Message-Id: <b5f881ba1adbab94a08c7336ad3b674370acb6d8.1592580071.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.665.git.1592580071.gitgitgadget@gmail.com>
 References: <pull.665.git.1592580071.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 19 Jun 2020 15:21:10 +0000
-Subject: [PATCH 3/3] refs: update ref_exists() to take a struct repository
+Date:   Fri, 19 Jun 2020 15:21:09 +0000
+Subject: [PATCH 2/3] refs: update update_ref() to take a struct repository
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,1115 +79,704 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-There are a number of places where we check for the existance of a
-pseudo ref by looking for a file rather than using the refs api.  The
-assumption that these refs are always files will not valid once
-repositories start storing their refs in a reftable. As the current code
-is already aware of which repository the ref is in update ref_exists()
-to take a struct repository* so that we can safely change the
-file_exists() calls to ref_exists() later. It would be possible to
-change the file_exists() to use refs_ref_exists(get_main_ref_store(r),
-...) but that gets quite cumbersome.
+There are a number of places where we create pseudo refs such as
+CHERRY_PICK head where the deletion takes a struct repository* but the
+creation of the ref does not. Change update_ref() so that creation and
+deletion match.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- branch.c                 | 14 ++++----
- branch.h                 |  6 ++--
- builtin/bisect--helper.c |  2 +-
- builtin/branch.c         | 19 +++++-----
- builtin/checkout.c       | 14 +++++---
- builtin/commit.c         |  4 +--
- builtin/for-each-ref.c   |  4 +--
- builtin/log.c            |  6 ++--
- builtin/ls-remote.c      |  2 +-
- builtin/merge.c          |  2 +-
- builtin/pull.c           |  2 +-
- builtin/rebase.c         |  4 +--
- builtin/receive-pack.c   |  2 +-
- builtin/remote.c         |  5 +--
- builtin/stash.c          |  4 +--
- builtin/tag.c            |  6 ++--
- builtin/verify-tag.c     |  2 +-
- builtin/worktree.c       |  8 ++---
- ref-filter.c             | 76 +++++++++++++++++++++++++---------------
- ref-filter.h             | 11 +++---
- refs.c                   |  4 +--
+ bisect.c                 | 18 +++++++++++-------
+ builtin/am.c             | 10 +++++-----
+ builtin/bisect--helper.c |  6 +++---
+ builtin/checkout.c       |  3 ++-
+ builtin/clone.c          | 16 ++++++++--------
+ builtin/merge.c          | 10 +++++-----
+ builtin/notes.c          | 10 +++++-----
+ builtin/pull.c           |  3 ++-
+ builtin/reset.c          |  8 ++++----
+ builtin/stash.c          |  2 +-
+ builtin/update-ref.c     |  3 ++-
+ diff.c                   |  2 +-
+ notes-cache.c            |  4 ++--
+ notes-cache.h            |  2 +-
+ notes-utils.c            |  2 +-
+ refs.c                   |  4 ++--
  refs.h                   |  2 +-
- remote.c                 | 30 +++++++++-------
- remote.h                 | 13 ++++---
- sha1-name.c              |  5 +--
- wt-status.c              | 41 ++++++++++++----------
- wt-status.h              |  2 +-
- 27 files changed, 168 insertions(+), 122 deletions(-)
+ reset.c                  |  6 +++---
+ sequencer.c              | 21 +++++++++++----------
+ transport-helper.c       | 32 ++++++++++++++++++--------------
+ transport-internal.h     |  4 +++-
+ transport.c              |  8 +++++---
+ 22 files changed, 96 insertions(+), 80 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 2d9e7675a6e..976d923196c 100644
---- a/branch.c
-+++ b/branch.c
-@@ -183,12 +183,13 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
-  * Return 1 if the named branch already exists; return 0 otherwise.
-  * Fill ref with the full refname for the branch.
-  */
--int validate_branchname(const char *name, struct strbuf *ref)
-+int validate_branchname(struct repository *r, const char *name,
-+			struct strbuf *ref)
- {
- 	if (strbuf_check_branch_ref(ref, name))
- 		die(_("'%s' is not a valid branch name."), name);
- 
--	return ref_exists(ref->buf);
-+	return ref_exists(r, ref->buf);
+diff --git a/bisect.c b/bisect.c
+index d5e830410f5..f2987df1c40 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -704,17 +704,20 @@ static int is_expected_rev(const struct object_id *oid)
+ 	return res;
  }
  
- /*
-@@ -197,11 +198,12 @@ int validate_branchname(const char *name, struct strbuf *ref)
-  * Return 1 if the named branch already exists; return 0 otherwise.
-  * Fill ref with the full refname for the branch.
-  */
--int validate_new_branchname(const char *name, struct strbuf *ref, int force)
-+int validate_new_branchname(struct repository *r, const char *name,
-+			    struct strbuf *ref, int force)
+-static enum bisect_error bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
++static enum bisect_error bisect_checkout(struct repository *r,
++					 const struct object_id *bisect_rev,
++					 int no_checkout)
  {
- 	const char *head;
+ 	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
+ 	enum bisect_error res = BISECT_OK;
  
--	if (!validate_branchname(name, ref))
-+	if (!validate_branchname(r, name, ref))
- 		return 0;
+ 	memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), the_hash_algo->hexsz + 1);
+-	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
++	update_ref(r, NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0,
++		   UPDATE_REFS_DIE_ON_ERR);
  
- 	if (!force)
-@@ -260,8 +262,8 @@ void create_branch(struct repository *r,
- 		explicit_tracking = 1;
- 
- 	if ((track == BRANCH_TRACK_OVERRIDE || clobber_head_ok)
--	    ? validate_branchname(name, &ref)
--	    : validate_new_branchname(name, &ref, force)) {
-+	    ? validate_branchname(r, name, &ref)
-+	    : validate_new_branchname(r, name, &ref, force)) {
- 		if (!force)
- 			dont_change_ref = 1;
- 		else
-diff --git a/branch.h b/branch.h
-index df0be61506f..2c0f7164a92 100644
---- a/branch.h
-+++ b/branch.h
-@@ -50,7 +50,8 @@ void create_branch(struct repository *r,
-  * Return 1 if the named branch already exists; return 0 otherwise.
-  * Fill ref with the full refname for the branch.
+ 	argv_checkout[2] = bisect_rev_hex;
+ 	if (no_checkout) {
+-		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
++		update_ref(r, NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
+ 			   UPDATE_REFS_DIE_ON_ERR);
+ 	} else {
+ 		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+@@ -820,7 +823,8 @@ static void handle_skipped_merge_base(const struct object_id *mb)
+  * for early success, this will be converted back to 0 in
+  * check_good_are_ancestors_of_bad().
   */
--int validate_branchname(const char *name, struct strbuf *ref);
-+int validate_branchname(struct repository *r, const char *name,
-+			struct strbuf *ref);
+-static enum bisect_error check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
++static enum bisect_error check_merge_bases(struct repository *r, int rev_nr,
++					   struct commit **rev, int no_checkout)
+ {
+ 	enum bisect_error res = BISECT_OK;
+ 	struct commit_list *result;
+@@ -838,7 +842,7 @@ static enum bisect_error check_merge_bases(int rev_nr, struct commit **rev, int
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf(_("Bisecting: a merge base must be tested\n"));
+-			res = bisect_checkout(mb, no_checkout);
++			res = bisect_checkout(r, mb, no_checkout);
+ 			if (!res)
+ 				/* indicate early success */
+ 				res = BISECT_INTERNAL_SUCCESS_MERGE_BASE;
+@@ -903,7 +907,7 @@ static enum bisect_error check_good_are_ancestors_of_bad(struct repository *r,
  
- /*
-  * Check if a branch 'name' can be created as a new branch; die otherwise.
-@@ -58,7 +59,8 @@ int validate_branchname(const char *name, struct strbuf *ref);
-  * Return 1 if the named branch already exists; return 0 otherwise.
-  * Fill ref with the full refname for the branch.
-  */
--int validate_new_branchname(const char *name, struct strbuf *ref, int force);
-+int validate_new_branchname(struct repository *r, const char *name,
-+			    struct strbuf *ref, int force);
+ 	rev = get_bad_and_good_commits(r, &rev_nr);
+ 	if (check_ancestors(r, rev_nr, rev, prefix))
+-		res = check_merge_bases(rev_nr, rev, no_checkout);
++		res = check_merge_bases(r, rev_nr, rev, no_checkout);
+ 	free(rev);
  
- /*
-  * Remove information about the merge state on the current
+ 	if (!res) {
+@@ -1065,7 +1069,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix, int
+ 		  nr), nr, steps_msg);
+ 	free(steps_msg);
+ 
+-	return bisect_checkout(bisect_rev, no_checkout);
++	return bisect_checkout(r, bisect_rev, no_checkout);
+ }
+ 
+ static inline int log2i(int n)
+diff --git a/builtin/am.c b/builtin/am.c
+index cd2e3f1f3b5..2adc6b7ab7f 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1013,8 +1013,8 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	if (!get_oid("HEAD", &curr_head)) {
+ 		write_state_text(state, "abort-safety", oid_to_hex(&curr_head));
+ 		if (!state->rebasing)
+-			update_ref("am", "ORIG_HEAD", &curr_head, NULL, 0,
+-				   UPDATE_REFS_DIE_ON_ERR);
++			update_ref(the_repository, "am", "ORIG_HEAD",
++				   &curr_head, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 	} else {
+ 		write_state_text(state, "abort-safety", "");
+ 		if (!state->rebasing)
+@@ -1378,7 +1378,7 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+ 
+ 	oidcpy(&state->orig_commit, &commit_oid);
+ 	write_state_text(state, "original-commit", oid_to_hex(&commit_oid));
+-	update_ref("am", "REBASE_HEAD", &commit_oid,
++	update_ref(the_repository, "am", "REBASE_HEAD", &commit_oid,
+ 		   NULL, REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
+ 
+ 	return 0;
+@@ -1594,7 +1594,7 @@ static void do_commit(const struct am_state *state)
+ 	strbuf_addf(&sb, "%s: %.*s", reflog_msg, linelen(state->msg),
+ 			state->msg);
+ 
+-	update_ref(sb.buf, "HEAD", &commit, old_oid, 0,
++	update_ref(the_repository, sb.buf, "HEAD", &commit, old_oid, 0,
+ 		   UPDATE_REFS_DIE_ON_ERR);
+ 
+ 	if (state->rebasing) {
+@@ -2055,7 +2055,7 @@ static void am_abort(struct am_state *state)
+ 	clean_index(&curr_head, &orig_head);
+ 
+ 	if (has_orig_head)
+-		update_ref("am --abort", "HEAD", &orig_head,
++		update_ref(the_repository, "am --abort", "HEAD", &orig_head,
+ 			   has_curr_head ? &curr_head : NULL, 0,
+ 			   UPDATE_REFS_DIE_ON_ERR);
+ 	else if (curr_branch)
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 09b37b67913..59e8898d9c1 100644
+index ec4996282e3..09b37b67913 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -336,7 +336,7 @@ static int bisect_next_check(const struct bisect_terms *terms,
- 	char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
- 	char *good_glob = xstrfmt("%s-*", terms->term_good);
+@@ -222,7 +222,7 @@ static int bisect_write(const char *state, const char *rev,
+ 		goto finish;
+ 	}
  
--	if (ref_exists(bad_ref))
-+	if (ref_exists(the_repository, bad_ref))
- 		missing_bad = 0;
- 
- 	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
-diff --git a/builtin/branch.c b/builtin/branch.c
-index a4409d42d7c..59938d1bc04 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -126,7 +126,8 @@ static int branch_merged(int kind, const char *name,
- 
- 	if (kind == FILTER_REFS_BRANCHES) {
- 		struct branch *branch = branch_get(name);
--		const char *upstream = branch_get_upstream(branch, NULL);
-+		const char *upstream =
-+			branch_get_upstream(the_repository, branch, NULL);
- 		struct object_id oid;
- 
- 		if (upstream &&
-@@ -428,12 +429,13 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 	if (verify_ref_format(format))
- 		die(_("unable to parse format string"));
- 
--	ref_array_sort(sorting, &array);
-+	ref_array_sort(the_repository, sorting, &array);
- 
- 	for (i = 0; i < array.nr; i++) {
- 		struct strbuf out = STRBUF_INIT;
- 		struct strbuf err = STRBUF_INIT;
--		if (format_ref_array_item(array.items[i], format, &out, &err))
-+		if (format_ref_array_item(the_repository, array.items[i],
-+					  format, &out, &err))
- 			die("%s", err.buf);
- 		if (column_active(colopts)) {
- 			assert(!filter->verbose && "--column and --verbose are incompatible");
-@@ -509,7 +511,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 		 * Bad name --- this could be an attempt to rename a
- 		 * ref that we used to allow to be created by accident.
- 		 */
--		if (ref_exists(oldref.buf))
-+		if (ref_exists(the_repository, oldref.buf))
- 			recovery = 1;
- 		else
- 			die(_("Invalid branch name: '%s'"), oldname);
-@@ -520,9 +522,10 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 	 * cause the worktree to become inconsistent with HEAD, so allow it.
- 	 */
- 	if (!strcmp(oldname, newname))
--		validate_branchname(newname, &newref);
-+		validate_branchname(the_repository, newname, &newref);
- 	else
--		validate_new_branchname(newname, &newref, force);
-+		validate_new_branchname(the_repository, newname, &newref,
-+					force);
- 
- 	reject_rebase_or_bisect_branch(oldref.buf);
- 
-@@ -756,7 +759,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			die(_("cannot edit description of more than one branch"));
- 
- 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
--		if (!ref_exists(branch_ref.buf)) {
-+		if (!ref_exists(the_repository, branch_ref.buf)) {
- 			strbuf_release(&branch_ref);
- 
- 			if (!argc)
-@@ -802,7 +805,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			die(_("no such branch '%s'"), argv[0]);
+-	if (update_ref(NULL, tag.buf, &oid, NULL, 0,
++	if (update_ref(the_repository, NULL, tag.buf, &oid, NULL, 0,
+ 		       UPDATE_REFS_MSG_ON_ERR)) {
+ 		res = -1;
+ 		goto finish;
+@@ -582,8 +582,8 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 			res = error(_("invalid ref: '%s'"), start_head.buf);
+ 			goto finish;
  		}
- 
--		if (!ref_exists(branch->refname))
-+		if (!ref_exists(the_repository, branch->refname))
- 			die(_("branch '%s' does not exist"), branch->name);
- 
- 		/*
+-		if (update_ref(NULL, "BISECT_HEAD", &oid, NULL, 0,
+-			       UPDATE_REFS_MSG_ON_ERR)) {
++		if (update_ref(the_repository, NULL, "BISECT_HEAD", &oid, NULL,
++			       0, UPDATE_REFS_MSG_ON_ERR)) {
+ 			res = -1;
+ 			goto finish;
+ 		}
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4f8c9924953..c1fe6aad9bf 100644
+index af849c644fe..4f8c9924953 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -832,7 +832,8 @@ static void report_tracking(struct branch_info *new_branch_info)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct branch *branch = branch_get(new_branch_info->name);
- 
--	if (!format_tracking_info(branch, &sb, AHEAD_BEHIND_FULL))
-+	if (!format_tracking_info(the_repository, branch, &sb,
-+				  AHEAD_BEHIND_FULL))
- 		return;
- 	fputs(sb.buf, stdout);
- 	strbuf_release(&sb);
-@@ -923,7 +924,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 			}
- 		}
- 		if (old_branch_info->path && old_branch_info->name) {
--			if (!ref_exists(old_branch_info->path) && reflog_exists(old_branch_info->path))
-+			if (!ref_exists(the_repository,
-+					old_branch_info->path) &&
-+			    reflog_exists(old_branch_info->path))
- 				delete_reflog(old_branch_info->path);
- 		}
+@@ -892,7 +892,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 	if (!strcmp(new_branch_info->name, "HEAD") && !new_branch_info->path && !opts->force_detach) {
+ 		/* Nothing to do. */
+ 	} else if (opts->force_detach || !new_branch_info->path) {	/* No longer on any branch. */
+-		update_ref(msg.buf, "HEAD", &new_branch_info->commit->object.oid, NULL,
++		update_ref(the_repository, msg.buf, "HEAD",
++			   &new_branch_info->commit->object.oid, NULL,
+ 			   REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
+ 		if (!opts->quiet) {
+ 			if (old_branch_info->path &&
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 2a8e3aaaed3..6d7686df758 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -647,8 +647,8 @@ static void write_followtags(const struct ref *refs, const char *msg)
+ 						OBJECT_INFO_QUICK |
+ 						OBJECT_INFO_SKIP_FETCH_OBJECT))
+ 			continue;
+-		update_ref(msg, ref->name, &ref->old_oid, NULL, 0,
+-			   UPDATE_REFS_DIE_ON_ERR);
++		update_ref(the_repository, msg, ref->name, &ref->old_oid, NULL,
++			   0, UPDATE_REFS_DIE_ON_ERR);
  	}
-@@ -1728,10 +1731,11 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 		struct strbuf buf = STRBUF_INIT;
- 
- 		if (opts->new_branch_force)
--			opts->branch_exists = validate_branchname(opts->new_branch, &buf);
-+			opts->branch_exists = validate_branchname(
-+				the_repository, opts->new_branch, &buf);
- 		else
--			opts->branch_exists =
--				validate_new_branchname(opts->new_branch, &buf, 0);
-+			opts->branch_exists = validate_new_branchname(
-+				the_repository, opts->new_branch, &buf, 0);
- 		strbuf_release(&buf);
- 	}
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d1b7396052a..496e641ebca 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -538,7 +538,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
- 	s->ignore_submodule_arg = ignore_submodule_arg;
- 
- 	wt_status_collect(s);
--	wt_status_print(s);
-+	wt_status_print(the_repository, s);
- 	wt_status_collect_free_buffers(s);
- 
- 	return s->committable;
-@@ -1457,7 +1457,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	if (s.relative_paths)
- 		s.prefix = prefix;
- 
--	wt_status_print(&s);
-+	wt_status_print(the_repository, &s);
- 	wt_status_collect_free_buffers(&s);
- 
- 	return 0;
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 57489e4eab1..df5edcb68de 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -76,12 +76,12 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	filter.name_patterns = argv;
- 	filter.match_as_path = 1;
- 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
--	ref_array_sort(sorting, &array);
-+	ref_array_sort(the_repository, sorting, &array);
- 
- 	if (!maxcount || array.nr < maxcount)
- 		maxcount = array.nr;
- 	for (i = 0; i < maxcount; i++)
--		show_ref_array_item(array.items[i], &format);
-+		show_ref_array_item(the_repository, array.items[i], &format);
- 	ref_array_clear(&array);
- 	return 0;
  }
-diff --git a/builtin/log.c b/builtin/log.c
-index d104d5c6889..90a5b659292 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1445,7 +1445,8 @@ static struct commit *get_base_commit(const char *base_commit,
- 			die(_("unknown commit %s"), base_commit);
- 	} else if ((base_commit && !strcmp(base_commit, "auto"))) {
- 		struct branch *curr_branch = branch_get(NULL);
--		const char *upstream = branch_get_upstream(curr_branch, NULL);
-+		const char *upstream =
-+			branch_get_upstream(the_repository, curr_branch, NULL);
- 		if (upstream) {
- 			struct commit_list *base_list;
- 			struct commit *commit;
-@@ -2201,7 +2202,8 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
- 		break;
- 	default:
- 		current_branch = branch_get(NULL);
--		upstream = branch_get_upstream(current_branch, NULL);
-+		upstream = branch_get_upstream(the_repository, current_branch,
-+					       NULL);
- 		if (!upstream) {
- 			fprintf(stderr, _("Could not find a tracked"
- 					" remote branch, please"
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 6ef519514bd..5e2ccd3935d 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -136,7 +136,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 
+@@ -719,24 +719,24 @@ static void update_head(const struct ref *our, const struct ref *remote,
+ 		if (create_symref("HEAD", our->name, NULL) < 0)
+ 			die(_("unable to update HEAD"));
+ 		if (!option_bare) {
+-			update_ref(msg, "HEAD", &our->old_oid, NULL, 0,
+-				   UPDATE_REFS_DIE_ON_ERR);
++			update_ref(the_repository, msg, "HEAD", &our->old_oid,
++				   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 			install_branch_config(0, head, option_origin, our->name);
+ 		}
+ 	} else if (our) {
+ 		struct commit *c = lookup_commit_reference(the_repository,
+ 							   &our->old_oid);
+ 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
+-		update_ref(msg, "HEAD", &c->object.oid, NULL, REF_NO_DEREF,
+-			   UPDATE_REFS_DIE_ON_ERR);
++		update_ref(the_repository, msg, "HEAD", &c->object.oid, NULL,
++			   REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
+ 	} else if (remote) {
+ 		/*
+ 		 * We know remote HEAD points to a non-branch, or
+ 		 * HEAD points to a branch but we don't know which one.
+ 		 * Detach HEAD in all these cases.
+ 		 */
+-		update_ref(msg, "HEAD", &remote->old_oid, NULL, REF_NO_DEREF,
+-			   UPDATE_REFS_DIE_ON_ERR);
++		update_ref(the_repository, msg, "HEAD", &remote->old_oid, NULL,
++			   REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
  	}
+ }
  
- 	if (sorting)
--		ref_array_sort(sorting, &ref_array);
-+		ref_array_sort(the_repository, sorting, &ref_array);
- 
- 	for (i = 0; i < ref_array.nr; i++) {
- 		const struct ref_array_item *ref = ref_array.items[i];
 diff --git a/builtin/merge.c b/builtin/merge.c
-index 72633be6503..1d8b72a0408 100644
+index 7da707bf55d..72633be6503 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -549,7 +549,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 		struct strbuf truname = STRBUF_INIT;
- 		strbuf_addf(&truname, "refs/heads/%s", remote);
- 		strbuf_setlen(&truname, truname.len - len);
--		if (ref_exists(truname.buf)) {
-+		if (ref_exists(the_repository, truname.buf)) {
- 			strbuf_addf(msg,
- 				    "%s\t\tbranch '%s'%s of .\n",
- 				    oid_to_hex(&remote_head->object.oid),
+@@ -450,8 +450,8 @@ static void finish(struct commit *head_commit,
+ 		if (verbosity >= 0 && !merge_msg.len)
+ 			printf(_("No merge message -- not updating HEAD\n"));
+ 		else {
+-			update_ref(reflog_message.buf, "HEAD", new_head, head,
+-				   0, UPDATE_REFS_DIE_ON_ERR);
++			update_ref(the_repository, reflog_message.buf, "HEAD",
++				   new_head, head, 0, UPDATE_REFS_DIE_ON_ERR);
+ 			/*
+ 			 * We ignore errors in 'gc --auto', since the
+ 			 * user should see them.
+@@ -1423,8 +1423,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 		remote_head_oid = &remoteheads->item->object.oid;
+ 		read_empty(remote_head_oid, 0);
+-		update_ref("initial pull", "HEAD", remote_head_oid, NULL, 0,
+-			   UPDATE_REFS_DIE_ON_ERR);
++		update_ref(the_repository, "initial pull", "HEAD",
++			   remote_head_oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 		goto done;
+ 	}
+ 
+@@ -1490,7 +1490,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		free(list);
+ 	}
+ 
+-	update_ref("updating ORIG_HEAD", "ORIG_HEAD",
++	update_ref(the_repository, "updating ORIG_HEAD", "ORIG_HEAD",
+ 		   &head_commit->object.oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 
+ 	if (remoteheads && !common) {
+diff --git a/builtin/notes.c b/builtin/notes.c
+index b852afe5a3e..b4a56111209 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -747,7 +747,7 @@ static int merge_commit(struct notes_merge_options *o)
+ 	format_commit_message(partial, "%s", &msg, &pretty_ctx);
+ 	strbuf_trim(&msg);
+ 	strbuf_insertstr(&msg, 0, "notes: ");
+-	update_ref(msg.buf, o->local_ref, &oid,
++	update_ref(the_repository, msg.buf, o->local_ref, &oid,
+ 		   is_null_oid(&parent_oid) ? NULL : &parent_oid,
+ 		   0, UPDATE_REFS_DIE_ON_ERR);
+ 
+@@ -861,13 +861,13 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 
+ 	if (result >= 0) /* Merge resulted (trivially) in result_oid */
+ 		/* Update default notes ref with new commit */
+-		update_ref(msg.buf, default_notes_ref(), &result_oid, NULL, 0,
+-			   UPDATE_REFS_DIE_ON_ERR);
++		update_ref(the_repository, msg.buf, default_notes_ref(),
++			   &result_oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 	else { /* Merge has unresolved conflicts */
+ 		const struct worktree *wt;
+ 		/* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
+-		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", &result_oid, NULL,
+-			   0, UPDATE_REFS_DIE_ON_ERR);
++		update_ref(the_repository, msg.buf, "NOTES_MERGE_PARTIAL",
++			   &result_oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
+ 		wt = find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
+ 		if (wt)
 diff --git a/builtin/pull.c b/builtin/pull.c
-index ea4148ba1e1..1f7c2e8e7e7 100644
+index 00e5857a8d1..ea4148ba1e1 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -736,7 +736,7 @@ static const char *get_upstream_branch(const char *remote)
- 	if (strcmp(curr_branch_remote, rm->name))
- 		return NULL;
+@@ -625,7 +625,8 @@ static int pull_into_void(const struct object_id *merge_head,
+ 				  merge_head, 0))
+ 		return 1;
  
--	return branch_get_upstream(curr_branch, NULL);
-+	return branch_get_upstream(the_repository, curr_branch, NULL);
+-	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
++	if (update_ref(the_repository, "initial pull", "HEAD", merge_head,
++		       curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
+ 		return 1;
+ 
+ 	return 0;
+diff --git a/builtin/reset.c b/builtin/reset.c
+index de407783c4e..1e89d331788 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -264,13 +264,13 @@ static int reset_refs(const char *rev, const struct object_id *oid)
+ 	if (!get_oid("HEAD", &oid_orig)) {
+ 		orig = &oid_orig;
+ 		set_reflog_message(&msg, "updating ORIG_HEAD", NULL);
+-		update_ref(msg.buf, "ORIG_HEAD", orig, old_orig, 0,
+-			   UPDATE_REFS_MSG_ON_ERR);
++		update_ref(the_repository, msg.buf, "ORIG_HEAD", orig, old_orig,
++			   0, UPDATE_REFS_MSG_ON_ERR);
+ 	} else if (old_orig)
+ 		delete_ref(the_repository, NULL, "ORIG_HEAD", old_orig, 0);
+ 	set_reflog_message(&msg, "updating HEAD", rev);
+-	update_ref_status = update_ref(msg.buf, "HEAD", oid, orig, 0,
+-				       UPDATE_REFS_MSG_ON_ERR);
++	update_ref_status = update_ref(the_repository, msg.buf, "HEAD", oid,
++				       orig, 0, UPDATE_REFS_MSG_ON_ERR);
+ 	strbuf_release(&msg);
+ 	return update_ref_status;
  }
- 
- /**
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 82284df8d94..77038a6611d 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1800,8 +1800,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			struct branch *branch;
- 
- 			branch = branch_get(NULL);
--			options.upstream_name = branch_get_upstream(branch,
--								    NULL);
-+			options.upstream_name = branch_get_upstream(
-+				the_repository, branch, NULL);
- 			if (!options.upstream_name)
- 				error_on_missing_default_upstream();
- 			if (fork_point < 0)
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ea3d0f01af3..2f025c51364 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1151,7 +1151,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		struct strbuf err = STRBUF_INIT;
- 		if (!parse_object(the_repository, old_oid)) {
- 			old_oid = NULL;
--			if (ref_exists(name)) {
-+			if (ref_exists(the_repository, name)) {
- 				rp_warning("Allowing deletion of corrupt ref.");
- 			} else {
- 				rp_warning("Deleting a non-existent ref.");
-diff --git a/builtin/remote.c b/builtin/remote.c
-index cde14a7bebe..6e3e2bdd46b 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -358,7 +358,8 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	states->tracked.strdup_strings = 1;
- 	states->stale.strdup_strings = 1;
- 	for (ref = fetch_map; ref; ref = ref->next) {
--		if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
-+		if (!ref->peer_ref ||
-+		    !ref_exists(the_repository, ref->peer_ref->name))
- 			string_list_append(&states->new_refs, abbrev_branch(ref->name));
- 		else
- 			string_list_append(&states->tracked, abbrev_branch(ref->name));
-@@ -1353,7 +1354,7 @@ static int set_head(int argc, const char **argv)
- 	if (head_name) {
- 		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
- 		/* make sure it's valid */
--		if (!ref_exists(buf2.buf))
-+		if (!ref_exists(the_repository, buf2.buf))
- 			result |= error(_("Not a valid ref: %s"), buf2.buf);
- 		else if (create_symref(buf.buf, buf2.buf, "remote set-head"))
- 			result |= error(_("Could not setup %s"), buf.buf);
 diff --git a/builtin/stash.c b/builtin/stash.c
-index a9dee125c4f..b84c6dce465 100644
+index dc318cb52be..a9dee125c4f 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -157,7 +157,7 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+@@ -792,7 +792,7 @@ static int do_store_stash(const struct object_id *w_commit, const char *stash_ms
+ 	if (!stash_msg)
+ 		stash_msg = "Created via \"git stash store\".";
  
- 	strbuf_init(&info->revision, 0);
- 	if (!commit) {
--		if (!ref_exists(ref_stash)) {
-+		if (!ref_exists(the_repository, ref_stash)) {
- 			free_stash_info(info);
- 			fprintf_ln(stderr, _("No stash entries found."));
- 			return -1;
-@@ -688,7 +688,7 @@ static int list_stash(int argc, const char **argv, const char *prefix)
- 			     git_stash_list_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
+-	if (update_ref(stash_msg, ref_stash, w_commit, NULL,
++	if (update_ref(the_repository, stash_msg, ref_stash, w_commit, NULL,
+ 		       REF_FORCE_CREATE_REFLOG,
+ 		       quiet ? UPDATE_REFS_QUIET_ON_ERR :
+ 		       UPDATE_REFS_MSG_ON_ERR)) {
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index b3ec9e5362c..b5534fcc01a 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -554,7 +554,8 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 				  (oldval && !is_null_oid(&oldoid)) ? &oldoid : NULL,
+ 				  default_flags);
+ 	else
+-		return update_ref(msg, refname, &oid, oldval ? &oldoid : NULL,
++		return update_ref(the_repository, msg, refname, &oid,
++				  oldval ? &oldoid : NULL,
+ 				  default_flags | create_reflog_flag,
+ 				  UPDATE_REFS_DIE_ON_ERR);
+ }
+diff --git a/diff.c b/diff.c
+index d24aaa30478..b796ea8f56a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6870,7 +6870,7 @@ size_t fill_textconv(struct repository *r,
+ 		 * Since generating a cache entry is the slow path anyway,
+ 		 * this extra overhead probably isn't a big deal.
+ 		 */
+-		notes_cache_write(driver->textconv_cache);
++		notes_cache_write(r, driver->textconv_cache);
+ 	}
  
--	if (!ref_exists(ref_stash))
-+	if (!ref_exists(the_repository, ref_stash))
- 		return 0;
+ 	return size;
+diff --git a/notes-cache.c b/notes-cache.c
+index 2473314d686..cbd41a03f0f 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -48,7 +48,7 @@ void notes_cache_init(struct repository *r, struct notes_cache *c,
+ 	strbuf_release(&ref);
+ }
  
- 	cp.git_cmd = 1;
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 109f8393100..0601735deb1 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -61,10 +61,10 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
- 		die(_("unable to parse format string"));
- 	filter->with_commit_tag_algo = 1;
- 	filter_refs(&array, filter, FILTER_REFS_TAGS);
--	ref_array_sort(sorting, &array);
-+	ref_array_sort(the_repository, sorting, &array);
+-int notes_cache_write(struct notes_cache *c)
++int notes_cache_write(struct repository *r, struct notes_cache *c)
+ {
+ 	struct object_id tree_oid, commit_oid;
  
- 	for (i = 0; i < array.nr; i++)
--		show_ref_array_item(array.items[i], format);
-+		show_ref_array_item(the_repository, array.items[i], format);
- 	ref_array_clear(&array);
- 	free(to_free);
- 
-@@ -121,7 +121,7 @@ static int verify_tag(const char *name, const char *ref,
+@@ -63,7 +63,7 @@ int notes_cache_write(struct notes_cache *c)
+ 	if (commit_tree(c->validity, strlen(c->validity), &tree_oid, NULL,
+ 			&commit_oid, NULL, NULL) < 0)
+ 		return -1;
+-	if (update_ref("update notes cache", c->tree.update_ref, &commit_oid,
++	if (update_ref(r, "update notes cache", c->tree.update_ref, &commit_oid,
+ 		       NULL, 0, UPDATE_REFS_QUIET_ON_ERR) < 0)
  		return -1;
  
- 	if (format->format)
--		pretty_print_ref(name, oid, format);
-+		pretty_print_ref(the_repository, name, oid, format);
+diff --git a/notes-cache.h b/notes-cache.h
+index 56f8c98e244..f268425fd71 100644
+--- a/notes-cache.h
++++ b/notes-cache.h
+@@ -12,7 +12,7 @@ struct notes_cache {
  
- 	return 0;
- }
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index f45136a06ba..e6cd33c86ec 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -71,7 +71,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 		}
+ void notes_cache_init(struct repository *r, struct notes_cache *c,
+ 		      const char *name, const char *validity);
+-int notes_cache_write(struct notes_cache *c);
++int notes_cache_write(struct repository *r, struct notes_cache *c);
  
- 		if (format.format)
--			pretty_print_ref(name, &oid, &format);
-+			pretty_print_ref(the_repository, name, &oid, &format);
- 	}
- 	return had_error;
- }
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d99db356684..45a831cc91f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -273,7 +273,7 @@ static int add_worktree(const char *path, const char *refname,
+ char *notes_cache_get(struct notes_cache *c, struct object_id *oid, size_t
+ 		      *outsize);
+diff --git a/notes-utils.c b/notes-utils.c
+index 4bf4888d8c1..fd044cc1546 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -53,7 +53,7 @@ void commit_notes(struct repository *r, struct notes_tree *t, const char *msg)
  
- 	/* is 'refname' a branch or commit? */
- 	if (!opts->detach && !strbuf_check_branch_ref(&symref, refname) &&
--	    ref_exists(symref.buf)) {
-+	    ref_exists(the_repository, symref.buf)) {
- 		is_branch = 1;
- 		if (!opts->force)
- 			die_if_checked_out(symref.buf, 0);
-@@ -442,7 +442,7 @@ static void print_preparing_worktree_line(int detach,
- 	} else {
- 		struct strbuf s = STRBUF_INIT;
- 		if (!detach && !strbuf_check_branch_ref(&s, branch) &&
--		    ref_exists(s.buf))
-+		    ref_exists(the_repository, s.buf))
- 			printf_ln(_("Preparing worktree (checking out '%s')"),
- 				  branch);
- 		else {
-@@ -465,7 +465,7 @@ static const char *dwim_branch(const char *path, const char **new_branch)
+ 	create_notes_commit(r, t, NULL, buf.buf, buf.len, &commit_oid);
+ 	strbuf_insertstr(&buf, 0, "notes: ");
+-	update_ref(buf.buf, t->update_ref, &commit_oid, NULL, 0,
++	update_ref(r, buf.buf, t->update_ref, &commit_oid, NULL, 0,
+ 		   UPDATE_REFS_DIE_ON_ERR);
  
- 	UNLEAK(branchname);
- 	if (!strbuf_check_branch_ref(&ref, branchname) &&
--	    ref_exists(ref.buf)) {
-+	    ref_exists(the_repository, ref.buf)) {
- 		strbuf_release(&ref);
- 		return branchname;
- 	}
-@@ -529,7 +529,7 @@ static int add(int ac, const char **av, const char *prefix)
- 
- 		if (!opts.force &&
- 		    !strbuf_check_branch_ref(&symref, new_branch) &&
--		    ref_exists(symref.buf))
-+		    ref_exists(the_repository, symref.buf))
- 			die_if_checked_out(symref.buf, 0);
- 		strbuf_release(&symref);
- 	}
-diff --git a/ref-filter.c b/ref-filter.c
-index bf7b70299b4..49b0a3f5878 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1412,14 +1412,15 @@ static const char *show_ref(struct refname_atom *atom, const char *refname)
- 		return xstrdup(refname);
- }
- 
--static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
-+static void fill_remote_ref_details(struct repository *r,
-+				    struct used_atom *atom, const char *refname,
- 				    struct branch *branch, const char **s)
- {
- 	int num_ours, num_theirs;
- 	if (atom->u.remote_ref.option == RR_REF)
- 		*s = show_ref(&atom->u.remote_ref.refname, refname);
- 	else if (atom->u.remote_ref.option == RR_TRACK) {
--		if (stat_tracking_info(branch, &num_ours, &num_theirs,
-+		if (stat_tracking_info(r, branch, &num_ours, &num_theirs,
- 				       NULL, atom->u.remote_ref.push,
- 				       AHEAD_BEHIND_FULL) < 0) {
- 			*s = xstrdup(msgs.gone);
-@@ -1438,7 +1439,7 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
- 			free((void *)to_free);
- 		}
- 	} else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
--		if (stat_tracking_info(branch, &num_ours, &num_theirs,
-+		if (stat_tracking_info(r, branch, &num_ours, &num_theirs,
- 				       NULL, atom->u.remote_ref.push,
- 				       AHEAD_BEHIND_FULL) < 0) {
- 			*s = xstrdup("");
-@@ -1605,7 +1606,8 @@ static char *get_worktree_path(const struct used_atom *atom, const struct ref_ar
- /*
-  * Parse the object referred by ref, and grab needed value.
-  */
--static int populate_value(struct ref_array_item *ref, struct strbuf *err)
-+static int populate_value(struct repository *r, struct ref_array_item *ref,
-+			  struct strbuf *err)
- {
- 	struct object *obj;
- 	int i;
-@@ -1658,9 +1660,10 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 			}
- 			branch = branch_get(branch_name);
- 
--			refname = branch_get_upstream(branch, NULL);
-+			refname = branch_get_upstream(r, branch, NULL);
- 			if (refname)
--				fill_remote_ref_details(atom, refname, branch, &v->s);
-+				fill_remote_ref_details(r, atom, refname,
-+							branch, &v->s);
- 			else
- 				v->s = xstrdup("");
- 			continue;
-@@ -1675,13 +1678,14 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 			if (atom->u.remote_ref.push_remote)
- 				refname = NULL;
- 			else {
--				refname = branch_get_push(branch, NULL);
-+				refname = branch_get_push(r, branch, NULL);
- 				if (!refname)
- 					continue;
- 			}
- 			/* We will definitely re-init v->s on the next line. */
- 			free((char *)v->s);
--			fill_remote_ref_details(atom, refname, branch, &v->s);
-+			fill_remote_ref_details(r, atom, refname, branch,
-+						&v->s);
- 			continue;
- 		} else if (starts_with(name, "color:")) {
- 			v->s = xstrdup(atom->u.color);
-@@ -1785,11 +1789,12 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
-  * Given a ref, return the value for the atom.  This lazily gets value
-  * out of the object by calling populate value.
-  */
--static int get_ref_atom_value(struct ref_array_item *ref, int atom,
--			      struct atom_value **v, struct strbuf *err)
-+static int get_ref_atom_value(struct repository *r, struct ref_array_item *ref,
-+			      int atom, struct atom_value **v,
-+			      struct strbuf *err)
- {
- 	if (!ref->value) {
--		if (populate_value(ref, err))
-+		if (populate_value(r, ref, err))
- 			return -1;
- 		fill_missing_values(ref->value);
- 	}
-@@ -2273,7 +2278,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
- 	return ret;
- }
- 
--static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, struct ref_array_item *b)
-+static int cmp_ref_sorting(struct repository *r, struct ref_sorting *s,
-+			   struct ref_array_item *a, struct ref_array_item *b)
- {
- 	struct atom_value *va, *vb;
- 	int cmp;
-@@ -2281,9 +2287,9 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- 	int (*cmp_fn)(const char *, const char *);
- 	struct strbuf err = STRBUF_INIT;
- 
--	if (get_ref_atom_value(a, s->atom, &va, &err))
-+	if (get_ref_atom_value(r, a, s->atom, &va, &err))
- 		die("%s", err.buf);
--	if (get_ref_atom_value(b, s->atom, &vb, &err))
-+	if (get_ref_atom_value(r, b, s->atom, &vb, &err))
- 		die("%s", err.buf);
- 	strbuf_release(&err);
- 	cmp_fn = s->ignore_case ? strcasecmp : strcmp;
-@@ -2303,18 +2309,25 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- 	return (s->reverse) ? -cmp : cmp;
- }
- 
--static int compare_refs(const void *a_, const void *b_, void *ref_sorting)
-+struct ref_sorting_internal {
-+	struct repository *r;
-+	struct ref_sorting *s;
-+};
-+
-+static int compare_refs(const void *a_, const void *b_, void *data)
- {
- 	struct ref_array_item *a = *((struct ref_array_item **)a_);
- 	struct ref_array_item *b = *((struct ref_array_item **)b_);
-+	struct ref_sorting_internal *s_internal = data;
-+	struct repository *r = s_internal->r;
- 	struct ref_sorting *s;
- 
--	for (s = ref_sorting; s; s = s->next) {
--		int cmp = cmp_ref_sorting(s, a, b);
-+	for (s = s_internal->s; s; s = s->next) {
-+		int cmp = cmp_ref_sorting(r, s, a, b);
- 		if (cmp)
- 			return cmp;
- 	}
--	s = ref_sorting;
-+	s = s_internal->s;
- 	return s && s->ignore_case ?
- 		strcasecmp(a->refname, b->refname) :
- 		strcmp(a->refname, b->refname);
-@@ -2326,9 +2339,12 @@ void ref_sorting_icase_all(struct ref_sorting *sorting, int flag)
- 		sorting->ignore_case = !!flag;
- }
- 
--void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
-+void ref_array_sort(struct repository *r, struct ref_sorting *sorting,
-+		    struct ref_array *array)
- {
--	QSORT_S(array->items, array->nr, compare_refs, sorting);
-+	struct ref_sorting_internal data = { r, sorting };
-+
-+	QSORT_S(array->items, array->nr, compare_refs, &data);
- }
- 
- static void append_literal(const char *cp, const char *ep, struct ref_formatting_state *state)
-@@ -2353,10 +2369,10 @@ static void append_literal(const char *cp, const char *ep, struct ref_formatting
- 	}
- }
- 
--int format_ref_array_item(struct ref_array_item *info,
--			   const struct ref_format *format,
--			   struct strbuf *final_buf,
--			   struct strbuf *error_buf)
-+int format_ref_array_item(struct repository *r, struct ref_array_item *info,
-+			  const struct ref_format *format,
-+			  struct strbuf *final_buf,
-+			  struct strbuf *error_buf)
- {
- 	const char *cp, *sp, *ep;
- 	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
-@@ -2372,7 +2388,8 @@ int format_ref_array_item(struct ref_array_item *info,
- 		if (cp < sp)
- 			append_literal(cp, sp, &state);
- 		pos = parse_ref_filter_atom(format, sp + 2, ep, error_buf);
--		if (pos < 0 || get_ref_atom_value(info, pos, &atomv, error_buf) ||
-+		if (pos < 0 ||
-+		    get_ref_atom_value(r, info, pos, &atomv, error_buf) ||
- 		    atomv->handler(atomv, &state, error_buf)) {
- 			pop_stack_element(&state.stack);
- 			return -1;
-@@ -2399,13 +2416,13 @@ int format_ref_array_item(struct ref_array_item *info,
- 	return 0;
- }
- 
--void show_ref_array_item(struct ref_array_item *info,
-+void show_ref_array_item(struct repository *r, struct ref_array_item *info,
- 			 const struct ref_format *format)
- {
- 	struct strbuf final_buf = STRBUF_INIT;
- 	struct strbuf error_buf = STRBUF_INIT;
- 
--	if (format_ref_array_item(info, format, &final_buf, &error_buf))
-+	if (format_ref_array_item(r, info, format, &final_buf, &error_buf))
- 		die("%s", error_buf.buf);
- 	fwrite(final_buf.buf, 1, final_buf.len, stdout);
- 	strbuf_release(&error_buf);
-@@ -2413,13 +2430,14 @@ void show_ref_array_item(struct ref_array_item *info,
- 	putchar('\n');
- }
- 
--void pretty_print_ref(const char *name, const struct object_id *oid,
-+void pretty_print_ref(struct repository *r, const char *name,
-+		      const struct object_id *oid,
- 		      const struct ref_format *format)
- {
- 	struct ref_array_item *ref_item;
- 	ref_item = new_ref_array_item(name, oid);
- 	ref_item->kind = ref_kind_from_refname(name);
--	show_ref_array_item(ref_item, format);
-+	show_ref_array_item(r, ref_item, format);
- 	free_array_item(ref_item);
- }
- 
-diff --git a/ref-filter.h b/ref-filter.h
-index 8ecc33cdfa5..32f04247670 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -113,16 +113,18 @@ void ref_array_clear(struct ref_array *array);
- /*  Used to verify if the given format is correct and to parse out the used atoms */
- int verify_ref_format(struct ref_format *format);
- /*  Sort the given ref_array as per the ref_sorting provided */
--void ref_array_sort(struct ref_sorting *sort, struct ref_array *array);
-+void ref_array_sort(struct repository *r, struct ref_sorting *sort,
-+		    struct ref_array *array);
- /*  Set the ignore_case flag for all elements of a sorting list */
- void ref_sorting_icase_all(struct ref_sorting *sorting, int flag);
- /*  Based on the given format and quote_style, fill the strbuf */
--int format_ref_array_item(struct ref_array_item *info,
-+int format_ref_array_item(struct repository *r, struct ref_array_item *info,
- 			  const struct ref_format *format,
- 			  struct strbuf *final_buf,
- 			  struct strbuf *error_buf);
- /*  Print the ref using the given format and quote_style */
--void show_ref_array_item(struct ref_array_item *info, const struct ref_format *format);
-+void show_ref_array_item(struct repository *r, struct ref_array_item *info,
-+			 const struct ref_format *format);
- /*  Parse a single sort specifier and add it to the list */
- void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *atom);
- /*  Callback function for parsing the sort option */
-@@ -140,7 +142,8 @@ void setup_ref_filter_porcelain_msg(void);
-  * Print a single ref, outside of any ref-filter. Note that the
-  * name must be a fully qualified refname.
-  */
--void pretty_print_ref(const char *name, const struct object_id *oid,
-+void pretty_print_ref(struct repository *r, const char *name,
-+		      const struct object_id *oid,
- 		      const struct ref_format *format);
- 
- /*
+ 	strbuf_release(&buf);
 diff --git a/refs.c b/refs.c
-index 7f120f8d33a..f60dc66b78e 100644
+index db2d0907d44..7f120f8d33a 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -316,9 +316,9 @@ static int refs_ref_exists(struct ref_store *refs, const char *refname)
- 	return !!refs_resolve_ref_unsafe(refs, refname, RESOLVE_REF_READING, NULL, NULL);
+@@ -1205,12 +1205,12 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
+ 	return 0;
  }
  
--int ref_exists(const char *refname)
-+int ref_exists(struct repository *r, const char *refname)
+-int update_ref(const char *msg, const char *refname,
++int update_ref(struct repository *r, const char *msg, const char *refname,
+ 	       const struct object_id *new_oid,
+ 	       const struct object_id *old_oid,
+ 	       unsigned int flags, enum action_on_err onerr)
  {
--	return refs_ref_exists(get_main_ref_store(the_repository), refname);
-+	return refs_ref_exists(get_main_ref_store(r), refname);
+-	return refs_update_ref(get_main_ref_store(the_repository), msg, refname, new_oid,
++	return refs_update_ref(get_main_ref_store(r), msg, refname, new_oid,
+ 			       old_oid, flags, onerr);
  }
  
- static int filter_refs(const char *refname, const struct object_id *oid,
 diff --git a/refs.h b/refs.h
-index b0a7ab490f2..d3e9e178f73 100644
+index 7d9bc045484..b0a7ab490f2 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -105,7 +105,7 @@ int refs_verify_refname_available(struct ref_store *refs,
- 				  const struct string_list *skip,
- 				  struct strbuf *err);
+@@ -728,7 +728,7 @@ void ref_transaction_free(struct ref_transaction *transaction);
+ int refs_update_ref(struct ref_store *refs, const char *msg, const char *refname,
+ 		    const struct object_id *new_oid, const struct object_id *old_oid,
+ 		    unsigned int flags, enum action_on_err onerr);
+-int update_ref(const char *msg, const char *refname,
++int update_ref(struct repository *r, const char *msg, const char *refname,
+ 	       const struct object_id *new_oid, const struct object_id *old_oid,
+ 	       unsigned int flags, enum action_on_err onerr);
  
--int ref_exists(const char *refname);
-+int ref_exists(struct repository *r, const char *refname);
- 
- int should_autocreate_reflog(const char *refname);
- 
-diff --git a/remote.c b/remote.c
-index 534c6426f1e..1c4ac83ba66 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1604,7 +1604,8 @@ static const char *error_buf(struct strbuf *err, const char *fmt, ...)
- 	return NULL;
+diff --git a/reset.c b/reset.c
+index 31ec2dbf829..95facc0f4eb 100644
+--- a/reset.c
++++ b/reset.c
+@@ -104,7 +104,7 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 				strbuf_addstr(&msg, "updating ORIG_HEAD");
+ 				reflog_orig_head = msg.buf;
+ 			}
+-			update_ref(reflog_orig_head, "ORIG_HEAD", orig,
++			update_ref(r, reflog_orig_head, "ORIG_HEAD", orig,
+ 				   old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
+ 		} else if (old_orig)
+ 			delete_ref(r, NULL, "ORIG_HEAD", old_orig, 0);
+@@ -116,11 +116,11 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 		reflog_head = msg.buf;
+ 	}
+ 	if (!switch_to_branch)
+-		ret = update_ref(reflog_head, "HEAD", oid, orig,
++		ret = update_ref(r, reflog_head, "HEAD", oid, orig,
+ 				 detach_head ? REF_NO_DEREF : 0,
+ 				 UPDATE_REFS_MSG_ON_ERR);
+ 	else {
+-		ret = update_ref(reflog_head, switch_to_branch, oid,
++		ret = update_ref(r, reflog_head, switch_to_branch, oid,
+ 				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+ 		if (!ret)
+ 			ret = create_symref("HEAD", switch_to_branch,
+diff --git a/sequencer.c b/sequencer.c
+index 88f1b13a600..0a75e34a372 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1426,9 +1426,9 @@ static int try_to_commit(struct repository *r,
+ 	return res;
  }
  
--const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
-+const char *branch_get_upstream(struct repository *r, struct branch *branch,
-+				struct strbuf *err)
+-static int write_rebase_head(struct object_id *oid)
++static int write_rebase_head(struct repository *r, struct object_id *oid)
  {
- 	if (!branch)
- 		return error_buf(err, _("HEAD does not point to a branch"));
-@@ -1615,7 +1616,7 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
- 		 * or because it is not a real branch, and get_branch
- 		 * auto-vivified it?
- 		 */
--		if (!ref_exists(branch->refname))
-+		if (!ref_exists(r, branch->refname))
- 			return error_buf(err, _("no such branch: '%s'"),
- 					 branch->name);
- 		return error_buf(err,
-@@ -1645,7 +1646,8 @@ static const char *tracking_for_push_dest(struct remote *remote,
- 	return ret;
+-	if (update_ref("rebase", "REBASE_HEAD", oid,
++	if (update_ref(r, "rebase", "REBASE_HEAD", oid,
+ 		       NULL, REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR))
+ 		return error(_("could not update %s"), "REBASE_HEAD");
+ 
+@@ -1465,7 +1465,7 @@ static int do_commit(struct repository *r,
+ 	}
+ 	if (res == 1) {
+ 		if (is_rebase_i(opts) && oid)
+-			if (write_rebase_head(oid))
++			if (write_rebase_head(r, oid))
+ 			    return -1;
+ 		return run_git_commit(r, msg_file, opts, flags);
+ 	}
+@@ -1939,11 +1939,11 @@ static int do_pick_commit(struct repository *r,
+ 	if ((command == TODO_PICK || command == TODO_REWORD ||
+ 	     command == TODO_EDIT) && !opts->no_commit &&
+ 	    (res == 0 || res == 1) &&
+-	    update_ref(NULL, "CHERRY_PICK_HEAD", &commit->object.oid, NULL,
++	    update_ref(r, NULL, "CHERRY_PICK_HEAD", &commit->object.oid, NULL,
+ 		       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR))
+ 		res = -1;
+ 	if (command == TODO_REVERT && ((opts->no_commit && res == 0) || res == 1) &&
+-	    update_ref(NULL, "REVERT_HEAD", &commit->object.oid, NULL,
++	    update_ref(r, NULL, "REVERT_HEAD", &commit->object.oid, NULL,
+ 		       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR))
+ 		res = -1;
+ 
+@@ -3018,7 +3018,7 @@ static int make_patch(struct repository *r,
+ 	p = short_commit_name(commit);
+ 	if (write_message(p, strlen(p), rebase_path_stopped_sha(), 1) < 0)
+ 		return -1;
+-	res |= write_rebase_head(&commit->object.oid);
++	res |= write_rebase_head(r, &commit->object.oid);
+ 
+ 	strbuf_addf(&buf, "%s/patch", get_dir(opts));
+ 	memset(&log_tree_opt, 0, sizeof(log_tree_opt));
+@@ -3337,8 +3337,8 @@ static int do_reset(struct repository *r,
+ 	free((void *)desc.buffer);
+ 
+ 	if (!ret)
+-		ret = update_ref(reflog_message(opts, "reset", "'%.*s'",
+-						len, name), "HEAD", &oid,
++		ret = update_ref(r, reflog_message(opts, "reset", "'%.*s'",
++						   len, name), "HEAD", &oid,
+ 				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+ 
+ 	strbuf_release(&ref_name);
+@@ -3862,7 +3862,8 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 		return error(_("could not detach HEAD"));
+ 	}
+ 
+-	return update_ref(NULL, "ORIG_HEAD", &oid, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
++	return update_ref(r, NULL, "ORIG_HEAD", &oid, NULL, 0,
++			  UPDATE_REFS_MSG_ON_ERR);
  }
  
--static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
-+static const char *branch_get_push_1(struct repository *r,
-+				     struct branch *branch, struct strbuf *err)
- {
- 	struct remote *remote;
- 
-@@ -1682,14 +1684,14 @@ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
- 		return tracking_for_push_dest(remote, branch->refname, err);
- 
- 	case PUSH_DEFAULT_UPSTREAM:
--		return branch_get_upstream(branch, err);
-+		return branch_get_upstream(r, branch, err);
- 
- 	case PUSH_DEFAULT_UNSPECIFIED:
- 	case PUSH_DEFAULT_SIMPLE:
- 		{
- 			const char *up, *cur;
- 
--			up = branch_get_upstream(branch, err);
-+			up = branch_get_upstream(r, branch, err);
- 			if (!up)
- 				return NULL;
- 			cur = tracking_for_push_dest(remote, branch->refname, err);
-@@ -1705,13 +1707,14 @@ static const char *branch_get_push_1(struct branch *branch, struct strbuf *err)
- 	BUG("unhandled push situation");
+ static int stopped_at_head(struct repository *r)
+@@ -4113,7 +4114,7 @@ static int pick_commits(struct repository *r,
+ 			}
+ 			msg = reflog_message(opts, "finish", "%s onto %s",
+ 				head_ref.buf, buf.buf);
+-			if (update_ref(msg, head_ref.buf, &head, &orig,
++			if (update_ref(r, msg, head_ref.buf, &head, &orig,
+ 				       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+ 				res = error(_("could not update %s"),
+ 					head_ref.buf);
+diff --git a/transport-helper.c b/transport-helper.c
+index a46afcb69db..723eca96c82 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -805,9 +805,10 @@ static int push_update_ref_status(struct strbuf *buf,
+ 	return !(status == REF_STATUS_OK);
  }
  
--const char *branch_get_push(struct branch *branch, struct strbuf *err)
-+const char *branch_get_push(struct repository *r, struct branch *branch,
-+			    struct strbuf *err)
+-static int push_update_refs_status(struct helper_data *data,
+-				    struct ref *remote_refs,
+-				    int flags)
++static int push_update_refs_status(struct repository *r,
++				   struct helper_data *data,
++				   struct ref *remote_refs,
++				   int flags)
  {
- 	if (!branch)
- 		return error_buf(err, _("HEAD does not point to a branch"));
- 
- 	if (!branch->push_tracking_ref)
--		branch->push_tracking_ref = branch_get_push_1(branch, err);
-+		branch->push_tracking_ref = branch_get_push_1(r, branch, err);
- 	return branch->push_tracking_ref;
- }
- 
-@@ -1961,15 +1964,16 @@ static int stat_branch_pair(const char *branch_name, const char *base,
-  * upstream defined, or ref does not exist).  Returns 0 if the commits are
-  * identical.  Returns 1 if commits are different.
-  */
--int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
-+int stat_tracking_info(struct repository *r, struct branch *branch,
-+		       int *num_ours, int *num_theirs,
- 		       const char **tracking_name, int for_push,
- 		       enum ahead_behind_flags abf)
- {
- 	const char *base;
- 
- 	/* Cannot stat unless we are marked to build on top of somebody else. */
--	base = for_push ? branch_get_push(branch, NULL) :
--		branch_get_upstream(branch, NULL);
-+	base = for_push ? branch_get_push(r, branch, NULL) :
-+			  branch_get_upstream(r, branch, NULL);
- 	if (tracking_name)
- 		*tracking_name = base;
- 	if (!base)
-@@ -1981,15 +1985,15 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- /*
-  * Return true when there is anything to report, otherwise false.
-  */
--int format_tracking_info(struct branch *branch, struct strbuf *sb,
--			 enum ahead_behind_flags abf)
-+int format_tracking_info(struct repository *r, struct branch *branch,
-+			 struct strbuf *sb, enum ahead_behind_flags abf)
- {
- 	int ours, theirs, sti;
- 	const char *full_base;
- 	char *base;
- 	int upstream_is_gone = 0;
- 
--	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-+	sti = stat_tracking_info(r, branch, &ours, &theirs, &full_base, 0, abf);
- 	if (sti < 0) {
- 		if (!full_base)
- 			return 0;
-diff --git a/remote.h b/remote.h
-index 5cc26c1b3b3..bd62d2fa9ad 100644
---- a/remote.h
-+++ b/remote.h
-@@ -278,7 +278,8 @@ int branch_merge_matches(struct branch *, int n, const char *);
-  * message is recorded there (if the function does not return NULL, then
-  * `err` is not touched).
-  */
--const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
-+const char *branch_get_upstream(struct repository *r, struct branch *branch,
-+				struct strbuf *err);
- 
- /**
-  * Return the tracking branch that corresponds to the ref we would push to
-@@ -286,7 +287,8 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
-  *
-  * The return value and `err` conventions match those of `branch_get_upstream`.
-  */
--const char *branch_get_push(struct branch *branch, struct strbuf *err);
-+const char *branch_get_push(struct repository *r, struct branch *branch,
-+			    struct strbuf *err);
- 
- /* Flags to match_refs. */
- enum match_refs_flags {
-@@ -305,11 +307,12 @@ enum ahead_behind_flags {
- };
- 
- /* Reporting of tracking info */
--int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
-+int stat_tracking_info(struct repository *r, struct branch *branch,
-+		       int *num_ours, int *num_theirs,
- 		       const char **upstream_name, int for_push,
- 		       enum ahead_behind_flags abf);
--int format_tracking_info(struct branch *branch, struct strbuf *sb,
--			 enum ahead_behind_flags abf);
-+int format_tracking_info(struct repository *r, struct branch *branch,
-+			 struct strbuf *sb, enum ahead_behind_flags abf);
- 
- struct ref *get_local_heads(void);
- /*
-diff --git a/sha1-name.c b/sha1-name.c
-index 0b8cb5247ab..536afaab67e 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1469,7 +1469,8 @@ static int interpret_branch_mark(struct repository *r,
- 				 const char *name, int namelen,
- 				 int at, struct strbuf *buf,
- 				 int (*get_mark)(const char *, int),
--				 const char *(*get_data)(struct branch *,
-+				 const char *(*get_data)(struct repository *,
-+							 struct branch *,
- 							 struct strbuf *),
- 				 unsigned allowed)
- {
-@@ -1492,7 +1493,7 @@ static int interpret_branch_mark(struct repository *r,
- 	} else
- 		branch = branch_get(NULL);
- 
--	value = get_data(branch, &err);
-+	value = get_data(r, branch, &err);
- 	if (!value)
- 		die("%s", err.buf);
- 
-diff --git a/wt-status.c b/wt-status.c
-index 98dfa6f73f9..809b1d56c4b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1086,7 +1086,8 @@ static void wt_longstatus_print_verbose(struct wt_status *s)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct ref *ref = remote_refs;
+@@ -834,7 +835,7 @@ static int push_update_refs_status(struct helper_data *data,
+ 		private = apply_refspecs(&data->rs, ref->name);
+ 		if (!private)
+ 			continue;
+-		update_ref("update by helper", private, &ref->new_oid, NULL,
++		update_ref(r, "update by helper", private, &ref->new_oid, NULL,
+ 			   0, 0);
+ 		free(private);
+ 	}
+@@ -868,7 +869,8 @@ static void set_common_push_options(struct transport *transport,
  	}
  }
  
--static void wt_longstatus_print_tracking(struct wt_status *s)
-+static void wt_longstatus_print_tracking(struct repository *r,
-+					 struct wt_status *s)
+-static int push_refs_with_push(struct transport *transport,
++static int push_refs_with_push(struct repository *r,
++			       struct transport *transport,
+ 			       struct ref *remote_refs, int flags)
  {
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *cp, *ep, *branch_name;
-@@ -1102,7 +1103,7 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
+ 	int force_all = flags & TRANSPORT_PUSH_FORCE;
+@@ -950,11 +952,12 @@ static int push_refs_with_push(struct transport *transport,
+ 	strbuf_release(&buf);
+ 	string_list_clear(&cas_options, 0);
  
- 	t_begin = getnanotime();
- 
--	if (!format_tracking_info(branch, &sb, s->ahead_behind_flags))
-+	if (!format_tracking_info(r, branch, &sb, s->ahead_behind_flags))
- 		return;
- 
- 	if (advice_status_ahead_behind_warning &&
-@@ -1683,7 +1684,7 @@ static void wt_longstatus_print_state(struct wt_status *s)
- 		show_bisect_in_progress(s, state_color);
+-	return push_update_refs_status(data, remote_refs, flags);
++	return push_update_refs_status(r, data, remote_refs, flags);
  }
  
--static void wt_longstatus_print(struct wt_status *s)
-+static void wt_longstatus_print(struct repository *r, struct wt_status *s)
+-static int push_refs_with_export(struct transport *transport,
+-		struct ref *remote_refs, int flags)
++static int push_refs_with_export(struct repository *r,
++				 struct transport *transport,
++				 struct ref *remote_refs, int flags)
  {
- 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
- 	const char *branch_status_color = color(WT_STATUS_HEADER, s);
-@@ -1716,7 +1717,7 @@ static void wt_longstatus_print(struct wt_status *s)
- 		status_printf_more(s, branch_status_color, "%s", on_what);
- 		status_printf_more(s, branch_color, "%s\n", branch_name);
- 		if (!s->is_initial)
--			wt_longstatus_print_tracking(s);
-+			wt_longstatus_print_tracking(r, s);
+ 	struct ref *ref;
+ 	struct child_process *helper, exporter;
+@@ -1021,7 +1024,7 @@ static int push_refs_with_export(struct transport *transport,
+ 
+ 	if (finish_command(&exporter))
+ 		die(_("error while running fast-export"));
+-	if (push_update_refs_status(data, remote_refs, flags))
++	if (push_update_refs_status(r, data, remote_refs, flags))
+ 		return 1;
+ 
+ 	if (data->export_marks) {
+@@ -1033,14 +1036,15 @@ static int push_refs_with_export(struct transport *transport,
+ 	return 0;
+ }
+ 
+-static int push_refs(struct transport *transport,
+-		struct ref *remote_refs, int flags)
++static int push_refs(struct repository *r, struct transport *transport,
++	       struct ref *remote_refs, int flags)
+ {
+ 	struct helper_data *data = transport->data;
+ 
+ 	if (process_connect(transport, 1)) {
+ 		do_take_over(transport);
+-		return transport->vtable->push_refs(transport, remote_refs, flags);
++		return transport->vtable->push_refs(r, transport, remote_refs,
++						    flags);
  	}
  
- 	wt_longstatus_print_state(s);
-@@ -1878,7 +1879,8 @@ static void wt_shortstatus_other(struct string_list_item *it,
- 	}
- }
- 
--static void wt_shortstatus_print_tracking(struct wt_status *s)
-+static void wt_shortstatus_print_tracking(struct repository *r,
-+					  struct wt_status *s)
- {
- 	struct branch *branch;
- 	const char *header_color = color(WT_STATUS_HEADER, s);
-@@ -1914,7 +1916,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 
- 	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
- 
--	sti = stat_tracking_info(branch, &num_ours, &num_theirs, &base,
-+	sti = stat_tracking_info(r, branch, &num_ours, &num_theirs, &base,
- 				 0, s->ahead_behind_flags);
- 	if (sti < 0) {
- 		if (!base)
-@@ -1954,12 +1956,12 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 	fputc(s->null_termination ? '\0' : '\n', s->fp);
- }
- 
--static void wt_shortstatus_print(struct wt_status *s)
-+static void wt_shortstatus_print(struct repository *r, struct wt_status *s)
- {
- 	struct string_list_item *it;
- 
- 	if (s->show_branch)
--		wt_shortstatus_print_tracking(s);
-+		wt_shortstatus_print_tracking(r, s);
- 
- 	for_each_string_list_item(it, &s->change) {
- 		struct wt_status_change_data *d = it->util;
-@@ -1976,13 +1978,13 @@ static void wt_shortstatus_print(struct wt_status *s)
- 		wt_shortstatus_other(it, s, "!!");
- }
- 
--static void wt_porcelain_print(struct wt_status *s)
-+static void wt_porcelain_print(struct repository *r, struct wt_status *s)
- {
- 	s->use_color = 0;
- 	s->relative_paths = 0;
- 	s->prefix = NULL;
- 	s->no_gettext = 1;
--	wt_shortstatus_print(s);
-+	wt_shortstatus_print(r, s);
- }
- 
- /*
-@@ -2018,7 +2020,8 @@ static void wt_porcelain_print(struct wt_status *s)
-  * upstream.  When AHEAD_BEHIND_QUICK is requested and the branches
-  * are different, '?' will be substituted for the actual count.
-  */
--static void wt_porcelain_v2_print_tracking(struct wt_status *s)
-+static void wt_porcelain_v2_print_tracking(struct repository *r,
-+					   struct wt_status *s)
- {
- 	struct branch *branch;
- 	const char *base;
-@@ -2053,7 +2056,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
- 		/* Lookup stats on the upstream tracking branch, if set. */
- 		branch = branch_get(branch_name);
- 		base = NULL;
--		ab_info = stat_tracking_info(branch, &nr_ahead, &nr_behind,
-+		ab_info = stat_tracking_info(r, branch, &nr_ahead, &nr_behind,
- 					     &base, 0, s->ahead_behind_flags);
- 		if (base) {
- 			base = shorten_unambiguous_ref(base, 0);
-@@ -2328,14 +2331,14 @@ static void wt_porcelain_v2_print_other(
-  * [<v2_ignored_items>]*
-  *
-  */
--static void wt_porcelain_v2_print(struct wt_status *s)
-+static void wt_porcelain_v2_print(struct repository *r, struct wt_status *s)
- {
- 	struct wt_status_change_data *d;
- 	struct string_list_item *it;
- 	int i;
- 
- 	if (s->show_branch)
--		wt_porcelain_v2_print_tracking(s);
-+		wt_porcelain_v2_print_tracking(r, s);
- 
- 	for (i = 0; i < s->change.nr; i++) {
- 		it = &(s->change.items[i]);
-@@ -2362,7 +2365,7 @@ static void wt_porcelain_v2_print(struct wt_status *s)
- 	}
- }
- 
--void wt_status_print(struct wt_status *s)
-+void wt_status_print(struct repository *r, struct wt_status *s)
- {
- 	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
- 	trace2_data_intmax("status", s->repo, "count/untracked",
-@@ -2373,20 +2376,20 @@ void wt_status_print(struct wt_status *s)
- 
- 	switch (s->status_format) {
- 	case STATUS_FORMAT_SHORT:
--		wt_shortstatus_print(s);
-+		wt_shortstatus_print(r, s);
- 		break;
- 	case STATUS_FORMAT_PORCELAIN:
--		wt_porcelain_print(s);
-+		wt_porcelain_print(r, s);
- 		break;
- 	case STATUS_FORMAT_PORCELAIN_V2:
--		wt_porcelain_v2_print(s);
-+		wt_porcelain_v2_print(r, s);
- 		break;
- 	case STATUS_FORMAT_UNSPECIFIED:
- 		BUG("finalize_deferred_config() should have been called");
- 		break;
- 	case STATUS_FORMAT_NONE:
- 	case STATUS_FORMAT_LONG:
--		wt_longstatus_print(s);
-+		wt_longstatus_print(r, s);
- 		break;
+ 	if (!remote_refs) {
+@@ -1051,10 +1055,10 @@ static int push_refs(struct transport *transport,
  	}
  
-diff --git a/wt-status.h b/wt-status.h
-index 73ab5d4da1c..31383ad9e3c 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -147,7 +147,7 @@ size_t wt_status_locate_end(const char *s, size_t len);
- void wt_status_append_cut_line(struct strbuf *buf);
- void wt_status_add_cut_line(FILE *fp);
- void wt_status_prepare(struct repository *r, struct wt_status *s);
--void wt_status_print(struct wt_status *s);
-+void wt_status_print(struct repository *r, struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
- void wt_status_collect_free_buffers(struct wt_status *s);
- void wt_status_get_state(struct repository *repo,
+ 	if (data->push)
+-		return push_refs_with_push(transport, remote_refs, flags);
++		return push_refs_with_push(r, transport, remote_refs, flags);
+ 
+ 	if (data->export)
+-		return push_refs_with_export(transport, remote_refs, flags);
++		return push_refs_with_export(r, transport, remote_refs, flags);
+ 
+ 	return -1;
+ }
+diff --git a/transport-internal.h b/transport-internal.h
+index 1cde6258a73..1ba1d063cc1 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -2,6 +2,7 @@
+ #define TRANSPORT_INTERNAL_H
+ 
+ struct ref;
++struct repository;
+ struct transport;
+ struct argv_array;
+ 
+@@ -56,7 +57,8 @@ struct transport_vtable {
+ 	 * could be a different value from peer_ref->new_oid if the
+ 	 * process involved generating new commits.
+ 	 **/
+-	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
++	int (*push_refs)(struct repository *r, struct transport *transport,
++			 struct ref *refs, int flags);
+ 	int (*connect)(struct transport *connection, const char *name,
+ 		       const char *executable, int fd[2]);
+ 
+diff --git a/transport.c b/transport.c
+index 5729577078a..c4b4ac0322d 100644
+--- a/transport.c
++++ b/transport.c
+@@ -446,7 +446,7 @@ void transport_update_tracking_ref(struct repository *r, struct remote *remote,
+ 		if (ref->deletion) {
+ 			delete_ref(r, NULL, rs.dst, NULL, 0);
+ 		} else
+-			update_ref("update by push", rs.dst, &ref->new_oid,
++			update_ref(r, "update by push", rs.dst, &ref->new_oid,
+ 				   NULL, 0, 0);
+ 		free(rs.dst);
+ 	}
+@@ -661,7 +661,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
+ 	free(head);
+ }
+ 
+-static int git_transport_push(struct transport *transport, struct ref *remote_refs, int flags)
++static int git_transport_push(struct repository *r, struct transport *transport,
++			      struct ref *remote_refs, int flags)
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	struct send_pack_args args;
+@@ -1234,7 +1235,8 @@ int transport_push(struct repository *r,
+ 
+ 		if (!(flags & TRANSPORT_RECURSE_SUBMODULES_ONLY)) {
+ 			trace2_region_enter("transport_push", "push_refs", r);
+-			push_ret = transport->vtable->push_refs(transport, remote_refs, flags);
++			push_ret = transport->vtable->push_refs(
++				r, transport, remote_refs, flags);
+ 			trace2_region_leave("transport_push", "push_refs", r);
+ 		} else
+ 			push_ret = 0;
 -- 
 gitgitgadget
+
