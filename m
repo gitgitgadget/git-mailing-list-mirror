@@ -2,89 +2,95 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF04C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E658C433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:45:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95E282100A
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:44:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="q1f//UbW"
+	by mail.kernel.org (Postfix) with ESMTP id 2639320DD4
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:45:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732518AbgFSRoj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:44:39 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63121 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731681AbgFSRoj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 13:44:39 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3C0EC801A;
-        Fri, 19 Jun 2020 13:44:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4uYRf637NQiedMSY/iQgzDH1yBI=; b=q1f//U
-        bWRc/R4kK/O4xkoWOz0rlvgxUkcXbaAacgNRbFDf1+Fk8NLLMiGC/a63S1FtQo0T
-        nP4cxYNOFMhT2KzimK/HZcr7U2I36fF6AK+Tt5s28H6Cs2nxvkbpvDaYyxSRK/JV
-        K79X1UIUC6egWEDxmEtPAwKg19vh3E+wNk/Ls=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=M23CCm84UhHRtqzpdOmqXx4ydwgFIQD7
-        0XJNQ2x5v8BIwO5IMu879Bcx5IYtAtGGmFD6wD9F2c7TTi0Q4QMg38VNWZot5tQK
-        C1J1T+k+I2j3/4Z6XjGcr4NA7Acpv1TwQHoWbLBvojZZaQUnOShurh+KUMS5Xc/o
-        UgbkhB+O64c=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EB599C8015;
-        Fri, 19 Jun 2020 13:44:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3A515C8014;
-        Fri, 19 Jun 2020 13:44:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org,
-        jnareb@gmail.com,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [GSOC Patch v4 0/4] Move generation, graph_pos to a slab
-References: <20200604072759.19142-1-abhishekkumar8222@gmail.com>
-        <20200617091411.14650-1-abhishekkumar8222@gmail.com>
-        <d5131361-2945-3daa-d91c-67761908b8ef@gmail.com>
-Date:   Fri, 19 Jun 2020 10:44:32 -0700
-In-Reply-To: <d5131361-2945-3daa-d91c-67761908b8ef@gmail.com> (Derrick
-        Stolee's message of "Fri, 19 Jun 2020 09:59:38 -0400")
-Message-ID: <xmqq7dw3hrwf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2390829AbgFSRpx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 13:45:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37456 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731681AbgFSRpx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 13:45:53 -0400
+Received: (qmail 4180 invoked by uid 109); 19 Jun 2020 17:45:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Jun 2020 17:45:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16531 invoked by uid 111); 19 Jun 2020 17:45:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Jun 2020 13:45:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 19 Jun 2020 13:45:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] fast-export: allow dumping the refname mapping
+Message-ID: <20200619174551.GA2123813@coredump.intra.peff.net>
+References: <20200619132304.GA2540657@coredump.intra.peff.net>
+ <20200619132546.GA2540774@coredump.intra.peff.net>
+ <CAPig+cRNem-S5LGX=v=1Tid64sXWBxNyWH4ffgLgF0o1yN=mtw@mail.gmail.com>
+ <20200619160129.GA1843858@coredump.intra.peff.net>
+ <20200619161816.GA9205@flurp.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 89873EAE-B254-11EA-B570-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200619161816.GA9205@flurp.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Fri, Jun 19, 2020 at 12:18:16PM -0400, Eric Sunshine wrote:
 
-> On 6/17/2020 5:14 AM, Abhishek Kumar wrote:
->> The struct commit is used in many contexts. However, members
->> `generation` and `graph_pos` are only used for commit graph related
->> operations and otherwise waste memory.
->> 
->> This wastage would have been more pronounced as we transition to
->> generation nuber v2, which uses 64-bit generation number instead of
->> current 32-bits.
->
-> Thanks, Szeder (CC'd) for the quality review in the previous
-> versions. I manually built and tested all of the patches here
-> and verified they passed all tests.
->
-> I think this series is in good shape.
+> > That's exactly what I wrote originally, but it failed on macos due to
+> > extra spaces in the "wc" output.
+> 
+> Hmph, that shouldn't have failed. Did you quote the $(wc -l refs)
+> invocation? Quoting it would cause it to fail.
 
-Thank you to all who are involved in this topic.  Looking good.
+Nope (and indeed, I was wary of the issue and made sure I didn't use
+quotes). My original was:
 
+test_expect_success 'refname mapping can be dumped' '
+       git fast-export --anonymize --all \
+               --dump-anonymized-refnames=refs.out >/dev/null &&
+       # we make no guarantees of the exact anonymized names,
+       # so just check that we have the right number and
+       # that a sample line looks sane.
+       expected_count=$(git for-each-ref | wc -l) &&
+       # Note that master is not anonymized, and so not included
+       # in the mapping.
+       expected_count=$((expected_count - 1)) &&
+       test_line_count = "$expected_count" refs.out &&
+       grep "^refs/heads/other refs/heads/" refs.out
+'
+
+So I guess I did quote the variable later.  It works fine on Linux, but
+one of the osx ci jobs failed:
+
+  https://github.com/peff/git/runs/787911270
+
+The relevant log is:
+
+++ git fast-export --anonymize --all --dump-anonymized-refnames=refs.out
++++ git for-each-ref
++++ wc -l
+++ expected_count='       7'
+++ test_line_count = '       7' refs.out
+++ test 3 '!=' 3
++++ wc -l
+++ test 7 = '       7'
+++ echo 'test_line_count: line count for refs.out !=        7'
+test_line_count: line count for refs.out !=        7
+
+so the whitespace is eaten not when "wc" is run, but rather when the
+variable is expanded.
+
+-Peff
