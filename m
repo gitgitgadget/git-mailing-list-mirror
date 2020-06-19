@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1D59C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEF56C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D643921531
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E42C20776
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CaMnhLis"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JBfXJK3q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729513AbgFSR5S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:57:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39634 "EHLO
+        id S2436510AbgFSR5U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 13:57:20 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39636 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2404763AbgFSR4s (ORCPT
+        by vger.kernel.org with ESMTP id S2404762AbgFSR4s (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:48 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3DE7360A60;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BA51260A62;
         Fri, 19 Jun 2020 17:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592589375;
-        bh=tcIo6T7g/Bgpnie25bur+FqoLMQVSB4Gb07k96qKCxE=;
+        s=default; t=1592589376;
+        bh=+voCdiSirAgtqb9/rDB3ZWxhycsHIe24RZ1Pp/Jw/EQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=CaMnhLis7nUL1h5dXHGmWKgtYoQks3BWniHNCw20NHbSUAbI0JksrBK4NhwmtzJ4N
-         4nC6VieRyL+w2GBXwV+0qBld75A4VQE694pTQ/i5qerkrkmw8H4dgPfm1etYl7IGY4
-         8z77JsLYePdfdiDlVShxT1+nJbvS4wzqE+eYUkPxyPfoPRxYkgSRYiLnlVRAsEq5P2
-         E01LtsBexfVuyWG/+bJaQOSWVI9CF42FE1YYlqejaM2aIgBuu3xP1ICWJ/9R32OKb4
-         RPEKQJZA4VpLEkWsALBmdNW26PB6rIoZgTsAbQV4P3xqU6TNCewHJZutHX50NwzIqO
-         MDQ9mFfLMzGYBB7Md62mOFTa4nsxtnDpWM3cEZDTzz8iQmQNIdy69TxdMKQlNzM64y
-         1+xSM2oKADgCtS8pYo5+to1y88d6ZOiL3+Uvcjs0kXwshH4OwPaXiI1OitB+YTMrLu
-         IRg98OI9EA6n1obmC4Srhr10HlYORIGjkZL1Z6Ou2akfzZ+Je8r
+        b=JBfXJK3qqAclWDUHqqFn/NI/ZEfe9WBEo7yLOdGeXJmj9SSSoK8FzFriuV9Wcy3DX
+         bC8lltC31mtHmtnlapKxR/voVsu+WUQQ+xnKvgap49yrxAlL9Y1jKDqQsfP3a/d4R6
+         LTWbfX4ylEy+STMlvDB82M2mhf9P8gAAKj7aABz38rKJhMQw+g7BmJRmM/+2ng4KXa
+         oD52dQ6qh7GT/lbrWBLWA92+wwOeWiBRW0deHKGVHHC6m4b4/D8wSrB/7pf4YG+Hme
+         amh3r0iPgpgVsr5sWG9sDd2AseJseGTfY4gOh1Scoduposb1CyoX1LKZC4ulBwlZBb
+         H2aIilwK2YrkTlZYwKaowTNTZ/Km+VQ92tet3E854RJeUKbFDesNLFEnQYwmJRqmft
+         wtP3KmGclOLtfGcCRY5wR1NZqmI5KjQnwrvIb3YtWFeq30NrOMGdPAM/7cdPQWuFbF
+         KkVsdULdjAWG28WZyzTvzA/t5Vbaj2dcKLmCAwcV5iXYEWt1eNy
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 05/44] remote: advertise the object-format capability on the server side
-Date:   Fri, 19 Jun 2020 17:55:22 +0000
-Message-Id: <20200619175601.569856-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 06/44] connect: add function to parse multiple v1 capability values
+Date:   Fri, 19 Jun 2020 17:55:23 +0000
+Message-Id: <20200619175601.569856-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200619175601.569856-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -58,45 +58,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Advertise the current hash algorithm in use by using the object-format
-capability as part of the ref advertisement.
+In a capability response, we can have multiple symref entries.  In the
+future, we will also allow for multiple hash algorithms to be specified.
+To avoid duplication, expand the parse_feature_value function to take an
+optional offset where the parsing should begin next time.  Add a wrapper
+function that allows us to query the next server feature value, and use
+it in the existing symref parsing code.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/receive-pack.c | 1 +
- upload-pack.c          | 3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ connect.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ea3d0f01af..4ffa501dce 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -249,6 +249,7 @@ static void show_ref(const char *path, const struct object_id *oid)
- 			strbuf_addf(&cap, " push-cert=%s", push_cert_nonce);
- 		if (advertise_push_options)
- 			strbuf_addstr(&cap, " push-options");
-+		strbuf_addf(&cap, " object-format=%s", the_hash_algo->name);
- 		strbuf_addf(&cap, " agent=%s", git_user_agent_sanitized());
- 		packet_write_fmt(1, "%s %s%c%s\n",
- 			     oid_to_hex(oid), path, 0, cap.buf);
-diff --git a/upload-pack.c b/upload-pack.c
-index 401c9e6c4b..a72eef9d14 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1063,7 +1063,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 		struct strbuf symref_info = STRBUF_INIT;
+diff --git a/connect.c b/connect.c
+index e66e779ebd..d30c637ab3 100644
+--- a/connect.c
++++ b/connect.c
+@@ -18,7 +18,8 @@
  
- 		format_symref_info(&symref_info, &data->symref);
--		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s agent=%s\n",
-+		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s object-format=%s agent=%s\n",
- 			     oid_to_hex(oid), refname_nons,
- 			     0, capabilities,
- 			     (allow_unadvertised_object_request & ALLOW_TIP_SHA1) ?
-@@ -1073,6 +1073,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 			     data->stateless_rpc ? " no-done" : "",
- 			     symref_info.buf,
- 			     allow_filter ? " filter" : "",
-+			     the_hash_algo->name,
- 			     git_user_agent_sanitized());
- 		strbuf_release(&symref_info);
- 	} else {
+ static char *server_capabilities_v1;
+ static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
+-static const char *parse_feature_value(const char *, const char *, int *);
++static const char *parse_feature_value(const char *, const char *, int *, int *);
++static const char *next_server_feature_value(const char *feature, int *len, int *offset);
+ 
+ static int check_ref(const char *name, unsigned int flags)
+ {
+@@ -181,17 +182,16 @@ static void parse_one_symref_info(struct string_list *symref, const char *val, i
+ static void annotate_refs_with_symref_info(struct ref *ref)
+ {
+ 	struct string_list symref = STRING_LIST_INIT_DUP;
+-	const char *feature_list = server_capabilities_v1;
++	int offset = 0;
+ 
+-	while (feature_list) {
++	while (1) {
+ 		int len;
+ 		const char *val;
+ 
+-		val = parse_feature_value(feature_list, "symref", &len);
++		val = next_server_feature_value("symref", &len, &offset);
+ 		if (!val)
+ 			break;
+ 		parse_one_symref_info(&symref, val, len);
+-		feature_list = val + 1;
+ 	}
+ 	string_list_sort(&symref);
+ 
+@@ -468,7 +468,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 	return list;
+ }
+ 
+-static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
++static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
+ {
+ 	int len;
+ 
+@@ -476,6 +476,8 @@ static const char *parse_feature_value(const char *feature_list, const char *fea
+ 		return NULL;
+ 
+ 	len = strlen(feature);
++	if (offset)
++		feature_list += *offset;
+ 	while (*feature_list) {
+ 		const char *found = strstr(feature_list, feature);
+ 		if (!found)
+@@ -490,9 +492,14 @@ static const char *parse_feature_value(const char *feature_list, const char *fea
+ 			}
+ 			/* feature with a value (e.g., "agent=git/1.2.3") */
+ 			else if (*value == '=') {
++				int end;
++
+ 				value++;
++				end = strcspn(value, " \t\n");
+ 				if (lenp)
+-					*lenp = strcspn(value, " \t\n");
++					*lenp = end;
++				if (offset)
++					*offset = value + end - feature_list;
+ 				return value;
+ 			}
+ 			/*
+@@ -507,12 +514,17 @@ static const char *parse_feature_value(const char *feature_list, const char *fea
+ 
+ int parse_feature_request(const char *feature_list, const char *feature)
+ {
+-	return !!parse_feature_value(feature_list, feature, NULL);
++	return !!parse_feature_value(feature_list, feature, NULL, NULL);
++}
++
++static const char *next_server_feature_value(const char *feature, int *len, int *offset)
++{
++	return parse_feature_value(server_capabilities_v1, feature, len, offset);
+ }
+ 
+ const char *server_feature_value(const char *feature, int *len)
+ {
+-	return parse_feature_value(server_capabilities_v1, feature, len);
++	return parse_feature_value(server_capabilities_v1, feature, len, NULL);
+ }
+ 
+ int server_supports(const char *feature)
