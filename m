@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 745C7C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4EA1C433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C8E220776
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4C6121531
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="joBQjlY5"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kqHA1Bjb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404229AbgFSR41 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:56:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39446 "EHLO
+        id S2394668AbgFSR5o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 13:57:44 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39526 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2393707AbgFSR40 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:26 -0400
+        by vger.kernel.org with ESMTP id S2404207AbgFSR42 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:28 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A03C160A68;
-        Fri, 19 Jun 2020 17:56:18 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 34B7260A70;
+        Fri, 19 Jun 2020 17:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592589378;
-        bh=edUdmuqwqgrI4d7hU9gk2tehK/HwKep/ouFUbgKC4Xo=;
+        s=default; t=1592589383;
+        bh=YhcqSF7NVvsfDzpsd5p3oihZbPBd50K1aBOeC4FnGdY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=joBQjlY5agjFH8lEmQiaCo9BWLEGrMz90vxDI3kGsFfqCNeU/i+5p9k+Usdb5Z5jt
-         tpxWPqSS3sAG10QA7xPkwfzQLxcN6VU3jWdo7Rmq7yeBOqPU8XuOp2M45WRbIvGjr8
-         G0WWc6kRhuTj1k3Yc8L7lihvsaZwUhGiPDiM1Y2GCNn5GhpjUBS1vBz0lJF0amK0ft
-         0+juaw/xM5oEY825l0uuHFT0Pepd3Bc4yzElyLut59bsfxR09nwqeqWnRkYDXKFLvm
-         NSRlPPKN7N7bEU7+3g27LxSBHRr0ShCKyL+K8sSshVO7vRsyT38YwKOYRFLAuO+2zt
-         PhRuze3lIQoEsvlTP/1VzRAXJ7myZXYJRzbsT7o8iOK6wszXCo+PdZdSpqYmh7e6hu
-         /u360ij7smoC9s2NJ3Dp00LgWBh8LPRzfSZWedjUZNy2dPVDBjLiESfSNN/OCzAmgO
-         wwG6GcYUAu3AvPoHAx9gmpaqKwCHEDj2OrOBdt+N2FgE5SSHtOO
+        b=kqHA1BjbFQn+p0oWMsXmPnOzPX0mRq4ZG2o+2MgYSwNrF8HI+oP9a4HIF/dq84dOj
+         QP7bkz6uuNWVtUoRgJ4qcCPDUutHKBPy6F34Vl180/nQmkZHx0Hvyeqx8R0PfsILXL
+         JeWljfwgthobGPBG+V7OFS5EBVn3p43O5pKKo5kDBqn3FZoQpufgacr0sOMxyNbM1e
+         ptYRJiZICMolaph1R6ttRtnYt+fUi1kfgv2bvuJkNtVSA79n6CXPVkV4QfaCNI6fsU
+         C5QszsN3BmGjlSTpWYETmb4wGWryhZguYo5PNVTbJVyKOpmYXbThZs+NF4OyJ00emf
+         ae14lYvlRs/Kn7nwcpJJe4OADH3B5GSNBGlwIAflzpzuIJYqPqd/8rQpipD2XvL1m6
+         HBkuc/OqMEfIgi9w651TZm2zWpwN33j2KDK/D6TIGTLrx8IIrj6GTZlnNYfHl7FMcL
+         5uftcBEl5iFye/HJ1hTnuC+OHRrGbrc8YWXI/1jrq/LFms/gfIg
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 11/44] send-pack: detect when the server doesn't support our hash
-Date:   Fri, 19 Jun 2020 17:55:28 +0000
-Message-Id: <20200619175601.569856-12-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 20/44] t5562: pass object-format in synthesized test data
+Date:   Fri, 19 Jun 2020 17:55:37 +0000
+Message-Id: <20200619175601.569856-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200619175601.569856-1-sandals@crustytoothpaste.net>
 References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
@@ -58,43 +58,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Detect when the server doesn't support our hash algorithm and abort.
-If the server does support our hash, advertise it as part of our
-capabilities.
+Ensure that we pass the object-format capability in the synthesized test
+data so that this test works with algorithms other than SHA-1.
+
+In addition, add an additional test using the old data for when we're
+using SHA-1 so that we can be sure that we preserve backwards
+compatibility with servers not offering the object-format capability.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- send-pack.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ t/t5562-http-backend-content-length.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/send-pack.c b/send-pack.c
-index 0abee22283..02aefcb08e 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -363,6 +363,7 @@ int send_pack(struct send_pack_args *args,
- 	int atomic_supported = 0;
- 	int use_push_options = 0;
- 	int push_options_supported = 0;
-+	int object_format_supported = 0;
- 	unsigned cmds_sent = 0;
- 	int ret;
- 	struct async demux;
-@@ -389,6 +390,9 @@ int send_pack(struct send_pack_args *args,
- 	if (server_supports("push-options"))
- 		push_options_supported = 1;
+diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+index 3f4ac71f83..c6ec625497 100755
+--- a/t/t5562-http-backend-content-length.sh
++++ b/t/t5562-http-backend-content-length.sh
+@@ -46,6 +46,7 @@ ssize_b100dots() {
+ }
  
-+	if (!server_supports_hash(the_hash_algo->name, &object_format_supported))
-+		die(_("the receiving end does not support this repository's hash algorithm"));
-+
- 	if (args->push_cert != SEND_PACK_PUSH_CERT_NEVER) {
- 		int len;
- 		push_cert_nonce = server_feature_value("push-cert", &len);
-@@ -429,6 +433,8 @@ int send_pack(struct send_pack_args *args,
- 		strbuf_addstr(&cap_buf, " atomic");
- 	if (use_push_options)
- 		strbuf_addstr(&cap_buf, " push-options");
-+	if (object_format_supported)
-+		strbuf_addf(&cap_buf, " object-format=%s", the_hash_algo->name);
- 	if (agent_supported)
- 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
- 
+ test_expect_success 'setup' '
++	test_oid_init &&
+ 	HTTP_CONTENT_ENCODING="identity" &&
+ 	export HTTP_CONTENT_ENCODING &&
+ 	git config http.receivepack true &&
+@@ -62,8 +63,8 @@ test_expect_success 'setup' '
+ 	test_copy_bytes 10 <fetch_body >fetch_body.trunc &&
+ 	hash_next=$(git commit-tree -p HEAD -m next HEAD^{tree}) &&
+ 	{
+-		printf "%s %s refs/heads/newbranch\\0report-status\\n" \
+-			"$ZERO_OID" "$hash_next" | packetize &&
++		printf "%s %s refs/heads/newbranch\\0report-status object-format=%s\\n" \
++			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize &&
+ 		printf 0000 &&
+ 		echo "$hash_next" | git pack-objects --stdout
+ 	} >push_body &&
