@@ -2,148 +2,340 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EA4DC433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C5F4C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:17:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 274DC20757
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:15:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB43920DD4
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:17:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BAUlsdIo"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="B2M3inHY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730832AbgFSRPf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:15:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
+        id S1732182AbgFSRRX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 13:17:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbgFSRPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 13:15:33 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761B0C06174E
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 10:15:33 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id dp10so4780066qvb.10
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 10:15:33 -0700 (PDT)
+        with ESMTP id S1729842AbgFSRRW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 13:17:22 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFEECC06174E
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 10:17:20 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id s10so4779958pgm.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 10:17:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=b+gvnRXA0yR9P+TKFTRIauUBWzou9YQ6YvUi59Jt3nU=;
-        b=BAUlsdIociyF/V4hmRb4JiPkvlDc2mdR7QPyIbiNn2COjKi03Ny6DEDozuF0Nicn1+
-         Ru1VrxBxna859z4kGrwibulO2e0xOHCwEdhRmsOTDajcK/DaNdL2zuXdykw7Y5Rg/Shp
-         kHnOGxy2bOXu7tz+pFhBSiKvZvzPgtItV/L0cTalXo/crlD4cIilqFHabdAKHapcd6fK
-         a00GDi+KWb1Wm0czWWhYTN7qVDVjU9GckmWS1HkaYd8PoMpe6FD3V7VDHUXZ4bJ9oaaZ
-         7jKhVrBsUeiEpzA5xcuDLfiO/jcxqq7A4xIfbT/wKyM3Vex+MXsg3+MgwDq4ApNaG4OP
-         ituQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=HIvoskmS0rhPF1bqwpVojN+M4HLzWWeEQzppcz1KMoY=;
+        b=B2M3inHYWr2GEUKC+QaGPC0WdhPWcTOiDZJV7gFHspd88tEcff64tGRmKoeLqRWB8s
+         QhOjjj2NX8/FI2/qb9pJIZ9GxAg/m2CNk6D79Uqk+bMSaoVAHuafdpoxal+AKtL0w0mj
+         6mawsrf9/B1BiGNZF6/PfHA6WZTBLRpf7N3enFKhcsbvj1FdjfA1MS9jjT6hzvY5zbTo
+         s95tYxnocD3JjterowyB+C4PgM/2FRQQqwk1WjJyb7r1FO6jUz/sA8wT+ASG15yvlTwW
+         xTaggJmlZaiiOkDGxGRTrQfxXWH6tR7uvNZIWoxhxdUTsxDNW4/gt/P6Sg/k9VCfER89
+         uV3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=b+gvnRXA0yR9P+TKFTRIauUBWzou9YQ6YvUi59Jt3nU=;
-        b=TDPWKneEU2DUSCAAMzcM08s8DE4yXN3jSFRXgwEhZ3I+ubRjDCKoGTXeQesYkldePY
-         iUFoG1F4ock+x8xBREVID4Pvt75mlbfOfsZmJFOf/Sr4gM0Uid16GLyNZ9Yv4jGxZe5T
-         kGWXPpCX3vzYA3uvo9a54zP8Wk3iObIgGSoMXC+TLZuLZdc0fShD7bs6jNVK0mN9WCoi
-         G5k8bQjdru+kJN3U/n6YlK6rlW3aGLlczT5rna+IdAvPR6x+ce5/w2GM5/+wAQZsB/hW
-         ul6hq74ZX42HlH0QNkl7Gy+p5SylJPVnLDw8ebYZ29MI47fs9zW1uNfhyrspHZJ1wIQD
-         wIdw==
-X-Gm-Message-State: AOAM5312UvZbBmirXPDjU2gNkY+wEHUD+iIkFmx6o6Qr8+RzKHivf36X
-        qVA/S8xH2vdcG2OKLNK9j93HEZeNVMdRQvhHpdE=
-X-Google-Smtp-Source: ABdhPJx+XoB6PNbWVAM+O1e4T93SGYUARbY/UW6ZsTpapIHs63Qgxn8NblF7XtfQIc9i+luXQ3ipMg5gjB+wmzxQYYA=
-X-Received: by 2002:ad4:4501:: with SMTP id k1mr9657870qvu.56.1592586932713;
- Fri, 19 Jun 2020 10:15:32 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=HIvoskmS0rhPF1bqwpVojN+M4HLzWWeEQzppcz1KMoY=;
+        b=Gst0CICejexyD9wZSBbjE2uWAxDgh8NjBdyfCPVgRlvsEYxYP6nphlAB3Kfe09AA2/
+         RTZUj6+nJaTlLH9qY7GCqzjFTQ6IIPmUhaUuODVEDSXZHpinuv1l9QxRANxfQPp9/EVX
+         97JspYuonmMorJY8JIupgJGmzZBAZ83G4c90hH/KTTRrxgoLrOmDbT9MnWFs8PGI3Ewa
+         /CY9Z8lKG63p4mSiYnmkEDO5uJtE/AIkb+hrsHr4KaO+MCUItvgDaejtOL1lrShK5Awi
+         YA2NdizjlyR9ywApN4axEcbbV0ZnX4sjps3JWIjNzGW9yrUiJpJ1sJTWZ3KFj5yyCL0C
+         5iSA==
+X-Gm-Message-State: AOAM5312u7ZtoRoh+O5YELBZ1izQMQtyO/VvKYAGFiNfu2+hkGpHzT5L
+        C/43chCAAYYL2lMOiXetXWeq3A==
+X-Google-Smtp-Source: ABdhPJx5PhiAxIVC4iF62JCsZaBsyA+uM6H+XukqSCW0P76VzFp84pUTAXKjfmuqraoFPEaVeicSRw==
+X-Received: by 2002:a63:3f42:: with SMTP id m63mr3992805pga.310.1592587040174;
+        Fri, 19 Jun 2020 10:17:20 -0700 (PDT)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id gt22sm9938922pjb.2.2020.06.19.10.17.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jun 2020 10:17:19 -0700 (PDT)
+Date:   Fri, 19 Jun 2020 11:17:17 -0600
+From:   Taylor Blau <me@ttaylorr.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, szeder.dev@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 5/8] commit-graph: check all leading directories in
+ changed path Bloom filters
+Message-ID: <20200619171717.GA55911@syl.local>
+References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
+ <9975fc96f1269b049ebdd54835a63480c3dcbe4e.1592252093.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <549f0cd5fffef38e8d85246a9aa2593674aad68c.1591986566.git.gitgitgadget@gmail.com>
- <20200615140349.1783-1-oystwa@gmail.com> <CAKiG+9X66yf_F8F3XuYFdFyBWiFRZ_rf0Y1mE5LVCjsi-AzKbg@mail.gmail.com>
- <xmqq8sglq8zn.fsf@gitster.c.googlers.com> <CAKiG+9VZUqDi=EbbqY2vLAiD6LEFMfR_2UHE+gbt_RpKNanUCA@mail.gmail.com>
- <xmqqk104nnll.fsf@gitster.c.googlers.com> <CAKiG+9UqvrxyMQufuG=oAP6Yo7+YSoicwqZBJjsZZFQT-Bscjw@mail.gmail.com>
- <xmqq1rmcm6md.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq1rmcm6md.fsf@gitster.c.googlers.com>
-From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Fri, 19 Jun 2020 22:45:20 +0530
-Message-ID: <CAKiG+9VCcH+CGc8=e22Xjc7z=-HL3vbDTDq9a4zZ9ONdmgTpvw@mail.gmail.com>
-Subject: Re: [PATCH v4 6/8] cmake: support for building git on windows with mingw
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>,
-        Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9975fc96f1269b049ebdd54835a63480c3dcbe4e.1592252093.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 19, 2020 at 2:30 AM Junio C Hamano <gitster@pobox.com> wrote:
+Hi Stolee,
+
+On Mon, Jun 15, 2020 at 08:14:50PM +0000, SZEDER Gábor via GitGitGadget wrote:
+> From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 >
-> Sibi Siddharthan <sibisiddharthan.github@gmail.com> writes:
+> The file 'dir/subdir/file' can only be modified if its leading
+> directories 'dir' and 'dir/subdir' are modified as well.
 >
-> > The reason I deferred modifying in PATCH v4 was because there was no
-> > easy way(cross platform)
-> > to change file permissions. The workaround is to juggle the files to a
-> > temporary directory, and then copy them
-> > to where they are intended to be with the required permissions. This
-> > added quite a bit of code.
-> > Since Windows platform was the priority, I did not address this issue.
+> So when checking modified path Bloom filters looking for commits
+> modifying a path with multiple path components, then check not only
+> the full path in the Bloom filters, but all its leading directories as
+> well.  Take care to check these paths in "deepest first" order,
+> because it's the full path that is least likely to be modified, and
+> the Bloom filter queries can short circuit sooner.
 >
-> I recall asking you, in a very early iteration, if you just
-> concentrate on Windows and do not even pretend you support Linux or
-> any other systems, the series can be kept smaller and review
-> simpler, and your answer was "no, it can be done with just a little
-> extra code".  But I think you are saying it needs "workaround" and
-> what needs to happen in the workaround sounds quite ugly to me.
+> This can significantly reduce the average false positive rate, by
+> about an order of magnitude or three(!), and can further speed up
+> pathspec-limited revision walks.  The table below compares the average
+> false positive rate and runtime of
+>
+>   git rev-list HEAD -- "$path"
+>
+> before and after this change for 5000+ randomly* selected paths from
+> each repository:
+>
+>                     Average false           Average        Average
+>                     positive rate           runtime        runtime
+>                   before     after     before     after   difference
+>   ------------------------------------------------------------------
+>   git             3.220%   0.7853%     0.0558s   0.0387s   -30.6%
+>   linux           2.453%   0.0296%     0.1046s   0.0766s   -26.8%
+>   tensorflow      2.536%   0.6977%     0.0594s   0.0420s   -29.2%
+>
+> *Path selection was done with the following pipeline:
+>
+> 	git ls-tree -r --name-only HEAD | sort -R | head -n 5000
+>
+> The improvements in runtime are much smaller than the improvements in
+> average false positive rate, as we are clearly reaching diminishing
+> returns here.  However, all these timings depend on that accessing
+> tree objects is reasonably fast (warm caches).  If we had a partial
+> clone and the tree objects had to be fetched from a promisor remote,
+> e.g.:
+>
+>   $ git clone --filter=tree:0 --bare file://.../webkit.git webkit.notrees.git
+>   $ git -C webkit.git -c core.modifiedPathBloomFilters=1 \
+>         commit-graph write --reachable
+>   $ cp webkit.git/objects/info/commit-graph webkit.notrees.git/objects/info/
+>   $ git -C webkit.notrees.git -c core.modifiedPathBloomFilters=1 \
+>         rev-list HEAD -- "$path"
+>
+> then checking all leading path component can reduce the runtime from
+> over an hour to a few seconds (and this is with the clone and the
+> promisor on the same machine).
+>
+> This adjusts the tracing values in t4216-log-bloom.sh, which provides a
+> concrete way to notice the improvement.
+>
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  revision.c           | 35 ++++++++++++++++++++++++++---------
+>  revision.h           |  6 ++++--
+>  t/t4216-log-bloom.sh |  2 +-
+>  3 files changed, 31 insertions(+), 12 deletions(-)
+>
+> diff --git a/revision.c b/revision.c
+> index c644c660917..027ae3982b4 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -670,9 +670,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>  {
+>  	struct pathspec_item *pi;
+>  	char *path_alloc = NULL;
+> -	const char *path;
+> +	const char *path, *p;
+>  	int last_index;
+> -	int len;
+> +	size_t len;
+> +	int path_component_nr = 0, j;
+>
+>  	if (!revs->commits)
+>  		return;
+> @@ -705,8 +706,22 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>
+>  	len = strlen(path);
+>
+> -	revs->bloom_key = xmalloc(sizeof(struct bloom_key));
+> -	fill_bloom_key(path, len, revs->bloom_key, revs->bloom_filter_settings);
+> +	p = path;
+> +	do {
+> +		p = strchrnul(p + 1, '/');
+> +		path_component_nr++;
+> +	} while (p - path < len);
+> +
+> +	revs->bloom_keys_nr = path_component_nr;
+> +	ALLOC_ARRAY(revs->bloom_keys, revs->bloom_keys_nr);
+> +
+> +	p = path;
+> +	for (j = 0; j < revs->bloom_keys_nr; j++) {
+> +		p = strchrnul(p + 1, '/');
+> +
+> +		fill_bloom_key(path, p - path, &revs->bloom_keys[j],
+> +			       revs->bloom_filter_settings);
+> +	}
 >
 
-I know what I said. This is the worst edge case of this scenario.
+Somewhat related to our off-list discussion yesterday, there is a bug in
+both 2.27 and this patch which produces incorrect results when (1)
+Bloom filters are enabled, and (2) we are doing a revision walk from
+root with the pathspec '.'.
 
-> Let's not worry about cross-platform and instead stick to Windows
-> and nothing else for now to expedite the process.  As long as it is
-> advertised as such, nobody would complain that it does not work on
-> Linux or macOS.
+What appears to be going on is that our normalization takes '.' -> '',
+and then we form a Bloom key based on the empty string, which will
+return 'definitely not' when querying the Bloom filter some of the time,
+which should never happen. This is a consequence of never inserting the
+empty key into the Bloom filter upon generation.
+
+As a result, I have patched this in GitHub's fork (which is currently
+based on 2.27 and doesn't have these patches yet) by doing an early
+return when 'strlen(path) == 0'. Since it looks like these patches are
+going to land, here is some clean-up and a fix for the bug that you
+should feel free to test with and apply on top:
+
+--- >8 ---
+
+diff --git a/revision.c b/revision.c
+index 8bd383b1dd..123e72698d 100644
+--- a/revision.c
++++ b/revision.c
+@@ -670,10 +670,10 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ {
+        struct pathspec_item *pi;
+        char *path_alloc = NULL;
+-       const char *path, *p;
++       char *path, *p;
+        int last_index;
+        size_t len;
+-       int path_component_nr = 0, j;
++       int path_component_nr = 1, j;
+
+        if (!revs->commits)
+                return;
+@@ -698,29 +698,33 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+
+        /* remove single trailing slash from path, if needed */
+        if (pi->match[last_index] == '/') {
+-           path_alloc = xstrdup(pi->match);
+-           path_alloc[last_index] = '\0';
+-           path = path_alloc;
+-       } else
+-           path = pi->match;
++               path_alloc = xstrdup(pi->match);
++               path_alloc[last_index] = '\0';
++               path = path_alloc;
++       } else {
++               path = pi->match;
++               len = pi->len;
++       }
+
+-       len = strlen(path);
++       if (!len)
++               return;
+
+-       p = path;
+        do {
+-               p = strchrnul(p + 1, '/');
+-               path_component_nr++;
+-       } while (p - path < len);
++               if (is_dir_sep(*p)) {
++                       *p = '\0';
++                       path_component_nr++;
++               }
++       } while (*p++);
+
+        revs->bloom_keys_nr = path_component_nr;
+        ALLOC_ARRAY(revs->bloom_keys, revs->bloom_keys_nr);
+
+        p = path;
+        for (j = 0; j < revs->bloom_keys_nr; j++) {
+-               p = strchrnul(p + 1, '/');
+-
+-               fill_bloom_key(path, p - path, &revs->bloom_keys[j],
++               size_t plen = strlen(p);
++               fill_bloom_key(p, plen, &revs->bloom_keys[j],
+                               revs->bloom_filter_settings);
++               p += plen;
+        }
+
+        if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
+
+>  	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
+>  		atexit(trace2_bloom_filter_statistics_atexit);
+> @@ -720,7 +735,7 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
+>  						 struct commit *commit)
+>  {
+>  	struct bloom_filter *filter;
+> -	int result;
+> +	int result = 1, j;
 >
-
-Okay.
-
-Just for your information.
-This is the exact diff that needs to be added to address the issue.
-------------------------------------------
-@@ -761,6 +761,14 @@
- file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
- string(REPLACE "#!/usr/bin/env python" "#!/usr/bin/python" content
-"${content}")
- file(WRITE ${CMAKE_BINARY_DIR}/git-p4 ${content})
-
-+#Give the scripts execute permissions. This does not apply on Windows
-+if(UNIX)
-+       foreach(script ${git_sh_scripts} git-instaweb
-${git_perl_scripts} git-p4)
-+               add_custom_target(${script}_executable ALL
-+                               chmod +x ${CMAKE_BINARY_DIR}/${script})
-+       endforeach()
-+endif()
-+
- #perl modules
- file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
-
-@@ -790,6 +799,12 @@
-foreach(tm ${templates})
-        configure_file(${CMAKE_SOURCE_DIR}/templates/${tm}
-${CMAKE_BINARY_DIR}/templates/blt/${blt_tm} @ONLY)
- endforeach()
-
-+#Give the templates read & execute permissions. This does not apply on Windows
-+if(UNIX)
-+       add_custom_target(templates_executable ALL
-+                       chmod -R +rx ${CMAKE_BINARY_DIR}/templates/blt/)
-+endif()
-+
-
- #translations
- if(MSGFMT_EXE)
----------------------------------------------------------
-If this is simple enough, I will add it in the next patch series. If
-not, when in the future should I implement this?
-
-
-Thank You,
-Sibi Siddharthan
+>  	if (!revs->repo->objects->commit_graph)
+>  		return -1;
+> @@ -740,9 +755,11 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
+>  		return -1;
+>  	}
+>
+> -	result = bloom_filter_contains(filter,
+> -				       revs->bloom_key,
+> -				       revs->bloom_filter_settings);
+> +	for (j = 0; result && j < revs->bloom_keys_nr; j++) {
+> +		result = bloom_filter_contains(filter,
+> +					       &revs->bloom_keys[j],
+> +					       revs->bloom_filter_settings);
+> +	}
+>
+>  	if (result)
+>  		count_bloom_filter_maybe++;
+> @@ -782,7 +799,7 @@ static int rev_compare_tree(struct rev_info *revs,
+>  			return REV_TREE_SAME;
+>  	}
+>
+> -	if (revs->bloom_key && !nth_parent) {
+> +	if (revs->bloom_keys_nr && !nth_parent) {
+>  		bloom_ret = check_maybe_different_in_bloom_filter(revs, commit);
+>
+>  		if (bloom_ret == 0)
+> diff --git a/revision.h b/revision.h
+> index 7c026fe41fc..abbfb4ab59a 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -295,8 +295,10 @@ struct rev_info {
+>  	struct topo_walk_info *topo_walk_info;
+>
+>  	/* Commit graph bloom filter fields */
+> -	/* The bloom filter key for the pathspec */
+> -	struct bloom_key *bloom_key;
+> +	/* The bloom filter key(s) for the pathspec */
+> +	struct bloom_key *bloom_keys;
+> +	int bloom_keys_nr;
+> +
+>  	/*
+>  	 * The bloom filter settings used to generate the key.
+>  	 * This is loaded from the commit-graph being used.
+> diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+> index c7011f33e2c..c13b97d3bda 100755
+> --- a/t/t4216-log-bloom.sh
+> +++ b/t/t4216-log-bloom.sh
+> @@ -142,7 +142,7 @@ test_expect_success 'setup - add commit-graph to the chain with Bloom filters' '
+>
+>  test_bloom_filters_used_when_some_filters_are_missing () {
+>  	log_args=$1
+> -	bloom_trace_prefix="statistics:{\"filter_not_present\":3,\"zero_length_filter\":0,\"maybe\":8,\"definitely_not\":6"
+> +	bloom_trace_prefix="statistics:{\"filter_not_present\":3,\"zero_length_filter\":0,\"maybe\":6,\"definitely_not\":8"
+>  	setup "$log_args" &&
+>  	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" &&
+>  	test_cmp log_wo_bloom log_w_bloom
+> --
+> gitgitgadget
+>
+Thanks,
+Taylor
