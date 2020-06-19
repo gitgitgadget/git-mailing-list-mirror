@@ -2,145 +2,120 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8577C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84C85C433E4
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:14:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 816CB2080C
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:01:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5620E208C7
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:14:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QuQBK+cX"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="AcSY2bDh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730300AbgFSNBE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 09:01:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37180 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728606AbgFSNBC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 09:01:02 -0400
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31890C06174E
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:01:02 -0700 (PDT)
-Received: by mail-pf1-x444.google.com with SMTP id s23so4397872pfh.7
-        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:01:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=74ADLmi2ClfgJUJ9o/MAQV+gCOEEk7wBHw/8ROWeWTs=;
-        b=QuQBK+cXw2Yw0yHTpNBtPz30xZQYqihH7NJrq6+GHqa1Tx8kD0clDQwfx4MVPdwNq/
-         69Gx4AyJPozH87cN9zhLHCReEoZ12xhbaiIwjtPdu7Z/QGs1oWlq3kSXwT1KJVf9E1P0
-         LUCwoNzUApsVPc/QtjEjrac1VnGxYch5l1YMy7b7lgMFWnCIrmKi7MKIBGr1hPzSdUKV
-         AcjK/pXPF6Ger8zXB3VXdoukKMGKf9hyUEjQri4W6jXhsCdj4fytM9P9vi73T4naCOVA
-         LKsRWmyd1BbS1t/2BETmW5XENqE+MkV1yzKONQI91Urct3N5XEWv7e3yOoOl4t2A/wzZ
-         au1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=74ADLmi2ClfgJUJ9o/MAQV+gCOEEk7wBHw/8ROWeWTs=;
-        b=tDWI8WlMJPyC1IhvYjz8/RkQrjtQkEiZdc+80r6LOJMnoTal1f6yNTAOQRNXPA6rtN
-         JHBXPDsb72VlwV39ivUvBv1pqMiM7sT4WNQJhL8N1jVpa4/SGglwuo5sjeFY6G7MrVCo
-         PBpnuhQq7DT+oCDmHm56ngiqcnYkmnSjpc6MQtThPmSBk61le3XNQb2JiSnNRqbJRZNI
-         gIAS1mlYDEVMjbnovV38MdBcrddMdsXN7HBUifhkpMb7+YNy4Y7DqBHZ9G6yxh+UjW2K
-         4kgaZ5zeftr1U3sYQFiGUgTUXDyGg+hHL7rXs++ECmTTgUgi0PuFT9Fj4GPto3HuV1dT
-         65Ig==
-X-Gm-Message-State: AOAM532kxA1V4nzBOB0VhDM6BIkb9hD2swDXkRN2pb6imwRRgKMHbMmf
-        1+wC1iVMLU0GIAzaheXhdkQ=
-X-Google-Smtp-Source: ABdhPJyPcOlFuBkIswcUzXNbOYvx45CR8YM8p2QnCqn6VUopB81fluhYA2KGPizEHuLf4Gr06yPkDA==
-X-Received: by 2002:a65:534d:: with SMTP id w13mr2897970pgr.18.1592571661650;
-        Fri, 19 Jun 2020 06:01:01 -0700 (PDT)
-Received: from localhost ([2402:800:6375:a18c:ce1a:d70b:8a27:2927])
-        by smtp.gmail.com with ESMTPSA id q1sm6379711pfk.132.2020.06.19.06.01.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2020 06:01:01 -0700 (PDT)
-Date:   Fri, 19 Jun 2020 20:00:58 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Paolo Bonzini <pbonzini@redhat.com>
-Cc:     git@vger.kernel.org, msuchanek@suse.de,
-        Till Maas <tmaas@redhat.com>
-Subject: Re: [PATCH v2] tests: do not use "slave branch" nomenclature
-Message-ID: <20200619130058.GA5027@danh.dev>
-References: <20200619093210.31289-1-pbonzini@redhat.com>
+        id S1732501AbgFSNOJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 09:14:09 -0400
+Received: from mout.web.de ([217.72.192.78]:39759 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730977AbgFSNOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 09:14:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1592572428;
+        bh=Vy/xcX/JQ50b2cTl+AqrG7Y82XYaVKVN6suxAxUJojI=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=AcSY2bDhDGuec1hDnVviqRz3hFN5+HrtVBWIbnAhwGdRIRpU5OHLnKE7iykBTiQQJ
+         KzykwOWnAP470SF+xZZBNI6b0Ha5omko/f2Pfo4XL4ujAxPAcLKJU9MAgyBqsNQy7/
+         N7f4CvhPx0yAzhGSMlT8yAC0YqGkdt1BBIVkadFQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mkmvd-1j1ccm3bbz-00m85r; Fri, 19
+ Jun 2020 15:13:47 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] commit-reach: plug minor memory leak after using
+ is_descendant_of()
+Message-ID: <ada13c16-d964-c6ee-80ac-626edbc5f52d@web.de>
+Date:   Fri, 19 Jun 2020 15:13:46 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200619093210.31289-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:bMpjJDTLANoyzrk0f/OCQ5H1zp+oAQJiSQrZ3N1OpuKpELCrkEj
+ m2OMiqzNmvS0dRdH3tRKWrBuM6c+N6xbOZFd9ySwhtb807Egi2ja/Ssbex6UFKm3NRy0jsJ
+ WSKNd7IMkN3XAzKBt/bzX7JwDyhIP1By7ra+tmXDIS6iOTQRa6YGf3Ohu0BjNj72xKBZPMf
+ I0/j0ioGEXs4Z1Iv1s1oA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RHd4UOUtANs=:FNL8Bg7S+n3ulU9swc7X+m
+ T3nt6KUfJ+QmDuiNXBr/sYrVI+sy6YIc1xXLepUH9EJyrj0zWK+bbSnoT4vqf5BWbqGYrXnJX
+ SSQL10Jrp7iRishdRm825QQyxR5K5+k8IV+5+o/obck9Iz9iiHO5IbZkmj1Vs1L/4c7HA+MhV
+ 3AbJOlfQuVxbGMqkXNNKJST0GIl2mj9oBPANtha5hYCjGnIMytcmnC5w99AZaCI4QK9Ua5Uom
+ /qd1MC37b6NNiGugTu3N1WKiOqQWIDIDSUKS1Q7HFDRxi/WmbWfGXQhNXIekH0zMpoP9XryzF
+ om+WIPsL+m2vlO2QncPBE1qWVm4nxoZ5aOaPgEPVTbvehzRbNaAStvJ1QzjhRZjwwMxcRj/Sj
+ dUWbciFU9SCa0hs+LmhEF3CurwJFoYDHynO0Rb9l9jGryOT1axmTasUR1WKhcly71uQMD6rCv
+ jIJ071bUPXeCeMBFPRdJGh2dPp+F12sVhTIhMaqa+Ma8bQKx0je4QpOIKxJM0/zwRuc7FI6iQ
+ cpQd02PQVV0J5qv0UBIH9ztZoJ6SehARaHWfPS1Z32x5LJEW7ylCRhy993eNhXMi7N4YVG2ro
+ f4qC35yz5MgI87TbMEv9FWcYWsxwgivkE7kqd9RBaZe8gYDxvZzSHat6eag8IMR9ryo14I2Cz
+ b8u0Rw0/g/fWZr45qV1lvvYDs5uCzw3GzUTS1XR8AalwSoJtMsqyUcNSoXBKQlP4yHbuiGJNE
+ 7+6EMVca586GS+5GEushzMg4kTRbnYbqo9NOgMtr+C5iyiEU85a+Mnjt0G5NVdMCIYr0hxmLK
+ L1Ln5aufyUGjUO/U3rvHu0DnYY4OWAp9O+DV+SIq/ACBSpKFDbc4y7MPze9LO7vgKlldfcUf/
+ jfAXny+nIneYUcNxQl0i7FB7mVTcUzMqkcCO0mGK+OkZQR2pEUVufYcMQDYfBa8tp0u3TyeU1
+ ugFcQUg1MF8KhZ3P6eJstA5yn9hETuPhp3J5Nzvf7LlDDG5lHh4kxFYMtrTP2XLG4P80G4VJ2
+ YU7TasdnMYDiltDi5w4RX5uuz4i4egM5zwxPgL1IN4VFeeFdzwcIimFeSjoh5NitbjCC7diDI
+ zhuvgE2rnly7BxJynCksIgYxlluJWbPYVL2IZNBFs0rdaWi++H/Z+zg/zzFlov16s8PJF+nSV
+ RGMkA9/64VxHHpvIcOOU/G3SBCTp4gdZu/RsnJk84VRMN3Zk3OAEc3l0CCC+cE4ng6+1Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-06-19 11:32:10+0200, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> Git branches have been qualified as topic branches, integration branches,
-> development branches, feature branches, release branches and so on.
-> Git has a branch that is the master *for* development, but it is not
-> the master *of* any "slave branch": Git does not have slave branches,
-> and has never had, except for a single testcase that claims otherwise. :)
+ref_newer() builds a commit_list to pass a single potential ancestor to
+is_descendant_of().  The latter leaves the list intact.  Release the
+allocated memory after the call.
 
-reading this text and the change may give the impression that this is
-used for feature branch only.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+We could allocate the commit_list on the stack, which would simplify such
+glue code quite a bit.  That would be dangerous in case is_descendant_of()
+or some other function that is handed such a list tries to consume/free()
+it.  How can we be tell a function is safe to be given a stack-allocated
+list?  Perhaps by marking its argument as const.  Or by converting all
+functions to arrays.
 
-I think common terminology in Git's test is this kind of branch is side.
-In this inaccurate comparison:
+ commit-reach.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-	git grep -E '(branch|checkout|switch).* side '
-	git grep -E '(branch|checkout|switch).* feature'
+diff --git a/commit-reach.c b/commit-reach.c
+index 4ca7e706a1..6bba16e7b5 100644
+=2D-- a/commit-reach.c
++++ b/commit-reach.c
+@@ -396,6 +396,7 @@ int ref_newer(const struct object_id *new_oid, const s=
+truct object_id *old_oid)
+ 	struct object *o;
+ 	struct commit *old_commit, *new_commit;
+ 	struct commit_list *old_commit_list =3D NULL;
++	int ret;
 
-The former yields more result than the latter.
-The latter shows only t1090 and t3420.
+ 	/*
+ 	 * Both new_commit and old_commit must be commit-ish and new_commit is d=
+escendant of
+@@ -417,7 +418,9 @@ int ref_newer(const struct object_id *new_oid, const s=
+truct object_id *old_oid)
+ 		return 0;
 
-If I were writing this patch, I would go with the former.
+ 	commit_list_insert(old_commit, &old_commit_list);
+-	return is_descendant_of(new_commit, old_commit_list);
++	ret =3D is_descendant_of(new_commit, old_commit_list);
++	free_commit_list(old_commit_list);
++	return ret;
+ }
 
-<xmqqr1umg8fp.fsf@gitster.c.googlers.com> seems to prefer side, too.
-
-Other than that, the patch looks good to me.
-
-> 
-> Independent of any future change to the naming of the "master" branch,
-> removing this sole appearance of the term is a strict improvement: it
-> avoids divisive language, and talking about "feature branch" clarifies
-> which developer workflow the test is trying to emulate.
-> 
-> Reported-by: Till Maas <tmaas@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  t/t4014-format-patch.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index 575e079cc2..958c2da56e 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -81,16 +81,16 @@ test_expect_success 'format-patch --ignore-if-in-upstream handles tags' '
->  '
->  
->  test_expect_success "format-patch doesn't consider merge commits" '
-> -	git checkout -b slave master &&
-> +	git checkout -b feature master &&
->  	echo "Another line" >>file &&
->  	test_tick &&
-> -	git commit -am "Slave change #1" &&
-> +	git commit -am "Feature branch change #1" &&
->  	echo "Yet another line" >>file &&
->  	test_tick &&
-> -	git commit -am "Slave change #2" &&
-> +	git commit -am "Feature branch change #2" &&
->  	git checkout -b merger master &&
->  	test_tick &&
-> -	git merge --no-ff slave &&
-> +	git merge --no-ff feature &&
->  	git format-patch -3 --stdout >patch &&
->  	grep "^From " patch >from &&
->  	test_line_count = 3 from
-> -- 
-> 2.25.4
-> 
-
--- 
-Danh
+ /*
+=2D-
+2.27.0
