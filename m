@@ -2,101 +2,109 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9502C433E1
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F45FC433E0
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 18:01:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A96D520776
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 17:57:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Qd+OUti7"
+	by mail.kernel.org (Postfix) with ESMTP id 7434D206B7
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 18:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436566AbgFSR55 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 13:57:57 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39508 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2393724AbgFSR40 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 13:56:26 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2540260A69;
-        Fri, 19 Jun 2020 17:56:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592589379;
-        bh=cEB7j441pJ7ZBQHDPn+LHn/tZPNuXvawa00Qmlr9GZs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Qd+OUti7fdwDcDYJXuVf6MiuNv7GHz45MpwHC2kMlJ+K1reSLzVqyWWomJhi/Aa/t
-         6PbyqB4IyhM+r9zkpMGXE/dI+WYmutG7MRUgbadvcchvIAMAjJ4u3hSA9QZ3Ipkcnj
-         SJCezvGzd57FD4oFfIZOJTultTqMSqbASvenAbyvjbpp/1UDVTCJ8Hn1v2lCLjNcjH
-         4yJMC/W3ZgGbttRA0iTwajyIF9jKqwWBocp7bHQWAgpf4psq6kTVnIDSoewMC/DbDU
-         6XYpJwEjF79/wI1CaTXBG5hcCfehsn6Q77B8XgKs+iPf5CDHs1FmI7C+SGVgNK5ZqA
-         qUDuflTemmULkNsqVh+0OV0rmd4KAbVENmxvwEHN/C8mfMeDUuhTNo02HsyZgtO9yD
-         bTi+n1rq89GeLixa7dCmuccpMRlcmVTOWeEWwruYtpDrf+BMT20fOxeiL0+ilXZ1wi
-         ITxqqFMQrzF4z+xnyQM3uPWV/rHgbipTVzB1FC3/pIUXmz7/2+r
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 12/44] connect: make parse_feature_value extern
-Date:   Fri, 19 Jun 2020 17:55:29 +0000
-Message-Id: <20200619175601.569856-13-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
-In-Reply-To: <20200619175601.569856-1-sandals@crustytoothpaste.net>
-References: <20200513005424.81369-1-sandals@crustytoothpaste.net>
- <20200619175601.569856-1-sandals@crustytoothpaste.net>
+        id S1733154AbgFSSBB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 14:01:01 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33569 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732986AbgFSSBA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 14:01:00 -0400
+Received: by mail-wr1-f65.google.com with SMTP id l11so10565375wru.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 11:00:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=d3Vv68l5PB4YEJcbq+pWWGku00CZZaWcENMhUOZXS80=;
+        b=ITVzyRh2xrx763AZpxJzWc/A6qo5VU9SAIQ+UoYnZllG3YU/XLHLipEGfoy+fDyvYT
+         dtMLKktsT+y3j72pipT4x36wJbXEfIRP+UMUH8cRiEqjpYn+14I6SohNDC3VEVu21zcn
+         9pMOnXS/NDVNhKfXFKbMeW1tGoieoqlTsWHvlLWl0XAU4CGPqPqQ4LCJAuz8hFzdp7de
+         guDfqy0Gem3xDmE6/lFmz+UPGgaXu5I8dBwg9ix6YAKm4sfXT3wvR2jQu1kIKWBifm53
+         R4Ze0cF6PkNGkx+ChE3sRmCi2A/2OdOTjSp9fSql3bgL3bf4SHks4czbFZ07Wn+BKM73
+         QGiQ==
+X-Gm-Message-State: AOAM533enX1A2UpvMHKW5sJdx99FUJbgFlkqu658HwCP1HB5OcvnhhNS
+        CUAxJLbGYbYTJH89miNbCJpPvpam2Q3K6QVLZDQ=
+X-Google-Smtp-Source: ABdhPJzrDMfUWgMxCvXBonYedX9vj0r/pSMD9fHfGMH0sdRatmFVtu3/A89dlU1muI/BnMytGjmIi84xvSovVHMb1a0=
+X-Received: by 2002:adf:e2ce:: with SMTP id d14mr5383031wrj.415.1592589658406;
+ Fri, 19 Jun 2020 11:00:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200619132304.GA2540657@coredump.intra.peff.net>
+ <20200619132546.GA2540774@coredump.intra.peff.net> <CAPig+cRNem-S5LGX=v=1Tid64sXWBxNyWH4ffgLgF0o1yN=mtw@mail.gmail.com>
+ <20200619160129.GA1843858@coredump.intra.peff.net> <20200619161816.GA9205@flurp.local>
+ <20200619174551.GA2123813@coredump.intra.peff.net>
+In-Reply-To: <20200619174551.GA2123813@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 19 Jun 2020 14:00:47 -0400
+Message-ID: <CAPig+cQxoz1AcS51qhtBr6oaTs9KTDamofCyN3qy_EARUi7oFQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] fast-export: allow dumping the refname mapping
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We're going to be using this function in other files, so no longer mark
-this function static.
+On Fri, Jun 19, 2020 at 1:45 PM Jeff King <peff@peff.net> wrote:
+> On Fri, Jun 19, 2020 at 12:18:16PM -0400, Eric Sunshine wrote:
+> > Hmph, that shouldn't have failed. Did you quote the $(wc -l refs)
+> > invocation? Quoting it would cause it to fail.
+>
+> Nope (and indeed, I was wary of the issue and made sure I didn't use
+> quotes). My original was:
+>
+> test_expect_success 'refname mapping can be dumped' '
+>        [...]
+>        expected_count=$(git for-each-ref | wc -l) &&
+>        expected_count=$((expected_count - 1)) &&
+>        test_line_count = "$expected_count" refs.out &&
+>
+> So I guess I did quote the variable later.  It works fine on Linux, but
+> one of the osx ci jobs failed:
+>
+> ++ expected_count='       7'
+> ++ test_line_count = '       7' refs.out
+> ++ test 7 = '       7'
+> ++ echo 'test_line_count: line count for refs.out !=        7'
+>
+> so the whitespace is eaten not when "wc" is run, but rather when the
+> variable is expanded.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- connect.c | 3 +--
- connect.h | 1 +
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Not something that should be done by this series (more a
+left-over-bitty thing, perhaps), but this almost suggests that
+test_line_count() deserves a tweak to make it more robust against that
+sort of thing:
 
-diff --git a/connect.c b/connect.c
-index a52b038865..8f70a05699 100644
---- a/connect.c
-+++ b/connect.c
-@@ -18,7 +18,6 @@
- 
- static char *server_capabilities_v1;
- static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
--static const char *parse_feature_value(const char *, const char *, int *, int *);
- static const char *next_server_feature_value(const char *feature, int *len, int *offset);
- 
- static int check_ref(const char *name, unsigned int flags)
-@@ -483,7 +482,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	return list;
- }
- 
--static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
-+const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
- {
- 	int len;
- 
-diff --git a/connect.h b/connect.h
-index c53976f7ec..c53586e929 100644
---- a/connect.h
-+++ b/connect.h
-@@ -19,6 +19,7 @@ struct packet_reader;
- enum protocol_version discover_version(struct packet_reader *reader);
- 
- int server_supports_hash(const char *desired, int *feature_supported);
-+const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset);
- int server_supports_v2(const char *c, int die_on_error);
- int server_feature_v2(const char *c, const char **v);
- int server_supports_feature(const char *c, const char *feature,
+    test_line_count () {
+        if test $# != 3
+        then
+            BUG "not 3 parameters to test_line_count"
+        elif ! test $(wc -l <"$3") "$1" "$2"
+        then
+            echo "test_line_count: line count for $3 !$1 $2"
+            cat "$3"
+            return 1
+        fi
+    }
+
+If we drop the quotes around $2 from the 'test':
+
+    elif ! test $(wc -l <"$3") "$1" $2
+
+then your code would have worked as expected.
+
+My only worry about that is that a poorly written caller would get a
+weird and unhelpful error message:
+
+    test_line_count = 4 4
+    --> sh: test: too many arguments
