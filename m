@@ -2,139 +2,135 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4D80C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92EC3C433E1
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AD7220DD4
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:26:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CDA420DD4
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 13:29:03 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZYNdTZo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732664AbgFSN0m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 09:26:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37146 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726124AbgFSN0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 09:26:42 -0400
-Received: (qmail 2713 invoked by uid 109); 19 Jun 2020 13:26:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Jun 2020 13:26:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14631 invoked by uid 111); 19 Jun 2020 13:26:41 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Jun 2020 09:26:41 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 19 Jun 2020 09:26:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/3] fast-export: anonymize "master" refname
-Message-ID: <20200619132640.GB2540774@coredump.intra.peff.net>
-References: <20200619132304.GA2540657@coredump.intra.peff.net>
+        id S1732887AbgFSN2r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 09:28:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41368 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731738AbgFSN17 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 09:27:59 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF01C0613EE
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:27:58 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id n9so3940369plk.1
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 06:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0qgNr6iP/aaJbjxdjzgkiUHZGIeJ2f7u8oAlGSik8G4=;
+        b=gZYNdTZocWtHxocJnp5h63f59/KOFEgMIULA1FC27hIbaT8/IORITE1JP9RX5227Sp
+         zZmC8LNsnY4opGKGWL0imxowWGCAG83t5zpu/dXSxGelcoTHrYr63Ud0oOIGEBTXM1zB
+         u5vytvSxPwv4ftP4VKm7kRfNhSI/cvaQCZ/jzOIcutJ47/cgAdrQ7chAH5kaDwurnoUX
+         sPmG13jB8eZvm53xPB2sGEU6o/BBARb6jjVLjJlBM5wkg72/Vuf3CeX5j9Ie6lqLLtGs
+         cYJWZl9QwERCwVf6LbKuLyBt71vx7/3fB6sbabDeI0oSg25geaW4CtaZ/kHJkCKjKHcn
+         RIXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0qgNr6iP/aaJbjxdjzgkiUHZGIeJ2f7u8oAlGSik8G4=;
+        b=lANGgtMJtUs9YEqT8HcTWU+NGUZKBliz/evryRlVkjDrbQc7LrvFAmWtuGL2IKnlen
+         kBj3V6+ZDrtuy8RKChzKnzSLhmSGC/AVrjSQaMkCRBM8eCmP/88czoK91/N1oRFADqqi
+         5ANOTYxkZ802yc3Bi/xQSvnxKcx9SSMzEFTiL886J3dKZW1abBzT6y0XvaPXp2Rkjcv4
+         Vpsko9syb+hGgWe/zMlyJ2JzxTNZaQqYJqgdgo8RLv73k6N0cruhxsx3AhXwAvLO+f78
+         oTKqgpiK+qXOc2sqO10BiDNSfYyRbhJomQcBWHkykKDMcZtgJ+IA7Rb/3Ehp78DB3QcL
+         iZwg==
+X-Gm-Message-State: AOAM531DANOlGnr4CyATptXxDt8Nwcgwc78DjMpT2i6+xL5gvyzzvBe8
+        0OFcWiSCUoNoFdge/7EbqVjI/VSl
+X-Google-Smtp-Source: ABdhPJz0lTOnhLDbeXtKnxbJwVLPWHs/lpIfpUvpj4wGkdA3fNBU93kE/P5UkU8VeTng8vBMgSTp7g==
+X-Received: by 2002:a17:90a:1308:: with SMTP id h8mr3844064pja.22.1592573278295;
+        Fri, 19 Jun 2020 06:27:58 -0700 (PDT)
+Received: from [192.168.208.37] ([49.207.136.53])
+        by smtp.gmail.com with ESMTPSA id p19sm6068583pff.116.2020.06.19.06.27.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Jun 2020 06:27:57 -0700 (PDT)
+Subject: Re: [PATCH v2] tests: do not use "slave branch" nomenclature
+To:     Paolo Bonzini <pbonzini@redhat.com>
+Cc:     git@vger.kernel.org, msuchanek@suse.de,
+        Till Maas <tmaas@redhat.com>
+References: <20200619093210.31289-1-pbonzini@redhat.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <8f2bf041-1a04-55cb-05fd-a3802fbfb09d@gmail.com>
+Date:   Fri, 19 Jun 2020 18:57:54 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
+In-Reply-To: <20200619093210.31289-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200619132304.GA2540657@coredump.intra.peff.net>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Running "fast-export --anonymize" will leave "refs/heads/master"
-untouched in the output, for two reasons:
+On 19-06-2020 15:02, Paolo Bonzini wrote:
+> Git branches have been qualified as topic branches, integration branches,
+> development branches, feature branches, release branches and so on.
+> Git has a branch that is the master *for* development, but it is not
+> the master *of* any "slave branch": Git does not have slave branches,
+> and has never had, except for a single testcase that claims otherwise. :)
+>
 
-  - it helped to have some known reference point between the original
-    and anonymized repository
+I wonder if "claims" is too strong a word here. "... hints otherwise"
+sounds better to me.
 
-  - since it's historically the default branch name, it doesn't leak any
-    information
+> Independent of any future change to the naming of the "master" branch,
+> removing this sole appearance of the term is a strict improvement: it
+> avoids divisive language, and talking about "feature branch" clarifies
+> which developer workflow the test is trying to emulate.
+> 
+> Reported-by: Till Maas <tmaas@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Now that we can ask fast-export to dump the anonymized ref mapping, we
-have a much better tool for the first one (because it works for _any_
-ref, not just master).
+Other than that and the comment by Danh elsewhere this patch looks
+good to me.
 
-For the second, the notion of "default branch name" is likely to become
-configurable soon, at which point the name _does_ leak information.
-Let's drop this special case in preparation.
+> ---
+>  t/t4014-format-patch.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 575e079cc2..958c2da56e 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -81,16 +81,16 @@ test_expect_success 'format-patch --ignore-if-in-upstream handles tags' '
+>  '
+>  
+>  test_expect_success "format-patch doesn't consider merge commits" '
+> -	git checkout -b slave master &&
+> +	git checkout -b feature master &&
+>  	echo "Another line" >>file &&
+>  	test_tick &&
+> -	git commit -am "Slave change #1" &&
+> +	git commit -am "Feature branch change #1" &&
+>  	echo "Yet another line" >>file &&
+>  	test_tick &&
+> -	git commit -am "Slave change #2" &&
+> +	git commit -am "Feature branch change #2" &&
+>  	git checkout -b merger master &&
+>  	test_tick &&
+> -	git merge --no-ff slave &&
+> +	git merge --no-ff feature &&
+>  	git format-patch -3 --stdout >patch &&
+>  	grep "^From " patch >from &&
+>  	test_line_count = 3 from
+> 
 
-Note that we have to adjust the test a bit, since it relied on using the
-name "master" in the anonymized repos. But this gives us a good
-opportunity to further test the new dumping feature.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/fast-export.c            |  7 -------
- t/t9351-fast-export-anonymize.sh | 16 ++++++----------
- 2 files changed, 6 insertions(+), 17 deletions(-)
-
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 6caea6f290..cd0174d514 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -547,13 +547,6 @@ static const char *anonymize_refname(const char *refname)
- 	const char *full_refname = refname;
- 	int i;
- 
--	/*
--	 * We also leave "master" as a special case, since it does not reveal
--	 * anything interesting.
--	 */
--	if (!strcmp(refname, "refs/heads/master"))
--		return refname;
--
- 	strbuf_reset(&anon);
- 	for (i = 0; i < ARRAY_SIZE(prefixes); i++) {
- 		if (skip_prefix(refname, prefixes[i], &refname)) {
-diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
-index 0c5dd2a4fb..88847b0f60 100755
---- a/t/t9351-fast-export-anonymize.sh
-+++ b/t/t9351-fast-export-anonymize.sh
-@@ -26,11 +26,8 @@ test_expect_success 'stream omits path names' '
- 	! grep xyzzy stream
- '
- 
--test_expect_success 'stream allows master as refname' '
--	grep master stream
--'
--
--test_expect_success 'stream omits other refnames' '
-+test_expect_success 'stream omits refnames' '
-+	! grep master stream &&
- 	! grep other stream &&
- 	! grep mytag stream
- '
-@@ -52,9 +49,7 @@ test_expect_success 'refname mapping can be dumped' '
- 	# we make no guarantees of the exact anonymized names,
- 	# so just check that we have the right number and
- 	# that a sample line looks sane.
--	# Note that master is not anonymized, and so not included
--	# in the mapping.
--	test_line_count = 6 refs.out &&
-+	test_line_count = 7 refs.out &&
- 	grep "^refs/heads/other refs/heads/" refs.out
- '
- 
-@@ -69,15 +64,16 @@ test_expect_success 'import stream to new repository' '
- test_expect_success 'result has two branches' '
- 	git for-each-ref --format="%(refname)" refs/heads >branches &&
- 	test_line_count = 2 branches &&
--	other_branch=$(grep -v refs/heads/master branches)
-+	main_branch=$(sed -ne "s,refs/heads/master ,,p" ../refs.out) &&
-+	other_branch=$(sed -ne "s,refs/heads/other ,,p" ../refs.out)
- '
- 
- test_expect_success 'repo has original shape and timestamps' '
- 	shape () {
- 		git log --format="%m %ct" --left-right --boundary "$@"
- 	} &&
- 	(cd .. && shape master...other) >expect &&
--	shape master...$other_branch >actual &&
-+	shape $main_branch...$other_branch >actual &&
- 	test_cmp expect actual
- '
- 
 -- 
-2.27.0.480.g4f98dbcb10
-
+Sivaraam
