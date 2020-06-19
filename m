@@ -2,119 +2,104 @@ Return-Path: <SRS0=lJm1=AA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 415B3C433DF
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 23:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1ABDC433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 23:36:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 246832166E
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 23:26:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74FE021D82
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 23:36:33 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s75jojjk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730424AbgFSX0l convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 19 Jun 2020 19:26:41 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:19807 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730379AbgFSX0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jun 2020 19:26:40 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 05JNQZ09021487
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 19 Jun 2020 19:26:36 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     =?UTF-8?B?J8SQb8OgbiBUcuG6p24gQ8O0bmcgRGFuaCc=?= 
-        <congdanhqx@gmail.com>
-Cc:     <randall.s.becker@rogers.com>, <git@vger.kernel.org>
-References: <20200619150445.4380-1-randall.s.becker@rogers.com> <20200619150445.4380-2-randall.s.becker@rogers.com> <20200619163530.GB5027@danh.dev> <02a501d6465d$80366680$80a33380$@nexbridge.com> <20200619230141.GC5027@danh.dev>
-In-Reply-To: <20200619230141.GC5027@danh.dev>
-Subject: RE: [Patch v1 1/3] bugreport.c: replace strbuf_write_fd with write_in_full
-Date:   Fri, 19 Jun 2020 19:26:29 -0400
-Message-ID: <02dc01d64691$12db4310$3891c930$@nexbridge.com>
+        id S1730497AbgFSXgc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 19:36:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50640 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730480AbgFSXgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jun 2020 19:36:31 -0400
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com [IPv6:2607:f8b0:4864:20::d42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0466FC06174E
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 16:36:31 -0700 (PDT)
+Received: by mail-io1-xd42.google.com with SMTP id q8so13285296iow.7
+        for <git@vger.kernel.org>; Fri, 19 Jun 2020 16:36:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=T+ZLt4Q8nFQmX2hByj8rJYu7ALCEkeGp3vyCy9JECNU=;
+        b=s75jojjknOK9ExsAXb/t/yarAXf7yHTMsbOKGkOle6dy4SryrIMcUOo+mTx4762icG
+         eIi0j3JB02VAgZDyvhOHN6AYG1rFbuB6e3BODAoUUWluGi+Vq9qNjqyaYTTdvyDWfGzq
+         uhMO0P2BdFQ+qxQ90mTP37YzNQwTzXvKvrNPpq5FBXzJrOVuduSV1JQ7wYzdImsIP6+U
+         X8DKl7MqaLRw8bnOCoD8k5sbaWcyd98GO/NmNgSQAWiB47WzMTveeIS06DEBeTiuVsOY
+         UxUGx9h50sQaEqj++7LbGfyilhnSm36v+fmr4Loi9HenQ0wh0WdiE7Q/FDCfgRvAhNI3
+         eYhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=T+ZLt4Q8nFQmX2hByj8rJYu7ALCEkeGp3vyCy9JECNU=;
+        b=gEtgMHytRgvuPFH62d0VieF8geyyaJqj5Qwe+YJuyR6wVWQzbLAXuz2yVVuh2+Jpr8
+         fEgwZtn/mDob1Kk1+iSzxVmQUTbHL1j7y1gith/xHyigBl7hoxuqiPq8ylFR5SxmkT/W
+         HaI63q15ADzFpoeYSlokkRZnVVmsuvlKWd9CaClzjSjUezdmYPABFmPyQtFKzH2tgW8f
+         bTqzeY7mXeArUkbdicfNBUUAcFmSLotJvYLVEwlEJNjvesSWlx0BrsZG6NAb2PCczFuU
+         eAzKibBA3RLm8PHTtqMS7ymGGvWXl/6ym7JTFQfl557wDdbCyNnDthJoatMvx7MtTkyZ
+         xpYA==
+X-Gm-Message-State: AOAM530owLTaK/bXBWlMhc+kgunaVu1phPS0hpbHIqNUormPjPaupipj
+        NFyMupdyizqeDZolBDOL/7cAXDfrn14=
+X-Google-Smtp-Source: ABdhPJzOjBTWJcU6AuCi3JEekyBeWLRMoN4aHBTyC8z7oggHKH+6ZysZg9k0Qk0wubVyhCv8MJOqlQ==
+X-Received: by 2002:a5e:9b0b:: with SMTP id j11mr6997346iok.17.1592609789913;
+        Fri, 19 Jun 2020 16:36:29 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id q5sm3890723ile.37.2020.06.19.16.36.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 Jun 2020 16:36:29 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/2] drop specialized knowledge from generic worktree code
+Date:   Fri, 19 Jun 2020 19:35:42 -0400
+Message-Id: <20200619233544.42025-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.27.0.221.g4d328a12d9
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKpTDE+t6IzuT5QyP1r/drrysHRPAImfDU6AorP7dACFQoNBAJ3Q+5OpvCcj9A=
-Content-Language: en-ca
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On June 19, 2020 7:02 PM, Ðoàn Tr?n Công Danh wrote:
-> To: Randall S. Becker <rsbecker@nexbridge.com>
-> Cc: randall.s.becker@rogers.com; git@vger.kernel.org
-> Subject: Re: [Patch v1 1/3] bugreport.c: replace strbuf_write_fd with
-> write_in_full
-> 
-> On 2020-06-19 13:17:19-0400, "Randall S. Becker"
-> <rsbecker@nexbridge.com> wrote:
-> > On June 19, 2020 12:36 PM, Đoàn Trần Công Danh wrote:
-> > > On 2020-06-19 11:04:43-0400, randall.s.becker@rogers.com wrote:
-> > > > From: "Randall S. Becker" <rsbecker@nexbridge.com>
-> > > >
-> > > > The strbuf_write_fd method did not provide checks for buffers
-> > > > larger than MAX_IO_SIZE. Replacing with write_in_full ensures the
-> > > > entire buffer will always be written to disk or report an error and die.
-> > > >
-> > > > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> > > > ---
-> > > >  bugreport.c | 5 ++++-
-> > > >  1 file changed, 4 insertions(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/bugreport.c b/bugreport.c index
-> > > > aa8a489c35..bc359b7fa8
-> > > > 100644
-> > > > --- a/bugreport.c
-> > > > +++ b/bugreport.c
-> > > > @@ -174,7 +174,10 @@ int cmd_main(int argc, const char **argv)
-> > > >  		die(_("couldn't create a new file at '%s'"), report_path.buf);
-> > > >  	}
-> > > >
-> > > > -	strbuf_write_fd(&buffer, report);
-> > > > +	if (write_in_full(report, buffer.buf, buffer.len) < 0) {
-> > > > +		die(_("couldn't write report contents '%s' to file '%s'"),
-> > > > +			buffer.buf, report_path.buf);
-> > >
-> > > Doesn't this dump the whole report to the stderr?
-> > > If it's the case, the error would be very hard to grasp.
-> >
-> > Where else can we put the error? By this point, we're likely out of
-> > disk or virtual memory.
-> 
-> Sorry, I forgot to suggest an alternatives.
-> 
-> I was thinking about ignore the report when writing the last email.
-> 
-> Since, the report is likely consists of multiple lines of text, and they likely
-> contains some single quote themselves.
-> 
-> Now, I think a bit more, I think it's way better to write as:
-> 
-> 	if (write_in_full(report, buffer.buf, buffer.len) < 0)
-> 		die(_("couldn't write the report contents to file '%s'.\n\n"
-> 		"The original report was:\n\n"
-> 		"%s\n"), report_path.buf, buffer.buf);
+This patch series removes specialized knowledge from the libified
+worktree code about how front-end "git worktree list" wants worktrees
+sorted, and instead makes it the responsibility of "git worktree list"
+itself to do the sorting.
 
-I went with Peff's suggestion of using die_error in v2. Thanks though.
+It is built atop es/worktree-duplicate-paths since that series adds
+another caller of get_worktrees() which this series touches.
 
-> > > Nit: We wouldn't want the pair of {}.
-> > >
-> > > > +	}
-> > > >  	close(report);
-> >
-> > I'm not sure what you mean in this nit? {} are balanced. You mean in the
-> error message?
-> 
-> Our style guides says we wouldn't want this pair of {} if it's single statement.
+A possible argument against this patch series is that some other entity
+may someday want worktrees sorted in the same fashion as "git worktree
+list", however, that seems a case of YAGNI.
 
-Fixed in v2
+Eric Sunshine (2):
+  worktree: drop get_worktrees() special-purpose sorting option
+  worktree: drop get_worktrees() unused 'flags' argument
 
-Regards,
-Randall
+ branch.c                  |  2 +-
+ builtin/branch.c          |  2 +-
+ builtin/config.c          |  2 +-
+ builtin/fsck.c            |  2 +-
+ builtin/reflog.c          |  2 +-
+ builtin/worktree.c        | 32 ++++++++++++++++++++++++++------
+ ref-filter.c              |  2 +-
+ revision.c                |  4 ++--
+ t/helper/test-ref-store.c |  2 +-
+ worktree.c                | 20 +++-----------------
+ worktree.h                | 11 +++--------
+ 11 files changed, 41 insertions(+), 40 deletions(-)
+
+-- 
+2.27.0.221.g4d328a12d9
 
