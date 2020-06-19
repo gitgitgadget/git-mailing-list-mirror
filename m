@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF299C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2BF3C433DF
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:12:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 835CE217D9
-	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:12:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A25CE2168B
+	for <git@archiver.kernel.org>; Fri, 19 Jun 2020 16:12:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=rogers.com header.i=@rogers.com header.b="T7C1du4c"
+	dkim=pass (2048-bit key) header.d=rogers.com header.i=@rogers.com header.b="qXDilDVZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393160AbgFSQMR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Jun 2020 12:12:17 -0400
-Received: from sonic315-16.consmr.mail.bf2.yahoo.com ([74.6.134.126]:38794
-        "EHLO sonic315-16.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2391238AbgFSPFF (ORCPT
+        id S2403879AbgFSQMW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Jun 2020 12:12:22 -0400
+Received: from sonic317-29.consmr.mail.bf2.yahoo.com ([74.6.129.84]:44871 "EHLO
+        sonic317-29.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2391237AbgFSPFF (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 19 Jun 2020 11:05:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1592579104; bh=4IfxBnLYu9Gl/21OjIvfxfRqoCOXjJvudQhdhsEmDjs=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject; b=T7C1du4cJHuxZqU3XfRM7g3c1gKa3U5ket7rbPcKpq4F2T6zpudliEYlTt+UW55wVFD3RpLP3LroB2nX3leB9E7bVF1ypzGGW+qK6KNtcz3yzS5ZpCNI1Abm/0Wgzqu0rgdRtGFJH5YMgZkMvoJZI89O7SLL8Kge7Z8XFS366tPQC9/+Fp34f6aXbEMLMZQtiCzY9jHMXzrSlOU7PwsafinDp5oQSwuRSG/GZz+P85/8PO6ceRefJn+XlrctOf7QV9btTUaVpXqawp8D9BGaeR/0L1ha14gKjffAiVFvr+zIgbNV5W66bma93/HPp2PKrI575PPhcYQcS2vrlgUexQ==
-X-YMail-OSG: SAp9aG8VM1m4tcc.7TltOb7biEq8LVSj8To62ifELBJTpnnCCycYrrLPRr9lD2j
- f2mZMK3rs_QQcbOZ4Xbt_0KtcFf2kfHtUOlkHhZF.qzi2J8NvjqUe4RsYsgqVKd4RIzn1me25po8
- sNd_UEe.af8EQqMBZH1LdEJ62c_gwYpUE9h3hQfYoWN4i56.68oiVe9UZoqOa.MP9iwu_AtbzXKq
- OaOJ1Dyiyr64vpcRv9L1icZ6RwCrWVwnWkuolEBGT4z6UH8DC3lFfg5uJ7MBDtoTzA9OMZXZnhOl
- 3AxyufVZfBzmjxzOcy6b7lHXYOE8Q_N_D7z.lKGHu_s4wR0HrQlr78HYO5I9pC3Rg8aeLLfBJ1qx
- 8_WASAhyumSWbvdrIHd..e2IT.lzPB5rbsIeyJbh4SPBwHD9FrNb7goJyu7IMqXTqxlL0ROZuqeA
- XwUdpssu6DSg2JsQfHMohmPC7RlK_kGDE6.JPwCzdMwI.g2fZRM1JXh1OS35LoWZdb16H6zzTmRR
- LA5gsmZ7ZqlcmP4S4p9fMImdHPVs0_KgzGk4wpRixuqJ0gIp5FczxMIPn2uzw5XlUVrtOq4adHCp
- LyQvIqwbJcfsKyrL8H0bIrTBwVu9sDEAtSzvz1.PuXp1OVwi2sgfVqlstsJwF0HHfm8PGJvQd.zJ
- REsYbhcczb3S6EqViJ0bWsLdocTsH3pfvPml3EkzGSwYhtpXU1Wdf6C_1v9.dj.6XxM8RjsbMXxr
- X2IkS33KTQg5RhctH9i.EBZ8Xx1WKyF.lHlsCAt0Ke8qb2G1WdyqUD32t2p9IoKTPTZK0U0keOAi
- QVh88OMr6QwDhrtOslnXexI6xhpIX4STD5StMUQ0SrrOzlfXFru2jZzwjUbvGRXq.aDYug5KF9x4
- bKhcr9gbYEF.mIMifU1L2g.9qg1QUp7PTS2k.9YMOzs1duMMtB6hApWnabTOiC0HXmpmM19TtHr.
- DS2p8U_0iLa8bU7AYn3OmFXf5hqr9MnGg3AYgTAOZrIlskLYXQalvrwgi1hnXSKtk15CzKh05U4U
- PkZaQ0fqUKPm3LH2Nzhc07LzwolRUEX_mFA7xwEJeahSn3yQ.GsWrYolsBaQqHH1TkAfEE218A7r
- dA_eVvIYABsqDsoBCI.fsEbw52IcNOQFjdNlnXOMzzwGZHK.wIcgGExmNe216sZuKTk4E_jVvDu8
- YuqTXIRVcINZDJdhfvTj7bqllfWHJwWl6MaE7U89OzpTcf9ACkToo44ZQddIVXpKLh7nluVqq6NA
- gGfav3yRizrw3bnH1RiJQ1xLigtpsZEexNK0y0zB4GfSqP2DQTV_LXFlsIlq8mVU7PYqHBNsmdN6
- 2ICTAJSFp52YlcSCYHhjf2Cd8xVKKYZPyapaugVc47qm3dr4B_KljwmWuWVlFjN_EFepSB4z9mpD
- v7t9j.4xijrn7b9WhqFf1Ke8chzAW6vNO6ctSfM2yG7G9D4yyPRp_FeRiV7Xt6ua.vr4DLI40OBJ
- 2mqrreWT36AjYudpH8ELYkDMwopPHiX5YPng-
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic315.consmr.mail.bf2.yahoo.com with HTTP; Fri, 19 Jun 2020 15:05:04 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1592579103; bh=OjZfLgI/+5XtwrIq5jnbx9zGRv+Hc5dh+J0tUW9mGnY=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject; b=qXDilDVZPCqckBBcWJ2b/W8LLK4a+DZkI+3CmB3KoW9YnUFtzZ3Qt3dT8Ukw+uZ0O3WuIFaL0YNxhyVzY7VQEeWyp0VPG4kCtAv4t1BKk1WgqmXE9G9+t3pfJxv/JOHejBGzaMkV159m8GsJQDzLFDBfwdwmFTS4LEfpcQKPYNfLm6dghXOt0iSfyXMWLEAcZWXsZe4yN4PYPsForm8r/cEEAH7wp0SBOlAtnNAG/IlEWldvXM2AaB5vwXRcmYDwila4ddZwlJMCHwdgPVPXP/G9eUMg+yRe+4p5WNjFSpHrMyGRNSzWtSdX7vL81EQ7RY86U6msCqFmnZowEruDLQ==
+X-YMail-OSG: iBgJ9AEVM1nkgX5hnmJF0S3Yfircdgv3ybU02kd0qi0..Kn80ClPNVpsQQdK0Sm
+ hY.3_3tBB9vSGmRSOLVwYX3ieJTWD2bFRcPTK539lmIjq.IZUdQIdiRSgEym43Zs3BHWd4jP3iFf
+ xJfloigGNzXo9VqoF8uUIabg4jI7bDsF3ZKApdbjJWFLkI0zJdcVK0sSTXNM9wrVwy8lNay_FU9E
+ uUlG9pHxPfv28BAZFv7vP_NPkcK5EwDed8uvYh5evF5u5EOV3nUoGhzmqYYkdBdpXDL9_eJc.dUa
+ oPa5lWmh_OxR2bKToMuZki94hOMjTXgJS8b.4_z680StlL7isipSkNx9LActxDBQeKlbs.ImdnPI
+ T3vTPkXS04CBeUIf0HXOXwihygswYIt8ODJcgtaDkcEBWA4vC_zXRxw8PzR7sbGAyjfcnnEZRZ4o
+ jmHeyk1cVjRtjySABsajTM9UpdHeTsjA3PWNKHskY5eFA36DojTXmBlYVQgoCG.n9sWD2icag77a
+ h03JPzMQars73GIWAF2yQwfxm2sUFAxfVHZw715D1HnzO_6s6qoWbI3Z_NxWO3oObZiHAmuimp9n
+ MyiC0dli8YmaN9KHaljRgEpKMA7qWLAwxCYJJ2mOHbDhU1M_k4SSUt3JWzvYqLZ7qFyvZxfqsREB
+ szDofxTfs80dv_anTjBbfRVFfHqRVGdsIKLua5rPI7WEBF7ncQep6NyrAmi9z_cZS7ao1tjBM4N_
+ Wypqfb_1LRBhPSV31yvSaYPwiJAhiDwiVesuQZy7hRYtjSGcFKfAUOKi_lHJYptuWP7mwOeUIAfj
+ 9pnIatO2_8UJGrsUX352nxRDlDa.2EL2gn_.8CL6Xpjy_jHizEkL8sACJtnkYq1ESHVg5kwaNSbg
+ qFwuFiSYEHhg1ncCjN92r6jfrbk7Rxp761Zozag6YDpqDeqC9ovEDi24pqolQvLIc4KVz1Q70sVG
+ .ldNnrJRaA92oJdvKvNAHB32tsFEVyrATzv02obvnHSqWyFzsOfyfYIyDoMActqdWoFa5ROGPMMc
+ zxtCa2S0DPv881BLXYM0hqws.auFgKL.0QW_qvb9troq4BYfLBvU4hz1qQSr8h8UlrgTZtvyXwPI
+ k8sscjtTBoCSaxdFZqc8v_U_SqsHRGPlK2Mr98DSxn4rnKAXqjBq9ZvIh2OIlz7nL045EpgeiaKT
+ aU49hFN9Jqt25fVgcX2BzkuRkiHWy.QCX3JHWgKn8Aw4wJ.aDuOQ95ncRfveUKn4YI3o_CVYnkvZ
+ iZycRHFvvkqIx48buM22fWZ_p9nVb1cYu9yTPC3qyKH5MXmMCZus_4A79k9valEdtBVdTfqifjYd
+ 1l2RE5GmEX7p0KMGIgHPTQPkCqvGUnjNXq1SSYGtQbaYIxKp7o0xJpjP9GQzzWmSo.zz_RedZrKj
+ yjhRktRGzCrGH1vPZsxHfp6Y2Yo2XlQ.C8JGjJ8ywGrnF.UGFH7Cyfy3XCO3Ggfkt6_8Y7HMwPh2
+ dwA.kTgl_uNc-
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.bf2.yahoo.com with HTTP; Fri, 19 Jun 2020 15:05:03 +0000
 Received: by smtp414.mail.gq1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA ID a3a454d2fd8d91b05ef2f93e2ccfa888;
-          Fri, 19 Jun 2020 15:04:59 +0000 (UTC)
+          Fri, 19 Jun 2020 15:05:00 +0000 (UTC)
 From:   randall.s.becker@rogers.com
 To:     git@vger.kernel.org
 Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [Patch v1 1/3] bugreport.c: replace strbuf_write_fd with write_in_full
-Date:   Fri, 19 Jun 2020 11:04:43 -0400
-Message-Id: <20200619150445.4380-2-randall.s.becker@rogers.com>
+Subject: [Patch v1 2/3] strbuf.c: remove unreferenced strbuf_write_fd method.
+Date:   Fri, 19 Jun 2020 11:04:44 -0400
+Message-Id: <20200619150445.4380-3-randall.s.becker@rogers.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20200619150445.4380-1-randall.s.becker@rogers.com>
 References: <20200619150445.4380-1-randall.s.becker@rogers.com>
@@ -64,31 +64,30 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-The strbuf_write_fd method did not provide checks for buffers larger
-than MAX_IO_SIZE. Replacing with write_in_full ensures the entire
-buffer will always be written to disk or report an error and die.
+strbuf_write_fd was only used in bugreport.c. Since that file now uses
+write_in_full, this method is no longer needed.
 
 Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
 ---
- bugreport.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ strbuf.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/bugreport.c b/bugreport.c
-index aa8a489c35..bc359b7fa8 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -174,7 +174,10 @@ int cmd_main(int argc, const char **argv)
- 		die(_("couldn't create a new file at '%s'"), report_path.buf);
- 	}
+diff --git a/strbuf.c b/strbuf.c
+index 2f1a7d3209..e3397cc4c7 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -556,11 +556,6 @@ ssize_t strbuf_write(struct strbuf *sb, FILE *f)
+ 	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
+ }
  
--	strbuf_write_fd(&buffer, report);
-+	if (write_in_full(report, buffer.buf, buffer.len) < 0) {
-+		die(_("couldn't write report contents '%s' to file '%s'"),
-+			buffer.buf, report_path.buf);
-+	}
- 	close(report);
+-ssize_t strbuf_write_fd(struct strbuf *sb, int fd)
+-{
+-	return sb->len ? write(fd, sb->buf, sb->len) : 0;
+-}
+-
+ #define STRBUF_MAXLINK (2*PATH_MAX)
  
- 	/*
+ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
 -- 
 2.21.0
 
