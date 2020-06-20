@@ -2,168 +2,98 @@ Return-Path: <SRS0=73cz=AB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DA34C433DF
-	for <git@archiver.kernel.org>; Sat, 20 Jun 2020 16:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58CB5C433DF
+	for <git@archiver.kernel.org>; Sat, 20 Jun 2020 16:59:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C36C123F57
-	for <git@archiver.kernel.org>; Sat, 20 Jun 2020 16:54:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F167823F59
+	for <git@archiver.kernel.org>; Sat, 20 Jun 2020 16:59:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xS/BIlRL"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vcptBdxT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbgFTQyS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Jun 2020 12:54:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50380 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbgFTQyS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jun 2020 12:54:18 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FAC276DC4;
-        Sat, 20 Jun 2020 12:54:17 -0400 (EDT)
+        id S1727858AbgFTQ7o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Jun 2020 12:59:44 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57778 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725290AbgFTQ7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jun 2020 12:59:43 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A0215DF615;
+        Sat, 20 Jun 2020 12:59:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=40BdrOWpvBhz9Aqi37jVC+raemE=; b=xS/BIl
-        RLK/s/ZB8cDitaTfNK067kIVisQK/xFnpeGJJPejRkjVL9iNHr8uQA5+JCXQsSrr
-        frdoRgC8KjpPzj55DCtIqYcCJJqqf5NufWipcOmHZ59fhz85AOWBuGYgBNZj/Z37
-        am0cF9r70T0ob0JfpYX2YHJpxOQ6zIOzcg+c4=
+        :content-type; s=sasl; bh=Y8nSSS4LOermo8iLGEvqsgXrbg8=; b=vcptBd
+        xTOQXAsmKG+8rlL3CWbq2SZRPVwJZt6i/lYEmLYuW122KIyaapeda0zhhEqU2wel
+        hm61fpWO8UxbacwvYQR+WzIo/fZDOI0XSMDW4lNYTRkJUnWgynmr7eokmrA3vB2H
+        wvvU7Z13WOu/2fOyVpnKPy7M8v0amdyOQnkuA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=w7pvwQDuH7TVt8EYcXk/m0r+8myuw2Cp
-        RgNnlA3SKvkpW5mZynM3ytKdufew+z4T450ZybSHD+4RJa2fiBEMoVl5Pdq3mhE3
-        iqaxMRShYir2xrLltgal/6OLM8p93Loz7urciWRIZ5A/zS7KY24tWQk8f3wozyG5
-        3yzCUe99LjI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7848076DC3;
-        Sat, 20 Jun 2020 12:54:17 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=d4lxwRExOPS1U2c1ap4Q2NfPxJjNdpP+
+        94wOxFB9wCsxwC/IZC8Xbman0QlwiYAS2Dyjgc4vfStofU0yQ99QeT6jb9f6NSRa
+        XzDrQ/rLucs6vPfKE/kGY59sX1CPl69Y7TMF+TH5+f20Xch/ddTlRafFHe+O0I2I
+        v3258a26cZw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 987EDDF614;
+        Sat, 20 Jun 2020 12:59:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F3C1276DC1;
-        Sat, 20 Jun 2020 12:54:16 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E2996DF613;
+        Sat, 20 Jun 2020 12:59:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     Solomon Ucko <solly.ucko@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] diff-files: treat "i-t-a" files as "not-in-index"
-References: <20200611161640.52156-1-shrinidhi.kaushik@gmail.com>
-        <20200620163845.871-1-shrinidhi.kaushik@gmail.com>
-Date:   Sat, 20 Jun 2020 09:54:16 -0700
-In-Reply-To: <20200620163845.871-1-shrinidhi.kaushik@gmail.com> (Srinidhi
-        Kaushik's message of "Sat, 20 Jun 2020 22:08:45 +0530")
-Message-ID: <xmqqsgepekzr.fsf@gitster.c.googlers.com>
+Subject: Re: reset --merge documentation typo?
+References: <CANtMP6qbX_U_0sWtUvNQVtMboMLJshsHc=n-5eA4_XXNGEnzLQ@mail.gmail.com>
+Date:   Sat, 20 Jun 2020 09:59:37 -0700
+In-Reply-To: <CANtMP6qbX_U_0sWtUvNQVtMboMLJshsHc=n-5eA4_XXNGEnzLQ@mail.gmail.com>
+        (Solomon Ucko's message of "Sat, 20 Jun 2020 12:15:54 -0400")
+Message-ID: <xmqqo8pdekqu.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AD862CE4-B316-11EA-B34A-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6D691486-B317-11EA-9F8A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Srinidhi Kaushik <shrinidhi.kaushik@gmail.com> writes:
+Solomon Ucko <solly.ucko@gmail.com> writes:
 
-> The `diff-files' command and related commands which call the function
-> `cmd_diff_files()', consider the "intent-to-add" files as a part of the
-> index when comparing the work-tree against it. This was previously
-> addressed in commits [1] and [2] by turning the option
-> `--ita-invisible-in-index' (introduced in [3]) on by default.
+> Oops, accidentally sent as HTML instead of plain text.
 >
-> For `diff-files' (and `add -p' as a consequence) to show the i-t-a
-> files as as new, `ita_invisible_in_index' will be enabled by default
-> here as well.
->
-> [1] 0231ae71d3 (diff: turn --ita-invisible-in-index on by default,
->                 2018-05-26)
-> [2] 425a28e0a4 (diff-lib: allow ita entries treated as "not yet exist
->                 in index", 2016-10-24)
-> [3] b42b451919 (diff: add --ita-[in]visible-in-index, 2016-10-24)
->
-> Signed-off-by: Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-> ---
+> The documentation for `git reset --merge` states:
 
-Thanks.
+It is talknig about `git reset --merge <commit>`.
 
-> -test_expect_success 'diff-files/diff-cached shows ita as new/not-new files' '
-> +test_expect_success 'i-t-a files shown as new for "diff", "diff-files"; not-new for "diff --cached"' '
->  	git reset --hard &&
-> +	: >empty &&
-> +	content="foo" &&
-> +	echo "$content" >not-empty &&
-> +
-> +	hash_e=$(git hash-object empty) &&
-> +	hash_n=$(git hash-object not-empty) &&
-> +	hash_t=$(git hash-object -t tree /dev/null) &&
-> +
-> +	cat >expect.diff_p <<-EOF &&
-> +	diff --git a/empty b/empty
-> +	new file mode 100644
-> +	index 0000000..$(git rev-parse --short $hash_e)
-> +	diff --git a/not-empty b/not-empty
-> +	new file mode 100644
-> +	index 0000000..$(git rev-parse --short $hash_n)
-> +	--- /dev/null
-> +	+++ b/not-empty
-> +	@@ -0,0 +1 @@
-> +	+$content
-> +	EOF
-> +	cat >expect.diff_s <<-EOF &&
-> +	 create mode 100644 empty
-> +	 create mode 100644 not-empty
-> +	EOF
-> +	cat >expect.diff_a <<-EOF &&
-> +	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")empty
-> +	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")not-empty
 
-This is good, but just FYI you did not have to use printf --- "<<-"
-treats only leading tab specially, and not in the middle of a line.
+>> Resets the index and updates the files in the working tree that are
+>> different between `<commit>` and `HEAD`, but keeps those which are
+>> different between the index and working tree (i.e. which have changes
+>> which have not been added).
 
-> +	EOF
-> +
-> +	git add -N empty not-empty &&
+Correct.  The command makes this request to "git".
 
-OK.  So with two paths...
+    I am on the commit at `HEAD`; I want to move to <commit> as if I
+    did "git checkout <otherbranch>", updating the files in the
+    working tree to that of <otherbranch> except that if I had local
+    changes from `HEAD` for a path, and the path is identical
+    between `HEAD` and <otherbranch>, carry my local changes along,
+    but I am not flipping to a different branch---instead I am
+    resetting the tip of the current branch.
 
-> +
-> +	git diff >actual &&
-> +	test_cmp expect.diff_p actual &&
+It allows the user to pretend as if the user started making these
+local changes _after_ "git reset --hard <commit>", on top of
+<commit>, and that is only possible because the command makes sure
+that the paths involved in these local changes are the same between
+`HEAD` and <commit>.
 
-... the patch output of "git diff", and
+> Where it says "`HEAD`", should it say "the index"?
 
->  	git diff --summary >actual &&
-
-... the summary part, and
-
-> -	echo " create mode 100644 new-ita" >expected &&
-> -	test_cmp expected actual &&
-> -	git diff --cached --summary >actual2 &&
-> -	test_must_be_empty actual2
-> -'
-> +	test_cmp expect.diff_s actual &&
-> +
-> +	git diff-files -p >actual &&
-> +	test_cmp expect.diff_p actual &&
->
-> +	git diff-files --abbrev >actual &&
-> +	test_cmp expect.diff_a actual &&
-
-... the same for "diff-files" and
-
-> +	git diff --cached >actual &&
-
-... "diff -cached" are all checked.
-
-Looking good.
-
-> +	test_must_be_empty actual
-> +'
->
->  test_expect_success '"diff HEAD" includes ita as new files' '
->  	git reset --hard &&
-> --
-> 2.27.0
+No.
