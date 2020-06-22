@@ -5,65 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E009C433E1
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5BCFC433DF
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C4762073E
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FE1F206E2
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pTShkPxp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DMBM3wdv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730765AbgFVVzb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Jun 2020 17:55:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41926 "EHLO
+        id S1730840AbgFVVzm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Jun 2020 17:55:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730747AbgFVVz0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jun 2020 17:55:26 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F094C061573
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:25 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id g75so1054526wme.5
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:25 -0700 (PDT)
+        with ESMTP id S1730804AbgFVVzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jun 2020 17:55:36 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34851C061795
+        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:36 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id g10so1062734wmh.4
+        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=T+voneQ0Whz61s3+JQuey70k8Ow9ROVzOJ6Axj3DAC0=;
-        b=pTShkPxpujV8H++wAOEGUJVF2zzugEkE0egcvoDIASRRovfRSUEH9mn+veIRxadh0G
-         AA2lh04NHRNhOKxl3vSj68UIERhl+jg5EJ8hAQS4eoACzb1nQTP7OQvSpOEWKz4F1B+/
-         EX5Pa0T57mFb++FQfnu6JToK+TV8RYNEgT2VwCukUFApWJxq/93fkvyXuPKzZPfDCjpE
-         25Pp9+r/MtzTQ4QQ8xr9gKTt/wKtOfE4ytrGR8PDofPibme1b+gmEvVZ1J/oksXr1TIT
-         Cn9eeG7e3Cq0HDcHFAMg8oiQGI5U9pq7Ye+niKPg7afVEMBZxrPd51af8dNpQgz1Ps6C
-         jL9Q==
+        bh=QqTHYCZp4B4SL99p8EPYIz4NiEXJaC5A1EVjDBkZzSU=;
+        b=DMBM3wdvFHLj342jtozYyOumBld7msjrPnD5nCDcx7M6Hbyaif8sJQjqGUwj4FjUkr
+         hJtASNb7E28tu4WlzAufsC8UIMX1lADQYocQlVqteXgdek7CEZAEov9LzIxOQxbcHjGN
+         /Eur2w1bAn8/oAnvFHCAVVZVgYXTN8y07yybe1/yXXr+zkTrNO1tCpkrL3EFh3lpYW9Y
+         bhMAHYD4G50/5DzL0HdCKYoNCpufaDJ92lKv37HOF3bzsX/tSbGE9DPbDhAtGaRwpwkm
+         wr3bfSv6M6J90VPqh+UqoxLlLBCUflZZb5LyeHjj0P6dtcKXcJquKecRjJrx63CNb2hs
+         bOQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=T+voneQ0Whz61s3+JQuey70k8Ow9ROVzOJ6Axj3DAC0=;
-        b=dKkhQVTZSA/iurfAF6iBtSpye1HocfUhEgKfPxt8mfvmQgCGKW1mCm1iyDDfH2bYqf
-         EDywYY4DW8fQXcQHzofpPu0BPVKylKQPRZf69udgSlkWc1UWzBitKVvLUmSWTLL85KP3
-         BNGEGurvlEfPeaDr6MKV0vSguMur9Fa+gqx3/eyBEc2ylYLZSUUWAyK0WFOf/m6UWpuG
-         BKEAvitXzb8Rp2HjXKysEiGays6CdeGrfQzyOUz3HnbPnovp+tI/3IM4GOmCKzH2G51J
-         FJ399ben1GOExqmrv1CX4/8fcCHEROjmp2td/GVbC0yxaeLBoqqlfMMDmTDnBbZOkF5i
-         1ibw==
-X-Gm-Message-State: AOAM532Z14DSpll48tMKC3Oy92g2LgQbf6DiHEissU26tr2nfhsAr1FM
-        ivNZ+jFU1QHs+HE0tGGqbpRX/YZr
-X-Google-Smtp-Source: ABdhPJyiocC8pA1dyA0mRVBza7/F8ROgGPrHiZ1ZoY8YJoK6AzZnFxUd6K08t8L4eGort2ji2pksBg==
-X-Received: by 2002:a7b:cd09:: with SMTP id f9mr10711440wmj.160.1592862923894;
-        Mon, 22 Jun 2020 14:55:23 -0700 (PDT)
+        bh=QqTHYCZp4B4SL99p8EPYIz4NiEXJaC5A1EVjDBkZzSU=;
+        b=Scwqtt8OXeHRs6R/hhUt7Ox15ChCJswUtX+g/NSRgAt+/ybWeUCihdEHtpKXK/S2Ka
+         irNRuSSn2RJZtDaqHkUzbzt4OczqvpWdmcTe0/3cii9DdnSh6e89scenJE3UIsQ9frxb
+         GR/vcjLNEsulP3QUSzzmxYR5MgejEZqvdBQqS59qhDh6kDzh0BnASGbWpP5kjoa9cJCx
+         1ZBPRe7WhoAxxK+Mn8XU9Dc68xjr+wXNl0kIuBe3eFPJjFb+dauRY+TFMvhPTyEz9fKw
+         pMRFJvFNH3vQJu/t/jhW7RaJyvOR5PWBS/WSDsv6svHdAcSfWeuCmNWVur1KJceP/hfQ
+         JkLw==
+X-Gm-Message-State: AOAM530TEZkKoMZtIqqzZ7wYxKAJTjSl4ljAOy9FTbEc/4UfFseXt7nX
+        OCVA55FDifjjZLim6v+CIiuLSFT3
+X-Google-Smtp-Source: ABdhPJyC9upKBlpi/gHaHyaidNgOJXWe6ftyfm88AW9B0ju/E8kwI7Q9vxZzHSx9CLm47n27ufzhRw==
+X-Received: by 2002:a1c:cc0d:: with SMTP id h13mr22079225wmb.168.1592862934465;
+        Mon, 22 Jun 2020 14:55:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d13sm5612647wrn.61.2020.06.22.14.55.23
+        by smtp.gmail.com with ESMTPSA id t15sm1052767wmj.14.2020.06.22.14.55.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 14:55:23 -0700 (PDT)
-Message-Id: <b968b795af9acf0ea05bc37f6b80bfd40570bb4c.1592862920.git.gitgitgadget@gmail.com>
+        Mon, 22 Jun 2020 14:55:33 -0700 (PDT)
+Message-Id: <c92b8d12ec653cd0e3e07ef0267effc418f80ab9.1592862921.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
 References: <pull.539.v17.git.1592335242.gitgitgadget@gmail.com>
         <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Jun 2020 21:55:02 +0000
-Subject: [PATCH v18 01/19] lib-t6000.sh: write tag using git-update-ref
+Date:   Mon, 22 Jun 2020 21:55:13 +0000
+Subject: [PATCH v18 12/19] Add standalone build infrastructure for reftable
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,33 +79,335 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+The reftable library is integrates with Git, so it become a first class
+supported storage mechanism, but is sufficiently complex that other
+projects (e.g. libgit2) may want to consume the same source code.
+
+To make this possible, the library also compiles completely standalone, which is
+demonstrated with the Bazel BUILD/WORKSPACE files that this commit adds.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/lib-t6000.sh | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ reftable/BUILD      | 203 ++++++++++++++++++++++++++++++++++++++++++++
+ reftable/README.md  |  33 +++++++
+ reftable/WORKSPACE  |  14 +++
+ reftable/zlib.BUILD |  36 ++++++++
+ 4 files changed, 286 insertions(+)
+ create mode 100644 reftable/BUILD
+ create mode 100644 reftable/README.md
+ create mode 100644 reftable/WORKSPACE
+ create mode 100644 reftable/zlib.BUILD
 
-diff --git a/t/lib-t6000.sh b/t/lib-t6000.sh
-index b0ed4767e32..fba6778ca35 100644
---- a/t/lib-t6000.sh
-+++ b/t/lib-t6000.sh
-@@ -1,7 +1,5 @@
- : included from 6002 and others
- 
--mkdir -p .git/refs/tags
--
- >sed.script
- 
- # Answer the sha1 has associated with the tag. The tag must exist under refs/tags
-@@ -26,7 +24,8 @@ save_tag () {
- 	_tag=$1
- 	test -n "$_tag" || error "usage: save_tag tag commit-args ..."
- 	shift 1
--	"$@" >".git/refs/tags/$_tag"
+diff --git a/reftable/BUILD b/reftable/BUILD
+new file mode 100644
+index 00000000000..d3946a717c0
+--- /dev/null
++++ b/reftable/BUILD
+@@ -0,0 +1,203 @@
++# Mirror core-git COPTS so reftable compiles without warning in CGit.
++GIT_COPTS = [
++    "-DREFTABLE_STANDALONE",
++    "-Wall",
++    "-Werror",
++    "-Wdeclaration-after-statement",
++    "-Wstrict-prototypes",
++    "-Wformat-security",
++    "-Wno-format-zero-length",
++    "-Wold-style-definition",
++    "-Woverflow",
++    "-Wpointer-arith",
++    "-Wstrict-prototypes",
++    "-Wunused",
++    "-Wvla",
++    "-Wextra",
++    "-Wmissing-prototypes",
++    "-Wno-empty-body",
++    "-Wno-missing-field-initializers",
++    "-Wno-sign-compare",
++    "-Werror=strict-aliasing",
++    "-Wno-unused-parameter",
++]
 +
-+	git update-ref "refs/tags/$_tag" $("$@")
- 
- 	echo "s/$(tag $_tag)/$_tag/g" >sed.script.tmp
- 	cat sed.script >>sed.script.tmp
++cc_library(
++    name = "reftable",
++    srcs = [
++        "basics.c",
++        "block.c",
++        "compat.c",
++        "file.c",
++        "iter.c",
++        "merged.c",
++        "pq.c",
++        "reader.c",
++        "record.c",
++        "refname.c",
++        "reftable.c",
++        "strbuf.c",
++        "stack.c",
++        "tree.c",
++        "writer.c",
++        "zlib-compat.c",
++        "basics.h",
++        "block.h",
++        "compat.h",
++        "constants.h",
++        "iter.h",
++        "merged.h",
++        "pq.h",
++        "reader.h",
++        "refname.h",
++        "record.h",
++        "strbuf.h",
++        "stack.h",
++        "system.h",
++        "tree.h",
++        "writer.h",
++    ],
++    hdrs = [
++        "reftable.h",
++    ],
++    includes = [
++        "include",
++    ],
++    copts = [
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++    deps = ["@zlib"],
++    visibility = ["//visibility:public"]
++)
++
++cc_library(
++    name = "testlib",
++    srcs = [
++        "test_framework.c",
++        "dump.c",
++	"test_framework.h",
++    ],
++    hdrs = [
++            "reftable-tests.h",
++    ],
++    copts = GIT_COPTS,
++    deps = [":reftable"],
++    visibility = ["//visibility:public"]
++)
++
++cc_test(
++    name = "record_test",
++    srcs = ["record_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ],
++    copts = [
++        "-Drecord_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++cc_test(
++    name = "reftable_test",
++    srcs = ["reftable_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ],
++    copts = [
++        "-Dreftable_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++cc_test(
++    name = "strbuf_test",
++    srcs = ["strbuf_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ] ,
++    copts = [
++        "-Dstrbuf_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++cc_test(
++    name = "stack_test",
++    srcs = ["stack_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ],
++    copts = [
++        "-Dstack_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++cc_test(
++    name = "tree_test",
++    srcs = ["tree_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ],
++    copts = [
++        "-Dtree_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++cc_test(
++    name = "block_test",
++    srcs = ["block_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ],
++    copts = [
++        "-Dblock_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++cc_test(
++    name = "refname_test",
++    srcs = ["refname_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ],
++    copts = [
++        "-Drefname_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++cc_test(
++    name = "merged_test",
++    srcs = ["merged_test.c"],
++    deps = [
++        ":reftable",
++        ":testlib",
++    ],
++    copts = [
++        "-Dmerged_test_main=main",
++        "-fvisibility=protected",
++    ] + GIT_COPTS,
++)
++
++[sh_test(
++    name = "%s_valgrind_test" % t,
++    srcs = [ "valgrind_test.sh" ],
++    args = [ t ],
++    data = [ t ])
++ for t in ["record_test",
++           "merged_test",
++           "refname_test",
++           "tree_test",
++           "block_test",
++           "strbuf_test",
++           "stack_test"]]
+diff --git a/reftable/README.md b/reftable/README.md
+new file mode 100644
+index 00000000000..0345015c575
+--- /dev/null
++++ b/reftable/README.md
+@@ -0,0 +1,33 @@
++This directory contains an implementation of the reftable library.
++
++The library is integrated into the git-core project, but can also be built
++standalone, by compiling with -DREFTABLE_STANDALONE. The standalone build is
++exercised by the accompanying BUILD/WORKSPACE files, and can be run as
++
++  bazel test :all
++
++It includes a fragment of the zlib library to provide uncompress2(), which is a
++recent addition to the API. zlib is licensed as follows:
++
++```
++ (C) 1995-2017 Jean-loup Gailly and Mark Adler
++
++  This software is provided 'as-is', without any express or implied
++  warranty.  In no event will the authors be held liable for any damages
++  arising from the use of this software.
++
++  Permission is granted to anyone to use this software for any purpose,
++  including commercial applications, and to alter it and redistribute it
++  freely, subject to the following restrictions:
++
++  1. The origin of this software must not be misrepresented; you must not
++     claim that you wrote the original software. If you use this software
++     in a product, an acknowledgment in the product documentation would be
++     appreciated but is not required.
++  2. Altered source versions must be plainly marked as such, and must not be
++     misrepresented as being the original software.
++  3. This notice may not be removed or altered from any source distribution.
++
++  Jean-loup Gailly        Mark Adler
++  jloup@gzip.org          madler@alumni.caltech.edu
++```
+diff --git a/reftable/WORKSPACE b/reftable/WORKSPACE
+new file mode 100644
+index 00000000000..9f91d16208a
+--- /dev/null
++++ b/reftable/WORKSPACE
+@@ -0,0 +1,14 @@
++workspace(name = "reftable")
++
++load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
++
++http_archive(
++    name = "zlib",
++    build_file = "@//:zlib.BUILD",
++    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
++    strip_prefix = "zlib-1.2.11",
++    urls = [
++        "https://mirror.bazel.build/zlib.net/zlib-1.2.11.tar.gz",
++        "https://zlib.net/zlib-1.2.11.tar.gz",
++    ],
++)
+diff --git a/reftable/zlib.BUILD b/reftable/zlib.BUILD
+new file mode 100644
+index 00000000000..edb77fdf8ee
+--- /dev/null
++++ b/reftable/zlib.BUILD
+@@ -0,0 +1,36 @@
++package(default_visibility = ["//visibility:public"])
++
++licenses(["notice"])  # BSD/MIT-like license (for zlib)
++
++cc_library(
++    name = "zlib",
++    srcs = [
++        "adler32.c",
++        "compress.c",
++        "crc32.c",
++        "crc32.h",
++        "deflate.c",
++        "deflate.h",
++        "gzclose.c",
++        "gzguts.h",
++        "gzlib.c",
++        "gzread.c",
++        "gzwrite.c",
++        "infback.c",
++        "inffast.c",
++        "inffast.h",
++        "inffixed.h",
++        "inflate.c",
++        "inflate.h",
++        "inftrees.c",
++        "inftrees.h",
++        "trees.c",
++        "trees.h",
++        "uncompr.c",
++        "zconf.h",
++        "zutil.c",
++        "zutil.h",
++    ],
++    hdrs = ["zlib.h"],
++    includes = ["."],
++)
 -- 
 gitgitgadget
 
