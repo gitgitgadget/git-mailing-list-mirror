@@ -2,107 +2,121 @@ Return-Path: <SRS0=Jtyc=AD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5613DC433E1
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 22:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C52FEC433DF
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 22:17:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DD2E2073E
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 22:03:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82CF320738
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 22:17:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="T6qbtFUF"
+	dkim=pass (1024-bit key) header.d=smartsoftwareinc.com header.i=@smartsoftwareinc.com header.b="h6gRFgPA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730805AbgFVWDp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Jun 2020 18:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43254 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727035AbgFVWDo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jun 2020 18:03:44 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A41C061573
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 15:03:43 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id o15so10528799vsp.12
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 15:03:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=bshHMxPNhi0eaKBsfaiPUwGdKfGZrrSXe7hU/0d+8PA=;
-        b=T6qbtFUFI6GAy1NBGyBypROga8+wV4d8plqRpuWIXwmgDT+SRy4V9Hi/azpfZrAlz/
-         gxMAHhQMJtMOr3I94lUBPI5tgUeX59r1JmKleMFgrlTMZHUjSIGu+ILMdEqWTwVLsd8O
-         cISC4VysmYswuAXKk3Sycp/JI1u2LM0iuDBNkCDU0nPB7U1JMZ9SBTlTJ7wt9g0u7jZz
-         C1BBCgeGU9IEAUH1p0ePnql2ckzkLkPGhb0DB+3xTlWhuWPzBSbLEpAvL1PFNTV41+iV
-         37jl2YZuJEkqvTA74fiPRI/rlnXcjXa1a4OEVoJTkn2fu3vXvhwxWWMAgbeQOVYnh8vs
-         0i9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=bshHMxPNhi0eaKBsfaiPUwGdKfGZrrSXe7hU/0d+8PA=;
-        b=rA1fEGNcWi4zi3tvf9OIJ2yIl+4r1+exx436uC0+40MrDXp4DFahdWtUQvJlS4/F68
-         NuGQf9mYFk/lDRoRMOeswPEnYtXn6k4AipcrnqkpXujB7q1vmOe1SCUVJHQFUTYm11PS
-         /FCKnWcxFq7SvA+wjfxrzWPxHJsbqqEeg58he8ZJp0pHgGzjk/qSFhFrPDbijQ31Kc45
-         l2E/XOt5YlKumNRXE83ots9mClcu8NynpVeMt4uX/uO95SKDLK8bEPw9SkdDnFIYVYYV
-         Atmpp0ZD8xwEm24buxR29UmwyBdkHfROHw664o4bZdDEgIDfY00COf+6Vz+fui497o0D
-         kMiA==
-X-Gm-Message-State: AOAM532wFXf4kaJqpIMgHvT1GoG3Jyvlr8XBZ5hgqTZxFWrAe1y25Zmj
-        fa8tYE+IAAIgmcBtvB3bkJbhYPFdMl7CSTOoeYQ5JQ7fB0I=
-X-Google-Smtp-Source: ABdhPJzW+yO61u6nvyaZVwZWCIcInoKtA+dsLlqM3A4evn6BWhV+w/oYDT+k3/o/1D86alPlyyiG2aYt0RFJK8Pdbws=
-X-Received: by 2002:a67:3211:: with SMTP id y17mr18782196vsy.56.1592863421765;
- Mon, 22 Jun 2020 15:03:41 -0700 (PDT)
+        id S1730933AbgFVWR1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Jun 2020 18:17:27 -0400
+Received: from mail.smartsoftwareinc.com ([24.230.151.194]:53778 "EHLO
+        mail.smartsoftwareinc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727018AbgFVWR0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jun 2020 18:17:26 -0400
+Received: from mward.lin.pirsss (unknown [10.0.0.166])
+        by mail.smartsoftwareinc.com (Postfix) with ESMTPSA id 68C1A63454;
+        Mon, 22 Jun 2020 17:17:22 -0500 (CDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=smartsoftwareinc.com;
+        s=default; t=1592864242;
+        bh=YtpLU/6qJTqKUiAIOEeR130+8j9Sk2U3w1b8JiFtB2Q=;
+        h=Subject:To:References:From:Date:In-Reply-To;
+        b=h6gRFgPAwA/mr0EfalgmDnoh6Jd60SoHAJdwCw8PZRclGzXd7J/H4yYWBDziVH5g9
+         PyJ6o0w8ldg9bXgIMq71bF7hF07I4kF6OIDl2Gzu7DRskVd7KQGCS8W8tpnEXRqiq2
+         6frIPl7/AXSnmkrAtliQDi5nHGZQwAyiECk7xKQo=
+Subject: Re: Git 2 force commits but Git 1 doesn't
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <dea24348-770c-1228-115d-23153fbecebd@smartsoftwareinc.com>
+ <20200622202122.GO6531@camp.crustytoothpaste.net>
+ <a42d038f-bf14-8f1a-927e-7488796e7710@smartsoftwareinc.com>
+ <20200622204346.GP6531@camp.crustytoothpaste.net>
+ <8ad16219-2426-6127-b41d-bb3007a9b993@smartsoftwareinc.com>
+ <20200622210953.GQ6531@camp.crustytoothpaste.net>
+From:   Michael Ward <mward@smartsoftwareinc.com>
+Organization: Smart Software Solutions, Inc.
+Message-ID: <2e43580c-9952-9ccf-6b35-27a4333fb83e@smartsoftwareinc.com>
+Date:   Mon, 22 Jun 2020 17:17:21 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Firefox/68.0 Thunderbird/68.8.0
 MIME-Version: 1.0
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 23 Jun 2020 00:03:30 +0200
-Message-ID: <CAFQ2z_NZbg4YoTo1vPaikfwYLMRZrx59bDMaeuczuJW2OG86DQ@mail.gmail.com>
-Subject: Reftable progress
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200622210953.GQ6531@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-smartsoftware-MailScanner-Information: Please contact the ISP for more information
+X-smartsoftware-MailScanner-ID: 68C1A63454.A6485
+X-smartsoftware-MailScanner: Found to be clean
+X-smartsoftware-MailScanner-SpamCheck: not spam (whitelisted),
+        SpamAssassin (not cached, score=-1.6, required 4, autolearn=not spam,
+        ALL_TRUSTED, BAYES_05, DKIM_SIGNED, DKIM_VALID, DKIM_VALID_AU)
+X-smartsoftware-MailScanner-From: mward@smartsoftwareinc.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi there,
+This is assuming that the repository is completely empty to start. Setup:
 
-I wanted to give a few updates on reftable. I'm posting a new version
-of the patch series separately.  It has a number of interesting
-improvements
+git clone [repository] repo1
+git clone [repository] repo2
+cd repo1
+echo "test1" > testfile
+git add testfile
+git commit -m 'initializing test from 1'
+git push
+cd ../repo2
+git pull
+cd ../repo1
 
-* The source in the git tree now uses the strbuf library, which was
-the largest stumbling block for integration.
+Now for the issue:
 
-*  The code is still completely self-contained (the
-REFTABLE_STANDALONE #define includes 100 lines worth of strbuf
-compatible code; enough to run the unittests.)
+echo "test1 update" >> testfile
+git add testfile
+git commit -m 'update test from 1'
+git push
+cd ../repo2
+echo "test2" >> testfile
+git commit -m 'update test from 2'
+git push
 
-*  The number of test failures has dipped below 1000.
+At this point using the git 2.26 client if I pull in repo1, the commit 
+with comment "update test from 1" is gone and the head is now the commit 
+from 2 with "update test from 2" as the comment along with a borked 
+tree. Using the 1.18 client, the push from 2 will prompt to pull first.
 
-I would like to post the next version on top of Phillip's patches that
-make ref_xxx functions take a struct repository* argument. Is there a
-branch that I can target for rebasing?
+Michael
 
-The bottom 2 commits should be OK to merge as is into next.
-("checkout: add '\n' to reflog message", "lib-t6000.sh: write tag
-using git-update-ref")
-
-The major open question is how to handle per-worktree refs.  My idea
-is that, on creation, the reftable backend can figure out if it is
-running in a worktree or in the main repository. If it is running in
-worktree X, we could read/write pseudorefs as ~X/PSEUDO_REF.
-
-Could we discuss next steps for merging at least the library? I think
-that would solve one of the major complaints, which is that history is
-kept in a separate repository.
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+On 6/22/20 4:09 PM, brian m. carlson wrote:
+> On 2020-06-22 at 20:52:50, Michael Ward wrote:
+>> Using the steps from my original email for how I had the repository set up
+>> (any user authentication scheme works), clone 2 copies from that repository
+>> (call them A and B). Make, commit, and push a change in A. Then make,
+>> commit, and push a change in B (without first pulling). With the 1.8 client,
+>> B will prompt that you're out of date and need to update. With the 2.26
+>> client, B's commit will be pushed and be forced.
+> I think we're going to need a more specific set of reproduction steps,
+> because adding the following to t5540 succeeds (starting on branch
+> "dev"):
+>
+> test_expect_success 'non-force push fails if not up to date' '
+> 	git push origin dev &&
+> 	git reset --hard HEAD^ &&
+> 	: >path3 &&
+> 	git add path3 &&
+> 	test_tick &&
+> 	git commit -m dev &&
+> 	test_must_fail git push origin dev &&
+> 	git push origin +dev
+> '
+>
+> That means that this is working in at least some cases.  If you're still
+> seeing this, can you provide a set of commands (e.g., a shell script) to
+> initialize and create a new repository that triggers this, provided that
+> "origin" refers to a suitable remote?
