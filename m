@@ -2,207 +2,181 @@ Return-Path: <SRS0=Jtyc=AD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC5F9C433E0
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 13:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F8A9C433DF
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 13:45:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A94A320738
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 13:40:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59E6D2070E
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 13:45:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oU97d9oK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729181AbgFVNkM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Jun 2020 09:40:12 -0400
-Received: from dovecot.mat.umk.pl ([158.75.2.81]:54291 "EHLO
-        poczta1.mat.umk.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728212AbgFVNkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jun 2020 09:40:12 -0400
-Received: from dovecot.mat.umk.pl (localhost.localdomain [127.0.0.1])
-        by poczta1.mat.umk.pl (Postfix) with ESMTP id D85079568C4;
-        Mon, 22 Jun 2020 15:40:07 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mat.umk.pl
-Received: from poczta1.mat.umk.pl ([127.0.0.1])
-        by dovecot.mat.umk.pl (poczta1.mat.umk.pl [127.0.0.1]) (amavisd-new, port 10024)
-        with LMTP id zpTooQcY4TQR; Mon, 22 Jun 2020 15:40:07 +0200 (CEST)
-Received: from [192.168.0.7] (host-89-229-7-83.dynamic.mm.pl [89.229.7.83])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jnareb)
-        by poczta1.mat.umk.pl (Postfix) with ESMTPSA id B8F3F9568C0;
-        Mon, 22 Jun 2020 15:40:06 +0200 (CEST)
-Cc:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [RFC] Metadata vs Generation Data Chunk
-To:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org
-References: <20200622093451.GA1719@Abhishek-Arch>
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <10d99e37-8870-6401-d9aa-21a359b30835@gmail.com>
-Date:   Mon, 22 Jun 2020 15:40:06 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1728404AbgFVNp2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Jun 2020 09:45:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50242 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728051AbgFVNp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jun 2020 09:45:27 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFED5C061573
+        for <git@vger.kernel.org>; Mon, 22 Jun 2020 06:45:26 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id s21so15622800oic.9
+        for <git@vger.kernel.org>; Mon, 22 Jun 2020 06:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=K1qcPmodWU4byqW3B7kTubKdHGYl3Oc+txyM91zs7F8=;
+        b=oU97d9oKLSlOjnzJ6Nlk1yy6oiAXOF1rdw/74YRUqovFUSNY85W4SutvV8XwloLSaD
+         4BwE9BrWxlyxXmMGSgUzp7iEwvvuvNOzyZH47vTehgz+OpiArxDrRUvZO7A/UmzbPVms
+         iCYTx/erLFO5ofShsdeTlO2aEB3suV+ckvQrBPM1jF/Ktvk4RrmUntOaEbnuSzGWd7qE
+         58xsrlfS3xb86G3IDH4cH1UWAgHge7dh+zIDI5JoMyyTEDPzcA+afb7OUIcrbqep/n0x
+         FbmxmtMpiJFimqor30i9nayMlRt0hOOEWRhFGGEZw2tbkeaMI117hp0vIZzq3CqLcm0v
+         MoWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=K1qcPmodWU4byqW3B7kTubKdHGYl3Oc+txyM91zs7F8=;
+        b=ln4BuMOj317JYoJuD3C/o/Qv97mHD80vEZDrIxOrpIR3t/365PjbDJX6RQDpFjpokT
+         8+hU4UxMvLAtbF3dzp0ExvZldSvqS+xZaGOE1zNyspj4RQWJiwlr5mhSnrkZujyx05dB
+         me+PvzswlazdbQ7pmAisAGcLc0VJ46bEhm455y/iMJ6fk8GnKfhPJjXhpsSzTI5Qe3E7
+         1Fy0aBOoBMNNKk5CVWw0Y3IHq5yERIW+Gc2n/UcaHUiH8+0vOeec6aWmtn3ZcG9mgoCL
+         lPMTCwB9m5bMWKy9ffCuK2YHYllIwdM0GK40vPauZlJvLlkxVcPS/C52JUWQ1phnc+RD
+         CfTg==
+X-Gm-Message-State: AOAM5311j3HgKx41dZDgJIu3tUk5bw6FTiDRNCzN/0LTY61sYh50Bc8X
+        OWZ0gVWrzeOMq1TV75daC/w=
+X-Google-Smtp-Source: ABdhPJyt6b06kcl9LMIpgodsW6goHBwCsfd/WRTjE9I87zctds6N8Bsd1axhE2YWZlJ8m/LdMBYLYw==
+X-Received: by 2002:aca:4c95:: with SMTP id z143mr12142527oia.43.1592833525964;
+        Mon, 22 Jun 2020 06:45:25 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id v14sm3202085oie.20.2020.06.22.06.45.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jun 2020 06:45:25 -0700 (PDT)
+Subject: Re: Possible git bug in commit-graph: "invalid commit position"
+To:     Michael Forney <mforney@mforney.org>,
+        Alex Riesen <alexander.riesen@cetitec.com>
+Cc:     git@vger.kernel.org, Gary Oberbrunner <garyo@oberbrunner.com>
+References: <CAFChFygiaMsUJC5Kfpnk26DLWbY0gPdNJpZ_gLMf4utZ6_oZxA@mail.gmail.com>
+ <CAFChFyi5J-mb+rshtF7U2m=MtPzEPUa+V1_qbEXC=-LdQ218yA@mail.gmail.com>
+ <d4313777-ce8c-0b64-997e-17cb719c9ab8@gmail.com>
+ <CAFChFyhZYm88cCo6X_XikT=HRQG9Pp0vyveXmAuComFUJYjRcA@mail.gmail.com>
+ <20200515120333.GA4677@pflmari>
+ <CAGw6cBuEshq18O_PrrGYuJi5VZ82XK3T9KuShneUqO2Ju0jtHw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0f03151c-d8ec-effc-a8f9-c4a3fc1325c7@gmail.com>
+Date:   Mon, 22 Jun 2020 09:45:24 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-In-Reply-To: <20200622093451.GA1719@Abhishek-Arch>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <CAGw6cBuEshq18O_PrrGYuJi5VZ82XK3T9KuShneUqO2Ju0jtHw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22.06.2020 at 11:34, Abhishek Kumar wrote:
-
-> One of the remaining pre-requisites for implementing generation number
-> v2 was distinguishing between corrected commit dates with monotonically
-> increasing offsets and topological level without incrementing generation
-> number version.
+On 6/21/2020 4:45 PM, Michael Forney wrote:
+> On 2020-05-15, Alex Riesen <alexander.riesen@cetitec.com> wrote:
+>> Gary Oberbrunner, Tue, Feb 04, 2020 23:33:42 +0100:
+>>> Sorry for the long reply delay; the bug went away and only just showed
+>>> up again. Here's the info you requested.
+>>> I'm now running git 2.25.0.
+>>
+>> I hit a very similar problem today with 2.26.0. Also in a submodule.
+>>
+>> Removing and regenerating the commit graph did not help and I did not have
+>> the
+>> commit-graphs directory (only a file). "git commit-graph verify" does not
+>> find
+>> anything. Switching writeCommitGraph on and regenerating the commit graph
+>> makes no difference.
+>>
+>> I can trigger it reliably by visiting the broken(?) commit in supermodule
+>> with:
+>>
+>>     git show --submodule=log <commit>
+>>
+>> I see nothing special in the commit invovled. It is just a single commit in
+>> my
+>> case, and the commit is a merge of two branches.
 > 
-> Two approaches were proposed [1]:
-> 1. New chunk for commit data (generation data chunk, "GDAT")
-> 2. Metadata/versioning chunk
-
-Actually in [1] there was also proposed another distinct approach,
-namely to 'rename' the "CDAT" chunk to something else, like "CDA2"
-(or proposed here "GDAT").
-
-If I read the code correctly, with old Git if one of required chunks
-is missing then Git would continue work as if commit-graph was not
-present -- as opposed to current handling of unknown commit-graph
-file format version number, where Git would stop working with an
-error message.
-
+> I hit this bug a while back, and it went away after I deleted the
+> commit-graph in the submodule and regenerated it (IIRC).
 > 
-> Since both approaches have their advantages and disadvantages, I wrote
-> up a prototype [2] to investigate their performance.
+> I just ran into it again (on 2.27.0), and this time, I did some digging.
 > 
-> [1]: https://lore.kernel.org/git/86mu87qj92.fsf@gmail.com/
-> [2]: https://github.com/abhishekkumar2718/git/pull/1
-
-That's very nice.  Thanks for investigating that.
-
+> I have a repository containing a number of submodules, and the bug
+> appeared after I updated one of the submodules, and then looked at
+> `git log -p` with diff.submodule = log. Just like Alex, I can reliably
+> trigger the error with `git show --submodule=log <commit>`.
 > 
-> TL;DR: I recommend we should use generation data chunk approach.
+> I rebuilt git with some print statements to try to see what's going
+> on, and got the following:
 > 
-> Generation Data Chunk
-> =====================
+> 	/src/oasis/.git/modules/pkg/file/src c81d1ccbf4c224af50e6d556419961dba72666c7
+> 		pos: 4986, num_commits: 6452, num_commits_in_base: 0
+> 	/src/oasis/.git/modules/pkg/file/src 9f2f793847c6aeab9501287b6847dc842c84630f
+> 		pos: 3964, num_commits: 6452, num_commits_in_base: 0
+> 	/src/oasis/.git/modules/pkg/file/src fd7eb1f793944635b92bfa56a84a4dc1dbefb119
+> 		pos: 6383, num_commits: 6452, num_commits_in_base: 0
+> 	/src/oasis/.git/modules/pkg/file/src d955cefc956ba537cfc0556023a65fe80bd2d82b
+> 		pos: 5436, num_commits: 6452, num_commits_in_base: 0
+> 	/src/oasis/.git/modules/pkg/file/src 0c79c693d6a86f7ad7ada2a9a1eb3bdf483f77cc
+> 		pos: 301, num_commits: 6452, num_commits_in_base: 0
+> 	.git fa09b87efa9b9664e4e53ab768cfa5f51a6c6fa2
+> 		pos: 6292, num_commits: 5177, num_commits_in_base: 0
+> 	fatal: invalid commit position. commit-graph is likely corrupt
 > 
-> We could move the generation number v2 into a separate chunk, storing
-> topological levels in CDAT and the corrected commit date into a new,
-> "GDAT" chunk.  Thus, old Git would use generation number v1, and
-> new Git would use corrected commit dates from GDAT.
+> Using `git commit-graph verify`, I confirmed that the main
+> repository's commit graph contains 5177 commits, and the submodule
+> repository's commit-graph contains 6452 commits. Commit fa09b8 is part
+> of the submodule, not the main repository, so it makes sense that it
+> is an invalid commit for the main repositories commit-graph.
 > 
-> Using generation data chunk has the advantage that we would no longer
-> be restricted to using 30 bits for generation number. It also works
-> well for commit-graph chains with a mix of v1 and v2 generation numbers.
+> So, this seems a little fishy. fill_commit_in_graph is getting called
+> with the main repository and a commit belonging to the submodule.
+> Looking through the call stack in gdb, I see that the initial calls to
+> fill_commit_in_graph come from show_submodule_header, which computes
+> left, right, and merge_bases. Then, those commits are passed to
+> prepare_submodule_summary, but this function does *not* accept a
+> submodule parameter. prepare_submodule_summary calls
+> repo_init_revisions with the_repository, which seems to be the source
+> of the problem. I think it should be using the submodule repository
+> instead.
 > 
-> However, it increases the time required for I/O as commit data and
-> generation numbers are no longer contiguous.
+> I changed prepare_submodule_summary to accept a repository and to use
+> that instead, but the issue persisted. Digging deeper, this is because
+> revision.c:process_parents uses parse_commit_gently, which is a
+> synonym for repo_parse_commit_gently(the_repository, ...). I changed
+> it to use repo_parse_commit_gently(revs->repo, ...), and this time,
+> the problem went away.
 > 
-> Note: While it also increases disk space required for storing
-> commit-graph files by 8 bytes per commit, I don't consider it relevant,
-> especially on modern systems. A repo of the size of Linux repo would be
-> larger by a mere 7.2 Mb.
+> I'm not very familiar with the git codebase, but am I on the right
+> track here? I also noticed a number of other calls to
+> parse_commit_gently in revision.c, and I think those should pass
+> revs->repo as well. Does that sound right? If so, I can send a patch
+> to fix these issues.
 
-All right.
+This is some good digging, and I think you are absolutely correct
+with the root cause. The dependence on the_repository is still
+something that is being worked on in the Git codebase (but less
+frequently lately) and trips up submodule things like this.
 
-Another advantage: we don't have to store the corrected committer date
-_offset_, we can store the date (as epoch) directly.  This saves some
-calculation, though a minuscule amount.
+I think a simple method swap would be a good patch to send, and
+you can include many of the details above in the commit message.
+Is that a contribution you have time to make? I'll gladly review
+it.
 
-Yet another advantage: we don't need backward-compatibility for
-generation number v2, i.e. corrected commit date.
-
-Another disadvantage: we need to compute both topological levels and
-corrected commit date when creating a commit-graph file or a chunk of
-it.  This means that `git commit-graph write` could be slightly more
-expensive.
-
-> 
-> Metadata / Versioning Chunk
-> ===========================
-> 
-> We could also introduce an optional metadata chunk to store generation
-> number version and store corrected date offsets in CDAT. Since the
-> offsets are backward compatible, Old Git would still yield correct
-> results by assuming the offsets to be topological levels. New Git would
-> correctly use the offsets to create corrected commit dates.
-
-This also means that we need to use backward-compatible generation
-number v2, that is corrected commit date with strictly monotonic
-offsets.  Which may lead to more cases where 30 bits for label is not
-enough, and thus worse performance (no detailed reachability
-information for newest commits).
-
-> 
-> It works just as well as generation number v1 in parsing and writing
-> commit-graph files.
-> 
-> However, the generation numbers are still restricted to 30 bits in CDAT
-> chunk and it does not work well with commit-graph chains with a mix of
-> v1 and v2 generation numbers.
+Thanks,
+-Stolee
 
 
-CDAT chunk replaced with another chunk
-======================================
 
-In this approach the "CDAT" chunk is missing from the commit-graph file.
-We can craft the replacement ("CDA2") however we like, but it can also
-look like the "CDAT" chunk, only with the offsets for corrected commit
-date rather than topological level for generation number part (30 bits).
-
-If we choose to follow the "CDAT" format (modified), then the file
-size would not change, and neither would change the amount of I/O
-needed -- there would be the same access structure as in current
-version.
-
-There should be no confusion with a mix of v1 and v2 generation numbers.
-
-The disadvantage is of course that older version of Git would no longer
-be able to make use of serialized commit-graph if the file was written
-by newer version of Git.
-
-> 
-> Performance
-> ===========
-
-What is the repository where those benchmarks took place?
-
-> | Command                        | Master | Metadata | Generation Data |
-> |--------------------------------|--------|----------|-----------------|
-> | git commit-graph write         | 14.45s | 14.28s   | 14.63s          |
-> | git log --topo-order -10000    | 0.211s | 0.206s   | 0.208s          |
-> | git log --topo-order -100 A..B | 0.019s | 0.015s   | 0.015s          |
-> | git merge-base A..B            | 0.137s | 0.137s   | 0.137s          |
-
-Nice.
-
-How those two (or three) approaches work on gen-test [3] test cases,
-both in terms of commits walked (extracted via trace2 mechanism) and
-actual wall-time clock, like in the result above?
-
-[3]: https://github.com/derrickstolee/gen-test
-
-> - Metadata and generation data chunks perform better than master on
->    using commit-graph files since they use corrected commit dates.
-> 
-> - The increased I/O time for parsing GDAT does not affect performance as
->    much as expected.
-> 
-> - Generation data commit-graph takes longer to write since more
->    information is written into the file.
-> 
-> As using the commit-graph is much more frequent than writing, we can
-> consider both approaches to perform equally well.
-> 
-> I prefer generation data chunk approach as it also removes 30-bit length
-> restriction on generation numbers.
-
-Thank you for your work.
-
-Best,
-
-P.S. I hope I haven't sent it twice...
--- 
-Jakub Narębski
