@@ -2,109 +2,117 @@ Return-Path: <SRS0=Jtyc=AD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA871C433DF
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 19:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FACCC433DF
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 19:41:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91DF220702
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 19:40:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75D5C20767
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 19:41:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=smartsoftwareinc.com header.i=@smartsoftwareinc.com header.b="ck7Yod4o"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pTug6ZS/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728308AbgFVTkV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Jun 2020 15:40:21 -0400
-Received: from mail.smartsoftwareinc.com ([24.230.151.194]:35534 "EHLO
-        mail.smartsoftwareinc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728068AbgFVTkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jun 2020 15:40:20 -0400
-Received: from mward.lin.pirsss (unknown [10.0.0.166])
-        by mail.smartsoftwareinc.com (Postfix) with ESMTPSA id D9A506331A
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:40:15 -0500 (CDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=smartsoftwareinc.com;
-        s=default; t=1592854815;
-        bh=UGN1uAH5PghRcT4AC8luw/egk9VR1aa5IcS4OI81nrk=;
-        h=To:From:Subject:Date;
-        b=ck7Yod4ohcpsRByRAvETUiY9WwTk5nxB3gc4XRHtj0kAztzBtCMZ1YWY7DlHEailW
-         LAmHx/z0kSTu2XozYLcUnwZEWHht7ppwoHMXJlAvzh1dH1dMz4F7cOPa1ehUcYphG/
-         sJPEsq0LAQSlRKJSkRep8sn2Kxf7OWYD6ZV7TUms=
-To:     git@vger.kernel.org
-From:   Michael Ward <mward@smartsoftwareinc.com>
-Subject: Git 2 force commits but Git 1 doesn't
-Organization: Smart Software Solutions, Inc.
-Message-ID: <dea24348-770c-1228-115d-23153fbecebd@smartsoftwareinc.com>
-Date:   Mon, 22 Jun 2020 14:40:15 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Firefox/68.0 Thunderbird/68.8.0
+        id S1728508AbgFVTla (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Jun 2020 15:41:30 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40080 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728447AbgFVTla (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Jun 2020 15:41:30 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B4F2860436;
+        Mon, 22 Jun 2020 19:41:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1592854889;
+        bh=zEYyN+tNGWIRtVWrt56UyQUjwU2sDTzXJQ8vVCUazHU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=pTug6ZS/zdTUQUDzY/kF/X3yzy+idDBWZQZACurs+LQZdzvlTUkAdOEIkblamlA8g
+         K4psjytKEENb0qupIajWY74BaDJT6TvR+HmbeDM70M1+wGAn4TiaGyHaO7AQS83BhC
+         VIu3MO9og63Afy02LTtgz4bNcpw70RwCMrfqEDsVOX0wAQvpjQ6SjAA4vy+Yk/+Fti
+         oYqORE9nKV3KFhPvY+tv853pZvL9ZEoJegMbuWik5J4UD3JIgLemk7RG0ygGRZMq5B
+         yfho6om/aVWkiEP+2aufXWw4/W72yLpNpdCCgSddc2M2THq5K5WjV/6WSFhEhIn4i0
+         RBXP1/aGhUOMIDTvq5LPgFc6phbbt68jJ3uEOaXMYSANYgDdlnMPMjxZGsrD65CDYm
+         0H6fOSD6IQXzNe701Azs4Hst1rOWfZ6YAXADoQwKyQIKlgWUCUCoNfYeY0TUKEF7Ys
+         ooo3nheRrmxaryQ1ra0PSEG1w+EBekyJjt82xR+HYxwOniCITd7
+Date:   Mon, 22 Jun 2020 19:41:22 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Tiran Meltser <Tiran.Meltser@mavenir.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Amir Yosef <Amir.Yosef@mavenir.com>
+Subject: Re: Request for adding a simple mechanism to exclude files from Git
+ merge operation
+Message-ID: <20200622194122.GN6531@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Tiran Meltser <Tiran.Meltser@mavenir.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Amir Yosef <Amir.Yosef@mavenir.com>
+References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-smartsoftware-MailScanner-Information: Please contact the ISP for more information
-X-smartsoftware-MailScanner-ID: D9A506331A.A8233
-X-smartsoftware-MailScanner: Found to be clean
-X-smartsoftware-MailScanner-SpamCheck: not spam (whitelisted),
-        SpamAssassin (not cached, score=-1.6, required 4, autolearn=not spam,
-        ALL_TRUSTED, BAYES_05, DKIM_SIGNED, DKIM_VALID, DKIM_VALID_AU)
-X-smartsoftware-MailScanner-From: mward@smartsoftwareinc.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="R92lf0Oi2sxyK3LA"
+Content-Disposition: inline
+In-Reply-To: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have some repositories we are hosting here using Apache's DAV module 
-to handle remote connections.
 
-The repositories are created using the following:
+--R92lf0Oi2sxyK3LA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-mkdir [reponame].git
-cd [reponame].git
-git --bare init
-git update-server-info
+On 2020-06-20 at 18:21:40, Tiran Meltser wrote:
+> Hi,
+> This topic is quite common in various use cases (e.g. production configur=
+ation vs. staging one) and there are quite a few talks about it in the web.
+> Nevertheless, there is no specific solution to this problem, only partial=
+ workarounds (including the famous merge driver =E2=80=9Cours=E2=80=9D).
 
-Our Apache location directive is as follows:
+In general, this is a hard problem.  When you perform a merge, you're
+asking to incorporate changes from both heads against a common merge
+base.  What does it mean when you want to merge two branches together
+but not make any changes?  Which version do you want, ours or theirs?
+Normally merges are symmetric, so if you want non-symmetric behavior,
+you have to define what it's supposed to be.
 
-<Location /[reponame].git>
-         DAV on
-         AuthType Basic
-         AuthName "Git"
-         AuthBasicProvider ldap
-         AuthLDAPUrl [ldap server info]
-         <RequireAny>
-                 require [ldap filter]
-         </RequireAny>
-</Location>
+In addition, it's probably not the case that you want _never_ to modify
+the contents of a file on a merge.  For example, if you have a feature
+branch to update the production configuration to fix an issue or add a
+new option, you probably do very much want that merge to succeed and not
+be a no-op, so a configuration in .gitattributes may not be helpful for
+your use case.
 
-The repository config generates with the values in the core section 
-below, and we add the receive and advice sections:
+Because this is such a tricky problem and there usually isn't a
+consistent set of behavior that people _always_ want to apply (unlike,
+say, line endings), the general recommendation here is that folks just
+avoid this problem altogether.  For example, your repository can contain
+configs for development, production, and staging and a script can copy
+the appropriate one into place based on an environment variable or
+hostname.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-[core]
-         repositoryformatversion = 0
-         filemode = true
-         bare = true
-[receive]
-         denyNonFastForwards = true
-         denyDeletes = true
-[advice]
-         pushFetchFirst = true
+--R92lf0Oi2sxyK3LA
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The odd behavior comes when we have git 1 vs git 2 clients attempting to 
-push in changes on the same branch. Git 1 clients will prompt the user 
-that they are out of date and need to pull. Git 2 clients don't and will 
-force push and overwrite the head revision. This occurs with either Git 
-1 or Git 2 on the server.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-We've tested this with the latest Git 2 client on Fedora 32 and Git 1 
-client on CentOS 7.8. The other oddity is that even when the Git 2 
-client does a pull to receive changes before making changes and pushing, 
-when another user pulls the change, there is a message shown that a 
-commit was forced.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXvEJYQAKCRB8DEliiIei
+gcIGAQDnnmyfx1xe6ZhX7qa/nCTESFXvzSujywHNnnuIAeOOkgEA+XQyFMJywk4g
+5XEdfEtvC08A1PT/gUcwogdm/BlTBg8=
+=P4Hq
+-----END PGP SIGNATURE-----
 
-What am I missing in the repository settings to prevent forced pushes 
-from working and force users to pull before being able to push?
-
-Thanks!
-
-Michael Ward
+--R92lf0Oi2sxyK3LA--
