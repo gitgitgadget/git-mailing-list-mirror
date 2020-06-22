@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A18BDC433E0
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B14FC433E1
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F4772073E
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72844206E2
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nPSIX5qZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apbOyxv+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730796AbgFVVzf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Jun 2020 17:55:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41952 "EHLO
+        id S1730801AbgFVVzg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Jun 2020 17:55:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730749AbgFVVzb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jun 2020 17:55:31 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E159FC061573
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:30 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id r9so1070427wmh.2
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:30 -0700 (PDT)
+        with ESMTP id S1730754AbgFVVzc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jun 2020 17:55:32 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDAF1C061795
+        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:31 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id z13so6566356wrw.5
+        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pOs6eMd+RC2vCLBLhB9pmRACQnnoM2tWyOisjR62G7U=;
-        b=nPSIX5qZveIG/H30YtMfri/vj9s6WHwkd0j+uIctb4HDyTp67/ajsW5rEE531wgPxQ
-         LftiPx+xSfGgvqZK8XCqHNdBSxrS7EOA9mhE/teO4loG2FUm0C9pvNDhIRqAxETxBgS5
-         K2pU8ByBC2PM6YHShz7ouWPvERHrAWYQm16WCq5XofldzwRb4K/KBHcFzdJypywrG3IX
-         sHFTtHYvD/NIbFZG8Fw16CLEF6GJzXk4sD7tRU9liLkU4bYtWt2BCjhQ3YVEEgIG2hRl
-         rkn8rN3rMS2KNP0hZerMhtw6g+OfOn8UQvci4a+VmdCUSSP99/esfdF380uNzxF6IZJj
-         mwIw==
+        bh=u1RHlxAFpwWBSV/HcKvyES6SzICWXlSchJDIeLwacbA=;
+        b=apbOyxv+yvR1Y9q9xfJQEX6qwp+g0/JJE3GITeSGu4XrpmNIUkU6SqZ77aop5F8E/g
+         8aJAQJful045P3hfeIGwwg2ipLphqOottuBcUZq+41GZrTG5oci9ClIKFs1V10UT0wzn
+         HVAyq2x73+6Pj7LYruzPaXycwCVnP9pYgyoFloOYGXebyeMPRnahnynCyh/49l6/BsPO
+         gHFcVTxlMbP3Mez73o6BX8GQKM/GsyeG2jkXzpsAGVOUlaHGQ47DehcL0bSQW0ElI3MZ
+         L8GD3A3Y3m9pu37ZUy8XeIIQYdU3ohHqHqx6DKeTwZL2WIRrpPxMex7f6HQKbbafOXUD
+         bvlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pOs6eMd+RC2vCLBLhB9pmRACQnnoM2tWyOisjR62G7U=;
-        b=cEKfnjYoyBlkj7aEPe7TQQv+Mnv4L29/ncEztGCW+gK6uMxKEkbIhGPVZ8+HiIGTYl
-         GP2yVYedYx3hnUF3Q1Q8IPww7AfljBHsM13T5aFjoe4Ho8daDc5Y0XGuygy2AORjCnfz
-         ZTvjsl84qO2gP2FZCKcfiTsbD+zza37wisS1RJOEr0RTLsR3HntLFF40+H7/6iaqk0L9
-         o8Zga+A3T9EDhHqVLYlQwr054yu5ftkYPO7hB6TkAyP3WfYZb06sSos6ReeFZUZVNrcb
-         GnRDmL2X0B4r394/Jx+Q1nB/G4CcRnUkUqyLLphh1N/GYBSTBI9jO9Hl/km3i1W6M8jO
-         R38g==
-X-Gm-Message-State: AOAM532UM5m5f0J182PO9ktpHEdLhddEzaS7HoThacC3d73xme1Xokiw
-        qpm/FR1RMVSUB93vyElsn0r5pb4c
-X-Google-Smtp-Source: ABdhPJyxau9Ha9uHmd+/1vQ+bgo2ogSLn0nHmQzaqEXQSUwlhZ300rNproHNeygXZ/fd9qtZUV2Uiw==
-X-Received: by 2002:a1c:9ac2:: with SMTP id c185mr10022216wme.24.1592862929537;
-        Mon, 22 Jun 2020 14:55:29 -0700 (PDT)
+        bh=u1RHlxAFpwWBSV/HcKvyES6SzICWXlSchJDIeLwacbA=;
+        b=NOuV8V+bt33asDF7607GhvLRzLK8k3OJZlMRYuJMtMV/P8Clej7G2PJ7p+If/+mD8c
+         iVdf2zyVMJSYyKoKaBydSCK0WwN1mF2nGYUJmU0k3JH3NfvS2cKn9TQkmupa8Ps0F+/e
+         NL5rYsfLyMNkSEaL3WT0OSIoae0/XH8kxwIEJxQLnuvPKWWzAooDK+tIBo1bg4lmv+ZX
+         W3nQiXm/Y40utqXOSYzRORsPyyJG/cAO8fLk9hcp0QM17ois4ozcOnmNKvoPI/ftokIg
+         BykHACt6q2voC7Oht+2DSAbzKjF7sELYiWz6zbEZ9ddqEz1WZoBIZ7i71Tg+a5AoEIhg
+         iOww==
+X-Gm-Message-State: AOAM5307+vxJg8JZfTwAEIFqvwY+XnQ3ZTKX8l9p3uiofzjdpbCwXWAO
+        DO9yZKdP3kvmmIKtvzpkdCP4aGAS
+X-Google-Smtp-Source: ABdhPJz/WTNS4jPfNBZcTcSXUQuho/72ul1CR925Wmi4Jl3xEZxWB/3kb+Ze/zcAES2aJAhIvkJQ1Q==
+X-Received: by 2002:a05:6000:47:: with SMTP id k7mr20358426wrx.233.1592862930351;
+        Mon, 22 Jun 2020 14:55:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y17sm20456205wrd.58.2020.06.22.14.55.28
+        by smtp.gmail.com with ESMTPSA id f14sm1726214wro.90.2020.06.22.14.55.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 14:55:28 -0700 (PDT)
-Message-Id: <4e52ec0dbc18093fe8305b1babae1868c78bccd7.1592862920.git.gitgitgadget@gmail.com>
+        Mon, 22 Jun 2020 14:55:29 -0700 (PDT)
+Message-Id: <37e350af159ac8c492e3915df49a518a8e31b7a5.1592862921.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
 References: <pull.539.v17.git.1592335242.gitgitgadget@gmail.com>
         <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Jun 2020 21:55:08 +0000
-Subject: [PATCH v18 07/19] Treat REVERT_HEAD as a pseudo ref
+Date:   Mon, 22 Jun 2020 21:55:09 +0000
+Subject: [PATCH v18 08/19] Move REF_LOG_ONLY to refs-internal.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,129 +78,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+REF_LOG_ONLY is used in the transaction preparation: if a symref is involved in
+a transaction, the referent of the symref should be updated, and the symref
+itself should only be updated in the reflog. Other ref backends will need to
+duplicate this logic.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- path.c      |  1 -
- path.h      |  8 +++-----
- sequencer.c | 16 +++++++++-------
- wt-status.c |  2 +-
- 4 files changed, 13 insertions(+), 14 deletions(-)
+ refs/files-backend.c | 7 -------
+ refs/refs-internal.h | 7 +++++++
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/path.c b/path.c
-index 783cc2ae819..7b385e5eb28 100644
---- a/path.c
-+++ b/path.c
-@@ -1528,7 +1528,6 @@ char *xdg_cache_home(const char *filename)
- 	return NULL;
- }
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index df7553f4cc3..141b6b08816 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -38,13 +38,6 @@
+  */
+ #define REF_NEEDS_COMMIT (1 << 6)
  
--REPO_GIT_PATH_FUNC(revert_head, "REVERT_HEAD")
- REPO_GIT_PATH_FUNC(squash_msg, "SQUASH_MSG")
- REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
- REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
-diff --git a/path.h b/path.h
-index 8941c018a99..e7e77da6aaa 100644
---- a/path.h
-+++ b/path.h
-@@ -170,7 +170,6 @@ void report_linked_checkout_garbage(void);
- 	}
+-/*
+- * Used as a flag in ref_update::flags when we want to log a ref
+- * update but not actually perform it.  This is used when a symbolic
+- * ref update is split up.
+- */
+-#define REF_LOG_ONLY (1 << 7)
+-
+ /*
+  * Used as a flag in ref_update::flags when the ref_update was via an
+  * update to HEAD.
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 59b053d53a2..dc9e8d3a92b 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -31,6 +31,13 @@ struct ref_transaction;
+  */
+ #define REF_HAVE_OLD (1 << 3)
  
- struct path_cache {
--	const char *revert_head;
- 	const char *squash_msg;
- 	const char *merge_msg;
- 	const char *merge_rr;
-@@ -181,12 +180,11 @@ struct path_cache {
- 	const char *shallow;
- };
- 
--#define PATH_CACHE_INIT                                              \
--	{                                                            \
--		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL \
-+#define PATH_CACHE_INIT                                        \
-+	{                                                      \
-+		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL \
- 	}
- 
--const char *git_path_revert_head(struct repository *r);
- const char *git_path_squash_msg(struct repository *r);
- const char *git_path_merge_msg(struct repository *r);
- const char *git_path_merge_rr(struct repository *r);
-diff --git a/sequencer.c b/sequencer.c
-index 26286ec8d08..25ef9fc773d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2317,8 +2317,10 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
- 		need_cleanup = 1;
- 	}
- 
--	if (file_exists(git_path_revert_head(r))) {
--		if (!unlink(git_path_revert_head(r)) && verbose)
-+	if (refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD")) {
-+		if (!refs_delete_pseudoref(get_main_ref_store(r), "REVERT_HEAD",
-+					   NULL) &&
-+		    verbose)
- 			warning(_("cancelling a revert in progress"));
- 		opts.action = REPLAY_REVERT;
- 		need_cleanup = 1;
-@@ -2677,7 +2679,7 @@ static int create_seq_dir(struct repository *r)
- 	const char *in_progress_error = NULL;
- 	const char *in_progress_advice = NULL;
- 	unsigned int advise_skip =
--		file_exists(git_path_revert_head(r)) ||
-+		refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") ||
- 		refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD");
- 
- 	if (!sequencer_get_last_command(r, &action)) {
-@@ -2778,7 +2780,7 @@ static int rollback_single_pick(struct repository *r)
- 	struct object_id head_oid;
- 
- 	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
--	    !file_exists(git_path_revert_head(r)))
-+	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
- 		return error(_("no cherry-pick or revert in progress"));
- 	if (read_ref_full("HEAD", 0, &head_oid, NULL))
- 		return error(_("cannot resolve HEAD"));
-@@ -2872,7 +2874,7 @@ int sequencer_skip(struct repository *r, struct replay_opts *opts)
- 	 */
- 	switch (opts->action) {
- 	case REPLAY_REVERT:
--		if (!file_exists(git_path_revert_head(r))) {
-+		if (!refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD")) {
- 			if (action != REPLAY_REVERT)
- 				return error(_("no revert in progress"));
- 			if (!rollback_is_safe())
-@@ -4210,7 +4212,7 @@ static int continue_single_pick(struct repository *r)
- 	const char *argv[] = { "commit", NULL };
- 
- 	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
--	    !file_exists(git_path_revert_head(r)))
-+	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
- 		return error(_("no cherry-pick or revert in progress"));
- 	return run_command_v_opt(argv, RUN_GIT_CMD);
- }
-@@ -4390,7 +4392,7 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
- 		/* Verify that the conflict has been resolved */
- 		if (refs_ref_exists(get_main_ref_store(r),
- 				    "CHERRY_PICK_HEAD") ||
--		    file_exists(git_path_revert_head(r))) {
-+		    refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD")) {
- 			res = continue_single_pick(r);
- 			if (res)
- 				goto release_todo_list;
-diff --git a/wt-status.c b/wt-status.c
-index 96302be030b..81b768504a1 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1642,7 +1642,7 @@ void wt_status_get_state(struct repository *r,
- 		oidcpy(&state->cherry_pick_head_oid, &oid);
- 	}
- 	wt_status_check_bisect(NULL, state);
--	if (!stat(git_path_revert_head(r), &st) &&
-+	if (refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD") &&
- 	    !get_oid("REVERT_HEAD", &oid)) {
- 		state->revert_in_progress = 1;
- 		oidcpy(&state->revert_head_oid, &oid);
++/*
++ * Used as a flag in ref_update::flags when we want to log a ref
++ * update but not actually perform it.  This is used when a symbolic
++ * ref update is split up.
++ */
++#define REF_LOG_ONLY (1 << 7)
++
+ /*
+  * Return the length of time to retry acquiring a loose reference lock
+  * before giving up, in milliseconds:
 -- 
 gitgitgadget
 
