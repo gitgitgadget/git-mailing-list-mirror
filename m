@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B1E9C433E1
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BACCC433E0
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D9D720767
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57D2D20767
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XlATvhSw"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="iHOfxmG2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730260AbgFVSE2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Jun 2020 14:04:28 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39982 "EHLO
+        id S1730324AbgFVSEb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Jun 2020 14:04:31 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39990 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730204AbgFVSE0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 Jun 2020 14:04:26 -0400
+        by vger.kernel.org with ESMTP id S1730274AbgFVSEa (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Jun 2020 14:04:30 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2158B60A5C;
-        Mon, 22 Jun 2020 18:04:25 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 949A260A63;
+        Mon, 22 Jun 2020 18:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592849065;
-        bh=CKXqyLpVG2H0LquA9U6HCRvE2fzakReJAFg20+nBFT0=;
+        s=default; t=1592849069;
+        bh=ackgtsKGAbZAljcOkN+4IxjqUnwTxVQfXHXDz875pzU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=XlATvhSwkcfdsjyvDFHDWNLjW/QiBU9fpXyLXdiEFrmfvlM4uS8IgYASNhJfDcnIl
-         4SMGO7SxMJk89c1kAZu3pu4scbopV0Q/YYLwn5TKwbMVq/mQN1kGs6CCeUbxskr0zO
-         w8TUg+z+ztRghmJGdg8rcsVLK4TzTl1UCUArTK7Tg4dCa+O/IP6y3IERXwt5tzxsMo
-         ZhyeSK0FSJYjCqJy879bSG9HH3yW/gwpYr8uAHf8X/1CLpLzPovO/j1CNUZkIVs87K
-         L7ReNBoPIsTvUEjNsCHkIzebb3Zd56gz+dpsbdzUoh0iXb9Ww6KJYlAlhSmFK8l8Xo
-         UfhtRcLY+FC5rbXD7AjlCuGmGkl/7zAcih69xlS6/55MqontUN7p2sbImVLbYoT/Cl
-         uF61TMJYfCwmy9BYgqV/5Rc8qojQ8qAtOWD3MJKfHIz7XQrfCb/nIcVT7N7ducOM8F
-         i98Z+d2LvOglzlBcmR2kb2tp1oqawoJGDFuJzCt5T8KvR2GE+Ts
+        b=iHOfxmG2JyQU/lOiJqOGepYGYhIp6PGob3UPj5WSBuFBEKI/gVUJt9EbuhK8G2UzX
+         eosBfWutnd39as+aavBViIa3na9qZZ2lNerBsQVZIjG2/VQaMcYcb54o3ylVjE8w/P
+         +kWusB1WdQArYl0NjAQg9OXayRoADHn7vlJhNWUksWO0HTtH2wVJWcCRzfvv6G+Yce
+         ymjt7iI/C7Rohg68APmGhaZh3G0xYqxv2pxa91GLOPy8lYc+HWT7Q18JTCU/56c8Y0
+         +NImdyleomN0x6ZriiZpwEPhEgWA8iHy9X7D7U1CvaiAezvHPsxQlPK+kiSs9CvU5Y
+         5cpAha0SK3SR+JtvnmBvyNgWHYmih/yzOvcejZZeZ3Gn7ftMbN0WtPeSQtFroyo/kv
+         nR0hFb3Hxvhsnvw3nkdsPvQg8vHOki0ny6HeCUEFpVzdCrg1TQk/BkTtcrY8S2QzyZ
+         Yyood0YPywaDJLO6V9xi1SgziPgBtN4Tp5GUnc/MBUDx2/uU/Jb
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Andreas Schwab <schwab@linux-m68k.org>, Eric Wong <e@80x24.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 02/14] t9168: make test hash independent
-Date:   Mon, 22 Jun 2020 18:04:06 +0000
-Message-Id: <20200622180418.2418483-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 08/14] perl: create and switch variables for hash constants
+Date:   Mon, 22 Jun 2020 18:04:12 +0000
+Message-Id: <20200622180418.2418483-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200622180418.2418483-1-sandals@crustytoothpaste.net>
 References: <20200619223947.947067-1-sandals@crustytoothpaste.net>
@@ -58,52 +58,142 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of stripping off the first 41 characters of git log output,
-let's just strip off the first space-separated component, which will
-work for any size hash.
+git-svn has several variables for SHA-1 constants, including short hash
+values and full length hash values.  Since these are no longer SHA-1
+specific, let's start them with "oid" instead of "sha1".  Add a
+constant, oid_length, which is the length of the hash algorithm in use
+in hex.  We use the hex version because overwhelmingly that's what's
+used by git-svn.
+
+We don't currently set oid_length based on the repository algorithm, but
+we will in a future commit.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9168-git-svn-partially-globbed-names.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ git-svn.perl           | 14 ++++++++------
+ perl/Git/SVN.pm        | 10 +++++-----
+ perl/Git/SVN/Editor.pm |  2 +-
+ perl/Git/SVN/Log.pm    |  2 +-
+ 4 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/t/t9168-git-svn-partially-globbed-names.sh b/t/t9168-git-svn-partially-globbed-names.sh
-index bdf6e84999..854b3419b2 100755
---- a/t/t9168-git-svn-partially-globbed-names.sh
-+++ b/t/t9168-git-svn-partially-globbed-names.sh
-@@ -49,7 +49,7 @@ test_expect_success 'test refspec prefixed globbing' '
- 			 "tags/t_*/src/a:refs/remotes/tags/t_*" &&
- 	git svn multi-fetch &&
- 	git log --pretty=oneline refs/remotes/tags/t_end >actual &&
--	sed -e "s/^.\{41\}//" actual >output.end &&
-+	cut -d" " -f2- actual >output.end &&
- 	test_cmp expect.end output.end &&
- 	test "$(git rev-parse refs/remotes/tags/t_end~1)" = \
- 		"$(git rev-parse refs/remotes/branches/b_start)" &&
-@@ -87,7 +87,7 @@ test_expect_success 'test left-hand-side only prefixed globbing' '
- 	test $(git rev-parse refs/remotes/two/tags/t_end~3) = \
- 	     $(git rev-parse refs/remotes/two/branches/b_start) &&
- 	git log --pretty=oneline refs/remotes/two/tags/t_end >actual &&
--	sed -e "s/^.\{41\}//" actual >output.two &&
-+	cut -d" " -f2- actual >output.two &&
- 	test_cmp expect.two output.two
- 	'
+diff --git a/git-svn.perl b/git-svn.perl
+index 4aa208ff5f..7c735cebd3 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -5,7 +5,8 @@
+ use warnings;
+ use strict;
+ use vars qw/	$AUTHOR $VERSION
+-		$sha1 $sha1_short $_revision $_repository
++		$oid $oid_short $oid_length
++		$_revision $_repository
+ 		$_q $_authors $_authors_prog %users/;
+ $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
+ $VERSION = '@@GIT_VERSION@@';
+@@ -103,8 +104,9 @@ sub _req_svn {
+ 	}
+ }
  
-@@ -129,7 +129,7 @@ test_expect_success 'test prefixed globs match just prefix' '
- 	test $(git rev-parse refs/remotes/three/tags/t_~1) = \
- 	     $(git rev-parse refs/remotes/three/branches/b_) &&
- 	git log --pretty=oneline refs/remotes/three/tags/t_ >actual &&
--	sed -e "s/^.\{41\}//" actual >output.three &&
-+	cut -d" " -f2- actual >output.three &&
- 	test_cmp expect.three output.three
- 	'
+-$sha1 = qr/[a-f\d]{40}/;
+-$sha1_short = qr/[a-f\d]{4,40}/;
++$oid = qr/(?:[a-f\d]{40}(?:[a-f\d]{24})?)/;
++$oid_short = qr/[a-f\d]{4,64}/;
++$oid_length = 40;
+ my ($_stdin, $_help, $_edit,
+ 	$_message, $_file, $_branch_dest,
+ 	$_template, $_shared,
+@@ -582,7 +584,7 @@ sub cmd_set_tree {
+ 		print "Reading from stdin...\n";
+ 		@commits = ();
+ 		while (<STDIN>) {
+-			if (/\b($sha1_short)\b/o) {
++			if (/\b($oid_short)\b/o) {
+ 				unshift @commits, $1;
+ 			}
+ 		}
+@@ -1831,7 +1833,7 @@ sub get_tree_from_treeish {
+ 	if ($type eq 'commit') {
+ 		$expected = (grep /^tree /, command(qw/cat-file commit/,
+ 		                                    $treeish))[0];
+-		($expected) = ($expected =~ /^tree ($sha1)$/o);
++		($expected) = ($expected =~ /^tree ($oid)$/o);
+ 		die "Unable to get tree from $treeish\n" unless $expected;
+ 	} elsif ($type eq 'tree') {
+ 		$expected = $treeish;
+@@ -2036,7 +2038,7 @@ sub working_head_info {
+ 	my $hash;
+ 	my %max;
+ 	while (<$fh>) {
+-		if ( m{^commit ($::sha1)$} ) {
++		if ( m{^commit ($::oid)$} ) {
+ 			unshift @$refs, $hash if $hash and $refs;
+ 			$hash = $1;
+ 			next;
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 4b28b87784..fcf1e3bb5e 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -874,7 +874,7 @@ sub assert_index_clean {
+ 		command_noisy('read-tree', $treeish) unless -e $self->{index};
+ 		my $x = command_oneline('write-tree');
+ 		my ($y) = (command(qw/cat-file commit/, $treeish) =~
+-		           /^tree ($::sha1)/mo);
++		           /^tree ($::oid)/mo);
+ 		return if $y eq $x;
  
-@@ -199,7 +199,7 @@ test_expect_success 'test globbing in the middle of the word' '
- 	test $(git rev-parse refs/remotes/five/tags/fghij~1) = \
- 	     $(git rev-parse refs/remotes/five/branches/abcde) &&
- 	git log --pretty=oneline refs/remotes/five/tags/fghij >actual &&
--	sed -e "s/^.\{41\}//" actual >output.five &&
-+	cut -d" " -f2- actual >output.five &&
- 	test_cmp expect.five output.five
- 	'
+ 		warn "Index mismatch: $y != $x\nrereading $treeish\n";
+@@ -1020,7 +1020,7 @@ sub do_git_commit {
+ 		$tree = $self->tmp_index_do(sub {
+ 		                            command_oneline('write-tree') });
+ 	}
+-	die "Tree is not a valid sha1: $tree\n" if $tree !~ /^$::sha1$/o;
++	die "Tree is not a valid oid $tree\n" if $tree !~ /^$::oid$/o;
  
+ 	my @exec = ('git', 'commit-tree', $tree);
+ 	foreach ($self->get_commit_parents($log_entry)) {
+@@ -1048,8 +1048,8 @@ sub do_git_commit {
+ 	close $out_fh or croak $!;
+ 	waitpid $pid, 0;
+ 	croak $? if $?;
+-	if ($commit !~ /^$::sha1$/o) {
+-		die "Failed to commit, invalid sha1: $commit\n";
++	if ($commit !~ /^$::oid$/o) {
++		die "Failed to commit, invalid oid: $commit\n";
+ 	}
+ 
+ 	$self->rev_map_set($log_entry->{revision}, $commit, 1);
+@@ -2150,7 +2150,7 @@ sub rebuild {
+ 	my $svn_uuid = $self->rewrite_uuid || $self->ra_uuid;
+ 	my $c;
+ 	while (<$log>) {
+-		if ( m{^commit ($::sha1)$} ) {
++		if ( m{^commit ($::oid)$} ) {
+ 			$c = $1;
+ 			next;
+ 		}
+diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
+index 0df16ed726..70b6d78cd9 100644
+--- a/perl/Git/SVN/Editor.pm
++++ b/perl/Git/SVN/Editor.pm
+@@ -63,7 +63,7 @@ sub generate_diff {
+ 	my @mods;
+ 	while (defined($_ = get_record($diff_fh, "\0"))) {
+ 		if ($state eq 'meta' && /^:(\d{6})\s(\d{6})\s
+-					($::sha1)\s($::sha1)\s
++					($::oid)\s($::oid)\s
+ 					([MTCRAD])\d*$/xo) {
+ 			push @mods, {	mode_a => $1, mode_b => $2,
+ 					sha1_a => $3, sha1_b => $4,
+diff --git a/perl/Git/SVN/Log.pm b/perl/Git/SVN/Log.pm
+index 664105357c..3858fcf27d 100644
+--- a/perl/Git/SVN/Log.pm
++++ b/perl/Git/SVN/Log.pm
+@@ -285,7 +285,7 @@ sub cmd_show_log {
+ 	my (@k, $c, $d, $stat);
+ 	my $esc_color = qr/(?:\033\[(?:(?:\d+;)*\d*)?m)*/;
+ 	while (<$log>) {
+-		if (/^${esc_color}commit (?:- )?($::sha1_short)/o) {
++		if (/^${esc_color}commit (?:- )?($::oid_short)/o) {
+ 			my $cmt = $1;
+ 			if ($c && cmt_showable($c) && $c->{r} != $r_last) {
+ 				$r_last = $c->{r};
