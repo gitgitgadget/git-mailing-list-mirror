@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0206C433E1
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DA3DC433DF
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8873D20767
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19F4A20767
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 18:04:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wyu8+FG3"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Fw6F9qcU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730293AbgFVSEm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Jun 2020 14:04:42 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40002 "EHLO
+        id S1730339AbgFVSEl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Jun 2020 14:04:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39990 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730252AbgFVSE2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 Jun 2020 14:04:28 -0400
+        by vger.kernel.org with ESMTP id S1730254AbgFVSEc (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Jun 2020 14:04:32 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CACA860A60;
-        Mon, 22 Jun 2020 18:04:26 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D475860A69;
+        Mon, 22 Jun 2020 18:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592849067;
-        bh=mIcA5gOf7x6V4CtJBabDCzptsnGtuqXE3ouDLrU4xOM=;
+        s=default; t=1592849071;
+        bh=/RCWfAMlaGU8Y+6sjRJ8oDEKHR0VpV2hOcyN+/qexsY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=wyu8+FG3IHKtOvBjCFfuMQSsDJwxbOlOhbROK8vqnvjNkF2TInuXH8WEFRo3aN5It
-         SpNuZ3DwDyY242fMAcm7Xy6XDmIWc9rqsQz2qoaPSNIg7BjFqPRoS7nF+gLZKV1OKG
-         zBVS5nhveRIz1s8L/5qgRpbLsYqcHd3batHwIanW6HPpkC4HOBqYD2f0sFwZiTUTMe
-         KyKdjZnhIRdmJD1XY38uqBrJX3680hkZTPCS7W5nK3m3cUo4k57winDzkJNOlIuOsN
-         2W9t9QXKZRM18gw/EqBlJ6xu1F8VAy8lRA6g2m5BIsofu7mYRNiS45pvaT0xdvKVwm
-         T8ayp7Vd8OI+qogvvqFOYvC73atHms+qny/OpEhqzmuHwu1JfC6luAHM4zem4RAE5K
-         ThdHBcwJ/5xDYEUwyEFgmL8psO+dGCl3QaS8JY9kq8V2GyfcZ2qR9Z4NwgFS0nhEz+
-         PAhJFA9ZlB5ZVDQzJ+Af0ERVMKlOGrDDE5mgWX9k5Bqf9yVCG/y
+        b=Fw6F9qcUmTJ/ZzpzoQjz1Kjv39YJCZN+KtAisrDm4jX59Pkk4oHvlsEferZeaZv2w
+         lpW/icWcnKMaW6oeRlOdF9CX/RaMBEqjotw7KBhXnFH2zS3rJ8CQ1g2xp/0yQC1lQo
+         amaPZndMKBmWHjX89dWIZJLHMiZFjTBeUvAfFXA59suKsbwJpBQA9QfFJTpQ9b8/Nd
+         4+Ubv1y+tfjxzbvfeOBCOomdO0qiGm5L5Hh8nWzCOVXIlFjxNuNzijXg1rnQw8jPk3
+         dPbXFvF45W8sGzSjHvuxlAnAaLrLKJ4dRM18FqmxjFDqu7cipdQWCIZudkZqbkIZcY
+         rSOKwuxx3e6ABUtazbIh/IIEMCXnPA88AUo035ov47BD4GKFtA8svoEJTES1DMbq9H
+         8Bk6hOfcAumM1JCwPXZ1QLmAjPbu5K0PM8BGPBuI+fEPFVMYYjAraHO6h2P+v1E03p
+         5V71oVJd88ZQQYUtDmXL23BexxjmH+lmDwNBRzEO0Ian8TFvOXT
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Andreas Schwab <schwab@linux-m68k.org>, Eric Wong <e@80x24.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 05/14] t9104: make hash size independent
-Date:   Mon, 22 Jun 2020 18:04:09 +0000
-Message-Id: <20200622180418.2418483-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 12/14] git-cvsserver: port to SHA-256
+Date:   Mon, 22 Jun 2020 18:04:16 +0000
+Message-Id: <20200622180418.2418483-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
 In-Reply-To: <20200622180418.2418483-1-sandals@crustytoothpaste.net>
 References: <20200619223947.947067-1-sandals@crustytoothpaste.net>
@@ -58,33 +58,177 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The size of a record in the database used by git svn is four bytes plus
-the length of the binary hash.  Instead of hard-coding 24, compute this
-value based on the size of the hash in use.
+The code of git-cvsserver currently has several hard-coded 20 and 40
+constants that are the length of SHA-1.  When parsing the configuration
+file, read the extensions.objectformat configuration setting as well as
+CVS-related ones and adjust the hash sizes accordingly.  Use these
+computed values in all the places we match object IDs.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9104-git-svn-follow-parent.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ git-cvsserver.perl | 37 ++++++++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-index 5e0ad19177..67eed2fefc 100755
---- a/t/t9104-git-svn-follow-parent.sh
-+++ b/t/t9104-git-svn-follow-parent.sh
-@@ -161,6 +161,7 @@ test_expect_success "track initial change if it was only made to parent" '
- 	'
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index ae1044273d..f6f3fc192c 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -365,7 +365,7 @@ sub req_Root
+     }
+     foreach my $line ( @gitvars )
+     {
+-        next unless ( $line =~ /^(gitcvs)\.(?:(ext|pserver)\.)?([\w-]+)=(.*)$/ );
++        next unless ( $line =~ /^(gitcvs|extensions)\.(?:(ext|pserver)\.)?([\w-]+)=(.*)$/ );
+         unless ($2) {
+             $cfg->{$1}{$3} = $4;
+         } else {
+@@ -392,6 +392,9 @@ sub req_Root
+         $log->nofile();
+     }
  
- test_expect_success "follow-parent is atomic" '
-+	record_size=$(($(test_oid rawsz) + 4)) &&
- 	(
- 		cd wc &&
- 		svn_cmd up &&
-@@ -186,7 +187,7 @@ test_expect_success "follow-parent is atomic" '
- 	mkdir -p "$GIT_DIR"/svn/refs/remotes/flunk@18 &&
- 	rev_map=$(cd "$GIT_DIR"/svn/refs/remotes/stunk && ls .rev_map*) &&
- 	dd if="$GIT_DIR"/svn/refs/remotes/stunk/$rev_map \
--	   of="$GIT_DIR"/svn/refs/remotes/flunk@18/$rev_map bs=24 count=1 &&
-+	   of="$GIT_DIR"/svn/refs/remotes/flunk@18/$rev_map bs=$record_size count=1 &&
- 	rm -rf "$GIT_DIR"/svn/refs/remotes/stunk &&
- 	git svn init --minimize-url -i flunk "$svnrepo"/flunk &&
- 	git svn fetch -i flunk &&
++    $state->{rawsz} = ($cfg->{'extensions'}{'objectformat'} || 'sha1') eq 'sha256' ? 32 : 20;
++    $state->{hexsz} = $state->{rawsz} * 2;
++
+     return 1;
+ }
+ 
+@@ -1581,7 +1584,7 @@ sub req_ci
+ 
+             $parenthash = safe_pipe_capture('git', 'show-ref', '-s', $branchRef);
+             chomp $parenthash;
+-            if ($parenthash !~ /^[0-9a-f]{40}$/)
++            if ($parenthash !~ /^[0-9a-f]{$state->{hexsz}}$/)
+             {
+                 if ( defined($stickyInfo) && defined($stickyInfo->{tag}) )
+                 {
+@@ -1708,7 +1711,7 @@ sub req_ci
+     chomp($commithash);
+     $log->info("Commit hash : $commithash");
+ 
+-    unless ( $commithash =~ /[a-zA-Z0-9]{40}/ )
++    unless ( $commithash =~ /[a-zA-Z0-9]{$state->{hexsz}}/ )
+     {
+         $log->warn("Commit failed (Invalid commit hash)");
+         print "error 1 Commit failed (unknown reason)\n";
+@@ -2375,7 +2378,7 @@ sub req_annotate
+         print "E ***************\n";
+         while ( <ANNOTATE> )
+         {
+-            if (m/^([a-zA-Z0-9]{40})\t\([^\)]*\)(.*)$/i)
++            if (m/^([a-zA-Z0-9]{$state->{hexsz}})\t\([^\)]*\)(.*)$/i)
+             {
+                 my $commithash = $1;
+                 my $data = $2;
+@@ -2852,7 +2855,7 @@ sub transmitfile
+         return;
+     }
+ 
+-    die "Need filehash" unless ( defined ( $filehash ) and $filehash =~ /^[a-zA-Z0-9]{40}$/ );
++    die "Need filehash" unless ( defined ( $filehash ) and $filehash =~ /^[a-zA-Z0-9]{$state->{hexsz}}$/ );
+ 
+     my $type = safe_pipe_capture('git', 'cat-file', '-t', $filehash);
+     chomp $type;
+@@ -3042,7 +3045,7 @@ sub ensureWorkTree
+ 
+     my $ver = safe_pipe_capture('git', 'show-ref', '-s', "refs/heads/$state->{module}");
+     chomp $ver;
+-    if ($ver !~ /^[0-9a-f]{40}$/)
++    if ($ver !~ /^[0-9a-f]{$state->{hexsz}}$/)
+     {
+         $log->warn("Error from git show-ref -s refs/head$state->{module}");
+         print "error 1 cannot find the current HEAD of module";
+@@ -3281,7 +3284,7 @@ sub open_blob_or_die
+     }
+     elsif( $srcType eq "sha1" )
+     {
+-        unless ( defined ( $name ) and $name =~ /^[a-zA-Z0-9]{40}$/ )
++        unless ( defined ( $name ) and $name =~ /^[a-zA-Z0-9]{$state->{hexsz}}$/ )
+         {
+             $log->warn("Need filehash");
+             die "Need filehash\n";
+@@ -3817,7 +3820,7 @@ sub update
+     chomp $commitsha1;
+ 
+     my $commitinfo = ::safe_pipe_capture('git', 'cat-file', 'commit', $self->{module});
+-    unless ( $commitinfo =~ /tree\s+[a-zA-Z0-9]{40}/ )
++    unless ( $commitinfo =~ /tree\s+[a-zA-Z0-9]{$state->{hexsz}}/ )
+     {
+         die("Invalid module '$self->{module}'");
+     }
+@@ -3957,7 +3960,7 @@ sub update
+             while ( <FILELIST> )
+             {
+ 		chomp;
+-                unless ( /^:\d{6}\s+([0-7]{6})\s+[a-f0-9]{40}\s+([a-f0-9]{40})\s+(\w)$/o )
++                unless ( /^:\d{6}\s+([0-7]{6})\s+[a-f0-9]{$state->{hexsz}}\s+([a-f0-9]{$state->{hexsz}})\s+(\w)$/o )
+                 {
+                     die("Couldn't process git-diff-tree line : $_");
+                 }
+@@ -4625,11 +4628,11 @@ sub getmeta
+             $db_query->execute($filename, $intRev);
+             $meta = $db_query->fetchrow_hashref;
+         }
+-        elsif ( $revision =~ /^2\.1\.1\.2000(\.[1-3][0-9][0-9]){20}$/ )
++        elsif ( $revision =~ /^2\.1\.1\.2000(\.[1-3][0-9][0-9]){$state->{rawsz}}$/ )
+         {
+             my ($commitHash)=($revision=~/^2\.1\.1\.2000(.*)$/);
+             $commitHash=~s/\.([0-9]+)/sprintf("%02x",$1-100)/eg;
+-            if($commitHash=~/^[0-9a-f]{40}$/)
++            if($commitHash=~/^[0-9a-f]{$state->{hexsz}}$/)
+             {
+                 return $self->getMetaFromCommithash($filename,$commitHash);
+             }
+@@ -4639,7 +4642,7 @@ sub getmeta
+             $log->warning("failed get $revision with commithash=$commitHash");
+             undef $revision;
+         }
+-        elsif ( $revision =~ /^[0-9a-f]{40}$/ )
++        elsif ( $revision =~ /^[0-9a-f]{$state->{hexsz}}$/ )
+         {
+             # Try DB first.  This is mostly only useful for req_annotate(),
+             # which only calls this for stuff that should already be in
+@@ -4658,7 +4661,7 @@ sub getmeta
+             if(! $meta)
+             {
+                 my($revCommit)=$self->lookupCommitRef($revision);
+-                if($revCommit=~/^[0-9a-f]{40}$/)
++                if($revCommit=~/^[0-9a-f]{$state->{hexsz}}$/)
+                 {
+                     return $self->getMetaFromCommithash($filename,$revCommit);
+                 }
+@@ -4672,7 +4675,7 @@ sub getmeta
+         else
+         {
+             my($revCommit)=$self->lookupCommitRef($revision);
+-            if($revCommit=~/^[0-9a-f]{40}$/)
++            if($revCommit=~/^[0-9a-f]{$state->{hexsz}}$/)
+             {
+                 return $self->getMetaFromCommithash($filename,$revCommit);
+             }
+@@ -4767,7 +4770,7 @@ sub getMetaFromCommithash
+ 
+     my($fileHash) = ::safe_pipe_capture("git","rev-parse","$revCommit:$filename");
+     chomp $fileHash;
+-    if(!($fileHash=~/^[0-9a-f]{40}$/))
++    if(!($fileHash=~/^[0-9a-f]{$state->{hexsz}}$/))
+     {
+         die "Invalid fileHash '$fileHash' looking up"
+                     ." '$revCommit:$filename'\n";
+@@ -4863,7 +4866,7 @@ sub lookupCommitRef
+     $commitHash = ::safe_pipe_capture("git","rev-parse","--verify","--quiet",
+ 				      $self->unescapeRefName($ref));
+     $commitHash=~s/\s*$//;
+-    if(!($commitHash=~/^[0-9a-f]{40}$/))
++    if(!($commitHash=~/^[0-9a-f]{$state->{hexsz}}$/))
+     {
+         $commitHash=undef;
+     }
+@@ -4909,7 +4912,7 @@ sub commitmessage
+     my $commithash = shift;
+     my $tablename = $self->tablename("commitmsgs");
+ 
+-    die("Need commithash") unless ( defined($commithash) and $commithash =~ /^[a-zA-Z0-9]{40}$/ );
++    die("Need commithash") unless ( defined($commithash) and $commithash =~ /^[a-zA-Z0-9]{$state->{hexsz}}$/ );
+ 
+     my $db_query;
+     $db_query = $self->{dbh}->prepare_cached("SELECT value FROM $tablename WHERE key=?",{},1);
