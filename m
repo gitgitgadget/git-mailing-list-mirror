@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3A7DC433E1
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 237EFC433E0
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEFE4206E2
-	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0073C206E2
+	for <git@archiver.kernel.org>; Mon, 22 Jun 2020 21:55:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ckghYm+F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZG8RPrdy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730776AbgFVVzc (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1730785AbgFVVzc (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 22 Jun 2020 17:55:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41940 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730754AbgFVVz2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jun 2020 17:55:28 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 364B1C061573
-        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:28 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id z13so6566175wrw.5
+        with ESMTP id S1730763AbgFVVz3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jun 2020 17:55:29 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 089DFC061795
+        for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:29 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id q2so15885013wrv.8
         for <git@vger.kernel.org>; Mon, 22 Jun 2020 14:55:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sD08nvPKEureMPWUl3ZPXZUlGgVzCFnRDJ8XWySzO9I=;
-        b=ckghYm+FoWUw53zhRHKnpPEtwLizMszW8DRH19B9+Nv4IKjsqNXOr9LAysQTN0OnKQ
-         Ro1FNSB84RKgtmqVcBbpmU/v75uiG1njc5ML2dBy4Fj7rdvzinsBLERZZbaLSowehpWo
-         ymWO6FHcu+oitKHU0GXgc8n9AXg+Q4HmZwPOsUrdVPO/KBOkobma/uB0EgPReG+ll+X2
-         WKX19o39TPBDkQtZrDjVqYXbNAYrmvqyjfYY9J04dx+/N8D4GJLr1kDcnhR3ONPjA1uG
-         xba3uhzKSiThVkOQiMZU4WiuJAhRcZi7cWPc3txRtqY9CR9an4QcBxIllhXgF3uKaNcB
-         3CXQ==
+        bh=rQfDs8/XlBupSRYoe1vXMMIhqbtOWX2QXYj0WtRX54k=;
+        b=ZG8RPrdyK5CBRBza1MGgDeqAjggW1m0jvuksolP+xZVt5mTH1cHrUIJFWReKLCV1/6
+         Zg8V0O0w2UsHRp3AXvV5Pq0ELQcTd9denMYBrIjmvhC5IDxTy0qo0t2c8I7FgMoYDqrP
+         vTI+Cu18HkPr7Fg77i8+T6wRhZ6SourtTKO0YrQEuFx4jaVIKV5yMrYPRqVx73w4OmB6
+         GZWo0g7c1rKjVbrkMQktFWdrkLPSKXQEo9YHlOB7l/d2LYbkw/nkwGaiEBVoH99jtr7o
+         I+jKTWcVnNdH+w9n9Og8LFyflicKnIk9Qq1LBcALgZOof89u7v5BhezNozbkYzqtvoKc
+         5arA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sD08nvPKEureMPWUl3ZPXZUlGgVzCFnRDJ8XWySzO9I=;
-        b=J2uEcImsxK8uFuzC8fAop96GhdL2bnkNYtAiMvxOgiwi30yKC++xB+GPAiDxPHLVBC
-         NLGDSYhgtljWaZmwHCbf6r3ZFqJD0ZgmzoVsd6ePm3u/BvuBxRLH+BRhKfO70XY/Dlal
-         zGqNoxpRHpJ/xuF7stZ7mmlsGk0PpKAS/3mMlS+TkTnmkmbj5WIzlQmy1/+qBxKv7nL4
-         bB273RSTlgk+2fmA3qwjG4iCaCim6T2bGvURTRK/J6gbsgIMDA5Kd7rf3fAoTJ73UzE4
-         +OqTfUUSEZhA1nQJwI6LcuJ3lkTr9lM1FUcZ7ztttgBQxZL+zuveHJ/BJZN/hS1G2OOH
-         UnfQ==
-X-Gm-Message-State: AOAM533IJvBkprezvOw+UjHiTP272Jo4PEgTH+juy9MyNeA7F+Z8EWs3
-        TuQ3WkBU3z5yTTdotcQdrt4llnhH
-X-Google-Smtp-Source: ABdhPJzsy7wn4sdZzNPvmZgeIQwh1C07OYHbCMmcl6eo+0/HX5VkNr0Vorq2B7+X1ePGZ6VJUGJ/8A==
-X-Received: by 2002:a5d:5549:: with SMTP id g9mr18025594wrw.419.1592862926775;
-        Mon, 22 Jun 2020 14:55:26 -0700 (PDT)
+        bh=rQfDs8/XlBupSRYoe1vXMMIhqbtOWX2QXYj0WtRX54k=;
+        b=Q032nTvfxYA6QcvIMjd3tlEly0+H06n4MZze7wfQsqS4FoYfpXKfPe2LgY1j3A3vS5
+         aWm45gVd/zGQAa++j4RLS6QW5RTNvXup9ge2IaWqIL5y5h+zYj1DhO2UvtTy9/ulqlFh
+         pdMUyMNemDs14l+9YATuVIaSLJxPLvnIIpyGEXpYj1v23bTr3rfIrFTrHqVyrHAxH2rE
+         u6gOgv/vXhTqFJYUpKs/63Hr/EeR8kMD3N6C3QTdXlY+J10mokX/phkmOrO5PeMdyBRa
+         PXgJsD5homytQTK5/L5wp1bRtqGlF5LjvWuyVcwdx75sFb9o0JC7tPxqWsUmzd94nuR+
+         Ii4Q==
+X-Gm-Message-State: AOAM530VM51H0WqE8xp9SupAiYYcw8HczrWlPTnULC/a8wvXwjeExKWX
+        XqtE4RdUS/GDhMIpwdPlophSa/VU
+X-Google-Smtp-Source: ABdhPJx2KcXup9SmEVx2ekutHdyRLdUkk6l7s+PT0FWCNEXZx1eknJn3OtGU8hn0ylerDNZFJE3aJA==
+X-Received: by 2002:adf:8b18:: with SMTP id n24mr22439499wra.372.1592862927673;
+        Mon, 22 Jun 2020 14:55:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w17sm20548906wra.42.2020.06.22.14.55.25
+        by smtp.gmail.com with ESMTPSA id z16sm19834239wrm.70.2020.06.22.14.55.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2020 14:55:26 -0700 (PDT)
-Message-Id: <a5bce2e3fe61d82ca81b1980499879c872cbc1d5.1592862920.git.gitgitgadget@gmail.com>
+        Mon, 22 Jun 2020 14:55:27 -0700 (PDT)
+Message-Id: <a29d898907a83b6e8b6a42884397d4148d8920ff.1592862920.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
 References: <pull.539.v17.git.1592335242.gitgitgadget@gmail.com>
         <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Jun 2020 21:55:05 +0000
-Subject: [PATCH v18 04/19] Make refs_ref_exists public
+Date:   Mon, 22 Jun 2020 21:55:06 +0000
+Subject: [PATCH v18 05/19] Treat BISECT_HEAD as a pseudo ref
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,38 +78,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+Both the git-bisect.sh as bisect--helper inspected the file system directly.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs.c | 2 +-
- refs.h | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ builtin/bisect--helper.c | 3 +--
+ git-bisect.sh            | 4 ++--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 12908066b13..812fee47108 100644
---- a/refs.c
-+++ b/refs.c
-@@ -311,7 +311,7 @@ int read_ref(const char *refname, struct object_id *oid)
- 	return read_ref_full(refname, RESOLVE_REF_READING, oid, NULL);
- }
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index ec4996282e3..73f9324ad7d 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -13,7 +13,6 @@ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+ static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
+ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+-static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_head_name, "head-name")
+ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+@@ -164,7 +163,7 @@ static int bisect_reset(const char *commit)
+ 		strbuf_addstr(&branch, commit);
+ 	}
  
--static int refs_ref_exists(struct ref_store *refs, const char *refname)
-+int refs_ref_exists(struct ref_store *refs, const char *refname)
+-	if (!file_exists(git_path_bisect_head())) {
++	if (!ref_exists("BISECT_HEAD")) {
+ 		struct argv_array argv = ARGV_ARRAY_INIT;
+ 
+ 		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 08a6ed57ddb..f03fbb18f00 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -41,7 +41,7 @@ TERM_GOOD=good
+ 
+ bisect_head()
  {
- 	return !!refs_resolve_ref_unsafe(refs, refname, RESOLVE_REF_READING, NULL, NULL);
- }
-diff --git a/refs.h b/refs.h
-index 4dad8f24914..7aaa1226551 100644
---- a/refs.h
-+++ b/refs.h
-@@ -105,6 +105,8 @@ int refs_verify_refname_available(struct ref_store *refs,
- 				  const struct string_list *skip,
- 				  struct strbuf *err);
+-	if test -f "$GIT_DIR/BISECT_HEAD"
++	if git rev-parse --verify -q BISECT_HEAD > /dev/null
+ 	then
+ 		echo BISECT_HEAD
+ 	else
+@@ -153,7 +153,7 @@ bisect_next() {
+ 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD $TERM_GOOD|| exit
  
-+int refs_ref_exists(struct ref_store *refs, const char *refname);
-+
- int ref_exists(const char *refname);
+ 	# Perform all bisection computation, display and checkout
+-	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
++	git bisect--helper --next-all $(git rev-parse --verify -q BISECT_HEAD > /dev/null && echo --no-checkout)
+ 	res=$?
  
- int should_autocreate_reflog(const char *refname);
+ 	# Check if we should exit because bisection is finished
 -- 
 gitgitgadget
 
