@@ -2,177 +2,210 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68AA3C433E3
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 12:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 667A6C433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 12:59:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4214F2072E
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 12:48:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 420BE20774
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 12:59:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kp6ljiWm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfYUThe8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732698AbgFWMsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 08:48:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38898 "EHLO
+        id S1732570AbgFWM7h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 08:59:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732680AbgFWMsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 08:48:09 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9543EC061755
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 05:48:09 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id g18so11338253wrm.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 05:48:09 -0700 (PDT)
+        with ESMTP id S1729504AbgFWM7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 08:59:36 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61B7CC061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 05:59:36 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id j189so18698379oih.10
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 05:59:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4TNL+ZyCk52rCJzdeOmuJCB59GlJxPW9J7MNBLE7XVM=;
-        b=Kp6ljiWmqHRY3uwTKS6ssneHYWaqyCjJqDVm1ikR1PRoPojMDjvX4utEPMitSbBfGn
-         0fLvh7anlh/Hy4ianMpFZIe0aP/bGA8KjpObfwGZQsJAyxE3YJkCkAoBknaHHfodDS2e
-         RX/JDgiqtpkR9qUrMbBD/XrraBwAU7HDtjNgjyfES5/xwimMI1MVMkExguN/pLUwrwLE
-         ftjzA1RH5Nhd0P7KgkiGu6nx4Sh5tCgNWHXMwVmrJtjjh/xIXB9SvZpEn5PuLEDGpv7W
-         a6rS3SJwSxW4fl2uRUbcVTlEbul1l+2MWbSyDqTl+Ce0uUEbmtiWjDxiqMsdHyoNpiuO
-         8vMA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=WgZb+GJXfPeym66DiEwbUjuj6x09M1v88lkGG0ajy9g=;
+        b=GfYUThe8SIhFg7GqTKoxuRfmclliRPynN8TkVlbmPlm1++++MD1iFTbJS5N7GkKcG0
+         BiYPut0dQKbChQe3KrnG+qEdUWVDE3q11fIngjAxTmU7Y+aFaaI1hRfXIur9KeHy5XoO
+         7rrrSHLbOpAEyV3S9/ap796hHoA6/MVYmiqLqWcGe69a6J0ccuM0K+7In5y/vVmlUDcR
+         XQPfjvyw9zAl/92U941APmGwRFNj8TdQxgmann72LOt8cso2j/xYsz/cSpZYO5Y2driG
+         Ljn3HvUoqqdp94wZFxkX9IPUYEFM4rgbjlJ+P9mFPPNQ9REPGKoPVglZFO7nuxy5oE09
+         lfzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4TNL+ZyCk52rCJzdeOmuJCB59GlJxPW9J7MNBLE7XVM=;
-        b=VICo88F3cb2BfZvDM0Qlp++sSYGyVDZMPXwWofG8FmpMARugV1gj2T7Q9pq8Xidag4
-         SCM2ZQrLORn3cnXLwf40YFvzB83eu1GwJHSWXKOwORgATYKSmKXU+xbrkfl7E6EDtsHf
-         TEUbRfEzUqPfrRQxc/MDf+FQB6ZioZeDCXnckR21FlBRgMKItpgx1vOuC6hIXh8fp8Y+
-         eqom19/5CzBqE7MLRVp07e6mf3vXT+fpopRc4T0Hsm3F7nogsoV9gPVLrEXDsg8KmgM3
-         qC4qv5M1AXLVfBRKjcJCak1srCtOwIsH/ej239f1nrZpTm6A7dFR4XCi3tg0RUzkaIU+
-         CCDQ==
-X-Gm-Message-State: AOAM531tSbIPpXKUlFCo1UbsNdtZuMDQx8FuFFr7Jfd9yoPDhhVkDXcF
-        K+xoCb1Afb19G92KSA6uwJR2yjjT
-X-Google-Smtp-Source: ABdhPJze8gjooYvL4skKU6aUiGOsY2ZS75CndOsaZEntMZJt5WrYmEt6xtrBs5dj8GOp4Ce+hfyftQ==
-X-Received: by 2002:adf:ecc8:: with SMTP id s8mr25388217wro.317.1592916488157;
-        Tue, 23 Jun 2020 05:48:08 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c5sm3670070wmb.24.2020.06.23.05.48.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2020 05:48:07 -0700 (PDT)
-Message-Id: <640e225550886727594ca9dfaee6c9e6ea4b1014.1592916485.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.654.v2.git.1592916485.gitgitgadget@gmail.com>
-References: <pull.654.git.1591879139.gitgitgadget@gmail.com>
-        <pull.654.v2.git.1592916485.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Jun 2020 12:48:03 +0000
-Subject: [PATCH v2 1/3] diff-files --raw: handle intent-to-add files correctly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=WgZb+GJXfPeym66DiEwbUjuj6x09M1v88lkGG0ajy9g=;
+        b=LtnmOZnd4GLx2Or94ba4PEDykkqlm7Vq2c65r8C97Pnyfo2DtU81G1B4SO/t0ftrsF
+         pFg8VWPIRQ0ol4uEV97sIiPd8ucK2xcQgaBZScRKZIcBpybe6uiGFFwzhwvr/Hv+pUfo
+         5OgSqk+ArYNtGjEF7TL9AjCyjl6Ue40zwreKmLhwZ8C+JcqwP0UbdFZPNm7cJae1fj5g
+         b6aPzjVbolbh9e/xLbU/72RCszPbVI8WZt97+XaGTI4Fjx3Agz2X0/YgdiJ6NVG2G87s
+         56Xd8haTvuedcuc5NW5c0UDRd/natNGIgKPuuUOXxPRdvNdiiRZS+yXQhj5IeXc4pknl
+         yl1A==
+X-Gm-Message-State: AOAM530A44y6LpAXdm1fBxH1cZLjMY9V9NyjBGFPyMg37o7WQJywP76p
+        U8WrMt7BMS7OsUMm+dbvLcU=
+X-Google-Smtp-Source: ABdhPJz69j8I5TdRDL9w/CS+YUciGJvYsLmNUVHbT4bHdzOQKuo0Xi4F+bkBfMMfsQ7UwNxYP2D+rg==
+X-Received: by 2002:aca:902:: with SMTP id 2mr15409981oij.151.1592917175468;
+        Tue, 23 Jun 2020 05:59:35 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id w10sm4033624otp.44.2020.06.23.05.59.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Jun 2020 05:59:34 -0700 (PDT)
+Subject: Re: [PATCH] commit-reach: avoid is_dependant_of() shim
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        git@vger.kernel.org
+Cc:     dstolee@microsoft.com
+References: <20200623081701.52607-1-carenas@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4cf84b43-0837-5737-f937-fad9ca13178b@gmail.com>
+Date:   Tue, 23 Jun 2020 08:59:34 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <20200623081701.52607-1-carenas@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 6/23/2020 4:17 AM, Carlo Marcelo Arenas Belón wrote:
+> d91d6fbf26 (commit-reach: create repo_is_descendant_of(), 2020-06-17)
+> adds a repository aware version of is_dependant_of() and a backward
+> compatibility shim that is barelly used.> 
+> Update all callers to directly use the new repo_is_dependant_of()
+> function instead.
 
-In `run_diff_files()`, files that have been staged with the intention to
-add are queued without a valid OID in the `diff_filepair`.
+In your commit message:
 
-When the output mode is, say, `DIFF_FORMAT_PATCH`, the
-`diff_fill_oid_info()` function, called from `run_diff()`, will remedy
-that situation by reading the file contents from disk.
+s/dependant/descendant/
+s/barelly/barely/
 
-However, when the output mode is `DIFF_FORMAT_RAW`, that does not hold
-true, and the output will contain a bogus OID (and the flag `M` for
-"modified" instead of the correct `A` for "added").
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>  builtin/pull.c        |  3 ++-
+>  commit-reach.c        | 16 ++++++----------
+>  commit-reach.h        |  4 +++-
+>  t/helper/test-reach.c |  2 +-
+>  4 files changed, 12 insertions(+), 13 deletions(-)
+> 
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index 8e6572d305..babc6a4e36 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -1025,7 +1025,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>  			commit_list_insert(head, &list);
+>  			merge_head = lookup_commit_reference(the_repository,
+>  							     &merge_heads.oid[0]);
+> -			if (is_descendant_of(merge_head, list)) {
+> +			if (repo_is_descendant_of(the_repository,
+> +							merge_head, list)) {
 
-As a consequence, `git difftool -d` (which relies on `git diff-files
---raw`'s output) does not work correctly.
+nit: left-align "merge_head" with "the_repository". Should look like this:
 
-Let's fix this specifically by imitating `diff_fill_oid_info()`.
++			if (repo_is_descendant_of(the_repository,
++						  merge_head, list)) {
 
-Note: we can only do that for diff formats that do not actually need the
-file contents, such as `DIFF_FORMAT_PATCH`: `run_diff()` would try to
-read the blob contents, but that blob might not have been written to
-Git's object database.
+>  				/* we can fast-forward this without invoking rebase */
+>  				opt_ff = "--ff-only";
+>  				ran_ff = 1;
+> diff --git a/commit-reach.c b/commit-reach.c
+> index 1761217663..82c73171dd 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -283,9 +283,9 @@ struct commit_list *repo_get_merge_bases(struct repository *r,
+>  /*
+>   * Is "commit" a descendant of one of the elements on the "with_commit" list?
+>   */
+> -static int repo_is_descendant_of(struct repository *r,
+> -				 struct commit *commit,
+> -				 struct commit_list *with_commit)
+> +int repo_is_descendant_of(struct repository *r,
+> +			  struct commit *commit,
+> +			  struct commit_list *with_commit)
+>  {
+>  	if (!with_commit)
+>  		return 1;
+> @@ -310,11 +310,6 @@ static int repo_is_descendant_of(struct repository *r,
+>  	}
+>  }
+>  
+> -int is_descendant_of(struct commit *commit, struct commit_list *with_commit)
+> -{
+> -	return repo_is_descendant_of(the_repository, commit, with_commit);
+> -}
+> -
+>  /*
+>   * Is "commit" an ancestor of one of the "references"?
+>   */
+> @@ -433,7 +428,8 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
+>  		return 0;
+>  
+>  	commit_list_insert(old_commit, &old_commit_list);
+> -	ret = is_descendant_of(new_commit, old_commit_list);
+> +	ret = repo_is_descendant_of(the_repository,
+> +					new_commit, old_commit_list);
 
-This fixes https://github.com/git-for-windows/git/issues/2677
+nit: align the whitespace so "new_commit" is left-aligned with the start
+of "the_repository" in the line above. It should look like this:
 
-This patch _also_ fixes the expectations set by the regression test
-introduced in feea6946a5b (diff-files: treat "i-t-a" files as
-"not-in-index", 2020-06-20).
++	ret = repo_is_descendant_of(the_repository,
++				    new_commit, old_commit_list);
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- diff-lib.c             | 14 ++++++++++++++
- t/t2203-add-intent.sh  |  4 ++--
- t/t4000-diff-format.sh | 10 ++++++++++
- 3 files changed, 26 insertions(+), 2 deletions(-)
+>  	free_commit_list(old_commit_list);
+>  	return ret;
+>  }
+> @@ -554,7 +550,7 @@ int commit_contains(struct ref_filter *filter, struct commit *commit,
+>  {
+>  	if (filter->with_commit_tag_algo)
+>  		return contains_tag_algo(commit, list, cache) == CONTAINS_YES;
+> -	return is_descendant_of(commit, list);
+> +	return repo_is_descendant_of(the_repository, commit, list);
+>  }
+>  
+>  static int compare_commits_by_gen(const void *_a, const void *_b)
+> diff --git a/commit-reach.h b/commit-reach.h
+> index 99a43e8b64..b49ad71a31 100644
+> --- a/commit-reach.h
+> +++ b/commit-reach.h
+> @@ -27,7 +27,9 @@ struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
+>  
+>  struct commit_list *get_octopus_merge_bases(struct commit_list *in);
+>  
+> -int is_descendant_of(struct commit *commit, struct commit_list *with_commit);
+> +int repo_is_descendant_of(struct repository *r,
+> +			  struct commit *commit,
+> +			  struct commit_list *with_commit);
+>  int repo_in_merge_bases(struct repository *r,
+>  			struct commit *commit,
+>  			struct commit *reference);
+> diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+> index a0272178b7..1d640f4757 100644
+> --- a/t/helper/test-reach.c
+> +++ b/t/helper/test-reach.c
+> @@ -108,7 +108,7 @@ int cmd__reach(int ac, const char **av)
+>  	else if (!strcmp(av[1], "in_merge_bases"))
+>  		printf("%s(A,B):%d\n", av[1], in_merge_bases(A, B));
+>  	else if (!strcmp(av[1], "is_descendant_of"))
+> -		printf("%s(A,X):%d\n", av[1], is_descendant_of(A, X));
+> +		printf("%s(A,X):%d\n", av[1], repo_is_descendant_of(r, A, X));
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 61812f48c27..ea23169afa2 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -217,6 +217,20 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 					       !is_null_oid(&ce->oid),
- 					       ce->name, 0);
- 				continue;
-+			} else if (ce_intent_to_add(ce) &&
-+				   !(revs->diffopt.output_format &
-+				     ~(DIFF_FORMAT_RAW | DIFF_FORMAT_NAME_STATUS))) {
-+				struct object_id oid;
-+				int ret = lstat(ce->name, &st);
-+
-+				if (ret < 0)
-+					oidclr(&oid);
-+				else
-+					ret = index_path(istate, &oid,
-+						 ce->name, &st, 0);
-+				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
-+					       &oid, ret >= 0, ce->name, 0);
-+				continue;
- 			} else if (revs->diffopt.ita_invisible_in_index &&
- 				   ce_intent_to_add(ce)) {
- 				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 8a5d55054f2..b000a2bdd1d 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -259,8 +259,8 @@ test_expect_success 'i-t-a files shown as new for "diff", "diff-files"; not-new
- 	 create mode 100644 not-empty
- 	EOF
- 	cat >expect.diff_a <<-EOF &&
--	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")empty
--	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")not-empty
-+	:000000 100644 0000000 $(git rev-parse --short $hash_e) A$(printf "\t")empty
-+	:000000 100644 0000000 $(git rev-parse --short $hash_n) A$(printf "\t")not-empty
- 	EOF
- 
- 	git add -N empty not-empty &&
-diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
-index e5116a76a1c..48ff4e250b5 100755
---- a/t/t4000-diff-format.sh
-+++ b/t/t4000-diff-format.sh
-@@ -89,4 +89,14 @@ test_expect_success 'git diff-files --patch --no-patch does not show the patch'
- 	test_must_be_empty err
- '
- 
-+test_expect_success 'git diff-files --raw handles intent-to-add files correctly' '
-+	echo 123 >ita &&
-+	git add -N ita &&
-+	printf ":000000 100644 %s %s A\\tita\n" \
-+		$ZERO_OID $(git hash-object --stdin <ita) >expect &&
-+	git diff-files --raw ita >actual &&
-+	test_cmp expect actual
-+'
-+
-+
- test_done
--- 
-gitgitgadget
+This is the most subtle of the changes, but it is done correctly.
+
+This is a worthwhile patch. Some of the callers _look_ more complicated,
+but overall this simplifies the codebase. Further: it pushes more
+the_repository references higher up the stack.
+
+Thanks,
+-Stolee
 
