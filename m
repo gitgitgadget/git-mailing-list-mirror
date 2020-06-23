@@ -5,71 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DEC0C433E1
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF700C433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:58:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 790F82072E
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:28:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9776B20771
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:58:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RikI45t0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DRYPqcPn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732228AbgFWK22 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 06:28:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45144 "EHLO
+        id S1732409AbgFWK6M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 06:58:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732223AbgFWK2X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 06:28:23 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0BA2C061573
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 03:28:21 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id z2so12880531qts.5
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 03:28:21 -0700 (PDT)
+        with ESMTP id S1732398AbgFWK6L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 06:58:11 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97104C061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 03:58:11 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id 80so6486954qko.7
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 03:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=igzrfi3WnJfvDZtO6KqpeiQtuUtzj80ciMuQ43kGxlw=;
-        b=RikI45t0g6OwED5KGpoR+9bVF4FRxuTenA1Eu9QflQ0nAO4lJI63QMbx9o1BNquPmN
-         uiyhjtXP4+V723rIhH0eofTTzDWfvOWuoK6G1fWm7jCLP/75x0K4pGbn6xnexl4nuIFB
-         OIe5L93KCFGv9LN4McMb+uStfD/zb5rExYOGTJN0qXl0SykZzJ72F3HMe5fD4/mJiUJ0
-         Nn5zDHdxLDnu2GAHIEd05xoZe8+i7llySagOV+5j6XIIXwkdHZKr+mq2jJszzR0IoI30
-         60MTRLFxwloubBCI3InO4KmFx+yi3R7gbF3v6N33+icEa4DDxXoMZ1uigFRfrCsvUeeo
-         VzLg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sSAi/5XXDbQqNnTBD3btL1PwHDBtq4UcGR8A9w9/Imo=;
+        b=DRYPqcPnI041lY0+/d5jW8eTT2jHgpf4+W75uvhsE6xhPOu5GJy3uKTXaxiHvXnBi8
+         pNqGThEQMXqQbj3uLxq0fcA4FkxrqNGXB+0BKfYKCoct4UEKkK8/cXQKvUfy1MeM+ofI
+         +RrDUXLivP4LxwM3WOAWMts9dAmmdfybD4NQapgE/z8HeUtidTbrZydxGd81w6jjttEH
+         /BmixA3UG+IAhDkfRhWn9MYOCXw8cQeHdinptSrZsFcyyloIP2mfVN1ic8mUJWbdain7
+         YPjO7UQOg7AJuWplWbSi3dcIOGPin9xUgOn3s17Xb/xQrrE8noc39C83a5+8ndUtLXrp
+         5LhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=igzrfi3WnJfvDZtO6KqpeiQtuUtzj80ciMuQ43kGxlw=;
-        b=YGKTglo7f2dkPqPLMJ9ytP1W1I+lw0qT+/JLKhyf4oDOp42ZSt671CS9555Eu1YfsD
-         I4oZnH+hyzRj9vaLZ3euqT5pEaEcTH0eTsQdeh+/8ymnpwZe6nL+PzS264QJgzrh7U2F
-         k+2Mc9EW1vKH/vKm4motrMZBvDlzqqTBIaXXzqlkbxmN6EIKiHa+6ceOaCrc7h2DKmRa
-         4/fi6fvxm0VQd3QTWgoK99EhAclBD8vAdDEPkREauSBEYTPKItC3umLFQmN0MWQOyIfG
-         PfqBCP7gJ76BI7LC/105Sjk8BjoxLpE5cNjVXjMePmL6rp78Af55nJNSw/jWb6kS04Fo
-         WMKg==
-X-Gm-Message-State: AOAM531Yp+xpccGeFhwoCxqvWPIXKQPzWDFrBDgD5jx7umnebGurDGsf
-        BHpsQVsKmJIYA1ALVA5UIG0wSc1ENqg=
-X-Google-Smtp-Source: ABdhPJwnqsS2wpgpBXF5Emx4IMAXTeX+rVYLIj1o1jRE/eQrSdrEZkT4FwmHyphZLBHgtWRUxQOebw==
-X-Received: by 2002:aed:3b29:: with SMTP id p38mr10195151qte.350.1592908100817;
-        Tue, 23 Jun 2020 03:28:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sSAi/5XXDbQqNnTBD3btL1PwHDBtq4UcGR8A9w9/Imo=;
+        b=n5ZmTstSBh/RZotWzLP3v0PTy6oC1Fviq+1F0d7l5TtqJyT1Dq0QetE+j1JZpzcO0J
+         bLEI04Uoz4Dmp//aF4m+aDwHfDoJ/jeWT6p3eHBnMzsPe3xG0zRttupq/MKYJO+ITc+s
+         UFRaIa22d4NHL5bnZhFJfy4FHd6MumcLBodpB9mO87lpKLmwtV00ogzHGozoloODnf8W
+         LGYoxwxNXPBN6Fnox1rxRlmwrJXbw3U3+dw1TK0ZcTYd8LZwEUsNKvK5jj6HNZbKqYgP
+         pP/39ZT69nGASkZaqYsfqVcUXuNbfiHmFUdscLFMqSwpgJaaNlEdWCBTA7BJRd59syjg
+         N2iA==
+X-Gm-Message-State: AOAM532UkxrS3u8Zi9Gh+IvdYmSsIWZOrWVIV7bSIKAnPcB6fgYA1w2l
+        jRTmr0DmvGX17p7So2xdIM1u3slffjA=
+X-Google-Smtp-Source: ABdhPJw7ZmaoKHuPkmprOaJWDOfoplOKFyUqLRhtCrnZYWkJ3ncAe8vpGeWbTgpLFHkC54oP0m5mUQ==
+X-Received: by 2002:a05:620a:218e:: with SMTP id g14mr3201949qka.430.1592909890156;
+        Tue, 23 Jun 2020 03:58:10 -0700 (PDT)
 Received: from archbookpro.phub.net.cable.rogers.com (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
-        by smtp.gmail.com with ESMTPSA id a126sm153795qkc.82.2020.06.23.03.28.19
+        by smtp.gmail.com with ESMTPSA id c189sm251457qkb.8.2020.06.23.03.58.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2020 03:28:20 -0700 (PDT)
+        Tue, 23 Jun 2020 03:58:09 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v5 3/4] lib-submodule-update: prepend "git" to $command
-Date:   Tue, 23 Jun 2020 06:28:04 -0400
-Message-Id: <09446be5b9e9d6291dae3531a93b588e0b7a1c3f.1592907663.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.132.g321788e831
-In-Reply-To: <cover.1592907663.git.liu.denton@gmail.com>
-References: <cover.1592470068.git.liu.denton@gmail.com> <cover.1592907663.git.liu.denton@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Doc: reference 'seen' instead of 'pu' in meta docs
+Date:   Tue, 23 Jun 2020 06:58:00 -0400
+Message-Id: <e250f1bb100aca94c914f1b2d38a3849c2566aea.1592909867.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.27.0.307.g7979e895e7
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -77,303 +72,340 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since all invocations of test_submodule_forced_switch() are git
-commands, automatically prepend "git" before invoking
-test_submodule_switch_common().
+As of 2020-06-22, the name of git.git's integration branch has been
+renamed from 'pu' to 'seen'.[0] Update git.git-specific documentation to
+refer to the new branch name. In particular, update documents that refer
+to the workflow and also "how to contribute"-type docs.
 
-Similarly, many invocations of test_submodule_switch() are also git
-commands so automatically prepend "git" before invoking
-test_submodule_switch_common() as well.
+There still remains other uses of 'pu' in the docs. In these cases, it
+is generally used as an example and there isn't much value in updating
+these examples since they aren't git.git specific.
 
-Finally, for invocations of test_submodule_switch() that invoke a custom
-function, rename the old function to test_submodule_switch_func().
-
-This is necessary because in a future commit, we will be adding some
-logic that needs to distinguish between an invocation of a plain git
-comamnd and an invocation of a test helper function.
+[0]: https://lore.kernel.org/git/xmqqimfid2l1.fsf@gitster.c.googlers.com/
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/lib-submodule-update.sh        | 14 +++++++++-----
- t/t1013-read-tree-submodule.sh   |  4 ++--
- t/t2013-checkout-submodule.sh    |  4 ++--
- t/t3426-rebase-submodule.sh      |  4 ++--
- t/t3512-cherry-pick-submodule.sh |  2 +-
- t/t3513-revert-submodule.sh      |  2 +-
- t/t3906-stash-submodule.sh       |  2 +-
- t/t4137-apply-submodule.sh       |  4 ++--
- t/t4255-am-submodule.sh          |  4 ++--
- t/t5572-pull-submodule.sh        |  8 ++++----
- t/t6041-bisect-submodule.sh      |  2 +-
- t/t7112-reset-submodule.sh       |  6 +++---
- t/t7613-merge-submodule.sh       |  8 ++++----
- 13 files changed, 34 insertions(+), 30 deletions(-)
+ Documentation/MyFirstContribution.txt |  4 +--
+ Documentation/SubmittingPatches       | 10 +++---
+ Documentation/giteveryday.txt         | 10 +++---
+ Documentation/gitworkflows.txt        | 12 +++----
+ Documentation/howto/maintain-git.txt  | 52 +++++++++++++--------------
+ 5 files changed, 44 insertions(+), 44 deletions(-)
 
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index bb36287803..7c3ba1be00 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -307,8 +307,8 @@ test_submodule_content () {
- # to protect the history!
- #
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index 427274df4d..d85c9b5143 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -1179,8 +1179,8 @@ look at the section below this one for some context.)
+ [[after-approval]]
+ === After Review Approval
  
--# Internal function; use test_submodule_switch() or
--# test_submodule_forced_switch() instead.
-+# Internal function; use test_submodule_switch_func(), test_submodule_switch(),
-+# or test_submodule_forced_switch() instead.
- test_submodule_switch_common () {
- 	command="$1"
- 	######################### Appearing submodule #########################
-@@ -566,8 +566,8 @@ test_submodule_switch_common () {
- #   # Do something here that updates the worktree and index to match target,
- #   # but not any submodule directories.
- # }
--# test_submodule_switch "my_func"
--test_submodule_switch () {
-+# test_submodule_switch_func "my_func"
-+test_submodule_switch_func () {
- 	command="$1"
- 	test_submodule_switch_common "$command"
+-The Git project has four integration branches: `pu`, `next`, `master`, and
+-`maint`. Your change will be placed into `pu` fairly early on by the maintainer
++The Git project has four integration branches: `seen`, `next`, `master`, and
++`maint`. Your change will be placed into `seen` fairly early on by the maintainer
+ while it is still in the review process; from there, when it is ready for wider
+ testing, it will be merged into `next`. Plenty of early testers use `next` and
+ may report issues. Eventually, changes in `next` will make it to `master`,
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index ecf9438cf0..291b61e262 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -19,7 +19,7 @@ change is relevant to.
+   base your work on the tip of the topic.
  
-@@ -587,12 +587,16 @@ test_submodule_switch () {
- 	'
- }
+ * A new feature should be based on `master` in general. If the new
+-  feature depends on a topic that is in `pu`, but not in `master`,
++  feature depends on a topic that is in `seen`, but not in `master`,
+   base your work on the tip of that topic.
  
-+test_submodule_switch () {
-+	test_submodule_switch_func "git $1"
-+}
-+
- # Same as test_submodule_switch(), except that throwing away local changes in
- # the superproject is allowed.
- test_submodule_forced_switch () {
- 	command="$1"
- 	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
--	test_submodule_switch_common "$command"
-+	test_submodule_switch_common "git $command"
+ * Corrections and enhancements to a topic not yet in `master` should
+@@ -28,7 +28,7 @@ change is relevant to.
+   into the series.
  
- 	# When forced, a file in the superproject does not prevent creating a
- 	# submodule of the same name.
-diff --git a/t/t1013-read-tree-submodule.sh b/t/t1013-read-tree-submodule.sh
-index 91a6fafcb4..b6df7444c0 100755
---- a/t/t1013-read-tree-submodule.sh
-+++ b/t/t1013-read-tree-submodule.sh
-@@ -12,8 +12,8 @@ test_submodule_switch_recursing_with_args "read-tree -u -m"
+ * In the exceptional case that a new feature depends on several topics
+-  not in `master`, start working on `next` or `pu` privately and send
++  not in `master`, start working on `next` or `seen` privately and send
+   out patches for discussion. Before the final merge, you may have to
+   wait until some of the dependent topics graduate to `master`, and
+   rebase your work.
+@@ -38,7 +38,7 @@ change is relevant to.
+   these parts should be based on their trees.
  
- test_submodule_forced_switch_recursing_with_args "read-tree -u --reset"
+ To find the tip of a topic branch, run `git log --first-parent
+-master..pu` and look for the merge commit. The second parent of this
++master..seen` and look for the merge commit. The second parent of this
+ commit is the tip of the topic branch.
  
--test_submodule_switch "git read-tree -u -m"
-+test_submodule_switch "read-tree -u -m"
+ [[separate-commits]]
+@@ -424,7 +424,7 @@ help you find out who they are.
+   and cooked further and eventually graduates to `master`.
  
--test_submodule_forced_switch "git read-tree -u --reset"
-+test_submodule_forced_switch "read-tree -u --reset"
+ In any time between the (2)-(3) cycle, the maintainer may pick it up
+-from the list and queue it to `pu`, in order to make it easier for
++from the list and queue it to `seen`, in order to make it easier for
+ people play with it without having to pick up and apply the patch to
+ their trees themselves.
  
- test_done
-diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
-index 8f86b5f4b2..b2bdd1fcb4 100755
---- a/t/t2013-checkout-submodule.sh
-+++ b/t/t2013-checkout-submodule.sh
-@@ -68,8 +68,8 @@ test_submodule_switch_recursing_with_args "checkout"
+@@ -435,7 +435,7 @@ their trees themselves.
+   master. `git pull --rebase` will automatically skip already-applied
+   patches, and will let you know. This works only if you rebase on top
+   of the branch in which your patch has been merged (i.e. it will not
+-  tell you if your patch is merged in pu if you rebase on top of
++  tell you if your patch is merged in `seen` if you rebase on top of
+   master).
  
- test_submodule_forced_switch_recursing_with_args "checkout -f"
+ * Read the Git mailing list, the maintainer regularly posts messages
+diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
+index 1bd919f92b..faba2ef088 100644
+--- a/Documentation/giteveryday.txt
++++ b/Documentation/giteveryday.txt
+@@ -278,13 +278,13 @@ $ git am -3 -i -s ./+to-apply <4>
+ $ compile/test
+ $ git switch -c hold/linus && git am -3 -i -s ./+hold-linus <5>
+ $ git switch topic/one && git rebase master <6>
+-$ git switch -C pu next <7>
++$ git switch -C seen next <7>
+ $ git merge topic/one topic/two && git merge hold/linus <8>
+ $ git switch maint
+ $ git cherry-pick master~4 <9>
+ $ compile/test
+ $ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
+-$ git fetch ko && for branch in master maint next pu <11>
++$ git fetch ko && for branch in master maint next seen <11>
+     do
+ 	git show-branch ko/$branch $branch <12>
+     done
+@@ -294,14 +294,14 @@ $ git push --follow-tags ko <13>
+ <1> see what you were in the middle of doing, if anything.
+ <2> see which branches haven't been merged into `master` yet.
+ Likewise for any other integration branches e.g. `maint`, `next`
+-and `pu` (potential updates).
++and `seen`.
+ <3> read mails, save ones that are applicable, and save others
+ that are not quite ready (other mail readers are available).
+ <4> apply them, interactively, with your sign-offs.
+ <5> create topic branch as needed and apply, again with sign-offs.
+ <6> rebase internal topic branch that has not been merged to the
+ master or exposed as a part of a stable branch.
+-<7> restart `pu` every time from the next.
++<7> restart `seen` every time from the next.
+ <8> and bundle topic branches still cooking.
+ <9> backport a critical fix.
+ <10> create a signed tag.
+@@ -323,7 +323,7 @@ repository at kernel.org, and looks like this:
+ 	fetch = refs/heads/*:refs/remotes/ko/*
+ 	push = refs/heads/master
+ 	push = refs/heads/next
+-	push = +refs/heads/pu
++	push = +refs/heads/seen
+ 	push = refs/heads/maint
+ ------------
  
--test_submodule_switch "git checkout"
-+test_submodule_switch "checkout"
+diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
+index abc0dc6bc7..ae38ff3fed 100644
+--- a/Documentation/gitworkflows.txt
++++ b/Documentation/gitworkflows.txt
+@@ -85,7 +85,7 @@ As a given feature goes from experimental to stable, it also
  
--test_submodule_forced_switch "git checkout -f"
-+test_submodule_forced_switch "checkout -f"
+ There is a fourth official branch that is used slightly differently:
  
- test_done
-diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
-index a2bba04ba9..788605ccc0 100755
---- a/t/t3426-rebase-submodule.sh
-+++ b/t/t3426-rebase-submodule.sh
-@@ -20,7 +20,7 @@ git_rebase () {
- 	git rebase "$1"
- }
+-* 'pu' (proposed updates) is an integration branch for things that are
++* 'seen' is an integration branch for things that are
+   not quite ready for inclusion yet (see "Integration Branches"
+   below).
  
--test_submodule_switch "git_rebase"
-+test_submodule_switch_func "git_rebase"
+@@ -93,7 +93,7 @@ Each of the four branches is usually a direct descendant of the one
+ above it.
  
- git_rebase_interactive () {
- 	git status -su >expect &&
-@@ -38,7 +38,7 @@ git_rebase_interactive () {
- 	git rebase -i "$1"
- }
+ Conceptually, the feature enters at an unstable branch (usually 'next'
+-or 'pu'), and "graduates" to 'master' for the next release once it is
++or 'seen'), and "graduates" to 'master' for the next release once it is
+ considered stable enough.
  
--test_submodule_switch "git_rebase_interactive"
-+test_submodule_switch_func "git_rebase_interactive"
  
- test_expect_success 'rebase interactive ignores modified submodules' '
- 	test_when_finished "rm -rf super sub" &&
-diff --git a/t/t3512-cherry-pick-submodule.sh b/t/t3512-cherry-pick-submodule.sh
-index bd78287841..6ece1d8573 100755
---- a/t/t3512-cherry-pick-submodule.sh
-+++ b/t/t3512-cherry-pick-submodule.sh
-@@ -7,7 +7,7 @@ test_description='cherry-pick can handle submodules'
+@@ -207,7 +207,7 @@ If you make it (very) clear that this branch is going to be deleted
+ right after the testing, you can even publish this branch, for example
+ to give the testers a chance to work with it, or other developers a
+ chance to see if their in-progress work will be compatible.  `git.git`
+-has such an official throw-away integration branch called 'pu'.
++has such an official throw-away integration branch called 'seen'.
  
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
--test_submodule_switch "git cherry-pick"
-+test_submodule_switch "cherry-pick"
  
- test_expect_success 'unrelated submodule/file conflict is ignored' '
- 	test_create_repo sub &&
-diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
-index 5e39fcdb66..95a7f64471 100755
---- a/t/t3513-revert-submodule.sh
-+++ b/t/t3513-revert-submodule.sh
-@@ -26,6 +26,6 @@ git_revert () {
- }
+ Branch management for a release
+@@ -291,7 +291,7 @@ This will not happen if the content of the branches was verified as
+ described in the previous section.
  
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
--test_submodule_switch "git_revert"
-+test_submodule_switch_func "git_revert"
  
- test_done
-diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
-index b93d1d74da..6a7e801ca0 100755
---- a/t/t3906-stash-submodule.sh
-+++ b/t/t3906-stash-submodule.sh
-@@ -19,7 +19,7 @@ git_stash () {
- KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES=1
- KNOWN_FAILURE_CHERRY_PICK_SEES_EMPTY_COMMIT=1
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
--test_submodule_switch "git_stash"
-+test_submodule_switch_func "git_stash"
+-Branch management for next and pu after a feature release
++Branch management for next and seen after a feature release
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
- setup_basic () {
- 	test_when_finished "rm -rf main sub" &&
-diff --git a/t/t4137-apply-submodule.sh b/t/t4137-apply-submodule.sh
-index a9bd40a6d0..b645e303a0 100755
---- a/t/t4137-apply-submodule.sh
-+++ b/t/t4137-apply-submodule.sh
-@@ -9,12 +9,12 @@ apply_index () {
- 	git diff --ignore-submodules=dirty "..$1" | git apply --index -
- }
+ After a feature release, the integration branch 'next' may optionally be
+@@ -319,8 +319,8 @@ so.
+ If you do this, then you should make a public announcement indicating
+ that 'next' was rewound and rebuilt.
  
--test_submodule_switch "apply_index"
-+test_submodule_switch_func "apply_index"
+-The same rewind and rebuild process may be followed for 'pu'. A public
+-announcement is not necessary since 'pu' is a throw-away branch, as
++The same rewind and rebuild process may be followed for 'seen'. A public
++announcement is not necessary since 'seen' is a throw-away branch, as
+ described above.
  
- apply_3way () {
- 	git diff --ignore-submodules=dirty "..$1" | git apply --3way -
- }
  
--test_submodule_switch "apply_3way"
-+test_submodule_switch_func "apply_3way"
+diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
+index 73be8b49f8..a67130debb 100644
+--- a/Documentation/howto/maintain-git.txt
++++ b/Documentation/howto/maintain-git.txt
+@@ -66,7 +66,7 @@ this mailing list after each feature release is made.
+    demonstrated to be regression free.  New changes are tested
+    in 'next' before merged to 'master'.
  
- test_done
-diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
-index 0ba8194403..1b179d5f45 100755
---- a/t/t4255-am-submodule.sh
-+++ b/t/t4255-am-submodule.sh
-@@ -9,14 +9,14 @@ am () {
- 	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am -
- }
+- - 'pu' branch is used to publish other proposed changes that do
++ - 'seen' branch is used to publish other proposed changes that do
+    not yet pass the criteria set for 'next'.
  
--test_submodule_switch "am"
-+test_submodule_switch_func "am"
+  - The tips of 'master' and 'maint' branches will not be rewound to
+@@ -76,7 +76,7 @@ this mailing list after each feature release is made.
+    of the cycle.
  
- am_3way () {
- 	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am --3way -
- }
+  - Usually 'master' contains all of 'maint' and 'next' contains all
+-   of 'master'.  'pu' contains all the topics merged to 'next', but
++   of 'master'.  'seen' contains all the topics merged to 'next', but
+    is rebuilt directly on 'master'.
  
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
--test_submodule_switch "am_3way"
-+test_submodule_switch_func "am_3way"
+  - The tip of 'master' is meant to be more stable than any
+@@ -229,12 +229,12 @@ by doing the following:
+    series?)
  
- test_expect_success 'setup diff.submodule' '
- 	test_commit one &&
-diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-index f916729a12..f911bf631e 100755
---- a/t/t5572-pull-submodule.sh
-+++ b/t/t5572-pull-submodule.sh
-@@ -17,21 +17,21 @@ git_pull () {
- }
+  - Prepare 'jch' branch, which is used to represent somewhere
+-   between 'master' and 'pu' and often is slightly ahead of 'next'.
++   between 'master' and 'seen' and often is slightly ahead of 'next'.
  
- # pulls without conflicts
--test_submodule_switch "git_pull"
-+test_submodule_switch_func "git_pull"
+-     $ Meta/Reintegrate master..pu >Meta/redo-jch.sh
++     $ Meta/Reintegrate master..seen >Meta/redo-jch.sh
  
- git_pull_ff () {
- 	reset_branch_to_HEAD "$1" &&
- 	git pull --ff
- }
+    The result is a script that lists topics to be merged in order to
+-   rebuild 'pu' as the input to Meta/Reintegrate script.  Remove
++   rebuild 'seen' as the input to Meta/Reintegrate script.  Remove
+    later topics that should not be in 'jch' yet.  Add a line that
+    consists of '### match next' before the name of the first topic
+    in the output that should be in 'jch' but not in 'next' yet.
+@@ -291,29 +291,29 @@ by doing the following:
+    merged to 'master'.  This may lose '### match next' marker;
+    add it again to the appropriate place when it happens.
  
--test_submodule_switch "git_pull_ff"
-+test_submodule_switch_func "git_pull_ff"
+- - Rebuild 'pu'.
++ - Rebuild 'seen'.
  
- git_pull_ff_only () {
- 	reset_branch_to_HEAD "$1" &&
- 	git pull --ff-only
- }
+-     $ Meta/Reintegrate master..pu >Meta/redo-pu.sh
++     $ Meta/Reintegrate master..seen >Meta/redo-seen.sh
  
--test_submodule_switch "git_pull_ff_only"
-+test_submodule_switch_func "git_pull_ff_only"
+-   Edit the result by adding new topics that are not still in 'pu'
++   Edit the result by adding new topics that are not still in 'seen'
+    in the script.  Then
  
- git_pull_noff () {
- 	reset_branch_to_HEAD "$1" &&
-@@ -40,7 +40,7 @@ git_pull_noff () {
+-     $ git checkout -B pu jch
+-     $ sh Meta/redo-pu.sh
++     $ git checkout -B seen jch
++     $ sh Meta/redo-seen.sh
  
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
--test_submodule_switch "git_pull_noff"
-+test_submodule_switch_func "git_pull_noff"
+-   When all is well, clean up the redo-pu.sh script with
++   When all is well, clean up the redo-seen.sh script with
  
- test_expect_success 'pull --recurse-submodule setup' '
- 	test_create_repo child &&
-diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
-index 62b8a2e7bb..0e0cdf638d 100755
---- a/t/t6041-bisect-submodule.sh
-+++ b/t/t6041-bisect-submodule.sh
-@@ -27,6 +27,6 @@ git_bisect () {
- 	git bisect bad $BAD
- }
+-     $ sh Meta/redo-pu.sh -u
++     $ sh Meta/redo-seen.sh -u
  
--test_submodule_switch "git_bisect"
-+test_submodule_switch_func "git_bisect"
+    Double check by running
  
- test_done
-diff --git a/t/t7112-reset-submodule.sh b/t/t7112-reset-submodule.sh
-index a1cb9ff858..8741b665c9 100755
---- a/t/t7112-reset-submodule.sh
-+++ b/t/t7112-reset-submodule.sh
-@@ -13,10 +13,10 @@ test_submodule_switch_recursing_with_args "reset --keep"
+-     $ git branch --no-merged pu
++     $ git branch --no-merged seen
  
- test_submodule_forced_switch_recursing_with_args "reset --hard"
+    to see there is no unexpected leftover topics.
  
--test_submodule_switch "git reset --keep"
-+test_submodule_switch "reset --keep"
+    At this point, build-test the result for semantic conflicts, and
+    if there are, prepare an appropriate merge-fix first (see
+-   appendix), and rebuild the 'pu' branch from scratch, starting at
++   appendix), and rebuild the 'seen' branch from scratch, starting at
+    the tip of 'jch'.
  
--test_submodule_switch "git reset --merge"
-+test_submodule_switch "reset --merge"
+  - Update "What's cooking" message to review the updates to
+@@ -323,14 +323,14 @@ by doing the following:
  
--test_submodule_forced_switch "git reset --hard"
-+test_submodule_forced_switch "reset --hard"
+      $ Meta/cook
  
- test_done
-diff --git a/t/t7613-merge-submodule.sh b/t/t7613-merge-submodule.sh
-index d1e9fcc781..04bf4be7d7 100755
---- a/t/t7613-merge-submodule.sh
-+++ b/t/t7613-merge-submodule.sh
-@@ -6,14 +6,14 @@ test_description='merge can handle submodules'
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
+-   This script inspects the history between master..pu, finds tips
++   This script inspects the history between master..seen, finds tips
+    of topic branches, compares what it found with the current
+    contents in Meta/whats-cooking.txt, and updates that file.
+-   Topics not listed in the file but are found in master..pu are
++   Topics not listed in the file but are found in master..seen are
+    added to the "New topics" section, topics listed in the file that
+-   are no longer found in master..pu are moved to the "Graduated to
++   are no longer found in master..seen are moved to the "Graduated to
+    master" section, and topics whose commits changed their states
+-   (e.g. used to be only in 'pu', now merged to 'next') are updated
++   (e.g. used to be only in 'seen', now merged to 'next') are updated
+    with change markers "<<" and ">>".
  
- # merges without conflicts
--test_submodule_switch "git merge"
-+test_submodule_switch "merge"
+    Look for lines enclosed in "<<" and ">>"; they hold contents from
+@@ -360,7 +360,7 @@ Observations
+ Some observations to be made.
  
--test_submodule_switch "git merge --ff"
-+test_submodule_switch "merge --ff"
+  * Each topic is tested individually, and also together with other
+-   topics cooking first in 'pu', then in 'jch' and then in 'next'.
++   topics cooking first in 'seen', then in 'jch' and then in 'next'.
+    Until it matures, no part of it is merged to 'master'.
  
--test_submodule_switch "git merge --ff-only"
-+test_submodule_switch "merge --ff-only"
+  * A topic already in 'next' can get fixes while still in
+@@ -411,7 +411,7 @@ new use of the variable under its old name. When these two topics
+ are merged together, the reference to the variable newly added by
+ the latter topic will still use the old name in the result.
  
- KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
- KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
--test_submodule_switch "git merge --no-ff"
-+test_submodule_switch "merge --no-ff"
+-The Meta/Reintegrate script that is used by redo-jch and redo-pu
++The Meta/Reintegrate script that is used by redo-jch and redo-seen
+ scripts implements a crude but usable way to work this issue around.
+ When the script merges branch $X, it checks if "refs/merge-fix/$X"
+ exists, and if so, the effect of it is squashed into the result of
+@@ -431,14 +431,14 @@ commit that can be squashed into a result of mechanical merge to
+ correct semantic conflicts.
  
- test_done
+ After finding that the result of merging branch "ai/topic" to an
+-integration branch had such a semantic conflict, say pu~4, check the
++integration branch had such a semantic conflict, say seen~4, check the
+ problematic merge out on a detached HEAD, edit the working tree to
+ fix the semantic conflict, and make a separate commit to record the
+ fix-up:
+ 
+-     $ git checkout pu~4
++     $ git checkout seen~4
+      $ git show -s --pretty=%s ;# double check
+-     Merge branch 'ai/topic' to pu
++     Merge branch 'ai/topic' to seen
+      $ edit
+      $ git commit -m 'merge-fix/ai/topic' -a
+ 
+@@ -450,9 +450,9 @@ result:
+ Then double check the result by asking Meta/Reintegrate to redo the
+ merge:
+ 
+-     $ git checkout pu~5 ;# the parent of the problem merge
++     $ git checkout seen~5 ;# the parent of the problem merge
+      $ echo ai/topic | Meta/Reintegrate
+-     $ git diff pu~4
++     $ git diff seen~4
+ 
+ This time, because you prepared refs/merge-fix/ai/topic, the
+ resulting merge should have been tweaked to include the fix for the
+@@ -464,7 +464,7 @@ branch needs this merge-fix is because another branch merged earlier
+ to the integration branch changed the underlying assumption ai/topic
+ branch made (e.g. ai/topic branch added a site to refer to a
+ variable, while the other branch renamed that variable and adjusted
+-existing use sites), and if you changed redo-jch (or redo-pu) script
++existing use sites), and if you changed redo-jch (or redo-seen) script
+ to merge ai/topic branch before the other branch, then the above
+ merge-fix should not be applied while merging ai/topic, but should
+ instead be applied while merging the other branch.  You would need
 -- 
-2.27.0.132.g321788e831
+2.27.0.307.g7979e895e7
 
