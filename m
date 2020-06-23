@@ -3,153 +3,408 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5D17C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F78EC433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:23:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9987C20738
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:22:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64A7A20724
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:23:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nuHtQ6Lf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYZ5EIjL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391638AbgFWVWu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 17:22:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40134 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388978AbgFWUVj (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Jun 2020 16:21:39 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 525066048A;
-        Tue, 23 Jun 2020 20:21:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592943698;
-        bh=XXHOeBvvuIg5rOdJVT9dfP5epCWfpKXhtPUR8jCvpBg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=nuHtQ6LfXsPFwMkI5tEmawC9UnpYEgdkUYt6IlZpQaa71WK33d7U2X2n3AUTS1wnK
-         TZaIOffB2xCUXFXf6+Lzw4or/QM4w1aoMa3QteoKh64DavGM/1W18FHjGP5eAkahsb
-         4SppkY+tT3SGrkGArJVYHeAHqyWLMPXeUmghqgMTohRTscYSuzExA4ecFf+srTy9Cs
-         JR7qHkYV93XdUYyE/5PjgZ5yqITnh4iyXhVjJYCFCeHYtfFhF8LwCC5x7u9a0bejuX
-         34hhVjJFMyvz7ZPpr24IFH80EoS3SogBvREsSnRhIaeT0vuCBJNsNPhmy4rQ7hqw1i
-         D/r89t2NqSsR2HiUi70M7wbPQRvoCCu4RM192QaPIbKU2nvgeQM9cxlsb7q5qRsp6y
-         sDzMxkzvGjC3W8R/yTLg9ceXBdpvq3gw07jJ7rLjS6EiE3nqfA9Wc+6L6EGhiWAtE0
-         CCNiLIQ9o0ra18P/kp2WHN1uiJCw0Y6J2fLgukd/uSB3hMUjJ58
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Ward <mward@smartsoftwareinc.com>
-Subject: [PATCH] http-push: ensure unforced pushes fail when data would be lost
-Date:   Tue, 23 Jun 2020 20:21:29 +0000
-Message-Id: <20200623202129.2616672-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
-In-Reply-To: <20200623010519.GR6531@camp.crustytoothpaste.net>
-References: <20200623010519.GR6531@camp.crustytoothpaste.net>
+        id S2390052AbgFWUVe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 16:21:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52394 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390041AbgFWUVa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 16:21:30 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B9C5C061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 13:21:31 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id j10so7856290qtq.11
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 13:21:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mLfgdkw1nUgJ5x3GvgwEgZeIql1XosWRGELNGBDZR4Q=;
+        b=GYZ5EIjL9wF8HvQsw+bvFX/dUCQe636FXU85kA8p/ov4+WfBK2zYzfadsFQqj96Fp2
+         FZlIt+78OtEON5nV6PK/T5Rlk1hg7u997N3hfHdAXT6JfePgk1TQBDkoJV3bei27Gq0x
+         VfJrYbiVOEWwmaoXTvQ/d6jGQ1+KLSGM8dPApWovN+nSU5QV0xrMpPaIUuzPqh/Gjdqq
+         YHgtG/hjOMzFkze1eDocw8Our5ZOVL+Km+zO9Kct4RBe+XJRJyksnUj2eOAAoPH/fBCw
+         QBqKvFVj8tp4qiqZ3sCvsTROF1ECTTuKeIIMhIeCH+TNZ+cDGjJWEszzgMU4pDgawvzI
+         ixbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mLfgdkw1nUgJ5x3GvgwEgZeIql1XosWRGELNGBDZR4Q=;
+        b=QJzDx7ySMwoQJsk0ostjoHy8v8JYchu6UGyXYgNZiYu3YIFsl1tvryKZpj1q3T4Aay
+         Hn36nsojNoqXrz6RI7uznqJaY0g8EK9r7ZEHtDWesX1RXu4rMQNJUcfCNkwd/3/Ntb6K
+         FcObrJk8t4iml8l7Wf7VDxDbzI+E0lCMiS4E5TvFHV0MTMx48zyRAz5iFFZicHHSOXB+
+         X9g9bZDVEkebmDYvdhguh6Do8oNPDcxgHqv5Rawjr8/2d8EGzlfK3uNTZjuNV/bhBsB7
+         KOginzbD+nK9cUiPgNj6faUSreMueJIcWO+zg7JG0Xc7+LYLNBkTZ3cDMiQNdVmydiMZ
+         i2LQ==
+X-Gm-Message-State: AOAM533d6ITWdDfGxt9BiiwJ6f3PDST0o8JiX6P0Bt4gz6vB7L6PcwXr
+        1KRAxto+CrDOyITo5S5UQ8pNyg1qepM=
+X-Google-Smtp-Source: ABdhPJwg1cRb+ishqklLIqqHqt5bsAf/zJV/nZne4bOQ/PBv0MBorVXzP6Kr7ePJYlr8yOOxb1rwEQ==
+X-Received: by 2002:ac8:1305:: with SMTP id e5mr12121964qtj.78.1592943689602;
+        Tue, 23 Jun 2020 13:21:29 -0700 (PDT)
+Received: from archbookpro.phub.net.cable.rogers.com (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
+        by smtp.gmail.com with ESMTPSA id q47sm1717208qta.16.2020.06.23.13.21.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2020 13:21:28 -0700 (PDT)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v5.1] lib-submodule-update: pass 'test_must_fail' as an argument
+Date:   Tue, 23 Jun 2020 16:21:20 -0400
+Message-Id: <7b9c19b3606f31b12a79591a41847dcb0a071751.1592942452.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.27.0.307.g7979e895e7
+In-Reply-To: <cover.1592907663.git.liu.denton@gmail.com>
+References: <cover.1592907663.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we push using the DAV-based protocol, the client is the one that
-performs the ref updates and therefore makes the checks to see whether
-an unforced push should be allowed.  We make this check by determining
-if either (a) we lack the object file for the old value of the ref or
-(b) the new value of the ref is not newer than the old value, and in
-either case, reject the push.
+When we run a test helper function in test_submodule_switch_common(), we
+sometimes specify a whole helper function as the $command. When we do
+this, in some test cases, we just mark the whole function with
+`test_must_fail`. However, it's possible that the helper function might
+fail earlier or later than expected due to an introduced bug. If this
+happens, then the test case will still report as passing but it should
+really be marked as failing since it didn't actually display the
+intended behaviour.
 
-However, the ref_newer function, which performs this latter check, has
-an odd behavior due to the reuse of certain object flags.  Specifically,
-it will incorrectly return false in its first invocation and then
-correctly return true on a subsequent invocation.  This occurs because
-the object flags used by http-push.c are the same as those used by
-commit-reach.c, which implements ref_newer, and one piece of code
-misinterprets the flags set by the other.
+Instead of invoking `test_must_fail $command`, pass the string
+"test_must_fail" as the second argument in case where the git command is
+expected to fail.
 
-Note that this does not occur in all cases.  For example, if the example
-used in the tests is changed to use one repository instead of two and
-rewind the head to add a commit, the test passes and we correctly reject
-the push.  However, the example provided does trigger this behavior, and
-the code has been broken in this way since at least Git 2.0.0.
+When $command is a helper function, the parent function calling
+test_submodule_switch_common() is test_submodule_switch_func(). For all
+test_submodule_switch_func() invocations, increase the granularity of
+the argument test helper function by prefixing the git invocation which is
+meant to fail with the second argument like this:
 
-To solve this problem, let's move the two sets of object flags so that
-they don't overlap, since we're clearly using them at the same time.
-The new set should not conflict with other usage because other users are
-either builtin code (which is not compiled into git http-push) or
-upload-pack (which we similarly do not use here).
+	$2 git checkout "$1"
 
-Signed-off-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+In the other cases, test_submodule_switch() and
+test_submodule_forced_switch(), instead of passing in the git command
+directly, wrap it using the git_test_func() and pass the git arguments
+using the global variable $gitcmd. Unfortunately, since closures aren't
+a thing in shell scripts, the global variable is necessary. Another
+unfortunate result is that the "git_test_func" will used as the test
+case name when $command is printed but it's worth it for the cleaner
+code.
+
+Finally, as an added bonus, `test_must_fail` will now only run on git
+commands.
+
+An alternate design was considered where the global variable,
+$OVERWRITING_FAIL, is set from test_submodule_switch_common() and
+exposed to the helper function. This would allow $command to be set to a
+more sensible value. However this approach was considered too difficult
+to understand due to the fact that using a signalling magical global
+variable is too indirect and it's best to keep the magic confined to
+within one file.
+
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- http-push.c                 |  8 ++++----
- object.h                    |  2 +-
- t/t5540-http-push-webdav.sh | 16 ++++++++++++++++
- 3 files changed, 21 insertions(+), 5 deletions(-)
+This patch replaces v5 4/4. Hopefully, this'll be the last iteration...
 
-diff --git a/http-push.c b/http-push.c
-index 822f326599..99adbebdcf 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -70,10 +70,10 @@ enum XML_Status {
- #define LOCK_REFRESH 30
+ t/lib-submodule-update.sh   | 49 +++++++++++++++++++++++++++----------
+ t/t3426-rebase-submodule.sh |  4 +--
+ t/t3513-revert-submodule.sh |  6 ++++-
+ t/t3906-stash-submodule.sh  |  6 ++++-
+ t/t4137-apply-submodule.sh  |  6 +++--
+ t/t4255-am-submodule.sh     |  6 +++--
+ t/t5572-pull-submodule.sh   |  8 +++---
+ t/t6041-bisect-submodule.sh |  6 ++++-
+ 8 files changed, 65 insertions(+), 26 deletions(-)
+
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 7c3ba1be00..53c5374ea1 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -303,8 +303,12 @@ test_submodule_content () {
+ # update" is run. And even then that command doesn't delete the work tree of
+ # a removed submodule.
+ #
++# The first argument of the callback function will be the name of the submodule.
++#
+ # Removing a submodule containing a .git directory must fail even when forced
+-# to protect the history!
++# to protect the history! If we are testing this case, the second argument of
++# the callback function will be 'test_must_fail', else it will be the empty
++# string.
+ #
  
- /* Remember to update object flag allocation in object.h */
--#define LOCAL    (1u<<16)
--#define REMOTE   (1u<<17)
--#define FETCHING (1u<<18)
--#define PUSHING  (1u<<19)
-+#define LOCAL    (1u<<11)
-+#define REMOTE   (1u<<12)
-+#define FETCHING (1u<<13)
-+#define PUSHING  (1u<<14)
+ # Internal function; use test_submodule_switch_func(), test_submodule_switch(),
+@@ -443,7 +447,7 @@ test_submodule_switch_common () {
+ 		(
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+-			test_must_fail $command replace_sub1_with_directory &&
++			$command replace_sub1_with_directory test_must_fail &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+@@ -456,7 +460,7 @@ test_submodule_switch_common () {
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_directory origin/replace_sub1_with_directory &&
+ 			replace_gitfile_with_git_dir sub1 &&
+-			test_must_fail $command replace_sub1_with_directory &&
++			$command replace_sub1_with_directory test_must_fail &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_git_directory_is_unchanged sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+@@ -470,7 +474,7 @@ test_submodule_switch_common () {
+ 		(
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+-			test_must_fail $command replace_sub1_with_file &&
++			$command replace_sub1_with_file test_must_fail &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+@@ -484,7 +488,7 @@ test_submodule_switch_common () {
+ 			cd submodule_update &&
+ 			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
+ 			replace_gitfile_with_git_dir sub1 &&
+-			test_must_fail $command replace_sub1_with_file &&
++			$command replace_sub1_with_file test_must_fail &&
+ 			test_superproject_content origin/add_sub1 &&
+ 			test_git_directory_is_unchanged sub1 &&
+ 			test_submodule_content sub1 origin/add_sub1
+@@ -559,12 +563,25 @@ test_submodule_switch_common () {
+ # conditions, set the appropriate KNOWN_FAILURE_* variable used in the tests
+ # below to 1.
+ #
+-# Use as follows:
++# The first argument of the callback function will be the name of the submodule.
++#
++# Removing a submodule containing a .git directory must fail even when forced
++# to protect the history! If we are testing this case, the second argument of
++# the callback function will be 'test_must_fail', else it will be the empty
++# string.
++#
++# The following example uses `git some-command` as an example command to be
++# tested. It updates the worktree and index to match a target, but not any
++# submodule directories.
+ #
+ # my_func () {
+-#   target=$1
+-#   # Do something here that updates the worktree and index to match target,
+-#   # but not any submodule directories.
++#   ...prepare for `git some-command` to be run...
++#   $2 git some-command "$1" &&
++#   if test -n "$2"
++#   then
++#     return
++#   fi &&
++#   ...check the state after git some-command is run...
+ # }
+ # test_submodule_switch_func "my_func"
+ test_submodule_switch_func () {
+@@ -580,23 +597,29 @@ test_submodule_switch_func () {
+ 			cd submodule_update &&
+ 			git branch -t add_sub1 origin/add_sub1 &&
+ 			>sub1 &&
+-			test_must_fail $command add_sub1 &&
++			$command add_sub1 test_must_fail &&
+ 			test_superproject_content origin/no_submodule &&
+ 			test_must_be_empty sub1
+ 		)
+ 	'
+ }
  
- /* We allow "recursive" symbolic refs. Only within reason, though */
- #define MAXDEPTH 5
-diff --git a/object.h b/object.h
-index b22328b838..a496d2e4e1 100644
---- a/object.h
-+++ b/object.h
-@@ -67,7 +67,7 @@ struct object_array {
-  * builtin/blame.c:                        12-13
-  * bisect.c:                                        16
-  * bundle.c:                                        16
-- * http-push.c:                                     16-----19
-+ * http-push.c:                          11-----14
-  * commit-graph.c:                                15
-  * commit-reach.c:                                  16-----19
-  * sha1-name.c:                                              20
-diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
-index d476c33509..450321fddb 100755
---- a/t/t5540-http-push-webdav.sh
-+++ b/t/t5540-http-push-webdav.sh
-@@ -126,6 +126,22 @@ test_expect_success 'create and delete remote branch' '
- 	test_must_fail git show-ref --verify refs/remotes/origin/dev
- '
- 
-+test_expect_success 'non-force push fails if not up to date' '
-+	git init --bare "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_conflict.git &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_conflict.git update-server-info &&
-+	git clone $HTTPD_URL/dumb/test_repo_conflict.git "$ROOT_PATH"/c1 &&
-+	git clone $HTTPD_URL/dumb/test_repo_conflict.git "$ROOT_PATH"/c2 &&
-+	test_commit -C "$ROOT_PATH/c1" path1 &&
-+	git -C "$ROOT_PATH/c1" push origin HEAD &&
-+	git -C "$ROOT_PATH/c2" pull &&
-+	test_commit -C "$ROOT_PATH/c1" path2 &&
-+	git -C "$ROOT_PATH/c1" push origin HEAD &&
-+	test_commit -C "$ROOT_PATH/c2" path3 &&
-+	git -C "$ROOT_PATH/c1" log --graph --all &&
-+	git -C "$ROOT_PATH/c2" log --graph --all &&
-+	test_must_fail git -C "$ROOT_PATH/c2" push origin HEAD
-+'
++git_test_func () {
++	$2 git $gitcmd "$1"
++}
 +
- test_expect_success 'MKCOL sends directory names with trailing slashes' '
+ test_submodule_switch () {
+-	test_submodule_switch_func "git $1"
++	gitcmd="$1"
++	test_submodule_switch_func "git_test_func"
+ }
  
- 	! grep "\"MKCOL.*[^/] HTTP/[^ ]*\"" < "$HTTPD_ROOT_PATH"/access.log
+ # Same as test_submodule_switch(), except that throwing away local changes in
+ # the superproject is allowed.
+ test_submodule_forced_switch () {
+-	command="$1"
++	gitcmd="$1"
++	command="git_test_func"
+ 	KNOWN_FAILURE_FORCED_SWITCH_TESTS=1
+-	test_submodule_switch_common "git $command"
++	test_submodule_switch_common "$command"
+ 
+ 	# When forced, a file in the superproject does not prevent creating a
+ 	# submodule of the same name.
+diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
+index 788605ccc0..dd5daa53d3 100755
+--- a/t/t3426-rebase-submodule.sh
++++ b/t/t3426-rebase-submodule.sh
+@@ -17,7 +17,7 @@ git_rebase () {
+ 	git status -su >actual &&
+ 	ls -1pR * >>actual &&
+ 	test_cmp expect actual &&
+-	git rebase "$1"
++	$2 git rebase "$1"
+ }
+ 
+ test_submodule_switch_func "git_rebase"
+@@ -35,7 +35,7 @@ git_rebase_interactive () {
+ 	test_cmp expect actual &&
+ 	set_fake_editor &&
+ 	echo "fake-editor.sh" >.git/info/exclude &&
+-	git rebase -i "$1"
++	$2 git rebase -i "$1"
+ }
+ 
+ test_submodule_switch_func "git_rebase_interactive"
+diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
+index 95a7f64471..f98e3301b9 100755
+--- a/t/t3513-revert-submodule.sh
++++ b/t/t3513-revert-submodule.sh
+@@ -15,7 +15,11 @@ git_revert () {
+ 	git status -su >expect &&
+ 	ls -1pR * >>expect &&
+ 	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
+-	git checkout "$1" &&
++	$2 git checkout "$1" &&
++	if test -n "$2"
++	then
++		return
++	fi &&
+ 	git revert HEAD &&
+ 	rm -rf * &&
+ 	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
+diff --git a/t/t3906-stash-submodule.sh b/t/t3906-stash-submodule.sh
+index 6a7e801ca0..61db4a9886 100755
+--- a/t/t3906-stash-submodule.sh
++++ b/t/t3906-stash-submodule.sh
+@@ -8,7 +8,11 @@ test_description='stash can handle submodules'
+ git_stash () {
+ 	git status -su >expect &&
+ 	ls -1pR * >>expect &&
+-	git read-tree -u -m "$1" &&
++	$2 git read-tree -u -m "$1" &&
++	if test -n "$2"
++	then
++		return
++	fi &&
+ 	git stash &&
+ 	git status -su >actual &&
+ 	ls -1pR * >>actual &&
+diff --git a/t/t4137-apply-submodule.sh b/t/t4137-apply-submodule.sh
+index b645e303a0..5477d48ffd 100755
+--- a/t/t4137-apply-submodule.sh
++++ b/t/t4137-apply-submodule.sh
+@@ -6,13 +6,15 @@ test_description='git apply handling submodules'
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
+ apply_index () {
+-	git diff --ignore-submodules=dirty "..$1" | git apply --index -
++	git diff --ignore-submodules=dirty "..$1" >diff &&
++	$2 git apply --index diff
+ }
+ 
+ test_submodule_switch_func "apply_index"
+ 
+ apply_3way () {
+-	git diff --ignore-submodules=dirty "..$1" | git apply --3way -
++	git diff --ignore-submodules=dirty "..$1" >diff
++	$2 git apply --3way diff
+ }
+ 
+ test_submodule_switch_func "apply_3way"
+diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
+index 1b179d5f45..8403124ac0 100755
+--- a/t/t4255-am-submodule.sh
++++ b/t/t4255-am-submodule.sh
+@@ -6,13 +6,15 @@ test_description='git am handling submodules'
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
+ am () {
+-	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am -
++	git format-patch --stdout --ignore-submodules=dirty "..$1" >patch &&
++	$2 git am patch
+ }
+ 
+ test_submodule_switch_func "am"
+ 
+ am_3way () {
+-	git format-patch --stdout --ignore-submodules=dirty "..$1" | git am --3way -
++	git format-patch --stdout --ignore-submodules=dirty "..$1" >patch &&
++	$2 git am --3way patch
+ }
+ 
+ KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index f911bf631e..cfa40b9251 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -13,7 +13,7 @@ reset_branch_to_HEAD () {
+ 
+ git_pull () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull
++	$2 git pull
+ }
+ 
+ # pulls without conflicts
+@@ -21,21 +21,21 @@ test_submodule_switch_func "git_pull"
+ 
+ git_pull_ff () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull --ff
++	$2 git pull --ff
+ }
+ 
+ test_submodule_switch_func "git_pull_ff"
+ 
+ git_pull_ff_only () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull --ff-only
++	$2 git pull --ff-only
+ }
+ 
+ test_submodule_switch_func "git_pull_ff_only"
+ 
+ git_pull_noff () {
+ 	reset_branch_to_HEAD "$1" &&
+-	git pull --no-ff
++	$2 git pull --no-ff
+ }
+ 
+ KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
+index 0e0cdf638d..619f181032 100755
+--- a/t/t6041-bisect-submodule.sh
++++ b/t/t6041-bisect-submodule.sh
+@@ -10,7 +10,11 @@ git_bisect () {
+ 	ls -1pR * >>expect &&
+ 	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
+ 	GOOD=$(git rev-parse --verify HEAD) &&
+-	git checkout "$1" &&
++	$2 git checkout "$1" &&
++	if test -n "$2"
++	then
++		return
++	fi &&
+ 	echo "foo" >bar &&
+ 	git add bar &&
+ 	git commit -m "bisect bad" &&
+-- 
+2.27.0.307.g7979e895e7
+
