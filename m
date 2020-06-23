@@ -2,410 +2,289 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF700C433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 098A7C433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 12:32:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9776B20771
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:58:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBF6820724
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 12:32:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DRYPqcPn"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Bh4jk8mD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732409AbgFWK6M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 06:58:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732398AbgFWK6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 06:58:11 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97104C061573
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 03:58:11 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id 80so6486954qko.7
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 03:58:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=sSAi/5XXDbQqNnTBD3btL1PwHDBtq4UcGR8A9w9/Imo=;
-        b=DRYPqcPnI041lY0+/d5jW8eTT2jHgpf4+W75uvhsE6xhPOu5GJy3uKTXaxiHvXnBi8
-         pNqGThEQMXqQbj3uLxq0fcA4FkxrqNGXB+0BKfYKCoct4UEKkK8/cXQKvUfy1MeM+ofI
-         +RrDUXLivP4LxwM3WOAWMts9dAmmdfybD4NQapgE/z8HeUtidTbrZydxGd81w6jjttEH
-         /BmixA3UG+IAhDkfRhWn9MYOCXw8cQeHdinptSrZsFcyyloIP2mfVN1ic8mUJWbdain7
-         YPjO7UQOg7AJuWplWbSi3dcIOGPin9xUgOn3s17Xb/xQrrE8noc39C83a5+8ndUtLXrp
-         5LhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=sSAi/5XXDbQqNnTBD3btL1PwHDBtq4UcGR8A9w9/Imo=;
-        b=n5ZmTstSBh/RZotWzLP3v0PTy6oC1Fviq+1F0d7l5TtqJyT1Dq0QetE+j1JZpzcO0J
-         bLEI04Uoz4Dmp//aF4m+aDwHfDoJ/jeWT6p3eHBnMzsPe3xG0zRttupq/MKYJO+ITc+s
-         UFRaIa22d4NHL5bnZhFJfy4FHd6MumcLBodpB9mO87lpKLmwtV00ogzHGozoloODnf8W
-         LGYoxwxNXPBN6Fnox1rxRlmwrJXbw3U3+dw1TK0ZcTYd8LZwEUsNKvK5jj6HNZbKqYgP
-         pP/39ZT69nGASkZaqYsfqVcUXuNbfiHmFUdscLFMqSwpgJaaNlEdWCBTA7BJRd59syjg
-         N2iA==
-X-Gm-Message-State: AOAM532UkxrS3u8Zi9Gh+IvdYmSsIWZOrWVIV7bSIKAnPcB6fgYA1w2l
-        jRTmr0DmvGX17p7So2xdIM1u3slffjA=
-X-Google-Smtp-Source: ABdhPJw7ZmaoKHuPkmprOaJWDOfoplOKFyUqLRhtCrnZYWkJ3ncAe8vpGeWbTgpLFHkC54oP0m5mUQ==
-X-Received: by 2002:a05:620a:218e:: with SMTP id g14mr3201949qka.430.1592909890156;
-        Tue, 23 Jun 2020 03:58:10 -0700 (PDT)
-Received: from archbookpro.phub.net.cable.rogers.com (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
-        by smtp.gmail.com with ESMTPSA id c189sm251457qkb.8.2020.06.23.03.58.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2020 03:58:09 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Doc: reference 'seen' instead of 'pu' in meta docs
-Date:   Tue, 23 Jun 2020 06:58:00 -0400
-Message-Id: <e250f1bb100aca94c914f1b2d38a3849c2566aea.1592909867.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.307.g7979e895e7
+        id S1732627AbgFWMcR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 08:32:17 -0400
+Received: from mout.gmx.net ([212.227.17.21]:34199 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729611AbgFWMcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 08:32:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1592915514;
+        bh=KDU8ScVuAYd7DqRcV+gclwwkBLYQjXSBBU7LPKgnzro=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Bh4jk8mDtNIg1QWTU5iy9dNGxyB6W30bAPnR2Bh9QI+zoxUbO8JXB85oV9MEC7xn4
+         tk+zHqy04G898Gu8F5XtKLimbhBV+3U5uH5mkw1GG7YmQOrcntnT5unDIjxqTKKHAy
+         XFBVEUiQ9sJvH71t8C37A5vPX8bS+CRfN+Y2ERvc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.227.237] ([89.1.214.61]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MdNcG-1jENL81cSe-00ZNRK; Tue, 23
+ Jun 2020 14:31:54 +0200
+Date:   Tue, 23 Jun 2020 14:31:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Matt Rogers <mattr94@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 02/12] fmt-merge-msg: introduce a way to override the
+ main branch name
+In-Reply-To: <b530fe66-9cf6-ea63-e9e6-123448e2d978@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2006231357260.54@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <f4d547391537e5c3b0b4a07adb41b6aa56541fc3.1592225416.git.gitgitgadget@gmail.com> <b530fe66-9cf6-ea63-e9e6-123448e2d978@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:GNs4laHPxfSA2rjFYlKQhJTfK+mIdMPSVh7tm7vqMtF8AuQOmrs
+ oGA5LQ4fLMTDfsYC5VSeKR6nmDWfadxmOwYhwQAU7EmBMymD4sKbECbs4qVrf4+AR4jsHQD
+ nsn12EoLAKm97NqekLio2S0vvtAxkBe0CE1sMR1NKTW79wLnq4VrLlA9wwydlIbTgmZnEfL
+ oJDoVUI2TFQpYUg3mECLw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dl+y7AgfMGQ=:q5jtejR7N+pSLlSH7eFP24
+ jNp5ewncLu0aIieQu4Ce44+qQDavU/H0FpfepFAlSTk1tPkU6Z20o9w7bHTXYKvOGfRxOY6Sa
+ 4U8Gnnvg3SOB+If30mp3xXQBpBob15kE4Ox41aBGEZCyniFRbPjj4fl0PkIoF+fY+BwXpBlK9
+ 3+Fi2+p6by0MitWFBPF+mu6qvd6Le+QinS2UZqp9mJcZ0OCIhsDF6spdH5Y3eN6oXI+4Hbz7n
+ aDMaRBu+IgDG3jh2QpG9GFW1qKrPkMOWddSe7JEYoMw1k1jHxrHQGdajr/B9RwuZ9U/z5Sin4
+ vebBzqStseVLGfH2cK/phanN/NKYu0f0UzDI4yvDn0IbSH5MGkOGuFWoNhzYSIQ8yK3hQLDFJ
+ SIXCvXN6Fjv4onZDVHCtiO5GWD5MgQ0HK60U+r9Bh5zvK8Fc2JovSBOqqAkImwTYkkhf32hBr
+ ZT3zyK6nQFsHTpS5JzlzWViKQR6rMaN3SZ6jRlH38vQGd/a6QjAr1DletzWJ380UbJtClPOF+
+ N+AQgiyLHrBNgQJWp+owxTshdUBjs6RGLPsWD8fSsn7rypBepyKZnYkijIwscOWf7cEoGn/l7
+ ZcK2d3HuKFshatQudJT3G2bRACrhtoDFG2hn27ZCUOZQ2d6ASOCoSK7lYOhsWnRiohPu0EZ3a
+ mOBoX4RjrPSuVzByMDmvqlEMqffOas/UOs4RF0zwMDrI1c3E9Wo/jwULnUrcBYorlUDqpusTf
+ U0P8qF8e4iWC2YHkZM7Ct5Tb0hGKC4LgmUbIGGzsd1HXdexTpfiGo87cerSLzhRXkyHmzjc5x
+ Jp4Cqa9JWczSytvZkGP85SiazJ8Anhk/rQljzjZjAp7DeVCmf5FmcuEv5JfcVtrGO0SpZUU8Z
+ VT6oRoSatDChRM1jOIOh/bqVJuNxczSZHtLzPdd7kvtDJhStJLZ+hi0v78Ag/nb03FKKNnUJW
+ x7QZX1A+Tmva7FEfmMeQ5A0ZfuDRoJ/xGOA1ztmIqjXESXOdM7gIVP+cBazw3jt1ZhHFO2U5o
+ yE3Pmq1TWAoDb1omnfdoV2dhuLaRsnto/HsoBJBPyirh5K0A2ogbv5c3PrjP4WMoqbx1VM4IL
+ W/RLdp7UBme1WqFRrmxhqNNoAKkwEZcccUokerJ9GnJ7SNct6BD4BiUh8uVtiCEveYgkOdkfl
+ GsAI9k0OB1FBTMGQy/snqg68q0wN5sXmA961gOxTz3IO8LsE6BuEv7b8PFMoJM9Mt9YiGQrIc
+ wO/+FyJPrsxfXuPnq
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As of 2020-06-22, the name of git.git's integration branch has been
-renamed from 'pu' to 'seen'.[0] Update git.git-specific documentation to
-refer to the new branch name. In particular, update documents that refer
-to the workflow and also "how to contribute"-type docs.
+Hi Phillip,
 
-There still remains other uses of 'pu' in the docs. In these cases, it
-is generally used as an example and there isn't much value in updating
-these examples since they aren't git.git specific.
+On Mon, 15 Jun 2020, Phillip Wood wrote:
 
-[0]: https://lore.kernel.org/git/xmqqimfid2l1.fsf@gitster.c.googlers.com/
+> On 15/06/2020 13:50, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > There is a growing number of projects and companies desiring to change
+> > the main branch name of their repositories (see e.g.
+> > https://twitter.com/mislav/status/1270388510684598272 for background o=
+n
+> > this).
+>
+> I think this is a good way of phrasing the rationale for the change
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/MyFirstContribution.txt |  4 +--
- Documentation/SubmittingPatches       | 10 +++---
- Documentation/giteveryday.txt         | 10 +++---
- Documentation/gitworkflows.txt        | 12 +++----
- Documentation/howto/maintain-git.txt  | 52 +++++++++++++--------------
- 5 files changed, 44 insertions(+), 44 deletions(-)
+As I am replacing this patch in v3 with a version that simply drops the
+special handling of the `master` branch, I moved that rationale into the
+patch introducing support for `git init --initial-branch=3D<name>`.
 
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index 427274df4d..d85c9b5143 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -1179,8 +1179,8 @@ look at the section below this one for some context.)
- [[after-approval]]
- === After Review Approval
- 
--The Git project has four integration branches: `pu`, `next`, `master`, and
--`maint`. Your change will be placed into `pu` fairly early on by the maintainer
-+The Git project has four integration branches: `seen`, `next`, `master`, and
-+`maint`. Your change will be placed into `seen` fairly early on by the maintainer
- while it is still in the review process; from there, when it is ready for wider
- testing, it will be merged into `next`. Plenty of early testers use `next` and
- may report issues. Eventually, changes in `next` will make it to `master`,
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index ecf9438cf0..291b61e262 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -19,7 +19,7 @@ change is relevant to.
-   base your work on the tip of the topic.
- 
- * A new feature should be based on `master` in general. If the new
--  feature depends on a topic that is in `pu`, but not in `master`,
-+  feature depends on a topic that is in `seen`, but not in `master`,
-   base your work on the tip of that topic.
- 
- * Corrections and enhancements to a topic not yet in `master` should
-@@ -28,7 +28,7 @@ change is relevant to.
-   into the series.
- 
- * In the exceptional case that a new feature depends on several topics
--  not in `master`, start working on `next` or `pu` privately and send
-+  not in `master`, start working on `next` or `seen` privately and send
-   out patches for discussion. Before the final merge, you may have to
-   wait until some of the dependent topics graduate to `master`, and
-   rebase your work.
-@@ -38,7 +38,7 @@ change is relevant to.
-   these parts should be based on their trees.
- 
- To find the tip of a topic branch, run `git log --first-parent
--master..pu` and look for the merge commit. The second parent of this
-+master..seen` and look for the merge commit. The second parent of this
- commit is the tip of the topic branch.
- 
- [[separate-commits]]
-@@ -424,7 +424,7 @@ help you find out who they are.
-   and cooked further and eventually graduates to `master`.
- 
- In any time between the (2)-(3) cycle, the maintainer may pick it up
--from the list and queue it to `pu`, in order to make it easier for
-+from the list and queue it to `seen`, in order to make it easier for
- people play with it without having to pick up and apply the patch to
- their trees themselves.
- 
-@@ -435,7 +435,7 @@ their trees themselves.
-   master. `git pull --rebase` will automatically skip already-applied
-   patches, and will let you know. This works only if you rebase on top
-   of the branch in which your patch has been merged (i.e. it will not
--  tell you if your patch is merged in pu if you rebase on top of
-+  tell you if your patch is merged in `seen` if you rebase on top of
-   master).
- 
- * Read the Git mailing list, the maintainer regularly posts messages
-diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
-index 1bd919f92b..faba2ef088 100644
---- a/Documentation/giteveryday.txt
-+++ b/Documentation/giteveryday.txt
-@@ -278,13 +278,13 @@ $ git am -3 -i -s ./+to-apply <4>
- $ compile/test
- $ git switch -c hold/linus && git am -3 -i -s ./+hold-linus <5>
- $ git switch topic/one && git rebase master <6>
--$ git switch -C pu next <7>
-+$ git switch -C seen next <7>
- $ git merge topic/one topic/two && git merge hold/linus <8>
- $ git switch maint
- $ git cherry-pick master~4 <9>
- $ compile/test
- $ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
--$ git fetch ko && for branch in master maint next pu <11>
-+$ git fetch ko && for branch in master maint next seen <11>
-     do
- 	git show-branch ko/$branch $branch <12>
-     done
-@@ -294,14 +294,14 @@ $ git push --follow-tags ko <13>
- <1> see what you were in the middle of doing, if anything.
- <2> see which branches haven't been merged into `master` yet.
- Likewise for any other integration branches e.g. `maint`, `next`
--and `pu` (potential updates).
-+and `seen`.
- <3> read mails, save ones that are applicable, and save others
- that are not quite ready (other mail readers are available).
- <4> apply them, interactively, with your sign-offs.
- <5> create topic branch as needed and apply, again with sign-offs.
- <6> rebase internal topic branch that has not been merged to the
- master or exposed as a part of a stable branch.
--<7> restart `pu` every time from the next.
-+<7> restart `seen` every time from the next.
- <8> and bundle topic branches still cooking.
- <9> backport a critical fix.
- <10> create a signed tag.
-@@ -323,7 +323,7 @@ repository at kernel.org, and looks like this:
- 	fetch = refs/heads/*:refs/remotes/ko/*
- 	push = refs/heads/master
- 	push = refs/heads/next
--	push = +refs/heads/pu
-+	push = +refs/heads/seen
- 	push = refs/heads/maint
- ------------
- 
-diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
-index abc0dc6bc7..ae38ff3fed 100644
---- a/Documentation/gitworkflows.txt
-+++ b/Documentation/gitworkflows.txt
-@@ -85,7 +85,7 @@ As a given feature goes from experimental to stable, it also
- 
- There is a fourth official branch that is used slightly differently:
- 
--* 'pu' (proposed updates) is an integration branch for things that are
-+* 'seen' is an integration branch for things that are
-   not quite ready for inclusion yet (see "Integration Branches"
-   below).
- 
-@@ -93,7 +93,7 @@ Each of the four branches is usually a direct descendant of the one
- above it.
- 
- Conceptually, the feature enters at an unstable branch (usually 'next'
--or 'pu'), and "graduates" to 'master' for the next release once it is
-+or 'seen'), and "graduates" to 'master' for the next release once it is
- considered stable enough.
- 
- 
-@@ -207,7 +207,7 @@ If you make it (very) clear that this branch is going to be deleted
- right after the testing, you can even publish this branch, for example
- to give the testers a chance to work with it, or other developers a
- chance to see if their in-progress work will be compatible.  `git.git`
--has such an official throw-away integration branch called 'pu'.
-+has such an official throw-away integration branch called 'seen'.
- 
- 
- Branch management for a release
-@@ -291,7 +291,7 @@ This will not happen if the content of the branches was verified as
- described in the previous section.
- 
- 
--Branch management for next and pu after a feature release
-+Branch management for next and seen after a feature release
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- After a feature release, the integration branch 'next' may optionally be
-@@ -319,8 +319,8 @@ so.
- If you do this, then you should make a public announcement indicating
- that 'next' was rewound and rebuilt.
- 
--The same rewind and rebuild process may be followed for 'pu'. A public
--announcement is not necessary since 'pu' is a throw-away branch, as
-+The same rewind and rebuild process may be followed for 'seen'. A public
-+announcement is not necessary since 'seen' is a throw-away branch, as
- described above.
- 
- 
-diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
-index 73be8b49f8..a67130debb 100644
---- a/Documentation/howto/maintain-git.txt
-+++ b/Documentation/howto/maintain-git.txt
-@@ -66,7 +66,7 @@ this mailing list after each feature release is made.
-    demonstrated to be regression free.  New changes are tested
-    in 'next' before merged to 'master'.
- 
-- - 'pu' branch is used to publish other proposed changes that do
-+ - 'seen' branch is used to publish other proposed changes that do
-    not yet pass the criteria set for 'next'.
- 
-  - The tips of 'master' and 'maint' branches will not be rewound to
-@@ -76,7 +76,7 @@ this mailing list after each feature release is made.
-    of the cycle.
- 
-  - Usually 'master' contains all of 'maint' and 'next' contains all
--   of 'master'.  'pu' contains all the topics merged to 'next', but
-+   of 'master'.  'seen' contains all the topics merged to 'next', but
-    is rebuilt directly on 'master'.
- 
-  - The tip of 'master' is meant to be more stable than any
-@@ -229,12 +229,12 @@ by doing the following:
-    series?)
- 
-  - Prepare 'jch' branch, which is used to represent somewhere
--   between 'master' and 'pu' and often is slightly ahead of 'next'.
-+   between 'master' and 'seen' and often is slightly ahead of 'next'.
- 
--     $ Meta/Reintegrate master..pu >Meta/redo-jch.sh
-+     $ Meta/Reintegrate master..seen >Meta/redo-jch.sh
- 
-    The result is a script that lists topics to be merged in order to
--   rebuild 'pu' as the input to Meta/Reintegrate script.  Remove
-+   rebuild 'seen' as the input to Meta/Reintegrate script.  Remove
-    later topics that should not be in 'jch' yet.  Add a line that
-    consists of '### match next' before the name of the first topic
-    in the output that should be in 'jch' but not in 'next' yet.
-@@ -291,29 +291,29 @@ by doing the following:
-    merged to 'master'.  This may lose '### match next' marker;
-    add it again to the appropriate place when it happens.
- 
-- - Rebuild 'pu'.
-+ - Rebuild 'seen'.
- 
--     $ Meta/Reintegrate master..pu >Meta/redo-pu.sh
-+     $ Meta/Reintegrate master..seen >Meta/redo-seen.sh
- 
--   Edit the result by adding new topics that are not still in 'pu'
-+   Edit the result by adding new topics that are not still in 'seen'
-    in the script.  Then
- 
--     $ git checkout -B pu jch
--     $ sh Meta/redo-pu.sh
-+     $ git checkout -B seen jch
-+     $ sh Meta/redo-seen.sh
- 
--   When all is well, clean up the redo-pu.sh script with
-+   When all is well, clean up the redo-seen.sh script with
- 
--     $ sh Meta/redo-pu.sh -u
-+     $ sh Meta/redo-seen.sh -u
- 
-    Double check by running
- 
--     $ git branch --no-merged pu
-+     $ git branch --no-merged seen
- 
-    to see there is no unexpected leftover topics.
- 
-    At this point, build-test the result for semantic conflicts, and
-    if there are, prepare an appropriate merge-fix first (see
--   appendix), and rebuild the 'pu' branch from scratch, starting at
-+   appendix), and rebuild the 'seen' branch from scratch, starting at
-    the tip of 'jch'.
- 
-  - Update "What's cooking" message to review the updates to
-@@ -323,14 +323,14 @@ by doing the following:
- 
-      $ Meta/cook
- 
--   This script inspects the history between master..pu, finds tips
-+   This script inspects the history between master..seen, finds tips
-    of topic branches, compares what it found with the current
-    contents in Meta/whats-cooking.txt, and updates that file.
--   Topics not listed in the file but are found in master..pu are
-+   Topics not listed in the file but are found in master..seen are
-    added to the "New topics" section, topics listed in the file that
--   are no longer found in master..pu are moved to the "Graduated to
-+   are no longer found in master..seen are moved to the "Graduated to
-    master" section, and topics whose commits changed their states
--   (e.g. used to be only in 'pu', now merged to 'next') are updated
-+   (e.g. used to be only in 'seen', now merged to 'next') are updated
-    with change markers "<<" and ">>".
- 
-    Look for lines enclosed in "<<" and ">>"; they hold contents from
-@@ -360,7 +360,7 @@ Observations
- Some observations to be made.
- 
-  * Each topic is tested individually, and also together with other
--   topics cooking first in 'pu', then in 'jch' and then in 'next'.
-+   topics cooking first in 'seen', then in 'jch' and then in 'next'.
-    Until it matures, no part of it is merged to 'master'.
- 
-  * A topic already in 'next' can get fixes while still in
-@@ -411,7 +411,7 @@ new use of the variable under its old name. When these two topics
- are merged together, the reference to the variable newly added by
- the latter topic will still use the old name in the result.
- 
--The Meta/Reintegrate script that is used by redo-jch and redo-pu
-+The Meta/Reintegrate script that is used by redo-jch and redo-seen
- scripts implements a crude but usable way to work this issue around.
- When the script merges branch $X, it checks if "refs/merge-fix/$X"
- exists, and if so, the effect of it is squashed into the result of
-@@ -431,14 +431,14 @@ commit that can be squashed into a result of mechanical merge to
- correct semantic conflicts.
- 
- After finding that the result of merging branch "ai/topic" to an
--integration branch had such a semantic conflict, say pu~4, check the
-+integration branch had such a semantic conflict, say seen~4, check the
- problematic merge out on a detached HEAD, edit the working tree to
- fix the semantic conflict, and make a separate commit to record the
- fix-up:
- 
--     $ git checkout pu~4
-+     $ git checkout seen~4
-      $ git show -s --pretty=%s ;# double check
--     Merge branch 'ai/topic' to pu
-+     Merge branch 'ai/topic' to seen
-      $ edit
-      $ git commit -m 'merge-fix/ai/topic' -a
- 
-@@ -450,9 +450,9 @@ result:
- Then double check the result by asking Meta/Reintegrate to redo the
- merge:
- 
--     $ git checkout pu~5 ;# the parent of the problem merge
-+     $ git checkout seen~5 ;# the parent of the problem merge
-      $ echo ai/topic | Meta/Reintegrate
--     $ git diff pu~4
-+     $ git diff seen~4
- 
- This time, because you prepared refs/merge-fix/ai/topic, the
- resulting merge should have been tweaked to include the fix for the
-@@ -464,7 +464,7 @@ branch needs this merge-fix is because another branch merged earlier
- to the integration branch changed the underlying assumption ai/topic
- branch made (e.g. ai/topic branch added a site to refer to a
- variable, while the other branch renamed that variable and adjusted
--existing use sites), and if you changed redo-jch (or redo-pu) script
-+existing use sites), and if you changed redo-jch (or redo-seen) script
- to merge ai/topic branch before the other branch, then the above
- merge-fix should not be applied while merging ai/topic, but should
- instead be applied while merging the other branch.  You would need
--- 
-2.27.0.307.g7979e895e7
+> > However, there are a couple of hard-coded spots in Git's source code
+> > that make this endeavor harder than necessary. For example, when
+> > formatting the commit message for merge commits, Git appends "into
+> > <branch-name>" unless the current branch is the `master` branch.
+> >
+> > Clearly, this is not what one wants when already having gone through a=
+ll
+> > the steps to manually rename the main branch
+>
+> This didn't quite scan for me maybe s/already having/one has already/ ?
 
+Thank you! If I had not dropped that part of the commit message, I would
+have taken your suggested fix.
+
+> > (and taking care of all the
+> > fall-out such as re-targeting existing Pull Requests).
+> >
+> > Let's introduce a way to override Git's hard-coded default:
+> > `core.mainBranch`.
+> >
+> > We will start supporting this config option in the `git fmt-merge-msg`
+> > command and successively adjust all other places where the main branch
+> > name is hard-coded.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   Documentation/config/core.txt |  5 +++++
+> >   fmt-merge-msg.c               |  6 ++++--
+> >   refs.c                        | 27 +++++++++++++++++++++++++++
+> >   refs.h                        |  7 +++++++
+> >   t/t6200-fmt-merge-msg.sh      |  7 +++++++
+> >   5 files changed, 50 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/Documentation/config/core.txt b/Documentation/config/core=
+.txt
+> > index 74619a9c03b..32bb5368ebb 100644
+> > --- a/Documentation/config/core.txt
+> > +++ b/Documentation/config/core.txt
+> > @@ -626,3 +626,8 @@ core.abbrev::
+> >    in your repository, which hopefully is enough for
+> >    abbreviated object names to stay unique for some time.
+> >    The minimum length is 4.
+> > +
+> > +core.mainBranch::
+> > +	The name of the main (or: primary) branch in the current repository.
+> > +	For historical reasons, `master` is used as the fall-back for this
+> > +	setting.
+> > diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+> > index 72d32bd73b1..43f4f829242 100644
+> > --- a/fmt-merge-msg.c
+> > +++ b/fmt-merge-msg.c
+> > @@ -407,7 +407,7 @@ static void fmt_merge_msg_title(struct strbuf *out=
+,
+> >   				const char *current_branch)
+> >   {
+> >   	int i =3D 0;
+> > -	char *sep =3D "";
+> > +	char *sep =3D "", *main_branch;
+> >
+> >    strbuf_addstr(out, "Merge ");
+> >    for (i =3D 0; i < srcs.nr; i++) {
+> > @@ -451,10 +451,12 @@ static void fmt_merge_msg_title(struct strbuf *o=
+ut,
+> >    		strbuf_addf(out, " of %s", srcs.items[i].string);
+> >    }
+> >   -	if (!strcmp("master", current_branch))
+> > +	main_branch =3D git_main_branch_name();
+> > +	if (!strcmp(main_branch, current_branch))
+> >    	strbuf_addch(out, '\n');
+> >    else
+> >   		strbuf_addf(out, " into %s\n", current_branch);
+> > +	free(main_branch);
+> >   }
+> >
+> >   static void fmt_tag_signature(struct strbuf *tagbuf,
+> > diff --git a/refs.c b/refs.c
+> > index 224ff66c7bb..f1854cffa2f 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -560,6 +560,33 @@ void expand_ref_prefix(struct argv_array *prefixe=
+s,
+> > const char *prefix)
+> >   		argv_array_pushf(prefixes, *p, len, prefix);
+> >   }
+> >
+> > +char *repo_main_branch_name(struct repository *r)
+> > +{
+> > +	const char *config_key =3D "core.mainbranch";
+> > +	const char *config_display_key =3D "core.mainBranch";
+> > +	const char *fall_back =3D "master";
+> > +	char *name =3D NULL, *ret;
+> > +
+> > +	if (repo_config_get_string(r, config_key, &name) < 0)
+> > +		die(_("could not retrieve `%s`"), config_display_key);
+> > +
+> > +	ret =3D name ? name : xstrdup(fall_back);
+> > +
+> > +	if (check_refname_format(ret, REFNAME_ALLOW_ONELEVEL))
+> > +		die(_("invalid branch name: %s =3D %s"),
+> > +		    config_display_key, name);
+> > +
+> > +	if (name !=3D ret)
+> > +		free(name);
+>
+> I'm struggling to come up with a scenario where name !=3D NULL && name !=
+=3D ret
+> here, however once we get to patch 4 that scenario definitely does exist=
+.
+
+Right.
+
+But as I am dropping the concept of `core.mainBranch` from v3, this won't
+apply anymore.
+
+>
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +char *git_main_branch_name(void)
+> > +{
+> > +	return repo_main_branch_name(the_repository);
+> > +}
+> > +
+> >   /*
+> >    * *string and *len will only be substituted, and *string returned (=
+for
+> >    * later free()ing) if the string passed in is a magic short-hand fo=
+rm
+> > diff --git a/refs.h b/refs.h
+> > index a92d2c74c83..a207ef01348 100644
+> > --- a/refs.h
+> > +++ b/refs.h
+> > @@ -154,6 +154,13 @@ int repo_dwim_log(struct repository *r, const cha=
+r
+> > *str, int len, struct object_
+> >   int dwim_ref(const char *str, int len, struct object_id *oid, char *=
+*ref);
+> >   int dwim_log(const char *str, int len, struct object_id *oid, char *=
+*ref);
+> >
+> > +/*
+> > + * Retrieves the name of the main (or: primary) branch of the given
+>
+> nit pick, I'm confused by the ':'
+
+Right, v3 won't have that peculiar construct.
+
+Thank you for your review!
+Dscho
+
+>
+> Best Wishes
+>
+> Phillip
+>
+> > + * repository.
+> > + */
+> > +char *git_main_branch_name(void);
+> > +char *repo_main_branch_name(struct repository *r);
+> > +
+> >   /*
+> >    * A ref_transaction represents a collection of reference updates th=
+at
+> >    * should succeed or fail together.
+> > diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+> > index e4c2a6eca43..7a873f4a05c 100755
+> > --- a/t/t6200-fmt-merge-msg.sh
+> > +++ b/t/t6200-fmt-merge-msg.sh
+> > @@ -158,6 +158,13 @@ test_expect_success 'setup FETCH_HEAD' '
+> >   	git fetch . left
+> >   '
+> >
+> > +test_expect_success 'with overridden default branch name' '
+> > +	test_when_finished "git switch master" &&
+> > +	git switch -c default &&
+> > +	git -c core.mainBranch=3Ddefault fmt-merge-msg <.git/FETCH_HEAD >act=
+ual
+> > &&
+> > +	! grep "into default" actual
+> > +'
+> > +
+> >   test_expect_success 'merge.log=3D3 limits shortlog length' '
+> >    cat >expected <<-EOF &&
+> >    Merge branch ${apos}left${apos}
+> >
+>
+>
