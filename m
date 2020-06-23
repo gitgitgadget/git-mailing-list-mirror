@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 245CAC433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C824C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:10:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2FAB20663
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:07:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 064E9204EA
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:10:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="H0rt9b8h"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WvbLp93Q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389784AbgFWVHo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 17:07:44 -0400
-Received: from mout.gmx.net ([212.227.17.20]:43695 "EHLO mout.gmx.net"
+        id S2391368AbgFWUc7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 16:32:59 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56221 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391397AbgFWVHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 17:07:40 -0400
+        id S2390856AbgFWUc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 16:32:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592946450;
-        bh=NGVM1F/lYYWDEYfEGSdUVOv389dsyAnjTygiIbXduYg=;
+        s=badeba3b8450; t=1592944367;
+        bh=MPyLzpmKj3XaRYLYsCzgwUrKPXCKQskfaT5I98Bm4do=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=H0rt9b8hFauOU/zZA8I8fmKEZpjqNTN0ck9i3aFp1QUvViSEt1f574MsscJgYpEuC
-         b4jad9572bY2yAb8WjCfPX21qhyS8iCfDFvvWRz0qw9ERFYgHMkYMSzFu8zUF3N9QM
-         LAQq4x/RuvMgaBJH8QfJ52XN9SKeXRa5BXzW8NJ4=
+        b=WvbLp93QWJ3lkJZ3/mzrr8dJ74he65DdpRwND7Z1vf/5eRHPSk3cOdsTOvmPxwtlZ
+         27kbU202k5OvDPvUSK7o9zxPatpdoyRAm8ox5GHTSKrViO/qWnhk0h06d9mTZQb2lx
+         wB9w1XC2AOBwhJHSgqpcCNxatzXj08dPH5DUADKQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MnJlc-1j72g93YoO-00jFBo; Tue, 23
- Jun 2020 23:07:29 +0200
-Date:   Tue, 23 Jun 2020 23:07:29 +0200 (CEST)
+Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3bSj-1inzbB3He7-010a1l; Tue, 23
+ Jun 2020 22:32:46 +0200
+Date:   Tue, 23 Jun 2020 22:32:46 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        don@goodman-wilson.com, stolee@gmail.com,
-        sandals@crustytoothpaste.net, Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 12/12] testsvn: respect `init.defaultBranch`
-In-Reply-To: <20200616135121.GJ666057@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2006232305160.54@tvgsbejvaqbjf.bet>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <e09f857f06857fedc46b91bc918486f34dde8b02.1592225416.git.gitgitgadget@gmail.com> <20200616135121.GJ666057@coredump.intra.peff.net>
+cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Don Goodman-Wilson via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+Subject: Re: [PATCH 1/9] init: allow overriding the default branch name for
+ new repositories
+In-Reply-To: <20200616124502.GC666057@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2006232228560.54@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <90912e32da1192cfc3b39a18cb606caa46e85b1c.1591823971.git.gitgitgadget@gmail.com> <CAPig+cSnEvVB5vsffFXidG1-XNxDX10u2XhD9NqV3pwh8zyxxw@mail.gmail.com>
+ <20200616124502.GC666057@coredump.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:uUelMmodrsV8ZzxdeN7NXodGtZYnowBv1Ya3Su9ugtlUswmvrbm
- UBjB7OTjD13tqv650Iy37Wi56KQWchf01GY+xmHc/jDAmu47ZbndKwOLQ8u6T6iri694GUK
- Zw/vgo/cUYGB538fXFatHD0q+j0bP6u96Qwyfh0Pwa3Dtl0YkOxv1e0AXhA5E9R5fJC9tQ3
- 6zqIx7gnn/1mxhaqv2lVQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ka/uw8uARjQ=:S+EQ7THiBmtC1FS8XrBHal
- phOy4rSqA91+XkiTKgAi7unhjEgIC3NFGx6VXXl14gs5HEY68ylqmgQVfUohlVeaRU9DSvHJ/
- 4VBhvwf2Zw/0JrwOYaoxUCGUZuyoBhwTTu/NK4EcULEbuUEdcdAWjS3cWx2lhSR8nybENQMSI
- VXrNi455cuvbXKZL5koY6ROJabnKnh+VVRktQ+XEnL5JlnMmQGl+sILfj6qHF9np9inYimXLs
- rmMO5p6jDWJDJ2EIrUS441/Ditf2vhvMC+NbWHZ5u0bxAquP4w6iMf1ZL/QjxCGX0nifJqiko
- gCmXrWpk6E2GUFeBgXZlXmdkeZj8UvmczKjdVSEPW/dIzfC1xGl5KIMHoPnQIMhPlnR0eojnC
- HuNSCnr+ln26k1m5wnRxwCF3sLbICU2gMmyZq5dOtnAKswLdnJ8D000TnxFmBJB4t47g60Ttf
- mwP8+hnPcQNh9bA/OKf7/8mKeHB0wvEmofQ94dyINEX8vNfjm3IAj6nfKpmVn0cHoin4tIM5q
- K7qO8f9oP+tk5u1BcHIhhtLReXnHYCMRBchumG6Q9FCwnzVhjH+6gWEm0JZxSB7usE0qilLXr
- ZYRfvs4maqjbIFQ3Tm3Vr1a6AAVYF2zxhBxQq6z2FuiKkOfx8ft02+29koiydbTkIKhds/yat
- 4S+zclhiKZTO+DVBa02XGRZEwqyDPiOTieBdNfrEoqaIOILVFjw3l+cGTF7+iJ07KKf1I9q+Z
- WYYpt22N2GaW769ziUb9jkQcMZVqYaSMR8cPYPsPfhLaxF+rGVDpToOU9udrb4jBS61rNAvnc
- EMTOimY3oKVvfjkciXqQ+FBDS5vzPjVPrbPMC+PZtiFtRhrKmr0QOvUBR9OXeArJjuwlSjtHI
- vY4fZN2rlJeqcLIfLYMtZnGHhx+rcE2qZGveYPMFOQFRJY/Rq3YG7lFKredRsbM+Uf8jbrxcF
- AhR8m7ZK3Nn1/bu/VW27G/ZsJpgUejas3IwRXsfddTkmt46lW7WiPQEQDetkKjU9gIDPU0n5E
- u0zXb4P5pBJyfRsdxlBx8CiJlSNliSnH/wWmWlHr4X8rC66jDc2DbkzHjiBkIgUlIGtCieAV9
- IbWsyYi8y615WAEUjcEo9X/g4eP4BX/qnQ3BB4ZLy5+NKDD4g1VaW6On/n7g5HzI8visNy8hW
- l8+U/XDsPFLnLWJ5zKBORp+R+vHex7vCv+qni4VeJN93+RSnrsunUYVTQ82zw5U5N/d0g5eab
- ZdzWOiatdQbJV3vzq
+X-Provags-ID: V03:K1:mtGbM2KW5/sfLO6a8VlryeKDb3a5jD0aePgkk3yRchCvIVb9Y//
+ R8ZHEtNt0x/amKJ0B3BeyTYA6x1YnqfRCEcYsqxVUIoR2HN3FgUslIGaN+WcFySb7XJeiZW
+ J3EygoyEl1Sf+2r1Ql4tcZrFAMoJhtECmTTZRbplOQwcbL04EtE3HGIgKgxtBezwykRB7Lz
+ ucLTkeNm+4DCmqxKLOT0w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:c4ou7AScv3E=:6KL7e4QVidTuGmnT5d02CX
+ tgxMXxCje5RMfjzMUNBXQjscssGDY8qhtoS6CSPWWOLNDEj9+KqcXQaVoWmUbPMsqOuxVPv2z
+ +584j+i4twP1RNHBtDdg2chJarUExz0Je19+1+dmmIY51QiUQhV7ZykO0wJVRXbC6XJwpJLGm
+ QRdWAzlMCyl0OhiKmpVxcOX7ZlH1/O5VvfE1ikSoPcx3DwOrWyN8T2a3IJX+qOlv933gNpy2A
+ awcD2x3k2bywmUptDLn7QhLwv19kKoF9eacpAmc6GNuTa81jzIIMpokTqqIlki42tSz6D8tk9
+ MXSkWYFwSBfkgLTOwjJ8TwR66w0bEgP41Uslmi0AxNcQMjHRKH6s38ZK9w25B4/xhWTwtvc/7
+ mu8tLxwTiYzEUbtHweZIKAjl6y3LxXN99mw07DO3ZrvNWpwJlMV0JDHTbgoqj/4pcVHOwzUvp
+ Kqqk3WCwBAZpJEZDYQ6RBmLRXH37bq+pIEk9PoUEwXpuyLyjpz5BgUrpU47ow6rTxhW0K9arm
+ 9kbrL2a+a6Op/MrPrLEOEfF6u+CRELPlTSi+w9i49Q13Yf5J4lXyeRaaz68AjFz/8vxZkoOxA
+ PWodhal+gHWoN5Rch0QBM1TJ6QB8zC11CYPDvzRLBWdcwK/7pL+gQeMOqfaUEGHiwr5yFsTWe
+ JieTWbEM6fLYZADR6g9OqkuXYmGd+7+BFFu7ldALaaaMScLD8zt+j0ldJSeMmQ8ITpg+wzxF3
+ wIlNzBJqNRPRTuMIIbQZ1LnpvblX1TJKxbctcrw1TiWLknCtHrQpCHMl3sK6L3AuCI8lNZzCu
+ XDc3Y+VZSFrdLCsXkC2Dn15hij6FGnuXCnFww2snWbuTGpigxm7rTVtURnXzkb9FHr/kjpLMq
+ 2Mw8P9QXvc5Yt05wtXR7Z0M+EEz8e0LvfFA74oAwF5bgSK//2FL+ONRoPlnuBY2axd1XFA5h/
+ Y66/OpfqIsnMZ3yK8LYfF9hx18Nm69521rBfo17LQ8fxaKcHe02R9U1k1XhNan5ZPTBzliZAT
+ TIav64g1I/RRUl8I9MUKz95Wg1tF3L4n0zbUt0y+LE0NHAMJ/qHyDSs8B97WYG+0T6+WS2cMw
+ il2u450n+e1Z8HqXA5Z1fJH8dFs5MMdObFOIZA/yEBF5oU9f3YEkkRNns69hN8+LYT7ce3Nen
+ H8dd68LlpKlIUxHVMy6w4PK/zDXOmLfa1RaNtNjJArB9Nybn1EGDZQ04BLo5jntEGX6xqs1qi
+ /kMRtrQhlbckrgzDm
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -83,49 +82,59 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Peff,
 
+
 On Tue, 16 Jun 2020, Jeff King wrote:
 
-> On Mon, Jun 15, 2020 at 12:50:16PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
+> On Wed, Jun 10, 2020 at 08:16:38PM -0400, Eric Sunshine wrote:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > > +/*
+> > > + * Retrieves the name of the default branch. If `short_name` is non=
+-zero, the
+> > > + * branch name will be prefixed with "refs/heads/".
+> > > + */
+> > > +char *git_default_branch_name(int short_name);
 > >
-> > The default name of the main branch in new repositories can now be
-> > configured. The `testsvn` remote helper translates the remote Subversi=
-on
-> > repository's branch name `trunk` to the hard-coded name `master`.
-> > Clearly, the intention was to make the name align with Git's detaults.
+> > Overall, the internal logic regarding duplicating/freeing strings
+> > would probably be easier to grok if there were two separate functions:
+> >
+> >     char *git_default_branch_name(void);
+> >     char *git_default_ref_name(void);
+> >
+> > but that's subjective.
 >
-> s/detaults/defaults/ :)
+> Having seen one of the callers, might it be worth avoiding handing off
+> ownership of the string entirely?
 
-:-)
+For `git_default_branch_name()`: yes. For `repo_default_branch_name()`,
+not really, as that is potentially repository-specific.
 
-Will fix.
+(Side note: while I cannot really think of a use case where you would want
+to set `init.defaultBranch` in a repository-local config, there _might_ be
+use cases for that out there, and it _is_ how our config machinery works.)
 
-> I'd agree that moving this to Git's default name makes sense.
+> I.e., this comes from a string that's already owned for the lifetime of
+> the process (either the environment, or a string stored by the config
+> machinery). Could we just pass that back (or if we want to be more
+> careful about getenv() lifetimes, we can copy it into a static owned by
+> this function)?
+>
+> Then all of the callers can stop dealing with the extra free(), and you
+> can do:
+>
+>   const char *git_default_branch_name(void)
+>   {
+> 	return skip_prefix("refs/heads/", git_default_ref_name());
+>   }
 
-Okay.
+For ease of use, I decided to only ever return the branch name (but check
+the full ref).
 
-> Though my overall preference is still to delete this whole testsvn thing
-> entirely (I have some other pending tree-wide changes that are being
-> held up by it, too). After getting "would you mind holding off until..."
-> from Jonathan in [1], I've been waiting almost 2 years. Maybe now is the
-> time?
+Those callers that actually need the full ref usually also need the branch
+name, and it is easy enough to call `xstrfmt("refs/heads/%s", ...)`.
 
-I wouldn't mind dropping `testsvn`, seeing as there are fewer and fewer
-users of `git svn` (and even those are unlikely to switch to `testsvn`,
-should that ever become production-ready).
+It might make the code a bit less efficient (but who cares, it's not like
+we're setting up a gazillion repositories per second all the time), but
+quite a bit easier to reason about.
 
-Having said that, this is an orthogonal issue to the purpose of this patch
-series. And I would really like to get this patch series into a shape that
-can be merged down to `next` soon.
-
-Thank you,
+Ciao,
 Dscho
-
->
-> -Peff
->
-> [1] https://lore.kernel.org/git/20180818052605.GA241538@aiede.svl.corp.g=
-oogle.com/
->
