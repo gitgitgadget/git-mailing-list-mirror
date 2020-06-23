@@ -2,171 +2,154 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DBC2C433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 23:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FF01C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 23:54:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 138D22078E
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 23:21:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2313D2075D
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 23:54:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GseDGNbR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a5JDIJMw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387709AbgFWXVq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 19:21:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52118 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387465AbgFWXVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 19:21:45 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54685C061573
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 16:21:45 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id g21so487619wmg.0
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 16:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ddX98SztcOGQGaSlRWY2T1dnSpCazezuLq4gkI8Om7U=;
-        b=GseDGNbRAzDEM4TZqCpR3B4NHH7/9xWpAWYlFs5VFxGTaf9v0q4pR274oj23I/P6xs
-         kFoLuOLT8yBMCAud0cTCO8xDNxrvZWaheFiavRd9n8K/HxahVsK07nRXwWJynOQKyq8j
-         W34jzlYL8k413FzA/Z9PTdL6+AFyxso/uq335c5Ors6PSxDHK4vS1zivNSlAuwuMR+g7
-         KQksKH6qtvXbCHn76MalFl3LtG6bIEfKXUD/H8LbLs688mF5+z6fzC8QXTpDRilQNZpw
-         q+DhdeKaD+4QHcLlKXn6yDlKW3sko94CJj0f4n8v3BKKaktsXSM8DH2ECz046OCbg09Q
-         8j4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ddX98SztcOGQGaSlRWY2T1dnSpCazezuLq4gkI8Om7U=;
-        b=plHKKzg7q4myhMoDoDyexedCQ8pyAE/RmIAfOmCIE/8yljCXch2xCMhwsA0k8jDcMk
-         oW67++qAcMlVOM3OFAuHolZtBdWmX3qDsLzGYy5yf3q2NKNHP6dNhDd+lwpmvMKSONGf
-         ++XkSQy2zEfSEYfUBMve7PjHxc8ZJTmsP1GCdAiR1/VCuHgvyc3PtiVISmMvkCgxDmAW
-         0q8dRvSbAHWwEeNEct3tvdvW9eDphuZO3093WbPL7aCn7tyeDIrl3WChVav0I+DGud+k
-         bmgNIQ+l7cDiZc8NM8y++Np/k/nx9tM4jtjSW9Qch7/yTzmIw9CbNfv8MOL/HQiAR8nL
-         6ooQ==
-X-Gm-Message-State: AOAM531aUeP78mAobXbIG7EFEZTbim7AScdKHS4FS7srRmyNhtpkE5za
-        wWWaOP2qNUovMO8Lkm/7WnGKBBsLnK4Omx0hn1BRMtDO
-X-Google-Smtp-Source: ABdhPJwyb/rgLylSEKttAxAWq7Mowrizp8dUm16Yl4HlIF74ThMlyf+seqPIW9YfNU+RAYgTeoAPK/S2PqlAcLMn0NA=
-X-Received: by 2002:a1c:2157:: with SMTP id h84mr25176165wmh.35.1592954503918;
- Tue, 23 Jun 2020 16:21:43 -0700 (PDT)
+        id S2387915AbgFWXyi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 19:54:38 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57748 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387613AbgFWXyh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 19:54:37 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91336D458E;
+        Tue, 23 Jun 2020 19:54:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=A76xjPqHp4k+WLjszOpSNTMUCAQ=; b=a5JDIJ
+        MwKf0r2skyLWq/xDqQEPscP/IiYBGGyKU392XixwmlKP59zcffSDMqIkaYXVaHtx
+        UuxmXNcSCMnVJM4v/dSqcTfO59danMPYUmT3urTyw1FeUki9+7wDB+I9Wq5av8+j
+        lfCWaiBPeFyDVb7MlvaWONDuMNT9HxDRJv8N4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jJ2wllhRzECCKaSxMjWAF98dBvuBulqz
+        SuhwrraWpe2WLZpJXrA/u9k6iyi+BquRZXbQTYZc4c+QJjQdpHTVBOvCCOWS7b29
+        YBus3QtBOYTZCB1WgHGW58Hj7BwIaO+035Nc34O4dm9RLXUWvWC1SydsDd6O0lca
+        51eBidGZoiQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8880FD458D;
+        Tue, 23 Jun 2020 19:54:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D0938D44B5;
+        Tue, 23 Jun 2020 19:54:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5.1] lib-submodule-update: pass 'test_must_fail' as an argument
+References: <cover.1592907663.git.liu.denton@gmail.com>
+        <7b9c19b3606f31b12a79591a41847dcb0a071751.1592942452.git.liu.denton@gmail.com>
+Date:   Tue, 23 Jun 2020 16:54:31 -0700
+In-Reply-To: <7b9c19b3606f31b12a79591a41847dcb0a071751.1592942452.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Tue, 23 Jun 2020 16:21:20 -0400")
+Message-ID: <xmqq4kr1bao8.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-In-Reply-To: <CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com>
-From:   Gunnar Liljas <gunnar.liljas@gmail.com>
-Date:   Wed, 24 Jun 2020 01:21:32 +0200
-Message-ID: <CAAOnFsNUB_+NZMGnu2yasL8tk_KTfqPY6JiHOpvYHiyY_Lytrw@mail.gmail.com>
-Subject: Re: Rename offensive terminology (master)
-To:     Simon Pieters <simon@bocoup.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E295EC4C-B5AC-11EA-B0EE-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First of all, I offer my excuses for inserting myself into this
-discussion as an outsider. It will probably seem a little laughable or
-sad that someone would feel the need to do that just to vent their
-frustrations outside the public social media platforms.
-However, I want to add mainly one thing, that has been completely
-absent from discussions elsewhere (it has been hinted here, recently).
+Denton Liu <liu.denton@gmail.com> writes:
 
-First, I will state my position, so that the actual argument can be
-put into the context of where I'm coming from (or maybe just because I
-wanted to vent some more...)
-
-- Giving users an option is a good thing.
-- Solid conventions that are rarely overridden is also a good thing.
-- Moving away from "master" may be the right thing to do, but there
-are certain ramifications (also optical) to such things, so the
-reasoning should be informed.
-- "Tagging" certain words as offensive or non-inclusive can be a
-disservice to a working, sensible, constructive, emotional,
-informational and nuanced language. At least when said word, in its
-context, is used completely without its possible negative
-connotations. It creates an emotion and a problem where there was
-none.
-- The actual origin of the word in git is irrelevant. How it's used is
-what matters.
-- The "perpetually offended" may be a moniker that's a bit too lazy.
-But I would argue that there is at least a large group that could be
-called the "eager to be offended, by proxy"
-
-So, my argument.
-
-Why is no-one talking or listening (!) to those who are assumed to be
-offended or hurt? That may be a false assumption, but it's certainly
-how it seems. I can only speak from my limited viewpoint, and for the
-sake of argument, let's say that we're talking about black people, or
-to narrow it down, black software developers.
-Is that too exclusive? Well, maybe, but it's the scope I'm using now,
-and I think my argument would remain unless we include the
-not-assumed-to-be-affected-but-still-uncomfortable.
-
-I tried to get an idea of how the GitHub move was actually received by
-black developers (I'm white, by the way), by googling and searching on
-Facebook and Twitter. And I really didn=E2=80=99t taint my searches with my
-bias (e.g =E2=80=9Cblack developer github master=E2=80=9D). The impression =
-I came away
-with was that 100% would rank the move somewhere between unnecessary,
-via laughable, to downright offensive. The move. Not the word.
-The voices I found are not necessarily representative, but they should
-at least give some pause. A common reaction seems to be something like
-what @SpeedKicks (a software engineer in the "target group") tweeted:
-
-"Reading a thread of white people, including the CEO of GitHub,
-advocating changing the name of the =E2=80=98Master=E2=80=99 branch to make=
- black devs
-more comfortable...
-
-is the most racially uncomfortable I've ever felt about GitHub."
-
-Acting on the uninformed assumption about someone else's feelings can
-be very counter-productive, belittling and even racist.
-
-This leads to my last bullet points.
-
-- Staying with the word "master" can if motivated properly (or not at
-all, since it seems to be a reaction to an ambient issue), be an
-action that is even more grown-up, respectful and therefore inclusive,
-than moving away from it.
-- Can someone still be offended? Sure, but I think the solution to
-educate, rather than eradicate, should be used more often.
-
-Best regards
-Gunnar
-
-
-
-Den m=C3=A5n 4 maj 2020 kl 19:20 skrev Simon Pieters <simon@bocoup.com>:
+> When $command is a helper function, the parent function calling
+> test_submodule_switch_common() is test_submodule_switch_func(). For all
+> test_submodule_switch_func() invocations, increase the granularity of
+> the argument test helper function by prefixing the git invocation which is
+> meant to fail with the second argument like this:
 >
-> "master" is an offensive term, as it can be interpreted as being
-> slavery-origin terminology. See
-> https://en.wikipedia.org/wiki/Master/slave_(technology)#Terminology_conce=
-rns
+> 	$2 git checkout "$1"
 >
-> The Python programming language, and various other projects, have
-> taken a stance and moved away from offensive terminology including
-> "master". See https://bugs.python.org/issue34605
->
-> When different projects using git decide to move away from "master" as
-> the name of their main branch, inconsistency ensues between projects.
-> See https://github.com/desktop/desktop/issues/6478 (and "Related
-> Issues and Projects").
->
-> To avoid offensive terminology and to avoid further inconsistency, I
-> think git should use a different branch name than "master" when
-> initiating a repo. I don't have a strong opinion, but I like "main"
-> since it shares the first two characters and it's shorter.
->
-> --
-> Simon Pieters
-> Bocoup https://bocoup.com/
->
->
+> ...
+> Finally, as an added bonus, `test_must_fail` will now only run on git
+> commands.
+
+> This patch replaces v5 4/4. Hopefully, this'll be the last iteration...
+
+So three copies of v5.1 are identical replacement for 4/4, they seem.
+
+> -			test_must_fail $command replace_sub1_with_directory &&
+> +			$command replace_sub1_with_directory test_must_fail &&
+
+> +# The following example uses `git some-command` as an example command to be
+> +# tested. It updates the worktree and index to match a target, but not any
+> +# submodule directories.
+>  #
+>  # my_func () {
+> +#   ...prepare for `git some-command` to be run...
+> +#   $2 git some-command "$1" &&
+> +#   if test -n "$2"
+> +#   then
+> +#     return
+> +#   fi &&
+
+So, in practice $2 MUST BE either test_must_fail OR an empty
+string.  Feeding the my_func anything other than these two values is
+a BUG.  I wonder if we can somehow make sure to reduce mental burden
+by readers.  Perhaps
+
+> +git_test_func () {
+
+	may_only_be_test_must_fail "$2"
+
+> +	$2 git $gitcmd "$1"
+> +}
+
+where
+
+	may_only_be_test_must_fail () {
+		test -z "$1" || test "$1" = test_must_fail || die
+	}
+
+or something.  The idea is to make sure that this extra helper can
+be named in such a way that it can serve as a documention to help
+readers of "git_test_func ()" and others about "$2".
+
+> diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
+> index 788605ccc0..dd5daa53d3 100755
+> --- a/t/t3426-rebase-submodule.sh
+> +++ b/t/t3426-rebase-submodule.sh
+> @@ -17,7 +17,7 @@ git_rebase () {
+>  	git status -su >actual &&
+>  	ls -1pR * >>actual &&
+>  	test_cmp expect actual &&
+> -	git rebase "$1"
+> +	$2 git rebase "$1"
+
+Likewise here.
+
+Even without such a change this round reads much better than the
+previous ones.
+
+> An alternate design was considered where the global variable,
+> $OVERWRITING_FAIL, is set from test_submodule_switch_common() and
+> exposed to the helper function.  This would allow $command to be
+> set to a more sensible value. However ...
+
+By the way, I do not think this paragraph adds much value to the
+message.  It wasn't clear how OVERWRITING_FAIL wanted to achieve its
+goal back in its own commit, and without any actual code but with
+only the four lines to go by, there is no chance that you can
+convince anybody how $command could have been "more sensible value".
+
+Thanks.
+
