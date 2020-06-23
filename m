@@ -2,188 +2,129 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDF95C433E2
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 20:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FE43C433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 20:28:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC91920707
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 20:10:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 121CD2064B
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 20:28:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="XJ8FhIT5"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="JodIMNQA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388804AbgFWUK3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 16:10:29 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36913 "EHLO mout.gmx.net"
+        id S2390647AbgFWU21 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 16:28:27 -0400
+Received: from mout.gmx.net ([212.227.15.15]:41163 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388265AbgFWUKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 16:10:25 -0400
+        id S2390866AbgFWU2Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 16:28:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592943013;
-        bh=74YsARRc+lvXUnCMxG4+j96LwZLt1yEwWpWJTw1iiB8=;
+        s=badeba3b8450; t=1592944091;
+        bh=DC6qn9oDwZLtNIP/4/pl2l3+IuXUdocIgl6iBfEvhv8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XJ8FhIT56RrmhzH0EeABlQvMZWmHZviEYTJ6eON9dMXPoAZ79/2w+2swnfXf3bW4U
-         UEgvbtSNaIqkD3lvkS9VF3s52pQ9NbaSzxYzqyboFnFmdwfTzB/MEpVYj43sX8Z8PV
-         Dvm/rlbssFwS/QPK5G02vCnoEI5sfI2IvZdUMSHQ=
+        b=JodIMNQAt0aQ6YKZTxsL0QQWeMmBVoj4NyDshz28c6laoBaua1yqfTauBHU31zpIA
+         txodEa5lVTsYJ1eS5hd1+dT+XGhSLNdIGFRRE3EDVm1cRh4io+qLBnbPjVEm4XbTBP
+         EPWgCX3tFAtF0MIma1F5xQcpU0RU35N+oQF/veQY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfpSl-1jCrfg2rmr-00gKjO; Tue, 23
- Jun 2020 22:10:13 +0200
-Date:   Tue, 23 Jun 2020 22:10:13 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M72sP-1jmTfo25jr-008eEk; Tue, 23
+ Jun 2020 22:28:11 +0200
+Date:   Tue, 23 Jun 2020 22:28:11 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Pratyush Yadav <me@yadavpratyush.com>,
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net
+        sandals@crustytoothpaste.net
 Subject: Re: [PATCH 0/9] Allow overriding the default name of the default
  branch
-In-Reply-To: <20200616001955.GA686455@generichostname>
-Message-ID: <nycvar.QRO.7.76.6.2006232122360.54@tvgsbejvaqbjf.bet>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <20200615100327.3mwft27oj7h2bixg@yadavpratyush.com> <nycvar.QRO.7.76.6.2006150011360.56@tvgsbejvaqbjf.bet> <20200616001955.GA686455@generichostname>
+In-Reply-To: <20200616142423.GA667151@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2006232214030.54@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <875zbrcpgh.fsf@evledraar.gmail.com> <20200616140932.GK666057@coredump.intra.peff.net> <20200616142423.GA667151@coredump.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:DhvCD+at5aeH6IrvVLIQV3lHFP9AXtQYwJnDsENXbbW+CwVE0lG
- 4QQiOgV0VTk4ppykXhjI7Y3ZJPz4cuY6QeBFt8MsDV+tcU6crnTjy7/sV8A4EJljyzk1PAX
- agaGqvP4rGMQlS8y9/pwhCmv7pmoW9nAcvVoxNrHPj4/89ltpz7r1KTVFM467CXrFgvriZ5
- upQlVKKrnQW2x+ucfsbVA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mWSJe2U6UWY=:QvKeAg+wrXgZHaHTDB6QGN
- qX76cvO9iO+cpn+50f07Eno6DdleFVkp1dty6cT0mUQx1pul4Yaz/+nWvBdQAQ6r4TnCtHVEl
- v/1esmimhD6YJ+Kik3Qu88ZA3m54V9J2r6sQvyXmayZZf91Pjpge7ARgKa056aUdR2eKEOmj5
- dkml4Li9NJRVcFbI0Mul9iYaZyLHWPWGO60MINQTBCFDk8PDGVbGBqYKlcVybRLMd1L1vmQi+
- 9OoUM663WFkv14Kx5o+tFi618Lf6U2nRkA+lHHAZquwjrDS4bfQCF0QL9iqixmnE51nsZnvQv
- BFE5qcwhO9yvcR2i+4RZfuQ9WAWK9GrmF1IVEvvendkz9dOOk6EUeEJcVC8rXzK4Z+hh9nXgn
- vw8IRtGGOtahFV6nq0J2UKN9gvxwvL58e9FWU+HET1xRKpKnTGvh5u8CQ24DHsJ/o96KiAO1B
- NKYtJ9JN75259ntROxujgXLua59U1rCAQ4bdsshmBuxkeFADah0etTNe2GbwH4LBSZdvq5IY/
- 5AgjGrm4LeC4B9nY6WJKXvutHFyGrAngVSpepGnJlue5Vz+tVqwh9XeWgk89W8nsjuFtdMkTy
- eYFFPsV72lY1Wg1KAhjK8iovBpoY16/OyfrWcBCukq61PluqW4NXp0lR6/R+xtl8h8UWBT9lm
- ODwWm53tZHkjReOYpIxoSVXP7wMRdEp9H72LSohAE8czPJlRfN7olddMTEduYM6Gl71nilsC4
- eYAInulDegCLzxSt5eMl0NhV9Qcyv5Zc5eH+ukxjA4Kz1dtDx4TcsgAqipWFZnOWxx/q+xx+r
- damMuJHNzOIoc034E4yrx06MXFjZtzHkXrIXNz3vTIRMR31hJO7Gm2yHRZUsnHmlgS2kzFHL6
- lqWMUl5I47hb1eUmSdu2msrcynGRxfK2aeLH5LY9421POTIDyk7qkIEw2PPOlb9TivlRF0FZ1
- os7ZaOJVIE7M2WYAB7NPKLnOYUIUKVRiseu6LlhRkP/LXEOhjrcLC36TZ0rJaM9qLDNUUyYLZ
- jrr9Q5QFbNnIdM7dvI/ZLZo4b4+3H0rOu9ZSakKogQ3wd9f5tdz25vU4VX0W5nzGfo0k+DX7H
- T35eUdJ1i7KuI3jvTgUx9Xdx3oGkp7kmTITm1Bxz37fjk/OL/6cQToivqN/TDFZ7rp1HRpIj2
- Rl6CWT5D9IMehSC5qa7sPOSeuzEDIy6+YeJOjsS5qv83yYkAvgoQ7t040O2uEO08ZWFtSj4j/
- VSEkh7MeahkcJz8P88X611JU0GDARYZrhZh1ARg==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-113551980-1592944093=:54"
+X-Provags-ID: V03:K1:EhntgevODg1u8zL57oNhYz640tTVWVTQj1Ze0Sk3VKKPrroYyBU
+ WA1tTq1FyktzKZ6tnBXCsYUsJpKz7/GmDAfNLrvzh4Mh138fghElJu37qGZL6jdopSGCRIE
+ 0hEgZocxcpV6/T/9QS8ha1CiGO8Czl+xy3zB1Ec9kFoE5PebY3o94EhY/PWGxeaucDmQq39
+ WpXkDPQCS2cK0Nk9vKxmQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:N+mHhemDV7s=:miYYZ7b2qCLAQXH6Zg84I6
+ 03SyYIoKQJ225iwk6lEuoiyaMKbELIHI6QRcqbOY4x3/8TPRaNeonW5rhQQ/FMwB8vOqz0n7l
+ COeNgV9+n7I9ueVB0kC+R6i5i7UW4zV0+UzLLibwvfo8+/zZlQjBHOOwz2YPKRGqqYMoTER/o
+ iJcO6z7VvGUBDaGbkthTnG9ON0x8Pyfd5ykUc63h10HN+lqog7uRIogpxu1b7BlMNxhrWv5il
+ AfCtdZyWqhK1uxnFnHs4sre7MMnbh4N54xszGY7KQ8jJWchUPcnl9RGo/pZt4H/L83xukDTQ/
+ oDO6AUoDJ6VH5aHNOuZstdn+TO2cJ0CIay3EytdITXVGU4plzaBPgfb+S0DyOnY34iUEmH/wy
+ g+uwsh9m+/lLIYtAnt4IkfOZ/ga4yZmCFq5e8V+XoqIjeBrbO/Hu/AUc99iZ1VDgGXdMjrjcU
+ O+vEFSPT5npTj/d5fTKPJvai0/OK30y/bSThF48a3AcZ9R2q6k4gJZX62QxkqfelLl+/0lvZ6
+ 1GnoQ1Ejx+/+d19BYTgAEeWTVN+rqFv7MqvHPX/7cLq9F5upbu8EEYyjTqQFXTYsZ5wp4Q/e5
+ Bv7TUHLvZHcdn21CTnEchoM25RVhoB/qz1x3z+u18ZZ+Ushuv0yLVaxI6PevdnQWMTMMRmzFc
+ phfk+0Xczk7QIv4BgnhBdT1ru5npKdv0NXT2RYgQawyFwfcjgGJpjNsVtu2OZHMKwFiip3D3l
+ KDWKp5qiU6/6lra/zPscOYQbx8/Yv8O7nPCHkkHbIz/SvpeAOg7ZeJVPykFaAh+kZT7J/qfuK
+ KikY2bdp0aSh4euhaSAOSlAFYrQVk4L3iROOTGJLb2NJopynxfY5s3FpJpyWycMP8bL4Zr/aS
+ iQWVMyE9qrvPE2Jo7V9S3NNzdhIH9PoZtp2EBUrjW4XETonkS96evFaH239xuz+MqLlcpSU2A
+ 5pITn3Me4vZnF2x30p/PPwB7zV99Kqmw/C63lzTRLuT6JNvC7vPVJ8n3mFq8D3vNbLdJDPxNj
+ oKnRLltvoe3K4ag1nNqQkOZnUb+4tleCGpOfiwZx7qC26fM21JhBp7B3n86Ldpny/zyYQvtcQ
+ q8xgyDThEqrizjLAzSrNvBpGOI0iLM2NGHbtZyAFuZD5wWe42sOMqfX0rRZ0rlbWqVFKAkAsU
+ k2AT6JlLtJh0LxI5WogGUzXM9ffSa71LZmPofFJXvrkX/fEwyuuMAbd/y+XKjUWaDmSeb+1K5
+ bYQgHyV6GNMj00AKRKTa6rNI1Cj/L9mUp8KPdZQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 15 Jun 2020, Denton Liu wrote:
+--8323328-113551980-1592944093=:54
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Mon, Jun 15, 2020 at 12:26:03AM +0200, Johannes Schindelin wrote:
-> > > For example, my vim plugins are submodules in the '~/.vim/bundle'
-> > > directory. When I want to update them, I run:
-> > >
-> > >   git submodule foreach 'git remote update && git reset --hard origi=
-n/master'
-> > >
-> > > With this change hitting a Git release, more and more people would c=
-all
-> > > their main branch different names they like. So what is the recommen=
-ded
-> > > way to do something like this now? How do I checkout the tip of the =
-main
-> > > branch? How do I push to the main branch? How do I pull from the mai=
-n
-> > > branch? And so on...
-> >
-> > ... has less to do with a new Git release, but more with the decision =
-of
-> > an existing project to change their main branch name.
-> >
-> > That's something users already had to deal with, of course. For exampl=
-e,
-> > projects switching to the Git Flow model will start to use the main br=
-anch
-> > name `development`.
->
-> I brought this concern up in a parallel thread but I'll bring it up here
-> too since it's relevant. Currently, in the .gitmodules file, if the
-> branch is not specified, it defaults to 'master'.
->
-> When I want to update my vim plugins, I run
-> `git submodule update --remote` which pulls in all of my submodules'
-> 'master' branches. By convention, a lack of `branch` key in .gitmodules
-> conventionally means 'master'.
->
-> With your change, it becomes the value of git_main_branch_name(), which
-> is fine for now. However, if this value changes to something else, then
-> when I update my Git, suddenly `git submodule update --remote` will be
-> broken for me as all of the new repositories that I pull will be for an
-> incorrect (and possibly missing) branch.
->
-> This leaves us in a scenario where one developer running an older
-> version of Git would have submodule updates work perfectly fine while a
-> developer with a newer version would have it suddenly broken. This might
-> be hard to debug, especially for someone who doesn't follow the release
-> notes around Git and doesn't realise why the default has suddenly
-> changed.
->
-> This problem gets much worse if we allow the main branch name to be
-> configurable as then the *private* configurations that a developer has
-> may have an effect on the *publicly visible* behaviour of a repository.
->
-> I think I see three possible solutions to this:
->
-> 	1. Special case 'master' in submodules to retain backwards
-> 	compatibility.
->
-> 	I don't think this is very appealing as if the change is made to
-> 	use another default branch name, then the "default" branch for
-> 	submodules would be "master" even though the new default
-> 	everywhere else would be different. And in the future, someone
-> 	who doesn't know the context behind all of this would be very
-> 	confused where there are two different default branch names.
->
-> 	2. Disable 'update --remote' support for submodules that don't
-> 	specify a branch.
->
-> 	If Git detects that a branch key is missing when trying to do an
-> 	'update --remote', it should just quit out and refuse to do
-> 	anything. Of course, this a very backwards incompatible change
-> 	and it would require several release cycles to implement where
-> 	we warn users about this impending change before we actually
-> 	make it happen.
->
-> 	3. Make 'update --remote' get HEAD.
->
-> 	I argue that this is how it always should've been implemented
-> 	but, alas, I can't go back in time and fix it. Regardless, it
-> 	might be good to flip this to be the default if we're going to
-> 	be making the change anyway.
->
-> 	Unfortunately, this suffers from both the problems of 1 and 2.
-> 	As with 1, we'll end up in a situation where users with
-> 	different versions of Git may experience different behaviours
-> 	given the same public repository and I think this is definitely
-> 	undesirable. With 2, this change will also require a long
-> 	deprecation period which I don't think it compatible with how
-> 	people seem to want the default branch switch to happen this
-> 	release.
->
-> So I dunno. I think my opinion leans on not changing the default branch
-> at all. Since it seems like the consensus is generally that it _will_
-> change, I think I would prefer options 3, 2 and 1 in that order.
->
-> Thoughts?
+Hi Peff & =C3=86var,
 
-My intuition matches your preference, and I have a strong preference for
-3.
+On Tue, 16 Jun 2020, Jeff King wrote:
 
-It took some banging my head (not my HEAD...) against the code to convince
-myself that the patch I prepared for v3 is good: I managed to confuse
-myself what with all those submodules and clones in t7406.
+> On Tue, Jun 16, 2020 at 10:09:32AM -0400, Jeff King wrote:
+>
+> > I think with that, we could ditch core.mainBranch entirely, with no
+> > notion at all of "this branch is special in this repo". We use HEAD
+> > where appropriate, and otherwise avoid any specialness.
+>
+> One obvious exception is that third-party tools may want to know the
+> "special" branch for some reason. But I'm inclined to say that they
+> should (in this order):
+>
+>   - consider whether they really need a special branch at all, or if the
+>     mechanism can be made more generic
+>
+>   - consider whether HEAD is the best value for a special branch (e.g.,
+>     GitHub pull requests default to targeting HEAD)
+
+Indeed, this is applicable in many circumstances. For example, instead of
+https://github.com/git/git/blob/master/README.md it is just as easy (and
+more robust) to write https://github.com/git/git/blob/HEAD/README.md.
+
+The same goes for `git ls-remote origin HEAD` and as a consequence, `git
+fetch origin HEAD`: it fetches the default branch of the remote
+repository.
+
+And with that, I could imagine that this is not actually necessary:
+
+>   - rely on per-tool config for what's special (because it really may
+>     vary between tools, and that's more flexible anyway)
+>
+> But I'm open to hearing about cases where some tool really wants to know
+> "what did the user consider the special branch at the time of creation".
+
+I cannot think of any use cases, apart from essentially creating a new
+repository, where a tool or a user would want to know of such a
+preference.
 
 Ciao,
 Dscho
+
+--8323328-113551980-1592944093=:54--
