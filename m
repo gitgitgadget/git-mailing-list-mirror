@@ -7,62 +7,64 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE920C433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 092D6C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:02:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9770F20663
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:02:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D559120738
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:02:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=mforney-org.20150623.gappssmtp.com header.i=@mforney-org.20150623.gappssmtp.com header.b="MTxPEeNH"
+	dkim=pass (2048-bit key) header.d=mforney-org.20150623.gappssmtp.com header.i=@mforney-org.20150623.gappssmtp.com header.b="cFDZ8Um/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404278AbgFWVCV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 17:02:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58702 "EHLO
+        id S2404284AbgFWVCY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 17:02:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404276AbgFWVCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 17:02:14 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BAF1C061573
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 14:02:14 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id x11so9655381plo.7
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 14:02:14 -0700 (PDT)
+        with ESMTP id S2404280AbgFWVCV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 17:02:21 -0400
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com [IPv6:2607:f8b0:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B79C061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 14:02:21 -0700 (PDT)
+Received: by mail-pg1-x543.google.com with SMTP id b5so137392pgm.8
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 14:02:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=mforney-org.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=PJadnMLhu9d0L5zl8KO2mj6oLPrNQpCa0342XC5yvyg=;
-        b=MTxPEeNHoB8HOJYdJlUDwyyi0M3iiqVR7sKl3qh2Kh6tilSwwi5gMzqtdsGe47HLzg
-         xOASDvOmB2qsC2VvfW4tMMTdAxXXsvstoP3iAi4Cz9/0RX1paBUwZNkq62olmGj+QDEI
-         zvsy5nLYPY1tZ+tPmkfa5WmbZY4RGM7dbvJW8rX7PPDE/d9x6wk6RHPeq412iJVQrpBT
-         jTvL3f1FFDHqQfB6ZHWb541Oc3i15VGY3lpwoqg4ijtoFgmyobPu6aMwWE5SEc14mpQx
-         Sscmqg5Ti7zIC7TqVdqL15+9HW/meB9zmFq8to6y187oH+2oqh6rSyCthS3/qJMLAopn
-         TZYw==
+        bh=zgx2Rqv750nKdaZN2EVLeZAhnJwZ+1V4aC/XubRUz68=;
+        b=cFDZ8Um/14FfVglvj0PUxutkWwhjQWBE8MJWcfwqPHA1FAEx3D1LD/YxWwZheDR3/I
+         KHJi7AUwHbj+Suob849Jm/xfk0P1lDrijOuQopC4NW8QdxoBDvW1KH5fLyF0FexaNhyr
+         zSyl2ncnwJ37KgYkrLNjDAD7HftFih0X3pBkLnu8IzJT/w4CLn6dkFpLqphsCmVTttsy
+         iwo70b2p40vq3aNKUux9aFUlWfV1+YGZNoLXK9kN3ZkOhQYYTiOL59kZohywv/K5fsH9
+         DMoC1LzxfukHFiAzENXJJFaPNReijkNjX8ToBR+MfMpJSPGlX6pLYdiUxwZchAmP8sQZ
+         Us2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=PJadnMLhu9d0L5zl8KO2mj6oLPrNQpCa0342XC5yvyg=;
-        b=FUevSGZhIoUF9tDnsb5fU1d5WZEgJbUY1Z1M+j/kTg45qgLhiHe15rSd2XveiigsVV
-         lGRqKCNMmiJCB5wHpHtkEA87vY/pOtsCHBhbKdxPvgJa55E7Yp9uDxS5tDWvjVjs/WSi
-         3z+h8bqHQoM1D0ai0gBIq2Pm/RMxlggQYSOT8BvqOk+pAaNx42uQ9FhvJvDHEbyIA10r
-         LKY50bk/xa3vJbjp8MXOc6+MVHjehrVIUCK6UPbXRqfIqFhlLnIplDsYpGxxXuLpHKTl
-         zV6AAV2hQDUw/NSsCyIf63bvRkExF5sQ5vL1M/dsROvWB6SbiQSNQMq8pxS49cTYikDq
-         UXqw==
-X-Gm-Message-State: AOAM530W8AyUBzDSvVHpR8HiFX0xlz1loHDfI5Yruaqc9iCHxJirxr8p
-        L0ZrpqkHt0vS0NqRwxrD0YGMDw6YjcJoMA==
-X-Google-Smtp-Source: ABdhPJwZ9rkQmwmsRbCxn2An/Vk7EWexl1WOWWek1Jm0YfaIB2gAnrJQXi1FFMuKgfZC1ZzPEaJUjQ==
-X-Received: by 2002:a17:90b:714:: with SMTP id s20mr22726822pjz.99.1592946133231;
-        Tue, 23 Jun 2020 14:02:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zgx2Rqv750nKdaZN2EVLeZAhnJwZ+1V4aC/XubRUz68=;
+        b=U8BulRbzfpEXgTwZLLYe2ewW/VjljxpXB3N9XXHbj2TBb+JT50l+ml/yW9l0yi0aIQ
+         LpvXAHR8pqDFK4IjR0fohm4/oW+PknbsnRqs6uUvahaRqADtRkb0m1UQFZCnk6i4k76m
+         XMQOwu4Icv/14PEmWzZUaPy/KRCtuRJOtWfMuIyv+qGg7iu8Ll78jQa5D+qPodq/44uo
+         wgz7h5SHujGIFBiQIRDb3uUAWiyoSaeNRDQmwgfQL0nkh7gw5s28M95uVvYH5w4gwoiF
+         W+aXYb/Tpl3KbP+S8Ut+tUUiWKWfZ/LafIZxue7uRiw4srQ7veTVhL/2xzcbMaLbxPbh
+         03bA==
+X-Gm-Message-State: AOAM531+5H5HUOqRh2kq8SDY1J9w5BBeu881NJmzBJFQ/7qmutTTLIxu
+        rS/G6ayRMdOmJHdFzK+8ScrQWh+UI6wg+A==
+X-Google-Smtp-Source: ABdhPJyi0LwXxTQCpHM/tOyLwlO3+lWJxTUhFcyJtMM08DRPSUqKl7Pk3PucVCkzy55TKWiWSs5a6Q==
+X-Received: by 2002:a65:6799:: with SMTP id e25mr13157417pgr.364.1592946140999;
+        Tue, 23 Jun 2020 14:02:20 -0700 (PDT)
 Received: from localhost ([2601:647:5180:4570:16dd:a9ff:fee7:6b79])
-        by smtp.gmail.com with ESMTPSA id n9sm3439190pjj.23.2020.06.23.14.02.12
+        by smtp.gmail.com with ESMTPSA id f14sm14967530pgj.62.2020.06.23.14.02.19
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 23 Jun 2020 14:02:12 -0700 (PDT)
+        Tue, 23 Jun 2020 14:02:20 -0700 (PDT)
 From:   Michael Forney <mforney@mforney.org>
 To:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 1/2] revision: use repository from rev_info when parsing commits
-Date:   Tue, 23 Jun 2020 13:56:58 -0700
-Message-Id: <20200623205659.14297-1-mforney@mforney.org>
+Subject: [PATCH 2/2] submodule: use submodule repository when preparing summary
+Date:   Tue, 23 Jun 2020 13:56:59 -0700
+Message-Id: <20200623205659.14297-2-mforney@mforney.org>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20200623205659.14297-1-mforney@mforney.org>
+References: <20200623205659.14297-1-mforney@mforney.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -70,119 +72,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is needed when repo_init_revisions() is called with a repository
-that is not the_repository to ensure appropriate repository is used
-in repo_parse_commit_internal(). If the wrong repository is used,
-a fatal error is the commit-graph machinery occurs:
+In show_submodule_header(), we gather the left and right commits
+of the submodule repository, as well as the merge bases. However,
+prepare_submodule_summary() initializes the rev_info with the_repository,
+so we end up parsing the commit in the wrong repository.
 
-  fatal: invalid commit position. commit-graph is likely corrupt
-
-Since revision.c was the only user of the parse_commit_gently
-compatibility define, remove it from commit.h.
+This results in a fatal error in parse_commit_in_graph(), since the
+passed item does not belong to the repository's commit graph.
 
 Signed-off-by: Michael Forney <mforney@mforney.org>
 ---
- commit.h   |  1 -
- revision.c | 18 +++++++++---------
- 2 files changed, 9 insertions(+), 10 deletions(-)
+ submodule.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/commit.h b/commit.h
-index 1b2dea5d85..a2e8ca99a2 100644
---- a/commit.h
-+++ b/commit.h
-@@ -97,7 +97,6 @@ static inline int parse_commit_no_graph(struct commit *commit)
+diff --git a/submodule.c b/submodule.c
+index e2ef5698c8..785ab47629 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -438,13 +438,13 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+ 	 */
+ }
  
- #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
- #define parse_commit_internal(item, quiet, use) repo_parse_commit_internal(the_repository, item, quiet, use)
--#define parse_commit_gently(item, quiet) repo_parse_commit_gently(the_repository, item, quiet)
- #define parse_commit(item) repo_parse_commit(the_repository, item)
- #endif
+-static int prepare_submodule_summary(struct rev_info *rev, const char *path,
+-		struct commit *left, struct commit *right,
++static int prepare_submodule_summary(struct repository *r, struct rev_info *rev,
++		const char *path, struct commit *left, struct commit *right,
+ 		struct commit_list *merge_bases)
+ {
+ 	struct commit_list *list;
  
-diff --git a/revision.c b/revision.c
-index ebb4d2a0f2..2b6bf47c81 100644
---- a/revision.c
-+++ b/revision.c
-@@ -439,7 +439,7 @@ static struct commit *handle_commit(struct rev_info *revs,
- 	if (object->type == OBJ_COMMIT) {
- 		struct commit *commit = (struct commit *)object;
+-	repo_init_revisions(the_repository, rev, NULL);
++	repo_init_revisions(r, rev, NULL);
+ 	setup_revisions(0, NULL, rev, NULL);
+ 	rev->left_right = 1;
+ 	rev->first_parent_only = 1;
+@@ -632,7 +632,7 @@ void show_submodule_summary(struct diff_options *o, const char *path,
+ 		goto out;
  
--		if (parse_commit(commit) < 0)
-+		if (repo_parse_commit(revs->repo, commit) < 0)
- 			die("unable to parse commit %s", name);
- 		if (flags & UNINTERESTING) {
- 			mark_parents_uninteresting(commit);
-@@ -992,7 +992,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 					ts->treesame[0] = 1;
- 			}
- 		}
--		if (parse_commit(p) < 0)
-+		if (repo_parse_commit(revs->repo, p) < 0)
- 			die("cannot simplify commit %s (because of %s)",
- 			    oid_to_hex(&commit->object.oid),
- 			    oid_to_hex(&p->object.oid));
-@@ -1037,7 +1037,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 				 * IOW, we pretend this parent is a
- 				 * "root" commit.
- 				 */
--				if (parse_commit(p) < 0)
-+				if (repo_parse_commit(revs->repo, p) < 0)
- 					die("cannot simplify commit %s (invalid %s)",
- 					    oid_to_hex(&commit->object.oid),
- 					    oid_to_hex(&p->object.oid));
-@@ -1105,7 +1105,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
- 			parent = parent->next;
- 			if (p)
- 				p->object.flags |= UNINTERESTING;
--			if (parse_commit_gently(p, 1) < 0)
-+			if (repo_parse_commit_gently(revs->repo, p, 1) < 0)
- 				continue;
- 			if (p->parents)
- 				mark_parents_uninteresting(p);
-@@ -1136,7 +1136,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
- 		struct commit *p = parent->item;
- 		int gently = revs->ignore_missing_links ||
- 			     revs->exclude_promisor_objects;
--		if (parse_commit_gently(p, gently) < 0) {
-+		if (repo_parse_commit_gently(revs->repo, p, gently) < 0) {
- 			if (revs->exclude_promisor_objects &&
- 			    is_promisor_object(&p->object.oid)) {
- 				if (revs->first_parent_only)
-@@ -3295,7 +3295,7 @@ static void explore_walk_step(struct rev_info *revs)
- 	if (!c)
- 		return;
- 
--	if (parse_commit_gently(c, 1) < 0)
-+	if (repo_parse_commit_gently(revs->repo, c, 1) < 0)
- 		return;
- 
- 	if (revs->sort_order == REV_SORT_BY_AUTHOR_DATE)
-@@ -3333,7 +3333,7 @@ static void indegree_walk_step(struct rev_info *revs)
- 	if (!c)
- 		return;
- 
--	if (parse_commit_gently(c, 1) < 0)
-+	if (repo_parse_commit_gently(revs->repo, c, 1) < 0)
- 		return;
- 
- 	explore_to_depth(revs, c->generation);
-@@ -3414,7 +3414,7 @@ static void init_topo_walk(struct rev_info *revs)
- 	for (list = revs->commits; list; list = list->next) {
- 		struct commit *c = list->item;
- 
--		if (parse_commit_gently(c, 1))
-+		if (repo_parse_commit_gently(revs->repo, c, 1))
- 			continue;
- 
- 		test_flag_and_insert(&info->explore_queue, c, TOPO_WALK_EXPLORED);
-@@ -3476,7 +3476,7 @@ static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
- 		if (parent->object.flags & UNINTERESTING)
- 			continue;
- 
--		if (parse_commit_gently(parent, 1) < 0)
-+		if (repo_parse_commit_gently(revs->repo, parent, 1) < 0)
- 			continue;
- 
- 		if (parent->generation < info->min_generation) {
+ 	/* Treat revision walker failure the same as missing commits */
+-	if (prepare_submodule_summary(&rev, path, left, right, merge_bases)) {
++	if (prepare_submodule_summary(sub, &rev, path, left, right, merge_bases)) {
+ 		diff_emit_submodule_error(o, "(revision walker failed)\n");
+ 		goto out;
+ 	}
 -- 
 2.27.0
 
