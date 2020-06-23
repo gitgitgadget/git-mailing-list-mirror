@@ -2,152 +2,151 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04730C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCDAC433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:47:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD3C52078A
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:43:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 113282078A
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:47:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EUtbG+Ng"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JuZgcIyv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387747AbgFWWny (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 18:43:54 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54055 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387666AbgFWWny (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 18:43:54 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 066A6D1F51;
-        Tue, 23 Jun 2020 18:38:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Q7pERj63WSTb63PrdDZht82N+Go=; b=EUtbG+
-        Ng+cs+O6T4LQZzOwgjAbYyWdZJ0eVehtdupCKytQiFVUWElWDZcdsGJB8Qgwt3dT
-        leieDPZ+4TbCfpcjc27l1Q+sP64iG8TsYIYRAWjD+nDlpAkT6JGGhKMxj/TMPSDo
-        sIaNQVN1QDYpkEClEi924lukJZE9IU5XGaygk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WvfGZm+I0leDaW1HGh6mPPm7dfkvmVVv
-        BZcwpWaN/d8Cjd1eo2k8AdtH286uu2b3HsWY5h7wpSLRp1j/VTf/WZTg5ppyZsA0
-        MX8hmWD5TpUgttQAA71PsSqNHwdkU8NPZCs1UzrZodM1r2cwgj6mMzetJFqnMf7Z
-        fxeRXIUhtA0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F1C0ED1F50;
-        Tue, 23 Jun 2020 18:38:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 45EE7D1F4F;
-        Tue, 23 Jun 2020 18:38:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Tiran Meltser <Tiran.Meltser@mavenir.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Amir Yosef <Amir.Yosef@mavenir.com>
-Subject: Re: Request for adding a simple mechanism to exclude files from Git merge operation
-References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
-        <20200622194122.GN6531@camp.crustytoothpaste.net>
-        <871rm6x86y.fsf@osv.gnss.ru>
-        <CABPp-BHa=jppGtoDiTz_NCXrd2zhTfALb_UrQjcF-VDcv+vuNA@mail.gmail.com>
-Date:   Tue, 23 Jun 2020 15:38:48 -0700
-In-Reply-To: <CABPp-BHa=jppGtoDiTz_NCXrd2zhTfALb_UrQjcF-VDcv+vuNA@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 23 Jun 2020 10:08:30 -0700")
-Message-ID: <xmqqk0zxbe6f.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2388493AbgFWWrd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 18:47:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46752 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388342AbgFWWr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 18:47:28 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30BF6C0617BE
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 15:33:36 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id k6so240024wrn.3
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 15:33:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=AcuURcMs3/L/lda8S0YlchF2ZQ1YWzh/Fa9Q4d0BgUM=;
+        b=JuZgcIyvY+3nABi654giJfHhecaem3EmS4ejLPUZJixh+jEGox2HC4GBQ3iDzCSDai
+         bSKtSEqogE57sL0kBFoRsmxkr4iZPKYAQmzt8oGRsDGDZkVs5tlYH2uPuQu2hPdEoQqd
+         3d9ai8B8sl3rh2ZqoNoKy5Yn1nq1fx9cx0UbVpVErNixtOi7xkp1Ljj2FjCeNRCJj/Y2
+         bNwbk3u3BjxUWAUcWt5faaZF4ybNiRdgvFf/KCuuiWWTTKcV6o655+CWv/7OYWKqbfpI
+         L/oAJK5WajBWepEQy6ZVFOoNsyc2eOMTvJmPnyBAVZLJXlKPt7PIt+H5wGNzPB74k+i1
+         VPgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=AcuURcMs3/L/lda8S0YlchF2ZQ1YWzh/Fa9Q4d0BgUM=;
+        b=f0UYAXVyUwHO4gt08zBEMptzW8xGrRzRmCdJ3glA9HkGbco1rML7sXu6mUflnU78OW
+         G0yuD4y/0gHmo1c94uQdretif39Dq6eEYyd3s7gkKD4947eZ3V7QYWEN4/yrRzpCXAlD
+         wIATNTfZtwYnmFXIeL3XCIaiFUyos5ZRdrkBb3TaXCVVI4ZOrXbBMvtAf/NA01PUfkiU
+         EbH1o1wmR5ol1o9oPEzMlnqyfVxmo8kJoaVHgIqb2isw98pmQ6thyeLjUVVnEEgFCFJj
+         EFGQFmBENLAIR1Q7CujgU1hQOOyjoMAuQrrr8egfWCvYJS4aFTE0FPXWK38weh7bmux8
+         1Ruw==
+X-Gm-Message-State: AOAM531qjcIW9uDJ16Fn8K0rgI2PAXD/7XPVf9DpWWDQiDUXE9Ze9gtb
+        zfHhor8Yiqk/1v7yVEcp7WRksXL3
+X-Google-Smtp-Source: ABdhPJzrgQGszjm3x4CVypWmcZmXnoGY5iLyeWi+vcXDUXlYvA5MW2dpsNLcGDg39wtRirLZwTwqoQ==
+X-Received: by 2002:a5d:44c7:: with SMTP id z7mr4849497wrr.226.1592951614525;
+        Tue, 23 Jun 2020 15:33:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d2sm24506775wrs.95.2020.06.23.15.33.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2020 15:33:34 -0700 (PDT)
+Message-Id: <a29943d7bbc11a524089348a4abbd33c7514eee9.1592951611.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
+References: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
+        <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 23 Jun 2020 22:33:24 +0000
+Subject: [PATCH v3 2/8] send-pack/transport-helper: avoid mentioning a
+ particular branch
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4F014436-B5A2-11EA-A4C7-B0405B776F7B-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     don@goodman-wilson.com, stolee@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, Matt Rogers <mattr94@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> I think you'd have an uphill battle to convince me that this isn't
-> net-negative value:
+When trying to push all matching branches, but none match, we offer a
+message suggesting to push the `master` branch.
 
->   * You can just do "git merge --no-commit ...; git restore ...
+However, we want to step away from making that branch any more special
+than any other branch, so let's reword that message to mention no branch
+in particular.
 
->   * The "ours" vs. "theirs" wording means you're going to ...
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ send-pack.c             | 2 +-
+ t/t5528-push-default.sh | 6 ++++++
+ transport-helper.c      | 2 +-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
->   * The pathspec limiting is going to be a bug factory ...
-
->   * I've run into "branch-specific" files in the wild and even
-> supported repositories that used them for years.  In my opinion, they
-> are almost always nasty code smells that are artifacts from
-> CVS/SVN-like thinking.  Although I wanted to stamp them out
-> immediately, there was opposition to it.  However, over time, people
-> removed those branch-specific files from the repository (and it wasn't
-> just by me or at my prodding either; many were cleaned away by others
-> without my involvement as other folks just found better ways to handle
-> things over time).  Giving special support to bad practices will just
-> enshrine them, which I'd rather avoid.
-
-Also if you consider what would happen to future merges after making
-such a half-merge, you would not recommend it, whether with an even
-easier "feature" to encourage a bad workflow or with existing tools.
-
-Every time you create a commit (be it a single parent commit or a
-merge commit with multiple parents), you are making this statement:
-
-    Where the histories leading to the parent commits want to go
-    aligns with my goal, and with this commit, I am extending their
-    effort to get us even closer to our shared goal.
-
-After a side branch forked and worked on two parts of the system (A
-and B) while the mainline did not do anything to these two parts but
-worked on other parts, you look at the histories (not just the trees
-of tip commits) leading to the current mainline and the tip of the
-side branch, convince yourself that you agree with both of the
-changes the side branch made to A and B, and because the mainline
-left these two parts intact, you take their changes wholesale and
-record the result in a merge commit.  Because you also made sure all
-the other developments happened while the side branch forked took
-you closer to your goal, you too them too, so the resulting merge
-commit records a tree that is closer to either of its parents to
-your goal.
-
-And readers cannot dismiss this fact as mere philosophy; it is
-fundamental and ingrained in the behaviour of Git tools,
-specifically how three-way merge works.
-
-Once you dismiss a part of what a side branch did as irrelevant by
-taking "our" version for selected paths in a merge, the goal you had
-when you made the merge will no longer align with the goal the folks
-who worked on the side branch had.  Perhaps you only took changes to
-the A part and discarded changes to the B part they made, because it
-suited your goal better.  Now after the folks who care about both
-parts further work on part A and B, you may try to merge their work
-into the updated mainline (whose history contains the declaration
-you made earlier that the work did on the B part made up to the
-point you made the earlier merge is worthless).  The new merge will
-use the older tip of the side branch that was partially merged with
-the old merge as the merge base and will consider what was done on
-the side branch (which would contain changes to both A and B---after
-all they care about both A and B).  This mismatch will either cause
-heavy conflicts in part B, or (worse yet) silent mismerges.
-
-So in short, sure, you can use the existing machinery, or invent a
-new "easier" machinery, to create and record such a half-merge, and
-you may declare victory after creating your first such merge.  But
-you left a disaster for future merges from the same side branch by
-doing so.
-
-As to handling configuration files, what you and Brian mentioned to
-keep recommended template(s) in-tree and have the build procedure
-copy it out and keeping the customization out of merge is the BCP.
-We shouldn't butcher the tool and make it even easier to use a bad
-workflow, as you said.
-
-Thanks.
+diff --git a/send-pack.c b/send-pack.c
+index 0abee22283..db79cdac77 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -406,7 +406,7 @@ int send_pack(struct send_pack_args *args,
+ 
+ 	if (!remote_refs) {
+ 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
+-			"Perhaps you should specify a branch such as 'master'.\n");
++			"Perhaps you should specify a specific branch.\n");
+ 		return 0;
+ 	}
+ 	if (args->atomic && !atomic_supported)
+diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
+index 4d1e0c363e..68b84c4add 100755
+--- a/t/t5528-push-default.sh
++++ b/t/t5528-push-default.sh
+@@ -98,6 +98,12 @@ test_expect_success 'push from/to new branch with upstream, matching and simple'
+ 	test_push_failure upstream
+ '
+ 
++test_expect_success '"matching" fails if none match' '
++	git init --bare empty &&
++	test_must_fail git push empty : 2>actual &&
++	test_i18ngrep "Perhaps you should specify a specific branch" actual
++'
++
+ test_expect_success 'push ambiguously named branch with upstream, matching and simple' '
+ 	git checkout -b ambiguous &&
+ 	test_config branch.ambiguous.remote parent1 &&
+diff --git a/transport-helper.c b/transport-helper.c
+index a46afcb69d..b81a3486bd 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1046,7 +1046,7 @@ static int push_refs(struct transport *transport,
+ 	if (!remote_refs) {
+ 		fprintf(stderr,
+ 			_("No refs in common and none specified; doing nothing.\n"
+-			  "Perhaps you should specify a branch such as 'master'.\n"));
++			  "Perhaps you should specify a specific branch.\n"));
+ 		return 0;
+ 	}
+ 
+-- 
+gitgitgadget
 
