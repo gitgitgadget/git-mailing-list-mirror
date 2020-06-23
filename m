@@ -2,136 +2,121 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BE40C433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC8E0C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:34:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1938A208C9
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:31:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84F2B2098B
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:34:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D4xBjsxR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YO2u6cut"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733258AbgFWTbv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 15:31:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61913 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733220AbgFWTbu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 15:31:50 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C168C64F8C;
-        Tue, 23 Jun 2020 15:31:46 -0400 (EDT)
+        id S2387457AbgFWTey (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 15:34:54 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59921 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733270AbgFWTey (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 15:34:54 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 57FD9CFBC1;
+        Tue, 23 Jun 2020 15:34:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=+fLRr+uQ9IDQ
-        dbQYThs4tYwhhKo=; b=D4xBjsxRgbJcsutKrZiUI20/O7sDdK3fjGB3xHvezIJ2
-        8eCYdmeET5HPBuC9Us2Zu8KNo0ys3LXJnKu0Ue3HpqcDoe70W84Y2HKl6Vm3d5On
-        mZ+0zwxfv3yVCCoxZRMt9FgvnaUi9/E+GpK5ksCzwDpncdL8aHDUPeWjEdsf1pM=
+        :content-type; s=sasl; bh=l54nD/masMFKpKUyonAE1bO7uYs=; b=YO2u6c
+        utamlJ3Rvp4yw/fKR28rLzdp3cbcu6PfXhBMBwOtwg5fht0YSU5ZLPOzNqNFsUzK
+        4yVJcHH4TIclMstETm897wV6e/oGUAiiA7ZdX4TbXAt2ku+xASQj8aiM8BUpu8BJ
+        RKL2vc64J4nDsYiVQ+eQCEMSIVN5oo4bSrzII=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=B+SSnj
-        fsliV2oXtc90bRNMcmUx+UFedFgoccHi5qEmucvufngNUWQO4TESqHUCozVyjSLO
-        xy7UvgwKMZCXRiebvoE24NSs8Ly244K8HDalfSY6cP+AzApudx4EiDTHTMMonB5I
-        C1t9f26MS7I6PFjpO/Z4qZOzWLSpehqFmIkvM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B920264F8B;
-        Tue, 23 Jun 2020 15:31:46 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=u+dRxwtGNNgoEKNza1Hp9+bnYcR+eT0I
+        xbqf0n5PgmDQuE+Rl7STmuxx2wirMj6yLD2gxu9tGwxEwDkKSscRFhy504tnOijq
+        c/cU+TWHeQmr8Jy/N8Fc5v+58hTd6NxiGhjieI35P2ipZH6MI8qMY92kierl98WD
+        vzK6VbYznBw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4FCC7CFBC0;
+        Tue, 23 Jun 2020 15:34:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4962664F8A;
-        Tue, 23 Jun 2020 15:31:46 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 96CA5CFBBF;
+        Tue, 23 Jun 2020 15:34:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] docs: adjust for the recent rename of `pu` to `seen`
-References: <pull.668.git.1592924655.gitgitgadget@gmail.com>
-        <dc6f97129019e9176d91c77576a84549c00a74b5.1592924655.git.gitgitgadget@gmail.com>
-        <20200623153106.GB20455@danh.dev>
-Date:   Tue, 23 Jun 2020 12:31:45 -0700
-In-Reply-To: <20200623153106.GB20455@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
- =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s
-        message of "Tue, 23 Jun 2020 22:31:06 +0700")
-Message-ID: <xmqq5zbhd1em.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [alternative 0/10] fast-export: allow seeding the anonymized mapping
+References: <20200619132304.GA2540657@coredump.intra.peff.net>
+        <20200622214745.GA3302779@coredump.intra.peff.net>
+        <20200623152436.GA50925@coredump.intra.peff.net>
+Date:   Tue, 23 Jun 2020 12:34:47 -0700
+In-Reply-To: <20200623152436.GA50925@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 23 Jun 2020 11:24:36 -0400")
+Message-ID: <xmqq1rm5d19k.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2CFCAC50-B588-11EA-B99F-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9A40B536-B588-11EA-8505-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Jeff King <peff@peff.net> writes:
 
-> Hi Dscho,
+> On Mon, Jun 22, 2020 at 05:47:46PM -0400, Jeff King wrote:
 >
-> On 2020-06-23 15:04:13+0000, Johannes Schindelin via GitGitGadget <gitg=
-itgadget@gmail.com> wrote:
->> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-re=
-mote.txt
->> index 0a5c8b7d493..492e573856f 100644
->> --- a/Documentation/git-ls-remote.txt
->> +++ b/Documentation/git-ls-remote.txt
->> @@ -101,9 +101,9 @@ f25a265a342aed6041ab0cc484224d9ca54b6f41	refs/tags=
-/v0.99.1
->>  7ceca275d047c90c0c7d5afb13ab97efdf51bd6e	refs/tags/v0.99.3
->>  c5db5456ae3b0873fc659c19fafdde22313cc441	refs/tags/v0.99.2
->>  0918385dbd9656cab0d1d81ba7453d49bbc16250	refs/tags/junio-gpg-pub
->> -$ git ls-remote http://www.kernel.org/pub/scm/git/git.git master pu r=
-c
->> +$ git ls-remote http://www.kernel.org/pub/scm/git/git.git master seen=
- rc
->
-> rc is not with us anymore.
->
-> Should we replace it with next, too?
+>> Here's a v2 which I think addresses all of the comments. I have to admit
+>> that after writing my last email to Junio, I am wondering whether it
+>> would be sufficient and simpler to let the user specify a static mapping
+>> of tokens (that could just be applied anywhere).
 
-I do not think so.  I think we never had 'rc'.
+Yeah, dumping the random mapping created and telling the user to
+figure out what the tool did is less nice than allowing the user
+to enumerate what tokens are sensitible and need to be replaced.
 
-I think what the above example is demonstrating is this.
+> Both of these techniques _could_ live side-by-side within fast-export,
+> as they have slightly different strengths and weaknesses. But I'd prefer
+> to just go with one (this one) in the name of simplicity, and I strongly
+> suspect nobody will ever ask for the other.
 
-    SYNOPSIS calls the last command line arguments <refs>; they are
-    actually mere patterns (which is how these command line
-    arguments are described in the documentation).  It is *not* an
-    error if no refs match a particular pattern.
-
-And because we have no refs that match the pattern "rc", we only see
-"master" and "pu" (now "seen") from the command.
-
-I see a couple of possible improvements here:
-
- - The "<refs>...::" documentation should explain what kind of
-   pattern match is performed here.  I recall these originally were
-   just tail matches, but the rule might have been made more
-   flexible over time.
-
- - The example should first explain the setting.  The first sample
-   depends on the current (./.) repository having these tags or it
-   would not work (showing the sample upfront and explaining the
-   outcome shown in the sample would work well in this case,
-   e.g. "we can see that in the current repository, there are tags
-   X, Y and Z").  The second one at least needs to say two things:
-   the sample repository does not have a branch called 'rc' and that
-   is why it is not shown, and it is not an error for patterns to
-   produce no match.
+OK.  So should we revert the merge of the other one into 'next'?
+That is easy enough ;-)
 
 Thanks.
 
+>   [01/10]: t9351: derive anonymized tree checks from original repo
+>   [02/10]: fast-export: use xmemdupz() for anonymizing oids
 >
->>  5fe978a5381f1fbad26a80e682ddd2a401966740	refs/heads/master
->> -c781a84b5204fb294c9ccc79f8b3baceeb32c061	refs/heads/pu
->> +c781a84b5204fb294c9ccc79f8b3baceeb32c061	refs/heads/seen
->>  $ git remote add korg http://www.kernel.org/pub/scm/git/git.git
->>  $ git ls-remote --tags korg v\*
->>  d6602ec5194c87b0fc87103ca4d67251c76f233a	refs/tags/v0.99
+>     These first two are actually a bug-fix that I noticed while writing
+>     it.
+>
+>   [03/10]: fast-export: store anonymized oids as hex strings
+>   [04/10]: fast-export: tighten anonymize_mem() interface to handle only strings
+>   [05/10]: fast-export: stop storing lengths in anonymized hashmaps
+>   [06/10]: fast-export: use a flex array to store anonymized entries
+>   [07/10]: fast-export: move global "idents" anonymize hashmap into function
+>   [08/10]: fast-export: add a "data" callback parameter to anonymize_str()
+>
+>     This is all cleanup and prep. More than is strictly necessary for
+>     this series, but it does simplify things and reduce the memory
+>     footprint (only a few megabytes in git.git, but more in larger
+>     repos).
+>
+>   [09/10]: fast-export: allow seeding the anonymized mapping
+>
+>     And then this is the actual feature...
+>
+>   [10/10]: fast-export: anonymize "master" refname
+>
+>     ...which finally lets us drop the special name rule.
+>
+>  Documentation/git-fast-export.txt |  24 +++++
+>  builtin/fast-export.c             | 161 +++++++++++++++++++-----------
+>  t/t9351-fast-export-anonymize.sh  |  54 +++++++---
+>  3 files changed, 167 insertions(+), 72 deletions(-)
