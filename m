@@ -2,144 +2,166 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FD1AC433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 879F2C433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:30:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 325022070E
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:25:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 643222070E
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:30:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nnShigfP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733019AbgFWPZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 11:25:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40208 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732878AbgFWPZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 11:25:09 -0400
-Received: (qmail 11910 invoked by uid 109); 23 Jun 2020 15:25:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Jun 2020 15:25:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17020 invoked by uid 111); 23 Jun 2020 15:25:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Jun 2020 11:25:08 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 23 Jun 2020 11:25:07 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 10/10] fast-export: anonymize "master" refname
-Message-ID: <20200623152507.GJ1435482@coredump.intra.peff.net>
-References: <20200623152436.GA50925@coredump.intra.peff.net>
+        id S1732990AbgFWPag (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 11:30:36 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40116 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1732950AbgFWPag (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Jun 2020 11:30:36 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 98FD160436;
+        Tue, 23 Jun 2020 15:30:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1592926235;
+        bh=jxVVsTIUgp0G3FvPRvJ1nhtScTvdEufGeVeg5YNJTJE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=nnShigfPvXIZUIPVJCje1aIGJ7lZthmYcnHDHkBxCAhNyxhKjXdYt+jnKaGtzI3gq
+         yGs6X935dutEKZpzbCg3kmYT4LLEL5Vo8HBy+iCYDAt0IHsYBikIOFVFGf/UZzNqEM
+         70zsBTp9Wh2FE2fd6gL/XIWQ5d7raqfnyuGO9OsmYe2ChIqORiwPEXl9aQieyKbqTX
+         Y3TDJxIF66kQsk3mhN1Z1k0k078PKGVwTlemWFx29lxJ4YVuP9kUsXUA/GTGk6HklF
+         X8HJ5DO2T3n867Y7b0+HaLTWj6vbF6tQ1ZhHIQaW6ZsIT1qf0C3IAIcfXenyRecpFb
+         tRwuQh6AFXwSYbJzVeEIGFoYni2JAUSn+DSGgH72Dlu5hk73grWHy7Z8myjHl6s/gt
+         B4vvUP1AVWAcgnUrt94DSbyW2e+IRlMJI4ouczp96Br15h8co3tzF5ksxtUVJ2oTCR
+         Z9n4MPuILbPgn+xU985FgQHr+uSAHmUJkN6PgH9qeWxZezqac51
+Date:   Tue, 23 Jun 2020 15:30:30 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Michael Ward <mward@smartsoftwareinc.com>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: Git 2 force commits but Git 1 doesn't
+Message-ID: <20200623151951.GS6531@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Michael Ward <mward@smartsoftwareinc.com>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <dea24348-770c-1228-115d-23153fbecebd@smartsoftwareinc.com>
+ <20200622202122.GO6531@camp.crustytoothpaste.net>
+ <a42d038f-bf14-8f1a-927e-7488796e7710@smartsoftwareinc.com>
+ <20200622204346.GP6531@camp.crustytoothpaste.net>
+ <8ad16219-2426-6127-b41d-bb3007a9b993@smartsoftwareinc.com>
+ <20200622210953.GQ6531@camp.crustytoothpaste.net>
+ <2e43580c-9952-9ccf-6b35-27a4333fb83e@smartsoftwareinc.com>
+ <20200623010519.GR6531@camp.crustytoothpaste.net>
+ <09a7fa54-d7ae-772c-fb36-29dbd27bc626@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="RlgFhasKO3bfRJ5j"
 Content-Disposition: inline
-In-Reply-To: <20200623152436.GA50925@coredump.intra.peff.net>
+In-Reply-To: <09a7fa54-d7ae-772c-fb36-29dbd27bc626@web.de>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Running "fast-export --anonymize" will leave "refs/heads/master"
-untouched in the output, for two reasons:
 
-  - it helped to have some known reference point between the original
-    and anonymized repository
+--RlgFhasKO3bfRJ5j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  - since it's historically the default branch name, it doesn't leak any
-    information
+On 2020-06-23 at 08:59:28, Ren=C3=A9 Scharfe wrote:
+> The following patch helps by avoiding a commit flag collision between
+> http-push.c and commit-reach.c.  I don't know if it causes other
+> collisions, though.
 
-Now that we can ask fast-export to retain particular tokens, we have a
-much better tool for the first one (because it works for any ref, not
-just master).
+Nice catch.
 
-For the second, the notion of "default branch name" is likely to become
-configurable soon, at which point the name _does_ leak information.
-Let's drop this special case in preparation.
+I don't think it collides with other things because the other things
+that overlap are either builtin code (which isn't used in git http-push)
+or upload-pack.c, which would already be having problems before this
+because it overlaps both before and after (and doesn't appear to be used
+in http-push either).  Therefore, I feel confident in saying this
+probably doesn't make anything worse.
 
-Note that we have to adjust the test a bit, since it relied on using the
-name "master" in the anonymized repos. We could just use
---seed-anonymized=master to keep the same output, but then we wouldn't
-know if it works because of our hard-coded master or because of the
-seeding.
+> How could we possibly check that?  Perhaps by having a commit flag
+> register (a global unsigned int) and having functions announce their
+> bits in it.  Colliding announcements would BUG().
 
-So let's flip the test a bit, and confirm that we anonymize "master",
-but keep "other" in the output.
+By my count, we have only 88 individual bits used.  If we moved all of
+the builtin functions plus upload-pack (which shouldn't overlap) to a
+single range, that would account for 53 bits, which would leave us 35
+bits for all the rest of the code.  Since we need at most 27 bits for a
+builtin command, if we used a 64-bit integer, we'd have space for all
+the remaining bits not to overlap, plus bits for the type and flags
+bits.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/fast-export.c            |  7 -------
- t/t9351-fast-export-anonymize.sh | 12 +++++++-----
- 2 files changed, 7 insertions(+), 12 deletions(-)
+Since we'd be doing only bit operations on the flags variable, the
+performance impact on 32-bit systems would be very minimal, although
+we'd allocate an extra 4 bytes for struct object.  I don't know if
+that's a problem.
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index ef82497bbf..7e0e1770cf 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -538,13 +538,6 @@ static const char *anonymize_refname(const char *refname)
- 	static struct strbuf anon = STRBUF_INIT;
- 	int i;
- 
--	/*
--	 * We also leave "master" as a special case, since it does not reveal
--	 * anything interesting.
--	 */
--	if (!strcmp(refname, "refs/heads/master"))
--		return refname;
--
- 	strbuf_reset(&anon);
- 	for (i = 0; i < ARRAY_SIZE(prefixes); i++) {
- 		if (skip_prefix(refname, prefixes[i], &refname)) {
-diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
-index d84eec9bab..6e2041865c 100755
---- a/t/t9351-fast-export-anonymize.sh
-+++ b/t/t9351-fast-export-anonymize.sh
-@@ -22,6 +22,7 @@ test_expect_success 'export anonymized stream' '
- 	git fast-export --anonymize --all \
- 		--seed-anonymized=retain-me \
- 		--seed-anonymized=xyzzy:custom-name \
-+		--seed-anonymized=other \
- 		>stream
- '
- 
-@@ -45,12 +46,12 @@ test_expect_success 'stream omits gitlink oids' '
- 	! grep a000000000000000000 stream
- '
- 
--test_expect_success 'stream allows master as refname' '
--	grep master stream
-+test_expect_success 'stream retains other as refname' '
-+	grep other stream
- '
- 
- test_expect_success 'stream omits other refnames' '
--	! grep other stream &&
-+	! grep master stream &&
- 	! grep mytag stream
- '
- 
-@@ -76,15 +77,16 @@ test_expect_success 'import stream to new repository' '
- test_expect_success 'result has two branches' '
- 	git for-each-ref --format="%(refname)" refs/heads >branches &&
- 	test_line_count = 2 branches &&
--	other_branch=$(grep -v refs/heads/master branches)
-+	other_branch=refs/heads/other &&
-+	main_branch=$(grep -v $other_branch branches)
- '
- 
- test_expect_success 'repo has original shape and timestamps' '
- 	shape () {
- 		git log --format="%m %ct" --left-right --boundary "$@"
- 	} &&
- 	(cd .. && shape master...other) >expect &&
--	shape master...$other_branch >actual &&
-+	shape $main_branch...$other_branch >actual &&
- 	test_cmp expect actual
- '
- 
--- 
-2.27.0.517.gbc32778fa3
+Assuming we don't want to do that right now, may I have your sign-off
+for the following code, Ren=C3=A9, so I can add it to a patch along with my
+test?
+
+> diff --git a/http-push.c b/http-push.c
+> index 822f326599..99adbebdcf 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -70,10 +70,10 @@ enum XML_Status {
+>  #define LOCK_REFRESH 30
+>=20
+>  /* Remember to update object flag allocation in object.h */
+> -#define LOCAL    (1u<<16)
+> -#define REMOTE   (1u<<17)
+> -#define FETCHING (1u<<18)
+> -#define PUSHING  (1u<<19)
+> +#define LOCAL    (1u<<11)
+> +#define REMOTE   (1u<<12)
+> +#define FETCHING (1u<<13)
+> +#define PUSHING  (1u<<14)
+>=20
+>  /* We allow "recursive" symbolic refs. Only within reason, though */
+>  #define MAXDEPTH 5
+> diff --git a/object.h b/object.h
+> index b22328b838..a496d2e4e1 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -67,7 +67,7 @@ struct object_array {
+>   * builtin/blame.c:                        12-13
+>   * bisect.c:                                        16
+>   * bundle.c:                                        16
+> - * http-push.c:                                     16-----19
+> + * http-push.c:                          11-----14
+>   * commit-graph.c:                                15
+>   * commit-reach.c:                                  16-----19
+>   * sha1-name.c:                                              20
+>=20
+
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--RlgFhasKO3bfRJ5j
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXvIgFQAKCRB8DEliiIei
+gRcGAP9ZVoNPaP7iyX04ahCI9qc1jY5mCX4jvWOBtsTFmJGmaAD/c3NqUz6onME0
+2rGoFuSjH6ttPfqkzEuKVt/tgR0Avg8=
+=4wLl
+-----END PGP SIGNATURE-----
+
+--RlgFhasKO3bfRJ5j--
