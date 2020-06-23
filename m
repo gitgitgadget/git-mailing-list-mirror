@@ -2,172 +2,102 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B582DC433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BFACC433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:22:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9130520780
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:17:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 370232070E
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:22:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Z58SgFMh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5M8/YDB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732946AbgFWPRQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 11:17:16 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41297 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732902AbgFWPRQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 11:17:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592925432;
-        bh=caxygGslm0uzTSEwaJZF3uyJN4vf0EYBYwLwD/48Apk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Z58SgFMh2CaO0fJSSgnC1NhifZjpAls0ber1J76Meb5ZcRZSADBVAId4bD5qScP0C
-         sauvQzk67YK2Y0Lo8qkEvD8wdCovRsKAVIP67wWs0PcH2FByXpFBXCw6KAI7G6UIy0
-         9hUo3xllwah6vgqT08K/WzvyZwdH9Lj5YnM7fcuo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mirna-1jBMyq1AUm-00ewFI; Tue, 23
- Jun 2020 17:17:12 +0200
-Date:   Tue, 23 Jun 2020 17:17:12 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] diff-files: treat "i-t-a" files as "not-in-index"
-In-Reply-To: <20200620163845.871-1-shrinidhi.kaushik@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2006231714450.54@tvgsbejvaqbjf.bet>
-References: <20200611161640.52156-1-shrinidhi.kaushik@gmail.com> <20200620163845.871-1-shrinidhi.kaushik@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732891AbgFWPWM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 11:22:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732781AbgFWPWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 11:22:12 -0400
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C1BC061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 08:22:10 -0700 (PDT)
+Received: by mail-qv1-xf43.google.com with SMTP id e2so9818259qvw.7
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 08:22:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4RX6jXMi//IxqIqXLHg1gMBD1cgMps9RYMQdDtgw1a4=;
+        b=V5M8/YDBBNmv+Cx61IiKgeEHWOoppHSTItYYod3gRSbCYcplIkBxdi08gzujONGSt7
+         SuucBDOmGSC8zRqs91a7WQ98X348E+5/cTNbMMtnUyP0SoDgn+SqkNrvh4xGOAuxb80y
+         f+pIdcz2qDDvpti3Enw+0HIzHPSjiTKgTwGIqysCb7Lu2X6HfSFYX+CPW8Tl0h/KsIaq
+         C76hHsbQyDQLecxjzTvl33p1eTu4/6ijtm+ukvgO20q0BbHKJEtoAlKYuU16oKBlsq3M
+         B4H178rey9CqjeCDkuvPTiTkanxFDeFvgaexFEW2PQXLKtOQOuffuOuUwbd9IGHlLc/e
+         HtRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4RX6jXMi//IxqIqXLHg1gMBD1cgMps9RYMQdDtgw1a4=;
+        b=HCW04o/yrKC0a5GnVaDUNjyZ0EUsJQVgJyXREKYSujro1jY1FHS9ScYOxz3oCfHtM9
+         rNS5qVvROk/IebCWZDJiav+o341TRtg0WXYcgAoO+iGg2jlWEhfD9iERuwqGjca2IW8V
+         ibsvx+f6HOhvzSoc9Lc9RxA4zyUyrWYiTO0e/UM5qNGoIfk8sgkZ+hJDLpG+VH4spIzi
+         cG0wIhzu9olE9aq9mBxpeYxIk6FqDM8/9VR5fDXMu44g1YqMOciBs8rnrnQ/1Ebre17U
+         cQMviGz4WXjTTBSpMnfkwEyqWjoqc3DuGvO7eZoMP81NPZMBtoQ2R03OSQYEzVX5IE8+
+         caFg==
+X-Gm-Message-State: AOAM533FGI4VB+aTS6gWI92nCb059fk6x+nPUdRSnFDmSkt9Vq+1H0OJ
+        hs1kbTwffFUYdhF0Xw9HI0Q=
+X-Google-Smtp-Source: ABdhPJzx3euhszf02bkYApjy+nqP/9sGSbhgc1xJ5MVQOBa4oMvQFhP26P2ExTgr3y+j69xOD15+gA==
+X-Received: by 2002:a0c:8482:: with SMTP id m2mr27297878qva.65.1592925729814;
+        Tue, 23 Jun 2020 08:22:09 -0700 (PDT)
+Received: from generichostname (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
+        by smtp.gmail.com with ESMTPSA id k14sm846513qtm.38.2020.06.23.08.22.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2020 08:22:09 -0700 (PDT)
+Date:   Tue, 23 Jun 2020 11:22:07 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Doc: reference 'seen' instead of 'pu' in meta docs
+Message-ID: <20200623152207.GA2027104@generichostname>
+References: <e250f1bb100aca94c914f1b2d38a3849c2566aea.1592909867.git.liu.denton@gmail.com>
+ <nycvar.QRO.7.76.6.2006231708300.54@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:V/tnJecgbH2G4jujTUMowTN7QOlEqkgJUxpAo+NxxnHhX1lSizu
- bjg+sYjcbtynH/yJU9Y5Jb5Fk2ZNNSpl55uNLgNEoN8Hj4mSqwMEqjXJnGHoNGPwJrBQsPm
- shW+S3xk2HhJy0pwyrY2sO68MYNtTaBtAykbIpmAUq3eVW3xU2lINmFc6WM9f67Sb8KvFnC
- Lh3Et/SZgsC1v+wL3mwhA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oe6OSFmH3oo=:AJqWMqdF9GLnBYhq3P2/B7
- p22pl4TVuUwM15Y/yl+Vm7Yd22vV0LF01KteypYTpSTWdKoJ+OoQTdkIO6ifZIbrcEJeKoFc+
- 80lGOxRISWv6Gbb5vvi9f2KW4Nwe3u6LeEoTZN0z4W3yp944NVmmmU8gej2afs2+974p1XFLc
- WRy9iD9oB/W7RlvFf5BF1EY3SDb5pkmuK1iepbTCi0zFoCOvmGT2uDJ86M+QpH+jntb2usuNp
- 5fPsTGzwlW7zBq5vFh2dcLBFISK0xSaqKlhbaeabqZ97qgyrKQtPn4UK08kxz3VXwxymJAZdr
- Bi/lowBk5GccRB3HO+i1IAPD1Znzp78dHhRPZIYEJEPAVPeNCZM9HupVmIPexeZXz8hrgjibA
- NbUa37sA6FN2ezt7Ak/BaCK/7nElWRsIBMtDIsCartnUUIQXjRgL0hH0HVK8M0wl+gliFWEJ9
- gTfk4V796Vj92WPh6s8ZOKmVga0KAzIZLpcKtrByTlzgUgQSMwfQF4vGP9ye3JAPAiwEkXQgb
- zIzaP8jDOsMW4HRF/me48o89XEjljrW1+IaUwnqIyDDhHF1/XYv1RlQEUjihDzM3RTOyZEN1D
- 6impP99+toW8SxLh0eAW+Z7ePFREf7LorAf2XNEJMeZNWsSvp9MN/7Agg9HueQEg9qxb28maN
- NMqN1PaOTQq/ejsXl/G6hRVNzCSxc2I2DUK3pQ5Abo+KwNJQvW97qVLsp5LM4vrTi5o1Eukpj
- R2zuDVCF97bVrCKlSgi8aKFFcxU5r7XyEies4b72rlIEMMBmOmCqmZ2Vmc4Cy2U8pC+KUcxoB
- n85DklKhyJRx6z63aMOGAJrLIucl75RK8eAPBkxcYVMBSddFTyOf16kddpQV7vIeYBnxVy9Td
- 6I8rBcoC16gT/G3r0Iv0o5kZjPAkzSMM2UJRHnFhwqp7XnPMnQgiDSZFXlv0Z20ag4rTYTelv
- icWhpCTgE484zl0k1Mc/N9VmhWunctN277u7fLnZcaEb3/AiT3691zDvsdH3xLPYb/NoZba50
- uL6yUtxq6PIVMuq3neeZvSBp/SeQr8J/rbY0zpC/XJlq+xWRiSmtK7oGPMEcI5GdfqM8rqWIt
- q/Ls+7UD5d3AkBhe0khGNsz0/wI5F5+Ks0/vtTdYSvIWJHYhmC4zVg7YpTbIaGRiNjNONZDTH
- EXimi5B4cfGskbq/HDNmEpGk2x4le1duFcA+fKqwfFaPKU012PimK56FKVbRy6gGJ4imWDQc3
- /cb8OuZfAZK6t291o
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2006231708300.54@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Srinidhi,
+Hi Dscho,
 
-On Sat, 20 Jun 2020, Srinidhi Kaushik wrote:
+On Tue, Jun 23, 2020 at 05:09:12PM +0200, Johannes Schindelin wrote:
+> Hi Denton,
+> 
+> On Tue, 23 Jun 2020, Denton Liu wrote:
+> 
+> > As of 2020-06-22, the name of git.git's integration branch has been
+> > renamed from 'pu' to 'seen'.[0] Update git.git-specific documentation to
+> > refer to the new branch name. In particular, update documents that refer
+> > to the workflow and also "how to contribute"-type docs.
+> >
+> > There still remains other uses of 'pu' in the docs. In these cases, it
+> > is generally used as an example and there isn't much value in updating
+> > these examples since they aren't git.git specific.
+> >
+> > [0]: https://lore.kernel.org/git/xmqqimfid2l1.fsf@gitster.c.googlers.com/
+> 
+> Whoops, I only saw this now. In the meantime I submitted what I hope is a
+> more complete version of this patch.
 
-> diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-> index 5bbe8dcce4..8a5d55054f 100755
-> --- a/t/t2203-add-intent.sh
-> +++ b/t/t2203-add-intent.sh
-> @@ -232,17 +232,54 @@ test_expect_success 'double rename detection in st=
-atus' '
->  	)
->  '
->
-> -test_expect_success 'diff-files/diff-cached shows ita as new/not-new fi=
-les' '
-> +test_expect_success 'i-t-a files shown as new for "diff", "diff-files";=
- not-new for "diff --cached"' '
->  	git reset --hard &&
-> -	echo new >new-ita &&
-> -	git add -N new-ita &&
-> +	: >empty &&
-> +	content=3D"foo" &&
-> +	echo "$content" >not-empty &&
-> +
-> +	hash_e=3D$(git hash-object empty) &&
-> +	hash_n=3D$(git hash-object not-empty) &&
-> +	hash_t=3D$(git hash-object -t tree /dev/null) &&
+ No worries. I was on the fence about changing any non-meta
+ documentation but, after reading your justification for the patches, it
+ makes sense to me. Let's supersede my version with yours. 
 
-So this is the hash of the empty tree object, and...
-
-> +
-> +	cat >expect.diff_p <<-EOF &&
-> +	diff --git a/empty b/empty
-> +	new file mode 100644
-> +	index 0000000..$(git rev-parse --short $hash_e)
-> +	diff --git a/not-empty b/not-empty
-> +	new file mode 100644
-> +	index 0000000..$(git rev-parse --short $hash_n)
-> +	--- /dev/null
-> +	+++ b/not-empty
-> +	@@ -0,0 +1 @@
-> +	+$content
-> +	EOF
-> +	cat >expect.diff_s <<-EOF &&
-> +	 create mode 100644 empty
-> +	 create mode 100644 not-empty
-> +	EOF
-> +	cat >expect.diff_a <<-EOF &&
-> +	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t"=
-)empty
-> +	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t"=
-)not-empty
-
-... here we expect `git diff --raw` to claim that the contents of `empty`
-and of `non-empty` are actually the empty tree.
-
-The underlying problem is that some time ago, the (already incorrect)
-empty blob constant was replaced by the empty tree constant, by mistake. I
-contributed a patch series to fix that, and Cc:ed you you in v2 that I
-sent out earlier today.
-
-It would be helpful if you reviewed it carefully, as you are already
-familiar with the code in question.
-
-Thank you,
-Johannes
-
-> +	EOF
-> +
-> +	git add -N empty not-empty &&
-> +
-> +	git diff >actual &&
-> +	test_cmp expect.diff_p actual &&
-> +
->  	git diff --summary >actual &&
-> -	echo " create mode 100644 new-ita" >expected &&
-> -	test_cmp expected actual &&
-> -	git diff --cached --summary >actual2 &&
-> -	test_must_be_empty actual2
-> -'
-> +	test_cmp expect.diff_s actual &&
-> +
-> +	git diff-files -p >actual &&
-> +	test_cmp expect.diff_p actual &&
->
-> +	git diff-files --abbrev >actual &&
-> +	test_cmp expect.diff_a actual &&
-> +
-> +	git diff --cached >actual &&
-> +	test_must_be_empty actual
-> +'
->
->  test_expect_success '"diff HEAD" includes ita as new files' '
->  	git reset --hard &&
-> --
-> 2.27.0
->
->
+ -Denton
