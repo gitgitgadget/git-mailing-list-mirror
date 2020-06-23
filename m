@@ -4,62 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3363C433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 012A6C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 17:08:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F61A20781
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:59:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC8CA20780
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 17:08:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUJ0kVRo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EkwabsFQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732526AbgFWQ7N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 12:59:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49484 "EHLO
+        id S1732725AbgFWRIo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 13:08:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728916AbgFWQ7N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 12:59:13 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA172C061573
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 09:59:12 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id rk21so5978823ejb.2
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 09:59:12 -0700 (PDT)
+        with ESMTP id S1728916AbgFWRIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 13:08:44 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB1FDC061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 10:08:43 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id p82so8703839oif.1
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 10:08:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=3QX9mo+70ZMHRnLXmed74ugrmrjyOxpieeTyq9qOLE4=;
-        b=eUJ0kVRo3GudLt8bMo3TZYSg5g+NYEbXFnVhPW4JcojWSpiS8B3VrwIpXfUufQ2wdg
-         vRBgz8NjnafNuZHSEGZh+DSVQqtt1HBx3a/yHm4FkaVObGfuAPTv48gsr6dbW7WWk/ty
-         x/dh1oxwB/oIw0wQHs/ffqQUks3knxTGPtknGGY0t6W2lH1M2iAYaVbWB2OesEdNcTVE
-         aHtxRmYFS0Czi7m6y/yx04wrrSdHjjdLeOzKucyONK8jh3oc3io6ODJ4foGwjgSs0/6i
-         Uo8w3DuEi0TpiayKFtN30Y1r0dpQ5C2qBCHUuRhV+WBbWu0e5nV0gTEDjtf1Qg4NLqBz
-         UvvA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RlVA3PBJJVBj4kz8zG3VxgGcVtDBZYSsIEDe+ImVfvY=;
+        b=EkwabsFQq83riuCYBVeP60ICgqBvuBL/5V4f22TQq0QwPibGzqucSnVVh9ee3IjwMv
+         02ymPcVKlFrquM2roT2z63OZfCAHHBDzj7znJxj/7ZSzRIugHN9lcI2etUnp47YD8vQ4
+         TDZqMGhBWqQa7Mja5vzqWr1h85Qfc5AvKhclXTx0y0i95Ja3piZzeZ22Dsf/iYN7BZr1
+         ydqgKV78KSYTuB/WyN1EOk280pPQXnmFvQ8uAHspIdjB6llA57ceNRdSg3xUH2GlGfU5
+         fOH04bgqIw6H3Z1B6/xqY0J2M3obfZ+Fio15F4/uRK9jAixdhTM3c/ATGShdJbGVEWbo
+         tYKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=3QX9mo+70ZMHRnLXmed74ugrmrjyOxpieeTyq9qOLE4=;
-        b=lbsuTzhloxKPcN2aBJ/KSWQgss/MkbrO+L2FiM94kuLyEmHD8xGV9tITmCInkytxXO
-         sAiDTt1G6p5svkSnXY82BjzS1meFFhJj1Q7XgvKPN6w7W0HI3fG0bbBkzIRkxWUVKLrm
-         xdIGOv/IeFD5uW40HJ75aFordkwuHIughsGwZlGz+ISUrqhjHKK/YCPfUmhYoeaXJH34
-         dVT2PWINuhsqN3gEcyYq3Q0Kqe5ldfFMjqFybVJ/t5iDbJpduvuMbaUtOA3PjLpdN+J4
-         9lok1XhKGrGDAGqHnGNFjxGtpm7im/eg917/OHao4rmv3Ci4xzILWC8ZeRVcctX0X8k2
-         GINA==
-X-Gm-Message-State: AOAM531OGmfPjyC6tUVprXk/ETS1dqwN0jsKUeyiNpeBVD2W2vgDPBEx
-        L2gRHhkq6li0+xeKkKzGU9ftiDtAdWnL4hQei98YbV8m1IM=
-X-Google-Smtp-Source: ABdhPJyuFPQcUR49Q2EwwotFoad4UUNnd4qhq157JTnl1tA6uozycF92oW1kzqLQIRewfvG2QVkDWWhZndNbcrFm3Rc=
-X-Received: by 2002:a17:906:b0a:: with SMTP id u10mr22218212ejg.211.1592931550705;
- Tue, 23 Jun 2020 09:59:10 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RlVA3PBJJVBj4kz8zG3VxgGcVtDBZYSsIEDe+ImVfvY=;
+        b=Q0N+uEaBrKRPihpQX0ffFpA7NJKj+oORHQOyvswzbDbYea33rSkXQ2sFdhwS6NoV5N
+         w/+BdFDk55uY5Y9WqWLA4EDrSStw6rS/aRVrBe6fkvUKcAJhK9SZBih0mNsIgPB8DLU0
+         VunsYVwSoH7zF/AV09FowmEc3aS+iWhqva2aDvRKWQ4220c+f5qh/ry/YGwHRZ5A1N9g
+         D9Kw8UPraiV9U5uXBdqHQHrelUS7GoLBPWesMLSxd70RO9RAEecuFkdEnpvPvcR4yPyW
+         gWIE7p65Z/QuMT/aGU6koBwGUkDgWRNxSe/b3A3AXPNAipvEndB5fHXrhaqWIpeMORVQ
+         U3Bg==
+X-Gm-Message-State: AOAM530xiK6d2B4xtDQ6je/6zPEfbgt5uC6jaxjwbthnV+WrVSCHs6Yu
+        A+AU/6bSuLYO75gwL/Okl9Fg2chkLp95IEJDc+U=
+X-Google-Smtp-Source: ABdhPJycKFXiPN1NzePDal4xQgU113Jw9Nn/MHOEnAtBFpNCVp1CZ8tOv6fRxz9sLyo9yk+y/mx8Ufn2F7Iv8I7t4FQ=
+X-Received: by 2002:aca:6287:: with SMTP id w129mr17737128oib.167.1592932122231;
+ Tue, 23 Jun 2020 10:08:42 -0700 (PDT)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 23 Jun 2020 18:58:59 +0200
-Message-ID: <CAP8UFD1KfEps4hS8eadBK-E4e5WyWSh93XivRabZAVhiCuQimQ@mail.gmail.com>
-Subject: [ANNOUNCE] Regarding Git and Branch Naming
-To:     git <git@vger.kernel.org>
-Cc:     Git at SFC <git@sfconservancy.org>
+References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
+ <20200622194122.GN6531@camp.crustytoothpaste.net> <871rm6x86y.fsf@osv.gnss.ru>
+In-Reply-To: <871rm6x86y.fsf@osv.gnss.ru>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 23 Jun 2020 10:08:30 -0700
+Message-ID: <CABPp-BHa=jppGtoDiTz_NCXrd2zhTfALb_UrQjcF-VDcv+vuNA@mail.gmail.com>
+Subject: Re: Request for adding a simple mechanism to exclude files from Git
+ merge operation
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Tiran Meltser <Tiran.Meltser@mavenir.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Amir Yosef <Amir.Yosef@mavenir.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -67,74 +74,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We at Git PLC [*1*] (who represents the project to our umbrella
-organization, Software Freedom Conservancy) drafted a statement on
-the subject matter with the Conservancy and it now is posted at the
-conservancy's site at [*2*].  A copy of it is attached at the end of
-this message.
+On Tue, Jun 23, 2020 at 5:47 AM Sergey Organov <sorganov@gmail.com> wrote:
+>
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+> > On 2020-06-20 at 18:21:40, Tiran Meltser wrote:
+> >> Hi,
+> >> This topic is quite common in various use cases (e.g. production
+> >> configuration vs. staging one) and there are quite a few talks about
+> >> it in the web.
+> >> Nevertheless, there is no specific solution to this problem, only
+> >> partial workarounds (including the famous merge driver =E2=80=9Cours=
+=E2=80=9D).
+> >
+> > In general, this is a hard problem.  When you perform a merge, you're
+> > asking to incorporate changes from both heads against a common merge
+> > base.  What does it mean when you want to merge two branches together
+> > but not make any changes?  Which version do you want, ours or theirs?
+>
+> I believe we basically need support to apply different merge strategies
+> to different files.
+>
+> I had similar problem a few times when I merged a long-standing branch
+> and, after I saw the result of merge, I was basically satisfied, except
+> I needed to revert a few sub-directories of the project (that gave huge
+> number of conflicts), to their original state, either of my current
+> branch, or of the branch being merged, depending on particular case. You
+> see, I knew exactly what I needed, yet I was not able to achieve my goal
+> without resorting to nasty kludges.
+>
+> > Normally merges are symmetric, so if you want non-symmetric behavior,
+> > you have to define what it's supposed to be.
+>
+> Yes, I'm ready to define what it's supposed to be. The problem is that
+> "git merge" won't let me, due to lack of support to apply different
+> merge strategies to different files.
+>
+> As I see it, first step of improvements could be to support
+>
+>   git merge -- <files>
+>
+> where selected strategy applies only to <files>, and the rest of files
+> are kept intact (effectively applying "ours" strategy to them), along
+> with
+>
+>   git merge --exclude=3D<files>
+>
+> , to be able to exclude specific files (apply "ours" only to them)
+> rather than include.
+>
+> [ As a side-note, please notice that after such changes, the "ours"
+> strategy could be deprecated (not that I think it should), as either:
+>
+>    git merge <branch> --
+>
+> or
+>
+>    git merge --exclude=3D. <branch>
+>
+> would do the trick. ]
+>
+> The next step would then be to support
+>
+>   git merge --force -- <files>
+>
+> that would force to re-merge <files> with given strategy no matter what
+> their current status in the index is.
+>
+> Even though such support would be enough for my specific use-case, it
+> doesn't provide suitable way to configure the default behavior. As a
+> more generic solution, a new syntax for "git merge" to specify what
+> merge strategy to apply to what files could be designed, and then
+> ability to put that syntax into a file for "git merge" to pick would
+> solve the problem of quasi-static configuration problem. Alternatively,
+> even more generic .gitignore way of doing things apparently could be
+> re-used to some degree by adding support for .gitmerge files.
 
-It is important that discussions and decisions about what changes we
-are going to make to the code happen on this list, just like any
-other changes.
+I think you'd have an uphill battle to convince me that this isn't
+net-negative value:
+  * You can just do "git merge --no-commit ...; git restore
+[--source=3D<side>] -- <pathspec>" to do what you're talking about
+above.  I don't see the need to add extra functionality to merge,
+especially not functionality that duplicates restore's functionality.
+  * The "ours" vs. "theirs" wording means you're going to have
+intrinsic problems with rebases.  Several users will like your choice
+of what "ours" means, the other half will complain that you've got it
+all wrong.  I think you need to let the users decide on a case-by-case
+basis, and we have a handy "git restore" command for letting them do
+that already.
+  * The pathspec limiting is going to be a bug factory for renaming
+handling.  (The simplest form of which is just renaming a special path
+to a non-special path or vice-versa and modifying both sides of
+history.)  Rename handling can already get some pretty hairy corner
+cases without dumping more in the mix.  I'd rather have users decide
+what to do with paths that switched from being one of the special
+"ours" paths to being a normal 3-way-conflict marker path.  Luckily,
+we already have a command that users can use to do this: git restore.
+  * I've run into "branch-specific" files in the wild and even
+supported repositories that used them for years.  In my opinion, they
+are almost always nasty code smells that are artifacts from
+CVS/SVN-like thinking.  Although I wanted to stamp them out
+immediately, there was opposition to it.  However, over time, people
+removed those branch-specific files from the repository (and it wasn't
+just by me or at my prodding either; many were cleaned away by others
+without my involvement as other folks just found better ways to handle
+things over time).  Giving special support to bad practices will just
+enshrine them, which I'd rather avoid.
 
-To that end, the patch series posted by Johannes Schindelin earlier
-this month [*3*] to allow users to give a name of their choice to
-the first branch "git init" creates and to configure the default for
-that purpose seems like an obviously good starting point.  Hopefully
-the series can be polished and included in the 2.28 release.
+If someone wants to spend their time here, I can't stop them.  Just be
+aware that personally, I think it'd be a bad idea to make any
+merge-recursive or merge-ort changes to support this kind of thing.
+(Alternatively, if you're still convinced this is a good idea, you can
+consider this email a heads up about potential problem areas that you
+need to address and areas where you'll need to craft some good
+arguments to win over those who are skeptical.)
 
-But it is just a starting point.  We need to keep the discussion
-moving and reach a consensus on remaining issues, including
-
- - whether to change the default used as the name of the first
-   branch created in a new repository away from 'master'?
-
- - if we were to change it, what should we change it to?
-
-There may be more things that need to be decided.  Please be
-respectful to each other and keep the discussion constructive
-in the coming weeks.
-
-Thanks.
-
-[Footnotes]
-
-*1* The current members of Git PLC are:
-
-  - =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-  - Christian Couder <christian.couder@gmail.com>
-  - Jeff King <peff@peff.net>
-  - Junio C Hamano <gitster@pobox.com>
-
-*2* https://sfconservancy.org/news/2020/jun/23/gitbranchname/
-
-*3* https://lore.kernel.org/git/pull.656.git.1591823971.gitgitgadget@gmail.=
-com/
-
--- >8 --
-
-Existing versions of Git are capable of working with any branch name;
-there's nothing special about =E2=80=98master=E2=80=99 except that it has h=
-istorically
-been the name used for the first branch when creating a new repository
-from scratch (with the git init command). Thus many projects use it to
-represent the primary line of development. We support and encourage
-projects to switch to branch names that are meaningful and inclusive,
-and we'll be adding features to Git to make it even easier to use a
-different default for new projects.
-
-As a first step, Git will add a mechanism to allow users to specify the
-default used as the name of the first branch when creating a new
-repository. Also, consistent with its project governance, Git has
-undertaken a community process to explore changing the name of the
-first branch created automatically for new repositories away from
-'master'. That change is currently being discussed on our mailing list.
-As always, changes in Git's core will minimize disruption for Git's
-users and will include appropriate deprecation periods.
-
-Meanwhile, Git as a project remains engaged in encouraging
-participation of underrepresented groups in the development of Git
-itself. Git continues their participation, which began four years ago,
-in Conservancy's Outreachy initiative. Conservancy also continues to
-explore and support other initiatives that can also assist in this
-area.
+Hope that helps,
+Elijah
