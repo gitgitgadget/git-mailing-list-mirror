@@ -2,37 +2,37 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3001DC433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C89D2C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:22:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AB972084D
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:20:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A00CD208C9
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 19:22:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="hTit3Jr+"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="d5O0Q0I1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733270AbgFWTUM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 15:20:12 -0400
-Received: from mout.gmx.net ([212.227.15.19]:32939 "EHLO mout.gmx.net"
+        id S2387410AbgFWTWQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 15:22:16 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54671 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733220AbgFWTUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 15:20:11 -0400
+        id S1733220AbgFWTWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 15:22:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592939997;
-        bh=ASMZ7i62jF/GJM6gcUAs7IqBlZicejzwDhwqLoG9g6Q=;
+        s=badeba3b8450; t=1592940123;
+        bh=hvSLDhI6Gy/lWpCv/iRW4q5Ms7wBAqpxzyEW9qPKt/s=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hTit3Jr+xo1yJo1dZXKCdLs0TPjW0HLjhblzIicfKpxAsJxc5yatzske+wH5SIsMN
-         G+UBnxnDT0kuN9pmXpgWKY/P4QtaxoNbC2V53/HHJ9qm8vzl8a47Qu9ebydtNiA+W5
-         7yNuVBMdS/CBRKd/ihmPZoVA4BWALX6JxF2iHnRg=
+        b=d5O0Q0I16asNMNsxkF5SJ5JxDGC+5IC7A6YkB+odP+X+UYTmUUuulEhAdEQD/g2Vc
+         K7bDDZmRk2N0ywr6hUdnj6I0rxND3kFQLGlwZjflvFVPMMIwg7mHdXjYTTjqzhpXVX
+         Sx9JCqjscLTeaSNPC2okbb5evHpfkntGd/xFgUSM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWAOW-1jKcjP0mVu-00XZMz; Tue, 23
- Jun 2020 21:19:57 +0200
-Date:   Tue, 23 Jun 2020 21:19:56 +0200 (CEST)
+Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUosN-1jNem232Yr-00QhZA; Tue, 23
+ Jun 2020 21:22:03 +0200
+Date:   Tue, 23 Jun 2020 21:22:02 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
@@ -45,37 +45,37 @@ cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 02/12] fmt-merge-msg: introduce a way to override the
- main branch name
-In-Reply-To: <xmqqr1ugw97e.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2006232118220.54@tvgsbejvaqbjf.bet>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <f4d547391537e5c3b0b4a07adb41b6aa56541fc3.1592225416.git.gitgitgadget@gmail.com> <xmqqr1ugw97e.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH v2 05/12] fast-export: handle overridden main branch
+ names correctly
+In-Reply-To: <xmqqmu54w91n.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2006232120221.54@tvgsbejvaqbjf.bet>
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <a3be4f39aa240e614a2e12756e1ea864c35137a2.1592225416.git.gitgitgadget@gmail.com> <xmqqmu54w91n.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UT4jnjxwc5uetQpVl21zzJV2IzKfE0KJt8m0Lu1m1mLp9SvjY5U
- ckOOz9b/HYtVN8x5gaKoB9cUNDlAJQAcfz3E0gZ+SwHeFQCLrf+9bInVRU10BV1xEJSLQ09
- X2PbEq6iqtbs89Q7pO+GoS5RzNWHZKrNrFZVPUwC7iSoGL1tfDZRMDfOU1IDxhoG/1wxfrG
- MXwlLdlcBRzDiVMLX7hyg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:A5zxzwIlQJg=:UPqEWFdDjqMQlcw7EjvaSg
- PkO8ul6WQVY6608ASVbLyaN0fjONwdzDOYRye0/AIfhSihAcL+IwMYykwHeuCF1b6BIc3ZwBr
- qOYobaO6ZAPhgc998YpgEgt5cokaKq0wmAVPj9em/hgSQAtKeXGFeGxj/smVVuBudjBU7KK57
- f9bxCflBXiNG35Jb2rsZVfeYL+UFzA4vW07iFVhCwmuBsnOOANC2D3vtKXxoKXv837bIlvcOi
- nAZevlsOmEtBmfnXqq0LLRgP7qGOQQN3Y9EzH8/GEIu+ki1/Sgo3GfDzzTJuAA+qJ70S+ToGi
- 4uXbK0HO46BahCH73sgN4Tym9U+MfQ/cw02bxgevcBr3AnKikBu8WExoVWfsGfZAJKyF2jw5O
- gK8CgjmCFzJrtADtCMBA+ckJYyVHKJmOtia+rDm1RxNRs91Q+rXa6eRxiQ+kJ6R2n/Tw5602R
- 9s1U0JhAMu+ZA3xHF9W+erFA1aewomN6QcZgpRiNEhEgA2lBGDhWOehr+6XEGquFeQzyz2jjR
- Y7jrnWT7uIXtXL1SZX9LUAZZn2t+RJSbmj2e/Z1Jh6tk9sRTzOUilcyX8bU15+f9n1Sg0W5pr
- FUK5AvpD5JUURUZIDUx0ocu5PP2sQfh4DUJFNf0ARdh5Y81jEsDAFY5wb7824pzoQ5MxQy6UK
- dBEVhQSPbHlHAh8r+FX8I0qiHs0CKfONu9Cn/96wJN/C9xIAM6apNUuiL1KfOopca5SUzr6BM
- EjTQBJjv0U/zrB44e/oar1tL1lJJkriaLpFLehGaZnUdMQSH+/yjgq3PRy3mOvCf/0JRFZko0
- 98Y+lH1/2uNnyCRbPQVmMfVzM/i1wXnakw/o9zQjDhvLMbNiLENA3Dp8Q1DIEJxGrsshMO7C4
- RHrhMZ9HvRsfj5EY3dOPLKiO7R75oPMwmukZ8lt/OS+s57RFc6lk/hSIpGj4qjMrlvln3Kw0V
- W0eOcGTizg5RBT8FJs9bekAe6c4bPaiBlxBDLjE+RhAA/MSBijFEK3jweFmSW9tTaIKZEx/if
- RA/RFAX1D3ew0NXqUr0V5pRTj/KYYQeeqotYVzi8q42/6J+3627f68Nr8HgrQNJ6yygtt2PeU
- pfH3unSx3F38bSABGxU43ALOY7IrSYvAmGabPXVgqLNMXQzwLv8Ab+8cIXPgPGnt7i9nH5SoR
- Be3c9HuwZXqOzl11hpKKa4Pq1ck55X4jiW6sXqH/oIGB+6A2VmdBmWpPcATjB4UMCES0CPvr8
- wJ7Y3j3rtlO+RIWtF35AdSuo0EQBuBFLM6x0LoA==
+X-Provags-ID: V03:K1:HSEEiuEsZXYZCavuDkBEPBAVSVirHCe4dRzT2Bpri4nkvd2b7S3
+ 8xjIiCGHTeJHJhazqONRDj4k+VOAj8q5l5HQZvsn3SgfwKu891poa5ZGZYYJmAYBkkqYr1b
+ 7zMPMIN5RUjf2tI3aW3t/QLJ7yy7mHHMWoPE6+hWwTIKm5XrP+/k+vFnQoHNTtsQ0OLyhrW
+ JzPTxbzcuUSJz6ytrvoUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DtD3CmieaoM=:zf+OqVMU7j1OrjxlR3to8a
+ u8wkRS9C3WSO906hK+XcQ2MzyDZIswP62h8BFiAp3kFQ95tPCGGT7Od/AOJLJ7W3otGYGe7C/
+ Ywjm38wq/qlkw+R9kVgnTUjXitwGIgD4/J9oHIrlLQTqsRk7C4pRdg66BB8BK2fBsFU+idQIF
+ KIXNUnSEfc9sghx+KN0NUT9Nw6i2ZIeohr8V0QK12PnHgQA2XmlpPV62yJs03x8muQZD4pB/V
+ VmdI8kqnlWeE72ugvCXqaPK+R5btRILL3RcoRVmpBBOp5VMq8a1Re/mM7O8HLskCnb9FhkSmi
+ zzfHzHBw0RQ7v8b+gTr+FYg6mDhi6Q/hutGMW3MTcSFi9hy3R0DPniivgjZI5Fuwqr4+Yl8HT
+ uOYS/5B53g47+ef3WV5X/ctQy6REeYjrfjdnXbspItTwq/NU6ADYJg8as4LPF0O/Hn+6X0G3w
+ ZJ1Lea1qhOAhhGJ1MOgiegwNfTwkU+YnWwCcJOv6gOEu3CRCY+KOGeCe4fCspvv2EoLHG+wx2
+ +DzpRhiYGLdyhVkIUPt1fXZJxIMRIiNuiBjy5kjkmpEEHSfG1R2FUkkWu0CYF0lnta2gUNc1D
+ kLeAiaQtks53YQZbhnjRlOy6ptQ+1TjT7XEVwgKKFcPJF91jPVnb1H2n0uS+xjoHoF3QktefF
+ gRqy4LM88SqDMMPLcKloPA0nKcEjtbTSjHry5+2Bdf7Kgr/6ZRCJaHIRs5gt5g9keopYIxTTa
+ egXX6/DniPF3p2AkXzdUxVhyH+ssYiM5eFhsHJwIlqq20sVurtk46rubTbsbgpU277iiLR+Wd
+ hkYW26BSmZ793FyJyE+w0oAEgCQfU5L4oZWng6KTdFwZ1XA20ReyBcLsojWcN7OrvCIroVUct
+ G5ar8xUJBP342UvvpPViKWzSC3oxf7T/GxOwDQGU0ygW5e9lbFgxYzXAOZwEPBXwCIpW9RFpB
+ uZi0RvvlVApy7vvPZIjghp+xfRl5fZZiO9hWHY8wELgfi7mL9a68mUS+f034b2N9uecxL1YOr
+ bgYxcMdGGP/mCFgEgasG14ojPFk3O+4CyzXapRmsv0QJsf5JVNufokwboNX/FfXNBT/MStB/2
+ v5hdClyrMN583Shd11yKDE7/UlqnALDylo6GmycGYZbL8gbeKoxsp7z+eBNeSJ8RfZ+T2BNKw
+ /37FDfg61bJD5RC832O8KJGeXoaRxk2Fvl0Ks/GJ6h1CeZLwZCFfGp7TJAdxVs22ilOo+A6OW
+ 7+1cTHr9B5UFw69ns
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -89,74 +89,37 @@ On Mon, 15 Jun 2020, Junio C Hamano wrote:
 > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 > writes:
 >
-> > diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-> > index 72d32bd73b1..43f4f829242 100644
-> > --- a/fmt-merge-msg.c
-> > +++ b/fmt-merge-msg.c
-> > @@ -407,7 +407,7 @@ static void fmt_merge_msg_title(struct strbuf *out=
-,
-> >  				const char *current_branch)
-> >  {
-> >  	int i =3D 0;
-> > -	char *sep =3D "";
-> > +	char *sep =3D "", *main_branch;
-> >
-> >  	strbuf_addstr(out, "Merge ");
-> >  	for (i =3D 0; i < srcs.nr; i++) {
-> > @@ -451,10 +451,12 @@ static void fmt_merge_msg_title(struct strbuf *o=
-ut,
-> >  			strbuf_addf(out, " of %s", srcs.items[i].string);
-> >  	}
-> >
-> > -	if (!strcmp("master", current_branch))
-> > +	main_branch =3D git_main_branch_name();
-> > +	if (!strcmp(main_branch, current_branch))
-> >  		strbuf_addch(out, '\n');
-> >  	else
-> >  		strbuf_addf(out, " into %s\n", current_branch);
-> > +	free(main_branch);
+> > +	 * While the main branch name might often be `main` for new
+> > +	 * repositories (and `master` for aged ones), and such well-known na=
+mes
 >
-> While you are at it, taking
+> As I said, if you used a different word for the first 'main' in the
+> sentence, it reads much better.
 >
-> https://lore.kernel.org/git/20200614211500.GA22505@dcvr/
+> > +	 * may not necessarily need anonymizing, it could be configured to u=
+se
+> > +	 * a secret word that the user may not want to reveal.
+> >  	 */
+> > -	if (!strcmp(refname, "refs/heads/master"))
+> > +	if (!main_branch)
+> > +		main_branch =3D git_main_branch_name(MAIN_BRANCH_FULL_NAME);
+> > +
+> > +	if (!strcmp(refname, main_branch))
+> >  		return "refs/heads/ref0";
 >
-> and the response to it into consideration, I'd suggest we should
-> support the case where the user says "no single branch is special
-> here" by configuring it to an empty string.
+> The same comment as 02/12 applies here.  If the helper function
+> returns "" when the user says that no branch is more special than
+> others in the repository, the code would automatically do the right
+> thing.
 
-Together with Peff's comments, I think we're even further than that: v3 of
-this patch series will completely drop `core.mainBranch` and not
-special-case *any* branch in `fmt-merge-msg`.
+Seeing as the `fast-export` patches in this here patch series will be
+dropped from v3, in favor of Peff's patches, this does no longer need to
+be addressed.
 
-There is still merit in Hannes Sixt's wish to be able to turn off the
-`into <branch>` suffix, but that is orthogonal to the purpose of this here
-patch series.
+> In any case, thanks for working on it.  I am on "vacation" so will
+> be commenting on the rest of the series later in the week.
+
+Welcome back! I hope you were able to rest.
 
 Ciao,
 Dscho
-
->
-> > +core.mainBranch::
-> > +	The name of the main (or: primary) branch in the current repository.
-> > +	For historical reasons, `master` is used as the fall-back for this
-> > +	setting.
->
-> As to the naming of the configuration variable and the actual
-> fall-back value, I would strongly suggest making them DIFFERNT
-> (i.e. separate the concept from an actual value).
->
-> An instruction
->
->     ... oh, if you want to do so, you can set the core.mainBranch
->     configuration variable to 'main'
->
-> sounds strange than
->
->     ... oh, if you want to do so, you can set the core.primaryBranch
->     configuration variable to 'main'
->
-> at least to me, and since I am OK with your choice of 'main' as the
-> replacement for 'master', a separate word would be more appropriate
-> for the variable name.
->
->
