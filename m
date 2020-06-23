@@ -2,141 +2,165 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE427C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CC7DC433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:43:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2BF82076E
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:16:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7C362078A
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:43:07 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="FfScZYmI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732975AbgFWQQX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 12:16:23 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:54878 "EHLO smtp.hosts.co.uk"
+        id S1732953AbgFWQnG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 12:43:06 -0400
+Received: from mout.web.de ([212.227.17.12]:56509 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729562AbgFWQQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 12:16:21 -0400
-Received: from host-92-20-155-32.as13285.net ([92.20.155.32] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1jnlas-000Abd-4f; Tue, 23 Jun 2020 17:16:18 +0100
-Subject: Re: Request for adding a simple mechanism to exclude files from Git
- merge operation
-To:     Sergey Organov <sorganov@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Tiran Meltser <Tiran.Meltser@mavenir.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Amir Yosef <Amir.Yosef@mavenir.com>
-References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
- <20200622194122.GN6531@camp.crustytoothpaste.net>
- <871rm6x86y.fsf@osv.gnss.ru>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <51924543-3e26-8340-2105-1d08adcea196@iee.email>
-Date:   Tue, 23 Jun 2020 17:16:17 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+        id S1732416AbgFWQnF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 12:43:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1592930569;
+        bh=zGKnrFMjbgqyrAmlzlTafgOxTpUIO7I4oJcW5561v6w=;
+        h=X-UI-Sender-Class:Subject:To:References:From:Cc:Date:In-Reply-To;
+        b=FfScZYmIBotShpZYfCUuMrTd3H/wmdqXROCXZ/QX1P/GirUKmxKzs3wyVtbUMdehG
+         pVKZXfvsMY2GTasGz8/ZbgP/P6Us501i31z/bYDyQ7ZXVQivERQTaxN/Z6pfjZLRmL
+         CDykqZ5jozuSzGGUbiXrvJhZqXsGR/kk8zRXaEDQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M4sXt-1jobUM2CWd-001z6Z; Tue, 23
+ Jun 2020 18:42:49 +0200
+Subject: Re: Git 2 force commits but Git 1 doesn't
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Ward <mward@smartsoftwareinc.com>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <dea24348-770c-1228-115d-23153fbecebd@smartsoftwareinc.com>
+ <20200622202122.GO6531@camp.crustytoothpaste.net>
+ <a42d038f-bf14-8f1a-927e-7488796e7710@smartsoftwareinc.com>
+ <20200622204346.GP6531@camp.crustytoothpaste.net>
+ <8ad16219-2426-6127-b41d-bb3007a9b993@smartsoftwareinc.com>
+ <20200622210953.GQ6531@camp.crustytoothpaste.net>
+ <2e43580c-9952-9ccf-6b35-27a4333fb83e@smartsoftwareinc.com>
+ <20200623010519.GR6531@camp.crustytoothpaste.net>
+ <09a7fa54-d7ae-772c-fb36-29dbd27bc626@web.de>
+ <20200623151951.GS6531@camp.crustytoothpaste.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>
+Message-ID: <83e99359-2c24-d8cd-bd4a-6ba90ed54b7f@web.de>
+Date:   Tue, 23 Jun 2020 18:42:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <871rm6x86y.fsf@osv.gnss.ru>
+In-Reply-To: <20200623151951.GS6531@camp.crustytoothpaste.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+m1SwOSfwIkjgmPJuzw9RnEOzPNxmTIW5+nXLyfwmqZurPujZDE
+ idg4x2a9FlucsVeI1+rU4VpmcHDHXbUV+5A/KBfsKX7DXEeUW+wu+gyY18ZrT9o6/Kf5sOk
+ JyLHIaMIzqHfJKbhRiUo7rINRz/wktYjcqeTi3Nus4v1XjVNS//9gVZlByZuxJfpl9dohjo
+ TUhur6cXJTc9SloJVOVQg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MZP1vyIe/L4=:A6HKCHNEuBcU52xatDuEto
+ u5s5HpIeLYWa2D12k5DwfSOQ1LJ1XrR3EdgEzSbNnMlQHmpAaIswjCvRgPXlrH0BpmOn5zMJ2
+ AwcHl9O6ZEKHRg6l980Oa99pUgVNZ1+l11oQmKyD1T5kIodrlVCI9fC22YMxKYGXRFcbY0Iui
+ uskdF/u30DqQibAJfGREbaTxKnl6zZZcY6xyJLhDVkEBN7Y4IFSVXzs85V/owCNzjDauJZKOI
+ a6wDVcoXloruBWBgSz0wdKzUu2QAMx7SW+5fTzIMrsIuM/GyiUTBi4cYY9ruUkC13USq0gRBc
+ Ki7o5wGWTYirEyTihqLiJd6A2itu/DCbcSWjff1/YdfP5ztIHhWbQKAZUJ8jjG43ZEF1IDfa2
+ MJKJx8ObP+WRtqm4vkNmPrYJbiJ5+WK4WYgcR5U5f+7MzpxEVPHJMAyg7e6v2cYuPsO52mKXB
+ +VSQd1I4tkBw6EHmXd26KTSp/3tv+bZYHojrgKEhx7LnLQ7oL+oVvPJuQAqCvIl1V3l/wmdXu
+ Q4d5Hs5g0ybV1QI8xo0XGLVr8saDRHnxanCCvTfwwIj/NE3PeKHat75tMGyrCvvZC82BV/EMw
+ KW3NpEoqEp1vLKLtiv6ktyVHTvSsF8GWPrrSPwS2FpV5GVvZKkXUi43cTmCvQUtqlsu2YFsu6
+ oyJ2UYKKsr8fg3cDMaHFrO8Guob0FFBRy+FIG4xdpwvkY+yBVnpHQuihPXHCmpALW6hJrGw83
+ VGYdOzpAluESZ7q/H6kaAnmLbgRbwcTDgxMI6EoXW5nUsP2TOrx/KWklKbenZN71i3DY6GEwf
+ M6Mo4FLIX7UfTsv/kJSM5S0PsZoeoroDMscaSNq5oCAliLBFztMQv3kPMbRtWue4XG2xVrUD6
+ q9vsDsTbc72Bxr9im+1pUIQxmrz4uAayeRFQt/FYoB2TepNRh5wNd843pk6nCqVwdsG5KWjN/
+ IscICbekM2jfaGq6tiCdwp3Miz7KRLh/lovIQLX+0DZDyBMsj2RuzipQF9pZ/6dWBQbKGwgdy
+ m3A8nypQSlwxCdQOO1Rl1NKVUBPyoV+bSFRJSr1ipu6PYcUxErftP7g4n486D6wtoHZRpTjyJ
+ WC5F93naWDxCBIauKowrMS+sVemw/EHntLTJ/uEMnratpliHTtA4UP32an0fGcu626rnm0ELQ
+ oOTpdqNeoCgoHxX6S2Ffqq6AG6JP3feDxK8Lb/csmFBsmtiwRu/W6EuTqhYLWcONsGeWI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/06/2020 13:44, Sergey Organov wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Am 23.06.20 um 17:30 schrieb brian m. carlson:
+> On 2020-06-23 at 08:59:28, Ren=C3=A9 Scharfe wrote:
+>> How could we possibly check that?  Perhaps by having a commit flag
+>> register (a global unsigned int) and having functions announce their
+>> bits in it.  Colliding announcements would BUG().
 >
->> On 2020-06-20 at 18:21:40, Tiran Meltser wrote:
->>> Hi,
->>> This topic is quite common in various use cases (e.g. production
->>> configuration vs. staging one) and there are quite a few talks about
->>> it in the web.
->>> Nevertheless, there is no specific solution to this problem, only
->>> partial workarounds (including the famous merge driver “ours”).
->> In general, this is a hard problem.  When you perform a merge, you're
->> asking to incorporate changes from both heads against a common merge
->> base.  What does it mean when you want to merge two branches together
->> but not make any changes?  Which version do you want, ours or theirs?
-> I believe we basically need support to apply different merge strategies
-> to different files.
+> By my count, we have only 88 individual bits used.  If we moved all of
+> the builtin functions plus upload-pack (which shouldn't overlap) to a
+> single range, that would account for 53 bits, which would leave us 35
+> bits for all the rest of the code.  Since we need at most 27 bits for a
+> builtin command, if we used a 64-bit integer, we'd have space for all
+> the remaining bits not to overlap, plus bits for the type and flags
+> bits.
 >
-> I had similar problem a few times when I merged a long-standing branch
-> and, after I saw the result of merge, I was basically satisfied, except
-> I needed to revert a few sub-directories of the project (that gave huge
-> number of conflicts), to their original state, either of my current
-> branch, or of the branch being merged, depending on particular case. You
-> see, I knew exactly what I needed, yet I was not able to achieve my goal
-> without resorting to nasty kludges.
->
->> Normally merges are symmetric, so if you want non-symmetric behavior,
->> you have to define what it's supposed to be.
-> Yes, I'm ready to define what it's supposed to be. The problem is that
-> "git merge" won't let me, due to lack of support to apply different
-> merge strategies to different files.
->
-> As I see it, first step of improvements could be to support
->
->   git merge -- <files>
->
-> where selected strategy applies only to <files>, and the rest of files
-> are kept intact (effectively applying "ours" strategy to them),
-So, essentially, for larger merges, this would be something like the
-recent `--pathspec-from-file=<file>` series
-https://public-inbox.org/git/7324e091ba7f48e286e6c35c7b7c40490e5c85d1.1576778515.git.gitgitgadget@gmail.com/
-by Alexandr Miloslavskiy for the commands that did allow files to be
-passed in via `--` lists.
+> Since we'd be doing only bit operations on the flags variable, the
+> performance impact on 32-bit systems would be very minimal, although
+> we'd allocate an extra 4 bytes for struct object.  I don't know if
+> that's a problem.
 
-It would still require merge to be extended to include just a
-'partial-merge' or a 'file-merge' to clearly distinguish what is happening!
+How many objects would we load into memory?  4 bytes would be OK if
+multiplied by a million or so (like in the Linux repo), but billions
+might cause problems.
 
-This still a symmetric merge, but with _author supplied_ pathspec
-limiting, which is implicitly "ours" for the paths that are not merged.
-(I don't believe that the pathspec file can have negative pathspecs, so..)
+The switch from SHA1 to SHA256 is going to add 12 bytes per object, so
+that might be a way to find out what happens if we add 4 bytes on top.
 
->  along
-> with
->
->   git merge --exclude=<files>
->
-> , to be able to exclude specific files (apply "ours" only to them)
-> rather than include.
+We could save 4 bytes on x64 by reducing FLAG_BITS from 29 to 28, by the
+way.  Increasing it to 32 would be free.  That's because parsed (1),
+type (3) and flags (29) currently occupy 33 bits, which are padded to 8
+bytes.  And bits 22-24 are only used by builtin/show-branch.c, so it
+should be easy to tighten the flags range just a bit.  Weird.
 
-One difficulty of .precious lists, whether embedded or local, is the
-false impression that they provide any form of security to the user, so
-it needs a name that make that clear.
->
-> [ As a side-note, please notice that after such changes, the "ours"
-> strategy could be deprecated (not that I think it should), as either:
->
->    git merge <branch> --
->
-> or
->
->    git merge --exclude=. <branch>
->
-> would do the trick. ]
->
-> The next step would then be to support
->
->   git merge --force -- <files>
->
-> that would force to re-merge <files> with given strategy no matter what
-> their current status in the index is.
-Isn't this already the same as the restore/checkout?
+Why do we have object flags and not commit flags anyway?  (I may have
+asked that before, but can't find the answer..)
 
+> Assuming we don't want to do that right now, may I have your sign-off
+> for the following code, Ren=C3=A9, so I can add it to a patch along with=
+ my
+> test?
 >
-> Even though such support would be enough for my specific use-case, it
-> doesn't provide suitable way to configure the default behavior. As a
-> more generic solution, a new syntax for "git merge" to specify what
-> merge strategy to apply to what files could be designed, and then
-> ability to put that syntax into a file for "git merge" to pick would
-> solve the problem of quasi-static configuration problem. Alternatively,
-> even more generic .gitignore way of doing things apparently could be
-> re-used to some degree by adding support for .gitmerge files.
->
-> -- Sergey
-Philip
+>> diff --git a/http-push.c b/http-push.c
+>> index 822f326599..99adbebdcf 100644
+>> --- a/http-push.c
+>> +++ b/http-push.c
+>> @@ -70,10 +70,10 @@ enum XML_Status {
+>>  #define LOCK_REFRESH 30
+>>
+>>  /* Remember to update object flag allocation in object.h */
+>> -#define LOCAL    (1u<<16)
+>> -#define REMOTE   (1u<<17)
+>> -#define FETCHING (1u<<18)
+>> -#define PUSHING  (1u<<19)
+>> +#define LOCAL    (1u<<11)
+>> +#define REMOTE   (1u<<12)
+>> +#define FETCHING (1u<<13)
+>> +#define PUSHING  (1u<<14)
+>>
+>>  /* We allow "recursive" symbolic refs. Only within reason, though */
+>>  #define MAXDEPTH 5
+>> diff --git a/object.h b/object.h
+>> index b22328b838..a496d2e4e1 100644
+>> --- a/object.h
+>> +++ b/object.h
+>> @@ -67,7 +67,7 @@ struct object_array {
+>>   * builtin/blame.c:                        12-13
+>>   * bisect.c:                                        16
+>>   * bundle.c:                                        16
+>> - * http-push.c:                                     16-----19
+>> + * http-push.c:                          11-----14
+>>   * commit-graph.c:                                15
+>>   * commit-reach.c:                                  16-----19
+>>   * sha1-name.c:                                              20
+>>
+
+You're welcome to use it.  Not sure if a sign-off is necessary, but
+here you have it:
+
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+
