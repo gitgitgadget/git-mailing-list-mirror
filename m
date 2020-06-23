@@ -2,131 +2,187 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12AD0C433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 20:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE920C433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:02:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D99A12070E
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 20:58:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9770F20663
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:02:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="U/K95vwM"
+	dkim=pass (2048-bit key) header.d=mforney-org.20150623.gappssmtp.com header.i=@mforney-org.20150623.gappssmtp.com header.b="MTxPEeNH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393022AbgFWU6v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 16:58:51 -0400
-Received: from mout.gmx.net ([212.227.17.20]:40001 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392358AbgFWU6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 16:58:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592945917;
-        bh=EakO1M+hoLPkXVPGxett1tS6MPWabNC0OT9be/Hft+E=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=U/K95vwMtWxKuYcqov/36bvliMMlQdUwbQT14gGvvLePHR/eW16m3xJ/kwF/lsrYa
-         7Un3hUD3eNl4XUTM+olIjHPOqSY6Uy3/oto61j9Ra+fyWTHRY8wIwVhVsck7CZEmlv
-         xYdR5CjSDukRqq9eOETSW32ubTndT6UYT2NlwKjg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VHG-1ilXHy3jQI-016z6V; Tue, 23
- Jun 2020 22:58:36 +0200
-Date:   Tue, 23 Jun 2020 22:58:36 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        sandals@crustytoothpaste.net, Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 09/12] clone: handle overridden main branch names
-In-Reply-To: <20200616132216.GH666057@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2006232233290.54@tvgsbejvaqbjf.bet>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <0e59b6181699abe17eb46fe3ca5a48ce71889780.1592225416.git.gitgitgadget@gmail.com> <20200616132216.GH666057@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2404278AbgFWVCV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 17:02:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58702 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404276AbgFWVCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 17:02:14 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BAF1C061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 14:02:14 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id x11so9655381plo.7
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 14:02:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mforney-org.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PJadnMLhu9d0L5zl8KO2mj6oLPrNQpCa0342XC5yvyg=;
+        b=MTxPEeNHoB8HOJYdJlUDwyyi0M3iiqVR7sKl3qh2Kh6tilSwwi5gMzqtdsGe47HLzg
+         xOASDvOmB2qsC2VvfW4tMMTdAxXXsvstoP3iAi4Cz9/0RX1paBUwZNkq62olmGj+QDEI
+         zvsy5nLYPY1tZ+tPmkfa5WmbZY4RGM7dbvJW8rX7PPDE/d9x6wk6RHPeq412iJVQrpBT
+         jTvL3f1FFDHqQfB6ZHWb541Oc3i15VGY3lpwoqg4ijtoFgmyobPu6aMwWE5SEc14mpQx
+         Sscmqg5Ti7zIC7TqVdqL15+9HW/meB9zmFq8to6y187oH+2oqh6rSyCthS3/qJMLAopn
+         TZYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PJadnMLhu9d0L5zl8KO2mj6oLPrNQpCa0342XC5yvyg=;
+        b=FUevSGZhIoUF9tDnsb5fU1d5WZEgJbUY1Z1M+j/kTg45qgLhiHe15rSd2XveiigsVV
+         lGRqKCNMmiJCB5wHpHtkEA87vY/pOtsCHBhbKdxPvgJa55E7Yp9uDxS5tDWvjVjs/WSi
+         3z+h8bqHQoM1D0ai0gBIq2Pm/RMxlggQYSOT8BvqOk+pAaNx42uQ9FhvJvDHEbyIA10r
+         LKY50bk/xa3vJbjp8MXOc6+MVHjehrVIUCK6UPbXRqfIqFhlLnIplDsYpGxxXuLpHKTl
+         zV6AAV2hQDUw/NSsCyIf63bvRkExF5sQ5vL1M/dsROvWB6SbiQSNQMq8pxS49cTYikDq
+         UXqw==
+X-Gm-Message-State: AOAM530W8AyUBzDSvVHpR8HiFX0xlz1loHDfI5Yruaqc9iCHxJirxr8p
+        L0ZrpqkHt0vS0NqRwxrD0YGMDw6YjcJoMA==
+X-Google-Smtp-Source: ABdhPJwZ9rkQmwmsRbCxn2An/Vk7EWexl1WOWWek1Jm0YfaIB2gAnrJQXi1FFMuKgfZC1ZzPEaJUjQ==
+X-Received: by 2002:a17:90b:714:: with SMTP id s20mr22726822pjz.99.1592946133231;
+        Tue, 23 Jun 2020 14:02:13 -0700 (PDT)
+Received: from localhost ([2601:647:5180:4570:16dd:a9ff:fee7:6b79])
+        by smtp.gmail.com with ESMTPSA id n9sm3439190pjj.23.2020.06.23.14.02.12
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 23 Jun 2020 14:02:12 -0700 (PDT)
+From:   Michael Forney <mforney@mforney.org>
+To:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH 1/2] revision: use repository from rev_info when parsing commits
+Date:   Tue, 23 Jun 2020 13:56:58 -0700
+Message-Id: <20200623205659.14297-1-mforney@mforney.org>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ilV9m8Ug1fgeqQx3WK+sEPNHgnTrdpbnuYOiUSdPV/j/sUc1629
- ogvdbpqCEz5YyYrBGDSqCH44SucmZb83MG+3cye1X4Ht5A91krXX9o3We64T/ogUCsO34z5
- /b/z9+1Kcg422j4YWZIHq4Cvp+0ESKRWKhRACkGFQUaXS2UX+DID1mqI4EgPFr8jGkCEBDh
- nly03wwuXNWeh/Ap7j8NQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DTy/SON02dI=:LhINsEqwQ27ph3j2d6fEfl
- J15tZRzirAimo9EfDk+8p/qkOsPm7G46N06gAcmTHtqCBWFQY7XFUOf+uQImTvk7Dd/TC43UO
- VpdBRoAePuoCWUZfKWP3OO4TjCDxbulwrNUkSqEdQBLDaXKyzmHoeuP+6ze/TEJOuvLRkkJUs
- TESDCn1aPVxspgiNbWeGs+SkqMDiT2+Sn9YluMx/AZzGjSIywYfh0AvqB63PhbGyOQtBvAm4Y
- rLIEUFxORojQk4tRhjSJvUrLBzFHvFiLicOKqPDuCwP9f1tGQf2DSsL/eJLzcv7R0u7jsvBBE
- mrp6gYeg9v9YIjLCgsHt1LJpCmtDnqctoNycc0/Bw8wA9yUdHMUZg+yyF6Dwty/jiBGsG3oZT
- D4do42k5nJCz/jaZci1Vy7gBtRQczPJ/4Ekai755JJnFzllmp2wqE3fEblfh0iQDomzScAl7f
- IGBQMg9sS4PDki9joPxhO2oj1CjKn+97YXv7XrDQhaU7GLT0U39MHKopWwqWgSVlJwyXCwtp2
- NFJALGROiPKpNOpHuUvvn+gLw/bj8yXiVsxuL8uiTJAFNhRAfKZQrTrvD8Hga4w0p2Iu3Zpeq
- fld4DgJycviwCCXu5o0Jr7wsl/SXvcmeJ3vYnPxjSXF0R/b5Y681QrryTuDZMojZbmWwCZ0ho
- EiKXPo0gY7J6YCmDxzKRVIKFbQfI8Z22DhbRVnVQLqkbpLqSKvI5/JS6mKXNgRrFMS32IvakX
- /vxR09jQDZMcRquGdND/XtjDuyHCozQT6je2pwidyMUu+Q81Dw2X148ARuaE9Xjc85J36QJ2q
- fotiDC8mZyXKb+MrS5vDKW3wIG6whLtZty7BYNSQaL4w+qY5E3P2/2W64KGYri+Lj/us8LgbK
- ADaC9dMYUqR7dj9iEd3HMNiMsIl9nclGL1SjAiTddL52i+SLI/v1eerlBk97fNgGK7lOzHrgL
- oxjSY5pYDbjFmkzIQu2lLRmu//PX0HGFAWWEgG4y6Z+ZtIwglBxTu+Y5RTXDA3LUZiDcUeb1z
- 7Z2QS35QE6zB04AyDO9HKLPtDDdEVM6Z2pQozEyuceFJVFFojCtj8AYyeR4XPrcZ8Wcv2b/Uf
- li7PcX8U+6GUgoJbVZ5oPy5tUHq7xVHiQITnXeYdrdp0aAs+SlV58E93EoERtpzJ60FdLWQ8q
- Xv27LWKvSvqABpU7d60DDMBXRT6YYzY7J5PBVib5hF/jsRaAw3ESaA2/DFyS+esk6xVrxX/Hl
- JbEz/DP8ZfD+Z/Z8R
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+This is needed when repo_init_revisions() is called with a repository
+that is not the_repository to ensure appropriate repository is used
+in repo_parse_commit_internal(). If the wrong repository is used,
+a fatal error is the commit-graph machinery occurs:
 
-On Tue, 16 Jun 2020, Jeff King wrote:
+  fatal: invalid commit position. commit-graph is likely corrupt
 
-> On Mon, Jun 15, 2020 at 12:50:13PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
->
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 487b0a42d75..755fcaeb0ba 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -718,6 +718,7 @@ static void update_head(const struct ref *our, con=
-st struct ref *remote,
-> >  		/* Local default branch link */
-> >  		if (create_symref("HEAD", our->name, NULL) < 0)
-> >  			die(_("unable to update HEAD"));
-> > +		git_config_set("core.mainbranch", head);
-> >  		if (!option_bare) {
-> >  			update_ref(msg, "HEAD", &our->old_oid, NULL, 0,
-> >  				   UPDATE_REFS_DIE_ON_ERR);
->
-> Just making sure I understand what's going on here...
->
-> This covers the case that we've run "clone -b foo" or similar, but there
-> are two other case arms when "foo" is a tag, or the remote HEAD is
-> unreachable. And there we don't set core.mainbranch at all.
+Since revision.c was the only user of the parse_commit_gently
+compatibility define, remove it from commit.h.
 
-It was actually meant to catch the case where the remote repository has a
-default branch other than `master`.
+Signed-off-by: Michael Forney <mforney@mforney.org>
+---
+ commit.h   |  1 -
+ revision.c | 18 +++++++++---------
+ 2 files changed, 9 insertions(+), 10 deletions(-)
 
-> But we would not want it to be missing, because that will likely need to
-> stay a default for "master" indefinitely (to keep behavior for existing
-> repositories). However, it won't be missing. We'll always have set it
-> during the init_db() call, and this is just overriding that. So we'd end
-> update_head() with either:
->
->   - core.mainbranch set to the same branch we point HEAD to, whether we
->     got it from the remote side or from "-b foo"
->
->   - if we write a detached HEAD, then core.mainbranch remains at
->     init.mainbranch (or defaulting to "master" now, and probably "main"
->     later). We have no better option.
->
-> If so, then that makes sense to me.
+diff --git a/commit.h b/commit.h
+index 1b2dea5d85..a2e8ca99a2 100644
+--- a/commit.h
++++ b/commit.h
+@@ -97,7 +97,6 @@ static inline int parse_commit_no_graph(struct commit *commit)
+ 
+ #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+ #define parse_commit_internal(item, quiet, use) repo_parse_commit_internal(the_repository, item, quiet, use)
+-#define parse_commit_gently(item, quiet) repo_parse_commit_gently(the_repository, item, quiet)
+ #define parse_commit(item) repo_parse_commit(the_repository, item)
+ #endif
+ 
+diff --git a/revision.c b/revision.c
+index ebb4d2a0f2..2b6bf47c81 100644
+--- a/revision.c
++++ b/revision.c
+@@ -439,7 +439,7 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 	if (object->type == OBJ_COMMIT) {
+ 		struct commit *commit = (struct commit *)object;
+ 
+-		if (parse_commit(commit) < 0)
++		if (repo_parse_commit(revs->repo, commit) < 0)
+ 			die("unable to parse commit %s", name);
+ 		if (flags & UNINTERESTING) {
+ 			mark_parents_uninteresting(commit);
+@@ -992,7 +992,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+ 					ts->treesame[0] = 1;
+ 			}
+ 		}
+-		if (parse_commit(p) < 0)
++		if (repo_parse_commit(revs->repo, p) < 0)
+ 			die("cannot simplify commit %s (because of %s)",
+ 			    oid_to_hex(&commit->object.oid),
+ 			    oid_to_hex(&p->object.oid));
+@@ -1037,7 +1037,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+ 				 * IOW, we pretend this parent is a
+ 				 * "root" commit.
+ 				 */
+-				if (parse_commit(p) < 0)
++				if (repo_parse_commit(revs->repo, p) < 0)
+ 					die("cannot simplify commit %s (invalid %s)",
+ 					    oid_to_hex(&commit->object.oid),
+ 					    oid_to_hex(&p->object.oid));
+@@ -1105,7 +1105,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+ 			parent = parent->next;
+ 			if (p)
+ 				p->object.flags |= UNINTERESTING;
+-			if (parse_commit_gently(p, 1) < 0)
++			if (repo_parse_commit_gently(revs->repo, p, 1) < 0)
+ 				continue;
+ 			if (p->parents)
+ 				mark_parents_uninteresting(p);
+@@ -1136,7 +1136,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+ 		struct commit *p = parent->item;
+ 		int gently = revs->ignore_missing_links ||
+ 			     revs->exclude_promisor_objects;
+-		if (parse_commit_gently(p, gently) < 0) {
++		if (repo_parse_commit_gently(revs->repo, p, gently) < 0) {
+ 			if (revs->exclude_promisor_objects &&
+ 			    is_promisor_object(&p->object.oid)) {
+ 				if (revs->first_parent_only)
+@@ -3295,7 +3295,7 @@ static void explore_walk_step(struct rev_info *revs)
+ 	if (!c)
+ 		return;
+ 
+-	if (parse_commit_gently(c, 1) < 0)
++	if (repo_parse_commit_gently(revs->repo, c, 1) < 0)
+ 		return;
+ 
+ 	if (revs->sort_order == REV_SORT_BY_AUTHOR_DATE)
+@@ -3333,7 +3333,7 @@ static void indegree_walk_step(struct rev_info *revs)
+ 	if (!c)
+ 		return;
+ 
+-	if (parse_commit_gently(c, 1) < 0)
++	if (repo_parse_commit_gently(revs->repo, c, 1) < 0)
+ 		return;
+ 
+ 	explore_to_depth(revs, c->generation);
+@@ -3414,7 +3414,7 @@ static void init_topo_walk(struct rev_info *revs)
+ 	for (list = revs->commits; list; list = list->next) {
+ 		struct commit *c = list->item;
+ 
+-		if (parse_commit_gently(c, 1))
++		if (repo_parse_commit_gently(revs->repo, c, 1))
+ 			continue;
+ 
+ 		test_flag_and_insert(&info->explore_queue, c, TOPO_WALK_EXPLORED);
+@@ -3476,7 +3476,7 @@ static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
+ 		if (parent->object.flags & UNINTERESTING)
+ 			continue;
+ 
+-		if (parse_commit_gently(parent, 1) < 0)
++		if (repo_parse_commit_gently(revs->repo, parent, 1) < 0)
+ 			continue;
+ 
+ 		if (parent->generation < info->min_generation) {
+-- 
+2.27.0
 
-In any case, this does not matter anymore, as I am dropping
-`core.mainBranch` from v3, as you had suggested elsewhere in this thread.
-
-Ciao,
-Dscho
