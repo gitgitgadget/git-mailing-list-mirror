@@ -2,164 +2,107 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 965B6C433E2
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD6EC433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:32:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69AA420707
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:32:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEC36207E8
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:32:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WAjclFw8"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DqNjEk0s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393652AbgFWVc3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 17:32:29 -0400
-Received: from mout.gmx.net ([212.227.17.20]:41305 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388972AbgFWVc2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 17:32:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592947935;
-        bh=I56h89nlS2pC2x9K9jNH0Nv0WiVhj9WyyfX4sH2gtng=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WAjclFw8ihNd+w50gm+LIwcMU9qhzPJozEbrwoexP4dwlM6eQfZzxnqlNREM5r+OX
-         jMSErL949N/X9UOKqgnISFzIS18QsoyUNzB1K6N6C/l+ubX4qfb5TDaiH+FI8g8TdM
-         jS83sJcoNNhTAfIzh6JiRwuLBWMPECyfe99gEQRw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtwUm-1j0QCJ0jGu-00uIhu; Tue, 23
- Jun 2020 23:32:15 +0200
-Date:   Tue, 23 Jun 2020 23:32:14 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>,
+        id S2390822AbgFWVcs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 17:32:48 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64853 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388979AbgFWVcn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 17:32:43 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 82869D0E17;
+        Tue, 23 Jun 2020 17:32:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eq2Le0SJt1K7b86MdRPxUZtGTmI=; b=DqNjEk
+        0sZ+9zvExWL172zBCnp+L1CnxSdVRJPgN0IklVT+neLR2gchrXwhV4Lh4zf0ZGTY
+        gIxoHrb1cYMl+SjJ9ZPwKHo6onkiiwkEJNAfCIgCJf/Y+UuxTsDXaQrmpeJ87BQ1
+        x9yJ3WqiYc9anf9SnZGsBR86lPgEJYFiW2Bm8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SjBrV2Md0pcXRyPGYZlHxtx2pz9mXap+
+        BCw5N0ZCtvfFwJA395zx+5iYpMJf+4pq9a/XlBAIQvLiJWiABEKOd9nhCt/EJ88x
+        P+FE/NCBJAeQspHidQ4h5NxRlLSF+pvNOjRtHfDphQOLNqe/0ONwFPcm49Qcul5N
+        cniRJfd5hOA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 79DFFD0E16;
+        Tue, 23 Jun 2020 17:32:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BF8E9D0E15;
+        Tue, 23 Jun 2020 17:32:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Matt Rogers <mattr94@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/3] docs: adjust for the recent rename of `pu` to
- `seen`
-In-Reply-To: <xmqq5zbhd1em.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2006232330550.54@tvgsbejvaqbjf.bet>
-References: <pull.668.git.1592924655.gitgitgadget@gmail.com> <dc6f97129019e9176d91c77576a84549c00a74b5.1592924655.git.gitgitgadget@gmail.com> <20200623153106.GB20455@danh.dev> <xmqq5zbhd1em.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        Git Mailing List <git@vger.kernel.org>,
+        don@goodman-wilson.com, stolee@gmail.com, Jeff King <peff@peff.net>
+Subject: Re: Re* [PATCH 8/9] fast-export: respect the possibly-overridden default branch name
+References: <pull.656.git.1591823971.gitgitgadget@gmail.com>
+        <1efe848f2b029e572cea61cadcfe36b9d3797836.1591823971.git.gitgitgadget@gmail.com>
+        <CAOjrSZvm9QNUttUNVBEUMPJ8zgYEoAnSPN5_6N5uwpiM1sVrcQ@mail.gmail.com>
+        <20200610233912.GU6569@camp.crustytoothpaste.net>
+        <CAOjrSZvV6+ApfmOBa7rdXDPQJbExRsOfodO16i_1N5QjjhCB1w@mail.gmail.com>
+        <xmqq3672cgw8.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006111559300.56@tvgsbejvaqbjf.bet>
+        <xmqqpna5bq2l.fsf_-_@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006121451100.56@tvgsbejvaqbjf.bet>
+        <xmqqy2os2u55.fsf@gitster.c.googlers.com>
+        <405521ec-aed7-ff76-5b48-70e9d11018e6@kdbg.org>
+        <xmqqv9jvylt7.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006131645380.56@tvgsbejvaqbjf.bet>
+        <xmqqeeqiztpq.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006141053170.56@tvgsbejvaqbjf.bet>
+        <xmqqtuz9tq30.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006232309190.54@tvgsbejvaqbjf.bet>
+Date:   Tue, 23 Jun 2020 14:32:37 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2006232309190.54@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 23 Jun 2020 23:11:10 +0200 (CEST)")
+Message-ID: <xmqqpn9pbh8q.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1867953520-1592947936=:54"
-X-Provags-ID: V03:K1:rfQOv6D2YoD9J3PrAuRT89HnGijkLis0bNK/as+dbLdSZC9Sj17
- rUZKuU5hKYL3jjPcwB2gWmSjge00CD9TzbQmNghNoNm1lnhQBiZhkVYKvIMDeeUjVGJZs3F
- bB/UzNC+/UgfBJvTHr8DxMrwl+e2EI34W0x/vOH4pJ0sIhM05/FDmAl3tog7G7RLTx3lrvP
- WVBTm4I1DdclPUZZZo8yw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0Wc4ZF211lA=:PBcg87QRKxP9IaaHO0MHLh
- GfSYtzHXkq8xCaKL8n2dLksRoK0vSWCLIYGPCToDx2UTyxP6k+Ls+dwTMGv4JG/BmJRtjcPtg
- EcPyz6o1ZpDt2uUiZgB3qd4E3FaHsYgMnfynEtQ0mA4VDjPreFDQ4Vb6ljxv4kXSONplJqChJ
- hhVnS+bCCH2OgSnO4FZGbWy23W24qfAtX7EwkRCaCXqmvy7UxitvLPaBuYyhogwVmydfN0HgM
- guD3t5B8/9+mL//M0PQmOXSUdsL8ddo+6FgGfzI6GJ6lRvlDUOVR0ZlgLcMIkPoPjCcCF3whw
- rU+1Z0PEkZazAiHQjZzjj+F89ZKlAOh3ypg9wzuNRVIgG4dvEFYs4Z0O976eIDrBlneqATNY2
- AAZmx5YeiAtL+zB+GdLVbV+v/G8c7/SNCC6F4LAJamNWdl6YVvSt8tS3knRlP3ZFe+d3rhlrC
- cYobG9lUHNSLQ0240j0lkJ1ZX64ksxXNIZVJlv2qJ1Avbyt4iPs540+UZIupwbNj4p0OSrf/k
- EfxCGaA9i688W4osyWnY8g/igTFg+QHMlSsknbG4QWCBvlmeSjSsePuetZadSTW5emZyAXhP/
- bDqonSxqkBM7aHPK8WximIUUqngT7okmEmXDlVHhKZHAOxY+9Ar0WOUw3nBYEcmVBa0lgXyOG
- NKqkU/5uwrnHkV+yDGAoIgzKE9T7dfLrHAeH6V8NlIR9Lm/2Zi2927niC8J3JIYylIQmkyf+C
- Z8KvyCNwAnYZpfSpeeYX04Juu5ywTTEnCxSiFTXmCnHTJ76j/9gEL+iwTDoYMS2D4Z0fNUQ1V
- YE4VFRKJhUYcKj8kLUWmV17S9ULmuIBt6HECxolbrp3NFlRq0+0qrXRMmOAmC12BtVvNkHPeQ
- rHeXYa96No3loxaLZarsBJiEbPXoYSA+OSzj63+896GNuYH2Ebcig+9qS28i90JeCKY5pXuLm
- oHNgPkulqWFqB9pOwbVJmGnGMXEsi8f69drhQ7L7MTRsNM6r6SMlVdrKOqb3A+ZhiVgrl6G7F
- 1n88tyoegKnvn5xTOgmBh3dkmKE5+BIi+Vnk7vcFPBipv8wOFOdrFOrux5QaInUaJf/mnYY2B
- PAN7eACmST+t69OZjADi3cYOoi3LlDKPPgPp2lUTUaVMP2n1dZrlHg59sDKYMRMAPbw/4SoRI
- ytZK16e99Gp6EhtStfo8GdGyqNk1oDdRZEhpKO8fR8/o7trl2ejwQ9pr+YpK7uuCDCdHomIuu
- JEbaiFy451D38w0BM
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0FCE8660-B599-11EA-A9CB-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---8323328-1867953520-1592947936=:54
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Junio & Danh,
-
-On Tue, 23 Jun 2020, Junio C Hamano wrote:
-
-> =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> write=
-s:
+> You could also use `next` instead of `master`, which would make intuitive
+> sense because the commits that make it into that branch are slated to be
+> part of the next major Git version.
 >
-> > On 2020-06-23 15:04:13+0000, Johannes Schindelin via GitGitGadget <git=
-gitgadget@gmail.com> wrote:
-> >> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-r=
-emote.txt
-> >> index 0a5c8b7d493..492e573856f 100644
-> >> --- a/Documentation/git-ls-remote.txt
-> >> +++ b/Documentation/git-ls-remote.txt
-> >> @@ -101,9 +101,9 @@ f25a265a342aed6041ab0cc484224d9ca54b6f41	refs/tag=
-s/v0.99.1
-> >>  7ceca275d047c90c0c7d5afb13ab97efdf51bd6e	refs/tags/v0.99.3
-> >>  c5db5456ae3b0873fc659c19fafdde22313cc441	refs/tags/v0.99.2
-> >>  0918385dbd9656cab0d1d81ba7453d49bbc16250	refs/tags/junio-gpg-pub
-> >> -$ git ls-remote http://www.kernel.org/pub/scm/git/git.git master pu =
-rc
-> >> +$ git ls-remote http://www.kernel.org/pub/scm/git/git.git master see=
-n rc
-> >
-> > rc is not with us anymore.
-> >
-> > Should we replace it with next, too?
+> And a relatively obvious name for the current `next` might be `cooking`.
 >
-> I do not think so.  I think we never had 'rc'.
+> I refrained from proposing this earlier, thinking that this would be too
+> disruptive, but since `pu` was renamed to `seen`...
 
-Indeed, and the context given in the patch demonstrates that no `rc` is
-shown, so I assumed the same things as Junio explained here:
+Renaming 'pu' away from two-letter has a positive technical and
+social effect.  Using 'next' for anything but what it currently
+means does not have any such upside and only the downside of
+confusing people.
 
-> I think what the above example is demonstrating is this.
->
->     SYNOPSIS calls the last command line arguments <refs>; they are
->     actually mere patterns (which is how these command line
->     arguments are described in the documentation).  It is *not* an
->     error if no refs match a particular pattern.
->
-> And because we have no refs that match the pattern "rc", we only see
-> "master" and "pu" (now "seen") from the command.
+As to 'cooking', I am not sure.  Personally I consider that the
+topics that are in 'next' plus those that are soon to be in 'next'
+are all 'cooking'.  But I do not think anybody's dying to rename
+'next', so...
 
-Precisely.
 
-> I see a couple of possible improvements here:
->
->  - The "<refs>...::" documentation should explain what kind of
->    pattern match is performed here.  I recall these originally were
->    just tail matches, but the rule might have been made more
->    flexible over time.
->
->  - The example should first explain the setting.  The first sample
->    depends on the current (./.) repository having these tags or it
->    would not work (showing the sample upfront and explaining the
->    outcome shown in the sample would work well in this case,
->    e.g. "we can see that in the current repository, there are tags
->    X, Y and Z").  The second one at least needs to say two things:
->    the sample repository does not have a branch called 'rc' and that
->    is why it is not shown, and it is not an error for patterns to
->    produce no match.
-
-Those sound like wonderful #leftoverbits to me.
-
-Thank you,
-Dscho
-
->
-> Thanks.
->
-> >
-> >>  5fe978a5381f1fbad26a80e682ddd2a401966740	refs/heads/master
-> >> -c781a84b5204fb294c9ccc79f8b3baceeb32c061	refs/heads/pu
-> >> +c781a84b5204fb294c9ccc79f8b3baceeb32c061	refs/heads/seen
-> >>  $ git remote add korg http://www.kernel.org/pub/scm/git/git.git
-> >>  $ git ls-remote --tags korg v\*
-> >>  d6602ec5194c87b0fc87103ca4d67251c76f233a	refs/tags/v0.99
->
-
---8323328-1867953520-1592947936=:54--
