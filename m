@@ -2,137 +2,141 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B19AC433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE427C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:16:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74B742076E
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:16:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q9C/YB9x"
+	by mail.kernel.org (Postfix) with ESMTP id C2BF82076E
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 16:16:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732958AbgFWQQS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 12:16:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42862 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729562AbgFWQQP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 12:16:15 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0954C061573;
-        Tue, 23 Jun 2020 09:16:14 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id l63so2061316oih.13;
-        Tue, 23 Jun 2020 09:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=C6zRBd638da/3Puon0/mPbz+ZaserpAdoN60zWcOdLI=;
-        b=q9C/YB9xTNbi+bUSIqxvhX2J9LG6GOkMQDm2VwP8GJuPHssugJJEnTrXF14R/INoZm
-         iQ3QQg0wqJoIaDQyOOD1zmAkdyvzdQOTkpEqUo1eToIrWFs218PHZY70QZpcx+QrFdMK
-         jAtWK64XxxLGBW3F3rH1BvCX5JgmKQHoHxZyIOSX0oMlLlrJNn6nEtv5BZj+Cbp2560/
-         zlaRxu3as1JLgaOJ+na3a+VHQ2XrYJk6y9bdNMIwF4Ix5TAm0p1uZCHFpGD5xwxXIS6v
-         ykFuyNpN+nJpjTNyGim8dGKr9squI6WXic/xGGxLACODlOQop6inLVWvexoI711WdhwQ
-         PmvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=C6zRBd638da/3Puon0/mPbz+ZaserpAdoN60zWcOdLI=;
-        b=Rz/7gBS48BPOcrbwwtDNugeM3F7x8GM08u67sp57Ig/wA3qwk8nRq1gRZ44ErE4zGp
-         USaW7P1rG9jvKPwpYBG6/yXWWgGd3SeEu0peASB6T66jsCEiOhSv4u0VsJdN03l1bBjb
-         Y6Q6HBB+X1lAv0ycKBZrHZvOo2kpUTdGUqCeIgRloyL67smcJsAbIKIAaHs9B1PvWYZh
-         HxE5UvHBwv5FmkTMeEC6JNIQEdlOyTBI8w3t4lm01Uy+FX6O9q3sfAct8c9wphV8TEKk
-         AJ8OxEmdEnGRgggrXjUoGv732tBDHCs24HMI40Vb/NvPKidV8NF1Fp9HFnp11KxinfPL
-         +qpg==
-X-Gm-Message-State: AOAM532G/FZsBk0EElqrUlvCGmPmB2rjdA4AHhJNjTJS1W9iFEc8bo1e
-        Zu98ttM6Qx7G/AFC/nnQTuCUosX0BToVWGoPmLzm4fCluTw=
-X-Google-Smtp-Source: ABdhPJzPGRoNQwYV7prpiLP4l6woYoYftSSNf32Kxl7WYaM4Qub1H/LpMosSXlZwcAOlEq6NpTl/ZwSS1zQ0t3F6Uy0=
-X-Received: by 2002:a05:6808:4b:: with SMTP id v11mr16344641oic.31.1592928973611;
- Tue, 23 Jun 2020 09:16:13 -0700 (PDT)
+        id S1732975AbgFWQQX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 12:16:23 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:54878 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729562AbgFWQQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 12:16:21 -0400
+Received: from host-92-20-155-32.as13285.net ([92.20.155.32] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1jnlas-000Abd-4f; Tue, 23 Jun 2020 17:16:18 +0100
+Subject: Re: Request for adding a simple mechanism to exclude files from Git
+ merge operation
+To:     Sergey Organov <sorganov@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Tiran Meltser <Tiran.Meltser@mavenir.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Amir Yosef <Amir.Yosef@mavenir.com>
+References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
+ <20200622194122.GN6531@camp.crustytoothpaste.net>
+ <871rm6x86y.fsf@osv.gnss.ru>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <51924543-3e26-8340-2105-1d08adcea196@iee.email>
+Date:   Tue, 23 Jun 2020 17:16:17 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <xmqqzh9mu4my.fsf@gitster.c.googlers.com> <CABPp-BF+xvzroi5QU8zPp-7KoSS16v1CsM43vWx1WO5NjyU0BQ@mail.gmail.com>
-In-Reply-To: <CABPp-BF+xvzroi5QU8zPp-7KoSS16v1CsM43vWx1WO5NjyU0BQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 23 Jun 2020 09:16:02 -0700
-Message-ID: <CABPp-BFo=SRkMezdD_FvM92-bgdeBzfExpjtjYiEvg0UM1rWQQ@mail.gmail.com>
-Subject: [ANNOUNCE] git-filter-repo v2.27.1
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <871rm6x86y.fsf@osv.gnss.ru>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Mon, Jun 1, 2020 at 10:08 AM Elijah Newren <newren@gmail.com> wrote:
+On 23/06/2020 13:44, Sergey Organov wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
-> The latest release of git-filter-repo, v2.27.0, is also now available.
-> It is comprised of 26 non-merge commits since v2.26.0, including two
-> changes from new contributors.
+>> On 2020-06-20 at 18:21:40, Tiran Meltser wrote:
+>>> Hi,
+>>> This topic is quite common in various use cases (e.g. production
+>>> configuration vs. staging one) and there are quite a few talks about
+>>> it in the web.
+>>> Nevertheless, there is no specific solution to this problem, only
+>>> partial workarounds (including the famous merge driver “ours”).
+>> In general, this is a hard problem.  When you perform a merge, you're
+>> asking to incorporate changes from both heads against a common merge
+>> base.  What does it mean when you want to merge two branches together
+>> but not make any changes?  Which version do you want, ours or theirs?
+> I believe we basically need support to apply different merge strategies
+> to different files.
+>
+> I had similar problem a few times when I merged a long-standing branch
+> and, after I saw the result of merge, I was basically satisfied, except
+> I needed to revert a few sub-directories of the project (that gave huge
+> number of conflicts), to their original state, either of my current
+> branch, or of the branch being merged, depending on particular case. You
+> see, I knew exactly what I needed, yet I was not able to achieve my goal
+> without resorting to nasty kludges.
+>
+>> Normally merges are symmetric, so if you want non-symmetric behavior,
+>> you have to define what it's supposed to be.
+> Yes, I'm ready to define what it's supposed to be. The problem is that
+> "git merge" won't let me, due to lack of support to apply different
+> merge strategies to different files.
+>
+> As I see it, first step of improvements could be to support
+>
+>   git merge -- <files>
+>
+> where selected strategy applies only to <files>, and the rest of files
+> are kept intact (effectively applying "ours" strategy to them),
+So, essentially, for larger merges, this would be something like the
+recent `--pathspec-from-file=<file>` series
+https://public-inbox.org/git/7324e091ba7f48e286e6c35c7b7c40490e5c85d1.1576778515.git.gitgitgadget@gmail.com/
+by Alexandr Miloslavskiy for the commands that did allow files to be
+passed in via `--` lists.
 
-I missed sending out this email earlier, but v2.27.1 of
-git-filter-repo was released a week and a half ago.  v2.27.0
-accidentally broke the most prominent example in the README.md file;
-v2.27.1 fixes that bug /and/ makes sure that example is actually in
-the testsuite to prevent a repeat.
+It would still require merge to be extended to include just a
+'partial-merge' or a 'file-merge' to clearly distinguish what is happening!
 
-The public repo of filter-repo is at
+This still a symmetric merge, but with _author supplied_ pathspec
+limiting, which is implicitly "ours" for the paths that are not merged.
+(I don't believe that the pathspec file can have negative pathspecs, so..)
 
-    https://github.com/newren/git-filter-repo
+>  along
+> with
+>
+>   git merge --exclude=<files>
+>
+> , to be able to exclude specific files (apply "ours" only to them)
+> rather than include.
 
-The tarballs can be found at:
+One difficulty of .precious lists, whether embedded or local, is the
+false impression that they provide any form of security to the user, so
+it needs a name that make that clear.
+>
+> [ As a side-note, please notice that after such changes, the "ours"
+> strategy could be deprecated (not that I think it should), as either:
+>
+>    git merge <branch> --
+>
+> or
+>
+>    git merge --exclude=. <branch>
+>
+> would do the trick. ]
+>
+> The next step would then be to support
+>
+>   git merge --force -- <files>
+>
+> that would force to re-merge <files> with given strategy no matter what
+> their current status in the index is.
+Isn't this already the same as the restore/checkout?
 
-    https://github.com/newren/git-filter-repo/releases
-
-git-filter-repo can also be installed via a variety of package managers
-across Windows, Mac OS, or Linux (and maybe others)[1].
-
-[1] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md
-
-----------------------------------------------------------------
-
-git-filter-repo 2.27.1 Release Notes
-====================================
-
-(Note: Additional information is available for many release notes at
-    https://github.com/newren/git-filter-repo/issues/<NUMBER>)
-
-* Fixes:
-  * fix "extract subdirectory for merging into a monorepo" example (#110)
-  * add tests to make sure we don't break that example again
-  * avoid applying --replace-text to binary files
-
-* Documentation:
-  * simplify manual installation using git's --man-path and --html-path (#107)
-  * make discovery of code formatting and linting examples easier (#99)
-  * many wording clarifications
-
-* contrib scripts:
-  * avoid applying --replace-text to binary files in bfg-ish
-  * new simple barebones example
-  * default replacement text is now a variable to allow overriding
-
-Changes since v2.27.0 are as follows:
-
-Elijah Newren (13):
-      converting-from-bfg-repo-cleaner.md: add a small clarification
-      converting-from-filter-branch.md: add a small clarification
-      filter-repo: avoid applying --replace-text to binary files
-      filter-repo: make default replacement text a variable
-      contrib: new simple no-op-example
-      contrib, docs: make discovery of code formatting and linting easier
-      Contributing.md: add a small clarification about line coverage
-      contrib: avoid applying --replace-text to binary files in bfg-ish
-      git-filter-repo.txt: briefly explain steps for pushing to original url
-      Revert "filter-repo: fix ugly bug with mixing path filtering and renaming"
-      filter-repo: clarify interactions between path filtering and path renaming
-      git-filter-repo.txt: discourage use of random clone flags
-      INSTALL.md: simplify manual installation instructions
+>
+> Even though such support would be enough for my specific use-case, it
+> doesn't provide suitable way to configure the default behavior. As a
+> more generic solution, a new syntax for "git merge" to specify what
+> merge strategy to apply to what files could be designed, and then
+> ability to put that syntax into a file for "git merge" to pick would
+> solve the problem of quasi-static configuration problem. Alternatively,
+> even more generic .gitignore way of doing things apparently could be
+> re-used to some degree by adding support for .gitmerge files.
+>
+> -- Sergey
+Philip
