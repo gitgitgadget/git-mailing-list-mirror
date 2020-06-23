@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D716C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70F2DC433E1
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:48:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F312720888
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:47:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A8AC2078A
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 22:48:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jK1cr9GN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eNZBpC25"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388651AbgFWWr4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2388606AbgFWWr4 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 23 Jun 2020 18:47:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46750 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388262AbgFWWrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 18:47:23 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21198C0617BF
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 15:33:37 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id t194so380822wmt.4
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 15:33:37 -0700 (PDT)
+        with ESMTP id S2388294AbgFWWr1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 18:47:27 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D94DBC0612AD
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 15:33:40 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id f18so383705wml.3
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 15:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=glBlY/7yW7twc8Qy5k7bGwLHwjhCmqCRtylbfMN7Arc=;
-        b=jK1cr9GNcCSIdhFgUCemhstCBEx7nBUZmx/Ds1lrb0R5ROFZbtEvMJfeyn014EhgY0
-         jbU+aVYUtCNHCyPiB+62euFb4wvA2eNht9PuZW+faIC9/kN5GS0G32/ESJX/ity/W87n
-         O+tmQOKmKlUwad6Y/CgaeeyakaEEcgx7/6xQrGBdLaT2o/XDSfBQm+Z66T1chyhPFxl8
-         QfR/+bmhs+FMe808xdwWr3iGzn0xIryiPgmhxyed0Z6V05eB3Yl2cfU3EIJ5vjk/Ft91
-         kOORmm2vkcIvJWs7Z0cE4j4bw6+Lz9+6PyPB5trgDGnC/h4y71swX4f9aj+mhMrm/jQ+
-         ao0g==
+        bh=Q0pF5yj7wjNRE2JCBd7v1az84w+LZ8K2+6NNlyKt2yU=;
+        b=eNZBpC25EtILpKiY+Y7hfedPXXc7FStEO26EiQiHbpCex76YPAsb14ZXy2aOjUuV6j
+         zPgpSQlcg4jifbu4bLfuwpKYRdhy2KNMvXy/SOsA9Vlc3DI4AJIqZHbSWWXeG0Qv00bT
+         dOZsHWBlL9gqF5Du43c+zqtkvbkGoz18tCn8+1KtOoNvltzj/PnYa/mBXvwezw+vlNCK
+         4axGfNurxJFNj/otDYiTxshWB5YAkShV7sQ8TfiwVJlD3kiXOHMNQcyjS9a6TF/pL6dc
+         QOwIEnbtzpB8NQDwavdImocN8F+VrXmqi+OWj4jgHdrMtef15LFdMXlQ43zTTgJ8I2qq
+         AFOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=glBlY/7yW7twc8Qy5k7bGwLHwjhCmqCRtylbfMN7Arc=;
-        b=arovoVEtIsA9STcny5UC5W+4CAKe6wHnWonVNHdvYRSpTUOAl3nBgLrUwiSjsZYJgc
-         j9IyzOKFZRJebOuNXNt5SYQU35p0yXBABOV0yN8mo4Mlnp2xJxmDPD8fk9/E2Oqsca5G
-         02yr5Bu6PcvwLF5mi5lxBORSGPozWOk+dCWWLWFCvXhkM78J7Vl1gxolbdKvgjDAdunW
-         ZuDUlbsX0samFKcRBrxWPDI13BZ9kcEyxSOCipbz4rkKj6Acc61zV+rU70VLtzPQO8K2
-         4o+GrJ2fCHiZwMcfmAw79G9rlaNJtQ8LrFcw/TzsmCKz9hLJ6qS9zDjOZGavIedZrJK7
-         QcOQ==
-X-Gm-Message-State: AOAM531m/vea3LQ6X/MLtyH+ZH0e9ZMo0+S7911YHq054wM2+tKYa4n5
-        +zSaTLvEArWE7RmIU+M5vhItjI8K
-X-Google-Smtp-Source: ABdhPJwYlyj2096Rv4gvunix8xYvIIO0erdkqtZhbh6zhyMNjSMd553YxqbYVQ/ibIIKgtsmITNaqQ==
-X-Received: by 2002:a05:600c:4109:: with SMTP id j9mr2607800wmi.157.1592951615560;
-        Tue, 23 Jun 2020 15:33:35 -0700 (PDT)
+        bh=Q0pF5yj7wjNRE2JCBd7v1az84w+LZ8K2+6NNlyKt2yU=;
+        b=ZpE6+M78i3S08gos/wV9fwgy0uW2GtoBhKa53b9HjHKmOzvW939FbgHxFDj9C4k7a0
+         uOdeiB1xSWKqq1lDo7Zfpow02cOx2LvVhmwTBHoIRW1wKA88pqTI+EqATiwLu/ZqVx1m
+         MadFZz8ZZSuIfuTdCf+ihKGBmM1FbIeB2MtVYAWEZDH1alNdLxapjn7PGENmLi1sM86S
+         THHkH+e4Ksmb7h3Qk/WXGYSs1UNtP7oJGlPE38cIp+nA7Dz7sTuUPtRgX24/aNILFex/
+         UyfT0s5pkj5gUuBrLNQcuoJkIk19oB/Rlk3+S7B482Wk7SvZQMopmrrhUXPL6gf04HPp
+         C/jw==
+X-Gm-Message-State: AOAM532AMTeylu4M9S1J/w/ML7XE6+LFl/KF7tYBJBg5Wu0Wy/od/Y/m
+        xzjAGMdPeiqa4SeZHpKWpN7BapAt
+X-Google-Smtp-Source: ABdhPJzQzCkwhkAnIaUbnfNtiH0/M/+lHMjTTkQQpPUWGZhGGJefqEvlIdojQMZXObZr8EBcb1CPuw==
+X-Received: by 2002:a7b:c5d5:: with SMTP id n21mr26441258wmk.106.1592951618389;
+        Tue, 23 Jun 2020 15:33:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j14sm24372835wrs.75.2020.06.23.15.33.34
+        by smtp.gmail.com with ESMTPSA id z1sm10657582wrh.14.2020.06.23.15.33.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2020 15:33:35 -0700 (PDT)
-Message-Id: <6bda69541b12e93cfcf7b841b8691296dc82eeba.1592951611.git.gitgitgadget@gmail.com>
+        Tue, 23 Jun 2020 15:33:37 -0700 (PDT)
+Message-Id: <c0d74cedd1571e0d791ec123fc4d0e1ec98e7862.1592951611.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
 References: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
         <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Jun 2020 22:33:25 +0000
-Subject: [PATCH v3 3/8] submodule: use a better fall-back for missing
- remote.<name>.branch
+Date:   Tue, 23 Jun 2020 22:33:28 +0000
+Subject: [PATCH v3 6/8] clone: use configured default branch name when
+ appropriate
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -90,130 +90,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When `remote.<name>.branch` is not configured, `git submodule update`
-currently falls back to using the branch name `master`. A much better
-idea, however, is to use `HEAD`: on all Git servers running reasonably
-recent Git versions, the symref `HEAD` points to the main branch.
+When cloning a repository without any branches, Git chooses a default
+branch name for the as-yet unborn branch.
 
-Note: t7419 demonstrates that there _might_ be use cases out there that
-_expect_ `git submodule update --remote` to update submodules to the
-remote `master` branch even if the remote `HEAD` points to another
-branch. Arguably, this patch makes the behavior more intuitive, but
-there is a slight possibility that this might cause regressions in
-obscure setups.
+As part of the implicit initialization of the local repository, Git just
+learned to respect `init.defaultBranch` to choose a different initial
+branch name. We now really want that branch name to be used as a
+fall-back.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-submodule.txt |  4 ++--
- builtin/submodule--helper.c     |  2 +-
- t/t7406-submodule-update.sh     | 16 ++++++++++++++++
- t/t7419-submodule-set-branch.sh |  7 +++++--
- 4 files changed, 24 insertions(+), 5 deletions(-)
+ Documentation/config/init.txt |  4 ++--
+ builtin/clone.c               | 10 +++++++---
+ t/t5606-clone-options.sh      | 15 +++++++++++++++
+ 3 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index c9ed2bf3d5..b20f85e622 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -284,7 +284,7 @@ OPTIONS
- 	`.gitmodules` for `update --remote`.  A special value of `.` is used to
- 	indicate that the name of the branch in the submodule should be the
- 	same name as the current branch in the current repository.  If the
--	option is not specified, it defaults to 'master'.
-+	option is not specified, it defaults to 'HEAD'.
+diff --git a/Documentation/config/init.txt b/Documentation/config/init.txt
+index 6ae4a38416..dc77f8c844 100644
+--- a/Documentation/config/init.txt
++++ b/Documentation/config/init.txt
+@@ -3,5 +3,5 @@ init.templateDir::
+ 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
  
- -f::
- --force::
-@@ -322,7 +322,7 @@ OPTIONS
- 	the superproject's recorded SHA-1 to update the submodule, use the
- 	status of the submodule's remote-tracking branch.  The remote used
- 	is branch's remote (`branch.<name>.remote`), defaulting to `origin`.
--	The remote branch used defaults to `master`, but the branch name may
-+	The remote branch used defaults to `HEAD`, but the branch name may
- 	be overridden by setting the `submodule.<name>.branch` option in
- 	either `.gitmodules` or `.git/config` (with `.git/config` taking
- 	precedence).
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 46c03d2a12..f55f7b7704 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1981,7 +1981,7 @@ static const char *remote_submodule_branch(const char *path)
- 	free(key);
+ init.defaultBranch::
+-	Allows overriding the default branch name when initializing
+-	a new repository.
++	Allows overriding the default branch name e.g. when initializing
++	a new repository or when cloning an empty repository.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index b751bdf13e..9a3f91b268 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1267,9 +1267,13 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		remote_head_points_at = NULL;
+ 		remote_head = NULL;
+ 		option_no_checkout = 1;
+-		if (!option_bare)
+-			install_branch_config(0, "master", option_origin,
+-					      "refs/heads/master");
++		if (!option_bare) {
++			const char *branch = git_default_branch_name();
++			char *ref = xstrfmt("refs/heads/%s", branch);
++
++			install_branch_config(0, branch, option_origin, ref);
++			free(ref);
++		}
+ 	}
  
- 	if (!branch)
--		return "master";
-+		return "HEAD";
+ 	write_refspec_config(src_ref_prefix, our_head_points_at,
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 9e24ec88e6..286bfd93ac 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -35,4 +35,19 @@ test_expect_success 'redirected clone -v does show progress' '
  
- 	if (!strcmp(branch, ".")) {
- 		const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 4fb447a143..aa19ff3a2e 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -70,6 +70,22 @@ test_expect_success 'setup a submodule tree' '
- 	)
  '
  
-+test_expect_success 'update --remote falls back to using HEAD' '
-+	test_create_repo main-branch-submodule &&
-+	test_commit -C main-branch-submodule initial &&
-+
-+	test_create_repo main-branch &&
-+	git -C main-branch submodule add ../main-branch-submodule &&
-+	git -C main-branch commit -m add-submodule &&
-+
-+	git -C main-branch-submodule switch -c hello &&
-+	test_commit -C main-branch-submodule world &&
-+
-+	git clone --recursive main-branch main-branch-clone &&
-+	git -C main-branch-clone submodule update --remote main-branch-submodule &&
-+	test_path_exists main-branch-clone/main-branch-submodule/world.t
++test_expect_success 'chooses correct default initial branch name' '
++	git init --bare empty &&
++	git -c init.defaultBranch=up clone empty whats-up &&
++	test refs/heads/up = $(git -C whats-up symbolic-ref HEAD) &&
++	test refs/heads/up = $(git -C whats-up config branch.up.merge)
 +'
 +
- test_expect_success 'submodule update detaching the HEAD ' '
- 	(cd super/submodule &&
- 	 git reset --hard HEAD~1
-diff --git a/t/t7419-submodule-set-branch.sh b/t/t7419-submodule-set-branch.sh
-index fd25f786a3..3b925c302f 100755
---- a/t/t7419-submodule-set-branch.sh
-+++ b/t/t7419-submodule-set-branch.sh
-@@ -52,12 +52,13 @@ test_expect_success 'test submodule set-branch --branch' '
- '
- 
- test_expect_success 'test submodule set-branch --default' '
-+	test_commit -C submodule c &&
- 	(cd super &&
- 		git submodule set-branch --default submodule &&
- 		! grep branch .gitmodules &&
- 		git submodule update --remote &&
- 		cat <<-\EOF >expect &&
--		a
-+		c
- 		EOF
- 		git -C submodule show -s --pretty=%s >actual &&
- 		test_cmp expect actual
-@@ -65,6 +66,7 @@ test_expect_success 'test submodule set-branch --default' '
- '
- 
- test_expect_success 'test submodule set-branch -b' '
-+	test_commit -C submodule b &&
- 	(cd super &&
- 		git submodule set-branch -b topic submodule &&
- 		grep "branch = topic" .gitmodules &&
-@@ -78,12 +80,13 @@ test_expect_success 'test submodule set-branch -b' '
- '
- 
- test_expect_success 'test submodule set-branch -d' '
-+	test_commit -C submodule d &&
- 	(cd super &&
- 		git submodule set-branch -d submodule &&
- 		! grep branch .gitmodules &&
- 		git submodule update --remote &&
- 		cat <<-\EOF >expect &&
--		a
-+		d
- 		EOF
- 		git -C submodule show -s --pretty=%s >actual &&
- 		test_cmp expect actual
++test_expect_success 'guesses initial branch name correctly' '
++	git init --initial-branch=guess initial-branch &&
++	test_commit -C initial-branch no-spoilers &&
++	git -C initial-branch branch abc guess &&
++	git clone initial-branch is-it &&
++	test refs/heads/guess = $(git -C is-it symbolic-ref HEAD)
++'
++
+ test_done
 -- 
 gitgitgadget
 
