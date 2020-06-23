@@ -2,107 +2,65 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33C4AC433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 09:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4779C433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:00:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 084EA20774
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 09:20:07 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F68nNeUF"
+	by mail.kernel.org (Postfix) with ESMTP id C942120716
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 10:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731965AbgFWJUF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 05:20:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34572 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731912AbgFWJUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 05:20:05 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E51C061573
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 02:20:05 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id i3so5331399qtq.13
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 02:20:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1PGH+kakfwFCaQs/0UXJUkntBdzdtbkzWqgAXMlujzg=;
-        b=F68nNeUFXCJIlhvpAab6Xa7YgoAiUX1YX0uhfZDruGNdNor55UFamDbvXyizM+aUkM
-         MPT6rC2jZ/L2pBn7puFQK5mY32AyVTnq2ppg3xvKpIv59leg6xy/0Q+FPOtDcXl37PHc
-         53lvlIUMZGzDR5xIh2TreOqYmbbxczfIJeM7zpEVN93LRV3uJgEjCReBHmxDmkF80t1u
-         IL6pWQGZ7DreWQP+5+dJDY2YHiOTkRCt+EMnIf02Pb7ZLhBfCMlV/5RGezi+sxPdodIo
-         nC4YWMJlztGhvQBgwB8/tQmNE91WpWSnkUizFQGoj91nyfFUGd3wTh/5RjmMABv0CLKA
-         C66g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1PGH+kakfwFCaQs/0UXJUkntBdzdtbkzWqgAXMlujzg=;
-        b=PGGZ2LtaFEsKDz4oF6IE80l1DvH7fkywT0CN+ieNJjs2O7mDsqwIV7HCzRlXsmuipL
-         u0sbrOKUpYmbwbXAwWws6CUgS1n6DPErnCpBi+E0s0AddOHUxM9MLaCLEn/jjJVeepwT
-         IoVvBBff899ya/gMQ2qGGJ7UFynLvhVtNWHJy+zgqUBkl/blIcYc67NF5BmzbTQEi+CN
-         l8HhKq4UyZxvTKBBj4mwbymi2V4HdCikaaiWo/f2JECO88Xz65fwp4gnSlUAAxgjCvcs
-         n/5au7l3ZqAZ3GvXCw3TRv/irod1ehyIxnOsQaIYHXfiqHy2u/lnUVuhGEz1Y+2gIU2O
-         4Eig==
-X-Gm-Message-State: AOAM533rzzMYqssq2QWKhmcN0wAxfVdEY0X+2or3+QAF9rt5hgZE8I7/
-        EyOEegRP/1JcvLtmIk6xuUaq7THv+0w=
-X-Google-Smtp-Source: ABdhPJydKz81q4X+53r7hyMjfZ058/ImEDxIlJW9xmH3LpTDbYTvXWw0Y8wvTEZlFDRpLiFeNHUpQQ==
-X-Received: by 2002:ac8:6f2f:: with SMTP id i15mr20609094qtv.73.1592904004374;
-        Tue, 23 Jun 2020 02:20:04 -0700 (PDT)
-Received: from archbookpro.phub.net.cable.rogers.com (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
-        by smtp.gmail.com with ESMTPSA id p22sm74590qtc.7.2020.06.23.02.20.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jun 2020 02:20:03 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] builtin/diff: fix botched update of usage comment
-Date:   Tue, 23 Jun 2020 05:19:49 -0400
-Message-Id: <4a1e357c390690375374490cd5aa2431a2593b9d.1592903964.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.132.g321788e831
+        id S1732247AbgFWKAQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 06:00:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39722 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731976AbgFWKAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 06:00:16 -0400
+Received: (qmail 8993 invoked by uid 109); 23 Jun 2020 10:00:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Jun 2020 10:00:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13489 invoked by uid 111); 23 Jun 2020 10:00:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Jun 2020 06:00:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 23 Jun 2020 06:00:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2020, #04; Mon, 22)
+Message-ID: <20200623100015.GA3386564@coredump.intra.peff.net>
+References: <xmqqimfid2l1.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqimfid2l1.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous commit, an attempt was made to correct the "N=1, M=0"
-case. However, the fix was botched and it introduced two half-correct
-sections by mistake. Combine these half-correct sections into one fully
-correct section.
+On Mon, Jun 22, 2020 at 05:54:02PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
+> * jk/fast-export-anonym (2020-06-22) 4 commits
+>   (merged to 'next' on 2020-06-22 at b517b2f707)
+>  + fast-export: allow dumping the path mapping
+>  + fast-export: refactor path printing to not rely on stdout
+>  + fast-export: anonymize "master" refname
+>  + fast-export: allow dumping the refname mapping
+> 
+>  The way refnames are anonymized has been updated and a way to help
+>  debugging using the anonymized output hsa been added.
+> 
+>  Will merge to 'master'.
 
-Notes:
-    This patch is based on dl/diff-usage-comment-update.
+This graduated much faster than I expected. I really did mean my "I'll
+look at this other direction" literally. I should have something to show
+later today. :)
 
- builtin/diff.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+The two techniques could complement each other, but I think the other
+one might be sufficient, and seems to be coming out a little cleaner.
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index bdae4d6a58..cdfb58d04b 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -284,11 +284,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	 * N=1, M=0:
- 	 *      tree vs files (diff-index)
- 	 *
--	 * N=1, M=0:
--	 *      tree vs cache (diff-index --cached)
--	 *
- 	 * N=1, M=0, --cached:
--	 *      tree vs files (diff-index)
-+	 *      tree vs cache (diff-index --cached)
- 	 *
- 	 * N=2, M=0:
- 	 *      tree vs tree (diff-tree)
--- 
-2.27.0.132.g321788e831
-
+-Peff
