@@ -2,97 +2,94 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E529C433DF
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81D9DC433DF
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:24:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78ABA20774
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:24:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 618922070E
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 15:24:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732987AbgFWPYh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 11:24:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40098 "EHLO cloud.peff.net"
+        id S1732990AbgFWPYs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 11:24:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40110 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732885AbgFWPYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 11:24:37 -0400
-Received: (qmail 11768 invoked by uid 109); 23 Jun 2020 15:24:37 -0000
+        id S1732885AbgFWPYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 11:24:48 -0400
+Received: (qmail 11782 invoked by uid 109); 23 Jun 2020 15:24:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Jun 2020 15:24:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Jun 2020 15:24:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16863 invoked by uid 111); 23 Jun 2020 15:24:36 -0000
+Received: (qmail 16882 invoked by uid 111); 23 Jun 2020 15:24:48 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Jun 2020 11:24:36 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Jun 2020 11:24:48 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 23 Jun 2020 11:24:36 -0400
+Date:   Tue, 23 Jun 2020 11:24:47 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [alternative 0/10] fast-export: allow seeding the anonymized mapping
-Message-ID: <20200623152436.GA50925@coredump.intra.peff.net>
-References: <20200619132304.GA2540657@coredump.intra.peff.net>
- <20200622214745.GA3302779@coredump.intra.peff.net>
+Subject: [PATCH 01/10] t9351: derive anonymized tree checks from original repo
+Message-ID: <20200623152447.GA1435482@coredump.intra.peff.net>
+References: <20200623152436.GA50925@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200622214745.GA3302779@coredump.intra.peff.net>
+In-Reply-To: <20200623152436.GA50925@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 22, 2020 at 05:47:46PM -0400, Jeff King wrote:
+Our tests of the anonymized repo just hard-code the expected set of
+objects in the root and subdirectory trees. This makes them brittle to
+the test setup changing (e.g., adding new paths that need tested).
 
-> Here's a v2 which I think addresses all of the comments. I have to admit
-> that after writing my last email to Junio, I am wondering whether it
-> would be sufficient and simpler to let the user specify a static mapping
-> of tokens (that could just be applied anywhere).
-> 
-> I'll take a look at that, but since I worked up this version, here it is
-> in the meantime.
+Let's look at the original repo to compute our expected set of objects.
+Note that this isn't completely perfect (e.g., we still rely on there
+being only one tree in the root), but it does simplify later patches.
 
-So here's that alternative. I think the result is actually a bit nicer
-to work with, _and_ it's a lot less code. Don't let the number of
-patches fool you. Most of it is cleanup that would be worth doing even
-without the final patches.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t9351-fast-export-anonymize.sh | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-Both of these techniques _could_ live side-by-side within fast-export,
-as they have slightly different strengths and weaknesses. But I'd prefer
-to just go with one (this one) in the name of simplicity, and I strongly
-suspect nobody will ever ask for the other.
-
-  [01/10]: t9351: derive anonymized tree checks from original repo
-  [02/10]: fast-export: use xmemdupz() for anonymizing oids
-
-    These first two are actually a bug-fix that I noticed while writing
-    it.
-
-  [03/10]: fast-export: store anonymized oids as hex strings
-  [04/10]: fast-export: tighten anonymize_mem() interface to handle only strings
-  [05/10]: fast-export: stop storing lengths in anonymized hashmaps
-  [06/10]: fast-export: use a flex array to store anonymized entries
-  [07/10]: fast-export: move global "idents" anonymize hashmap into function
-  [08/10]: fast-export: add a "data" callback parameter to anonymize_str()
-
-    This is all cleanup and prep. More than is strictly necessary for
-    this series, but it does simplify things and reduce the memory
-    footprint (only a few megabytes in git.git, but more in larger
-    repos).
-
-  [09/10]: fast-export: allow seeding the anonymized mapping
-
-    And then this is the actual feature...
-
-  [10/10]: fast-export: anonymize "master" refname
-
-    ...which finally lets us drop the special name rule.
-
- Documentation/git-fast-export.txt |  24 +++++
- builtin/fast-export.c             | 161 +++++++++++++++++++-----------
- t/t9351-fast-export-anonymize.sh  |  54 +++++++---
- 3 files changed, 167 insertions(+), 72 deletions(-)
+diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
+index 897dc50907..e772cf9930 100755
+--- a/t/t9351-fast-export-anonymize.sh
++++ b/t/t9351-fast-export-anonymize.sh
+@@ -71,22 +71,18 @@ test_expect_success 'repo has original shape and timestamps' '
+ 
+ test_expect_success 'root tree has original shape' '
+ 	# the output entries are not necessarily in the same
+-	# order, but we know at least that we will have one tree
+-	# and one blob, so just check the sorted order
+-	cat >expect <<-\EOF &&
+-	blob
+-	tree
+-	EOF
++	# order, but we should at least have the same set of
++	# object types.
++	git -C .. ls-tree HEAD >orig-root &&
++	cut -d" " -f2 <orig-root | sort >expect &&
+ 	git ls-tree $other_branch >root &&
+ 	cut -d" " -f2 <root | sort >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'paths in subdir ended up in one tree' '
+-	cat >expect <<-\EOF &&
+-	blob
+-	blob
+-	EOF
++	git -C .. ls-tree other:subdir >orig-subdir &&
++	cut -d" " -f2 <orig-subdir | sort >expect &&
+ 	tree=$(grep tree root | cut -f2) &&
+ 	git ls-tree $other_branch:$tree >tree &&
+ 	cut -d" " -f2 <tree >actual &&
+-- 
+2.27.0.517.gbc32778fa3
 
