@@ -2,118 +2,154 @@ Return-Path: <SRS0=IiYM=AE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 347CBC433E0
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5D17C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:22:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DB2B2077D
-	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:15:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9987C20738
+	for <git@archiver.kernel.org>; Tue, 23 Jun 2020 21:22:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KAXTkYiI"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nuHtQ6Lf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393418AbgFWVPt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 17:15:49 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52311 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392204AbgFWVPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 17:15:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1592946938;
-        bh=SjtNsG+urZJnWaqaAq1mz10SqXDtUiPUPWmkESfbaxc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KAXTkYiI0GzV5KfR/gSzJL+juBjevvA5RN3Cte3W/bE1gB701zdDx+47BKjT6F5Fx
-         Y9MyIT/uQDlHNs19fOurlDgD+fyMAu67xEIcswcUWbbQIyFvQh6GlGQ6o45e134Hjr
-         VlOe8H5iZXwiVtkwrP1/UhK4DJZBsDMqgUbrgjj4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKbg4-1jZUF41dVs-00KxhO; Tue, 23
- Jun 2020 23:15:38 +0200
-Date:   Tue, 23 Jun 2020 23:15:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH 2/9] remote: respect `core.defaultBranchName`
-In-Reply-To: <20200618115028.GB41345@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2006232313540.54@tvgsbejvaqbjf.bet>
-References: <pull.656.git.1591823971.gitgitgadget@gmail.com> <06a2cea051c01ebee38c9910425171f112daf41a.1591823971.git.gitgitgadget@gmail.com> <20200616123559.GB666057@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2006181218270.54@tvgsbejvaqbjf.bet>
- <20200618115028.GB41345@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2391638AbgFWVWu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 17:22:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40134 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388978AbgFWUVj (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Jun 2020 16:21:39 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 525066048A;
+        Tue, 23 Jun 2020 20:21:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1592943698;
+        bh=XXHOeBvvuIg5rOdJVT9dfP5epCWfpKXhtPUR8jCvpBg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=nuHtQ6LfXsPFwMkI5tEmawC9UnpYEgdkUYt6IlZpQaa71WK33d7U2X2n3AUTS1wnK
+         TZaIOffB2xCUXFXf6+Lzw4or/QM4w1aoMa3QteoKh64DavGM/1W18FHjGP5eAkahsb
+         4SppkY+tT3SGrkGArJVYHeAHqyWLMPXeUmghqgMTohRTscYSuzExA4ecFf+srTy9Cs
+         JR7qHkYV93XdUYyE/5PjgZ5yqITnh4iyXhVjJYCFCeHYtfFhF8LwCC5x7u9a0bejuX
+         34hhVjJFMyvz7ZPpr24IFH80EoS3SogBvREsSnRhIaeT0vuCBJNsNPhmy4rQ7hqw1i
+         D/r89t2NqSsR2HiUi70M7wbPQRvoCCu4RM192QaPIbKU2nvgeQM9cxlsb7q5qRsp6y
+         sDzMxkzvGjC3W8R/yTLg9ceXBdpvq3gw07jJ7rLjS6EiE3nqfA9Wc+6L6EGhiWAtE0
+         CCNiLIQ9o0ra18P/kp2WHN1uiJCw0Y6J2fLgukd/uSB3hMUjJ58
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Ward <mward@smartsoftwareinc.com>
+Subject: [PATCH] http-push: ensure unforced pushes fail when data would be lost
+Date:   Tue, 23 Jun 2020 20:21:29 +0000
+Message-Id: <20200623202129.2616672-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.27.0.278.ge193c7cf3a9
+In-Reply-To: <20200623010519.GR6531@camp.crustytoothpaste.net>
+References: <20200623010519.GR6531@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dIiLTb85FFjddnKIJE4bW2ZIUahbN/DWciQfyLDSZjkkC+gnZda
- Am2igaSRO6KkTYwddGOREzgTnu7kC2OmBL6edTaoOoR/usYAcQF7f6ItD0wWvmkorkkeB61
- ispuoRnHv5MaYjxskI9dbKcYuBiPUaP2WFx5Rs8NFRDVSF8cPlNnUnTX/3Cp4lTZtta0Czw
- bxg5brSsZlVfgZ0Azeqtg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Pnvam1onuoY=:Ho0ag0BQBRZql2rKKspyvZ
- AvBrbAf0PWGQ+y7wV+i14IhUMsquB/RswEQeUuwfqnE6QhZ+3To1ephJ3q+c2lFrlNlbSZVRD
- AkBy3I0uqPWEjGfCYKIKRAcWP9efApBS5QpN46/zEY33WtVbT97hePlf0xIUBA7KfLb3H/sa+
- hAr+dXPJ/fBu+jLkDQtq2FM0UxAh1HFwiXVz5g4r/oH5VT7I6wH8o0txYJYN2wqOdiIukVfI3
- 5gMYqzT834D1oNVKPJ/BkvZfQ6UZObp8ZRNIsbumzYgMLRpFBrvMqtvJqUKV4P1K1fA/82qUZ
- cc1gDcbjbZHy/36HGt/PF8ww6O7eY3m3hHxz0zNqXoS9aOL3TO2qs2PFm8EZTf5NKHQ+c9S/E
- 2QrMwF9RfMFLg6uD/tTZgYyH/rTCi+WpckqGP0LxZkQvDqLZ57qXWKk4Xwt8ZVelDtHjoUPU1
- P3JGBgxpSgSzkxFkiMwxZEduQXtpPiZ37xUW6+SZxeE+7gmPgHkDKGnTIWroLcaRHu/I/WY3r
- vJBYQRUBsIuLWnrBtW1k/5CHZyeClC9NCKno08/AcZy4VygcERitRGXAY40tgm6om3QGMd8Dm
- R8Hisp9DH5aHLNzH9MKiI33kgL/CM5Sj5TBWLzWmPvA7/A1baMT0WzgZ6j/z467CdbUvp7T/y
- vk8+rADhU/PmMlcbmNfmKJc7w3LqCa48LlwFQjTLLvw4nMQdclyq+t1tJJ1jIcZZftI0UuKAs
- K2RuXKfhA7qmtRNCc3Nrk4eJQjRtlyo0wwYvIqYwsjDCunxYweE/eONAtrR8yqWtdI3bsZZ4D
- FDrPcG84UF/pAW1mmAtQc625xdu9lvMGGvMOrz52NtHRN6uPRSC4uVO2Y4hrqs0EAMlTaLYW5
- QvKfPpE8/ctCgq9L1xaRz5j9+AQfGNR6+W0nImvi+95tmVrw/PVevMNS23GcS5uJMBSWL8HHu
- cenTevXr5CQ9D5ODpDSNL59FtEI6n/l1wl4eXoJ2WMRnny9xQ8u7R3I/KPERsgGju4Gyhw7oO
- VAAABMeJhYlMnH9VBm5ImnWfZ0O62gt6hJgik3vVgv978cYiruB4INsmt/cwihsdrzIuF5TYB
- +cXaOszEg7Di3Y3SC/1jYjM8AX7rpCk5odYe223HWXMO+tj8BR7MHfAkjzjJESY2QqYtPZSmj
- KI9RhqVL0NYzjjw2E+7sLVg/dVpns3hVFaNMBUonnjg2jQjDBiAYQy4aHpoyauW/wl2SHTxnO
- RmKILwfCezk3CJDYJ
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+When we push using the DAV-based protocol, the client is the one that
+performs the ref updates and therefore makes the checks to see whether
+an unforced push should be allowed.  We make this check by determining
+if either (a) we lack the object file for the old value of the ref or
+(b) the new value of the ref is not newer than the old value, and in
+either case, reject the push.
 
-On Thu, 18 Jun 2020, Jeff King wrote:
+However, the ref_newer function, which performs this latter check, has
+an odd behavior due to the reuse of certain object flags.  Specifically,
+it will incorrectly return false in its first invocation and then
+correctly return true on a subsequent invocation.  This occurs because
+the object flags used by http-push.c are the same as those used by
+commit-reach.c, which implements ref_newer, and one piece of code
+misinterprets the flags set by the other.
 
-> On Thu, Jun 18, 2020 at 12:21:30PM +0200, Johannes Schindelin wrote:
->
-> > > Hopefully this would not matter _too_ much either way, as most serve=
-rs
-> > > would support the symref extension these days. But I still think we
-> > > should do our best to minimize spots where the user may see a
-> > > regression.
-> >
-> > Sure, we could just leave this alone, or we can just ditch the
-> > special-casing of `master` here.
-> >
-> > As you say, this does not affect any modern Git version, and IIRC the =
-code
-> > after that special-casing tries to find any remote ref that matches th=
-e
-> > remote `HEAD`.
->
-> I think we need to be a little careful with "any modern Git", because a
-> modern client against an old (or perhaps an alternative implementation)
-> server might still use it. I have to imagine it's pretty rare, but I
-> think it's still useful to return _some_ value.
->
-> But as you note, even without a symref extension, we already try to
-> guess based on a unique branch. Probably even choosing the first one
-> alphabetically would be reasonable. But I'd rather err on the side of
-> historical compatibility if we can do so easily. Looking for
-> init.mainBranch, followed by master, accomplishes that and isn't many
-> lines of code.
+Note that this does not occur in all cases.  For example, if the example
+used in the tests is changed to use one repository instead of two and
+rewind the head to add a commit, the test passes and we correctly reject
+the push.  However, the example provided does trigger this behavior, and
+the code has been broken in this way since at least Git 2.0.0.
 
-I ended up using `init.defaultBranch` as preference, falling back to
-`master`, and then falling back to the first ref matching the given commit
-hash.
+To solve this problem, let's move the two sets of object flags so that
+they don't overlap, since we're clearly using them at the same time.
+The new set should not conflict with other usage because other users are
+either builtin code (which is not compiled into git http-push) or
+upload-pack (which we similarly do not use here).
 
-That should be safe enough.
+Signed-off-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ http-push.c                 |  8 ++++----
+ object.h                    |  2 +-
+ t/t5540-http-push-webdav.sh | 16 ++++++++++++++++
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/http-push.c b/http-push.c
+index 822f326599..99adbebdcf 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -70,10 +70,10 @@ enum XML_Status {
+ #define LOCK_REFRESH 30
+ 
+ /* Remember to update object flag allocation in object.h */
+-#define LOCAL    (1u<<16)
+-#define REMOTE   (1u<<17)
+-#define FETCHING (1u<<18)
+-#define PUSHING  (1u<<19)
++#define LOCAL    (1u<<11)
++#define REMOTE   (1u<<12)
++#define FETCHING (1u<<13)
++#define PUSHING  (1u<<14)
+ 
+ /* We allow "recursive" symbolic refs. Only within reason, though */
+ #define MAXDEPTH 5
+diff --git a/object.h b/object.h
+index b22328b838..a496d2e4e1 100644
+--- a/object.h
++++ b/object.h
+@@ -67,7 +67,7 @@ struct object_array {
+  * builtin/blame.c:                        12-13
+  * bisect.c:                                        16
+  * bundle.c:                                        16
+- * http-push.c:                                     16-----19
++ * http-push.c:                          11-----14
+  * commit-graph.c:                                15
+  * commit-reach.c:                                  16-----19
+  * sha1-name.c:                                              20
+diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
+index d476c33509..450321fddb 100755
+--- a/t/t5540-http-push-webdav.sh
++++ b/t/t5540-http-push-webdav.sh
+@@ -126,6 +126,22 @@ test_expect_success 'create and delete remote branch' '
+ 	test_must_fail git show-ref --verify refs/remotes/origin/dev
+ '
+ 
++test_expect_success 'non-force push fails if not up to date' '
++	git init --bare "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_conflict.git &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_conflict.git update-server-info &&
++	git clone $HTTPD_URL/dumb/test_repo_conflict.git "$ROOT_PATH"/c1 &&
++	git clone $HTTPD_URL/dumb/test_repo_conflict.git "$ROOT_PATH"/c2 &&
++	test_commit -C "$ROOT_PATH/c1" path1 &&
++	git -C "$ROOT_PATH/c1" push origin HEAD &&
++	git -C "$ROOT_PATH/c2" pull &&
++	test_commit -C "$ROOT_PATH/c1" path2 &&
++	git -C "$ROOT_PATH/c1" push origin HEAD &&
++	test_commit -C "$ROOT_PATH/c2" path3 &&
++	git -C "$ROOT_PATH/c1" log --graph --all &&
++	git -C "$ROOT_PATH/c2" log --graph --all &&
++	test_must_fail git -C "$ROOT_PATH/c2" push origin HEAD
++'
++
+ test_expect_success 'MKCOL sends directory names with trailing slashes' '
+ 
+ 	! grep "\"MKCOL.*[^/] HTTP/[^ ]*\"" < "$HTTPD_ROOT_PATH"/access.log
