@@ -2,113 +2,109 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5322C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 11:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E449C433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 12:44:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C20C320706
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 11:43:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DD7320836
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 12:44:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ErGDTGT2"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="MJEB1LeN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389040AbgFXLnV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 07:43:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53056 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388360AbgFXLnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 07:43:20 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552A9C061573
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 04:43:19 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id l10so1943347wrr.10
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 04:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=9Di5cSJFS4bvKBa92EdlrdzHkC2XQI/qoNEGVbO87VY=;
-        b=ErGDTGT2C9J1QwiPScZFLQbHd4WEoukkDul46mWCSjxPt0Ay3OwgPa3ifn1pMtCarL
-         PIe60pfy0egWLnmKMeVBaHTS4AKdXDQTuKBGqt3JFmqwwQjU8NDR7SNZ/kmtL0wUriLF
-         Mz/n+arIINJ81byymaKSzcJ7xZUg6Bd+snb5aVS4l5qZDC3HqBVWoC3XAw1bRvsnmvye
-         OkPZBfgZcCJFrONLZM0e348vx43gnnKHJZdM3CKI1gtPTDK5vIduNMfEklw8fTgtZqsV
-         OKwQ2ZVxIxUu7HT7zBJrmpy+4ldvkGQWxsFeX75EMsP9qHbRR1x7vwZ+3IawJtzACYzp
-         qIOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9Di5cSJFS4bvKBa92EdlrdzHkC2XQI/qoNEGVbO87VY=;
-        b=ENq7FmDJi0Lqh9Plu8Pr0GsG68jgtcFbCLwqJwnwiJ4c1GN6QfJE/UMQ12p9FPo3aG
-         6RAjbc/RpmCx/OeGnqv/yikXx1n1REXEwnlWJFY2ij3kMq4Dw6NvLn1ptUVRdcWDdWKH
-         Qo6ZiIGbhr21gTYSs98RERYgfclbRPypayiiCn1REN5BP3LWBKFY7kR/X9hF2s+pLxbk
-         27mqzaYiZKP+lVCsNUvE11IIMU5dnab+J1WSZqGeABeJv1MZFoX2eK2E60gidTwfFZxo
-         GYyO5dmehliVX6ILqnvp9fEuBdEZ25/8y1um295+dhV72viLqDHq3c4p3nHSEdO53BDU
-         EmRA==
-X-Gm-Message-State: AOAM5328jWh7R95jOs6y9Pzk89HpX31LGZejcXusS3RoHdXMgFHDK5jn
-        mc083fgnFR4FExYoBKks3+Cna0q0
-X-Google-Smtp-Source: ABdhPJywFtcTTHAUyS/nVli46aMRxmE+wU5hzKaz00z/b4dzDgrUdr3W44hmCdrP1eyb84XzoRssKA==
-X-Received: by 2002:adf:f608:: with SMTP id t8mr15736048wrp.308.1592998996915;
-        Wed, 24 Jun 2020 04:43:16 -0700 (PDT)
-Received: from szeder.dev (92-249-246-85.pool.digikabel.hu. [92.249.246.85])
-        by smtp.gmail.com with ESMTPSA id r1sm26284207wrn.29.2020.06.24.04.43.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jun 2020 04:43:16 -0700 (PDT)
-Date:   Wed, 24 Jun 2020 13:43:13 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/10] fast-export: store anonymized oids as hex strings
-Message-ID: <20200624114313.GJ2898@szeder.dev>
-References: <20200623152436.GA50925@coredump.intra.peff.net>
- <20200623152451.GC1435482@coredump.intra.peff.net>
+        id S2390819AbgFXMot (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 08:44:49 -0400
+Received: from mout.gmx.net ([212.227.17.20]:49131 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2388942AbgFXMos (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 08:44:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1593002660;
+        bh=DDJlnUkyAHcu+8Q0v45YdzfgikXdhJiow/4mY5y/pZQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=MJEB1LeNb6nk4xBQdj1mmjVyBP5hQ8MRINfQtwDEupSFYjjhSE/mKEA6JaweHbEEr
+         HS9UX7Zfw8rRZ5gkVYB4gfk73750ILCd6LRQDK73EIc7/Cb9loat/Ctgsm3r5pHRw1
+         J+RfTgEGyr7fCBstWQb8XF+yWfqj4FQUZ2pqtUi4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MjS9C-1j7tBG2mCI-00kt5c; Wed, 24
+ Jun 2020 14:44:20 +0200
+Date:   Wed, 24 Jun 2020 14:44:20 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Matt Rogers <mattr94@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v3 2/8] send-pack/transport-helper: avoid mentioning a
+ particular branch
+In-Reply-To: <xmqqr1u59u5f.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2006241443200.54@tvgsbejvaqbjf.bet>
+References: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <pull.656.v3.git.1592951611.gitgitgadget@gmail.com> <a29943d7bbc11a524089348a4abbd33c7514eee9.1592951611.git.gitgitgadget@gmail.com> <xmqqr1u59u5f.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200623152451.GC1435482@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:RCvZ5uUfIA52SJlPy+3WZuA7LQ33g0V7MDppNJZRc/AcmjOx8WT
+ 3SVS7iAeEoiz+EL3B61hWtDhZ6FAiuyGL/DubTDVPhG6qUxds96ZlYylliYWQrRvdvjC68m
+ naynGUIwxsSDnhOSFVgQew4xilVTgeMih1gI9A3KSLD8orttqQ2X1WdxojVawRBDR/JXr7m
+ 2kUde51It0t2x0MoguhGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qq4rEW53Rdk=:zIvcwQQ8n0SOlKdqydbDga
+ edNMS9tOXON4emNjSJrM6uZJDU02dBA2KyiJ56Py38DLs0OKqouyzeUfrV0tfRR6DeWSiFobY
+ PPSsMk5pE6hXXlxd6drFvpXMa5GVH+hw8i0DnBs9p//Sg3I7VUubvtSl1fIkX42jnxWKAEaLe
+ kGfNkUfGkhYo996Cjtg5wNfrdWl7Jxfv1QGCXA/XkHr1etUKc+G5l8jOoOC1kn2cnm9SuJbo1
+ h8bbEVDq9pEfpwj7xz/wBsuuXN3k8Ap0QYX6rjguj5Knw3XVXWU08+3o6er7pAg3bV95Ty7Vv
+ zP2vnNCExIMrjddqr2/m7IEVKfb3Fd+hwpBTSDmF3CYvSm9zydCTdGC5Kz0dpFuhOe5tOp//d
+ dARMvW10TvaFa5LOfZvzYLA6WuA9Q+a6G3rENF6NYDee5SMO9bHS6OZ2eikIV+FHsYD+r7s4i
+ pgghcTDHvG8uyUK3aHnc5g33NBTsr5q2JWCvN4zpJbLIHW9RYINtfkDRvrN9iPNL3DSgxltbP
+ /HQNYwiAn4QN2bFGmfLOzsXSbTmC0pDCgdPIFen+bDskjLHEhdIDctN/bUp1w2e1GK3mNSh/A
+ Lt8trdYqhUpTO4pIc49s1S5QGlQomjURqLhuF5RR+ngdUHRncNiUl2mpY4Ktoe+H0F9nnQOwB
+ VssAiscsDYSM5RuTfgN2Lwo9xE2WOIC8IzRcPS8tAzhV+ov3oc+Hqyx5UXL9EjV9a1r6hYuqO
+ 5ax9tsvVS3bhwQW1ylepUsJI+pO1xREXeCdvTbNIaN/O7noOPQ87WcrN9wlY0XLZBEF6SBBts
+ Qwdhr7R/JF1YKjSRNBEtNdMNxuP3XXVYvGjd6QFjo4PHbk3GN+vsoP07OMyes+/ro8mK2wh3D
+ ym8Hfm9xLd+Bzieb/pcyMn/iT4YrRApobZDSOGqVOFPjhelEcMHF797PtfmgfuH0wOt+oliwe
+ 61IBX3m6G2eBZ1VSV2oE9X2xwPS83RSrlwizmrjXyo/nGU8EiSpXdQ2o/qoYenJQGeOVSodw2
+ uUBQp6s/0ON/9RJfoudfBiqcH0E44FbMAW25uDGApWU144ciszd8iS18CzmfEszYBh2DujszR
+ aGgDC05RUtD7fbkFk7WE2VAgnHgowxAxw7LCkW4UHZbo4NyaM8O3vv3gyz6sqbtBWitMjS31x
+ zhj94yBdMBn7Z88RW1y9OTcI8YRlnJXreMTIVTuk2s5S4q0rjpr9Pz9ShVVnQ3FA6fLoOQEqe
+ r35FpTeujKkPhvegK
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 23, 2020 at 11:24:51AM -0400, Jeff King wrote:
+Hi Junio,
 
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 289395a131..4a3a4c933e 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -387,16 +387,19 @@ static void *generate_fake_oid(const void *old, size_t *len)
->  {
->  	static uint32_t counter = 1; /* avoid null oid */
->  	const unsigned hashsz = the_hash_algo->rawsz;
-> -	unsigned char *out = xcalloc(hashsz, 1);
-> -	put_be32(out + hashsz - 4, counter++);
-> -	return out;
-> +	struct object_id oid;
-> +	char *hex = xmallocz(GIT_MAX_HEXSZ);
-> +
-> +	oidclr(&oid);
-> +	put_be32(oid.hash + hashsz - 4, counter++);
-> +	return oid_to_hex_r(hex, &oid);
->  }
+On Tue, 23 Jun 2020, Junio C Hamano wrote:
 
-GCC 4.8 complains about this change in our CI job:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > @@ -1046,7 +1046,7 @@ static int push_refs(struct transport *transport=
+,
+> >  	if (!remote_refs) {
+> >  		fprintf(stderr,
+> >  			_("No refs in common and none specified; doing nothing.\n"
+> > -			  "Perhaps you should specify a branch such as 'master'.\n"));
+> > +			  "Perhaps you should specify a specific branch.\n"));
+>
+> Hmph, not just "specify a branch."?  Maybe it is just me, but
+> "specify a specific branch" did not roll well on my tongue.
 
-  $ make CC=gcc-4.8 builtin/fast-export.o
-      CC builtin/fast-export.o
-  builtin/fast-export.c: In function ‘generate_fake_oid’:
-  builtin/fast-export.c:394:2: error: dereferencing type-punned pointer will break strict-aliasing rules [-Werror=strict-aliasing]
-    put_be32(oid.hash + hashsz - 4, counter++);
-    ^
-  cc1: all warnings being treated as errors
+Oh well. "Perhaps you should specify a branch" sounded too judgmental to
+me, but I'm not a native speaker, so I simply removed the word "specific".
 
-
+Ciao,
+Dscho
