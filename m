@@ -2,124 +2,142 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9EB2C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 837A7C433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:45:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC77C2078D
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:33:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3ADAB20738
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:45:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYbDP8lD"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JM5D/jro"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388392AbgFXXdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 19:33:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50218 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387709AbgFXXdA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 19:33:00 -0400
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DB2C061573
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 16:32:58 -0700 (PDT)
-Received: by mail-qv1-xf44.google.com with SMTP id g7so1919722qvx.11
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 16:32:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=N5niTNvILZIe3247dXEHKWfE+0gRo9BckREUqYeb2F4=;
-        b=GYbDP8lDlT6lTJCiutn3dx87W8YeT0/iqTOR0XW73u/K7ZibiO5UpR2ROXJjTTEeLQ
-         0kmrMuk27GPnPpnmICMhJ7un/oawhuPbj5YnN8rBjpXjd8BOOCN/LYS6GQXcM6/YBUc6
-         xWTvrAxgQY3oxGr+2g2BMDypE8I7IQ5DW6m/b7t0XnQWREp8/vSreFGzlq5ChEdAzUFE
-         UXrCy1m+fGuDtjGzDj5zbYq8yG+ZsEfAR6l0lzOx/32/iBaEWd4jjVnZBMiPhaaoF45i
-         5HrPCkXyGWbeWmO7fgVji4TnaguKwn07tIqIgsfV2FvfFXKLT6vniMS5arRNVNBWncX5
-         Xm3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=N5niTNvILZIe3247dXEHKWfE+0gRo9BckREUqYeb2F4=;
-        b=qUeVkiiteWIt33dTDqfpuLTRqoqDxktwGfZNZZjumUlgDT5yy0GUqx89MlR/pAtOB2
-         fGHErW2IqRA0cITZf+ih4KNgKEmkxf6dQMv8QxxYjYepbseoLZLxZHwboMiBGaOahaJ6
-         ELG7lRavPn924R+/0omtcLtKdc3pEL8UDr50U6jFIq2tZWzqq8WV/+WLqwniuU7MX6el
-         /k9E0lDvJ9T51sk47/W2TITUjR+TUzsiiWtuxlSyiHL9pa3HMvF7lNwDZTwBciwb85ub
-         dhX5S4vnRpKO+CXLETmNMieSyghEZuV9gTB9k+0Wojym1bMbgHhcUtPMjjOe87LP6izx
-         jaPg==
-X-Gm-Message-State: AOAM53012ZCWUJsJqAYzICPsqF4Egt84WN7ccsJRlCeO8ISZe+CQniIw
-        J2IJwEANoalBA0bjXEF/fCE=
-X-Google-Smtp-Source: ABdhPJyxCj52ctXx7DaABu8rfVE9tkYCRqtGzzcLuEaynAQ7YMBy3riaxvazF/bJVxW4FmAP1Eun2A==
-X-Received: by 2002:ad4:580e:: with SMTP id dd14mr17107105qvb.96.1593041577685;
-        Wed, 24 Jun 2020 16:32:57 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 195sm4613494qkl.37.2020.06.24.16.32.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jun 2020 16:32:57 -0700 (PDT)
-Subject: Re: [PATCH v2 00/11] More commit-graph/Bloom filter improvements
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, szeder.dev@gmail.com,
-        l.s.r@web.de, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
- <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
- <xmqqftak5aa0.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <429f38a2-9346-f6f7-bd69-2fd63828ae7c@gmail.com>
-Date:   Wed, 24 Jun 2020 19:32:56 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+        id S2387843AbgFXXpu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 19:45:50 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:38176 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1731184AbgFXXpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 19:45:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1593042348;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=pX1IBP+C+o1erPNnpyb5gB2xMptKybKShK3Jkp8wRG4=;
+        b=JM5D/jrouCf735hOfzKmIAKY87ZGZeSYRlQEjs//gAPI0UptFV41ImEjtanbTnGgfNuxst
+        VSBxfETJ0THm2EYA7xT46lcHdLk95Ua8OxTIOQLHqeU+TJb54nBAZF8Lj9a15UedYTw8QP
+        ALJIspp8sbgUALXW1WICWt5QucoN7Q4=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-258-hVdXSg9LMRuCj00vKcSIeg-1; Wed, 24 Jun 2020 19:45:44 -0400
+X-MC-Unique: hVdXSg9LMRuCj00vKcSIeg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id B1B41464;
+        Wed, 24 Jun 2020 23:45:43 +0000 (UTC)
+Received: from optiplex-lnx (unknown [10.3.128.9])
+        by smtp.corp.redhat.com (Postfix) with ESMTPS id C66B160C87;
+        Wed, 24 Jun 2020 23:45:42 +0000 (UTC)
+Date:   Wed, 24 Jun 2020 19:45:39 -0400
+From:   Rafael Aquini <aquini@redhat.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] send-email: restore --in-reply-to superseding behavior
+Message-ID: <20200624234539.GH1987277@optiplex-lnx>
+References: <20200624195520.2062298-1-aquini@redhat.com>
+ <xmqqo8p85eud.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqftak5aa0.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo8p85eud.fsf@gitster.c.googlers.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/24/2020 7:11 PM, Junio C Hamano wrote:
-> This does not seem to play well with what is in flight.  Tests seem
-> to pass with topics up to es/config-hooks merged but not with this
-> topic merged on top.
+On Wed, Jun 24, 2020 at 02:33:14PM -0700, Junio C Hamano wrote:
+> Rafael Aquini <aquini@redhat.com> writes:
 > 
->     1b5d3d8260 Merge branch 'ds/commit-graph-bloom-updates' into seen
->     32169c595c Merge branch 'es/config-hooks' into seen
->     ...
+> > git send-email --in-reply-to= fails to override the email headers,
+> > if they're present in the output of format-patch, which breakes the
 > 
-> $ sh t4216-log-bloom.sh -i -v
-> 
-> ends like so:
-> 
-> ok 133 - Use Bloom filters if they exist in the latest but not all commit graphs in the chain.
-> 
-> expecting success of 4216.134 'persist filter settings':
->         test_when_finished rm -rf .git/objects/info/commit-graph* &&
->         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" git commit-graph write --reachable --changed-paths &&
->         grep "{\"hash_version\":1,\"num_hashes\":7,\"bits_per_entry\":10}" trace2.txt &&
->         cp .git/objects/info/commit-graph commit-graph-before &&
->         corrupt_graph $BASE_K_BYTE_OFFSET "\09" &&
->         corrupt_graph $BASE_LEN_BYTE_OFFSET "\0F" &&
->         cp .git/objects/info/commit-graph commit-graph-after &&
->         test_commit c18 A/corrupt &&
->         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" git commit-graph write --reachable --changed-paths &&
->         grep "{\"hash_version\":1,\"num_hashes\":57,\"bits_per_entry\":70}" trace2.txt
-> 
-> not ok 134 - persist filter settings
-> # ...
-> 
-> Thanks.
+> Will do s/breakes/breaks/ while applying.
+>
 
-Thanks for letting me know. I'll investigate carefully with the
-rest of the 'seen' branch. This test is a bit fragile due to
-computed values for which bytes to replace, so anything that
-could have changed the length or order of chunks would lead to
-a failure here.
+UGH! I've been fat-fingering typos the whole day, today... Sorry about
+that one.
 
-Sorry for the disruption.
+ 
+> It makes me wonder, however, why it is a good idea to have the I-R-T
+> in the format patch output in the first place.
+> 
+> >  			elsif (/^In-Reply-To: (.*)/i) {
+> > -				$in_reply_to = $1;
+> > +				if (!$initial_in_reply_to) {
+> > +					$in_reply_to = $1;
+> > +				}
+> 
+> I can see how this would work the way it should for the first
+> message we send out, so it would work well for a single patch.
+> 
+> But what does this change do to the chaining (either making [PATCH
+> 1/N] thru [PATCH N/N] as responses to the cover letter [PATCH 0/N],
+> or making [PATCH n+1/N] as response to [PATCH n/N] for 1 <= n < N)
+> of multiple messages?
+> 
+> When you prepare a series whose 1..N/N are all pointing at 0/N with
+> the already prepared In-Reply-To (so you have N+1 files to send
+> out), wouldn't you want to make 0/N a reply to a particular message
+> you specify on the command line, while keeping the relationship
+> among your messages intact?  Doesn't having $initial_in_reply_to
+> (i.e. command line override) help above code break the chaning?
+>
 
--Stolee
+This change will make all emails to appear as a reply to the msgid
+fed to --in-reply-to. I see your point, though, and at its light 
+I think now this patch, is actually incomplete. 
+
+With this change we get back the override desired behavior,
+but it also breaks the contract, according to the man page.
+
+"
+ --in-reply-to=<identifier>
+     Make the first mail (or all the mails with --no-thread) appear as a reply to the given Message-Id, which
+     avoids breaking threads to provide a new patch series. The second and subsequent emails will be sent as
+     replies according to the --[no-]chain-reply-to setting.
+"
+
+I drove the change based on my usecase, which is marginal to the
+multi-part reply case. 
+
+I guess we just need the following, for a complete solution:
+
+
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index dc95656f75..768296ea0a 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1699,10 +1699,14 @@ sub process_file {
+ 				$xfer_encoding = $1 if not defined $xfer_encoding;
+ 			}
+ 			elsif (/^In-Reply-To: (.*)/i) {
+-				$in_reply_to = $1;
++				if (!$initial_in_reply_to || $thread) {
++					$in_reply_to = $1;
++				}
+ 			}
+ 			elsif (/^References: (.*)/i) {
+-				$references = $1;
++				if (!$initial_in_reply_to || $thread) {
++					$references = $1;
++				}
+ 			}
+ 			elsif (!/^Date:\s/i && /^[-A-Za-z]+:\s+\S/) {
+ 				push @xh, $_;
 
