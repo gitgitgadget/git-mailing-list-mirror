@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B118C433E1
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B10C433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:48:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C6C020702
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:48:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B98320702
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:48:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TIISxCCG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kFYb1tgv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404037AbgFXOss (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 10:48:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53430 "EHLO
+        id S2404031AbgFXOsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 10:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404026AbgFXOsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 10:48:46 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5471FC061573
+        with ESMTP id S2403792AbgFXOsp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 10:48:45 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3ABEC0613ED
         for <git@vger.kernel.org>; Wed, 24 Jun 2020 07:48:45 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id z13so2576911wrw.5
+Received: by mail-wm1-x329.google.com with SMTP id o2so2801561wmh.2
         for <git@vger.kernel.org>; Wed, 24 Jun 2020 07:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=p3Kkwx8s0hrsr78uUgV4C9Nfeh23RNhklLHroY9/BZY=;
-        b=TIISxCCGIZox0/tULJNHdxeuLjr8jf0kAcOcOY5NcrUcBWl8haFtOLTy8LPdAIn9cG
-         wzuFeeI/LKOA3L+KRj2ObPq5fTIcyC8oeOlhWyiHVz93euMFC1wY2qXOk5Pn7T3rMlUk
-         6RDsNXNVF+7Tx0vBRNgYAm8Jrx2O52mkOeVd1EoxBL9wXP/rQQb0rt1IO/bYt925nAs3
-         T5FEIHLxzGEHMj9y6cHioMIJ2r26375biJaB75e1+vPhbK900YihN36/cG13GycgLCIQ
-         mdGtE97Q5IVn0xVi4QtojTD7WX8BV15t2r3Rfgp3GkO/gkxRlUy5fwhUYcHrgIdfQoMg
-         zp3Q==
+        bh=WATopKgvPgAzyxZfMXtvKku6B/p2t4DGUl/bBvKCCTs=;
+        b=kFYb1tgvpPC/9z18YyKvpY6HjK4qvM2Nwt6EF60dFZ48ea5I3JdnxqLu0lvMfoChwZ
+         AXbZbiHjv2PBLXXwQvvuEWUe125MQFSPszTltY9nVxgUxjvWwFgCx/VfP27HkogoxiuO
+         IjWDEikLZ6IIv7N/u/egR+2vKO/67L6/6XHswGQKQByGr8ry6rOrft5Lh4oXieM4TvjQ
+         dXYpALf0QpV51E0o8ya0rwUUhoeaFDk3CMROI0obIxUh1CRk5aqMPRff8xBliz81HRxs
+         JjAZYZxonPC02GY8/B9/nNzWEB+IHllv+58bY7Gf3w+MH0epcKCA+LhYkBLd0+Gzsm3F
+         HA1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p3Kkwx8s0hrsr78uUgV4C9Nfeh23RNhklLHroY9/BZY=;
-        b=lkX86V2TBV1hFbxC28rBKItkIOCtYZo/9hRTFQNr24ptkL+cy60giFF7giMHqRbtV2
-         e2LZlBxuzINamE4Xxj4HPn1rcBZKwseJGvg3pB6xb056bKAsqvUeJ1L2MA5zleIgy1uW
-         ZQq3ELlIRLh/PELNYOqaK6VkQ++qn3gVsrBb8eojjOVyjFpgY/StsDstgDOnZ6/uEgVx
-         iI1sElOk0Ng3H6eqnwDRHj6gK3lEzp2O6M/+qsxpX1T6eJnqTs8n0PIOWQ8jvGWeTmcX
-         rR9ltyBR42bVdMr/kFwKbepRatVF8jYapW4GXsvLjkGNRZaPUlCJnAedxsFJ2jCwP9w3
-         CGiQ==
-X-Gm-Message-State: AOAM532D+8SQQyvpAOIK9SQWsJ1+/Fwxgt7pcw8iPhLCmzN28F4AD2Su
-        E1kP6BuYUm+5nVN2x8KRxDm5gqKHA4s=
-X-Google-Smtp-Source: ABdhPJzRsEh28huwDQylx7O8ffHO+fIODtPzbvbUWjtfBW3+63Pn7zOiqV030fnK/M2NIC/UAYVKGw==
-X-Received: by 2002:adf:ef4d:: with SMTP id c13mr19584021wrp.315.1593010123332;
-        Wed, 24 Jun 2020 07:48:43 -0700 (PDT)
+        bh=WATopKgvPgAzyxZfMXtvKku6B/p2t4DGUl/bBvKCCTs=;
+        b=ksppvjEJ7bnLjTL2cqsW4wcWHsz8DvYDHZrRPKpvWkpU3QQWwtnH28b1qdg4w4v/SP
+         XZ7QKsWPp244A2UKj3oZFDaxa2vjXsljubgi6xkyCiMW4imGkxb1Uuz17iMNpxQxw4hj
+         02e+keBOL82z5vw1h+7kwKvu9e1ekmqML3+y3Yy/Gzf8aYmPD8L7ppCjD29o8HToc3Wx
+         0Vp0bnsDX9IDyZSyxV3Bey34zCN+CpMq7C8JoyK+TzYmRIxI3XVHfSu6fa18tmwf0W18
+         +2d7BgmGSH5AB4t7QnYMVFjyWJt6hndJXfA9zcWWy/qXamTIXxUdjdI5GbGCgv410E52
+         h56A==
+X-Gm-Message-State: AOAM532hY6IbMHuCnGt4xR1HTYjI43NbbvegPiJeqOYBVTK2eDGX6U/y
+        963hoFkxpIREg0Sr0WSjN5AFCfHnyto=
+X-Google-Smtp-Source: ABdhPJxAyCDZAW/a7SehABDjVIW5vxBdnnPIUjM/KfPBgBGR89avm7AGMpnjoXyXtbAyub10c0Lr+w==
+X-Received: by 2002:a1c:80d3:: with SMTP id b202mr9316397wmd.111.1593010124184;
+        Wed, 24 Jun 2020 07:48:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c70sm8153800wme.32.2020.06.24.07.48.42
+        by smtp.gmail.com with ESMTPSA id d132sm8288659wmd.35.2020.06.24.07.48.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2020 07:48:42 -0700 (PDT)
-Message-Id: <c2bcfdcb5bbd181f3c157ab9b6e8be8a70f6bce1.1593010120.git.gitgitgadget@gmail.com>
+        Wed, 24 Jun 2020 07:48:43 -0700 (PDT)
+Message-Id: <c8e356c02f95c48fa30711f3f89133b6c05c2867.1593010120.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
 References: <pull.668.git.1592924655.gitgitgadget@gmail.com>
         <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 24 Jun 2020 14:48:39 +0000
-Subject: [PATCH v2 2/3] docs: adjust the technical overview for the rename
- `pu` -> `seen`
+Date:   Wed, 24 Jun 2020 14:48:40 +0000
+Subject: [PATCH v2 3/3] tests: reference `seen` wherever `pu` was referenced
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,377 +80,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch tries to rewrite history a bit: the mail contents that have
-been added to Git's source code are actually fixed, we cannot change
-them in hindsight.
+As our test suite partially reflects how we work in the Git project, it
+is natural that the branch name `pu` was used in a couple places.
 
-But as the `pu` branch _was_ renamed, and as the documents were added to
-Git's source code not so much as historical record, but to describe the
-status quo, let's pretend that we have a time machine and adjust the
-provided information accordingly.
-
-Where appropriate, quotes were added for readability.
+Since that branch was renamed to `seen`, let's use the new name
+consistently.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/howto/maintain-git.txt          | 52 +++++++++----------
- .../howto/rebase-from-internal-branch.txt     | 32 ++++++------
- Documentation/howto/revert-branch-rebase.txt  | 32 ++++++------
- Documentation/howto/update-hook-example.txt   |  6 +--
- 4 files changed, 61 insertions(+), 61 deletions(-)
+ t/t5505-remote.sh     |  8 ++++----
+ t/t5516-fetch-push.sh | 16 ++++++++--------
+ t/t9902-completion.sh |  4 ++--
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
-index 73be8b49f8..a67130debb 100644
---- a/Documentation/howto/maintain-git.txt
-+++ b/Documentation/howto/maintain-git.txt
-@@ -66,7 +66,7 @@ this mailing list after each feature release is made.
-    demonstrated to be regression free.  New changes are tested
-    in 'next' before merged to 'master'.
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index dda81b7d07..8d62edd98b 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -988,7 +988,7 @@ test_expect_success 'remote set-branches' '
+ 	+refs/heads/maint:refs/remotes/scratch/maint
+ 	+refs/heads/master:refs/remotes/scratch/master
+ 	+refs/heads/next:refs/remotes/scratch/next
+-	+refs/heads/pu:refs/remotes/scratch/pu
++	+refs/heads/seen:refs/remotes/scratch/seen
+ 	+refs/heads/t/topic:refs/remotes/scratch/t/topic
+ 	EOF
+ 	sort <<-\EOF >expect.setup-ffonly &&
+@@ -998,7 +998,7 @@ test_expect_success 'remote set-branches' '
+ 	sort <<-\EOF >expect.respect-ffonly &&
+ 	refs/heads/master:refs/remotes/scratch/master
+ 	+refs/heads/next:refs/remotes/scratch/next
+-	+refs/heads/pu:refs/remotes/scratch/pu
++	+refs/heads/seen:refs/remotes/scratch/seen
+ 	EOF
  
-- - 'pu' branch is used to publish other proposed changes that do
-+ - 'seen' branch is used to publish other proposed changes that do
-    not yet pass the criteria set for 'next'.
+ 	git clone .git/ setbranches &&
+@@ -1016,7 +1016,7 @@ test_expect_success 'remote set-branches' '
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.replace &&
  
-  - The tips of 'master' and 'maint' branches will not be rewound to
-@@ -76,7 +76,7 @@ this mailing list after each feature release is made.
-    of the cycle.
+-		git remote set-branches --add scratch pu t/topic &&
++		git remote set-branches --add scratch seen t/topic &&
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.add-two &&
  
-  - Usually 'master' contains all of 'maint' and 'next' contains all
--   of 'master'.  'pu' contains all the topics merged to 'next', but
-+   of 'master'.  'seen' contains all the topics merged to 'next', but
-    is rebuilt directly on 'master'.
+@@ -1028,7 +1028,7 @@ test_expect_success 'remote set-branches' '
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.setup-ffonly &&
  
-  - The tip of 'master' is meant to be more stable than any
-@@ -229,12 +229,12 @@ by doing the following:
-    series?)
+-		git remote set-branches --add scratch pu &&
++		git remote set-branches --add scratch seen &&
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.respect-ffonly
+ 	) &&
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 9c6218f568..36ad20a849 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -747,42 +747,42 @@ test_expect_success 'deletion of a non-existent ref alone does trigger post-rece
+ '
  
-  - Prepare 'jch' branch, which is used to represent somewhere
--   between 'master' and 'pu' and often is slightly ahead of 'next'.
-+   between 'master' and 'seen' and often is slightly ahead of 'next'.
+ test_expect_success 'mixed ref updates, deletes, invalid deletes trigger hooks with correct input' '
+-	mk_test_with_hooks testrepo heads/master heads/next heads/pu &&
++	mk_test_with_hooks testrepo heads/master heads/next heads/seen &&
+ 	orgmaster=$(cd testrepo && git show-ref -s --verify refs/heads/master) &&
+ 	newmaster=$(git show-ref -s --verify refs/heads/master) &&
+ 	orgnext=$(cd testrepo && git show-ref -s --verify refs/heads/next) &&
+ 	newnext=$ZERO_OID &&
+-	orgpu=$(cd testrepo && git show-ref -s --verify refs/heads/pu) &&
+-	newpu=$(git show-ref -s --verify refs/heads/master) &&
++	orgseen=$(cd testrepo && git show-ref -s --verify refs/heads/seen) &&
++	newseen=$(git show-ref -s --verify refs/heads/master) &&
+ 	git push testrepo refs/heads/master:refs/heads/master \
+-	    refs/heads/master:refs/heads/pu :refs/heads/next \
++	    refs/heads/master:refs/heads/seen :refs/heads/next \
+ 	    :refs/heads/nonexistent &&
+ 	(
+ 		cd testrepo/.git &&
+ 		cat >pre-receive.expect <<-EOF &&
+ 		$orgmaster $newmaster refs/heads/master
+ 		$orgnext $newnext refs/heads/next
+-		$orgpu $newpu refs/heads/pu
++		$orgseen $newseen refs/heads/seen
+ 		$ZERO_OID $ZERO_OID refs/heads/nonexistent
+ 		EOF
  
--     $ Meta/Reintegrate master..pu >Meta/redo-jch.sh
-+     $ Meta/Reintegrate master..seen >Meta/redo-jch.sh
+ 		cat >update.expect <<-EOF &&
+ 		refs/heads/master $orgmaster $newmaster
+ 		refs/heads/next $orgnext $newnext
+-		refs/heads/pu $orgpu $newpu
++		refs/heads/seen $orgseen $newseen
+ 		refs/heads/nonexistent $ZERO_OID $ZERO_OID
+ 		EOF
  
-    The result is a script that lists topics to be merged in order to
--   rebuild 'pu' as the input to Meta/Reintegrate script.  Remove
-+   rebuild 'seen' as the input to Meta/Reintegrate script.  Remove
-    later topics that should not be in 'jch' yet.  Add a line that
-    consists of '### match next' before the name of the first topic
-    in the output that should be in 'jch' but not in 'next' yet.
-@@ -291,29 +291,29 @@ by doing the following:
-    merged to 'master'.  This may lose '### match next' marker;
-    add it again to the appropriate place when it happens.
+ 		cat >post-receive.expect <<-EOF &&
+ 		$orgmaster $newmaster refs/heads/master
+ 		$orgnext $newnext refs/heads/next
+-		$orgpu $newpu refs/heads/pu
++		$orgseen $newseen refs/heads/seen
+ 		EOF
  
-- - Rebuild 'pu'.
-+ - Rebuild 'seen'.
+ 		cat >post-update.expect <<-EOF &&
+ 		refs/heads/master
+ 		refs/heads/next
+-		refs/heads/pu
++		refs/heads/seen
+ 		EOF
  
--     $ Meta/Reintegrate master..pu >Meta/redo-pu.sh
-+     $ Meta/Reintegrate master..seen >Meta/redo-seen.sh
+ 		test_cmp pre-receive.expect pre-receive.actual &&
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 3c44af6940..c824608881 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -494,7 +494,7 @@ test_expect_success '__gitcomp - prefix' '
+ '
  
--   Edit the result by adding new topics that are not still in 'pu'
-+   Edit the result by adding new topics that are not still in 'seen'
-    in the script.  Then
+ test_expect_success '__gitcomp - suffix' '
+-	test_gitcomp "branch.me" "master maint next pu" "branch." \
++	test_gitcomp "branch.me" "master maint next seen" "branch." \
+ 		"ma" "." <<-\EOF
+ 	branch.master.Z
+ 	branch.maint.Z
+@@ -545,7 +545,7 @@ read -r -d "" refs <<-\EOF
+ maint
+ master
+ next
+-pu
++seen
+ EOF
  
--     $ git checkout -B pu jch
--     $ sh Meta/redo-pu.sh
-+     $ git checkout -B seen jch
-+     $ sh Meta/redo-seen.sh
- 
--   When all is well, clean up the redo-pu.sh script with
-+   When all is well, clean up the redo-seen.sh script with
- 
--     $ sh Meta/redo-pu.sh -u
-+     $ sh Meta/redo-seen.sh -u
- 
-    Double check by running
- 
--     $ git branch --no-merged pu
-+     $ git branch --no-merged seen
- 
-    to see there is no unexpected leftover topics.
- 
-    At this point, build-test the result for semantic conflicts, and
-    if there are, prepare an appropriate merge-fix first (see
--   appendix), and rebuild the 'pu' branch from scratch, starting at
-+   appendix), and rebuild the 'seen' branch from scratch, starting at
-    the tip of 'jch'.
- 
-  - Update "What's cooking" message to review the updates to
-@@ -323,14 +323,14 @@ by doing the following:
- 
-      $ Meta/cook
- 
--   This script inspects the history between master..pu, finds tips
-+   This script inspects the history between master..seen, finds tips
-    of topic branches, compares what it found with the current
-    contents in Meta/whats-cooking.txt, and updates that file.
--   Topics not listed in the file but are found in master..pu are
-+   Topics not listed in the file but are found in master..seen are
-    added to the "New topics" section, topics listed in the file that
--   are no longer found in master..pu are moved to the "Graduated to
-+   are no longer found in master..seen are moved to the "Graduated to
-    master" section, and topics whose commits changed their states
--   (e.g. used to be only in 'pu', now merged to 'next') are updated
-+   (e.g. used to be only in 'seen', now merged to 'next') are updated
-    with change markers "<<" and ">>".
- 
-    Look for lines enclosed in "<<" and ">>"; they hold contents from
-@@ -360,7 +360,7 @@ Observations
- Some observations to be made.
- 
-  * Each topic is tested individually, and also together with other
--   topics cooking first in 'pu', then in 'jch' and then in 'next'.
-+   topics cooking first in 'seen', then in 'jch' and then in 'next'.
-    Until it matures, no part of it is merged to 'master'.
- 
-  * A topic already in 'next' can get fixes while still in
-@@ -411,7 +411,7 @@ new use of the variable under its old name. When these two topics
- are merged together, the reference to the variable newly added by
- the latter topic will still use the old name in the result.
- 
--The Meta/Reintegrate script that is used by redo-jch and redo-pu
-+The Meta/Reintegrate script that is used by redo-jch and redo-seen
- scripts implements a crude but usable way to work this issue around.
- When the script merges branch $X, it checks if "refs/merge-fix/$X"
- exists, and if so, the effect of it is squashed into the result of
-@@ -431,14 +431,14 @@ commit that can be squashed into a result of mechanical merge to
- correct semantic conflicts.
- 
- After finding that the result of merging branch "ai/topic" to an
--integration branch had such a semantic conflict, say pu~4, check the
-+integration branch had such a semantic conflict, say seen~4, check the
- problematic merge out on a detached HEAD, edit the working tree to
- fix the semantic conflict, and make a separate commit to record the
- fix-up:
- 
--     $ git checkout pu~4
-+     $ git checkout seen~4
-      $ git show -s --pretty=%s ;# double check
--     Merge branch 'ai/topic' to pu
-+     Merge branch 'ai/topic' to seen
-      $ edit
-      $ git commit -m 'merge-fix/ai/topic' -a
- 
-@@ -450,9 +450,9 @@ result:
- Then double check the result by asking Meta/Reintegrate to redo the
- merge:
- 
--     $ git checkout pu~5 ;# the parent of the problem merge
-+     $ git checkout seen~5 ;# the parent of the problem merge
-      $ echo ai/topic | Meta/Reintegrate
--     $ git diff pu~4
-+     $ git diff seen~4
- 
- This time, because you prepared refs/merge-fix/ai/topic, the
- resulting merge should have been tweaked to include the fix for the
-@@ -464,7 +464,7 @@ branch needs this merge-fix is because another branch merged earlier
- to the integration branch changed the underlying assumption ai/topic
- branch made (e.g. ai/topic branch added a site to refer to a
- variable, while the other branch renamed that variable and adjusted
--existing use sites), and if you changed redo-jch (or redo-pu) script
-+existing use sites), and if you changed redo-jch (or redo-seen) script
- to merge ai/topic branch before the other branch, then the above
- merge-fix should not be applied while merging ai/topic, but should
- instead be applied while merging the other branch.  You would need
-diff --git a/Documentation/howto/rebase-from-internal-branch.txt b/Documentation/howto/rebase-from-internal-branch.txt
-index 02cb5f758d..ece51ddddc 100644
---- a/Documentation/howto/rebase-from-internal-branch.txt
-+++ b/Documentation/howto/rebase-from-internal-branch.txt
-@@ -4,7 +4,7 @@ Cc:	Petr Baudis <pasky@suse.cz>, Linus Torvalds <torvalds@osdl.org>
- Subject: Re: sending changesets from the middle of a git tree
- Date:	Sun, 14 Aug 2005 18:37:39 -0700
- Abstract: In this article, JC talks about how he rebases the
-- public "pu" branch using the core Git tools when he updates
-+ public "seen" branch using the core Git tools when he updates
-  the "master" branch, and how "rebase" works.  Also discussed
-  is how this applies to individual developers who sends patches
-  upstream.
-@@ -20,8 +20,8 @@ Petr Baudis <pasky@suse.cz> writes:
- > where Junio C Hamano <junkio@cox.net> told me that...
- >> Linus Torvalds <torvalds@osdl.org> writes:
- >>
-->> > Junio, maybe you want to talk about how you move patches from your "pu"
-->> > branch to the real branches.
-+>> > Junio, maybe you want to talk about how you move patches from your
-+>> > "seen" branch to the real branches.
- >>
- > Actually, wouldn't this be also precisely for what StGIT is intended to?
- --------------------------------------
-@@ -33,12 +33,12 @@ the kind of task StGIT is designed to do.
- I just have done a simpler one, this time using only the core
- Git tools.
- 
--I had a handful of commits that were ahead of master in pu, and I
-+I had a handful of commits that were ahead of master in 'seen', and I
- wanted to add some documentation bypassing my usual habit of
--placing new things in pu first.  At the beginning, the commit
-+placing new things in 'seen' first.  At the beginning, the commit
- ancestry graph looked like this:
- 
--                             *"pu" head
-+                             *"seen" head
-     master --> #1 --> #2 --> #3
- 
- So I started from master, made a bunch of edits, and committed:
-@@ -50,7 +50,7 @@ So I started from master, made a bunch of edits, and committed:
- 
- After the commit, the ancestry graph would look like this:
- 
--                              *"pu" head
-+                              *"seen" head
-     master^ --> #1 --> #2 --> #3
-           \
-             \---> master
-@@ -58,31 +58,31 @@ After the commit, the ancestry graph would look like this:
- The old master is now master^ (the first parent of the master).
- The new master commit holds my documentation updates.
- 
--Now I have to deal with "pu" branch.
-+Now I have to deal with "seen" branch.
- 
- This is the kind of situation I used to have all the time when
- Linus was the maintainer and I was a contributor, when you look
--at "master" branch being the "maintainer" branch, and "pu"
-+at "master" branch being the "maintainer" branch, and "seen"
- branch being the "contributor" branch.  Your work started at the
- tip of the "maintainer" branch some time ago, you made a lot of
- progress in the meantime, and now the maintainer branch has some
- other commits you do not have yet.  And "git rebase" was written
- with the explicit purpose of helping to maintain branches like
--"pu".  You _could_ merge master to pu and keep going, but if you
-+"seen".  You _could_ merge master to 'seen' and keep going, but if you
- eventually want to cherrypick and merge some but not necessarily
- all changes back to the master branch, it often makes later
- operations for _you_ easier if you rebase (i.e. carry forward
--your changes) "pu" rather than merge.  So I ran "git rebase":
-+your changes) "seen" rather than merge.  So I ran "git rebase":
- 
--    $ git checkout pu
--    $ git rebase master pu
-+    $ git checkout seen
-+    $ git rebase master seen
- 
- What this does is to pick all the commits since the current
--branch (note that I now am on "pu" branch) forked from the
-+branch (note that I now am on "seen" branch) forked from the
- master branch, and forward port these changes.
- 
-     master^ --> #1 --> #2 --> #3
--          \                                  *"pu" head
-+          \                                  *"seen" head
-             \---> master --> #1' --> #2' --> #3'
- 
- The diff between master^ and #1 is applied to master and
-@@ -92,7 +92,7 @@ commits are made similarly out of #2 and #3 commits.
- 
- Old #3 is not recorded in any of the .git/refs/heads/ file
- anymore, so after doing this you will have dangling commit if
--you ran fsck-cache, which is normal.  After testing "pu", you
-+you ran fsck-cache, which is normal.  After testing "seen", you
- can run "git prune" to get rid of those original three commits.
- 
- While I am talking about "git rebase", I should talk about how
-diff --git a/Documentation/howto/revert-branch-rebase.txt b/Documentation/howto/revert-branch-rebase.txt
-index 149508e13b..a3e5595a56 100644
---- a/Documentation/howto/revert-branch-rebase.txt
-+++ b/Documentation/howto/revert-branch-rebase.txt
-@@ -15,7 +15,7 @@ One of the changes I pulled into the 'master' branch turns out to
- break building Git with GCC 2.95.  While they were well-intentioned
- portability fixes, keeping things working with gcc-2.95 was also
- important.  Here is what I did to revert the change in the 'master'
--branch and to adjust the 'pu' branch, using core Git tools and
-+branch and to adjust the 'seen' branch, using core Git tools and
- barebone Porcelain.
- 
- First, prepare a throw-away branch in case I screw things up.
-@@ -104,11 +104,11 @@ $ git diff master..revert-c99
- 
- says nothing.
- 
--Then we rebase the 'pu' branch as usual.
-+Then we rebase the 'seen' branch as usual.
- 
- ------------------------------------------------
--$ git checkout pu
--$ git tag pu-anchor pu
-+$ git checkout seen
-+$ git tag seen-anchor seen
- $ git rebase master
- * Applying: Redo "revert" using three-way merge machinery.
- First trying simple merge strategy to cherry-pick.
-@@ -127,11 +127,11 @@ First trying simple merge strategy to cherry-pick.
- First trying simple merge strategy to cherry-pick.
- ------------------------------------------------
- 
--The temporary tag 'pu-anchor' is me just being careful, in case 'git
-+The temporary tag 'seen-anchor' is me just being careful, in case 'git
- rebase' screws up.  After this, I can do these for sanity check:
- 
- ------------------------------------------------
--$ git diff pu-anchor..pu ;# make sure we got the master fix.
-+$ git diff seen-anchor..seen ;# make sure we got the master fix.
- $ make CC=gcc-2.95 clean test ;# make sure it fixed the breakage.
- $ make clean test ;# make sure it did not cause other breakage.
- ------------------------------------------------
-@@ -140,7 +140,7 @@ Everything is in the good order.  I do not need the temporary branch
- or tag anymore, so remove them:
- 
- ------------------------------------------------
--$ rm -f .git/refs/tags/pu-anchor
-+$ rm -f .git/refs/tags/seen-anchor
- $ git branch -d revert-c99
- ------------------------------------------------
- 
-@@ -168,18 +168,18 @@ Committed merge 7fb9b7262a1d1e0a47bbfdcbbcf50ce0635d3f8f
- And the final repository status looks like this:
- 
- ------------------------------------------------
--$ git show-branch --more=1 master pu rc
-+$ git show-branch --more=1 master seen rc
- ! [master] Revert "Replace zero-length array decls with []."
-- ! [pu] git-repack: Add option to repack all objects.
-+ ! [seen] git-repack: Add option to repack all objects.
-   * [rc] Merge refs/heads/master from .
- ---
-- +  [pu] git-repack: Add option to repack all objects.
-- +  [pu~1] More documentation updates.
-- +  [pu~2] Show commits in topo order and name all commits.
-- +  [pu~3] mailinfo and applymbox updates
-- +  [pu~4] Document "git cherry-pick" and "git revert"
-- +  [pu~5] Remove git-apply-patch-script.
-- +  [pu~6] Redo "revert" using three-way merge machinery.
-+ +  [seen] git-repack: Add option to repack all objects.
-+ +  [seen~1] More documentation updates.
-+ +  [seen~2] Show commits in topo order and name all commits.
-+ +  [seen~3] mailinfo and applymbox updates
-+ +  [seen~4] Document "git cherry-pick" and "git revert"
-+ +  [seen~5] Remove git-apply-patch-script.
-+ +  [seen~6] Redo "revert" using three-way merge machinery.
-   - [rc] Merge refs/heads/master from .
- ++* [master] Revert "Replace zero-length array decls with []."
-   - [rc~1] Merge refs/heads/master from .
-diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
-index 89821ec74f..151ee84ceb 100644
---- a/Documentation/howto/update-hook-example.txt
-+++ b/Documentation/howto/update-hook-example.txt
-@@ -179,7 +179,7 @@ allowed-groups, to describe which heads can be pushed into by
- whom.  The format of each file would look like this:
- 
-     refs/heads/master   junio
--    +refs/heads/pu      junio
-+    +refs/heads/seen    junio
-     refs/heads/cogito$  pasky
-     refs/heads/bw/.*    linus
-     refs/heads/tmp/.*   .*
-@@ -187,6 +187,6 @@ whom.  The format of each file would look like this:
- 
- With this, Linus can push or create "bw/penguin" or "bw/zebra"
- or "bw/panda" branches, Pasky can do only "cogito", and JC can
--do master and pu branches and make versioned tags.  And anybody
--can do tmp/blah branches. The '+' sign at the pu record means
-+do master and "seen" branches and make versioned tags.  And anybody
-+can do tmp/blah branches. The '+' sign at the "seen" record means
- that JC can make non-fast-forward pushes on it.
+ test_expect_success '__gitcomp_nl - trailing space' '
 -- 
 gitgitgadget
-
