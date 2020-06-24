@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAB9DC433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF5C9C433E2
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:47:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1B6720724
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:47:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6F8120724
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 14:47:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NxbTQddC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M+bCEOPf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403975AbgFXOrA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 10:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53106 "EHLO
+        id S2404021AbgFXOrC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 10:47:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403955AbgFXOqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 10:46:45 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB1EBC0613ED
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 07:46:44 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id j18so2581760wmi.3
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 07:46:44 -0700 (PDT)
+        with ESMTP id S2403926AbgFXOqo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 10:46:44 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6EDDC061573
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 07:46:43 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id l2so1313057wmf.0
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 07:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3rXUslYCSXhn8OXvH5V2fRYdXYmO54T6GIJcsiBJWmQ=;
-        b=NxbTQddCXIXTE9ohCYb+5ny2H5bKau2+xWNLp2BZSIt6ilfeRto4nuXdgJdT3NIy2e
-         F3UOMkGhhCJJbpD56Lf2eYzdUGTzNt6vU2jWjNeYyXtmUfU4a4/8Ig1j87RGm7Gs4rlK
-         lNuyjXnz3axrwTuS8/NlU8HOF2tj2/2kDYH26JGpsI6evgcBidYV/pdTFd2uXRQpmksV
-         Gr1J1nik/e9vqmc+gFLG7vgt6MFFLHSGmSWKu/JuipNwJy3bDz6wMlp51Z1gtz/qAsHL
-         QwDaAeLBXGsue6SwQNOxE4UgXdWGbF/JNLTRLsiA8+Ku/DDPFb3hvBu27a+7MHpu1wll
-         pw5A==
+        bh=YR5mgWvq8oel7pskivydUczFijobGIiMDxUn4vO8/EQ=;
+        b=M+bCEOPfMRkn2cJcsK49iXFEoMjKNpyJ3N78nRAjVpc4e6BirfysxE6vYNUfvX+X0I
+         Rk8FSgbdsGI2g7Fe05qLGFnoQkNnZSX5X16of1/krz/oc4BKdG2mD8GI7MvBLIu//Y6N
+         li2nZu31QcrijYSEbl+jUdskY+6dPrcGJT639vbXgY6fPPjrERTwhB4MV1LFGXIAVFOV
+         MFsW6zeZ/0jLSjWcR0o5xf1xYPzUTrvbiqPbTNzR8bzyhmE8yp31evoPXjkE7qxyslW6
+         ANjsfWl4llInYWuxYsiPEoNbAY2xNxEGcc37MVceoH9fbO/8lK3wlt9GsMusyErs8L30
+         f3Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3rXUslYCSXhn8OXvH5V2fRYdXYmO54T6GIJcsiBJWmQ=;
-        b=QyfULckm1tPEklUVXWiFSCydLwtNX34SxusyuIkYnFcqqK7aTUpYaCZM/6malPWW4V
-         UxURzNy46W8b9s+UCBs7IjbbbPYmArZSAp9YDMphHFP7CpZQcN3xQPfAYu4KQCOCIBqz
-         LFlljgXvQW/RH2j4sPV2vwHSz4SNyY4DMvL0yEIePO5vw4g/4WYQ5LQy6SamrGK107/d
-         JCTHTTWttWsiiqdPzpTn/0XrXe+aneqenzpRS2DLk32BN8ybdJQy9fd2BkBg987mKcIu
-         ObQkzS3LmzZ8TvwJzdv5RyeHgUDDRTb2qBmfATT1m5FRxaGufhoffaDRXhwMF9dCNQ+l
-         wMwg==
-X-Gm-Message-State: AOAM531/vxH9hf6F5h8wnZQEztZLaIT1tL8CjnXH8+UwqfxFgJH76W5u
-        xvfuzkwemg68oaxPTZ1qeBzwuS1l9J4=
-X-Google-Smtp-Source: ABdhPJz7jWj7dFihBdwYbknB6cuZWGDEcU2ZS2Q6t31HD9I5Uydqg4mv3jTRhHf07E6nJ7xdz2IjwQ==
-X-Received: by 2002:a1c:1d04:: with SMTP id d4mr31705985wmd.156.1593010003182;
-        Wed, 24 Jun 2020 07:46:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d2sm27615176wrs.95.2020.06.24.07.46.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=YR5mgWvq8oel7pskivydUczFijobGIiMDxUn4vO8/EQ=;
+        b=HuXp3RfB9nzKX1QQe0vf1XoEVOBj+hWk37Dz5rSFy//3dy0gvzYqdDPU0pBUBCEa6M
+         f9C3cc1Z6IhWC7q5I4KK330XCmT4rqHHDvCUYu5LkdrdEhth7IFLuYPTn+rBJfILtM79
+         Mxkc4gzJaOovasxfX2Kd3vwq2glletJ1CBWmGW7fleUpTN1ikborZEpltQeh32RHqeC2
+         0D+xpMP7SX/FnjuJwWJN7Jc5B/3BXL7P18S2zh6rKjKeyp+jbFleoTzUxkEPZrcGk6dB
+         Igm+w4S6uyKS7cYM948/Go6k1V8zEdk83OMmj9+u1BvTH2xwwQ1t6Lm1pp2yo79VYnOt
+         gtWA==
+X-Gm-Message-State: AOAM532tThT2SR341wfgveYiLEUx6WU7NNGX5MXq23U2kLfUgNnNiG7a
+        +FZiUAFjT37YorqdujTNExOTKt5rMFA=
+X-Google-Smtp-Source: ABdhPJzI3i/LSuQhphtxSWOD1XPxx+uHgUhKtfeml+60f6xiOEPfjaIIvcnv3bniHikwqCeODpgmTg==
+X-Received: by 2002:a1c:ed17:: with SMTP id l23mr30052476wmh.175.1593010002188;
         Wed, 24 Jun 2020 07:46:42 -0700 (PDT)
-Message-Id: <7747eaa57de9324b7f7a46f86d1179ce751f76c9.1593009996.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f13sm7978578wmb.33.2020.06.24.07.46.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2020 07:46:41 -0700 (PDT)
+Message-Id: <9edd4fd3b26cef4ff8ffb99be6647055ebb76ed6.1593009996.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.656.v4.git.1593009996.gitgitgadget@gmail.com>
 References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
         <pull.656.v4.git.1593009996.gitgitgadget@gmail.com>
-From:   "Don Goodman-Wilson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 24 Jun 2020 14:46:33 +0000
-Subject: [PATCH v4 6/9] init: allow setting the default for the initial branch
- name via the config
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 24 Jun 2020 14:46:32 +0000
+Subject: [PATCH v4 5/9] init: allow specifying the initial branch name for the
+ new repository
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,139 +82,198 @@ Cc:     don@goodman-wilson.com, stolee@gmail.com, peff@peff.net,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Don Goodman-Wilson <don@goodman-wilson.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Don Goodman-Wilson <don@goodman-wilson.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We just introduced the command-line option
-`--initial-branch=<branch-name>` to allow initializing a new repository
-with a different initial branch than the hard-coded one.
+There is a growing number of projects and companies desiring to change
+the main branch name of their repositories (see e.g.
+https://twitter.com/mislav/status/1270388510684598272 for background on
+this).
 
-To allow users to override the initial branch name more permanently
-(i.e. without having to specify the name manually for each and every
-`git init` invocation), let's introduce the `init.defaultBranch` config
-setting.
+To change that branch name for new repositories, currently the only way
+to do that automatically is by copying all of Git's template directory,
+then hard-coding the desired default branch name into the `.git/HEAD`
+file, and then configuring `init.templateDir` to point to those copied
+template files.
 
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Helped-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Don Goodman-Wilson <don@goodman-wilson.com>
+To make this process much less cumbersome, let's introduce a new option:
+`--initial-branch=<branch-name>`.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config/init.txt |  4 ++++
- builtin/init-db.c             |  2 +-
- refs.c                        | 30 ++++++++++++++++++++++++++++++
- refs.h                        |  9 +++++++++
- t/t0001-init.sh               | 13 +++++++++++++
- 5 files changed, 57 insertions(+), 1 deletion(-)
+ Documentation/git-init.txt |  7 +++++++
+ builtin/clone.c            |  3 ++-
+ builtin/init-db.c          | 33 +++++++++++++++++++++++++++------
+ cache.h                    |  2 +-
+ t/t0001-init.sh            | 13 +++++++++++++
+ 5 files changed, 50 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/config/init.txt b/Documentation/config/init.txt
-index 46fa8c6a08..6ae4a38416 100644
---- a/Documentation/config/init.txt
-+++ b/Documentation/config/init.txt
-@@ -1,3 +1,7 @@
- init.templateDir::
- 	Specify the directory from which templates will be copied.
- 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index f9467cc6a4..ddfe265da5 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -11,6 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git init' [-q | --quiet] [--bare] [--template=<template_directory>]
+ 	  [--separate-git-dir <git dir>] [--object-format=<format>]
++	  [-b <branch-name> | --initial-branch=<branch-name>]
+ 	  [--shared[=<permissions>]] [directory]
+ 
+ 
+@@ -67,6 +68,12 @@ repository.
+ +
+ If this is reinitialization, the repository will be moved to the specified path.
+ 
++-b <branch-name::
++--initial-branch=<branch-name>::
 +
-+init.defaultBranch::
-+	Allows overriding the default branch name when initializing
-+	a new repository.
++Use the specified name for the initial branch in the newly created repository.
++If not specified, fall back to the default name: `master`.
++
+ --shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
+ 
+ Specify that the Git repository is to be shared amongst several users.  This
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 2a8e3aaaed..b751bdf13e 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1111,7 +1111,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, INIT_DB_QUIET);
++	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, NULL,
++		INIT_DB_QUIET);
+ 
+ 	if (real_git_dir)
+ 		git_dir = real_git_dir;
 diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 8fdfc334ac..cee64823cb 100644
+index 0b7222e718..8fdfc334ac 100644
 --- a/builtin/init-db.c
 +++ b/builtin/init-db.c
-@@ -269,7 +269,7 @@ static int create_default_files(const char *template_path,
- 		char *ref;
+@@ -203,6 +203,7 @@ void initialize_repository_version(int hash_algo)
  
- 		if (!initial_branch)
--			initial_branch = "master";
-+			initial_branch = git_default_branch_name();
+ static int create_default_files(const char *template_path,
+ 				const char *original_git_dir,
++				const char *initial_branch,
+ 				const struct repository_format *fmt)
+ {
+ 	struct stat st1;
+@@ -258,15 +259,26 @@ static int create_default_files(const char *template_path,
+ 		die("failed to set up refs db: %s", err.buf);
  
- 		ref = xstrfmt("refs/heads/%s", initial_branch);
- 		if (check_refname_format(ref, 0) < 0)
-diff --git a/refs.c b/refs.c
-index 224ff66c7b..b98dea5217 100644
---- a/refs.c
-+++ b/refs.c
-@@ -560,6 +560,36 @@ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix)
- 		argv_array_pushf(prefixes, *p, len, prefix);
+ 	/*
+-	 * Create the default symlink from ".git/HEAD" to the "master"
+-	 * branch, if it does not exist yet.
++	 * Point the HEAD symref to the initial branch with if HEAD does
++	 * not yet exist.
+ 	 */
+ 	path = git_path_buf(&buf, "HEAD");
+ 	reinit = (!access(path, R_OK)
+ 		  || readlink(path, junk, sizeof(junk)-1) != -1);
+ 	if (!reinit) {
+-		if (create_symref("HEAD", "refs/heads/master", NULL) < 0)
++		char *ref;
++
++		if (!initial_branch)
++			initial_branch = "master";
++
++		ref = xstrfmt("refs/heads/%s", initial_branch);
++		if (check_refname_format(ref, 0) < 0)
++			die(_("invalid initial branch name: '%s'"),
++			    initial_branch);
++
++		if (create_symref("HEAD", ref, NULL) < 0)
+ 			exit(1);
++		free(ref);
+ 	}
+ 
+ 	initialize_repository_version(fmt->hash_algo);
+@@ -383,7 +395,8 @@ static void validate_hash_algorithm(struct repository_format *repo_fmt, int hash
  }
  
-+char *repo_default_branch_name(struct repository *r)
-+{
-+	const char *config_key = "init.defaultbranch";
-+	const char *config_display_key = "init.defaultBranch";
-+	char *ret = NULL, *full_ref;
-+
-+	if (repo_config_get_string(r, config_key, &ret) < 0)
-+		die(_("could not retrieve `%s`"), config_display_key);
-+
-+	if (!ret)
-+		ret = xstrdup("master");
-+
-+	full_ref = xstrfmt("refs/heads/%s", ret);
-+	if (check_refname_format(full_ref, 0))
-+		die(_("invalid branch name: %s = %s"), config_display_key, ret);
-+	free(full_ref);
-+
-+	return ret;
-+}
-+
-+const char *git_default_branch_name(void)
-+{
-+	static char *ret;
-+
-+	if (!ret)
-+		ret = repo_default_branch_name(the_repository);
-+
-+	return ret;
-+}
-+
- /*
-  * *string and *len will only be substituted, and *string returned (for
-  * later free()ing) if the string passed in is a magic short-hand form
-diff --git a/refs.h b/refs.h
-index e010f8aec2..f212f8945e 100644
---- a/refs.h
-+++ b/refs.h
-@@ -154,6 +154,15 @@ int repo_dwim_log(struct repository *r, const char *str, int len, struct object_
- int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
- int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
+ int init_db(const char *git_dir, const char *real_git_dir,
+-	    const char *template_dir, int hash, unsigned int flags)
++	    const char *template_dir, int hash, const char *initial_branch,
++	    unsigned int flags)
+ {
+ 	int reinit;
+ 	int exist_ok = flags & INIT_DB_EXIST_OK;
+@@ -425,7 +438,11 @@ int init_db(const char *git_dir, const char *real_git_dir,
  
-+/*
-+ * Retrieves the default branch name for newly-initialized repositories.
-+ *
-+ * The return value of `repo_default_branch_name()` is an allocated string. The
-+ * return value of `git_default_branch_name()` is a singleton.
-+ */
-+const char *git_default_branch_name(void);
-+char *repo_default_branch_name(struct repository *r);
-+
- /*
-  * A ref_transaction represents a collection of reference updates that
-  * should succeed or fail together.
+ 	validate_hash_algorithm(&repo_fmt, hash);
+ 
+-	reinit = create_default_files(template_dir, original_git_dir, &repo_fmt);
++	reinit = create_default_files(template_dir, original_git_dir,
++				      initial_branch, &repo_fmt);
++	if (reinit && initial_branch)
++		warning(_("re-init: ignored --initial-branch=%s"),
++			initial_branch);
+ 
+ 	create_object_directory();
+ 
+@@ -528,6 +545,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	const char *template_dir = NULL;
+ 	unsigned int flags = 0;
+ 	const char *object_format = NULL;
++	const char *initial_branch = NULL;
+ 	int hash_algo = GIT_HASH_UNKNOWN;
+ 	const struct option init_db_options[] = {
+ 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
+@@ -541,6 +559,8 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('q', "quiet", &flags, N_("be quiet"), INIT_DB_QUIET),
+ 		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 			   N_("separate git dir from working tree")),
++		OPT_STRING('b', "initial-branch", &initial_branch, N_("name"),
++			   N_("override the name of the initial branch")),
+ 		OPT_STRING(0, "object-format", &object_format, N_("hash"),
+ 			   N_("specify the hash algorithm to use")),
+ 		OPT_END()
+@@ -652,5 +672,6 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	UNLEAK(work_tree);
+ 
+ 	flags |= INIT_DB_EXIST_OK;
+-	return init_db(git_dir, real_git_dir, template_dir, hash_algo, flags);
++	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
++		       initial_branch, flags);
+ }
+diff --git a/cache.h b/cache.h
+index 0f0485ecfe..654426460c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -628,7 +628,7 @@ int path_inside_repo(const char *prefix, const char *path);
+ 
+ int init_db(const char *git_dir, const char *real_git_dir,
+ 	    const char *template_dir, int hash_algo,
+-	    unsigned int flags);
++	    const char *initial_branch, unsigned int flags);
+ void initialize_repository_version(int hash_algo);
+ 
+ void sanitize_stdfds(void);
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 386c06b5dd..6d2467995e 100755
+index 1edd5aeb8f..386c06b5dd 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -477,4 +477,17 @@ test_expect_success '--initial-branch' '
- 	grep hello actual
+@@ -464,4 +464,17 @@ test_expect_success MINGW 'redirect std handles' '
+ 	grep "Needed a single revision" output.txt
  '
  
-+test_expect_success 'overridden default initial branch name (config)' '
-+	test_config_global init.defaultBranch nmb &&
-+	git init initial-branch-config &&
-+	git -C initial-branch-config symbolic-ref HEAD >actual &&
-+	grep nmb actual
-+'
++test_expect_success '--initial-branch' '
++	git init --initial-branch=hello initial-branch-option &&
++	git -C initial-branch-option symbolic-ref HEAD >actual &&
++	echo refs/heads/hello >expect &&
++	test_cmp expect actual &&
 +
-+test_expect_success 'invalid default branch name' '
-+	test_config_global init.defaultBranch "with space" &&
-+	test_must_fail git init initial-branch-invalid 2>err &&
-+	test_i18ngrep "invalid branch name" err
++	: re-initializing should not change the branch name &&
++	git init --initial-branch=ignore initial-branch-option 2>err &&
++	test_i18ngrep "ignored --initial-branch" err &&
++	git -C initial-branch-option symbolic-ref HEAD >actual &&
++	grep hello actual
 +'
 +
  test_done
