@@ -2,138 +2,231 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9637DC433DF
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 01:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62CD5C433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 02:18:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60D22206EB
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 01:31:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 360A320874
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 02:18:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uNOV7OER"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p411z+cA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388392AbgFXBbI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 21:31:08 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40168 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388347AbgFXBbI (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 23 Jun 2020 21:31:08 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8267860459;
-        Wed, 24 Jun 2020 01:31:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1592962266;
-        bh=XIzPqAyzrqEz7LnUaXKhMJXg8Oc6jSRxdq2VneG4G+0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=uNOV7OEREdr37NUsnLjBNce/QZS+sBrnUrtXkiq9E23uabglgz+HPfDesMLWA2glz
-         FT9OtT7A1jutpGRoSdMVcW0wa9ehgXjXPIbx8Az2ty7cnfBZd6DO+WCekRym8FtMYU
-         wDsOC7wLJgKw5fRLTwFZJ15v8MW4tSjx9LHCQsbMK1BjAXWScmix4QfoK2zEBI4FD6
-         1MAtgHEjtGDKXOYxePAzb29F7/SQ/MlfuC2zreDWbrvJeSeLtiq4p9w5bAY2q/VH5/
-         aHhPIX2S6zzxlaapR1o2rofRePYM/8SjDLro5QY3Ej4GjAyDvq4XiZoG+IWSwxjhp+
-         +tmdN9xxlrGVUeGrXQXkNvRAmjDr7m0OH6zEUQC1soWUx7tv6kZOVxiEDutMziowlG
-         x3VUJb5gXe3qiVHpA2nqzb2VTRi3aBJewynkvU3EUpRjiUSwc5D7EiF2TmW5x7PpCr
-         8H6NxxjCthaCYN23sMNjGeB0yQ1wa3GBaMMUBly8X/Nc7m5giLj
-Date:   Wed, 24 Jun 2020 01:31:01 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     shejan shuza <shejan0@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: your mail
-Message-ID: <20200624013101.GA6451@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        shejan shuza <shejan0@gmail.com>, git@vger.kernel.org
-References: <CABO4vy0WTYbeAiyWf7hE_4QurwH_c1wJUdU=A4FSC0uSxiEO7g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
-Content-Disposition: inline
-In-Reply-To: <CABO4vy0WTYbeAiyWf7hE_4QurwH_c1wJUdU=A4FSC0uSxiEO7g@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+        id S2387828AbgFXCSX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 22:18:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51084 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387694AbgFXCSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jun 2020 22:18:21 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C08B5C061573
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 19:18:20 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id f18so532003qkh.1
+        for <git@vger.kernel.org>; Tue, 23 Jun 2020 19:18:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=lBsgsyZRzEYYMeMyQR/NmXkHj5CWWEFq9wzkmam1EIc=;
+        b=p411z+cA4Pk5OGnzMHOBwHb974W5VKNt8j446ZMJ0Czj/4oO1yOGJzH41Mkq8zWqk/
+         +xV0X4cAVGGVBSA/SmVmGlENdlnk8XQbzK6x8l1lsTdBBJP1i1ZF6hICB0eVG0lxME0H
+         rFBLc7EJAo8nMf/iu0ftKs01/0yzey3MYpiQypC6Zmt5kN6PQe/sZM3uzVwbnO2x7sHf
+         3sCHVB1GAJvYUfhHKZTfd4TqpuLFfjZ/Kcf9fqLSCJbfJjruOj1DxQfQ33gCjheqxB1j
+         NxgnYSwihIKnPzi1ei3VdIEhta9dwqZoSI8ZrwwOr0eJbYaPPx1mI5SVpSW+dK9I8mG9
+         JqhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=lBsgsyZRzEYYMeMyQR/NmXkHj5CWWEFq9wzkmam1EIc=;
+        b=JD2vjyk079ceghz2xz7LKHttpNb0GN4Jryv/P7af8jLC07QHkIoUNTx8u+gHM38Fmq
+         bp6VrSvnSsVGZiXAk1Ah43eLNChAMewUob39bN60rN+RVG28LjGtgxQaXd4V/kbT0BWt
+         Dq327ZVubxrb6668K0/1acQ1KwcgypjSRdioGM8jvXGiR9kiZ2BzzFGTw7RGpeDZ8e73
+         yAIb24VrTbpmw9FHqDeXWQDgyGThn2+7xOu1Mjk/OmOhlwoN8uOb3nQl/SShtsK54x+f
+         Oo5g+UxDiDagO7KLinreBP6u1KUhG2//eSzJoICvPIeSGs3rx3xyGR/cQ99bDeAUPGcP
+         o0Cw==
+X-Gm-Message-State: AOAM530qUWibsuiAJYXbcBQvIX70Zk+gACrevWPXJNnt4GUS/IJlzcBr
+        X2JbEFWaxPhOwwSbViZ2lo4=
+X-Google-Smtp-Source: ABdhPJwcB8JsFqGec7UHvFp9Zfmg18XZ1+t2g8/Qh7JazZYXLOH7/pzntzKekVwLA/EsgoEMbftlDA==
+X-Received: by 2002:a37:796:: with SMTP id 144mr7114600qkh.84.1592965099265;
+        Tue, 23 Jun 2020 19:18:19 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id e11sm2270130qtp.67.2020.06.23.19.18.17
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 23 Jun 2020 19:18:18 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v3 3/8] submodule: use a better fall-back for missing remote.<name>.branch
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <6bda69541b12e93cfcf7b841b8691296dc82eeba.1592951611.git.gitgitgadget@gmail.com>
+Date:   Tue, 23 Jun 2020 22:18:15 -0400
+Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Matt Rogers <mattr94@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D2ED942B-9397-472A-B017-190016531547@gmail.com>
+References: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <pull.656.v3.git.1592951611.gitgitgadget@gmail.com> <6bda69541b12e93cfcf7b841b8691296dc82eeba.1592951611.git.gitgitgadget@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Dscho,
 
---17pEHd4RhPHOinZp
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2020-06-24 at 00:38:39, shejan shuza wrote:
-> Hi, I have a repository with about 55GB of contents, with binary files
-> that are less than 100MB each (so no LFS mode) from a project which
-> has almost filled up an entire hard drive. I am trying to add all of
-> the contents to a git repo and push it to GitHub but every time I do
+> Le 23 juin 2020 =C3=A0 18:33, Johannes Schindelin via GitGitGadget =
+<gitgitgadget@gmail.com> a =C3=A9crit :
 >=20
-> git add .
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >=20
-> in the folder with my contents after initializing and setting my
-> remote, git starts caching all the files to .git/objects, making the
-> .git folder grow in size rapidly. All the files are binaries, so git
-> cannot stage changes between versions anyway, so there is no reason to
-> cache versions.
+> When `remote.<name>.branch` is not configured, `git submodule update`
+> currently falls back to using the branch name `master`. A much better
+> idea, however, is to use `HEAD`: on all Git servers running reasonably
+> recent Git versions, the symref `HEAD` points to the main branch.
 
-What you're experiencing is normal; storing files in the .git directory
-is how Git keeps track of them.  It can't rely on the copies in your
-working tree because you can modify those files at any time, and if you
-did so, relying on them would corrupt the repository.
+To be pedantic, it is up to the maintainer/developers to make sure that=20=
 
-Also, note that Git can and does deltify changes between revisions once
-the data is packed, regardless of whether the file is binary, but how
-well it does so depends on your data.  For example, if it's compressed,
-it likely doesn't deltify very well, so storing things like compressed
-images or zip files using deflate is generally going to result in a
-bloated repository.
+HEAD on the canonic repository indeed points to the branch that is =
+considered
+the 'main' branch of the project; the Git version does not really matter =
+IMO...
+I've seen plenty of repos at work that have HEAD pointing to `master` =
+but `master`=20
+is not used, or not anymore...
 
-However, if you don't need versioning for these files, then you don't
-need a Git repository.  Git is a tool for versioning files, not a
-general storage mechanism.  You may find a cloud storage bucket or some
-other artifact storage service may meet your needs better.
+> Note: t7419 demonstrates that there _might_ be use cases out there =
+that
+> _expect_ `git submodule update --remote` to update submodules to the
+> remote `master` branch even if the remote `HEAD` points to another
+> branch. Arguably, this patch makes the behavior more intuitive, but
+> there is a slight possibility that this might cause regressions in
+> obscure setups.
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I will also tell you from a practical point of view that almost nobody
-(including you) will want to host a 55 GB repository filled with binary
-blobs.  Usually repacking these repositories is very expensive,
-requiring extensive CPU and memory usage for a prolonged time for little
-useful benefit.
+I think that's an excellent idea. However I'd be more explicit in the =
+commit message title:
+submodule: fall back to remote's HEAD for missing remote.<name>.branch
 
-> Is there any way, such as editing the git attributes or changing
-> something about how files are staged in the git repository, to only
-> just add indexes or references to files in the repository rather than
-> cache them into the .git folder, while also being able to push all the
-> data to GitHub?
+meta comment: I never know where is the best place to make suggestions
+about changing the commit message title, since I can't quote it in my =
+replies!
 
-This is how Git LFS and similar tools, like git-annex, work.  Git LFS
-will create copies of the objects in your .git directory though, at
-least until they're pushed to the server, at which point they can be
-pruned.  Git LFS has the same limitation as Git here.  I'm less familiar
-with git-annex, but it is also a popular choice.
+> ---
+> Documentation/git-submodule.txt |  4 ++--
+> builtin/submodule--helper.c     |  2 +-
+> t/t7406-submodule-update.sh     | 16 ++++++++++++++++
+> t/t7419-submodule-set-branch.sh |  7 +++++--
+> 4 files changed, 24 insertions(+), 5 deletions(-)
 
-However, as mentioned, it sounds like you don't need versioning at all,
-so unless you do, Git with Git LFS will be no more suitable for this
-than plain Git.  If that's the case, I encourage you to explore
-alternate solutions.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I think Documentation/gitmodules.txt (`submodule.<name>.branch` header)
+ should also be changed to reflect the behaviour change:=20
 
---17pEHd4RhPHOinZp
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index 67275fd187..539b4e1997 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -49,9 +49,9 @@ submodule.<name>.update::
+=20
+ submodule.<name>.branch::
+ 	A remote branch name for tracking updates in the upstream =
+submodule.
+-	If the option is not specified, it defaults to 'master'.  A =
+special
+-	value of `.` is used to indicate that the name of the branch in =
+the
+-	submodule should be the same name as the current branch in the
++	If the option is not specified, it defaults to the remote =
+'HEAD'.
++	A special value of `.` is used to indicate that the name of the =
+branch
++	in the submodule should be the same name as the current branch =
+in the
+ 	current repository.  See the `--remote` documentation in
+ 	linkgit:git-submodule[1] for details.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+> diff --git a/Documentation/git-submodule.txt =
+b/Documentation/git-submodule.txt
+> index c9ed2bf3d5..b20f85e622 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -284,7 +284,7 @@ OPTIONS
+> 	`.gitmodules` for `update --remote`.  A special value of `.` is =
+used to
+> 	indicate that the name of the branch in the submodule should be =
+the
+> 	same name as the current branch in the current repository.  If =
+the
+> -	option is not specified, it defaults to 'master'.
+> +	option is not specified, it defaults to 'HEAD'.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXvKs1QAKCRB8DEliiIei
-gbdwAP90zUbX2/iMiaOAKsqhdBZ4DzuYETSMaAgXOpMIYS9gAQD+P4Bi4YECJqtz
-qLEw+NFLqNxDC/+Jf7DWkQdkAmDv2gM=
-=IalQ
------END PGP SIGNATURE-----
+Just to be extra clear (it's easy to get confused with submodules!) I'd =
+say explicitly:
 
---17pEHd4RhPHOinZp--
+If the option is not specified, it defaults to the remote 'HEAD'.
+
+>=20
+> -f::
+> --force::
+> @@ -322,7 +322,7 @@ OPTIONS
+> 	the superproject's recorded SHA-1 to update the submodule, use =
+the
+> 	status of the submodule's remote-tracking branch.  The remote =
+used
+> 	is branch's remote (`branch.<name>.remote`), defaulting to =
+`origin`.
+> -	The remote branch used defaults to `master`, but the branch name =
+may
+> +	The remote branch used defaults to `HEAD`, but the branch name =
+may
+
+Same thing here:
+
+The remote branch used defaults to the remote `HEAD`.
+
+> 	be overridden by setting the `submodule.<name>.branch` option in
+> 	either `.gitmodules` or `.git/config` (with `.git/config` taking
+> 	precedence).
+
+Also, you seem to have missed the `master` reference in the description =
+of=20
+the 'set-branch' subcommand. Something like this would do, I think:
+
+diff --git a/Documentation/git-submodule.txt =
+b/Documentation/git-submodule.txt
+index c9ed2bf3d5..8cf5831a72 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -183,7 +183,7 @@ set-branch (-d|--default) [--] <path>::
+ 	Sets the default remote tracking branch for the submodule. The
+ 	`--branch` option allows the remote branch to be specified. The
+ 	`--default` option removes the submodule.<name>.branch =
+configuration
+-	key, which causes the tracking branch to default to 'master'.
++	key, which causes the tracking branch to default to the remote =
+'HEAD'.
+=20
+ set-url [--] <path> <newurl>::
+ 	Sets the URL of the specified submodule to <newurl>. Then, it =
+will
+
+
+The rest of the patch looks good.
+
+Cheers,
+Philippe.
+
