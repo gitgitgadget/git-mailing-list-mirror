@@ -2,98 +2,124 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06391C433DF
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9EB2C433E0
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:33:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC64A20738
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:12:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC77C2078D
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:33:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Iun21Nbq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYbDP8lD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728857AbgFXXLy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 19:11:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59632 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728090AbgFXXLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 19:11:54 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3031467A2B;
-        Wed, 24 Jun 2020 19:11:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3H/I9l+dDT0Mr2+RFcPTZat9bqY=; b=Iun21N
-        bqFuaPPyq0nWvUuOa9EeAqbRXZFy0LKs9RWmkUxMFFbhoeffRuLIj4I+mud+1C5E
-        p41Rh2hfnZLjy2+rdUpToF8HRMVxf+y1S4VKvn1C4A0gVNJSJjhPDjOuXZXDf/4q
-        q1alSf+X4y5IwTngceLuCNxpTqqe09rubaoL8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=utXrQ8wRiv+TJnMg/tErfV1oFBZ0OMMT
-        p/h/9ymxXA0H/mgj7X6J6hz2e8PNzHFmd0kZBXkgoSyViQnV1YFzdyzSQiwmgpT4
-        I3fQrai6UgbRckAgUUrBOa+H9cUoNiKAN5/7TM8KB++l6Th2vHUVlvTjFg6dvyMb
-        +s2rAgsvIRI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2770067A2A;
-        Wed, 24 Jun 2020 19:11:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAB8767A29;
-        Wed, 24 Jun 2020 19:11:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+        id S2388392AbgFXXdA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 19:33:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50218 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387709AbgFXXdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 19:33:00 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DB2C061573
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 16:32:58 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id g7so1919722qvx.11
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 16:32:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=N5niTNvILZIe3247dXEHKWfE+0gRo9BckREUqYeb2F4=;
+        b=GYbDP8lDlT6lTJCiutn3dx87W8YeT0/iqTOR0XW73u/K7ZibiO5UpR2ROXJjTTEeLQ
+         0kmrMuk27GPnPpnmICMhJ7un/oawhuPbj5YnN8rBjpXjd8BOOCN/LYS6GQXcM6/YBUc6
+         xWTvrAxgQY3oxGr+2g2BMDypE8I7IQ5DW6m/b7t0XnQWREp8/vSreFGzlq5ChEdAzUFE
+         UXrCy1m+fGuDtjGzDj5zbYq8yG+ZsEfAR6l0lzOx/32/iBaEWd4jjVnZBMiPhaaoF45i
+         5HrPCkXyGWbeWmO7fgVji4TnaguKwn07tIqIgsfV2FvfFXKLT6vniMS5arRNVNBWncX5
+         Xm3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=N5niTNvILZIe3247dXEHKWfE+0gRo9BckREUqYeb2F4=;
+        b=qUeVkiiteWIt33dTDqfpuLTRqoqDxktwGfZNZZjumUlgDT5yy0GUqx89MlR/pAtOB2
+         fGHErW2IqRA0cITZf+ih4KNgKEmkxf6dQMv8QxxYjYepbseoLZLxZHwboMiBGaOahaJ6
+         ELG7lRavPn924R+/0omtcLtKdc3pEL8UDr50U6jFIq2tZWzqq8WV/+WLqwniuU7MX6el
+         /k9E0lDvJ9T51sk47/W2TITUjR+TUzsiiWtuxlSyiHL9pa3HMvF7lNwDZTwBciwb85ub
+         dhX5S4vnRpKO+CXLETmNMieSyghEZuV9gTB9k+0Wojym1bMbgHhcUtPMjjOe87LP6izx
+         jaPg==
+X-Gm-Message-State: AOAM53012ZCWUJsJqAYzICPsqF4Egt84WN7ccsJRlCeO8ISZe+CQniIw
+        J2IJwEANoalBA0bjXEF/fCE=
+X-Google-Smtp-Source: ABdhPJyxCj52ctXx7DaABu8rfVE9tkYCRqtGzzcLuEaynAQ7YMBy3riaxvazF/bJVxW4FmAP1Eun2A==
+X-Received: by 2002:ad4:580e:: with SMTP id dd14mr17107105qvb.96.1593041577685;
+        Wed, 24 Jun 2020 16:32:57 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id 195sm4613494qkl.37.2020.06.24.16.32.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jun 2020 16:32:57 -0700 (PDT)
+Subject: Re: [PATCH v2 00/11] More commit-graph/Bloom filter improvements
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, me@ttaylorr.com, szeder.dev@gmail.com,
         l.s.r@web.de, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 00/11] More commit-graph/Bloom filter improvements
 References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
-        <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
-Date:   Wed, 24 Jun 2020 16:11:51 -0700
-In-Reply-To: <pull.659.v2.git.1592934430.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Tue, 23 Jun 2020 17:46:59
-        +0000")
-Message-ID: <xmqqftak5aa0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
+ <xmqqftak5aa0.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <429f38a2-9346-f6f7-bd69-2fd63828ae7c@gmail.com>
+Date:   Wed, 24 Jun 2020 19:32:56 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 166EBDC8-B670-11EA-829B-C28CBED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqftak5aa0.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This does not seem to play well with what is in flight.  Tests seem
-to pass with topics up to es/config-hooks merged but not with this
-topic merged on top.
+On 6/24/2020 7:11 PM, Junio C Hamano wrote:
+> This does not seem to play well with what is in flight.  Tests seem
+> to pass with topics up to es/config-hooks merged but not with this
+> topic merged on top.
+> 
+>     1b5d3d8260 Merge branch 'ds/commit-graph-bloom-updates' into seen
+>     32169c595c Merge branch 'es/config-hooks' into seen
+>     ...
+> 
+> $ sh t4216-log-bloom.sh -i -v
+> 
+> ends like so:
+> 
+> ok 133 - Use Bloom filters if they exist in the latest but not all commit graphs in the chain.
+> 
+> expecting success of 4216.134 'persist filter settings':
+>         test_when_finished rm -rf .git/objects/info/commit-graph* &&
+>         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" git commit-graph write --reachable --changed-paths &&
+>         grep "{\"hash_version\":1,\"num_hashes\":7,\"bits_per_entry\":10}" trace2.txt &&
+>         cp .git/objects/info/commit-graph commit-graph-before &&
+>         corrupt_graph $BASE_K_BYTE_OFFSET "\09" &&
+>         corrupt_graph $BASE_LEN_BYTE_OFFSET "\0F" &&
+>         cp .git/objects/info/commit-graph commit-graph-after &&
+>         test_commit c18 A/corrupt &&
+>         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" git commit-graph write --reachable --changed-paths &&
+>         grep "{\"hash_version\":1,\"num_hashes\":57,\"bits_per_entry\":70}" trace2.txt
+> 
+> not ok 134 - persist filter settings
+> # ...
+> 
+> Thanks.
 
-    1b5d3d8260 Merge branch 'ds/commit-graph-bloom-updates' into seen
-    32169c595c Merge branch 'es/config-hooks' into seen
-    ...
+Thanks for letting me know. I'll investigate carefully with the
+rest of the 'seen' branch. This test is a bit fragile due to
+computed values for which bytes to replace, so anything that
+could have changed the length or order of chunks would lead to
+a failure here.
 
-$ sh t4216-log-bloom.sh -i -v
+Sorry for the disruption.
 
-ends like so:
+-Stolee
 
-ok 133 - Use Bloom filters if they exist in the latest but not all commit graphs in the chain.
-
-expecting success of 4216.134 'persist filter settings':
-        test_when_finished rm -rf .git/objects/info/commit-graph* &&
-        GIT_TRACE2_EVENT="$(pwd)/trace2.txt" git commit-graph write --reachable --changed-paths &&
-        grep "{\"hash_version\":1,\"num_hashes\":7,\"bits_per_entry\":10}" trace2.txt &&
-        cp .git/objects/info/commit-graph commit-graph-before &&
-        corrupt_graph $BASE_K_BYTE_OFFSET "\09" &&
-        corrupt_graph $BASE_LEN_BYTE_OFFSET "\0F" &&
-        cp .git/objects/info/commit-graph commit-graph-after &&
-        test_commit c18 A/corrupt &&
-        GIT_TRACE2_EVENT="$(pwd)/trace2.txt" git commit-graph write --reachable --changed-paths &&
-        grep "{\"hash_version\":1,\"num_hashes\":57,\"bits_per_entry\":70}" trace2.txt
-
-not ok 134 - persist filter settings
-# ...
-
-Thanks.
