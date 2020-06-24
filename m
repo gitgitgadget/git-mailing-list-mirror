@@ -3,119 +3,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51947C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 04:35:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5E44C433E0
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 07:11:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CEFE2084D
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 04:35:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEDB6207DD
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 07:11:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ebY9iCgk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fogHbS5H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728794AbgFXEfW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 00:35:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51551 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728681AbgFXEfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 00:35:22 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 76E52D77C2;
-        Wed, 24 Jun 2020 00:35:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MWs9UzLnoAaBCc4eJuwKwSoF+yA=; b=ebY9iC
-        gkMgt01l+uNsXtwdXjB0fuQgaALtrY+Rtf+EyFqHBVzZ1i2kravIcpHfL5rB1rfq
-        HrSplkzWHU3frq11REfN/dgh3sAWOkMGP7kjU/9jhaQn+ViYKcBDUcigZk46mSeo
-        X7FhdLqt9aWMhaeAY2nAAzybTuXFy7JRY6MqI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EURi9y4j1kYyZEsJfKK6IqI7M03vJwbT
-        RLc762DmwSO5i0CdIFPJIxrONBf+3O0h5mpNtBadn9QxSlYdu92ydCStgXJhef0V
-        o1AaZWTmEb/aWILUMiAhXIR1+fhMpKXuxcvmcSqwEj6Uiufj5Dyw5iAkIUlkLD4d
-        pEbj4H0TaI0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E98BD77C1;
-        Wed, 24 Jun 2020 00:35:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B5EBAD77BF;
-        Wed, 24 Jun 2020 00:35:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
+        id S2389561AbgFXHLX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 03:11:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39552 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387849AbgFXHLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 03:11:23 -0400
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EECC9C061573
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 00:11:22 -0700 (PDT)
+Received: by mail-pl1-x642.google.com with SMTP id f2so682243plr.8
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 00:11:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jORqRQbi3VgwbRYXJA3YqsI9KCo7gJEDIAXbZNawt0Q=;
+        b=fogHbS5HSDYvZ8UKOO9VfxAAVQByK5Tzn9QUwe9KuDArz/jjoJU/omU5KT8hUCrIzq
+         A9A0PYPtinv6+3pWleJifmMkPjG32veiG/QzZZAvB6D9+p2aLMOQw67aZ9j2Re1pLJsU
+         kY3FFBOcaujY6QECkLEUHRoWA11AfrupujgQrKq8Kz0P/Wg7ZMBxT3vzTAuFmaiOhTDi
+         2fKcXrWoevEP2ad6Jc9ooCGT35aQsWrnkm4GaYFPIOjEy0uAeRtMbw7MkLb9dcXBPNSC
+         siyzZAWx/cuZLyMsUk9pIAGzswyVZ1zuK40RrjqTV1+L1O20Sz77erP5daGCPS0KzZLW
+         7frA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jORqRQbi3VgwbRYXJA3YqsI9KCo7gJEDIAXbZNawt0Q=;
+        b=SVfmPoKsiVWG78vUDZv5avYBy7evsvsS0iHRf3B3SJT99dpRxoIQ3G5Mw6X4YFr3WB
+         rk0slgXb+urZk3DJ4sQ26p1+6P+quAhPKaIcTqWFMIcKCMO7NTnSuu98a05aCxfFjM5O
+         5cwyMTIrH44x3OgRzeDQ/wYetqnB8M6Eloo6cTrAn6aCJ7mhnbRKHp+05AlteaUlLJWO
+         Iz8kRLd6VPq+636z3qaoFZ+Pv1mjgV5NRnLRyvkKT98qdnucOQg01Ncw9i7vEModpZE/
+         1biRnXncd4u7P++pP7A8kMUNnUU9xjUq9lx3naMUVHZJLlQAcGAVPI0uY22HFUrRs8/w
+         qKEQ==
+X-Gm-Message-State: AOAM533xtqVyrfdQUr/CaXJIGQxLz5T4ut8JDa8RNgUb8lnFsdWOj5Rg
+        GZqqHyTtEJ7mKodLAyiklVk=
+X-Google-Smtp-Source: ABdhPJxoAnDfpH5plUFrdYCn87XWPnEq9wqTVMZupWcDLux0FdRqRt8i8lSTcdRHCyzyB74Eh5TL2w==
+X-Received: by 2002:a17:90a:ae11:: with SMTP id t17mr28393469pjq.157.1592982682435;
+        Wed, 24 Jun 2020 00:11:22 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([49.206.13.94])
+        by smtp.gmail.com with ESMTPSA id k14sm18437921pfk.97.2020.06.24.00.11.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2020 00:11:21 -0700 (PDT)
+Date:   Wed, 24 Jun 2020 12:41:16 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
-        =?utf-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] bugreport: generate config safelist based on docs
-References: <20200624012827.34126-1-emilyshaffer@google.com>
-        <20200624012827.34126-2-emilyshaffer@google.com>
-Date:   Tue, 23 Jun 2020 21:35:15 -0700
-In-Reply-To: <20200624012827.34126-2-emilyshaffer@google.com> (Emily Shaffer's
-        message of "Tue, 23 Jun 2020 18:28:26 -0700")
-Message-ID: <xmqq4kr19j3w.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/3] diff-files --raw: handle intent-to-add files
+ correctly
+Message-ID: <20200624071116.GA79097@mail.clickyotomy.dev>
+References: <pull.654.git.1591879139.gitgitgadget@gmail.com>
+ <pull.654.v2.git.1592916485.gitgitgadget@gmail.com>
+ <640e225550886727594ca9dfaee6c9e6ea4b1014.1592916485.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1AEC3566-B5D4-11EA-849F-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <640e225550886727594ca9dfaee6c9e6ea4b1014.1592916485.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Hi Johannes,
 
-> ... To mark a config as safe,
-> add "annotate:bugreport[include]" to the corresponding line in the
-> config documentation; to mark it as unsafe, add
-> "annotate:bugreport[exclude]" instead.
+> The underlying problem is that some time ago, the (already incorrect)
+> empty blob constant was replaced by the empty tree constant, by mistake. I
+> contributed a patch series to fix that, and Cc:ed you you in v2 that I
+> sent out earlier today.
 
-Hmph,...
+Thanks for CC-ing me!
 
-> -sendemail.smtpEncryption::
-> +sendemail.smtpEncryption annotate:bugreport[include] ::
->  	See linkgit:git-send-email[1] for description.  Note that this
->  	setting is not subject to the 'identity' mechanism.
->  
-> @@ -15,7 +15,7 @@ sendemail.smtpsslcertpath::
->  	Path to ca-certificates (either a directory or a single file).
->  	Set it to an empty string to disable certificate verification.
->  
-> -sendemail.<identity>.*::
-> +sendemail.<identity>.* annotate:bugreport[exclude] ::
+[...]
 
-So "sendemail.git-devel.cc" is not included due to [exclude] here,
-but ...
-
-> +sendemail.annotate annotate:bugreport[include] ::
-> +sendemail.bcc annotate:bugreport[include] ::
-> +sendemail.cc annotate:bugreport[include] ::
-
-... "sendemail.cc" that is a fallback value for other "sendemail.*.cc"
-is included?  
-
-> +++ b/generate-bugreport-config-safelist.sh
-> @@ -0,0 +1,18 @@
-> +#!/bin/sh
+> +			} else if (ce_intent_to_add(ce) &&
+> +				   !(revs->diffopt.output_format &
+> +				     ~(DIFF_FORMAT_RAW | DIFF_FORMAT_NAME_STATUS))) {
+> +				struct object_id oid;
+> +				int ret = lstat(ce->name, &st);
 > +
-> +cat <<"EOF"
-> +/* Automatically generated by bugreport-generate-config-safelist.sh */
-> +
-> +
-> +static const char *bugreport_config_safelist[] = {
-> +EOF
-> +
-> +# cat all regular files in Documentation/config
-> +find Documentation/config -type f -exec cat {} \; |
-> +# print the command name which matches the annotate-bugreport macro
-> +sed -n 's/^\([^ ]*\)  *annotate:bugreport\[include\].* ::$/  "\1",/p' |
-> +	sort
+> +				if (ret < 0)
+> +					oidclr(&oid);
+> +				else
+> +					ret = index_path(istate, &oid,
+> +						 ce->name, &st, 0);
+> +				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
+> +					       &oid, ret >= 0, ce->name, 0);
+> +				continue;
 
-We just care about "include" entries, so it does not matter whether
-we mark entries with [exclude] or not anyway?
+Instead of showing the hash for empty blobs for all entries previously,
+introducing this shows the hash of non-empty "i-t-a" files correctly.
+Nice.
 
-Puzzled...
+[...]
+
+>  			} else if (revs->diffopt.ita_invisible_in_index &&
+>  				   ce_intent_to_add(ce)) {
+>  				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
+> -					       the_hash_algo->empty_tree, 0,
+> +					       the_hash_algo->empty_blob, 0,
+>  					       ce->name, 0);
+>  				continue;
+>  			}
+
+Oh, I totally missed this in my patch; the change looks good!
+
+> -  :000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")empty
+> -  :000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")not-empty
+> +  :000000 100644 0000000 $(git rev-parse --short $hash_e) A$(printf "\t")empty
+> +  :000000 100644 0000000 $(git rev-parse --short $hash_n) A$(printf "\t")not-empty
+
+Changing the test-case to reflect to the hash of the blob also makes
+sense.
+
+
+[...]
+
+> > +     hash_e=$(git hash-object empty) &&
+> > +     hash_n=$(git hash-object not-empty) &&
+> > +     hash_t=$(git hash-object -t tree /dev/null) &&
+>
+> > So this is the hash of the empty tree object, and...
+
+I guess we can get rid of the `hash_t' assignment here, because it
+won't be used anywhere else in the test.
+
+Thanks.
