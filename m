@@ -2,103 +2,123 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BB12C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 817D5C433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:47:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2CA520706
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:44:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KG2iq+be"
+	by mail.kernel.org (Postfix) with ESMTP id 6775920720
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404341AbgFXPoK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 11:44:10 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54089 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404199AbgFXPoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 11:44:10 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 622CEC8C16;
-        Wed, 24 Jun 2020 11:44:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XApRwpDLryMy4nXs6pU439rp0fo=; b=KG2iq+
-        bewnVHaTJ3rPWBjPhWI29IBNCrw/Eq1nQWfCoPdMC+0wKEFSlwkH4nsK+zo35Q2V
-        U+bewvguaF3mC7jjIjPw8RXIG+6Vi4CKB3wdfLbDZ6+UhvVJ3ZT1AYhMXx9VIFi+
-        v9Ax53DWAbufc108KTRNw+xhEMti0pi9Prlnc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=n+JxW6B3is/WSUFXDKukNq+eCvM0zenf
-        wxXvQPgtBRIaANi93nkW7F9NBUdZVXtHPJTFUgujb+nm0U2wUJwycpxvqFKarz0y
-        b2JJpXpG8tuXRrkUU1/MJ0UU7/rkJVOw0AL2vGeBPJWZmDkIjnPQo08jP9SFfqJ9
-        p54AgYzi8og=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 59600C8C15;
-        Wed, 24 Jun 2020 11:44:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A47B7C8C13;
-        Wed, 24 Jun 2020 11:44:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3 2/8] send-pack/transport-helper: avoid mentioning a particular branch
-References: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
-        <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
-        <a29943d7bbc11a524089348a4abbd33c7514eee9.1592951611.git.gitgitgadget@gmail.com>
-        <xmqqr1u59u5f.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2006241443200.54@tvgsbejvaqbjf.bet>
-Date:   Wed, 24 Jun 2020 08:44:04 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2006241443200.54@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 24 Jun 2020 14:44:20 +0200 (CEST)")
-Message-ID: <xmqqlfkc8o57.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2404467AbgFXPrm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 11:47:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41920 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2404253AbgFXPrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 11:47:42 -0400
+Received: (qmail 21273 invoked by uid 109); 24 Jun 2020 15:47:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Jun 2020 15:47:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30406 invoked by uid 111); 24 Jun 2020 15:47:41 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Jun 2020 11:47:41 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 24 Jun 2020 11:47:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 09/10] fast-export: allow seeding the anonymized mapping
+Message-ID: <20200624154740.GA2088459@coredump.intra.peff.net>
+References: <20200623152436.GA50925@coredump.intra.peff.net>
+ <20200623152505.GI1435482@coredump.intra.peff.net>
+ <CAPig+cTMu3SW5UE59Eva=jh-07hOT8Dz5A5trWyEugKd_2HaKg@mail.gmail.com>
+ <20200623183053.GA1444619@coredump.intra.peff.net>
+ <CAPig+cTFkAOyLG1Sm_p11GgH9Ms87_7zs-7kFbEYZ-uXg1yrYw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8908CEC6-B631-11EA-9B46-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTFkAOyLG1Sm_p11GgH9Ms87_7zs-7kFbEYZ-uXg1yrYw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Jun 23, 2020 at 04:30:23PM -0400, Eric Sunshine wrote:
 
-> Hi Junio,
->
-> On Tue, 23 Jun 2020, Junio C Hamano wrote:
->
->> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
->> writes:
->>
->> > @@ -1046,7 +1046,7 @@ static int push_refs(struct transport *transport,
->> >  	if (!remote_refs) {
->> >  		fprintf(stderr,
->> >  			_("No refs in common and none specified; doing nothing.\n"
->> > -			  "Perhaps you should specify a branch such as 'master'.\n"));
->> > +			  "Perhaps you should specify a specific branch.\n"));
->>
->> Hmph, not just "specify a branch."?  Maybe it is just me, but
->> "specify a specific branch" did not roll well on my tongue.
->
-> Oh well. "Perhaps you should specify a branch" sounded too judgmental to
-> me, but I'm not a native speaker, so I simply removed the word "specific".
+> > I'm not sure what you'd write, then. You can't mention "mybranch"
+> > anymore if it was anonymized. Are you suggesting to make the example:
+> >
+> >  git rev-list -- foo.c
+> >
+> > by itself?
+> 
+> Sorry, I meant to provide an example like this:
+> 
+>     For example, if you have a bug which reproduces with `git rev-list
+>     sensitive -- secret.c`, you can run:
+> 
+>     $ git fast-export --anonymize --all \
+>         --seed-anonymized=sensitive:foo \
+>         --seed-anonymized=secret.c:bar.c \
+>         >stream
+> 
+>     After importing the stream, you can then run `git rev-list foo --
+>     bar.c` in the anonymized repository.
 
-I'm not either.  Note that when I say "maybe it is just me", I
-usually am not asking to change anything.
+Thanks, that makes sense. I took this as-is for my reroll (modulo the
+change of option name discussed elsewhere).
+
+> Hmm, perhaps your original attempt can be extended slightly to state
+> it more explicitly?
+> 
+>     Note that paths and refnames are split into tokens at slash
+>     boundaries. The command above would anonymize `subdir/foo.c` as
+>     something like `path123/secret.c`; you could then search for
+>     `secret.c` in the anonymized repository to determine the final
+>     pathname.
+> 
+>     To make referencing the final pathname simpler, you can seed
+>     anonymization for each path component; so, if you also anonymize
+>     `subdir` to `publicdir`, then the final pathname would be
+>     `publicdir/secret.c`.
+
+Thanks, I took this modulo some fixups to match the example above, and
+to avoid the use of the word "seed" based on our other discussion.
+
+> This makes me wonder if --seed-anonymized should do its own
+> tokenization so that --seed-anonymized=subdir/foo:public/bar is
+> automatically understood as anonymizing "subdir" to "public" _and_
+> "foo" to "bar". But that potentially gets weird if you say:
+> 
+>     --seed-anonymized=a/b:q/p --seed-anonymized=a/c:y/z
+> 
+> in which case you've given conflicting replacements for "a". (I
+> suppose it could issue a warning message in that case.)
+
+Right, I think you get into weird corner cases. Another issue is that
+not all items are tokenized (e.g., if your author name was foo/bar,
+you'd want that replaced as a whole). Probably you could add both the
+broken-down and full inputs. Yet another issue is that you can't add a
+token with a ":" due to the syntax.
+
+This is an infrequently-enough-used feature that I think it's worth
+keeping things simple, even if they're a little less convenient to
+invoke.
+
+> Lack of a warning or error could be kind of bad if the person doesn't
+> check the fast-export file before sending it out and only discovers
+> later that:
+> 
+>     git fast-export --seed-anonymized=foo:bar
+> 
+> didn't perform _any_ anonymization at all.
+
+Good point. I'd hope people would glance at the output before sending it
+out, but given that it's a potential safety issue, it probably is worth
+detecting this case. I'll add it to my re-roll.
+
+-Peff
