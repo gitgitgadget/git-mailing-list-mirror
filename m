@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48943C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BB12C433E0
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:44:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16E8320720
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:42:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2CA520706
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:44:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RZNpFdAI"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KG2iq+be"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404162AbgFXPmi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 11:42:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62876 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391164AbgFXPmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 11:42:38 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5C357615B;
-        Wed, 24 Jun 2020 11:42:35 -0400 (EDT)
+        id S2404341AbgFXPoK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 11:44:10 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54089 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404199AbgFXPoK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 11:44:10 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 622CEC8C16;
+        Wed, 24 Jun 2020 11:44:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wqSCqDhWQlOzD79pKGhuceZ31NU=; b=RZNpFd
-        AIXHmduAjem3NTLd4yNaVpaQV9pr/Llj0aR+5iAMN96ErGkH0uZtlDAJUjMtLjUA
-        5giw9rdeQ3H4+8MK8vTq0ceoXjdYKAAIfRQYCdy1WPIwt+rHZy/bfNYGx4QZcRME
-        5sPBcNLIlO7h2QvgJq3I/7UXc6Q+RYhTbkup0=
+        :content-type; s=sasl; bh=XApRwpDLryMy4nXs6pU439rp0fo=; b=KG2iq+
+        bewnVHaTJ3rPWBjPhWI29IBNCrw/Eq1nQWfCoPdMC+0wKEFSlwkH4nsK+zo35Q2V
+        U+bewvguaF3mC7jjIjPw8RXIG+6Vi4CKB3wdfLbDZ6+UhvVJ3ZT1AYhMXx9VIFi+
+        v9Ax53DWAbufc108KTRNw+xhEMti0pi9Prlnc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jLX1NhxEmJx/ci3bgNccvO2NBJk1Pl/6
-        gFUKbU6LEH3E8Hh9TznrBPw8MpQOSWBuOkBi7FKo3w8ioojKpzJU0HYv1KrKazBc
-        GT6KPGXSWRdzF5fNAyXFcv5JPx22TXe8DpbBdtA3R1WAOJ3PDZrAnpXkV1d18jFO
-        p25bppgPQ+A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE4897615A;
-        Wed, 24 Jun 2020 11:42:35 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=n+JxW6B3is/WSUFXDKukNq+eCvM0zenf
+        wxXvQPgtBRIaANi93nkW7F9NBUdZVXtHPJTFUgujb+nm0U2wUJwycpxvqFKarz0y
+        b2JJpXpG8tuXRrkUU1/MJ0UU7/rkJVOw0AL2vGeBPJWZmDkIjnPQo08jP9SFfqJ9
+        p54AgYzi8og=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 59600C8C15;
+        Wed, 24 Jun 2020 11:44:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5C27376159;
-        Wed, 24 Jun 2020 11:42:35 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A47B7C8C13;
+        Wed, 24 Jun 2020 11:44:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/3] Accommodate for pu having been renamed to seen
-References: <pull.668.git.1592924655.gitgitgadget@gmail.com>
-        <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
-        <20200624152409.GA143253@generichostname>
-Date:   Wed, 24 Jun 2020 08:42:34 -0700
-In-Reply-To: <20200624152409.GA143253@generichostname> (Denton Liu's message
-        of "Wed, 24 Jun 2020 11:24:09 -0400")
-Message-ID: <xmqqpn9o8o7p.fsf@gitster.c.googlers.com>
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Matt Rogers <mattr94@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 2/8] send-pack/transport-helper: avoid mentioning a particular branch
+References: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com>
+        <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
+        <a29943d7bbc11a524089348a4abbd33c7514eee9.1592951611.git.gitgitgadget@gmail.com>
+        <xmqqr1u59u5f.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2006241443200.54@tvgsbejvaqbjf.bet>
+Date:   Wed, 24 Jun 2020 08:44:04 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2006241443200.54@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 24 Jun 2020 14:44:20 +0200 (CEST)")
+Message-ID: <xmqqlfkc8o57.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 53361BFA-B631-11EA-A623-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 8908CEC6-B631-11EA-9B46-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi Dscho,
+> Hi Junio,
 >
-> On Wed, Jun 24, 2020 at 02:48:37PM +0000, Johannes Schindelin via GitGitGadget wrote:
->> Changes since v1:
->> 
->>  * Rebased onto master (no conflicts, so it is safe, and it is more robust
->>    than basing the patches on seen which already contains v1 of these
->>    patches).
+> On Tue, 23 Jun 2020, Junio C Hamano wrote:
 >
-> Out of curiosity, why would we ever want to base any patches on `seen`?
+>> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+>> writes:
+>>
+>> > @@ -1046,7 +1046,7 @@ static int push_refs(struct transport *transport,
+>> >  	if (!remote_refs) {
+>> >  		fprintf(stderr,
+>> >  			_("No refs in common and none specified; doing nothing.\n"
+>> > -			  "Perhaps you should specify a branch such as 'master'.\n"));
+>> > +			  "Perhaps you should specify a specific branch.\n"));
+>>
+>> Hmph, not just "specify a branch."?  Maybe it is just me, but
+>> "specify a specific branch" did not roll well on my tongue.
+>
+> Oh well. "Perhaps you should specify a branch" sounded too judgmental to
+> me, but I'm not a native speaker, so I simply removed the word "specific".
 
-Never.  Even bulding on top of 'next' is discouraged.  
-
-Either "prepare a merge on top of 'master' with all the topics in
-flight that you depend on, and base your series on top of it,
-risking that any one of these topics can take your series hostage"
-or "wait until these topics graduate and then base your topic on
-'master'".  I'd vastly prefer the latter, as it would become
-cumbersome if one of the topics you base your series on gets
-rerolled.
-
-
-
+I'm not either.  Note that when I say "maybe it is just me", I
+usually am not asking to change anything.
