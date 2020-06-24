@@ -2,115 +2,99 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64E7CC433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6852AC433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:05:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41AFE20C09
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:00:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 444A320706
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:05:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KgGzG35r"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="s5bftYI9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390230AbgFXNAm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 09:00:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50431 "EHLO mout.gmx.net"
+        id S2403866AbgFXNFo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 09:05:44 -0400
+Received: from mout.web.de ([212.227.17.12]:55361 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389933AbgFXNAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 09:00:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1593003629;
-        bh=4gzwPRc2oodG1YbkEQj80mke5I92FmPtxdVIp+6795o=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KgGzG35rgPezs4THpZvbMKlxETJwKqJxMvhS70LPLgBIAbYQXr76DaaBJECnaQpdn
-         eSaq5nMOtqWQybab0lbx47CPcCWjMvaeW75evXpBV7FRDupal6BtC4hrpwjQVFGd06
-         b5/KbRqTbW5VQh/C5919tREfAXqsFc6ZxSHn4KVE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MryTF-1j2h6P3Dhl-00nwG8; Wed, 24
- Jun 2020 15:00:28 +0200
-Date:   Wed, 24 Jun 2020 15:00:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v3 7/8] remote: use the configured default branch name
- when appropriate
-In-Reply-To: <xmqqbll99sl5.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2006241459000.54@tvgsbejvaqbjf.bet>
-References: <pull.656.v2.git.1592225416.gitgitgadget@gmail.com> <pull.656.v3.git.1592951611.gitgitgadget@gmail.com> <00a1b281e5ae4cf14435a6745cc55fc248f378a5.1592951611.git.gitgitgadget@gmail.com> <xmqqbll99sl5.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2390437AbgFXNFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 09:05:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1593003929;
+        bh=O4TK9n4UfPD/QAkBuVsR5orv+3SO6quF4043lkJu+YI=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=s5bftYI9DFrC5YZpJ0aqeYrFkojQh5dCFTL9zbfVYo1hlLDafqfIMpoKCookNWfnT
+         tkHEsGzi+ug+IWr1a36D2nY1xEPcC26i+w78I2I/W03UJcRZmTxgqxjjuwgf/oYTKg
+         8LK8N7Qb6XmwgstFqeR/IFZCPPSpde269WuEtFg0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Ml46w-1j9XgT2WTs-00lSgJ; Wed, 24
+ Jun 2020 15:05:29 +0200
+Subject: Re: Git 2 force commits but Git 1 doesn't
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Ward <mward@smartsoftwareinc.com>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     Jeff King <peff@peff.net>
+References: <dea24348-770c-1228-115d-23153fbecebd@smartsoftwareinc.com>
+ <20200622202122.GO6531@camp.crustytoothpaste.net>
+ <a42d038f-bf14-8f1a-927e-7488796e7710@smartsoftwareinc.com>
+ <20200622204346.GP6531@camp.crustytoothpaste.net>
+ <8ad16219-2426-6127-b41d-bb3007a9b993@smartsoftwareinc.com>
+ <20200622210953.GQ6531@camp.crustytoothpaste.net>
+ <2e43580c-9952-9ccf-6b35-27a4333fb83e@smartsoftwareinc.com>
+ <20200623010519.GR6531@camp.crustytoothpaste.net>
+ <09a7fa54-d7ae-772c-fb36-29dbd27bc626@web.de>
+ <20200623151951.GS6531@camp.crustytoothpaste.net>
+ <83e99359-2c24-d8cd-bd4a-6ba90ed54b7f@web.de>
+Message-ID: <143f7207-4428-81bb-877e-8bbeb9a79a1c@web.de>
+Date:   Wed, 24 Jun 2020 15:05:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oXxmpzQ7xhVA77bagk5hbIGptOfct4NNjB8cEUCvavJaSjDIWia
- EdCA8mC1+W1uTWC5l44dzLW+33DwdIw0OwgYsEZPmSZgifJwixjq5AojF83Ntd0mBREndF2
- p1VCPdrBg1BA4pR3pI+qaWIrAyD9jD9I5SAGEjiKSRHztRQLI68A/F7Ynx2MulqZXssIFib
- HVuo1Tb1nuC9ccMKqmfeQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:631WqZEz5eQ=:OuO0tOl7NlozCE6rgYj2l2
- n6YgxR5gdkeVlxUyK4oXLfFgu8vSdbOY2DgSSDWXBzO4pehiymzAUJy6mhlG8oTapg6fuNrGy
- kux42ZSj0aCZZUoHIhqYoMY5MQNx+gHzvlC1UEwcUK5oJD3VXCc3wzVI0b5POvjaSYc0z/3pm
- Bvqi+nhPR4OnRZ406RP3LUkQqkdMpttNJwz7vPWP1NUhV8C6EA14S8wTwCQFk/16XCr2c+kAz
- HQeWkcND27CNdbUMYye8/J2Mo3pwsIAIAMJqdfCbMqBEKV8x0mGVeOlqKlO0dxNVU0bBdLcSA
- 3TGkI6z2u1OUk7Un0b2iZY4Hih+KmofWHljgBY4Jo/P7/Guk3cCO/ZWFx2rt5pr7u7GIM4rl3
- 7l8I0UOOAEB2z97Prv2+saoRhofOlPtHjoXqV97LL7fs5PNw/0K0whNoRm5lSwRe+wJgaMmw7
- WE+TcI2MKao9f6Ns82QF7LIBSIkZGpbda+dDWtzKiHdiYXAMjW178K0Vq84ILKbMsK+/KwsdA
- MCnwNYAsHnEzrfRjFc2uCpcdB49Zfq9GfAHasUM7OwxnbXAelKzLyIbpOd0qZ/UFHS8YUpOGA
- /87fP16x4hBdDaecxFZek/atVTrT/co1Z9ATawhce0Mm/uksRM4DHJBY2/s4u98x3ZxybLX+0
- Fa6j8ReiSwNwD90ZVoZTePfetC+lZdzkH22Vesau0Te37BK+mmFW7iyr2KiwyeQzmTtEnZlU1
- CLYzCwbXa57+PiXAhy5uFFaOyKrrFYTvVNnyv1aULk8AJluE6VIlmapZfB1WdI462qvTTXY59
- HmnX/Dvnq33dLtqbCNSrS3PZW6yCq4BUhRByVviVs/j/po3Oy7Ev9kpC0uD5J7POAFZy1iMm4
- qybBeUY/oUYkhsPwe/w7AbguEIjdI7bZH4g5nI9Iwq7skqgripUfi3ehRexZBK30q8KZM4izo
- 7sFNfWz31mXBO8vTdHYRvMmFIhkyzPJ5Vh9Zd23KqqUeZPW5jBF772uenp7owXbdgpkQdGB/5
- R3DleMMPiY2XpLgC2dFb0oNtCsZikOYoDf+cCq2fiqpcT8+Uf+LCUSjBoYeuiaMmRxP9EEOig
- 4yPTLQoeX9eRCfmCWhj72Z5JYfBKrKUYBDCZqCMKRni4MgtG45nm0XOh04hxZngCZCzYsdzos
- RCY6yC4Oq871VzhgFhuqCmHKLFtIPyWziBJq8+2tisO5Wx1PmZNWHUI25esVBhzFHS4O5a2AY
- WNvvoIrGaYiVnyRhi
+In-Reply-To: <83e99359-2c24-d8cd-bd4a-6ba90ed54b7f@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ODy94GfH+dGVRhmXiq0QMyCV7jPmgdkJjW1R/LV0mn9UHJDbJ65
+ dOF9PAcRbm48l757Cxqo3r1dXYPgPJMIdzFpav+TUSQhmj6pJMATw6Xt0V7Bf8aPkjiaKVb
+ vYxK6wHfXklA7kbyzdC5bGnQaeJievQnVntcmH7chBJqHiHtliNGe1Y6osAcUOv3+V1VAw7
+ eNqi/JFmwSrHOWUMe0Vrw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ldx0N4ykYpY=:DNes4rmb57rBTYhmkF3D6+
+ OP5Yrqst3Fd576Ai2+v/F4FkkUdbYtPkKj1M/53p+fuWCd0yDJoypYo9bxgQ/FLHV4UMXvIPd
+ no3WWG5kKUYLyRfdy5sCYShJVD068NsLwVtXk4bQXUF0F5CMRzcQiEGFNuf+S1rIa6btmcffW
+ YzRvYoJaEhA8ZTXdZKfsuo5ipOH4IghQf90yUkJ8cDeBmAIF6QE6qq9jqUzAlgQvMW4KQQIYH
+ JLbGAjjqQ1w/rfkhrvaTXjYJF1EFQ2gEm7qIxZLWx7rHXOYvpZdt2R0QVhS6sRDSiZYMKEikl
+ xiAMwEk9vHTM6JkX3XeE6+wfNL4pzeqqiVoshrQLF+aS0Waj/IKdZSVBDIj24MvAzmWC8lOnA
+ lggcfn8WjhpXMKyGmwfgYVlcnya2CesB+cNB04lgJWXZx+rTOvEkB4xr8yL51I16+RT9bIfAF
+ 6/z0MoDc864DA0gwL2AZ0WZcRQq6i+4Ay17/lEeVClDCnWGy8XfAhG8M4GZh9vr3L7LTGG2yg
+ SdZvae0848Y+r7MbV2P+buHd0InVHQ88lzk0TfGUW7NvoY6idKuVO/eEtnJLd2azo4saTUbrO
+ EYmFyOPrfkdcDmUsx4VHpM301UJXnVf1faFe7342UQA/wyOFBTpLULfrifftPpnJf91JtS5Ms
+ 1excuZ7n+NZWycdTMieVcN88cIPJJqPCkF/EYFnbrD9yNi17t/XrcdTfrBDjjFM1cq5fby3FC
+ REdeHSbvineyRcFLLUZmnnb+oG3HRGhkeUVjKhxgBhiJlgEMK4j6Jne2XWy6+9Cs0s2hGEtdC
+ zCY8P3tE3Hqa9b9m7DdHzcpqov5/9uT/FVywLoQCqTGoM7/kmpHaVAQVPYfUKAfnNm3cJI7+Z
+ +O9I8XlSTlEsS+yQvM7wIGPNeIQ63GKJ04Ep7B4dLJNN0SH/cZ1T0TP/aB8b7n2CopwOKs999
+ VVekNSgH/P3zUyHoH1RmrdlbybcvGME1nsk6Yn/6TJOCK0Dubpt52rtkyi0aAqgeYlSpqyEYI
+ HiLW0WmR0r0C2VL6mVGH90QRO3jLoMCvKp8fHI4ctkva8dkxp7nubRZTNkCnuZFsKtheN7t9F
+ Z+lvytIWcesyRSvoAbeN1BjWnnCAPlWuWZAS3wYIWcSiXkAFbj1li7ted+DHIvb3M132Ry8H2
+ RDQ5KbJ+nvlOI1KP8l74f17SKU7j+wVluIoB9HNVQcgFQBTePNIG7TG23HkprJ96dwpwU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Am 23.06.20 um 18:42 schrieb Ren=C3=A9 Scharfe:
+> Why do we have object flags and not commit flags anyway?  (I may have
+> asked that before, but can't find the answer..)
 
-On Tue, 23 Jun 2020, Junio C Hamano wrote:
+Easy: There are flags that apply to other types of objects; e.g.
+NOT_USER_GIVEN only applies to trees and blobs.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > diff --git a/remote.c b/remote.c
-> > index 534c6426f1..965129adc3 100644
-> > --- a/remote.c
-> > +++ b/remote.c
-> > @@ -276,7 +276,7 @@ static void read_branches_file(struct remote *remo=
-te)
-> >
-> >  	/*
-> >  	 * The branches file would have URL and optionally
-> > -	 * #branch specified.  The "master" (or specified) branch is
-> > +	 * #branch specified.  The main (or specified) branch is
-> >  	 * fetched and stored in the local branch matching the
-> >  	 * remote name.
-> >  	 */
->
-> Isn't this a bit premature here?
+Adding a commit flags field sounds easy, but requires duplicating
+several functions that work with object flags, e.g.
+clear_commit_marks().  And there's the risk of confusing the two
+flags types.
 
-Actually, it is just wrong. It should talk about the default branch
-instead.
-
-Ciao,
-Dscho
+Ren=C3=A9
