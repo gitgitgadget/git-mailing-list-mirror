@@ -2,82 +2,94 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99718C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 526C0C433E0
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:58:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E04E20781
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:54:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E5EF206F7
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 15:58:59 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=pdinc.us header.i=@pdinc.us header.b="DWmr9fhm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404312AbgFXPyX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 11:54:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41958 "EHLO cloud.peff.net"
+        id S2404680AbgFXP66 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 11:58:58 -0400
+Received: from mail2.pdinc.us ([67.90.184.28]:56654 "EHLO mail2.pdinc.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2403931AbgFXPyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 11:54:22 -0400
-Received: (qmail 21345 invoked by uid 109); 24 Jun 2020 15:54:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Jun 2020 15:54:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30558 invoked by uid 111); 24 Jun 2020 15:54:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Jun 2020 11:54:21 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 24 Jun 2020 11:54:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/10] fast-export: store anonymized oids as hex strings
-Message-ID: <20200624155420.GC2088459@coredump.intra.peff.net>
-References: <20200623152436.GA50925@coredump.intra.peff.net>
- <20200623152451.GC1435482@coredump.intra.peff.net>
- <20200624114313.GJ2898@szeder.dev>
+        id S2404558AbgFXP65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 11:58:57 -0400
+Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 05OFwrnY007391
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 24 Jun 2020 11:58:54 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 05OFwrnY007391
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1593014334; bh=p7jz9qhNnv/9iC531qTblOiDcAnoaecSeuNqhK/+NwU=;
+        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
+        b=DWmr9fhmru+OJoKYW39VNVl536t4q7q4YkRoPTu/5G310wXMDLjAainIUhd9yzU9n
+         uAaoXe8NRUhZqOWgCEbkZdcxIRkiXF4Sbi2+TbkcW8xdWumd3NuNmC2/WGtuHwXKS8
+         wVo/s+WRrC2ZUZttq2YvZycFIun+emsV0JXzPE1cB2KwNzSQr9aBNO3bCu1ALUbatu
+         IllSyj4XH/TrWAHtLLyHoUaxsiw+i1WlLng5Eo0TaUx3gOLwFKEPjSPazd2nTHUzZq
+         f3/l0HIWLA3sGO+QHDiaU5WhXVLsAv1TQCnOQfSrm+bz6zGdZJSwPAMTxxFzeZMkL5
+         Jt2cu1qYF+Wvg==
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     "'Jesse Earles'" <jesse.earles@aero.org>
+Cc:     <git@vger.kernel.org>
+References: <BY5PR09MB4504218AEF2DFD593843A41EFF950@BY5PR09MB4504.namprd09.prod.outlook.com>
+In-Reply-To: <BY5PR09MB4504218AEF2DFD593843A41EFF950@BY5PR09MB4504.namprd09.prod.outlook.com>
+Subject: RE: Are there MPU/SKU's for these products?
+Date:   Wed, 24 Jun 2020 11:59:04 -0400
+Organization: PD Inc
+Message-ID: <25d501d64a40$62991410$27cb3c30$@pdinc.us>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200624114313.GJ2898@szeder.dev>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-us
+thread-index: AQHSB2ADz8zCfa4zmKyiaoVbsYQIDqjwcb8A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 24, 2020 at 01:43:13PM +0200, SZEDER Gábor wrote:
+The unique identifier for that version is: e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7
 
-> >  	static uint32_t counter = 1; /* avoid null oid */
-> >  	const unsigned hashsz = the_hash_algo->rawsz;
-> > -	unsigned char *out = xcalloc(hashsz, 1);
-> > -	put_be32(out + hashsz - 4, counter++);
-> > -	return out;
-> > +	struct object_id oid;
-> > +	char *hex = xmallocz(GIT_MAX_HEXSZ);
-> > +
-> > +	oidclr(&oid);
-> > +	put_be32(oid.hash + hashsz - 4, counter++);
-> > +	return oid_to_hex_r(hex, &oid);
-> >  }
+commit e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7 (tag: v2.12.0)
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Fri Feb 24 10:49:58 2017 -0800
+
+    Git 2.12
+
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+
+> -----Original Message-----
+> From: git-owner@vger.kernel.org <git-owner@vger.kernel.org> On Behalf Of Jesse Earles
+> Sent: Wednesday, June 24, 2020 11:43 AM
+> To: git@vger.kernel.org
+> Subject: Are there MPU/SKU's for these products?
 > 
-> GCC 4.8 complains about this change in our CI job:
+> Hello,
 > 
->   $ make CC=gcc-4.8 builtin/fast-export.o
->       CC builtin/fast-export.o
->   builtin/fast-export.c: In function ‘generate_fake_oid’:
->   builtin/fast-export.c:394:2: error: dereferencing type-punned pointer will break strict-aliasing rules [-Werror=strict-aliasing]
->     put_be32(oid.hash + hashsz - 4, counter++);
->     ^
->   cc1: all warnings being treated as errors
+> I am working with my software team on updating their internal catalog with current and accurate info
+> and am needing to find the MPN/SKU for "Software Freedom Conservancy | Git | v2.12.0". I'm not certain
+> if there even is one as I assume this is open-sourced, but I figured I'd reach out to get confirmation
+> before I make an internal SKU for our records. Thanks.
+> 
+> 
+> Jesse Earles
+> Desktop Support Specialist
+> EIS/IT Operations
+> Digital Intelligence Systems, LLC (DISYS)
+> The Aerospace Corporation
+> 14745 Lee Rd. Chantilly, VA 20151
+> 
+> 
+> 
 
-Interesting. The only change on this line is swapping out the local
-"unsigned char *" for an object_id, which also stores an "unsigned
-char" (though as an array). And while put_be32() takes a void pointer,
-it's inlined and treats it the argument an "unsigned char *" internally.
-So I'm not sure I see that any type punning is going on at all.
 
-I'll see if I can appease the compiler, though.
-
--Peff
