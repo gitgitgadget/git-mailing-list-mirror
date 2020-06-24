@@ -3,93 +3,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D083FC433DF
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 17:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE0A5C433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 17:24:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9FF3820823
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 17:05:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C51C22078D
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 17:24:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ix+FuVuP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ggp+FcS4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405156AbgFXRFu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 13:05:50 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63147 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404208AbgFXRFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 13:05:50 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D743CA3E4;
-        Wed, 24 Jun 2020 13:05:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a7jC3NiK8iKNMhGG8/qAp9D2Rb8=; b=Ix+FuV
-        uPV55+cbPJh45A+KMS2oLdOvY06+yCsyJuY2HCCeIJ3dFb0StznQRdDL196tLxlO
-        X+qI/ZyBKkuN9fpBC20P/p4a8mxtcNwoEVjHPwycLGGjmphFH4m3+B1CeOU+DD9B
-        6KreJXEG2W5AOfHWU/6DE5+WgOAAWpiYTyCVY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fok4gR3VidiiYgbN1LYJZQDQFlAvAT4y
-        u+DTHkLIV6JPtKT3yQRVHfIK1K7FbyJMZgflIyMAmZ+nUvbfnpORX2U3A94GTNvA
-        b8IRaMLoK68DYGmiIIapOkoDhJN8GgqDbviMxIxwX5gwpHHyvCoZUGtES1sEROcU
-        1HafirjAJLg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3581BCA3E3;
-        Wed, 24 Jun 2020 13:05:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7FA83CA3E2;
-        Wed, 24 Jun 2020 13:05:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        id S2405449AbgFXRY3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 13:24:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49658 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405318AbgFXRY2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 13:24:28 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B0FC061573
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 10:24:28 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id k18so2575942qke.4
+        for <git@vger.kernel.org>; Wed, 24 Jun 2020 10:24:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PH2fFmGx45KN/sgdfoLNyA17vlYLrQc5/YJ6008nF0M=;
+        b=ggp+FcS4DkBaMzRBtalemdIvmBKKITHacYVYj1g27kv+gcnEW5Ak1+Ph1sh3fOembI
+         Nej+fus6aGPyo/j0ISJp0xm86UY4M5iOxawhzt/xrujjq1membmeO7SnVJKjaSBUp15c
+         sLv/Umv/AJQk7GJUOJn/6dst4mw/UqZtNF5EfiT4KARBPMDJOecL9fGjnEHlwki/aMRN
+         XyYVr1ehur7wof6k0SCAeqMPm5qnEr5DpALYHYycWU9X+7Ow5U5HmD9WbTLhGabiXoDW
+         VAL5XgLoNyLsIoFgjufpT/bX9W0kNP6/kI5g2KRk+TMFxAbBz6cKJtqZ6bbDPMndzSQ/
+         3AMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PH2fFmGx45KN/sgdfoLNyA17vlYLrQc5/YJ6008nF0M=;
+        b=JvlcF+gZlrG/kFaWat/99PQg+H0ek9pQ8YStbIkI7Qm6eDbMj2hQ/EZtI5PjE9z0mo
+         eAw6isI5S8JBWi6fwy5vS8oa15Au9Xl5xxhNZ9UBUu9sYCyfL+P9620RhUL+ONmfdiF9
+         HoR94TP6YCy9MKS0+lpeb0taF/MIQsZyrpN/IepFXXTF5Fn5B+a06ntVsWPpEwl8GrOh
+         +tBoH1syx9Hy15TozAfNLWy3IFkKTkS/W/ANjG33DqjwdfCNe1zPFM8MoYsst5wgjHnI
+         gAgaGh/Qv60YDllTbeyqicDuVUX8DzJAgPwHT4bJZ4OY3foObYQnVynZIaiJ68MdQzDZ
+         oRug==
+X-Gm-Message-State: AOAM532DAIj6br61vv4lBJGWVSbhvgVhHifd/Ddfc87EQmyH+4s9Gniq
+        WoncZltNGKoVjzpimS5GHkE=
+X-Google-Smtp-Source: ABdhPJx711nW5kuieRKmazupC17vmxZmwn5ta76mYA1llWq+KFoBX95LGDwbWHWrGLWVzxb+o8BjAQ==
+X-Received: by 2002:a37:dcc:: with SMTP id 195mr25647460qkn.251.1593019467893;
+        Wed, 24 Jun 2020 10:24:27 -0700 (PDT)
+Received: from generichostname (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
+        by smtp.gmail.com with ESMTPSA id m57sm4457874qtk.19.2020.06.24.10.24.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2020 10:24:27 -0700 (PDT)
+Date:   Wed, 24 Jun 2020 13:24:25 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: [PATCH v2 0/3] Accommodate for pu having been renamed to seen
+Message-ID: <20200624172425.GA152115@generichostname>
 References: <pull.668.git.1592924655.gitgitgadget@gmail.com>
-        <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
-        <xmqqtuz08ofa.fsf@gitster.c.googlers.com>
-Date:   Wed, 24 Jun 2020 10:05:43 -0700
-In-Reply-To: <xmqqtuz08ofa.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 24 Jun 2020 08:38:01 -0700")
-Message-ID: <xmqqd05o75so.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
+ <xmqqtuz08ofa.fsf@gitster.c.googlers.com>
+ <xmqqd05o75so.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F1919E0E-B63C-11EA-A836-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqd05o75so.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Jun 24, 2020 at 10:05:43AM -0700, Junio C Hamano wrote:
+> I do not know how many of you regularly have interacted with 'pu'
+> and now need to go through the same adjustment as I do.  Sorry for
+> using you as a guinea pig for an experiment for you know what to
+> gauge the cost.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
->> Changes since v1:
->>
->>  * Rebased onto master (no conflicts, so it is safe, and it is more robust
->>    than basing the patches on seen which already contains v1 of these
->>    patches).
->
-> Thanks, I actually wanted to include it in 'maint', so I'll queue on
-> the same base (no conflicts, so it is safe, and it will be in a
-> maintenance release if we are going to issue one).
+Heh, I was wondering if you had any ulterior motives ;)
 
-By the way, I find myself typing 'pu' all the time, even though I've
-been using 'seen' for almost 48 hours by now.  My private tooling
-all have been updated to work with 'seen', but it seems that it
-takes time to retrain muscle memory.  I'll see if I can fully adjust
-before the next week starts.
+Since we're on the topic of the cost of renaming branches, I was reading
+a reply from you back in 2011 about how HEAD symrefs are the only valid
+ones[0]. I'm not sure if the situation has changed since then but
+perhaps we could officially expand the scope of symrefs to allow users
+to essentially alias branches? It might reduce the cost of performing
+branch renames by having a backwards compatible option.
 
-I do not know how many of you regularly have interacted with 'pu'
-and now need to go through the same adjustment as I do.  Sorry for
-using you as a guinea pig for an experiment for you know what to
-gauge the cost.
-
+[0]: https://lore.kernel.org/git/7vsjvpq0jk.fsf@alter.siamese.dyndns.org/
