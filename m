@@ -2,228 +2,151 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D241FC433DF
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 19:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8D6DC433E0
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 19:39:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A80702077D
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 19:15:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ikTs9FOP"
+	by mail.kernel.org (Postfix) with ESMTP id B39292077D
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 19:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405162AbgFXTPr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 15:15:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404563AbgFXTPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 15:15:47 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CA83C061573
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 12:15:46 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id x18so3842473lji.1
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 12:15:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=W5ulQNFDy/1Dafc6K8uZk77w7ATkSFR7xcfWNMfD1lE=;
-        b=ikTs9FOPLed/Z2AKbm1GnY+FikMdv25MWoI27uq+2r9V0uwWBafw66D1KO3Us1FC6w
-         w9315dkY5mUAd0MHpxu4lEKy85yC1sqsXy3DBnOcUK5DQSziQGmFCPo4TsiNaShBQ3GH
-         CnEPLTKlpz/7FX4FzGrjdwVvwP7F3/LBcPLNYD3QKY4wskKahJ0/pF9ogtluIWwGWpAk
-         l62fv1AergnZoiS7M2hd49O7CjYzRvMOS2y7inBP4o3vUXjsDh9xZbR/AN3mFj2bIPHj
-         BAz2p1PGVvT1NOnnzKBTVb8IIzuaAKkTZGnZJVTqbtr2ZUkgMyv/NUiwyutxPq/QPKrg
-         OexA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=W5ulQNFDy/1Dafc6K8uZk77w7ATkSFR7xcfWNMfD1lE=;
-        b=HeV5s+DxbN2rDn2NtFzgLHrE0NJM3eJVIphDPv50ywCinJSneDMwPYa/7AoM6ybgYZ
-         pKKczeeM/Xrrg/Igv45pb/nrhcpaEKe6JSyhNYIlegBWBUff052lBR794OiR92ZgPAMn
-         t7LKpaQgxwPDHpaahF1z6L2BD87RvonlbUe08mdEukpv2T2R+bsdCMnqupvgIAlAjTLh
-         UywHQaIbjsRMFFooavlsodqns1rZZm+DExEQQhMtWfHhYXTUR0NQ2d69E3jx9EwR7am4
-         R4eknC2MX2RGgI5KC4bWPMKLxRUswojqbR4m+GC/qMF6YTEP7BAvt4IYM9TEiiK0o7ti
-         IqSQ==
-X-Gm-Message-State: AOAM532RzcQ1BdmwIAfrNVP51fV02u1D+0MmBTW6gbS0wA+rRzZMxfEg
-        8/vZFIa7gvtaLoxtzFQK4p8=
-X-Google-Smtp-Source: ABdhPJxkORd4VnKlFUSwi4+bLSSnrpFEEnJSv9jQml8kDCoIT6yr2Ybgsc/VsaW5wdDqcGkX/Ai34A==
-X-Received: by 2002:a2e:8041:: with SMTP id p1mr14214194ljg.99.1593026144798;
-        Wed, 24 Jun 2020 12:15:44 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id j17sm4369542lja.30.2020.06.24.12.15.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2020 12:15:43 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Tiran Meltser <Tiran.Meltser@mavenir.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Amir Yosef <Amir.Yosef@mavenir.com>
-Subject: Re: Request for adding a simple mechanism to exclude files from Git
- merge operation
-References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
-        <20200622194122.GN6531@camp.crustytoothpaste.net>
-        <871rm6x86y.fsf@osv.gnss.ru>
-        <CABPp-BHa=jppGtoDiTz_NCXrd2zhTfALb_UrQjcF-VDcv+vuNA@mail.gmail.com>
-        <87sgelpmb2.fsf@osv.gnss.ru>
-        <CABPp-BFwNnD-zZvHjCAvvmzy1wTT3yy-smK5nCtQ937apaNmkQ@mail.gmail.com>
-Date:   Wed, 24 Jun 2020 22:15:42 +0300
-In-Reply-To: <CABPp-BFwNnD-zZvHjCAvvmzy1wTT3yy-smK5nCtQ937apaNmkQ@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 23 Jun 2020 14:46:22 -0700")
-Message-ID: <87ftak1di9.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S2391334AbgFXTjd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 15:39:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42252 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2391239AbgFXTjd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 15:39:33 -0400
+Received: (qmail 22689 invoked by uid 109); 24 Jun 2020 19:39:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Jun 2020 19:39:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1294 invoked by uid 111); 24 Jun 2020 19:39:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Jun 2020 15:39:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 24 Jun 2020 15:39:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] revision: reallocate TOPO_WALK object flags
+Message-ID: <20200624193931.GA3336639@coredump.intra.peff.net>
+References: <29f8b1fc-fac7-12c6-4bfe-28aed7e709c3@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <29f8b1fc-fac7-12c6-4bfe-28aed7e709c3@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+On Wed, Jun 24, 2020 at 03:05:38PM +0200, René Scharfe wrote:
 
-Elijah Newren <newren@gmail.com> writes:
+> The bit fields in struct object have an unfortunate layout.  Here's what
+> pahole reports on x86_64 GNU/Linux:
+> 
+> struct object {
+> 	unsigned int               parsed:1;             /*     0: 0  4 */
+> 	unsigned int               type:3;               /*     0: 1  4 */
+> 
+> 	/* XXX 28 bits hole, try to pack */
+> 
+> 	/* Force alignment to the next boundary: */
+> 	unsigned int               :0;
+> 
+> 	unsigned int               flags:29;             /*     4: 0  4 */
+> 
+> 	/* XXX 3 bits hole, try to pack */
+> 
+> 	struct object_id           oid;                  /*     8    32 */
+> 
+> 	/* size: 40, cachelines: 1, members: 4 */
+> 	/* sum members: 32 */
+> 	/* sum bitfield members: 33 bits, bit holes: 2, sum bit holes: 31 bits */
+> 	/* last cacheline: 40 bytes */
+> };
+> 
+> Notice the 1+3+29=33 bits in bit fields and 28+3=31 bits in holes.
 
-> Hi Sergey,
->
-> On Tue, Jun 23, 2020 at 1:19 PM Sergey Organov <sorganov@gmail.com> wrote:
+Good catch. The original FLAG_BITS was intended to pack with parsed and
+type, and we should have caught this in review when it got bumped in
+b45424181e (revision.c: generation-based topo-order algorithm,
+2018-11-01).
 
-[...]
+The patch looks correct to me.
 
->> I don't see how rebases are affected. I only suggested enhancements to
->> the merge-the-procedure, the "git merge" user command. Once merge is
->> finished and result is committed, there is (fortunately) now way for git
->> to know how exactly the resulting content has been achieved.
->
-> Sorry, the original email from Tiran wanted to be able to record
-> "branch-specific" files and have merge automatically handle them
-> differently.  You also alluded to that when you said
->
-> """
-> As a
-> more generic solution, a new syntax for "git merge" to specify what
-> merge strategy to apply to what files could be designed, and then
-> ability to put that syntax into a file for "git merge" to pick would
-> solve the problem of quasi-static configuration problem. Alternatively,
-> even more generic .gitignore way of doing things apparently could be
-> re-used to some degree by adding support for .gitmerge files.
-> """
->
-> Once you record the information for which files it applies to, then
-> you want it to happen whenever the merge machinery fires, right?
+> There are holes inside the flags bit field as well -- while some object
+> flags are used for more than one purpose, 22, 23 and 24 are still free.
+> Use  23 and 24 instead of 27 and 28 for TOPO_WALK_EXPLORED and
+> TOPO_WALK_INDEGREE.  This allows us to reduce FLAG_BITS by one so that
+> all bitfields combined fit into a single 32-bit slot:
+> 
+> struct object {
+> 	unsigned int               parsed:1;             /*     0: 0  4 */
+> 	unsigned int               type:3;               /*     0: 1  4 */
+> 	unsigned int               flags:28;             /*     0: 4  4 */
+> 	struct object_id           oid;                  /*     4    32 */
+> 
+> 	/* size: 36, cachelines: 1, members: 4 */
+> 	/* last cacheline: 36 bytes */
+> };
 
-No. I didn't mean it, no way. I wanted only "git merge" to be affected.
+With 20-byte hashes, this put us at 24 bytes, which is 8-byte aligned. I
+had always assumed once we moved to 32-byte hashes that we'd be stuck
+with a 40-byte "struct object" to keep 8-byte alignment on 64-bit
+systems. But it seems that at least on x86_64 Linux, we're happy with
+4-byte alignment. That's useful to know (I had wondered if we might be
+able to put those extra bytes to a good use, but I guess not).
 
-> Rebasing, cherry-picking, and reverting are all created via the merge
-> machinery (even if they end up recording one parent instead of more).
-> Said another way, if merge automatically handles these special files,
-> either rebase/cherry-pick/revert also handle the special files
-> automatically or you've just created a very inconsistent and weird
-> design.
+>  /*
+>   * object flag allocation:
+> - * revision.h:               0---------10         15                   25----28
+> + * revision.h:               0---------10         15             23------26
+>   * fetch-pack.c:             01
+>   * negotiator/default.c:       2--5
+>   * walker.c:                 0-2
 
-I disagree. The fact that all of the mentioned commands reuse internal
-merge implementation is a good thing, but it's irrelevant to the case at
-hand. I never merge side-branches with either of
-rebase/cherry-pick/revert, so it's only logical to ask for specific
-branch-merging functionality only from "git merge".
+Definitely not a new problem, but I think we should consider "rotating"
+this table. The point of it is for two branches that get merged to cause
+a conflict if they allocate the same bit to two uses. And we _might_ get
+see such a conflict if the allocations are on adjacent lines, but we
+wouldn't if they're far away. E.g., imagine one side does:
 
-I don't even want to think for now if it could be useful in
-rebase/cherry-pick/revert/whatever, as it's already difficult enough.
+  -* revision.h    0---------10
+  +* revision.h    0----------11
+   * fetch-pack.c  01
+   * foo.c           2
+   * bar.c            3
 
-As a side note, if anything, in my POV, having both rebase and
-cherry-pick in porcelain is an overkill. Effectively, 'rebase' is a
-'cherry-pick' on steroids, so adding a --cherry option to 'rebase' seems
-to be logical.
+and the other does:
 
->
-> If you're disclaiming your last paragraph and saying that this would
-> only be a manual operation where the user specifies which files they
-> want to specially merge, then a lot of my complaints go away.
+   * revision.h    0---------10
+   * fetch-pack.c  01
+   * foo.c           2
+   * bar.c            3
+  +* uh-oh.c                  11
 
-Nothing to disclaim, I think. What I thought was that it will affect
-things automatically, but only for "git merge". Apparently generic merge
-machinery will need support for this, but it will be used only for "git
-merge", at least for a start. Alternatively, there could be generic
-option that will turn this handling on, and this option will be turned
-on by default only for "git merge". I'm not familiar with Git
-implementation enough to even try suggest the right way to implement it
-though.
+Now we have two possibly conflicting uses of bit 11 (a semantic
+conflict), but no matching textual conflict.
 
-> Although...
->
->> Nor do I see why to limit decisions to "ours" vs "theirs". I meant to
->> support arbitrary merge strategies for different files. Generic feature.
->>
->> My thought was: if git at all supports different merge strategies, why
->> not to support different strategies for different files? I don't see any
->> inherent contradiction in adding of such a feature.
->
-> If you're interested in re-merging specific files, why not just call
-> `git merge-file` to handle each one?  It supports e.g. --ours/--theirs
-> (similar to merge's -Xours/-Xtheirs) and could possibly add more if
-> there are ones missing.  So, it seems like we already have a command
-> for this, even if it's less well known?
+Whereas if we wrote:
 
-merge-file is likely some low-level utility... check... yeah, it is.
-Extremely low-level. Three-way merge of 3 /files/. How does it help? How
-much error-prone scripting will I need to get to the point of any
-suitable result?
+  * bit 0: revision.h, fetch-pack.c
+  * bit 1: revision.h
+  * bit 2: revision.h, foo.c
+  * bit 3: revision.h, bar.c
+  [etc...]
 
-To me what you suggest here is basically what I've described as kludgy
-way of achieving the goal. I can probably also make merges with
-different strategies in 2 different repositories, then copy files
-between them. Does it mean I already have all the needed tools to get
-the job done?
+then we'd get a conflict on the "bit 11" line. It does mean that
+unrelated modules get written on the same line, but that's the point.
+They're only allowed to be on the same line after somebody determines
+that they're mutually exclusive and won't stomp on each other.
 
-Please consider the problem: I did a regular merge, and by analysis of
-the resulting conflicts I realized I'd need to visit a few tens of files
-and resolve conflicts exactly the way -X ours would. Suppose, for
-simplicity, that all these files are in some sub-directory <subdir>.
-
-git merge --force -X ours -- <subdir>
-
-would solve this immediately, if it existed. Honestly, I can't even
-estimate what would I need to do to achieve it using "git merge-file". I
-mean, I guess it's possible, yet I don't believe it's practical.
-
->> >   * The pathspec limiting is going to be a bug factory for renaming
->> > handling.  (The simplest form of which is just renaming a special path
->> > to a non-special path or vice-versa and modifying both sides of
->> > history.)  Rename handling can already get some pretty hairy corner
->> > cases without dumping more in the mix.  I'd rather have users decide
->> > what to do with paths that switched from being one of the special
->> > "ours" paths to being a normal 3-way-conflict marker path.
->>
->> I admittedly didn't dive into such details, but I didn't suggest to
->> attach any additional attributes to paths either, so there is no need to
->> care about renames, as far as I'm able to see.
->>
->> Apparently you talk about some other feature here that I didn't suggest.
->
-> Perhaps your comments on creating a ".gitmerge" file means something
-> different than I understood.  If it indeed does not record pathnames,
-> then the rename issue goes away (though then I don't understand what
-> its purpose is nor the rest of your comments in that paragraph where
-> you suggested it).  But if your .gitmerge comments did imply something
-> similar to .gitattributes which specified how certain paths were to be
-> handled, then renaming issues would certainly arise.
-
-Well, I had no use for .gitattributes, so I didn't even recall they
-exist. Maybe it's where needed support could be defined, so that
-existing renames handling machinery is simply reused without additional
-efforts. Will it work right now if I define custom merge driver that
-does "git merge -X ours" and then assign it to the set of files? It'd
-still be a kludge, but one that proves the point that such support could
-be implemented without much effort.
-
-OTOH, as I already said, my own use-case doesn't need any permanent
-configuration, so what I say about it is mostly just thinking aloud. In
-particular, the .gitattributes trick above is again too complex to solve
-a casual but heavy problem I sometimes have, though I think I'd still
-use it lacking better way.
-
-Thanks,
--- Sergey
+-Peff
