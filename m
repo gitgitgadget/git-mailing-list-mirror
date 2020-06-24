@@ -2,172 +2,138 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.6 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44FA0C433E1
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 01:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9637DC433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 01:31:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C7712098B
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 01:28:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60D22206EB
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 01:31:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="m+xSDzZ5"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uNOV7OER"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388418AbgFXB2o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 21:28:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43480 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387842AbgFXB2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 21:28:43 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B008C061755
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 18:28:41 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id a188so592291ybg.20
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 18:28:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Lo26tiHO+9f9HPf5ytUKuhgqaHnhgouLFXzAm4wNgkI=;
-        b=m+xSDzZ5n9lHhT8zR0a46ehCLv2d3ojO9WJ8am6M/WrIhWznI88N+UVXH5X/7/5vFX
-         6sJHZho4JxLf4mMZcbyQv3eqyDCnoN9kDxdfltpLTEe/GV/OqIVqgftAWcQmxmQmqILb
-         9D58CeyX+FpxajSn8ryoe1mnmfyKerG0I27CtuUz1GHdYlUPS9K8OduQ+sXlKY6GEQzV
-         QS5pmD4cbaGRyHBQ1gYvo2qQZ+9yGJ+ajmxnfJ5Z/OEVlJ+v4y3ECvnVEf6SAJ1AsT9g
-         BDkUggiQ5dLFFdLPzVG8C2W1F2PUCAS4RcPHshltsuvmhnKearFEsVpTv3Kf5iZHAHaj
-         zhOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Lo26tiHO+9f9HPf5ytUKuhgqaHnhgouLFXzAm4wNgkI=;
-        b=gVdNn9pst3/KGC/IL7KyS0IrNVIObdLS3VMiRNTyIoYg5ICt502LDUjUEKDiakjct4
-         YhPUG8u1QQ3Bdmjcrlg6Qn2isANFh6aBUKmQH4wJHMU4Hhsoqb2NiSTM3WfRWeIyWfVJ
-         5Gh6LQJihBaj4O+XGhT29XkxAVPZPJqI7I3/hrZsz0O/fzykaOM5zj/BoggIXlGNVRez
-         vsHzNvlvvG2ioetzKvs8szZzZmrgePhqWHVGchgT8OnkFZ2D9lxcrqL6Nb0WUOlOe7t6
-         HKDZ1r7a0BV3KSU+QizyT6+w8FG9H2ROa/X4KaW86SvTkA9kIJ9yS9IRFRa3Kvc2YYed
-         FK6Q==
-X-Gm-Message-State: AOAM533wBOZaiyd7HKMvOW75+FFNthDIJbGuBr5n79YSYCasLFxvTdP1
-        ZQXjUwE4RcEVCQ4EOlpnbciv5gsM8xgxWFjdP5jNjMzUMQe6fHxBdFY9hF6BMl1ajsGrs1euQyi
-        i7SEXpxmUKS8Zq25RlZLBfjq1yoSmfOyYrl9GpWBNit29SdCaq/MG+EgviRVqYSoTkD1hMeg+zQ
-        ==
-X-Google-Smtp-Source: ABdhPJwGg1wI4uFsS2AhfISovYW8RatAMKxBzISlB/GEP+w9NX6utjHI4jQSpE8k8VqEPnywh1yeTwOVSbm5FOLIHXY=
-X-Received: by 2002:a25:7744:: with SMTP id s65mr39142084ybc.400.1592962120664;
- Tue, 23 Jun 2020 18:28:40 -0700 (PDT)
-Date:   Tue, 23 Jun 2020 18:28:27 -0700
-In-Reply-To: <20200624012827.34126-1-emilyshaffer@google.com>
-Message-Id: <20200624012827.34126-3-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20200624012827.34126-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.27.0.111.gc72c7da667-goog
-Subject: [PATCH 2/2] bugreport: add config values from safelist
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S2388392AbgFXBbI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Jun 2020 21:31:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40168 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388347AbgFXBbI (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 23 Jun 2020 21:31:08 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8267860459;
+        Wed, 24 Jun 2020 01:31:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1592962266;
+        bh=XIzPqAyzrqEz7LnUaXKhMJXg8Oc6jSRxdq2VneG4G+0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=uNOV7OEREdr37NUsnLjBNce/QZS+sBrnUrtXkiq9E23uabglgz+HPfDesMLWA2glz
+         FT9OtT7A1jutpGRoSdMVcW0wa9ehgXjXPIbx8Az2ty7cnfBZd6DO+WCekRym8FtMYU
+         wDsOC7wLJgKw5fRLTwFZJ15v8MW4tSjx9LHCQsbMK1BjAXWScmix4QfoK2zEBI4FD6
+         1MAtgHEjtGDKXOYxePAzb29F7/SQ/MlfuC2zreDWbrvJeSeLtiq4p9w5bAY2q/VH5/
+         aHhPIX2S6zzxlaapR1o2rofRePYM/8SjDLro5QY3Ej4GjAyDvq4XiZoG+IWSwxjhp+
+         +tmdN9xxlrGVUeGrXQXkNvRAmjDr7m0OH6zEUQC1soWUx7tv6kZOVxiEDutMziowlG
+         x3VUJb5gXe3qiVHpA2nqzb2VTRi3aBJewynkvU3EUpRjiUSwc5D7EiF2TmW5x7PpCr
+         8H6NxxjCthaCYN23sMNjGeB0yQ1wa3GBaMMUBly8X/Nc7m5giLj
+Date:   Wed, 24 Jun 2020 01:31:01 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     shejan shuza <shejan0@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: your mail
+Message-ID: <20200624013101.GA6451@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        shejan shuza <shejan0@gmail.com>, git@vger.kernel.org
+References: <CABO4vy0WTYbeAiyWf7hE_4QurwH_c1wJUdU=A4FSC0uSxiEO7g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
+Content-Disposition: inline
+In-Reply-To: <CABO4vy0WTYbeAiyWf7hE_4QurwH_c1wJUdU=A4FSC0uSxiEO7g@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach bugreport to gather the values of config options which are present
-in 'bugreport-config-safelist.h', and show their origin scope.
 
-Many config options are sensitive, and many Git add-ons use config
-options which git-core does not know about; it is better only to gather
-config options which we know to be safe, rather than excluding options
-which we know to be unsafe.
+--17pEHd4RhPHOinZp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Rather than including the path to someone's config, which can reveal
-filesystem layout and project names, just name the scope (e.g. system,
-global, local) of the config source.
+On 2020-06-24 at 00:38:39, shejan shuza wrote:
+> Hi, I have a repository with about 55GB of contents, with binary files
+> that are less than 100MB each (so no LFS mode) from a project which
+> has almost filled up an entire hard drive. I am trying to add all of
+> the contents to a git repo and push it to GitHub but every time I do
+>=20
+> git add .
+>=20
+> in the folder with my contents after initializing and setting my
+> remote, git starts caching all the files to .git/objects, making the
+> .git folder grow in size rapidly. All the files are binaries, so git
+> cannot stage changes between versions anyway, so there is no reason to
+> cache versions.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- Documentation/git-bugreport.txt |  1 +
- Makefile                        |  2 ++
- bugreport.c                     | 28 ++++++++++++++++++++++++++++
- 3 files changed, 31 insertions(+)
+What you're experiencing is normal; storing files in the .git directory
+is how Git keeps track of them.  It can't rely on the copies in your
+working tree because you can modify those files at any time, and if you
+did so, relying on them would corrupt the repository.
 
-diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index 66e88c2e31..827063d69b 100644
---- a/Documentation/git-bugreport.txt
-+++ b/Documentation/git-bugreport.txt
-@@ -30,6 +30,7 @@ The following information is captured automatically:
-  - Compiler-specific info string
-  - A list of enabled hooks
-  - $SHELL
-+ - Selected config values
- 
- This tool is invoked via the typical Git setup process, which means that in some
- cases, it might not be able to launch - for example, if a relevant config file
-diff --git a/Makefile b/Makefile
-index 11d4029003..a88f918c77 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2132,6 +2132,8 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
- 
- help.sp help.s help.o: command-list.h
- 
-+bugreport.sp bugreport.s bugreport.o: bugreport-config-safelist.h
-+
- builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
- builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
- 	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
-diff --git a/bugreport.c b/bugreport.c
-index 28f4568b01..f988939bba 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -4,6 +4,8 @@
- #include "help.h"
- #include "compat/compiler.h"
- #include "run-command.h"
-+#include "config.h"
-+#include "bugreport-config-safelist.h"
- 
- 
- static void get_system_info(struct strbuf *sys_info)
-@@ -86,6 +88,29 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- 			strbuf_addf(hook_info, "%s\n", hook[i]);
- }
- 
-+static void get_safelisted_config(struct strbuf *config_info)
-+{
-+	size_t idx;
-+	struct string_list_item *it = NULL;
-+	struct key_value_info *kv_info = NULL;
-+
-+	for (idx = 0; idx < ARRAY_SIZE(bugreport_config_safelist); idx++) {
-+		const struct string_list *list =
-+			git_config_get_value_multi(bugreport_config_safelist[idx]);
-+
-+		if (!list)
-+			continue;
-+
-+		strbuf_addf(config_info, "%s:\n", bugreport_config_safelist[idx]);
-+		for_each_string_list_item(it, list) {
-+			kv_info = it->util;
-+			strbuf_addf(config_info, "  %s (%s)\n", it->string,
-+				    kv_info ? config_scope_name(kv_info->scope)
-+					    : _("source unknown"));
-+		}
-+	}
-+}
-+
- static const char * const bugreport_usage[] = {
- 	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
- 	NULL
-@@ -172,6 +197,9 @@ int cmd_main(int argc, const char **argv)
- 	get_header(&buffer, _("Enabled Hooks"));
- 	get_populated_hooks(&buffer, nongit_ok);
- 
-+	get_header(&buffer, _("Safelisted Config Info"));
-+	get_safelisted_config(&buffer);
-+
- 	/* fopen doesn't offer us an O_EXCL alternative, except with glibc. */
- 	report = open(report_path.buf, O_CREAT | O_EXCL | O_WRONLY, 0666);
- 
--- 
-2.27.0.111.gc72c7da667-goog
+Also, note that Git can and does deltify changes between revisions once
+the data is packed, regardless of whether the file is binary, but how
+well it does so depends on your data.  For example, if it's compressed,
+it likely doesn't deltify very well, so storing things like compressed
+images or zip files using deflate is generally going to result in a
+bloated repository.
 
+However, if you don't need versioning for these files, then you don't
+need a Git repository.  Git is a tool for versioning files, not a
+general storage mechanism.  You may find a cloud storage bucket or some
+other artifact storage service may meet your needs better.
+
+I will also tell you from a practical point of view that almost nobody
+(including you) will want to host a 55 GB repository filled with binary
+blobs.  Usually repacking these repositories is very expensive,
+requiring extensive CPU and memory usage for a prolonged time for little
+useful benefit.
+
+> Is there any way, such as editing the git attributes or changing
+> something about how files are staged in the git repository, to only
+> just add indexes or references to files in the repository rather than
+> cache them into the .git folder, while also being able to push all the
+> data to GitHub?
+
+This is how Git LFS and similar tools, like git-annex, work.  Git LFS
+will create copies of the objects in your .git directory though, at
+least until they're pushed to the server, at which point they can be
+pruned.  Git LFS has the same limitation as Git here.  I'm less familiar
+with git-annex, but it is also a popular choice.
+
+However, as mentioned, it sounds like you don't need versioning at all,
+so unless you do, Git with Git LFS will be no more suitable for this
+than plain Git.  If that's the case, I encourage you to explore
+alternate solutions.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--17pEHd4RhPHOinZp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXvKs1QAKCRB8DEliiIei
+gbdwAP90zUbX2/iMiaOAKsqhdBZ4DzuYETSMaAgXOpMIYS9gAQD+P4Bi4YECJqtz
+qLEw+NFLqNxDC/+Jf7DWkQdkAmDv2gM=
+=IalQ
+-----END PGP SIGNATURE-----
+
+--17pEHd4RhPHOinZp--
