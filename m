@@ -2,118 +2,142 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90EC4C433DF
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 344CAC433E0
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:34:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6735F20738
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:26:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10F9820836
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:34:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TZAUhMqn"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="hCAxvOGt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390394AbgFXN01 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 09:26:27 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55883 "EHLO mout.gmx.net"
+        id S2390974AbgFXNeV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 09:34:21 -0400
+Received: from mout.gmx.net ([212.227.15.15]:45855 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728794AbgFXN0X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 09:26:23 -0400
+        id S2388320AbgFXNeU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 09:34:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1593005179;
-        bh=uXOqlYq5X1/IWkfN4qd6RhfQv4wt56g6bFUdOuzmfmo=;
+        s=badeba3b8450; t=1593005658;
+        bh=Ln2ZtZKg6OFrofXH1QyK12HuVyjysBK3/I4e301VEek=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TZAUhMqnO8Nf/ruNr0KoTXd+mYSSqXG5XixQP5Yq2WA8hBk6lN8Sd4izvIKzGM1IR
-         2qBbuAxtJttLol1AQVRxZwVv469IZyrdUeqcatzMBZwoE62nHxYrbCYR1cSjUHXQCh
-         z3IrxMHHCepaXeTLWV6dnNd1AIuR6knWEK7wFYzk=
+        b=hCAxvOGtezgLIrS5v8uURfSPWgYkV0m/+KXxwlOXEN1ZK/vR4JzZmCdh1f4bF0R8u
+         PepHe+XaO58HLDSC+1DcCK2EphcK+0yssIhfEZg4WC9vQJYghehfNGO5feMdgQ3mx0
+         GvdHsaiLaAVSxTOAW+VBNpEnGaOkcKW8yULBQEGU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBm1e-1jicpL1Maa-00CBVk; Wed, 24
- Jun 2020 15:26:19 +0200
-Date:   Wed, 24 Jun 2020 15:26:20 +0200 (CEST)
+Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MulqD-1iwXDV1wah-00roRQ; Wed, 24
+ Jun 2020 15:34:18 +0200
+Date:   Wed, 24 Jun 2020 15:34:19 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+        git@vger.kernel.org
 Subject: Re: [PATCH v2 1/3] diff-files --raw: handle intent-to-add files
  correctly
-In-Reply-To: <xmqqzh8t9vf5.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2006241517320.54@tvgsbejvaqbjf.bet>
-References: <pull.654.git.1591879139.gitgitgadget@gmail.com> <pull.654.v2.git.1592916485.gitgitgadget@gmail.com> <640e225550886727594ca9dfaee6c9e6ea4b1014.1592916485.git.gitgitgadget@gmail.com> <xmqqzh8t9vf5.fsf@gitster.c.googlers.com>
+In-Reply-To: <20200624071116.GA79097@mail.clickyotomy.dev>
+Message-ID: <nycvar.QRO.7.76.6.2006241528290.54@tvgsbejvaqbjf.bet>
+References: <pull.654.git.1591879139.gitgitgadget@gmail.com> <pull.654.v2.git.1592916485.gitgitgadget@gmail.com> <640e225550886727594ca9dfaee6c9e6ea4b1014.1592916485.git.gitgitgadget@gmail.com> <20200624071116.GA79097@mail.clickyotomy.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:07hSmy6ktodXOJUTWa3cij5IwR0NJkIj+5K70fDIUKIEx3OaKOw
- MuhqVQzDe3fSP5oppZFV/2JBzlScsk6qjaQyHa8N1qQY/PHk9ArNfmo9QuN+bGok5k8Q3oS
- IBe29clBPSC4N2VryQxoJX/s3JT/lxO9J2NjQ+dPSIMw5lTkea4MlHfSiIhiOLIptGlbSGI
- c/6VqgWitTowi8V8VvCYg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2Ys3pta6MCI=:n/xWYVhWSbclDGJNCCFf8F
- KDPKqmNMGlYB8ha/wM4kxKXrDeNJEEKmN0gmcy214Rhcyjbc5UtfRuA8dQp+WAHCRiEg7MtTP
- ZcBScxuSsfTa8yqm5rM+lqrrfGQqD1Y1rMGeeezodI8+B3b1yIy7518ZlGGs0ID8NS8DChNnN
- CZJD7u8EVUc0qGf5ZPLrLTAavzMAo0fEfLqcc0QMGiWs1YxvufSvMbSu2X/6FVoAbOfpgYEn0
- +TC03nhWZAROzaskdUP0JcNiY1zomVfESqm/lM7rCPA6Ap4C6T1RDHg1LZsq2/TPvJZcfQHjG
- msqPy5WmWw70k+9x7iIISAin1/TuGTFh5535RC9SnT5D7tkuNvU0HoDBRWW+TgEIwD3UVDtcU
- xZrPUrWFgwmBKDXi6fqkZ59PlmcOiizMiqv+owWAsuGqiO1F47kpF6U78C0DQmX8aRl25MsYt
- aoUAIK6yWtbrcZ7fJcs3zjRiC0VDBtJJaa3IVIrPxECFElflUncER4K/7gLUf6JW7/kg5YTYd
- Zk1FkKqNI1lMWxyDEYj85m/YFlfgsENTaH2Ls2SuxR9hBjTJFyUD+RVsCXGqlqo5G7JJztJhY
- FCRpuiPoF46y4nE0+8+Rnb+jibBrEzHDowsctRZEZZ4qa1bBu7p/CbZyHtJgrdqHPHZHguIvr
- dcDzedIY6pL/fjaUG4nwkAJ/blkY26dCIGMTMUG9uwGVn4FpCp+XjKKWOulu4fILJCscmH0cq
- XdcNpccudz4XBecYCxg1NWgyT92maa4erkQBPv9NyywJuQyHhY/SzgXPEHCSVAXmWG0jBi+mb
- QI8H2hkOVTUckmkd5uIGT3m8z3ooLwkxogTPO8x49BDDcT/wZ8GrSnbVERc8HSN3/rl52RnhJ
- dMi/CKUxiFDaHufFjQU0T9oeAJtuYVRTu2Yg0oWA/tNbh7Dgkg1jtV1iYlaUtp9wZXSKPkwaM
- QeMbUIBezyAzUmDNUDVGl9x6k7YF3P8CmWVpARcUCzc/o4dySkGjo9bqR0iv7fcg6gwZj+xRw
- BLudECHOhNIC2MNtngm5myBQWk9prGnwQ9opw7O2ARcOlIYIcqXpQAHBQ4vugSPel+SvrJVx4
- ySxosTa2nnLDlJnIsnS+cB18eRtiqt9/JNfp9PFrtosrPAs0sQuKaIJPMqCJOgVzi6YwptgfY
- xAun1bKaURAHkaUfj1VPr3E2XYFc1ePU7tBGzsnd0P1PY0dIZ8RLT6whgGRNmt8yklJjchngs
- NXdU7IlqVkr5koZT5
+X-Provags-ID: V03:K1:zvUlgzPHeMOcGnqlazzFW07ZA0ldPZ/6wszejDBR0fv0mgVcwMs
+ PlqNxRTfsrpDwcf8uAMgsmn2zi+X2HnWaGcAuY7vPqPseZKem5WvLut03n5mhaNl3YoATNg
+ icoH9o4Kz3m+MjBhwOGygyuNNus0ISif1MdfkW+qpvEQHXsq7uZHxFnSOkiiaBgsEqHI5hM
+ fQZ8zno1LqGOuJiNkYuTA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Lnd4RNGsRJg=:utM1fKbWHpn0I61RHQo5QM
+ pBJXsaEJwGCR/sIwynVbhvywjSgS4zvQs3VaJShSR2TQxt89jO5ET+A4vc3ZPsSYRCu28eXwi
+ bMATfJSqOJgX0r3dRqD/g2r0EUd5mn77sT0I1D7/2puLc07xbS15908w85Fz8DNz7M5d4Ssr9
+ UkXgh1axxCuKasH5YGu62rLcj8ys8IUMJTUYN855dQZ8v/s+r0KKrlfeapRpwAKgv3rOGeHKZ
+ 37UofQs8sNkV77Svf3CarvCrQmXEiDgG8QXZiD8EeBE5iRtQA7H5wZ2UquQRsxiEquOba7hgJ
+ 547br0VwWpygyJnHGeaMJLPdk/a5BKK2b8nKeCGLZogO96cBLpTJyyywzLwbhrQy0uQ7Sv2ya
+ 6UsIV6Ly+WJxQC6KHn9gIATh3vuQ0gzmkIGuTANRGaH0fNU7T+xFV5vce1d5yYdFpb5dUe4zn
+ KocuJm+GrB1TzC8/iFNuetZAZ61Q11RifctNdl+jGvob5RWTgL5pE2RCSXb9xOIKw9TG/wOtz
+ taCI/iegKOnn8lPxsR4Ps7GDTuZ5AIQ2oqHh/qrhRd1SsdWOEjw2aZFPXG5l6agZcDBVD+EXB
+ Xk1GMBXVQp4VsHPf5FfdTldutIHhKSbEpvxjloKevaKL1XrI13woqwbg/wET+ob9BYapWlxMu
+ NOwd5CWMDwkIxgyNwZa9sKP2I2z6mWBD+evUcCT6l9qxbBxfocGfkLkJuc/ovJHGOqbaeuz5l
+ NqE1oB8WXLe59bNnFptWV+cNfaC5As7wcW3UB3oujxzQUynNzFuFRKKRLviYu98EO9QnGI/IF
+ qpdsm8ab8zw22y0ywlXsUGerAC1lbD8on1VBGmwaubre/bDrM9qpd2Ot1Y/4ZRP5k2iEMgJJG
+ Gaf0QGK8czLK7m15gBZh59uBJhMLo2TRUXVJagl43Go7k4XPxH+hGKdmqhmQv23lJX3hP4B66
+ aFjP049X//+6WUC+PlBht8ONyIbicG/3/g3m5I3LKxA/Badht/f4lrs+joLYfZMKxC9J9mc0s
+ vpk8QnCxnj9C16sN4lzAwo9TTGggfHggAfs1ONOk/6xq36s/uXsdL9H/R5TjbaJQYLPokpySM
+ vhwJADUQF/ssNaOwxqWY0wpKbdo78SFy6gs6SwdXvw0EqcbImZIOp9WJgn20cGGXu7Qn3e84f
+ MEvgQATFEgXkwGlQVflcz5rGL4Yfw+JCFGddA6yOajAzR33AwyGOldUmHseWt50nXE+3FDzS0
+ wgA4Tu7JFtS7u9mhnsQzcAzA6kbXsRxeUOCM+Gg==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Srinidhi,
 
-On Tue, 23 Jun 2020, Junio C Hamano wrote:
+On Wed, 24 Jun 2020, Srinidhi Kaushik wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> > The underlying problem is that some time ago, the (already incorrect)
+> > empty blob constant was replaced by the empty tree constant, by mistak=
+e. I
+> > contributed a patch series to fix that, and Cc:ed you you in v2 that I
+> > sent out earlier today.
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In `run_diff_files()`, files that have been staged with the intention =
-to
-> > add are queued without a valid OID in the `diff_filepair`.
-> >
-> > When the output mode is, say, `DIFF_FORMAT_PATCH`, the
-> > `diff_fill_oid_info()` function, called from `run_diff()`, will remedy
-> > that situation by reading the file contents from disk.
+> Thanks for CC-ing me!
+
+Of course!
+
+> > -  :000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "=
+\t")empty
+> > -  :000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "=
+\t")not-empty
+> > +  :000000 100644 0000000 $(git rev-parse --short $hash_e) A$(printf "=
+\t")empty
+> > +  :000000 100644 0000000 $(git rev-parse --short $hash_n) A$(printf "=
+\t")not-empty
 >
-> The above is true.  What do we do for a path that is actually added
-> to the index but is stat-dirty or actually modified in the working
-> tree when we are giving the raw output?  Don't we give 0{40} to mean
-> "we dunno---you go look at the working tree"?  I think we should do
-> the same for i-t-a file wrt the object name.  In both cases, the
-> index does not know what the actual object name is, and we do not
-> want to run the index_path() and write out a new object in the
-> object database.
+> Changing the test-case to reflect to the hash of the blob also makes
+> sense.
 
-Sure, but my intention was to synchronize the `--raw` vs the `--patch`
-output: the latter _already_ shows the correct hash. This here patch makes
-the hash in the former's output match the latter's.
+Yes, that's the post-image side. The pre-image side is marked with 0000000
+(which is Git's way to say "dunno! no current information in the index").
 
-Besides, we're talking about the post-image of `diff-files`, i.e. the
-worktree version, here. I seem to remember that the pre-image already uses
-the all-zero hash to indicate precisely what you mentioned above.
+And it is reflecting the `--patch` case that is unfortunately not visible
+in the diff context:
 
-Ciao,
+        cat >expect.diff_p <<-EOF &&
+        diff --git a/empty b/empty
+        new file mode 100644
+        index 0000000..$(git rev-parse --short $hash_e)
+        diff --git a/not-empty b/not-empty
+        new file mode 100644
+        index 0000000..$(git rev-parse --short $hash_n)
+        --- /dev/null
+        +++ b/not-empty
+        @@ -0,0 +1 @@
+        +$content
+        EOF
+
+(This comment is not so much directed at you as it really is a
+continuation of my reply to Junio, see
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2006241517320.54@tvgsbejvaqb=
+jf.bet/)
+
+> [...]
+>
+> > > +     hash_e=3D$(git hash-object empty) &&
+> > > +     hash_n=3D$(git hash-object not-empty) &&
+> > > +     hash_t=3D$(git hash-object -t tree /dev/null) &&
+> >
+> > > So this is the hash of the empty tree object, and...
+>
+> I guess we can get rid of the `hash_t' assignment here, because it
+> won't be used anywhere else in the test.
+
+Right! I _knew_ there was something I wanted to do, still, but then
+forgot all about it...
+
+Thanks,
 Dscho
-
-> Using the status letter 'A' would also be appropriate, as we would
-> show "new file ..." in the --patch output in this case, which would
-> be consistent.
->
->
