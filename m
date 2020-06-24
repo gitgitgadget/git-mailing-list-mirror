@@ -2,181 +2,118 @@ Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 522C0C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90EC4C433DF
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:26:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2EE9420857
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:05:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6735F20738
+	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 13:26:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="r7QB/gGa"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TZAUhMqn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390437AbgFXNF6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 09:05:58 -0400
-Received: from mout.web.de ([212.227.17.11]:35445 "EHLO mout.web.de"
+        id S2390394AbgFXN01 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 09:26:27 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55883 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389393AbgFXNF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 09:05:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1593003939;
-        bh=gCbnfYd727MVPhXgHRyIJiDCRalemQq/QEaTVC4Z9k0=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=r7QB/gGaOIxWQHjqHGFIONJESnFx+vxEt6eLTWuXyDQkkgV0Q8Ej6FR8Z+5xKcD2F
-         Rz9SSkPtHvyQVA4XeA7luklXoujXgUsvBdMNsY/S4qGzHzGCVROLx3uLVlZ0WHFTIV
-         NskmoNq42oFNZMnzpisyJ76rJWz7AXIC7oUNAXHE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LetYx-1j4Kc949Vv-00qewc; Wed, 24
- Jun 2020 15:05:39 +0200
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] revision: reallocate TOPO_WALK object flags
-Message-ID: <29f8b1fc-fac7-12c6-4bfe-28aed7e709c3@web.de>
-Date:   Wed, 24 Jun 2020 15:05:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1728794AbgFXN0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 09:26:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1593005179;
+        bh=uXOqlYq5X1/IWkfN4qd6RhfQv4wt56g6bFUdOuzmfmo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=TZAUhMqnO8Nf/ruNr0KoTXd+mYSSqXG5XixQP5Yq2WA8hBk6lN8Sd4izvIKzGM1IR
+         2qBbuAxtJttLol1AQVRxZwVv469IZyrdUeqcatzMBZwoE62nHxYrbCYR1cSjUHXQCh
+         z3IrxMHHCepaXeTLWV6dnNd1AIuR6knWEK7wFYzk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.227.237] ([89.1.212.7]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBm1e-1jicpL1Maa-00CBVk; Wed, 24
+ Jun 2020 15:26:19 +0200
+Date:   Wed, 24 Jun 2020 15:26:20 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+Subject: Re: [PATCH v2 1/3] diff-files --raw: handle intent-to-add files
+ correctly
+In-Reply-To: <xmqqzh8t9vf5.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2006241517320.54@tvgsbejvaqbjf.bet>
+References: <pull.654.git.1591879139.gitgitgadget@gmail.com> <pull.654.v2.git.1592916485.gitgitgadget@gmail.com> <640e225550886727594ca9dfaee6c9e6ea4b1014.1592916485.git.gitgitgadget@gmail.com> <xmqqzh8t9vf5.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:07hSmy6ktodXOJUTWa3cij5IwR0NJkIj+5K70fDIUKIEx3OaKOw
+ MuhqVQzDe3fSP5oppZFV/2JBzlScsk6qjaQyHa8N1qQY/PHk9ArNfmo9QuN+bGok5k8Q3oS
+ IBe29clBPSC4N2VryQxoJX/s3JT/lxO9J2NjQ+dPSIMw5lTkea4MlHfSiIhiOLIptGlbSGI
+ c/6VqgWitTowi8V8VvCYg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2Ys3pta6MCI=:n/xWYVhWSbclDGJNCCFf8F
+ KDPKqmNMGlYB8ha/wM4kxKXrDeNJEEKmN0gmcy214Rhcyjbc5UtfRuA8dQp+WAHCRiEg7MtTP
+ ZcBScxuSsfTa8yqm5rM+lqrrfGQqD1Y1rMGeeezodI8+B3b1yIy7518ZlGGs0ID8NS8DChNnN
+ CZJD7u8EVUc0qGf5ZPLrLTAavzMAo0fEfLqcc0QMGiWs1YxvufSvMbSu2X/6FVoAbOfpgYEn0
+ +TC03nhWZAROzaskdUP0JcNiY1zomVfESqm/lM7rCPA6Ap4C6T1RDHg1LZsq2/TPvJZcfQHjG
+ msqPy5WmWw70k+9x7iIISAin1/TuGTFh5535RC9SnT5D7tkuNvU0HoDBRWW+TgEIwD3UVDtcU
+ xZrPUrWFgwmBKDXi6fqkZ59PlmcOiizMiqv+owWAsuGqiO1F47kpF6U78C0DQmX8aRl25MsYt
+ aoUAIK6yWtbrcZ7fJcs3zjRiC0VDBtJJaa3IVIrPxECFElflUncER4K/7gLUf6JW7/kg5YTYd
+ Zk1FkKqNI1lMWxyDEYj85m/YFlfgsENTaH2Ls2SuxR9hBjTJFyUD+RVsCXGqlqo5G7JJztJhY
+ FCRpuiPoF46y4nE0+8+Rnb+jibBrEzHDowsctRZEZZ4qa1bBu7p/CbZyHtJgrdqHPHZHguIvr
+ dcDzedIY6pL/fjaUG4nwkAJ/blkY26dCIGMTMUG9uwGVn4FpCp+XjKKWOulu4fILJCscmH0cq
+ XdcNpccudz4XBecYCxg1NWgyT92maa4erkQBPv9NyywJuQyHhY/SzgXPEHCSVAXmWG0jBi+mb
+ QI8H2hkOVTUckmkd5uIGT3m8z3ooLwkxogTPO8x49BDDcT/wZ8GrSnbVERc8HSN3/rl52RnhJ
+ dMi/CKUxiFDaHufFjQU0T9oeAJtuYVRTu2Yg0oWA/tNbh7Dgkg1jtV1iYlaUtp9wZXSKPkwaM
+ QeMbUIBezyAzUmDNUDVGl9x6k7YF3P8CmWVpARcUCzc/o4dySkGjo9bqR0iv7fcg6gwZj+xRw
+ BLudECHOhNIC2MNtngm5myBQWk9prGnwQ9opw7O2ARcOlIYIcqXpQAHBQ4vugSPel+SvrJVx4
+ ySxosTa2nnLDlJnIsnS+cB18eRtiqt9/JNfp9PFrtosrPAs0sQuKaIJPMqCJOgVzi6YwptgfY
+ xAun1bKaURAHkaUfj1VPr3E2XYFc1ePU7tBGzsnd0P1PY0dIZ8RLT6whgGRNmt8yklJjchngs
+ NXdU7IlqVkr5koZT5
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:mpfVFhVQ/mGrOccTt35seY2Y2I9zDzEbVn0ma84xu5oH1uIQerS
- Qy01yDWiGzvKl9XiGv4oimPAtWi+YH2If42y9sWcRaLxkWqZfH8fqA7KMXhtYS0p99vkgYe
- oK6QjuLCnIYsyWxWVRgKyIZDgC2wBnTQ11/K9ROP3uR1XEOcLbLfqOwaYLkg9BUCnvAqmHW
- XjYDlRNqwkN8JA4gcSIng==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XKMhZMIbDSk=:3r4W4zG2hsqz4IHjRp1VjW
- nTinZdW4wE3JSdm5m16pkfJKDLnlK8bbpO4/N93Ndum4KXV+H9lxI67ayKJQavxe0cdUXgqAa
- DHmTV3pyuYciXM3RtPitSHh1+Vz9bGsMLZuEFAbIm75wOUhLqd9JmZ+LYjZz8GilndcZoFB8L
- oNP2bZxPsook5/I3L11cw3YnnUzpmwsxD37M6PxclzaOo7XxDAZgPSUsvAcNqMEdkgj3niH/g
- kofuQZ08RBqRCTfvitnaXJ9FbxbRO4GOOsFqqR6UTpnnsTazWFwEVXXjs07lpzAKJub8F5KP/
- zYozwRmnf6za60nFM4W53MCOOhAneeoCsllJaYnbFvlgbDS3kwG0gp6GM/tBr3BMsDNryY3r7
- BimtxF4NUx6NYIrHiJsovJTkSA7ljKEbAuuVoecjjvAMF99PKjNnFG4UigK7lARLYYlAyhKDc
- P3SpDTjkkNYHP00Ck7BACNciFWfCWWU6oKdo0eregRKmQ6ukUNDHyxh38lmNzQ5CXbqN/bGjV
- LxToLf+ltr+kHohFdJL6ioLmSlZkThSsIUOsN7AVlV3oGIS4XhYMiNuxKL8Q+WggyaJReYT57
- TTfQwQonOkk9wVKXGbFCfQ5W/siw9S5/Eeq1RLpXlm8A+11I0+rYOY4XXS5Rb2rRnjj7Egs80
- Gqvan3McgL1XdPqNgd2/c8Lv5nYd0deX6jLc+MnEnKh6yrQGBCFRvihQjjoNelL/DfSxg7ew/
- xL3TYwjsDmlAKHDB/oOcaKolv9WOYGkjRqMOHGdTVKi4SR0JG+A7ZiPFrXiCsWY5nXkB7K9xI
- OAR8IMqski0PPaAWIfTLBECTJKPVLwiyc/sq5VMchJAk8zfZttiHyN4YyPwO8H3w2wHEYP9Py
- ySFjlds+hwN5+hqsHy03tdtwKqGS3w6N2hpS0Pcr4SQb8uxJEgBcYaJkWmR4W5oxg5XfV/Gj2
- iRIjX3Bt4M9e+CI1LrotlnMKlJdhTICNpy2PH//1s8MmcGXgOePWAI2rh9nn9HFHvtybo/8/S
- ub2Fq5OL4GCHA9+ZLPYAQTMpaQzU34E+LWVHUkJdH/+UaWTwa65nKy1WCwI2CHxjWq+5vcY4q
- ZvBLgL5Mf+p0XgqvzC1gcmwIUKTjiXKG+t9NGw9C1RGdQSIVDJuMDCRNw+T3sJbR5AEPaJC6K
- fLuYBC9TPyVp+6qDs0k+tuZ/rdjiTnqs5rcfwJdunhRTOo8DWVUW2SsKJwyf3u2+McUs2tOkI
- m8rm4BGNNpQSdCEHV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The bit fields in struct object have an unfortunate layout.  Here's what
-pahole reports on x86_64 GNU/Linux:
+Hi Junio,
 
-struct object {
-	unsigned int               parsed:1;             /*     0: 0  4 */
-	unsigned int               type:3;               /*     0: 1  4 */
+On Tue, 23 Jun 2020, Junio C Hamano wrote:
 
-	/* XXX 28 bits hole, try to pack */
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > In `run_diff_files()`, files that have been staged with the intention =
+to
+> > add are queued without a valid OID in the `diff_filepair`.
+> >
+> > When the output mode is, say, `DIFF_FORMAT_PATCH`, the
+> > `diff_fill_oid_info()` function, called from `run_diff()`, will remedy
+> > that situation by reading the file contents from disk.
+>
+> The above is true.  What do we do for a path that is actually added
+> to the index but is stat-dirty or actually modified in the working
+> tree when we are giving the raw output?  Don't we give 0{40} to mean
+> "we dunno---you go look at the working tree"?  I think we should do
+> the same for i-t-a file wrt the object name.  In both cases, the
+> index does not know what the actual object name is, and we do not
+> want to run the index_path() and write out a new object in the
+> object database.
 
-	/* Force alignment to the next boundary: */
-	unsigned int               :0;
+Sure, but my intention was to synchronize the `--raw` vs the `--patch`
+output: the latter _already_ shows the correct hash. This here patch makes
+the hash in the former's output match the latter's.
 
-	unsigned int               flags:29;             /*     4: 0  4 */
+Besides, we're talking about the post-image of `diff-files`, i.e. the
+worktree version, here. I seem to remember that the pre-image already uses
+the all-zero hash to indicate precisely what you mentioned above.
 
-	/* XXX 3 bits hole, try to pack */
+Ciao,
+Dscho
 
-	struct object_id           oid;                  /*     8    32 */
-
-	/* size: 40, cachelines: 1, members: 4 */
-	/* sum members: 32 */
-	/* sum bitfield members: 33 bits, bit holes: 2, sum bit holes: 31 bits */
-	/* last cacheline: 40 bytes */
-};
-
-Notice the 1+3+29=3D33 bits in bit fields and 28+3=3D31 bits in holes.
-
-There are holes inside the flags bit field as well -- while some object
-flags are used for more than one purpose, 22, 23 and 24 are still free.
-Use  23 and 24 instead of 27 and 28 for TOPO_WALK_EXPLORED and
-TOPO_WALK_INDEGREE.  This allows us to reduce FLAG_BITS by one so that
-all bitfields combined fit into a single 32-bit slot:
-
-struct object {
-	unsigned int               parsed:1;             /*     0: 0  4 */
-	unsigned int               type:3;               /*     0: 1  4 */
-	unsigned int               flags:28;             /*     0: 4  4 */
-	struct object_id           oid;                  /*     4    32 */
-
-	/* size: 36, cachelines: 1, members: 4 */
-	/* last cacheline: 36 bytes */
-};
-
-With this tight packing the size of struct object is reduced by 10%.
-Other architectures probably benefit as well.
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- object.h   | 4 ++--
- revision.h | 7 ++++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/object.h b/object.h
-index a496d2e4e1..b207f550b2 100644
-=2D-- a/object.h
-+++ b/object.h
-@@ -59,7 +59,7 @@ struct object_array {
-
- /*
-  * object flag allocation:
-- * revision.h:               0---------10         15                   25=
-----28
-+ * revision.h:               0---------10         15             23------=
-26
-  * fetch-pack.c:             01
-  * negotiator/default.c:       2--5
-  * walker.c:                 0-2
-@@ -79,7 +79,7 @@ struct object_array {
-  * builtin/show-branch.c:    0-------------------------------------------=
-26
-  * builtin/unpack-objects.c:                                 2021
-  */
--#define FLAG_BITS  29
-+#define FLAG_BITS  28
-
- /*
-  * The object type is stored in 3 bits.
-diff --git a/revision.h b/revision.h
-index 93491b79d4..f412ae85eb 100644
-=2D-- a/revision.h
-+++ b/revision.h
-@@ -37,6 +37,10 @@
-
- /* WARNING: This is also used as REACHABLE in commit-graph.c. */
- #define PULL_MERGE	(1u<<15)
-+
-+#define TOPO_WALK_EXPLORED	(1u<<23)
-+#define TOPO_WALK_INDEGREE	(1u<<24)
-+
- /*
-  * Indicates object was reached by traversal. i.e. not given by user on
-  * command-line or stdin.
-@@ -48,9 +52,6 @@
- #define TRACK_LINEAR	(1u<<26)
- #define ALL_REV_FLAGS	(((1u<<11)-1) | NOT_USER_GIVEN | TRACK_LINEAR | PUL=
-L_MERGE)
-
--#define TOPO_WALK_EXPLORED	(1u<<27)
--#define TOPO_WALK_INDEGREE	(1u<<28)
--
- #define DECORATE_SHORT_REFS	1
- #define DECORATE_FULL_REFS	2
-
-=2D-
-2.27.0
+> Using the status letter 'A' would also be appropriate, as we would
+> show "new file ..." in the --patch output in this case, which would
+> be consistent.
+>
+>
