@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35731C433E1
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50BBCC433DF
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:19:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FFED206C3
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:19:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31274206C3
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:19:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tkOHPtS9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iw6vjksG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404683AbgFYMTE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 08:19:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54672 "EHLO
+        id S2404688AbgFYMTG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 08:19:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404343AbgFYMTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 08:19:03 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89809C061573
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:19:03 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id q15so5333974wmj.2
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:19:03 -0700 (PDT)
+        with ESMTP id S2404684AbgFYMTF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 08:19:05 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 194D1C0613ED
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:19:05 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id j4so3144297wrp.10
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DHQX3VQZBB9dI88qjbclTit2I4b3rkj9hbsqFnw1ajs=;
-        b=tkOHPtS9/ciAu/bV4CLT4z5B8c8nRMsMjCRQEK7wuzI7Oj1qHV1/4c9OcQqxlgw05A
-         5emtsxLB21AxscVOqBUfymGrMD+VBVYWyNkRjrBoFA7urNpFJ+f1dE/pm6r3fJ7zDMzg
-         ZccsiHEQ7xPPcH+kahdXPgvd2oKO9JjXXoger7OxWaBLYaEipF+0+FSmqllu+OndrzPN
-         n7LfgMVZLiTk0JGY+G6kPlM6QCdJsLrAQvmxc0PShGaZ3YvMt/9qrqFuVf/D+Zorv4tt
-         r8M0MigiuSbgPUxquSGiGv4MrseHk4ZaVpP9r1d+QPRhF5PwY+aivnuLktUD3Vw5npmS
-         MzHQ==
+        bh=uTAZCiPBgTXSmwQOskIQagbHSzfgkIhxWaoX6yxfVro=;
+        b=iw6vjksGx2lUyI04hIN3f3lH0U0DM+z3nqZDXvGx3XH+AYDSqZI66crUMSqukfZFrN
+         5aF6nudlbqh4eKoCF7xqauiTWULGoWeiTRrDWAtrlUHhaHPo+GAQpwrzHOAMVlTqH9UB
+         /oz1VM1iZCe6tAQjjmQMxHihWbFZ4N83/lX5ZVacTzH7IKtvftQAosHra9kQxF5R1Em5
+         IUJN8D4FC92NdPb6J5zQHym02qSaHdfTPavIzjMVTQ5zwsqivW+KWSr9tzCJV72++Do/
+         WBPOynfArTRpoLihqcRZ+Ncil1OLoOLurA1LLkxnmvJyfvlT/iBgLb5TrObJAMQm9qRh
+         s/Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DHQX3VQZBB9dI88qjbclTit2I4b3rkj9hbsqFnw1ajs=;
-        b=THudujri8V7G9vuhEq+cCuHFuaFe1CbLsjljFYmXPMJ+5uKKQMbZtHjYUhiZ1iHJK1
-         ohqAWPhhi3E0bujDXNAD5lq9jaQMRIRabtJfVCA8T1EkCp64IN7MNBGRN4J091K4F9WV
-         59NXAUe1pOIkXuRe0y2W35p5SQRHLM/pWwa5io+yNmgB72L3Vuuf+K/tJVmeGRJNTRtP
-         XD3Dk4zH+AMXH7OXqNzoERN/d7RNB2Jvw2fXybJ7FrrdWJODacs3aSeOMHWYBEA22Mpf
-         U5hj8OtGsnCk19xRkQEtMrwThZNUqUYl4eQJW/JLRNgXEcSdmT6ZLBhG29IvEczASVYW
-         Stmw==
-X-Gm-Message-State: AOAM533B8kqV7tSckXVgrz0450n0LJ9QtsIdPlSnXCMDx0LYavJHduk8
-        m7+EQAmZlLnce/rOATvVg058MzSe
-X-Google-Smtp-Source: ABdhPJwEz2/qQeqwm09rM1+DRWEESEhgLJjESf+NLkAZrYJq5e47+x1yzSnJsUY5unEEYd1Z2RzONQ==
-X-Received: by 2002:a1c:408b:: with SMTP id n133mr3071700wma.88.1593087541826;
-        Thu, 25 Jun 2020 05:19:01 -0700 (PDT)
+        bh=uTAZCiPBgTXSmwQOskIQagbHSzfgkIhxWaoX6yxfVro=;
+        b=nIoNbjV5+D7CNk5SlnH4WW1OlXdR8aDBgbwcGXWBU2sKQfxYvgEp1mf3hHyfIFNy/p
+         gK4dGwqe7Lxf7WDUWP9Bpk2RdLisLH5wNHuf60e1T3oTJdBxAL6jLri7S/h8pMx2Q7KB
+         uWJwERxRuwWNNVLe8lYjr/XU7dAdPH73kna19QpONfbvrDv9YUlXTq6r5wofWshv+Diw
+         jWDUXWWVU/WcXsa4OCGIr6HiJLTHTQr9t0dBHj7NEnQ08Cb4Pc/ydM5cv/Ggg2ACe7JJ
+         PAitzEjJJWzQqKgeePp3WzisfemgSx+tNNaeXeX25cOFjhuAiCC71u2VNTKCI147Gaf4
+         rjhA==
+X-Gm-Message-State: AOAM532slnfadiierno5sujbtak5VMfahqUs7ZP5KEzAg2g8N5ZiTdeq
+        rEYnAC9XnyfmBk6Ko4p+DcLxD/z8
+X-Google-Smtp-Source: ABdhPJzNJgbyOCVgczPrwwYVfox4DQKIyvVRpLSxqGEqK9jLRQKIY4shXobzzSYrcp/zclUwjKCB9Q==
+X-Received: by 2002:adf:e7c2:: with SMTP id e2mr24854215wrn.179.1593087543631;
+        Thu, 25 Jun 2020 05:19:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i17sm25544455wrc.34.2020.06.25.05.19.01
+        by smtp.gmail.com with ESMTPSA id 2sm11900887wmo.44.2020.06.25.05.19.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 05:19:01 -0700 (PDT)
-Message-Id: <13e03e0e65c0ba9e0e791e545a1a15694cb49689.1593087539.git.gitgitgadget@gmail.com>
+        Thu, 25 Jun 2020 05:19:03 -0700 (PDT)
+Message-Id: <e38ade2ee060bac1e92869de1121d1e79d9d6a56.1593087539.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.668.v3.git.1593087539.gitgitgadget@gmail.com>
 References: <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
         <pull.668.v3.git.1593087539.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Jun 2020 12:18:57 +0000
-Subject: [PATCH v3 1/3] docs: adjust for the recent rename of `pu` to `seen`
+Date:   Thu, 25 Jun 2020 12:18:59 +0000
+Subject: [PATCH v3 3/3] tests: reference `seen` wherever `pu` was referenced
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,244 +80,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As of "What's cooking in git.git (Jun 2020, #04; Mon, 22)", there is no
-longer any `pu` branch, but a `seen` branch.
+As our test suite partially reflects how we work in the Git project, it
+is natural that the branch name `pu` was used in a couple places.
 
-While we technically do not even need to update the manual pages, it
-makes sense to update them because they clearly talk about branches in
-git.git.
-
-Please note that in two instances, this patch not only updates the
-branch name, but also the description "(proposed updates)".
-
-Where appropriate, quotes have been added for readability.
+Since that branch was renamed to `seen`, let's use the new name
+consistently.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/MyFirstContribution.txt |  4 ++--
- Documentation/SubmittingPatches       | 10 +++++-----
- Documentation/git-fetch.txt           |  8 ++++----
- Documentation/git-ls-remote.txt       |  4 ++--
- Documentation/giteveryday.txt         | 10 +++++-----
- Documentation/gitworkflows.txt        | 16 ++++++++--------
- Documentation/user-manual.txt         |  2 +-
- 7 files changed, 27 insertions(+), 27 deletions(-)
+ t/t5505-remote.sh     |  8 ++++----
+ t/t5516-fetch-push.sh | 16 ++++++++--------
+ t/t9902-completion.sh |  4 ++--
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-index 427274df4d..d85c9b5143 100644
---- a/Documentation/MyFirstContribution.txt
-+++ b/Documentation/MyFirstContribution.txt
-@@ -1179,8 +1179,8 @@ look at the section below this one for some context.)
- [[after-approval]]
- === After Review Approval
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index dda81b7d07..8d62edd98b 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -988,7 +988,7 @@ test_expect_success 'remote set-branches' '
+ 	+refs/heads/maint:refs/remotes/scratch/maint
+ 	+refs/heads/master:refs/remotes/scratch/master
+ 	+refs/heads/next:refs/remotes/scratch/next
+-	+refs/heads/pu:refs/remotes/scratch/pu
++	+refs/heads/seen:refs/remotes/scratch/seen
+ 	+refs/heads/t/topic:refs/remotes/scratch/t/topic
+ 	EOF
+ 	sort <<-\EOF >expect.setup-ffonly &&
+@@ -998,7 +998,7 @@ test_expect_success 'remote set-branches' '
+ 	sort <<-\EOF >expect.respect-ffonly &&
+ 	refs/heads/master:refs/remotes/scratch/master
+ 	+refs/heads/next:refs/remotes/scratch/next
+-	+refs/heads/pu:refs/remotes/scratch/pu
++	+refs/heads/seen:refs/remotes/scratch/seen
+ 	EOF
  
--The Git project has four integration branches: `pu`, `next`, `master`, and
--`maint`. Your change will be placed into `pu` fairly early on by the maintainer
-+The Git project has four integration branches: `seen`, `next`, `master`, and
-+`maint`. Your change will be placed into `seen` fairly early on by the maintainer
- while it is still in the review process; from there, when it is ready for wider
- testing, it will be merged into `next`. Plenty of early testers use `next` and
- may report issues. Eventually, changes in `next` will make it to `master`,
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 4515cab519..c610a320d1 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -18,7 +18,7 @@ change is relevant to.
-   base your work on the tip of the topic.
+ 	git clone .git/ setbranches &&
+@@ -1016,7 +1016,7 @@ test_expect_success 'remote set-branches' '
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.replace &&
  
- * A new feature should be based on `master` in general. If the new
--  feature depends on a topic that is in `pu`, but not in `master`,
-+  feature depends on a topic that is in `seen`, but not in `master`,
-   base your work on the tip of that topic.
+-		git remote set-branches --add scratch pu t/topic &&
++		git remote set-branches --add scratch seen t/topic &&
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.add-two &&
  
- * Corrections and enhancements to a topic not yet in `master` should
-@@ -27,7 +27,7 @@ change is relevant to.
-   into the series.
+@@ -1028,7 +1028,7 @@ test_expect_success 'remote set-branches' '
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.setup-ffonly &&
  
- * In the exceptional case that a new feature depends on several topics
--  not in `master`, start working on `next` or `pu` privately and send
-+  not in `master`, start working on `next` or `seen` privately and send
-   out patches for discussion. Before the final merge, you may have to
-   wait until some of the dependent topics graduate to `master`, and
-   rebase your work.
-@@ -37,7 +37,7 @@ change is relevant to.
-   these parts should be based on their trees.
+-		git remote set-branches --add scratch pu &&
++		git remote set-branches --add scratch seen &&
+ 		git config --get-all remote.scratch.fetch >config-result &&
+ 		sort <config-result >../actual.respect-ffonly
+ 	) &&
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 9ff041a093..12ae04c1fe 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -747,42 +747,42 @@ test_expect_success 'deletion of a non-existent ref alone does trigger post-rece
+ '
  
- To find the tip of a topic branch, run `git log --first-parent
--master..pu` and look for the merge commit. The second parent of this
-+master..seen` and look for the merge commit. The second parent of this
- commit is the tip of the topic branch.
+ test_expect_success 'mixed ref updates, deletes, invalid deletes trigger hooks with correct input' '
+-	mk_test_with_hooks testrepo heads/master heads/next heads/pu &&
++	mk_test_with_hooks testrepo heads/master heads/next heads/seen &&
+ 	orgmaster=$(cd testrepo && git show-ref -s --verify refs/heads/master) &&
+ 	newmaster=$(git show-ref -s --verify refs/heads/master) &&
+ 	orgnext=$(cd testrepo && git show-ref -s --verify refs/heads/next) &&
+ 	newnext=$ZERO_OID &&
+-	orgpu=$(cd testrepo && git show-ref -s --verify refs/heads/pu) &&
+-	newpu=$(git show-ref -s --verify refs/heads/master) &&
++	orgseen=$(cd testrepo && git show-ref -s --verify refs/heads/seen) &&
++	newseen=$(git show-ref -s --verify refs/heads/master) &&
+ 	git push testrepo refs/heads/master:refs/heads/master \
+-	    refs/heads/master:refs/heads/pu :refs/heads/next \
++	    refs/heads/master:refs/heads/seen :refs/heads/next \
+ 	    :refs/heads/nonexistent &&
+ 	(
+ 		cd testrepo/.git &&
+ 		cat >pre-receive.expect <<-EOF &&
+ 		$orgmaster $newmaster refs/heads/master
+ 		$orgnext $newnext refs/heads/next
+-		$orgpu $newpu refs/heads/pu
++		$orgseen $newseen refs/heads/seen
+ 		$ZERO_OID $ZERO_OID refs/heads/nonexistent
+ 		EOF
  
- [[separate-commits]]
-@@ -423,7 +423,7 @@ help you find out who they are.
-   and cooked further and eventually graduates to `master`.
+ 		cat >update.expect <<-EOF &&
+ 		refs/heads/master $orgmaster $newmaster
+ 		refs/heads/next $orgnext $newnext
+-		refs/heads/pu $orgpu $newpu
++		refs/heads/seen $orgseen $newseen
+ 		refs/heads/nonexistent $ZERO_OID $ZERO_OID
+ 		EOF
  
- In any time between the (2)-(3) cycle, the maintainer may pick it up
--from the list and queue it to `pu`, in order to make it easier for
-+from the list and queue it to `seen`, in order to make it easier for
- people play with it without having to pick up and apply the patch to
- their trees themselves.
+ 		cat >post-receive.expect <<-EOF &&
+ 		$orgmaster $newmaster refs/heads/master
+ 		$orgnext $newnext refs/heads/next
+-		$orgpu $newpu refs/heads/pu
++		$orgseen $newseen refs/heads/seen
+ 		EOF
  
-@@ -434,7 +434,7 @@ their trees themselves.
-   master. `git pull --rebase` will automatically skip already-applied
-   patches, and will let you know. This works only if you rebase on top
-   of the branch in which your patch has been merged (i.e. it will not
--  tell you if your patch is merged in pu if you rebase on top of
-+  tell you if your patch is merged in `seen` if you rebase on top of
-   master).
+ 		cat >post-update.expect <<-EOF &&
+ 		refs/heads/master
+ 		refs/heads/next
+-		refs/heads/pu
++		refs/heads/seen
+ 		EOF
  
- * Read the Git mailing list, the maintainer regularly posts messages
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index 5b1909fdf4..45b6d8e633 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -255,14 +255,14 @@ refspec.
- * Using refspecs explicitly:
- +
- ------------------------------------------------
--$ git fetch origin +pu:pu maint:tmp
-+$ git fetch origin +seen:seen maint:tmp
- ------------------------------------------------
- +
--This updates (or creates, as necessary) branches `pu` and `tmp` in
-+This updates (or creates, as necessary) branches `seen` and `tmp` in
- the local repository by fetching from the branches (respectively)
--`pu` and `maint` from the remote repository.
-+`seen` and `maint` from the remote repository.
- +
--The `pu` branch will be updated even if it does not fast-forward,
-+The `seen` branch will be updated even if it does not fast-forward,
- because it is prefixed with a plus sign; `tmp` will not be.
+ 		test_cmp pre-receive.expect pre-receive.actual &&
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 5505e5aa24..3fef499322 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -494,7 +494,7 @@ test_expect_success '__gitcomp - prefix' '
+ '
  
- * Peek at a remote's branch, without configuring the remote in your local
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index 0a5c8b7d49..492e573856 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -101,9 +101,9 @@ f25a265a342aed6041ab0cc484224d9ca54b6f41	refs/tags/v0.99.1
- 7ceca275d047c90c0c7d5afb13ab97efdf51bd6e	refs/tags/v0.99.3
- c5db5456ae3b0873fc659c19fafdde22313cc441	refs/tags/v0.99.2
- 0918385dbd9656cab0d1d81ba7453d49bbc16250	refs/tags/junio-gpg-pub
--$ git ls-remote http://www.kernel.org/pub/scm/git/git.git master pu rc
-+$ git ls-remote http://www.kernel.org/pub/scm/git/git.git master seen rc
- 5fe978a5381f1fbad26a80e682ddd2a401966740	refs/heads/master
--c781a84b5204fb294c9ccc79f8b3baceeb32c061	refs/heads/pu
-+c781a84b5204fb294c9ccc79f8b3baceeb32c061	refs/heads/seen
- $ git remote add korg http://www.kernel.org/pub/scm/git/git.git
- $ git ls-remote --tags korg v\*
- d6602ec5194c87b0fc87103ca4d67251c76f233a	refs/tags/v0.99
-diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
-index 1bd919f92b..faba2ef088 100644
---- a/Documentation/giteveryday.txt
-+++ b/Documentation/giteveryday.txt
-@@ -278,13 +278,13 @@ $ git am -3 -i -s ./+to-apply <4>
- $ compile/test
- $ git switch -c hold/linus && git am -3 -i -s ./+hold-linus <5>
- $ git switch topic/one && git rebase master <6>
--$ git switch -C pu next <7>
-+$ git switch -C seen next <7>
- $ git merge topic/one topic/two && git merge hold/linus <8>
- $ git switch maint
- $ git cherry-pick master~4 <9>
- $ compile/test
- $ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
--$ git fetch ko && for branch in master maint next pu <11>
-+$ git fetch ko && for branch in master maint next seen <11>
-     do
- 	git show-branch ko/$branch $branch <12>
-     done
-@@ -294,14 +294,14 @@ $ git push --follow-tags ko <13>
- <1> see what you were in the middle of doing, if anything.
- <2> see which branches haven't been merged into `master` yet.
- Likewise for any other integration branches e.g. `maint`, `next`
--and `pu` (potential updates).
-+and `seen`.
- <3> read mails, save ones that are applicable, and save others
- that are not quite ready (other mail readers are available).
- <4> apply them, interactively, with your sign-offs.
- <5> create topic branch as needed and apply, again with sign-offs.
- <6> rebase internal topic branch that has not been merged to the
- master or exposed as a part of a stable branch.
--<7> restart `pu` every time from the next.
-+<7> restart `seen` every time from the next.
- <8> and bundle topic branches still cooking.
- <9> backport a critical fix.
- <10> create a signed tag.
-@@ -323,7 +323,7 @@ repository at kernel.org, and looks like this:
- 	fetch = refs/heads/*:refs/remotes/ko/*
- 	push = refs/heads/master
- 	push = refs/heads/next
--	push = +refs/heads/pu
-+	push = +refs/heads/seen
- 	push = refs/heads/maint
- ------------
+ test_expect_success '__gitcomp - suffix' '
+-	test_gitcomp "branch.me" "master maint next pu" "branch." \
++	test_gitcomp "branch.me" "master maint next seen" "branch." \
+ 		"ma" "." <<-\EOF
+ 	branch.master.Z
+ 	branch.maint.Z
+@@ -545,7 +545,7 @@ read -r -d "" refs <<-\EOF
+ maint
+ master
+ next
+-pu
++seen
+ EOF
  
-diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
-index abc0dc6bc7..2db7ba7842 100644
---- a/Documentation/gitworkflows.txt
-+++ b/Documentation/gitworkflows.txt
-@@ -85,15 +85,15 @@ As a given feature goes from experimental to stable, it also
- 
- There is a fourth official branch that is used slightly differently:
- 
--* 'pu' (proposed updates) is an integration branch for things that are
--  not quite ready for inclusion yet (see "Integration Branches"
--  below).
-+* 'seen' (patches seen by the maintainer) is an integration branch for
-+  things that are not quite ready for inclusion yet (see "Integration
-+  Branches" below).
- 
- Each of the four branches is usually a direct descendant of the one
- above it.
- 
- Conceptually, the feature enters at an unstable branch (usually 'next'
--or 'pu'), and "graduates" to 'master' for the next release once it is
-+or 'seen'), and "graduates" to 'master' for the next release once it is
- considered stable enough.
- 
- 
-@@ -207,7 +207,7 @@ If you make it (very) clear that this branch is going to be deleted
- right after the testing, you can even publish this branch, for example
- to give the testers a chance to work with it, or other developers a
- chance to see if their in-progress work will be compatible.  `git.git`
--has such an official throw-away integration branch called 'pu'.
-+has such an official throw-away integration branch called 'seen'.
- 
- 
- Branch management for a release
-@@ -291,7 +291,7 @@ This will not happen if the content of the branches was verified as
- described in the previous section.
- 
- 
--Branch management for next and pu after a feature release
-+Branch management for next and seen after a feature release
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- After a feature release, the integration branch 'next' may optionally be
-@@ -319,8 +319,8 @@ so.
- If you do this, then you should make a public announcement indicating
- that 'next' was rewound and rebuilt.
- 
--The same rewind and rebuild process may be followed for 'pu'. A public
--announcement is not necessary since 'pu' is a throw-away branch, as
-+The same rewind and rebuild process may be followed for 'seen'. A public
-+announcement is not necessary since 'seen' is a throw-away branch, as
- described above.
- 
- 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 833652983f..fd480b8645 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -347,7 +347,7 @@ $ git branch -r
-   origin/man
-   origin/master
-   origin/next
--  origin/pu
-+  origin/seen
-   origin/todo
- ------------------------------------------------
- 
+ test_expect_success '__gitcomp_nl - trailing space' '
 -- 
 gitgitgadget
-
