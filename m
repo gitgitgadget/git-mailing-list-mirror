@@ -2,152 +2,229 @@ Return-Path: <SRS0=4a08=AG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9BD1C433E0
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 18:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FA72C433DF
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2C692067D
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 18:47:32 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PFNTv8Ka"
+	by mail.kernel.org (Postfix) with ESMTP id 065472076E
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390330AbgFYSrb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 14:47:31 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:48557 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S2390007AbgFYSr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 14:47:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1593110848;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=ReC9AhKtwPE/4vle+ZkbgxHUJLmUw3blk+fyjpxNSBI=;
-        b=PFNTv8KaYISbXOY9M60RlbMp/ntj0OdTN3kOQ4grDbestKlaQsQx48Y7rugca3DCIKnQsF
-        O0c3x2GhjwBb1QIT+JPG3WbjrwU5oHQFBBuFB8X7j1eAvGxSd6qxpyDQMN8+qFzjpmSs05
-        0bOSWK+5pwQagrhgMWsjgD8nX84B9v8=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-444-m2v--WDQNd2BohOYMMaE4A-1; Thu, 25 Jun 2020 14:47:21 -0400
-X-MC-Unique: m2v--WDQNd2BohOYMMaE4A-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D4F4D18FE867;
-        Thu, 25 Jun 2020 18:47:19 +0000 (UTC)
-Received: from optiplex-lnx (unknown [10.3.128.9])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id E45D9100EBA4;
-        Thu, 25 Jun 2020 18:47:18 +0000 (UTC)
-Date:   Thu, 25 Jun 2020 14:47:15 -0400
-From:   Rafael Aquini <aquini@redhat.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] send-email: restore --in-reply-to superseding behavior
-Message-ID: <20200625184715.GC2117795@optiplex-lnx>
-References: <20200624195520.2062298-1-aquini@redhat.com>
- <xmqqo8p85eud.fsf@gitster.c.googlers.com>
- <20200624234539.GH1987277@optiplex-lnx>
+        id S2406796AbgFYTsE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 15:48:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43232 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2406573AbgFYTsD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 15:48:03 -0400
+Received: (qmail 31311 invoked by uid 109); 25 Jun 2020 19:48:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jun 2020 19:48:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19538 invoked by uid 111); 25 Jun 2020 19:48:03 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jun 2020 15:48:03 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 25 Jun 2020 15:48:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: [PATCH v2 0/11] fast-export: allow seeding the anonymized mapping
+Message-ID: <20200625194802.GA4028913@coredump.intra.peff.net>
+References: <20200619132304.GA2540657@coredump.intra.peff.net>
+ <20200622214745.GA3302779@coredump.intra.peff.net>
+ <20200623152436.GA50925@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200624234539.GH1987277@optiplex-lnx>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200623152436.GA50925@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 24, 2020 at 07:45:43PM -0400, Rafael Aquini wrote:
-> On Wed, Jun 24, 2020 at 02:33:14PM -0700, Junio C Hamano wrote:
-> > Rafael Aquini <aquini@redhat.com> writes:
-> > 
-> > > git send-email --in-reply-to= fails to override the email headers,
-> > > if they're present in the output of format-patch, which breakes the
-> > 
-> > Will do s/breakes/breaks/ while applying.
-> >
-> 
-> UGH! I've been fat-fingering typos the whole day, today... Sorry about
-> that one.
-> 
->  
-> > It makes me wonder, however, why it is a good idea to have the I-R-T
-> > in the format patch output in the first place.
-> > 
-> > >  			elsif (/^In-Reply-To: (.*)/i) {
-> > > -				$in_reply_to = $1;
-> > > +				if (!$initial_in_reply_to) {
-> > > +					$in_reply_to = $1;
-> > > +				}
-> > 
-> > I can see how this would work the way it should for the first
-> > message we send out, so it would work well for a single patch.
-> > 
-> > But what does this change do to the chaining (either making [PATCH
-> > 1/N] thru [PATCH N/N] as responses to the cover letter [PATCH 0/N],
-> > or making [PATCH n+1/N] as response to [PATCH n/N] for 1 <= n < N)
-> > of multiple messages?
-> > 
-> > When you prepare a series whose 1..N/N are all pointing at 0/N with
-> > the already prepared In-Reply-To (so you have N+1 files to send
-> > out), wouldn't you want to make 0/N a reply to a particular message
-> > you specify on the command line, while keeping the relationship
-> > among your messages intact?  Doesn't having $initial_in_reply_to
-> > (i.e. command line override) help above code break the chaning?
-> >
-> 
-> This change will make all emails to appear as a reply to the msgid
-> fed to --in-reply-to. I see your point, though, and at its light 
-> I think now this patch, is actually incomplete. 
-> 
-> With this change we get back the override desired behavior,
-> but it also breaks the contract, according to the man page.
-> 
-> "
->  --in-reply-to=<identifier>
->      Make the first mail (or all the mails with --no-thread) appear as a reply to the given Message-Id, which
->      avoids breaking threads to provide a new patch series. The second and subsequent emails will be sent as
->      replies according to the --[no-]chain-reply-to setting.
-> "
-> 
-> I drove the change based on my usecase, which is marginal to the
-> multi-part reply case. 
-> 
-> I guess we just need the following, for a complete solution:
-> 
-> 
-> 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index dc95656f75..768296ea0a 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1699,10 +1699,14 @@ sub process_file {
->  				$xfer_encoding = $1 if not defined $xfer_encoding;
->  			}
->  			elsif (/^In-Reply-To: (.*)/i) {
-> -				$in_reply_to = $1;
-> +				if (!$initial_in_reply_to || $thread) {
-> +					$in_reply_to = $1;
-> +				}
->  			}
->  			elsif (/^References: (.*)/i) {
-> -				$references = $1;
-> +				if (!$initial_in_reply_to || $thread) {
-> +					$references = $1;
-> +				}
->  			}
->  			elsif (!/^Date:\s/i && /^[-A-Za-z]+:\s+\S/) {
->  				push @xh, $_;
+Here's a re-roll of the "--seed-anonymize" feature, incorporating
+changes from Eric's review.
 
-This guy worked like a charm, and git send-email, now, follows what the
-man page says wrt the --in-reply-to usage.
+Here's a summary of the changes. Patches 1-8 are unchanged:
 
-I'll reformat the commit log, and repost the patch ASAP, if you are
-OK with it.
+  [01/11]: t9351: derive anonymized tree checks from original repo
+  [02/11]: fast-export: use xmemdupz() for anonymizing oids
+  [03/11]: fast-export: store anonymized oids as hex strings
+  [04/11]: fast-export: tighten anonymize_mem() interface to handle only strings
+  [05/11]: fast-export: stop storing lengths in anonymized hashmaps
+  [06/11]: fast-export: use a flex array to store anonymized entries
+  [07/11]: fast-export: move global "idents" anonymize hashmap into function
+  [08/11]: fast-export: add a "data" callback parameter to anonymize_str()
 
--- Rafael
+  [09/11]: fast-export: allow seeding the anonymized mapping
 
+    - the option is now called "--anonymize-map", and the word "seed"
+      isn't used in any user-facing documentation
+
+    - incorporated Eric's documentation suggestions
+
+    - --anonymize-map without --anonymize now triggers an error
+
+  [10/11]: fast-export: anonymize "master" refname
+
+    - minor adjustments to handle change of option name
+
+  [11/11]: fast-export: use local array to store anonymized oid
+
+    - new in this iteration; this address the gcc-4 warning that Gábor
+      mentioned. I prepared it on top since I think we'd eventually want
+      to revert it once we decide that compiler is too old (and I'd be
+      perfectly fine to declare that it's so now, and just never apply
+      it at all).
+
+Full range diff is below.
+
+ 1:  65dca0c684 =  1:  dd2668d7fe t9351: derive anonymized tree checks from original repo
+ 2:  bc79b92850 =  2:  46a07c62e1 fast-export: use xmemdupz() for anonymizing oids
+ 3:  f5b34b3730 =  3:  a7be6c4703 fast-export: store anonymized oids as hex strings
+ 4:  5982a5c764 =  4:  712e481e4e fast-export: tighten anonymize_mem() interface to handle only strings
+ 5:  d6b7a75a13 =  5:  1ad28f560a fast-export: stop storing lengths in anonymized hashmaps
+ 6:  f897a949b1 =  6:  b6456c0c7b fast-export: use a flex array to store anonymized entries
+ 7:  e5465fb8d8 =  7:  81d478c12b fast-export: move global "idents" anonymize hashmap into function
+ 8:  8dd74b95b7 =  8:  0d34f57a94 fast-export: add a "data" callback parameter to anonymize_str()
+ 9:  c7aec82ba5 !  9:  64e3afe46f fast-export: allow seeding the anonymized mapping
+    @@ Commit message
+         does work, but it's a bit awkward to use (you have to manually dig the
+         items you care about out of the mapping).
+     
+    +    Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+         Signed-off-by: Jeff King <peff@peff.net>
+     
+      ## Documentation/git-fast-export.txt ##
+     @@ Documentation/git-fast-export.txt: by keeping the marks the same across runs.
+      	the shape of the history and stored tree.  See the section on
+      	`ANONYMIZING` below.
+      
+    -+--seed-anonymized=<from>[:<to>]::
+    ++--anonymize-map=<from>[:<to>]::
+     +	Convert token `<from>` to `<to>` in the anonymized output. If
+     +	`<to>` is omitted, map `<from>` to itself (i.e., do not
+     +	anonymize it). See the section on `ANONYMIZING` below.
+    @@ Documentation/git-fast-export.txt: collapse "User 0", "User 1", etc into "User X
+     +paths, which becomes challenging after refnames and paths have been
+     +anonymized. You can ask for a particular token to be left as-is or
+     +mapped to a new value. For example, if you have a bug which reproduces
+    -+with `git rev-list mybranch -- foo.c`, you can run:
+    ++with `git rev-list sensitive -- secret.c`, you can run:
+     +
+     +---------------------------------------------------
+     +$ git fast-export --anonymize --all \
+    -+      --seed-anonymized=foo.c:secret.c \
+    -+      --seed-anonymized=mybranch \
+    ++      --anonymize-map=sensitive:foo \
+    ++      --anonymize-map=secret.c:bar.c \
+     +      >stream
+     +---------------------------------------------------
+     +
+    -+After importing the stream, you can then run `git rev-list mybranch --
+    -+secret.c` in the anonymized repository.
+    ++After importing the stream, you can then run `git rev-list foo -- bar.c`
+    ++in the anonymized repository.
+     +
+     +Note that paths and refnames are split into tokens at slash boundaries.
+    -+The command above would anonymize `subdir/foo.c` as something like
+    -+`path123/secret.c`.
+    ++The command above would anonymize `subdir/secret.c` as something like
+    ++`path123/bar.c`; you could then search for `bar.c` in the anonymized
+    ++repository to determine the final pathname.
+    ++
+    ++To make referencing the final pathname simpler, you can map each path
+    ++component; so if you also anonymize `subdir` to `publicdir`, then the
+    ++final pathname would be `publicdir/bar.c`.
+      
+      LIMITATIONS
+      -----------
+    @@ builtin/fast-export.c: static void handle_deletes(void)
+     +	return xstrdup(data);
+     +}
+     +
+    -+static int parse_opt_seed_anonymized(const struct option *opt,
+    -+				     const char *arg, int unset)
+    ++static int parse_opt_anonymize_map(const struct option *opt,
+    ++				   const char *arg, int unset)
+     +{
+     +	struct hashmap *map = opt->value;
+     +	const char *delim, *value;
+    @@ builtin/fast-export.c: static void handle_deletes(void)
+     +	}
+     +
+     +	if (!keylen || !*value)
+    -+		return error(_("--seed-anonymized token cannot be empty"));
+    ++		return error(_("--anonymize-map token cannot be empty"));
+     +
+     +	anonymize_str(map, anonymize_seed, arg, keylen, (void *)value);
+     +
+    @@ builtin/fast-export.c: int cmd_fast_export(int argc, const char **argv, const ch
+      		OPT_STRING_LIST(0, "refspec", &refspecs_list, N_("refspec"),
+      			     N_("Apply refspec to exported refs")),
+      		OPT_BOOL(0, "anonymize", &anonymize, N_("anonymize output")),
+    -+		OPT_CALLBACK_F(0, "seed-anonymized", &anonymized_seeds, N_("from:to"),
+    ++		OPT_CALLBACK_F(0, "anonymize-map", &anonymized_seeds, N_("from:to"),
+     +			       N_("convert <from> to <to> in anonymized output"),
+    -+			       PARSE_OPT_NONEG, parse_opt_seed_anonymized),
+    ++			       PARSE_OPT_NONEG, parse_opt_anonymize_map),
+      		OPT_BOOL(0, "reference-excluded-parents",
+      			 &reference_excluded_commits, N_("Reference parents which are not in fast-export stream by object id")),
+      		OPT_BOOL(0, "show-original-ids", &show_original_ids,
+    +@@ builtin/fast-export.c: int cmd_fast_export(int argc, const char **argv, const char *prefix)
+    + 	if (argc > 1)
+    + 		usage_with_options (fast_export_usage, options);
+    + 
+    ++	if (anonymized_seeds.cmpfn && !anonymize)
+    ++		die(_("--anonymize-map without --anonymize does not make sense"));
+    ++
+    + 	if (refspecs_list.nr) {
+    + 		int i;
+    + 
+     
+      ## t/t9351-fast-export-anonymize.sh ##
+     @@ t/t9351-fast-export-anonymize.sh: test_description='basic tests for fast-export --anonymize'
+    @@ t/t9351-fast-export-anonymize.sh: test_expect_success 'setup simple repo' '
+      test_expect_success 'export anonymized stream' '
+     -	git fast-export --anonymize --all >stream
+     +	git fast-export --anonymize --all \
+    -+		--seed-anonymized=retain-me \
+    -+		--seed-anonymized=xyzzy:custom-name \
+    ++		--anonymize-map=retain-me \
+    ++		--anonymize-map=xyzzy:custom-name \
+     +		>stream
+      '
+      
+10:  59737b97de ! 10:  103f5bcd65 fast-export: anonymize "master" refname
+    @@ Commit message
+     
+         Note that we have to adjust the test a bit, since it relied on using the
+         name "master" in the anonymized repos. We could just use
+    -    --seed-anonymized=master to keep the same output, but then we wouldn't
+    +    --anonymize-map=master to keep the same output, but then we wouldn't
+         know if it works because of our hard-coded master or because of the
+    -    seeding.
+    +    explicit map.
+     
+         So let's flip the test a bit, and confirm that we anonymize "master",
+         but keep "other" in the output.
+    @@ builtin/fast-export.c: static const char *anonymize_refname(const char *refname)
+      ## t/t9351-fast-export-anonymize.sh ##
+     @@ t/t9351-fast-export-anonymize.sh: test_expect_success 'export anonymized stream' '
+      	git fast-export --anonymize --all \
+    - 		--seed-anonymized=retain-me \
+    - 		--seed-anonymized=xyzzy:custom-name \
+    -+		--seed-anonymized=other \
+    + 		--anonymize-map=retain-me \
+    + 		--anonymize-map=xyzzy:custom-name \
+    ++		--anonymize-map=other \
+      		>stream
+      '
+      
+ -:  ---------- > 11:  f2640407c5 fast-export: use local array to store anonymized oid
