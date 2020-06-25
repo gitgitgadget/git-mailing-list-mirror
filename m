@@ -1,143 +1,96 @@
-Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=4a08=AG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 837A7C433DF
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D114AC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 00:38:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3ADAB20738
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 23:45:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7284D2078D
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 00:38:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JM5D/jro"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qRofvcpq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387843AbgFXXpu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Jun 2020 19:45:50 -0400
-Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:38176 "EHLO
-        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1731184AbgFXXpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jun 2020 19:45:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1593042348;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=pX1IBP+C+o1erPNnpyb5gB2xMptKybKShK3Jkp8wRG4=;
-        b=JM5D/jrouCf735hOfzKmIAKY87ZGZeSYRlQEjs//gAPI0UptFV41ImEjtanbTnGgfNuxst
-        VSBxfETJ0THm2EYA7xT46lcHdLk95Ua8OxTIOQLHqeU+TJb54nBAZF8Lj9a15UedYTw8QP
-        ALJIspp8sbgUALXW1WICWt5QucoN7Q4=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-258-hVdXSg9LMRuCj00vKcSIeg-1; Wed, 24 Jun 2020 19:45:44 -0400
-X-MC-Unique: hVdXSg9LMRuCj00vKcSIeg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        id S2388624AbgFYAiZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Jun 2020 20:38:25 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53770 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388467AbgFYAiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jun 2020 20:38:25 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C6005D1DB1;
+        Wed, 24 Jun 2020 20:38:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SaFVgQKpSBrmzhP4JxkX//1ojFc=; b=qRofvc
+        pq9FNqjp9SN+5gNHgJVrLJzr4cihqxVL3QyTWZ+4P4rBZUE7IZTsTc9USE+uZwuD
+        XzHLPThpynYfoBzeKhI/5sguKOHDtjE/AamfHu3D9MFdgH9raEno6Rl22ZtS6vhK
+        cW5X50hvlLqekEuKkn9NzqGiwcHqF1JXXnHKY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=P37NdYyJ0f7KGYcgxGgbAqlZVA7FHnMW
+        FBJJzEgr9pq6UWPolJzTuB5jC7HABCpdK39movUt0xrTmMdg0O2lYmL+DFd5hcmx
+        tEU/57DnvTNg43+dDUs6ad779DC0AjSZjbXhk9VwEAMNlqHgS7LIn0HhCa0vY9DE
+        4D8TQlUz/fI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BDD45D1DAF;
+        Wed, 24 Jun 2020 20:38:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id B1B41464;
-        Wed, 24 Jun 2020 23:45:43 +0000 (UTC)
-Received: from optiplex-lnx (unknown [10.3.128.9])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id C66B160C87;
-        Wed, 24 Jun 2020 23:45:42 +0000 (UTC)
-Date:   Wed, 24 Jun 2020 19:45:39 -0400
-From:   Rafael Aquini <aquini@redhat.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] send-email: restore --in-reply-to superseding behavior
-Message-ID: <20200624234539.GH1987277@optiplex-lnx>
-References: <20200624195520.2062298-1-aquini@redhat.com>
- <xmqqo8p85eud.fsf@gitster.c.googlers.com>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 14C1DD1DAD;
+        Wed, 24 Jun 2020 20:38:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Hariom verma <hariom18599@gmail.com>
+Subject: Re: [PATCH] worktree: avoid dead-code in conditional
+References: <20200624190541.5253-1-sunshine@sunshineco.com>
+        <xmqqsgek5fg3.fsf@gitster.c.googlers.com>
+        <CAPig+cRdRyWAjU7QADPt39rDgJ4njDtN_pwo8JMVD=YX09a-Vg@mail.gmail.com>
+Date:   Wed, 24 Jun 2020 17:38:18 -0700
+In-Reply-To: <CAPig+cRdRyWAjU7QADPt39rDgJ4njDtN_pwo8JMVD=YX09a-Vg@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 24 Jun 2020 19:00:37 -0400")
+Message-ID: <xmqqbll8569x.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo8p85eud.fsf@gitster.c.googlers.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2AF2B18A-B67C-11EA-A5B0-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 24, 2020 at 02:33:14PM -0700, Junio C Hamano wrote:
-> Rafael Aquini <aquini@redhat.com> writes:
-> 
-> > git send-email --in-reply-to= fails to override the email headers,
-> > if they're present in the output of format-patch, which breakes the
-> 
-> Will do s/breakes/breaks/ while applying.
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> Callers of get_git_common_dir() aren't forced to care. But after
+> applying strbuf_add_absolute_path() we are forced to care. This is the
+> result of get_git_common_dir() for the three cases:
 >
-
-UGH! I've been fat-fingering typos the whole day, today... Sorry about
-that one.
-
- 
-> It makes me wonder, however, why it is a good idea to have the I-R-T
-> in the format patch output in the first place.
-> 
-> >  			elsif (/^In-Reply-To: (.*)/i) {
-> > -				$in_reply_to = $1;
-> > +				if (!$initial_in_reply_to) {
-> > +					$in_reply_to = $1;
-> > +				}
-> 
-> I can see how this would work the way it should for the first
-> message we send out, so it would work well for a single patch.
-> 
-> But what does this change do to the chaining (either making [PATCH
-> 1/N] thru [PATCH N/N] as responses to the cover letter [PATCH 0/N],
-> or making [PATCH n+1/N] as response to [PATCH n/N] for 1 <= n < N)
-> of multiple messages?
-> 
-> When you prepare a series whose 1..N/N are all pointing at 0/N with
-> the already prepared In-Reply-To (so you have N+1 files to send
-> out), wouldn't you want to make 0/N a reply to a particular message
-> you specify on the command line, while keeping the relationship
-> among your messages intact?  Doesn't having $initial_in_reply_to
-> (i.e. command line override) help above code break the chaning?
+>     .     (within bare repo)
+>     .git  (within any worktree)
+>     .     (within .git)
 >
+> After applying strbuf_add_absolute_path(), we get:
+>
+>     /whatever/proj.git/.   (within bare proj)
+>     /whatever/proj/.git    (within any worktree)
+>     /whatever/proj/.git/.  (within .git)
 
-This change will make all emails to appear as a reply to the msgid
-fed to --in-reply-to. I see your point, though, and at its light 
-I think now this patch, is actually incomplete. 
+OK, but the point still stands.  
 
-With this change we get back the override desired behavior,
-but it also breaks the contract, according to the man page.
+Shouldn't strbuf_add_absolute_path() be what we want to normalize?
 
-"
- --in-reply-to=<identifier>
-     Make the first mail (or all the mails with --no-thread) appear as a reply to the given Message-Id, which
-     avoids breaking threads to provide a new patch series. The second and subsequent emails will be sent as
-     replies according to the --[no-]chain-reply-to setting.
-"
+> Your puzzlement may arise from the misunderstanding regarding
+> get_git_common_dir() vs. strbuf_add_absolute_path()?
 
-I drove the change based on my usecase, which is marginal to the
-multi-part reply case. 
+Yes, exactly.
 
-I guess we just need the following, for a complete solution:
-
-
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index dc95656f75..768296ea0a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1699,10 +1699,14 @@ sub process_file {
- 				$xfer_encoding = $1 if not defined $xfer_encoding;
- 			}
- 			elsif (/^In-Reply-To: (.*)/i) {
--				$in_reply_to = $1;
-+				if (!$initial_in_reply_to || $thread) {
-+					$in_reply_to = $1;
-+				}
- 			}
- 			elsif (/^References: (.*)/i) {
--				$references = $1;
-+				if (!$initial_in_reply_to || $thread) {
-+					$references = $1;
-+				}
- 			}
- 			elsif (!/^Date:\s/i && /^[-A-Za-z]+:\s+\S/) {
- 				push @xh, $_;
-
+Thanks.
