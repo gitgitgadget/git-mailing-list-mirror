@@ -3,38 +3,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9631BC433DF
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0CF6C433E0
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A96F2076E
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A71072076E
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406926AbgFYTsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 15:48:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43368 "EHLO cloud.peff.net"
+        id S2406844AbgFYTsm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 15:48:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43384 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406899AbgFYTsh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 15:48:37 -0400
-Received: (qmail 31480 invoked by uid 109); 25 Jun 2020 19:48:36 -0000
+        id S2406926AbgFYTsj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 15:48:39 -0400
+Received: (qmail 31499 invoked by uid 109); 25 Jun 2020 19:48:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jun 2020 19:48:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jun 2020 19:48:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19739 invoked by uid 111); 25 Jun 2020 19:48:36 -0000
+Received: (qmail 19746 invoked by uid 111); 25 Jun 2020 19:48:39 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jun 2020 15:48:36 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jun 2020 15:48:39 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 25 Jun 2020 15:48:35 -0400
+Date:   Thu, 25 Jun 2020 15:48:37 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 10/11] fast-export: anonymize "master" refname
-Message-ID: <20200625194835.GJ4029374@coredump.intra.peff.net>
+Subject: [PATCH v2 11/11] fast-export: use local array to store anonymized oid
+Message-ID: <20200625194837.GK4029374@coredump.intra.peff.net>
 References: <20200625194802.GA4028913@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,103 +45,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Running "fast-export --anonymize" will leave "refs/heads/master"
-untouched in the output, for two reasons:
+Some older versions of gcc complain about this line:
 
-  - it helped to have some known reference point between the original
-    and anonymized repository
+  builtin/fast-export.c:412:2: error: dereferencing type-punned pointer
+       will break strict-aliasing rules [-Werror=strict-aliasing]
+    put_be32(oid.hash + hashsz - 4, counter++);
+    ^
 
-  - since it's historically the default branch name, it doesn't leak any
-    information
+This seems to be a false positive, as there's no type-punning at all
+here. oid.hash is an array of unsigned char; when we pass it to a
+function it decays to a pointer to unsigned char. We do take a void
+pointer in put_be32(), but it's immediately aliased with another pointer
+to unsigned char (and clearly the compiler is looking inside the inlined
+put_be32(), since the warning doesn't happen with -O0).
 
-Now that we can ask fast-export to retain particular tokens, we have a
-much better tool for the first one (because it works for any ref, not
-just master).
+This happens on gcc 4.8 and 4.9, but not later versions (I tested gcc 6,
+7, 8, and 9).
 
-For the second, the notion of "default branch name" is likely to become
-configurable soon, at which point the name _does_ leak information.
-Let's drop this special case in preparation.
-
-Note that we have to adjust the test a bit, since it relied on using the
-name "master" in the anonymized repos. We could just use
---anonymize-map=master to keep the same output, but then we wouldn't
-know if it works because of our hard-coded master or because of the
-explicit map.
-
-So let's flip the test a bit, and confirm that we anonymize "master",
-but keep "other" in the output.
+We can work around it by using a local array instead of an object_id
+struct. This is a little more intimate with the details of object_id,
+but for whatever reason doesn't seem to trigger the compiler warning.
+We can revert this patch once we decide that those gcc versions are too
+old to care about for a warning like this (gcc 4.8 is the default
+compiler for Ubuntu Trusty, which is out-of-support but not fully
+end-of-life'd until April 2022).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/fast-export.c            |  7 -------
- t/t9351-fast-export-anonymize.sh | 12 +++++++-----
- 2 files changed, 7 insertions(+), 12 deletions(-)
+ builtin/fast-export.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index b0b09bca30..c6ecf404d7 100644
+index c6ecf404d7..9f37895d4c 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -538,13 +538,6 @@ static const char *anonymize_refname(const char *refname)
- 	static struct strbuf anon = STRBUF_INIT;
- 	int i;
+@@ -405,12 +405,12 @@ static char *generate_fake_oid(void *data)
+ {
+ 	static uint32_t counter = 1; /* avoid null oid */
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+-	struct object_id oid;
++	unsigned char out[GIT_MAX_RAWSZ];
+ 	char *hex = xmallocz(GIT_MAX_HEXSZ);
  
--	/*
--	 * We also leave "master" as a special case, since it does not reveal
--	 * anything interesting.
--	 */
--	if (!strcmp(refname, "refs/heads/master"))
--		return refname;
--
- 	strbuf_reset(&anon);
- 	for (i = 0; i < ARRAY_SIZE(prefixes); i++) {
- 		if (skip_prefix(refname, prefixes[i], &refname)) {
-diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
-index 5a21c71568..5ac2c3b5ee 100755
---- a/t/t9351-fast-export-anonymize.sh
-+++ b/t/t9351-fast-export-anonymize.sh
-@@ -22,6 +22,7 @@ test_expect_success 'export anonymized stream' '
- 	git fast-export --anonymize --all \
- 		--anonymize-map=retain-me \
- 		--anonymize-map=xyzzy:custom-name \
-+		--anonymize-map=other \
- 		>stream
- '
+-	oidclr(&oid);
+-	put_be32(oid.hash + hashsz - 4, counter++);
+-	return oid_to_hex_r(hex, &oid);
++	hashclr(out);
++	put_be32(out + hashsz - 4, counter++);
++	return hash_to_hex_algop_r(hex, out, the_hash_algo);
+ }
  
-@@ -45,12 +46,12 @@ test_expect_success 'stream omits gitlink oids' '
- 	! grep a000000000000000000 stream
- '
- 
--test_expect_success 'stream allows master as refname' '
--	grep master stream
-+test_expect_success 'stream retains other as refname' '
-+	grep other stream
- '
- 
- test_expect_success 'stream omits other refnames' '
--	! grep other stream &&
-+	! grep master stream &&
- 	! grep mytag stream
- '
- 
-@@ -76,15 +77,16 @@ test_expect_success 'import stream to new repository' '
- test_expect_success 'result has two branches' '
- 	git for-each-ref --format="%(refname)" refs/heads >branches &&
- 	test_line_count = 2 branches &&
--	other_branch=$(grep -v refs/heads/master branches)
-+	other_branch=refs/heads/other &&
-+	main_branch=$(grep -v $other_branch branches)
- '
- 
- test_expect_success 'repo has original shape and timestamps' '
- 	shape () {
- 		git log --format="%m %ct" --left-right --boundary "$@"
- 	} &&
- 	(cd .. && shape master...other) >expect &&
--	shape master...$other_branch >actual &&
-+	shape $main_branch...$other_branch >actual &&
- 	test_cmp expect actual
- '
- 
+ static const char *anonymize_oid(const char *oid_hex)
 -- 
 2.27.0.593.gb3082a2aaf
-
