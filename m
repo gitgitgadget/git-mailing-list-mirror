@@ -2,145 +2,153 @@ Return-Path: <SRS0=4a08=AG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E36CC433DF
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 11:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C44BBC433DF
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:19:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13D3620706
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 11:47:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E5FF20707
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:19:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HcKydmCM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJhPY4HV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404330AbgFYLq7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 07:46:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49750 "EHLO
+        id S2404641AbgFYMTD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 08:19:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404321AbgFYLq6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 07:46:58 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E6C0C061573
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 04:46:58 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id y18so3020008lfh.11
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 04:46:58 -0700 (PDT)
+        with ESMTP id S2404343AbgFYMTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 08:19:02 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5943DC061573
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:19:02 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id t194so5695186wmt.4
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:19:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oiU/1HQCm4HtQd2fp0coFUpFRbzJMtFUKHydC243DQ8=;
-        b=HcKydmCMqNFXoUbbDDcBxE1NtWWdCACmG2YUUMr6qpp9ILXDQcbka82Igoj5hl0XJZ
-         /yq/4dLLrEOL+XTw8zZ07SLCEm3pPpcuS+HtnW1D+1PCH0ImUzxjRd9qMlYYLQewHC+M
-         C0W7telkZa7sX1zxJXBCf2uGvY0kUZscw1sOlfqTjJ3EUq3k4FC9ukXaGbk8H9mLFFnR
-         0LDLH3DwPjOEYPJYj5H2NsBdI3y7OaieLGjDszLD7oG1cPh0kDhNrvsdpodajHtVoNrz
-         +R158t0h+gj6VMKvOPC+nTZbnVHhqkR3mbGUX5vhUOFLgTt+ZNTgAcEx8+uWzsjY/D0J
-         Pi/A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MFeXwMggMANRpAi97SZ47hBi2ET2RT3S4E1mYo3qrK8=;
+        b=FJhPY4HV67TjZsu9TijJGuQ/VNN+Cdb8POqkDdn2N5fDxSdPU1xMtRH0eXH0bhbIOm
+         JaCNqqQ1QzHPbzrkAWJO0txGEWdOy4q8JVLgxXGOqOnEJLy8C+eOPHR5QNnHi8mJRY5l
+         fkYYcnRdHQbuRTh6XeNduCQhBxkWUZ2orz9VLTamHEw3MmldC6S8+bvjtEIWfUlKiWMZ
+         SbgAJwgQjovTPEEnVxTTCEzStNYnosnd2/nSCJRCWkD9aPy/hy0XzK4MviSzWKFDcDHp
+         w0JG7FBBaiWuv5z6QwxTxUMntaFU1Rx4uaFmWEVbV1zoI+S6etzO8QafWXKJKaAKKGa3
+         O+SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=oiU/1HQCm4HtQd2fp0coFUpFRbzJMtFUKHydC243DQ8=;
-        b=caUa0LfjD+18g/8Zl9q37usBpXpt3ENnvxfKfeewBiUHPZfDj2XaJvCaSE5ehRiII0
-         T/zCZeSBb1CxtGhNCB1mccyiBaEe2UevTL32otbGITUE6owGH819faSd2J2h+ltTKxP5
-         5JygYXXcfsjMi2UGuu1Gyov6X/fmzyS8nAQ3+e7lTZTT1wVStGPUxFNedZJfzPBA/BSs
-         PU07gM4Wq9P38Ebz4SJiamzhVQ8tVFKUSVJS9BLAmN9sjQYSESfzPybqXsrKn9wOMVOZ
-         PPY0tWCbMli5BRLlk/Hjct0qpqcXkocwKilc8gABiq1Wtdpxy9yTL1a4i3zI4Zu/ywpJ
-         HICA==
-X-Gm-Message-State: AOAM530MPpVdDbPHd7oS2u7lzv00z97hUp2Ux/EHt/Ub5tljqrhsZnbs
-        KO9gpOWqSjPvowTK5QnWIJI=
-X-Google-Smtp-Source: ABdhPJziqd9GLNrxjObbjFgtlFXmKhPQDrnsbbi3W5Sv8fnRB3J4Uhy+r4BY1KO2xXVfcitoR+y7/A==
-X-Received: by 2002:a19:c64e:: with SMTP id w75mr18299667lff.64.1593085616781;
-        Thu, 25 Jun 2020 04:46:56 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id u30sm4733848ljd.94.2020.06.25.04.46.54
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=MFeXwMggMANRpAi97SZ47hBi2ET2RT3S4E1mYo3qrK8=;
+        b=nKTYu8+3eUOaKc0JSGPpRI32plhykw/QNB4IkrZauj3YbNCFfxJyu6I49gUu0oWqqQ
+         FgGhw0iIJKeC2t100qVWGPYe6SsMVpmlpFi4IHTVT3yOZz5B3OzXwju/+dviS82YlOyM
+         DuFKGMzsAqwWRzeMCxGxXy4CA983OLJJulzrLcK+rowq5heG4byTnt1E5ScjD/avFc59
+         dVvKcKrnKi//l9ry+JWnDt2r2cjRQjz40yoXsaZfiub1eY3haXddd0YW9Ts4EclqGbN5
+         xbVavHhJSx6L4MsjtSKi5K4fVAjaIwBOyRu3Z3KBDKE0ffgWXRpPVL0Iq0/dsIjaybA0
+         XapA==
+X-Gm-Message-State: AOAM533yJOFW7d6LKKtIroRraFs3VM/oYg1pAbh4pG3tFiOZ/8gljGhy
+        H4lFtew1HmUa/w/aqYGFg+osL7bY
+X-Google-Smtp-Source: ABdhPJwrLD8mt5xvaeR+EshCnRQ6RnbOKicqgsR62pR3OxkavcMQfvvpwOHcrxg4MSH/pFyeIy/grg==
+X-Received: by 2002:a1c:99c5:: with SMTP id b188mr2965243wme.76.1593087540894;
+        Thu, 25 Jun 2020 05:19:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w17sm32434407wra.42.2020.06.25.05.19.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 04:46:55 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Tiran Meltser <Tiran.Meltser@mavenir.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Amir Yosef <Amir.Yosef@mavenir.com>
-Subject: Re: Request for adding a simple mechanism to exclude files from Git
- merge operation
-References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
-        <20200622194122.GN6531@camp.crustytoothpaste.net>
-        <871rm6x86y.fsf@osv.gnss.ru>
-        <CABPp-BHa=jppGtoDiTz_NCXrd2zhTfALb_UrQjcF-VDcv+vuNA@mail.gmail.com>
-        <xmqqk0zxbe6f.fsf@gitster.c.googlers.com> <87k0zw1gu9.fsf@osv.gnss.ru>
-        <xmqqk0zw5bt5.fsf@gitster.c.googlers.com>
-Date:   Thu, 25 Jun 2020 14:46:54 +0300
-In-Reply-To: <xmqqk0zw5bt5.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 24 Jun 2020 15:38:46 -0700")
-Message-ID: <87h7uzweoh.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Thu, 25 Jun 2020 05:19:00 -0700 (PDT)
+Message-Id: <pull.668.v3.git.1593087539.gitgitgadget@gmail.com>
+In-Reply-To: <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
+References: <pull.668.v2.git.1593010120.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 25 Jun 2020 12:18:56 +0000
+Subject: [PATCH v3 0/3] Accommodate for pu having been renamed to seen
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+This patch series adjusts Git's own source code to reflect that change.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> To clarify, could you please tell if plain
->>
->>    git merge -s ours
->>
->> is a "partial merge" from your point of view?
->
-> It is not even "partial".
+Please note that even with these patches, there are still a couple places
+where pu is used:
 
-OK, get it, thanks!
+ * In the translations. These are legitimate words in languages that are not
+   English (as in "gpg n'a pas pu signer les données" where "pu" is French
+   for the English "could").
+ * In upload-pack.c, where a variable named pu is short form for
+   "pack-objects updates".
 
-I asked for clarification because it /is/ possible to interpret such
-merge as "partial" in the sense that it gets only /part/ of changes,
-discarding those that were introduced on the side branch.
+Changes since v2:
 
->
-> The merge strategy "-s ours" is a way to cauterize a side branch as
-> dead-end, declaring that everything that has ever been done on that
-> side branch up to the point of the merge is not interesting and we'd
-> never want to look at anything that builds on it.
->
-> It has its uses, though.  After doing so, "git log --all ^mainline"
-> or "git branch --not-merged release" would not show such a
-> cauterized branch; it is a good way to "hide" the branch that you
-> deem a dead-end when you cannot remove it.  But of course you do not
-> want to ever build on such a side branch after doing so.
->
+ * One accidental quoting change in v1 was reverted.
+   
+   
+ * Rebased onto maint (no merge conflicts, so it does not actually change
+   anything).
+   
+   
 
-I think the usefulness of the feature might happen to be somewhat wider,
-yet I'm to avoid arguing, to scatter no attention.
+Changes since v1:
 
->> If you think it is not, then what about:
->>
->>   git merge -X ours
->
-> It is not even a sensible merge.
+ * Rebased onto master (no conflicts, so it is safe, and it is more robust
+   than basing the patches on seen which already contains v1 of these
+   patches).
+   
+   
+ * Adjusted the quoting to match 
+   https://lore.kernel.org/git/e250f1bb100aca94c914f1b2d38a3849c2566aea.1592909867.git.liu.denton@gmail.com/
+   .
 
-I don't believe one could tell out of context, see below.
+Johannes Schindelin (3):
+  docs: adjust for the recent rename of `pu` to `seen`
+  docs: adjust the technical overview for the rename `pu` -> `seen`
+  tests: reference `seen` wherever `pu` was referenced
 
-Anyway, the question was not if it's good, bad, or sensible. Suppose I
-do such a "non-sensible" merge, is it a "partial merge" or not?
+ Documentation/MyFirstContribution.txt         |  4 +-
+ Documentation/SubmittingPatches               | 10 ++--
+ Documentation/git-fetch.txt                   |  8 +--
+ Documentation/git-ls-remote.txt               |  4 +-
+ Documentation/giteveryday.txt                 | 10 ++--
+ Documentation/gitworkflows.txt                | 16 +++---
+ Documentation/howto/maintain-git.txt          | 52 +++++++++----------
+ .../howto/rebase-from-internal-branch.txt     | 32 ++++++------
+ Documentation/howto/revert-branch-rebase.txt  | 32 ++++++------
+ Documentation/howto/update-hook-example.txt   |  6 +--
+ Documentation/user-manual.txt                 |  2 +-
+ t/t5505-remote.sh                             |  8 +--
+ t/t5516-fetch-push.sh                         | 16 +++---
+ t/t9902-completion.sh                         |  4 +-
+ 14 files changed, 102 insertions(+), 102 deletions(-)
 
-> It takes their changes where we didn't touch, but it takes our change
-> without even looking at what they did when the changes overlap.
 
-Sure, and that happens to be exactly what I need from Git when I do such
-merge, because I did look at all the 137 conflicts and found none where
-I need different resolution; and yes, I'm too lazy to resolve all 137 by
-hand. Makes sense? Is my merge "partial" /now/?
+base-commit: af6b65d45ef179ed52087e80cb089f6b2349f4ec
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-668%2Fdscho%2Faccommodate-for-pu-having-been-renamed-to-seen-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-668/dscho/accommodate-for-pu-having-been-renamed-to-seen-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/668
 
-Getting back to technical discussion, can we come up with a useful
-definition of "partial merge" at all? Honestly, I can't, and unless
-somebody else does, I'm inclined to consider it to be an arbitrary label
-being put on selected merge examples for the sake of argument.
+Range-diff vs v2:
 
-Thanks,
--- Sergey
+ 1:  35e3dafd6a ! 1:  13e03e0e65 docs: adjust for the recent rename of `pu` to `seen`
+     @@ Documentation/gitworkflows.txt: As a given feature goes from experimental to sta
+      -* 'pu' (proposed updates) is an integration branch for things that are
+      -  not quite ready for inclusion yet (see "Integration Branches"
+      -  below).
+     -+* `seen` (patches seen by the maintainer) is an integration branch for
+     ++* 'seen' (patches seen by the maintainer) is an integration branch for
+      +  things that are not quite ready for inclusion yet (see "Integration
+      +  Branches" below).
+       
+ 2:  c2bcfdcb5b = 2:  13f3501c84 docs: adjust the technical overview for the rename `pu` -> `seen`
+ 3:  c8e356c02f = 3:  e38ade2ee0 tests: reference `seen` wherever `pu` was referenced
+
+-- 
+gitgitgadget
