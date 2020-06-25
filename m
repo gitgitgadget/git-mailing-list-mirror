@@ -2,70 +2,70 @@ Return-Path: <SRS0=4a08=AG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-12.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68CCAC433E0
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 17:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36C5CC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 17:53:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DBFC207E8
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 17:53:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CC38207E8
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 17:53:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VKdUqec8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G859BSR8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406957AbgFYRxp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 13:53:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50400 "EHLO
+        id S2406959AbgFYRxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 13:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406936AbgFYRxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 13:53:44 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 485EDC08C5DC
+        with ESMTP id S2406955AbgFYRxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 13:53:45 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC340C08C5C1
         for <git@vger.kernel.org>; Thu, 25 Jun 2020 10:53:44 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id t194so6859499wmt.4
+Received: by mail-wm1-x332.google.com with SMTP id f139so6850890wmf.5
         for <git@vger.kernel.org>; Thu, 25 Jun 2020 10:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dWGIG3v5b0SDgS7NEtM/beyL6iDFK+K2rNHA/7Btnhk=;
-        b=VKdUqec8EbTo33xqE+1VS/rji3IgooIApawrAg1+vHxXZUbALdJOAseHGxi6/xZXaK
-         HGPX0kj89PfCKLniTEPrpGr7Ohi4KqJdARGMvIbxgCLIuhx7EAPPPIhFLAGwtTECMv3K
-         lgAs4Wj68Vs1qLr/YZmxnfEJNJmp9Z0ZkJwSndxJDaBtJdqCAQZL+JTry+0q4ECD7qW6
-         eQJuMZyIBgxlnCcEzKpebfDgtHp5Br/633wwGD38lCxNRCNE8g7C2dDD+dlQxmXXPq/9
-         yTHRdNqiq1S4uYoEWcBswMySWzrP46QQu2KDp8dMmEpNyr+mtyRY6FhUDEhBhojQSngH
-         AW+Q==
+        bh=jzq5Z8sPrMzIYKA6uw17FQivGsH+sEOsh8uUK5cMTDo=;
+        b=G859BSR80Jvoywpwg0RYOZPvfNht3j5SKiUze4caCfcUEF3yl9O4yOKMv+ZK1et94w
+         TvpA4h6EX43Kc+6yT4GBmWBgcE2R04mkH60Mn1hMNrUdRiifD5gUqP8J+OiSoQSPPm+0
+         PMg5XuiCzvByf92DR7+s7jktL+A2zlXfKI7Pq9xUet4jN0b1GTl1TVq7rXYwD2LQCPcF
+         Q2oN6YmVBpL8YXW5FD4eDbIRZMpkg6KmXIygmp8hF1qVqj7yTJuxgRIYoK2sQJCQcwcq
+         /L/bAyjGJ2HmES761qtisoBOFgvCaI6EVwoA+DttLqMXf6w41CkmKl48bEwzHMv/SXFY
+         UPgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dWGIG3v5b0SDgS7NEtM/beyL6iDFK+K2rNHA/7Btnhk=;
-        b=WiKNppwX949TQ02CW5M5Q8G2Lhb5zqxlaa2QcnKi6o/hc5YVGnGdAyvHEFpkTG3zRo
-         DjlBxkNTd4spQocKMlKeFyUSEFoP9WHXyYxAxSfgnyOqwADX3SQ/dIARCtxviQvCD1wo
-         u16JtJEaYGXsnclb9HC0cpYY81rzr2TNIOiwPHtaPdHGWdbW0ttZh9aJzDKDIqBoeFIW
-         aM4lgB00Ik34Hii/09WLs3BdEDuhF38aXQprUxjW89Blp2uSLE43KfCaVDhYYTbm2YVb
-         Tzdh2sdyHPw+CTq0JvmfPftW0cdu+NcW/iE6inmJ7FOrlJhEUE+TPjBOCaRHhgtHXgBR
-         1slQ==
-X-Gm-Message-State: AOAM530rJPKB7qTm50PdXgQrvmhrAuOQEgJWC2G2aqxh25qFU1sYmB/B
-        u3W8jkSJH2FzrtTM5weW4sMhg+2v
-X-Google-Smtp-Source: ABdhPJzOzcdqubdegZLsUngQMxrBSMfnVgd631UFJl9uce7aMoYvF36xHHV9laaOpb79RzEWHIpI2Q==
-X-Received: by 2002:a1c:8192:: with SMTP id c140mr4537728wmd.108.1593107622832;
-        Thu, 25 Jun 2020 10:53:42 -0700 (PDT)
+        bh=jzq5Z8sPrMzIYKA6uw17FQivGsH+sEOsh8uUK5cMTDo=;
+        b=kjqPVeG7IXxH2HV4U1h0Mzcyw+8t6kXEFcxc09sKZzlWmcwbqfXTJslWPqfu+GLqIl
+         cfbicDk0Mw77rdG9tS3LiszXACpvQAW+xVvF+wjSbesO84m+tt22BNk8fW5N8LP3gMNx
+         u25bl3+Cdcb67BkiFsKxre1qr9Xmn1Y8XBCwCaFWY6DIpy1V8Fqh7E1eKbOzAOdGPKFH
+         jLOD9Tau7qzPwPh3GvfqlERSW0VG6l2w8YCZR5+smNfOqh2C5pD4S5OddrSTKWru8U8c
+         dQ/utSPB7LXHBJ6ZIW45ZnQtk/9oNDDrtN6sqZ5YELboC2jmAYd9dZ/FxSeuPXQ7yXmu
+         xh/A==
+X-Gm-Message-State: AOAM532p3kMuTCSbmj6doZzlsUN3Wkx+XvpKJyLCDS1CDRGbm0XKJtBf
+        lPOevM4Aj4Tvm/3yvVmPxvhVS/al
+X-Google-Smtp-Source: ABdhPJwBBcTg5oI8EOzzIPoqWRdMPRdxrHnrCI91nY7Tu8x8z1S6Z0H+UGFa+uoU1kaxc3qD19TN1g==
+X-Received: by 2002:a7b:cf12:: with SMTP id l18mr4904304wmg.131.1593107623640;
+        Thu, 25 Jun 2020 10:53:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 40sm9235698wrc.27.2020.06.25.10.53.42
+        by smtp.gmail.com with ESMTPSA id c143sm14925990wmd.1.2020.06.25.10.53.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 10:53:42 -0700 (PDT)
-Message-Id: <69256ab9107c3dba0dc007b69cc0ce98a9b91f9a.1593107621.git.gitgitgadget@gmail.com>
+        Thu, 25 Jun 2020 10:53:43 -0700 (PDT)
+Message-Id: <9bb8d84ea956dcddefbe7b62baa3a5ff23b6b1e2.1593107621.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.654.v4.git.1593107621.gitgitgadget@gmail.com>
 References: <pull.654.v3.git.1593010066.gitgitgadget@gmail.com>
         <pull.654.v4.git.1593107621.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Jun 2020 17:53:40 +0000
-Subject: [PATCH v4 1/2] diff-files --raw: show correct post-image of
- intent-to-add files
+Date:   Thu, 25 Jun 2020 17:53:41 +0000
+Subject: [PATCH v4 2/2] difftool -d: ensure that intent-to-add files are
+ handled correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,67 +81,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The documented behavior of `git diff-files --raw` is to display
+In https://github.com/git-for-windows/git/issues/2677, a `git difftool
+-d` problem was reported. The underlying cause was a bug in `git
+diff-files --raw` that we just fixed.
 
-	[...] 0{40} if creation, unmerged or "look at work tree".
-
-This happens for example when showing modified, unstaged files.
-
-For intent-to-add files, we used to show the empty blob's hash instead.
-In c26022ea8f5 (diff: convert diff_addremove to struct object_id,
-2017-05-30), we made that worse by inadvertently changing that to the
-hash of the empty tree.
-
-Let's make the behavior consistent with modified files by showing
-all-zero values also for intent-to-add files.
-
-Accordingly, this patch adjusts the expectations set by the regression
-test introduced in feea6946a5b (diff-files: treat "i-t-a" files as
-"not-in-index", 2020-06-20).
+Make sure that the reported `difftool` problem stays fixed.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- diff-lib.c            | 3 +--
- t/t2203-add-intent.sh | 5 ++---
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ t/t7800-difftool.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 61812f48c2..25fd2dee19 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -220,8 +220,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			} else if (revs->diffopt.ita_invisible_in_index &&
- 				   ce_intent_to_add(ce)) {
- 				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
--					       the_hash_algo->empty_tree, 0,
--					       ce->name, 0);
-+					       &null_oid, 0, ce->name, 0);
- 				continue;
- 			}
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 29b92907e2..524f30f7dc 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -720,6 +720,14 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+ 	test_cmp expect actual
+ '
  
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 8a5d55054f..cf0175ad6e 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -240,7 +240,6 @@ test_expect_success 'i-t-a files shown as new for "diff", "diff-files"; not-new
- 
- 	hash_e=$(git hash-object empty) &&
- 	hash_n=$(git hash-object not-empty) &&
--	hash_t=$(git hash-object -t tree /dev/null) &&
- 
- 	cat >expect.diff_p <<-EOF &&
- 	diff --git a/empty b/empty
-@@ -259,8 +258,8 @@ test_expect_success 'i-t-a files shown as new for "diff", "diff-files"; not-new
- 	 create mode 100644 not-empty
- 	EOF
- 	cat >expect.diff_a <<-EOF &&
--	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")empty
--	:000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")not-empty
-+	:000000 100644 0000000 0000000 A$(printf "\t")empty
-+	:000000 100644 0000000 0000000 A$(printf "\t")not-empty
- 	EOF
- 
- 	git add -N empty not-empty &&
++test_expect_success 'add -N and difftool -d' '
++	test_when_finished git reset --hard &&
++
++	test_write_lines A B C >intent-to-add &&
++	git add -N intent-to-add &&
++	git difftool --dir-diff --extcmd ls
++'
++
+ test_expect_success 'outside worktree' '
+ 	echo 1 >1 &&
+ 	echo 2 >2 &&
 -- 
 gitgitgadget
-
