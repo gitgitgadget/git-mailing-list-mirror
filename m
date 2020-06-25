@@ -2,145 +2,145 @@ Return-Path: <SRS0=4a08=AG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E66BC433E0
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 10:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E36CC433DF
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 11:47:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 543EC20679
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 10:21:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13D3620706
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 11:47:00 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HcKydmCM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403822AbgFYKVl convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 25 Jun 2020 06:21:41 -0400
-Received: from mout.kundenserver.de ([217.72.192.74]:34041 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403800AbgFYKVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 06:21:38 -0400
-Received: from mail.ifta.com ([80.152.142.24]) by mrelayeu.kundenserver.de
- (mreue107 [212.227.15.183]) with ESMTPA (Nemesis) id 1N7RDn-1ilnMD2YMn-017qMo
- for <git@vger.kernel.org>; Thu, 25 Jun 2020 12:21:36 +0200
-Received: from mail.ifta.com [127.0.0.1] by mail.ifta.com with David.fx (0554.4743464A4E474B484A52);
- 25 Jun 2020 10:21:36 UT
-From:   "Daniel Dyk" <Daniel.Dyk@ifta.com>
-Subject: Capital letters do not work when using vi as git editor
-To:     <git@vger.kernel.org>
-Date:   Thu, 25 Jun 2020 10:21:36 +0000
-X-Priority: 3 (Normal)
-Importance: normal
-X-Mailer: david by Tobit.Software, Germany (0554.4743464A4E474B484A52), Mime Converter 101.20
-X-David-Sym: 0
-X-David-Flags: 0
-Message-ID: <000232C3.5EF496D0@mail.ifta.com>
+        id S2404330AbgFYLq7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 07:46:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49750 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404321AbgFYLq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 07:46:58 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E6C0C061573
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 04:46:58 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id y18so3020008lfh.11
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 04:46:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=oiU/1HQCm4HtQd2fp0coFUpFRbzJMtFUKHydC243DQ8=;
+        b=HcKydmCMqNFXoUbbDDcBxE1NtWWdCACmG2YUUMr6qpp9ILXDQcbka82Igoj5hl0XJZ
+         /yq/4dLLrEOL+XTw8zZ07SLCEm3pPpcuS+HtnW1D+1PCH0ImUzxjRd9qMlYYLQewHC+M
+         C0W7telkZa7sX1zxJXBCf2uGvY0kUZscw1sOlfqTjJ3EUq3k4FC9ukXaGbk8H9mLFFnR
+         0LDLH3DwPjOEYPJYj5H2NsBdI3y7OaieLGjDszLD7oG1cPh0kDhNrvsdpodajHtVoNrz
+         +R158t0h+gj6VMKvOPC+nTZbnVHhqkR3mbGUX5vhUOFLgTt+ZNTgAcEx8+uWzsjY/D0J
+         Pi/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=oiU/1HQCm4HtQd2fp0coFUpFRbzJMtFUKHydC243DQ8=;
+        b=caUa0LfjD+18g/8Zl9q37usBpXpt3ENnvxfKfeewBiUHPZfDj2XaJvCaSE5ehRiII0
+         T/zCZeSBb1CxtGhNCB1mccyiBaEe2UevTL32otbGITUE6owGH819faSd2J2h+ltTKxP5
+         5JygYXXcfsjMi2UGuu1Gyov6X/fmzyS8nAQ3+e7lTZTT1wVStGPUxFNedZJfzPBA/BSs
+         PU07gM4Wq9P38Ebz4SJiamzhVQ8tVFKUSVJS9BLAmN9sjQYSESfzPybqXsrKn9wOMVOZ
+         PPY0tWCbMli5BRLlk/Hjct0qpqcXkocwKilc8gABiq1Wtdpxy9yTL1a4i3zI4Zu/ywpJ
+         HICA==
+X-Gm-Message-State: AOAM530MPpVdDbPHd7oS2u7lzv00z97hUp2Ux/EHt/Ub5tljqrhsZnbs
+        KO9gpOWqSjPvowTK5QnWIJI=
+X-Google-Smtp-Source: ABdhPJziqd9GLNrxjObbjFgtlFXmKhPQDrnsbbi3W5Sv8fnRB3J4Uhy+r4BY1KO2xXVfcitoR+y7/A==
+X-Received: by 2002:a19:c64e:: with SMTP id w75mr18299667lff.64.1593085616781;
+        Thu, 25 Jun 2020 04:46:56 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id u30sm4733848ljd.94.2020.06.25.04.46.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jun 2020 04:46:55 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Tiran Meltser <Tiran.Meltser@mavenir.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Amir Yosef <Amir.Yosef@mavenir.com>
+Subject: Re: Request for adding a simple mechanism to exclude files from Git
+ merge operation
+References: <DM6PR11MB27958B80E3994CEEF13971ECE5990@DM6PR11MB2795.namprd11.prod.outlook.com>
+        <20200622194122.GN6531@camp.crustytoothpaste.net>
+        <871rm6x86y.fsf@osv.gnss.ru>
+        <CABPp-BHa=jppGtoDiTz_NCXrd2zhTfALb_UrQjcF-VDcv+vuNA@mail.gmail.com>
+        <xmqqk0zxbe6f.fsf@gitster.c.googlers.com> <87k0zw1gu9.fsf@osv.gnss.ru>
+        <xmqqk0zw5bt5.fsf@gitster.c.googlers.com>
+Date:   Thu, 25 Jun 2020 14:46:54 +0300
+In-Reply-To: <xmqqk0zw5bt5.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 24 Jun 2020 15:38:46 -0700")
+Message-ID: <87h7uzweoh.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-X-Provags-ID: V03:K1:5PVGfSb96M/VWfLu57GYdS6K7RnqBhnX4z7eWT2cJ7ceMttN135
- VyC5pNocyo5GCXFvzhUjhbqefAs65uFCLnHqreTu7oeIB0TIW3Eu027Ld+FZ0ZBYDfhsEyK
- LaMIUipWMO4w7g2+E198ujbDoUQbnb0YspvBzH3F/66unF1VeH0upiHyHWQcVf5PcYRz9Wf
- bzf7yg2S2ftQY/zyr2aUw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZFE8Dla2fng=:hhQ5L3AgCbNcrxX6yACu2e
- XTEVqRiwRHbh/RY5Nwc4DJA2l6QiOhu6YCg8glGqnK6W05rwF34FqrxXv0a6jVozX/Ssd3k8R
- ixF7CBmvgZsUDRhnAimc9pOx/zbKJDlJDtotwM2a0JtGRMcxlGuWuMWim1stC4iGyahkF9eD8
- WJo2RK/a6ud0Q2e7tmufIa9/JqTjByOXZX0CM50NUNJPu3sMXS1VCRykB97dBXAIj2rkxNLLR
- AfwEuKnMEkjNuvJ7G7bx9vbnTS06VBjjeAmyGA9Izp4hvWo259ZnmveDKaKSALeXZC6mEfQJp
- V+Bq3MnEwH4g8tcMYVqn+4gBWxgN3fC/oIRQ70F3TIMm2p/Ad0vS52gfRNoqVC29mEW2Nz6Ui
- eySe6qRV+c2cKUABL9lGbWiFV0HJvSvlsSk9uJvCOuvKQWsx16slBssvsXtz4kyGNMqdhjA0y
- CW/ombaGgtcuOVvCBPz7p/NyV7Q1O5vPPjaVhKmRNgB318cchD4SNM35jYjnZLHQzUaTAjlUq
- DC7Fz1AhBbAiVU/qoDzeqkVjdN7oEyaJgCSB6kVoMfR8BGTYQduNmaxqP3soEsVN8kkHhq0Fv
- z1pxYVJg5E2MFW/dQ2O61m7pCBTt+b3n/k8jVgVLlD6JfP8r+31m/yMb/7I/oKtNhacRnlFwB
- 0T7i3YKKD8GlsqHR2V89vMk9eqT+I72NCO+wb7fGDEVtip6O47tNsXVeUguyteIUZhVToZn+f
- aMhXhA+/KNt2cTgk/ojCLicN+rHyd5eVN1hRNrm9yTc1cZv9ptOgOCSCjHthJ4RXnS0QCddQZ
- uFgs+ZF4wO/T00eEOE0YSPcCyjcU+Q0sAY5W240sOWfeocyitRnT1+4zA0LDj0UZfCw6ira
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hi git-devs,
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> To clarify, could you please tell if plain
+>>
+>>    git merge -s ours
+>>
+>> is a "partial merge" from your point of view?
+>
+> It is not even "partial".
 
+OK, get it, thanks!
 
-I installed git 2.27.0 on a fresh Windows 10 system, there where no old installations of mingw or git. Unfortunatly I have encountered a bug with vim when doing 'git rebase -i' or 'git commit':
+I asked for clarification because it /is/ possible to interpret such
+merge as "partial" in the sense that it gets only /part/ of changes,
+discarding those that were introduced on the side branch.
 
-I am not able to type capital letters, so commands for selecting rows (<Shift>V), pasting above (<Shift>P) etc are not working. I am also not able to type 'ABCDE' in insertion mode. Small letters and capital umlauts (ÄÖÜ) work. If I open the vi without git, I can type the capital letters. If I use nano as editor, I can type capital letters as well. 
+>
+> The merge strategy "-s ours" is a way to cauterize a side branch as
+> dead-end, declaring that everything that has ever been done on that
+> side branch up to the point of the merge is not interesting and we'd
+> never want to look at anything that builds on it.
+>
+> It has its uses, though.  After doing so, "git log --all ^mainline"
+> or "git branch --not-merged release" would not show such a
+> cauterized branch; it is a good way to "hide" the branch that you
+> deem a dead-end when you cannot remove it.  But of course you do not
+> want to ever build on such a side branch after doing so.
+>
 
-Downgrading to git 2.24.1.2 solved the problem for now (I double checked and reinstalled 2.27.0 again => same issue).
+I think the usefulness of the feature might happen to be somewhat wider,
+yet I'm to avoid arguing, to scatter no attention.
 
+>> If you think it is not, then what about:
+>>
+>>   git merge -X ours
+>
+> It is not even a sensible merge.
 
-Regards
+I don't believe one could tell out of context, see below.
 
-Daniel Dyk
+Anyway, the question was not if it's good, bad, or sensible. Suppose I
+do such a "non-sensible" merge, is it a "partial merge" or not?
 
+> It takes their changes where we didn't touch, but it takes our change
+> without even looking at what they did when the changes overlap.
 
-___________________________________________________________________
+Sure, and that happens to be exactly what I need from Git when I do such
+merge, because I did look at all the 137 conflicts and found none where
+I need different resolution; and yes, I'm too lazy to resolve all 137 by
+hand. Makes sense? Is my merge "partial" /now/?
 
+Getting back to technical discussion, can we come up with a useful
+definition of "partial merge" at all? Honestly, I can't, and unless
+somebody else does, I'm inclined to consider it to be an arbitrary label
+being put on selected merge examples for the sake of argument.
 
-Daniel Dyk
-Software Developer
-
-
-IfTA Ingenieurbuero fuer Thermoakustik GmbH
-Junkersstrasse 8
-D-82178 Puchheim 
-Germany 
-
-
-
-Tel. +49-89-8392719-42
-Fax +49-89-8392719-11
-http://www.ifta.com
-
-
-Geschaeftsfuehrer: Dr.-Ing. Jakob Hermann
-Handelsregister: Amtsgericht Muenchen HRB 114 602 
-Umsatzsteuer-ID: DE 812 240 350
-
-
-
-IfTA's Datenschutzerklärung finden Sie hier: https://www.ifta.com/de/unternehmen/datenschutzerklärung
-For IfTA's privacy policy please go to: https://www.ifta.com/en/company/privacy-policy 
-___________________________________________________________________
-
-
-
-
-
-Mit freundlichen Grüßen
-
-
-Daniel Dyk
-
-
-___________________________________________________________________
-
-
-Daniel Dyk
-Software Entwickler
-
-
-IfTA Ingenieurbuero fuer Thermoakustik GmbH
-Junkersstrasse 8
-D-82178 Puchheim 
-Germany 
-
-
-
-Tel. +49-89-8392719-42
-Fax +49-89-8392719-11
-http://www.ifta.com
-
-
-Geschaeftsfuehrer: Dr.-Ing. Jakob Hermann
-Handelsregister: Amtsgericht Muenchen HRB 114 602 
-Umsatzsteuer-ID: DE 812 240 350
-
-
-
-IfTA's Datenschutzerklärung finden Sie hier: https://www.ifta.com/de/unternehmen/datenschutzerklärung
-For IfTA's privacy policy please go to: https://www.ifta.com/en/company/privacy-policy 
-______________________________________________________________________________________________________
-
-
+Thanks,
+-- Sergey
