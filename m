@@ -2,110 +2,152 @@ Return-Path: <SRS0=4a08=AG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F79C433E0
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 18:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9BD1C433E0
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 18:47:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B78EC20781
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 18:21:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2C692067D
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 18:47:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jBCa0LoH"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PFNTv8Ka"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389946AbgFYSVI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 14:21:08 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52405 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389648AbgFYSVI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 14:21:08 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5085EE2B0C;
-        Thu, 25 Jun 2020 14:21:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=T0fmyVtmVNF5NXN9byrqeGhL1Hw=; b=jBCa0L
-        oHLbu/X7foLnvjYLsCHTJ+fk3QJ3SIqZahbNpavZUUt6YTalYgIrUmy+ZDaDibe3
-        W+fhDsuUF9dVa+FWVRT5GRHSXt9BZs9YxQC1nWP+8o+Y+SAtc48eyCvy6fzE5TSD
-        uqCOPZJ45N3W/h+lymdg5dvcHZuwcz5d+bNN4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rgx+UUlsNZEWU5JEWYMHQVAJUavLuE/6
-        KE1k5JVTphHWYH/IHweuwRfcb13F3Zx+daJDg6FJCtAI4U511yJTQY3XFX0OqXhb
-        2kftLnAtBqQvmGSX0YtPJFn5GziLhE8SmKJz0Z9bcXvbwwlsvBjiXNqlxMUKx+rW
-        2pSZeUj0vzQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 480A2E2B0B;
-        Thu, 25 Jun 2020 14:21:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2390330AbgFYSrb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 14:47:31 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([205.139.110.120]:48557 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S2390007AbgFYSr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 14:47:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1593110848;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ReC9AhKtwPE/4vle+ZkbgxHUJLmUw3blk+fyjpxNSBI=;
+        b=PFNTv8KaYISbXOY9M60RlbMp/ntj0OdTN3kOQ4grDbestKlaQsQx48Y7rugca3DCIKnQsF
+        O0c3x2GhjwBb1QIT+JPG3WbjrwU5oHQFBBuFB8X7j1eAvGxSd6qxpyDQMN8+qFzjpmSs05
+        0bOSWK+5pwQagrhgMWsjgD8nX84B9v8=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-444-m2v--WDQNd2BohOYMMaE4A-1; Thu, 25 Jun 2020 14:47:21 -0400
+X-MC-Unique: m2v--WDQNd2BohOYMMaE4A-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8A5DBE2B0A;
-        Thu, 25 Jun 2020 14:21:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/2] diff-files --raw: show correct post-image of intent-to-add files
-References: <pull.654.v3.git.1593010066.gitgitgadget@gmail.com>
-        <pull.654.v4.git.1593107621.gitgitgadget@gmail.com>
-        <69256ab9107c3dba0dc007b69cc0ce98a9b91f9a.1593107621.git.gitgitgadget@gmail.com>
-Date:   Thu, 25 Jun 2020 11:21:01 -0700
-In-Reply-To: <69256ab9107c3dba0dc007b69cc0ce98a9b91f9a.1593107621.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 25 Jun 2020
-        17:53:40 +0000")
-Message-ID: <xmqqeeq33t2q.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D4F4D18FE867;
+        Thu, 25 Jun 2020 18:47:19 +0000 (UTC)
+Received: from optiplex-lnx (unknown [10.3.128.9])
+        by smtp.corp.redhat.com (Postfix) with ESMTPS id E45D9100EBA4;
+        Thu, 25 Jun 2020 18:47:18 +0000 (UTC)
+Date:   Thu, 25 Jun 2020 14:47:15 -0400
+From:   Rafael Aquini <aquini@redhat.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] send-email: restore --in-reply-to superseding behavior
+Message-ID: <20200625184715.GC2117795@optiplex-lnx>
+References: <20200624195520.2062298-1-aquini@redhat.com>
+ <xmqqo8p85eud.fsf@gitster.c.googlers.com>
+ <20200624234539.GH1987277@optiplex-lnx>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A0F2627E-B710-11EA-8C88-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200624234539.GH1987277@optiplex-lnx>
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Jun 24, 2020 at 07:45:43PM -0400, Rafael Aquini wrote:
+> On Wed, Jun 24, 2020 at 02:33:14PM -0700, Junio C Hamano wrote:
+> > Rafael Aquini <aquini@redhat.com> writes:
+> > 
+> > > git send-email --in-reply-to= fails to override the email headers,
+> > > if they're present in the output of format-patch, which breakes the
+> > 
+> > Will do s/breakes/breaks/ while applying.
+> >
+> 
+> UGH! I've been fat-fingering typos the whole day, today... Sorry about
+> that one.
+> 
+>  
+> > It makes me wonder, however, why it is a good idea to have the I-R-T
+> > in the format patch output in the first place.
+> > 
+> > >  			elsif (/^In-Reply-To: (.*)/i) {
+> > > -				$in_reply_to = $1;
+> > > +				if (!$initial_in_reply_to) {
+> > > +					$in_reply_to = $1;
+> > > +				}
+> > 
+> > I can see how this would work the way it should for the first
+> > message we send out, so it would work well for a single patch.
+> > 
+> > But what does this change do to the chaining (either making [PATCH
+> > 1/N] thru [PATCH N/N] as responses to the cover letter [PATCH 0/N],
+> > or making [PATCH n+1/N] as response to [PATCH n/N] for 1 <= n < N)
+> > of multiple messages?
+> > 
+> > When you prepare a series whose 1..N/N are all pointing at 0/N with
+> > the already prepared In-Reply-To (so you have N+1 files to send
+> > out), wouldn't you want to make 0/N a reply to a particular message
+> > you specify on the command line, while keeping the relationship
+> > among your messages intact?  Doesn't having $initial_in_reply_to
+> > (i.e. command line override) help above code break the chaning?
+> >
+> 
+> This change will make all emails to appear as a reply to the msgid
+> fed to --in-reply-to. I see your point, though, and at its light 
+> I think now this patch, is actually incomplete. 
+> 
+> With this change we get back the override desired behavior,
+> but it also breaks the contract, according to the man page.
+> 
+> "
+>  --in-reply-to=<identifier>
+>      Make the first mail (or all the mails with --no-thread) appear as a reply to the given Message-Id, which
+>      avoids breaking threads to provide a new patch series. The second and subsequent emails will be sent as
+>      replies according to the --[no-]chain-reply-to setting.
+> "
+> 
+> I drove the change based on my usecase, which is marginal to the
+> multi-part reply case. 
+> 
+> I guess we just need the following, for a complete solution:
+> 
+> 
+> 
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index dc95656f75..768296ea0a 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1699,10 +1699,14 @@ sub process_file {
+>  				$xfer_encoding = $1 if not defined $xfer_encoding;
+>  			}
+>  			elsif (/^In-Reply-To: (.*)/i) {
+> -				$in_reply_to = $1;
+> +				if (!$initial_in_reply_to || $thread) {
+> +					$in_reply_to = $1;
+> +				}
+>  			}
+>  			elsif (/^References: (.*)/i) {
+> -				$references = $1;
+> +				if (!$initial_in_reply_to || $thread) {
+> +					$references = $1;
+> +				}
+>  			}
+>  			elsif (!/^Date:\s/i && /^[-A-Za-z]+:\s+\S/) {
+>  				push @xh, $_;
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> The documented behavior of `git diff-files --raw` is to display
->
-> 	[...] 0{40} if creation, unmerged or "look at work tree".
+This guy worked like a charm, and git send-email, now, follows what the
+man page says wrt the --in-reply-to usage.
 
-"on the right hand (i.e. postimage) side" is missing, which is
-crucial in this description.
+I'll reformat the commit log, and repost the patch ASAP, if you are
+OK with it.
 
-> This happens for example when showing modified, unstaged files.
+-- Rafael
 
-Modified I would understand.  We notice that the contents on the
-work tree is different from what is in the index, and we tell the
-consumer "look at work tree".  I do not think you meant "unstaged",
-though.  If truly removed from the index, diff-files won't even know
-about the path.  You probably meant "removed from the working tree",
-but 0{40} in that case means totally different thing (i.e. it would
-be a (D)eletion record, so 0{40} on the postimage side is a filler,
-not even "look at work tree").  What would make more sense to
-describe might be
-
-	This happens for paths that are modified, or unmodified but
-	stat-dirty.
-
-Either case, we tell the consumer to check the "work tree".
-
-> For intent-to-add files, we used to show the empty blob's hash instead.
-> In c26022ea8f5 (diff: convert diff_addremove to struct object_id,
-> 2017-05-30), we made that worse by inadvertently changing that to the
-> hash of the empty tree.
->
-> Let's make the behavior consistent with modified files by showing
-> all-zero values also for intent-to-add files.
-
-Well described.
-
-Thanks.
