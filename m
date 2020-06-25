@@ -6,35 +6,35 @@ X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB688C433E1
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65878C433DF
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A011120781
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A1CF2076E
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406858AbgFYTsT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 15:48:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43260 "EHLO cloud.peff.net"
+        id S2406862AbgFYTsV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 15:48:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43268 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406836AbgFYTsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 15:48:18 -0400
-Received: (qmail 31345 invoked by uid 109); 25 Jun 2020 19:48:18 -0000
+        id S2406836AbgFYTsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 15:48:20 -0400
+Received: (qmail 31356 invoked by uid 109); 25 Jun 2020 19:48:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jun 2020 19:48:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jun 2020 19:48:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19579 invoked by uid 111); 25 Jun 2020 19:48:18 -0000
+Received: (qmail 19586 invoked by uid 111); 25 Jun 2020 19:48:20 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jun 2020 15:48:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jun 2020 15:48:20 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 25 Jun 2020 15:48:17 -0400
+Date:   Thu, 25 Jun 2020 15:48:19 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 02/11] fast-export: use xmemdupz() for anonymizing oids
-Message-ID: <20200625194817.GB4029374@coredump.intra.peff.net>
+Subject: [PATCH v2 03/11] fast-export: store anonymized oids as hex strings
+Message-ID: <20200625194819.GC4029374@coredump.intra.peff.net>
 References: <20200625194802.GA4028913@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,95 +45,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our anonymize_mem() function is careful to take a ptr/len pair to allow
-storing binary tokens like object ids, as well as partial strings (e.g.,
-just "foo" of "foo/bar"). But it duplicates the hash key using
-xstrdup()! That means that:
+When fast-export stores anonymized oids, it does so as binary strings.
+And while the anonymous mapping storage is binary-clean (at least as of
+the previous commit), this will become awkward when we start exposing
+more of it to the user. In particular, if we allow a method for
+retaining token "foo", then users may want to specify a hex oid as such
+a token.
 
-  - for a partial string, we'd store all bytes up to the NUL, even
-    though we'd never look at anything past "len". This didn't produce
-    wrong behavior, but was wasteful.
-
-  - for a binary oid that doesn't contain a zero byte, we'd copy garbage
-    bytes off the end of the array (though as long as nothing complained
-    about reading uninitialized bytes, further reads would be limited by
-    "len", and we'd produce the correct results)
-
-  - for a binary oid that does contain a zero byte, we'd copy _fewer_
-    bytes than intended into the hashmap struct. When we later try to
-    look up a value, we'd access uninitialized memory and potentially
-    falsely claim that a particular oid is not present.
-
-The most common reason to store an oid is an anonymized gitlink, but our
-test case doesn't have any gitlinks at all. So let's add one whose oid
-contains a NUL and is present at two different paths. ASan catches the
-memory error, but even without it we can detect the bug because the oid
-is not anonymized the same way for both paths.
-
-And of course the fix is to copy the correct number of bytes. We don't
-technically need the appended NUL from xmemdupz(), but it doesn't hurt
-as an extra protection against anybody treating it like a string (plus a
-future patch will push us more in that direction).
+Let's just switch to storing the hex strings. The difference in memory
+usage is negligible (especially considering how infrequently we'd
+generally store an oid compared to, say, path components).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/fast-export.c            |  2 +-
- t/t9351-fast-export-anonymize.sh | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ builtin/fast-export.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 85868162ee..289395a131 100644
+index 289395a131..4a3a4c933e 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -162,7 +162,7 @@ static const void *anonymize_mem(struct hashmap *map,
- 	if (!ret) {
- 		ret = xmalloc(sizeof(*ret));
- 		hashmap_entry_init(&ret->hash, key.hash.hash);
--		ret->orig = xstrdup(orig);
-+		ret->orig = xmemdupz(orig, *len);
- 		ret->orig_len = *len;
- 		ret->anon = generate(orig, len);
- 		ret->anon_len = *len;
-diff --git a/t/t9351-fast-export-anonymize.sh b/t/t9351-fast-export-anonymize.sh
-index e772cf9930..dc5d75cd19 100755
---- a/t/t9351-fast-export-anonymize.sh
-+++ b/t/t9351-fast-export-anonymize.sh
-@@ -10,6 +10,10 @@ test_expect_success 'setup simple repo' '
- 	mkdir subdir &&
- 	test_commit subdir/bar &&
- 	test_commit subdir/xyzzy &&
-+	fake_commit=$(echo $ZERO_OID | sed s/0/a/) &&
-+	git update-index --add --cacheinfo 160000,$fake_commit,link1 &&
-+	git update-index --add --cacheinfo 160000,$fake_commit,link2 &&
-+	git commit -m "add gitlink" &&
- 	git tag -m "annotated tag" mytag
- '
- 
-@@ -26,6 +30,12 @@ test_expect_success 'stream omits path names' '
- 	! grep xyzzy stream
- '
- 
-+test_expect_success 'stream omits gitlink oids' '
-+	# avoid relying on the whole oid to remain hash-agnostic; this is
-+	# plenty to be unique within our test case
-+	! grep a000000000000000000 stream
-+'
+@@ -387,16 +387,19 @@ static void *generate_fake_oid(const void *old, size_t *len)
+ {
+ 	static uint32_t counter = 1; /* avoid null oid */
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+-	unsigned char *out = xcalloc(hashsz, 1);
+-	put_be32(out + hashsz - 4, counter++);
+-	return out;
++	struct object_id oid;
++	char *hex = xmallocz(GIT_MAX_HEXSZ);
 +
- test_expect_success 'stream allows master as refname' '
- 	grep master stream
- '
-@@ -89,6 +99,11 @@ test_expect_success 'paths in subdir ended up in one tree' '
- 	test_cmp expect actual
- '
++	oidclr(&oid);
++	put_be32(oid.hash + hashsz - 4, counter++);
++	return oid_to_hex_r(hex, &oid);
+ }
  
-+test_expect_success 'identical gitlinks got identical oid' '
-+	awk "/commit/ { print \$3 }" <root | sort -u >commits &&
-+	test_line_count = 1 commits
-+'
-+
- test_expect_success 'tag points to branch tip' '
- 	git rev-parse $other_branch >expect &&
- 	git for-each-ref --format="%(*objectname)" | grep . >actual &&
+-static const struct object_id *anonymize_oid(const struct object_id *oid)
++static const char *anonymize_oid(const char *oid_hex)
+ {
+ 	static struct hashmap objs;
+-	size_t len = the_hash_algo->rawsz;
+-	return anonymize_mem(&objs, generate_fake_oid, oid, &len);
++	size_t len = strlen(oid_hex);
++	return anonymize_mem(&objs, generate_fake_oid, oid_hex, &len);
+ }
+ 
+ static void show_filemodify(struct diff_queue_struct *q,
+@@ -455,9 +458,9 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 			 */
+ 			if (no_data || S_ISGITLINK(spec->mode))
+ 				printf("M %06o %s ", spec->mode,
+-				       oid_to_hex(anonymize ?
+-						  anonymize_oid(&spec->oid) :
+-						  &spec->oid));
++				       anonymize ?
++				       anonymize_oid(oid_to_hex(&spec->oid)) :
++				       oid_to_hex(&spec->oid));
+ 			else {
+ 				struct object *object = lookup_object(the_repository,
+ 								      &spec->oid);
+@@ -712,9 +715,10 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 		if (mark)
+ 			printf(":%d\n", mark);
+ 		else
+-			printf("%s\n", oid_to_hex(anonymize ?
+-						  anonymize_oid(&obj->oid) :
+-						  &obj->oid));
++			printf("%s\n",
++			       anonymize ?
++			       anonymize_oid(oid_to_hex(&obj->oid)) :
++			       oid_to_hex(&obj->oid));
+ 		i++;
+ 	}
+ 
 -- 
 2.27.0.593.gb3082a2aaf
 
