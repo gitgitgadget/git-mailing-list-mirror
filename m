@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C8BC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E6CEC433DF
 	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:49:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 066F3206BE
+	by mail.kernel.org (Postfix) with ESMTP id 5D95B206BE
 	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 12:49:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iKl0ybEX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OoTr+Uqb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404777AbgFYMtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2404799AbgFYMtC (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 25 Jun 2020 08:49:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59300 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404761AbgFYMtA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 08:49:00 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36E4AC0613ED
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:48:59 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id j18so5421986wmi.3
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:48:59 -0700 (PDT)
+        with ESMTP id S2404764AbgFYMtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 08:49:01 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6091DC061573
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:49:01 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id a6so5713910wrm.4
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 05:49:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kAvHl/JhnYRaMUMuiirHrgwuklbVky8tI/TBNJJKK+M=;
-        b=iKl0ybEXbk4MoOR+diED94GptRGIYNP6EI5xVR3pOlNaIzy0wizYWkXZvkRjjYH6EW
-         NdmkDmRRQ1zmK2DlLFKhuf5oRE5mSH6nPL4GCwIrLOWJMpe/tEw8c0FfLqfN8JEdwa7c
-         T84dFnbTqLuU7KyxABeyYxmgaBuIsSdk64TmQyppT6HtpICtBN1R5Wbl+hsu9qNmgFqi
-         yORhK/LjGxTkAgYFmMt1qhVq6vwLv/V6myAA718aGNB2QRzXSJ4Xoc03vapdWEtyctZ9
-         BnVYNTX1/DBTDLCMhVbGkOSB6bTdWubq4h5+w0XlMOaLqqX2JHxM718SHGRneODFX1YX
-         BnnA==
+        bh=9sooaKVhXSrJT5mgEU6o4Adku7L6SEhIg0nBV8aETOk=;
+        b=OoTr+UqblIYiGOr5Rx1TBKfdRFcEos5ZaQwSOXLu30/UvsFS34sOds65j3Sfik9rKW
+         T8Z+MZTwHfef4hEwiFS8uQJboFhJ8dbZS8ospcIhiJEFDWK7q549AH2iETgSHOjkZuM5
+         hiWoctJxgEflQPh6ZPFufvn7e+1NzVJsNENvpkLE1GxXnela4dpRtLJij185i+E0vxBt
+         rXB4qbakCnIvyiKn4OkwUMjuRd4j9xGcmEwzb9vQYd6gEiWSnCTGcPD8Lk18ceGAaQAA
+         QwofEuzYHKdKcKgf2d5Fy60ecGWN4gqqcMROyCdtpM5TPKiE6O0/qqWSXOtqrUsnyIRW
+         aFEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kAvHl/JhnYRaMUMuiirHrgwuklbVky8tI/TBNJJKK+M=;
-        b=CgJUQtMbIJGbOFFNNRCtfuJd+xe7VqhFWbugBzV3D4KBYRYW6BOSHA7hHkEAyY2WjL
-         v4VRPxGLggLl+uroOccvskFVMV3OPNjWQ35MNAx0T8MqVECRnYFt+y6AO8QQFObFSz72
-         DnLwgBF+09/gE5wK5lQskG4arr0qAtbVRkAa2VupfBTV5LqNkFQpDyO+j/AnPl2rEmvx
-         It1n5VWefrGtcrjeMd9bmaDbFO4wEjNpHNBJhkIl9GjMbs7CvNY3vc9j27LoNgz7pi1T
-         RT5wCQl6mlKo5YJ1isqMpvlMgTB9icuULqKjO7KcKq4ovkYaqxpJUvr7AaUTUYsp4erY
-         uEVA==
-X-Gm-Message-State: AOAM532BDY09YTp1ES113hWSuNBG1g/QCnG9QwSN1aV0k/qYHffgl8NV
-        aWDRoIa/kzo4XappltByi/urvDUD
-X-Google-Smtp-Source: ABdhPJxYam6lMPRIQKoa0n6wRXEwOs2fY2xZW/pJut9HDWrd7rp1DGtLyt4uBGut25972eAetOV4pw==
-X-Received: by 2002:a1c:4d05:: with SMTP id o5mr3224037wmh.130.1593089337465;
-        Thu, 25 Jun 2020 05:48:57 -0700 (PDT)
+        bh=9sooaKVhXSrJT5mgEU6o4Adku7L6SEhIg0nBV8aETOk=;
+        b=S1FdYttO9x66rkJL+ert94czPEbQv7gT+HdLkwDqvYwiujQbIbY3qTL116OO6Dqfe2
+         2PKsAmcNOnpRMVwO5fKcAkmINoPjr+GWu8U132Zp3Xvp0szGqp0SmwZD2/BsER5Plxnc
+         FqM3MQj47UC7DBU1Du2QhopI26Pfd7lX3VjU6g5Ab/7PF/t1ny+bm3L632B3SzbeBV0l
+         BTF2E2PtKg0lnOlavgXP3FYpuZ/OpIEgQb5kkN1DjxB2qhy1yARXUuqqVYJt/CLExYOu
+         1fWZEr681K4s51mqsTK2IQmlgaJVqPTGJFd/2nb/IUr6c08zMQRsO0h19JUWROhFLh6h
+         +p3w==
+X-Gm-Message-State: AOAM530zlALE8zHSGvxCcX4Hq0MgVQE+yQ7wkgwQ8MF9ZKuOmu3+ylPu
+        qMKLN/rfx7ZWRHAED+cblguxFd1Z
+X-Google-Smtp-Source: ABdhPJyiT4AiSIutscbXScwxiRKvnyPfvtuMkQwIJkJR6xVsWslV0IFcCfJoYVUl8bBz2EXchUCFbQ==
+X-Received: by 2002:a5d:4607:: with SMTP id t7mr29238716wrq.251.1593089338574;
+        Thu, 25 Jun 2020 05:48:58 -0700 (PDT)
 Received: from ylate.lan (atoulouse-654-1-308-216.w86-199.abo.wanadoo.fr. [86.199.91.216])
-        by smtp.googlemail.com with ESMTPSA id y16sm31563409wro.71.2020.06.25.05.48.56
+        by smtp.googlemail.com with ESMTPSA id y16sm31563409wro.71.2020.06.25.05.48.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2020 05:48:56 -0700 (PDT)
+        Thu, 25 Jun 2020 05:48:58 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [RFC PATCH v1 03/17] merge-one-file: remove calls to external processes
-Date:   Thu, 25 Jun 2020 14:19:39 +0200
-Message-Id: <20200625121953.16991-4-alban.gruin@gmail.com>
+Subject: [RFC PATCH v1 04/17] merge-one-file: use error() instead of fprintf(stderr, ...)
+Date:   Thu, 25 Jun 2020 14:19:40 +0200
+Message-Id: <20200625121953.16991-5-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200625121953.16991-1-alban.gruin@gmail.com>
 References: <20200625121953.16991-1-alban.gruin@gmail.com>
@@ -75,272 +75,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To save precious cycles by avoiding reading and flushing the index
-repeatedly, or write temporary files when an operation can be performed
-in-memory, this removes call to external processes:
-
- - calls to `update-index --add --cacheinfo' are replaced by calls to
-   add_cache_entry();
-
- - calls to `update-index --remove' are replaced by calls to
-   remove_file_from_cache();
-
- - calls to `checkout-index -u -f' are replaced by calls to
-   checkout_entry();
-
- - calls to `unpack-file' and `merge-files' are replaced by calls to
-   read_mmblob() and xdl_merge(), respectively, to merge files
-   in-memory;
-
- - calls to `checkout-index -f --stage=2' are replaced by calls to
-   cache_file_exists();
-
- - calls to `update-index' are replaced by calls to add_file_to_cache().
-
-To enable these changes, the index is read and written back in
-cmd_merge_one_file().
+We have a handy helper function to display errors and return a value.
+Use it instead of fprintf(stderr, ...).
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- builtin/merge-one-file.c | 160 +++++++++++++++++++--------------------
- 1 file changed, 78 insertions(+), 82 deletions(-)
+ builtin/merge-one-file.c | 43 +++++++++++++---------------------------
+ 1 file changed, 14 insertions(+), 29 deletions(-)
 
 diff --git a/builtin/merge-one-file.c b/builtin/merge-one-file.c
-index 4992a6cd30..d9ebd820cb 100644
+index d9ebd820cb..d612885723 100644
 --- a/builtin/merge-one-file.c
 +++ b/builtin/merge-one-file.c
-@@ -27,54 +27,48 @@
- #include "dir.h"
- #include "lockfile.h"
- #include "object-store.h"
--#include "run-command.h"
- #include "xdiff-interface.h"
- 
--static int create_temp_file(const struct object_id *oid, struct strbuf *path)
--{
--	struct child_process cp = CHILD_PROCESS_INIT;
--	struct strbuf err = STRBUF_INIT;
--	int ret;
--
--	cp.git_cmd = 1;
--	argv_array_pushl(&cp.args, "unpack-file", oid_to_hex(oid), NULL);
--	ret = pipe_command(&cp, NULL, 0, path, 0, &err, 0);
--	if (!ret && path->len > 0)
--		strbuf_trim_trailing_newline(path);
--
--	fprintf(stderr, "%.*s", (int) err.len, err.buf);
--	strbuf_release(&err);
--
--	return ret;
--}
--
- static int add_to_index_cacheinfo(unsigned int mode,
- 				  const struct object_id *oid, const char *path)
+@@ -77,11 +77,9 @@ static int merge_one_file_deleted(const struct object_id *orig_blob,
+ 				  unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode)
  {
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct cache_entry *ce;
-+	int len, option;
- 
--	cp.git_cmd = 1;
--	argv_array_pushl(&cp.args, "update-index", "--add", "--cacheinfo", NULL);
--	argv_array_pushf(&cp.args, "%o,%s,%s", mode, oid_to_hex(oid), path);
--	return run_command(&cp);
--}
-+	if (!verify_path(path, mode))
-+		return error("Invalid path '%s'", path);
- 
--static int remove_from_index(const char *path)
--{
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	len = strlen(path);
-+	ce = make_empty_cache_entry(&the_index, len);
- 
--	cp.git_cmd = 1;
--	argv_array_pushl(&cp.args, "update-index", "--remove", "--", path, NULL);
--	return run_command(&cp);
-+	oidcpy(&ce->oid, oid);
-+	memcpy(ce->name, path, len);
-+	ce->ce_flags = create_ce_flags(0);
-+	ce->ce_namelen = len;
-+	ce->ce_mode = create_ce_mode(mode);
-+	if (assume_unchanged)
-+		ce->ce_flags |= CE_VALID;
-+	option = ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE;
-+	if (add_cache_entry(ce, option))
-+		return error("%s: cannot add to the index", path);
-+
-+	return 0;
- }
- 
- static int checkout_from_index(const char *path)
- {
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct checkout state;
-+	struct cache_entry *ce;
- 
--	cp.git_cmd = 1;
--	argv_array_pushl(&cp.args, "checkout-index", "-u", "-f", "--", path, NULL);
--	return run_command(&cp);
-+	state.istate = &the_index;
-+	state.force = 1;
-+	state.base_dir = "";
-+	state.base_dir_len = 0;
-+
-+	ce = cache_file_exists(path, strlen(path), 0);
-+	if (checkout_entry(ce, &state, NULL, NULL) < 0)
-+		return error("%s: cannot checkout file", path);
-+	return 0;
- }
- 
- static int merge_one_file_deleted(const struct object_id *orig_blob,
-@@ -96,7 +90,9 @@ static int merge_one_file_deleted(const struct object_id *orig_blob,
- 			remove_path(path);
- 	}
- 
--	return remove_from_index(path);
-+	if (remove_file_from_cache(path))
-+		return error("%s: cannot remove from the index", path);
-+	return 0;
- }
- 
- static int do_merge_one_file(const struct object_id *orig_blob,
-@@ -104,61 +100,50 @@ static int do_merge_one_file(const struct object_id *orig_blob,
- 			     const struct object_id *their_blob, const char *path,
- 			     unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode)
- {
--	int ret, source, dest;
--	struct strbuf src1 = STRBUF_INIT, src2 = STRBUF_INIT, orig = STRBUF_INIT;
--	struct child_process cp_merge = CHILD_PROCESS_INIT,
--		cp_checkout = CHILD_PROCESS_INIT,
--		cp_update = CHILD_PROCESS_INIT;
-+	int ret, i, dest;
-+	mmbuffer_t result = {NULL, 0};
-+	mmfile_t mmfs[3];
-+	xmparam_t xmp = {{0}};
-+	struct cache_entry *ce;
- 
--	if (our_mode == S_IFLNK || their_mode == S_IFLNK) {
--		fprintf(stderr, "ERROR: %s: Not merging symbolic link changes.\n", path);
--		return 1;
--	} else if (our_mode == S_IFGITLINK || their_mode == S_IFGITLINK) {
--		fprintf(stderr, "ERROR: %s: Not merging conflicting submodule changes.\n",
--			path);
+ 	if ((our_blob && orig_mode != our_mode) ||
+-	    (their_blob && orig_mode != their_mode)) {
+-		fprintf(stderr, "ERROR: File %s deleted on one branch but had its\n", path);
+-		fprintf(stderr, "ERROR: permissions changed on the other.\n");
 -		return 1;
 -	}
-+	if (our_mode == S_IFLNK || their_mode == S_IFLNK)
-+		return error(_("%s: Not merging symbolic link changes."), path);
-+	else if (our_mode == S_IFGITLINK || their_mode == S_IFGITLINK)
-+		return error(_("%s: Not merging conflicting submodule changes."), path);
++	    (their_blob && orig_mode != their_mode))
++		return error(_("File %s deleted on one branch but had its "
++			       "permissions changed on the other."), path);
  
--	create_temp_file(our_blob, &src1);
--	create_temp_file(their_blob, &src2);
-+	read_mmblob(mmfs + 0, our_blob);
-+	read_mmblob(mmfs + 2, their_blob);
- 
- 	if (orig_blob) {
- 		printf("Auto-merging %s\n", path);
--		create_temp_file(orig_blob, &orig);
-+		read_mmblob(mmfs + 1, orig_blob);
- 	} else {
- 		printf("Added %s in both, but differently.\n", path);
--		create_temp_file(the_hash_algo->empty_blob, &orig);
-+		read_mmblob(mmfs + 1, the_hash_algo->empty_blob);
- 	}
- 
--	cp_merge.git_cmd = 1;
--	argv_array_pushl(&cp_merge.args, "merge-file", src1.buf, orig.buf, src2.buf,
--			 NULL);
--	ret = run_command(&cp_merge);
-+	xmp.level = XDL_MERGE_ZEALOUS_ALNUM;
-+	xmp.style = 0;
-+	xmp.favor = 0;
- 
--	if (ret != 0)
-+	ret = xdl_merge(mmfs + 1, mmfs + 0, mmfs + 2, &xmp, &result);
-+
-+	for (i = 0; i < 3; i++)
-+		free(mmfs[i].ptr);
-+
-+	if (ret > 127)
- 		ret = 1;
- 
--	cp_checkout.git_cmd = 1;
--	argv_array_pushl(&cp_checkout.args, "checkout-index", "-f", "--stage=2",
--			 "--", path, NULL);
--	if (run_command(&cp_checkout))
--		return 1;
-+	ce = cache_file_exists(path, strlen(path), 0);
-+	if (!ce)
-+		BUG("file is not present in the cache?");
- 
--	source = open(src1.buf, O_RDONLY);
--	dest = open(path, O_WRONLY | O_TRUNC);
--
--	copy_fd(source, dest);
--
--	close(source);
-+	unlink(path);
-+	dest = open(path, O_WRONLY | O_CREAT, ce->ce_mode);
-+	write_in_full(dest, result.ptr, result.size);
- 	close(dest);
- 
--	unlink(orig.buf);
--	unlink(src1.buf);
--	unlink(src2.buf);
--
--	strbuf_release(&src1);
--	strbuf_release(&src2);
--	strbuf_release(&orig);
-+	free(result.ptr);
+ 	if (our_blob) {
+ 		printf("Removing %s\n", path);
+@@ -146,19 +144,11 @@ static int do_merge_one_file(const struct object_id *orig_blob,
+ 	free(result.ptr);
  
  	if (ret) {
- 		fprintf(stderr, "ERROR: ");
-@@ -178,9 +163,7 @@ static int do_merge_one_file(const struct object_id *orig_blob,
+-		fprintf(stderr, "ERROR: ");
+-
+-		if (!orig_blob) {
+-			fprintf(stderr, "content conflict");
+-			if (our_mode != their_mode)
+-				fprintf(stderr, ", ");
+-		}
+-
++		if (!orig_blob)
++			error(_("content conflict in %s"), path);
+ 		if (our_mode != their_mode)
+-			fprintf(stderr, "permissions conflict: %o->%o,%o",
+-				orig_mode, our_mode, their_mode);
+-
+-		fprintf(stderr, " in %s\n", path);
++			error(_("permission conflict: %o->%o,%o in %s"),
++			      orig_mode, our_mode, their_mode, path);
+ 
  		return 1;
  	}
+@@ -181,22 +171,18 @@ static int merge_one_file(const struct object_id *orig_blob,
+ 	} else if (!orig_blob && !our_blob && their_blob) {
+ 		printf("Adding %s\n", path);
  
--	cp_update.git_cmd = 1;
--	argv_array_pushl(&cp_update.args, "update-index", "--", path, NULL);
--	return run_command(&cp_update);
-+	return add_file_to_cache(path, 0);
- }
+-		if (file_exists(path)) {
+-			fprintf(stderr, "ERROR: untracked %s is overwritten by the merge.\n", path);
+-			return 1;
+-		}
++		if (file_exists(path))
++			return error(_("untracked %s is overwritten by the merge."), path);
  
- static int merge_one_file(const struct object_id *orig_blob,
-@@ -250,11 +233,17 @@ int cmd_merge_one_file(int argc, const char **argv, const char *prefix)
- {
- 	struct object_id orig_blob, our_blob, their_blob,
- 		*p_orig_blob = NULL, *p_our_blob = NULL, *p_their_blob = NULL;
--	unsigned int orig_mode = 0, our_mode = 0, their_mode = 0;
-+	unsigned int orig_mode = 0, our_mode = 0, their_mode = 0, ret;
-+	struct lock_file lock = LOCK_INIT;
+ 		if (add_to_index_cacheinfo(their_mode, their_blob, path))
+ 			return 1;
+ 		return checkout_from_index(path);
+ 	} else if (!orig_blob && our_blob && their_blob &&
+ 		   oideq(our_blob, their_blob)) {
+-		if (our_mode != their_mode) {
+-			fprintf(stderr, "ERROR: File %s added identically in both branches,", path);
+-			fprintf(stderr, "ERROR: but permissions conflict %o->%o.\n",
+-				our_mode, their_mode);
+-			return 1;
+-		}
++		if (our_mode != their_mode)
++			return error(_("File %s added identically in both branches, "
++				       "but permissions conflict %o->%o."),
++				     path, our_mode, their_mode);
  
- 	if (argc != 8)
- 		usage(builtin_merge_one_file_usage);
+ 		printf("Adding %s\n", path);
  
-+	if (read_cache() < 0)
-+		die("invalid index");
-+
-+	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
-+
- 	if (!get_oid(argv[1], &orig_blob)) {
- 		p_orig_blob = &orig_blob;
- 		orig_mode = strtol(argv[5], NULL, 8);
-@@ -270,6 +259,13 @@ int cmd_merge_one_file(int argc, const char **argv, const char *prefix)
- 		their_mode = strtol(argv[7], NULL, 8);
+@@ -216,9 +202,8 @@ static int merge_one_file(const struct object_id *orig_blob,
+ 		if (their_blob)
+ 			their_hex = oid_to_hex(their_blob);
+ 
+-		fprintf(stderr, "ERROR: %s: Not handling case %s -> %s -> %s\n",
++		return error(_("%s: Not handling case %s -> %s -> %s"),
+ 			path, orig_hex, our_hex, their_hex);
+-		return 1;
  	}
  
--	return merge_one_file(p_orig_blob, p_our_blob, p_their_blob, argv[4],
--			      orig_mode, our_mode, their_mode);
-+	ret = merge_one_file(p_orig_blob, p_our_blob, p_their_blob, argv[4],
-+			     orig_mode, our_mode, their_mode);
-+
-+	if (ret) {
-+		rollback_lock_file(&lock);
-+		return ret;
-+	}
-+
-+	return write_locked_index(&the_index, &lock, COMMIT_LOCK);
- }
+ 	return 0;
 -- 
 2.27.0.139.gc9c318d6bf
 
