@@ -2,94 +2,155 @@ Return-Path: <SRS0=4a08=AG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19459C433DF
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 06:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 459E9C433DF
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 07:25:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC68F206FA
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 06:16:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F4DF206C3
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 07:25:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="keqFVGvF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390015AbgFYGQ0 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 25 Jun 2020 02:16:26 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:42180 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390012AbgFYGQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 02:16:25 -0400
-Received: by mail-wr1-f54.google.com with SMTP id o11so4525568wrv.9
-        for <git@vger.kernel.org>; Wed, 24 Jun 2020 23:16:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BOx/iLg8Shll3R7HF4pVrklokfF4MFEWT1iun9uU6pE=;
-        b=qVHYmRw4HEArc3HscrHuK22D6tWzxZVNkVqbYm9W4bkv4Vg+Dl9Iv0dIH5B6ujMEVj
-         WFONgIio6iHymPo0LYfD/sYESw3Pbq6cmn/7HnESN18BKJvSBy94kp0xFakmOTrmV8xt
-         WFppq/d4Q4F+tLZU4853kaLXAa+8K43YNvwPUHpwvSBPllfjl8MhL2svcdQ5NMq7V3Ib
-         aZWJDFqMNnA5BILV1o5tuwt1aNVT8gKLYzIDNrlOZP10es5rkYqKb51r2YWBPvR9qOh6
-         risBG8n//DTfdWVw5QjblZzjTaDlPgxy/dyYLmGrlIrM7VzOpIbAk8fE7uDje3Ts9F+q
-         JtIQ==
-X-Gm-Message-State: AOAM531fIvLE6fbZKt8xdn17KYBa/ec3iW/MFIxlvM1VvxObPbalvq2a
-        ptTFtZfa+T+IO+KJXtP1sHlllgTmr3q5Nm9mlAoZk3vA5sg=
-X-Google-Smtp-Source: ABdhPJx/Hm4mJSVt0gfOJpl7DGobWU1cpYdsVtaga5yInW3KN3AfDCtE0emvZKmGsqEVzuEGOkJUwuM/xDHsxffHjys=
-X-Received: by 2002:adf:e648:: with SMTP id b8mr35813682wrn.386.1593065783442;
- Wed, 24 Jun 2020 23:16:23 -0700 (PDT)
+        id S2390144AbgFYHZM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 03:25:12 -0400
+Received: from mout.web.de ([212.227.17.11]:57289 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2390110AbgFYHZM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 03:25:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1593069907;
+        bh=RNq85K803iu3B3cw1uK5VzyD7Ynp+6G9+fSKe7hFfuY=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=keqFVGvFNiEl8XMHab3YyaL1hlnI+aEfDyP576hghRD0K9JWhb6pQ52NqtXWQ+v62
+         IfMOjfxvphAG1qyLOYtaQqYkBKXqk+Vu8hm2sIx1lMXNXRyeh5pKylT1RwgjhbL+fl
+         A74k9PIYAUb1ZKuqPOJ32hnPheMvOkm/OztQ7pa4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lnj7L-1jCoub42mN-00hwoA; Thu, 25
+ Jun 2020 09:25:07 +0200
+Subject: Re: [PATCH v2 03/11] bloom: get_bloom_filter() cleanups
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     me@ttaylorr.com, szeder.dev@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
+ <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
+ <492deaf916464abedc7fc2d3de41fe690a558d9b.1592934430.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2d64707c-a538-118c-d7c3-7a38bf08fa79@web.de>
+Date:   Thu, 25 Jun 2020 09:24:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <CAHbriek39i9NSHRw6DZm0dftk-GkeAYR74c0xyss0vbeDHu1Hw@mail.gmail.com>
-In-Reply-To: <CAHbriek39i9NSHRw6DZm0dftk-GkeAYR74c0xyss0vbeDHu1Hw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 25 Jun 2020 02:16:12 -0400
-Message-ID: <CAPig+cSaJXqx8F_OXL5uLsQ0g2Y5LQF4Q3b_gFZ+VjSqiN+zfQ@mail.gmail.com>
-Subject: Re: git init --separate-git-dir doesn't play nice with linked working trees
-To:     =?UTF-8?B?SGVucsOpIEJvdGhh?= <henrebotha@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <492deaf916464abedc7fc2d3de41fe690a558d9b.1592934430.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rUySa0tdtH6nET8NIxwMkISrkc7Z8pUPrcHug7/cgczzEwfe5+c
+ 6eiidh7Iy+UODqGtcWKmyvmWQBGoBZGEVebKdAeNs3mSJqT5VvzEc2PvyMlR82eilYDMhyQ
+ tmSK5Xeni3YTtkRr2C5Ok4YEPvb0eCJ30wylOEOCVFu1WngwEOK372tk7lq7vSK2U8eU+PL
+ k1nuZaxZ5c0pxKLqeu4vQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ZVWKUMUm5Bk=:mTzRSmpvjwnzwbEZLGLHjD
+ ki5AEvkq7dGEOkpyg8MPvu2SJ2omr/h7ODF/Tu4sR+NfsW0jjrGn2Rr73crKoahoweVZO66YL
+ Ffp68ACzWhyaxn/XnlgTwRLWspVYmJlZDoWekQ3umju2+WSOKbqw3jLP1yMmD4fG+A+7N4fbr
+ Os9wbbfj2QqkoS7VLFThURAyEUjbYueRZWEmJnVnaamCgN8CZqdRCNcyi/POAY6wX0Fh4VhpY
+ taOSv1FY7k+ZZG7jkY5JfryH5MuzzTbyeTJyDy0froGlrd6kZrBVDIA9x+JWXlABLYFadQ3Pi
+ QqtOMOLY7e6gLJ2Q3EfmFffVKsjnwCU5YjXOI+bGkzM3fwR47YbFSS3iP4KI9nScbY7CFwl2h
+ FMeUVxtNh2HpJ6GnQMrFc6KGsXE7mL1an4/4mS+N6GCp7YQ2IDSY/sitC1r/HrYe0DFhiNoG5
+ qMVGJJn2rQMJwi7LlAv2jjE+oo+9vt5PGlZ7pU3wEP9ufee0WxkZjQPsahSAfBTM0SD35KCl5
+ TU4I+5YN6qSeqgOwGmZs2F5RCp1+0J8yFZfrWljxBU2VfURPhD3DudG41EWBHsNNTwlNEIsU2
+ DAcxoK+tmbg4ivTjL2Lg/cCKiffxj+p8WqvIkbYXzmL/bZvOKO4YNETKMpFRlS+u1TxEU8YBg
+ coiQXPvMwYcgZu6jUcs+z5NOgUPdTr7mlT/ecaysPsBCUifWC2XsVxWIM14sHtQOdESIiZ/TV
+ h0ifU8bV0xRl8z8dmTSJRweAbTfKvYdqs2GikUSLO+clBH7TgIf2hITf29UAQmGcLhWamjsmv
+ lk8ssCIDvvJPSz7t8AuVwmkRe6VMl9CKb9ukK7o5NgQjuq1pTzGr+5E1TEqgi80RanNyAVcG8
+ W1Ax7rA6nioMyR+o2cXusexYx9wYgYrhQUqwNLX9SvtjK5IIBRGHmJSMlGcQxc3MerHE7kfOM
+ mliOaVM2BDVpiISAndodnlfyM/nSMHiwArIhWkzXuKvxHmrQh92aYARh2oWW5EBKLGlSjaCgn
+ np7/LRRnoBrJesrF/n9x4lwpblIwGuV9yKA5BigpwIdHUGREW0Wfo1LRjh1iJd4tiYWVNES2b
+ q2PjfBKSJsKcf+ltW4ZXDoG7XOeoU32phh3hQJdvRoHysJtKLFcz2xki2I6z1jhWpQWOLFYWO
+ YryD1hKMJipzIX7PzuDRF3CiJ1iJKxMnMIpMbvHOZGn1j4OkBZGJOM6NGH2PAkubyKO1Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 18, 2020 at 12:48 PM Henré Botha <henrebotha@gmail.com> wrote:
-> I have identified two potential problems when using git init
-> --separate-git-dir with a repo that has linked working trees (created
-> using git worktree add).
+Am 23.06.20 um 19:47 schrieb Derrick Stolee via GitGitGadget:
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> 1. Moving the gitdir of a main working tree doesn't inform linked
-> working trees that their gitdir has moved. It seems to me that if I do
-> cd main-worktree && git init --separate-git-dir=.git_repo, the git
-> init command should go to all the linked working trees and change
-> their Git links to point at main-worktree/.git_repo. But perhaps
-> there's some use case I'm not aware of where you'd want to change only
-> the gitdir path of the main working tree, and not those of linked
-> working trees.
+> The get_bloom_filter() method is a bit complicated in some parts where
+> it does not need to be. In particular, it needs to return a NULL filter
+> only when compute_if_not_present is zero AND the filter data cannot be
+> loaded from a commit-graph file. This currently happens by accident
+> because the commit-graph does not load changed-path Bloom filters from
+> an existing commit-graph when writing a new one. This will change in a
+> later patch.
 
-This is almost certainly an oversight in the implementation; the
---separate-git-dir option wasn't mentioned during development of
-git-worktree as far as I recall.
+So this is actually a logic fix, not just a cleanup as the subject says?
 
-As this relocation of the repository is entirely under Git's control
-(as opposed to the user mucking around as with "mv .git ../foo), it
-does indeed seem reasonable that --separate-git-dir should update the
-worktree meta-information files. As far as I know, there is no
-existing machinery to perform this sort of update, though, so it would
-have to be implemented from scratch.
+>
+> Also clean up some style issues while we are here.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  bloom.c | 15 +++++++--------
+>  1 file changed, 7 insertions(+), 8 deletions(-)
+>
+> diff --git a/bloom.c b/bloom.c
+> index c38d1cff0c..7291506564 100644
+> --- a/bloom.c
+> +++ b/bloom.c
+> @@ -186,7 +186,7 @@ struct bloom_filter *get_bloom_filter(struct reposit=
+ory *r,
+>  	struct diff_options diffopt;
+>  	int max_changes =3D 512;
+>
+> -	if (bloom_filters.slab_size =3D=3D 0)
+> +	if (!bloom_filters.slab_size)
+>  		return NULL;
+>
+>  	filter =3D bloom_filter_slab_at(&bloom_filters, c);
+> @@ -194,16 +194,15 @@ struct bloom_filter *get_bloom_filter(struct repos=
+itory *r,
+>  	if (!filter->data) {
+>  		load_commit_graph_info(r, c);
+>  		if (c->graph_pos !=3D COMMIT_NOT_FROM_GRAPH &&
+> -			r->objects->commit_graph->chunk_bloom_indexes) {
+> -			if (load_bloom_filter_from_graph(r->objects->commit_graph, filter, c=
+))
+> -				return filter;
+> -			else
+> -				return NULL;
 
-> 2. Attempting to move the gitdir of a linked working tree breaks the
-> linked working tree entirely.
-> It seems to me that if I do cd linked-worktree && git init
-> --separate-git-dir=.git_repo, it should fail, or warn, or do something
-> other than break the linked working tree. (I note that
-> linked-worktree/{.git,.git_repo/commondir,.git_repo/gitdir} all point
-> at the wrong thing after this operation; manually fixing them restores
-> functionality, though it loses the link to the main working tree.)
+... and the fix is that this else branch should not be taken if
+compute_if_not_present is set.
 
-Again, an oversight; --separate-git-dir wasn't on anyone's mind during
-development. This is just utterly broken, as far as I can tell; it
-doesn't move the repository out of the main worktree to the new
-location but instead seems to make a copy of it (minus the
-.git/worktrees directory) and drops entries from the original
-.git/worktrees directory, thus breaking everything. I suppose it could
-error out, though friendlier would be for it to behave correctly.
+> -		}
+> +		    r->objects->commit_graph->chunk_bloom_indexes &&
+> +		    load_bloom_filter_from_graph(r->objects->commit_graph, filter, c)=
+)
+> +			return filter;
+
+You could even drop this return as well and have the check below handle th=
+e
+successful load case.
+
+>  	}
+>
+> -	if (filter->data || !compute_if_not_present)
+> +	if (filter->data)
+>  		return filter;
+> +	if (!filter->data && !compute_if_not_present)
+            ^^^^^^^^^^^^^
+The first condition is always true, as the check two lines above makes sur=
+e.
+Removing it would be cleaner IMHO.
+
+> +		return NULL;
+>
+>  	repo_diff_setup(r, &diffopt);
+>  	diffopt.flags.recursive =3D 1;
+>
