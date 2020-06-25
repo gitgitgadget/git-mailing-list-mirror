@@ -6,35 +6,36 @@ X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65878C433DF
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2C3FC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A1CF2076E
-	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CFAF32076E
+	for <git@archiver.kernel.org>; Thu, 25 Jun 2020 19:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406862AbgFYTsV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Jun 2020 15:48:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43268 "EHLO cloud.peff.net"
+        id S2406874AbgFYTs1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Jun 2020 15:48:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43302 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406836AbgFYTsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jun 2020 15:48:20 -0400
-Received: (qmail 31356 invoked by uid 109); 25 Jun 2020 19:48:20 -0000
+        id S2406635AbgFYTsZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jun 2020 15:48:25 -0400
+Received: (qmail 31393 invoked by uid 109); 25 Jun 2020 19:48:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jun 2020 19:48:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 25 Jun 2020 19:48:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19586 invoked by uid 111); 25 Jun 2020 19:48:20 -0000
+Received: (qmail 19626 invoked by uid 111); 25 Jun 2020 19:48:25 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jun 2020 15:48:20 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Jun 2020 15:48:25 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 25 Jun 2020 15:48:19 -0400
+Date:   Thu, 25 Jun 2020 15:48:23 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 03/11] fast-export: store anonymized oids as hex strings
-Message-ID: <20200625194819.GC4029374@coredump.intra.peff.net>
+Subject: [PATCH v2 05/11] fast-export: stop storing lengths in anonymized
+ hashmaps
+Message-ID: <20200625194823.GE4029374@coredump.intra.peff.net>
 References: <20200625194802.GA4028913@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -45,77 +46,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fast-export stores anonymized oids, it does so as binary strings.
-And while the anonymous mapping storage is binary-clean (at least as of
-the previous commit), this will become awkward when we start exposing
-more of it to the user. In particular, if we allow a method for
-retaining token "foo", then users may want to specify a hex oid as such
-a token.
+Now that the anonymize_str() interface is restricted to NUL-terminated
+strings, there's no need for us to keep track of the length of each
+entry in the hashmap. This simplifies the code and saves a bit of
+memory.
 
-Let's just switch to storing the hex strings. The difference in memory
-usage is negligible (especially considering how infrequently we'd
-generally store an oid compared to, say, path components).
+Note that we do still need to compare the stored results to partial
+strings passed in by the callers. We can do that by using hashmap's
+keydata feature to get the ptr/len pair into the comparison function,
+and then using strncmp().
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/fast-export.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ builtin/fast-export.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 289395a131..4a3a4c933e 100644
+index d8ea067630..5df2ada47d 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -387,16 +387,19 @@ static void *generate_fake_oid(const void *old, size_t *len)
- {
- 	static uint32_t counter = 1; /* avoid null oid */
- 	const unsigned hashsz = the_hash_algo->rawsz;
--	unsigned char *out = xcalloc(hashsz, 1);
--	put_be32(out + hashsz - 4, counter++);
--	return out;
-+	struct object_id oid;
-+	char *hex = xmallocz(GIT_MAX_HEXSZ);
+@@ -121,23 +121,32 @@ static int has_unshown_parent(struct commit *commit)
+ struct anonymized_entry {
+ 	struct hashmap_entry hash;
+ 	const char *orig;
+-	size_t orig_len;
+ 	const char *anon;
+-	size_t anon_len;
++};
 +
-+	oidclr(&oid);
-+	put_be32(oid.hash + hashsz - 4, counter++);
-+	return oid_to_hex_r(hex, &oid);
- }
++struct anonymized_entry_key {
++	struct hashmap_entry hash;
++	const char *orig;
++	size_t orig_len;
+ };
  
--static const struct object_id *anonymize_oid(const struct object_id *oid)
-+static const char *anonymize_oid(const char *oid_hex)
+ static int anonymized_entry_cmp(const void *unused_cmp_data,
+ 				const struct hashmap_entry *eptr,
+ 				const struct hashmap_entry *entry_or_key,
+-				const void *unused_keydata)
++				const void *keydata)
  {
- 	static struct hashmap objs;
--	size_t len = the_hash_algo->rawsz;
--	return anonymize_mem(&objs, generate_fake_oid, oid, &len);
-+	size_t len = strlen(oid_hex);
-+	return anonymize_mem(&objs, generate_fake_oid, oid_hex, &len);
+ 	const struct anonymized_entry *a, *b;
+ 
+ 	a = container_of(eptr, const struct anonymized_entry, hash);
+-	b = container_of(entry_or_key, const struct anonymized_entry, hash);
++	if (keydata) {
++		const struct anonymized_entry_key *key = keydata;
++		int equal = !strncmp(a->orig, key->orig, key->orig_len) &&
++			    !a->orig[key->orig_len];
++		return !equal;
++	}
+ 
+-	return a->orig_len != b->orig_len ||
+-		memcmp(a->orig, b->orig, a->orig_len);
++	b = container_of(entry_or_key, const struct anonymized_entry, hash);
++	return strcmp(a->orig, b->orig);
  }
  
- static void show_filemodify(struct diff_queue_struct *q,
-@@ -455,9 +458,9 @@ static void show_filemodify(struct diff_queue_struct *q,
- 			 */
- 			if (no_data || S_ISGITLINK(spec->mode))
- 				printf("M %06o %s ", spec->mode,
--				       oid_to_hex(anonymize ?
--						  anonymize_oid(&spec->oid) :
--						  &spec->oid));
-+				       anonymize ?
-+				       anonymize_oid(oid_to_hex(&spec->oid)) :
-+				       oid_to_hex(&spec->oid));
- 			else {
- 				struct object *object = lookup_object(the_repository,
- 								      &spec->oid);
-@@ -712,9 +715,10 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 		if (mark)
- 			printf(":%d\n", mark);
- 		else
--			printf("%s\n", oid_to_hex(anonymize ?
--						  anonymize_oid(&obj->oid) :
--						  &obj->oid));
-+			printf("%s\n",
-+			       anonymize ?
-+			       anonymize_oid(oid_to_hex(&obj->oid)) :
-+			       oid_to_hex(&obj->oid));
- 		i++;
+ /*
+@@ -149,23 +158,22 @@ static const char *anonymize_str(struct hashmap *map,
+ 				 char *(*generate)(const char *, size_t),
+ 				 const char *orig, size_t len)
+ {
+-	struct anonymized_entry key, *ret;
++	struct anonymized_entry_key key;
++	struct anonymized_entry *ret;
+ 
+ 	if (!map->cmpfn)
+ 		hashmap_init(map, anonymized_entry_cmp, NULL, 0);
+ 
+ 	hashmap_entry_init(&key.hash, memhash(orig, len));
+ 	key.orig = orig;
+ 	key.orig_len = len;
+-	ret = hashmap_get_entry(map, &key, hash, NULL);
++	ret = hashmap_get_entry(map, &key, hash, &key);
+ 
+ 	if (!ret) {
+ 		ret = xmalloc(sizeof(*ret));
+ 		hashmap_entry_init(&ret->hash, key.hash.hash);
+ 		ret->orig = xmemdupz(orig, len);
+-		ret->orig_len = len;
+ 		ret->anon = generate(orig, len);
+-		ret->anon_len = strlen(ret->anon);
+ 		hashmap_put(map, &ret->hash);
  	}
  
 -- 
