@@ -3,102 +3,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07390C433E0
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 07:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AE92C433DF
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 08:22:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAA0E2076E
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 07:31:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1181B20775
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 08:22:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kfFJmisw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iknwgo9B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728683AbgFZHbX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 03:31:23 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60086 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbgFZHbX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 03:31:23 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B03861364;
-        Fri, 26 Jun 2020 03:31:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TrdaKtu0U+ns
-        GTw1RRQm0Npbzck=; b=kfFJmiswrDTC9EZopH7cBsAPh9mXyNbl+ZkiPLvduWBH
-        zz7I9inV6L3iig9ulxax5MxL4WHwGRDApi6rf+I9PHr7u8th6cKWSWEOfIO8wXQu
-        6fCNHrqMs+bLAypXmt3NK5PiUSXq1IPRDeh+q5A4qpaoxhY3zHOXYq6SPhtm7e4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VlLuvY
-        9CZyvGB3IYmOLnXrCthSAFacYigoYIYespHIPX4nXnpcidhjtzdc0qo4T/+452St
-        uq/ujNoWeEDDhjhiqeX/2ZvgWFNnjhW3CY/u+q8TfuJwwvcu65/IZB0ynFPuFdWA
-        igtFqWjXaNwDtKo8G74ul6dcSi0Z6vG4v0muk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 47EC261361;
-        Fri, 26 Jun 2020 03:31:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B9BC16135D;
-        Fri, 26 Jun 2020 03:31:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2020, #05; Thu, 25)
-References: <xmqq1rm24ol3.fsf@gitster.c.googlers.com>
-        <20200626070807.GA84491@Carlos-MBP>
-Date:   Fri, 26 Jun 2020 00:31:19 -0700
-In-Reply-To: <20200626070807.GA84491@Carlos-MBP> ("Carlo Marcelo Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Fri, 26 Jun 2020 00:08:07 -0700")
-Message-ID: <xmqq1rm2i8qg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726406AbgFZIWy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 04:22:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43360 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726386AbgFZIWx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 04:22:53 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B5FC08C5C1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 01:22:54 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id z17so6241032edr.9
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 01:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=G9HnItG0olWvRbX5HSYHw5ALVAjl43NQ2m47xloLLIk=;
+        b=iknwgo9BxjcSe589xrACQLCGYKgM8ZUzePzgq9dZ3a+W8jSg1TY1orwMqGV+HxJxZC
+         pVaaAMANjCvwyk6ev44CheV8x69HXopVZvVcVfCDwngW/8Sn13UAS0Tpih6dtORLfLEN
+         /bdFVUD+O7Fdl8AbTmIU352A+lnlswKE7016Tc15rokQJoBOU2jA7qThbDFe5OzDEHrH
+         vS0QTMUyDlh6+yfPAHI+CK0X8QjvjiG+p6ddAauc/xzuLceMtd/U6FVlB9+ZbTIqQd8p
+         +woyZ6WKs02rIcF/cwvXS+F6oI6li7Y9lyUoAC+AMiKM+Fehw5i+z/ZPc9IAQPg/V8Jq
+         8F0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=G9HnItG0olWvRbX5HSYHw5ALVAjl43NQ2m47xloLLIk=;
+        b=ogYde3ZYzr5LAAV3EgRGzyAtDBuXTvEI2dTRXrVkFzABh2l/C8M9aoIPzwqOL+dPgl
+         lRrwttXgLM4KpbnouQPN880wcOBuhnZn+S8odwx05S7A6ROpFBZ/ZMaqlfvenczskdV2
+         6a6M3OqxolsVxBYyyMGBHH59UXXi2MEdJqzS8h0UbppdAfCjZy3Sk1sHT6g5RRwUqXu1
+         AA6nNFXC/tQ+gqnko8z5DMWytayfwCJwHIAfXp7GRvP+xnNC4qQRDgivvXA3OaquHxgR
+         KdUIJuq3CjcMF4Az6/0mMkiwqXHmFf6oNqdyarbp1pmnNiZVCpF1UQESFGgOuFJweIJV
+         /dRg==
+X-Gm-Message-State: AOAM533/i1intdive0rhJMaWaEp0mwBZ0cX+5BPSLUwtDRBxee7YkV0P
+        enMZFlaANNd/VXQ0wAEnDc1EQZW20SAlMOfBjUA=
+X-Google-Smtp-Source: ABdhPJzSZxRl6ccHVn7sfKuWV8aim1paiK4Il2tpF91U72PB0KKu1JmfZhz4ngxAgXNFiIBvYVeUSrI0PtMZyfFz4YQ=
+X-Received: by 2002:a05:6402:1153:: with SMTP id g19mr2119593edw.127.1593159772662;
+ Fri, 26 Jun 2020 01:22:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 07CBEAD8-B77F-11EA-873B-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20200625013851.GA9782@camp.crustytoothpaste.net> <cover.1593115455.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1593115455.git.matheus.bernardino@usp.br>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 26 Jun 2020 10:22:41 +0200
+Message-ID: <CAP8UFD0oWuoYLwgYLbkSvDjV1Ymedd_E2j8iv3QGGitgRVq6=Q@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Make oid_to_hex() thread-safe
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
-
-> On Thu, Jun 25, 2020 at 06:12:40PM -0700, Junio C Hamano wrote:
->>=20
->> * cb/is-descendant-of (2020-06-23) 1 commit
->>   (merged to 'next' on 2020-06-25 at ca0eaddf5e)
->>  + commit-reach: avoid is_descendant_of() shim
->>=20
->>  Code clean-up.
->>=20
->>  Will merge to 'master'.
+On Fri, Jun 26, 2020 at 1:35 AM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
 >
-> apologize for the most likely unnecessary clarification (probably impli=
-ed
-> by the merged comment indicating ca0eaddf5e), but this branch uses both
-> rs/pull-leakfix and rs/commit-reach-leakfix, that are currently merged
-> earlier into next and also scheduled for master.
+> Some thread-unsafe functions of our codebase appear very down in the
+> call stack, which can be hard to notice (or avoid). Thus they are
+> sometimes used in threaded code unsafely. In this series we add
+> pthread_once() to compat/win32/ and use it in conjunction with
+> pthread_key to make a subset of the said functions thread-safe.
 
-Hmph, Does it break if it is merged alone to 'master' without these
-other two topics?  I somehow thought I disentangled the topic from
-unnecessary dependencies before queuing it, but it is possible that
-I misremember...
+Great!
 
->> * jk/fast-export-anonym (2020-06-22) 4 commits
->>   (merged to 'next' on 2020-06-22 at b517b2f707)
->>  + fast-export: allow dumping the path mapping
->>  + fast-export: refactor path printing to not rely on stdout
->>  + fast-export: anonymize "master" refname
->>  + fast-export: allow dumping the refname mapping
->>=20
->>  The way refnames are anonymized has been updated and a way to help
->>  debugging using the anonymized output hsa been added.
+> As a next step, I would love to make [warning|error|die]_errno()
+> thread-safe as well. strerror() is not safe on *nix, and there are some
+> thread functions today that call these (although the actual risk of a
+> race condition must be very small...)
 >
-> s/hsa/has
+> My idea was to implement a xstrerror() wrapper which calls the
+> appropriate thread-safe function (dependant on the OS),
 
-Thanks.
+Yeah, that works if there are appropriate thread-safe functions for
+all the OS we are interested in, or if we can fallback to strerror()
+or calling it holding a lock.
+
+> or even call
+> strerror() itself but holding a lock to copy the result for a local
+> buffer (which should be OK as we don't expect contention in strerror).
+
+I agree that it should be ok.
+
+> We could also set a thread local buffer array, as in the second patch of
+> this series, to excuse callers from allocating/freeing memory.
+
+I don't think caller allocating/freeing memory for error strings is a
+performance or code simplification issue.
+
+> One concern with this idea is the risk of an infinite recursion if
+> xstrerror() or any of its childs call [warning|error|die]_errno().
+> However, if we are only using strerror() and pthread_*() within the
+> wrapper, there should be no problem, right?
+
+Yeah, I agree.
+
+> Has anyone thought of
+> other problems with this approach?
+>
+> Finally, should such change also come with a coccinelle patch to replace
+> usages of strerror() with xstrerror()? Or better not, as the change
+> would be too big?
+
+I would agree that it's better to avoid too big changes. I am not sure
+how much we want to automate and check that though.
+
+Thanks,
+Christian.
