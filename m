@@ -5,288 +5,232 @@ X-Spam-Level:
 X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9EADC433E1
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7644CC433E0
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F11A207E8
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52259207E8
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mjr57eay"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkeYfq0Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728524AbgFZMat (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 08:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S1728530AbgFZMau (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 08:30:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726335AbgFZMao (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728493AbgFZMao (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 26 Jun 2020 08:30:44 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A64EDC08C5DB
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:43 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id 22so8678823wmg.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:43 -0700 (PDT)
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625C8C08C5DC
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:44 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id o11so9318764wrv.9
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NPwgmjtGtVfhNaIMtMRTJuLX4Hhz/h7avtSR/My5caQ=;
-        b=Mjr57eaykwHOaHrIqOJ+9pl5AQTxSKZTxz0IVV8uIRqsz6yDbvjLGDWSMrOKtP+TLg
-         6n3gxhoPHYMpJFE/meZ8S4p4KeOnmVJ0QqwXsQbwjVtOF0U7HiTDZmVmn4JyRj5obDG9
-         GoGk9IQRBPLw8GrYe2EiaVa3YsvL7hUdAcywg10pB6XYSHAwomjo9OJD7NSvBDya6iTM
-         mtP0YuVFa06GXN7PWsNzAulX8ofc9XTXHb5ThRVdaJ+H/MByffiUH7iD9TrCTQ4vnzhR
-         J3q/ns2RbExES/lOL8yZ1ZKjaeecAkrhTfJktLNmmSinc7lyLCJxXHv9oAGMck7OZqk3
-         F8jw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=Oc2qesnf6Ofc1rRneszz/pg/RVXkcL/ntZlyvZAqpF0=;
+        b=nkeYfq0YJnC6uxt2dJWkrHKCDalZ1qov2EJH2HjgrtNwc/hRW1j8GOHbXw3aKAZQXV
+         vnsK2v+OIR0r003j4Ds3NO13DutYc66zmWEUPzKl9selG7BSFqR3pSNadEG5M7UNJKsF
+         eKb7leJQTS4qcDLZ/JsKQzwd7GQrbkINGLIIHBMG4SCrM33hvpwhzjwv5VbFnozHWtbR
+         ITm5kHaXd3h18EiaVWBczsSu0I2XaE9CIzAZ2wXUrZpEa6VLuBBSavu+FOtKWSg/g/an
+         0a/VM0Ce7aW9yt8M8B5oCndWfVSQvI5N5+rhN5jrT8n9N0nHP56hH0pEyWM7f2vV1IW+
+         B2DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NPwgmjtGtVfhNaIMtMRTJuLX4Hhz/h7avtSR/My5caQ=;
-        b=J9LM9bkOtLqKhp5PWB3GvackUbRyrigHanThqhywj3iSnrbG5Oe1SKx07x+1BLsCjT
-         s15JGl3Ckp91yALVK7dxwnjeYqz/qQVWyahiNF2jakddbmOFdwlptQ8ICxh/I6X4pU9r
-         yDwymsHs0tYTAILA1oveaVsx/Z4Nmdjw+USH4+Sa+IYiUvzjlPiRW7qyqhuT+t3CHWDV
-         w1WGGFK9e08Qw9M73sEcQx9ICKuCct0UDsZWSdNsY+BhLMM0jAf6J0wg7MBnQYKK68TJ
-         x81qFYQk3jBt/7f0aBgJ++ZVE7y2tcvzHDH2FHFE4vzYKRqsSO78kVO5YMxAEyV8zY8b
-         51Tw==
-X-Gm-Message-State: AOAM533tHbWGkzftpScCfs5SdoIqdlpie1mMkF2QWTQMa8HSK4k+37sD
-        mkCs2CP1ul39VNSa5k04cZqUB2M9
-X-Google-Smtp-Source: ABdhPJwY29Byy3hN8KOT51aCOLkb5yRLpw+7vxmNvutsxzpflyb+vWsnoXHyuZcw6D8tvAbgc4RpBQ==
-X-Received: by 2002:a1c:1946:: with SMTP id 67mr3405347wmz.59.1593174642088;
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=Oc2qesnf6Ofc1rRneszz/pg/RVXkcL/ntZlyvZAqpF0=;
+        b=h9U17wrS0Ky6CwcGRI8iWQ3kjSZwV/JA2SJeWZgij3VSjIGuIInsvcxZLTYebdEshv
+         VfGEEFfGrjZMUtLY4lUT57IE6+D7+mgvakjLs8iIbY039wX8WYE8Gg/q7cLvN3k2ZiZb
+         QRSxB8JOYaTI1ATtCJpblzE2r+a4ZSA6HRro3wnWHAOy3vzm4gvMeqH18htGo7LlGixC
+         d2e3f2LPPz2KIUfX8TzIeOEyXMPyrQGeQsxCYCwkN/dKQ463r9VXhb1jX9LzJViXB6fQ
+         ja/cJdBh1Ktfyc3Y0WeR0lWLmPcYdJwvIsZf0i4uV8Vst5DbzxB4/xv4O1zEHhhads81
+         QCUg==
+X-Gm-Message-State: AOAM531mEPOg2Jgda6/Fv3e7A/rs8h5U2yFWGOTfhe0v1Orn7ymLvusd
+        HjlncxQ3PojkCI3YRkRIC7hxYyfT
+X-Google-Smtp-Source: ABdhPJwjvhQ9OYVUjmkuUBC8qWCUQDRb2UqfUj2kjdvGBogh8atK4URaZsN2IsKkd+JkHIqGWiVhzg==
+X-Received: by 2002:adf:fcc5:: with SMTP id f5mr3947224wrs.60.1593174642934;
         Fri, 26 Jun 2020 05:30:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q188sm14463947wma.46.2020.06.26.05.30.41
+        by smtp.gmail.com with ESMTPSA id o82sm17921636wmo.40.2020.06.26.05.30.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2020 05:30:41 -0700 (PDT)
-Message-Id: <33e22d05cbf9d60e5f0164985d3481643220d8fa.1593174637.git.gitgitgadget@gmail.com>
+        Fri, 26 Jun 2020 05:30:42 -0700 (PDT)
+Message-Id: <81c45d5260f4aaf885aa51d19e3ab891aa2988c1.1593174637.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
 References: <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
         <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 26 Jun 2020 12:30:30 +0000
-Subject: [PATCH v3 04/10] commit-graph: persist existence of changed-paths
-Fcc:    Sent
+From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Fri, 26 Jun 2020 12:30:31 +0000
+Subject: [PATCH v3 05/10] commit-graph: unify the signatures of all
+ write_graph_chunk_*() functions
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, szeder.dev@gmail.com, l.s.r@web.de,
         Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-The changed-path Bloom filters were released in v2.27.0, but have a
-significant drawback. A user can opt-in to writing the changed-path
-filters using the "--changed-paths" option to "git commit-graph write"
-but the next write will drop the filters unless that option is
-specified.
+Update the write_graph_chunk_*() helper functions to have the same
+signature:
 
-This becomes even more important when considering the interaction with
-gc.writeCommitGraph (on by default) or fetch.writeCommitGraph (part of
-features.experimental). These config options trigger commit-graph writes
-that the user did not signal, and hence there is no --changed-paths
-option available.
+  - Return an int error code from all these functions.
+    write_graph_chunk_base() already has an int error code, now the
+    others will have one, too, but since they don't indicate any
+    error, they will always return 0.
 
-Allow a user that opts-in to the changed-path filters to persist the
-property of "my commit-graph has changed-path filters" automatically. A
-user can drop filters using the --no-changed-paths option.
+  - Drop the hash size parameter of write_graph_chunk_oids() and
+    write_graph_chunk_data(); its value can be read directly from
+    'the_hash_algo' inside these functions as well.
 
-In the process, we need to be extremely careful to match the Bloom
-filter settings as specified by the commit-graph. This will allow future
-versions of Git to customize these settings, and the version with this
-change will persist those settings as commit-graphs are rewritten on
-top.
+This opens up the possibility for further cleanups and foolproofing in
+the following two patches.
 
-Use the trace2 API to signal the settings used during the write, and
-check that output in a test after manually adjusting the correct bytes
-in the commit-graph file.
-
+Helped-by: René Scharfe <l.s.r@web.de>
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-commit-graph.txt |  5 +++-
- builtin/commit-graph.c             |  5 +++-
- commit-graph.c                     | 45 ++++++++++++++++++++++++++++--
- commit-graph.h                     |  1 +
- t/t4216-log-bloom.sh               | 17 ++++++++++-
- 5 files changed, 67 insertions(+), 6 deletions(-)
+ commit-graph.c | 42 ++++++++++++++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index f4b13c005b..369b222b08 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -60,7 +60,10 @@ existing commit-graph file.
- With the `--changed-paths` option, compute and write information about the
- paths changed between a commit and it's first parent. This operation can
- take a while on large repositories. It provides significant performance gains
--for getting history of a directory or a file with `git log -- <path>`.
-+for getting history of a directory or a file with `git log -- <path>`. If
-+this option is given, future commit-graph writes will automatically assume
-+that this option was intended. Use `--no-changed-paths` to stop storing this
-+data.
- +
- With the `--split` option, write the commit-graph as a chain of multiple
- commit-graph files stored in `<dir>/info/commit-graphs`. The new commits
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 59009837dc..ff7b177c33 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -151,6 +151,7 @@ static int graph_write(int argc, const char **argv)
- 	};
- 
- 	opts.progress = isatty(2);
-+	opts.enable_changed_paths = -1;
- 	split_opts.size_multiple = 2;
- 	split_opts.max_commits = 0;
- 	split_opts.expire_time = 0;
-@@ -171,7 +172,9 @@ static int graph_write(int argc, const char **argv)
- 		flags |= COMMIT_GRAPH_WRITE_SPLIT;
- 	if (opts.progress)
- 		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
--	if (opts.enable_changed_paths ||
-+	if (!opts.enable_changed_paths)
-+		flags |= COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS;
-+	if (opts.enable_changed_paths == 1 ||
- 	    git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
- 		flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
- 
 diff --git a/commit-graph.c b/commit-graph.c
-index 6a28d4a5a6..11088fc11f 100644
+index 11088fc11f..d51682998d 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -16,6 +16,8 @@
- #include "progress.h"
- #include "bloom.h"
- #include "commit-slab.h"
-+#include "json-writer.h"
-+#include "trace2.h"
- 
- void git_test_write_commit_graph_or_die(void)
- {
-@@ -1107,6 +1109,21 @@ static void write_graph_chunk_bloom_indexes(struct hashfile *f,
- 	stop_progress(&progress);
- }
- 
-+static void trace2_bloom_filter_settings(struct write_commit_graph_context *ctx)
-+{
-+	struct json_writer jw = JSON_WRITER_INIT;
-+
-+	jw_object_begin(&jw, 0);
-+	jw_object_intmax(&jw, "hash_version", ctx->bloom_settings->hash_version);
-+	jw_object_intmax(&jw, "num_hashes", ctx->bloom_settings->num_hashes);
-+	jw_object_intmax(&jw, "bits_per_entry", ctx->bloom_settings->bits_per_entry);
-+	jw_end(&jw);
-+
-+	trace2_data_json("bloom", ctx->r, "settings", &jw);
-+
-+	jw_release(&jw);
-+}
-+
- static void write_graph_chunk_bloom_data(struct hashfile *f,
- 					 struct write_commit_graph_context *ctx)
- {
-@@ -1115,6 +1132,8 @@ static void write_graph_chunk_bloom_data(struct hashfile *f,
- 	struct progress *progress = NULL;
- 	int i = 0;
- 
-+	trace2_bloom_filter_settings(ctx);
-+
- 	if (ctx->report_progress)
- 		progress = start_delayed_progress(
- 			_("Writing changed paths Bloom filters data"),
-@@ -1543,9 +1562,15 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	int num_chunks = 3;
- 	uint64_t chunk_offset;
- 	struct object_id file_hash;
--	const struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
-+	struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
- 
--	ctx->bloom_settings = &bloom_settings;
-+	if (!ctx->bloom_settings) {
-+		bloom_settings.bits_per_entry = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY",
-+							      bloom_settings.bits_per_entry);
-+		bloom_settings.num_hashes = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_NUM_HASHES",
-+							  bloom_settings.num_hashes);
-+		ctx->bloom_settings = &bloom_settings;
-+	}
- 
- 	if (ctx->split) {
- 		struct strbuf tmp_file = STRBUF_INIT;
-@@ -1970,9 +1995,23 @@ int write_commit_graph(struct object_directory *odb,
- 	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
- 	ctx->check_oids = flags & COMMIT_GRAPH_WRITE_CHECK_OIDS ? 1 : 0;
- 	ctx->split_opts = split_opts;
--	ctx->changed_paths = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
- 	ctx->total_bloom_filter_data_size = 0;
- 
-+	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
-+		ctx->changed_paths = 1;
-+	if (!(flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
-+		struct commit_graph *g;
-+		prepare_commit_graph_one(ctx->r, ctx->odb);
-+
-+		g = ctx->r->objects->commit_graph;
-+
-+		/* We have changed-paths already. Keep them in the next graph */
-+		if (g && g->chunk_bloom_data) {
-+			ctx->changed_paths = 1;
-+			ctx->bloom_settings = g->bloom_filter_settings;
-+		}
-+	}
-+
- 	if (ctx->split) {
- 		struct commit_graph *g;
- 		prepare_commit_graph(ctx->r);
-diff --git a/commit-graph.h b/commit-graph.h
-index f0fb13e3f2..45b1e5bca3 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -96,6 +96,7 @@ enum commit_graph_write_flags {
- 	/* Make sure that each OID in the input is a valid commit OID. */
- 	COMMIT_GRAPH_WRITE_CHECK_OIDS = (1 << 3),
- 	COMMIT_GRAPH_WRITE_BLOOM_FILTERS = (1 << 4),
-+	COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS = (1 << 5),
+@@ -891,8 +891,8 @@ struct write_commit_graph_context {
+ 	const struct bloom_filter_settings *bloom_settings;
  };
  
- struct split_commit_graph_opts {
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index c7011f33e2..73ed51b595 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -126,7 +126,7 @@ test_expect_success 'setup - add commit-graph to the chain without Bloom filters
- 	test_commit c14 A/anotherFile2 &&
- 	test_commit c15 A/B/anotherFile2 &&
- 	test_commit c16 A/B/C/anotherFile2 &&
--	GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0 git commit-graph write --reachable --split &&
-+	git commit-graph write --reachable --split --no-changed-paths &&
- 	test_line_count = 2 .git/objects/info/commit-graphs/commit-graph-chain
- '
+-static void write_graph_chunk_fanout(struct hashfile *f,
+-				     struct write_commit_graph_context *ctx)
++static int write_graph_chunk_fanout(struct hashfile *f,
++				    struct write_commit_graph_context *ctx)
+ {
+ 	int i, count = 0;
+ 	struct commit **list = ctx->commits.list;
+@@ -913,17 +913,21 @@ static void write_graph_chunk_fanout(struct hashfile *f,
  
-@@ -152,4 +152,19 @@ test_expect_success 'Use Bloom filters if they exist in the latest but not all c
- 	test_bloom_filters_used_when_some_filters_are_missing "-- A/B"
- '
- 
-+test_expect_success 'persist filter settings' '
-+	test_when_finished rm -rf .git/objects/info/commit-graph* &&
-+	rm -rf .git/objects/info/commit-graph* &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		GIT_TRACE2_EVENT_NESTING=5 \
-+		GIT_TEST_BLOOM_SETTINGS_NUM_HASHES=9 \
-+		GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY=15 \
-+		git commit-graph write --reachable --changed-paths &&
-+	grep "{\"hash_version\":1,\"num_hashes\":9,\"bits_per_entry\":15}" trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2-auto.txt" \
-+		GIT_TRACE2_EVENT_NESTING=5 \
-+		git commit-graph write --reachable --changed-paths &&
-+	grep "{\"hash_version\":1,\"num_hashes\":9,\"bits_per_entry\":15}" trace2-auto.txt
-+'
+ 		hashwrite_be32(f, count);
+ 	}
 +
- test_done
-\ No newline at end of file
++	return 0;
+ }
+ 
+-static void write_graph_chunk_oids(struct hashfile *f, int hash_len,
+-				   struct write_commit_graph_context *ctx)
++static int write_graph_chunk_oids(struct hashfile *f,
++				  struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	int count;
+ 	for (count = 0; count < ctx->commits.nr; count++, list++) {
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+-		hashwrite(f, (*list)->object.oid.hash, (int)hash_len);
++		hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
+ 	}
++
++	return 0;
+ }
+ 
+ static const unsigned char *commit_to_sha1(size_t index, void *table)
+@@ -932,8 +936,8 @@ static const unsigned char *commit_to_sha1(size_t index, void *table)
+ 	return commits[index]->object.oid.hash;
+ }
+ 
+-static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+-				   struct write_commit_graph_context *ctx)
++static int write_graph_chunk_data(struct hashfile *f,
++				  struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -950,7 +954,7 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(&(*list)->object.oid));
+ 		tree = get_commit_tree_oid(*list);
+-		hashwrite(f, tree->hash, hash_len);
++		hashwrite(f, tree->hash, the_hash_algo->rawsz);
+ 
+ 		parent = (*list)->parents;
+ 
+@@ -1030,10 +1034,12 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 
+ 		list++;
+ 	}
++
++	return 0;
+ }
+ 
+-static void write_graph_chunk_extra_edges(struct hashfile *f,
+-					  struct write_commit_graph_context *ctx)
++static int write_graph_chunk_extra_edges(struct hashfile *f,
++					 struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -1082,10 +1088,12 @@ static void write_graph_chunk_extra_edges(struct hashfile *f,
+ 
+ 		list++;
+ 	}
++
++	return 0;
+ }
+ 
+-static void write_graph_chunk_bloom_indexes(struct hashfile *f,
+-					    struct write_commit_graph_context *ctx)
++static int write_graph_chunk_bloom_indexes(struct hashfile *f,
++					   struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -1107,6 +1115,7 @@ static void write_graph_chunk_bloom_indexes(struct hashfile *f,
+ 	}
+ 
+ 	stop_progress(&progress);
++	return 0;
+ }
+ 
+ static void trace2_bloom_filter_settings(struct write_commit_graph_context *ctx)
+@@ -1124,8 +1133,8 @@ static void trace2_bloom_filter_settings(struct write_commit_graph_context *ctx)
+ 	jw_release(&jw);
+ }
+ 
+-static void write_graph_chunk_bloom_data(struct hashfile *f,
+-					 struct write_commit_graph_context *ctx)
++static int write_graph_chunk_bloom_data(struct hashfile *f,
++					struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -1151,6 +1160,7 @@ static void write_graph_chunk_bloom_data(struct hashfile *f,
+ 	}
+ 
+ 	stop_progress(&progress);
++	return 0;
+ }
+ 
+ static int oid_compare(const void *_a, const void *_b)
+@@ -1667,8 +1677,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			num_chunks * ctx->commits.nr);
+ 	}
+ 	write_graph_chunk_fanout(f, ctx);
+-	write_graph_chunk_oids(f, hashsz, ctx);
+-	write_graph_chunk_data(f, hashsz, ctx);
++	write_graph_chunk_oids(f, ctx);
++	write_graph_chunk_data(f, ctx);
+ 	if (ctx->num_extra_edges)
+ 		write_graph_chunk_extra_edges(f, ctx);
+ 	if (ctx->changed_paths) {
 -- 
 gitgitgadget
 
