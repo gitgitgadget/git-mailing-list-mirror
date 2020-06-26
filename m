@@ -7,123 +7,118 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AE92C433DF
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 08:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED482C433DF
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 08:43:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1181B20775
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 08:22:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C65022080C
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 08:43:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iknwgo9B"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B1LpeVVS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726406AbgFZIWy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 04:22:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43360 "EHLO
+        id S1725957AbgFZInT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 04:43:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726386AbgFZIWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 04:22:53 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B5FC08C5C1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 01:22:54 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id z17so6241032edr.9
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 01:22:53 -0700 (PDT)
+        with ESMTP id S1725841AbgFZInT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 04:43:19 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66662C08C5C1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 01:43:19 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id b16so4339759pfi.13
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 01:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G9HnItG0olWvRbX5HSYHw5ALVAjl43NQ2m47xloLLIk=;
-        b=iknwgo9BxjcSe589xrACQLCGYKgM8ZUzePzgq9dZ3a+W8jSg1TY1orwMqGV+HxJxZC
-         pVaaAMANjCvwyk6ev44CheV8x69HXopVZvVcVfCDwngW/8Sn13UAS0Tpih6dtORLfLEN
-         /bdFVUD+O7Fdl8AbTmIU352A+lnlswKE7016Tc15rokQJoBOU2jA7qThbDFe5OzDEHrH
-         vS0QTMUyDlh6+yfPAHI+CK0X8QjvjiG+p6ddAauc/xzuLceMtd/U6FVlB9+ZbTIqQd8p
-         +woyZ6WKs02rIcF/cwvXS+F6oI6li7Y9lyUoAC+AMiKM+Fehw5i+z/ZPc9IAQPg/V8Jq
-         8F0g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=2pmP6JYJ2+bfR5Z6m5p9RlCShDKPszNXFCNg8J7ssYo=;
+        b=B1LpeVVSJcfDUY62kYN3lhCJFCK6h0K5twKXl0xL5OyUFz7TaoiK5ZfyhTkh7e+jKZ
+         FtFKINTYuwl0rdmaSDTQXcgQsEGfeXFLxDCLnGrAy0llWt4d+2Rh0zZ/bUef6XNQwc/X
+         ODjH7yPfXp5p8EBCBOZhBH2kYHfomq0gpP/pHT9NLD5OnN1/shIOPzZPljxhtGM6YS9I
+         Ryjai7munbL1YKD8IT62WnltldhfqWHaZTxWHJdawJWEo0h2v6lwdPOyXP9lng3SAdPi
+         TxoYNYUyYWIxWkGkYdhdY0VgAIK/LfQbG8w0SzmtOZ629Lp81cJlyA3xX3jDS/8ZBWwk
+         8Xng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G9HnItG0olWvRbX5HSYHw5ALVAjl43NQ2m47xloLLIk=;
-        b=ogYde3ZYzr5LAAV3EgRGzyAtDBuXTvEI2dTRXrVkFzABh2l/C8M9aoIPzwqOL+dPgl
-         lRrwttXgLM4KpbnouQPN880wcOBuhnZn+S8odwx05S7A6ROpFBZ/ZMaqlfvenczskdV2
-         6a6M3OqxolsVxBYyyMGBHH59UXXi2MEdJqzS8h0UbppdAfCjZy3Sk1sHT6g5RRwUqXu1
-         AA6nNFXC/tQ+gqnko8z5DMWytayfwCJwHIAfXp7GRvP+xnNC4qQRDgivvXA3OaquHxgR
-         KdUIJuq3CjcMF4Az6/0mMkiwqXHmFf6oNqdyarbp1pmnNiZVCpF1UQESFGgOuFJweIJV
-         /dRg==
-X-Gm-Message-State: AOAM533/i1intdive0rhJMaWaEp0mwBZ0cX+5BPSLUwtDRBxee7YkV0P
-        enMZFlaANNd/VXQ0wAEnDc1EQZW20SAlMOfBjUA=
-X-Google-Smtp-Source: ABdhPJzSZxRl6ccHVn7sfKuWV8aim1paiK4Il2tpF91U72PB0KKu1JmfZhz4ngxAgXNFiIBvYVeUSrI0PtMZyfFz4YQ=
-X-Received: by 2002:a05:6402:1153:: with SMTP id g19mr2119593edw.127.1593159772662;
- Fri, 26 Jun 2020 01:22:52 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=2pmP6JYJ2+bfR5Z6m5p9RlCShDKPszNXFCNg8J7ssYo=;
+        b=t5kJMxmIJLU3VIsjDgMrQPPb6BlFBx8gCIrsH34XvNMpMmPCut0tIGaAGfDb1tTr8i
+         8J4opSnqOd2I2GlB3oSJjBW9JlD4B4ZXPFpB9CIorqoVRUSjFuhyL+ofKXwiZ663eFKZ
+         g6jRLecCrY90NuKLp+LTifiyJOI+0f4e2isxr886TZ5RTjs9z3rqsGw0oFXuGXR1RBeV
+         cjsw8dlgFQV6e66lArQPYKfSIhC1z7Tg4CqexRtEz4s64m/8eLgG3HDm9mouHyYTh5Gb
+         tuulxkrrvLX5kCLbv6usoVcKDF+6bITL5T3pngdZbR8Dmc5APLotukjuDHlDyEPe3nAa
+         KeEg==
+X-Gm-Message-State: AOAM533GKXXPd6A0XoI5V5jjLZAIuqwk859CcfMnPr4tLWULlSu51Rlf
+        TOUnig1sJ3qXdFXnIpOHRNM=
+X-Google-Smtp-Source: ABdhPJyHSi/UsxgJ1bSHdfcVl53P0ANKSBNMeBgA4OWq7jSEd/5se6Ri75wHtMrYTvEIzwTfX7RRAA==
+X-Received: by 2002:aa7:9525:: with SMTP id c5mr1857179pfp.79.1593160998870;
+        Fri, 26 Jun 2020 01:43:18 -0700 (PDT)
+Received: from Carlos-MBP (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id x24sm10493495pfo.12.2020.06.26.01.43.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jun 2020 01:43:18 -0700 (PDT)
+Date:   Fri, 26 Jun 2020 01:43:15 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2020, #05; Thu, 25)
+Message-ID: <20200626084315.GB84491@Carlos-MBP>
+References: <xmqq1rm24ol3.fsf@gitster.c.googlers.com>
+ <20200626070807.GA84491@Carlos-MBP>
+ <xmqq1rm2i8qg.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <20200625013851.GA9782@camp.crustytoothpaste.net> <cover.1593115455.git.matheus.bernardino@usp.br>
-In-Reply-To: <cover.1593115455.git.matheus.bernardino@usp.br>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 26 Jun 2020 10:22:41 +0200
-Message-ID: <CAP8UFD0oWuoYLwgYLbkSvDjV1Ymedd_E2j8iv3QGGitgRVq6=Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Make oid_to_hex() thread-safe
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq1rm2i8qg.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 26, 2020 at 1:35 AM Matheus Tavares
-<matheus.bernardino@usp.br> wrote:
->
-> Some thread-unsafe functions of our codebase appear very down in the
-> call stack, which can be hard to notice (or avoid). Thus they are
-> sometimes used in threaded code unsafely. In this series we add
-> pthread_once() to compat/win32/ and use it in conjunction with
-> pthread_key to make a subset of the said functions thread-safe.
+On Fri, Jun 26, 2020 at 12:31:19AM -0700, Junio C Hamano wrote:
+> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+> 
+> > On Thu, Jun 25, 2020 at 06:12:40PM -0700, Junio C Hamano wrote:
+> >> 
+> >> * cb/is-descendant-of (2020-06-23) 1 commit
+> >>   (merged to 'next' on 2020-06-25 at ca0eaddf5e)
+> >>  + commit-reach: avoid is_descendant_of() shim
+> >> 
+> >>  Code clean-up.
+> >> 
+> >>  Will merge to 'master'.
+> >
+> > apologize for the most likely unnecessary clarification (probably implied
+> > by the merged comment indicating ca0eaddf5e), but this branch uses both
+> > rs/pull-leakfix and rs/commit-reach-leakfix, that are currently merged
+> > earlier into next and also scheduled for master.
+> 
+> Hmph, Does it break if it is merged alone to 'master' without these
+> other two topics?  I somehow thought I disentangled the topic from
+> unnecessary dependencies before queuing it, but it is possible that
+> I misremember...
 
-Great!
+Doesn't break and applies perfectly on its own, or in any order with
+rs/pull-leakfix, but will conflict with rs/commit-reach-leakfix with
+the obvious conflict resolution needed:
 
-> As a next step, I would love to make [warning|error|die]_errno()
-> thread-safe as well. strerror() is not safe on *nix, and there are some
-> thread functions today that call these (although the actual risk of a
-> race condition must be very small...)
->
-> My idea was to implement a xstrerror() wrapper which calls the
-> appropriate thread-safe function (dependant on the OS),
-
-Yeah, that works if there are appropriate thread-safe functions for
-all the OS we are interested in, or if we can fallback to strerror()
-or calling it holding a lock.
-
-> or even call
-> strerror() itself but holding a lock to copy the result for a local
-> buffer (which should be OK as we don't expect contention in strerror).
-
-I agree that it should be ok.
-
-> We could also set a thread local buffer array, as in the second patch of
-> this series, to excuse callers from allocating/freeing memory.
-
-I don't think caller allocating/freeing memory for error strings is a
-performance or code simplification issue.
-
-> One concern with this idea is the risk of an infinite recursion if
-> xstrerror() or any of its childs call [warning|error|die]_errno().
-> However, if we are only using strerror() and pthread_*() within the
-> wrapper, there should be no problem, right?
-
-Yeah, I agree.
-
-> Has anyone thought of
-> other problems with this approach?
->
-> Finally, should such change also come with a coccinelle patch to replace
-> usages of strerror() with xstrerror()? Or better not, as the change
-> would be too big?
-
-I would agree that it's better to avoid too big changes. I am not sure
-how much we want to automate and check that though.
-
-Thanks,
-Christian.
+--- >8 ---
+diff --cc commit-reach.c
+index 1761217663,2d85265a35..f846d30f22
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@@ -433,9 -427,8 +428,10 @@@ int ref_newer(const struct object_id *n
+  		return 0;
+  
+  	commit_list_insert(old_commit, &old_commit_list);
+- 	ret = is_descendant_of(new_commit, old_commit_list);
+ -	return repo_is_descendant_of(the_repository,
+++	ret = repo_is_descendant_of(the_repository,
++ 				    new_commit, old_commit_list);
+ +	free_commit_list(old_commit_list);
+ +	return ret;
+  }
+  
+  /*
