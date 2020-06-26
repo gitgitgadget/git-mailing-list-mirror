@@ -3,111 +3,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE32C433E0
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 16:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55EB2C433DF
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 17:49:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FC5320781
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 16:36:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 339FF2080C
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 17:49:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Uzi4JxVG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NdYF6/Is"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727097AbgFZQgB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 12:36:01 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63311 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726933AbgFZQgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 12:36:01 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 692AEC9C94;
-        Fri, 26 Jun 2020 12:35:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=13C4fKy7CxjXFaaQTrkfx1bDDI0=; b=Uzi4Jx
-        VGdjI4EaF1CIWfk7e1+20h3bMkhNmdYcT54gYOUJbh5XChWw5OKO1GvQBPLHn4D0
-        66R8mYAKFqN1wuZZobTp37hVW2Ecs1p34H+suX61nu6RgsCdG9mhbHzu2n+8e0jp
-        B6Iw21WQxhzoEkQMIFHKk89GlItl1F72Lgw0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wlOg6lpsmdmlw7S6vNbxK5FStmAt2riq
-        aRWONw0ej0JVrfd/yzdXL0XlCN3I5UJYAwBer8d0aZ8y+YuvY7MYkl1ugN7payI9
-        LHMiPhXUGOQmB0COniv42D9gpUCCCLtxoCH9yyIW+LN47rDVt6unnwKObCBQB+Hc
-        lR+WFKt1Log=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 606BCC9C93;
-        Fri, 26 Jun 2020 12:35:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9D1F8C9C92;
-        Fri, 26 Jun 2020 12:35:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v5 5/5] rebase: add --reset-author-date
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
-        <20200626095528.117524-1-phillip.wood123@gmail.com>
-        <20200626095528.117524-6-phillip.wood123@gmail.com>
-Date:   Fri, 26 Jun 2020 09:35:54 -0700
-In-Reply-To: <20200626095528.117524-6-phillip.wood123@gmail.com> (Phillip
-        Wood's message of "Fri, 26 Jun 2020 10:55:28 +0100")
-Message-ID: <xmqqbll5hjit.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726441AbgFZRta (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 13:49:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45998 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725833AbgFZRt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 13:49:29 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A511BC03E979
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 10:49:29 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id i16so8088279qtr.7
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 10:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8pizkZGFeGl5QR+268WsPkL/zIbJEd8CIY3vYBu0fDM=;
+        b=NdYF6/Is841vUlmedb8BqcmoO2xa9vrq7zGllc0kaIabvLdxsQTJu5QR4l9a8L0i9C
+         /Nv1idmv9AYlvJoeWiK8YNGm26gTKf3JMJ715O7fsunkHAMUZKDeqwkC5vuecTjvN6YK
+         rcJn8HzExLlzdhFQPz/cGy7/iXOcs2Mqu9iIoGy01EkrzP+lS9foQaC4F/pMoXegRSka
+         UqTWT8bWYgQS4w80p/zqDfEhELPP0dvyx6zncWrPTmvxM9UEsHE6oU4HFFsB8V2AAv8K
+         9g0AKbctvPrpCOR1WzDwwKqopKrsPoNJTr9l51GbExSO4e74PKXqByMy++MFTNC/wnxT
+         kTHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8pizkZGFeGl5QR+268WsPkL/zIbJEd8CIY3vYBu0fDM=;
+        b=UDefmqo1zLtZNzTtXnT7wWvQPkvEaOM/YU10cLbXmmCm5G5H+txdkRB4OmPDaCL7gy
+         cSA7GnYtNR/OFupBtya7tqqcn8ry40ljDVuPoMgZ5p+HiLWMTNe8WEbHkTKeCKuhQ1Ur
+         dG0sw70T8to8DdjKHo2P7plzTJwB8Cnv8eI535Lhqq92MLN3v1mGON0XIqaa0+rH+NcR
+         X4FX8RAVWQLr9s1h0AZp8dJIqvBnhSyOx6Z1AJtq66BL9W6UpqjdRJ0SwuGBacfv+J5j
+         Far+tq/f+1Z6Z8bzHxCDCCgcMI6qAncaz38CP2X3BNgh8283YCQOikFBHUSEGxxYOPet
+         qNnw==
+X-Gm-Message-State: AOAM530gIrNkcIR2G9qtlti3xWxYm51GkE5K7DiTryBpFwBWOQluSCyt
+        niOlawTjNOsaxItLR3mLJP4=
+X-Google-Smtp-Source: ABdhPJxoJMkeFfUkQRyXjL/J0UH5/ugQrwK4ndZFueNBKHnvjh3MoQ6czjBTj0kcZMsCLQJWIP6Wfw==
+X-Received: by 2002:ac8:6c36:: with SMTP id k22mr4028304qtu.288.1593193768851;
+        Fri, 26 Jun 2020 10:49:28 -0700 (PDT)
+Received: from mail.clickyotomy.dev ([49.206.12.119])
+        by smtp.gmail.com with ESMTPSA id v2sm8791654qtq.8.2020.06.26.10.49.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jun 2020 10:49:27 -0700 (PDT)
+Date:   Fri, 26 Jun 2020 23:19:21 +0530
+From:   Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 1/2] diff-files --raw: show correct post-image of
+ intent-to-add files
+Message-ID: <20200626174921.GA50735@mail.clickyotomy.dev>
+References: <pull.654.v3.git.1593010066.gitgitgadget@gmail.com>
+ <pull.654.v4.git.1593107621.gitgitgadget@gmail.com>
+ <69256ab9107c3dba0dc007b69cc0ce98a9b91f9a.1593107621.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1C243D54-B7CB-11EA-B573-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <69256ab9107c3dba0dc007b69cc0ce98a9b91f9a.1593107621.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Sorry for the late reply.
 
-> From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+> Let's make the behavior consistent with modified files by showing
+> all-zero values also for intent-to-add files.
 >
-> The previous commit introduced --ignore-date flag to rebase -i, but the
-> name is rather vague as it does not say whether the author date or the
-> committer date is ignored. Add an alias to convey the precise purpose.
+-- >8 --
 >
-> Helped-by: Junio C Hamano <gitster@pobox.com>
+>                               diff_addremove(&revs->diffopt, '+', ce->ce_mode,
+> -                                            the_hash_algo->empty_tree, 0,
+> -                                            ce->name, 0);
+> +                                            &null_oid, 0, ce->name, 0);
+>                               continue;
+>                       }
+>
+> diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+> index 8a5d55054f..cf0175ad6e 100755
+> --- a/t/t2203-add-intent.sh
+> +++ b/t/t2203-add-intent.sh
+> @@ -240,7 +240,6 @@ test_expect_success 'i-t-a files shown as new for "diff", "diff-files"; not-new
+>
+>       hash_e=$(git hash-object empty) &&
+>       hash_n=$(git hash-object not-empty) &&
+> -     hash_t=$(git hash-object -t tree /dev/null) &&
+>
+>       cat >expect.diff_p <<-EOF &&
+>       diff --git a/empty b/empty
+> @@ -259,8 +258,8 @@ test_expect_success 'i-t-a files shown as new for "diff", "diff-files"; not-new
+>        create mode 100644 not-empty
+>       EOF
+>       cat >expect.diff_a <<-EOF &&
+> -     :000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")empty
+> -     :000000 100644 0000000 $(git rev-parse --short $hash_t) A$(printf "\t")not-empty
+> +     :000000 100644 0000000 0000000 A$(printf "\t")empty
+> +     :000000 100644 0000000 0000000 A$(printf "\t")not-empty
 
-Hmph, did I?
+This change (and the new test in [PATCH v4 2/2]) looks good to me.
 
-> +		OPT_BOOL(0, "reset-author-date", &options.ignore_date,
-> +			 N_("ignore author date and use current date")),
-> +		OPT_HIDDEN_BOOL(0, "ignore-date", &options.ignore_date,
-> +				N_("synonym of --reset-author-date")),
+I learnt quite a bit about what the string "0{40}" means in the context
+of `diff'  post-image from the conversations around this patch. It was
+very helpful.
 
-It is merely hidden but still supported.
-
-> diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-> index 0ede2b8900..5b8963272a 100755
-> --- a/t/t3436-rebase-more-options.sh
-> +++ b/t/t3436-rebase-more-options.sh
-> @@ -117,53 +117,61 @@ test_ctime_is_ignored () {
->  	! grep -v +0000 authortime
->  }
->  
-> -test_expect_success '--ignore-date works with apply backend' '
-> +test_expect_success '--reset-author-date works with apply backend' '
->  	git commit --amend --date="$GIT_AUTHOR_DATE" &&
-> -	git rebase --apply --ignore-date HEAD^ &&
-> +	git rebase --apply --reset-author-date HEAD^ &&
->  	test_ctime_is_ignored -1
->  '
-
-Are there still some tests that check "--ignore-date"?  We probably
-should have them, if we are not removing the support.
-
-Thanks.  The entire series looked reasonable to me.
+Thank you.
