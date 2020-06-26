@@ -2,94 +2,196 @@ Return-Path: <SRS0=gJGs=AH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79A19C433DF
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 06:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A3A8C433E0
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 06:34:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 466162076E
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 06:03:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EB3420768
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 06:34:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZyC9WbTV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N1U6VMlD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726564AbgFZGDK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 02:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49904 "EHLO
+        id S1727917AbgFZGeq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 02:34:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725801AbgFZGDJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 02:03:09 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 995DFC08C5C1
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 23:03:09 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id ga4so8173105ejb.11
-        for <git@vger.kernel.org>; Thu, 25 Jun 2020 23:03:09 -0700 (PDT)
+        with ESMTP id S1726450AbgFZGep (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 02:34:45 -0400
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA1BC08C5C1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 23:34:45 -0700 (PDT)
+Received: by mail-ed1-x543.google.com with SMTP id h28so6074166edz.0
+        for <git@vger.kernel.org>; Thu, 25 Jun 2020 23:34:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OL3IaOVoR3qmjFPkBDzK4BttRnr0golk7RkdJbtHpU4=;
-        b=ZyC9WbTVR5R2KkdAMYehrm7HhQJm7pAhJIS24U/Iq55pCONebUxMbewD33QAQfdkhI
-         E6/jNKZDRPOMABhrOvwxSWSh7YDF+qhfnoATT+D7DR5Q8QF6ARCMLZnzt9627LP6j4yk
-         XRrH3zOKESKsrzwhi928+NALxUBfWXv/1lT3b5G4TvRl+Q1SZzUMakD/Aon6gQ1Lg8pz
-         4s+ALK+AoOuSwC7/9b+oDIgICprOMxdxKeZJNq6URn80X9RjdpQipYH3KupqhB5swylV
-         nUx3crkoH2bmBtoSFZIZ1KURzfSMCHsTsmTRAxki6fteb5GEJp1qtoJJdZxzoccORA35
-         nIEw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/deyneOFVg2ByrjICyo5cdtQKOsXxo7mOdCQ1CuQgXE=;
+        b=N1U6VMlDmTUaG+T5QDQuOQXcQbiWcmu54PDCm9DLYkG+Ctqsyhy4zgw/Ntq1wOFfkn
+         FCw9vv1vxL2VwAzk4EPLBcs5MnTrQUwAFTcVruopgJTrLENkYYorC001MhLHWlSAHbfZ
+         +gRGzTph/OOq+mOw/Qioobo038KGWOOHFvjBJNcR4ZvHSO1bPnyqowp5hTSTwCQXKXu6
+         C+YeHH+IiWfnK6Q2RTPwkS0dmuL5cnSyBwa0W+/v6bZhaaaIU0oo33TN+b3qclcyGQ6m
+         C7K2yVBI6+5etqd8rkVrfNdYiueey4LMP3gqqZyoK1idWpvN/kkmMehXzvFmfH5pF2Vd
+         GM0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OL3IaOVoR3qmjFPkBDzK4BttRnr0golk7RkdJbtHpU4=;
-        b=Vo4Z3oRgFeZEvM1lniGIDJoVEUhZ7zATmRCkabrAwSK2b0oNJ3lV6IW7c8Hf8quA+L
-         2VJkfvM1AWfEKjwoRmBCvIfnFuktdfPU1GBMNPypTtNE+NyNjZmm9u8YM56jOKHYC8v0
-         1TD8C5hHxljNFTV9uXu18jYStxEmlAmEIGwBVR+M4HfIt40oS2x/7hVRFG+3wCjzgjBL
-         CFYifNfKkyYwgLOFDcKwvMqcxft11qVYeZ/f6FO6wP6eyQ42cgdbWADhX8NnaPxC1Jmp
-         Q25okcDPjQSg9JyfXCIeKcoB4NXbj/HekCZFZfdDA4dOte2tUI/Wnvg0ZMUXqzk3WvKn
-         gMag==
-X-Gm-Message-State: AOAM531edEXmw7mppFPuGu//LhIExX2ZB6VSa7FtIrvNtOgyGnct26qj
-        dzl2jK0M7a/p/wKEZMf61eS4cz+vln9k+xzvetk=
-X-Google-Smtp-Source: ABdhPJxNPIqWIWfH4MTROsImECPCLw/TXOwYFUYKeER48RnVp4Sn3eKGCfsFdwf6yzxIAPuRK/f/ut30NiseEosNbZk=
-X-Received: by 2002:a17:906:a01:: with SMTP id w1mr1186560ejf.197.1593151388391;
- Thu, 25 Jun 2020 23:03:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/deyneOFVg2ByrjICyo5cdtQKOsXxo7mOdCQ1CuQgXE=;
+        b=AHoELd8llb5VNwHmvmH9Wu1k0IjT8BtT6u9GmmkiWlrtIDCvm5Diwap7SmObZ18zLq
+         uZxKeMokbP7z3jw/YS31DFwnyBiqMQpXTGlKNNEAIdkc8+wOm99y1AK44EbTL/P2ppB8
+         YMeVkyGdSic3VTuDDLRvMIrrXDnk7PIRJOVt3J5gkp+o4oV6VCykQ8Q8q46/px0m8V8C
+         nI8fyaWYn/zzhMlBkMQLhtX48CZ3lDP8HcrxoRjgTqxzS5SWsdjUdIp75CNoWQ4Ascyc
+         uiOoF4rm/AztRQWW8PeCo+pL897DkrxCPxGB0l0P/By+U7B30cj17aMd+gpqzY22J4Ub
+         GXkA==
+X-Gm-Message-State: AOAM5326sAnx6B3ZH+013vWi9TjEOpi+8X4claWBvMVvdGB0EFq1MSkb
+        fD0fXfCHiHl1tdHg+PwY44z/hjfB
+X-Google-Smtp-Source: ABdhPJwVThqgSPbIYBV03Du/4BojTGGgAuRLpr9joBtBIWQn6rSJm2sJnbJj4GanCAxVrSIHvTo9fw==
+X-Received: by 2002:a50:8143:: with SMTP id 61mr1877673edc.202.1593153283829;
+        Thu, 25 Jun 2020 23:34:43 -0700 (PDT)
+Received: from szeder.dev (92-249-246-85.pool.digikabel.hu. [92.249.246.85])
+        by smtp.gmail.com with ESMTPSA id w8sm20119972eds.41.2020.06.25.23.34.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Jun 2020 23:34:42 -0700 (PDT)
+Date:   Fri, 26 Jun 2020 08:34:36 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org, me@ttaylorr.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 10/11] commit-graph: check all leading directories in
+ changed path Bloom filters
+Message-ID: <20200626063436.GA11341@szeder.dev>
+References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
+ <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
+ <9c2076b4ce46918fce8f05e609b057611ec56e13.1592934430.git.gitgitgadget@gmail.com>
+ <8d8b1763-bbf3-682e-0649-f5a0885399e6@web.de>
+ <0fe96c75-2946-8160-2ced-3d9781dca8c0@gmail.com>
 MIME-Version: 1.0
-References: <cover.1593115455.git.matheus.bernardino@usp.br> <0104cd9c763aee220a2df357834c79b10695ee35.1593115455.git.matheus.bernardino@usp.br>
-In-Reply-To: <0104cd9c763aee220a2df357834c79b10695ee35.1593115455.git.matheus.bernardino@usp.br>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 26 Jun 2020 08:02:57 +0200
-Message-ID: <CAP8UFD1yE8HRxEdw72T70Jw0Eb4RWDze0pD6sNUfF4SKMYuyWw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hex: make hash_to_hex_algop() and friends thread-safe
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Fredrik Kuivinen <frekui@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0fe96c75-2946-8160-2ced-3d9781dca8c0@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 26, 2020 at 1:35 AM Matheus Tavares
-<matheus.bernardino@usp.br> wrote:
+On Thu, Jun 25, 2020 at 11:05:04AM -0400, Derrick Stolee wrote:
 
-[...]
+> >> +	while (p > path) {
+> >> +		if (is_dir_sep(*p))
+> >> +			fill_bloom_key(path, p - path,
+> >> +				       &revs->bloom_keys[path_component_nr++],
+> >> +				       revs->bloom_filter_settings);
+> >> +		p--;
+> >> +	}
+> > 
+> > This walks the directory hierarchy upwards and adds bloom filters for
+> > shorter and shorter paths, ("deepest first").  Good.
+> > 
+> > And it supports all directory separators.  On Windows that would be
+> > slash (/) and backslash (\).  I assume paths are normalized to use
+> > only slashes when bloom filters are written, correct?  Then the lookup
+> > side needs to normalize a given path to only use slashes as well,
+> > otherwise paths with backslashes cannot be found.  This part seems to
+> > be missing.
+> 
+> Yes, that's a good point. We _require_ the paths to be normalized
+> here to be Unix-style paths or else the Bloom filter keys are
+> incorrect. Thankfully, they are.
 
-> Although these functions don't seem to be causing problems out there for
-> now (at least not reported), making them thread-safe makes the codebase
-> more robust against race conditions. We can easily do that replicating
+Unfortunately, they aren't always...
 
-Maybe s/that replicating/that by replicating/.
+Path normalization is done in normalize_path_copy_len(), whose
+description says, among other things:
 
-> the static buffer in each thread's local storage.
->
-> Original-patch-by: Fredrik Kuivinen <frekui@gmail.com>
+   * Performs the following normalizations on src, storing the result in dst:
+   * - Ensures that components are separated by '/' (Windows only)
 
-If Fredrik gave his "Signed-off-by:", maybe it's better to keep it too.
+and the code indeed does:
 
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> ---
+        if (is_dir_sep(c)) {
+                *dst++ = '/';
+
+Now, while parsing pathspecs this function is called via:
+
+  parse_pathspec()
+    init_pathspec_item()
+      prefix_path_gently()
+        normalize_path_copy_len()
+
+Unfortunately, init_pathspec_item() has this chain of conditions:
+
+        /* Create match string which will be used for pathspec matching */
+        if (pathspec_prefix >= 0) {
+                match = xstrdup(copyfrom);
+                prefixlen = pathspec_prefix;
+        } else if (magic & PATHSPEC_FROMTOP) {
+                match = xstrdup(copyfrom);
+                prefixlen = 0;
+        } else {
+                match = prefix_path_gently(prefix, prefixlen,
+                                           &prefixlen, copyfrom);
+                if (!match) {
+                        const char *hint_path = get_git_work_tree();
+                        if (!hint_path)
+                                hint_path = get_git_dir();
+                        die(_("%s: '%s' is outside repository at '%s'"), elt,
+                            copyfrom, absolute_path(hint_path));
+                }
+        }
+
+which means that it doesn't always calls prefix_path_gently(), which,
+in turn, means that 'pathspec_item->match' might remain un-normalized
+in case of some unusual pathspecs.
+
+The first condition is supposed to handle the case when one Git
+process passes pathspecs to another, and is supposed to be "internal
+use only"; see 233c3e6c59 (parse_pathspec: preserve prefix length via
+PATHSPEC_PREFIX_ORIGIN, 2013-07-14), I haven't even tried to grok what
+that might entail.
+
+The second condition handles pathspecs explicitly relative to the root
+of the work tree, i.e. ':/path'.  Adding a printf() to show the
+original path and the resulting 'pathspec_item->match' does confirm
+that no normalization is performed:
+
+  expecting success of 9999.1 'test': 
+          mkdir -p dir &&
+          >dir/file &&
+          git add ":/dir/file" &&
+          git add ":(top)dir/file" &&
+          test_might_fail git add ":/dir//file" &&
+          git add ":(top)dir//file"
+  
+  orig:  ':/dir/file'
+  match: 'dir/file'
+  orig:  ':(top)dir/file'
+  match: 'dir/file'
+  orig:  ':/dir//file'
+  match: 'dir//file'
+  fatal: oops in prep_exclude
+  orig:  ':(top)dir//file'
+  match: 'dir//file'
+  fatal: oops in prep_exclude
+  not ok 1 - test
+
+This is, of course, bad for Bloom filters, because the repeated
+slashes are hashed as well and commits will be omitted from the output
+of pathspec-limited revision walks, but apparently it also affects
+other parts of Git.
+
+And the else branch handles the rest, which, I believe, is by far the
+most common case.
+
+> Let's make that clear in-code by
+> using '/' instead of is_dir_sep().
+> 
+> Thanks,
+> -Stolee
