@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA99EC433DF
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 16:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F98DC433E1
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 16:11:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85CAE206BE
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 16:11:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18049206BE
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 16:11:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXcdoSc3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dNPu5GHs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbgFZQLr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 12:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59168 "EHLO
+        id S1726811AbgFZQLy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 12:11:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725807AbgFZQLo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 12:11:44 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE967C03E979
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 09:11:43 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id o8so9324634wmh.4
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 09:11:43 -0700 (PDT)
+        with ESMTP id S1726747AbgFZQLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 12:11:46 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5A0C08C5DB
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 09:11:46 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id r12so9975684wrj.13
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 09:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PBxELzUrEXrHisqDGH29tLmn6Em/NvI64qPxlhCO1aI=;
-        b=fXcdoSc3q8DrOJ7ewno20ChRpA9ACfHslFtxhACokxTwRWXHHgZBBKbv5K+kEguiO1
-         1p0kCBzXbSh4+9ER77op37vw05N87p8N1jmfzSOJKv9u34SeDai6R1MeZtovT5spttXy
-         SA9iFBU9wUAnHAvItpEH6JK7z68qL/p3AzFkE9Tdjtycl4/nUykZV6BXers2EBLzE+WJ
-         lmqu8lOGk2ZyVZh6QaXJJhqn3tebm0GV9bWZt5RUM/9llJx2YgQaotKNPDoGaw2ubQoC
-         HSkOKXE/tsMLk2Tjdusu6e6wtD5bKSqHt9/+bJseQZqtdMWcoaYH275OkgCTc3SuiaP4
-         zwhw==
+        bh=dMhzHIupvQZAAfg3KRMzA+kC9O0WA5OztOAaIydAgaA=;
+        b=dNPu5GHsOGdAqB9wiZnt0aMkjqNjH2P/84u3Yj4ECMWMX0JUu6kfoXwLwkInmbE/Zl
+         HqJiN38Y+VjCrG5ibCMe20eXiiRDbx7SZ97XFpDxyPCSleQAY4d6SJYGwXlwcSjY6aqx
+         jyWUeGNi33OY2VcFema7lDqQrMu2JP3iVXOWbfqseTYBkBE7i8wHHdazQxjD9F3pXT+q
+         MVBibZsm6MDS/5fY69rzd7z65tkIkyc5r5eF/F6OLqzBsx2+9fPT4k9/pnWWRPOT9uYS
+         1E09bIDNcenmZDjqyqJljo6jpxJATVsehLDImCTeAk2jdd9B2soyNjcvqmNdN2fb57DU
+         mN5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PBxELzUrEXrHisqDGH29tLmn6Em/NvI64qPxlhCO1aI=;
-        b=uJNNh7yVVqVdlJbnj8g1TS1EWLUhwuoM0G6FHDzBibAiwEpaMU2TYnnHYuLjKNbeJb
-         hXI6Fk4S4rMOlxxuLscCRdDONd9x+szrlLbP/CJrug+nT+ZLBQ3Pn3jWqOCvKjy9t/bE
-         FuP8RD/FI0Sr/G3MLQ0IeYE5LZqPUhauw7hIrqMIrJUHjZmEsUQbTv0I+ZI/klOnEqon
-         2L3ad4KyEaNi39l4BEw17LqCoPcvaychfv/NZrVYQxNTAZ4QxCXiL8U9/rF0EtIrTNW+
-         NDFuhAYb3rTYVpp8rpwi8i5xCYOQcVXXy3uQ0hVF0+t1/OQ6waBsHdd07PjKHIvFLNlf
-         4pfw==
-X-Gm-Message-State: AOAM532JK7Fw4l6mhublgL+DvfWOMQ3j5ls6bgZ9/t21ASwMdpCK+JJ2
-        bYQlVQDeVI57iRqh1Qwq/SmhP2Pr
-X-Google-Smtp-Source: ABdhPJwiLb5bsoJkiL/Hbolyn4ooRrtPxb1AdRt3+64EsN0rED4ngQ7UXrY0oCty68kXONNPfPkxGw==
-X-Received: by 2002:a1c:9804:: with SMTP id a4mr4195873wme.109.1593187902398;
-        Fri, 26 Jun 2020 09:11:42 -0700 (PDT)
+        bh=dMhzHIupvQZAAfg3KRMzA+kC9O0WA5OztOAaIydAgaA=;
+        b=Y1QS4vpJACAbxfBvTq3VFHuOK56/7jn6cEaZZxbR0rq5Vc836ko+mRaletQkHNNlxN
+         z9wNqQ8ExC1D/vGMJWB4jLJY0f4B2H4SYtSWbpmBd5YIgFjc67PYrMvmtC0l6uWNh0By
+         HwW6J+SJqCqHnYjMD2SrvjS+zA1EIzavsPoGwU+0fvUf7UsTqHcgD8p16kmjiwuhOTli
+         +5GiDJdOFmN86ZrRu7KiNamYnvJbQmPeqRInLIENEWnwXIzLLPEzgJOubQ77T2+wF8Hr
+         OM+lq9NK35DEWTW8pDTbZONnuadxlptPEE4MVh5fv5VQPcw+v2XKzN5KdJ76zjdGq4Zw
+         i9Pg==
+X-Gm-Message-State: AOAM5333G6oCZJQLc04nlDgalk69gS15vtlBv3ZRee6upvfIav0Et/6c
+        7GHBEUXvSJS/nx0iJ7/hDG3FijI3
+X-Google-Smtp-Source: ABdhPJwYjHPtKfhU4OQg5nnV3r947Tki/kVlVV2pZDTJYRblRdd2QSSoDDpakBDailjA/ECgfO9Mbw==
+X-Received: by 2002:adf:8067:: with SMTP id 94mr4327166wrk.427.1593187904891;
+        Fri, 26 Jun 2020 09:11:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y17sm38966027wrd.58.2020.06.26.09.11.41
+        by smtp.gmail.com with ESMTPSA id 30sm34291943wrm.74.2020.06.26.09.11.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2020 09:11:41 -0700 (PDT)
-Message-Id: <74358b389d1b28eab723f4db32987332c26de154.1593187898.git.gitgitgadget@gmail.com>
+        Fri, 26 Jun 2020 09:11:44 -0700 (PDT)
+Message-Id: <398a578558b7c880770c04398cebdb7eeee23127.1593187898.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.614.v5.git.1593187898.gitgitgadget@gmail.com>
 References: <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
         <pull.614.v5.git.1593187898.gitgitgadget@gmail.com>
 From:   "Sibi Siddharthan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 26 Jun 2020 16:11:32 +0000
-Subject: [PATCH v5 2/8] cmake: generate the shell/perl/python scripts and
- templates, translations
+Date:   Fri, 26 Jun 2020 16:11:35 +0000
+Subject: [PATCH v5 5/8] cmake: support for testing git when building out of
+ the source tree
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,162 +80,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 
-Implement the placeholder substitution to generate scripted
-Porcelain commands, e.g. git-request-pull out of
-git-request-pull.sh
+This patch allows git to be tested when performin out of source builds.
 
-Generate shell/perl/python scripts and template using CMake instead of
-using sed like the build procedure in the Makefile does.
+This involves changing GIT_BUILD_DIR in t/test-lib.sh to point to the
+build directory. Also some miscellaneous copies from the source directory
+to the build directory.
+The copies are:
+t/chainlint.sed needed by a bunch of test scripts
+po/is.po needed by t0204-gettext-rencode-sanity
+mergetools/tkdiff needed by t7800-difftool
+contrib/completion/git-prompt.sh needed by t9903-bash-prompt
+contrib/completion/git-completion.bash needed by t9902-completion
+contrib/svn-fe/svnrdump_sim.py needed by t9020-remote-svn
 
-The text translations are only build if `msgfmt` is found in your path.
-
-NOTE: The scripts and templates are generated during configuration.
+NOTE: t/test-lib.sh is only modified when tests are run not during
+the build or configure.
+The trash directory is still srcdir/t
 
 Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 111 +++++++++++++++++++++++++++-
- 1 file changed, 110 insertions(+), 1 deletion(-)
+ contrib/buildsystems/CMakeLists.txt | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 1e910d9df8..6c5bb4e233 100644
+index 315f234b04..2768ee5b71 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -66,7 +66,7 @@ project(git
- 	LANGUAGES C)
+@@ -862,6 +862,26 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n"
+ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
+ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
  
- 
--#macros for parsing the Makefile for sources
-+#macros for parsing the Makefile for sources and scripts
- macro(parse_makefile_for_sources list_var regex)
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
- 	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
-@@ -77,6 +77,16 @@ macro(parse_makefile_for_sources list_var regex)
- 	list(REMOVE_ITEM ${list_var} "") #remove empty list elements
- endmacro()
- 
-+macro(parse_makefile_for_scripts list_var regex lang)
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${regex} \\+=(.*)")
-+	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
-+	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
-+	string(REPLACE " " ";" ${list_var} ${${list_var}}) #convert string to a list
-+	if(NOT ${lang}) #exclude for SCRIPT_LIB
-+		list(TRANSFORM ${list_var} REPLACE "${lang}" "") #do the replacement
-+	endif()
-+endmacro()
-+
- include(CheckTypeSize)
- include(CheckCSourceRuns)
- include(CheckCSourceCompiles)
-@@ -112,6 +122,11 @@ if(Intl_FOUND)
- 	include_directories(SYSTEM ${Intl_INCLUDE_DIRS})
- endif()
- 
-+find_program(MSGFMT_EXE msgfmt)
-+if(NOT MSGFMT_EXE)
-+	message(WARNING "Text Translations won't be build")
++#Make the tests work when building out of the source tree
++get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
++if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
++	file(RELATIVE_PATH BUILD_DIR_RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/CMakeCache.txt)
++	string(REPLACE "/CMakeCache.txt" "" BUILD_DIR_RELATIVE ${BUILD_DIR_RELATIVE})
++	#Setting the build directory in test-lib.sh before running tests
++	file(WRITE ${CMAKE_BINARY_DIR}/CTestCustom.cmake
++		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh GIT_BUILD_DIR_REPL REGEX \"GIT_BUILD_DIR=(.*)\")\n"
++		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh content NEWLINE_CONSUME)\n"
++		"string(REPLACE \"\${GIT_BUILD_DIR_REPL}\" \"GIT_BUILD_DIR=\\\"$TEST_DIRECTORY\\\"/../${BUILD_DIR_RELATIVE}\" content \"\${content}\")\n"
++		"file(WRITE ${CMAKE_SOURCE_DIR}/t/test-lib.sh \${content})")
++	#misc copies
++	file(COPY ${CMAKE_SOURCE_DIR}/t/chainlint.sed DESTINATION ${CMAKE_BINARY_DIR}/t/)
++	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DIR}/po/)
++	file(COPY ${CMAKE_SOURCE_DIR}/mergetools/tkdiff DESTINATION ${CMAKE_BINARY_DIR}/mergetools/)
++	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-prompt.sh DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
++	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-completion.bash DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
++	file(COPY ${CMAKE_SOURCE_DIR}/contrib/svn-fe/svnrdump_sim.py DESTINATION ${CMAKE_BINARY_DIR}/contrib/svn-fe/)
 +endif()
 +
- #default behaviour
- include_directories(${CMAKE_SOURCE_DIR})
- add_compile_definitions(GIT_HOST_CPU="${CMAKE_SYSTEM_PROCESSOR}")
-@@ -590,3 +605,97 @@ add_custom_command(OUTPUT ${git_links} ${git_http_links}
- 		COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/CreateLinks.cmake
- 		DEPENDS git git-remote-http)
- add_custom_target(git-links ALL DEPENDS ${git_links} ${git_http_links})
-+
-+
-+#creating required scripts
-+set(SHELL_PATH /bin/sh)
-+set(PERL_PATH /usr/bin/perl)
-+set(LOCALEDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
-+set(GITWEBDIR ${FALLBACK_RUNTIME_PREFIX}/share/locale)
-+set(INSTLIBDIR ${FALLBACK_RUNTIME_PREFIX}/share/perl5)
-+
-+#shell scripts
-+parse_makefile_for_scripts(git_sh_scripts "SCRIPT_SH" ".sh")
-+parse_makefile_for_scripts(git_shlib_scripts "SCRIPT_LIB" "")
-+set(git_shell_scripts
-+	${git_sh_scripts} ${git_shlib_scripts} git-instaweb)
-+
-+foreach(script ${git_shell_scripts})
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.sh content NEWLINE_CONSUME)
-+	string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" content "${content}")
-+	string(REPLACE "@@DIFF@@" "diff" content "${content}")
-+	string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
-+	string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" content "${content}")
-+	string(REPLACE "@@NO_CURL@@" "" content "${content}")
-+	string(REPLACE "@@USE_GETTEXT_SCHEME@@" "" content "${content}")
-+	string(REPLACE "# @@BROKEN_PATH_FIX@@" "" content "${content}")
-+	string(REPLACE "@@PERL@@" "${PERL_PATH}" content "${content}")
-+	string(REPLACE "@@SANE_TEXT_GREP@@" "-a" content "${content}")
-+	string(REPLACE "@@PAGER_ENV@@" "LESS=FRX LV=-c" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
-+endforeach()
-+
-+#perl scripts
-+parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
-+
-+#create perl header
-+file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
-+string(REPLACE "@@PATHSEP@@" ":" perl_header "${perl_header}")
-+string(REPLACE "@@INSTLIBDIR@@" "${INSTLIBDIR}" perl_header "${perl_header}")
-+
-+foreach(script ${git_perl_scripts})
-+	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.perl content NEWLINE_CONSUME)
-+	string(REPLACE "#!/usr/bin/perl" "#!/usr/bin/perl\n${perl_header}\n" content "${content}")
-+	string(REPLACE "@@GIT_VERSION@@" "${PROJECT_VERSION}" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
-+endforeach()
-+
-+#python script
-+file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
-+string(REPLACE "#!/usr/bin/env python" "#!/usr/bin/python" content "${content}")
-+file(WRITE ${CMAKE_BINARY_DIR}/git-p4 ${content})
-+
-+#perl modules
-+file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
-+
-+foreach(pm ${perl_modules})
-+	string(REPLACE "${CMAKE_SOURCE_DIR}/perl/" "" file_path ${pm})
-+	file(STRINGS ${pm} content NEWLINE_CONSUME)
-+	string(REPLACE "@@LOCALEDIR@@" "${LOCALEDIR}" content "${content}")
-+	string(REPLACE "@@NO_PERL_CPAN_FALLBACKS@@" "" content "${content}")
-+	file(WRITE ${CMAKE_BINARY_DIR}/perl/build/lib/${file_path} ${content})
-+#test-lib.sh requires perl/build/lib to be the build directory of perl modules
-+endforeach()
-+
-+
-+#templates
-+file(GLOB templates "${CMAKE_SOURCE_DIR}/templates/*")
-+list(TRANSFORM templates REPLACE "${CMAKE_SOURCE_DIR}/templates/" "")
-+list(REMOVE_ITEM templates ".gitignore")
-+list(REMOVE_ITEM templates "Makefile")
-+list(REMOVE_ITEM templates "blt")# Prevents an error when reconfiguring for in source builds
-+
-+list(REMOVE_ITEM templates "branches--")
-+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/branches) #create branches
-+
-+#templates have @.*@ replacement so use configure_file instead
-+foreach(tm ${templates})
-+	string(REPLACE "--" "/" blt_tm ${tm})
-+	string(REPLACE "this" "" blt_tm ${blt_tm})# for this--
-+	configure_file(${CMAKE_SOURCE_DIR}/templates/${tm} ${CMAKE_BINARY_DIR}/templates/blt/${blt_tm} @ONLY)
-+endforeach()
-+
-+
-+#translations
-+if(MSGFMT_EXE)
-+	file(GLOB po_files "${CMAKE_SOURCE_DIR}/po/*.po")
-+	list(TRANSFORM po_files REPLACE "${CMAKE_SOURCE_DIR}/po/" "")
-+	list(TRANSFORM po_files REPLACE ".po" "")
-+	foreach(po ${po_files})
-+		file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
-+		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
-+				COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
-+		list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
-+	endforeach()
-+	add_custom_target(po-gen ALL DEPENDS ${po_gen})
-+endif()
+ file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
+ 
+ #test
 -- 
 gitgitgadget
 
