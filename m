@@ -2,382 +2,150 @@ Return-Path: <SRS0=gJGs=AH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72BC6C433DF
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66C94C433DF
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:33:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 427D3207E8
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:32:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39C5A207E8
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:33:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ApduQhId"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="soF9ky7x"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729252AbgFZOcP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 10:32:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43694 "EHLO
+        id S1726067AbgFZOdf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 10:33:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725970AbgFZOcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 10:32:14 -0400
+        with ESMTP id S1725778AbgFZOde (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 10:33:34 -0400
 Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FCBBC03E97B
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:32:14 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id k6so9737938wrn.3
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:32:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79534C03E979
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:33:34 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id f7so6735071wrw.1
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:33:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
+        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+w7e13cP0zCoqbaDMPRh+gBA5DvxziOUOAwN1NmzGe8=;
-        b=ApduQhId9nJkY8q4Z039njF127FANaq+TqlEo2rre9P/arrjv3/X7d0IBKSk222+5/
-         r3cpYub+Wm26yuH67JlXEG+MxoMXtQ0+1bZP6ieF7tDmzYoJ8mXtkStB4k/voiglTSqZ
-         bEfCkLMIiwNhoR9vxzXMWCiIwIqXQxsAy5mHbaUxBWAv7bAk6I/g4BFmxrvWZaPiOaev
-         4VscDhC+6enyvB3j2ZOQXRe9w6WtEOE9Vpq6qGb4cfyI3/Rq1WaPlxnQb5RJAlJRB+fC
-         xoBapjQvE1qZJJBcIEUWDhEtN3YPJqvShgN1/OA06zm8v4rukHqZamL84mLfMspabjMP
-         jN4w==
+        bh=0BHuWgfKRqKsk/99S7L25I69Renv9PtJxoCvtpGYwo4=;
+        b=soF9ky7x30fmdXQmjPA90kIfSX2smBMYyhDFidn+wFMmBuRUWWbVwnkpMmnYBpjVp1
+         PRZbLfwag2WANZAniCuVdPep5aOna41RngZpXiZxvgZhuvSq57mJtVG6w5UeFSLzRf5z
+         0BteBUntmKmmm2eQ+1A9yOu+Yq8nSsY7CqCN46eTOAzN+uL59JObG0FnrHyChzGdbY3h
+         Gpiob3UI7ltTFn+pyNXpSRnh4l4M+TQ8TxEotPBWzzhh/SIgGPheu1tr3R2i5WIuK39H
+         mni5E9EzLb4PIWtMGc+pRhx5nljCU5Jgw4E5az+sO03bMx7llmbokPeSr7iExo8kP0iZ
+         ZYAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+w7e13cP0zCoqbaDMPRh+gBA5DvxziOUOAwN1NmzGe8=;
-        b=TEMMBldxyZCCAu6kmo3WO+IvgZS5bRJfUHNrqCeuYgZitmIiSD75l6yIk6OqXs8L9t
-         BxW3diqhcJq1LqvI0DKcik71NgPMaWPFxluuh5AsFDDWGlM/fEvVHhy9f7elpvy2pHxM
-         fo049XerjSar73Mk0CXW780All2brr4IqyOxsys4NjrZJWGq26Q8f8QLok7o97a9DzAq
-         /d2XWjEt+GKiXsQuehSdVfpFXH933AWoPTpUasAdwFJZyT85/ObLmnEU31X79igk1wMa
-         U1iHWWXEvxikxAU5tbpUobptbkaadgcmekSzaSVDq9CRy19qe3cgvZS8O3VyhGnnGE6K
-         ew+w==
-X-Gm-Message-State: AOAM530MSrxpEVtVw4DjAtrr6cbWzdRLotdfiXKkONnU46LNsDu3vc2q
-        Te6s041PQ9yLXw6PVMhK4Jc=
-X-Google-Smtp-Source: ABdhPJxSZimszFd9ZBQ2RF5L1/Nuj0fMPXGJb9HYWdxkfcDcvivPdJnRAvawN+hMTDIXV9GjHvtD/Q==
-X-Received: by 2002:adf:de12:: with SMTP id b18mr4439486wrm.390.1593181932935;
-        Fri, 26 Jun 2020 07:32:12 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:from:to:cc:references
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=0BHuWgfKRqKsk/99S7L25I69Renv9PtJxoCvtpGYwo4=;
+        b=q9nFstoEMYVh72wT3Hn2fVK95QUoRZBDENNVSZZrgM7UaJ3ekf7qvlPYn2JOrGPTAa
+         ZoNYPZk9Uq9kOPYYcm7uqo8qgSVS6hDvkHWYpvNnPrTbOzsZ8XS5MamDW/lKoSb4aEpE
+         fWOnkrjNf9oGrrtnfo6O9jYPyF9bp5SV5C3tFFGxStdf8Hkj0Ixk0lgDYsEydBRXqfcp
+         mqaQHGUjffHnUq978UitZ9uW7SNShoRUUkAimmPov4iLcVxE0er2wnGjrkFn46Jb8Cij
+         nnGXBepgWomMyhiU2F1n0NLNRmcIuqfS1lgSlm0AehZ4dpn4oRvABW5nP6tClbP2QEVG
+         odzg==
+X-Gm-Message-State: AOAM5318xRVsejcByEY7NqlGQCX0EhVKozBzD3MZM2zEqXuSF5V6fWDT
+        rb+7V8fFIDAea2HQqyT3AHs=
+X-Google-Smtp-Source: ABdhPJwy4N2++imKenVRYkaCKfx/imFLUy6XUtj5V82a+lcdIeaY/M34IedlffUNtoW7MoscBBSUYA==
+X-Received: by 2002:a5d:664a:: with SMTP id f10mr4120017wrw.300.1593182013257;
+        Fri, 26 Jun 2020 07:33:33 -0700 (PDT)
 Received: from [192.168.1.240] (226.20.198.146.dyn.plus.net. [146.198.20.226])
-        by smtp.gmail.com with ESMTPSA id j14sm36662579wrs.75.2020.06.26.07.32.11
+        by smtp.gmail.com with ESMTPSA id 12sm4552548wmg.6.2020.06.26.07.33.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2020 07:32:12 -0700 (PDT)
-Subject: Re: [RFC PATCH v1 06/17] merge-index: libify merge_one_path() and
- merge_all()
+        Fri, 26 Jun 2020 07:33:32 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH v1 02/17] merge-one-file: rewrite in C
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <20200625121953.16991-1-alban.gruin@gmail.com>
- <20200625121953.16991-7-alban.gruin@gmail.com>
- <0e20fa12-4628-d1fe-fc6e-df83d26edda3@gmail.com>
-Message-ID: <b7b7915d-6ca3-0a0a-94bd-7298ecaf45d2@gmail.com>
-Date:   Fri, 26 Jun 2020 15:32:09 +0100
+ <20200625121953.16991-3-alban.gruin@gmail.com>
+ <80af2da7-d943-94ef-999a-7035bbec0f0d@gmail.com>
+ <32ce88bd-14ce-0cd4-b938-285a95302cae@gmail.com>
+Message-ID: <1e1dfe42-ab62-103a-e213-cfa42f5d9792@gmail.com>
+Date:   Fri, 26 Jun 2020 15:33:31 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <0e20fa12-4628-d1fe-fc6e-df83d26edda3@gmail.com>
+In-Reply-To: <32ce88bd-14ce-0cd4-b938-285a95302cae@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
+On 25/06/2020 19:17, Phillip Wood wrote:
+> On 25/06/2020 16:16, Phillip Wood wrote:
+>> Hi Alban
+>>
+>> I think this series is a great idea
+>>
+>> On 25/06/2020 13:19, Alban Gruin wrote:
+>>> This rewrites `git merge-one-file' from shell to C.  This port is very
+>>> straightforward: it keeps using external processes to edit the index,
+>>> for instance.  Errors are also displayed with fprintf() instead of
+>>> error().  Both of these will be addressed in the next few commits,
+>>> leading to its libification so its main function can be used from other
+>>> commands directly.
+>>>
+>>> This also fixes a bug present in the original script: instead of
+>>> checking if a _regular_ file exists when a file exists in the branch to
+>>> merge, but not in our branch, the rewritten version checks if a file of
+>>> any kind (ie. a directory, ...) exists.  This fixes the tests t6035.14,
+>>> where the branch to merge had a new file, `a/b', but our branch had a
+>>> directory there; it should have failed because a directory exists, but
+>>> it did not because there was no regular file called `a/b'.  This test is
+>>> now marked as successful.
+>>> [...]
+>>> +static int merge_one_file(const struct object_id *orig_blob,
+>>> +              const struct object_id *our_blob,
+>>> +              const struct object_id *their_blob, const char *path,
+>>> +              unsigned int orig_mode, unsigned int our_mode, unsigned
+>>> int their_mode)
+>>> +{
+>>> +    if (orig_blob &&
+>>> +        ((our_blob && oideq(orig_blob, our_blob)) ||
+>>> +         (their_blob && oideq(orig_blob, their_blob))))
+>>> +        return merge_one_file_deleted(orig_blob, our_blob,
+>>> their_blob, path,
+>>> +                          orig_mode, our_mode, their_mode);
+>>
+>> It would be nice to preserve the comments from the script as I find they
+>> help a lot in understanding which case each piece of code is handling.
+>> The code above appears to be handling deletions but does not appear to
+>> check that one side is actually missing. Shouldn't it be something like
+>>
+>> if (orig_blob &&
+>>      ((!their_blob && (our_blob && oideq(orig_blob, our_blob))) ||
+>>       (!our_blob && (their_blob && oideq(orig_blob, their_blob))))
+>>
+>> Maybe this could do with a test case
+> 
+> The reason your version works is that if only one side has changed
+> read-tree will have done the merge itself so this only gets called if
+> one side has been deleted. However the original script printed an error
+> if someone accidentally called when the content had changed in only one
+> side and there were no mode changes. I think we want to keep that behavior.
 
-On 26/06/2020 11:13, Phillip Wood wrote:
-> Hi Alban
-> 
-> On 25/06/2020 13:19, Alban Gruin wrote:
->> The "resolve" and "octopus" merge strategies do not call directly `git
->> merge-one-file', they delegate the work to another git command, `git
->> merge-index', that will loop over files in the index and call the
->> specified command.  Unfortunately, these functions are not part of
->> libgit.a, which means that once rewritten, the strategies would still
->> have to invoke `merge-one-file' by spawning a new process first.
->>
->> To avoid this, this moves merge_one_path(), merge_all(), and their
->> helpers to merge-strategies.c.  They also take a callback to dictate
->> what they should do for each file.  For now, only one launching a new
->> process is defined to preserve the behaviour of the builtin version.
->>
->> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
->> ---
->>
->> Notes:
->>      This patch is best viewed with `--color-moved'.
->>
->>   builtin/merge-index.c | 77 +++------------------------------
->>   merge-strategies.c    | 99 +++++++++++++++++++++++++++++++++++++++++++
->>   merge-strategies.h    | 17 ++++++++
->>   3 files changed, 123 insertions(+), 70 deletions(-)
->>
->> diff --git a/builtin/merge-index.c b/builtin/merge-index.c
->> index 38ea6ad6ca..6cb666cc78 100644
->> --- a/builtin/merge-index.c
->> +++ b/builtin/merge-index.c
->> @@ -1,74 +1,11 @@
->>   #define USE_THE_INDEX_COMPATIBILITY_MACROS
->>   #include "builtin.h"
->> -#include "run-command.h"
->> -
->> -static const char *pgm;
->> -static int one_shot, quiet;
->> -static int err;
->> -
->> -static int merge_entry(int pos, const char *path)
->> -{
->> -	int found;
->> -	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
->> -	char hexbuf[4][GIT_MAX_HEXSZ + 1];
->> -	char ownbuf[4][60];
->> -
->> -	if (pos >= active_nr)
->> -		die("git merge-index: %s not in the cache", path);
->> -	found = 0;
->> -	do {
->> -		const struct cache_entry *ce = active_cache[pos];
->> -		int stage = ce_stage(ce);
->> -
->> -		if (strcmp(ce->name, path))
->> -			break;
->> -		found++;
->> -		oid_to_hex_r(hexbuf[stage], &ce->oid);
->> -		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
->> -		arguments[stage] = hexbuf[stage];
->> -		arguments[stage + 4] = ownbuf[stage];
->> -	} while (++pos < active_nr);
->> -	if (!found)
->> -		die("git merge-index: %s not in the cache", path);
->> -
->> -	if (run_command_v_opt(arguments, 0)) {
->> -		if (one_shot)
->> -			err++;
->> -		else {
->> -			if (!quiet)
->> -				die("merge program failed");
->> -			exit(1);
->> -		}
->> -	}
->> -	return found;
->> -}
->> -
->> -static void merge_one_path(const char *path)
->> -{
->> -	int pos = cache_name_pos(path, strlen(path));
->> -
->> -	/*
->> -	 * If it already exists in the cache as stage0, it's
->> -	 * already merged and there is nothing to do.
->> -	 */
->> -	if (pos < 0)
->> -		merge_entry(-pos-1, path);
->> -}
->> -
->> -static void merge_all(void)
->> -{
->> -	int i;
->> -	for (i = 0; i < active_nr; i++) {
->> -		const struct cache_entry *ce = active_cache[i];
->> -		if (!ce_stage(ce))
->> -			continue;
->> -		i += merge_entry(i, ce->name)-1;
->> -	}
->> -}
->> +#include "merge-strategies.h"
->>   
->>   int cmd_merge_index(int argc, const char **argv, const char *prefix)
->>   {
->> -	int i, force_file = 0;
->> +	int i, force_file = 0, err = 0, one_shot = 0, quiet = 0;
->> +	const char *pgm;
->>   
->>   	/* Without this we cannot rely on waitpid() to tell
->>   	 * what happened to our children.
->> @@ -98,14 +35,14 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
->>   				continue;
->>   			}
->>   			if (!strcmp(arg, "-a")) {
->> -				merge_all();
->> +				err |= merge_all(&the_index, one_shot, quiet,
->> +						 merge_program_cb, (void *)pgm);
->>   				continue;
->>   			}
->>   			die("git merge-index: unknown option %s", arg);
->>   		}
->> -		merge_one_path(arg);
->> +		err |= merge_one_path(&the_index, one_shot, quiet, arg,
->> +				      merge_program_cb, (void *)pgm);
->>   	}
->> -	if (err && !quiet)
->> -		die("merge program failed");
->>   	return err;
->>   }
->> diff --git a/merge-strategies.c b/merge-strategies.c
->> index 3a9fce9f22..f4c0b4acd6 100644
->> --- a/merge-strategies.c
->> +++ b/merge-strategies.c
->> @@ -1,6 +1,7 @@
->>   #include "cache.h"
->>   #include "dir.h"
->>   #include "merge-strategies.h"
->> +#include "run-command.h"
->>   #include "xdiff-interface.h"
->>   
->>   static int add_to_index_cacheinfo(struct index_state *istate,
->> @@ -189,3 +190,101 @@ int merge_strategies_one_file(struct repository *r,
->>   
->>   	return 0;
->>   }
->> +
->> +int merge_program_cb(const struct object_id *orig_blob,
->> +		     const struct object_id *our_blob,
->> +		     const struct object_id *their_blob, const char *path,
->> +		     unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
->> +		     void *data)
-> 
-> Using void* is slightly unfortunate but it's needed later.
-> 
-> It would be nice to check if the program to run is git-merge-one-file
-> and call the appropriate function instead in that case so all users of
-> merge-index get the benefit of it being builtin. That probably wants to
-> be done in cmd_merge_index() rather than here though.
-> 
->> +{
->> +	char ownbuf[3][60] = {{0}};
-> 
-> I know this is copied from above but it would be better to use
-> GIT_MAX_HEXSZ rather than 60
-> 
->> +	const char *arguments[] = { (char *)data, "", "", "", path,
->> +				    ownbuf[0], ownbuf[1], ownbuf[2],
->> +				    NULL };
->> +
->> +	if (orig_blob)
->> +		arguments[1] = oid_to_hex(orig_blob);
->> +	if (our_blob)
->> +		arguments[2] = oid_to_hex(our_blob);
->> +	if (their_blob)
->> +		arguments[3] = oid_to_hex(their_blob);
->> +
->> +	xsnprintf(ownbuf[0], sizeof(ownbuf[0]), "%o", orig_mode);
->> +	xsnprintf(ownbuf[1], sizeof(ownbuf[1]), "%o", our_mode);
->> +	xsnprintf(ownbuf[2], sizeof(ownbuf[2]), "%o", their_mode);
-
-Sorry ignore all the comments below, they are nonsense
+Actually I think the original probably handles this case by calling 'git 
+merge-file'
 
 Best Wishes
 
 Phillip
 
-> These are leaked. Also are you sure we want to fill out the mode if the
-> corresponding blob is missing - I guess it doesn't matter but it would
-> be good to check that - i think the original passed "". It also passed
-> "" rather than "0000..." for the blobs that were missing I think.
+> In the future we could probably update this to also handle the cases
+> that read-tree normally takes care of rather than erroring out but I
+> don't think it is a high priority.
 > 
 > Best Wishes
 > 
 > Phillip
-> 
->> +
->> +	return run_command_v_opt(arguments, 0);
->> +}
->> +
->> +static int merge_entry(struct index_state *istate, int quiet, int pos,
->> +		       const char *path, merge_cb cb, void *data)
->> +{
->> +	int found = 0;
->> +	const struct object_id *oids[3] = {NULL};
->> +	unsigned int modes[3] = {0};
->> +
->> +	do {
->> +		const struct cache_entry *ce = istate->cache[pos];
->> +		int stage = ce_stage(ce);
->> +
->> +		if (strcmp(ce->name, path))
->> +			break;
->> +		found++;
->> +		oids[stage - 1] = &ce->oid;
->> +		modes[stage - 1] = ce->ce_mode;
->> +	} while (++pos < istate->cache_nr);
->> +	if (!found)
->> +		return error(_("%s is not in the cache"), path);
->> +
->> +	if (cb(oids[0], oids[1], oids[2], path, modes[0], modes[1], modes[2], data)) {
->> +		if (!quiet)
->> +			error(_("Merge program failed"));
->> +		return -2;
->> +	}
->> +
->> +	return found;
->> +}
->> +
->> +int merge_one_path(struct index_state *istate, int oneshot, int quiet,
->> +		   const char *path, merge_cb cb, void *data)
->> +{
->> +	int pos = index_name_pos(istate, path, strlen(path)), ret;
->> +
->> +	/*
->> +	 * If it already exists in the cache as stage0, it's
->> +	 * already merged and there is nothing to do.
->> +	 */
->> +	if (pos < 0) {
->> +		ret = merge_entry(istate, quiet, -pos - 1, path, cb, data);
->> +		if (ret == -1)
->> +			return -1;
->> +		else if (ret == -2)
->> +			return 1;
->> +	}
->> +	return 0;
->> +}
->> +
->> +int merge_all(struct index_state *istate, int oneshot, int quiet,
->> +	      merge_cb cb, void *data)
->> +{
->> +	int err = 0, i, ret;
->> +	for (i = 0; i < istate->cache_nr; i++) {
->> +		const struct cache_entry *ce = istate->cache[i];
->> +		if (!ce_stage(ce))
->> +			continue;
->> +
->> +		ret = merge_entry(istate, quiet, i, ce->name, cb, data);
->> +		if (ret > 0)
->> +			i += ret - 1;
->> +		else if (ret == -1)
->> +			return -1;
->> +		else if (ret == -2) {
->> +			if (oneshot)
->> +				err++;
->> +			else
->> +				return 1;
->> +		}
->> +	}
->> +
->> +	return err;
->> +}
->> diff --git a/merge-strategies.h b/merge-strategies.h
->> index b527d145c7..cf78d7eaf4 100644
->> --- a/merge-strategies.h
->> +++ b/merge-strategies.h
->> @@ -10,4 +10,21 @@ int merge_strategies_one_file(struct repository *r,
->>   			      unsigned int orig_mode, unsigned int our_mode,
->>   			      unsigned int their_mode);
->>   
->> +typedef int (*merge_cb)(const struct object_id *orig_blob,
->> +			const struct object_id *our_blob,
->> +			const struct object_id *their_blob, const char *path,
->> +			unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
->> +			void *data);
->> +
->> +int merge_program_cb(const struct object_id *orig_blob,
->> +		     const struct object_id *our_blob,
->> +		     const struct object_id *their_blob, const char *path,
->> +		     unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
->> +		     void *data);
->> +
->> +int merge_one_path(struct index_state *istate, int oneshot, int quiet,
->> +		   const char *path, merge_cb cb, void *data);
->> +int merge_all(struct index_state *istate, int oneshot, int quiet,
->> +	      merge_cb cb, void *data);
->> +
->>   #endif /* MERGE_STRATEGIES_H */
->>
 > 
