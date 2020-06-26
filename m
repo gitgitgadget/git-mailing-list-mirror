@@ -2,83 +2,85 @@ Return-Path: <SRS0=gJGs=AH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 918D9C433E1
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A4ECC433E0
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:43:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63DF120768
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:42:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48F3B20768
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 14:43:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r/D+opW2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FVc00k+n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726928AbgFZOms (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 10:42:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45332 "EHLO
+        id S1727090AbgFZOnE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 10:43:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725792AbgFZOmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 10:42:47 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A7BC03E979
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:42:47 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id h23so7654585qtr.0
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:42:47 -0700 (PDT)
+        with ESMTP id S1725792AbgFZOnD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 10:43:03 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A940BC03E979
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:43:03 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id o2so9624241wmh.2
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 07:43:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eMpZyMkOVkpVMYmgZdqjxnfRmiGLWzwqX74w8hC+Lek=;
-        b=r/D+opW2mbVP9Bmt2XXe5W1kg58Y6lI8TGPVDcUtPWIsmYX+gP5bHcZJFw+dhRZDiy
-         /utguWOFelvWcXGf2NKnBYbxNjYZjlpcfPBkf/X8NqXh2qMycqQgBHV5KZ7iyEY3iR+H
-         Pgbd4+5Hj2ygtISPfnh5llZ0r5/cUGVr4PRlty20/zQarMObKyPNvKQg3chngePoORyN
-         zBWzKeQM51UYLrznR96JgFBthl+yVoP5CIkYWZB0HCwUJrdfafqYr5NhLdz//tz2q84V
-         8AavB8E7NwsahM09Exd2N8yOLb2cVJID1ft1pcete6P/Du4nc7S3P2uwwchwN2JcEmNt
-         dC6g==
+        bh=TCAm8dxzkuhbFVqrgYOKHl2CChmW4ucFZK8tvQ5jo48=;
+        b=FVc00k+nMH8uwcdahN+U+XhiYW9MdhO6TnWZPHK2AflHyUqabj8u8WgGvfjyWOADsH
+         SvXFfssKTt3t/bO2fDWtm4VOPy59pPaFT5d1mGlr5rSvdTWsbL0KbvD9Np6hcGCR4L/1
+         WpS4bIvkJkQsBYCF/xZaLvwmRqI0yw4F/4ewq5YmLjS+ZpH87jFQpRlbz955FIbPf0Yd
+         0Mrp/k+o/yR8mb+ocpeeyjJCdbNuKqMp3JCjA8KQ7aN+dzis+rBtI9v+nmp1QzVhA9j1
+         mJe5/FB5VPkzK4Kov8dG/qB2L+VlKmcEqexRI+fubY7wdvYYtrMmOw2WKnx74MKM2MA/
+         g+qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eMpZyMkOVkpVMYmgZdqjxnfRmiGLWzwqX74w8hC+Lek=;
-        b=gD8IjUEuUtF0QVsO3Wm5Dse5W6diwzL4pcucVpceNQ/KnPC8LyFL5Uc4Ik6fIIBGmK
-         E4ain1JOwyBt2tI4XZ33nQwykbQ8z9KPZlDp6Ji0lHGtelVS6Osu5msA0b3FpKXzxNtF
-         6sF4qIbHKPCwCvK33pankzMXlLfBwlku93rNpAp699++h6kj0Cl0bBsGyK/SYsw1iKog
-         9KGvhx9W91EoXEiDriGqC3OwjJDCWlsBTNFzzFTDuPZlqF+72wgK69f7yhsn7TYA6zQh
-         KN/T51WFw5Bry+O4vswpAVQ8TFbmBrZ3/fXHwLT5TthRKMUIb8fz+N9ob6yfhoFqJHE+
-         XW3Q==
-X-Gm-Message-State: AOAM532W28OFCRWIzOpDA/LErWoTQtqCCT38BuBEi8taoMwGDITz+1Ap
-        ywLOiE1MpF7vexz7BefmnWw=
-X-Google-Smtp-Source: ABdhPJygxB+80ArkcH3fPKFODna+43pyM/piGIBkiR6gSfOd2qT66BzPcP7yq2x1B3h3SQxtnuYkTg==
-X-Received: by 2002:ac8:6d17:: with SMTP id o23mr3204380qtt.127.1593182567044;
-        Fri, 26 Jun 2020 07:42:47 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id r7sm8308410qtm.66.2020.06.26.07.42.45
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=TCAm8dxzkuhbFVqrgYOKHl2CChmW4ucFZK8tvQ5jo48=;
+        b=A/OVPCy7XZUcYyODNcnOp92NXEzy60akBzCZVOQnVPEPJXySkxgWnHJ+NGiPktrY37
+         6PQ/a/hhdteH0zwa7B4YSZGKboEMLfFQ1Jq1hxdAgnHJyESYdiOJqd8cdhMzIboG+xtE
+         /gZGJa6J1IWQ4if/En0FC9n97r8sxT1uQI9qtsNnQME9AQxZHYsIKFchR1UsWexxzBqS
+         2IW48bU0sBcKaxKms10mOmobyKmFxue8Qy7NGkHeEzT/fdUZDLtoJabn8sysJkF/yGuU
+         7BzQ6ibScFktvrBDSyCR2dUEBNosY21hbWNDfTBKQlf/nVPZovP54Z/2jpR2RlwTYtxB
+         H2MA==
+X-Gm-Message-State: AOAM533thZzHh20zywNQbCnNB1Ne2x3clEh3MiqpReMqUNY9t38Vzfyo
+        Y1RvNm0r++41wO4+qdAV2p59urwA
+X-Google-Smtp-Source: ABdhPJw01m/CwLLzqRMxFzwHeFdaZIxN7sUpcpkdF5OWdTvlWuSUYWkW4fp5UFFOiw2ncCISUbI9Vg==
+X-Received: by 2002:a1c:55c4:: with SMTP id j187mr3736866wmb.120.1593182581969;
+        Fri, 26 Jun 2020 07:43:01 -0700 (PDT)
+Received: from [192.168.1.240] (226.20.198.146.dyn.plus.net. [146.198.20.226])
+        by smtp.gmail.com with ESMTPSA id t205sm17744444wmt.8.2020.06.26.07.43.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2020 07:42:46 -0700 (PDT)
-Subject: Re: [PATCH v2 10/11] commit-graph: check all leading directories in
- changed path Bloom filters
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org, me@ttaylorr.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.659.git.1592252093.gitgitgadget@gmail.com>
- <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
- <9c2076b4ce46918fce8f05e609b057611ec56e13.1592934430.git.gitgitgadget@gmail.com>
- <8d8b1763-bbf3-682e-0649-f5a0885399e6@web.de>
- <0fe96c75-2946-8160-2ced-3d9781dca8c0@gmail.com>
- <20200626063436.GA11341@szeder.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <452d363a-d3c1-e80f-2354-13d2070afbee@gmail.com>
-Date:   Fri, 26 Jun 2020 10:42:45 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+        Fri, 26 Jun 2020 07:43:01 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 1/5] rebase -i: add --ignore-whitespace flag
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com>
+ <20200626095528.117524-1-phillip.wood123@gmail.com>
+ <20200626095528.117524-2-phillip.wood123@gmail.com>
+ <20200626133714.GB12504@danh.dev>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <78c32f2d-3af6-1514-51a3-1110531cbb88@gmail.com>
+Date:   Fri, 26 Jun 2020 15:43:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200626063436.GA11341@szeder.dev>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20200626133714.GB12504@danh.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -86,120 +88,256 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/26/2020 2:34 AM, SZEDER Gábor wrote:
-> On Thu, Jun 25, 2020 at 11:05:04AM -0400, Derrick Stolee wrote:
-> 
->>>> +	while (p > path) {
->>>> +		if (is_dir_sep(*p))
->>>> +			fill_bloom_key(path, p - path,
->>>> +				       &revs->bloom_keys[path_component_nr++],
->>>> +				       revs->bloom_filter_settings);
->>>> +		p--;
->>>> +	}
->>>
->>> This walks the directory hierarchy upwards and adds bloom filters for
->>> shorter and shorter paths, ("deepest first").  Good.
->>>
->>> And it supports all directory separators.  On Windows that would be
->>> slash (/) and backslash (\).  I assume paths are normalized to use
->>> only slashes when bloom filters are written, correct?  Then the lookup
->>> side needs to normalize a given path to only use slashes as well,
->>> otherwise paths with backslashes cannot be found.  This part seems to
->>> be missing.
+Hi Danh
+
+On 26/06/2020 14:37, Đoàn Trần Công Danh wrote:
+> On 2020-06-26 10:55:24+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 >>
->> Yes, that's a good point. We _require_ the paths to be normalized
->> here to be Unix-style paths or else the Bloom filter keys are
->> incorrect. Thankfully, they are.
+>> Rebase is implemented with two different backends - 'apply' and
+>> 'merge' each of which support a different set of options. In
+>> particular the apply backend supports a number of options implemented
+>> by 'git am' that are not implemented in the merge backend. This means
+>> that the available options are different depending on which backend is
+>> used which is confusing. This patch adds support for the
+>> --ignore-whitespace option to the merge backend. This option treats
+>> lines with only whitespace changes as unchanged and is implemented in
+>> the merge backend by translating it to -Xignore-space-change.
+>>
+>> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>   Documentation/git-rebase.txt           | 19 +++++++-
+>>   builtin/rebase.c                       | 16 +++++--
+>>   t/t3422-rebase-incompatible-options.sh |  1 -
+>>   t/t3436-rebase-more-options.sh         | 60 ++++++++++++++++++++++++++
+>>   4 files changed, 90 insertions(+), 6 deletions(-)
+>>   create mode 100755 t/t3436-rebase-more-options.sh
+>>
+>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>> index f7a6033607..b003784f01 100644
+>> --- a/Documentation/git-rebase.txt
+>> +++ b/Documentation/git-rebase.txt
+>> @@ -422,8 +422,23 @@ your branch contains commits which were dropped, this option can be used
+>>   with `--keep-base` in order to drop those commits from your branch.
+>>   
+>>   --ignore-whitespace::
+>> +	Ignore whitespace differences when trying to reconcile
+>> +differences. Currently, each backend implements an approximation of
+>> +this behavior:
+>> ++
+>> +apply backend: When applying a patch, ignore changes in whitespace in
+>> +context lines. Unfortunately, this means that if the "old" lines being
+>> +replaced by the patch differ only in whitespace from the existing
+>> +file, you will get a merge conflict instead of a successful patch
+>> +application.
+>> ++
+>> +merge backend: Treat lines with only whitespace changes as unchanged
+>> +when merging. Unfortunately, this means that any patch hunks that were
+>> +intended to modify whitespace and nothing else will be dropped, even
+>> +if the other side had no changes that conflicted.
+>> +
+>>   --whitespace=<option>::
+>> -	These flags are passed to the 'git apply' program
+>> +	This flag is passed to the 'git apply' program
+>>   	(see linkgit:git-apply[1]) that applies the patch.
+>>   	Implies --apply.
+>>   +
+>> @@ -572,7 +587,6 @@ The following options:
+>>    * --apply
+>>    * --committer-date-is-author-date
+>>    * --ignore-date
+>> - * --ignore-whitespace
+>>    * --whitespace
+>>    * -C
+>>   
+>> @@ -598,6 +612,7 @@ In addition, the following pairs of options are incompatible:
+>>    * --preserve-merges and --signoff
+>>    * --preserve-merges and --rebase-merges
+>>    * --preserve-merges and --empty=
+>> + * --preserve-merges and --ignore-whitespace
+>>    * --keep-base and --onto
+>>    * --keep-base and --root
+>>   
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 27a07d4e78..810c9b7779 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -126,6 +126,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>>   	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+>>   	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+>>   	replay.strategy = opts->strategy;
+>> +
+>>   	if (opts->strategy_opts)
+>>   		parse_strategy_opts(&replay, opts->strategy_opts);
+>>   
+>> @@ -1466,6 +1467,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>   	struct strbuf revisions = STRBUF_INIT;
+>>   	struct strbuf buf = STRBUF_INIT;
+>>   	struct object_id merge_base;
+>> +	int ignore_whitespace = 0;
+>>   	enum action action = ACTION_NONE;
+>>   	const char *gpg_sign = NULL;
+>>   	struct string_list exec = STRING_LIST_INIT_NODUP;
+>> @@ -1495,16 +1497,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>   			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
+>>   		OPT_BOOL(0, "signoff", &options.signoff,
+>>   			 N_("add a Signed-off-by: line to each commit")),
+>> -		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &options.git_am_opts,
+>> -				  NULL, N_("passed to 'git am'"),
+>> -				  PARSE_OPT_NOARG),
+>>   		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
+>>   				  &options.git_am_opts, NULL,
+>>   				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+>>   		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts, NULL,
+>>   				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+>>   		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
+>>   				  N_("passed to 'git apply'"), 0),
+>> +		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
+>> +			 N_("ignore changes in whitespace")),
+>>   		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
+>>   				  N_("action"), N_("passed to 'git apply'"), 0),
+>>   		OPT_BIT('f', "force-rebase", &options.flags,
+>> @@ -1850,6 +1851,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>   		imply_merge(&options, "--rebase-merges");
+>>   	}
+>>   
+>> +	if (options.type == REBASE_APPLY) {
+>> +		if (ignore_whitespace)
+>> +			argv_array_push (&options.git_am_opts,
+>> +					 "--ignore-whitespace");
+>> +	} else if (ignore_whitespace) {
+>> +			string_list_append (&strategy_options,
+>> +					    "ignore-space-change");
+>> +	}
+>> +
 > 
-> Unfortunately, they aren't always...
+> Hm, I've just noticed this by now.
+> Would it's better if we rewrite it as:
 > 
-> Path normalization is done in normalize_path_copy_len(), whose
-> description says, among other things:
+> 	if (ignore_whitespace) {
+> 		if (options.type == REBASE_APPLY)
+> 			argv_array_push(&options.git_am_opts,
+> 					"--ignore-whitespace");
+> 		else
+> 			string_list_append(&strategy_options,
+> 					   "ignore-space-change");
+> 	}
 > 
->    * Performs the following normalizations on src, storing the result in dst:
->    * - Ensures that components are separated by '/' (Windows only)
+> Ah, the incoming patches will add more conditions into the:
 > 
-> and the code indeed does:
+> 	if (options.type == REBASE_APPLY)
 > 
->         if (is_dir_sep(c)) {
->                 *dst++ = '/';
-> 
-> Now, while parsing pathspecs this function is called via:
-> 
->   parse_pathspec()
->     init_pathspec_item()
->       prefix_path_gently()
->         normalize_path_copy_len()
-> 
-> Unfortunately, init_pathspec_item() has this chain of conditions:
-> 
->         /* Create match string which will be used for pathspec matching */
->         if (pathspec_prefix >= 0) {
->                 match = xstrdup(copyfrom);
->                 prefixlen = pathspec_prefix;
->         } else if (magic & PATHSPEC_FROMTOP) {
->                 match = xstrdup(copyfrom);
->                 prefixlen = 0;
->         } else {
->                 match = prefix_path_gently(prefix, prefixlen,
->                                            &prefixlen, copyfrom);
->                 if (!match) {
->                         const char *hint_path = get_git_work_tree();
->                         if (!hint_path)
->                                 hint_path = get_git_dir();
->                         die(_("%s: '%s' is outside repository at '%s'"), elt,
->                             copyfrom, absolute_path(hint_path));
->                 }
->         }
-> 
-> which means that it doesn't always calls prefix_path_gently(), which,
-> in turn, means that 'pathspec_item->match' might remain un-normalized
-> in case of some unusual pathspecs.
-> 
-> The first condition is supposed to handle the case when one Git
-> process passes pathspecs to another, and is supposed to be "internal
-> use only"; see 233c3e6c59 (parse_pathspec: preserve prefix length via
-> PATHSPEC_PREFIX_ORIGIN, 2013-07-14), I haven't even tried to grok what
-> that might entail.
-> 
-> The second condition handles pathspecs explicitly relative to the root
-> of the work tree, i.e. ':/path'.  Adding a printf() to show the
-> original path and the resulting 'pathspec_item->match' does confirm
-> that no normalization is performed:
-> 
->   expecting success of 9999.1 'test': 
->           mkdir -p dir &&
->           >dir/file &&
->           git add ":/dir/file" &&
->           git add ":(top)dir/file" &&
->           test_might_fail git add ":/dir//file" &&
->           git add ":(top)dir//file"
->   
->   orig:  ':/dir/file'
->   match: 'dir/file'
->   orig:  ':(top)dir/file'
->   match: 'dir/file'
->   orig:  ':/dir//file'
->   match: 'dir//file'
->   fatal: oops in prep_exclude
->   orig:  ':(top)dir//file'
->   match: 'dir//file'
->   fatal: oops in prep_exclude
->   not ok 1 - test
-> 
-> This is, of course, bad for Bloom filters, because the repeated
-> slashes are hashed as well and commits will be omitted from the output
-> of pathspec-limited revision walks, but apparently it also affects
-> other parts of Git.
-> 
-> And the else branch handles the rest, which, I believe, is by far the
-> most common case.
+> I'm still not convinced, though.
 
-Thanks for this analysis. Clearly, there is already a bug here
-when the input data is not pristine. I didn't see this message
-when I submitted my v3, but normalizing the path data before
-computing filters can (hopefully) be done as a small patch
-before or after my v3 PATCH 10 without much conflict.
+I wanted to keep the subsequent patches as simple as possible. Having to 
+rewrite the if statement in the next patch just clutters it up and makes 
+the real changes introduced by that patch less obvious
 
-Thanks,
--Stolee
+> Anyway, IIRC, --ignore-whitespace and --ignore-space-change has the
+> same meaning, I think it's better to use the same option for both
+> legs, no?
+> 
+> I can understand the decision to use --ignore-whitespace as keeping
+> the pass-through behavior of old code, but I think future maintenance
+> is more important than that.
+
+I'm not sure how it affects future maintenance. The two different 
+options are for two different commands so I'm not sure it is worth the 
+effort
+
+Best Wishes
+
+Phillip
+
+> I've tried changing ignore-whitespace to ignore-space-change and run
+> make test
+> 
+> It looks good to me (aka nothing failed _in my machine_),
+> 4/5 and 5/5 is not applied, though.
+> 
+>>   	if (strategy_options.nr) {
+>>   		int i;
+>>   
+>> diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
+>> index 50e7960702..55ca46786d 100755
+>> --- a/t/t3422-rebase-incompatible-options.sh
+>> +++ b/t/t3422-rebase-incompatible-options.sh
+>> @@ -61,7 +61,6 @@ test_rebase_am_only () {
+>>   }
+>>   
+>>   test_rebase_am_only --whitespace=fix
+>> -test_rebase_am_only --ignore-whitespace
+>>   test_rebase_am_only --committer-date-is-author-date
+>>   test_rebase_am_only -C4
+>>   
+>> diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
+>> new file mode 100755
+>> index 0000000000..4f8a6e51c9
+>> --- /dev/null
+>> +++ b/t/t3436-rebase-more-options.sh
+>> @@ -0,0 +1,60 @@
+>> +#!/bin/sh
+>> +#
+>> +# Copyright (c) 2019 Rohit Ashiwal
+>> +#
+>> +
+>> +test_description='tests to ensure compatibility between am and interactive backends'
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +. "$TEST_DIRECTORY"/lib-rebase.sh
+>> +
+>> +# This is a special case in which both am and interactive backends
+>> +# provide the same output. It was done intentionally because
+>> +# both the backends fall short of optimal behaviour.
+>> +test_expect_success 'setup' '
+>> +	git checkout -b topic &&
+>> +	test_write_lines "line 1" "	line 2" "line 3" >file &&
+>> +	git add file &&
+>> +	git commit -m "add file" &&
+>> +
+>> +	test_write_lines "line 1" "new line 2" "line 3" >file &&
+>> +	git commit -am "update file" &&
+>> +	git tag side &&
+>> +
+>> +	git checkout --orphan master &&
+>> +	test_write_lines "line 1" "        line 2" "line 3" >file &&
+>> +	git commit -am "add file" &&
+>> +	git tag main
+>> +'
+>> +
+>> +test_expect_success '--ignore-whitespace works with apply backend' '
+>> +	test_must_fail git rebase --apply main side &&
+>> +	git rebase --abort &&
+>> +	git rebase --apply --ignore-whitespace main side &&
+>> +	git diff --exit-code side
+>> +'
+>> +
+>> +test_expect_success '--ignore-whitespace works with merge backend' '
+>> +	test_must_fail git rebase --merge main side &&
+>> +	git rebase --abort &&
+>> +	git rebase --merge --ignore-whitespace main side &&
+>> +	git diff --exit-code side
+>> +'
+>> +
+>> +test_expect_success '--ignore-whitespace is remembered when continuing' '
+>> +	(
+>> +		set_fake_editor &&
+>> +		FAKE_LINES="break 1" git rebase -i --ignore-whitespace \
+>> +			main side &&
+>> +		git rebase --continue
+>> +	) &&
+>> +	git diff --exit-code side
+>> +'
+>> +
+>> +# This must be the last test in this file
+>> +test_expect_success '$EDITOR and friends are unchanged' '
+>> +	test_editor_unchanged
+>> +'
+>> +
+>> +test_done
+>> -- 
+>> 2.27.0
+>>
+> 
