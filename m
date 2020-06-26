@@ -5,70 +5,69 @@ X-Spam-Level:
 X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD10FC433E0
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 746C2C433DF
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABD8D204EA
-	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EB91207E8
+	for <git@archiver.kernel.org>; Fri, 26 Jun 2020 12:30:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bm6PSqFS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4v1Jws/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728485AbgFZMan (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Jun 2020 08:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53192 "EHLO
+        id S1728504AbgFZMap (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Jun 2020 08:30:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726335AbgFZMam (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jun 2020 08:30:42 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A81C08C5DD
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:41 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id 22so8678748wmg.1
-        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:41 -0700 (PDT)
+        with ESMTP id S1725864AbgFZMan (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jun 2020 08:30:43 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE752C08C5DB
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:42 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id q5so9320951wru.6
+        for <git@vger.kernel.org>; Fri, 26 Jun 2020 05:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UiCtqTJGVEULmS7sPq1CCgWHFh2xZ9/Kbd4Wgi4nLYI=;
-        b=Bm6PSqFS4SgpvI7pZKg+SFDOM0fK48MTjhe26vIN4UkJ8yUcbScUza1bvF7RcjhESd
-         NXbIzw8PO9BpNyZN+65IT4cX5l+Rm7An9WrqbV9u+t+12/5akaSq8WHAPsxK2ufIVQ7Y
-         sam/L6Ctxjcb0GTj1cboLMzGrKEss+YNvDeQmYFKlTIdiPJYPl6KadrKLcQSZeAIOtG7
-         i8UKqMRusXzhXV3MzYnBOYoSMsUxZgPsIBkyrkfoseDgChXHFDNl3br5vsfZpFCEgYb6
-         txES0L35u6ACiUbSouotgjRex8dO7Oh65BntXdDMmeg05kbwaf6sKe4VwMNStXHKpcJY
-         wZQA==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=+L6SCMA7yE5WbnCrIdqh9mek/Hy2vi09CFOR2XSlnpI=;
+        b=G4v1Jws/l+l7JdrocXppf84bAzYDDjnTLVweUmUCh+2Rvh3McHaRmuZ0KZHwSI5Ab7
+         tYPR5zLPJIG+cEwuPYTzO6sPxxQ9Ez9Qgv9W4cH1QIrzmqcqKIrUwM71Ob0SYDcJO0cV
+         V6jE+HQXAKl4lk8NTbt3uBZ7o4/WtHOpB7wVP72dVoJRmw1oDxu6XU+Ok5fVV2P9mu1N
+         UZKNvQp7L4xHHZb2erT/ygMBgkyNrQ8XRCgauiuOTuQY+SpmOmUn4gGyQkaicTSy3fhT
+         Nys1X+YiGV+R/OxSaoIbElUi/S80jkJV7LPVqY7x7C9rULfGRjEk5Ca03LSrQ/VUiKXC
+         UdCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UiCtqTJGVEULmS7sPq1CCgWHFh2xZ9/Kbd4Wgi4nLYI=;
-        b=CaMfT+rDjKrKZZ9GJdzLMiP+wf1DczcEC5VcMFP7YP+aB6W2B7ZJIm89xhRWYI03RG
-         f577xiM2q2sJ/nmiTFSc41wqbuSjK88ikEY+c4DNjFHVRjVlc7s88iiJIVXwpQVT3zDO
-         W1rykVo93zzkGtRKjQ6VKK1O5kM0pP5v3wYmpFRvw0LxRUYZdRYlbyVPSxDpkEmoSPUR
-         ZxxC1oFkZlR53WaAV5Z+skTK2UdBMSz+2Q7Goxs0uSg46UR3/Im45h0EHx2cNRpcfkW9
-         4ENA7/WxELVu7GLuYKich2DL7dj+yZFBnOuZOalziAbl1C8TLlZvlS4MBs5gObRuHOON
-         9xkw==
-X-Gm-Message-State: AOAM530T7vCiK2v8/jBCCR1paOMHay6o62CWkMjQCY+SlZW5yY0emtID
-        WHq68vOQ8LUs4MClDevF6taUMNa4
-X-Google-Smtp-Source: ABdhPJymB+kYQR57/wN7uzfF6Al/rzSUpU+niCsTz86q4hG/WYTsMHBcXsmJw/ZE0PdtJPrQwyG1qQ==
-X-Received: by 2002:a1c:acc2:: with SMTP id v185mr3075367wme.81.1593174640374;
-        Fri, 26 Jun 2020 05:30:40 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=+L6SCMA7yE5WbnCrIdqh9mek/Hy2vi09CFOR2XSlnpI=;
+        b=YXb2INRMEZ6+DfETcWq9P8Kqajowazs1xvphOkWaxQa16yI+XEQ6M17PZUqFXEeG/j
+         pIbGq1ZogdPmKYekRIaPtLBzD1DGUndlN2c4EWncp+62+/KsfXV0dwe8cwlA66WKy9VO
+         mwIO3J5KV2HWOq5N4nAZZRyDUrsZjIRR8SN75muqLJZibGwSEF55SxE1shsoUI1eT6A2
+         0QDAd2IftdOhl4+yx2AIaN9nmNXrz27atuaOiWHq1z/9ENiTkavrsR0Ckb3Qc/v9FkWX
+         zdr3+rpoUtw0vcyy//6I15bXVnhauhMzQGvDrF0rU3DO2jozP/4hzJV+nTJF3cuEtqNQ
+         TuGA==
+X-Gm-Message-State: AOAM532cJylT3QSyNKemmBykiZZuFo3qUawJ52YmSMzKFSSb3f4glVlX
+        K6LjVEazb7kSNM3ovsV3Cihl7RAm
+X-Google-Smtp-Source: ABdhPJyBBVTOU7tMZTiwsmo/iFGl5nemVtstbCETC6SvlgkBvrWrKHZEMkMdBB9z7u0qgrUEmURepQ==
+X-Received: by 2002:a5d:6045:: with SMTP id j5mr3465614wrt.209.1593174641198;
+        Fri, 26 Jun 2020 05:30:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h2sm23293671wrw.62.2020.06.26.05.30.39
+        by smtp.gmail.com with ESMTPSA id x1sm10959320wrp.10.2020.06.26.05.30.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2020 05:30:39 -0700 (PDT)
-Message-Id: <6b63f9bd8a2a7e18d7ac1be7066d4bcd1df2a729.1593174637.git.gitgitgadget@gmail.com>
+        Fri, 26 Jun 2020 05:30:40 -0700 (PDT)
+Message-Id: <2f809499abadd83b81b3d38d0cad9a2fd08b5440.1593174637.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
 References: <pull.659.v2.git.1592934430.gitgitgadget@gmail.com>
         <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 26 Jun 2020 12:30:28 +0000
-Subject: [PATCH v3 02/10] commit-graph: change test to die on parse, not load
-Fcc:    Sent
+Date:   Fri, 26 Jun 2020 12:30:29 +0000
+Subject: [PATCH v3 03/10] bloom: fix logic in get_bloom_filter()
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, szeder.dev@gmail.com, l.s.r@web.de,
         Derrick Stolee <dstolee@microsoft.com>,
@@ -80,81 +79,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-43d3561 (commit-graph write: don't die if the existing graph is corrupt,
-2019-03-25) introduced the GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD environment
-variable. This was created to verify that commit-graph was not loaded
-when writing a new non-incremental commit-graph.
+The get_bloom_filter() method is a bit complicated in some parts where
+it does not need to be. In particular, it needs to return a NULL filter
+only when compute_if_not_present is zero AND the filter data cannot be
+loaded from a commit-graph file. This currently happens by accident
+because the commit-graph does not load changed-path Bloom filters from
+an existing commit-graph when writing a new one. This will change in a
+later patch.
 
-An upcoming change wants to load a commit-graph in some valuable cases,
-but we want to maintain that we don't trust the commit-graph data when
-writing our new file. Instead of dying on load, instead die if we ever
-try to parse a commit from the commit-graph. This functionally verifies
-the same intended behavior, but allows a more advanced feature in the
-next change.
+Also clean up some style issues while we are here.
 
+Helped-by: René Scharfe <l.s.r@web.de>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c          | 12 ++++++++----
- commit-graph.h          |  2 +-
- t/t5318-commit-graph.sh |  2 +-
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ bloom.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index d0fedcd9b1..6a28d4a5a6 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -564,10 +564,6 @@ static int prepare_commit_graph(struct repository *r)
- 		return !!r->objects->commit_graph;
- 	r->objects->commit_graph_attempted = 1;
+diff --git a/bloom.c b/bloom.c
+index c38d1cff0c..2af5389795 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -186,7 +186,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+ 	struct diff_options diffopt;
+ 	int max_changes = 512;
  
--	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD, 0))
--		die("dying as requested by the '%s' variable on commit-graph load!",
--		    GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD);
--
- 	prepare_repo_settings(r);
+-	if (bloom_filters.slab_size == 0)
++	if (!bloom_filters.slab_size)
+ 		return NULL;
  
- 	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
-@@ -790,6 +786,14 @@ static int parse_commit_in_graph_one(struct repository *r,
+ 	filter = bloom_filter_slab_at(&bloom_filters, c);
+@@ -194,16 +194,14 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
+ 	if (!filter->data) {
+ 		load_commit_graph_info(r, c);
+ 		if (c->graph_pos != COMMIT_NOT_FROM_GRAPH &&
+-			r->objects->commit_graph->chunk_bloom_indexes) {
+-			if (load_bloom_filter_from_graph(r->objects->commit_graph, filter, c))
+-				return filter;
+-			else
+-				return NULL;
+-		}
++		    r->objects->commit_graph->chunk_bloom_indexes)
++			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c);
+ 	}
  
- int parse_commit_in_graph(struct repository *r, struct commit *item)
- {
-+	static int checked_env = 0;
-+
-+	if (!checked_env &&
-+	    git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE, 0))
-+		die("dying as requested by the '%s' variable on commit-graph parse!",
-+		    GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE);
-+	checked_env = 1;
-+
- 	if (!prepare_commit_graph(r))
- 		return 0;
- 	return parse_commit_in_graph_one(r, r->objects->commit_graph, item);
-diff --git a/commit-graph.h b/commit-graph.h
-index 881c9b46e5..f0fb13e3f2 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -5,7 +5,7 @@
- #include "object-store.h"
+-	if (filter->data || !compute_if_not_present)
++	if (filter->data)
+ 		return filter;
++	if (!compute_if_not_present)
++		return NULL;
  
- #define GIT_TEST_COMMIT_GRAPH "GIT_TEST_COMMIT_GRAPH"
--#define GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD "GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD"
-+#define GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE "GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE"
- #define GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS "GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS"
- 
- /*
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 1073f9e3cf..5ec01abdaa 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -436,7 +436,7 @@ corrupt_graph_verify() {
- 		cp $objdir/info/commit-graph commit-graph-pre-write-test
- 	fi &&
- 	git status --short &&
--	GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD=true git commit-graph write &&
-+	GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE=true git commit-graph write &&
- 	git commit-graph verify
- }
- 
+ 	repo_diff_setup(r, &diffopt);
+ 	diffopt.flags.recursive = 1;
 -- 
 gitgitgadget
 
