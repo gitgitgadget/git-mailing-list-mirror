@@ -2,155 +2,117 @@ Return-Path: <SRS0=sGv9=AK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40ABFC433E0
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 22:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D2F4C433E0
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 22:54:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1346F20760
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 22:42:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 553B620702
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 22:54:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Z9pqsG6z"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="akXZxU09"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726829AbgF2WmH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 18:42:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40266 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726046AbgF2WmG (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 29 Jun 2020 18:42:06 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728308AbgF2WyP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 18:54:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63943 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726078AbgF2WyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 18:54:15 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B60583035;
+        Mon, 29 Jun 2020 18:54:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3rkCUuZNnZ/cvyGmSGZ1WE8AnJA=; b=akXZxU
+        092Hc2AMEQwwG8yqHQjzjHaD7RGDqSQJYgKsbcVONJ5T0HFBF4fMx6CgGKxkULYb
+        gwlJBUa/oRlXBsFWOH6gZwT75fj0I761ZzAjWeWNobOqQXtf3pYNMvIUu6fMDaBL
+        KaZB4C+jPZmL3b1TV3sErWjQ4DxDhzm2JmiAQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=k2/Xc01pE+UISjqQEVhPMn/sJHtIYnWl
+        shimRkGipAxmTIAyeD88idqR5Hx9cc01/NlAI03CgbC+LY7VhDkxmVxuzqFIY5+u
+        WqVHS7LAR6EQBPriX9sRS4CxfAZ8ftoapOI5Q/4vx9WFyJowLuM47XbIbw3ogCFL
+        sdDPd3WLtWM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 93E7083034;
+        Mon, 29 Jun 2020 18:54:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1E11860459;
-        Mon, 29 Jun 2020 22:41:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1593470495;
-        bh=1Ju++8+9zCJqE9ad1NTNpwbmUquJ2ARLei/2oU1el/8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Z9pqsG6zgEElvD5t/OBdi+FWiWqfZtuYO/Mhb4z/GcD8patRdR5EIPjDEm+7IPm3P
-         fbnQl5lYHAdL748z0aJPn9r9w1flfn8FfYIRmLiTXJet52B85WbjL8I/ZFFT/MKDyL
-         78rS18BnncsLFr1cheQnmpwHBV8H+nOp64yXFSwHJOCC7jdxhPmzuvyC2bVkieR7v/
-         rO4wzlRWUP22uQRYfdkphmj8/aFUx0r6U/X1Y4jtNKrp7bxHYQNAK/8Ic+Np3KOIcM
-         w7IP3PWwb4nejSElJ6mdni5tj55cXXOsWpcfnvRsdHGAynwKiu3VdhbAnOaUHbuWb9
-         /l7s5IUQwIa+mEUPTwFSW9TxaWa8Wj09FkFG2f8MeOErNdLJUtkeq+pQxTAqd6A63o
-         KmLVns/otPlEAlabXhmaYzfJ7WDhubtChoJC+NepwJ2WoxyuW4lZYNsOisKzFCwa49
-         a1GPaFahzdEaflQYLMxJvTUdExPn3NfroVB5pyucgFjdLtRDExk
-Date:   Mon, 29 Jun 2020 22:41:13 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 0/9] Allow overriding the default name of the default
- branch
-Message-ID: <20200629224113.GC9782@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
- <pull.656.v4.git.1593009996.gitgitgadget@gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E20FA83033;
+        Mon, 29 Jun 2020 18:54:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v19 00/20] Reftable support git-core
+References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
+        <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
+Date:   Mon, 29 Jun 2020 15:54:12 -0700
+In-Reply-To: <pull.539.v19.git.1593457018.gitgitgadget@gmail.com> (Han-Wen
+        Nienhuys via GitGitGadget's message of "Mon, 29 Jun 2020 18:56:38
+        +0000")
+Message-ID: <xmqqimf9fppn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZmUaFz6apKcXQszQ"
-Content-Disposition: inline
-In-Reply-To: <pull.656.v4.git.1593009996.gitgitgadget@gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 74040332-BA5B-11EA-8E90-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---ZmUaFz6apKcXQszQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> base-commit: b9a2d1a0207fb9ded3fa524f54db3bc322a12cc4
 
-On 2020-06-24 at 14:46:27, Johannes Schindelin via GitGitGadget wrote:
-> A growing number of open source projects aims to avoid the branch name=20
-> master due to its negative connotation. See [1] for an existing discussion
-> on this. The links [2], [3], and [4] describe community-driven ways for
-> users to rename their default branches or use template edits to set a new
-> default branch name.
->=20
-> [1]=20
-> https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV=
-=3D=3DapdWDg@mail.gmail.com/
->=20
-> [2] https://twitter.com/mislav/status/1270388510684598272
->=20
-> [3]=20
-> https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMaster=
-ToMain.aspx
->=20
-> [4] https://github.com/ethomson/retarget_prs
->=20
-> By necessity, existing repositories require a lot of manual work to move
-> away from that branch name, but it should be much easier for new
-> repositories.
->=20
-> This patch series allows overriding the branch name being used for new
-> repositories' main branch. This can be configured via init.defaultBranch.
->=20
-> The initial patch was started by newcomer Don Goodman-Wilson, as well as =
-the
-> bigger change that morphed into #655, where we demonstrate how to change
-> Git's hard-coded default branch name for new repositories to main based on
-> this here patch series, verifying the approach. Thanks for the contributi=
-on!
->=20
-> This series DOES NOT change the default automatically, but only provides =
-an
-> opt-in mechanism for interested users. The plan for that is to convert the
-> test scripts incrementally (by introducing GIT_TEST_DEFAULT_MAIN_BRANCH_N=
-AME
-> , which overrides init.defaultBranch, and then converting the tricky test
-> scripts first, one by one, using that environment variable).
+This is based on 'next', which usually is a sure way for a topic to
+stay forever out of 'next', but we have impactful dependence only on
+two topics, I think, and a good news is that both of them are in
+pretty good shape.  I think Brian's part 2 of SHA-256 work should be
+on the 'master' branch soon, and Dscho's "customizable default
+branch" is also ready---it just would, like all other topics, want
+to spend at least one week on 'next' to be safe.  And after that,
+this topic can be directly on 'master' (there is another trivial
+conflict around bisect--helper, but I am not worried about it),
+which looks quite good.
 
-I'm very happy with this and the way it's progressed since v1.  This
-seems simpler than earlier designs, and I appreciate the improved focus
-on avoiding special-casing branches, since I think that will make it
-easier for folks to choose branch naming that suits them.
+Tentatively I've prepared a merge of bc/sha-256-part-2 and
+js/default-branch-name on top of today's 'master' and these patches
+applied cleanly on the result.  As you mentioned, we may want to
+flip the orders of patches a bit to split uncontroversial ones out
+to a separate preparatory topic and get them merged to 'next' and
+then to 'master' earlier than the remainder.
 
-Thanks for working on this.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Thanks.
 
---ZmUaFz6apKcXQszQ
-Content-Type: application/pgp-signature; name="signature.asc"
+-- >8 --
+fixup! Reftable support for git-core
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+Noticed by the "make && make distclean && git clean -n -x" test.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXvpuCAAKCRB8DEliiIei
-gUlfAP4jJ2vSSsH+WgYIPzUrQezonnrcMd42cW2a5XFuWf23MwD/XYorC/MKlyoN
-hOsXwi+gd5eJhRjLh//0g0Kd83JaLA4=
-=JYlh
------END PGP SIGNATURE-----
+diff --git a/Makefile b/Makefile
+index d949b79720..c22fd41662 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3153,7 +3153,7 @@ cocciclean:
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) *.res
+ 	$(RM) $(OBJECTS)
+-	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB) $(REFTABLE_LIB)
++	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+-- 
+2.27.0-221-ga08a83db2b
 
---ZmUaFz6apKcXQszQ--
+
+
+
+
+
