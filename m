@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78068C433E2
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 328A2C433DF
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51917204EC
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17C4F204EC
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rwWH0qOw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CoFmhb/u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729911AbgF2S5N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 14:57:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40778 "EHLO
+        id S1729973AbgF2S5I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 14:57:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729633AbgF2S5L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:57:11 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908A3C031C41
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:11 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id j4so15187819wrp.10
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:11 -0700 (PDT)
+        with ESMTP id S1729912AbgF2S5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:57:04 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C097C031C43
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:04 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id g18so17674621wrm.2
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+Z8vEIBY7dqXeqqNBUPsNw/E+iUxatUcmVMbFcKVLzc=;
-        b=rwWH0qOwv7jSejQszuty7aGZPI3YRU6BoOQ+m8by/e5qPHy5Xz3GqkwxkEcgpsCuIF
-         h26LXOxkpQ8NkkPTf9NPxBWRH0dEzBUGw9NbQWy/ynWnLdCMuu/1/rRHOu8p/aoOPikg
-         AcenYe3Ya3yuQOiWEe40SUG0OPSwCXCVdUVZjg0UK80wp1g2nXNdBRLEqrFMdL7h1/fi
-         TxWgSw03ljpMUuXd90nIur2L3MJqk6guTYcOC6jgrjUiYnyxO2NGYT4Y2deKKdV/DuSe
-         AfkyPVMw4wGFZ31ZyJIY7jh1wb7kRDzwcV9NkWVALsZeiWepHKYh0IFYmbs1D63wooEs
-         zESg==
+        bh=KeQPSgQHB6GBlCKxDfeccg4JcRy9zHM+z2ewZQFsCEU=;
+        b=CoFmhb/uf41v5IKX6Y/2hQlmvYTe8JBlgUccJj0vBfxQA0vc8B7QBZjX7zGXJB2/G8
+         bZu+zvAgEVk2FidknZalLNaSJtGY6IfM5s/B6xxKWe8h9ZrylvnqHhuIKZuKA3LeUrYY
+         pt08ba4/nGbwqazEpihRTlIRdMNNELR1HIuT8iZm2x0qv6dxi0rk/su2LLZdGIEpVSMZ
+         qbcSKUqc/EmlYRcGWMO/JdCsKAc7jI4Uvbde4Be5vRkvfd7McI+MWGYkS2U2PhlwqnBm
+         xLSiFkAXWMjF4Yd/9uooj59MEUpjhQeGgtwrcZbg/JNF878yZjnyIJVHtZwE4U9zThB5
+         w0Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+Z8vEIBY7dqXeqqNBUPsNw/E+iUxatUcmVMbFcKVLzc=;
-        b=pjQYqlMLZ8hawxhA/7RO9vlo3NZ9DPsDF+B3UbrHmAqDJVkZ9eTvcB1kCnUEcHteKw
-         GFuE2V0fkTl1b2jYig3sK1elEQWdVRNtDJF0DRD3mVM8ReagTf7mvqlrDLPMYAOGGGgl
-         3wjt14A5k0FnXW7mfaP694llv/Okv0cCtti0GOpQeCMJ8HQtSW+3yOW9TTA5UN8LJyNn
-         vAozbpyAcEn7ZfljrTdDVjcFivmsNOcxBtr/akAwwSWmAceaSDdBK3IWYLVHiH6zWhvL
-         NzvuPykQArp3kPPtXu8Z+CstmP4R+26c/kXGSIyODbuMxX9TtvE2qTvxptoQ1M8HmIh8
-         J4ag==
-X-Gm-Message-State: AOAM532zUeIWOEGRWsVJGhNLpaYsRvOy7wufDXoJlHL/sjRKLkN74SFa
-        2dXBOsjZmroYF6gAUqAGrx5lrfoWRFE=
-X-Google-Smtp-Source: ABdhPJy6533Cyz0chbugusUCp+pM4mSt2gn6VWxnns7wXZ61sQMUy1P4QILVgyf/yBFCLVJCAuAQvQ==
-X-Received: by 2002:adf:eecf:: with SMTP id a15mr18398510wrp.83.1593457030228;
-        Mon, 29 Jun 2020 11:57:10 -0700 (PDT)
+        bh=KeQPSgQHB6GBlCKxDfeccg4JcRy9zHM+z2ewZQFsCEU=;
+        b=loSJDsjUivJMI+IR29IO5xYSMo7NiWI7QKaYkBnISHjKpb6ZihBWUd5KvyU/+Gn/Hq
+         h+qd9cHHZ2AiOe3ITv3+5XZytMA3IIUxc3m33nwa1u8UbHzCgPLM04mIwB67WHoTUEGS
+         uUsoJXyPpR/WJI4RnjI7cmbDl3akJF/lwjqs/ZMOLUVvHPsdi3VWOwNTCLK+ioJDWVAu
+         A2QXWTQjLr7uWrd0CJf19BrS0c4RlTNAEQpKQl1deOXmd+Kx2oqwYe1a+SptMzFTusp9
+         Zase0Z/o5fAFPR0gQobLDo9ayCEym1touSEjy8uNhXMQubSo4u9F/pQ/v7wkql+zL/yE
+         R0GQ==
+X-Gm-Message-State: AOAM530cAd2OqIKVBQpd059NbQfrjjG9mvEyo2+7Oc14RifNHpbrTIB5
+        Jz2RmWsnlDev55QdvTnIBSh+65MoHOw=
+X-Google-Smtp-Source: ABdhPJz89WlIDy3ITWT/8zTnjretAuWXLJKADGjeYoQq65V0UQy79ZgBk36gZnd0PPdd8YUSgXauKQ==
+X-Received: by 2002:adf:e6c8:: with SMTP id y8mr19509645wrm.40.1593457022740;
+        Mon, 29 Jun 2020 11:57:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d132sm758693wmd.35.2020.06.29.11.57.09
+        by smtp.gmail.com with ESMTPSA id z2sm843791wmc.2.2020.06.29.11.57.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 11:57:09 -0700 (PDT)
-Message-Id: <e4545658edb011262924d60ab166a4dbc39c6dd4.1593457018.git.gitgitgadget@gmail.com>
+        Mon, 29 Jun 2020 11:57:02 -0700 (PDT)
+Message-Id: <125695ce92218ca2ddb9868880db542acb0d2a79.1593457018.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
 References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
         <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Jun 2020 18:56:49 +0000
-Subject: [PATCH v19 11/20] Add .gitattributes for the reftable/ directory
+Date:   Mon, 29 Jun 2020 18:56:41 +0000
+Subject: [PATCH v19 03/20] checkout: add '\n' to reflog message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,19 +78,30 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+Reftable precisely reproduces the given message. This leads to differences,
+because the files backend implicitly adds a trailing '\n' to all messages.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/.gitattributes | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 reftable/.gitattributes
+ builtin/checkout.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/reftable/.gitattributes b/reftable/.gitattributes
-new file mode 100644
-index 0000000000..f44451a379
---- /dev/null
-+++ b/reftable/.gitattributes
-@@ -0,0 +1 @@
-+/zlib-compat.c	whitespace=-indent-with-non-tab,-trailing-space
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index af849c644f..bb11fcc4e9 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -884,8 +884,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 
+ 	reflog_msg = getenv("GIT_REFLOG_ACTION");
+ 	if (!reflog_msg)
+-		strbuf_addf(&msg, "checkout: moving from %s to %s",
+-			old_desc ? old_desc : "(invalid)", new_branch_info->name);
++		strbuf_addf(&msg, "checkout: moving from %s to %s\n",
++			    old_desc ? old_desc : "(invalid)",
++			    new_branch_info->name);
+ 	else
+ 		strbuf_insertstr(&msg, 0, reflog_msg);
+ 
 -- 
 gitgitgadget
 
