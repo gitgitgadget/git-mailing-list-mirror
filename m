@@ -7,58 +7,96 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 725EBC433E0
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 19:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB63AC433E1
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 19:25:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 332FA2073E
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 19:15:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88FC0206F1
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 19:25:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="LQSBQfwZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UiQdvFP4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731146AbgF2TO5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 15:14:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43382 "EHLO
+        id S1732382AbgF2TY7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 15:24:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731786AbgF2TOX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jun 2020 15:14:23 -0400
-X-Greylist: delayed 384 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 29 Jun 2020 03:24:36 PDT
-Received: from forward103o.mail.yandex.net (forward103o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::606])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F29D3C008610
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 03:24:36 -0700 (PDT)
-Received: from mxback26j.mail.yandex.net (mxback26j.mail.yandex.net [IPv6:2a02:6b8:0:1619::226])
-        by forward103o.mail.yandex.net (Yandex) with ESMTP id 2805F5F80ED2
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 13:18:09 +0300 (MSK)
-Received: from myt4-ee976ce519ac.qloud-c.yandex.net (myt4-ee976ce519ac.qloud-c.yandex.net [2a02:6b8:c00:1da4:0:640:ee97:6ce5])
-        by mxback26j.mail.yandex.net (mxback/Yandex) with ESMTP id YhPMjnfo9o-I8G0l59h;
-        Mon, 29 Jun 2020 13:18:09 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1593425889;
-        bh=YxiQh9jM4LKpkisOT7/pkRUa0xEGsgSczd55LzRrcCs=;
-        h=To:From:Subject:Date:Message-ID;
-        b=LQSBQfwZxyATisSjL+hexuYtxc5Tcbh6dSSDiM8zDco9iIVmwRudYZsAML8QEl7hf
-         44Yll+h8C4i3fn7Cjf/MYwWG4fHWm84Zc93R9yKdftIEghsc6uUWtUFIOL79DdMGk8
-         dx8Jdp9UbNaE3YpquVFbLs8DZJhSw2lqEZwY0ufs=
-Authentication-Results: mxback26j.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by myt4-ee976ce519ac.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id MTYVli23Sw-I8kigqWs;
-        Mon, 29 Jun 2020 13:18:08 +0300
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client certificate not present)
-Message-ID: <e37cdda3b73094f4f1a929dd181a64936a649c48.camel@yandex.ru>
-Subject: Listing changed identifiers with git log/diff
-From:   Konstantin Kharlamov <hi-angel@yandex.ru>
-To:     git@vger.kernel.org
-Date:   Mon, 29 Jun 2020 13:18:08 +0300
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.3 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1732132AbgF2TYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 15:24:50 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B6BC061755
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 12:24:50 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id z2so13775475qts.5
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 12:24:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=8OgPXznbGmex8WhtwXsniISBf+e2pWATNQmL3lzp86w=;
+        b=UiQdvFP4IKrGMxON1VNaCx+oqjbBUJqw+cJRhchTSOKHAJinmXElO92q+ZH6w3Gcgi
+         YOgt3MaXnqpSe4xVU5eoSccxqhRB2tYvBGSK405/mNd0Q3CaZTrTH6L+57vc7kuk5Tmb
+         TubFZ2k2n8nCCI+vPQ5AURgllW7fo7KGHG8SmEZdEoAW39lKFeDhL0nv2sDxiDqwh74v
+         NjAv706akIeQcaocOYV8DhjReUfPYKNUt8DRlCcg0dwDt7WyRJfO35FY1u8ZuM5ibwuG
+         JXHU5UejHY4u83NF9m9wDHQwNgI94sqB5J6k/Tk47alVZ31gTHTSCeE2Hx6sOayYbRn+
+         T3Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=8OgPXznbGmex8WhtwXsniISBf+e2pWATNQmL3lzp86w=;
+        b=NOcyU+yFP5ITjMYErDJCG6I9ltbR4V3LGQb35R7tgyeMcF+eBDqWy10ujpHsnmOSlr
+         ZaZFaESEXAO9CZ3jVglgy8UkSyB+eIChEKf45AFu3e63GRZ9NSctlAmPUNJ8DepSJsTI
+         T5HPdpWs7xBOMWqejHnQpI2M+H9azPNDbrPBIFRw98giiWwDzKtMFPIChMg9bO9QIDCu
+         TRGLEuJLJXdwIXcexaVXr5kEgQAsivZ0o6RrHr3J5BT4HtGBGLGtJMBhxHLyjfGPFLYc
+         Q4Lr/SzA7WoGOTBRep2ogF0GGo7QrRp55y1f67Rtd47PO29CC1k8hsBeq9l5FCQgitLX
+         pb+g==
+X-Gm-Message-State: AOAM5338Ba0CFooamu699HMwHbkxNYTEjHJhpjOhLvAP6rB8NGh+lEH8
+        /od5ZmiwOJs6n4tLkkYvvvE40OdN
+X-Google-Smtp-Source: ABdhPJz/jpL4CMzYRqgd9x927+mE18AO7aIiMsWBI/uF/A7t1fzZlaVaZ85WPWlso/v8BR5ml9Hv0Q==
+X-Received: by 2002:ac8:a03:: with SMTP id b3mr16808815qti.240.1593458689898;
+        Mon, 29 Jun 2020 12:24:49 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id z19sm761982qtz.81.2020.06.29.12.24.48
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Mon, 29 Jun 2020 12:24:49 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: Listing changed identifiers with git log/diff
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <e37cdda3b73094f4f1a929dd181a64936a649c48.camel@yandex.ru>
+Date:   Mon, 29 Jun 2020 15:24:47 -0400
+Cc:     Git List <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3CA60EC2-13E9-4A1A-9A89-066CFF9CA36E@gmail.com>
+References: <e37cdda3b73094f4f1a929dd181a64936a649c48.camel@yandex.ru>
+To:     Konstantin Kharlamov <hi-angel@yandex.ru>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git is able to recognise functions/variables changed, and even allows to see the history of such identifier with `-L` option.
+Hi Konstantin,
 
-But I couldn't find: how does one get a list of such identifiers in `git log` or `git diff`? This would be particularly useful for projects with odd requirements to have a list of identifiers changed in the commit message.
+> Le 29 juin 2020 =C3=A0 06:18, Konstantin Kharlamov =
+<hi-angel@yandex.ru> a =C3=A9crit :
+>=20
+> Git is able to recognise functions/variables changed, and even allows =
+to see the history of such identifier with `-L` option.
+>=20
+> But I couldn't find: how does one get a list of such identifiers in =
+`git log` or `git diff`? This would be particularly useful for projects =
+with odd requirements to have a list of identifiers changed in the =
+commit message.
+>=20
+> FTR, the diff text after the "@@=E2=80=A6@@" does not cut it because =
+for example if the diff is at the beginning of the function, then it =
+would have a name of the previous function, i.e. not the one modified. =
+As a hack, I tried passing an option `-U0`, but that didn't help, for =
+one-line identifiers it still shows the name of the prev. identifier.
 
-FTR, the diff text after the "@@…@@" does not cut it because for example if the diff is at the beginning of the function, then it would have a name of the previous function, i.e. not the one modified. As a hack, I tried passing an option `-U0`, but that didn't help, for one-line identifiers it still shows the name of the prev. identifier.
+As far as I'm aware this is a limitation of the diff machinery.
+I agree with you that it would be really nice if it could work as you =
+describe...
 
+Cheers,
+
+Philippe.=
