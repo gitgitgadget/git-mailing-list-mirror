@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B77E8C433E0
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BCCDC433E1
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90B1020663
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F47420663
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bm4EI0Nf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tu8nJb4k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730089AbgF2S5S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 14:57:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40772 "EHLO
+        id S1730101AbgF2S51 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 14:57:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729568AbgF2S5K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:57:10 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC83C031C40
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:10 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id g10so2917587wmc.1
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:10 -0700 (PDT)
+        with ESMTP id S1730093AbgF2S5T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:57:19 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF7AC031C40
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 17so17119870wmo.1
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=x3gkwfDyVATxmVwJQ1kKlzmJzZlPPHDOc3pXYQtKRhc=;
-        b=Bm4EI0Nf3J9Fd3QHRvyxkGK/lsz3rzsL1B3p/TM4UO9SQoAFk5ydOH3Jc6JYq5j6dm
-         n9hD/9mEgEty0YWzg+ma1JLG4wpke7RcNDjZJZGZqdd1s+IweuieyY2ukYcIlGYkLOOY
-         aqRTGDnYZ6G0z4uhHtu2li62z9KtcLsnKYdKKJuNuCGyMmia6e3fnWyLZvIwyoxn3aA6
-         JIhvMaB+KYzWovzWO1z8icvCVHUfKU4NZrqa1MKirOFOUvVxinuZc1eNYEHA9k9dwaRw
-         1pvmAGaOIaWZohkR6hFCcp2W40eOqMo3SR+4ujYMNrJJG8vywPWru7wLjRaPlpqV91T4
-         8HAg==
+        bh=4+GYIwg64XgTp2UucbUePBzYBR0cr8NZ9G3xhB1kVk0=;
+        b=tu8nJb4k4tgtN5ArJ11br5gZ1Cbe1Y9dEo4eJKiNqGoRuzPmiNsExm5B9rQEcn7hPq
+         kZWBB64knjJtevVsKcXyl5aB+AeYJnEk951jRxWwY21F9rV9P3YKpzc/UI5dDgLkcIdw
+         qi41jMERmiZDioLWDHCEDSCpWeqrY0ZsyJoufeWaYGCoX1uqKFqWJLpNj4gBlWfyDlT0
+         //m7QVQSS9va14ubN2M9KitsaxZT6+vrfsEJdjO8avYxYZdLDY3/FwtnEG2R3EgXotA6
+         tbXpPUcAs8XRCuMU0WVDhfPigKs6o1T2JVOPTjeKTOoBV860eKmfccM49rdOfCqbxKja
+         x9lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=x3gkwfDyVATxmVwJQ1kKlzmJzZlPPHDOc3pXYQtKRhc=;
-        b=OraUf8R9+WkvaVXjzLoIVe4L48d1NiHQjeEtx4R6q2pd35AGhdG7g2HGjPDi3gWXYk
-         yQExuOQVCT91z+vWfnkOE5E2Ryb/s3u1QYvc+nLfZcoIT3Abh1ngF01ZHN3ejt85oqth
-         GBfia1+0KbK6njtlay6+LfzgM4RN1sZHzYZ2tB4nxnXzEmYavkjtKevwG9DIJBQ6W7Oh
-         MAWpmEzMZaKVL7NTMNasd1NqK901eEKjEA24ayJk5wde2ldh8fzjNZHQ/b+LINfTncap
-         h42xjD5bcyBIN7vokLTSwE/aKL1PGdlCwU5feoHJijo3lKiMe5B2vIdPL9lXVd7o9yS8
-         1acg==
-X-Gm-Message-State: AOAM530oLLR2mn+pxszi+aSDPfCO7fIEsuNlR9f2kTLExvmZb8YqEa//
-        QXPqdMAvI7olqykOG0IDGqW1q4RkHQw=
-X-Google-Smtp-Source: ABdhPJyT2Oe66xScOjlq96BfXBLbbEgi01BlCEiMRdzm9eLoHTwIN0CoQvNXZ5IKmezrsE0PPWwB8g==
-X-Received: by 2002:a1c:9ac2:: with SMTP id c185mr17603866wme.24.1593457028733;
-        Mon, 29 Jun 2020 11:57:08 -0700 (PDT)
+        bh=4+GYIwg64XgTp2UucbUePBzYBR0cr8NZ9G3xhB1kVk0=;
+        b=Opcdok6SHn2Ow2relnX9UNUYHSZ5MwqmTtNlGAr/m+JqTd9qTIy6Ceotwhwn2IFuLr
+         kWM0+MRkp8zdrXU9V8ZHxLedyWkjsLVTgIK+Mwt477BRV4ROZPGy8EwohFlWUg3Fw3m0
+         Ss+HBJUSiilHamouBzuLLdE1BrU+K7OAOmLSpWDG5N+bnL6F4uFnc0e50jFjazFfN9vE
+         +CozcDhaAStPoOUEv6Vw0KWX3ThB3wa694FnMy9blT4Dn3YfnpWG7bmrMDhXHh9p3iu2
+         rwpeI63YjwngmqKBBVK22KFxyzw1NYNEdLI67qCeUp0iRJZGk1TkgGVREKLXQPRpfDzJ
+         cfcw==
+X-Gm-Message-State: AOAM530no0q9X71WvY8kZFUcNHMGOHyS1PNRXG84oB38+N/yEJo8kqAW
+        /mMugVr8lPfQDBdwVPLfaLKyranM2JQ=
+X-Google-Smtp-Source: ABdhPJwWgocj6Sakv9slp62I0K5xSFvm0tiNlOvD6MS4Usjhzv17EB4LoPPrbee7a2bpE6hqqZbt1Q==
+X-Received: by 2002:a1c:6788:: with SMTP id b130mr18515096wmc.100.1593457038129;
+        Mon, 29 Jun 2020 11:57:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g195sm837998wme.38.2020.06.29.11.57.08
+        by smtp.gmail.com with ESMTPSA id w17sm804684wra.42.2020.06.29.11.57.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 11:57:08 -0700 (PDT)
-Message-Id: <a116aebe110fc1023b7b0dce8ae5a94f5d3d4d28.1593457018.git.gitgitgadget@gmail.com>
+        Mon, 29 Jun 2020 11:57:17 -0700 (PDT)
+Message-Id: <0ebf7beb95c90cab3ea97bd2f13cda0eb47f7b54.1593457018.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
 References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
         <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Jun 2020 18:56:48 +0000
-Subject: [PATCH v19 10/20] Iterate over the "refs/" namespace in
- for_each_[raw]ref
+Date:   Mon, 29 Jun 2020 18:56:58 +0000
+Subject: [PATCH v19 20/20] Add "test-tool dump-reftable" command.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,39 +78,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This happens implicitly in the files/packed ref backend; making it
-explicit simplifies adding alternate ref storage backends, such as
-reftable.
+This command dumps individual tables or a stack of of tables.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Makefile                 | 1 +
+ t/helper/test-reftable.c | 5 +++++
+ t/helper/test-tool.c     | 1 +
+ t/helper/test-tool.h     | 1 +
+ 4 files changed, 8 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index 0363ddbeeb..36c0e76256 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1482,7 +1482,7 @@ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+diff --git a/Makefile b/Makefile
+index 700ba10b01..d949b79720 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2375,6 +2375,7 @@ REFTABLE_OBJS += reftable/writer.o
+ REFTABLE_OBJS += reftable/zlib-compat.o
  
- int refs_for_each_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(refs, "", fn, 0, 0, cb_data);
-+	return do_for_each_ref(refs, "refs/", fn, 0, 0, cb_data);
+ REFTABLE_TEST_OBJS += reftable/block_test.o
++REFTABLE_TEST_OBJS += reftable/dump.o
+ REFTABLE_TEST_OBJS += reftable/merged_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
+ REFTABLE_TEST_OBJS += reftable/refname_test.o
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index def8883439..aff4fbccda 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -13,3 +13,8 @@ int cmd__reftable(int argc, const char **argv)
+ 	tree_test_main(argc, argv);
+ 	return 0;
  }
- 
- int for_each_ref(each_ref_fn fn, void *cb_data)
-@@ -1542,8 +1542,8 @@ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
- 
- int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(refs, "", fn, 0,
--			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-+	return do_for_each_ref(refs, "refs/", fn, 0, DO_FOR_EACH_INCLUDE_BROKEN,
-+			       cb_data);
- }
- 
- int for_each_rawref(each_ref_fn fn, void *cb_data)
++
++int cmd__dump_reftable(int argc, const char **argv)
++{
++	return reftable_dump_main(argc, (char *const *)argv);
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 10366b7b76..9e689f9d2b 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -53,6 +53,7 @@ static struct test_cmd cmds[] = {
+ 	{ "read-midx", cmd__read_midx },
+ 	{ "ref-store", cmd__ref_store },
+ 	{ "reftable", cmd__reftable },
++	{ "dump-reftable", cmd__dump_reftable },
+ 	{ "regex", cmd__regex },
+ 	{ "repository", cmd__repository },
+ 	{ "revision-walking", cmd__revision_walking },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index d52ba2f5e5..bf833e01d4 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -17,6 +17,7 @@ int cmd__dump_cache_tree(int argc, const char **argv);
+ int cmd__dump_fsmonitor(int argc, const char **argv);
+ int cmd__dump_split_index(int argc, const char **argv);
+ int cmd__dump_untracked_cache(int argc, const char **argv);
++int cmd__dump_reftable(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+ int cmd__genzeros(int argc, const char **argv);
 -- 
 gitgitgadget
-
