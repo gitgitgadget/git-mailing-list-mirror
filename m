@@ -2,91 +2,112 @@ Return-Path: <SRS0=sGv9=AK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09E44C433DF
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 19:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44F4EC433DF
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 20:08:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAF6420702
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 19:51:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 203DC2085B
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 20:08:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C01X6qDc"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mZLiYtcU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388118AbgF2TvN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 15:51:13 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51417 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387770AbgF2TvL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jun 2020 15:51:11 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8689281709;
-        Mon, 29 Jun 2020 15:51:08 -0400 (EDT)
+        id S2388925AbgF2UIC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 16:08:02 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63527 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388769AbgF2UIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 16:08:00 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 469A2DAAA1;
+        Mon, 29 Jun 2020 16:07:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=esrYd1FhCZcBkFd1EU+rwm42SH4=; b=C01X6q
-        DcbhD6LlVVlT7zDISrzIFESR43pTTqF3sF6v0NhyZSIzT3+zH3DHPEc4lLroZeS7
-        rbguR0naT/C6gsVkMM29nnFvEp6h98vkOFguMhXnWHDSMP+ygYAMO/s4Nj2r6SGT
-        Sso1gwwrPNXMlIjJevQcrqE5LBVkykpIZI7ho=
+        :content-type; s=sasl; bh=msOqSxyM5njvWTyQSOs051NIF3Y=; b=mZLiYt
+        cUBQnmd6/KzaDqROAH9HSOi7CsgkbRQ5xDlxzYuFFJP1tDPFVHYQIFuuZquFt2jW
+        dbwN8Jo3JyyaLgxcR3xZj7wLHFdZdHliUKYT3xQmFlb1zfNF0c/oesD935JrLHNA
+        jnRjSnpXUC9XuYKeRNXd+Q1joV2CnmqtrnSNY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GAgFvFj8U5uKlqOHozhibF6wBR0hco/M
-        wJLF/RU7r4GVQP55ARGwsV10NLld7/FOHLjS56IQw3DUlBOiBYP9s8Rb4dxiT4RZ
-        tLUfCbdcM0dJUe2p0GAhR4xR0If695KbegjXbe+t0zVbbL/IKmGGH0bdRQMriVvA
-        B9c8ifVVEEc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D2BB81706;
-        Mon, 29 Jun 2020 15:51:08 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=avsRtvowzLdf7FyCK2uv01S6trl8YgMc
+        izWB7wR2jDKrQ55HiPf7h/ayOTLWVE0xhIcsygUb89Yc/bhagjjCKJ9k4ddEqaW+
+        AcTV4X4MS30FJa0MagfFuG5qTM47rNJ86rBLKD6CryIo/+UiYw4beCXNOG/WGBxG
+        Iy+MsuxAsi0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E40EDAA9E;
+        Mon, 29 Jun 2020 16:07:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F359C81703;
-        Mon, 29 Jun 2020 15:51:05 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7D887DAA9D;
+        Mon, 29 Jun 2020 16:07:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Reftable progress
-References: <CAFQ2z_NZbg4YoTo1vPaikfwYLMRZrx59bDMaeuczuJW2OG86DQ@mail.gmail.com>
-        <CAFQ2z_Ohp29=Txu9ikn1i_GJQ8eYV9HNrKqSpAOMNamL92YZYQ@mail.gmail.com>
-Date:   Mon, 29 Jun 2020 12:51:04 -0700
-In-Reply-To: <CAFQ2z_Ohp29=Txu9ikn1i_GJQ8eYV9HNrKqSpAOMNamL92YZYQ@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Mon, 29 Jun 2020 20:57:15 +0200")
-Message-ID: <xmqqr1txfy6v.fsf@gitster.c.googlers.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v19 03/20] checkout: add '\n' to reflog message
+References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
+        <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
+        <125695ce92218ca2ddb9868880db542acb0d2a79.1593457018.git.gitgitgadget@gmail.com>
+Date:   Mon, 29 Jun 2020 13:07:54 -0700
+In-Reply-To: <125695ce92218ca2ddb9868880db542acb0d2a79.1593457018.git.gitgitgadget@gmail.com>
+        (Han-Wen Nienhuys via GitGitGadget's message of "Mon, 29 Jun 2020
+        18:56:41 +0000")
+Message-ID: <xmqqmu4lfxet.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DEB78A92-BA41-11EA-9768-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 3903BEE2-BA44-11EA-A814-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Tue, Jun 23, 2020 at 12:03 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
->> The bottom 2 commits should be OK to merge as is into next.
->> ("checkout: add '\n' to reflog message", "lib-t6000.sh: write tag
->> using git-update-ref")
+> From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> The patch t3432: use git-reflog to inspect the reflog for HEAD can
-> also be merged as is.
+> Reftable precisely reproduces the given message. This leads to differences,
+> because the files backend implicitly adds a trailing '\n' to all messages.
 
-Yeah, carving test updates in the early parts out of the series and
-have them in 'next' and then in 'master' may make sense.  Good idea.
+What does this mean?  With the files backend we'll now see a
+redundant two LFs in a row?  I think you are careful enough not to
+introduce unnecessary compatibility breakage like that, so perhaps
+"implicitly adds" is a wrong way to characterize what happens in the
+files backend, and it only adds LF when the message does not end
+with one, but does not add an extra one if not necessary?  
 
->> The major open question is how to handle per-worktree refs.  My idea
->> is that, on creation, the reftable backend can figure out if it is
->> running in a worktree or in the main repository. If it is running in
->> worktree X, we could read/write pseudorefs as ~X/PSEUDO_REF.
+If so, then the change in the patch does not break compatibility,
+but the above description does not give readers confidence that it
+is indeed the case.  IOW it is unclear how this change manages to
+avoid breaking existing code.
+
+Sorry, but I am left puzzled.
+
 >
-> I figured out a better way to do this. See the series that I am  posting today.
-
-It seems that patches started trickling in but perhaps missing
-pieces are mailspools somewhere and would arrive later?  I'll check
-the list archive tomorrow to see if all 20 patches have arrived.
-
-Thanks.
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  builtin/checkout.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index af849c644f..bb11fcc4e9 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -884,8 +884,9 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+>  
+>  	reflog_msg = getenv("GIT_REFLOG_ACTION");
+>  	if (!reflog_msg)
+> -		strbuf_addf(&msg, "checkout: moving from %s to %s",
+> -			old_desc ? old_desc : "(invalid)", new_branch_info->name);
+> +		strbuf_addf(&msg, "checkout: moving from %s to %s\n",
+> +			    old_desc ? old_desc : "(invalid)",
+> +			    new_branch_info->name);
+>  	else
+>  		strbuf_insertstr(&msg, 0, reflog_msg);
