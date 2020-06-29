@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C881C433E0
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78068C433E2
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47793204EC
-	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51917204EC
+	for <git@archiver.kernel.org>; Mon, 29 Jun 2020 18:57:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jPqxrlob"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rwWH0qOw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729600AbgF2S5M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 14:57:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40768 "EHLO
+        id S1729911AbgF2S5N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 14:57:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730081AbgF2S5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jun 2020 14:57:09 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3774AC031C40
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:09 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id f18so9582584wrs.0
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:09 -0700 (PDT)
+        with ESMTP id S1729633AbgF2S5L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 14:57:11 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908A3C031C41
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:11 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id j4so15187819wrp.10
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 11:57:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=B0Kd1zfccLGkd+yYLbuDtqct/aQ0oFxEAp509Zzarlg=;
-        b=jPqxrlob0eVggdaanQWwMr/c4jIn1PodRYhFKHaVTHeVCYZeQQNW/SSiVEVg+V6DbW
-         4J1Tri48SHI0jXKRawHpL1y7DF3icAtpW9g6t9AHFUV/MxRWZrxc8jn+l5LbBlaLvPSg
-         Gbm3AmT+Urer5cHoidCJy9d6cs6ZLz3Lkrhs0+y2Q/QWPM7BUcjgZHoHTSQLjXKkjYai
-         wTMvu/t3bbxLnZjCgbyMiPTjfbcKGxCuubvIrr81MYFLaXQ7J8/fo738BoeDoFtX9vuY
-         Tsso1vG8MT1mNRL2olo7efzPobXNS75uy07UxL/oEJHlBVbMgJ3YUydu9bLla9RTwkIg
-         BrUw==
+        bh=+Z8vEIBY7dqXeqqNBUPsNw/E+iUxatUcmVMbFcKVLzc=;
+        b=rwWH0qOwv7jSejQszuty7aGZPI3YRU6BoOQ+m8by/e5qPHy5Xz3GqkwxkEcgpsCuIF
+         h26LXOxkpQ8NkkPTf9NPxBWRH0dEzBUGw9NbQWy/ynWnLdCMuu/1/rRHOu8p/aoOPikg
+         AcenYe3Ya3yuQOiWEe40SUG0OPSwCXCVdUVZjg0UK80wp1g2nXNdBRLEqrFMdL7h1/fi
+         TxWgSw03ljpMUuXd90nIur2L3MJqk6guTYcOC6jgrjUiYnyxO2NGYT4Y2deKKdV/DuSe
+         AfkyPVMw4wGFZ31ZyJIY7jh1wb7kRDzwcV9NkWVALsZeiWepHKYh0IFYmbs1D63wooEs
+         zESg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=B0Kd1zfccLGkd+yYLbuDtqct/aQ0oFxEAp509Zzarlg=;
-        b=oHGtg4gQ9MsV32Viy3L08o+SQPJeRLK3tsJzraOa3rSsjo4En663MT1Icvgz/GcGdN
-         X3eX5AY2vxNITOrTJ4Tt3ccvOFSPoZu6OFKzVf4VGqxmyoREnXmTMosnLaqIHnNR3PDc
-         5Eqp5SNThwdZ8y567I8NTckSHWjpM16XU/9LUCLz21gjJVmqsEV8oyc6/01qSork34ZN
-         Pg/Kq67sQ9QqC86iVWhvfeIGntpv5pbQLQjY3CbINnFriRbu9sOyQ6DGU5kRIrUh3cmR
-         o1apHhpGo5rVW47ppTZ/oDUkEDCXrbDTtiKY9HlIHxZiDhcMazPhLTHG7Xdr1On8LxgK
-         ouaA==
-X-Gm-Message-State: AOAM532tkpEotsUzs2A9dLoDgfv6coxfC1Uza0LjGGD0qfOrxjZSnyVI
-        C/bj1bp+9ZcFimAGi/mf91Xe3ut+J3k=
-X-Google-Smtp-Source: ABdhPJwuVOeoXkTnXy7Xq4Oe4S/BQwuYddjhG3c8oMfWabREs955cTB2mTin73r749LviqfJi2UHnw==
-X-Received: by 2002:adf:8024:: with SMTP id 33mr19615690wrk.117.1593457027846;
-        Mon, 29 Jun 2020 11:57:07 -0700 (PDT)
+        bh=+Z8vEIBY7dqXeqqNBUPsNw/E+iUxatUcmVMbFcKVLzc=;
+        b=pjQYqlMLZ8hawxhA/7RO9vlo3NZ9DPsDF+B3UbrHmAqDJVkZ9eTvcB1kCnUEcHteKw
+         GFuE2V0fkTl1b2jYig3sK1elEQWdVRNtDJF0DRD3mVM8ReagTf7mvqlrDLPMYAOGGGgl
+         3wjt14A5k0FnXW7mfaP694llv/Okv0cCtti0GOpQeCMJ8HQtSW+3yOW9TTA5UN8LJyNn
+         vAozbpyAcEn7ZfljrTdDVjcFivmsNOcxBtr/akAwwSWmAceaSDdBK3IWYLVHiH6zWhvL
+         NzvuPykQArp3kPPtXu8Z+CstmP4R+26c/kXGSIyODbuMxX9TtvE2qTvxptoQ1M8HmIh8
+         J4ag==
+X-Gm-Message-State: AOAM532zUeIWOEGRWsVJGhNLpaYsRvOy7wufDXoJlHL/sjRKLkN74SFa
+        2dXBOsjZmroYF6gAUqAGrx5lrfoWRFE=
+X-Google-Smtp-Source: ABdhPJy6533Cyz0chbugusUCp+pM4mSt2gn6VWxnns7wXZ61sQMUy1P4QILVgyf/yBFCLVJCAuAQvQ==
+X-Received: by 2002:adf:eecf:: with SMTP id a15mr18398510wrp.83.1593457030228;
+        Mon, 29 Jun 2020 11:57:10 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q4sm765575wmc.1.2020.06.29.11.57.07
+        by smtp.gmail.com with ESMTPSA id d132sm758693wmd.35.2020.06.29.11.57.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2020 11:57:07 -0700 (PDT)
-Message-Id: <9463ed9093c3ae9fab5c00accd3142ed6e8acf59.1593457018.git.gitgitgadget@gmail.com>
+        Mon, 29 Jun 2020 11:57:09 -0700 (PDT)
+Message-Id: <e4545658edb011262924d60ab166a4dbc39c6dd4.1593457018.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
 References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
         <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Jun 2020 18:56:47 +0000
-Subject: [PATCH v19 09/20] Move REF_LOG_ONLY to refs-internal.h
+Date:   Mon, 29 Jun 2020 18:56:49 +0000
+Subject: [PATCH v19 11/20] Add .gitattributes for the reftable/ directory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,53 +78,19 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-REF_LOG_ONLY is used in the transaction preparation: if a symref is involved in
-a transaction, the referent of the symref should be updated, and the symref
-itself should only be updated in the reflog. Other ref backends will need to
-duplicate this logic.
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs/files-backend.c | 7 -------
- refs/refs-internal.h | 7 +++++++
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ reftable/.gitattributes | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 reftable/.gitattributes
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index df7553f4cc..141b6b0881 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -38,13 +38,6 @@
-  */
- #define REF_NEEDS_COMMIT (1 << 6)
- 
--/*
-- * Used as a flag in ref_update::flags when we want to log a ref
-- * update but not actually perform it.  This is used when a symbolic
-- * ref update is split up.
-- */
--#define REF_LOG_ONLY (1 << 7)
--
- /*
-  * Used as a flag in ref_update::flags when the ref_update was via an
-  * update to HEAD.
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 59b053d53a..dc9e8d3a92 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -31,6 +31,13 @@ struct ref_transaction;
-  */
- #define REF_HAVE_OLD (1 << 3)
- 
-+/*
-+ * Used as a flag in ref_update::flags when we want to log a ref
-+ * update but not actually perform it.  This is used when a symbolic
-+ * ref update is split up.
-+ */
-+#define REF_LOG_ONLY (1 << 7)
-+
- /*
-  * Return the length of time to retry acquiring a loose reference lock
-  * before giving up, in milliseconds:
+diff --git a/reftable/.gitattributes b/reftable/.gitattributes
+new file mode 100644
+index 0000000000..f44451a379
+--- /dev/null
++++ b/reftable/.gitattributes
+@@ -0,0 +1 @@
++/zlib-compat.c	whitespace=-indent-with-non-tab,-trailing-space
 -- 
 gitgitgadget
 
