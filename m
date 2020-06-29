@@ -2,155 +2,234 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6058AC433DF
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 14:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D913FC433DF
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:01:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2672E206BE
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 14:44:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CA1E2073E
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:01:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=dlh.de header.i=@dlh.de header.b="Rr/a+w5F";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=lufthansagroup.onmicrosoft.com header.i=@lufthansagroup.onmicrosoft.com header.b="MXZVwMDS"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="a4Ju3Ckj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389081AbgF3Ooh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 10:44:37 -0400
-Received: from mx1.lhsystems.com ([80.77.214.51]:26866 "EHLO mx1.lhsystems.com"
+        id S1732386AbgF3PBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 11:01:16 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56611 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726699AbgF3Oof (ORCPT <rfc822;GIT@vger.kernel.org>);
-        Tue, 30 Jun 2020 10:44:35 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jun 2020 10:44:33 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=dlh.de; i=@dlh.de; q=dns/txt;
-  s=ibmqlh-201908-6Ebhe7LLpR; t=1593528273; x=1625064273;
-  h=from:to:subject:date:message-id:
-   content-transfer-encoding:mime-version;
-  bh=ixkVj+q3UnKhXKXpfIWGOOQDk+QiJBvvV4x2sxFJNHs=;
-  b=Rr/a+w5FaN70XybRnliVA0gLZlOgi6FqWM+FHzWavuhBDDUXQLAXDZE7
-   nm/TwSRZUa8swHsLxG/jlwJ8nro889QjcvLr9HhkxLC6McBcxzPlezRcX
-   v6VMNualaq17XzOM8T/jyHkNKVkBqWui+vkyqUDfGpYZr3sL28dxEkIde
-   c=;
-IronPort-SDR: DYGZXrEmMfW59Z+8hNs5CJtAm8WsI3iNffnVM0gcxnWIGBvXDOg9+ZztmEmXB+1Z4N1qsfSrRD
- LlJIncU5Q1uw==
-X-IronPort-Anti-NAV: true
-X-TimeStamp-GMT1: 30 Jun 2020 14:37:22 -0000
-Received: from unknown (HELO smailin.ads.dlh.de) ([57.56.251.78])
-  by mx1.lhsystems.com with ESMTP/TLS/ECDHE-RSA-AES256-SHA; 30 Jun 2020 16:37:22 +0200
-Received: from SW-FRAADS-EDG04.cns.fra.dlh.de (57.20.0.13) by
- SW-FRAADS-HUB31.ads.dlh.de (57.56.251.78) with Microsoft SMTP Server (TLS) id
- 14.3.487.0; Tue, 30 Jun 2020 16:37:21 +0200
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (104.47.12.56) by
- mxO365.app.lufthansa.com (80.77.212.237) with Microsoft SMTP Server (TLS) id
- 14.3.487.0; Tue, 30 Jun 2020 16:37:00 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aFcSYKRTjt7PQa+5sZvyISN/Tf+qnxUt4gZFlkrSMgoq5VOqfp7u1tbHK9v/CTrXW9FAzLBKLjuO06OEbeOSYCu+LzJ2rZJllHj84eftsbTguwRaO6FcP2M5eQ1pQckd1DS84wy9Wfxxn5aMGE74m7Sw9ubGkCD9E3iHcXCWLnFSqUCY2dWvFPT0FQCnBBo6+VhyNf+sxcni6Q71RhbO+5DAqKzmSb3wKtncnFfT4GfhrY4NF3/zs6R2dA+zEXTZXQ0RiFvMR9mojnW7ycqjTsSxRccrfa+S6/Ce2VUsXn/07VfAvIECS5VBBqOSBzxQcQbqChA8jijALPaqiegPlg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fINoHSK0jJlDex04yRR/ZnTwHu0jvokgVYmgJ3UPPKU=;
- b=leBSmxEA+j+O1TBXImIYUs9VDabqQ1fR0W+ZfMePPSl7D5ADuDb9scprs69YExhjac2SxSkXmBEK0pFPKxFyODzHdZL6piO8JBm/JNaa1sK1o2jxC09U09bp8f40P/tN1xciKPq+MmLqhEoXnQgn/vM5oXUquvU9KSzpemps9pKvwom2T5jPaO87f2ccnOs9a6L8SJ785UnKMlvjc3/1E8rz1nqdowsxmVIaEy3uyToQD6pMzuLHvgbv6WWO6nI/rhu5VjTZbM9hJOPwcScBQITH07pf39g1CGsvFspYejA7f5rZDpSGnuIjN1gEkoRifBB06u9Cu/AhvieV6a2L7w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=lhind.dlh.de; dmarc=pass action=none header.from=lhind.dlh.de;
- dkim=pass header.d=lhind.dlh.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lufthansagroup.onmicrosoft.com; s=selector1-lufthansagroup-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fINoHSK0jJlDex04yRR/ZnTwHu0jvokgVYmgJ3UPPKU=;
- b=MXZVwMDS81P+D0eekuTFm1IPSrOWfCz2coMnPtqhAY7toWVQGXmf5YGlLGqBbLUDPEFEUOP2RbyFeIYYn6uAM5WpqiyXcI0jI/pZnnSHw/wbLEyE6blCyipSNjuE2+BpYhDm49KWaKGXYntRH/FFlh4BcdcHZnBynNGnyh/7iWk=
-Received: from DB7PR09MB2252.eurprd09.prod.outlook.com (2603:10a6:10:47::33)
- by DB7PR09MB2619.eurprd09.prod.outlook.com (2603:10a6:10:4c::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3131.26; Tue, 30 Jun
- 2020 14:37:00 +0000
-Received: from DB7PR09MB2252.eurprd09.prod.outlook.com
- ([fe80::f4f1:d84a:a7a:1c15]) by DB7PR09MB2252.eurprd09.prod.outlook.com
- ([fe80::f4f1:d84a:a7a:1c15%7]) with mapi id 15.20.3131.026; Tue, 30 Jun 2020
- 14:37:00 +0000
-From:   "WARRELMANN, RASMUS" <rasmus.warrelmann@lhind.dlh.de>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [bug-report] Segmentation fault on git subtree push
-Thread-Topic: [bug-report] Segmentation fault on git subtree push
-Thread-Index: AdZO6+ZgoURPt+3ZSWm8h/zihrRcsQ==
-Date:   Tue, 30 Jun 2020 14:36:59 +0000
-Message-ID: <DB7PR09MB225265C74CACD564A82641ABCA6F0@DB7PR09MB2252.eurprd09.prod.outlook.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=lhind.dlh.de;
-x-originating-ip: [31.16.101.111]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 47fb7059-aa0d-49b8-9926-08d81d030c44
-x-ms-traffictypediagnostic: DB7PR09MB2619:
-x-microsoft-antispam-prvs: <DB7PR09MB2619F87066214E762C7D2E8CCA6F0@DB7PR09MB2619.eurprd09.prod.outlook.com>
-x-eop:  bypass_spam_filtering
-x-ms-oob-tlc-oobclassifiers: OLM:1107;
-x-forefront-prvs: 0450A714CB
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: XHMCGLY8kFOXCMHoD88B44liKzf32T4t7kJk1PhwPDTUIVNcMztHVdMtZL5rG4GQUsGA2mc2YlxBnji2goaMjmg+0uLBh04nCEXBMZ1fu0stl7RLzFp2GhS2kNZR/cBll2R+onB8QHhRWpIgBMNdOpiwfHtBT21GYK3ff7E85H6aBXPmtEjMuak1HuCg9eI5RMi3Cuie6UBVmls9rXlhC4jBHgEO/Nof9bMqExJJ2wBEvh9sFIEEaDMMWoXwQulkIKytdZzaK+9w61o5EE1QJrHEK619D71e58myt6FwAbKs6h2AITR4h80qOjNvh4fYPoSGPrBLblBX+7jtwIxrO1QbhqQIFRvFge8jIzokA9GQWhqCr2KWdIuoYvJVmCzPXjxudjnUr5IBIQ6Iyf4bqg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB7PR09MB2252.eurprd09.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(346002)(39860400002)(136003)(376002)(366004)(396003)(76116006)(66946007)(66476007)(66556008)(64756008)(66446008)(52536014)(2906002)(83380400001)(478600001)(316002)(71200400001)(86362001)(6916009)(33656002)(5660300002)(8936002)(9686003)(8676002)(6506007)(7696005)(4744005)(55016002)(186003)(26005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: qlyqN0DYodeLwi6igw8tXpPAAsxOGEV/P8jqjWL1NE6i+G1QSeMifjdWDq5bH2yVR4hOr2+2KnJz3GozHLAswW7vgne2KQSHHG3p5Y5wjVpIcoI833Qsf2mTrmuXL2EoIonr9wKIDkWYMvzzohcO4SHZ2ZQDFejh/AFnLyf1iD7mPtPnfHgJs9oToUBjDdzvArumTM1fx+N6CtsOzH8JC6cbyDzEjGNK8dLgK3+Tdp05S7nbXdNbiFa0gctoiv/1th1sTEp7NaigYXIBGkmeqFqbD1sWGhx/FvULrnVwXDothbsJQMeD5BkmeEHB7h16edr3d3EpKxNa7aZH3pE5zDSDGmYzRlb0bsvIHGwiKV71MwQw/+/1iY1Sr2rSCvjMdL9dw17hVljUSs3Bfkge0N/VJLmQqG7CQpkfqJMpWycaBdwwVsmuG3roGg4VSZcCjs2KnTBktjJi/bXEFgwZtxguY7yNhFVQGdcK6DDqrWM=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1729325AbgF3PBP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 11:01:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1593529261;
+        bh=ufocMUWcIp5shYwPfRLjJCXAvNeU9aEbF4WdMi48BAI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=a4Ju3Ckjy2YN4c57OK5owhRB92If0Lhe94gTMKHOb4nWj+mY9R2JLrdv3YXEnHbor
+         UbX1zeryRku51W/8elDaEqYZWYhQZUXCB/th+LLzoliD0mbTmmtMduMoQ+/9Yq0H63
+         aNnLPiKWDXqRClZPfiL+WGB75KwSiDrucHdTXXVM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.116.87] ([213.196.212.146]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCsPy-1jhWJR1K7c-008paA; Tue, 30
+ Jun 2020 17:01:01 +0200
+Date:   Mon, 29 Jun 2020 17:11:59 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+cc:     git@vger.kernel.org, sandals@crustytoothpaste.net, j6t@kdbg.org,
+        jonathantanmy@google.com, peff@peff.net,
+        christian.couder@gmail.com, Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH v2 2/2] hex: make hash_to_hex_algop() and friends
+ thread-safe
+In-Reply-To: <b47445fa1cef6d4523dd0ca336f7ee22bce89466.1593208411.git.matheus.bernardino@usp.br>
+Message-ID: <nycvar.QRO.7.76.6.2006291646420.56@tvgsbejvaqbjf.bet>
+References: <cover.1593208411.git.matheus.bernardino@usp.br> <b47445fa1cef6d4523dd0ca336f7ee22bce89466.1593208411.git.matheus.bernardino@usp.br>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB7PR09MB2252.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47fb7059-aa0d-49b8-9926-08d81d030c44
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jun 2020 14:37:00.0495
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72e15514-5be9-46a8-8b0b-af9b1b77b3b8
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: RnqHSsX3xH62Lqf1U8sNTQCG1cbBg1WT4TX7quKvd+OOJLYXZ0w3BTwoiuxvZnyp/es7xR1Z/XSbHqejea24DY8/dQm1/gkrA4Y+4Q1VJEw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR09MB2619
-X-OriginatorOrg: lhind.dlh.de
-X-EXCLAIMER-MD-CONFIG: 5a548768-c397-4167-aef4-f33627bbf3ec
-X-TM-AS-Product-Ver: SMEX-11.0.0.4255-8.200.1013-25512.007
-X-TM-AS-Result: No--3.616900-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:3PpkaJz0y4lp21GXNhiB/BXEjcVrxMtgyyHw0xh9AIhwdLlbKkF
+ HHMC/HAvTkntLuuAh0PbwNfoKmEK3DlCb5ig2yc43JdFoo1Qiln5TPXbhw6u/a46LoAWVQJ
+ NOYRoAPFdVHVwVGlUhnGx5b1pMUldRTwbddHD1Qpl3XofkdYumjsO8e9LWGAu3H8h5lWWrD
+ rMovKGC9w/PditzVdYB2Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jaGwqMudt6Q=:paSFswF3VIeR34nUqAvM+S
+ nlldJTmNjyx7GQTnemDQG/s6WqM9oJMbev1ngCXsBOQEN1JeyptUbR7Tai4H9vjyvq+nS5zrE
+ JXysva5ea/kx+LQoVVOmyh1+wosA9POezr/rmZpZPHYmHugNWcWFe5sY76aSCA/1RjW6hYIXo
+ aI1L/0MuZGX4cs7zdNOZrdOS2Y/z2hhT4F8mUS9kZUeUKDMB28Do4en9Ej+ILyolHHy9m4+XK
+ 8yk8t4dhTWD870r1tyRBaHiUjvWQ9HSBB99gQdZO5vISVxqARfObgA89tJBnlaEYjueyXH6A3
+ ZIUN7Xxf35pWjtUCAMKk9GMMLZoKeSNrWBZ5jBrsJFS3Jr3j8atdy+MLFopEHgXJg5bWJ0Doz
+ Tcg4E1WXCOjOkDBeNCsDDN9lTmRjksM+sp9bKKDaTdIwx2hsw6r50MFCeG+Mi3zplvib/XqXc
+ +dXxhSkP6Py8AsjaC+vyz+vbnkD2nO0r8/LIxQYch3R2o9697LvPOwtKYE2wqVIs+fokwURvU
+ KgneZ8id+q5Migt3NLCJuyVZc876F7g/IDN73l8wyiBAsXzxaTSVAEat67u7lFxHUqoMuS7jH
+ 94kZfkhYXJQrpjjmmbiO8Pgl6LjQrQirwIQpqDar16dM+TZwTUEoLGEpfmpWQLJhwMh1JqySo
+ 6HOdsHIp7Mmtxn2n7D/Ia2QdwaP6ou57SPPKsjnw6xXD2Rh+5hsQR7R7seMOLZaUKdY7zwsEv
+ JJUs/+v0x/AACs6zuZnORQqzdLkYYPGUNJND7kz+xHCuh0VdtuWPZijrXvvQ1gvT1T8+so2O1
+ aH1PuVzO/vgLGfsUqNyCiiKpDiKlThKUPbu5yOJQBLPI1QBz5rm7d6tFOp1FIEknWqM1rxVO0
+ u14Xwpsghba0g6Ixo7MWLgEO+QyG7SNMfqEmaMg/AWGUhalkP9XEeID/Tsb4axxo42H0YYQvP
+ sMn/00SIU3cT5DviaNgt3f58PqB62f2Wmvht24uxP8mgQrvzj1bT/80KsKBKL5vVcbo0pue9u
+ ajwTmymZG4VDExgl7TocjVRykuuqAT5PUx990UzMyyHRNQM9F2oqTvc8wQYIgmfLaebpzJgY1
+ gFEvothvPDCsoUR7lK7m3HCmxk6U+zYLQYyMVLIEzOcwOKIyljfQPpFgDGdEEdJFMv1A77RVd
+ DoHacoxCfzEp8v/3UEFSNFt9KAh950K6knDEsOq7qLPXD7DDkyjSbO1buGLItY6BwpsQ8oxc8
+ 7nOUHbIM0jB5nutNqO2A2f9KTIB/xcQcVwLfqpQ==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=EF=BB=BFHello,
+Hi Matheus,
 
-I get a segmentation error when p-repo using git subtree push. I have the c=
-urrent version of git (2.27.0.windows.1) installed.
-The issue seems to be related to (https://stackoverflow.com/questions/57033=
-081/git-subtree-push-fail-applications-xcode-app-contents-developer-usr-lib=
-exec-gi/61380907#61380907). The answer from Jakub Zloczewski of April 23 su=
-ggesting to downgrade to git version 2.19.2 worked for me, but I don't like=
- to use an outdated version of git.
+I am fine with the Windows changes (although I have to admit that I did
+not find time to test things yet).
 
-The error message is:
-C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 757:  1044 =
-Done                    eval "$grl"
-      1045 Segmentation fault      (core dumped) | while read rev parents; =
-do
-    process_split_commit "$rev" "$parents" 0;
-done
+There is one problem in that I do not necessarily know that the memory is
+released correctly when threads end; You will notice that the
+`pthread_key_create()` shim in `compat/win32/pthread.h` does not use the
+`destructor` parameter at all. The documentation at
 
-Do you need more information on the issue?
+	https://docs.microsoft.com/en-us/windows/win32/procthread/using-thread-lo=
+cal-storage
 
-Thanks for your help.
+is also not terribly clear _how_ the memory is released that was assigned
+via `TlsSetValue()`. I notice that the example uses `LocalAlloc()`, but we
+override `malloc()` via the `compat/nedmalloc/` functions, so that should
+cause problems unless I am wrong.
 
-Best reguards,
-Rasmus Warrelmann
+Maybe there is an expert reading this who could jump in and help
+understand the ramifications?
 
+A couple more things:
 
+On Fri, 26 Jun 2020, Matheus Tavares wrote:
 
-Sitz der Gesellschaft / Corporate Headquarters: Lufthansa Industry Solution=
-s AS GmbH, Norderstedt, Registereintragung / Registration: Amtsgericht Kiel=
- 3688 NO
-Geschaeftsfuehrung / Management Board: Bernd Appel
+> hash_to_hex_algop() returns a static buffer, relieving callers from the
+> responsibility of freeing memory after use. But the current
+> implementation uses the same static data for all threads and, thus, is
+> not thread-safe. We could avoid using this function and its wrappers
+> in threaded code, but they are sometimes too deep in the call stack to
+> be noticed or even avoided.
+>
+> grep.c:grep_source_load_oid(), for example, uses the thread-unsafe
+> oid_to_hex() (on errors) despite being called in threaded code. And
+> oid_to_hex() -- which calls hash_to_hex_algop() -- is used in many other
+> places, as well:
+>
+> $ git grep 'oid_to_hex(' | wc -l
+> 818
+>
+> Although hash_to_hex_algop() and its wrappers don't seem to be causing
+> problems out there for now (at least not reported), making them
+> thread-safe makes the codebase more robust against race conditions. We
+> can easily do that by replicating the static buffer in each thread's
+> local storage.
+>
+> Original-patch-by: Fredrik Kuivinen <frekui@gmail.com>
+> Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
+>  hex.c | 46 ++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 42 insertions(+), 4 deletions(-)
+>
+> diff --git a/hex.c b/hex.c
+> index da51e64929..4f2f163d5e 100644
+> --- a/hex.c
+> +++ b/hex.c
+> @@ -1,4 +1,5 @@
+>  #include "cache.h"
+> +#include "thread-utils.h"
+>
+>  const signed char hexval_table[256] =3D {
+>  	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 00-07 */
+> @@ -136,12 +137,49 @@ char *oid_to_hex_r(char *buffer, const struct obje=
+ct_id *oid)
+>  	return hash_to_hex_algop_r(buffer, oid->hash, the_hash_algo);
+>  }
+>
+> +struct hexbuf_array {
+> +	int idx;
 
+Is there a specific reason why you renamed `bufno` to `idx`? If not, I'd
+rather keep the old name.
 
+> +	char bufs[4][GIT_MAX_HEXSZ + 1];
+> +};
+> +
+> +#ifdef HAVE_THREADS
+> +static pthread_key_t hexbuf_array_key;
+> +static pthread_once_t hexbuf_array_once =3D PTHREAD_ONCE_INIT;
+> +
+> +static void init_hexbuf_array_key(void)
+> +{
+> +	if (pthread_key_create(&hexbuf_array_key, free))
+> +		die(_("failed to initialize threads' key for hash to hex conversion")=
+);
+> +}
+> +
+> +#else
+> +static struct hexbuf_array default_hexbuf_array;
+> +#endif
+> +
+>  char *hash_to_hex_algop(const unsigned char *hash, const struct git_has=
+h_algo *algop)
+>  {
+> -	static int bufno;
+> -	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
+> -	bufno =3D (bufno + 1) % ARRAY_SIZE(hexbuffer);
+> -	return hash_to_hex_algop_r(hexbuffer[bufno], hash, algop);
+> +	struct hexbuf_array *ha;
+> +
+> +#ifdef HAVE_THREADS
+> +	void *value;
+> +
+> +	if (pthread_once(&hexbuf_array_once, init_hexbuf_array_key))
+> +		die(_("failed to initialize threads' key for hash to hex conversion")=
+);
+> +
+> +	value =3D pthread_getspecific(hexbuf_array_key);
+> +	if (value) {
+> +		ha =3D (struct hexbuf_array *) value;
+> +	} else {
+> +		ha =3D xmalloc(sizeof(*ha));
+> +		if (pthread_setspecific(hexbuf_array_key, (void *)ha))
+> +			die(_("failed to set thread buffer for hash to hex conversion"));
+> +	}
+> +#else
+> +	ha =3D &default_hexbuf_array;
+> +#endif
 
+This introduces two ugly `#ifdef HAVE_THREADS` constructs which are
+problematic because they are the most likely places to introduce compile
+errors.
+
+I wonder whether you considered introducing a function (and probably a
+macro) that transparently gives you a thread-specific instance of a given
+data type? The caller would look something like
+
+	struct hexbuf_array *hex_array;
+
+	GET_THREADSPECIFIC(hex_array);
+
+where the macro would look somewhat like this:
+
+	#define GET_THREADSPECIFIC(var) \
+		if (get_thread_specific(&var, sizeof(var)) < 0)
+			die(_("Failed to get thread-specific %s"), #var);
+
+and the function would allocate and assign the variable. I guess this
+scheme won't work, though, as `pthread_once()` does not take a callback
+parameter, right? And we would need that parameter to be able to create
+the `pthread_key_t`. Hmm.
+
+Ciao,
+Dscho
+
+> +
+> +	ha->idx =3D (ha->idx + 1) % ARRAY_SIZE(ha->bufs);
+> +	return hash_to_hex_algop_r(ha->bufs[ha->idx], hash, algop);
+>  }
+>
+>  char *hash_to_hex(const unsigned char *hash)
+> --
+> 2.26.2
+>
+>
