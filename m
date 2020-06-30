@@ -2,200 +2,181 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D350C433E0
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FF46C433DF
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:05:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17D422073E
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:03:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BB452073E
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:05:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VrA2owW3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I2MHpSun"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389242AbgF3PDk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 11:03:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58950 "EHLO
+        id S2389163AbgF3PFh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 11:05:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731592AbgF3PDk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 11:03:40 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F3A0C061755
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:03:40 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id e12so15760850qtr.9
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:03:40 -0700 (PDT)
+        with ESMTP id S1728492AbgF3PFh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 11:05:37 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40CD9C061755
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:05:37 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id o1so2012001plk.1
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:05:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=fh2dfIVEBOy9PppBa/lU0BMRIiOvh5Fs5PbqhuwLFAw=;
-        b=VrA2owW3TmxGs/IOMlwxxzDEQW8muqpB+ozzlyDO7ciESD2+D/kl0mgmD+TULpyxyt
-         wfkp5X/Z2H0k2z6AFGT+oiPC1FbKU8uqIB8861rhQqqKlgzGGw/Fk5Mw+V/gutEvEKnG
-         APbPkttTe28p4mTZeedJA6UwOE/Fp29RDoLhvOAzTE2qEGf+b+f4n4hCK7VmCAz+4uth
-         VMrTGPBBFIRP+j0oN0LFVoEI5wxs/erQxwkH+2KgWYOFdtZc308Fq9UOzD0ttrth2l1f
-         Sc3KYRN21kkECyRIVA7PTPjiheJKvt6GQXW49BwO9HlHzNWim3X+rGwg3ln0geRBQL3h
-         lyPQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=2NNccbLjgDfOW90aMcoU/IpO+IJGY59oi1G5acg93/o=;
+        b=I2MHpSununyg0pBYWBH58lTew8jDJk+wUQ0+ZZsiOgABxV8YLGAJ8PZ1OXdFlxUXzt
+         KI2kif8XmCaOMl2Dg/cq76coESCFxMZEI2P0qPP+K71DJn8wTf7c0hR+snYO7k5BaSDF
+         1Jz9o8ndvxQAmQGOlvWYZIq6xbew/gFR1523gr3gF2FAJolSnQ/uyihebuIYoWlZhpPF
+         TrFF8IlpDZElrFG9AFcSD0tZvyuKKBzu+4l+/xP0Tzm3O6iuXaZWRMozZpzzWcsN66mV
+         seJu79V44QnEgRuaRXNozc/po2IMhcLT5DrpVJkXor/12hBzRuFbVjjEh+bb3Lj+gOCx
+         3k1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fh2dfIVEBOy9PppBa/lU0BMRIiOvh5Fs5PbqhuwLFAw=;
-        b=fpig3PAiUvniRFsPT4ws+o+ApQcXpWD+cWPT2jtwjdZMX+TsqwzTlRPVgRL6VowWBv
-         71DA4mUilyqaezpmhooWgUAbextanQGgsiWGbLWP5BFLqZeVqNsZD7xPO8oeQMINiXMM
-         P2REERVBSStH6LVG6SJ/0+P0B3ldejv04MuYA1aAh4wwhek6zVDxCpG4Y5w2jbtryyzP
-         13g+ZEQ6ZBNqPwHAFKAOrZW2TlYz9GPR+1uJSx9strEP8sNu06VEHwvfzZV8dh34shiD
-         VOSfm2uC+i/P3JaxYzNkG1IPYyQ6SnP2xSVXygrX003P583sAwswU7m3MA3/98IyZK9v
-         IN+A==
-X-Gm-Message-State: AOAM533jTvtXrZFsexhK1gHL//QW7DuzGrKYoZb0aSiKTF0ZW9YC3ITX
-        UjZOoDEUErydYOY6ORZkbRlhhg/EIuk=
-X-Google-Smtp-Source: ABdhPJyl+kAugjenrj6h87Ieoes1B/EeXQ1Vfqdr8btQUJYXr2Y7jHEElIbijJuJUnOM+t8phPBPfg==
-X-Received: by 2002:ac8:7343:: with SMTP id q3mr22440717qtp.165.1593529414285;
-        Tue, 30 Jun 2020 08:03:34 -0700 (PDT)
-Received: from archbookpro.phub.net.cable.rogers.com (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
-        by smtp.gmail.com with ESMTPSA id p66sm3209626qkf.58.2020.06.30.08.03.33
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=2NNccbLjgDfOW90aMcoU/IpO+IJGY59oi1G5acg93/o=;
+        b=Cs6q1YxIemiq7Y0YQd5QIYCSsxUt4CVUqTtIMp0BCLWhHaoExvEKXo3Uc/+M1pbnVi
+         l+AJLiR3o4oPHoYTzG+jsSUf+8a/VFMfiJgfitNCxlxZZqTqzqx3v2sgWah+RF+BsHZZ
+         UMXAmsJP24GsMsLjy+3c6MvascWiqPO1WsxDDCJnVeiNh+FeIelDHGS+zlWwWXl2Cjbg
+         3U+NIO0j+Br7yvwMflajJ+Tx8CTrWlDrLRPCkddPpUtSclZSjNd3RV8+YnBH4hBXYoes
+         bCzQa9bxcowD9UZK4tH9/MJgO6hmSR0L6uWJF/LwQlz6isFUmAQHMHDWmjq+yjWCvm52
+         5BNw==
+X-Gm-Message-State: AOAM533aelHmwgpmBDirK/hLm2Eny2y2SWs4tasG42wQcDGT1NreI07B
+        QK3JiYx8hNyMNhxrXrp0kAs=
+X-Google-Smtp-Source: ABdhPJwEto+zLdbtQ7I6grVh7D18kdNYRBaEAEO3CL9WFZFUsqgYVvt8uvxrq9b6ZToqxqCT6suzGw==
+X-Received: by 2002:a17:90b:705:: with SMTP id s5mr16164813pjz.11.1593529536661;
+        Tue, 30 Jun 2020 08:05:36 -0700 (PDT)
+Received: from localhost ([2402:800:6375:9968:2644:616c:71ad:c7e6])
+        by smtp.gmail.com with ESMTPSA id g63sm2625438pje.14.2020.06.30.08.05.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2020 08:03:33 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 5/5] test-lib-functions: restrict test_must_fail usage
-Date:   Tue, 30 Jun 2020 11:03:19 -0400
-Message-Id: <01e29450fe51a4ba13e07c611d8795ffd0282b9e.1593529394.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.383.g050319c2ae
-In-Reply-To: <cover.1593529394.git.liu.denton@gmail.com>
-References: <cover.1593529394.git.liu.denton@gmail.com>
+        Tue, 30 Jun 2020 08:05:35 -0700 (PDT)
+Date:   Tue, 30 Jun 2020 22:05:33 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Matt Rogers <mattr94@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v4 1/9] fmt-merge-msg: stop treating `master` specially
+Message-ID: <20200630150533.GF20303@danh.dev>
+References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
+ <pull.656.v4.git.1593009996.gitgitgadget@gmail.com>
+ <fffdb9944fc2672ccb7eac776cdd18855a1f99dc.1593009996.git.gitgitgadget@gmail.com>
+ <20200629162003.GD20303@danh.dev>
+ <nycvar.QRO.7.76.6.2006291520220.56@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2006291520220.56@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In previous commits, we removed the usage of test_must_fail() for most
-commands except for a set of pre-approved commands. Since that's done,
-only allow test_must_fail() to run those pre-approved commands.
+Hi Dscho,
 
-Obviously, we should allow `git`.
+On 2020-06-29 15:27:44+0200, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > This change will also affect git-subtree test.
+> 
+> Good point. The patch looks good. I wonder whether we should also address
+> these:
+> 
+> Documentation/git-rebase.txt:*   Merge branch 'report-a-bug'
+> Documentation/git-rebase.txt:* | Merge branch 'refactor-button'
+> Documentation/git-switch.txt:HEAD is now at 9fc9555312 Merge branch 'cc/shared-index-permbits'
+> Documentation/howto/using-signed-tag-in-pull-request.txt: Merge tag 'frotz-for-xyzzy' of example.com:/git/froboz.git/
+> Documentation/howto/using-signed-tag-in-pull-request.txt:     Merge tag 'frotz-for-xyzzy' of example.com:/git/froboz.git/
+> t/t7606-merge-custom.sh:*   (HEAD, master) Merge commit 'c3'
+> 
+> The first three matches are in manual pages, the next two in technical
+> documentation, and the last one in a comment in one of the test scripts.
+> So none of them are super critical, but maybe there are different
+> opinions?
 
-We allow `__git*` as some completion functions return an error code that
-comes from a git invocation. It's good to avoid using test_must_fail
-unnecessarily but it wouldn't hurt to err on the side of caution when
-we're potentially wrapping a git command (like in these case).
+In _my very opinion_, I don't think it's that critical.
+We allow git merge --edit and git fmt-merge-msg -m.
+Someone may have configured their Git to remove branch name already.
+And some others may always remove the target branch manually.
+We probably don't want to introduce another master occurence.
+(For sideline watcher: Please not argue on this,
+I don't have any opinions about the word: master.)
 
-We also allow `test-tool` and `test-svn-fe` because these are helper
-commands that are written by us and we want to catch their failure.
+If there're a consensus on changing those documentation,
+I won't mind to do that manual work ;)
 
-Finally, we allow `test_terminal` because `test_terminal` just wraps
-around git commands. Also, we cannot rewrite
-`test_must_fail test_terminal` as `test_terminal test_must_fail` because
-test_must_fail() is a shell function and as a result, it cannot be
-invoked from the test-terminal Perl script.
+The test is a different story, since some (or most?) distro enable
+check (or test) phase for their build infrastructure.
+And, we shouldn't break their infrastructures.
 
-We opted to explicitly list the above tools instead of using a catch-all
-such as `test[-_]*` because we want to be as restrictive as possible so
-that in the future, someone would not accidentally introduce an
-unrelated usage of test_must_fail() on an "unapproved" command.
+> 
+> Ciao,
+> Dscho
+> 
+> > We'll need this patch for subtree:
+> > ----------------8<-------------------
+> > From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
+> >  <congdanhqx@gmail.com>
+> > Date: Mon, 29 Jun 2020 22:56:37 +0700
+> > Subject: [PATCH] contrib: subtree: adjust test to change in fmt-merge-msg
+> > MIME-Version: 1.0
+> > Content-Type: text/plain; charset=UTF-8
+> > Content-Transfer-Encoding: 8bit
+> >
+> > We're starting to stop treating `master' specially in fmt-merge-msg.
+> > Adjust the test to reflect that change.
+> >
+> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> > ---
+> >  contrib/subtree/t/t7900-subtree.sh | 6 ++++--
+> >  1 file changed, 4 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+> > index 57ff4b25c1..53d7accf94 100755
+> > --- a/contrib/subtree/t/t7900-subtree.sh
+> > +++ b/contrib/subtree/t/t7900-subtree.sh
+> > @@ -196,7 +196,8 @@ test_expect_success 'merge new subproj history into sub dir/ with --prefix' '
+> >  		cd "$subtree_test_count" &&
+> >  		git fetch ./"sub proj" master &&
+> >  		git subtree merge --prefix="sub dir" FETCH_HEAD &&
+> > -		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
+> > +		check_equal "$(last_commit_message)" \
+> > +			"Merge commit '\''$(git rev-parse FETCH_HEAD)'\'' into master"
+> >  	)
+> >  '
+> >
+> > @@ -273,7 +274,8 @@ test_expect_success 'merge new subproj history into subdir/ with a slash appende
+> >  		cd "$test_count" &&
+> >  		git fetch ./subproj master &&
+> >  		git subtree merge --prefix=subdir/ FETCH_HEAD &&
+> > -		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
+> > +		check_equal "$(last_commit_message)" \
+> > +			"Merge commit '\''$(git rev-parse FETCH_HEAD)'\'' into master"
+> >  	)
+> >  '
+> >
+> > --
+> > 2.27.0.111.gc72c7da667
+> > Danh
+> >
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t0000-basic.sh        | 18 ++++++++++++++++++
- t/test-lib-functions.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 2ff176cd5d..f5e4fb515d 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -1271,4 +1271,22 @@ test_expect_success 'very long name in the index handled sanely' '
- 	test $len = 4098
- '
- 
-+test_expect_success 'test_must_fail on a failing git command' '
-+	test_must_fail git notacommand
-+'
-+
-+test_expect_success 'test_must_fail on a failing git command with env' '
-+	test_must_fail env var1=a var2=b env var3=c git notacommand
-+'
-+
-+test_expect_success 'test_must_fail rejects a non-git command' '
-+	! test_must_fail grep ^$ notafile 2>err &&
-+	grep -F "test_must_fail: only '"'"'git'"'"' is allowed" err
-+'
-+
-+test_expect_success 'test_must_fail rejects a non-git command with env' '
-+	! test_must_fail env var1=a var2=b env var3=c grep ^$ notafile 2>err &&
-+	grep -F "test_must_fail: only '"'"'git'"'"' is allowed" err
-+'
-+
- test_done
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 3103be8a32..16596b28ba 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -798,6 +798,31 @@ list_contains () {
- 	return 1
- }
- 
-+# Returns success if the arguments indicate that a command should be
-+# accepted by test_must_fail(). If the command is run with env, the env
-+# and its corresponding variable settings will be stripped before we
-+# test the command being run.
-+test_must_fail_acceptable () {
-+	while test "$1" = "env"
-+	do
-+		shift
-+		while test $# -gt 0
-+		do
-+			case "$1" in *?=*) ;; *) break ;; esac
-+			shift
-+		done
-+	done
-+
-+	case "$1" in
-+	git|__git*|test-tool|test-svn-fe|test_terminal)
-+		return 0
-+		;;
-+	*)
-+		return 1
-+		;;
-+	esac
-+}
-+
- # This is not among top-level (test_expect_success | test_expect_failure)
- # but is a prefix that can be used in the test script, like:
- #
-@@ -817,6 +842,15 @@ list_contains () {
- #     Multiple signals can be specified as a comma separated list.
- #     Currently recognized signal names are: sigpipe, success.
- #     (Don't use 'success', use 'test_might_fail' instead.)
-+#
-+# Do not use this to run anything but "git" and other specific testable
-+# commands (see test_must_fail_acceptable()).  We are not in the
-+# business of vetting system supplied commands -- in other words, this
-+# is wrong:
-+#
-+#    test_must_fail grep pattern output
-+#
-+# Just use '!' instead.
- 
- test_must_fail () {
- 	case "$1" in
-@@ -828,6 +862,11 @@ test_must_fail () {
- 		_test_ok=
- 		;;
- 	esac
-+	if ! test_must_fail_acceptable "$@"
-+	then
-+	    echo >&7 "test_must_fail: only 'git' is allowed: $*"
-+	    return 1
-+	fi
- 	"$@" 2>&7
- 	exit_code=$?
- 	if test $exit_code -eq 0 && ! list_contains "$_test_ok" success
 -- 
-2.27.0.383.g050319c2ae
-
+Danh
