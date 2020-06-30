@@ -2,234 +2,205 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D913FC433DF
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6A7DC433DF
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:03:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CA1E2073E
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:01:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9EAC420771
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:03:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="a4Ju3Ckj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KE/3T6fl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732386AbgF3PBQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 11:01:16 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56611 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729325AbgF3PBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 11:01:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1593529261;
-        bh=ufocMUWcIp5shYwPfRLjJCXAvNeU9aEbF4WdMi48BAI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=a4Ju3Ckjy2YN4c57OK5owhRB92If0Lhe94gTMKHOb4nWj+mY9R2JLrdv3YXEnHbor
-         UbX1zeryRku51W/8elDaEqYZWYhQZUXCB/th+LLzoliD0mbTmmtMduMoQ+/9Yq0H63
-         aNnLPiKWDXqRClZPfiL+WGB75KwSiDrucHdTXXVM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.116.87] ([213.196.212.146]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCsPy-1jhWJR1K7c-008paA; Tue, 30
- Jun 2020 17:01:01 +0200
-Date:   Mon, 29 Jun 2020 17:11:59 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-cc:     git@vger.kernel.org, sandals@crustytoothpaste.net, j6t@kdbg.org,
-        jonathantanmy@google.com, peff@peff.net,
-        christian.couder@gmail.com, Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH v2 2/2] hex: make hash_to_hex_algop() and friends
- thread-safe
-In-Reply-To: <b47445fa1cef6d4523dd0ca336f7ee22bce89466.1593208411.git.matheus.bernardino@usp.br>
-Message-ID: <nycvar.QRO.7.76.6.2006291646420.56@tvgsbejvaqbjf.bet>
-References: <cover.1593208411.git.matheus.bernardino@usp.br> <b47445fa1cef6d4523dd0ca336f7ee22bce89466.1593208411.git.matheus.bernardino@usp.br>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1731701AbgF3PDG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 11:03:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58850 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725872AbgF3PDF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 11:03:05 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C55C061755
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:03:05 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id h4so2490769plt.9
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:03:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:reply-to:mime-version
+         :content-disposition;
+        bh=0mUVJi2jzPqCugzhUNoSGwV/mW6x0J2wDG8R26vRAtg=;
+        b=KE/3T6flmyPu2eNPsM7XE5qyX425YX2D2LhoOO8unlDnC6rVOgWnB0WZFhcmbThf2a
+         dsTUpsJ3mVPYZRuVE7rB8z5eIuYmQ4jVz7jAIjxxKe3Fg+kC1cJ8cMrvpMsMgLIlYFaK
+         OyUL8frb01WaMK2NfMV16t8Xgb6EYFqbiCVOG/iLRc3QqZAmePGEsKm2zIp1R85Z9sUI
+         JTwoZCOOiSFvCDBZMSo/6L2JrqDXfVTP1ZW91Wdwws4x3aZEhNAg1JtpoJ4QCtRzafzN
+         w2fy6khpdNw+WiP/I+FvBjcdapwIDqn7+YrodBkh+rJsQkFKhz6in+mYdwN+5B7lS8EX
+         CYig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :mime-version:content-disposition;
+        bh=0mUVJi2jzPqCugzhUNoSGwV/mW6x0J2wDG8R26vRAtg=;
+        b=Gd0uPZCk7PAINhFlqu3lSWG3h8JxlEXc1HXPVc0ktyl0YJGsfy46X9FQ4Uu/T2BQ92
+         BFE5Lyy5CyZXjW211XsmOfY2yoqDCKtOXCph2ZeqljuRbQN2abAsoTz/GiFtnxzvFxQ7
+         zJzwUM55mtSsvX+i+ilatMDdLO09IbT/6M1OJqxbc1Ga9Up9bBxgjs7TFgnk9izKblpU
+         KQBWC44kw13ptJZf628g0fQbGtEPluMEVAzDWO1lpr/yn7fIoEzLLROcPMqSnMHdGXob
+         8SuW8TCHP1uPd0SwjKBY3omQLvcBBrXvrZtGfuGtV+N0f6JWCgMzFcx0AbJnJqZLn8WV
+         WT9g==
+X-Gm-Message-State: AOAM530GXpx8GLGLCsF8RFfgrRwnsNGQbL9xByNj6p4q79fzvK5b/+gd
+        4ISbYlrRIeHFYhfn6ZZ/LXc=
+X-Google-Smtp-Source: ABdhPJyT6jNLt3x0QlSBlEiXNEZNZ/VZKD3qHTlrJNxLq1b0ElKeaSNrBkamDcEIBM6NkO/vNjx+fA==
+X-Received: by 2002:a17:90a:22ab:: with SMTP id s40mr20858405pjc.27.1593529385209;
+        Tue, 30 Jun 2020 08:03:05 -0700 (PDT)
+Received: from Abhishek-Arch ([2409:4064:2e12:1676:a4c3:af9:291d:7f18])
+        by smtp.gmail.com with ESMTPSA id mu17sm2886974pjb.53.2020.06.30.08.02.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2020 08:02:55 -0700 (PDT)
+Date:   Tue, 30 Jun 2020 20:30:56 +0530
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     abhishekkumar8222@gmail.com
+Cc:     jnareb@gmail.com, stolee@gmail.com, git@vger.kernel.org
+Subject: Re: [RFC] Metadata vs Generation Data Chunk
+Message-ID: <20200630150056.GA4111@Abhishek-Arch>
+Reply-To: 20200622093451.GA1719@abhishek-arch
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3PpkaJz0y4lp21GXNhiB/BXEjcVrxMtgyyHw0xh9AIhwdLlbKkF
- HHMC/HAvTkntLuuAh0PbwNfoKmEK3DlCb5ig2yc43JdFoo1Qiln5TPXbhw6u/a46LoAWVQJ
- NOYRoAPFdVHVwVGlUhnGx5b1pMUldRTwbddHD1Qpl3XofkdYumjsO8e9LWGAu3H8h5lWWrD
- rMovKGC9w/PditzVdYB2Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jaGwqMudt6Q=:paSFswF3VIeR34nUqAvM+S
- nlldJTmNjyx7GQTnemDQG/s6WqM9oJMbev1ngCXsBOQEN1JeyptUbR7Tai4H9vjyvq+nS5zrE
- JXysva5ea/kx+LQoVVOmyh1+wosA9POezr/rmZpZPHYmHugNWcWFe5sY76aSCA/1RjW6hYIXo
- aI1L/0MuZGX4cs7zdNOZrdOS2Y/z2hhT4F8mUS9kZUeUKDMB28Do4en9Ej+ILyolHHy9m4+XK
- 8yk8t4dhTWD870r1tyRBaHiUjvWQ9HSBB99gQdZO5vISVxqARfObgA89tJBnlaEYjueyXH6A3
- ZIUN7Xxf35pWjtUCAMKk9GMMLZoKeSNrWBZ5jBrsJFS3Jr3j8atdy+MLFopEHgXJg5bWJ0Doz
- Tcg4E1WXCOjOkDBeNCsDDN9lTmRjksM+sp9bKKDaTdIwx2hsw6r50MFCeG+Mi3zplvib/XqXc
- +dXxhSkP6Py8AsjaC+vyz+vbnkD2nO0r8/LIxQYch3R2o9697LvPOwtKYE2wqVIs+fokwURvU
- KgneZ8id+q5Migt3NLCJuyVZc876F7g/IDN73l8wyiBAsXzxaTSVAEat67u7lFxHUqoMuS7jH
- 94kZfkhYXJQrpjjmmbiO8Pgl6LjQrQirwIQpqDar16dM+TZwTUEoLGEpfmpWQLJhwMh1JqySo
- 6HOdsHIp7Mmtxn2n7D/Ia2QdwaP6ou57SPPKsjnw6xXD2Rh+5hsQR7R7seMOLZaUKdY7zwsEv
- JJUs/+v0x/AACs6zuZnORQqzdLkYYPGUNJND7kz+xHCuh0VdtuWPZijrXvvQ1gvT1T8+so2O1
- aH1PuVzO/vgLGfsUqNyCiiKpDiKlThKUPbu5yOJQBLPI1QBz5rm7d6tFOp1FIEknWqM1rxVO0
- u14Xwpsghba0g6Ixo7MWLgEO+QyG7SNMfqEmaMg/AWGUhalkP9XEeID/Tsb4axxo42H0YYQvP
- sMn/00SIU3cT5DviaNgt3f58PqB62f2Wmvht24uxP8mgQrvzj1bT/80KsKBKL5vVcbo0pue9u
- ajwTmymZG4VDExgl7TocjVRykuuqAT5PUx990UzMyyHRNQM9F2oqTvc8wQYIgmfLaebpzJgY1
- gFEvothvPDCsoUR7lK7m3HCmxk6U+zYLQYyMVLIEzOcwOKIyljfQPpFgDGdEEdJFMv1A77RVd
- DoHacoxCfzEp8v/3UEFSNFt9KAh950K6knDEsOq7qLPXD7DDkyjSbO1buGLItY6BwpsQ8oxc8
- 7nOUHbIM0jB5nutNqO2A2f9KTIB/xcQcVwLfqpQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+Hello everyone,
 
-I am fine with the Windows changes (although I have to admit that I did
-not find time to test things yet).
+I have finished all tests that I can think of and instead of throwing
+performance numbers at you, I am going to try and tell you a story.
 
-There is one problem in that I do not necessarily know that the memory is
-released correctly when threads end; You will notice that the
-`pthread_key_create()` shim in `compat/win32/pthread.h` does not use the
-`destructor` parameter at all. The documentation at
+WRITING COMMIT GRAPH
+====================
 
-	https://docs.microsoft.com/en-us/windows/win32/procthread/using-thread-lo=
-cal-storage
+The run time of writing a commit-graph is affected by time taken to
+compute generation number(s) and write them to the file.
 
-is also not terribly clear _how_ the memory is released that was assigned
-via `TlsSetValue()`. I notice that the example uses `LocalAlloc()`, but we
-override `malloc()` via the `compat/nedmalloc/` functions, so that should
-cause problems unless I am wrong.
+We had the following possible ideas for writing commit-graph:
 
-Maybe there is an expert reading this who could jump in and help
-understand the ramifications?
+MO: Calculate generation number V5 and write the offset into CDAT
+    (along with a metadata chunk).
 
-A couple more things:
+G5O: Calculate generation number V5 and write the corrected date into
+    Generation Data chunk.
 
-On Fri, 26 Jun 2020, Matheus Tavares wrote:
+G5D: Calculate generation number V5 and write the offset into Generation
+    Data chunk.
 
-> hash_to_hex_algop() returns a static buffer, relieving callers from the
-> responsibility of freeing memory after use. But the current
-> implementation uses the same static data for all threads and, thus, is
-> not thread-safe. We could avoid using this function and its wrappers
-> in threaded code, but they are sometimes too deep in the call stack to
-> be noticed or even avoided.
->
-> grep.c:grep_source_load_oid(), for example, uses the thread-unsafe
-> oid_to_hex() (on errors) despite being called in threaded code. And
-> oid_to_hex() -- which calls hash_to_hex_algop() -- is used in many other
-> places, as well:
->
-> $ git grep 'oid_to_hex(' | wc -l
-> 818
->
-> Although hash_to_hex_algop() and its wrappers don't seem to be causing
-> problems out there for now (at least not reported), making them
-> thread-safe makes the codebase more robust against race conditions. We
-> can easily do that by replicating the static buffer in each thread's
-> local storage.
->
-> Original-patch-by: Fredrik Kuivinen <frekui@gmail.com>
-> Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> ---
->  hex.c | 46 ++++++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 42 insertions(+), 4 deletions(-)
->
-> diff --git a/hex.c b/hex.c
-> index da51e64929..4f2f163d5e 100644
-> --- a/hex.c
-> +++ b/hex.c
-> @@ -1,4 +1,5 @@
->  #include "cache.h"
-> +#include "thread-utils.h"
->
->  const signed char hexval_table[256] =3D {
->  	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 00-07 */
-> @@ -136,12 +137,49 @@ char *oid_to_hex_r(char *buffer, const struct obje=
-ct_id *oid)
->  	return hash_to_hex_algop_r(buffer, oid->hash, the_hash_algo);
->  }
->
-> +struct hexbuf_array {
-> +	int idx;
+G3IO: Calculate generation number V3 and write GENERATION_NUMBER_MAX into
+    CDAT and the offset into Generation Data chunk.
 
-Is there a specific reason why you renamed `bufno` to `idx`? If not, I'd
-rather keep the old name.
+G3ID: Calculate generation number V3 and write GENERATION_NUMBER_MAX into
+    CDAT and the corrected date into Generation Data chunk.
 
-> +	char bufs[4][GIT_MAX_HEXSZ + 1];
-> +};
-> +
-> +#ifdef HAVE_THREADS
-> +static pthread_key_t hexbuf_array_key;
-> +static pthread_once_t hexbuf_array_once =3D PTHREAD_ONCE_INIT;
-> +
-> +static void init_hexbuf_array_key(void)
-> +{
-> +	if (pthread_key_create(&hexbuf_array_key, free))
-> +		die(_("failed to initialize threads' key for hash to hex conversion")=
-);
-> +}
-> +
-> +#else
-> +static struct hexbuf_array default_hexbuf_array;
-> +#endif
-> +
->  char *hash_to_hex_algop(const unsigned char *hash, const struct git_has=
-h_algo *algop)
->  {
-> -	static int bufno;
-> -	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
-> -	bufno =3D (bufno + 1) % ARRAY_SIZE(hexbuffer);
-> -	return hash_to_hex_algop_r(hexbuffer[bufno], hash, algop);
-> +	struct hexbuf_array *ha;
-> +
-> +#ifdef HAVE_THREADS
-> +	void *value;
-> +
-> +	if (pthread_once(&hexbuf_array_once, init_hexbuf_array_key))
-> +		die(_("failed to initialize threads' key for hash to hex conversion")=
-);
-> +
-> +	value =3D pthread_getspecific(hexbuf_array_key);
-> +	if (value) {
-> +		ha =3D (struct hexbuf_array *) value;
-> +	} else {
-> +		ha =3D xmalloc(sizeof(*ha));
-> +		if (pthread_setspecific(hexbuf_array_key, (void *)ha))
-> +			die(_("failed to set thread buffer for hash to hex conversion"));
-> +	}
-> +#else
-> +	ha =3D &default_hexbuf_array;
-> +#endif
+G3TO: Calculate generation number V3 and generation number V0, write
+    topological levels into CDAT and the offset into Generation Data
+    chunk.
 
-This introduces two ugly `#ifdef HAVE_THREADS` constructs which are
-problematic because they are the most likely places to introduce compile
-errors.
+G3TD: Calculate generation number V3 and generation number V0, write
+    topological levels into CDAT and the offset into Generation Data
+    chunk.
 
-I wonder whether you considered introducing a function (and probably a
-macro) that transparently gives you a thread-specific instance of a given
-data type? The caller would look something like
+Key:
+- M -> Metadata, G -> Generation
+- 5 -> Generation Number V5, 3 -> Generation Number V3,
+- T -> Topological level, I (for infinity) -> Generation Number Max
+- O -> Offset, D -> Date
 
-	struct hexbuf_array *hex_array;
+On the Linux repo with HEAD at 08bf1a27, time is taken by different
+versions:
 
-	GET_THREADSPECIFIC(hex_array);
+| Version | time Taken      |
+|---------|-----------------|
+| master  | 14.200s         |
+| MO      | 14.094s         |
+| G5D     | 14.406s         |
+| G5O     | 14.323s         |
+| G3IO    | 14.175s         |
+| G3ID    | 14.258s         |
+| G3TO    | 14.331s         |
+| G3TD    | 14.419s         |
 
-where the macro would look somewhat like this:
+Observations:
 
-	#define GET_THREADSPECIFIC(var) \
-		if (get_thread_specific(&var, sizeof(var)) < 0)
-			die(_("Failed to get thread-specific %s"), #var);
+- Writing offset (i.e., 32-bits) is faster than writing corrected date 
+  (which are 64-bit long). However, we would have to deal with overflow
+  issues.
 
-and the function would allocate and assign the variable. I guess this
-scheme won't work, though, as `pthread_once()` does not take a callback
-parameter, right? And we would need that parameter to be able to create
-the `pthread_key_t`. Hmm.
+  The largest offset value observed was of the order 2 ** 29. Assuming
+  no further "skips" in offset, we can store around ~635 million
+  commits without overflows. This, however, might not be true for other
+  repositories.
 
-Ciao,
-Dscho
+  A repository with a commit with Unix epoch '0' will overflow.
+  If we choose some sane default like commit date must be higher than
+  the release date of git, we can store around 110 million commits even
+  with '0' epoch.
 
-> +
-> +	ha->idx =3D (ha->idx + 1) % ARRAY_SIZE(ha->bufs);
-> +	return hash_to_hex_algop_r(ha->bufs[ha->idx], hash, algop);
->  }
->
->  char *hash_to_hex(const unsigned char *hash)
-> --
-> 2.26.2
->
->
+- Calculating topological levels with generation number V3 takes nearly
+  the same time as calculating generation number V5.
+
+- The commit-graph file is larger by 4 Mb (+8%) and 8 Mb (+16%) when
+  storing offsets and dates.
+
+Reading Commit Graph
+====================
+
+The time taken in using commit-graph to answer queries depends on:
+- The number of commits walked.
+- The time taken to load commit data from commit-graph.
+
+Number of commits walked for different commands:
+
+| Command                         | Master |   V3   |   V5   |
+|---------------------------------|--------|--------|--------|
+| log --topo-order -10000         |  48011 |  49954 |  49933 |
+| log --topo-order -100 v5.4 v5.5 |   3794 |   3314 |   3312 |
+| log --topo-order -100 v4.8 v4.9 |   5736 |   3887 |   3625 |
+| merge-base v5.4 v5.5            |  55053 |  57097 |  55109 |
+| merge-base v4.8 v4.9            | 635579 | 167468 | 506577 |
+
+- For log --topo-order, V3, and V5 walk 35% fewer commits than
+  the topological level when comparing v4.8 and v4.9.
+
+- V3 walks far fewer commits than V5 when comparing by generation
+  numbers and then date for paint_down_to_common(). This is unusual
+  and is probably due to my implementation. Based on log --topo-order,
+  we might expect V5 to perform better than V3.
+ 
+- V3 walks the same number of commits when compared using commit
+  date for merge-base.
+
+The time taken for each command rough corresponds to the number of
+commits walked, with no difference between Metadata chunk and Generation
+Data chunk approaches.
+
+| Command                         | Master  |    V3   |   V5   |
+|---------------------------------|---------|---------|--------|
+| log --topo-order -10000         |  0.210s |  0.209s | 0.207s |
+| log --topo-order -100 v5.4 v5.5 |  0.013s |  0.013s | 0.013s |
+| log --topo-order -100 v4.8 v4.9 |  0.015s |  0.013s | 0.013s |
+| merge-base v5.4 v5.5            |  0.048s |  0.047s | 0.047s |
+| merge-base v4.8 v4.9            |  0.135s |  0.133s | 0.134s |
+
+CONCLUSION
+==========
+
+With all this, my inital recommendation becomes more specific as:
+
+- If overflows are unlikely to happen and not accounted for, implement
+  generation number V5 using metadata chunk. It has the lowest write
+  time and walks just as few commits as V3.
+
+- If overflows are a concern, implement generation number V5 with
+  generation data chunk, storing offsets in generation data chunk.
+
+Thanks
+- Abhishek
