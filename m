@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E9ABC433DF
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 20:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15870C433E0
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 21:48:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14F942077D
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 20:56:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE505206A1
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 21:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727783AbgF3U4l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 16:56:41 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39803 "EHLO
+        id S1729291AbgF3Vs6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 17:48:58 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39914 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727773AbgF3U4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 16:56:38 -0400
-Received: by mail-wr1-f65.google.com with SMTP id q5so21465726wru.6
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 13:56:37 -0700 (PDT)
+        with ESMTP id S1728319AbgF3Vs5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 17:48:57 -0400
+Received: by mail-wr1-f65.google.com with SMTP id q5so21615113wru.6
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 14:48:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=XOEFvtMB0BXy/w863LhiJ/mT5haWx+2wUCuPC8gwRpA=;
-        b=OCpizBeZhqSNcN9x8aq3sr9o/ENNdv3iz4bsmLkqp4bvbjBmZz0QeOw3vpgL9DOryT
-         X/kyWQ11Jjq7jYyTQM/kmZErqOnTMzSf7Cqbc/Vo8cIWZZJuPrGjqMdiBPHTFJbb97tu
-         L2+y6LzBGyXb9mHWbBnfAL2YnuvOAXjQTNSA4Mgtf9el1vvKyo8S3DN/waGv/ViOwxgj
-         4Wy6MPHVc8hKCsKj+KqLM6osz+hNy9RklXWh919ri5yQM4/wqYdIPRibtCyzC+J637Sp
-         aIyPwUN0xxRJmGsPi3OsgkMJ8QyRmZ7AWtxpL4W3q2/yx568EXIr15xSUWfib6E0FWoH
-         Erzg==
-X-Gm-Message-State: AOAM532JsUmt6GwrDwMSOGnKoWe5dAw3eYUH4EwEFvxDaS3NXH/8qqoR
-        c2HITZ45pplb/ICC+QRu8jYhevjVem/blYU6pYut1G8Q
-X-Google-Smtp-Source: ABdhPJyt8DJDWR9f4muQ4PLeqh3jiIA8TdCO1KO2+9KVbAAI1LSoy+CKSqWG9sdsbo2ZpUjUhSJWwKX1jsVymcw6zfU=
-X-Received: by 2002:a5d:44c7:: with SMTP id z7mr25001069wrr.226.1593550594043;
- Tue, 30 Jun 2020 13:56:34 -0700 (PDT)
+        bh=g5N10Tgb1XRx+Vg2pREgqSHSFL/BLVa5yEIiBJNj1Nk=;
+        b=Tl98pp6hEVzyZTu6D8CCovOSOcnyvDvfHd3DuXXqhbEzoiJuxU4nK+k8SGBllZPRKw
+         vhat5EUDJB4wrHCpv6aoWdf0BBy1VUOxdH5mQHwXAvm5tTbl5RfqnFOMjJn7YOtIDgfj
+         NolCUQOh06VYaIFojbgeGKuChb4r9EB7bdeafdQnVl9+d++A7+nVejI3vhwnvjV2x9+8
+         o1RRgUtxbygR+ml7oRCNiNTEutuHhvgfbeOIJczXScoPsrW/vO/VigGttWiFF1CsbJKQ
+         JZLyx0gsqTmXXxSkL+1xCqMVr98SOAt/3DzzbzEIxDggwgOEBgwffClSkYbk6etibXoU
+         A/hA==
+X-Gm-Message-State: AOAM530kbU+gAUPUsbP8ylPYD5R/AXxYu/BeErTZpBBN4uwWJFPDL+kS
+        9E4X30o5mRMyQ+qS1tGK/REPW3Ls9RATSU4KBPw=
+X-Google-Smtp-Source: ABdhPJyKaI/+Lac5ldFecM+yI9poIKr/O1e/ujavFb8IGIdcxWnn/IVAY2Dnz/iSXhGsy9dEDR5yNxUHr6+k3fXf4Jg=
+X-Received: by 2002:adf:f34f:: with SMTP id e15mr23795469wrp.415.1593553735080;
+ Tue, 30 Jun 2020 14:48:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1593529394.git.liu.denton@gmail.com> <01e29450fe51a4ba13e07c611d8795ffd0282b9e.1593529394.git.liu.denton@gmail.com>
-In-Reply-To: <01e29450fe51a4ba13e07c611d8795ffd0282b9e.1593529394.git.liu.denton@gmail.com>
+References: <cover.1593529394.git.liu.denton@gmail.com> <67d5b93fdaab7f73f352293372ee3d71fb7c1409.1593529394.git.liu.denton@gmail.com>
+In-Reply-To: <67d5b93fdaab7f73f352293372ee3d71fb7c1409.1593529394.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 30 Jun 2020 16:56:22 -0400
-Message-ID: <CAPig+cSNK1MDitZyh7Ax-eRAh6NjG_QsoF0feEo4475GjZ5ezw@mail.gmail.com>
-Subject: Re: [PATCH 5/5] test-lib-functions: restrict test_must_fail usage
+Date:   Tue, 30 Jun 2020 17:48:44 -0400
+Message-ID: <CAPig+cTYJwDL_uGfSR0OmU4fYANbqQ5jLkyN29WXDvq6gWG_Zg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] t3701: stop using `env` in force_color()
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -52,98 +52,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, Jun 30, 2020 at 11:03 AM Denton Liu <liu.denton@gmail.com> wrote:
-> In previous commits, we removed the usage of test_must_fail() for most
-> commands except for a set of pre-approved commands. Since that's done,
-> only allow test_must_fail() to run those pre-approved commands.
+> In a future patch, we plan on making the test_must_fail()-family of
+> functions accept only git commands. Even though force_color() wraps an
+> invocation of `env git`, test_must_fail() will not be able to figure
+> this out since it will assume that force_color() is just some random
+> function which is disallowed.
 >
-> Obviously, we should allow `git`.
+> Instead of using `env` in force_color() (which does not support shell
+> functions), export the environment variables in a subshell. Write the
+> invocation as `force_color test_must_fail git ...` since shell functions
+> are now supported.
 >
-> We allow `__git*` as some completion functions return an error code that
-> comes from a git invocation. It's good to avoid using test_must_fail
-> unnecessarily but it wouldn't hurt to err on the side of caution when
-> we're potentially wrapping a git command (like in these case).
-
-s/case/cases/
-
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> +# Returns success if the arguments indicate that a command should be
-> +# accepted by test_must_fail(). If the command is run with env, the env
-> +# and its corresponding variable settings will be stripped before we
-> +# test the command being run.
-> +test_must_fail_acceptable () {
-> +       while test "$1" = "env"
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> @@ -31,7 +31,13 @@ diff_cmp () {
+>  force_color () {
+> -       env GIT_PAGER_IN_USE=true TERM=vt100 "$@"
+> +       (
+> +               GIT_PAGER_IN_USE=true &&
+> +               export GIT_PAGER_IN_USE &&
+> +               TERM=vt100 &&
+> +               export TERM &&
+> +               "$@"
+> +       )
+>  }
 
-I was surprised to see a 'while' loop for stripping 'env'. Did you
-actually run across cases in the test suite in which 'env' was
-invoking 'env'? If so, were such cases legitimate (as opposed to
-accidental)? Perhaps the commit message or an in-code comment could
-help readers understand why it needs to strip multiple 'env's.
+I'm having trouble understanding why this function was transformed the
+way it was. I presume the subshell is to ensure that the variable
+assignments don't escape the function context since you're dropping
+'env', however, it seems the following would be simpler:
 
-> +       do
-> +               shift
-> +               while test $# -gt 0
-> +               do
-> +                       case "$1" in *?=*) ;; *) break ;; esac
-> +                       shift
-> +               done
-> +       done
+    force_color ()  {
+        (GIT_PAGER_IN_USE=true TERM=vt100 "$@")
+    }
 
-Isn't '*?=*' the same as '?=', or am I misunderstanding the intention?
-Also, I wonder how important it is to insist that there must be at
-least one character before the '=' sign. (It doesn't necessarily hurt,
-but I'm curious if it is protecting against legitimate weird cases.)
+Or, is there something non-obvious going on that I'm missing?
 
-This logic would be easier to follow written this way:
-
-    case "$1" in
-        =) shift ;;
-        *) break ;;
-    esac
-
-That is, place the 'shift' in the appropriate case-arm rather than
-suspending it below all cases.
-
-> +       case "$1" in
-> +       git|__git*|test-tool|test-svn-fe|test_terminal)
-> +               return 0
-> +               ;;
-> +       *)
-> +               return 1
-> +               ;;
-> +       esac
-> +}
-
-Would it make sense to error out if "$1" has no value? That is, if the
-author wrote:
-
-    test_must_fail &&
-
-or
-
-    test_must_fail env foo=bar &&
-
-then that surely is a programmer error, which could be diagnosed here
-(though the original 'test_must_fail' didn't bother diagnosing that
-problem so it may be overkill and outside the scope of this series to
-do so here).
-
-> @@ -817,6 +842,15 @@ list_contains () {
-> +# Do not use this to run anything but "git" and other specific testable
-> +# commands (see test_must_fail_acceptable()).  We are not in the
-> +# business of vetting system supplied commands -- in other words, this
-> +# is wrong:
-> +#
-> +#    test_must_fail grep pattern output
-> +#
-> +# Just use '!' instead.
-
-I find this somewhat ambiguous; it's not clear at first sight what I'm
-supposed to do with '!'. t/README is slightly clearer by saying "use
-'! cmd' instead". It might be even clearer to spell it out explicitly
-with an example:
-
-    Instead use '!':
-
-        ! grep pattern output
+By the way, I'm wondering if the subshell deserves an in-code comment.
+Whereas, we have somewhat settled upon the idiom 'test_must_fail env
+FOO=bar ...' when we need to make sure variable assignments don't
+escape the local context -- since 'FOO=bar test_must_fail ...' doesn't
+make that guarantee under all shells -- the use of a subshell here to
+achieve the same (if I'm understanding correctly) is not nearly so
+obvious. The non-obviousness is due to "$@" being abstract -- someone
+reading the code won't necessarily realize that the first element of
+"$@" might be a shell function, thus would not necessarily understand
+the use of a subshell.
