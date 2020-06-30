@@ -2,68 +2,104 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B69BFC433E0
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2764AC433E1
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:45:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 963612078A
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:37:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0193D2076C
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:45:36 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S7G8sfZw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbgF3BhW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 21:37:22 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21]:60274 "EHLO cstnet.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726342AbgF3BhW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jun 2020 21:37:22 -0400
-Received: from [10.0.20.65] (unknown [106.120.127.15])
-        by APP-01 (Coremail) with SMTP id qwCowAAH6uoTlvpeyBTaAQ--.55360S2;
-        Tue, 30 Jun 2020 09:32:03 +0800 (CST)
-Subject: Re: how to make "git log" to grep diff
-From:   wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>
-To:     git@vger.kernel.org
-References: <b15193cd-339a-1097-df9f-a3b587db3be3@mails.ucas.ac.cn>
-Message-ID: <e052a0dc-26b0-391d-a29d-e9ab6f55d7f7@mails.ucas.ac.cn>
-Date:   Tue, 30 Jun 2020 09:32:03 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        id S1727005AbgF3Bpf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 21:45:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48926 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726163AbgF3Bpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 21:45:34 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55E3AC061755
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 18:45:34 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id 145so14714975qke.9
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 18:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GhR+OrbdfCFW/uTObA/uIb5Wg7veLlstcNHN5ecVhDk=;
+        b=S7G8sfZw6Gi+CWv+T93NseF3d92g0pyiKQ9G7aA7AyeM9JwIIl73Zf3IM+u5r/QXKT
+         AIVq7cNcJkk4h69I4IR/u4c5TpUtOeeRD8pwSwAx2UluEbZgmciVA8hy3KVRIY27UbJH
+         jdKAPWp0/yYS29zKQNmG0ADbjpNIjAhe6ZbeuM6XzCqFdlvNePo3gt4GeZU0J2sPUIiH
+         d4gdil7FeAjN8mn8Q5WaPE/hGMXjg/QKvooWpEbh8coXxUhqCrOpjqeVY6mmX9kPRZYO
+         9ZIm5kb9Vyb2S6xFP24omNjEmC6FQYeXBKCy2pfFLSABpCwW2yeN038Jp0hesEzizrmi
+         6ofg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GhR+OrbdfCFW/uTObA/uIb5Wg7veLlstcNHN5ecVhDk=;
+        b=Kq0xY8r/qn1z/sTBkDqRfbk+9hxhIYfS/z5gmhbyVN+BWrjIE0IyimXgjkyvhZW/rU
+         Rgv2oX2vB7yw4XFt2RC8HHhe0darQfji4IQ3e1FkpsO2y4CDv0GZaBBNy5MErpieNBG1
+         C0SrfUQ4q03zxqGgaKybXYQyDIMd/K7dI1Am5mfD1+0sHFzf4zga/wTqIWveyufEug9q
+         lwJ1/U457xBMaw7vLidbCs1P9Fm2vwNzYG/C3l3PVs/q3+dijZWdtj9XWhaGGMv0nOvo
+         5ulriVXaILceCkMt+U4yxB9egCND8Y10aD2+Cg163VBljN3vgT8oIphLUGP+EZfZqcdv
+         cK2Q==
+X-Gm-Message-State: AOAM532jR7OJD8p25SFqoVY8F8Ww5fBcEKtSNyiLP4V2S0RDBptoA+q3
+        /AAuYBZGA7Y6OZOyazkSH0g=
+X-Google-Smtp-Source: ABdhPJzt26CQpGoPdT1e2PO4bICDZ/fEyjrLlOkxfKx7w2EoeMtKfiO/vYCr0W0v6K8kxwTPq4x8CQ==
+X-Received: by 2002:a05:620a:40c1:: with SMTP id g1mr17847431qko.391.1593481533483;
+        Mon, 29 Jun 2020 18:45:33 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id o5sm1936815qtb.26.2020.06.29.18.45.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jun 2020 18:45:32 -0700 (PDT)
+Subject: Re: [PATCH 1/2] commit-reach: create repo_is_descendant_of()
+To:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com, avarab@gmail.com,
+        abhishekkumar8222@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+References: <pull.664.git.1592414670.gitgitgadget@gmail.com>
+ <8f7fd8f5941426c3ed7fc28c6e4afd62bcd4bb8d.1592414670.git.gitgitgadget@gmail.com>
+ <20200629134035.GA59624@syl.lan>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8dc7ae37-8587-b055-d18f-75a153129026@gmail.com>
+Date:   Mon, 29 Jun 2020 21:45:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-In-Reply-To: <b15193cd-339a-1097-df9f-a3b587db3be3@mails.ucas.ac.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20200629134035.GA59624@syl.lan>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-X-CM-TRANSID: qwCowAAH6uoTlvpeyBTaAQ--.55360S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-        VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYT7k0a2IF6F4UM7kC6x804xWl14x267AK
-        xVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGw
-        A2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r4j
-        6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Gr
-        1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJwAac4AC62xK8xCEY4vEwIxC
-        4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7
-        IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4U
-        M4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I
-        0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWU
-        GVWUWwC2zVAF1VAY17CE14v26r1j6r15MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI
-        0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0
-        rVW3JVWrJr1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJV
-        W8JbIYCTnIWIevJa73UjIFyTuYvjxU7EfOUUUUU
-X-Originating-IP: [106.120.127.15]
-X-CM-SenderInfo: xzx2x05xkxxi2u6ptx1ovo3u1dvotugofq/1tbiCAwDAV02YPcHJQAAsY
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/30/20 9:27 AM, wuzhouhui wrote:
-> Hi
->
-> The option --grep of git log is to grep commit log message, but I want to
->
-> grep diff, is any option support it?
->
-I have found option -G can do this, never mind.
-> Thanks
->
+On 6/29/2020 9:40 AM, Taylor Blau wrote:
+> On Wed, Jun 17, 2020 at 05:24:28PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> +int is_descendant_of(struct commit *commit, struct commit_list *with_commit)
+>> +{
+>> +	return repo_is_descendant_of(the_repository, commit, with_commit);
+>> +}
+>> +
+> 
+> I don't think that it makes a big deal either way, but I wonder about
+> moving 'repo_is_descendant_of' to the header file, and making
+> 'is_descendant_of' be 'static inline int' as you defined it here.
+> 
+> Since this has already graduated up to master already, I don't think
+> that it's worth going back just to shuffle this code around, but I was
+> wondering if you had any specific reason for doing it this way.
 
+I have good news for you. [1]
+
+[1] https://lore.kernel.org/git/20200623184222.54201-1-carenas@gmail.com/
+
+Thanks,
+-Stolee
