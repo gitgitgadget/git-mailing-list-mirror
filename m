@@ -2,123 +2,125 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52243C433E0
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F06AC433E1
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:23:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BB2C20724
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:16:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 539832074F
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 15:23:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u776vIAS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDv1MuuI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389355AbgF3PQh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 11:16:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60948 "EHLO
+        id S2389380AbgF3PXI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 11:23:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388217AbgF3PQd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 11:16:33 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A949C061755
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:16:34 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id 22so19191149wmg.1
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:16:33 -0700 (PDT)
+        with ESMTP id S2389250AbgF3PXG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 11:23:06 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908DFC061755
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:23:06 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id c139so18904340qkg.12
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 08:23:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=F+KO+D5p3YOmib6IviJGmS4ctI5tZIQ6SxGpPeB4buk=;
-        b=u776vIASLkcy5StlCWwRKEx9m9ydby1y0DGf4rZTKRzV96glZrhrHXw6rro0Ir5Ruy
-         atR7tfk25bBtDPne+o+bBEqVfkgSmHINWdWMfy18fYyFdcNrfHa1Rj9Az6pEHvG5Kbjm
-         ZZTSFXGYRu9LIuOKsPXVceWJd2V7lMgthbvrON/T57Amjj5h31NZ7RbTzAoyGdcKf9vu
-         Mtmv79RQ0xUl/OlmXAX+v9TDXIS7Tgv22mwtkfDdf0MLuuy2KQNL/RvCqkZUB9GOqVch
-         1MooX+iPqYbR0ciCco4LTimiipI/IJaJ1DacEPSVHs8rQYLf6J9m0NIUyGfooZOdZoLZ
-         qC/Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WFGVY2ijHuIReJA+Zc9/3DG3PM29JLj7p6j1Kh0weLw=;
+        b=MDv1MuuIEYdXeHLNbYjJkfGStQ2OGJsGinE6fEMbVpqF2Wgq04GYTNWI382Ls3s9va
+         Zf7VFhTUY3hwwTyv88R45ePIl6Y0ZKqZaPvRuvojyEG5WsZHFub+IPWpyB22jYQeJwXx
+         hxuvbS/6MJgdz0+7aj7SMe0SMY/eq3p1XHkOBxxN6VyM+Sj3WCbInD28+nVDOnKOLkML
+         pMZVpR1Ip0Vdy5rwH1XxM2A9kCtqjGc1acIrn+TrTpjZV7wyeqb6Iluw9dw+1yfHkGZ6
+         H47YkF2b80BbMywtZeDw35DSkXvDh8RVa+OFtMRmAo+ve4MUtTy18K8mfNTCTyvm2gG0
+         Nilw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=F+KO+D5p3YOmib6IviJGmS4ctI5tZIQ6SxGpPeB4buk=;
-        b=eC8+yaBMQ6Y615v+lL7nIs2kU0urnIuyxyUaaZ2tRJvDnKwIVHAK167Ze6caEumFwP
-         V4utwCFh5FDp6seTslaoEF/YS4Ul8Mwfez2y/44CQnOwq47LG0GcLwqz7PIe05fRYIiX
-         L+mFJspvK1X+2vIWLdcgB0rxREUNVTCoOxLYYEGXQ7YvZJ9pAP5AoBlhPdDNeTZiYzb2
-         SroBaqYrsT7/94LHxE4MHuQsQBnv3iorLKJUdSohz5RkNbq6+jkonigQMt5HkKiF5s4z
-         Z+hdeEXCKMyGfdirm30jma41MJeyE2otH2yh6eceOj4Xq5d21P7X6XYCZrbMiMwFDKXX
-         oiUw==
-X-Gm-Message-State: AOAM531706VMcudEa1s2ynks0eupGw0IDLnOA8KlfAQGuLklm02p7/vU
-        //03od1oLvzltlSIs/7WVocJM5fP
-X-Google-Smtp-Source: ABdhPJwvYLWf/btQ3PCXnQBJXYt2hZE42PlzDrJwp3JSYe2zj36KQmsOP1cFL8rPpmTWTpQqJZONyw==
-X-Received: by 2002:a05:600c:2182:: with SMTP id e2mr21646249wme.186.1593530192467;
-        Tue, 30 Jun 2020 08:16:32 -0700 (PDT)
-Received: from ylate.lan (atoulouse-654-1-323-12.w86-199.abo.wanadoo.fr. [86.199.210.12])
-        by smtp.googlemail.com with ESMTPSA id 63sm4263911wra.86.2020.06.30.08.16.31
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WFGVY2ijHuIReJA+Zc9/3DG3PM29JLj7p6j1Kh0weLw=;
+        b=Cw2NstpesDWgexrB8nKmQq2nLcyBGU7QSbnm5vaDWruW0EM5eYllOX3/Roz6QHg1zl
+         zC6uqx1YUsCfImkz8Fgi/okqmxv9roFjcS5IQpnaWZNjrCjJvZl7wRFBe35GmA0noZaS
+         0FMCs7xdcGJF84ReuVm+oiabKz7kRlnISD8odV7Aq7kLdP1XHCYIBxW5+eTr+qMtKd8M
+         xzdegvbWR+RbbwvxfJf238uvC6OoFJWRc60un5ZofTZ+IohFcSUwiMIqfiIDcPREWLDE
+         x60coXOBiCcb+SVHddb9bstdPgi3/o/+I8eaPq/wU8mGNFSU6ilHrnZD7/XwATTNVv9R
+         gJXg==
+X-Gm-Message-State: AOAM533G1xHvKXwOzWlzrPFYzmV0/AkmNyBHa6IK8IskphiSbRcC3O3c
+        nQ4j5vs2KCEavv+b5pRanlM=
+X-Google-Smtp-Source: ABdhPJyRQoQGxaTkGiQUYgAkKxs3NfpG5pmi2G5nEw0nzV/ll1kddVMFZ/lEi3vbHjbds63baqUMsA==
+X-Received: by 2002:a37:9c8f:: with SMTP id f137mr20921227qke.63.1593530585689;
+        Tue, 30 Jun 2020 08:23:05 -0700 (PDT)
+Received: from generichostname (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
+        by smtp.gmail.com with ESMTPSA id g41sm3631479qtb.37.2020.06.30.08.23.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2020 08:16:31 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v2 6/6] stash: remove `stash_index_path'
-Date:   Tue, 30 Jun 2020 17:15:58 +0200
-Message-Id: <20200630151558.20975-7-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200630151558.20975-1-alban.gruin@gmail.com>
-References: <20200505104849.13602-1-alban.gruin@gmail.com>
- <20200630151558.20975-1-alban.gruin@gmail.com>
+        Tue, 30 Jun 2020 08:23:04 -0700 (PDT)
+Date:   Tue, 30 Jun 2020 11:23:02 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v19 02/20] t3432: use git-reflog to inspect the reflog
+ for HEAD
+Message-ID: <20200630152302.GA1278279@generichostname>
+References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
+ <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
+ <277da0cf7ed641a085e6f4d843aa5ac0dd56a6c4.1593457018.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <277da0cf7ed641a085e6f4d843aa5ac0dd56a6c4.1593457018.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since stash no longer uses a second index, `stash_index_path' is now
-unused, and can be dropped.
+Hi Han-Wen,
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- builtin/stash.c | 7 -------
- 1 file changed, 7 deletions(-)
+On Mon, Jun 29, 2020 at 06:56:40PM +0000, Han-Wen Nienhuys via GitGitGadget wrote:
+> From: Han-Wen Nienhuys <hanwen@google.com>
+> 
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  t/t3432-rebase-fast-forward.sh | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
+> index 6f0452c0ea..22afeb8ccd 100755
+> --- a/t/t3432-rebase-fast-forward.sh
+> +++ b/t/t3432-rebase-fast-forward.sh
+> @@ -60,15 +60,16 @@ test_rebase_same_head_ () {
+>  		fi &&
+>  		oldhead=\$(git rev-parse HEAD) &&
+>  		test_when_finished 'git reset --hard \$oldhead' &&
+> -		cp .git/logs/HEAD expect &&
+> +		git reflog HEAD > expect &&
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index d5077a27d9..f1b3c0d2f8 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -88,7 +88,6 @@ static const char * const git_stash_save_usage[] = {
- };
- 
- static const char *ref_stash = "refs/stash";
--static struct strbuf stash_index_path = STRBUF_INIT;
- 
- /*
-  * w_commit is set to the commit containing the working tree
-@@ -1505,8 +1504,6 @@ static int save_stash(int argc, const char **argv, const char *prefix)
- 
- int cmd_stash(int argc, const char **argv, const char *prefix)
- {
--	pid_t pid = getpid();
--	const char *index_file;
- 	struct argv_array args = ARGV_ARRAY_INIT;
- 
- 	struct option options[] = {
-@@ -1523,10 +1520,6 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, git_stash_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
- 
--	index_file = get_index_file();
--	strbuf_addf(&stash_index_path, "%s.stash.%" PRIuMAX, index_file,
--		    (uintmax_t)pid);
--
- 	if (!argc)
- 		return !!push_stash(0, NULL, prefix, 0);
- 	else if (!strcmp(argv[0], "apply"))
--- 
-2.20.1
+Tiny nit: there should be no space present after the redirect operator,
+so it should be written like this
 
+	git reflog HEAD >expect
+
+>  		git rebase$flag $* >stdout &&
+> +		git reflog HEAD > actual &&
+
+Same here.
+
+>  		if test $what = work
+>  		then
+>  			old=\$(wc -l <expect) &&
+> -			test_line_count '-gt' \$old .git/logs/HEAD
+> +			test_line_count '-gt' \$old actual
+>  		elif test $what = noop
+>  		then
+> -			test_cmp expect .git/logs/HEAD
+> +			test_cmp expect actual
+>  		fi &&
+>  		newhead=\$(git rev-parse HEAD) &&
+>  		if test $cmp = same
+> -- 
+> gitgitgadget
+> 
