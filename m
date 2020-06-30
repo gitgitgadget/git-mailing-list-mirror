@@ -2,273 +2,215 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89FC3C433DF
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 07:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB355C433E0
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 07:42:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FDBD206BE
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 07:25:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E3DF207FF
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 07:42:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bjw4JgI1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EDP+UdeM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730821AbgF3HZZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 03:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44666 "EHLO
+        id S1731071AbgF3HmI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 03:42:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726943AbgF3HZY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 03:25:24 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7698C061755
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 00:25:24 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id e18so9530530pgn.7
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 00:25:24 -0700 (PDT)
+        with ESMTP id S1731019AbgF3HmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 03:42:07 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C965CC061755
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 00:42:07 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id h22so9131973pjf.1
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 00:42:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=AUpWjI6aFA+Ca29t+J8nE5LwSwLNyXuQXvG1n93mYbc=;
-        b=Bjw4JgI1nvOxB3XSroQ3RoE1fkVJhm6rNp++aF4LZvNUzDgtjkuCUJYb6jaOufARLw
-         2crWCvnz7ZEcRPzjidJAG1W26DhWQYNBG9Ky3+JRJjVfIKN/J8EhKTMO9sqNUF5mnTPC
-         1lmlo0ThZzecE4SYdqp4b9yTGxEZmYSpvPjURAHSUkQoGwpynve6av1HatvWKYD5H1G9
-         JOisrN355aZ3zA/jRxqk68HaYpthv0vcgSONDI8f1BjvRXhROYAhzOwde6xuNtTbQavr
-         tDPz7mK4sQJ2eQdqBFbBUIsFy5dtRjuFAd3ct8ATTbqmQOedNoGPwu8D9Xq4651TbtWZ
-         OzEQ==
+        bh=pslDSW1Pb3Lb6jwdTEG1XmsMyRWTh3iNo+o7a+HoI7E=;
+        b=EDP+UdeMNwZYJhcjG91x89tPt+Qx/pofwncT1ssGw76cnaUWvNc274JcUqOp66dL0a
+         v8Gcd7oSYT5AfPiM3DxFvRv+0FD7ZGFHlPisZ9boHKbd04Zey/IzJSgvVvf0Jo75H4Mg
+         f2fnwaizhnxGP+sE6OLJ3EQlamNlbMKdRDQ8GCJeOLKExVKu9etv53NGxoMN4cIdLaut
+         1Xbl/aot3Y7G2aK+ujX2xjetSPxW56sgIo5LZm3yyWTkacHfwKC0D4jCVQ2twjhSgvcA
+         rOy6gW/QpxI/6Tt3sqBmsIL2aX986XTTJm9CYuYg5wR1gfFDG6hKcFNO7BQDaqF+kVbI
+         EHXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AUpWjI6aFA+Ca29t+J8nE5LwSwLNyXuQXvG1n93mYbc=;
-        b=mavo+p3plY5LOVPkxD30LA49xZx+AgH/E9efa9CrmulbSvO116MOgjHxi51+N7EzmG
-         gzwAM4s9DvWpWOfAizDAYY60mkctqvKuo8hmXXsGtUMv+OvNsaox83MOzwWizMjs7vLN
-         rX+sX1lAsSSiwaOnxaVUIdtZvkfYYRumNxLAblXYpzvad6XJIRlDeJaa7oeWwVWsndE8
-         qKhDi5GWCCIUUPvU4gD14C1aZQGxEhB6AMGuL4asjOAau8Vds3CtWmYoOF/t/itcD3Hf
-         0yv3aK4o5oKuoBucS2TnHf7DhPOR1etP+7m/QZJEMwZmnWGh/i8cRhje3aWLvfMKKLKw
-         Kj4w==
-X-Gm-Message-State: AOAM533lSGVDNNpSDtQru2pz+j8FQ3UTevfz1znsgfH2TFnqOEa4FfAn
-        Ii+QpZb9nfLCTQU0cTOT+YQ=
-X-Google-Smtp-Source: ABdhPJzS3GXHWqqoZRRzyi8RJKEMvIA4DGtBveF2YARuylVECtdwcG794s43iIDC8ELDcP7NKsTIyQ==
-X-Received: by 2002:a63:e00c:: with SMTP id e12mr13768381pgh.413.1593501924157;
-        Tue, 30 Jun 2020 00:25:24 -0700 (PDT)
+        bh=pslDSW1Pb3Lb6jwdTEG1XmsMyRWTh3iNo+o7a+HoI7E=;
+        b=QZB5iGPI49XYK7VqMgR8OOD+R83u135fhHGIkFLkNCPJMpsm4GoGrh+sgUcNKVAZR+
+         rpaOiXr8RW9imVGpK0hiG3hC0r0IU/HHSPVodIRNs4wa386iM5C6zXbMQNVLB4vxhk2M
+         D6QCqyo0xpf9IWMthWdmbaPyhEqH/Qa9xd67Xl8/8kPMdhUb3pYQUP8IUfhTN3+dJsp6
+         Ne+VJgme4ECFt09AvmroAbfSSUoQPvHI/OA9Iu9DlT/PJK5hpLsVI1Jltu90aK12JwIP
+         V80wItOaE4GgH9VIYhyDtEkbdsv0GoFb4V+gewSkkrwA+U4eIaQAAaPSDFIy07KVVgdn
+         r0Mg==
+X-Gm-Message-State: AOAM533307eFXQqhkZI5a8LHoMNHMSGIPc6oblH+cSW8T9A0VI2Up4F3
+        LfQ4zc/MmXSq++8OM4VzUjU=
+X-Google-Smtp-Source: ABdhPJyABLB3bloyo8Rg80s4NsjrwxgsilsILwU0ivamA72AyWuK2/Rw6kHjy67WC3MKheK2hsu+SQ==
+X-Received: by 2002:a17:902:8e82:: with SMTP id bg2mr17052513plb.198.1593502927237;
+        Tue, 30 Jun 2020 00:42:07 -0700 (PDT)
 Received: from gmail.com (108-81-23-119.lightspeed.irvnca.sbcglobal.net. [108.81.23.119])
-        by smtp.gmail.com with ESMTPSA id w9sm1707730pfq.178.2020.06.30.00.25.23
+        by smtp.gmail.com with ESMTPSA id 137sm1783000pgg.72.2020.06.30.00.42.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2020 00:25:23 -0700 (PDT)
-Date:   Tue, 30 Jun 2020 00:25:21 -0700
+        Tue, 30 Jun 2020 00:42:06 -0700 (PDT)
+Date:   Tue, 30 Jun 2020 00:42:04 -0700
 From:   David Aguilar <davvid@gmail.com>
-To:     Sibi Siddharthan via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Subject: Re: [PATCH v5 6/8] cmake: support for building git on windows with
- mingw
-Message-ID: <20200630072521.GC1962986@gmail.com>
-References: <pull.614.v4.git.1591986566.gitgitgadget@gmail.com>
- <pull.614.v5.git.1593187898.gitgitgadget@gmail.com>
- <10acdbf5e4d4c49f69889ab1129d3d6b5a7fd754.1593187898.git.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     sunlin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sunlin <sunlin7@yahoo.com>,
+        "lin.sun" <lin.sun@zoom.us>
+Subject: Re: [PATCH v3] Enable auto-merge for meld to follow the vim-diff
+ beharior
+Message-ID: <20200630074204.GA2144485@gmail.com>
+References: <pull.781.v2.git.git.1591672753363.gitgitgadget@gmail.com>
+ <pull.781.v3.git.git.1593414441313.gitgitgadget@gmail.com>
+ <xmqqeepxfmdm.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <10acdbf5e4d4c49f69889ab1129d3d6b5a7fd754.1593187898.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqeepxfmdm.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 26, 2020 at 04:11:36PM +0000, Sibi Siddharthan via GitGitGadget wrote:
-> From: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+On Mon, Jun 29, 2020 at 05:06:13PM -0700, Junio C Hamano wrote:
+> "sunlin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >  mergetools/meld | 32 ++++++++++++++++++++++++++++++--
+> >  1 file changed, 30 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/mergetools/meld b/mergetools/meld
+> > index 7a08470f88..91b65ff22c 100644
+> > --- a/mergetools/meld
+> > +++ b/mergetools/meld
+> > @@ -7,13 +7,23 @@ merge_cmd () {
+> >  	then
+> >  		check_meld_for_output_version
+> >  	fi
+> > +	if test -z "${meld_has_auto_merge_option:+set}"
+> > +	then
+> > +		check_meld_for_auto_merge_version
+> > +	fi
 > 
-> This patch facilitates building git on Windows with CMake using MinGW
+> The detection part looks clumsy and inefficient.  More about it later.
+
+
+Sorry for not noticing your reply here earlier.  I agree with everything
+you wrote here, and rescind my earlier sign-off.  Combining as you
+suggested below is best IMO as well.
+
 > 
-> NOTE: The funtions unsetenv and hstrerror are not checked in Windows
-> builds.
-> Reasons
-> NO_UNSETENV is not compatible with Windows builds.
-> lines 262-264 compat/mingw.h
+> > +	option_auto_merge=
+> > +	if test "$meld_has_auto_merge_option" = true
+> > +	then
+> > +		option_auto_merge="--auto-merge"
+> > +	fi
+> >  
+> >  	if test "$meld_has_output_option" = true
+> >  	then
+> > -		"$merge_tool_path" --output="$MERGED" \
+> > +		"$merge_tool_path" $option_auto_merge --output="$MERGED" \
+> >  			"$LOCAL" "$BASE" "$REMOTE"
+> >  	else
+> > -		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+> > +		"$merge_tool_path" $option_auto_merge "$LOCAL" "$MERGED" "$REMOTE"
+> >  	fi
+> >  }
 > 
-> compat/mingw.h(line 25) provides a definition of hstrerror which
-> conflicts with the definition provided in
-> git-compat-util.h(lines 733-736).
+> The part that chooses whether to pass --auto-merge or not and
+> adjusts the command line options does look sensible.
 > 
-> To use CMake on Windows with MinGW do this:
-> cmake `relative-path-to-srcdir` -G "MinGW Makefiles"
+> I wonder if the same "hasAutoMerge" option can be used by those who
+> do *not* want the new --auto-merge behaviour to opt out of this
+> change.  Is there a reason why "meld" offers the --auto-merge as an
+> optional behaviour (which tells, at least to me, that the default
+> behaviour is not to auto-merge and makes me assume that the default
+> must be chosen by some sound reasoning, hence some users would prefer
+> not to use this new behaviour with good reasons)?
 > 
-> Signed-off-by: Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-> ---
->  contrib/buildsystems/CMakeLists.txt | 117 ++++++++++++++++++++++------
->  1 file changed, 94 insertions(+), 23 deletions(-)
+> I guess what I am trying to get at is, if --auto-merge is an optional
+> and non-default behaviour for "meld" users, perhaps it is not a good
+> idea to change the behaviour on them only because the version of meld
+> they run happens to support the --auto-merge as an optional behaviour.
 > 
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-> index 2768ee5b71..2d7c0ed88e 100644
-> --- a/contrib/buildsystems/CMakeLists.txt
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -42,6 +42,10 @@ cmake_minimum_required(VERSION 3.14)
->  set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
->  
->  find_program(SH_EXE sh)
-> +if(NOT SH_EXE)
-> +	message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
-> +			"On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
-> +endif()
->  
->  #Create GIT-VERSION-FILE using GIT-VERSION-GEN
->  if(NOT EXISTS ${CMAKE_SOURCE_DIR}/GIT-VERSION-FILE)
-> @@ -65,7 +69,9 @@ project(git
->  	VERSION ${git_version}
->  	LANGUAGES C)
->  
-> +
->  #TODO gitk git-gui gitweb
-> +#TODO Enable NLS on windows natively
->  #TODO Add pcre support
->  
->  #macros for parsing the Makefile for sources and scripts
-> @@ -104,6 +110,7 @@ find_package(EXPAT)
->  find_package(Iconv)
->  find_package(Intl)
->  
-> +
->  if(NOT Intl_FOUND)
->  	add_compile_definitions(NO_GETTEXT)
->  	if(NOT Iconv_FOUND)
-> @@ -125,6 +132,14 @@ if(Intl_FOUND)
->  	include_directories(SYSTEM ${Intl_INCLUDE_DIRS})
->  endif()
->  
-> +
-> +if(WIN32)
-> +	find_program(WINDRES_EXE windres)
-> +	if(NOT WINDRES_EXE)
-> +		message(FATAL_ERROR "Install windres on Windows for resource files")
-> +	endif()
-> +endif()
-> +
->  find_program(MSGFMT_EXE msgfmt)
->  if(NOT MSGFMT_EXE)
->  	message(WARNING "Text Translations won't be build")
-> @@ -156,11 +171,35 @@ add_compile_definitions(PAGER_ENV="LESS=FRX LV=-c"
->  			BINDIR="bin"
->  			GIT_BUILT_FROM_COMMIT="")
->  
-> -set(FALLBACK_RUNTIME_PREFIX /home/$ENV{USER})
-> -add_compile_definitions(FALLBACK_RUNTIME_PREFIX="${FALLBACK_RUNTIME_PREFIX}")
-> +if(WIN32)
-> +	set(FALLBACK_RUNTIME_PREFIX /mingw64)
-> +	add_compile_definitions(FALLBACK_RUNTIME_PREFIX="${FALLBACK_RUNTIME_PREFIX}")
-> +else()
-> +	set(FALLBACK_RUNTIME_PREFIX /home/$ENV{USER})
-> +	add_compile_definitions(FALLBACK_RUNTIME_PREFIX="${FALLBACK_RUNTIME_PREFIX}")
-> +endif()
-> +
-> +
-> +#Platform Specific
-> +if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-> +	include_directories(${CMAKE_SOURCE_DIR}/compat/win32)
-> +	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_UNIX_SOCKETS WIN32
-> +				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
-> +				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
-> +				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
-> +				UNICODE _UNICODE HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET)
-> +	list(APPEND compat_SOURCES compat/mingw.c compat/winansi.c compat/win32/path-utils.c
-> +		compat/win32/pthread.c compat/win32mmap.c compat/win32/syslog.c
-> +		compat/win32/trace2_win32_process_info.c compat/win32/dirent.c
-> +		compat/nedmalloc/nedmalloc.c compat/strdup.c)
-> +	set(NO_UNIX_SOCKETS 1)
-> +
-> +elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-> +	add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
-> +	list(APPEND compat_SOURCES unix-socket.c)
-> +endif()
->  
-> -add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
-> -list(APPEND compat_SOURCES unix-socket.c)
-> +set(EXE_EXTENSION ${CMAKE_EXECUTABLE_SUFFIX})
->  
->  #header checks
->  check_include_file(libgen.h HAVE_LIBGEN_H)
-> @@ -223,7 +262,12 @@ endif()
->  #function checks
->  set(function_checks
->  	strcasestr memmem strlcpy strtoimax strtoumax strtoull
-> -	setenv mkdtemp poll pread memmem unsetenv hstrerror)
-> +	setenv mkdtemp poll pread memmem)
-> +
-> +#unsetenv,hstrerror are incompatible with windows build
-> +if(NOT WIN32)
-> +	list(APPEND function_checks unsetenv hstrerror)
-> +endif()
->  
->  foreach(f ${function_checks})
->  	string(TOUPPER ${f} uf)
-> @@ -444,7 +488,13 @@ unset(CMAKE_REQUIRED_INCLUDES)
->  #programs
->  set(PROGRAMS_BUILT
->  	git git-bugreport git-credential-store git-daemon git-fast-import git-http-backend git-sh-i18n--envsubst
-> -	git-shell git-remote-testsvn git-credential-cache git-credential-cache--daemon)
-> +	git-shell git-remote-testsvn)
-> +
-> +if(NO_UNIX_SOCKETS)
-> +	list(APPEND excluded_progs git-credential-cache git-credential-cache--daemon)
-> +else()
-> +	list(APPEND PROGRAMS_BUILT git-credential-cache git-credential-cache--daemon)
-> +endif()
->  
->  if(NOT CURL_FOUND)
->  	list(APPEND excluded_progs git-http-fetch git-http-push)
-> @@ -516,15 +566,34 @@ parse_makefile_for_sources(libvcs-svn_SOURCES "VCSSVN_OBJS")
->  list(TRANSFORM libvcs-svn_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
->  add_library(vcs-svn STATIC ${libvcs-svn_SOURCES})
->  
-> +#add git.rc for gcc
-> +if(WIN32)
-> +	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
-> +			COMMAND ${WINDRES_EXE} -O coff -DMAJOR=${PROJECT_VERSION_MAJOR} -DMINOR=${PROJECT_VERSION_MINOR}
-> +				-DMICRO=${PROJECT_VERSION_PATCH} -DPATCHLEVEL=0 -DGIT_VERSION="\\\"${PROJECT_VERSION}.GIT\\\""
-> +				-i ${CMAKE_SOURCE_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
-> +			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-> +			VERBATIM)
-> +	add_custom_target(git-rc DEPENDS ${CMAKE_BINARY_DIR}/git.res)
-> +endif()
-> +
->  #link all required libraries to common-main
->  add_library(common-main OBJECT ${CMAKE_SOURCE_DIR}/common-main.c)
-> -target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES} pthread rt)
-> +
-> +target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES})
->  if(Intl_FOUND)
->  	target_link_libraries(common-main ${Intl_LIBRARIES})
->  endif()
->  if(Iconv_FOUND)
->  	target_link_libraries(common-main ${Iconv_LIBRARIES})
->  endif()
-> +if(WIN32)
-> +	target_link_libraries(common-main ws2_32 ntdll ${CMAKE_BINARY_DIR}/git.res)
-> +	add_dependencies(common-main git-rc)
-> +	target_link_options(common-main PUBLIC -municode -Wl,--nxcompat -Wl,--dynamicbase -Wl,--pic-executable,-e,mainCRTStartup)
-> +elseif(UNIX)
-> +	target_link_libraries(common-main pthread rt)
-> +endif()
+> IOW, wouldn't it make more sense, and certainly make it safer
+> without surprises to existing users, if we made the logic to
+> 
+>     * If mergetool.meld.useAutoMerge is not set, do not pass
+>       --auto-merge whether "meld" supports the option or not.
+> 
+>     * If mergetool.meld.useAutoMerge is 'true', always pass it
+>       without checking.
+> 
+>     * If mergetool.meld.useAutoMerge is 'when-able' (or come up with
+>       a better name if you want, perhaps 'auto'), check if "meld"
+>       accepts "--auto-merge" and decide whether to pass it or not.
+> 
+> perhaps?
 
 
-Small note about pthread.  In CMake land, the typical convention is to
-use the FindThreads module. [1]
+I like the idea of having it be auto/true/false, and perhaps "auto"
+would be a sensible default if more users benefit from it than not.
 
-To use it, add this to the top-level:
+Sunlin, do you have an opinion on what the default should be?
 
-	set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-	find_package(Threads REQUIRED)
 
-and then use the Threads::Threads target with target_link_libraries()
-instead of hard-coding "pthread" here.
 
-That way it'll only use the "-pthread" flag and library links as needed.
+> > +# Check whether we should use 'meld --auto-merge ...'
+> > +check_meld_for_auto_merge_version () {
+> > +	meld_path="$(git config mergetool.meld.path)"
 
-I'm not sure if mingw makes this advice moot, but I figured it was worth
-mentioning.
+Small sug -- this command substitution doesn't need the enclosing
+quotes.
 
-[1] https://cmake.org/cmake/help/latest/module/FindThreads.html
+	meld_path=$(git config mergetool.meld.path || echo meld)
+
+should be sufficient.  Are we okay with `|| echo meld`?
+If so, it would let us drop this line below.
+
+> > +	meld_path="${meld_path:-meld}"
+
+
+> > +
+> > +	if meld_has_auto_merge_option=$(git config --bool mergetool.meld.hasAutoMerge)
+> > +	then
+> > +		: use configured value
+> > +	elif "$meld_path" --help 2>&1 |
+> > +		grep -e '--auto-merge' -e '\[OPTION\.\.\.\]' >/dev/null
+> > +	then
+> > +		: old ones mention --auto-merge and new ones just say OPTION...
+> > +		meld_has_auto_merge_option=true
+> > +	else
+> > +		meld_has_auto_merge_option=false
+> > +	fi
+> > +}
+> 
+> When not configured, we end up running "meld --help" twice for two
+> options, which is not great, don't you think?  I actually think the
+> part that runs "meld --help" and parses its output should be split
+> out of the helper function "check_meld_for_output_version" and
+> called "check_meld_supported_options" or something, so that the
+> logic to see if the --output and --auto-merge options should be
+> passed can be made with at most one invocation of "meld --help".
+> Which may involve *NOT* having two separate helper functions
+> check_meld_for_*_version for the tested features.
+
+
+I'm 100% on board with this suggestion.
+
+> 
+> Oh, also, check_meld_for_*_version is nonsensical as a name for
+> these helper functions (it is not the fault of this patch---it is
+> mimicking the existing practice, but that does not make the function
+> name not nonsensical).  The helpers do not actually want to check a
+> "version", they only want to see if a feature is supported.  So
+> having "feature" in the name would be good, but "version" is not.
+
+
+Ditto.
 -- 
 David
