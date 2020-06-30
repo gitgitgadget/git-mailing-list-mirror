@@ -7,72 +7,68 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2764AC433E1
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 089CEC433E0
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:51:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0193D2076C
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:45:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8B5B2078B
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 01:51:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S7G8sfZw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uAikPTc6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbgF3Bpf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Jun 2020 21:45:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48926 "EHLO
+        id S1728414AbgF3Bvl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Jun 2020 21:51:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726163AbgF3Bpe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jun 2020 21:45:34 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55E3AC061755
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 18:45:34 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id 145so14714975qke.9
-        for <git@vger.kernel.org>; Mon, 29 Jun 2020 18:45:34 -0700 (PDT)
+        with ESMTP id S1726003AbgF3Bvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jun 2020 21:51:41 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A658C061755
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 18:51:41 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id g13so14456946qtv.8
+        for <git@vger.kernel.org>; Mon, 29 Jun 2020 18:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GhR+OrbdfCFW/uTObA/uIb5Wg7veLlstcNHN5ecVhDk=;
-        b=S7G8sfZw6Gi+CWv+T93NseF3d92g0pyiKQ9G7aA7AyeM9JwIIl73Zf3IM+u5r/QXKT
-         AIVq7cNcJkk4h69I4IR/u4c5TpUtOeeRD8pwSwAx2UluEbZgmciVA8hy3KVRIY27UbJH
-         jdKAPWp0/yYS29zKQNmG0ADbjpNIjAhe6ZbeuM6XzCqFdlvNePo3gt4GeZU0J2sPUIiH
-         d4gdil7FeAjN8mn8Q5WaPE/hGMXjg/QKvooWpEbh8coXxUhqCrOpjqeVY6mmX9kPRZYO
-         9ZIm5kb9Vyb2S6xFP24omNjEmC6FQYeXBKCy2pfFLSABpCwW2yeN038Jp0hesEzizrmi
-         6ofg==
+        bh=i6oesyCsGm6bJzJhYYwSSeAeWe3HbAC2YXCSORNLIDc=;
+        b=uAikPTc64NySOy+fG5GrFCpzmmYO/k//fiz9Thz9u6J9iEihVDnWAhIoLIfhHwnRQt
+         RRgISCZArpTUcGPhtppjBSQd5UgqXiBk9Z0l9+SOkRIGp5jDv1VCTz1m4PLSRLskWWiQ
+         BPqU5PgzmV3IiaTuvrOfVuaPlmkfdTgE9yoNgGJjzTLYV/Fi8Tt2oX5g/YCGmnXHlMj0
+         h1Ozs32HHakW73p+V/yf8yj3yIM9Ekcsc/8ZIGJb/KhTRjz68NHy9kKM/iKvwCuOk8cF
+         vwbKFCuw/LVFj1A+ggcN4cfv2qr0fpd1c2jP3udWQRZNOj0rANNVPX8qjxzCPgRCNeWY
+         ypLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=GhR+OrbdfCFW/uTObA/uIb5Wg7veLlstcNHN5ecVhDk=;
-        b=Kq0xY8r/qn1z/sTBkDqRfbk+9hxhIYfS/z5gmhbyVN+BWrjIE0IyimXgjkyvhZW/rU
-         Rgv2oX2vB7yw4XFt2RC8HHhe0darQfji4IQ3e1FkpsO2y4CDv0GZaBBNy5MErpieNBG1
-         C0SrfUQ4q03zxqGgaKybXYQyDIMd/K7dI1Am5mfD1+0sHFzf4zga/wTqIWveyufEug9q
-         lwJ1/U457xBMaw7vLidbCs1P9Fm2vwNzYG/C3l3PVs/q3+dijZWdtj9XWhaGGMv0nOvo
-         5ulriVXaILceCkMt+U4yxB9egCND8Y10aD2+Cg163VBljN3vgT8oIphLUGP+EZfZqcdv
-         cK2Q==
-X-Gm-Message-State: AOAM532jR7OJD8p25SFqoVY8F8Ww5fBcEKtSNyiLP4V2S0RDBptoA+q3
-        /AAuYBZGA7Y6OZOyazkSH0g=
-X-Google-Smtp-Source: ABdhPJzt26CQpGoPdT1e2PO4bICDZ/fEyjrLlOkxfKx7w2EoeMtKfiO/vYCr0W0v6K8kxwTPq4x8CQ==
-X-Received: by 2002:a05:620a:40c1:: with SMTP id g1mr17847431qko.391.1593481533483;
-        Mon, 29 Jun 2020 18:45:33 -0700 (PDT)
+        bh=i6oesyCsGm6bJzJhYYwSSeAeWe3HbAC2YXCSORNLIDc=;
+        b=uKIoF1GuaE7k8h/i4fvuU7t6wHrrMxjNfBb83xJG38o1syLt8BWhvMV/mRCEurz1s3
+         Rs9cG4xRXdrquSU0QORx1N5/bGkS/IOYHhA8q6p+JHP3MxJtflxl/fv36OEAvpLaQ0zc
+         3XQ0c8VdedZuEDG826QWdyJ5DKEIFU3bo7opcTzHUp7en5pcyclv/jilQkqxDcTt8ZDL
+         KIR+Nmxy8Nt5ptGRosrLL890FMeZV4TSHiznHa/c1h1ZIoVI0anLkv50Ll59SMeh7dIE
+         1qrDJNXZc0Rou8DPfLVrFrz2YPx6dBpdvngQ49zzI3sU2q0AGlxfvtKbpONWFHDg9Mf+
+         AwBg==
+X-Gm-Message-State: AOAM5308lz9ajFflggQVblpmRJLWRAB9lEF8rJN/Rgpfi1NM0UndTbmK
+        /TCAlwG9iZa1kxnRbLs17TEPtAqR6ZU=
+X-Google-Smtp-Source: ABdhPJz63KgJxAv2K+0PJbgL/jEeg2pb+vyYOPhmU3h21XIYKgwW7CQ+FZLs8A+c+wel2DxaGRg/3A==
+X-Received: by 2002:aed:3c64:: with SMTP id u33mr18606563qte.56.1593481900279;
+        Mon, 29 Jun 2020 18:51:40 -0700 (PDT)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id o5sm1936815qtb.26.2020.06.29.18.45.32
+        by smtp.gmail.com with ESMTPSA id u58sm1727419qth.77.2020.06.29.18.51.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jun 2020 18:45:32 -0700 (PDT)
-Subject: Re: [PATCH 1/2] commit-reach: create repo_is_descendant_of()
-To:     Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com, avarab@gmail.com,
-        abhishekkumar8222@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.664.git.1592414670.gitgitgadget@gmail.com>
- <8f7fd8f5941426c3ed7fc28c6e4afd62bcd4bb8d.1592414670.git.gitgitgadget@gmail.com>
- <20200629134035.GA59624@syl.lan>
+        Mon, 29 Jun 2020 18:51:39 -0700 (PDT)
+Subject: Re: Commit graph chains with no corresponding files?
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+References: <20200629220744.1054093-1-jonathantanmy@google.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8dc7ae37-8587-b055-d18f-75a153129026@gmail.com>
-Date:   Mon, 29 Jun 2020 21:45:32 -0400
+Message-ID: <92b218ca-f2b4-db9d-9f9c-1d071ea4fa97@gmail.com>
+Date:   Mon, 29 Jun 2020 21:51:39 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.0
 MIME-Version: 1.0
-In-Reply-To: <20200629134035.GA59624@syl.lan>
+In-Reply-To: <20200629220744.1054093-1-jonathantanmy@google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -81,25 +77,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/29/2020 9:40 AM, Taylor Blau wrote:
-> On Wed, Jun 17, 2020 at 05:24:28PM +0000, Derrick Stolee via GitGitGadget wrote:
->> +int is_descendant_of(struct commit *commit, struct commit_list *with_commit)
->> +{
->> +	return repo_is_descendant_of(the_repository, commit, with_commit);
->> +}
->> +
+On 6/29/2020 6:07 PM, Jonathan Tan wrote:
+> At $DAYJOB, a few people have reported "warning: unable to find all
+> commit-graph files" warnings. Their commit-graph-chain files have a few
+> lines, but they only have one commit graph file with very few commits. I
+> suspected something happening during fetch, because (as far as I know) a
+> fetch may cause an incremental commit graph to be written, but I ran a
+> fetch on a large repository myself and didn't run into this problem.
 > 
-> I don't think that it makes a big deal either way, but I wonder about
-> moving 'repo_is_descendant_of' to the header file, and making
-> 'is_descendant_of' be 'static inline int' as you defined it here.
-> 
-> Since this has already graduated up to master already, I don't think
-> that it's worth going back just to shuffle this code around, but I was
-> wondering if you had any specific reason for doing it this way.
+> Has anyone ran into this problem before, and know how to reproduce?
 
-I have good news for you. [1]
+The incremental commit-graph code deletes any commit-graph files
+that do not appear in the chain. I believe this is done by comparing
+the contents of the ".git/objects/info/commit-graphs/" directory to
+the contents of the chain file.
 
-[1] https://lore.kernel.org/git/20200623184222.54201-1-carenas@gmail.com/
+These appear to be case-sensitive, full-path comparisons.
+
+It is _possible_ that something like a case switch or a symlink
+could be causing a problem here. That's where I would look on
+the affected systems.
+
+Likely the full-path comparison in expire_commit_graphs() should
+be dropped in favor of local filename comparisons. A case-
+sensitive match is less likely to be important here since Git
+is writing the paths itself and should get the proper case back
+from the directory listing.
 
 Thanks,
 -Stolee
+
