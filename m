@@ -2,116 +2,139 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35AB7C433E1
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 09:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51FA8C433DF
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 11:04:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B119204EC
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 09:28:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 21F9B2067D
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 11:04:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GzvIMe1Z"
+	dkim=pass (2048-bit key) header.d=mforney-org.20150623.gappssmtp.com header.i=@mforney-org.20150623.gappssmtp.com header.b="N3YvIXxU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731538AbgF3J2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 05:28:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35446 "EHLO
+        id S1732831AbgF3LEV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 07:04:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730256AbgF3J2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 05:28:34 -0400
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8365AC061755
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 02:28:34 -0700 (PDT)
-Received: by mail-vs1-xe2b.google.com with SMTP id v1so10807891vsb.10
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 02:28:34 -0700 (PDT)
+        with ESMTP id S1729924AbgF3LER (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 07:04:17 -0400
+Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B62C061755
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 04:04:17 -0700 (PDT)
+Received: by mail-il1-x142.google.com with SMTP id t27so12332961ill.9
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 04:04:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EvaLV6IFdDtiOGM7iSUYm9w2DH82oX3R645ZRsw7LL8=;
-        b=GzvIMe1ZI4C5iceMGIYMWki9yFnGuG/1exoFrl16Oap4jmE2KD5WIhK+R0PCeUfyYc
-         3dj4vmUW6vdUqplf/itONJd1o0p+7EquI5vAH12C0YByheKbZZMK51TVpKixJ3j9lv+r
-         zDEUTfliLBRHJDzcGO3WOgUc5ltG80gQAlgclgQh0bH8DQdFOjhXHL7cnN8ot56RvsoD
-         4TkNLZ+JkgyePR71inWl+noBrJPUdCI3Pa+9PrD/6Yltos7FC7zXDxk4yvjFs+EPx+JA
-         MsbVhAifIeugsuodXy3HhtKPFpTyV9ka5B2UtGrkNTeyQga5yn2P1MIoZ82b/Suc/+43
-         VWKw==
+        d=mforney-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0gtWVqCqPFe+m9ZFhAjCg6LxgMHzHicEXdOKQW3EMFs=;
+        b=N3YvIXxU9uR7W/yoBLugm2LoAamjd3syeGk111iTKsXdU36GBEdrwLWXVP1Ma4vQB1
+         ZRS64VQIQjOVCfmSBrw0nR1JpY0k6XD4CgR1CBuDQEBvStSh+RW91a3SmRfSprorcKJE
+         CZZgR8KidMka+XsdY6X1MqgwTMxI80q7Fvy18e6qAWsPit5qTw4DEj7P7Xy3WQz5LIqQ
+         3TXzWXwsiPTQv2dxHb5uzDShx/nFlasz3PaqkCWGe3zoACX10J+4z9SUvuG3A1Bx3MLR
+         qWw4MzwJQdR37qoGgpSgsGZ8P6rVEvFYiOQ4l/2HtplSDmyNbH//Ohfnpdk8r8np1Om5
+         ieWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EvaLV6IFdDtiOGM7iSUYm9w2DH82oX3R645ZRsw7LL8=;
-        b=YKXfpsH8pNuyoUKelm7YwLz47ECZL6/2nX1EWS9wcuxNR5z/dwQD2qKXOCQHXXclxL
-         slSn6CvgwcFvGhYY0KYag1BY84MllBSfST4liO5fV9iSD8xYaligzuUAlE+jiy0ER/Pf
-         25Tc5VOPMoSKBX8aDTXaiaDwyX+ZwI2scZwHAxpuhKGAy1ZkOjMm6nSLEoDdCLVkl1AS
-         H4Mjn5pYHzYOHWcnovhqufqoe2kLJUcgMpiPGUctpjTQgICYf0f40O9fBWNWRPhTGWuK
-         vTYltWUAfbG4ZMDIRAfB6uzIoCmAhikvDk76PjiMfD+b14sABzPbuFDz077Ic4FuGasW
-         akNg==
-X-Gm-Message-State: AOAM530b+C8xdycUU94rNawyZUu3J/wAe30iqV0E7uNztKHYaVxxZ3lP
-        wNKWIPPwLLyWp/PZItJ/dr5gZ0E1r7b0aX5zOlcsiQ==
-X-Google-Smtp-Source: ABdhPJz92L2JsFdtSB9Ajt+W3C2VvdGVydGZxOhtJYqq8H5cN0fU1OsrGxyMeFwqJOtoLvCF5PE3bOALbHEud7Wh9Q4=
-X-Received: by 2002:a67:701:: with SMTP id 1mr8824847vsh.134.1593509312508;
- Tue, 30 Jun 2020 02:28:32 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0gtWVqCqPFe+m9ZFhAjCg6LxgMHzHicEXdOKQW3EMFs=;
+        b=D/+nDkbNXkPHqbBj2ednEWQy5UpYUnmk4YSTGnPKvMw4WjxQB07TOutkhhLgoQB6aK
+         G8KdLg8sjB9EsV76SljDPuQ46z0sWxGQhhP3GO7aA3iC+Q/eHTg++2Rzx24muNjCCsI0
+         eOV/k3ZVr4Ty+4+4JZyfrXGdVQpuJgblymiiq0ZNk/oLwo3bjfjxHjXo25uLzOpYy5TN
+         l1Wq11SVvZOS2LDMAuJjzkUUMPZo0BOy+KEUr/hPF1J+J6kJFmHoQIxJR0sms5kU9/LG
+         C0IYwbFkE5jnyhwBYINdpHHWcYXSUNMBXbRr0QccrAFxr3sqfSytqZuZG0koz6o435Jj
+         nzNw==
+X-Gm-Message-State: AOAM531vftfGfGcTbo2+WKwKSmg7Y9E0VpTJt7FUaDclLb9eYSh2xsdS
+        h/h1aBCLjWi8YgmXNHIgyij6Po/1iocBTaLKPS+sFA==
+X-Google-Smtp-Source: ABdhPJxBebQ+OIzVrYu19HBphKlGwJV40/vsetbL4jPxLgzRSRKbIpn4xFzSdVvmpwQqDQ7kgNaHR1H5B3NdVBGhD38=
+X-Received: by 2002:a92:4856:: with SMTP id v83mr1988993ila.125.1593515056752;
+ Tue, 30 Jun 2020 04:04:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
- <pull.539.v19.git.1593457018.gitgitgadget@gmail.com> <xmqqimf9fppn.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqimf9fppn.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 30 Jun 2020 11:28:21 +0200
-Message-ID: <CAFQ2z_MbiTEzztU9a8beMAQFn1-ozBUwKD1JyhXHUnoTTto0TA@mail.gmail.com>
-Subject: Re: [PATCH v19 00/20] Reftable support git-core
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Received: by 2002:a02:b794:0:0:0:0:0 with HTTP; Tue, 30 Jun 2020 04:04:15
+ -0700 (PDT)
+X-Originating-IP: [73.70.188.119]
+In-Reply-To: <33de1078-5f19-e76c-2a30-1754494d1e31@gmail.com>
+References: <20200623205659.14297-1-mforney@mforney.org> <20200623205659.14297-2-mforney@mforney.org>
+ <33de1078-5f19-e76c-2a30-1754494d1e31@gmail.com>
+From:   Michael Forney <mforney@mforney.org>
+Date:   Tue, 30 Jun 2020 04:04:15 -0700
+Message-ID: <CAGw6cBsctN0-BP6k7p71-edsHR4BxJWai4Qz5m5gi4J6pYh=Kw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] submodule: use submodule repository when preparing summary
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000e71a7a05a94b22dc"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 30, 2020 at 12:54 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > base-commit: b9a2d1a0207fb9ded3fa524f54db3bc322a12cc4
->
-> This is based on 'next', which usually is a sure way for a topic to
-> stay forever out of 'next', but we have impactful dependence only on
-> two topics, I think, and a good news is that both of them are in
-> pretty good shape.  I think Brian's part 2 of SHA-256 work should be
-> on the 'master' branch soon, and Dscho's "customizable default
-> branch" is also ready---it just would, like all other topics, want
-> to spend at least one week on 'next' to be safe.  And after that,
-> this topic can be directly on 'master' (there is another trivial
-> conflict around bisect--helper, but I am not worried about it),
-> which looks quite good.
+--000000000000e71a7a05a94b22dc
+Content-Type: text/plain; charset="UTF-8"
 
-ok. For the next time, I should keep basing myself on master, even if
-I know there are conflicts?
+On 2020-06-24, Derrick Stolee <stolee@gmail.com> wrote:
+> Perhaps the test I requested in patch 1 is only appropriate
+> here? Or, maybe the test should be test_expect_failure in the
+> first patch and switched to test_expect_success here?
 
-Do you have an opinion on
-https://public-inbox.org/git/pull.665.git.1592580071.gitgitgadget@gmail.com=
-/
-?
+I made a good effort to write a test, but I am still unable to
+reliably trigger the offending codepath, which is:
 
-There is some overlap with in sequencer.c, and Phillip's approach is
-likely more principled, so I'd like to base reftable on that.
+submodule.c:prepare_submodule_summary
+revision.c:prepare_revision_walk
+revision.c:limit_list
+revision.c:process_parents
+commit.c:repo_parse_commit_gently
+commit.c:repo_parse_commit_internal (needs !item->object.parsed and
+use_commit_graph)
+commit-graph.c:parse_commit_in_graph
+commit-graph.c:parse_commit_in_graph_one
+commit-graph.c:fill_commit_in_graph (needs pos >= number of commits in
+commit-graph in parent repository)
 
-> fixup! Reftable support for git-core
+The trick seems to be ensuring that the parent commit of the first
+commit in the range of commits changed in a submodule does not get
+parsed during show_submodule_header, is not a loose object in the
+repository, and has an index in the commit-graph that is larger than
+the size of the commit-graph in the parent repository. This seems to
+depend on the order of commits in the commit-graph, which seems to be
+random (perhaps based on commit hashes?).
 
-thanks, folded in!
+I attached my best attempt at a test to trigger the error. The
+probability of the test failing correctly (without the fix applied)
+seems to depend on how many commits are present in submodule before
+the first commit in the range of changed commits. This can be
+controlled by adjusting the `seq 1 X` in the for loop. The lowest
+number of commits with which I have been able to reproduce the bug is
+3, where it occurs around 1% of the time, and if I set it to 200, I
+can reproduce the bug around 99% of the time.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+I don't really want to spend more time on this than I already have.
+Can the bug fix be applied without a test? If not, hopefully someone
+can volunteer to craft a reliable test (assuming that this is even
+possible).
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+-Michael
 
-Registergericht und -nummer: Hamburg, HRB 86891
+--000000000000e71a7a05a94b22dc
+Content-Type: application/x-sh; name="t7421-submodule-commit-graph.sh"
+Content-Disposition: attachment; filename="t7421-submodule-commit-graph.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: file0
 
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+IyEvYmluL3NoCiMKIyBDb3B5cmlnaHQgKGMpIDIwMjAgTWljaGFlbCBGb3JuZXkKIwoKdGVzdF9k
+ZXNjcmlwdGlvbj0nVGVzdCBzdWJtb2R1bGUgc3VtbWFyeSB3aXRoIGNvbW1pdC1ncmFwaAoKVGhp
+cyB0ZXN0IHZlcmlmaWVzIHRoYXQgdGhlIHN1Ym1vZHVsZSBsb2cgd29ya3Mgd2hlbiB1c2luZyBh
+CmNvbW1pdC1ncmFwaC4KJwoKLiAuL3Rlc3QtbGliLnNoCgp0ZXN0X2V4cGVjdF9zdWNjZXNzICdz
+dWJtb2R1bGUgbG9nIHdvcmtzIHdpdGggY29tbWl0LWdyYXBoJyAnCglta2RpciBzdWIgJiYKCSgK
+CQljZCBzdWIgJiYKCQlnaXQgaW5pdCAmJgoJCWZvciBpIGluICQoc2VxIDEgMjAwKTsgZG8KCQkJ
+ZWNobyAkaSA+ZiAmJgoJCQlnaXQgYWRkIGYgJiYKCQkJZ2l0IGNvbW1pdCAtbSAic3VibW9kdWxl
+IGNvbW1pdCAkaSIKCQlkb25lCgkpICYmCglnaXQgYWRkIHN1YiAmJgoJZ2l0IGNvbW1pdCAtbSAi
+c3VwZXIgY29tbWl0IDEiICYmCgkoCgkJY2Qgc3ViICYmCgkJZWNobyBmaW5hbCA+ZiAmJgoJCWdp
+dCBhZGQgZiAmJgoJCWdpdCBjb21taXQgLW0gImZpbmFsIHN1Ym1vZHVsZSBjb21taXQiICYmCgkJ
+Z2l0IHJlcGFjayAtQSAmJgoJCWdpdCBnYwoJKSAmJgoJZ2l0IGFkZCBzdWIgJiYKCWdpdCBjb21t
+aXQgLW0gInN1cGVyIGNvbW1pdCAyIiAmJgoJZ2l0IHJlcGFjayAtQSAmJgoJZ2l0IGdjICYmCgln
+aXQgc2hvdyAtLXN1Ym1vZHVsZT1sb2cKJwoKdGVzdF9kb25lCg==
+--000000000000e71a7a05a94b22dc--
