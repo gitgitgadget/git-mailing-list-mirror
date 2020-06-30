@@ -2,113 +2,148 @@ Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BB82C433E0
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 20:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E9ABC433DF
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 20:56:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 23D0920702
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 20:52:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rBA9/+5o"
+	by mail.kernel.org (Postfix) with ESMTP id 14F942077D
+	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 20:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726324AbgF3UwR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 16:52:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725845AbgF3UwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 16:52:16 -0400
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B606BC061755
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 13:52:16 -0700 (PDT)
-Received: by mail-qk1-x741.google.com with SMTP id c139so20008739qkg.12
-        for <git@vger.kernel.org>; Tue, 30 Jun 2020 13:52:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5wgofCch1hUAlMaCnPbFuN5dTNza/Rr1XlvqGQwRDJY=;
-        b=rBA9/+5ofTRm8aZoaVsPuY+hfHVw00lSH06WfcHP5cpR+CxRWkfaHOKBod38ryTb6x
-         hNOl4u6d+u/MGwI2UwH4sM0NTUw++gb5F5qgBItAJUpLmHHCS8fk3L/U8r8jVQxcaKr0
-         DMNKkPduqFmK1eRQx2RcMsTzl89EuIZ+BeT6STwolI02ST6sPrNWz5G0jWFn6yHcN69U
-         TDoDugsLkACw20Y3n97F3TlsQrFemkJcCbsw9Ix+ttzTCS/Tb3n6w0TJsGdzaGdk8FnH
-         RtRAwlQY6/3+vUj1S78TbpGNGyNFsdUsORgH2W5UWSnlFXt0vmptayIg0eQcwe0r4tQi
-         PqEA==
+        id S1727783AbgF3U4l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 16:56:41 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39803 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727773AbgF3U4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 16:56:38 -0400
+Received: by mail-wr1-f65.google.com with SMTP id q5so21465726wru.6
+        for <git@vger.kernel.org>; Tue, 30 Jun 2020 13:56:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5wgofCch1hUAlMaCnPbFuN5dTNza/Rr1XlvqGQwRDJY=;
-        b=fsS7rlnGiuqXsBmlAqAdi8Xhr0LmF+VOutf35vfDar/FKkQnunPY/zhfqj2n7NQWN+
-         7yCleq4zO6XoKf/GFN9Jp6XRqT/w6yOQfcMXpxZS11I6HQCoRs8qimONHqjFrZdaF+/H
-         c6e5qhikoogLFoNq2UNHBSqjFMfIC0RR3Cjf57HuYO4HI8U+oG7TcPhHg9y4qrdIwX3X
-         zCbZA0KZ8nYNTRGVeSe0RFKIhZ+UubxW3alk36OE9stcbiq/O0AHuP4xIfygUWuLHZ0d
-         c4EuGHqez8gdDam3TGwqqT9pUbmnkzsCxexk4+yO7qZyyB3obXnhhsoQFGAyWRa2ktBk
-         rHyA==
-X-Gm-Message-State: AOAM530K/tsffWhhg4crL8DatPi+dohhAkH0b9OU8T32h04xcqUIxca8
-        0RHss3eZPE+JVSVKt9faNNo=
-X-Google-Smtp-Source: ABdhPJxiAR4j+3KaIzrNsMKO5GkJoRFn+vIk17D5JSVN6dhyCavUK+sSHVAxQmobEvKynUQ7Opw/6g==
-X-Received: by 2002:a37:7242:: with SMTP id n63mr6611395qkc.143.1593550335763;
-        Tue, 30 Jun 2020 13:52:15 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id s8sm4019644qtc.17.2020.06.30.13.52.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jun 2020 13:52:15 -0700 (PDT)
-Subject: Re: [PATCH 1/3] commit-graph: pass a 'struct repository *' in more
- places
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     peff@peff.net, dstolee@microsoft.com
-References: <cover.1593536481.git.me@ttaylorr.com>
- <4ea9933b50fe0bc2738ab0e0dc52a4f17c4a2cb4.1593536481.git.me@ttaylorr.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <00a3658e-323c-0719-5f26-4689e2a90374@gmail.com>
-Date:   Tue, 30 Jun 2020 16:52:15 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XOEFvtMB0BXy/w863LhiJ/mT5haWx+2wUCuPC8gwRpA=;
+        b=OCpizBeZhqSNcN9x8aq3sr9o/ENNdv3iz4bsmLkqp4bvbjBmZz0QeOw3vpgL9DOryT
+         X/kyWQ11Jjq7jYyTQM/kmZErqOnTMzSf7Cqbc/Vo8cIWZZJuPrGjqMdiBPHTFJbb97tu
+         L2+y6LzBGyXb9mHWbBnfAL2YnuvOAXjQTNSA4Mgtf9el1vvKyo8S3DN/waGv/ViOwxgj
+         4Wy6MPHVc8hKCsKj+KqLM6osz+hNy9RklXWh919ri5yQM4/wqYdIPRibtCyzC+J637Sp
+         aIyPwUN0xxRJmGsPi3OsgkMJ8QyRmZ7AWtxpL4W3q2/yx568EXIr15xSUWfib6E0FWoH
+         Erzg==
+X-Gm-Message-State: AOAM532JsUmt6GwrDwMSOGnKoWe5dAw3eYUH4EwEFvxDaS3NXH/8qqoR
+        c2HITZ45pplb/ICC+QRu8jYhevjVem/blYU6pYut1G8Q
+X-Google-Smtp-Source: ABdhPJyt8DJDWR9f4muQ4PLeqh3jiIA8TdCO1KO2+9KVbAAI1LSoy+CKSqWG9sdsbo2ZpUjUhSJWwKX1jsVymcw6zfU=
+X-Received: by 2002:a5d:44c7:: with SMTP id z7mr25001069wrr.226.1593550594043;
+ Tue, 30 Jun 2020 13:56:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <4ea9933b50fe0bc2738ab0e0dc52a4f17c4a2cb4.1593536481.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <cover.1593529394.git.liu.denton@gmail.com> <01e29450fe51a4ba13e07c611d8795ffd0282b9e.1593529394.git.liu.denton@gmail.com>
+In-Reply-To: <01e29450fe51a4ba13e07c611d8795ffd0282b9e.1593529394.git.liu.denton@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 30 Jun 2020 16:56:22 -0400
+Message-ID: <CAPig+cSNK1MDitZyh7Ax-eRAh6NjG_QsoF0feEo4475GjZ5ezw@mail.gmail.com>
+Subject: Re: [PATCH 5/5] test-lib-functions: restrict test_must_fail usage
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/30/2020 1:17 PM, Taylor Blau wrote:
-> In a future commit, some commit-graph internals will want access to
-> 'r->settings', but we only have the 'struct object_directory *'
-> corresponding to that repository.
+On Tue, Jun 30, 2020 at 11:03 AM Denton Liu <liu.denton@gmail.com> wrote:
+> In previous commits, we removed the usage of test_must_fail() for most
+> commands except for a set of pre-approved commands. Since that's done,
+> only allow test_must_fail() to run those pre-approved commands.
+>
+> Obviously, we should allow `git`.
+>
+> We allow `__git*` as some completion functions return an error code that
+> comes from a git invocation. It's good to avoid using test_must_fail
+> unnecessarily but it wouldn't hurt to err on the side of caution when
+> we're potentially wrapping a git command (like in these case).
 
-It is good to use "struct repository *" more.
+s/case/cases/
 
-> Add an additional parameter to pass the repository around in more
-> places. In the next patch, we will remove the object directory (and
-> instead reference it with 'r->odb').
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> +# Returns success if the arguments indicate that a command should be
+> +# accepted by test_must_fail(). If the command is run with env, the env
+> +# and its corresponding variable settings will be stripped before we
+> +# test the command being run.
+> +test_must_fail_acceptable () {
+> +       while test "$1" = "env"
 
-And this is a good reason why we need the repository here: we will
-need the settings AND odb.
+I was surprised to see a 'while' loop for stripping 'env'. Did you
+actually run across cases in the test suite in which 'env' was
+invoking 'env'? If so, were such cases legitimate (as opposed to
+accidental)? Perhaps the commit message or an in-code comment could
+help readers understand why it needs to strip multiple 'env's.
 
-> diff --git a/commit-graph.h b/commit-graph.h
-> index 3ba0da1e5f..03d848e168 100644
-> --- a/commit-graph.h
-> +++ b/commit-graph.h
-> @@ -76,10 +76,12 @@ struct commit_graph {
->  };
->  
->  struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st,
-> +						 struct repository *r,
->  						 struct object_directory *odb);
+> +       do
+> +               shift
+> +               while test $# -gt 0
+> +               do
+> +                       case "$1" in *?=*) ;; *) break ;; esac
+> +                       shift
+> +               done
+> +       done
 
-I suppose my only nit is that the struct repository pointer is
-not always the first parameter. I understand that you have grouped
-it where the 'odb' parameter is here, so perhaps that is fine.
+Isn't '*?=*' the same as '?=', or am I misunderstanding the intention?
+Also, I wonder how important it is to insist that there must be at
+least one character before the '=' sign. (It doesn't necessarily hurt,
+but I'm curious if it is protecting against legitimate weird cases.)
 
-Feel free to ignore this nit.
+This logic would be easier to follow written this way:
 
-Thanks,
--Stolee
+    case "$1" in
+        =) shift ;;
+        *) break ;;
+    esac
+
+That is, place the 'shift' in the appropriate case-arm rather than
+suspending it below all cases.
+
+> +       case "$1" in
+> +       git|__git*|test-tool|test-svn-fe|test_terminal)
+> +               return 0
+> +               ;;
+> +       *)
+> +               return 1
+> +               ;;
+> +       esac
+> +}
+
+Would it make sense to error out if "$1" has no value? That is, if the
+author wrote:
+
+    test_must_fail &&
+
+or
+
+    test_must_fail env foo=bar &&
+
+then that surely is a programmer error, which could be diagnosed here
+(though the original 'test_must_fail' didn't bother diagnosing that
+problem so it may be overkill and outside the scope of this series to
+do so here).
+
+> @@ -817,6 +842,15 @@ list_contains () {
+> +# Do not use this to run anything but "git" and other specific testable
+> +# commands (see test_must_fail_acceptable()).  We are not in the
+> +# business of vetting system supplied commands -- in other words, this
+> +# is wrong:
+> +#
+> +#    test_must_fail grep pattern output
+> +#
+> +# Just use '!' instead.
+
+I find this somewhat ambiguous; it's not clear at first sight what I'm
+supposed to do with '!'. t/README is slightly clearer by saying "use
+'! cmd' instead". It might be even clearer to spell it out explicitly
+with an example:
+
+    Instead use '!':
+
+        ! grep pattern output
