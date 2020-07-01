@@ -2,89 +2,120 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88505C433DF
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13DB7C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:59:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E75C12073E
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:53:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E48D32073E
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:59:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=neanderfunk.de header.i=@neanderfunk.de header.b="Ca15lJXB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ofC88mRx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729770AbgGAJxI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 05:53:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35904 "EHLO
+        id S1729358AbgGAJ7F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 05:59:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729125AbgGAJxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 05:53:07 -0400
-X-Greylist: delayed 584 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 01 Jul 2020 02:53:07 PDT
-Received: from mail.nadeshda.org (mail.nadeshda.org [IPv6:2001:41d0:1:a31a::210])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADB4C061755
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 02:53:07 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7CA331769D3
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 11:43:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=neanderfunk.de;
-        s=default; t=1593596596;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Ng6150v9B6OCSKwsjnhhYzRJBaOwehJGoC4uY729tkI=;
-        b=Ca15lJXBqCF5Qm4tiAXtP+ZIyIwztKYdb2RitOic+eA+aHxrvG+5hr/ml9MB6O7O03M0/9
-        lU7+/cj8sCOXqE5SQvgOAuDzfLRnEWRznSrC98ODfonZ2LUyWfvI5Fyd4nh8fX86IQzqNn
-        ciCyiftVtN2zTjDbhXz3CJvNGagp3q38TUXL1xb4mxp6Q4+6V8FGHIa4Ff1HBJOJSLWcaU
-        6CahKQH0gkBlLm/kBmKNfuaoD8cDaXF4xpfMQP6UfHk7xHi6R0GlzzacccD9Mr/LcDmFDy
-        hoxrkEf9KcKcNDnUv/6/lyYnXE+3f06NTrFcbrdHOAxQsxGxY/g+mFgUq6YW4Q==
-Subject: Interrupted system call
-References: <14b3d372-f3fe-c06c-dd56-1d9799a12632@yahoo.de>
-To:     git@vger.kernel.org
-From:   "R. Diez" <rdiez@neanderfunk.de>
-Message-ID: <c8061cce-71e4-17bd-a56a-a5fed93804da@neanderfunk.de>
-Date:   Wed, 1 Jul 2020 11:43:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+        with ESMTP id S1725440AbgGAJ7F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 05:59:05 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E7FC061755
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 02:59:04 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id dg28so19056565edb.3
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 02:59:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=J9OGBzCmvUWTZe1dG/0B3uwbTCwMyq8O3IPyxLC8UNw=;
+        b=ofC88mRxJlZeYnUAW6GxfpSt3FLhsvz1MpFaVGyaBwO/jjhHR+7NBAl6HNqnwB2PwJ
+         aWZS2lwfVSWJX3ra29sn13nT+Vz3/Vt5JX4q+3ZEUNYLd6URv9u6/eczUHYh7/xc/Qxo
+         5BblK7Cm35psZ9SF3bvTMmTdRvJ++4rc9hm2DdRzaMrH9mcaWW60buCF58VsZlMac4Ty
+         7MQSeuEqGRSitotf7cg0JPTWKBPjdtYxJ7ycSUQkTVVFGIEAvIRbdEisp9IPed8AKNUv
+         zV+sPBmsdNTX6A1ZpQr3e4uD0ZOictCAzemefOyHSyi2+NbnMmsEthD1zkamdnHhkKP8
+         odTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=J9OGBzCmvUWTZe1dG/0B3uwbTCwMyq8O3IPyxLC8UNw=;
+        b=nEogmql+EDq0ER3NPco3hCSn58qOX/88RkXO1orOmqMulL+t7eQLeyLHL+UNal+T1K
+         4l3Yk2Pm8BywFpcTiu8hu+RFbuAG2XwzDbtDawZ9NoAdrqgOY8RoebUJaZcUN0b3RbiB
+         S+r98PLuKUrYsKhAMpO57psty8adFFt7gV5n149okHOQreFQDi/Y6bH/rRn/JpEe2lj5
+         kqVWvtOVU8wyDzUfCv3mmGlU1Ce+hMf0jZKjX2sghjHYOQi3MQHYYXr4+Kxg/nKNIzBh
+         th02iFBSWXTylPqaB25tFtf7MMqQLvK5Kod5z4Q589u0HzTwgHN4fBX7SsMpdEaj6/ge
+         jqeA==
+X-Gm-Message-State: AOAM532NY4Oj4N7G6ZMnv6jnJ64GM1tBx8lNyNlY8lowtwj+SKHEi7Dy
+        zUFZ4spEWvNbNcOqN+6eB7eLy8YeYmLT4gaS0L84Px3e4K0=
+X-Google-Smtp-Source: ABdhPJziNwEL6dwcYKNZ5NQE1nCayiZGVKPCAE+Ip8VOZFdCA/44vLX+rwAUrZVsC6jhXNA6Qf5fSyAM29OwEbWoZrE=
+X-Received: by 2002:a50:cd1e:: with SMTP id z30mr27244995edi.364.1593597543573;
+ Wed, 01 Jul 2020 02:59:03 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <14b3d372-f3fe-c06c-dd56-1d9799a12632@yahoo.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+From:   Son Luong Ngoc <sluongng@gmail.com>
+Date:   Wed, 1 Jul 2020 11:58:53 +0200
+Message-ID: <CAL3xRKdZyE+9r-bPTDo_Fiz=nT_Y7uve+rvBqQZxjL-DYMGYpw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] commit-graph: respect 'core.useBloomFilters'
+To:     peff@peff.net
+Cc:     dstolee@microsoft.com, git@vger.kernel.org, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all:
+Hi folks,
 
-First of all, many thanks for Git.
+On Tue, 30 Jun 2020 15:33:40 -0400, Jeff King wrote:
 
-After a 3-month pause, I recently updated my Ubuntu 18.04.4. I am using a PPA to keep Git more up to date, so I have now "git version 2.27.0".
+> > > It might even be worth considering whether "changed paths" needs more
+> > > context (or would if we add new features in the future). On a "git
+> > > commit-graph write" command-line it is perfectly clear, but would
+> > > core.commitGraphChangedPaths be worth it? It's definitely more specific,
+> > > but it's also way more ugly. ;)
+> >
+> > Here's a third option what about 'graph.readChangedPaths'. I think that
+> > Stolee and I discussed a new top-level 'graph' section, since we now
+> > have a few commit-graph-related configuration variables in 'core'.
+>
+> Yes, I like that even better. Probably "graph" is sufficiently specific
+> within Git's context, though I guess it _could_ bring to mind "git log
+> --graph". So many overloaded terms. :)
 
-I am now getting this kind of errors:
+I would suggest using 'commitgraph.readChangedPaths' as I was planning on
+implementing the same config in [1] but never got around to it.
 
-fatal: failed to read object cf965547a433493caa80e84d7a2b78b32a26ee35: Interrupted system call
+From an end-user perspective, not server admin, 'graph' is very much
+correlated to 'git log --graph'.
 
-error: unable to mmap /home/rdiez/[blah blah]/SrcRepo.git/objects/2e/f96ffba4c0d60f36c8779758f82752be380689: Interrupted system call
+Using 'commitgraph' instead of core could also help us enabling more config
+down the line that equate to the current options in 'git commit-graph write'.
 
-I am using a mount point for a network share. Keep in mind that Git thinks it is working on a local directory, so there should be no sockets 
-or non-blocking I/O involved.
+I.e. something like 'commitgraph.writeSplit' might be desirable to tune the
+behavior of 'gc.writeCommitGraph' to use '--split=replace' strategy.
 
-The problem is probably caused by using SMB to connect to an outdated Windows server. It has been working for years, but at some point in 
-time it is bound to fail. The Linux kernel itself seems to introduce bugs in the SMB/CIFS code every now and then.
+---
 
-Nevertheless, I am surprised to get such an "Interrupted system call" from Git. A long time ago I learnt that it is OK for many syscalls to 
-get interrupted, so you have to loop around them. See here for more information:
+@Taylor: Thanks a lot for implementing this.
 
-http://250bpm.com/blog:12
+On Tue, 30 Jun 2020 13:17:36 -0400, Taylor Blau wrote:
 
-As a result, users should never actually get an "Interrupted system call" error from any software, at least when no sockets or non-blocking 
-I/O is involved.
+> We're planning on using these patches as part of a two-phase roll-out of
+> changed-path Bloom filters, where the first phase conditions whether or
+> not repositories *write* Bloom filters, and the second phase (controlled
+> via the new 'core.useBloomFilters') controls whether repositories *read*
+> their Bloom filters.
 
-How can I pin-point this problem? I would like to know where Git is encountering this error, so that I can troubleshoot it, and maybe report 
-yet another bug to the Linux SMB/CIFS maintainer.
+Could you elaborate a bit more on the 'two-phase roll-out' mentioned here?
 
-Thanks in advance,
-   rdiez
+I was looking for a way to verify whether a commit-graph chain has been
+written with Bloom filter (and force it to rewrite if not) but there seems
+to be no straightforward way?
+
+Do we need to implement a flag in 'git commit-graph verify' to check
+for Bloom filter existence?
+
+[1]: https://github.com/gitgitgadget/git/pull/633
+
+Regards,
+Son Luong.
