@@ -5,59 +5,59 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8451DC433E0
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD04C433E1
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B4E920760
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46A56206BE
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oIktA5l/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MRfVxBWh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731173AbgGANfr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 09:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42452 "EHLO
+        id S1731177AbgGANfs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 09:35:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729332AbgGANfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 09:35:45 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E0FC08C5DC
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:35:44 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 17so23262116wmo.1
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:35:44 -0700 (PDT)
+        with ESMTP id S1729332AbgGANfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 09:35:47 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49FF9C08C5C1
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:35:47 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id o8so22447476wmh.4
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:35:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=P6HSTBj8mmPeZRpWo8jeAdM3JIm4llQZnyUKHBtFk6s=;
-        b=oIktA5l/2TKXLhXw3/7Nu2xPXHaa51uhGqq9CFVlI7Bi5VUh16heOU9q7nlwiIiREk
-         5yDidWTTs3lFjCZLU8PMMNcJ3nQWYkiwYbSDV5IeD6ri/ArlXxhKQgv2SfPpaFIOgYl1
-         tY6cvteNfeTaUi5sESFQt5WLb1v9vPFaAshrEf8tSpf01/llL4TH6Fw41GCXNuuGdEZR
-         /1MUWq0pmwro4+k29aOcVzWd0O2JxCsBang3wPxMKJAQ3yYe9hADfwvzjoCfACZdN5RZ
-         SDRZK7qDAsEMNf8cgmtESUZy8q1HrOSoMZBjmC7G032Eon4eLigvFYkYOt/tN57Yzz08
-         bptQ==
+        bh=Npr/M7UuOj3UKyUGbMPYeV+rV5nr/9xAOEZN+JGZTjQ=;
+        b=MRfVxBWhyz3lxIh5KPSAeNbJSEUjbxCFgtCfPYpw23EOWT43OLLX1g+JOxFsxWeNtY
+         EVyvpmdQI0XdNW4iZRxfEmh8vW4NQwaqzEHMVQP3yOZZUQ8OIiIEf6LbWqvJl26vnzZG
+         BezfhwPip8Zb7BeaEO9huUfbCIEIt5TsF3K8F/1leqzcFzc8Vz1phpM6LY6LtOy1s9Zq
+         aLytNL0ksoKzgneHyIh4ciwc/K1+NNdxDY2A8KJb0tdSAgh5mcf9EYChGfVsCqNObkFd
+         /8acsHg6V+khwED7+/Twdjrj80TKn1vCFq8meCapR8TVnU5K3Ivhvf14cJ4qUW5/zKEf
+         V2jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=P6HSTBj8mmPeZRpWo8jeAdM3JIm4llQZnyUKHBtFk6s=;
-        b=FaLTYXyz7Bx+wUugG0TrcVgtzaXeibqfQl6PDHBU1XfQSXnh3gebITdGe8ymVTl9vC
-         D0wkGw3h1mkZCgOYQE1XplZc2P7ihOotC2vxbI1E98+H3XNJg9E6/vpB3qa1iwD04XQX
-         qiOr1hlxeC7sk9KrUw/UnKhD+Vd4U57OzAho4de3vq4CDjaV2zmfEctP2RisHQAQSTJ1
-         clQW2W4XjYISmPBdMKiZkTXlPjfHC1fcq3wiGk0On0iiC0Qc/jr7mGji5LyLGnmrerC/
-         CveQ0k1Mv0ypt8kmHyd4J6hpmieELAqLir1NxU4ZdFyv2s/1PqYSSgcI/2QhRwWRQHYM
-         yriw==
-X-Gm-Message-State: AOAM5334ASc5Um65S3qYlUldCH7Eu4TpMRr+NiTW2waKr5anvyFmQdUh
-        2tMhnLyuxkmNvyP/fRcrhP/fiHqHhmuoow==
-X-Google-Smtp-Source: ABdhPJwnOWcXHbxFfDCsN/WE4mHztXJweBsejnyvD2DUw5NIYVdA4QTX+ThxK5aKfdebjClzNDGIlQ==
-X-Received: by 2002:a1c:6805:: with SMTP id d5mr25892039wmc.19.1593610542682;
-        Wed, 01 Jul 2020 06:35:42 -0700 (PDT)
+        bh=Npr/M7UuOj3UKyUGbMPYeV+rV5nr/9xAOEZN+JGZTjQ=;
+        b=JbiKeFSKV0TPvbFnUto3R3YfsH10wwOPVicI/O3NIqXQW7amCcgN7UoVlahO2vuJAh
+         vS/D55IxgyY96WYu7w8XWLVnyTSry+OehcjUN0PBjRG9XzdFhlgI0AMEIk0eSmCEIpZe
+         +20JIVnoJNgrWWXMJpljrvgmcC/7lOr2pHZD4YHd+TAVeaaXQ4xp74zI0rE0YNRWgMuQ
+         unmiWpIOBjw4EDk074OiMMOn2PlyNGjbD3CQ08w73VsEFPgGdCI6+HNhzJ6NABpvIec/
+         hIW5WpG6ZrGMV9Ee2HW7B0n7BfSOtm9bTw1GxmmQvh8xx+bTZAyp4dzQBcqIuzu59E8d
+         f7hw==
+X-Gm-Message-State: AOAM531PGHT1OYp4Yqb5fqV0Y51aKMQKGH0gVq+l6VaPKwrjXCnCTAp8
+        ljLoWd7tWzBbJ6BnaBd/3oh6MWoq7DWHAQ==
+X-Google-Smtp-Source: ABdhPJznuPIejC+FybMJW6Nh5nQaWS5+YKn4oYCYfegQUZxRXuACcv5OrOmKPNbjDSoZIp2LxuH2wA==
+X-Received: by 2002:a1c:2906:: with SMTP id p6mr26417446wmp.68.1593610544129;
+        Wed, 01 Jul 2020 06:35:44 -0700 (PDT)
 Received: from localhost.localdomain ([91.242.153.178])
-        by smtp.gmail.com with ESMTPSA id 30sm7928840wrm.74.2020.07.01.06.35.41
+        by smtp.gmail.com with ESMTPSA id 30sm7928840wrm.74.2020.07.01.06.35.42
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Jul 2020 06:35:42 -0700 (PDT)
+        Wed, 01 Jul 2020 06:35:43 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
@@ -66,9 +66,9 @@ Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v4 10/13] bisect--helper: reimplement `bisect_state` & `bisect_head` shell functions in C
-Date:   Wed,  1 Jul 2020 15:35:01 +0200
-Message-Id: <20200701133504.18360-11-mirucam@gmail.com>
+Subject: [PATCH v4 11/13] bisect--helper: retire `--check-expected-revs` subcommand
+Date:   Wed,  1 Jul 2020 15:35:02 +0200
+Message-Id: <20200701133504.18360-12-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200701133504.18360-1-mirucam@gmail.com>
 References: <20200701133504.18360-1-mirucam@gmail.com>
@@ -81,17 +81,9 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Reimplement the `bisect_state()` shell functions in C and also add a
-subcommand `--bisect-state` to `git-bisect--helper` to call them from
-git-bisect.sh .
-
-Using `--bisect-state` subcommand is a temporary measure to port shell
-function to C so as to use the existing test suite. As more functions
-are ported, this subcommand will be retired and will be called by some
-other methods.
-
-`bisect_head()` is only called from `bisect_state()`, thus it is not
-required to introduce another subcommand.
+The `--check-expected-revs` subcommand is no longer used from the
+git-bisect.sh shell script. Functions `check_expected_revs` and
+`is_expected_revs` are also deleted.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
@@ -100,230 +92,71 @@ Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 87 +++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 55 ++-----------------------
- 2 files changed, 90 insertions(+), 52 deletions(-)
+ builtin/bisect--helper.c | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 3ded6a0ea2..ef8121afc7 100644
+index ef8121afc7..874f8c38c4 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -31,6 +31,8 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-next"),
- 	N_("git bisect--helper --bisect-auto-next"),
- 	N_("git bisect--helper --bisect-autostart"),
-+	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
-+	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
- 	NULL
- };
- 
-@@ -856,6 +858,81 @@ static int bisect_autostart(struct bisect_terms *terms)
- 
- 		return res;
+@@ -185,30 +185,6 @@ static int write_terms(const char *bad, const char *good)
+ 	return (res < 0) ? -1 : 0;
  }
-+ int mark_for_removal(const char *refname, const struct object_id *oid,
-+			    int flag, void *cb_data)
-+{
-+	struct string_list *refs = cb_data;
-+	char *ref = xstrfmt("refs/bisect%s", refname);
-+	string_list_append(refs, ref);
-+	return 0;
-+}
-+
-+
-+static enum bisect_error bisect_state(struct bisect_terms *terms, const char **argv,
-+				      int argc)
-+{
-+	const char *state;
-+	int i, verify_expected = 1;
-+	struct object_id oid, expected;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct oid_array revs = OID_ARRAY_INIT;
-+
-+	if (!argc)
-+		return error(_("Please call `--bisect-state` with at least one argument"));
-+
-+	state = argv[0];
-+	if (check_and_set_terms(terms, state) ||
-+	    !one_of(state, terms->term_good, terms->term_bad, "skip", NULL))
-+		return BISECT_FAILED;
-+
-+	argv++;
-+	argc--;
-+	if (argc > 1 && !strcmp(state, terms->term_bad))
-+		return error(_("'git bisect %s' can take only one argument."), terms->term_bad);
-+
-+	if (argc == 0) {
-+		enum get_oid_result res_head = get_oid("BISECT_HEAD", &oid);
-+		if (res_head == MISSING_OBJECT)
-+			res_head = get_oid("HEAD", &oid);
-+		if (res_head) {
-+			error(_("Bad bisect_head rev input"));
-+			return BISECT_FAILED;
-+		}
-+		oid_array_append(&revs, &oid);
-+	}
-+
-+	/*
-+	 * All input revs must be checked before executing bisect_write()
-+	 * to discard junk revs.
-+	 */
-+
-+	for (; argc; argc--, argv++) {
-+		if (get_oid(*argv, &oid)){
-+			error(_("Bad rev input: %s"), *argv);
-+			return BISECT_FAILED;
-+		}
-+		oid_array_append(&revs, &oid);
-+	}
-+
-+	if (strbuf_read_file(&buf, git_path_bisect_expected_rev(), 0) < the_hash_algo->hexsz ||
-+	    get_oid_hex(buf.buf, &expected) < 0)
-+		verify_expected = 0; /* Ignore invalid file contents */
-+	strbuf_release(&buf);
-+
-+	for (i = 0; i < revs.nr; i++) {
-+		if (bisect_write(state, oid_to_hex(&revs.oid[i]), terms, 0))
-+			return BISECT_FAILED;
-+
-+		if (verify_expected && !oideq(&revs.oid[i], &expected)) {
-+			unlink_or_warn(git_path_bisect_ancestors_ok());
-+			unlink_or_warn(git_path_bisect_expected_rev());
-+			verify_expected = 0;
-+		}
-+	}
-+
-+	oid_array_clear(&revs);
-+	return bisect_auto_next(terms, NULL);
-+}
  
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
-@@ -870,7 +947,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_START,
- 		BISECT_NEXT,
- 		BISECT_AUTO_NEXT,
--		BISECT_AUTOSTART
-+		BISECT_AUTOSTART,
-+		BISECT_STATE
- 	} cmdmode = 0;
- 	int no_checkout = 0, res = 0, nolog = 0;
- 	struct option options[] = {
-@@ -896,6 +974,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("verify the next bisection state then checkout the next bisection commit"), BISECT_AUTO_NEXT),
- 		OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
- 			 N_("start the bisection if it has not yet been started"), BISECT_AUTOSTART),
-+		OPT_CMDMODE(0, "bisect-state", &cmdmode,
-+			 N_("mark the state of ref (or refs)"), BISECT_STATE),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_BOOL(0, "no-log", &nolog,
-@@ -968,6 +1048,11 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		set_terms(&terms, "bad", "good");
- 		res = bisect_autostart(&terms);
- 		break;
-+	case BISECT_STATE:
-+		set_terms(&terms, "bad", "good");
-+		get_terms(&terms);
-+		res = bisect_state(&terms, argv, argc);
-+		break;
- 	default:
- 		BUG("unknown subcommand %d", (int)cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index cfb05c0511..7a8f796251 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -39,16 +39,6 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- TERM_BAD=bad
- TERM_GOOD=good
- 
--bisect_head()
+-static int is_expected_rev(const char *expected_hex)
 -{
--	if test -f "$GIT_DIR/BISECT_HEAD"
--	then
--		echo BISECT_HEAD
--	else
--		echo HEAD
--	fi
+-	struct strbuf actual_hex = STRBUF_INIT;
+-	int res = 0;
+-	if (strbuf_read_file(&actual_hex, git_path_bisect_expected_rev(), 0) >= 40) {
+-		strbuf_trim(&actual_hex);
+-		res = !strcmp(actual_hex.buf, expected_hex);
+-	}
+-	strbuf_release(&actual_hex);
+-	return res;
 -}
 -
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -61,43 +51,7 @@ bisect_skip() {
- 		esac
- 		all="$all $revs"
- 	done
--	eval bisect_state 'skip' $all
+-static void check_expected_revs(const char **revs, int rev_nr)
+-{
+-	int i;
+-
+-	for (i = 0; i < rev_nr; i++) {
+-		if (!is_expected_rev(revs[i])) {
+-			unlink_or_warn(git_path_bisect_ancestors_ok());
+-			unlink_or_warn(git_path_bisect_expected_rev());
+-		}
+-	}
 -}
 -
--bisect_state() {
--	git bisect--helper --bisect-autostart
--	state=$1
--	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
--	get_terms
--	case "$#,$state" in
--	0,*)
--		die "Please call 'bisect_state' with at least one argument." ;;
--	1,"$TERM_BAD"|1,"$TERM_GOOD"|1,skip)
--		bisected_head=$(bisect_head)
--		rev=$(git rev-parse --verify "$bisected_head") ||
--			die "$(eval_gettext "Bad rev input: \$bisected_head")"
--		git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
--		git bisect--helper --check-expected-revs "$rev" ;;
--	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
--		shift
--		hash_list=''
--		for rev in "$@"
--		do
--			sha=$(git rev-parse --verify "$rev^{commit}") ||
--				die "$(eval_gettext "Bad rev input: \$rev")"
--			hash_list="$hash_list $sha"
--		done
--		for rev in $hash_list
--		do
--			git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
--		done
--		git bisect--helper --check-expected-revs $hash_list ;;
--	*,"$TERM_BAD")
--		die "$(eval_gettext "'git bisect \$TERM_BAD' can take only one argument.")" ;;
--	*)
--		usage ;;
--	esac
--	git bisect--helper --bisect-auto-next
-+	eval git bisect--helper --bisect-state 'skip' $all
- }
- 
- bisect_visualize() {
-@@ -187,8 +141,7 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
- 			state="$TERM_GOOD"
- 		fi
- 
--		# We have to use a subshell because "bisect_state" can exit.
--		( bisect_state $state >"$GIT_DIR/BISECT_RUN" )
-+		git bisect--helper --bisect-state $state >"$GIT_DIR/BISECT_RUN"
- 		res=$?
- 
- 		cat "$GIT_DIR/BISECT_RUN"
-@@ -203,7 +156,7 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
- 		if [ $res -ne 0 ]
- 		then
- 			eval_gettextln "bisect run failed:
--'bisect_state \$state' exited with error code \$res" >&2
-+'git bisect--helper --bisect-state \$state' exited with error code \$res" >&2
- 			exit $res
- 		fi
- 
-@@ -244,7 +197,7 @@ case "$#" in
- 	start)
- 		git bisect--helper --bisect-start "$@" ;;
- 	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
--		bisect_state "$cmd" "$@" ;;
-+		git bisect--helper --bisect-state "$cmd" "$@" ;;
- 	skip)
- 		bisect_skip "$@" ;;
- 	next)
+ static int bisect_reset(const char *commit)
+ {
+ 	struct strbuf branch = STRBUF_INIT;
+@@ -938,7 +914,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+ 		WRITE_TERMS = 1,
+-		CHECK_EXPECTED_REVS,
+ 		BISECT_RESET,
+ 		BISECT_WRITE,
+ 		CHECK_AND_SET_TERMS,
+@@ -954,8 +929,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "write-terms", &cmdmode,
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+-		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
+-			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_CMDMODE(0, "bisect-write", &cmdmode,
+@@ -996,9 +969,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc != 2)
+ 			return error(_("--write-terms requires two arguments"));
+ 		return write_terms(argv[0], argv[1]);
+-	case CHECK_EXPECTED_REVS:
+-		check_expected_revs(argv, argc);
+-		return 0;
+ 	case BISECT_RESET:
+ 		if (argc > 1)
+ 			return error(_("--bisect-reset requires either no argument or a commit"));
 -- 
 2.25.0
 
