@@ -2,92 +2,85 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4021C433E0
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19FB9C433DF
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:56:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BFE5020781
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:21:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1A8120771
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:56:49 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kD/LnfaI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732045AbgGAQVM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 12:21:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47408 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729019AbgGAQVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 12:21:12 -0400
-Received: (qmail 24830 invoked by uid 109); 1 Jul 2020 16:21:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jul 2020 16:21:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6629 invoked by uid 111); 1 Jul 2020 16:21:12 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jul 2020 12:21:12 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 1 Jul 2020 12:21:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     "R. Diez" <rdiez@neanderfunk.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Interrupted system call
-Message-ID: <20200701162111.GA934052@coredump.intra.peff.net>
-References: <14b3d372-f3fe-c06c-dd56-1d9799a12632@yahoo.de>
- <c8061cce-71e4-17bd-a56a-a5fed93804da@neanderfunk.de>
+        id S1732623AbgGAQ4s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 12:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45736 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732602AbgGAQ4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 12:56:47 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645BFC08C5C1
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 09:56:47 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id t25so23423154lji.12
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 09:56:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lnPxAE4Mi/gt+Ihy4UEuFmHnDltjU4oda79VafyX4aI=;
+        b=kD/LnfaIMoAr5DJDHGgHfOY5kzio7HX2Jatf74JusluaU+lLMieo8CbI9qO/ZM7CvC
+         jG5qs33uYRp/4kh7F1vdKLeHdDYNyyTF8kBCicDd81k1GuHWR+AKP0UVFfaSH7CUr6PD
+         wyBgcdmv7w3bszZFD+sam1ZhTdi0iWreMGph9v0uLyjRj5FGbPm4jx+oR415eebJqYsG
+         vnW6BG6R9HZyvWOVgXG/4AUz0HSjxLaw5fE0rIz5zwtk9uUGA+60brm+VZYvgLAr4EaL
+         /wIsAVN3r6cdBPHkrMUtC2fq6VLRpVXy7jQie0mzjzg/mkKkNncrqT7dX+WYdAW4hN6p
+         +oGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lnPxAE4Mi/gt+Ihy4UEuFmHnDltjU4oda79VafyX4aI=;
+        b=g+AukukvGc4vdrsHS5+XhwXKFnQBqPDwnIn8L1wnDkZaX020U0HWPydun8sAgmU+2V
+         7mMuv1+5a/e5WbaPUGSyYA/vMHcMWL5wCrg52s0L3fCFD/AwzzfalJ4JCcl+XKTspD+v
+         m4jBpZdXoRvm2BU8MJ9IEvEaZO7xwx6bSzJ478tCdcdRDtJd09TZiiHtASF6aicirO5M
+         pXelXrH8S1dKE7CXoQAj3KP/J84mdjDop+dgSsj3C5BQbPc65Btx9EfS1GZG0lPDTqkv
+         yJlEniIz4/gMIRI9l5k/Sn/wYCE3t7S5HklgnZ2HIv2GpN5/SoAXBM0SBdxNGdeOQFCU
+         oXmQ==
+X-Gm-Message-State: AOAM532Q/FUQkaT8Lr0sPUuP82JFikhJSVy9NyFAfVpXwylT3B93INSN
+        nwpTak2qoizyAmNcG2Ez4bBED3pZ3yKjNlNc2Hd8+K2j
+X-Google-Smtp-Source: ABdhPJzBkq05U140HRmeZ0DT6Id/WgpJAibD0ORNtcREOr6JhgflxEBF2YQLipO1fXFG1uNLurU1xUtxlmJNtS4AquA=
+X-Received: by 2002:a05:651c:c1:: with SMTP id 1mr13178257ljr.292.1593622605860;
+ Wed, 01 Jul 2020 09:56:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c8061cce-71e4-17bd-a56a-a5fed93804da@neanderfunk.de>
+References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
+ <pull.539.v19.git.1593457018.gitgitgadget@gmail.com> <125695ce92218ca2ddb9868880db542acb0d2a79.1593457018.git.gitgitgadget@gmail.com>
+ <xmqqmu4lfxet.fsf@gitster.c.googlers.com> <CAFQ2z_MuD0e+a_r0_-GMpjr1mV==hdh2=0gyVrT7f8tDbXC6xQ@mail.gmail.com>
+ <xmqqftacds2a.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqftacds2a.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwenn@gmail.com>
+Date:   Wed, 1 Jul 2020 18:56:34 +0200
+Message-ID: <CAOw_e7bcfUyumKkQRubf=zg6zso4pOtiC8-6d8qQiVL7vyfCog@mail.gmail.com>
+Subject: Re: [PATCH v19 03/20] checkout: add '\n' to reflog message
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 01, 2020 at 11:43:15AM +0200, R. Diez wrote:
+On Wed, Jul 1, 2020 at 1:58 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > I initially thought we could or should fix this across git-core, but I
+> > think it will be a lot of work to find all occurrences.
+>
+> I think we are on the same page, even if the definition of which is
+> correct might be different between us.  As long as all the refs
 
-> After a 3-month pause, I recently updated my Ubuntu 18.04.4. I am
-> using a PPA to keep Git more up to date, so I have now "git version
-> 2.27.0".
-> 
-> I am now getting this kind of errors:
-> 
-> fatal: failed to read object cf965547a433493caa80e84d7a2b78b32a26ee35: Interrupted system call
-> 
-> error: unable to mmap /home/rdiez/[blah blah]/SrcRepo.git/objects/2e/f96ffba4c0d60f36c8779758f82752be380689: Interrupted system call
-> 
-> I am using a mount point for a network share. Keep in mind that Git thinks
-> it is working on a local directory, so there should be no sockets or
-> non-blocking I/O involved.
+Right. The practical upshot of this is that I should drop this patch, though.
 
-Looking at the code, that message is slightly deceptive. It's reporting
-a failure from map_loose_object_1(), which calls both open() and mmap(),
-as well as fstat().  It would be interesting to know which syscall is
-actually failing. Running the failure case under "strace" would be
-interesting (likewise to see which signal is causing the interruption).
-
-> The problem is probably caused by using SMB to connect to an outdated
-> Windows server. It has been working for years, but at some point in time it
-> is bound to fail. The Linux kernel itself seems to introduce bugs in the
-> SMB/CIFS code every now and then.
-> 
-> Nevertheless, I am surprised to get such an "Interrupted system call" from
-> Git. A long time ago I learnt that it is OK for many syscalls to get
-> interrupted, so you have to loop around them. See here for more information:
-
-We do check for signals and re-start read() and write() calls as
-appropriate. We don't for open(), and nobody has ever complained (though
-it definitely is documented to result in EINTR, I'd imagine it's
-relatively rare). I'm not excited about the prospect of adding retry
-code to every open(), though perhaps doing it with our git_open()
-wrapper would be sufficient (it's unclear how stdio fopen() behaves).
-
-> How can I pin-point this problem? I would like to know where Git is
-> encountering this error, so that I can troubleshoot it, and maybe report yet
-> another bug to the Linux SMB/CIFS maintainer.
-
-I think the first step is using strace to record the system call
-returning EINTR (and the signal that interrupted it). I suspect it's in
-open(), though, and probably not a bug: opening network files may take a
-while and need to be interruptable.
-
--Peff
+-- 
+Han-Wen Nienhuys - hanwenn@gmail.com - http://www.xs4all.nl/~hanwen
