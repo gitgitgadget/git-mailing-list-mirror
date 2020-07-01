@@ -2,284 +2,130 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71501C433DF
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 18:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B66C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 19:44:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B45B20870
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 18:19:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C77FA20760
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 19:44:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B5TET4Is"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="OzAOCDaJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732660AbgGASTw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 14:19:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58502 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732172AbgGASTv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 14:19:51 -0400
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE21EC08C5C1
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 11:19:51 -0700 (PDT)
-Received: by mail-pl1-x642.google.com with SMTP id p1so959223pls.4
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 11:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HiQ4/F4fT0TdeWXaE8WKPlzshbfxvBJJ6RKEQP0wQRw=;
-        b=B5TET4Is5HFgn0MJBqhOIWCdcLVPUHZ2CScHc+cLib/D3yi7UopNpQ0HWpUQiH/Wmq
-         8Yrrq/0/uLv7HzD+diomBE3bsRtfUyBApvR/um1D8Tz298uzocUmc/iCj3y7RQk4JXtt
-         t48YRIO5rUbhp17KtcL7v9yuCptF7sY2h/W4oNILza5ae79insOahWktpGqoJ6Ox/Sim
-         L9ibT+/rBC/knaeCZkigwUfyTDNlLrqq/pi4tOLW+bUKWT4+DsF1+SSZlu7bUdEoL6+n
-         wEQWzf3B/qseNw/pS26E2DCWe7Di5RvCjEDKDw3/fbh6ZcSX9mWcHJrEPN6t9VZND+M7
-         OSGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HiQ4/F4fT0TdeWXaE8WKPlzshbfxvBJJ6RKEQP0wQRw=;
-        b=tZJH+dN0kbAgM6eq9OvcJGAmyX41R8lYMWvppegh/VyoetCeDBS9xl+o8fw+b8eziX
-         lk4GmduwRWc22juwaq1YYOkJJK3/PpcTS/CkSGmx1EuMZ6jcwkrP2S5fHUc+csSt9ngH
-         a4vPC9G5W2Vx0OX4TGlnHLEYL3JVqiS99XT5dSJ9OW/y5cgdurzqLkrPlHzJjEPM4ooe
-         6TiQkNN3yL5b+/oHxcQAEPHuSf/fXQVr0TGaIZuBWgj7kbVtj8rJ4Q4M8BMr2621wJxZ
-         F8g/DoopT/3vwiW6/xyEGhw18rtQI9KrGkPh1eO3z2oBGAWDGVyvUEZYctsng485cNT/
-         wF7g==
-X-Gm-Message-State: AOAM531YSa7KHG0sECTR8IfVhS7dC8QETgHO8A9lzMCEzjUPawJS2BcQ
-        OysEUFD6fVAKMwVZcx9HJck=
-X-Google-Smtp-Source: ABdhPJxI5jzHP37CUnZFBuZrIsufBhundQ5worDoqA4A/Kz4rLe/f+0shvsXH/Mbgi/6DiXmTnMYZQ==
-X-Received: by 2002:a17:90b:2350:: with SMTP id ms16mr1794441pjb.127.1593627591164;
-        Wed, 01 Jul 2020 11:19:51 -0700 (PDT)
-Received: from gmail.com (108-81-23-119.lightspeed.irvnca.sbcglobal.net. [108.81.23.119])
-        by smtp.gmail.com with ESMTPSA id l9sm5349309pjy.2.2020.07.01.11.19.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2020 11:19:50 -0700 (PDT)
-Date:   Wed, 1 Jul 2020 11:19:47 -0700
-From:   David Aguilar <davvid@gmail.com>
-To:     lin.sun@zoom.us
-Cc:     'sunlin via GitGitGadget' <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?J8SQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh' 
-        <congdanhqx@gmail.com>, 'Junio C Hamano' <gitster@pobox.com>
-Subject: Re: [PATCH v5] Enable auto-merge for meld to follow the vim-diff
- beharior
-Message-ID: <20200701181947.GA16794@gmail.com>
-References: <pull.781.v4.git.git.1593516397380.gitgitgadget@gmail.com>
- <pull.781.v5.git.git.1593587206520.gitgitgadget@gmail.com>
- <1514701d64f78$970ba180$c522e480$@zoom.us>
+        id S1726721AbgGATo3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 15:44:29 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57063 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725771AbgGATo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 15:44:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1593632667;
+        bh=2MwGD3slY9MZ5GfPxwn7EqdoZhCgaWTDWcnvaWA+4b8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=OzAOCDaJgg3c+dGnMRMz6MNaLpvT+KLsEyYbeB8Aste/aRwSIIl6sUS3jWTmL7siG
+         ztJ+LCIoouuReuBr5vIU5GOqe011lLo3ACwAEK+naohZFDO0FS6YopXN6fLqm9nIVn
+         zQ1wgptAj8Osi2ACGzwESYWHLBivX6tPEuf82JZo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.116.87] ([213.196.213.153]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBUmD-1jfPam0ocp-00D0ug; Wed, 01
+ Jul 2020 21:44:27 +0200
+Date:   Wed, 1 Jul 2020 21:44:24 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "WARRELMANN, RASMUS" <rasmus.warrelmann@lhind.dlh.de>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [bug-report] Segmentation fault on git subtree push
+In-Reply-To: <DB7PR09MB225265C74CACD564A82641ABCA6F0@DB7PR09MB2252.eurprd09.prod.outlook.com>
+Message-ID: <nycvar.QRO.7.76.6.2007012143270.56@tvgsbejvaqbjf.bet>
+References: <DB7PR09MB225265C74CACD564A82641ABCA6F0@DB7PR09MB2252.eurprd09.prod.outlook.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1514701d64f78$970ba180$c522e480$@zoom.us>
+Content-Type: multipart/mixed; boundary="8323328-1513048340-1593632668=:56"
+X-Provags-ID: V03:K1:VGW4Gwaqro5+m8XXeSXc6mO7o0nIhpZt9J1ntrFcCCnk6ffxZfo
+ K3/wW1bFjRnZlVKnXpQ8xfjarhGN45xtbp0cYNmVWmVnPFt0omJ7LgK/wPLBzkfpOd9O86j
+ /tZKSgqf17RqcR4E7SNJEATOl5wg9lV3FJiSiqNVn2+KDkIBbJ55IoU/A6Atw89v3Bihb/V
+ 0UVQIsSh1uTkHVDsIFC2A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:F6qnAv3+Wsc=:50tgzfGk8ivOT3UQGPRR78
+ PzyvgS1I8/hhlW2eUsOlk5Tl5YKRSoC2Y6ZA29Rbw5Y7gIMs8bi/41Bxy5+4YjcH968/o/bY6
+ Yepmagry2aioSbJOehd3ReUDPHmsxGMAFzKeoYkZNB6woZP3swutQOQklZiL2vRE+by2lf/T9
+ 6VtYahc4E25B9qa03sCzyAcfh2H0AxNEDRsxBVv5jHS8a3Qm4TD66dMnfkwj2odAq1AwcCaf/
+ hWGTFZP34Wwsx9lK5XZXtUGFlH1Ek5kCgZ/95G/oOsdmtkogIiwhsQTDckNtb05b73Gz/Y4oL
+ bSmtdwHTqNSV1J5O51LO3rZydcAq/ct5gKV2cW6Q6m+JW6ii4CdbLdzDUQvC659n9hZkPuxYC
+ K0OVw2IVsZrdewfFGWUlz6SJ5vUn6IBJqDtdr9fRvoy0CBb6cY+k6ioccVgBbfLAVYToISIh5
+ N+VizvfFyhsWVLKsxDNl4fpL52ynL91fjA/KCVVLowANdAAe1BFvtQ8TPnTbnwuK0F2NOMn+P
+ ynuQShnNJ3RhgvvN861wP3GR/IKAoHYfwIqaHvchwEdiU0PRB22LyBGm7FujoN/cw4ViP9zex
+ VUs8RB9bB6UVe+aqsCCQkzy/OCCkH3EmNG6h+g9i1i+sfMR0QMRoh2B2xKK0sa3THwtfkCg9h
+ cy0Y7ymX+Fa88MEkfmee2TF+Hgc/4UXMzq6ZfoQ7iEyF/lntLToubiacIbrchBTzquo+n1V5V
+ EnV366kDprhr8lClKlB9P1lHb1gKceuW6g+JwT67xNfYhNdxiiimZVze2Ta+4EWkU6Ms5+iX5
+ Cmc3kRDc/xgOZ6NhpFpW++FEOOzpXDlQ+1ttLijKs+n/REJ46Q7k+GNpA5qFbmtJLJXbENQf+
+ xJM0xdU0XoJVUXACbE4NjM7eoflQuZnMujGQvSQrKvyb859pbFSSCnG3FnqY+4by5fasnwCP1
+ fTTytESy77MhkUG41T6SgSihnqmZgqQL3qeU5eLEDl/ZozFZVqjaqVrRjSLmqL2EfTAOO3JBg
+ Y9Vyk+9Mnjk/wQN4yrwgfoKOSqDM17iMrtqY92W8IHqqYiJT02mbofJiEsOct6eUbVA4Ky5mK
+ txXL7JoTlWl0rkhs+2s55M4eT2WxHBcDyIAur4s5plpL8lSoPLuCqxKsu7ljmAegGjUnhzKbW
+ Qnr4knuHvH11m4Tf0d2IW6Uxtgt2So7PaqsBo7w6i45/WvCCKU8FFIoVnr7qx2HiriBxM/9nv
+ jKkNgs+jJbJGTsig8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 01, 2020 at 03:23:56PM +0800, lin.sun@zoom.us wrote:
-> Hi Danh,
-> 
-> The [PATH v5] is changed to following the comments from you, Junio, David. 
-> Please review this newer version. Thank you.
-> The raw files is https://github.com/git/git/blob/344817d57970e3ac0910cdd8ad47bf97334ab2a6/mergetools/meld
-> 
-> Regards
-> Lin
-> -----Original Message-----
-> From: sunlin via GitGitGadget <gitgitgadget@gmail.com> 
-> Sent: Wednesday, July 1, 2020 15:07
-> To: git@vger.kernel.org
-> Cc: sunlin <sunlin7@yahoo.com>; Lin Sun <lin.sun@zoom.us>
-> Subject: [PATCH v5] Enable auto-merge for meld to follow the vim-diff beharior
-> 
-> From: Lin Sun <lin.sun@zoom.us>
-> 
-> Make the mergetool used with "meld" backend behave similarly to how "vimdiff" behavior by telling it to auto-merge parts without conflicts and highlight the parts with conflicts when configuring `mergetool.meld.hasAutoMerge` with `true`, or `auto` for automatically detecting the option.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Please word-wrap commit messages to 72 chars or less.
+--8323328-1513048340-1593632668=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
+Hi Rasmus,
 
-> 
-> Signed-off-by: Lin Sun <lin.sun@zoom.us>
-> ---
->  Documentation/config/mergetool.txt |  8 ++++
->  mergetools/meld                    | 72 +++++++++++++++++++++++-------
->  2 files changed, 64 insertions(+), 16 deletions(-)
-> 
-> diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
-> index 09ed31dbfa..9a74bd98dc 100644
-> --- a/Documentation/config/mergetool.txt
-> +++ b/Documentation/config/mergetool.txt
-> @@ -30,6 +30,14 @@ mergetool.meld.hasOutput::
->  	to `true` tells Git to unconditionally use the `--output` option,
->  	and `false` avoids using `--output`.
->  
-> +mergetool.meld.hasAutoMerge::
-> +	Older versions of `meld` do not support the `--auto-merge` option.
-> +	Setting `mergetool.meld.hasOutput` to `true` tells Git to
-> +	unconditionally use the `--auto-merge` option, and `false` avoids using
-> +	`--auto-merge`, and `auto` detect whether `meld` supports `--auto-merge`
-> +	by inspecting the output of `meld --help`, otherwise, follow meld's
-> +	default behavior.
-> +
+On Tue, 30 Jun 2020, WARRELMANN, RASMUS wrote:
 
-Now that we've decided that "false" should be the default behavior, the
-naming of this option don't make sense.  "hasAutoMerge" doesn't
-really convey what this option does anymore.  I would suggest calling it
-"mergetool.meld.automerge".
+> =EF=BB=BFHello,
+>
+> I get a segmentation error when p-repo using git subtree push. I have th=
+e current version of git (2.27.0.windows.1) installed.
+> The issue seems to be related to (https://stackoverflow.com/questions/57=
+033081/git-subtree-push-fail-applications-xcode-app-contents-developer-usr=
+-libexec-gi/61380907#61380907). The answer from Jakub Zloczewski of April =
+23 suggesting to downgrade to git version 2.19.2 worked for me, but I don'=
+t like to use an outdated version of git.
+>
+> The error message is:
+> C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 757:  10=
+44 Done                    eval "$grl"
+>       1045 Segmentation fault      (core dumped) | while read rev parent=
+s; do
+>     process_split_commit "$rev" "$parents" 0;
+> done
+>
+> Do you need more information on the issue?
 
-Perhaps something like this?
+Yes.
 
-mergetool.meld.automerge::
-	Older versions of `meld` do not support the `--auto-merge`
-	option.  Setting `mergetool.meld.automerge` to `true` tells Git
-	to unconditionally use the `--auto-merge` option with `meld`.
-	Setting this value to `auto` makes git detect whether
-	`--auto-merge` is supported and will only use `--auto-merge`
-	when available.  A value of `false` avoids using `--auto-merge`
-	altogether, and is the default value.
+This needs at least an MCVE
+(https://stackoverflow.com/help/minimal-reproducible-example)
 
-> @@ -3,34 +3,74 @@ diff_cmd () {
->  }
->  
->  merge_cmd () {
-> -	if test -z "${meld_has_output_option:+set}"
-> +	check_meld_for_features
-> +
-> +	option_auto_merge=
-> +	if test "$meld_has_auto_merge_option" = true
->  	then
-> -		check_meld_for_output_version
-> +		option_auto_merge="--auto-merge"
->  	fi
->  
->  	if test "$meld_has_output_option" = true
->  	then
-> -		"$merge_tool_path" --output="$MERGED" \
-> +		"$merge_tool_path" $option_auto_merge --output="$MERGED" \
->  			"$LOCAL" "$BASE" "$REMOTE"
->  	else
-> -		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-> +		"$merge_tool_path" $option_auto_merge "$LOCAL" "$MERGED" "$REMOTE"
->  	fi
->  }
->  
-> -# Check whether we should use 'meld --output <file>'
-> -check_meld_for_output_version () {
-> -	meld_path="$(git config mergetool.meld.path)"
-> -	meld_path="${meld_path:-meld}"
-> +# Get meld help message
-> +get_meld_help_msg () {
+Ciao,
+Johannes
 
-This comment seems redundant when the function is called
-get_meld_help_msg().
+>
+> Thanks for your help.
+>
+> Best reguards,
+> Rasmus Warrelmann
+>
+>
+>
+> Sitz der Gesellschaft / Corporate Headquarters: Lufthansa Industry Solut=
+ions AS GmbH, Norderstedt, Registereintragung / Registration: Amtsgericht =
+Kiel 3688 NO
+> Geschaeftsfuehrung / Management Board: Bernd Appel
+>
+>
+>
+>
 
-
-> +	meld_path="$(git config mergetool.meld.path || echo meld)"
-> +	$meld_path --help 2>&1
-> +}
->  
-> -	if meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
-> +# Check the features and set flags
-> +check_meld_for_features () {
-
-Ditto for this comment.
-
-
-> +	# Check whether we should use 'meld --output <file>'
-> +	if test -z "${meld_has_output_option:+set}"
->  	then
-> -		: use configured value
-> -	elif "$meld_path" --help 2>&1 |
-> -		grep -e '--output=' -e '\[OPTION\.\.\.\]' >/dev/null
-> +		meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
-> +		if test "$meld_has_output_option" = true -o \
-> +			"$meld_has_output_option" = false
-
-Documentation/CodingGuidelines mentions:
-
- - We do not write our "test" command with "-a" and "-o" and use "&&"
-   or "||" to concatenate multiple "test" commands instead, because
-   the use of "-a/-o" is often error-prone.  E.g.
-
-This would be written as:
-
-	if test "$meld_has_output_option" = true ||
-		test "$meld_has_output_option" = false
-	then
-		...
-	fi
-
-Instead of two checks, would it be better to instead just check:
-	if test -n "$meld_has_output_option"
-?
-git config --bool will only ever produce true/false, so we really only
-need to check that it's a non-empty value, perhaps?
-
-
-> +			case "$meld_help_msg" in
-> +				*"--output="* | *"[OPTION"???"]"*)
-> +					# old ones mention --output and new ones just say OPTION...
-> +					meld_has_output_option=true ;;
-> +				*)
-> +					meld_has_output_option=false ;;
-> +			esac
-
-We typically avoid the extra indentation level for the case labels.
-eg. this would be written like this (with ";;" on its own line):
-
-	case "$meld_help_msg" in
-	*--output=*|*"[OPTION"???"]"*)
-		# old ones mention --output and new ones just say OPTION...
-		meld_has_output_option=true
-		;;
-	*)
-		meld_has_output_option=false
-		;;
-	esac
-
-
-Also, if you're matching [OPTION ...] would it work to just use
-a single-quoted value in the case label?  eg: *'[OPTION...]'* ?
-
-
-> +	if test -z "${meld_has_auto_merge_option:+set}"
->  	then
-> -		: old ones mention --output and new ones just say OPTION...
-> -		meld_has_output_option=true
-> -	else
-> -		meld_has_output_option=false
-> +		meld_has_auto_merge_option=$(git config mergetool.meld.hasAutoMerge)
-> +		if test "$meld_has_auto_merge_option" = auto
-> +		then
-> +			# testing the "--auto-merge" option only if config is "auto"
-> +			if test -z "$meld_help_msg"
-> +			then
-> +					meld_help_msg="$(get_meld_help_msg)"
-
-This can just be:
-
-	meld_help_msg=$(get_meld_help_msg)
-
-and can do without the surrounding " " double quotes.
-
-
-
-> +			case "$meld_help_msg" in
-> +				*"--auto-merge"*)
-> +					: old ones mention --output and new ones just say OPTION...
-> +					meld_has_auto_merge_option=true ;;
-> +				*)
-> +					meld_has_auto_merge_option=false ;;
-> +			esac
-
-As above -- unindent the case statements, and put the ";;" case
-statement terminators on their own line.
-
-cheers,
--- 
-David
+--8323328-1513048340-1593632668=:56--
