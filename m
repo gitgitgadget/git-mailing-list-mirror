@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DDBDC433E0
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 19:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84A17C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 19:54:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46E3E20720
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 19:51:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 606A420870
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 19:54:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KOACjCcm"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xm1EGR+a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbgGATvW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 15:51:22 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55244 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726009AbgGATvV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 15:51:21 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0B814C608A;
-        Wed,  1 Jul 2020 15:51:20 -0400 (EDT)
+        id S1726287AbgGATyo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 15:54:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65277 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725771AbgGATyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 15:54:44 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 765CCC08C5;
+        Wed,  1 Jul 2020 15:54:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9iDn76eOro96
-        OVSBOitpoHbE2BE=; b=KOACjCcmHDHPgbqMIRgXT9chmSsFG2BQ/NtXl4PQ6HwD
-        J8rsZWXoKkS1TgWslmyYlwNIf0UD8JtUXEi4XAVj1A2u/F4SOTUnwIJX1u+g4Sr2
-        L94hVYVHlD0kUFHwSYgFMi6S8ksMkGAa5ea/lsaYcFC07qcdoGc8cutc5l4F79s=
+        :content-type; s=sasl; bh=kn2IGTdP4r8h/N83t8n9lkneAJk=; b=Xm1EGR
+        +a/7q7GWJXT+MfqCRqS1lVqJastzmVPFy7aSCteTiRELbRtDhSqpur40rYqF4Hmz
+        kGUjoxDENmDB5HLzvqL6XR3ouv02FpO/eaPu1TKhGQkl1gQOnVxWUq8hnXoeDOvA
+        cB0GnpaV+Jn2auUhEsN2JGhw2fxw3sl95DqCk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=yfUqC/
-        zoNs+GI3XT5AthLkxp3vKI1ohSKcDXwUu+OfAMjhHfZ56gxfTL/GaHwQcO00yZ62
-        wKJPkyQaDTgPZ61GPrOjymU8xQ/3nLsGLYaJ5L1jaOLyD9gvmq+efj/YnrHEElt6
-        NT9XdrgwGn6HYN3qsT3RfjlsQaLss56RFaYCo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0445EC6089;
-        Wed,  1 Jul 2020 15:51:20 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=lMdgRICpGkNQXgoaxRr4j8SEvh6dHHB+
+        TJmotkttaBDYoJUnyYo82JsUdE/VFRjyrlOakePryS1kqhxdULNqGYDb5g7ucHY5
+        1AMqS91VieUebmGWZXUCDrSh86I2Bxo5NIam7GOiuAbnj7mjNiTa2nBTRXKKdPOt
+        jF4sa9Lz1i4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C698C08C4;
+        Wed,  1 Jul 2020 15:54:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4359AC6088;
-        Wed,  1 Jul 2020 15:51:17 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B41ABC08C2;
+        Wed,  1 Jul 2020 15:54:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     sunlin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sunlin <sunlin7@yahoo.com>,
-        Lin Sun <lin.sun@zoom.us>
-Subject: Re: [PATCH v5] Enable auto-merge for meld to follow the vim-diff beharior
-References: <pull.781.v4.git.git.1593516397380.gitgitgadget@gmail.com>
-        <pull.781.v5.git.git.1593587206520.gitgitgadget@gmail.com>
-        <20200701141755.GB1966@danh.dev>
-Date:   Wed, 01 Jul 2020 12:51:15 -0700
-In-Reply-To: <20200701141755.GB1966@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
- =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s message
-        of "Wed, 1 Jul 2020 21:17:55 +0700")
-Message-ID: <xmqq7dvndnf0.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        Matt Rogers <mattr94@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v4 1/9] fmt-merge-msg: stop treating `master` specially
+References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com>
+        <pull.656.v4.git.1593009996.gitgitgadget@gmail.com>
+        <fffdb9944fc2672ccb7eac776cdd18855a1f99dc.1593009996.git.gitgitgadget@gmail.com>
+        <20200629162003.GD20303@danh.dev>
+        <nycvar.QRO.7.76.6.2006291520220.56@tvgsbejvaqbjf.bet>
+        <20200630150533.GF20303@danh.dev>
+        <nycvar.QRO.7.76.6.2007011237330.56@tvgsbejvaqbjf.bet>
+Date:   Wed, 01 Jul 2020 12:54:38 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2007011237330.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 1 Jul 2020 12:39:07 +0200 (CEST)")
+Message-ID: <xmqq366bdn9d.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3A3F4D80-BBD4-11EA-81D8-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B2ED27A2-BBD4-11EA-A17A-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> +mergetool.meld.hasAutoMerge::
->> +	Older versions of `meld` do not support the `--auto-merge` option.
->> +	Setting `mergetool.meld.hasOutput` to `true` tells Git to
+>> In _my very opinion_, I don't think it's that critical.
+>> We allow git merge --edit and git fmt-merge-msg -m.
+>> ...
 >
-> s/hasOutput/hasAutoMerge/
+> True.
 >
-> Bikeshed opinion: I don't know if hasAutoMerge is a good name :)
+>> If there're a consensus on changing those documentation,
+>> I won't mind to do that manual work ;)
+>
+> I actually agree that it is not _really_ necessary.
+>
+>> The test is a different story, since some (or most?) distro enable
+>> check (or test) phase for their build infrastructure.
+>> And, we shouldn't break their infrastructures.
+>
+> Actually, the hit in t7606 is in the initial _comment_. So I highly doubt
+> that it would break any build infrastructure to leave it alone.
 
-I do not think "has" is a good choice for this one, even though
-hasOutput may very well be a good one for "output".  As the
-paragraph describes (below), this lets the user "avoid" using
-"--auto-merge", even if the version of "meld" the user has does have
-the automerge capability.
+I guess it's settled, then.
 
-So perhaps say "mergetool.meld.useAutoMerge"; that will let the users
-express exactly their wish---don't use it (false), do forcibly try
-to use it (true), or use it when able (auto).
+Thank you to all for being extra careful.
 
