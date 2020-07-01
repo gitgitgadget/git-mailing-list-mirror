@@ -2,212 +2,121 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 306EAC433DF
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02E31C433DF
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:42:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAEA120722
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:39:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1FE920747
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:42:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kABIUXY+"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Jp/Z60cc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729911AbgGAKj1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 06:39:27 -0400
-Received: from mout.gmx.net ([212.227.15.19]:39721 "EHLO mout.gmx.net"
+        id S1729990AbgGAKmu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 06:42:50 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59575 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729180AbgGAKj0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:39:26 -0400
+        id S1729180AbgGAKmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 06:42:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1593599949;
-        bh=qohE4dpFsX+yUH29jkULzXwrTQxAjxb27sbm4WDhtUM=;
+        s=badeba3b8450; t=1593600166;
+        bh=mZdsSx7JD3g+8mu86IVTTBE/ECEfpvSwBy1CbpZWK6o=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kABIUXY+XsdlbYN5Z/RcuQjY6u4fVjeGh/TKn1Ltmfz4TbuG/PN3XUp+nSWgmKYo6
-         jCYUKZSRMYQXJexqfrszDpLQtkcvVb6wDDqhCh9uCXlWZmj5YsY87n/TN18JOlc0pp
-         OkvnJqL7OAejVvUS2rB2lY+UuDI1azisJwJ2qydA=
+        b=Jp/Z60ccHoDSjDFXk5klSwb9Y/94UxwL+TPTGYKZLy0AQgnGa2u8EnxdoFJImNH6X
+         fPjxWUsGjnnbpnCy5xCxvH21h7o3x3ISalz4YJ0KGpwxdO1zytZ7PkueWqmYDSrGkq
+         TbWcsnaZa7cBRGaWV5rcaJBJ6J4jttgfDhGnFb4o=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.30.116.87] ([213.196.213.153]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvbFs-1izIT508qE-00sdYQ; Wed, 01
- Jul 2020 12:39:09 +0200
-Date:   Wed, 1 Jul 2020 12:39:07 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUGe1-1jQuT03y6N-00RFSe; Wed, 01
+ Jul 2020 12:42:46 +0200
+Date:   Wed, 1 Jul 2020 12:42:42 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, don@goodman-wilson.com, stolee@gmail.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v4 1/9] fmt-merge-msg: stop treating `master` specially
-In-Reply-To: <20200630150533.GF20303@danh.dev>
-Message-ID: <nycvar.QRO.7.76.6.2007011237330.56@tvgsbejvaqbjf.bet>
-References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com> <pull.656.v4.git.1593009996.gitgitgadget@gmail.com> <fffdb9944fc2672ccb7eac776cdd18855a1f99dc.1593009996.git.gitgitgadget@gmail.com> <20200629162003.GD20303@danh.dev>
- <nycvar.QRO.7.76.6.2006291520220.56@tvgsbejvaqbjf.bet> <20200630150533.GF20303@danh.dev>
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v3 0/3] Accommodate for pu having been renamed to seen
+In-Reply-To: <xmqqpn9gee2l.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2007011241560.56@tvgsbejvaqbjf.bet>
+References: <pull.668.v2.git.1593010120.gitgitgadget@gmail.com> <pull.668.v3.git.1593087539.gitgitgadget@gmail.com> <xmqq366j5d57.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2006291606060.56@tvgsbejvaqbjf.bet> <xmqqpn9gee2l.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-439506614-1593599949=:56"
-X-Provags-ID: V03:K1:pz4PMVogn/7f3D0gXMunT4RI50LD3EaBPIQzgtTKOSz5V05z491
- AY5VLKjMPhLnSL/tus5KP6xEgmM2tnXb1VLufjYmb/zvix8FYyvp/lH9PSNjBtA7OmycgRv
- I6LluN0Qy/uHkAvli+4vzXWM8Xgdhdaj9SnCLYeLCY7z565noST+AsdtlFZl6nkOIqcp+Ha
- KXuMmed1ZjHnT9pazNprQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vBjYCTjzgtA=:oF/741H/aWnelNXNInv3Rl
- Gc2rblUPmM/o2H9Ykufl0s4M1D7O1UbE5CgEkFSXnC5aWORhN+QVlq+lQjxxXxBMY0mbF8ige
- jRUFqIM1bBagZEj02f3XJPHfdvtBGdOBVmjj6i7UOvcemNIOYMp6Bxk0XCcChXv+IWWKy5SOl
- hY5hDlcpazvYj4PuJsVeLu1gBWKI97wdkkDKDw+BAcKAKTdvGa+zso71Ub04L8IJbu0dKyUZz
- hblnWfSILH8lhoJkMLtWlGRdwuBCGsZu0uReBvFluvL+GmMzd9I/AShQywZSHNVNKSjwDYQpJ
- qh8jv0jpxcLBOwVkeccfyhYZDNkRqjXXF2L0wMbnLnFoeO+NyAq2fAA0m5zA4/G6xMavaPS4V
- p/EezR1DscnFMm874xBzP4w+i2Dx3g6N1U4HpzMpCojIk6usbSAW9Su2jUuuusfmFq0NiVPeE
- OkeibNIPeD5m69NrbhKYwmKBQUZhsQ5o2zNyjSCmiAdKWB5lnjF3NStR8/43dgkj4c0zZ+qAu
- BgsSxPMKdNIrISbRoipKzZ1gakhcZuqlLZZlsv0MKlDX7JA4iDyZmzvnMpOwBK4fImJeSmRwF
- MCfvdynKCOQo4WDc8x/Npw4mtoBVEuh7QGLYvds33lrDoO0iOKsDB/+V4CBs02GU7Z14MvqkV
- Pjcix67HDtHoVdFXcnQB9dgcfySRlxSdtcs7+Ctx9oBwxdQ7AcyQDf15dJp5F2nsTle1IduTC
- r/dstqWWGHe81RJ9/aiY7VrnLiFPWnreWMg1frnL5//b1ffND/CXmr0Sy6WtyUUvsHQE+U1MO
- 3OCGV5Hoopul4XMp16o5oEpett3Gi+3o+ycxl8yLljtCAL2IJovLiquTUTHswHSqXJIwyK0AW
- KG61ELAj0ywqcrXnu/3D26X+SWQqaYPMbq/XpP2a/JUPwmTdEaqr5jSwuL6vYDkt+Du/C9koy
- tDsJtln1AKDcHvdwDFFIjvaJRbqfoa9eLGCeRHuXDXuY15+UaLIXi/YzHoZ5jT8T8GoyBg/eR
- 5KgKPQH7CsjqrI0G5H/b2bfn8c7Wt0rmFR1Oe/uU6F9WJUbI390JxmYsxAQMsiaeYuw4fUwaP
- 70nwPj74cumaAjndcRxXpA6DObbuS1ebebLjaVLyOM0TqZZ2hVmtp25OT9kR/w3//s0/+Nzfw
- gd5uNrQoTeC8ZO4np3i2HTfX1zUokSXk0c8jLM40v9P2Gv89PdebOUgOG6JwzgqkGMamcY6FS
- HKkSa3/knJRV2vB00
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1BZ0b5GhdIqZbDg8TMoYxp3KXXqPK+h6rmS606o6CRU3K4zikTJ
+ ZdVH2eVQXW5JoSqAKh6K5QVFvhZDdcUnJ36UyS6vFNJw3y3zmIe4miIAdzLOGxlxM9iaCuf
+ BDtaArLtB3eX4SuiQ6XPBT8AIdJkcBGhARiK/zrgjyyrZjJRfDAFpa7/q7uo6uYQz+8A6vK
+ mpseIfDMETi6siflsxdOg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:L4fVAeD84AE=:XSDYqqnhdYh3aSApeIy33U
+ EFMHD4Gb2dQCkN2MfOtJAygQOj+0o80BusyWds7sgjZyP+en36KECiN+30UFctsKUnqhrHb/i
+ 4HGfP0+mIv6DxOcN1bxOjkCKYko6eI0aKx39iYGFMPjZNmfBxCuNrKUl8Tdqk4dEfUEUkCRUv
+ ev/6+pybUIhgJVo4dvf4QAKv7GA23uTKXMFmUDOzEKcFcJy3/QLMAzDyds5+60XmHQ3n9WOM8
+ uVxyIVvA6gsn73Xn/dssL7MBIcg70+asgZY6UOjqBQNiwAWybTNJzxGltkEPI6g5zlCanZHoW
+ 5o98bHl0Q6yh+QVEPn3LWG/yC6Np67POOEHs3itUpD2OoUQeoEvZGA6FRHrnohXwJsqUj5iNJ
+ /iVpMzNpEDdoyjFW8FLt/KYYbRghf6eMRSp3GpHOrsiCtgvCzUyCFC9lljHYjYUqbIwxZhh1Y
+ An7jlWlSw4Cqpup4kzUEuc0mnvvOB341YLsitAMao5pgBijflbIPPpEgeaNR3hiwM+sPLcF7a
+ NaqTF/u8m8SPW/urUJtaU8jB3DM6y3b0FqRJKBTVdATHl3dgEbscV7adZVST62QGsyV3wvoFx
+ h71TW3lm4DAN6ztP7PCe18im2G4TCPTAqME3MkgeHJ71YVuY+d2aOtlvUQx5eQ+HdOaU8avrK
+ /eIe7H9X0hVLPsFOv50TB75PjvonjnI8bleBEhg/9UPIvbd0s3nEnsX/Dvwt2uSA01o4vV+1m
+ jz5sDSFs8CP409z6tx5KJfol/EYSgha4veiKLgeOTc5q9y8suOHZ+hUfXF3A1JejCMk8cx/og
+ xKg8k9ug7e7f10ecXGjjJarlZnh5aWyzy2JCVd5ivk2/5VLCC2yeY9Myja+9pceywiLBPmXI2
+ e2qQa2Lqcl9HgZNyePuseyEOKDhFlCadzZSyjPxyCMNTExYhHcr2GkBJhUfzN+tqQV3TIA+zu
+ eTPxhstzCM7M3yl9Di/FQ0BQUfP+Kk79pEEkk6a/BO7YlKQlFo0AMoN3F1B+maiGFddfzzFHj
+ QXIxZd6yIMr8KFTyMEy4NX5+6qV9iSPszNRwEwXkamEkpxetpM16ULPmdKhrb70MhQrZHlCA5
+ rZxlMFkew1P6gKOTQab+q6M9I9glYPAxmNCVlj3P6Ktl0m9hCtlVkfjYdp9A593Hty+A7fAnc
+ WciM3P2WSijEG9f7eKpGNGHU6ofajn5+6hTNxU+4Y0mX23ZUAXqjbh0lfMnISnziNaby0ds+N
+ MBwF6t4anmdsQTKpf
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-439506614-1593599949=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 30 Jun 2020, Junio C Hamano wrote:
 
-Hi Danh,
-
-On Tue, 30 Jun 2020, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-
-> On 2020-06-29 15:27:44+0200, Johannes Schindelin <Johannes.Schindelin@gm=
-x.de> wrote:
-> > > This change will also affect git-subtree test.
-> >
-> > Good point. The patch looks good. I wonder whether we should also addr=
-ess
-> > these:
-> >
-> > Documentation/git-rebase.txt:*   Merge branch 'report-a-bug'
-> > Documentation/git-rebase.txt:* | Merge branch 'refactor-button'
-> > Documentation/git-switch.txt:HEAD is now at 9fc9555312 Merge branch 'c=
-c/shared-index-permbits'
-> > Documentation/howto/using-signed-tag-in-pull-request.txt: Merge tag 'f=
-rotz-for-xyzzy' of example.com:/git/froboz.git/
-> > Documentation/howto/using-signed-tag-in-pull-request.txt:     Merge ta=
-g 'frotz-for-xyzzy' of example.com:/git/froboz.git/
-> > t/t7606-merge-custom.sh:*   (HEAD, master) Merge commit 'c3'
-> >
-> > The first three matches are in manual pages, the next two in technical
-> > documentation, and the last one in a comment in one of the test script=
-s.
-> > So none of them are super critical, but maybe there are different
-> > opinions?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> In _my very opinion_, I don't think it's that critical.
-> We allow git merge --edit and git fmt-merge-msg -m.
-> Someone may have configured their Git to remove branch name already.
-> And some others may always remove the target branch manually.
-> We probably don't want to introduce another master occurence.
-> (For sideline watcher: Please not argue on this,
-> I don't have any opinions about the word: master.)
+> >> You could have just told me that the fixup queued on 'seen' looks
+> >> good to you and squash it in the first step instead to save one
+> >> roundtrip, but replacing with a new set of three patches is not so
+> >> bad, either ;-)
+> >
+> > To be honest, the GitGitGadget-based workflow makes it quicker for me =
+to
+> > just submit a new iteration.
+>
+> I do not mind seeing a new iteration that gives easier time for
+> others to comment on the version that is closer to the final than
+> the previous round.  The offer was only for contributors who find
+> it easier to just say "yeah, I am happy with that change" than
+> submitting a new round.
+>
+> > In fact, I did not even see your fixup until I read your mail.
+>
+> This I actually would mind a bit more.  The reason why I publish
+> 'seen' is to make it easier for authors of individual topics how
+> their work would play with other topics in flight, and it diminishes
+> the value of it if contributors do not pay attention to what is
+> queued there.  I expect contributors to fetch and look at what is
+> queued in origin/seen.
+>
+> There may be evil merges that reveal subtle interactions between
+> topics, some of which may involve the topic an author may care
+> about.  There may be fixups for problems that were not found during
+> review but only found during the integration process.  I try to
+> communicate these back on the list when possible, but the thing is,
+> a day does not have sufficient number of minutes for me to always do
+> so.
 
-True.
-
-> If there're a consensus on changing those documentation,
-> I won't mind to do that manual work ;)
-
-I actually agree that it is not _really_ necessary.
-
-> The test is a different story, since some (or most?) distro enable
-> check (or test) phase for their build infrastructure.
-> And, we shouldn't break their infrastructures.
-
-
-Actually, the hit in t7606 is in the initial _comment_. So I highly doubt
-that it would break any build infrastructure to leave it alone.
+I understand. And I am trying my best to accommodate.
 
 Ciao,
 Dscho
 
-> >
-> > Ciao,
-> > Dscho
-> >
-> > > We'll need this patch for subtree:
-> > > ----------------8<-------------------
-> > > From: =3D?UTF-8?q?=3DC4=3D90o=3DC3=3DA0n=3D20Tr=3DE1=3DBA=3DA7n=3D20=
-C=3DC3=3DB4ng=3D20Danh?=3D
-> > >  <congdanhqx@gmail.com>
-> > > Date: Mon, 29 Jun 2020 22:56:37 +0700
-> > > Subject: [PATCH] contrib: subtree: adjust test to change in fmt-merg=
-e-msg
-> > > MIME-Version: 1.0
-> > > Content-Type: text/plain; charset=3DUTF-8
-> > > Content-Transfer-Encoding: 8bit
-> > >
-> > > We're starting to stop treating `master' specially in fmt-merge-msg.
-> > > Adjust the test to reflect that change.
-> > >
-> > > Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhq=
-x@gmail.com>
-> > > ---
-> > >  contrib/subtree/t/t7900-subtree.sh | 6 ++++--
-> > >  1 file changed, 4 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/=
-t7900-subtree.sh
-> > > index 57ff4b25c1..53d7accf94 100755
-> > > --- a/contrib/subtree/t/t7900-subtree.sh
-> > > +++ b/contrib/subtree/t/t7900-subtree.sh
-> > > @@ -196,7 +196,8 @@ test_expect_success 'merge new subproj history i=
-nto sub dir/ with --prefix' '
-> > >  		cd "$subtree_test_count" &&
-> > >  		git fetch ./"sub proj" master &&
-> > >  		git subtree merge --prefix=3D"sub dir" FETCH_HEAD &&
-> > > -		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-=
-parse FETCH_HEAD)'\''"
-> > > +		check_equal "$(last_commit_message)" \
-> > > +			"Merge commit '\''$(git rev-parse FETCH_HEAD)'\'' into master"
-> > >  	)
-> > >  '
-> > >
-> > > @@ -273,7 +274,8 @@ test_expect_success 'merge new subproj history i=
-nto subdir/ with a slash appende
-> > >  		cd "$test_count" &&
-> > >  		git fetch ./subproj master &&
-> > >  		git subtree merge --prefix=3Dsubdir/ FETCH_HEAD &&
-> > > -		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-=
-parse FETCH_HEAD)'\''"
-> > > +		check_equal "$(last_commit_message)" \
-> > > +			"Merge commit '\''$(git rev-parse FETCH_HEAD)'\'' into master"
-> > >  	)
-> > >  '
-> > >
-> > > --
-> > > 2.27.0.111.gc72c7da667
-> > > Danh
-> > >
 >
+> Thanks.
 >
-> --
-> Danh
->
-
---8323328-439506614-1593599949=:56--
