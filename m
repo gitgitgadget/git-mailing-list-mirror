@@ -7,63 +7,65 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80FF0C433E1
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:27:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE704C433DF
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:27:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 557E8206BE
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:27:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A270C206BE
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:27:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DSJELQeK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aramdzxZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731089AbgGAN1i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 09:27:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41136 "EHLO
+        id S1731097AbgGAN1m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 09:27:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731084AbgGAN1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 09:27:36 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAA17C08C5C1
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:27:35 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id j4so21378213wrp.10
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:27:35 -0700 (PDT)
+        with ESMTP id S1731088AbgGAN1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 09:27:38 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E6EC08C5C1
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:27:37 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id w3so10789845wmi.4
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:27:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=ufveTMOU4PgwU7CXupDCHbMnWVklWfJci0tSzN1i++o=;
-        b=DSJELQeKSPYrRNCOxvgjm+Whu2cxEHKg6O2i3y4x4poWlMqNAfVxh4xeSuAUvva/Mt
-         QjJzIRAUe2F9PTLTjYgsdaZ3TL8iHfydqZQJrFZ8o0KC3r+f8a60p8CD2iowlZjRLfZV
-         Cv9dqAw/EABUAJJ84OfeaOpecKYssIr+Jx9895x1WV9+2gnVA9fMSiBVC2RxYVYJOOpy
-         potjzXHMhSW4zR6cvdIqg14AOiQW6UkfYGDB1qCT909+Nq4pbmShET8PPrXTD8BHak6k
-         J/cHwie3hpe80PUAvSn76Q1oYXH0mAsD5lDkDEUPbvGvV+NfJU9hsvWkYy0gh0bimFja
-         VyvQ==
+        bh=fJHYFO+7x6kA0BJFGtB61JVFGUyOmqi3FbQlHe8Geqs=;
+        b=aramdzxZyX2BeWZXh8xMxTOS7E73KXT4pyPYrIVRC+RFAesgWrAem1pb48ZLlFlIWN
+         WU67OUD0/PNnJPQkjv8k7VUhFBM/6Aynkbr351hR/z7poi+rA2US61jiHwdG8Ol8Filj
+         /euDXFRnRcTnKL7liEbGQ/6PGg5svX6rkGHRokpChhN12lytpR5m4yTIdmVXB3P9OkeF
+         1rEmvU8UppqkS6qwFb4YOg7wzVHQ4kohBqLeO198yG4deGmLDI2VthZKDDtusSTkSCsE
+         BIaSSxK8s5XAlW/Xe6qfPFLOUmweBzlyBfq4wbCLUMJBxF+q6FgpRFggl714Ey9jS/nG
+         feSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=ufveTMOU4PgwU7CXupDCHbMnWVklWfJci0tSzN1i++o=;
-        b=dCW6cgy/2hBrRIeCXwkzhRNk6J3/nxaKoe8VIP3hjhOM9sGYzbStQkFb6k/M3d9JJb
-         TbpGUkYl6MM6nJ2H83c/Mq/KXu5nfsQUM9FieLnNhPAzP/+18HZTtLZg/TpcGRyNUW1B
-         cGoXw7rpZBBgn9LFZ7J1WYkI5r3ilo6FhuN/ChQL6U4hqvTOiJT0x4gZsXfnfomUsHQL
-         5IliHvCvd0aCEZjg+W4k9NQjCwhb88uXPBFSE1/YVXWbU3Za7PzHcp4XWUu298b3sTki
-         mXjHD5KYaNulkQEA6alzMT7mGW3YRDUI+D8FsTYWpwV4ivKEzC/4+xbteg6jV+RWGGjK
-         c5YQ==
-X-Gm-Message-State: AOAM532jUaHAE9HEApm0bP9zGSTHYldpXC+KSqbtE3XyFwcLmp3yxQqN
-        7/KbEjsAQJXyHlsjITq6D9IoXCdn
-X-Google-Smtp-Source: ABdhPJzrCkE3UkGkXU8wXvn0VTiLwhMu4v3IeYJgtj0hixgh/dsXBw4L7MXuEao5eEyCqxxRrSHPFg==
-X-Received: by 2002:adf:f104:: with SMTP id r4mr27954536wro.90.1593610054407;
-        Wed, 01 Jul 2020 06:27:34 -0700 (PDT)
+        bh=fJHYFO+7x6kA0BJFGtB61JVFGUyOmqi3FbQlHe8Geqs=;
+        b=uSlwtIqbdM8EQdF/aMe/TDbKpo21/jI92e6kk9BJe0IVEz0ZPmR2cEA6srDHFGo+Me
+         4HchVPHwpgyPrNm4Qt5PPrW3w3RlYiLmmoAdQ12NVDLDtHcRGZDWIWOt1d+LzpIlcGoT
+         ey5ZQFEyUFQ7kYidEJBTzkrGeCwEFljxqHv2Yv6RBg8GtjWzGJe61npT0WO9VOdfwDLu
+         bvzfr4BOMPmVd6UW3Zq+d2lK/O3DRC7zCoQnQj84eOJ5wTwW1zEG/m6uK3NwhMCOPSmI
+         KKuRXJ4ivchVMOh4NwFUTKduIv2fOsro3Gk3zZuxQIVsu0gjHqAw+ZtIQqdOtiI5onFv
+         VyGw==
+X-Gm-Message-State: AOAM533aQ4trtFacRL5WF0GTa28YjHbSd2uVLfmLNvlM6tDGeqD+3VQ6
+        AQjdqHwtngLfRnQeWykdIe0/F3FE
+X-Google-Smtp-Source: ABdhPJyQk2NSifm3zE5lJKiGpDN49xq4YgqybFSDksPrXlF7DhHdYLH1W8IytgTZkYbVGHVP4/yiFQ==
+X-Received: by 2002:a1c:7d56:: with SMTP id y83mr25784722wmc.154.1593610056161;
+        Wed, 01 Jul 2020 06:27:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n16sm7212839wra.19.2020.07.01.06.27.33
+        by smtp.gmail.com with ESMTPSA id w7sm7431330wmc.32.2020.07.01.06.27.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2020 06:27:33 -0700 (PDT)
-Message-Id: <3c532ebabc17fef9149e477b7263cbf11c4d7cb9.1593610050.git.gitgitgadget@gmail.com>
+        Wed, 01 Jul 2020 06:27:35 -0700 (PDT)
+Message-Id: <c07992147354258c3ea76bba4d85f430ddda5632.1593610050.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.659.v4.git.1593610050.gitgitgadget@gmail.com>
 References: <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
         <pull.659.v4.git.1593610050.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Jul 2020 13:27:23 +0000
-Subject: [PATCH v4 03/10] bloom: fix logic in get_bloom_filter()
+From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 01 Jul 2020 13:27:25 +0000
+Subject: [PATCH v4 05/10] commit-graph: unify the signatures of all
+ write_graph_chunk_*() functions
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,182 +73,164 @@ Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, szeder.dev@gmail.com, l.s.r@web.de,
         Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-The get_bloom_filter() method is a bit complicated in some parts where
-it does not need to be. In particular, it needs to return a NULL filter
-only when compute_if_not_present is zero AND the filter data cannot be
-loaded from a commit-graph file. This currently happens by accident
-because the commit-graph does not load changed-path Bloom filters from
-an existing commit-graph when writing a new one. This will change in a
-later patch.
+Update the write_graph_chunk_*() helper functions to have the same
+signature:
 
-Also clean up some style issues while we are here.
+  - Return an int error code from all these functions.
+    write_graph_chunk_base() already has an int error code, now the
+    others will have one, too, but since they don't indicate any
+    error, they will always return 0.
 
-One side-effect of returning a NULL filter is that the filters that are
-reported as "too large" will now be reported as NULL insead of length
-zero. This case was not properly covered before, so add a test. Further,
-remote the counting of the zero-length filters from revision.c and the
-trace2 logs.
+  - Drop the hash size parameter of write_graph_chunk_oids() and
+    write_graph_chunk_data(); its value can be read directly from
+    'the_hash_algo' inside these functions as well.
+
+This opens up the possibility for further cleanups and foolproofing in
+the following two patches.
 
 Helped-by: René Scharfe <l.s.r@web.de>
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- bloom.c              | 14 ++++++--------
- commit-graph.c       |  8 ++++++--
- revision.c           |  7 -------
- t/t4216-log-bloom.sh | 24 ++++++++++++++++++++++--
- 4 files changed, 34 insertions(+), 19 deletions(-)
+ commit-graph.c | 42 ++++++++++++++++++++++++++----------------
+ 1 file changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index c38d1cff0c..2af5389795 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -186,7 +186,7 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 	struct diff_options diffopt;
- 	int max_changes = 512;
- 
--	if (bloom_filters.slab_size == 0)
-+	if (!bloom_filters.slab_size)
- 		return NULL;
- 
- 	filter = bloom_filter_slab_at(&bloom_filters, c);
-@@ -194,16 +194,14 @@ struct bloom_filter *get_bloom_filter(struct repository *r,
- 	if (!filter->data) {
- 		load_commit_graph_info(r, c);
- 		if (c->graph_pos != COMMIT_NOT_FROM_GRAPH &&
--			r->objects->commit_graph->chunk_bloom_indexes) {
--			if (load_bloom_filter_from_graph(r->objects->commit_graph, filter, c))
--				return filter;
--			else
--				return NULL;
--		}
-+		    r->objects->commit_graph->chunk_bloom_indexes)
-+			load_bloom_filter_from_graph(r->objects->commit_graph, filter, c);
- 	}
- 
--	if (filter->data || !compute_if_not_present)
-+	if (filter->data)
- 		return filter;
-+	if (!compute_if_not_present)
-+		return NULL;
- 
- 	repo_diff_setup(r, &diffopt);
- 	diffopt.flags.recursive = 1;
 diff --git a/commit-graph.c b/commit-graph.c
-index 6a28d4a5a6..50ce039a53 100644
+index 6762704324..1a6d26f864 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1098,7 +1098,8 @@ static void write_graph_chunk_bloom_indexes(struct hashfile *f,
+@@ -891,8 +891,8 @@ struct write_commit_graph_context {
+ 	const struct bloom_filter_settings *bloom_settings;
+ };
  
- 	while (list < last) {
- 		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
--		cur_pos += filter->len;
-+		size_t len = filter ? filter->len : 0;
-+		cur_pos += len;
- 		display_progress(progress, ++i);
- 		hashwrite_be32(f, cur_pos);
- 		list++;
-@@ -1126,8 +1127,11 @@ static void write_graph_chunk_bloom_data(struct hashfile *f,
- 
- 	while (list < last) {
- 		struct bloom_filter *filter = get_bloom_filter(ctx->r, *list, 0);
-+		size_t len = filter ? filter->len : 0;
- 		display_progress(progress, ++i);
--		hashwrite(f, filter->data, filter->len * sizeof(unsigned char));
-+
-+		if (len)
-+			hashwrite(f, filter->data, len * sizeof(unsigned char));
- 		list++;
- 	}
- 
-diff --git a/revision.c b/revision.c
-index c644c66091..7339750af1 100644
---- a/revision.c
-+++ b/revision.c
-@@ -633,7 +633,6 @@ static unsigned int count_bloom_filter_maybe;
- static unsigned int count_bloom_filter_definitely_not;
- static unsigned int count_bloom_filter_false_positive;
- static unsigned int count_bloom_filter_not_present;
--static unsigned int count_bloom_filter_length_zero;
- 
- static void trace2_bloom_filter_statistics_atexit(void)
+-static void write_graph_chunk_fanout(struct hashfile *f,
+-				     struct write_commit_graph_context *ctx)
++static int write_graph_chunk_fanout(struct hashfile *f,
++				    struct write_commit_graph_context *ctx)
  {
-@@ -641,7 +640,6 @@ static void trace2_bloom_filter_statistics_atexit(void)
+ 	int i, count = 0;
+ 	struct commit **list = ctx->commits.list;
+@@ -913,17 +913,21 @@ static void write_graph_chunk_fanout(struct hashfile *f,
  
- 	jw_object_begin(&jw, 0);
- 	jw_object_intmax(&jw, "filter_not_present", count_bloom_filter_not_present);
--	jw_object_intmax(&jw, "zero_length_filter", count_bloom_filter_length_zero);
- 	jw_object_intmax(&jw, "maybe", count_bloom_filter_maybe);
- 	jw_object_intmax(&jw, "definitely_not", count_bloom_filter_definitely_not);
- 	jw_object_intmax(&jw, "false_positive", count_bloom_filter_false_positive);
-@@ -735,11 +733,6 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 		return -1;
+ 		hashwrite_be32(f, count);
+ 	}
++
++	return 0;
+ }
+ 
+-static void write_graph_chunk_oids(struct hashfile *f, int hash_len,
+-				   struct write_commit_graph_context *ctx)
++static int write_graph_chunk_oids(struct hashfile *f,
++				  struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	int count;
+ 	for (count = 0; count < ctx->commits.nr; count++, list++) {
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+-		hashwrite(f, (*list)->object.oid.hash, (int)hash_len);
++		hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
+ 	}
++
++	return 0;
+ }
+ 
+ static const unsigned char *commit_to_sha1(size_t index, void *table)
+@@ -932,8 +936,8 @@ static const unsigned char *commit_to_sha1(size_t index, void *table)
+ 	return commits[index]->object.oid.hash;
+ }
+ 
+-static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+-				   struct write_commit_graph_context *ctx)
++static int write_graph_chunk_data(struct hashfile *f,
++				  struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -950,7 +954,7 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(&(*list)->object.oid));
+ 		tree = get_commit_tree_oid(*list);
+-		hashwrite(f, tree->hash, hash_len);
++		hashwrite(f, tree->hash, the_hash_algo->rawsz);
+ 
+ 		parent = (*list)->parents;
+ 
+@@ -1030,10 +1034,12 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
+ 
+ 		list++;
+ 	}
++
++	return 0;
+ }
+ 
+-static void write_graph_chunk_extra_edges(struct hashfile *f,
+-					  struct write_commit_graph_context *ctx)
++static int write_graph_chunk_extra_edges(struct hashfile *f,
++					 struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -1082,10 +1088,12 @@ static void write_graph_chunk_extra_edges(struct hashfile *f,
+ 
+ 		list++;
+ 	}
++
++	return 0;
+ }
+ 
+-static void write_graph_chunk_bloom_indexes(struct hashfile *f,
+-					    struct write_commit_graph_context *ctx)
++static int write_graph_chunk_bloom_indexes(struct hashfile *f,
++					   struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -1108,6 +1116,7 @@ static void write_graph_chunk_bloom_indexes(struct hashfile *f,
  	}
  
--	if (!filter->len) {
--		count_bloom_filter_length_zero++;
--		return -1;
--	}
--
- 	result = bloom_filter_contains(filter,
- 				       revs->bloom_key,
- 				       revs->bloom_filter_settings);
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index c7011f33e2..2761208e74 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -60,7 +60,7 @@ setup () {
+ 	stop_progress(&progress);
++	return 0;
+ }
  
- test_bloom_filters_used () {
- 	log_args=$1
--	bloom_trace_prefix="statistics:{\"filter_not_present\":0,\"zero_length_filter\":0,\"maybe\""
-+	bloom_trace_prefix="statistics:{\"filter_not_present\":0,\"maybe\""
- 	setup "$log_args" &&
- 	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" &&
- 	test_cmp log_wo_bloom log_w_bloom &&
-@@ -142,7 +142,7 @@ test_expect_success 'setup - add commit-graph to the chain with Bloom filters' '
+ static void trace2_bloom_filter_settings(struct write_commit_graph_context *ctx)
+@@ -1125,8 +1134,8 @@ static void trace2_bloom_filter_settings(struct write_commit_graph_context *ctx)
+ 	jw_release(&jw);
+ }
  
- test_bloom_filters_used_when_some_filters_are_missing () {
- 	log_args=$1
--	bloom_trace_prefix="statistics:{\"filter_not_present\":3,\"zero_length_filter\":0,\"maybe\":8,\"definitely_not\":6"
-+	bloom_trace_prefix="statistics:{\"filter_not_present\":3,\"maybe\":8,\"definitely_not\":6"
- 	setup "$log_args" &&
- 	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" &&
- 	test_cmp log_wo_bloom log_w_bloom
-@@ -152,4 +152,24 @@ test_expect_success 'Use Bloom filters if they exist in the latest but not all c
- 	test_bloom_filters_used_when_some_filters_are_missing "-- A/B"
- '
+-static void write_graph_chunk_bloom_data(struct hashfile *f,
+-					 struct write_commit_graph_context *ctx)
++static int write_graph_chunk_bloom_data(struct hashfile *f,
++					struct write_commit_graph_context *ctx)
+ {
+ 	struct commit **list = ctx->commits.list;
+ 	struct commit **last = ctx->commits.list + ctx->commits.nr;
+@@ -1155,6 +1164,7 @@ static void write_graph_chunk_bloom_data(struct hashfile *f,
+ 	}
  
-+test_expect_success 'correctly report changes over limit' '
-+	git init 513changes &&
-+	(
-+		cd 513changes &&
-+		for i in $(test_seq 1 513)
-+		do
-+			echo $i >file$i.txt || return 1
-+		done &&
-+		git add . &&
-+		git commit -m "files" &&
-+		git commit-graph write --reachable --changed-paths &&
-+		for i in $(test_seq 1 513)
-+		do
-+			git -c core.commitGraph=false log -- file$i.txt >expect &&
-+			git log -- file$i.txt >actual &&
-+			test_cmp expect actual || return 1
-+		done
-+	)
-+'
-+
- test_done
-\ No newline at end of file
+ 	stop_progress(&progress);
++	return 0;
+ }
+ 
+ static int oid_compare(const void *_a, const void *_b)
+@@ -1671,8 +1681,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			num_chunks * ctx->commits.nr);
+ 	}
+ 	write_graph_chunk_fanout(f, ctx);
+-	write_graph_chunk_oids(f, hashsz, ctx);
+-	write_graph_chunk_data(f, hashsz, ctx);
++	write_graph_chunk_oids(f, ctx);
++	write_graph_chunk_data(f, ctx);
+ 	if (ctx->num_extra_edges)
+ 		write_graph_chunk_extra_edges(f, ctx);
+ 	if (ctx->changed_paths) {
 -- 
 gitgitgadget
 
