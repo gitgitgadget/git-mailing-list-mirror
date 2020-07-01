@@ -2,156 +2,105 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CC63C433DF
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9EB6C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:09:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BE4C2074D
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:01:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C21BE20722
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:09:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="iAGdihGe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nU1Z2Inv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729780AbgGAKBu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 06:01:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58181 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729486AbgGAKBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:01:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1593597704;
-        bh=Lc+Kqia+7VCiIBzaooXzrHgNvgseUOwkMAw3GQxsHcE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=iAGdihGeJOKZHAuFIyXevW4B/xGd5U2BS78bQea+GoG8UHgDYHMkm2sLWV5G+/Rc3
-         PnQ0twj3svufIhXT6rzH3KrVlVrpDto5TaEvEeWQc3KwCgBLIJNYjMq0CAierREJIt
-         GRiRNwwTT2sfmjuHIwCQCl7fMlhdiZsoHB9kkwsU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.116.87] ([213.196.213.153]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1My36N-1iswCO3WEJ-00zTwc; Wed, 01
- Jul 2020 12:01:43 +0200
-Date:   Wed, 1 Jul 2020 12:01:42 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
-Subject: Re: [PATCH v4 2/2] difftool -d: ensure that intent-to-add files are
- handled correctly
-In-Reply-To: <xmqqimff3tib.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2007011153040.56@tvgsbejvaqbjf.bet>
-References: <pull.654.v3.git.1593010066.gitgitgadget@gmail.com> <pull.654.v4.git.1593107621.gitgitgadget@gmail.com> <9bb8d84ea956dcddefbe7b62baa3a5ff23b6b1e2.1593107621.git.gitgitgadget@gmail.com> <xmqqimff3tib.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729486AbgGAKJZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 06:09:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38414 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728941AbgGAKJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 06:09:22 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 098C4C061755
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 03:09:22 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id e64so19428870iof.12
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 03:09:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=2fiUUD61U7LVew7AJAErZHAeSnk1ODbbIsmDOr0QmQ4=;
+        b=nU1Z2InvYtRWvVjmlFaJ+Gmefzc8ER1XhKNFv9+2MyjZ7btvJunmAlB7rlPms4lhay
+         awssMjcdJzOt8uRDBPVpMKFzzevB9XKTWJSFn3mPvdS1V4WrpESeDCBnRq9Jgzp9H6ck
+         Mj+j9HhX4ea42VP+bdOIeJUZ2u3CfJKqxcZxMUjUY0KYu+RkcbfYrEERG8GkEk5E8p6x
+         k5AbFymT4hPSJGGlwLor1gHMQfepjhhJWFT4pmbqM1rBJWQLsDW4q9LZ0kjV1as+nlz4
+         +Mbo5zvF49oMH8EAbCEMhaGB5rgGo+k+xD1dtarvHoMabRtNS++rNMVATUSu6Hk6YhX9
+         X69w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=2fiUUD61U7LVew7AJAErZHAeSnk1ODbbIsmDOr0QmQ4=;
+        b=Ez5R8+iRGnOcjrMNTXonGY0Of/CyV/wOHajZt4BJO4oeciVkslmSmZUffLneMq2u2a
+         J/H8uVTk6hni1oTJDIdK0QG/jh3kvZBQgw1XT91atbUS6Hh0SKoas7kFIYbBtD0Gcxos
+         1ateCIjGpRrBYb+duz8YKF4b+iRapG80Wh3qcc8FRVFrWy132jp3YCZYbdjZ2n/Mvx2W
+         xQRUz+0HmK9SXJSs6rNOIIiY9eJskFOSQsbzF7Du9v3UGBBRpn2w6YOrghhjbqVvL2ED
+         8zNP7p3M76jTObLARX+mgCu1/aTAHoxs8A+Oe3KzPQB/a3Kzkvg6K/4MN8wtMS1lVrJC
+         fuFw==
+X-Gm-Message-State: AOAM530JoOKMUfBl+/q8dvvCIeIEa6efHyDY5F+C5TxZfX4b8XktTa6u
+        3ZuPeVU1kzaLIMBX2jUWnvzEGoDoqGG2iGFGNXw9oQNa
+X-Google-Smtp-Source: ABdhPJyjQJnkpCfGAN2qjdTPcmRibagPs8GsUOam+7W8OUWdQEBpjd/OC6N0wgcO/sMSJbzli/cT6s9MkF42LKafmmE=
+X-Received: by 2002:a05:6602:2805:: with SMTP id d5mr1486997ioe.124.1593598161323;
+ Wed, 01 Jul 2020 03:09:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6Q1KUDabFmm+mm8b1CXTHFOUHzV2+dS1bKg1vFHGtUABwx5LYIa
- nZhlT+Qww4V84xNlJgNPvVTYPOBtGwmPhtAp9OdYtZyxKZGW3FgIuiCpx6LiBZ0XYyJ22Eh
- gi0GQ6M+mC7wtW3FjlBf/vOhKaiqrjQ3w27GlUaHvmUJATBd2iJuHOwR76gPjMDhnAV5O4W
- 7LXWRaAadMD77FKsEf3Tw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7m19J5+Px20=:aNGGH23MKdv1lfcH9ttFEx
- r5e6H0MEUg/cuLS3Ag6lr8JcGaqD77Khitb5OiKEepS3ZaTAF9YjOLRA9IYhNv5sYBD2VooKz
- gQ8IxA4+6vBUHDEG9mZ+HDY9Ta7kNqkevrqzVR8al9gPW5214jOSA4uOYwx4y0/ClFdFKdK6r
- 8Yh1QMy5u02o3KaEAYU0swoYZzCTVWPPUOCAHHN2BSRb5NdcL6RoSTspsTKX34bF0bD2QTvVl
- XDe7mBpBZRF3/r2/CAAlvQ6ow8vMsCvNFw4gO0fmWlYZPQLPmpzWlpZY+wv36ZQDW6fo99y2m
- 8SZ5oAA4ZXRLvAK9D7e9FarFs8+3EpI7lExxba+uzAkB/AyJLt11IWd6i/vqpdg9RD8ZpI0J1
- TgGPTvvPDMTJtkhevgT8eamU4XsPRNgk72GXjvGzFkuXYGBZtGI4o2xMwe8fH1ul8yq/hpcnk
- 3nwwNPc18bPj5zjUk/q6mC3R6IwxzZOM6vBRVQkpeKA5za5zWhoqFyiwEbbsUVupmni/5fClz
- vS7HAeHngsrq4oQysLyVWxmPqnI7pjFqT5OKVGzZGfF5YXcyPZeFWigqOhWZRJendPkWJ/gCT
- k9cFMacxk5Ml5krewpyEIhA9LuVf3eqjZ6BAmHNiFFtJ9Gk4dDmXZG7qAqAgex1NW8WtHCBt+
- jEBNKLZpe1Vf1onv/+hJ2ox9iXp59jJS35C7vdGk26MK/PeBlEMQ6xsiTipIf/sEN/vfFkkUL
- vBvOaYuSkKtzrmeB38l7qr1hpQgtEbJxEXlVFT728DTLF9PIVkigGrbwAx+aCw2I8zD6mlTyH
- iNxfR+tJ91YuWFFsT0bWDuTGPVCIrjuxRKlYIQ1B/iOng3cxN5033+DLPS0/fLVWX2hOzCIgx
- MlnTd3g0zF5QH5DFfeIdXfkZYdla1xjQzV9amKtLlMKQCBxR+eh+jh7XY/u+1h3S2IRL+MaV+
- x6di4ULJ8Vz84KvKwLr2r6vin9GdH3KKNDW2EN1Rzsfj5DtX6n3ISYWAPpIMRzS5393oEF9TS
- 4JE1p4HgcjVu8PDIPnuS7+MiyK2foQ4PpMBMNX3CjnjQjfZAmPIew0q/OzZPr/j+CH9PBP6km
- 2jKGADBGABaxJrJa8dTEg7Btd4N221juhukIDa4nELs0ROTXHYjXoxJRo2ar3ch9M45E8fgFp
- 5A/IUat1rM4dq15nc0flxM1ItrYb/wlLa1ywLtpFq26ayK8w+35HwNOaWjiwm4I7SGV0ZZ//I
- 6j8NSWmxk+5Vfx8qc7Ppb/LOTBRExZx7Pd4JfCg==
-Content-Transfer-Encoding: quoted-printable
+References: <CAH8yC8m1=0n8zzoW--g_XLebJFqFSXpBpTr+1S58z7snLTt-0Q@mail.gmail.com>
+ <87tuyrd0ng.fsf@igel.home>
+In-Reply-To: <87tuyrd0ng.fsf@igel.home>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Wed, 1 Jul 2020 06:09:10 -0400
+Message-ID: <CAH8yC8kxY5mV0p-98W0uDN7PLxmNR4LkNcz9vbKsq21aTd-qQg@mail.gmail.com>
+Subject: Re: Why won't git checkout a branch?
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Thu, 25 Jun 2020, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Wed, Jul 1, 2020 at 5:50 AM Andreas Schwab <schwab@linux-m68k.org> wrote:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In https://github.com/git-for-windows/git/issues/2677, a `git difftool
-> > -d` problem was reported. The underlying cause was a bug in `git
-> > diff-files --raw` that we just fixed.
+> On Jul 01 2020, Jeffrey Walton wrote:
 >
-> That leaves a gap between "there is some unspecified problem" and
-> "the problem was cased by such and such" that forces readers to
-> either know the problem at heart (may apply to you and me right now,
-> but I am not sure about me 3 months in the future) or go check the
-> external website.
+> > $ git checkout m4
 >
-> Can we fill the gap by saying how seeing the object name of empty
-> blob (or worse, tree) instead of 0{40} made "difftool -d" upset?
-
-Sorry about catching this only now, after the commit hit `next`.
-
-Filling the gap is a slightly more complicated.
-
-And now that I looked at the code again, to make sure that I don't say
-anything stupid, I realize that I just provided incorrect information in
-my reply elsewhere in this thread: Srinidhi's fix is _not_ enough to fix
-t7800 with this here patch.
-
-Your guess was almost spot on: the empty blob would have worked (as in:
-not caused an error, but it would have shown incorrect information). The
-problem really is the attempt trying to read the empty tree as if it was a
-blob. That results in something like this:
-
-	error: unable to read sha1 file of /tmp/git-difftool.O8CoK9/right/intent-=
-to-add (4b825dc642cb6eb9a060e54bf8d69288fbee4904)
-	error: could not write 'intent-to-add'
-
-And yes, it would have been good to adjust the commit message as you
-suggested. Sorry for not getting to it in time before it hit `next`.
-
-Do you want me to send out a v5 and drop v4 from `next` in favor of the
-new iteration?
-
-Ciao,
-Dscho
-
+> Try a newer git version:
 >
-> Thanks.
->
->
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  t/t7800-difftool.sh | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >
-> > diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> > index 29b92907e2..524f30f7dc 100755
-> > --- a/t/t7800-difftool.sh
-> > +++ b/t/t7800-difftool.sh
-> > @@ -720,6 +720,14 @@ test_expect_success SYMLINKS 'difftool --dir-diff=
- handles modified symlinks' '
-> >  	test_cmp expect actual
-> >  '
-> >
-> > +test_expect_success 'add -N and difftool -d' '
-> > +	test_when_finished git reset --hard &&
-> > +
-> > +	test_write_lines A B C >intent-to-add &&
-> > +	git add -N intent-to-add &&
-> > +	git difftool --dir-diff --extcmd ls
-> > +'
-> > +
-> >  test_expect_success 'outside worktree' '
-> >  	echo 1 >1 &&
-> >  	echo 2 >2 &&
->
+> $ git checkout m4
+> fatal: 'm4' could be both a local file and a tracking branch.
+> Please use -- (and optionally --no-guess) to disambiguate
+
+Ack, thanks.
+
+This does not look normal, either. I don't want to create a new
+branch. I want to work on the existing branch.
+
+$ git checkout origin/m4
+Note: checking out 'origin/m4'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 5c3967f Merge branch 'm4' of
+https://github.com/noloader/libb2 into m4
+
+Jeff
