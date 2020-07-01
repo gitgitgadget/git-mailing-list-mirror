@@ -2,134 +2,92 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA5C6C433E1
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C84EC433E1
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:01:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB8FB20780
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:00:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kKhgVnye"
+	by mail.kernel.org (Postfix) with ESMTP id E321F2080D
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 16:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732189AbgGAQAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 12:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728534AbgGAQAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 12:00:53 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02619C08C5C1
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 09:00:53 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id o11so24584411wrv.9
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 09:00:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7IoNr4yvZMHW9w6dnCR3VsdeUq6V4k4ZhZm8WSoSdSo=;
-        b=kKhgVnyeECIm+eI5G5y61uQREDbDtJdooGQlTTlF6xKUYIw/Kob9YEGFYRmYQjcs/p
-         0NPvQwOvFclqE7ERjtMED1rCOsCxO/rFHebvBED5u82DotB+PUtv//Zv2SU+eMi2PL82
-         MTSvIB3cYJgqcoOrQkugtVo4wH+d1UfDP6xxNkQ9xODVsD1IDrgKTS8J/TsCdMPr2V7K
-         oa5x8m7gVAmeoVBZLiNRxYPm0B3XZ2+yzGszY5uTWQKwfHUJnGDX+oLGFcsLvF6xUux6
-         xu7KdNfTz6uRvGlaqbqKIqdGAW9kQoWg/Ov+xiBrPjM6vMR3w3S9eqn07enfIQE6bpbp
-         OLRQ==
+        id S1732246AbgGAQBA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 12:01:00 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45746 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731519AbgGAQA7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 12:00:59 -0400
+Received: by mail-wr1-f65.google.com with SMTP id s10so24533750wrw.12
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 09:00:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7IoNr4yvZMHW9w6dnCR3VsdeUq6V4k4ZhZm8WSoSdSo=;
-        b=g6mFEQC9BYr1CgKUrYBzXgpdYLVdGKBSJ0vkvhKBjzQBFp9y7AsDylM3B3gSJnEN5y
-         iSUcw6MO9xCT+jsGD7S1C0sf3cbxAlMX/4VJZ5LcEeIWZo6p/sb6xt/sbt0jhZ53rpBJ
-         fyS9bL9IbUMzXbtQZmTci8Y8jpRvwYnHf5nEc3qWRtbV2bFPWs4bsEW4Ju9+WWoP7Ia/
-         XHXvw6+VeSktPzH6DpjGHVXJjxJ7ZIv4UgycreR50/Is5BbitM6r576DdPkRcil/Cg5g
-         XNvssZAOSyr5b3AJB1OPQBLgIpVenUaO3rzGypQctmkb3AyuIgIw5RaPUVjOf1JLzgdl
-         +M0Q==
-X-Gm-Message-State: AOAM532Z9G9MK+SPlmk/tJkuI7VdqSnpHX3GfKZlNpzoMfchDH771gKv
-        JC5pMa1f9NvIePWIUlDprc3QrGMdHPw=
-X-Google-Smtp-Source: ABdhPJzfNi9FpGa/eEChetkn+8t6RH1KgPpDjqzBPf1kyGvIyYdLm5nubWn32/sVz6A2tRyZ8g8OIQ==
-X-Received: by 2002:a5d:5306:: with SMTP id e6mr29583937wrv.39.1593619251647;
-        Wed, 01 Jul 2020 09:00:51 -0700 (PDT)
-Received: from [192.168.1.116] (2-229-250-51.ip199.fastwebnet.it. [2.229.250.51])
-        by smtp.gmail.com with ESMTPSA id c70sm7610127wme.32.2020.07.01.09.00.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Jul 2020 09:00:50 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: Built Git 2.27.0 from sources on macOS Catalina fails on "make
- profile"
-From:   Fabio Frumento <frumento.fabio@gmail.com>
-In-Reply-To: <20200701153726.GC6726@coredump.intra.peff.net>
-Date:   Wed, 1 Jul 2020 18:00:49 +0200
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E9210645-66F4-4B76-BB26-C8282AE23B3D@gmail.com>
-References: <618374D7-60E1-4942-B29F-4F2EA261996F@gmail.com>
- <20200701153726.GC6726@coredump.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NNrlFrRZXpIK1gcgDrE4bZpdVw+bW2qrSQQXLzoCics=;
+        b=OvroBuLcjyEPvOLVGNrgH+5drhc8yVrS/1ws7JW1TZf2htk4J/EwWb442VMS0fwuye
+         LoAmecP1Gmgt4oDMCtZdMAYjwBQAjwlKUZwwqNGIit4i0+oDU/NRKoyGmwANlhw57sET
+         TvSVXY10vhdNcQ6GXgXPjhVYokM+GT+u/wnC7f5wCJ+HJ5MoNrXxgEqzr4uiS5z8zil2
+         eh/ZRovWvKxMf7fwjMAJTb0Yh7DSxh5h5oMFNMTznhZlASJ9OljCUrveiuu41w7jEfGG
+         DsCmVjcrP9frmdd6vtUfrtsOXzt/PEXP19ke+hbrrNFkOfcpcQVS2yd2FF3kSolMZUHj
+         rJFA==
+X-Gm-Message-State: AOAM531XY0EDpkf6PbVd91G0/xlK1rePQegego39DPv0aMLJ+USZARnc
+        z+Ro0YMr6r/FRqnLipPVHBLNFw45t0/hWijaGzLRUl0w
+X-Google-Smtp-Source: ABdhPJyIpFSBYXVnajZ2OJYdj4dis0Dz/7bv2qCwtcCN/J7niBNtVOGQly+j6Z0VRVQRjI87AoJ7hBHAXTTYC0QxtkY=
+X-Received: by 2002:a5d:44c7:: with SMTP id z7mr29322503wrr.226.1593619256971;
+ Wed, 01 Jul 2020 09:00:56 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200701093653.3706-1-ben@wijen.net> <20200701093653.3706-2-ben@wijen.net>
+In-Reply-To: <20200701093653.3706-2-ben@wijen.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 1 Jul 2020 12:00:45 -0400
+Message-ID: <CAPig+cT+cXuM3Asu6+Z25pGV2uRm6K1iAeYVhic9kqk1mS84-g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] git clone: check for non-empty directory
+To:     Ben Wijen <ben@wijen.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Jul 1, 2020 at 5:46 AM Ben Wijen <ben@wijen.net> wrote:
+> When using git clone with --separate-git-dir realgitdir and
+> realgitdir already exists, it's content is destroyed.
+>
+> Extend test to make sure content is left intact
+>
+> Signed-off-by: Ben Wijen <ben@wijen.net>
+> ---
+> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+> @@ -271,7 +271,8 @@ test_expect_success 'fetch from gitfile parent' '
+>  test_expect_success 'clone separate gitdir where target already exists' '
+>         rm -rf dst &&
+> -       test_must_fail git clone --separate-git-dir realgitdir src dst
+> +       test_must_fail git clone --separate-git-dir realgitdir src dst &&
+> +       test -f realgitdir/config
+>  '
 
-Thanks for the reply.
+This addresses the immediate problem of the directory content being
+destroyed, which is good. But, we can future-proof it even more by
+also verifying (to some degree) that the existing content has not been
+disturbed. Doing so would give us greater confidence against some
+future change breaking "realgitdir" in some fashion other than merely
+emptying it. For instance, we might do this:
 
-I get several messages like this
+    rm -rf dst &&
+    echo foo=bar >realgitdir/config &&
+    test_must_fail git clone --separate-git-dir realgitdir src dst &&
+    grep foo=bar realgitdir/config
 
-LLVM Profile Warning: Unable to track new values: Running out of static =
-counters.  Consider using option -mllvm -vp-counters-per-site=3D<n> to =
-allocate more value profile counters at compile time.
-
-I=E2=80=99ve checked the scripts in the t folder, they use #!/bin/sh =
-while  I=E2=80=99m using zsh could  it be of some relevance? Which shell =
-are they supposed to be run?
-
--Fabio
-
-> Il giorno 1 lug 2020, alle ore 17:37, Jeff King <peff@peff.net> ha =
-scritto:
->=20
-> On Wed, Jul 01, 2020 at 03:17:05PM +0200, Fabio Frumento wrote:
->=20
->> now I'm struggling during the ```make profile``` step
->> [...]
->> I'm a little surprised as presumed, since 2.27.0 is an official
->> release, all the tests should pass without any issue.
->=20
-> They generally do (not just for releases but for every commit that =
-hits
-> master). However, we've sometimes seen weird test failures from "make
-> profile" (which in my experience isn't all that well maintained).
->=20
-> That said, "make profile" passes for me on v2.27.0, on Linux.  It's
-> possible that a test is racy (the profiler often slows things down,
-> exacerbating races), but I can't seem to get t0410 to fail with our
-> usual stress-test to find races.
->=20
-> If you don't care about profile-optimized builds, then I'd suggest
-> skipping "make profile".
->=20
-> If you want to look further into the test failure, probably it would
-> help to re-run the test with more verbose settings. E.g.:
->=20
->  [wait for this to fail, which would leave the problematic version of
->   git in the build directory]
->  $ make profile
->  $ cd t
->  $ ./t0410-partial-clone.sh -v -i -x
->=20
-> then we could see what's failing.
->=20
->> How to file a bug to the Git developers?
->=20
-> I think you just did.
->=20
-> -Peff
-
+One other observation: To preserve bisectability (git-bisect) of
+git.git itself, we want to ensure that the entire test suite still
+passes at each point in a patch series. Making this change to the test
+in its own patch introduces a failure into the test suite, which is
+undesirable. One way to address this shortcoming would be to
+temporarily change this test from 'test_must_succeed' to
+'test_must_fail', and then flip it back to 'test_must_succeed' in
+patch 2/2. A cleaner approach is simply to combine the two patches so
+that the fix and updated test are bundled together (which makes sense
+anyhow in this case since this patch is so short and need not stand on
+its own).
