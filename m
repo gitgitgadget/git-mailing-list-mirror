@@ -8,67 +8,67 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEBFFC433E1
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C9E6C433DF
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DEF9206BE
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 227C1206BE
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:35:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Um/9H+3I"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IKtjC/KK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731158AbgGANfj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 09:35:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42414 "EHLO
+        id S1731062AbgGANfl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 09:35:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730792AbgGANfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 09:35:36 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0781CC08C5C1
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:35:36 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id b6so23836055wrs.11
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:35:35 -0700 (PDT)
+        with ESMTP id S1731155AbgGANfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 09:35:38 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B281C08C5C1
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:35:38 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id a6so23869236wrm.4
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7nbieT4QtGXk0hmm0z7vqt2vlcmy3vOJN8DpcAIQOIw=;
-        b=Um/9H+3IrlnjEt1zJ7uf5eb5kWaP7DZW2mNU174uLTCwSgTJPbacLlgSkJfj/AYuBg
-         KDCiKZBS9ihdcGIMM+WmPfkAG9zkwPjydzcFcZ4oRMQfkwRqt+9PomsagDo02ewoKmrH
-         HNehpHER/85bAREERynGjgKUlvzrkvhyNfnlPOPevKNlz5DnkwqlGVGUyHNhKT3kN83Y
-         ImfAmlOEJwvijDJObAGcFvfmGu6OmeURWf5EJyNEWbPE3l8db3aARWeMW7rf1PO7UzNO
-         WROoD2ax/hfvUiEj5vqdn1cbZ07ttgQhDmpdWSKTSC/enZpub3f64ajRbi4pJGghEsrh
-         Ky6A==
+        bh=0+TBjK09n0JdK3COj+yxvL9U2kCGDaC7n99KaRZYjgE=;
+        b=IKtjC/KKCLM9OSs3CQWtzcpQJWSz8yN5KcQuFzvxN+ggVb3nsOhKDE0IGl3c1PsEsp
+         C88ktnUE9FXzYtWY1Fbz3TpwSmB8eIGjRL7t/roGWvhGzTbFywUnTRexYoEQ8CXcbEKZ
+         +/7VQLbu+K7DZL0igS6Yw4QHbfKfi9be5uTVkJHeY1Jg0WU63BCEvg/QMDSyXMrUTRcS
+         D24gwCn5j6vvpbeTzgSxUXTej1mKlNtsBOVc6iNjhxDIdz9ySzyjcjsRbRflnIxCHjFf
+         lct9xg60Rz+288i1dDNWH90SaTiCXD5/dswnPKRx3Sn8R9PUfXFuWfa10T1g9awh71vg
+         GTtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7nbieT4QtGXk0hmm0z7vqt2vlcmy3vOJN8DpcAIQOIw=;
-        b=kRE3tdGu1iVDrghm8fEQRKzCAA3otLEXOKyAlsvs5qG758iWRfiLeKAd7m1sbnwfga
-         LKMjTJPjOvwQFPgYFNE4CS4eRAU9+RLK7Hc7CdadOeLK1AgqrX+I7spoog1+/VSsMdU3
-         mk2bhLZEJKJbIDGAsSrJ/0vtHimRqVQZdxBigowCNJswGe+OKiDsK8hl7FJuHS/I0vk4
-         ja7+YbOHsbaPXmKe33GswP/fffTWtWlFEr1fPv5NCkMt81Br/+gbZJ1sU3KvduG3FUTK
-         at2BHOHf3Mva9eAlPEO+T5Jn7CjBwrGSDVomNRhYWI0nnXlxr1nUMJD7BUwqDscgJDiM
-         DuwA==
-X-Gm-Message-State: AOAM530+qFFPzWpsC9TYsfkKCWnVL98/y48LJ0sWoR7CjzYlgdSbiOIP
-        eYPURH4i+3X80etK1pFN2ijLpq+Bzr2MFw==
-X-Google-Smtp-Source: ABdhPJy2bUfXYSLlwebeKd+6ZSWgaezjPzPS1+of5lpZcWIANSZJX5Sl/TDHcRMZhvaJM1IkTZkUhQ==
-X-Received: by 2002:adf:f04c:: with SMTP id t12mr24948449wro.382.1593610534430;
-        Wed, 01 Jul 2020 06:35:34 -0700 (PDT)
+        bh=0+TBjK09n0JdK3COj+yxvL9U2kCGDaC7n99KaRZYjgE=;
+        b=YnPlXT0nV4P39L3FmiO1mqH+6l+miP483UuU1PICZ+3de5KheBwEkoPLkDmUR+hqf5
+         2h5DRzVW2hLu1bUMlCfZW8YS15PApD/53OCTacRMcMEzrBlupYX8ykawFIP1QzCBnU5x
+         gBTbj4p6iG3YRaaHjS9PwlCOxmOdPegBxC5gfPTHa16fLQrNvEIneW0FwaHF5ZR/ax9O
+         kDrSOkVMaQQ4i33HYhjm2zTDjuelKIw/JOzt35+qgnib4TZ03G6hTkhfYrb3Dhkc4Sps
+         vpgO8J/QzGBD4sqOFTMZlEZWt29U0xiXXGqygrGvTvmnLd3oXDc7dmtwoicYHWWuB1Hr
+         THDQ==
+X-Gm-Message-State: AOAM530P2mf+T4hn+5devTDwMzIpY4UqHwoIT3brg+k1DwJbr7XZxVDQ
+        dbz4VVBuHzXoSG0LBEBNBzb6eDw/+Kf0dg==
+X-Google-Smtp-Source: ABdhPJzqVuFyGhKKQoDmuCFITCS95bfSygFZvh/tQygI4oxsR2rNBU0Rnwn1wz80+B5XJtlplhItrw==
+X-Received: by 2002:adf:a34a:: with SMTP id d10mr2700767wrb.59.1593610536614;
+        Wed, 01 Jul 2020 06:35:36 -0700 (PDT)
 Received: from localhost.localdomain ([91.242.153.178])
-        by smtp.gmail.com with ESMTPSA id 30sm7928840wrm.74.2020.07.01.06.35.33
+        by smtp.gmail.com with ESMTPSA id 30sm7928840wrm.74.2020.07.01.06.35.35
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Jul 2020 06:35:33 -0700 (PDT)
+        Wed, 01 Jul 2020 06:35:36 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v4 04/13] bisect--helper: reimplement `bisect_autostart` shell function in C
-Date:   Wed,  1 Jul 2020 15:34:55 +0200
-Message-Id: <20200701133504.18360-5-mirucam@gmail.com>
+Subject: [PATCH v4 06/13] bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell functions in C
+Date:   Wed,  1 Jul 2020 15:34:57 +0200
+Message-Id: <20200701133504.18360-7-mirucam@gmail.com>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200701133504.18360-1-mirucam@gmail.com>
 References: <20200701133504.18360-1-mirucam@gmail.com>
@@ -81,160 +81,378 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Reimplement the `bisect_autostart()` shell function in C and add the
-C implementation from `bisect_next()` which was previously left
-uncovered.
+Reimplement the `bisect_next()` and the `bisect_auto_next()` shell functions
+in C and add the subcommands to `git bisect--helper` to call them from
+git-bisect.sh .
 
-Add `--bisect-autostart` subcommand to be called from git-bisect.sh.
-Using `--bisect-autostart` subcommand is a temporary measure to port
-the shell function to C so as to use the existing test suite. As more
-functions are ported, this subcommand will be retired and
-bisect_autostart() will be called directly by `bisect_state()`.
+bisect_auto_next() function returns an enum bisect_error type as whole
+`git bisect` can exit with an error code when bisect_next() does.
+
+Using `--bisect-next` and `--bisect-auto-next` subcommands is a
+temporary measure to port shell function to C so as to use the existing
+test suite. As more functions are ported, `--bisect-auto-next`
+subcommand will be retired and will be called by some other methods.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 44 +++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 25 ++---------------------
- 2 files changed, 45 insertions(+), 24 deletions(-)
+ bisect.c                 |   6 ++
+ builtin/bisect--helper.c | 181 ++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            |  47 +---------
+ 3 files changed, 189 insertions(+), 45 deletions(-)
 
+diff --git a/bisect.c b/bisect.c
+index db00850065..0864e2a21b 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -980,6 +980,12 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
+  * the bisection process finished successfully.
+  * In this case the calling function or command should not turn a
+  * BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND return code into an error or a non zero exit code.
++ *
++ * Checking BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND
++ * in bisect_helper::bisect_next() and only transforming it to 0 at
++ * the end of bisect_helper::cmd_bisect__helper() helps bypassing
++ * all the code related to finding a commit to test.
++ *
+  * If no_checkout is non-zero, the bisection process does not
+  * checkout the trial commit but instead simply updates BISECT_HEAD.
+  */
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index b421056546..36166840d1 100644
+index 36166840d1..9a9705c9e3 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -29,6 +29,7 @@ static const char * const git_bisect_helper_usage[] = {
+@@ -8,6 +8,7 @@
+ #include "run-command.h"
+ #include "prompt.h"
+ #include "quote.h"
++#include "revision.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+@@ -29,10 +30,17 @@ static const char * const git_bisect_helper_usage[] = {
  	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
  	N_("git bisect--helper --bisect-start [--term-{old,good}=<term> --term-{new,bad}=<term>]"
  					     "[--no-checkout] [<bad> [<good>...]] [--] [<paths>...]"),
-+	N_("git bisect--helper --bisect-autostart"),
++	N_("git bisect--helper --bisect-next"),
++	N_("git bisect--helper --bisect-auto-next"),
+ 	N_("git bisect--helper --bisect-autostart"),
  	NULL
  };
  
-@@ -645,6 +646,38 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
++struct add_bisect_ref_data {
++	struct rev_info *revs;
++	unsigned int object_flags;
++};
++
+ struct bisect_terms {
+ 	char *term_good;
+ 	char *term_bad;
+@@ -56,6 +64,8 @@ static void set_terms(struct bisect_terms *terms, const char *bad,
+ static const char vocab_bad[] = "bad|new";
+ static const char vocab_good[] = "good|old";
+ 
++static int bisect_autostart(struct bisect_terms *terms);
++
+ /*
+  * Check whether the string `term` belongs to the set of strings
+  * included in the variable arguments.
+@@ -107,6 +117,18 @@ static int write_to_file(const char *path, const char *format, ...)
  	return res;
  }
  
-+static inline int file_is_not_empty(const char *path)
-+{
-+	return !is_empty_or_missing_file(path);
-+}
-+
-+static int bisect_autostart(struct bisect_terms *terms)
++static int append_to_file(const char *path, const char *format, ...)
 +{
 +	int res;
-+	const char *yesno;
++	va_list args;
 +
-+	if (file_is_not_empty(git_path_bisect_start()))
-+		return 0;
++	va_start(args, format);
++	res = write_in_file(path, "a", format, args);
++	va_end(args);
 +
-+	fprintf_ln(stderr, _("You need to start by \"git bisect "
-+			  "start\"\n"));
-+
-+	if (!isatty(STDIN_FILENO))
-+		return 0;
-+
-+	/*
-+	 * TRANSLATORS: Make sure to include [Y] and [n] in your
-+	 * translation. The program will only accept English input
-+	 * at this point.
-+	 */
-+	yesno = git_prompt(_("Do you want me to do it for you "
-+			     "[Y/n]? "), PROMPT_ECHO);
-+	res = tolower(*yesno) == 'n' ?
-+		-1 : bisect_start(terms, 0, NULL, 0);
-+
-+		return res;
++	return res;
 +}
 +
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ static int check_term_format(const char *term, const char *orig_term)
  {
- 	enum {
-@@ -657,7 +690,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		CHECK_AND_SET_TERMS,
+ 	int res;
+@@ -449,6 +471,143 @@ static int bisect_append_log_quoted(const char **argv)
+ 	return res;
+ }
+ 
++static int add_bisect_ref(const char *refname, const struct object_id *oid,
++			  int flags, void *cb)
++{
++	struct add_bisect_ref_data *data = cb;
++
++	add_pending_oid(data->revs, refname, oid, data->object_flags);
++
++	return 0;
++}
++
++static int prepare_revs(struct bisect_terms *terms, struct rev_info *revs)
++{
++	int res = 0;
++	struct add_bisect_ref_data cb = { revs };
++	char *good = xstrfmt("%s-*", terms->term_good);
++
++	/*
++	 * We cannot use terms->term_bad directly in
++	 * for_each_glob_ref_in() and we have to append a '*' to it,
++	 * otherwise for_each_glob_ref_in() will append '/' and '*'.
++	 */
++	char *bad = xstrfmt("%s*", terms->term_bad);
++
++	/*
++	 * It is important to reset the flags used by revision walks
++	 * as the previous call to bisect_next_all() in turn
++	 * sets up a revision walk.
++	 */
++	reset_revision_walk();
++	init_revisions(revs, NULL);
++	setup_revisions(0, NULL, revs, NULL);
++	for_each_glob_ref_in(add_bisect_ref, bad, "refs/bisect/", &cb);
++	cb.object_flags = UNINTERESTING;
++	for_each_glob_ref_in(add_bisect_ref, good, "refs/bisect/", &cb);
++	if (prepare_revision_walk(revs))
++		res = error(_("revision walk setup failed\n"));
++
++	free(good);
++	free(bad);
++	return res;
++}
++
++static int bisect_skipped_commits(struct bisect_terms *terms)
++{
++	int res;
++	FILE *fp = NULL;
++	struct rev_info revs;
++	struct commit *commit;
++	struct pretty_print_context pp = {0};
++	struct strbuf commit_name = STRBUF_INIT;
++
++	res = prepare_revs(terms, &revs);
++	if (res)
++		return res;
++
++	fp = fopen(git_path_bisect_log(), "a");
++	if (!fp)
++		return error_errno(_("could not open '%s' for appending"),
++				  git_path_bisect_log());
++
++	if (fprintf(fp, "# only skipped commits left to test\n") < 0)
++		return error_errno(_("failed to write to '%s'"), git_path_bisect_log());
++
++	while ((commit = get_revision(&revs)) != NULL) {
++		strbuf_reset(&commit_name);
++		format_commit_message(commit, "%s",
++				      &commit_name, &pp);
++		fprintf(fp, "# possible first %s commit: [%s] %s\n",
++			terms->term_bad, oid_to_hex(&commit->object.oid),
++			commit_name.buf);
++	}
++
++	/*
++	 * Reset the flags used by revision walks in case
++	 * there is another revision walk after this one.
++	 */
++	reset_revision_walk();
++
++	strbuf_release(&commit_name);
++	fclose(fp);
++	return 0;
++}
++
++static int bisect_successful(struct bisect_terms *terms)
++{
++	struct object_id oid;
++	struct commit *commit;
++	struct pretty_print_context pp = {0};
++	struct strbuf commit_name = STRBUF_INIT;
++	char *bad_ref = xstrfmt("refs/bisect/%s",terms->term_bad);
++	int res;
++
++	read_ref(bad_ref, &oid);
++	commit = lookup_commit_reference_by_name(bad_ref);
++	format_commit_message(commit, "%s", &commit_name, &pp);
++
++	res = append_to_file(git_path_bisect_log(), "# first %s commit: [%s] %s\n",
++			    terms->term_bad, oid_to_hex(&commit->object.oid),
++			    commit_name.buf);
++
++	strbuf_release(&commit_name);
++	free(bad_ref);
++	return res;
++}
++
++static enum bisect_error bisect_next(struct bisect_terms *terms, const char *prefix)
++{
++	int no_checkout;
++	enum bisect_error res;
++
++	bisect_autostart(terms);
++	if (bisect_next_check(terms, terms->term_good))
++		return BISECT_FAILED;
++
++	no_checkout = file_exists(git_path_bisect_head());
++
++	/* Perform all bisection computation, display and checkout */
++	res = bisect_next_all(the_repository, prefix, no_checkout);
++
++	if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
++		res = bisect_successful(terms);
++		return res ? res : BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND;
++	} else if (res == BISECT_ONLY_SKIPPED_LEFT) {
++		res = bisect_skipped_commits(terms);
++		return res ? res : BISECT_ONLY_SKIPPED_LEFT;
++	}
++	return res;
++}
++
++static enum bisect_error bisect_auto_next(struct bisect_terms *terms, const char *prefix)
++{
++	if (bisect_next_check(terms, NULL))
++		return BISECT_OK;
++
++	return bisect_next(terms, prefix);
++}
++
+ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 			const char **argv, int argc)
+ {
+@@ -691,7 +850,9 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  		BISECT_NEXT_CHECK,
  		BISECT_TERMS,
--		BISECT_START
-+		BISECT_START,
-+		BISECT_AUTOSTART,
+ 		BISECT_START,
+-		BISECT_AUTOSTART,
++		BISECT_NEXT,
++		BISECT_AUTO_NEXT,
++		BISECT_AUTOSTART
  	} cmdmode = 0;
  	int no_checkout = 0, res = 0, nolog = 0;
  	struct option options[] = {
-@@ -681,6 +715,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+@@ -715,6 +876,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  			 N_("print out the bisect terms"), BISECT_TERMS),
  		OPT_CMDMODE(0, "bisect-start", &cmdmode,
  			 N_("start the bisect session"), BISECT_START),
-+		OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
-+			 N_("start the bisection if it has not yet been started"), BISECT_AUTOSTART),
++		OPT_CMDMODE(0, "bisect-next", &cmdmode,
++			 N_("find the next bisection commit"), BISECT_NEXT),
++		OPT_CMDMODE(0, "bisect-auto-next", &cmdmode,
++			 N_("verify the next bisection state then checkout the next bisection commit"), BISECT_AUTO_NEXT),
+ 		OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
+ 			 N_("start the bisection if it has not yet been started"), BISECT_AUTOSTART),
  		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_BOOL(0, "no-log", &nolog,
-@@ -742,6 +778,12 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+@@ -778,6 +943,18 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  		set_terms(&terms, "bad", "good");
  		res = bisect_start(&terms, no_checkout, argv, argc);
  		break;
-+	case BISECT_AUTOSTART:
++	case BISECT_NEXT:
 +		if (argc)
-+			return error(_("--bisect-autostart does not accept arguments"));
-+		set_terms(&terms, "bad", "good");
-+		res = bisect_autostart(&terms);
++			return error(_("--bisect-next requires 0 arguments"));
++		get_terms(&terms);
++		res = bisect_next(&terms, prefix);
 +		break;
- 	default:
- 		BUG("unknown subcommand %d", (int)cmdmode);
- 	}
++	case BISECT_AUTO_NEXT:
++		if (argc)
++			return error(_("--bisect-auto-next requires 0 arguments"));
++		get_terms(&terms);
++		res = bisect_auto_next(&terms, prefix);
++		break;
+ 	case BISECT_AUTOSTART:
+ 		if (argc)
+ 			return error(_("--bisect-autostart does not accept arguments"));
+@@ -793,7 +970,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	 * Handle early success
+ 	 * From check_merge_bases > check_good_are_ancestors_of_bad > bisect_next_all
+ 	 */
+-	if (res == BISECT_INTERNAL_SUCCESS_MERGE_BASE)
++	if ((res == BISECT_INTERNAL_SUCCESS_MERGE_BASE) || (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND))
+ 		res = BISECT_OK;
+ 
+ 	return -res;
 diff --git a/git-bisect.sh b/git-bisect.sh
-index 08a6ed57dd..d7a6990c29 100755
+index d7a6990c29..809be25424 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
-@@ -49,27 +49,6 @@ bisect_head()
- 	fi
- }
+@@ -65,8 +65,7 @@ bisect_start() {
+ 	#
+ 	# Check if we can proceed to the next bisect state.
+ 	#
+-	get_terms
+-	bisect_auto_next
++	git bisect--helper --bisect-auto-next || exit
  
--bisect_autostart() {
--	test -s "$GIT_DIR/BISECT_START" || {
--		gettextln "You need to start by \"git bisect start\"" >&2
--		if test -t 0
--		then
--			# TRANSLATORS: Make sure to include [Y] and [n] in your
--			# translation. The program will only accept English input
--			# at this point.
--			gettext "Do you want me to do it for you [Y/n]? " >&2
--			read yesno
--			case "$yesno" in
--			[Nn]*)
--				exit ;;
--			esac
--			bisect_start
--		else
--			exit 1
--		fi
--	}
+ 	trap '-' 0
+ }
+@@ -119,45 +118,7 @@ bisect_state() {
+ 	*)
+ 		usage ;;
+ 	esac
+-	bisect_auto_next
 -}
 -
- bisect_start() {
- 	git bisect--helper --bisect-start $@ || exit
- 
-@@ -108,7 +87,7 @@ bisect_skip() {
+-bisect_auto_next() {
+-	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD && bisect_next || :
+-}
+-
+-bisect_next() {
+-	case "$#" in 0) ;; *) usage ;; esac
+-	git bisect--helper --bisect-autostart
+-	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD $TERM_GOOD|| exit
+-
+-	# Perform all bisection computation, display and checkout
+-	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
+-	res=$?
+-
+-	# Check if we should exit because bisection is finished
+-	if test $res -eq 10
+-	then
+-		bad_rev=$(git show-ref --hash --verify refs/bisect/$TERM_BAD)
+-		bad_commit=$(git show-branch $bad_rev)
+-		echo "# first $TERM_BAD commit: $bad_commit" >>"$GIT_DIR/BISECT_LOG"
+-		exit 0
+-	elif test $res -eq 2
+-	then
+-		echo "# only skipped commits left to test" >>"$GIT_DIR/BISECT_LOG"
+-		good_revs=$(git for-each-ref --format="%(objectname)" "refs/bisect/$TERM_GOOD-*")
+-		for skipped in $(git rev-list refs/bisect/$TERM_BAD --not $good_revs)
+-		do
+-			skipped_commit=$(git show-branch $skipped)
+-			echo "# possible first $TERM_BAD commit: $skipped_commit" >>"$GIT_DIR/BISECT_LOG"
+-		done
+-		exit $res
+-	fi
+-
+-	# Check for an error in the bisection process
+-	test $res -ne 0 && exit $res
+-
+-	return 0
++	git bisect--helper --bisect-auto-next
  }
  
- bisect_state() {
--	bisect_autostart
-+	git bisect--helper --bisect-autostart
- 	state=$1
- 	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
- 	get_terms
-@@ -149,7 +128,7 @@ bisect_auto_next() {
+ bisect_visualize() {
+@@ -213,7 +174,7 @@ bisect_replay () {
+ 		esac
+ 	done <"$file"
+ 	IFS="$oIFS"
+-	bisect_auto_next
++	git bisect--helper --bisect-auto-next
+ }
  
- bisect_next() {
- 	case "$#" in 0) ;; *) usage ;; esac
--	bisect_autostart
-+	git bisect--helper --bisect-autostart
- 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD $TERM_GOOD|| exit
- 
- 	# Perform all bisection computation, display and checkout
+ bisect_run () {
+@@ -310,7 +271,7 @@ case "$#" in
+ 		bisect_skip "$@" ;;
+ 	next)
+ 		# Not sure we want "next" at the UI level anymore.
+-		bisect_next "$@" ;;
++		git bisect--helper --bisect-next "$@" || exit ;;
+ 	visualize|view)
+ 		bisect_visualize "$@" ;;
+ 	reset)
 -- 
 2.25.0
 
