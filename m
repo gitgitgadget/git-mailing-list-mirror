@@ -2,100 +2,115 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0
-	tests=HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA6E0C433DF
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A193C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:46:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4A262067D
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:46:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E863B2067D
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 09:46:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="FRNb2RJW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729718AbgGAJqY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 05:46:24 -0400
-Received: from smtp01.domein-it.com ([92.48.232.134]:59184 "EHLO
-        smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729236AbgGAJqX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 05:46:23 -0400
-Received: by smtp01.domein-it.com (Postfix, from userid 1000)
-        id 1038D8086D5B; Wed,  1 Jul 2020 11:37:35 +0200 (CEST)
-Received: from ferret.domein-it.nl (unknown [92.48.232.148])
-        by smtp01.domein-it.com (Postfix) with ESMTP id 26AE48086D5E
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 11:37:07 +0200 (CEST)
-Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:48484 helo=ben.dynamic.ziggo.nl)
-        by ferret.domein-it.nl with esmtpa (Exim 4.93)
-        (envelope-from <ben@wijen.net>)
-        id 1jqZAt-00066q-2U; Wed, 01 Jul 2020 11:37:03 +0200
-From:   Ben Wijen <ben@wijen.net>
-To:     git@vger.kernel.org
-Cc:     Ben Wijen <ben@wijen.net>
-Subject: [PATCH 2/2] git clone: don't clone into non-empty directory
-Date:   Wed,  1 Jul 2020 11:36:53 +0200
-Message-Id: <20200701093653.3706-3-ben@wijen.net>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20200701093653.3706-1-ben@wijen.net>
-References: <20200701093653.3706-1-ben@wijen.net>
+        id S1729358AbgGAJqz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 05:46:55 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55667 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729719AbgGAJqy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 05:46:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1593596804;
+        bh=3Oj4+M34tG3RZaHxOgQgFaioLhu70sppqxlAqHw4zAU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FRNb2RJWFmfmOcl9yGPSF8iz6p/RPYzE/odxWFFIIidbNFNe4bi2/UrXUJyXcORDk
+         I9aDU8jQKJFyk4wHvClx7yGkVWpT5MMxYGKj9pEg6iqLUU4LhimvEVKHJ8uKnMxsk9
+         jBcQzJAlGN9v7rhpMQgRxam36vP5ubcsHwi2DdFk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.116.87] ([213.196.213.153]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlf4c-1j9I5x3FZ4-00igvP; Wed, 01
+ Jul 2020 11:46:43 +0200
+Date:   Wed, 1 Jul 2020 11:46:42 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Srinidhi Kaushik <shrinidhi.kaushik@gmail.com>
+Subject: Re: [PATCH v4 1/2] diff-files --raw: show correct post-image of
+ intent-to-add files
+In-Reply-To: <xmqqmu4r3to1.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2007011144410.56@tvgsbejvaqbjf.bet>
+References: <pull.654.v3.git.1593010066.gitgitgadget@gmail.com> <pull.654.v4.git.1593107621.gitgitgadget@gmail.com> <69256ab9107c3dba0dc007b69cc0ce98a9b91f9a.1593107621.git.gitgitgadget@gmail.com> <xmqqmu4r3to1.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
-X-Domein-IT-MailScanner-ID: 1jqZAt-00066q-2U
-X-Domein-IT-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
-X-Domein-IT-MailScanner-SpamCheck: 
-X-Domein-IT-MailScanner-From: ben@wijen.net
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:2uPTG6u0xUpdNEF5IXcQS+macA6o6SGld/7YQEctNbKXD3f4L/I
+ eDbZC6yjzscMW7ZSnLnvYxynWxCOnmPSHr4XNp77QKTMfhIkN6geQb9XpF8YBWEu9qhHkOe
+ 0E3vZlSE0YLKV0CHupYP2Mn/Gp9qI/dy68l9nnIlljQcl1CuxcV26a8z9o7tCFZ4rp82l1h
+ wGoBo4tJvM9SYJB7ukAsQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KTqQcQpitPg=:w2RCElebASNprSJqnnnf22
+ NJy6XHgHqC1bK1165bcFYmv6opRmlXXXwyktyP2wssYXQvUyXXF6QBocD70gRFCvlxcRyqA3W
+ zdS/eNTA8KcCpK20FyiYCwXRdLN6vwgcYAKinn59zpXOGncgwRppA44sqXU8cFPfV8I9NEsay
+ 4/crXve0eSjqXULQ2LYWZ147gGHzXajOhja2fq3tSLCw5HD0gZxYS4wOBWESZ/TO5NbMOf5nX
+ xfn1a7vGggibYbWPF1lIUmNVJ7dcFWRQd4DyEGEGBB8jaS+SIdIR03sHlhUAXQy5scoeYh2E7
+ wTFpT/imCFKlsQ42JblGmCLD3a9NHrDPo7ukCy8mpj4zy2+SInqrIgh+Iu8afRaS6q7Nv1jqA
+ sAR5ADv13nkGL0q4Kx6AJRx3AP5yAxCFK0VZlamjj7MDzzyTGM8ZiCDm9ANNOUsiu31HwTNcR
+ um25nyWw5/il1D/u0P+lPgr5klCOX1quEFoPWTrhMw3jEeYY8beHkadVa9lDirIg5DSjU6nyT
+ AyWjfRkYyjHXQYZSuVeplOyRX32Ty5RHm/HmWpTsaHX4I+1uFxAFmQ/c+EB8efiK41OZXIYOt
+ 5arxyPaS7QsgeJxrj7HulJD0caTV5vXtO4Vp/gOOfKmNi0G9zcejZOARKeTQmvrwWUEl9iJr+
+ Ml1CutqlHXjc56Vcgfr68iBepXE7o7Y2SGPHelEQ5ec2ULRBopbFvJ3g50jRjvKwfXAX463qn
+ d6YRvBuTzEkWQ8khO0fsMCljbDuD3PFyD99z4lIT1sRw1RjGWUJBj+3H1Pl1NdsNry/OF9smb
+ HeXW3DGHDHSyDliQFBSuK1y1ZDX4alyj14x/9azPEwxnFO0AhdAH4ZHSDE0x6XSlczftlZrCn
+ YXuojV7FVqVNJs+ZXQc/gB2qyp1HLLq9rHSuhNuBvvhfUzJQaH6jiAMS7o0Nj+HyOknljf7aN
+ Ft5UgADCIdwp5ONlUzX/h+1U4faf1UeIGWJXLVEffEPY0YQA/LPr2XG8Ca76Nk9v9pwYq/obT
+ wBfBCc0S5MCP0toFAemn1osvQalO0SK9gWG+cAt0RT+327EwcZfolDThcnkzvQx7up47RLHWr
+ h8b1ZvQk4YfXOaK+jXpkwhLvZBWOncHVjBTdR5Y1jaUsngTd9qsZX7jF/B8YIIddcp+KoTcRV
+ xP59Y7y3FczHfumEOfHOwBbvxQxyc6pFdIVp+dnd2Z3TOlTo2T7BpZYvkvMrF2pypwPAZ9XqY
+ C3Y0mW6JiZp5vhmgf
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using git clone with --separate-git-dir realgitdir and
-realgitdir already exists, it's content is destroyed.
+Hi Junio,
 
-Make sure we don't clone into an existing non-empty directory.
 
-Signed-off-by: Ben Wijen <ben@wijen.net>
----
- builtin/clone.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+On Thu, 25 Jun 2020, Junio C Hamano wrote:
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index bef70745c0..54a91acf06 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -946,7 +946,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	int is_bundle = 0, is_local;
- 	const char *repo_name, *repo, *work_tree, *git_dir;
- 	char *path, *dir, *display_repo = NULL;
--	int dest_exists;
-+	int dest_exists, real_dest_exists = 0;
- 	const struct ref *refs, *remote_head;
- 	const struct ref *remote_head_points_at;
- 	const struct ref *our_head_points_at;
-@@ -1021,6 +1021,14 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		die(_("destination path '%s' already exists and is not "
- 			"an empty directory."), dir);
- 
-+	if (real_git_dir) {
-+		real_dest_exists = path_exists(real_git_dir);
-+		if (real_dest_exists && !is_empty_dir(real_git_dir))
-+			die(_("destination path '%s' already exists and is not "
-+				"an empty directory."), real_git_dir);
-+	}
-+
-+
- 	strbuf_addf(&reflog_msg, "clone: from %s",
- 		    display_repo ? display_repo : repo);
- 	free(display_repo);
-@@ -1057,7 +1065,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (real_git_dir) {
--		if (path_exists(real_git_dir))
-+		if (real_dest_exists)
- 			junk_git_dir_flags |= REMOVE_DIR_KEEP_TOPLEVEL;
- 		junk_git_dir = real_git_dir;
- 	} else {
--- 
-2.27.0
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > diff --git a/diff-lib.c b/diff-lib.c
+> > index 61812f48c2..25fd2dee19 100644
+> > --- a/diff-lib.c
+> > +++ b/diff-lib.c
+> > @@ -220,8 +220,7 @@ int run_diff_files(struct rev_info *revs, unsigned=
+ int option)
+> >  			} else if (revs->diffopt.ita_invisible_in_index &&
+> >  				   ce_intent_to_add(ce)) {
+> >  				diff_addremove(&revs->diffopt, '+', ce->ce_mode,
+> > -					       the_hash_algo->empty_tree, 0,
+> > -					       ce->name, 0);
+> > +					       &null_oid, 0, ce->name, 0);
+>
+> This (even if the preimage were correctly using empty_blob) is *so*
+> simple a change that it is very surprising that the new test in
+> [2/2] passes without any other code change.
+>
+> It means that difftool was written correctly in the first place,
+> right?
 
+Well, it means that difftool does not even consume the OID. Sure, it
+parses it, but then it ignores it. All it _really_ is interested in is
+that status flag (`A`), so technically, my fix in 1/2 is not even needed
+after `sk/diff-files-show-i-t-a-as-new` to let 2/2 pass.
+
+Ciao,
+Dscho
+
+>
+> Nicely done.
+>
