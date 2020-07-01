@@ -1,69 +1,68 @@
-Return-Path: <SRS0=HTZL=AL=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C11C433DF
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 23:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A13BC433DF
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 00:03:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D56FC2073E
-	for <git@archiver.kernel.org>; Tue, 30 Jun 2020 23:58:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A20A20780
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 00:03:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LaplAmWy"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="STW8gOFW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726024AbgF3X6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Jun 2020 19:58:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62851 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbgF3X6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jun 2020 19:58:43 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 373377EECA;
-        Tue, 30 Jun 2020 19:58:38 -0400 (EDT)
+        id S1726024AbgGAADm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Jun 2020 20:03:42 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58343 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725930AbgGAADm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jun 2020 20:03:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8FF6FEC347;
+        Tue, 30 Jun 2020 20:03:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lDBHDmS9UQk6U/5PvtDSfC/xst0=; b=LaplAm
-        Wy+oIODwm4GUUj0sDmsbx0KULFtZ+EBGe2xkklHISA6uIfpkJZ5H0Xc95JNCaVjw
-        gmsIoDq67mzFc0eJ26swBGh/zBNrNCJJwHmpFUnxRKVPqJgCAZlIh3MjrS4KsDpp
-        2uJ8NEX+XThivYyn0jcfB4kGfDBbLJKuJZPfc=
+        :content-type; s=sasl; bh=5cikigrZHzkix/2baqUkx17Ci5A=; b=STW8gO
+        FWtuj980iSeqTf4D5nRYbne+tq53ibjOtaTFkWlqniCggBlBhPT6VsR2c/IXbSbQ
+        nisdze0Sfa/bt6pxnRcVaX4BOuyRD1GH1xxQTtsw6/GBNoimo1Q4n2zf+WBSkj9N
+        vdjaf7xFvkelj/xfgbyZ9lsDeIEJ+YQJ9qiSg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BRtDPPt9eNaN2y/g5ubB8R4JRE1yxiV/
-        2rYqhQosk5dWEQ3SfZXGUUGtLOIFq29MS4S9v+a4RoqNDWv01larFd16GmQKofou
-        JwgsMiXtAFyJ802j+lLAlBpn78z5GY9hhclZ8RU9yuvz260OpxCimb/0W1hR2v1A
-        NGEF9GfmjbM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F6F47EEC9;
-        Tue, 30 Jun 2020 19:58:38 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=SXUoHtcx8XL07kwyG9VUkPdQLp57jp9h
+        tBE8uebyivLKxa5KPfoZCD0qvYQ5+61Jor7p9PYgaXLhrNY+GE9+9VewyvO2FEuM
+        i8Vz8OxuoTkXURmK+uIp84TfLb7X/tduVx00fyg3GLDtA1iDt37BX1hi9QktPGQx
+        Qx6rXA4Wi7w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 87D77EC346;
+        Tue, 30 Jun 2020 20:03:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD3527EEC8;
-        Tue, 30 Jun 2020 19:58:37 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CB261EC345;
+        Tue, 30 Jun 2020 20:03:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Han-Wen Nienhuys <hanwen@google.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v19 03/20] checkout: add '\n' to reflog message
+Subject: Re: [PATCH v19 00/20] Reftable support git-core
 References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
         <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
-        <125695ce92218ca2ddb9868880db542acb0d2a79.1593457018.git.gitgitgadget@gmail.com>
-        <xmqqmu4lfxet.fsf@gitster.c.googlers.com>
-        <CAFQ2z_MuD0e+a_r0_-GMpjr1mV==hdh2=0gyVrT7f8tDbXC6xQ@mail.gmail.com>
-Date:   Tue, 30 Jun 2020 16:58:37 -0700
-In-Reply-To: <CAFQ2z_MuD0e+a_r0_-GMpjr1mV==hdh2=0gyVrT7f8tDbXC6xQ@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Tue, 30 Jun 2020 10:30:23 +0200")
-Message-ID: <xmqqftacds2a.fsf@gitster.c.googlers.com>
+        <xmqqimf9fppn.fsf@gitster.c.googlers.com>
+        <CAFQ2z_MbiTEzztU9a8beMAQFn1-ozBUwKD1JyhXHUnoTTto0TA@mail.gmail.com>
+Date:   Tue, 30 Jun 2020 17:03:36 -0700
+In-Reply-To: <CAFQ2z_MbiTEzztU9a8beMAQFn1-ozBUwKD1JyhXHUnoTTto0TA@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Tue, 30 Jun 2020 11:28:21 +0200")
+Message-ID: <xmqqbll0drtz.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9D6C0BB6-BB2D-11EA-BE33-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 504EE4A6-BB2E-11EA-84FF-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,83 +70,44 @@ X-Mailing-List: git@vger.kernel.org
 
 Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> Most places that write a reflog message use a message that ends with '\n'.
+> On Tue, Jun 30, 2020 at 12:54 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>> > base-commit: b9a2d1a0207fb9ded3fa524f54db3bc322a12cc4
+>>
+>> This is based on 'next', which usually is a sure way for a topic to
+>> stay forever out of 'next', but we have impactful dependence only on
+>> two topics, I think, and a good news is that both of them are in
+>> pretty good shape.  I think Brian's part 2 of SHA-256 work should be
+>> on the 'master' branch soon, and Dscho's "customizable default
+>> branch" is also ready---it just would, like all other topics, want
+>> to spend at least one week on 'next' to be safe.  And after that,
+>> this topic can be directly on 'master' (there is another trivial
+>> conflict around bisect--helper, but I am not worried about it),
+>> which looks quite good.
 >
-> Some places (the one mentioned here) do not append a '\n'.
+> ok. For the next time, I should keep basing myself on master, even if
+> I know there are conflicts?
 
-Just to make sure I am following, I see
+Right now we know there won't be and that is why I said the above.
+If your next round would change the code drastically, or somebody
+sends changes that deliberately conflicts with what you are doing
+to sabotage you, the situation would become different.
 
-	if (update_ref("initial pull", "HEAD", merge_head, ...
+> Do you have an opinion on
+> https://public-inbox.org/git/pull.665.git.1592580071.gitgitgadget@gmail.com/
+> ?
+>
+> There is some overlap with in sequencer.c, and Phillip's approach is
+> likely more principled, so I'd like to base reftable on that.
 
-in bultin/pull.c; this is supposed to be written with "\n" under the
-new world order?
-
-As reflog messages are supposed to be a single liner (due to the
-nature of the original storage format), I have a feeling that it is
-cumbersome to the programmers to requre "\n" at the end.  It would
-not add much value to the readability of the resulting code, either.
-
-If the places that have hardcoded messages like the above have to be
-written like so:
-
-	if (update_ref("initial pull\n", "HEAD", merge_head, ...
-
-it makes the code worse.
-
-Let's see if I can come up with a coherent "rule" that we can follow
-to improve the current situation that is an undisciplined mixture as
-you found out.
-
-    ... goes and looks the current code ...
-
-So, what happens is that update->msg in each ref transaction (in
-refs.c::ref_transaction_add_update()) gets verbatim copy of what the
-caller gives the refs API, but when it is written out as an reflog
-entry, the message is cleansed by calling refs.c::copy_reflog_msg()
-that squashes a run of whitespaces (not just SP but including LF and
-HT) into a single SP and then trims whitespaces at the end.  
-
-Then to the result, a LF is unconditionally added.
-
-I would consider the massaging of the application-supplied message
-done in copy_reflog_msg() as normalization, which turns possibly
-invalid data (like a message that has LF anywhere in it) into an
-acceptable form.  Which defines the kosher form of a reflog message
-as not having any LF (or excess SP) in it, and the terminating LF is
-not part of the message.  From that point of view, if we were to do
-something, I would rather standardize on not having the final (and
-only) LF.
-
-But some callers that prepare a message in a string buffer may find
-it easier not having to strip the trailing LF, or even depend on the
-fact that they can feed a string split into multiple lines and the
-result becomes a single line.  So I do not see a point in "fixing"
-the existing callers that gives an extra LF at the end or other
-not-so-kosher form of data---these will be normalized by calling
-copy_reflog_msg() anyway.  
-
-If they are easy to fix, like sending a constant string with LF at
-the end, we would want to fix them to improve the readability of the
-resulting code, though.  If the update_ref() call in builtin/pull.c
-were sending "initial pull\n" as its first parameter, it would be
-worth fixing by removing the LF, as the result would be easier to
-read and it is not too much work.  On the other hand, if the message
-that eventually becomes a reflog entry comes from outside and if the
-existing code relies on the sanitizing done by copy_reflog_msg(), I
-do not see a point in carefully removing the LF at the end on the
-caller's side, either.
-
-> I initially thought we could or should fix this across git-core, but I
-> think it will be a lot of work to find all occurrences.
-
-I think we are on the same page, even if the definition of which is
-correct might be different between us.  As long as all the refs
-backend does the same sanitizing (which is probably easy---just call
-copy_reflog_msg() from them, or perhaps we may want to move the call
-to where update->msg are queued for each step in a transaction,
-which would relieve individual backends from having to worry about
-this issue at all), they would all behave the same for the same
-reflog data.
+I assumed that these were offered to you as possible improvements to
+be folded into your series, so I didn't read them very carefully and
+I didn't queue them myself.  I expected that I would see them,
+possibly modified to fit the context better, as part of your series
+sent from you, perhaps to become a part of early clean-up portion of
+your topic.
 
 Thanks.
 
