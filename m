@@ -2,120 +2,59 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94331C433E0
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 17:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EFF3C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 17:41:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7830F20771
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 17:31:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1140B2078A
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 17:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732016AbgGARbM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 13:31:12 -0400
-Received: from mx2.suse.de ([195.135.220.15]:35982 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726432AbgGARbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 13:31:12 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 01B6EAD1B;
-        Wed,  1 Jul 2020 17:31:10 +0000 (UTC)
-Date:   Wed, 1 Jul 2020 19:31:08 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        James Ramsay <james@jramsay.com.au>,
-        Bryan Turner <bturner@atlassian.com>
-Subject: Re: Consensus on a new default branch name
-Message-ID: <20200701173108.GD21462@kitsune.suse.cz>
-References: <20200615205722.GG71506@syl.local>
- <20200615212154.GA79696@syl.local>
- <20200616143107.GL666057@coredump.intra.peff.net>
- <20200617180617.GN21462@kitsune.suse.cz>
+        id S1732691AbgGARlD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 13:41:03 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:53561 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731491AbgGARlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 13:41:03 -0400
+Received: by mail-wm1-f68.google.com with SMTP id j18so23298757wmi.3
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 10:41:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2fv1jcXCPgLgSUbByoUBBDSRYTTS0UVfUVhROKQaang=;
+        b=nSlc0IjPd3wcXcO8M69tNWy53ayfYl7zlxlrV6YJQXUO7NiZuHx6nX5Dz3szqXzhmw
+         KYbWNAT9BAdc3rEizcHfN+IQwNIri9J1rMqqO+TzaZ9oyZekDL7jeBpnwHsKHolSd36Q
+         yGJavGrojg5E59988ydEqdqg2Log80NFEaKOmp0WvOx8ybXi53oAhFkQwQYd3EDa5uWj
+         IPbYyjBLu5fwvx2rrl0xsZszehcbUx0CRYyTstjWYz5fbNb+ed9O/aiomYGhFFqyhTPv
+         6yH6hZ0bGL+hZzWkpr8Z6evXNDruIvq2LN/MG371Dqes8t9NBtdgs2NL6mIGViyD9PkW
+         VjRA==
+X-Gm-Message-State: AOAM532OMtjSQr6gb4j387ky4YZv/mFyshYiHejK3yhzq1qR8sPsxwgg
+        7l66HGWVPPfzFLe2KBjSUZqTU3OCIjgGJhJbcxk=
+X-Google-Smtp-Source: ABdhPJzxONsefyPce8hW/bX5GEpprVhshUPAbL/tQ5AbQ2C+5HS9cpAruGWgMMskM/DEcM+k+0lF2wDxgs9wbObHA8M=
+X-Received: by 2002:a7b:c406:: with SMTP id k6mr26696901wmi.130.1593625261133;
+ Wed, 01 Jul 2020 10:41:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200617180617.GN21462@kitsune.suse.cz>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200701093653.3706-1-ben@wijen.net> <20200701093653.3706-2-ben@wijen.net>
+ <CAPig+cT+cXuM3Asu6+Z25pGV2uRm6K1iAeYVhic9kqk1mS84-g@mail.gmail.com>
+In-Reply-To: <CAPig+cT+cXuM3Asu6+Z25pGV2uRm6K1iAeYVhic9kqk1mS84-g@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 1 Jul 2020 13:40:49 -0400
+Message-ID: <CAPig+cRj6p4tdDhQOeoXpoqp+Wb94rKaVim-Yddj_Gz13phQpg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] git clone: check for non-empty directory
+To:     Ben Wijen <ben@wijen.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 17, 2020 at 08:06:17PM +0200, Michal Suchánek wrote:
-> On Tue, Jun 16, 2020 at 10:31:07AM -0400, Jeff King wrote:
-> > On Mon, Jun 15, 2020 at 03:21:54PM -0600, Taylor Blau wrote:
-> > 
-> > > > Concurrently with this, GitHub, GitLab [3], and Bitbucket are working together
-> > > > in order to make a similar change across our respective products. Because of
-> > > > this, we are met with a bit of a challenge: we would like to make these changes
-> > > > before the next version(s) (and so need to settle on a new default branch name),
-> > > > but we also want to avoid a situation where the community is fractured (eg.,
-> > > > GitHub uses 'main', Git uses 'default', etc).
-> > > >
-> > > > A related question is whether or not we plan to change the default value of
-> > > > 'core.defaultBranchName' at all (once Johannes' patches land, of course). That
-> > > > seems to be the intent in [4], but forming consensus around this would be good,
-> > > > too.
-> > 
-> > My biggest concern here was trying to understand what could break.
-> > Having read the patches from Johannes and thought about it a lot, I have
-> > a pretty good handle on where Git itself cares about the name. And I
-> > feel pretty confident that we can make the change in a way that won't
-> > cause problems there (and in fact, I think some of the code will be
-> > made more robust by relying on HEAD more appropriately).
-> > 
-> > There's a more open question of what _else_ will break in the ecosystem.
-> > I.e., what other tools and scripts did people write "master" in that
-> > we'll never even see, and they will eventually need to update. And there
-> > I think we need to be respectful of our users and their time. Obviously
-> > stopping at configurability is the least risky thing there. But it's
-> > clear that a lot of projects are interested in changing their names, so
-> > tools will have to deal with a world where various repos will have
-> > different HEAD names.
-> > 
-> > By moving the default, we do push some repos into a name change that
-> > might otherwise have remained oblivious (e.g., if your org has a custom
-> > script that nobody else will see, and nobody in your org has an interest
-> > in changing their repo HEADs, you might never need to update your
-> > scripts). We can help with that by:
-> > 
-> >   - clearly communicating the timetable for the change, and giving lots
-> >     of opportunity for people to consider whether their scripts might
-> >     need updating (again, I think in many cases these updates actually
-> >     make the tools more robust)
-> > 
-> >   - giving an escape hatch to restore the old behavior, which Johannes'
-> >     patches certainly do
-> > 
-> > Both of which I think everybody is on board with. I won't claim that
-> > changing the default won't cause _any_ disruption, but it seems to me to
-> > be on par with other changes we've made (and is being handled similarly
-> > carefully). So I think I'm in favor.
-> > 
-> > > > My interpretation thus far is that 'main' is the planned replacement for
-> > > > 'master'. Consensus seems to have formed around this name [5], but if that's
-> > > > incorrect--or there are yet-unvoiced opinions that you would like to share--now
-> > > > is the time to discuss further.
-> > 
-> > My opinion is that "main" is the best suggestion I've heard.
-> 
-> See also
-> https://lore.kernel.org/git/20200616210701.22924-1-zeevriend@gmail.com/
+On Wed, Jul 1, 2020 at 12:00 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> [...] For instance, we might do this:
+>     rm -rf dst &&
+>     echo foo=bar >realgitdir/config &&
 
-So you completely ignore this input.
-
-That kind of gives confirmation to the naysayers that point out this is
-not really about inclusivity but about US-internal politics.
-
-If that is so be more honest and clearly say that by being based in the
-US you must give way to certain activists or be potentailly subject to
-terrorism from the same or more radical colleagues of the activists that
-request the change.
-
-Thanks
-
-Michal
+I meant to use '>>' here, not '>'.
