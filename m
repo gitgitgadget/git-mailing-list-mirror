@@ -7,65 +7,64 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE704C433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA9D6C433E2
 	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:27:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A270C206BE
+	by mail.kernel.org (Postfix) with ESMTP id C93B720809
 	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:27:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aramdzxZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j3CP1p7P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731097AbgGAN1m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 09:27:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41144 "EHLO
+        id S1731100AbgGAN1n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 09:27:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731088AbgGAN1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 09:27:38 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E6EC08C5C1
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:27:37 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id w3so10789845wmi.4
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:27:37 -0700 (PDT)
+        with ESMTP id S1731084AbgGAN1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 09:27:39 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D14FC08C5DC
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:27:38 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id z13so23834060wrw.5
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=fJHYFO+7x6kA0BJFGtB61JVFGUyOmqi3FbQlHe8Geqs=;
-        b=aramdzxZyX2BeWZXh8xMxTOS7E73KXT4pyPYrIVRC+RFAesgWrAem1pb48ZLlFlIWN
-         WU67OUD0/PNnJPQkjv8k7VUhFBM/6Aynkbr351hR/z7poi+rA2US61jiHwdG8Ol8Filj
-         /euDXFRnRcTnKL7liEbGQ/6PGg5svX6rkGHRokpChhN12lytpR5m4yTIdmVXB3P9OkeF
-         1rEmvU8UppqkS6qwFb4YOg7wzVHQ4kohBqLeO198yG4deGmLDI2VthZKDDtusSTkSCsE
-         BIaSSxK8s5XAlW/Xe6qfPFLOUmweBzlyBfq4wbCLUMJBxF+q6FgpRFggl714Ey9jS/nG
-         feSA==
+        bh=qC2zQUw85XBuWBnNo0E+B0/zAE11gJ3LrNgTrM3pySo=;
+        b=j3CP1p7PMR6ws3njDMdMdyaFza4kZhkf4LKr3cW3OHlHdeCj8o+wS2LniG9RXgEvC0
+         sjuqYnFTGkYFWMPGIR9VdmRY4wx8Elua4fLCRJ4nx3oj2XT0spCmQsBxvYYZflmE+xuS
+         BW0yDb+lycS1aWcDu6xrYYQXc3f41jpJJoMcNlTGXalqzSKaPA1llgLkq5CrNoOc5Ejx
+         oWqSl5/RgUGy2MQZ/c91oeSPgVSRLx+9hkdRweyXe8wfQ5fkfkjBwElJimoO4QEKlJnQ
+         /6Qcb5E8a8e1eZFq36M3erVNTmOMnfK0N2IuHttqzVzDJfXvtJpi3jn8isdSOM6HodGs
+         ayWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=fJHYFO+7x6kA0BJFGtB61JVFGUyOmqi3FbQlHe8Geqs=;
-        b=uSlwtIqbdM8EQdF/aMe/TDbKpo21/jI92e6kk9BJe0IVEz0ZPmR2cEA6srDHFGo+Me
-         4HchVPHwpgyPrNm4Qt5PPrW3w3RlYiLmmoAdQ12NVDLDtHcRGZDWIWOt1d+LzpIlcGoT
-         ey5ZQFEyUFQ7kYidEJBTzkrGeCwEFljxqHv2Yv6RBg8GtjWzGJe61npT0WO9VOdfwDLu
-         bvzfr4BOMPmVd6UW3Zq+d2lK/O3DRC7zCoQnQj84eOJ5wTwW1zEG/m6uK3NwhMCOPSmI
-         KKuRXJ4ivchVMOh4NwFUTKduIv2fOsro3Gk3zZuxQIVsu0gjHqAw+ZtIQqdOtiI5onFv
-         VyGw==
-X-Gm-Message-State: AOAM533aQ4trtFacRL5WF0GTa28YjHbSd2uVLfmLNvlM6tDGeqD+3VQ6
-        AQjdqHwtngLfRnQeWykdIe0/F3FE
-X-Google-Smtp-Source: ABdhPJyQk2NSifm3zE5lJKiGpDN49xq4YgqybFSDksPrXlF7DhHdYLH1W8IytgTZkYbVGHVP4/yiFQ==
-X-Received: by 2002:a1c:7d56:: with SMTP id y83mr25784722wmc.154.1593610056161;
+        bh=qC2zQUw85XBuWBnNo0E+B0/zAE11gJ3LrNgTrM3pySo=;
+        b=OftNZYgDFm2vPBchBZKY9gzCbBG5MLeRQZMf3wvzidLa6nZ3oBvO0AJHhzSgCY+qbx
+         23fhyBXwfXGB5lkLXrJ5Z+IPTyHUhQ2LGd/xB6LZGR5v1YeVh/diV4/Qigeu/YiTeEB4
+         mLqDVPLGsJ5V372TeB7O/ODtO+wUjRNKt17NkMES4qrbT/vByDXHj79hHUIlWdPd8acw
+         MsXvMAmt926xc4rSSk62Jfkyq0Gl0DrN2f02wcJFzrXg0gw74DqhuUtDj2RUzE2FbSVS
+         UbgueVt++YEctKf/rHZtBgTyLr0+6OQTCb6aNcTsvs9Q7YO6zY2jHtD3qrRS1m5Gu3kV
+         vfPQ==
+X-Gm-Message-State: AOAM530bdPs68Ip0W5VC3mRgbmbr1aiFbwM+NYE9sWcBnKVqBQi2HYkt
+        QFeX1nFq7npDm3wnXxuJ2NYiMljk
+X-Google-Smtp-Source: ABdhPJwDfxytnLJJL5jU4bRLA6fuA2ix/xCLybJbYvIxXL8VVy4pvSzMcyVaHR0HMNOV1HyrCeFSAQ==
+X-Received: by 2002:adf:e6cb:: with SMTP id y11mr26052329wrm.282.1593610056940;
         Wed, 01 Jul 2020 06:27:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w7sm7431330wmc.32.2020.07.01.06.27.35
+        by smtp.gmail.com with ESMTPSA id u10sm7080199wml.29.2020.07.01.06.27.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2020 06:27:35 -0700 (PDT)
-Message-Id: <c07992147354258c3ea76bba4d85f430ddda5632.1593610050.git.gitgitgadget@gmail.com>
+        Wed, 01 Jul 2020 06:27:36 -0700 (PDT)
+Message-Id: <5ed0ce20a4a82d09ec2e9b82e12b0315dc6fd7d4.1593610050.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.659.v4.git.1593610050.gitgitgadget@gmail.com>
 References: <pull.659.v3.git.1593174636.gitgitgadget@gmail.com>
         <pull.659.v4.git.1593610050.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Wed, 01 Jul 2020 13:27:25 +0000
-Subject: [PATCH v4 05/10] commit-graph: unify the signatures of all
- write_graph_chunk_*() functions
+Date:   Wed, 01 Jul 2020 13:27:26 +0000
+Subject: [PATCH v4 06/10] commit-graph: simplify chunk writes into loop
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,156 +80,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-Update the write_graph_chunk_*() helper functions to have the same
-signature:
+In write_commit_graph_file() we now have one block of code filling the
+array of 'struct chunk_info' with the IDs and sizes of chunks to be
+written, and an other block of code calling the functions responsible
+for writing individual chunks.  In case of optional chunks like Extra
+Edge List an Base Graphs List there is also a condition checking
+whether that chunk is necessary/desired, and that same condition is
+repeated in both blocks of code. Other, newer chunks have similar
+optional conditions.
 
-  - Return an int error code from all these functions.
-    write_graph_chunk_base() already has an int error code, now the
-    others will have one, too, but since they don't indicate any
-    error, they will always return 0.
-
-  - Drop the hash size parameter of write_graph_chunk_oids() and
-    write_graph_chunk_data(); its value can be read directly from
-    'the_hash_algo' inside these functions as well.
-
-This opens up the possibility for further cleanups and foolproofing in
-the following two patches.
+Eliminate these repeated conditions by storing the function pointers
+responsible for writing individual chunks in the 'struct chunk_info'
+array as well, and calling them in a loop to write the commit-graph
+file.  This will open up the possibility for a bit of foolproofing in
+the following patch.
 
 Helped-by: René Scharfe <l.s.r@web.de>
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 42 ++++++++++++++++++++++++++----------------
- 1 file changed, 26 insertions(+), 16 deletions(-)
+ commit-graph.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 6762704324..1a6d26f864 100644
+index 1a6d26f864..2b26a9dad3 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -891,8 +891,8 @@ struct write_commit_graph_context {
- 	const struct bloom_filter_settings *bloom_settings;
+@@ -1559,9 +1559,13 @@ static int write_graph_chunk_base(struct hashfile *f,
+ 	return 0;
+ }
+ 
++typedef int (*chunk_write_fn)(struct hashfile *f,
++			      struct write_commit_graph_context *ctx);
++
+ struct chunk_info {
+ 	uint32_t id;
+ 	uint64_t size;
++	chunk_write_fn write_fn;
  };
  
--static void write_graph_chunk_fanout(struct hashfile *f,
--				     struct write_commit_graph_context *ctx)
-+static int write_graph_chunk_fanout(struct hashfile *f,
-+				    struct write_commit_graph_context *ctx)
- {
- 	int i, count = 0;
- 	struct commit **list = ctx->commits.list;
-@@ -913,17 +913,21 @@ static void write_graph_chunk_fanout(struct hashfile *f,
+ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+@@ -1624,27 +1628,34 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  
- 		hashwrite_be32(f, count);
+ 	chunks[0].id = GRAPH_CHUNKID_OIDFANOUT;
+ 	chunks[0].size = GRAPH_FANOUT_SIZE;
++	chunks[0].write_fn = write_graph_chunk_fanout;
+ 	chunks[1].id = GRAPH_CHUNKID_OIDLOOKUP;
+ 	chunks[1].size = hashsz * ctx->commits.nr;
++	chunks[1].write_fn = write_graph_chunk_oids;
+ 	chunks[2].id = GRAPH_CHUNKID_DATA;
+ 	chunks[2].size = (hashsz + 16) * ctx->commits.nr;
++	chunks[2].write_fn = write_graph_chunk_data;
+ 	if (ctx->num_extra_edges) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_EXTRAEDGES;
+ 		chunks[num_chunks].size = 4 * ctx->num_extra_edges;
++		chunks[num_chunks].write_fn = write_graph_chunk_extra_edges;
+ 		num_chunks++;
  	}
-+
-+	return 0;
- }
- 
--static void write_graph_chunk_oids(struct hashfile *f, int hash_len,
--				   struct write_commit_graph_context *ctx)
-+static int write_graph_chunk_oids(struct hashfile *f,
-+				  struct write_commit_graph_context *ctx)
- {
- 	struct commit **list = ctx->commits.list;
- 	int count;
- 	for (count = 0; count < ctx->commits.nr; count++, list++) {
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
--		hashwrite(f, (*list)->object.oid.hash, (int)hash_len);
-+		hashwrite(f, (*list)->object.oid.hash, the_hash_algo->rawsz);
+ 	if (ctx->changed_paths) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMINDEXES;
+ 		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
++		chunks[num_chunks].write_fn = write_graph_chunk_bloom_indexes;
+ 		num_chunks++;
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMDATA;
+ 		chunks[num_chunks].size = sizeof(uint32_t) * 3
+ 					  + ctx->total_bloom_filter_data_size;
++		chunks[num_chunks].write_fn = write_graph_chunk_bloom_data;
+ 		num_chunks++;
  	}
-+
-+	return 0;
- }
- 
- static const unsigned char *commit_to_sha1(size_t index, void *table)
-@@ -932,8 +936,8 @@ static const unsigned char *commit_to_sha1(size_t index, void *table)
- 	return commits[index]->object.oid.hash;
- }
- 
--static void write_graph_chunk_data(struct hashfile *f, int hash_len,
--				   struct write_commit_graph_context *ctx)
-+static int write_graph_chunk_data(struct hashfile *f,
-+				  struct write_commit_graph_context *ctx)
- {
- 	struct commit **list = ctx->commits.list;
- 	struct commit **last = ctx->commits.list + ctx->commits.nr;
-@@ -950,7 +954,7 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
- 			die(_("unable to parse commit %s"),
- 				oid_to_hex(&(*list)->object.oid));
- 		tree = get_commit_tree_oid(*list);
--		hashwrite(f, tree->hash, hash_len);
-+		hashwrite(f, tree->hash, the_hash_algo->rawsz);
- 
- 		parent = (*list)->parents;
- 
-@@ -1030,10 +1034,12 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
- 
- 		list++;
- 	}
-+
-+	return 0;
- }
- 
--static void write_graph_chunk_extra_edges(struct hashfile *f,
--					  struct write_commit_graph_context *ctx)
-+static int write_graph_chunk_extra_edges(struct hashfile *f,
-+					 struct write_commit_graph_context *ctx)
- {
- 	struct commit **list = ctx->commits.list;
- 	struct commit **last = ctx->commits.list + ctx->commits.nr;
-@@ -1082,10 +1088,12 @@ static void write_graph_chunk_extra_edges(struct hashfile *f,
- 
- 		list++;
- 	}
-+
-+	return 0;
- }
- 
--static void write_graph_chunk_bloom_indexes(struct hashfile *f,
--					    struct write_commit_graph_context *ctx)
-+static int write_graph_chunk_bloom_indexes(struct hashfile *f,
-+					   struct write_commit_graph_context *ctx)
- {
- 	struct commit **list = ctx->commits.list;
- 	struct commit **last = ctx->commits.list + ctx->commits.nr;
-@@ -1108,6 +1116,7 @@ static void write_graph_chunk_bloom_indexes(struct hashfile *f,
+ 	if (ctx->num_commit_graphs_after > 1) {
+ 		chunks[num_chunks].id = GRAPH_CHUNKID_BASE;
+ 		chunks[num_chunks].size = hashsz * (ctx->num_commit_graphs_after - 1);
++		chunks[num_chunks].write_fn = write_graph_chunk_base;
+ 		num_chunks++;
  	}
  
- 	stop_progress(&progress);
-+	return 0;
- }
- 
- static void trace2_bloom_filter_settings(struct write_commit_graph_context *ctx)
-@@ -1125,8 +1134,8 @@ static void trace2_bloom_filter_settings(struct write_commit_graph_context *ctx)
- 	jw_release(&jw);
- }
- 
--static void write_graph_chunk_bloom_data(struct hashfile *f,
--					 struct write_commit_graph_context *ctx)
-+static int write_graph_chunk_bloom_data(struct hashfile *f,
-+					struct write_commit_graph_context *ctx)
- {
- 	struct commit **list = ctx->commits.list;
- 	struct commit **last = ctx->commits.list + ctx->commits.nr;
-@@ -1155,6 +1164,7 @@ static void write_graph_chunk_bloom_data(struct hashfile *f,
- 	}
- 
- 	stop_progress(&progress);
-+	return 0;
- }
- 
- static int oid_compare(const void *_a, const void *_b)
-@@ -1671,8 +1681,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+@@ -1680,19 +1691,12 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			progress_title.buf,
  			num_chunks * ctx->commits.nr);
  	}
- 	write_graph_chunk_fanout(f, ctx);
--	write_graph_chunk_oids(f, hashsz, ctx);
--	write_graph_chunk_data(f, hashsz, ctx);
-+	write_graph_chunk_oids(f, ctx);
-+	write_graph_chunk_data(f, ctx);
- 	if (ctx->num_extra_edges)
- 		write_graph_chunk_extra_edges(f, ctx);
- 	if (ctx->changed_paths) {
+-	write_graph_chunk_fanout(f, ctx);
+-	write_graph_chunk_oids(f, ctx);
+-	write_graph_chunk_data(f, ctx);
+-	if (ctx->num_extra_edges)
+-		write_graph_chunk_extra_edges(f, ctx);
+-	if (ctx->changed_paths) {
+-		write_graph_chunk_bloom_indexes(f, ctx);
+-		write_graph_chunk_bloom_data(f, ctx);
+-	}
+-	if (ctx->num_commit_graphs_after > 1 &&
+-	    write_graph_chunk_base(f, ctx)) {
+-		return -1;
++
++	for (i = 0; i < num_chunks; i++) {
++		if (chunks[i].write_fn(f, ctx))
++			return -1;
+ 	}
++
+ 	stop_progress(&ctx->progress);
+ 	strbuf_release(&progress_title);
+ 
 -- 
 gitgitgadget
 
