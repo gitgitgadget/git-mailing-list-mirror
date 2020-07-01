@@ -4,268 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5D66C433DF
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 11:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39D46C433DF
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:17:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7EB1D206CB
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 11:55:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1064020780
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 13:17:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e2VsZPEz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QbcTeTDf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730447AbgGALzT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 07:55:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54932 "EHLO
+        id S1730985AbgGANRK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 09:17:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730419AbgGALzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 07:55:18 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF357C061755
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 04:55:18 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id c25so3566626otf.7
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 04:55:18 -0700 (PDT)
+        with ESMTP id S1729687AbgGANRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 09:17:10 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD38BC03E979
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 06:17:09 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id j4so21334639wrp.10
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 06:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zYkvM19x0P7QzjUoUksfNyY6Wkjx9gX6vcSHrFs71Lc=;
-        b=e2VsZPEzviflpoFzFBhiUH1MGzIBmbPYWEHFuACJuUC/9TjJjEZsYuLiPpcqZibDZM
-         SenGrPXt5ldJKJhocuQfqJ/YDDLxXfVcGkAqs8ppj65Qd8wV4tOyUZJ1oWY6x7yiKKer
-         ncqoU8Isdlhvh/PoikbkEt5dOEItH4EmZFWeI7eUnsq0NgrixL0YG3gD92Mg48jTmD7q
-         BE6uRx+vrEhoxBHhp2xXldnsZP8DbhRCaH/fc4+3wZ6dvYgAUaL33lIu3DBYg3VRr12d
-         QHrG185mN4a2G3JVAQoKrBEn1/NzfIcZCEScC7gjgAhPQL1i2iCTPZS0yfBZZROVauZ7
-         HK+w==
+        h=from:content-transfer-encoding:mime-version:date:subject:message-id
+         :to;
+        bh=lGva9epjzFm7gQW9J8L2HpMvm32rlzzR49f6fAWBAiE=;
+        b=QbcTeTDf4+zwLC2ulZiYHkXrk/UUHyA4WMAcYRNGqvheAJ2titGTmJQAiWcxpgj0pv
+         bIf30ewm6nXy3mZRjhnY534MHuGbUZo8HtPoOcgNGftnplkSBLmvjYPsweE/Hmh4Q6KS
+         oZ7MtyzE0t4ZS8pkCnqf22QvBDQnNkF2OrYbe4j43iVxTk1geerVWz/ZRPDZtYoJT9KJ
+         JX3GMvrCBRL5blN9wGQpxmzTCGK+W9Ap+1h7KQ/KKAMofiLpqIrFBBPHpac/sXe8hybI
+         YJRxK6hBamZCzQRseSggoEjFjZ4GaOxgQHjGHSCuswxpd7aIBDpkkp8mdx6pN7VCbOze
+         yiRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zYkvM19x0P7QzjUoUksfNyY6Wkjx9gX6vcSHrFs71Lc=;
-        b=Q8ZCLa7y7M0xue0dxuuUW9M0sto5yLVGgMMjQXfkcTyXT+zH9/xuuE29fQnAr0RkiM
-         8eh+OJgUSN1pAbMBachBQfpjm+z8ZXCi614FWm1tGOXXG/6dXN98u+o9smDVnKITPFja
-         Any4h6NnK3b+FxulSGydV9MjPJK0gxQlphfyduYB8tiOfuIM6f6hj6jdLCBPZ/C+pppU
-         zUf+ASyQJcFGOSUxCFwA/V8jRgcusrnCjGZ8pgytSzN4KnnEkRWFYHJlPGO0/ddNh9Ou
-         gp4FPiR9fhgtDKjcSAzEBE1tBfZ048e9Ar6KJPpL+qFQmizlw1GgWtNo/jP49jTW8fTu
-         vSfg==
-X-Gm-Message-State: AOAM531EOaX5ISJQUrTS2dxpflYGXFMbhfZCCppmYDPgyX3XzhOwcxaF
-        tnZsj0QD5yNLdgQShOioX2ifrVxkoa9qdZO39CA=
-X-Google-Smtp-Source: ABdhPJzpXPsZd5oAQ1ldb0FlNb0+qXstqedjm3OqGH2uq1lTBu2p13fWhQ5pplxUj6QAWQZGFzsy83e7Pl0DE2qdx1E=
-X-Received: by 2002:a05:6830:60a:: with SMTP id w10mr18005976oti.241.1593604517827;
- Wed, 01 Jul 2020 04:55:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+CkUQ_-_Rzu00w1L7QeMxT73a_MsD=8kY0+wtuRmze4z+1_AA@mail.gmail.com>
- <CAP8UFD2qbtoXay1AgwrdaJ8XgVkq=NqBTa=KptUTop19xzUVuQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD2qbtoXay1AgwrdaJ8XgVkq=NqBTa=KptUTop19xzUVuQ@mail.gmail.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Wed, 1 Jul 2020 17:25:06 +0530
-Message-ID: <CA+CkUQ9dW9E+yujwU0A7KYu6-fdK9Y4q31+Gq6-9AYoyLyQT6Q@mail.gmail.com>
-Subject: Re: [RFC] ref-filter: add new atom `signature`
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Heba Waly <heba.waly@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
+         :subject:message-id:to;
+        bh=lGva9epjzFm7gQW9J8L2HpMvm32rlzzR49f6fAWBAiE=;
+        b=oXMbqKV1VZPoOm1RVKRx6NpzW4PjQB+//qnxHisvPaXnKYUteY/rWienlhyXMK/3fz
+         vBLJzaeS773LXziInjphExiMh/GeOoPE0qhVFVUOP77SanvyRFpTIgWydLeDKuRrAPWn
+         U0N4wTsu1Sjwl+eCrV3Z505C0yi0I99uTQP6yXLB/c9a7KmDpiuan5Yg0zzzEtxk7hL3
+         yx+jqBV0+ZMaapzhy2FcJwLEez7oNhoMQVBOPJppPa9xzeBMs4QW7hwjgGrSMyaUoFJ2
+         TkhIlYoxhCf7wKOKgdUaakTVmCHkXtAbR2FIwNzAr1oWF9tfjf6kGZ6Zcq+mVQnKyPuZ
+         2IwA==
+X-Gm-Message-State: AOAM532CqfPUrRM9PESpE4XpcmIzvZ1apHW1cJCP9f8XB838igdlo1aK
+        eWCk/2EYhDNgcHnmFcDxI5DPeWhxCds=
+X-Google-Smtp-Source: ABdhPJwGCXHlgtMD5NyzdRDU7R0x7M5JZPSsMoOjge+hV4W6gVFMcUuymiRjxF1+naxujKkzkfGvQw==
+X-Received: by 2002:adf:c551:: with SMTP id s17mr25757231wrf.330.1593609427679;
+        Wed, 01 Jul 2020 06:17:07 -0700 (PDT)
+Received: from [192.168.1.116] (2-229-250-51.ip199.fastwebnet.it. [2.229.250.51])
+        by smtp.gmail.com with ESMTPSA id 92sm7848849wrr.96.2020.07.01.06.17.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Jul 2020 06:17:06 -0700 (PDT)
+From:   Fabio Frumento <frumento.fabio@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Date:   Wed, 1 Jul 2020 15:17:05 +0200
+Subject: Built Git 2.27.0 from sources on macOS Catalina fails on "make
+ profile"
+Message-Id: <618374D7-60E1-4942-B29F-4F2EA261996F@gmail.com>
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I'm trying to build Git 2.27.0 from sources on MACOS
 
-On Wed, Jul 1, 2020 at 3:23 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi,
->
-> On Sun, Jun 28, 2020 at 12:05 PM Hariom verma <hariom18599@gmail.com> wrote:
-> >
-> > Hi,
-> >
-> > In ref-filter, we have a bunch of atoms which serves as a formatting
-> > option for `git for-each-ref`.
->
-> Ok.
->
-> > Despite of having 'subject' as an argument to 'contents' [i.e
-> > `%(contents:subject)`], we still have 'subject' as an atom [i.e
-> > `%(subject)`].
-> > Likewise for `%(contents:signature)`, we can have 'signature' as an atom too.
->
-> Ok. Some things are available in different ways perhaps because of
-> historical reasons and backward compatibility.
+I've got to get the build works solving missing autoconf app and gcov =
+issues (clang does not need it)
 
-Okay.
+now I'm struggling during the ```make profile``` step
 
-> > Currently, `%(contents:signature)` internally uses `parse_signature()`
-> > that only works for signed tag objects. I plan to expand the scope of
-> > `signature` by defining it as an atom and will make it work for
-> > commits too.
->
-> Didn't you say already that "we can have 'signature' as an atom too",
-> so isn't it already defined as an atom? Does `%(contents:signature)`
-> work for commits while '%(signature)' doesn't? And what happens when
-> it doesn't work?
+some tests fail on ```t0410-partial-clone.sh```
 
-Sorry for the ambiguity in my statement.
-- Only `contents` exists as an atom, which accepts `signature` as an
-argument. i.e '%(contents:signature)'
-- 'signature' does not exist as an atom. I plan to add this.
-- `%(contents: signature)` only works for tag objects. For commit it
-prints nothing.
+```
+not ok 15 - missing tree objects with --missing=3Dallow-promisor and =
+--exclude-promisor-objects
+#
+#		rm -rf repo &&
+#		test_create_repo repo &&
+#		test_commit -C repo foo &&
+#		test_commit -C repo bar &&
+#		test_commit -C repo baz &&
+#
+#		promise_and_delete $(git -C repo rev-parse bar^{tree}) =
+&&
+#		promise_and_delete $(git -C repo rev-parse foo^{tree}) =
+&&
+#
+#		git -C repo config core.repositoryformatversion 1 &&
+#		git -C repo config extensions.partialclone "arbitrary =
+string" &&
+#
+#		git -C repo rev-list --missing=3Dallow-promisor =
+--objects HEAD >objs 2>rev_list_err &&
+#		test_must_be_empty rev_list_err &&
+#		# 3 commits, 3 blobs, and 1 tree
+#		test_line_count =3D 7 objs &&
+#
+#		# Do the same for --exclude-promisor-objects, but with =
+all trees gone.
+#		promise_and_delete $(git -C repo rev-parse baz^{tree}) =
+&&
+#		git -C repo rev-list --exclude-promisor-objects =
+--objects HEAD >objs 2>rev_list_err &&
+#		test_must_be_empty rev_list_err &&
+#		# 3 commits, no blobs or trees
+#		test_line_count =3D 3 objs
+#
+not ok 16 - missing non-root tree object and rev-list
+#
+#		rm -rf repo &&
+#		test_create_repo repo &&
+#		mkdir repo/dir &&
+#		echo foo >repo/dir/foo &&
+#		git -C repo add dir/foo &&
+#		git -C repo commit -m "commit dir/foo" &&
+#
+#		promise_and_delete $(git -C repo rev-parse HEAD:dir) &&
+#
+#		git -C repo config core.repositoryformatversion 1 &&
+#		git -C repo config extensions.partialclone "arbitrary =
+string" &&
+#
+#		git -C repo rev-list --missing=3Dallow-any --objects =
+HEAD >objs 2>rev_list_err &&
+#		test_must_be_empty rev_list_err &&
+#		# 1 commit and 1 tree
+#		test_line_count =3D 2 objs
+#
+```
 
-> > Also, thinking of adding `signer`, `key`, `fingerprint`,
-> > `primarykeyfingerprint`, `trustlevel` and `grade`[print 'G' for good,
-> > 'B' for bad...] as arguments to "signature".
->
-> Ok, I guess all the above arguments would be new.
+I'm a little surprised as presumed, since 2.27.0 is an official release, =
+all the tests should pass without any issue.
 
-Yes
+I'm not interested to get latest version using home-brew so please leave =
+it out of the answers
 
-> > This change will also help me in using ref-filter's logic in pretty.c
-> > for formatting options like "GG", "G?", etc. To know more about these
-> > formatting options, you can take a look here[1].
-> >
-> > If curious about what approach I'm taking for using ref-filter logic
-> > in pretty.c, see[2]
-> >
-> > Would love hear your thoughts on it. Any suggestions will also be appreciated.
->
-> It would be nice to see, at least for the atoms or arguments that you
-> are planning to, or have already, worked on, a list showing how each
-> formatting option in pretty.c maps to one or more atoms possibly with
-> arguments.
->
-> For example something like:
->
-> %GS: show the name of the signer for a signed commit
->   maps to: %(signature:signer)
->   status: yet to be implemented
->
+Any idea?
 
-Yeah, that would be nice.
+How to file a bug to the Git developers?
 
-## User Formats
-
-%H: commit hash
-maps to: "%(objectname)"
-status: Implemented
-
-%h: abbreviated commit hash
-maps to: "%(objectname:short)"
-status: Implemented
-
-%T: tree hash
-maps to: "%(tree)"
-status: Implemented
-
-%t: abbreviated tree hash
-maps to: "%(tree:short)"
-status: Implemented
-
-%P: parent hashes
-maps to: "%(parent)"
-status: Implemented
-
-%p: abbreviated parent hashes
-maps to: "%(parent:short)"
-status: Implemented
-
-%an: author name
-maps to: "%(authorname)"
-status: Implemented
-
-%ae: author email
-maps to: "%(authoremail)"
-status: Implemented
-
-%ad: author date
-maps to: "%(authordate)"
-status: Implemented
-
-%cn: committer name
-maps to: "%(committername)"
-status: Implemented
-
-%ce: committer email
-maps to: "%(committeremail)"
-status: Implemented
-
-%cd: committer date
-maps to: "%(committerdate)"
-status: Implemented
-
-%s: subject
-maps to: "%(subject)"
-status: Implemented
-
-%f: sanitized subject line, suitable for a filename
-maps to: "%(subject:sanitize)"
-status: Implemented
-
-%b: body
-maps to: "%(body)"
-status: Implemented
-
-%GG: raw verification message from GPG for a signed commit
-maps to: %(signature)
-status: Implemented
-
-%G?: show "G" for a good (valid) signature, "B" for a bad signature...
-maps to: "%(signature:grade)"
-status: In progress
-
-%GS: show the name of the signer for a signed commit
-maps to: "%(signature:signer)"
-status: Implemented
-
-%GK: show the key used to sign a signed commit
-maps to: "%(signature:key)"
-status: Implemented
-
-%GF: show the fingerprint of the key used to sign a signed commit
-maps to: "%(signature:fingerprint)"
-status: Implemented
-
-%GP: show the fingerprint of the primary key whose subkey was used to
-sign a signed commit
-maps to: "%(signature:primarykeyfingerprint)"
-status: Implemented
-
-%GT: show the trust level for the key used to sign a signed commit
-maps to: "%(signature:trustlevel)"
-status: In progress
-
-## Commit Formats
-
-Note: This is only for the commit body[as pretty.c only handles commit
-body]. First line that contains `commit hash` is handled by
-log-tree.c, So no need to map it.
-
-'oneline'
-maps to: "%(subject)"
-status: implemented
-
-'short'
-maps to: "Author: %(authorname) %(authoremail)\n\n\t%(subject)\n"
-status: Implemented
-
-'medium'
-maps to: "Author: %(authorname)
-%(authoremail)\nDate:\t%(authordate)\n\n%(subject)\n\n%(body)"
-status: Implemeted
-
-'full'
-maps to: "Author: %(authorname) %(authoremail)\nCommit:
-%(committername) %(committeremail)\n\n%(subject)\n\n%(body)"
-status: Implemented
-
-'fuller'
-maps to: "Author:\t\t%(authorname)
-%(authoremail)\nAuthorDate:\t%(authordate)\nCommit:\t\t%(committername)
-%(committeremail)\nCommitDate:\t%(committerdate)\n\n%(subject)\n\n%(body)"
-status: Implemented
-
-'raw'
-status: Not yet Implemented
-
-Thanks,
-Hariom
