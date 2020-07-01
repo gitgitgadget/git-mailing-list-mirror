@@ -2,126 +2,106 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39870C433E0
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B70D5C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:17:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13716206B6
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:16:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9531F2074D
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 10:17:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rGymMEJo"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AFyte/+q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729857AbgGAKQj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 06:16:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39538 "EHLO
+        id S1729862AbgGAKRB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 06:17:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729226AbgGAKQi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 06:16:38 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DFE5C061755
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 03:16:38 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id g10so6482171wmc.1
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 03:16:37 -0700 (PDT)
+        with ESMTP id S1729226AbgGAKRB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 06:17:01 -0400
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED5DC061755
+        for <git@vger.kernel.org>; Wed,  1 Jul 2020 03:17:01 -0700 (PDT)
+Received: by mail-vs1-xe41.google.com with SMTP id f24so12989261vsg.1
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 03:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Y1LA2EokgOG3DsXWMN3W+eyTDAp3mYmZaHdPYYtbOmU=;
-        b=rGymMEJo09XuMospa//1NpUs7Xou92OEqHOxSsLRT48eG8lzE+91EqTaS9X9196Bb/
-         oODQuOjbYa14O1FCOqW851vs3eveK7Grb+S+v8kTjpg57nXQUpzKuSRo1hg0OBrn/WZr
-         JLE/Aa63mdVyhdjO++D5sr30HcfprYL+8WJA5zPALAWkdUIIIVCrpXJ7MqgvajUafYXg
-         tuO+QInr7mtFikasEpmFfBBRiWn3Aly2iAEv6jCVm0hj3OG2oV0d2gNY176Ivi2URCDf
-         UxhzLk7XaNB8BOx7GThL0p20WZmQdfDHUKj7KmT+C59v6v+Kqpm9kNjugg5tjwUnO0Kc
-         Vbzw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=02XSS7apjrq2odJ9dNiONTN7L6tTG4pp7GyNWZ4MiSY=;
+        b=AFyte/+qivJGTnVdxix/68PsERJtcQVABl6fnl1Cq5oXV5rrNxTDPfNeMnPHkijzQ5
+         EuB0ca8qTTOuHmudNynJdJAirXoU6/bMpg2Bmes/Ejfyh6c6rqiFBKmiXr74K5qfMC5L
+         qpJUAFuszzVbsaw3XS0JiWuvubkAMOmU77Vw6NRO2PLt124Tec+sAPfUF0mzZlYn0Jkk
+         YQnublcFdYrX+4NIA3zKDORcG297HO+OXCLO87zdvPeVUKgPSDJsEp3usi7zcdRwOwGM
+         70M/wbITeMZfHKeVWLaSBJVwm0ACjhCcCGFMRA9HG/VKsGkob77cEXR3KvJj9VH3FmoA
+         fB1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Y1LA2EokgOG3DsXWMN3W+eyTDAp3mYmZaHdPYYtbOmU=;
-        b=csXcx06LM5Cd7y/hN1EVabYl5axuSqDrZNK3BCFHUKUBmjGs+BVG1H6Xe8QSfMFsGF
-         7jMmgxKskk15E3PMNqoG4p/HfeZOV9vCAqP+SciThw/hTns6wBDfTkh5nSAnL7HBkgSM
-         01y1t4WjWXbBVM0rQ9qFTNgVrpc0eR5EFDad9Qolvy4roguR/qv5eyOIoD/rhITamcOG
-         V0ea9GMCOckKABTkoRSWcbzXsDGZDr4ycnn8BkHk1Iol/Z8kX3db9latp+36sC/2OiC3
-         ymIirRo827enbYIoPzMfc9owwg0qqj1FdoUxqFW4ZFQFxqZmmOA+rBPCfQ2PqGQeBFsG
-         Qx/A==
-X-Gm-Message-State: AOAM533O5thOqTbK6j1dH4XU2bBhl7vg6cjQ58ljcR3zgptrjJ4vlKZV
-        JUV1FKv1QYFuTduPfUpNFEcqPOLykIk=
-X-Google-Smtp-Source: ABdhPJxQxn+td3/Kt3bOO4N/l/B1worPrQsZ3keUED0PooY4woap1+cmHweSa+7K+F0rG9oiDtjfgg==
-X-Received: by 2002:a7b:cd18:: with SMTP id f24mr3232753wmj.40.1593598596468;
-        Wed, 01 Jul 2020 03:16:36 -0700 (PDT)
-Received: from localhost.localdomain ([193.56.244.51])
-        by smtp.gmail.com with ESMTPSA id d63sm6945634wmc.22.2020.07.01.03.16.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2020 03:16:35 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] cat-file: add missing [=<format>] to usage/synopsis
-Date:   Wed,  1 Jul 2020 12:16:18 +0200
-Message-Id: <20200701101618.28761-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.27.0.221.ga08a83db2b.dirty
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=02XSS7apjrq2odJ9dNiONTN7L6tTG4pp7GyNWZ4MiSY=;
+        b=qkmKmgTHP97k9xzKtYkmgFPObsPiaY8KHyuVpMF51EyZNUbJ5kM7aOb2XKRVBtUGta
+         eAqedx5WUBlEOsuoH9AX18KmBEWUJ0/pMWv2k0yoy6tRPtcYPX06b87kbpP6k6ncW27w
+         59qQAW+RfaSloEDvGyLzz6ZpnRI2SSA1/LsOKTFr+pNIf9s7593O7YsdIvqkNDxbTIuA
+         V5Z2RYLAJqvQ79RAJ6bu5OVVrt7bP/ZwP5X1mr8Kyk/a3jNmK4jzFIZZkgQVeMb6su1i
+         MzweG3VekTZZo1oy/81TXBA4yZvdnyqMWT8B0TV0DOj2/gLTxOSp0bJykxO7YvWxmWMT
+         ga1g==
+X-Gm-Message-State: AOAM532nU/s3Gcgs28OgJTojwx/FrWhqWinQymv3nOX0adE84LraoPcy
+        WC5nacOpA7VbeUd6yo7x82lxrQNTdYc4Fs5QbeqzFg==
+X-Google-Smtp-Source: ABdhPJzD26YwjMYrBQ2VByLFqLy3ObTsM8ySksZJMYFBPOT4yMWJD+Ms2Q+KYDn03JoUA0JT5oSPEh69tFw4m+L1dJQ=
+X-Received: by 2002:a67:c011:: with SMTP id v17mr20320242vsi.56.1593598620068;
+ Wed, 01 Jul 2020 03:17:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
+ <pull.539.v19.git.1593457018.gitgitgadget@gmail.com> <xmqqimf9fppn.fsf@gitster.c.googlers.com>
+ <CAFQ2z_MbiTEzztU9a8beMAQFn1-ozBUwKD1JyhXHUnoTTto0TA@mail.gmail.com> <xmqqbll0drtz.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqbll0drtz.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 1 Jul 2020 12:16:47 +0200
+Message-ID: <CAFQ2z_MZoc3Q15O0LDTgVYV7nKEK1Oc8GLWEZYrrFjU9VSsUCQ@mail.gmail.com>
+Subject: Re: [PATCH v19 00/20] Reftable support git-core
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When displaying cat-file usage, the fact that a <format> can
-be specified is only visible when lookling at the --batch and
---batch-check options which are shown like this:
+On Wed, Jul 1, 2020 at 2:03 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > Do you have an opinion on
+> > https://public-inbox.org/git/pull.665.git.1592580071.gitgitgadget@gmail=
+.com/
+> > ?
+> >
+> > There is some overlap with in sequencer.c, and Phillip's approach is
+> > likely more principled, so I'd like to base reftable on that.
+>
+> I assumed that these were offered to you as possible improvements to
+> be folded into your series, so I didn't read them very carefully and
+> I didn't queue them myself.  I expected that I would see them,
+> possibly modified to fit the context better, as part of your series
+> sent from you, perhaps to become a part of early clean-up portion of
+> your topic.
 
-    --batch[=<format>]    show info and content of objects fed from the standard input
-    --batch-check[=<format>]
-                          show info about objects fed from the standard input
+They are changing the signature of widely used functions, which is
+useful for my series but not completely necessary. I would rather that
+someone else decides on how to go forward with the series.
 
-It seems more coherent and improves discovery to also show it
-on the usage line.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-In the documentation the DESCRIPTION tells us that "The output
-format can be overridden using the optional <format> argument",
-but we can't see the <format> argument in the SYNOPSIS above
-the description which is confusing.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-cat-file.txt | 2 +-
- builtin/cat-file.c             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Registergericht und -nummer: Hamburg, HRB 86891
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 8eca671b82..8e192d87db 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git cat-file' (-t [--allow-unknown-type]| -s [--allow-unknown-type]| -e | -p | <type> | --textconv | --filters ) [--path=<path>] <object>
--'git cat-file' (--batch | --batch-check) [ --textconv | --filters ] [--follow-symlinks]
-+'git cat-file' (--batch[=<format>] | --batch-check[=<format>]) [ --textconv | --filters ] [--follow-symlinks]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index ae18e20a7c..5ebf13359e 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -596,7 +596,7 @@ static int batch_objects(struct batch_options *opt)
- 
- static const char * const cat_file_usage[] = {
- 	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
--	N_("git cat-file (--batch | --batch-check) [--follow-symlinks] [--textconv | --filters]"),
-+	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
- 	NULL
- };
- 
--- 
-2.27.0.221.ga08a83db2b.dirty
+Sitz der Gesellschaft: Hamburg
 
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
