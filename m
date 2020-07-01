@@ -2,284 +2,153 @@ Return-Path: <SRS0=EAeL=AM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9ABBC433E0
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 14:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E117C433DF
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 14:22:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D71020702
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 14:18:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DBB62067D
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 14:22:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wbv/T1Td"
+	dkim=pass (2048-bit key) header.d=nyu.edu header.i=@nyu.edu header.b="ln3mUqf6";
+	dkim=pass (2048-bit key) header.d=nyu-edu.20150623.gappssmtp.com header.i=@nyu-edu.20150623.gappssmtp.com header.b="i9I/SAYJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731153AbgGAOR7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 10:17:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731039AbgGAOR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 10:17:59 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DE2DC08C5C1
-        for <git@vger.kernel.org>; Wed,  1 Jul 2020 07:17:59 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id l6so7947103pjq.1
-        for <git@vger.kernel.org>; Wed, 01 Jul 2020 07:17:59 -0700 (PDT)
+        id S1731324AbgGAOWL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 10:22:11 -0400
+Received: from mx0a-00256a01.pphosted.com ([148.163.150.240]:14028 "EHLO
+        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1731202AbgGAOWK (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 1 Jul 2020 10:22:10 -0400
+Received: from pps.filterd (m0094546.ppops.net [127.0.0.1])
+        by mx0b-00256a01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id 061E8LwK071906
+        for <git@vger.kernel.org>; Wed, 1 Jul 2020 10:22:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=20180315; bh=xJfx/BOc0Gm91TEdwua856wn7SykvLtIcvJH/KlK4Ts=;
+ b=ln3mUqf6tiMOvk7WVqumLInabsdDJusl7UJ6V2NbKuy6eOtcJj0uqYeNwQdHtjfhcg8r
+ Ja+hAHcv6tzjueA7h+LRmA6f5pEg1xvxaLOwRHUV151fzD04xnjpYLrk+RyL6tqFVjV4
+ ClfHFVu67Oiohs3SjQ/TgLqMqFxUg1lvLongNIXGuKqkKJ5VHcyzBdZeKZ2YyX/TJBZ2
+ 1ls5PZ6ZZMfPxVMdJU9Pzvb6zIkyXZ61F0a7pC8xKSe56fOA4Qe7dqwUg7n15KVZOU5i
+ 1KxcGtQXJxgPN/818b8+sO8E0OLrj6KcJZ9JlAjkITi526+dhFBpzcT7z4/LDW/4vqMV vg== 
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+        by mx0b-00256a01.pphosted.com with ESMTP id 320g6h7c3n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 10:22:09 -0400
+Received: by mail-qt1-f199.google.com with SMTP id c26so16891468qtq.6
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 07:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BWoi2X5NQsKN0eLIiNNz0qh7y/vB9p09oOKPl5OAueU=;
-        b=Wbv/T1TdNP6rRVKFztfhqfqyzv4Df8Y75YnRKuriGVLUcnSNd4uuweayMKOW0KDpB2
-         NA2/T/BCFtY/wCqQsvlteP3cr8d8ZwsOLF5CLThM4ijxNqFeA7Js4L9CfUBysGXXaYCl
-         iOf2o7RigYip1I2L/avvXptdL3DHwfPi2VPztna/Fd5IIvuMnkxV5aEonaIWtQEAZ3iN
-         3OpVZ/LGaECJhmxYrL19F2jr3l6XXK8N9fU8XUL74wqurLz5XK8b8QUcp+OH3K8+uyXr
-         sG7erD8mEp/X2SbjOAuMhvmGWxLMYIGU3PgVutjYa6OB0m6itpomYoFXeFEWWmhOD++7
-         6KlQ==
+        bh=xJfx/BOc0Gm91TEdwua856wn7SykvLtIcvJH/KlK4Ts=;
+        b=i9I/SAYJ9ThUSkSogEfnDPnGUtlvJwKNYUN3yZw/ebUFUM43D8MQ0WSzpMw5OMK2hV
+         +MVMG/sohbge+DmCqO+N01nc1/Y29YMNz7r7jw9jsfblNY5sEs+vhF9PZHphbLcQYU1e
+         NuJKGUSLfy77wJ/E4UlSwxZ65Ps0xuZDHDUP4+WaLyhaMc3r3AVHPe9T8jh5znAWLxEL
+         YN7iwfg7et3ES+JlGnG7vB9SebcNsIfXcVBh0a1QfSTGgxzm5Z52nVLDPZXx/YOjfJtI
+         8UqZpNGjOlNt2OV/BUeSIIV4+NisaUvU2k+sgTFA5opJgPi+6Y3wMEZdsvH5I0c2/Otp
+         xOYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BWoi2X5NQsKN0eLIiNNz0qh7y/vB9p09oOKPl5OAueU=;
-        b=mlrfNn/BMr4yXqqmoCW6PdjuBlyrGTTd7lmmtDVvDfK/MeCtcU6WofI5ujzbNFqPg3
-         PX5HsRyue7S84UxbIaLwKzN+8V8u9yNSopi3EIZuKTtpoQjJiFP5iXotnhUasSMUiGWy
-         Ato2k8/cE9RcvVYnRGsPCDwtHDssWPGSAHa5A59kFf/zFDuOG5WiMxRecuowzvPTXgnH
-         XFELr9+IjagwxEIN+B4M0iLWWKAJNjLmrPAZDlOOPm4mA4iUU4nmh7GWvEejC+vRsvdr
-         /8B3SD5hi/aCcW9M05WlovrR4/I1W3WJsL10UQfFp0ZfTBrpS8AQNTFgK7MDSszXIwfF
-         G7GQ==
-X-Gm-Message-State: AOAM53277fxWXR0+tpM5ocpFv0XwyOkNSQwK9hfLwtO3WPL+97vuaFsp
-        53k6G/qvkkgCKZzH3d2E11M=
-X-Google-Smtp-Source: ABdhPJzJ9bZg5BT176Butu11WlfImt9kw+F2LohwbS9cvysDfYU9WVLFqQGrbj9Vg4xXrPBllZ0pxg==
-X-Received: by 2002:a17:90b:405:: with SMTP id v5mr2983666pjz.226.1593613078642;
-        Wed, 01 Jul 2020 07:17:58 -0700 (PDT)
-Received: from localhost ([2402:800:6375:9968:2644:616c:71ad:c7e6])
-        by smtp.gmail.com with ESMTPSA id 144sm6240904pfb.31.2020.07.01.07.17.57
+        bh=xJfx/BOc0Gm91TEdwua856wn7SykvLtIcvJH/KlK4Ts=;
+        b=sDjcZH3q283PkiweacI4+nmfSP5A4tR/uEXFjCRM5D8JMOSzNKRZbP6QW13TRXWfLY
+         D/1yVF+2kS4luROM+trY0RtlwFre/gpRLjjzqzMVcVio4RNM8zSbrLI6ylq+YeDBMYLn
+         waERxErUBBuBFK/d2BLsEjGBKkRZz/N2HSf+PaSFlhnkrvVIKAN8/AYz3pUo78uswDhR
+         DYds+nWRvzkJq/pcy+nPvRzmcD5bPqHN3IgLhx+ZNVYI22lL8vyWr6/hcdMkv3andluW
+         0upRWc6rEEEmo8LqL6DDJOxIsvnBKLHgFuDdt8HvUxkebFxzoG9gjuWB2ZwNc0B2VBJO
+         0J0Q==
+X-Gm-Message-State: AOAM533/Qo/Zp5gfCSh++Z8zSL5aSt6GvMIak1rJjeDjpTFrWxw2Lp0h
+        gltc2A1mnlsUdV6k14t4xqH7rqT560fgunwyozTKSuXEJIJ03UXzYpdZeDwZcrH7ZmDkil+fc6W
+        KyCIRhfR2eG0=
+X-Received: by 2002:a37:e8c:: with SMTP id 134mr24497177qko.462.1593613328074;
+        Wed, 01 Jul 2020 07:22:08 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwqaqUVU9J5FpBoROp5arpQ8SEhSZA+DowHoqQXjIDdNo/4y/SVthQ/ADRZ4PYecw8a+TeJ5w==
+X-Received: by 2002:a37:e8c:: with SMTP id 134mr24497165qko.462.1593613327832;
+        Wed, 01 Jul 2020 07:22:07 -0700 (PDT)
+Received: from LykOS.localdomain (ool-2f10876a.dyn.optonline.net. [47.16.135.106])
+        by smtp.gmail.com with ESMTPSA id q189sm5923977qkd.57.2020.07.01.07.22.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2020 07:17:57 -0700 (PDT)
-Date:   Wed, 1 Jul 2020 21:17:55 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     sunlin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sunlin <sunlin7@yahoo.com>,
-        Lin Sun <lin.sun@zoom.us>
-Subject: Re: [PATCH v5] Enable auto-merge for meld to follow the vim-diff
- beharior
-Message-ID: <20200701141755.GB1966@danh.dev>
-References: <pull.781.v4.git.git.1593516397380.gitgitgadget@gmail.com>
- <pull.781.v5.git.git.1593587206520.gitgitgadget@gmail.com>
+        Wed, 01 Jul 2020 07:22:06 -0700 (PDT)
+Date:   Wed, 1 Jul 2020 10:22:05 -0400
+From:   Santiago Torres Arias <santiago@nyu.edu>
+To:     "R. Diez" <rdiez@neanderfunk.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Interrupted system call
+Message-ID: <20200701142205.3gwltulmkrd6iljk@LykOS.localdomain>
+References: <14b3d372-f3fe-c06c-dd56-1d9799a12632@yahoo.de>
+ <c8061cce-71e4-17bd-a56a-a5fed93804da@neanderfunk.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="s5h65za233mii63l"
 Content-Disposition: inline
-In-Reply-To: <pull.781.v5.git.git.1593587206520.gitgitgadget@gmail.com>
+In-Reply-To: <c8061cce-71e4-17bd-a56a-a5fed93804da@neanderfunk.de>
+X-Orig-IP: 209.85.160.199
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ bulkscore=0 cotscore=-2147483648 impostorscore=0 suspectscore=0
+ phishscore=0 malwarescore=0 mlxlogscore=680 priorityscore=1501 spamscore=0
+ mlxscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2007010102
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-07-01 07:06:46+0000, sunlin via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Lin Sun <lin.sun@zoom.us>
-> 
-> Make the mergetool used with "meld" backend behave similarly to
-> how "vimdiff" behavior by telling it to auto-merge parts without
-> conflicts and highlight the parts with conflicts when configuring
-> `mergetool.meld.hasAutoMerge` with `true`, or `auto` for
-> automatically detecting the option.
-> 
-> Signed-off-by: Lin Sun <lin.sun@zoom.us>
-> ---
-> diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
-> index 09ed31dbfa..9a74bd98dc 100644
-> --- a/Documentation/config/mergetool.txt
-> +++ b/Documentation/config/mergetool.txt
-> @@ -30,6 +30,14 @@ mergetool.meld.hasOutput::
->  	to `true` tells Git to unconditionally use the `--output` option,
->  	and `false` avoids using `--output`.
->  
-> +mergetool.meld.hasAutoMerge::
-> +	Older versions of `meld` do not support the `--auto-merge` option.
-> +	Setting `mergetool.meld.hasOutput` to `true` tells Git to
 
-s/hasOutput/hasAutoMerge/
+--s5h65za233mii63l
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Bikeshed opinion: I don't know if hasAutoMerge is a good name :)
+Hi,=20
 
-> +	unconditionally use the `--auto-merge` option, and `false` avoids using
-> +	`--auto-merge`, and `auto` detect whether `meld` supports `--auto-merge`
-> +	by inspecting the output of `meld --help`, otherwise, follow meld's
-> +	default behavior.
-> +
->  mergetool.keepBackup::
->  	After performing a merge, the original file with conflict markers
->  	can be saved as a file with a `.orig` extension.  If this variable
-> diff --git a/mergetools/meld b/mergetools/meld
-> index 7a08470f88..9ee835b1e5 100644
-> --- a/mergetools/meld
-> +++ b/mergetools/meld
-> @@ -3,34 +3,74 @@ diff_cmd () {
->  }
->  
->  merge_cmd () {
-> -	if test -z "${meld_has_output_option:+set}"
-> +	check_meld_for_features
-> +
-> +	option_auto_merge=
-> +	if test "$meld_has_auto_merge_option" = true
->  	then
-> -		check_meld_for_output_version
-> +		option_auto_merge="--auto-merge"
->  	fi
->  
->  	if test "$meld_has_output_option" = true
->  	then
-> -		"$merge_tool_path" --output="$MERGED" \
-> +		"$merge_tool_path" $option_auto_merge --output="$MERGED" \
->  			"$LOCAL" "$BASE" "$REMOTE"
->  	else
-> -		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-> +		"$merge_tool_path" $option_auto_merge "$LOCAL" "$MERGED" "$REMOTE"
->  	fi
->  }
->  
-> -# Check whether we should use 'meld --output <file>'
-> -check_meld_for_output_version () {
-> -	meld_path="$(git config mergetool.meld.path)"
-> -	meld_path="${meld_path:-meld}"
-> +# Get meld help message
-> +get_meld_help_msg () {
-> +	meld_path="$(git config mergetool.meld.path || echo meld)"
-> +	$meld_path --help 2>&1
-> +}
+> Nevertheless, I am surprised to get such an "Interrupted system call" from
+> Git. A long time ago I learnt that it is OK for many syscalls to get
+> interrupted, so you have to loop around them. See here for more informati=
+on:
+>=20
+> https://urldefense.proofpoint.com/v2/url?u=3Dhttp-3A__250bpm.com_blog-3A1=
+2&d=3DDwICaQ&c=3DslrrB7dE8n7gBJbeO0g-IQ&r=3DyZMPY-APGKyVIX7HgQFZJA&m=3DJwtG=
+1XJ8aqvchYKsbjW23-PqEl4qm4xuOrYLaF8MOK4&s=3Dk58MMdPdIRPl0kpuTohwZo_3GbW7elv=
+ojU1wjTil2GY&e=3D
+>=20
+> As a result, users should never actually get an "Interrupted system call"
+> error from any software, at least when no sockets or non-blocking I/O is
+> involved.
 
-I'm actually prefer this change in 2 separated patches to reduce noise.
-But given that mergetool/meld doesn't attract much attention, I don't know.
+I'm not sure if you can blame git right away (it could be an underlying
+library), and I'm also not convinced that "interrupted system call" is
+an error that should never exist for users (error handling is generally
+very nuanced).
 
->  
-> -	if meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
-> +# Check the features and set flags
-> +check_meld_for_features () {
-> +	# Check whether we should use 'meld --output <file>'
-> +	if test -z "${meld_has_output_option:+set}"
->  	then
-> -		: use configured value
-> -	elif "$meld_path" --help 2>&1 |
-> -		grep -e '--output=' -e '\[OPTION\.\.\.\]' >/dev/null
-> +		meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
-> +		if test "$meld_has_output_option" = true -o \
-> +			"$meld_has_output_option" = false
+I'd advice to use GIT_TRACE_FSMONITOR or just GIT_TRACE to figure out
+what component is the last one in place before things failed. You can
+read about these on the manpage on the "other" subsection of the
+"ENVIRONMENT VARIABLES" section.
 
-The coding guideline seems to not like "test -o".
-I think it's acceptable in this case since we control its input.
-The output is comming out of "git config --bool" anyway,
-so meld_has_output_option must be either "", "true", or "false"
+I hope this helps!
+-Santiago
 
-I think we're better to do this instead:
+--s5h65za233mii63l
+Content-Type: application/pgp-signature; name="signature.asc"
 
-	if test -n "$meld_has_output_option"
-	then
-		: use configured output
-	else
-		: messing with help
-	fi
+-----BEGIN PGP SIGNATURE-----
 
-> +		then
-> +			: use configured value
-> +		else
-> +			# treat meld_has_output_option as "auto"
-> +			if test -z "$meld_help_msg"
-> +			then
-> +				meld_help_msg="$(get_meld_help_msg)"
-> +			fi
+iQIzBAABCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAl78nA0ACgkQRo8SLOgW
+IpXcHRAAmujs+2A4xwKNm2BllkkoNZW53/+WdU0bW3N6WSzdlctJyTlbBshyVh/q
+Zo9doGdW6zMh0X8nTG0XsJw50JHy7JdRK6VtCFosklHX7q3lFg8VWZatB7y0ndjL
+9EMXFkfDgviPbEQTQJWKcnWdHma/NlOZFtyifTW3jjCV5dO4JzWPTKoc158MbDWu
++iaGa0CllWWQqJFHY2iv7FAOsKHbaL3XLnYyST3KZWLKtgDmZye/GABoeSpEwo0E
+uRQZy9qRqeRXmq7QlVv6ErFcxJbgV4baKhJEBz5mbREV6OiTHcD5KC20c+GLpBpY
+SK/quyR8M6hBLFbxhvhxMdMZBkdjxYfhG+6Byphy/IEBES7yt8h6ZCbm8P2XCyUF
+OhaeEgPCZd020e+rdW6ITlmBUVIc7gFwPIcdID9wZLrdyXBtx10juptVRTJU/T7n
+9y3uaINTchIF3JrxPgW76RRj8pFERO+R4w8nQOXUV83V62pUZYR50RyFD6erV18U
+t/t/xuKNos/glEycyWfrBAirv8wtydITy0WqTH3D6UcZw/QCtEaiHO+A7KY27Mzj
+qiq7BCqIrDzpIKQCRBb3aLpUnK95eQgSh5QywPnb39qehMt7IjouaHZ70T2WoCrG
+xOx5gDvEqTIWfLTSgpNwtD9kE/L+RhF6irjtd+akr1vp3KU+ZZs=
+=u7AF
+-----END PGP SIGNATURE-----
 
-If I were writing this patch, I probably changed get_meld_help_msg to
-
-	init_meld_help_msg () {
-		if test -z "$meld_help_msg"
-		then
-			meld_path="$(git config mergetool.meld.path || echo meld)"
-			meld_help_msg=$($meld_path --help 2>&1)
-		fi
-	}
-
-And call init_meld_help_msg unconditionally here,
-(and in --auto-merge arm below, maybe other arms in the future).
-
-I'm writing without much thought into this,
-please take my word with a grain of salt :)
-
-> +}
-
-
-> +
-> +			case "$meld_help_msg" in
-> +				*"--output="* | *"[OPTION"???"]"*)
-
-I think Git project prefer aligning case arm with case,
-IOW, move left 1 TAB.
-
-> +					# old ones mention --output and new ones just say OPTION...
-> +					meld_has_output_option=true ;;
-
-It's nice to see this update, good.
-The comment is no longer correct, though.
-The version 3.20.2 has --output but not OPTIONS.
-
-It's not introduced by your change, but I think it's better to say:
-
-	# All versions that has [OPTIONS???] supports --output
-
-> +				*)
-> +					meld_has_output_option=false ;;
-> +			esac
-> +		fi
-> +	fi
-> +	# Check whether we should use 'meld --auto-merge ...'
-> +	if test -z "${meld_has_auto_merge_option:+set}"
->  	then
-> -		: old ones mention --output and new ones just say OPTION...
-> -		meld_has_output_option=true
-> -	else
-> -		meld_has_output_option=false
-> +		meld_has_auto_merge_option=$(git config mergetool.meld.hasAutoMerge)
-> +		if test "$meld_has_auto_merge_option" = auto
-
-Since we don't canonicallise to bool output of
-mergetool.meld.hasAutoMerge, I think we would need:
-
-	case "$meld_has_auto_merge_option" in
-	[Tt]rue|[Yy]es|[Oo]n)
-		meld_has_auto_merge_option=true ;;
-	auto)
-		: this shenanigan ;;
-	esac
-
-But, that's a bit messy. Let's see other's opinions.
-
-> +		then
-> +			# testing the "--auto-merge" option only if config is "auto"
-> +			if test -z "$meld_help_msg"
-> +			then
-> +					meld_help_msg="$(get_meld_help_msg)"
-> +			fi
-> +
-> +			case "$meld_help_msg" in
-> +				*"--auto-merge"*)
-> +					: old ones mention --output and new ones just say OPTION...
-
-This comment doesn't apply here.
-
-> +					meld_has_auto_merge_option=true ;;
-> +				*)
-> +					meld_has_auto_merge_option=false ;;
-> +			esac
-> +		fi
->  	fi
->  }
-> 
-> base-commit: 07d8ea56f2ecb64b75b92264770c0a664231ce17
-> -- 
-> gitgitgadget
-
--- 
-Danh
+--s5h65za233mii63l--
