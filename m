@@ -3,78 +3,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52119C433E0
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 15:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70876C433E0
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 15:40:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BEE82077D
-	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 15:37:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 566142071A
+	for <git@archiver.kernel.org>; Wed,  1 Jul 2020 15:40:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731763AbgGAPh2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jul 2020 11:37:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47328 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731399AbgGAPh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jul 2020 11:37:27 -0400
-Received: (qmail 24614 invoked by uid 109); 1 Jul 2020 15:37:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jul 2020 15:37:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6092 invoked by uid 111); 1 Jul 2020 15:37:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jul 2020 11:37:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 1 Jul 2020 11:37:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Fabio Frumento <frumento.fabio@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Built Git 2.27.0 from sources on macOS Catalina fails on "make
- profile"
-Message-ID: <20200701153726.GC6726@coredump.intra.peff.net>
-References: <618374D7-60E1-4942-B29F-4F2EA261996F@gmail.com>
+        id S1731908AbgGAPkA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jul 2020 11:40:00 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35876 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731473AbgGAPkA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jul 2020 11:40:00 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 17so23725417wmo.1
+        for <git@vger.kernel.org>; Wed, 01 Jul 2020 08:39:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=A01sj1J1wzLzZkWtXYMDVTrJ5g3UJeIdy9fCeYIZBGU=;
+        b=U/1s4KfOXlg+rSgt/GFFYjp8vNnfO/YU8SgD1NnI/Xmg3c/kp6iYsWG4YCrubz9EvL
+         TIqJNcdrPpALgdovz4LluvAJOA3J5dPlphkwyYxglf/YaLu1mAWNyE2tXnq4UihTsZfv
+         SgZKviMDDVcqbZcYYO7Z9PedacVDWWGaCOQi1Sw7wYoTtBjEyv0bMJxWCwnvQxFTCRmJ
+         o+tCaNE88h2SjaZ5jKK30332U8OsPf4n4/0xci6w2z1kGDh8r48QfYOWJ+aDoycU2pRp
+         gEJlRwzVr78/tZ4iSy2rc0uFQLMXWofx8S9DhrSfcmkCtCNWAuMl9yocqugG3ZBgz6Yx
+         xydg==
+X-Gm-Message-State: AOAM533niylXrUVW0JDXyuuB6ghoUy8HGAY2bsbf+NQRuTDMtQxJgzks
+        XrmJQ20Wb3O5F0EWjepoWZdOAWt4Z8gUEinyCASs5Q==
+X-Google-Smtp-Source: ABdhPJxFukrRtxAdxijEIbTJoaIX6YPXnKwIOCukc+lBORFDGfCsdfPWjhmdZ3A5S0qRgg/dgQktX9F+IA2UH5Rr538=
+X-Received: by 2002:a1c:9d0c:: with SMTP id g12mr20881064wme.107.1593617998105;
+ Wed, 01 Jul 2020 08:39:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <618374D7-60E1-4942-B29F-4F2EA261996F@gmail.com>
+References: <20200701093653.3706-1-ben@wijen.net>
+In-Reply-To: <20200701093653.3706-1-ben@wijen.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 1 Jul 2020 11:39:46 -0400
+Message-ID: <CAPig+cS6XnUK9MQL68_yoR9Gve4_itmawsd_0-yJr3S5=3-zPQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] git clone with --separate-git-dir destroys existing
+ directory content
+To:     Ben Wijen <ben@wijen.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 01, 2020 at 03:17:05PM +0200, Fabio Frumento wrote:
+On Wed, Jul 1, 2020 at 5:46 AM Ben Wijen <ben@wijen.net> wrote:
+> I found an issue with git clone, when using --separate-git-dir and that directory already exists,
+> it's content is destroyed.
 
-> now I'm struggling during the ```make profile``` step
-> [...]
-> I'm a little surprised as presumed, since 2.27.0 is an official
-> release, all the tests should pass without any issue.
+Thanks for fixing this.
 
-They generally do (not just for releases but for every commit that hits
-master). However, we've sometimes seen weird test failures from "make
-profile" (which in my experience isn't all that well maintained).
+> I have created a patch set on origin/next, but (as I have learned this the hard way) please let me know
+> if this needs to be backported...
 
-That said, "make profile" passes for me on v2.27.0, on Linux.  It's
-possible that a test is racy (the profiler often slows things down,
-exacerbating races), but I can't seem to get t0410 to fail with our
-usual stress-test to find races.
-
-If you don't care about profile-optimized builds, then I'd suggest
-skipping "make profile".
-
-If you want to look further into the test failure, probably it would
-help to re-run the test with more verbose settings. E.g.:
-
-  [wait for this to fail, which would leave the problematic version of
-   git in the build directory]
-  $ make profile
-  $ cd t
-  $ ./t0410-partial-clone.sh -v -i -x
-
-then we could see what's failing.
-
-> How to file a bug to the Git developers?
-
-I think you just did.
-
--Peff
+Does this patch series depend on certain topics in 'next'? If not,
+please base it on 'master' instead. This will allow it to graduate
+from 'seen' to 'next' and eventually 'master' without being held back
+by any other topics in flight. On the other hand, if it does depend
+upon some topic in 'next', then it is a good idea to specify which
+specific topics it needs. That way, your patches will be able to
+graduate after those specific topics graduate rather than having to
+wait until _all_ of 'next' graduates (which could take forever).
