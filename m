@@ -5,69 +5,68 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B0A5C433E0
-	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 19:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B390C433DF
+	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 19:25:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF72D221E9
-	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 19:24:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 399A320780
+	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 19:25:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CaBl/lwA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OlSezPBT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726032AbgGBTYx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jul 2020 15:24:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36720 "EHLO
+        id S1726053AbgGBTZD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jul 2020 15:25:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbgGBTYw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jul 2020 15:24:52 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F062C08C5C1
-        for <git@vger.kernel.org>; Thu,  2 Jul 2020 12:24:52 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id d10so11683346pls.5
-        for <git@vger.kernel.org>; Thu, 02 Jul 2020 12:24:52 -0700 (PDT)
+        with ESMTP id S1725915AbgGBTZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jul 2020 15:25:03 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4833C08C5C1
+        for <git@vger.kernel.org>; Thu,  2 Jul 2020 12:25:02 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id k71so9343892pje.0
+        for <git@vger.kernel.org>; Thu, 02 Jul 2020 12:25:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RQD+HDai7Q5CR/dG8a4vM+E9F2libihPB1l+ixu4cV0=;
-        b=CaBl/lwA1Zi6lVDGI+SliEsUS30rLbbJ+db2fyQ8jG6Aaybac4L87zxTOBO+T98oks
-         J8bsgG8bDtleiXpD+xRB5C5swxhyImuW5hF3WDfkDoq8Nigc8XjWR3418OYRKZrCDnjV
-         7U3Ur/LdBC85EG3y6A3C1Vu1nAh7COYeqq5SG5vO93bmNJ06zvlXbv3aSqGTHVeNIDdW
-         u+qDa+wZGp4yN8YpkG9TQPf0uQcEXfceBOmNu/k5Kch54qSpTbV0/b5NBE7k7QUVKX6g
-         NgEG9B9bHmqPA69F5tzUQ6k9DmjUB4fV1TCng0wqZLRHiRwVJMqyVfeBs3APwjvV42GI
-         YNKQ==
+        bh=hF2UjjQkr2LxfdZBbXJWulsNlCLtR4dt2Jo05xbiLQo=;
+        b=OlSezPBTzqt4g7WYAzeFOlUzXdP0odEwqzRemdT5A1TzwX67TPNlmoUBo8S04K/15M
+         Cknna2i+I7a3CEPUIICDkc6MbQHTFKgJjNmcEBLI3ESbIms0qsmer8NcXF7cymBGQXJ+
+         /wV/Shf9BSobh7P7WkLeTM6+ngb07OffajOokT+ln5I4SoHNDyxR4rkj+GNCqF8+5UlB
+         +j86Y6eM43mNT84Yx3UW4/hQO9t1Q5pFWMvdY85+KDd3FBQfI0j5/ySzzbojKWvjjjwo
+         UjSYllTXO5AAk/zVwxUFrfE+ZjjwGjpTt4gtnbnnKCmHAJyqV4wlq4+NGqvbuNjOkjYc
+         kk6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RQD+HDai7Q5CR/dG8a4vM+E9F2libihPB1l+ixu4cV0=;
-        b=r1fOfUI9KC1//XgekV/Ray0S2gspcB+EXd3/NYC4b4ZbKLSem/AqvCfAgVEKAonQHU
-         Q5SusPkhEtVymwAAjaw225SfQyfdJUcjI0RtdrsZJlIlnAOTtI/7gOvdAGE9wQ9n637s
-         inV4LiRCx0+rIr9IKWd1mpiGhWs1kKH/HrC7Zq2q4TGkiTJhGeN2WPq/NU0OPswb27HT
-         6zn4dC5SIvugzcGHUMFJ+6DvBcep2uV9c6zY7Yp5NtfOVQ4dWuHPMmbNBTjY000HhC6u
-         ty9TQHx+4whTznSCoofyvAO4f03vd3xyoTHiKXn0rOAWDk1/zXzbJlgd9TQTeVJbLb+L
-         GPEg==
-X-Gm-Message-State: AOAM533mwX2oFG4EwK70OqIK3SGQFQuZktlxAos+iWVGwmWHJ3xtCFTJ
-        Tj8Pvbz/7LpLijEukRLLSXrNigRQSnX/4Q==
-X-Google-Smtp-Source: ABdhPJw5tmy2863Xy8I/MqFdHNIIKt6RQTuaXSuAWXWMnq8J1ySefg+fqyID2sPRxlNpoL1jWa3Oug==
-X-Received: by 2002:a17:90a:cc03:: with SMTP id b3mr31509199pju.80.1593717891493;
-        Thu, 02 Jul 2020 12:24:51 -0700 (PDT)
+        bh=hF2UjjQkr2LxfdZBbXJWulsNlCLtR4dt2Jo05xbiLQo=;
+        b=Zh8tPgk6F+0ymOQC/5r5AUexkdsfj9nrNJU/+qtDivUZOfYMB7xX2gQgMpQ+x4EJo7
+         2Y1IAcyGuQaEkd2HM846I2ZGkxrfDAZsMJkwk8NFwRRpw+EN94wI8wzkE3PT1OiGUZNK
+         LlxJ/SHlvlp8A5PmIpxtQVlJlpqfRExX0++DNlWhLx7PO6eMq0QpHFqR2NrxuRdU3Edt
+         nWKeQA77Eqj+/0ey0M3Xmsqo/n5aSYmyBpusXu9u1wb6XZR5oPTAgHI/y+/mVNXuTBX7
+         JKbvub5ZEET1OsNPuR2gqvUPgYeC7Nw/yGDVV899j/tYIM0of+zgrzu2CbwG1zHFAZhe
+         DHkg==
+X-Gm-Message-State: AOAM531Gs57IZQ30///dnOL3Z9D7Y0HQ4HJ3BopKNnXO+bBm6UoR1kJ+
+        ccCHRJQkctVCSblXxBHnhzt9getur6Zxww==
+X-Google-Smtp-Source: ABdhPJxsDur0y0a+vpT2/0dOGVSTRW7in66NhW6/Nn3dLqG7/7jSTPJ0hnveyHfre2ke/cjXvCtOpw==
+X-Received: by 2002:a17:90a:d684:: with SMTP id x4mr20208888pju.62.1593717901997;
+        Thu, 02 Jul 2020 12:25:01 -0700 (PDT)
 Received: from localhost.localdomain ([45.127.46.244])
-        by smtp.gmail.com with ESMTPSA id c2sm9266739pgk.77.2020.07.02.12.24.42
+        by smtp.gmail.com with ESMTPSA id c2sm9266739pgk.77.2020.07.02.12.24.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2020 12:24:50 -0700 (PDT)
+        Thu, 02 Jul 2020 12:25:01 -0700 (PDT)
 From:   Shourya Shukla <shouryashukla.oo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, gitster@pobox.com,
         liu.denton@gmail.com, kaartic.sivaraam@gmail.com,
         pc44800@gmail.com, sbeller@google.com, pclouds@gmail.com,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/4] submodule: rename helper functions to avoid ambiguity
-Date:   Fri,  3 Jul 2020 00:54:07 +0530
-Message-Id: <20200702192409.21865-3-shouryashukla.oo@gmail.com>
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Subject: [PATCH 3/4] diff: change scope of the function count_lines()
+Date:   Fri,  3 Jul 2020 00:54:08 +0530
+Message-Id: <20200702192409.21865-4-shouryashukla.oo@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200702192409.21865-1-shouryashukla.oo@gmail.com>
 References: <20200702192409.21865-1-shouryashukla.oo@gmail.com>
@@ -78,96 +77,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The helper functions: show_submodule_summary(),
-prepare_submodule_summary() and print_submodule_summary() are used by
-the builtin_diff() function in diff.c to generate a summary of
-submodules in the context of a diff. Functions with similar names are to
-be introduced in the upcoming port of submodule's summary subcommand.
+From: Prathamesh Chavan <pc44800@gmail.com>
 
-So, rename the helper functions to '*_diff_submodule_summary()' to avoid
-ambiguity.
+Change the scope of function count_lines for allowing the function
+to be reused in other parts of the code as well.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
 Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 ---
- diff.c      |  2 +-
- submodule.c | 10 +++++-----
- submodule.h |  2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ diff.c | 2 +-
+ diff.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/diff.c b/diff.c
-index d24aaa3047..4a2c631c37 100644
+index 4a2c631c37..39ddbcf451 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -3429,7 +3429,7 @@ static void builtin_diff(const char *name_a,
- 	if (o->submodule_format == DIFF_SUBMODULE_LOG &&
- 	    (!one->mode || S_ISGITLINK(one->mode)) &&
- 	    (!two->mode || S_ISGITLINK(two->mode))) {
--		show_submodule_summary(o, one->path ? one->path : two->path,
-+		show_submodule_diff_summary(o, one->path ? one->path : two->path,
- 				&one->oid, &two->oid,
- 				two->dirty_submodule);
- 		return;
-diff --git a/submodule.c b/submodule.c
-index e2ef5698c8..097902ee67 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -438,7 +438,7 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 	 */
- }
+@@ -547,7 +547,7 @@ struct emit_callback {
+ 	struct strbuf *header;
+ };
  
--static int prepare_submodule_summary(struct rev_info *rev, const char *path,
-+static int prepare_submodule_diff_summary(struct rev_info *rev, const char *path,
- 		struct commit *left, struct commit *right,
- 		struct commit_list *merge_bases)
+-static int count_lines(const char *data, int size)
++int count_lines(const char *data, int size)
  {
-@@ -459,7 +459,7 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- 	return prepare_revision_walk(rev);
- }
+ 	int count, ch, completely_empty = 1, nl_just_seen = 0;
+ 	count = 0;
+diff --git a/diff.h b/diff.h
+index 9443dc1b00..bd96c8c434 100644
+--- a/diff.h
++++ b/diff.h
+@@ -495,6 +495,7 @@ void free_diffstat_info(struct diffstat_t *diffstat);
+ int parse_long_opt(const char *opt, const char **argv,
+ 		   const char **optarg);
  
--static void print_submodule_summary(struct repository *r, struct rev_info *rev, struct diff_options *o)
-+static void print_submodule_diff_summary(struct repository *r, struct rev_info *rev, struct diff_options *o)
- {
- 	static const char format[] = "  %m %s";
- 	struct strbuf sb = STRBUF_INIT;
-@@ -610,7 +610,7 @@ static void show_submodule_header(struct diff_options *o,
- 	strbuf_release(&sb);
- }
- 
--void show_submodule_summary(struct diff_options *o, const char *path,
-+void show_submodule_diff_summary(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule)
- {
-@@ -632,12 +632,12 @@ void show_submodule_summary(struct diff_options *o, const char *path,
- 		goto out;
- 
- 	/* Treat revision walker failure the same as missing commits */
--	if (prepare_submodule_summary(&rev, path, left, right, merge_bases)) {
-+	if (prepare_submodule_diff_summary(&rev, path, left, right, merge_bases)) {
- 		diff_emit_submodule_error(o, "(revision walker failed)\n");
- 		goto out;
- 	}
- 
--	print_submodule_summary(sub, &rev, o);
-+	print_submodule_diff_summary(sub, &rev, o);
- 
- out:
- 	if (merge_bases)
-diff --git a/submodule.h b/submodule.h
-index 4dad649f94..22db9e1832 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -69,7 +69,7 @@ int parse_submodule_update_strategy(const char *value,
- 				    struct submodule_update_strategy *dst);
- const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
- void handle_ignore_submodules_arg(struct diff_options *, const char *);
--void show_submodule_summary(struct diff_options *o, const char *path,
-+void show_submodule_diff_summary(struct diff_options *o, const char *path,
- 			    struct object_id *one, struct object_id *two,
- 			    unsigned dirty_submodule);
- void show_submodule_inline_diff(struct diff_options *o, const char *path,
++int count_lines(const char *data, int size);
+ int git_diff_basic_config(const char *var, const char *value, void *cb);
+ int git_diff_heuristic_config(const char *var, const char *value, void *cb);
+ void init_diff_ui_defaults(void);
 -- 
 2.27.0
 
