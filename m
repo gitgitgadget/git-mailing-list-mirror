@@ -2,64 +2,99 @@ Return-Path: <SRS0=gkpi=AN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16119C433DF
-	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 16:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80D04C433E0
+	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 17:06:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E91EE20720
-	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 16:40:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5911620720
+	for <git@archiver.kernel.org>; Thu,  2 Jul 2020 17:06:19 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DEHpr7FT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726675AbgGBQkt convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 2 Jul 2020 12:40:49 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:11937 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726638AbgGBQkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jul 2020 12:40:49 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 062Geimi036694
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 2 Jul 2020 12:40:44 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jason Pyeron'" <jpyeron@pdinc.us>, <git@vger.kernel.org>
-Cc:     "'Matthew Horowitz'" <mhorowitz@pdinc.us>,
-        "'Jakub Trzebiatowski'" <cubuspl42.1@gmail.com>
-References: <CAAF2pWYNbZF5fqZVuakTmAguK7End3nFbRgfT=mRXFfmgD9LNA@mail.gmail.com> <0e9801d6508d$c1f55560$45e00020$@pdinc.us>
-In-Reply-To: <0e9801d6508d$c1f55560$45e00020$@pdinc.us>
-Subject: RE: Is git compliant with GDPR?
-Date:   Thu, 2 Jul 2020 12:40:37 -0400
-Message-ID: <03df01d6508f$873cc320$95b64960$@nexbridge.com>
+        id S1726865AbgGBRGS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jul 2020 13:06:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726726AbgGBRGR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jul 2020 13:06:17 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 535FCC08C5C1
+        for <git@vger.kernel.org>; Thu,  2 Jul 2020 10:06:17 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id f8so20891572ljc.2
+        for <git@vger.kernel.org>; Thu, 02 Jul 2020 10:06:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=H+sU+DYL0bNZjXUIFVIM/pcHl06IUDdRMmY1X35NfdQ=;
+        b=DEHpr7FTHUrwPIZKr2z2KWxFgRyhnuoMWwID+niaaTqNdGzqN0hSWEac3GUHF8v0oR
+         57QTjop+aLO4XdcFTPzJNkcegrxwn4kCTmhOILvolHSCMywIZ5rHBfBsmib3Q4cZN+PJ
+         UA9DIB7pMi7ZwyF0MqquPqm0mfjmkcEVZHZ8/+6JXwLZ6zhJzAQTtyOvuc2P3/BS13ML
+         GGHzoX4MtOjMxInupCCZ8iFIVonzFhyemwwDegE54I15SnWHA+NeoKK3fHGqk4rkF70e
+         WY/Kay5Oim/7z8echaeFWKMGITy7tSYrPe8m4/LRubrprCc5fbVNot1PCytGhZOPtHKl
+         9+og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=H+sU+DYL0bNZjXUIFVIM/pcHl06IUDdRMmY1X35NfdQ=;
+        b=ZceF3TWLUT3lOoJh148KXP8GHPXQeFfVMDfLELyYrfXhFbVnTx6ewHJ2alKJ5A/R/f
+         /x8cW/bzeCKLF+GNm9VdzdbkixWymXI2EJrJpV8lP+kXRQ714A9RtdcpaQxVzCDDKpVM
+         KYUdFlpSyMHVUP8ctzFBnBSCQsxQcXWJHxum+gN/UYiJL4ZUJvYAMtQLoRmMe2wvQkHN
+         tOaLtXfmdlmOC25WHIRAKD5AbOZeLJaLHcGsdDHTKRHgBxX6QXxmXOr/eIeo8xWK2f/R
+         Fc4wGrP8FHGwLCYfier0WkB9V9dZUiyaEig7pXAur9oMe71R+UMPb7lqpN9gi63T3399
+         uYCA==
+X-Gm-Message-State: AOAM533KncFMJoskv99N8tgvEGjSdfU+AgIjmMrNVqe8JysBqNV1GldI
+        h6Y7Q3O/h3POtXZMrnxdeOpT//Y5/H8Oytg14DN9KqZp204=
+X-Google-Smtp-Source: ABdhPJzJhakXYFZQj5Gu7xnAQhhhF2UJvLdMilXhdp6SBREWglkXjWYBmUcWPCp3k6YKY8f13J+FIlAbiZNfwArKAjI=
+X-Received: by 2002:a2e:b4ce:: with SMTP id r14mr7884735ljm.88.1593709575557;
+ Thu, 02 Jul 2020 10:06:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQI3a36ohrugQlw4W93V7edqWZTq6QHTAPwuqCOvOXA=
+References: <CAAF2pWYNbZF5fqZVuakTmAguK7End3nFbRgfT=mRXFfmgD9LNA@mail.gmail.com>
+ <0e9801d6508d$c1f55560$45e00020$@pdinc.us>
+In-Reply-To: <0e9801d6508d$c1f55560$45e00020$@pdinc.us>
+From:   Jakub Trzebiatowski <cubuspl42.1@gmail.com>
+Date:   Thu, 2 Jul 2020 19:06:04 +0200
+Message-ID: <CAAF2pWb8Namk1rpm4==PUrq4ft9fp4eD=t9WyMLv56dPZuGk2g@mail.gmail.com>
+Subject: Re: Is git compliant with GDPR?
+To:     Jason Pyeron <jpyeron@pdinc.us>
+Cc:     git@vger.kernel.org, Matthew Horowitz <mhorowitz@pdinc.us>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 2, 2020 12:28 PM, Jason Pyeron wrote:
-> Subject: RE: Is git compliant with GDPR?
+czw., 2 lip 2020 o 18:27 Jason Pyeron <jpyeron@pdinc.us> napisa=C5=82(a):
+>
 > > -----Original Message-----
 > > From: Jakub Trzebiatowski
 > > Sent: Thursday, July 2, 2020 11:58 AM
 > >
-> First: I am not a lawyer, and even if I were, I (nor anyone else on this list)
-> would not be your lawyer - get a lawyer.
-> 
-> Second: This thread is likely borderline off topic because for Git and GPDR to
-> meet, it would be in the context of SaaS or your internal organization. There
-> is almost nothing pure Git about these issues, see below. Discussion for the
-> sake of it follows.
-> 
+> > Hello,
+>
+> First: I am not a lawyer, and even if I were, I (nor anyone else on this =
+list) would not be your lawyer - get a lawyer.
+I don't think I'm in need of a lawyer. I wanted to start a discussion
+on a topic that in my opinion deserves being discussed, because I'm a
+git user and I believe it's interesting.
+>
+> Second: This thread is likely borderline off topic because for Git and GP=
+DR to meet, it would be in the context of SaaS or your internal organizatio=
+n. There is almost nothing pure Git about these issues, see below. Discussi=
+on for the sake of it follows.
+
+I do agree that that sounds reasonable. But could I ask you why do you
+assume that there needs to be a service (or Software as a Service) to
+make software fall under GDPR? The GDPR definitions don't seem to
+mention that.
+
 > >
 > > I've been using git for years, but I've never before taken part in the
 > > discussion on the mailing list. I have a simple question, which
@@ -71,26 +106,46 @@ On July 2, 2020 12:28 PM, Jason Pyeron wrote:
 > > name. That is personal data.
 > >
 > > GDPR, Article 4, point (1):
-> > ‘personal data’ means any information relating to an identified or
-> > identifiable natural person (‘data subject’); [...]
+> > =E2=80=98personal data=E2=80=99 means any information relating to an id=
+entified or
+> > identifiable natural person (=E2=80=98data subject=E2=80=99); [...]
 > >
 > > That data is handled by the git utility. It's sent to other parties
 > > operating remote git servers (as a result of my commands, but as far
 > > as I know that's not relevant). It sounds like it's being processed.
-> 
-> Git is like a hard drive or database in your organization. It does not do
-> anything else than store the information.
-> 
+>
+> Git is like a hard drive or database in your organization. It does not do=
+ anything else than store the information.
+
+Storing is processing. I'm not saying that git is evil or wrong, I'm
+saying that it might be the case that it processes personal data (both
+understood as in GDPR).
+
+git is also a software created by people and used by people.
+
+>
 > Exception 1: IF you configure it to do so.
-> 
-> Exception 2: You are using a SaaS provider (e.g. github.com, gitlab.com, etc.)
-> 
-> Note: this is no different than any other SCM (e.g. CVS, Subversion, file
-> shares, etc.).
-> 
+
+Sure, it doesn't change much. Processing data initiated by the user
+isn't any kind of distinguished processing, as far as I know.
+
+>
+> Exception 2: You are using a SaaS provider (e.g. github.com, gitlab.com, =
+etc.)
+>
+> Note: this is no different than any other SCM (e.g. CVS, Subversion, file=
+ shares, etc.).
+
+I'm totally aware. I know how git works, including some of the
+internals, and I'm in general aware of standard solutions in the IT
+industry. Probably if git would be considered non-compliant, then so
+would be other SCMs.
+
+>
 > >
 > > GDPR, Article 4, point (2):
-> > ‘processing’ means any operation or set of operations which is
+> > =E2=80=98processing=E2=80=99 means any operation or set of operations w=
+hich is
 > > performed on personal data or on sets of personal data, whether or not
 > > by automated means, such as collection, recording, organisation,
 > > structuring, storage, adaptation or alteration, retrieval,
@@ -103,39 +158,44 @@ On July 2, 2020 12:28 PM, Jason Pyeron wrote:
 > > other parties only when specific commands are given. All this was
 > > defined by git authors/contributors (from all around the world).
 > >
-> 
-> Again, like any database, you can query it for its contents. What you put in it
-> is what it has. If you put personal data in, then it is there.
-> 
+>
+> Again, like any database, you can query it for its contents. What you put=
+ in it is what it has. If you put personal data in, then it is there.
+
+It's not a general purpose database, it's a structured database and a
+software that operates on that database. That database has a field for
+personal data, and that data is processed by the software.
+
 > Where can data reside in Git?
-> 
+>
 > 1. The blobs - e.g. your source code
-> 
+>
 > 2. The commit messages.
-> 
+>
 > #2 is your most likely candidate of GDPR related activities.
-> 
-> Do you use the developers names and email addresses in the message?
-> Almost certainly.
-> 
-> Note: this is no different than any other SCM (e.g. CVS, Subversion, file
-> shares, etc.).
-> 
+>
+> Do you use the developers names and email addresses in the message? Almos=
+t certainly.
+>
+> Note: this is no different than any other SCM (e.g. CVS, Subversion, file=
+ shares, etc.).
+>
 > > GDPR, Article 4, point (7):
-> > ‘controller’ means the natural or legal person, public authority,
+> > =E2=80=98controller=E2=80=99 means the natural or legal person, public =
+authority,
 > > agency or other body which, alone or jointly with others, determines
 > > the purposes and means of the processing of personal data; [...]
 > >
 > > Git authors can be considered joint controllers.
 > >
-> 
-> The Git distributed model means that COPIES of all of the data are on each
-> Git server and developer environment. You (and I mean your organization)
-> must address this in your IT plans.
-> 
-> Note: this is no different than many other SCMs although some others SCM
-> technologies only have the most recent version locally..
-> 
+>
+> The Git distributed model means that COPIES of all of the data are on eac=
+h Git server and developer environment. You (and I mean your organization) =
+must address this in your IT plans.
+>
+> Note: this is no different than many other SCMs although some others SCM =
+technologies only have the most recent version locally..
+>
 > > If we'd assume the above interpretations, there would be many, many
 > > consequences.
 > >
@@ -153,21 +213,19 @@ On July 2, 2020 12:28 PM, Jason Pyeron wrote:
 > > difficult with Free/Open Source software with many, many authors. But
 > > if the aforementioned interpretation was assumed, the git authors
 > > could be held responsible for non-compliance.
-> 
-> 
+>
+>
 > I have copied our Policy SME, maybe he will have opinions.
+>
+> -Jason
+>
 
-I am not speaking for the Git Foundation here, nor am I a lawyer; However, to use some practices from some of my customers who have this concern, the team members are directed to use tokenized names and email addresses that can be resolved by their security teams during an audit. Obviously the team members recognize the tokens so they know who is making what change. This means that externally, any names/emails that might get pushed upstream are non-identifying.
+In general, I totally agree with everything you said.
 
-The problem with this approach is that it is not global. As a result, if you want to contribute to a public project you have to self-identify, which may imply consent under GDPR. This is for the protection of the project itself as a project cannot take code from anonymous sources. If you are unwilling to share that information, do not contribute to a project.
+But you said that git itself (as a software) doesn't fall under GDPR,
+and that's the only thing I'm not sure about. I was wondering if
+someone with a deeper understanding of GDPR would tell my _why_.
+Because when interpreting the law literally, it sounds like it does.
 
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
-
+Also, to clarify, I'm not seeking legal advice for myself or my organizatio=
+n.
