@@ -6,67 +6,105 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF97FC433DF
-	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 04:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 691B2C433E0
+	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 04:50:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6F322067D
-	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 04:22:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12C5E20737
+	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 04:50:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=tomaszubiri.com header.i=correo@tomaszubiri.com header.b="gfuoMN2t"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fr0qazTj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725891AbgGCEWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jul 2020 00:22:14 -0400
-Received: from sender4-of-o53.zoho.com ([136.143.188.53]:21338 "EHLO
-        sender4-of-o53.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725294AbgGCEWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jul 2020 00:22:14 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1593750131; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=jYzD/mF2Z+beppEdDMAt6VNkcc337pq4EkvHwrWbdEzoiF74dmdpwvvyuueqXuy1LP/NWfIO07xkBe46co8hLCV/GkoB37K/h8G5DzPYAsslUwXSLv3HCzhLQ6Qnlt9wIZ5t6bnrx24I/kNbJYTeREcx3F5aAksyQVZ6fMa1Kdg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1593750131; h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To; 
-        bh=tcprOcyiLl+TJ8G+is0i7IyB/tdRuMe/bIvKE51+CPo=; 
-        b=VpIxaz15+veEJmN4tpYFO8yoEgohxzatMoKwyjcW8waMdTz0vF9SsidWgNnAZkEZeF5elzq2C9Xa/e0CCDGlcFi+rEmq4ZfgZX22JLIFWG/+WC4r72qGpfvIrolSdcZOr0xa4z6dfxda9rRI2opPQyTVtn1Sfj2LCwlkLBYjV1E=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        dkim=pass  header.i=tomaszubiri.com;
-        spf=pass  smtp.mailfrom=correo@tomaszubiri.com;
-        dmarc=pass header.from=<correo@tomaszubiri.com> header.from=<correo@tomaszubiri.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1593750131;
-        s=raiz; d=tomaszubiri.com; i=correo@tomaszubiri.com;
-        h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=tcprOcyiLl+TJ8G+is0i7IyB/tdRuMe/bIvKE51+CPo=;
-        b=gfuoMN2tx2bOJEvaZnmxg+QXttDrQkDyNuPh8b+DGbyueC0BxCc2XLSnVSd5tXLQ
-        F6somoxfhurOxU9MsNXaQFVk8z0P37mxBH0DdUZpx35PItIFrHRwPOSXpQX0bHiTLOq
-        bNMzscdLXra012nNs5TeLaYB5DAYPCEbkMpijljg=
-Received: from mail.zoho.com by mx.zohomail.com
-        with SMTP id 1593750129721399.48116947775156; Thu, 2 Jul 2020 21:22:09 -0700 (PDT)
-Date:   Fri, 03 Jul 2020 01:22:09 -0300
-From:   Tomas <correo@tomaszubiri.com>
-To:     "git" <git@vger.kernel.org>
-Message-ID: <17312e90c37.fefa495d137526.1559287962218705021@tomaszubiri.com>
-Subject: commiting a change from command line with newlines.
+        id S1726300AbgGCEuv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jul 2020 00:50:51 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52840 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725764AbgGCEuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jul 2020 00:50:50 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F0459D50E9;
+        Fri,  3 Jul 2020 00:50:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J7sDnLy5UBbW5m7BZfj0aCTXZxU=; b=Fr0qaz
+        TjwsyyXlAXv4CZ5zsGJs0LnWByFAi85hS3DXpc/vtCimdMsu2kfVMbe8WwzRhxJJ
+        XmC5UhJW8WiQ82BkBDwtAxS2hECUH7J/XbTW8li6GoFDPR1p4YDmm/0fvxuBDv4L
+        wUOEKXcHi/mcnloX/Zxus+ZwdpmuRq4+Ybda4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Fub7SOtvpjyJIulXY4W4Xy4nWbEVTkX/
+        AMsLRR3qFz+ReUvsyFRV2NgEOttHTy9HBN9F38E2bjT9G9YcNDo7O3byfd1wWdfz
+        G+b0H7gCt/uNo9xzZ03KJDAxGDEs7qkDBQxq4/biOBeYVc+ns7rJKXWFe7hiwMkv
+        XVpVMu9FLsQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E9787D50E8;
+        Fri,  3 Jul 2020 00:50:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3DCFCD50E7;
+        Fri,  3 Jul 2020 00:50:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sunlin <sunlin7@yahoo.com>,
+        Lin Sun <lin.sun@zoom.us>
+Subject: Re: [PATCH v7] Support auto-merge for meld to follow the vim-diff behavior
+References: <pull.781.v6.git.git.1593650687697.gitgitgadget@gmail.com>
+        <pull.781.v7.git.git.1593746805771.gitgitgadget@gmail.com>
+Date:   Thu, 02 Jul 2020 21:50:44 -0700
+In-Reply-To: <pull.781.v7.git.git.1593746805771.gitgitgadget@gmail.com>
+        (sunlin via GitGitGadget's message of "Fri, 03 Jul 2020 03:26:45
+        +0000")
+Message-ID: <xmqqo8oxb3rv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain
+X-Pobox-Relay-ID: C212EE82-BCE8-11EA-8BBE-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+"sunlin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I'm trying to write stanzas in my commit message, and naturally the ASCII newline character is the best tool for this, beautifully integrated throughout my whole system, from my keyboard to my screen.
+>      ++	When the `--auto-merge` is given, meld will merges all non-conflicting
 
-My question is, how can I add a newline from the git command line without opening an external program like vi, atom, notepad, word etc...
+Grammo: "will merges"???
 
-Since I'm using a unix like system I even tried with pipes (and xargs, the necessary evil) but with something like "printf "a\nb" | xargs git commit -m" b gets interpreted as something else. 
+>      ++	part automatically, highlight the conflicting part and waiting for user
+>      ++	decision.  Setting `mergetool.meld.useAutoMerge` to `true` tells Git to
+>      ++	unconditionally use the `--auto-merge` option with `meld`.  Setting this
+>      ++	value to `auto` makes git detect whether `--auto-merge` is supported and
+>      ++	will only use `--auto-merge` when available.  A value of `false` avoids
+>      ++	using `--auto-merge` altogether, and is the default value.
+>       +
+>        mergetool.keepBackup::
+>        	After performing a merge, the original file with conflict markers
+>      @@ mergetools/meld: diff_cmd () {
+>       -	meld_path="${meld_path:-meld}"
+>       +# Get meld help message
+>       +init_meld_help_msg () {
+>      -+	if test -z "${meld_help_msg:+set}"
+>      ++	if test -z "${meld_help_msg}"
 
-Does anybody know of a way to adorn a commit message with newlines in a single git commit command? 
-Thanks in advance.
+Now we do not use the :+ magic, there is no reason to use extra
+{brace} around the variable name.  Just sticking to the normal
+"$meld_help_msg" would help the readers to hint that there is no
+strange thing going on.
 
+>      ++		case "${meld_use_auto_merge_option,,*}" in
 
+DON'T. 
+
+The ${parameter,,pattern} expansion is one of the non-portable
+bash-isms we do not use in our codebase.  Use of it won't fix the
+correctness problem coming from not using --bool anyway, because ...
+
+>      ++		true|yes|on|1)
+
+... any numeric value that is not 0 is taken as true.  Writing 1
+here does not help.
 
 
