@@ -2,322 +2,132 @@ Return-Path: <SRS0=CKFy=AO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20C95C433DF
-	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 08:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6A7AC433DF
+	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 08:38:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E86CB207FF
-	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 08:30:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7091B206DF
+	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 08:38:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R0LdUkJA"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=qmaw.com header.i=@qmaw.com header.b="m9t/6Cyn";
+	dkim=pass (1024-bit key) header.d=prudentialus.onmicrosoft.com header.i=@prudentialus.onmicrosoft.com header.b="yX43u5yC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbgGCIay (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jul 2020 04:30:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725648AbgGCIay (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jul 2020 04:30:54 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EFE2C08C5C1
-        for <git@vger.kernel.org>; Fri,  3 Jul 2020 01:30:54 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id l6so10513636pjq.1
-        for <git@vger.kernel.org>; Fri, 03 Jul 2020 01:30:54 -0700 (PDT)
+        id S1725915AbgGCIiN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jul 2020 04:38:13 -0400
+Received: from pa-mailgate.prudential.com ([12.42.58.8]:11074 "EHLO
+        pa-mailgate.prudential.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725648AbgGCIiM (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 3 Jul 2020 04:38:12 -0400
+X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Jul 2020 04:38:12 EDT
+IronPort-SDR: kmV9e2AA2dtbgnsuvztg35/2wc575QrGK1HKZmm2flJC0x2Jq9j5h2g4PXLa1KQncxKhdkWQMF
+ g+TYpXH+laLA==
+Received: from p2erscba1086.prudential.com (HELO ironportpaprod.prudential.com) ([161.151.153.22])
+  by ironportpaprod.prudential.com with ESMTP; 03 Jul 2020 04:31:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=qmaw.com; i=@qmaw.com; q=dns/txt; s=20190808;
+  t=1593765064; x=1656837064;
+  h=from:to:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=fyQRSkphgGuJ1rZutnswqPoIR0dhQWpeFT+sycomJNo=;
+  b=m9t/6CynI3paE9CRZbxjTzZ2vJ1wQEp7oFdxkzV1zhnCiURnjUtCnvsJ
+   7Z7tkST8ZO0FRvJC35/az+WFGXJEPlHmcL6IarEAGbPZDBbu3lQpdj/UI
+   qVtk7xIhLz67mwiN30+i2Qrqo/FWa9ih/C02qbYdW4E6q8GutzIRSTDTA
+   sKHGvZBO7YeRC/HF1RkLTVTjx2o3CTG3dQiL9XICYZY8qUL/4qba4uswQ
+   A4IYpquITsySmSV+LohPG0tXAw/6OH6QgzanY8TBFhC9wQ9JagAqu2sKw
+   xNJehd82a9RICqzTxsonupA4QV9kw49xTX8sVH5mUbQogTbwgoJWxCQPv
+   g==;
+IronPort-SDR: Jw4tApAzH5BDiog4ViivS0yhQYhD2lSgJDTJSM5IIlAWvjhQV4TqAtDOc8NDtuP7Tm9BFWZJXx
+ QY25rLzzk0ww==
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com ([48.96.18.99])
+          by p2erscengw004.prudential.com (IBM Domino Release 9.0.1FP8 HF450)
+          with ESMTP id 2020070304310432-2278071 ;
+          Fri, 3 Jul 2020 04:31:04 -0400 
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dWV4n4joQTZxxKVgB4wLQYQIpfh0qNXTe+LzQWhSLhFJGCA/gkUziaEqv8NVwYRGCC+EpltDWMi738o8a9Z7ZTGuOqQvhcw6O0bJaLBMJcF+wlYZz5Shuv3I/K/hBrRjxk7vNMKaz6TE300myYPdbw8yc3sRbMYTmHfB7caSU9zFkdA9Rs3Or0niw4aJFjk5GosYnaLl0nGSqKBS+/hxjGelDYRQimuMxpX6tzfdwyOqsF+jGiOq5MjTcQ4acKdxCQvlZCut3jc1J0BuoPB9TAzcuzsF1211DBohL76Z/fsfRb3cB8EHAADySrGyMLNQqZKysoYVgyE6QcRRAYkf/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fyQRSkphgGuJ1rZutnswqPoIR0dhQWpeFT+sycomJNo=;
+ b=iaWL9F9sFLOVc44AGzV+xExmhyfjheI+/45TdiCkvuO5GbTtpkby53INxkHoK1PZhtKfuGQjxzhK9jHJH20IqxCV15rCRgynW3frnx9SgFanxncTw2NF9N6tIOuG5akOBDAaME+X/A6flHSKaspRcO0lMJPy40xVwVCp/g+CRtwSw3uYlMKncTfTO65PXIUl8AE5oTOQ0k3zaqttPZgtfUIl9/IW+dKMuoLwI1wQSS06Ge/1rwnIecA18KJvszNbAFVW1wZO+uuB3TSTQbxk1rIQykYv0oEOe2/owg+lGbZUuueMryqeeiHSq0skI3QLafkwlarAkvQYry8SmXEQZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qmaw.com; dmarc=pass action=none header.from=qmaw.com;
+ dkim=pass header.d=qmaw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hwfM3/G2wpigiMMBJWnKufu3bntv5aGVaW9hJ3jZhMQ=;
-        b=R0LdUkJAca2+4PkZThemJxw1ACBBF4GHHEiU+TyRn5I198EqEnyrOood/LA1Ls2qnO
-         XKsMaCLOiH0VZ6pmhXLVpz8fG71nyqy68OHPJ9tylZZQvFDChQP1AU5rSnwFvM4zb39m
-         fos2WnmvLU55zYhqV+kXdC2DIQf44bryNMTewwzlsu0nWRvd2Gp9BcFYx5GKl+iy/7Tv
-         LWYFfvL/594TJcCHofBGXH53CP3K5CHrCHxvbs8RcUahy3gwglN96SK9EETirUnTtroj
-         gMFCuNpSsEwq5ueokihIkMa2Yf3wl/QYS4g55e9WeKhK1hnqI/24jFr3ADveSTfyRaOC
-         QDtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=hwfM3/G2wpigiMMBJWnKufu3bntv5aGVaW9hJ3jZhMQ=;
-        b=EYB6dkz2Mk7nUJCL26PPeSOXjt/kfHNNE6Kc4c+aPclTyDmyvesJgjSCt3+VQWPO76
-         8/LJ3Ed7NQcRP1jcy2dGRWl660lXpuW5c5Or6cSb+9rrF/d/sizENOxrPdzJ4frBp9aK
-         YOJmD8cER/Z9AkIInkqQeu/aygKw/sEu/gxkh5dgTq6wQPXzV8em9Z7qmmmGWWFPf3Yr
-         t5LKtuvd0OrDRtZgd16aNfkiADkxJ+nMcOhY8av8yFB0maUYVTatLXnm2hLHFX22xQib
-         5PF678cI7v6fyes9CSQdDwWIcDD2DHrpcVAad5WEdjrllYQWMB6iyOcD4n/IGVEG50VI
-         UwHg==
-X-Gm-Message-State: AOAM5304d8zMK6lZ3/k/vLEhV4IMBX/ng6pu3EDRX7/WenCmMS4kc2rF
-        sbMcfxegNKd5y1bsbacwHKw=
-X-Google-Smtp-Source: ABdhPJzysPYV6dVfJt8uw0iWVUCkWNTN93bnD3k69Hc07h/tHJdqj1cg411AOLwvLshdJw47YvSCBg==
-X-Received: by 2002:a17:90a:970c:: with SMTP id x12mr35765120pjo.115.1593765053547;
-        Fri, 03 Jul 2020 01:30:53 -0700 (PDT)
-Received: from Abhishek-Arch ([2409:4064:2e25:1ed8:b84b:a378:b9b2:c27c])
-        by smtp.gmail.com with ESMTPSA id y10sm10583294pfn.121.2020.07.03.01.30.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jul 2020 01:30:52 -0700 (PDT)
-Date:   Fri, 3 Jul 2020 13:59:02 +0530
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     20200622093451.GA1719@abhishek-arch, git@vger.kernel.org,
-        jnareb@gmail.com
-Subject: Re: [RFC] Metadata vs Generation Data Chunk
-Message-ID: <20200703082842.GA28027@Abhishek-Arch>
-Reply-To: cf230320-b661-cc15-ce46-9cdc0250ee1c@gmail.com
-References: <20200630150056.GA4111@Abhishek-Arch>
- <cf230320-b661-cc15-ce46-9cdc0250ee1c@gmail.com>
+ d=prudentialus.onmicrosoft.com; s=selector1-prudentialus-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fyQRSkphgGuJ1rZutnswqPoIR0dhQWpeFT+sycomJNo=;
+ b=yX43u5yC0l/A83VJ6zDAtX1BDx0BeBACdWRxH3AVGNmtRkwY+snYdgY4pYElw2zNAOV99hhKnwD05bOs/KDHEqnXovfQBvSwqT36izPCwpQUW9SyMWa2r7HRbJJfO8FJz4sTE86senT2IOPkdiGaWwA/3Ud2435NFfJfsnUXBNs=
+Received: from BL0PR11MB3460.namprd11.prod.outlook.com (2603:10b6:208:6e::21)
+ by MN2PR11MB4712.namprd11.prod.outlook.com (2603:10b6:208:264::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3153.23; Fri, 3 Jul
+ 2020 08:30:52 +0000
+Received: from BL0PR11MB3460.namprd11.prod.outlook.com
+ ([fe80::3c77:95c5:a97f:d659]) by BL0PR11MB3460.namprd11.prod.outlook.com
+ ([fe80::3c77:95c5:a97f:d659%5]) with mapi id 15.20.3153.024; Fri, 3 Jul 2020
+ 08:30:52 +0000
+From:   Ed Avis <ed.avis@qmaw.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git switch -c message improvement suggestion
+Thread-Topic: git switch -c message improvement suggestion
+Thread-Index: AQHWUROss4Et0801CEutkLTxIXuHXA==
+Date:   Fri, 3 Jul 2020 08:30:51 +0000
+Message-ID: <BL0PR11MB346072F896E88001502324C69D6A0@BL0PR11MB3460.namprd11.prod.outlook.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=qmaw.com;
+x-originating-ip: [82.69.86.123]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 52d854b5-4ccc-417b-02ba-08d81f2b659c
+x-ms-traffictypediagnostic: MN2PR11MB4712:
+x-microsoft-antispam-prvs: <MN2PR11MB471204E8310F7753858E56839D6A0@MN2PR11MB4712.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:4941;
+x-forefront-prvs: 045315E1EE
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: x+3dQiDKb8BwecbJNxsNIM0D7kYqauHcSIgG7x25VecXXyNp2JOzWzqRsUhGo0Fh/j1C2rD/zk2F4+cdZUlMh2VVBh8/56ViV5UwhhEk3gyzks8v0w7NSkQf7Mf48jPgu9cPe2S18ujsET9rb3F1rrG5i+m8n1MQO8Z/6hlSfsojITiSdP+ql1wCwxWTtClwr9JjQk7p2fvPbPqT6gFozjN1il31ZNxCTubDG4g6zV5ft2mFphYAg1A9ucAISHz0ClsroUvuJtK1inwwMKo65BcfImDQ/wrMrMpI9fZp7SHZbszi1l5cuvbGFS5uQmw73m2OJFTw4Ih8NmUwkcSkKg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR11MB3460.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(396003)(346002)(366004)(39860400002)(136003)(376002)(64756008)(66446008)(66946007)(66556008)(66476007)(76116006)(478600001)(316002)(71200400001)(9686003)(6916009)(55016002)(8676002)(2906002)(8936002)(5660300002)(33656002)(7696005)(558084003)(86362001)(44832011)(26005)(186003)(6506007)(52536014);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: tXbtYTFT7zySkzJTUqK31KWcoQ5VDjGDwIKgyJ23TUne4hwQiVVmh1gcxbGksvdgUKQ2UaJT6OzPC5qVw6jSP41mUZ7XSbphBpmpNfMJGj1CZizbrassAjEJ6HE5xzdtMJyUL9tVRhoq2+6OWZYPaRGLoy4KFHept1d2jc7nnUgxbLspDks8NjqtMNF872YDhS2nOohfqOFZHWQLvN0hVit1CTqD8MJG5CWXsHEcgGWgF3uBlUA+ZoGhudbTcvgMiA6FqTjE1Lo03/+djQvqneYwnedRQN6lv58u3xtJndxHsnqAmrlV+N/Q0/7b1RWxQD9SLKffEpykYHVu3E1VNBjVm0c9ab+geQmFDJzVPxbFoWs4Ivvt729fQOYlq1DyPMhUWm5X0HXBM9zzEW+zvdoWIQym2kpgmS8INDgyyp9YliBAHDjmNf/w7CHHxJNzFTyt6mhsSXd0lnYzFZsMP6SV19xCiRaP4xVRygq3Lqs=
+x-ms-exchange-transport-forked: True
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cf230320-b661-cc15-ce46-9cdc0250ee1c@gmail.com>
+X-OriginatorOrg: qmaw.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR11MB3460.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52d854b5-4ccc-417b-02ba-08d81f2b659c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jul 2020 08:30:51.9724
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: d8fde2f5-9392-4260-8a03-0ad01f4746e9
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 81SWkTw6xkUPVqmX2SVQLk5RpyctVhYJom/MrrjOS4yQlJ2DkyLMyugM/CmP9PH/95gwVodZdWxEIaO+OsAD2Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4712
+X-MIMETrack: Itemize by SMTP Server on PAERSCNGW23/SERVER/Prudential(Release 9.0.1FP8
+ HF450|June 28, 2017) at 07/03/2020 04:31:04 AM,
+        Serialize by Router on PAERSCNGW23/SERVER/Prudential(Release 9.0.1FP8 HF450|June
+ 28, 2017) at 07/03/2020 04:31:04 AM,
+        Serialize complete at 07/03/2020 04:31:04 AM
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Language: en-GB
+X-CFilter-Loop: Reflected
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 30, 2020 at 04:46:46PM -0400, Derrick Stolee wrote:
-> On 6/30/2020 11:00 AM, Abhishek Kumar wrote:
-> > Hello everyone,
-> > 
-> > I have finished all tests that I can think of and instead of throwing
-> > performance numbers at you, I am going to try and tell you a story.
-> > 
-> > WRITING COMMIT GRAPH
-> > ====================
-> > 
-> > The run time of writing a commit-graph is affected by time taken to
-> > compute generation number(s) and write them to the file.
-> 
-> As you continue, you use V0, V3, and V5 without (re)introducing
-> them. Please ensure these are defined well. This message has "Re:"
-> in the title, but was removed from the thread somehow in my
-> inbox. I don't see a definition of these terms in the thread [1],
-> either.
-> 
-> [1] https://lore.kernel.org/git/20200630150056.GA4111@Abhishek-Arch/T/#u
-> 
-> IIRC, we have these modes:
-> 
-> V0: The current generation number gen(C) defined as one more than the
->     maximum gen(P) among parents P of C.
-> 
-> V3: The corrected commit-date given by ccd_3(C) = offset_3(C) + date(C)
->     where offset_3(C) is the minimum non-negative integer such that
->     offset_3(C) + date(C) > offset_3(P) + date(P) for all parents P of C.
-> 
-> V5: The backwards-compatible corrected commit-date is given by
->     ccd_5(C) = offset_5(C) + date(C) where the inequality
->     offset_5(C) + date(C) > offset_5(P) + date(P) holds, but also
->     offset_5(C) > offset_(P) for all parents P of C.
-> 
-> Please correct me if I am wrong about these definitions.
-> 
-
-Yes, these are correct.
-
-> > We had the following possible ideas for writing commit-graph:
-> 
-> The options here seem to be a little bit of overkill. Here are the
-> ones that I would seriously consider:
->  
-> > MO: Calculate generation number V5 and write the offset into CDAT
-> >     (along with a metadata chunk).
-> >
-> > G3TO: Calculate generation number V3 and generation number V0, write
-> >     topological levels into CDAT and the offset into Generation Data
-> >     chunk.
-> > 
-> > G3TD: Calculate generation number V3 and generation number V0, write
-> >     topological levels into CDAT and the offset into Generation Data
-> >     chunk.
-> 
-> I think this last option you meant s/the offset/the corrected date/.
-> This means you are storing the date+offset in the file instead of just
-> the offset.
-
-Right, thanks for correcting.
-
-> 
-> > | Version | time Taken      |
-> > |---------|-----------------|
-> > | master  | 14.200s         |
-> > | MO      | 14.094s         |
-> > | G3TO    | 14.331s         |
-> > | G3TD    | 14.419s         |
-> 
-> I don't consider write _time_ to be a huge issue, especially not with
-> these relative values. The SPACE taken by the commit-graph is more
-> important, and is probably a higher relative change than this time.
->  
-> > Observations:
-> > 
-> > - Writing offset (i.e., 32-bits) is faster than writing corrected date 
-> >   (which are 64-bit long). However, we would have to deal with overflow
-> >   issues.
-> 
-> Please keep in mind that the CDAT chunk has a 64-bit "column" that
-> is split between commit date (34 bits) and generation number (30 bits).
-> So having 32-bit offsets in a new chunk adds some extra flexibility.
-
-Huh, I didn't think of that at all. Do we have some possible use in
-mind?
-
-> 
-> >   The largest offset value observed was of the order 2 ** 29. Assuming
-> >   no further "skips" in offset, we can store around ~635 million
-> >   commits without overflows. This, however, might not be true for other
-> >   repositories.
-> 
-> Was this the largest required offset for a single commit->parent skew,
-> or the cumulative effect of many offsets needing to grow, along with
-> the natural generation number growth? I'm guessing this is just the
-> largest offset that you computed in your write.
-> 
-> Since V3 doesn't require offset_3(C) > offset_3(P), the offsets should
-> naturally "fix" themselves over time by decreasing as time moves ahead.
-> So in that sense, I'm rather surprised to see that a 2^29 offset is
-> necessary.
-> 
-
-This was the cumulative effect of both of offsets and the generation
-number growth. If we require just ccd(C) > ccd(P), the largest offset
-was 25960236, merely of the order 2 ^ 25.
-
-> This does make it seem like V5 should be abandoned because the CDAT
-> is running out of room for these offsets, so repos that grow enough
-> to overflow will lose any performance benefits from this approach.
-> 
-> >   A repository with a commit with Unix epoch '0' will overflow.
-> >   If we choose some sane default like commit date must be higher than
-> >   the release date of git, we can store around 110 million commits even
-> >   with '0' epoch.
-> 
-> This really depends on a commit with date '0' having a parent with a
-> ~30-bit timestamp, OR having many of these kinds of shifts with more
-> reasonable dates.
-> 
-> > - Calculating topological levels with generation number V3 takes nearly
-> >   the same time as calculating generation number V5.
-> > 
-> > - The commit-graph file is larger by 4 Mb (+8%) and 8 Mb (+16%) when
-> >   storing offsets and dates.
-> 
-> 8-16% is noticeable, but also not too bad. Thanks for reporting
-> these stats!
-> 
-> > Number of commits walked for different commands:
-> > 
-> > | Command                         | Master |   V3   |   V5   |
-> > |---------------------------------|--------|--------|--------|
-> > | log --topo-order -10000         |  48011 |  49954 |  49933 |
-> > | log --topo-order -100 v5.4 v5.5 |   3794 |   3314 |   3312 |
-> > | log --topo-order -100 v4.8 v4.9 |   5736 |   3887 |   3625 |
-> > | merge-base v5.4 v5.5            |  55053 |  57097 |  55109 |
-> > | merge-base v4.8 v4.9            | 635579 | 167468 | 506577 |
-> 
-> This last data point is extremely valuable. I think the fact
-> that V5 is closer to V0 here speaks to the negative effect
-> of requiring offset_3(C) > offset_3(P).
->  
-
-Woah! I was working more or less with the assumption that V5 performs at
-least as well as V3 and blamed my implementation of it.
-
-> > - For log --topo-order, V3, and V5 walk 35% fewer commits than
-> >   the topological level when comparing v4.8 and v4.9.
-> > 
-> > - V3 walks far fewer commits than V5 when comparing by generation
-> >   numbers and then date for paint_down_to_common(). This is unusual
-> >   and is probably due to my implementation. Based on log --topo-order,
-> >   we might expect V5 to perform better than V3.
-> 
-> The v4.8 to v4.9 case is particularly nasty in a way that
-> doesn't cause issues with topo-order walks. This is the
-> big reason we are pursuing this at all!
-> 
->
-> > - V3 walks the same number of commits when compared using commit
-> >   date for merge-base.
-> > 
-> > The time taken for each command rough corresponds to the number of
-> > commits walked, with no difference between Metadata chunk and Generation
-> > Data chunk approaches.
-> > 
-> > | Command                         | Master  |    V3   |   V5   |
-> > |---------------------------------|---------|---------|--------|
-> > | log --topo-order -10000         |  0.210s |  0.209s | 0.207s |
-> > | log --topo-order -100 v5.4 v5.5 |  0.013s |  0.013s | 0.013s |
-> > | log --topo-order -100 v4.8 v4.9 |  0.015s |  0.013s | 0.013s |
-> > | merge-base v5.4 v5.5            |  0.048s |  0.047s | 0.047s |
-> > | merge-base v4.8 v4.9            |  0.135s |  0.133s | 0.134s |
-> 
-> Are you sure these timings are correct for the last row? It
-> seems that the times would be more significantly different
-> for the number of commits that were walked. Keep in mind that
-> we should be reporting these merge-base timings when
-> paint_down_to_common() has its priority queue set to pull
-> the maximum generation number (V0, V3, or V5) in order to
-> really compare. It seems like that was done correctly in
-> the commit count, but this data seems to imply something
-> else.
-
-I hadn't timed it correctly. Forgot to set the env variable for stric
-comparision by generation numbers.
-
-The number of commits walked:
-
-| merge-base v5.4 v5.5 |  55053 |  55109 |  57098 |
-| merge-base v4.8 v4.9 | 635579 | 506577 | 167496 |
-
-The timings:
-
-| merge-base v5.4 v5.5 | 0.046s | 0.046s | 0.049s |
-| merge-base v4.8 v4.9 | 0.670s | 0.499s | 0.157s |
-
-Which neatly corresponds to the number of commits walked.
-
-> 
-> > - If overflows are unlikely to happen and not accounted for, implement
-> >   generation number V5 using metadata chunk. It has the lowest write
-> >   time and walks just as few commits as V3.
-> 
-> (For the "merge-base v4.8 v4.9" case, this is untrue.)
->  
-> > - If overflows are a concern, implement generation number V5 with
-> >   generation data chunk, storing offsets in generation data chunk.
-> 
-> Here is an excellent time to be REALLY clear about what you mean
-> about V3 and V5.
-
-With the clarity that corrected commit dates with monotonic offset does
-not perform better than corrected commit dates (and my implementation
-was probably correct), we should implement store topological levels into
-CDAT and the (not strictly monotonic) offsets into generation data
-chunk.
-
-> 
-> Do you have these prototypes available somewhere so others can
-> test? That would also help in verifying these results. It
-> would be enough to push the code to a public Git hosting service
-> so we can fetch your commits, build, and test. These don't need
-> to be submission-ready patches.
-> 
-
-Yeah, I do. Added better instructions and more information now.
-
-It should build, and you can replicate the tests by setting $linux_dir
-and running gen_perf.sh. The script would print the timing results and
-create tracer reports with filenames `master.perf`, `gen_v3.perf` and
-`gen_v5.perf`.
-
-[1]: https://github.com/abhishekkumar2718/git/pull/1
-
-> Thanks for doing all this work! We are getting closer and closer
-> to a final direction.
-> 
-> -Stolee
-
-Thanks for the reviews and the discussion!
-Abhishek
+I think that git switch -c could tell you not only that you already created=
+ the branch, but you already switched to it!=0A=
+=0A=
+% git switch -c branch1=0A=
+% git switch -c branch1=0A=
+fatal: A branch named 'branch1' already exists, and you are already on it=
+=0A=
+=0A=
+-- =0A=
+Ed Avis <ed.avis@qmaw.com>=
