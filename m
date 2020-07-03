@@ -7,70 +7,68 @@ X-Spam-Status: No, score=-8.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B330AC433DF
-	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 14:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8C7DC433E0
+	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 15:07:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 858DC20899
-	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 14:58:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2FD920737
+	for <git@archiver.kernel.org>; Fri,  3 Jul 2020 15:07:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PMtHCDHs"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="f4U1S7Zq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbgGCO6O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jul 2020 10:58:14 -0400
-Received: from mout.gmx.net ([212.227.17.20]:39491 "EHLO mout.gmx.net"
+        id S1726310AbgGCPH3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jul 2020 11:07:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50361 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726581AbgGCO6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jul 2020 10:58:14 -0400
+        id S1726039AbgGCPH3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jul 2020 11:07:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1593788279;
-        bh=o+FrMLU3h6tYPqaISIndlb6j1cfK0K1x5B6tg3aH5bY=;
+        s=badeba3b8450; t=1593788836;
+        bh=UsoEU5Ju3pUB3uUmythLhWWjSKLGzc78ux1gv52GnnI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PMtHCDHs6GUaV2AZCOtkL1twy/EI50O5oz75SauqQyavaxbeJBzB2d2da8QmX58dL
-         o6K1TXHZ3+G5ApAP37ZUZvyeXwMMJmWvsUewJZ7oKdnuN1YI4ru8Dj5RW/88EVDTHs
-         p8MyUSFv6ZTtP11UTEmqQNOifdz/caw8vuHctK6w=
+        b=f4U1S7Zqles2rZffDtTslYItoM+hTtyO5He7qEBlwdJMwlXk0sDF9FvQcVWPMWG1m
+         fkNvKciVyBLPQJMBI4W7/IorKhbt7tFsRRRWA4zq15ACXxxuqNVbCrnDOkY4/B960E
+         d/ltKOnIcmFrREM6PFh5Vju3pTZZ5pMJE4MsdTTQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.26.78] ([213.196.213.64]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiacR-1jBzu41smd-00fgnL; Fri, 03
- Jul 2020 16:57:59 +0200
-Date:   Fri, 3 Jul 2020 16:57:55 +0200 (CEST)
+Received: from [172.28.26.78] ([213.196.213.64]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MIdeX-1jcr5C3Uqz-00EeMN; Fri, 03
+ Jul 2020 17:07:15 +0200
+Date:   Fri, 3 Jul 2020 17:07:13 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Shourya Shukla <shouryashukla.oo@gmail.com>
 cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
         liu.denton@gmail.com, kaartic.sivaraam@gmail.com,
-        pc44800@gmail.com, sbeller@google.com, pclouds@gmail.com,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/4] submodule: amend extra line feed between callback
- struct and macro
-In-Reply-To: <20200702192409.21865-2-shouryashukla.oo@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007031653570.50@tvgsbejvaqbjf.bet>
-References: <20200702192409.21865-1-shouryashukla.oo@gmail.com> <20200702192409.21865-2-shouryashukla.oo@gmail.com>
+        pc44800@gmail.com, sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH 3/4] diff: change scope of the function count_lines()
+In-Reply-To: <20200702192409.21865-4-shouryashukla.oo@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2007031659580.50@tvgsbejvaqbjf.bet>
+References: <20200702192409.21865-1-shouryashukla.oo@gmail.com> <20200702192409.21865-4-shouryashukla.oo@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:SrHG5RhKc4y0L1OIWJZebJ5ciQhAK3Xa1+Kd5vmhqSrss641mnK
- Z3HdjXNBAql1dVOYt2jy5DuueQHm1JGW/UQbW+OQjqRP80ixj1T1Ef1BEXpOeBv0hiE1vDr
- afAoM2jpL2d8WKc+8GzGuGBg36pTahyqqSsNq8tbhnj9mJXKsuKsW6OA7pgCQxcuPFQuLyB
- Vfl8xMQTfRKUS0Ccb8kzg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:q8puWmb/pb8=:oZ+7wqRfknztBNtthMh4SM
- L61SCgzMBATm3Mtg2B5jZXGa+OYK6zBZN4KhHzUJSoaa1asTb+YNgRllcssA0oukx+yTTXBax
- fnXHF0yVe2dSkDCzJnIA8ys2Eabc9AdxWRnsffS3f3/0gcKnhLYy9cn4YXtheKHz8gPdPCeJJ
- BSjA8lGYmNGLHi8knNYythoUj4nDU6XkKTF+k+bLyI7Fa21V3CXc99yCcBf3uoOHOGXtHRzsq
- ynp6mGA00lylZCL6OgIYad2GKp7MbXI/tQgrBIOcoR6Hz+8siQHLDLbORA0S3saheJ+rvRZXu
- AwTxgy3MKQIanH602wBV4fM/CH8PiynwRQjSWM6sWVBSqPEBHNe/uRC/6PDJwz2ZbLLjlN0uW
- 1yy0TMCDG3L98iHuQ0WMMOsoEJRLcqcExxzw++XVkpTePu+EsOSP9d8pNoecNBw4mi4/pVSlz
- IpTvhZmtqKRYfy9MJZQp5zLxxgCfh82VZdLWBYNCN2jt1NZHWvHeMNxjmxVuP0rS+1Wb3bMsB
- PF1jssrOQorVpIZxucjKghBJuLMHoPrNiwLmILvsX2HQKc82zUeHRe+5aOH1nUP6k8Gs2SMe4
- rB7eZ4kZqF1/nTaN7noUiV5rOiolOzwXp4Fdmw+nvivBhbmYoCkHksZ7DNCMGEj6pa/QApeMN
- 5CLzHQiGxJkgdzkCwYWt8c24TF3VNkROfB2lg0VI5SEYFjJ01+E3lezyCXbV35CaWn1TZ6wzA
- 4hrq8ZvcTRZ9SKVBsw7bx4lfnl9xdASF+9kF67JlCKZFIM+h37Cr/drnGl1JIge7GbnpVk8Nz
- vvc6ZR3ldBuf6J1FniPOQmA4nsGVQe4TqPhLTiDassovxW7EmNJ+3L0z8N4qSBigOKNjDDRG2
- VisHX0Jlowb8EJnIe2czmuH/8HUbTGRUNpvtpnMayh5tnAqNgI7XeDOWPvPhMDQ9yLiJZdnJE
- U/7lhTwJfWHvxpIqFrXAoH/xXnlI+y0b1M9LHzaaqIZ2na+B4Y7r1UOr1xnzvEAZbGzMBC9Vu
- wyAU8V/zEt0+JymXeem02MnVrt11Xv6QVnwTOTrcQiCxZY9x1reVgkrKRuwtD9AcsDR2mg+Fp
- 5W2O/maTkLGCSWFrY3r9sXGJALaVkEY0x5U2QnjL66q6R1kcQ/wT99OfrJfc4ttqosxxiZX3f
- n5zDeZiGZZvis2YMvwt+k3cRTqtNs/zpYVHc+scrDfl3G8H3t4MhQuhjBJRj965Pg5EGXiUlM
- 01a7C+tH/3VvnnXoxl176z9kZHz2k0oeJ5ay3Pw==
+X-Provags-ID: V03:K1:y7emFJMpZPEB0D4ohdLn/qqy0FAbHkbzseO6BvoAihf5ACgQSQI
+ 12UDcrPIX1EjaHPaWdjdCFZTmJKwMyC4ZJjumB/K0k8CfxLc7lrwuY2Jy7mF422ghR5qfjj
+ tGUVK0lFUUvTiD0h8GnQP+BXZbFIztJGytWoVhLtxUbow2HIRe14VcUIRLk5dcM+Cl9jxn+
+ Yc8tf0ezi0cptnm7Il6HA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kIKB5jSdJWI=:fVW1oTeUN+rlS9zPLhYW92
+ L0SK733pJQvv/nb+NKLXvn16OUA/WoEuuE3rSa1NuthtRqnE4gyDvX+uY+ersHQruD/hK2ib5
+ CvzSNiYpx+dPxseXhFq8lWpNwWayfatDr6HRDOSmtAgSyrlshTHUcjscrU6JuwkQ00K9fJTem
+ jXnHEcQBr6S+ZD9+BfU8G7UxgKJpad/KoDuAvT3GlqB2LmaGRfQvrkAeV1SCyh2PgaEiRir8Y
+ GyUrWWQlJJPtpLsp2FhU5tkNV1la7en6PIdlpX1BGk81AENLhO45DFKJHNj9rzuvB0sgqgMum
+ ziyjVq90bgRvGpdqTRzoKHZDPk4TYgwqoWDk4lwCw/i4ABdMOqgjakyRq/WxpL1mID3n874Oe
+ R9ccD2wwzyMFgVaV26mlXkBpDLh77m5sriw50NOSLPSfyeaFc5vSsDrsi9KVyIX0JSRqwiBrn
+ nBXP4mFVr6lvTCwWZzptZh+HLCfeSSsyKcs5Awk37OV3CSbj/DYQRF7DT/EGcu1yKapEkS4yZ
+ w0+X0O7+MpnFMLG7FfCHLYUI0SVyk86t/dDTZt436GCUZaKgncYSLopnHZ8KbzYtU0Bwc8k7W
+ kJYq6gDmGE/8jVrGi/oF0I1UFmzizY7PTUkQKlMkQGh7z6Tqu9zMCxGd89J0jsdNdwFsSItJu
+ PkncPev4CwKwQXvxuRh1tJeZ5+97NH+sS4g2hEA9sla8TT5n84gwTrPlUeQyTVaYJyH/T7OIe
+ g0P2KQE47/nks1I7jHZf175IITEkr7Ym0HfB54Ed8TLZqoMaI7yv8OEhqVMvZDzVSlEffC/M/
+ WXV28wQK6w1UnXj17iv3eRgMhGB0SnTqKXC68K69AhefVjsLODA/MNyYcwA8viEgms+53PZPh
+ p/QCnkwsblR3cBESGnw0BLWCkpMJnP0smAmChZzoxNDnn7dGOgC3ehxG/YjIBlNT7AAp80OUZ
+ YxtFG4Fr5UCzgKniAfDyko2XY0jNaf67oPpa27iTVr4Lab4N30NDQeEYGD6b9oetMfAdLgu+u
+ BqqyFTO7azN/+gW/WT1qgeKvKOHUsuw+8wATRJOwc+sYgEUnqexBr8LAuVB8kJ4YjrCE3/Vx5
+ qI6+H2v4ujMLrkEpkqBZv1ef6n/v8IGKqTECUts758vVXzy/ZrfdNY6adG8xoxfCrJD2oqgRH
+ ljm24vn379VAA5MrPJRDQjVz+9bCnRqEuX+cnwY2AlY90iUW0ZE/zXJ+BjNJSu52yS4GWpHWT
+ 5wluX2OoQqxerL15o
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -79,68 +77,72 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Shourya,
 
-"amend" sounds a little awkward to describe what the patch does. Maybe
-"submodule: remove extra empty lines"?
-
 On Fri, 3 Jul 2020, Shourya Shukla wrote:
 
-> All subcommands of 'git submodule' using a callback mechanism had
-> absence of an extra linefeed between their callback structs and
-> macros. Subcommands 'init', 'status' and 'sync' did not follow suit.
-> Amend the extra line feed.
+> From: Prathamesh Chavan <pc44800@gmail.com>
+>
+> Change the scope of function count_lines for allowing the function
+> to be reused in other parts of the code as well.
 
-Maybe a native reader can suggest something that flows a bit easier? I am
-not a native English speaker, but I'd prefer something along those lines:
+It may be just me, but I'd rather see the word "visibility" instead of
+"scope" here. I mistook the subject line to indicate that the function is
+changed to serve an (at least slightly) different purpose than before,
+which is not actually the case.
 
-	Many `submodule--helper` subcommands follow the convention a
-	struct defines their callback data, and the declaration of said
-	struct is followed immediately by a macro to use in static
-	initializers, without any separating empty line.
+Another alternative to "visibility" might be to imitate existing commit
+messages, such as e4cb659ebdd (diff: export diffstat interface,
+2019-11-13), 22184497a36 (factor out refresh_and_write_cache function,
+2019-09-11) or ef283b3699f (apply: make parse_git_diff_header public,
+2019-07-11).
 
-	Let's align the `init`, `status` and `sync` subcommands with that
-	convention.
-
-The patch obviously does what the commit message promises.
+In addition, as with all such changes, we need to be careful to consider
+whether unrelated function names coming in from system headers might
+clash. In this case, I think `count_lines()` is a bit too generic, but
+will probably not clash. Personally, I would probably have opted for
+`count_lines_in_string()`.
 
 Ciao,
-Dscho
+Johannes
 
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Stefan Beller <sbeller@google.com>
 > Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 > Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 > ---
->  builtin/submodule--helper.c | 3 ---
->  1 file changed, 3 deletions(-)
+>  diff.c | 2 +-
+>  diff.h | 1 +
+>  2 files changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 59c1e1217c..eea3932c40 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -612,7 +612,6 @@ struct init_cb {
->  	const char *prefix;
->  	unsigned int flags;
+> diff --git a/diff.c b/diff.c
+> index 4a2c631c37..39ddbcf451 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -547,7 +547,7 @@ struct emit_callback {
+>  	struct strbuf *header;
 >  };
-> -
->  #define INIT_CB_INIT { NULL, 0 }
 >
->  static void init_submodule(const char *path, const char *prefix,
-> @@ -742,7 +741,6 @@ struct status_cb {
->  	const char *prefix;
->  	unsigned int flags;
->  };
-> -
->  #define STATUS_CB_INIT { NULL, 0 }
+> -static int count_lines(const char *data, int size)
+> +int count_lines(const char *data, int size)
+>  {
+>  	int count, ch, completely_empty =3D 1, nl_just_seen =3D 0;
+>  	count =3D 0;
+> diff --git a/diff.h b/diff.h
+> index 9443dc1b00..bd96c8c434 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -495,6 +495,7 @@ void free_diffstat_info(struct diffstat_t *diffstat)=
+;
+>  int parse_long_opt(const char *opt, const char **argv,
+>  		   const char **optarg);
 >
->  static void print_status(unsigned int flags, char state, const char *pa=
-th,
-> @@ -933,7 +931,6 @@ struct sync_cb {
->  	const char *prefix;
->  	unsigned int flags;
->  };
-> -
->  #define SYNC_CB_INIT { NULL, 0 }
->
->  static void sync_submodule(const char *path, const char *prefix,
+> +int count_lines(const char *data, int size);
+>  int git_diff_basic_config(const char *var, const char *value, void *cb)=
+;
+>  int git_diff_heuristic_config(const char *var, const char *value, void =
+*cb);
+>  void init_diff_ui_defaults(void);
 > --
 > 2.27.0
 >
