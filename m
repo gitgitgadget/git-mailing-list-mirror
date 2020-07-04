@@ -2,89 +2,130 @@ Return-Path: <SRS0=Nv7C=AP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA896C433E0
-	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 01:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1551C433E0
+	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B504A2075D
-	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 01:19:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7EAA20885
+	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=zoom.us header.i=@zoom.us header.b="QDCFaNp/"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="XvXNN1Qq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbgGDBTH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jul 2020 21:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726501AbgGDBTH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jul 2020 21:19:07 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3434CC061794
-        for <git@vger.kernel.org>; Fri,  3 Jul 2020 18:19:07 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id r22so30224763qke.13
-        for <git@vger.kernel.org>; Fri, 03 Jul 2020 18:19:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zoom.us; s=google;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=1xv+0B5HNYneF+pAvjFDkFOIY384dshhvLh6Yeoo57E=;
-        b=QDCFaNp/tTzOsYhdM9nRtIV+aZ+89t48CnOW9FrNDwTxJK75OXWnISFOgrLF9UEIhA
-         8rk5BEvf8sGexoltUucih3FSxdC3CIT8WCM93MPoRdgX/WD4PHvMZnzuXv4dVxshQ6K9
-         zNOjf9jrplm/Rql6A+OekrtS9VovoNgthsPik=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=1xv+0B5HNYneF+pAvjFDkFOIY384dshhvLh6Yeoo57E=;
-        b=XvbTKn0QrW1GNZ6ySfnr6wUEEz/5tx8BbSVHFdjM5UtJdrhb8FjvFiHehqfEtcgjug
-         1qKzaLlD1mYa3aXhq8BdADQ6AvfWL7z/b8UPKtMC0D83ib7Lm/KPZYC0nHhvR5Zx79+j
-         S/Emm3gkNug0tHGHXUb5lK73Oq+U3i5id1dyHl5GICmcOzEwuKSigfQmE3V3w6s5j/qb
-         ABrSz+I10wSFJDwoN+GIpDhVihQ0J6R2ytK0SlACShywgyHDyyxPoGaXwix+eDz1kFB5
-         ywoCc2dRG/aDr5K9dEZQ00Lpn40QmlxmJvJIWMxooW/B785oEfnHnOTmkJXCqbhwBKck
-         FSjA==
-X-Gm-Message-State: AOAM532nmo4tQJ4+Wou9IpV0P8AY4mUgk+pTA/dikonprLlllnnecx7s
-        ayML4G8nmRPFbsBVMaRaOGbsUyMezGJi1PTnxX5IyBTUHCWyE9iGZTyPML83m2sXrhYc8sOWmzv
-        gQh53TWzcMCQzfzH3SG5yWhp+yn36nRddx5afCboLZ6s5Fl2C9Bb8+ZZirg==
-X-Google-Smtp-Source: ABdhPJwTqouKcyS9XY49c28iMEwplCJjgIf4b9v/uWDILOt37SHbD2bgyi3Ie7/UYdmkTZ+3fFifcg==
-X-Received: by 2002:a37:7803:: with SMTP id t3mr37357763qkc.358.1593825545902;
-        Fri, 03 Jul 2020 18:19:05 -0700 (PDT)
-Received: from DESKTOPLINSUN ([38.99.100.2])
-        by smtp.gmail.com with ESMTPSA id 125sm12215070qkg.88.2020.07.03.18.19.03
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Jul 2020 18:19:05 -0700 (PDT)
-From:   <lin.sun@zoom.us>
-To:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'sunlin via GitGitGadget'" <gitgitgadget@gmail.com>
-Cc:     <git@vger.kernel.org>, "'sunlin'" <sunlin7@yahoo.com>
-References: <pull.781.v6.git.git.1593650687697.gitgitgadget@gmail.com>  <pull.781.v7.git.git.1593746805771.gitgitgadget@gmail.com> <xmqqo8oxb3rv.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqo8oxb3rv.fsf@gitster.c.googlers.com>
-Subject: RE: [PATCH v7] Support auto-merge for meld to follow the vim-diff behavior
-Date:   Sat, 4 Jul 2020 09:18:59 +0800
-Message-ID: <2920401d651a1$1ac3ea80$504bbf80$@zoom.us>
+        id S1726794AbgGDM4c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jul 2020 08:56:32 -0400
+Received: from mout.web.de ([217.72.192.78]:58587 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726738AbgGDM4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jul 2020 08:56:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1593867389;
+        bh=eBLfUXkpW4VgHVJhyzla2fzxOZtU8sbFX9XJBoOk8jA=;
+        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
+        b=XvXNN1Qq89Gh/E9TVs8lHTeO7oA72tIx/sUq8g+sYCE4vUnISAvI5cw57ZEdoSeP5
+         i3K7JrGjYUWFV/AOBRxQ6Rwl21hDoWfGg5YcDushdQafEBaszXny0238eTBmK//O3g
+         BVosD3lKwnTcHQw0DPmPw1WJLB6/csLoG63sok74=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MSai0-1kJ5vF2XvY-00RXbe; Sat, 04
+ Jul 2020 14:56:29 +0200
+Subject: Re: Git log: filtering by date and by lines do not work together
+To:     =?UTF-8?B?0JzQsNGA0LjRjyDQlNC+0LvQs9C+0L/QvtC70L7QstCw?= 
+        <dolgopolovamariia@gmail.com>
+References: <CAD6JL5SRvB_yXcqJ5HGADQaGtZAiKrtd447vtHLSagJqNGPChA@mail.gmail.com>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2c4a6657-1a47-cfbb-21cd-04f131d2ed49@web.de>
+Date:   Sat, 4 Jul 2020 14:56:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
+In-Reply-To: <CAD6JL5SRvB_yXcqJ5HGADQaGtZAiKrtd447vtHLSagJqNGPChA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHMDywQjtCwMdSCwpYqVrUTM1HyZgGcI5q0AZgY686o8YHLQA==
-Content-Language: en-us
+X-Provags-ID: V03:K1:vY2NdfRyc+PORZKKl3I9OGFpDyHlSE2/zErqxdIBg7mmMzvnxjZ
+ GQUoQBUH7I51YGi10wjvZblp6sib1lZPJc9888CJl99qdMKaCglYmUTBnNN+1r3lcCUALZY
+ 4prL/eJNBFsepoQFlPM0oN9T1kcaQ1/vh7iqrKnH+cCYvDa9JhR1RYq+IwCmo7UX/+EIKO/
+ 5ZDzJfCvEU0lk1IAWXMhQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:o3IIquOlPjc=:oiMo4csjsxFZx9lKkx6wuW
+ rduu3PNon5aStXu1JTlhVMuOPVF1SpwgdZB6HFc7liQP8BM2Sg9LgHrkH3x0CXWbLspxhFRXm
+ LegyzzYKT1XfFRD+vR9Bre3T/OlEjVJOx8dQHBe9aV+uXoHqT3mTw/BcH6wJ1uJ2HhytwXg3Z
+ DS3gG7mIjsZAIZmXgTDwjJxfsHCR8m753v7dACBwywb9pF7oxKinXI7CU6bsAq4fjOhXmDVfZ
+ 6gUZCfUJ8QlxG0bEDQM++znhl/iYVZvc12aJ0I2XdgmwXcDeW9WwzhZgMpl+huN3MM55nFLmc
+ SHI0hIn3wdLHj+vxbtoVWsz2BSX4RPMPRdhHJrXVzwmcBx1eIwrbxqBMRs/tuIichdZOoZVrC
+ irrNJdYASIhvTBtStaLyS0d7Q5VVo72uSv4G/TgZSGmlT6MjNBaim00q7e/dbC6OCpxBzoDgN
+ wpecCAPXzhy8vh20H5CGyNihh/f6FmP7K6qF4hjEP5QWXyXoNLxhw96TARbOyVz38V2lrspw0
+ SuM3XB9+eCYiA2KyLHUHNMeNgwTH+JdpGOzv01B2xq+Aw3rgRGzu2npM5wzFOV6I4evpWDxFf
+ /SH0syoRf01QLUGMYeLSA3OCIQiHELb+X9MZbsZWDDVQ102tWH88ZAVElC2Jqbmel8g33tz2z
+ 8NfmW1KPLx6qIwbVpYJkZdtacIo/VsN9CfcfhlUvdpuZOIqvy60KkTdKOHez8Sejdhkxf5bJV
+ NdcnjEtcUABENzN+qqJH5PNywNe8clEleogDwzS96tk6xzh093liNOT8gJpcbV0DLzHSNsH0U
+ gMwUyqUvq0CphrYeKdDWIvAuHHBfiT4kHzvwfIBJTf8J5IJOvt9i5QKTXFhvVo/Xkrcet9vB3
+ L03YUmaVkqeEgzb6U7RwT3rFCUp8UCBF7RSpmpDN9/E2jrbfCUsjrozi4+jzPZnLcgTm3U5R/
+ kD66JFpFj3RL9ym5aBEcS5lria+Qy2eGhNNnfGkePbJfTtt2DrNTvYFi2JESXrIdtlZ9jfqPR
+ bTKt0ApDbyoHiynDNQ0mww789R1x7mVOacw5pJtp3qw/fpbiVEzUkb8eMy3fLEzMUiAkJ5FB+
+ hXOraChVjL2Q+EcDR5SbqA+1XPZwacglRJpj5f8nyoevSHBA4q2xNwBJPq8vLK+vJ57Jrv63J
+ N5mp4qFpv7VU+tkc+OKGZzYI/4p30ij5WoGK0+iVTfUwVfgmig65QOgNSi485vOvB0Uaw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio, Doah,
+Am 03.07.20 um 16:14 schrieb =D0=9C=D0=B0=D1=80=D0=B8=D1=8F =D0=94=D0=BE=
+=D0=BB=D0=B3=D0=BE=D0=BF=D0=BE=D0=BB=D0=BE=D0=B2=D0=B0:
+> Hi! I would like to report the bug.
+>
+> I want to get commits that change specific lines in a specific file
+> and were made before a specific date.
+>
+> Steps:
+> 1) I apply filtering by date: --before=3D"2016-11-18"
+> Result is in the picture FilteringByDate.png. Commit
+> 570778797effd69bd4536c51125b7d2e8f654c08 is presented.
+>
+> 2) I apply filtering by lines:
+> -L33,34:src/main/java/org/toradocu/translator/Subject.java
+> Result is in the picture FilteringByLines.png . Commit
+> 570778797effd69bd4536c51125b7d2e8f654c08 is presented.
+>
+> 3) Finally, I apply filtering by lines and by date:
+> --before=3D"2016-11-18"
+> -L33,34:src/main/java/org/toradocu/translator/Subject.java
+> Result is in the picture FilteringByDatesAndLines.png . Commit
+> 570778797effd69bd4536c51125b7d2e8f654c08 is NOT presented.
+>
+> Expected Result: the commit is presented in filter 1 and in filter 2,
+> so it must be presented in filter =E2=80=9C1 AND 2=E2=80=9D
+>
+> Actual Result: the commit is NOT presented in filter =E2=80=9C1 AND 2=E2=
+=80=9D
+>
+> Environment: git version 2.27.0.windows.1
+>
+>  I beg you to provide me with a workaround. I am doing research work
+> on analyzing commits in open source projects. Therefore, this
+> functionality is very important to me.
 
-To follow your comments, the new [PATCH v8] is uploaded, try to reduce =
-calling `git config --bool`.
-Please review again. Thank you.
-https://lore.kernel.org/git/pull.781.v8.git.git.1593825400699.gitgitgadge=
-t@gmail.com/
+You could do the date filtering on the output of git log, e.g.:
 
-B.R.
-Lin
+  git log -L33,34:src/main/java/org/toradocu/translator/Subject.java --dat=
+e=3Dshort --color=3Dalways |
+  awk -v before=3D2016-11-18 '
+    /^[^ ]*commit/ {state=3D1; header=3D""}
+    /^[^ ]*Date:/ {if ($2 <=3D before) {state=3D2; printf "%s", header} el=
+se {state=3D0}}
+    state =3D=3D 1 {header =3D header $0 ORS}
+    state =3D=3D 2 {print}
+  '
 
+This command is a bit unwieldy, so you might want to put the AWK
+script into a file, then you could use it like this:
+
+  git log -L33,34:src/main/java/org/toradocu/translator/Subject.java --dat=
+e=3Dshort --color=3Dalways |
+  awk -v before=3D2016-11-18 -f gitlogbefore.awk
+
+Ren=C3=A9
