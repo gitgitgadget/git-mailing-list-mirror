@@ -2,143 +2,113 @@ Return-Path: <SRS0=Nv7C=AP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62BFEC433DF
-	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31CE5C433E0
+	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 15:21:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F96520885
-	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1188A20747
+	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 15:21:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="KW3uPeDd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rrF+A0gw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727083AbgGDM4p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jul 2020 08:56:45 -0400
-Received: from mout.web.de ([217.72.192.78]:43739 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726738AbgGDM4o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jul 2020 08:56:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1593867393;
-        bh=GD9UaREf5OJuYwrhkONl3UMxsEV+kT7WqfS4I+0h8cA=;
-        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
-        b=KW3uPeDdZtGVYB9eZ7UpjT5diuRC7ryFHHoV9W8Xc4PPg0J4UvsQBAopt56ONOWPI
-         /JaQH287PcgcjItV7blu6OEAoFdk9AA7kNd091z+0qx6Z9ztD+TSOJQCanmP+SjsZM
-         NoUBXNr7xUl8JsaSFzFur2Y0xd8rDIEkvc3IIw2I=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N5lj7-1kyjj028KJ-017ER1; Sat, 04
- Jul 2020 14:56:33 +0200
-Subject: [PATCH] revision: disable min_age optimization with line-log
-To:     =?UTF-8?B?0JzQsNGA0LjRjyDQlNC+0LvQs9C+0L/QvtC70L7QstCw?= 
-        <dolgopolovamariia@gmail.com>, git@vger.kernel.org
-References: <CAD6JL5SRvB_yXcqJ5HGADQaGtZAiKrtd447vtHLSagJqNGPChA@mail.gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <0c55e178-8f7c-ef84-e6eb-e50de9924ef6@web.de>
-Date:   Sat, 4 Jul 2020 14:56:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        id S1726669AbgGDPVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jul 2020 11:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726488AbgGDPVM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jul 2020 11:21:12 -0400
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68739C061794
+        for <git@vger.kernel.org>; Sat,  4 Jul 2020 08:21:12 -0700 (PDT)
+Received: by mail-pf1-x444.google.com with SMTP id s26so1505557pfm.4
+        for <git@vger.kernel.org>; Sat, 04 Jul 2020 08:21:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=j3LnCSaPMndm4LGkYKllWssvce983/bLeHofVKsVAP4=;
+        b=rrF+A0gwlUZWQMNQD1cfFtBCfd10vAs42O9mlwQhPX9b3LBY/vw0zxFTy84VfWm53V
+         v0W9vOrLHRSTC26v9pvkPztJkCd9uZcMScCLHrHYgAKN7IUDmj/YBQ8PO/Aq8hilMW+Y
+         7OCBlL6gYwqOhEo/hDNV6IrVS+jtyGufiXAeEwipVyo+mRPuQgFC+b21wH5dI8X6CnN8
+         Vb5TAzUy4xo+3bcdfbrFt7eFgp4B6iB8P0iFUtQtG6c2IXOGfucGXdIwY/IuHx6sUjI2
+         GoICkY/5ZX8cibjqKm6tCvha+9lscOObYt1YzqXZ5FNkWuH1ig2LMv5P7LDR6yPQIaLg
+         TUAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=j3LnCSaPMndm4LGkYKllWssvce983/bLeHofVKsVAP4=;
+        b=pV061D1p16kzmyQ4uhLr9scDcatIsVAJgHM+rYXWJNWAz/3TlUdVorzROmM+lqps9V
+         x5r+Ml9YEpEQtWOvt9YTKd+BhtsKL4P1twtJLXjxIBsQZMd7Y52H8/BZE4CRNBZO68cY
+         N05t20m0uKooonRxPtf2gJkaMCzqiuKJVkwhZmoG8IJ4l4YC48PvujMAuE2S+5eP6f/d
+         GPWxmlct9od1SqEg88DPetcbmHoaCqE01OGFrl3QIG/UYUTD6Z7m9ea+CKqVPACjthpi
+         4JC9DXu1juLcLY13vbFlqt8/VAdL24pJF14mh43KHpCNZkps0LZkokSFb0lTAw3cYh+W
+         aIZg==
+X-Gm-Message-State: AOAM532wOrssPkInJdDMWaxoHox6fEtIVOyT4UjGiEiuAsz3GqWINpDe
+        v7FAvs3w79gBrm0hPa73CEk=
+X-Google-Smtp-Source: ABdhPJxYvXRYhL7VdSRUbDbEqaDBFPWUUuoYQUsCE8piTzJHx6415oKMWZn5ClQWRNEEON8VkVfJnw==
+X-Received: by 2002:a63:f541:: with SMTP id e1mr32514430pgk.375.1593876070914;
+        Sat, 04 Jul 2020 08:21:10 -0700 (PDT)
+Received: from konoha ([45.127.46.159])
+        by smtp.gmail.com with ESMTPSA id e18sm14433862pff.37.2020.07.04.08.21.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Jul 2020 08:21:10 -0700 (PDT)
+Date:   Sat, 4 Jul 2020 20:51:04 +0530
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+        liu.denton@gmail.com, kaartic.sivaraam@gmail.com,
+        Johannes.Schindelin@gmx.de, pclouds@gmail.com
+Subject: Re: [PATCH 1/4] submodule: amend extra line feed between callback
+ struct and macro
+Message-ID: <20200704152104.GA45598@konoha>
+References: <20200702192409.21865-1-shouryashukla.oo@gmail.com>
+ <20200702192409.21865-2-shouryashukla.oo@gmail.com>
+ <nycvar.QRO.7.76.6.2007031653570.50@tvgsbejvaqbjf.bet>
+ <8a36a3cd-02a3-f4fa-7b86-0d4884c88449@iee.email>
 MIME-Version: 1.0
-In-Reply-To: <CAD6JL5SRvB_yXcqJ5HGADQaGtZAiKrtd447vtHLSagJqNGPChA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:uRie3PBIdkZCQBBupDOMNXyIqQpk9cgnwmGfeccE0dd3HM2zV06
- mcC9nepnXkf/wzmQW01+zgkMLec6L/hmCYk+bsdte0j/2EFVTWF6phZWP62MgrbV6t2l8bI
- IB+OwoDUgULoz+20yOMBRTCMGEGAqbyvQeD1Kq/16R4aPv+z0/4g82VWpLtyetP2R8H5h5c
- 7aL3m+c1+yPuipWfwmf4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ed9+MHn8x6E=:ANlchnyP17iqCQJQ8wzh6y
- F+9KME0Fb57GIlNwdlkytjKk21wUt+BN+SPW2VVSXviJzT+rxkH3CLHSe6C7zYzRH8Uhwe1hs
- iAyYu31Zzjg1eLEl71PXj3Pvb2Z002grpu34haiM3Xi/PViiDX7PNRLPaD2eVCCRUW826Xzfl
- wwo26/pMcs8dd0x/8jyg8cTekiw74nT9c0L5zUsx+5r4msOTpTcEXntgAOCE5VyL3a17ZUeVu
- Zefmt2C+eFMhUDn7turtOca3X8Ed6GU2Q7QDTO586jFMljGcSc4uNlDzjuqTr6KmdRTwRYp0Z
- 2YCvC6Rmlzh66tFMgXWYVjKHYDhXNSZ7G1oCUfDEQyKceHY3hPln2sjwdZ4tNTY7A+MwU+unP
- JPWQbPtU24J4J5N53CMQgnv29yp5jaUgD+QdC5wjV7mExduBkoe2M7OKgJijv5WVFIMU+oYQ+
- PeeUWA4txa3RhDPwrHLSOq1H8tLDY6J13cRHJygIiyEvYyUdrcl0UyCSbLUI6SezDfivGrktM
- W4zzXizGD2BKS6PPECuUlPokFgkQfV7kC9LwW8a/emJl8zubqVBH0/Og+3WIT01wkOfTMpIuO
- NsBL93oJBpfvVtDQbhhKGhBqmuCVZUPLVce0R1n4xhoxzmt4kgMIi+ytqtt8v2zRSTPKX/eoR
- f7AHHkG9SpPXsEe1H5eB08sbQSPm+jBt6uMH7BXAbFzA7jdfs1Q2MvwBPqjtLqu5K8RkXtEfo
- 2maNe0JHs8FUPCTESO+5vboZbFnrhsaDUhS6/wZUq6wLzmjp9TM8gL4NbVJ7UEFOE5yaoXA7R
- 6FqpSPC2NYujq1OqHMIqicz2rOcbKJfDnixG5xVhWnrlZGIhh6PGtUKFJQVnwscgEGfNvlbAn
- 6Vo/S4Bppdi1jV96FbGcIHAD9WWtRt8ULKlma2afq8ibBJHtyhlid8o8WRV+aQGULWwd7SIgB
- GDBxw7p2/9jo7CQ8CdyY+KRlea/Lcsr5eo5YictVG/zy3B1t8uG41zJjyP4dpyQ+PJjRak04N
- phjadiwAd0qsbpW2fqLF7bc/h0dibmZFIgY+u/S3yuLxyt9Fg+aT5xP3Ohy2xovhCLWMe20pu
- rFSEnRj7a4MXlaVY0HiuzMckJQeMraxGAQGGsz3MxjAKZkR/uaZek6i7idP9+QEmu423rk8mi
- n3C+nDwaPKn07cICebMhyUxAFzn0IVvgYOsuGfHYVamcOSa8wPQRquppSQ9IZqJq4JFZs=
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8a36a3cd-02a3-f4fa-7b86-0d4884c88449@iee.email>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If one of the options --before, --min-age or --until is given,
-limit_list() filters out younger commits early on.  Line-log needs all
-those commits to trace the movement of line ranges, though.  Skip this
-optimization if both are used together.
+On 03/07 04:37, Philip Oakley wrote:
+> 
+> Suggestion...
+> 
+> On 03/07/2020 15:57, Johannes Schindelin wrote:
+> > Maybe a native reader can suggest something that flows a bit easier? I am
+> > not a native English speaker, but I'd prefer something along those lines:
+> >
+> > 	Many `submodule--helper` subcommands follow the convention a
+> s/convention a/convention that a/    feels nicer for me
 
-Reported-by: =D0=9C=D0=B0=D1=80=D0=B8=D1=8F =D0=94=D0=BE=D0=BB=D0=B3=D0=BE=
-=D0=BF=D0=BE=D0=BB=D0=BE=D0=B2=D0=B0 <dolgopolovamariia@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Needs careful review -- I'm not familiar with that the line-log code and
-the revision traversal machinery is a bit scary.  AFAIU the min_age
-check is done again in get_commit_action(), so this patch shouldn't
-cause underage commits to be shown, but I'm not sure.  Test coverage for
-the three options is spotty. :-/
+I did not get this one. Are you asking to replace "convention" with "a"
+only?
 
- revision.c          | 3 ++-
- t/t4211-line-log.sh | 8 ++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+> > 	struct defines their callback data, and the declaration of said
+> s/said/that/   maybe.  'said' is a bit too much like 'patent speak', but
+> otherwise either word is OK.
 
-diff --git a/revision.c b/revision.c
-index ebb4d2a0f2..3bdc1bbf2a 100644
-=2D-- a/revision.c
-+++ b/revision.c
-@@ -1410,7 +1410,8 @@ static int limit_list(struct rev_info *revs)
- 				continue;
- 			break;
- 		}
--		if (revs->min_age !=3D -1 && (commit->date > revs->min_age))
-+		if (revs->min_age !=3D -1 && (commit->date > revs->min_age) &&
-+		    !revs->line_level_traverse)
- 			continue;
- 		date =3D commit->date;
- 		p =3D &commit_list_insert(commit, p)->next;
-diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
-index 1428eae262..e186c83250 100755
-=2D-- a/t/t4211-line-log.sh
-+++ b/t/t4211-line-log.sh
-@@ -240,10 +240,12 @@ test_expect_success 'setup for checking line-log and=
- parent oids' '
- 	EOF
- 	git add file.c &&
- 	test_tick &&
-+	first_tick=3D$test_tick &&
- 	git commit -m "Add func1() and func2() in file.c" &&
+Okay will do!
 
- 	echo 1 >other-file &&
- 	git add other-file &&
-+	test_tick &&
- 	git commit -m "Add other-file" &&
+> > 	struct is followed immediately by a macro to use in static
+> > 	initializers, without any separating empty line.
+> >
+> > 	Let's align the `init`, `status` and `sync` subcommands with that
+> > 	convention.
+> Nice summary.
+> 
+> Philip
+> Native Yorkshire speaker, but not that 'literate' ;-)
 
- 	sed -e "s/F1/F1 + 1/" file.c >tmp &&
-@@ -283,4 +285,10 @@ test_expect_success 'parent oids with parent rewritin=
-g' '
- 	test_cmp expect actual
- '
-
-+test_expect_success 'line-log with --before' '
-+	echo $root_oid >expect &&
-+	git log --format=3D%h --no-patch -L:func2:file.c --before=3D$first_tick =
->actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-=2D-
-2.27.0
+This made me chuckle. Nice!
