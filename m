@@ -2,44 +2,46 @@ Return-Path: <SRS0=Nv7C=AP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1551C433E0
-	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62BFEC433DF
+	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7EAA20885
-	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F96520885
+	for <git@archiver.kernel.org>; Sat,  4 Jul 2020 12:56:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="XvXNN1Qq"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="KW3uPeDd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbgGDM4c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jul 2020 08:56:32 -0400
-Received: from mout.web.de ([217.72.192.78]:58587 "EHLO mout.web.de"
+        id S1727083AbgGDM4p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jul 2020 08:56:45 -0400
+Received: from mout.web.de ([217.72.192.78]:43739 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726738AbgGDM4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jul 2020 08:56:31 -0400
+        id S1726738AbgGDM4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jul 2020 08:56:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1593867389;
-        bh=eBLfUXkpW4VgHVJhyzla2fzxOZtU8sbFX9XJBoOk8jA=;
+        s=dbaedf251592; t=1593867393;
+        bh=GD9UaREf5OJuYwrhkONl3UMxsEV+kT7WqfS4I+0h8cA=;
         h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
-        b=XvXNN1Qq89Gh/E9TVs8lHTeO7oA72tIx/sUq8g+sYCE4vUnISAvI5cw57ZEdoSeP5
-         i3K7JrGjYUWFV/AOBRxQ6Rwl21hDoWfGg5YcDushdQafEBaszXny0238eTBmK//O3g
-         BVosD3lKwnTcHQw0DPmPw1WJLB6/csLoG63sok74=
+        b=KW3uPeDdZtGVYB9eZ7UpjT5diuRC7ryFHHoV9W8Xc4PPg0J4UvsQBAopt56ONOWPI
+         /JaQH287PcgcjItV7blu6OEAoFdk9AA7kNd091z+0qx6Z9ztD+TSOJQCanmP+SjsZM
+         NoUBXNr7xUl8JsaSFzFur2Y0xd8rDIEkvc3IIw2I=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MSai0-1kJ5vF2XvY-00RXbe; Sat, 04
- Jul 2020 14:56:29 +0200
-Subject: Re: Git log: filtering by date and by lines do not work together
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N5lj7-1kyjj028KJ-017ER1; Sat, 04
+ Jul 2020 14:56:33 +0200
+Subject: [PATCH] revision: disable min_age optimization with line-log
 To:     =?UTF-8?B?0JzQsNGA0LjRjyDQlNC+0LvQs9C+0L/QvtC70L7QstCw?= 
-        <dolgopolovamariia@gmail.com>
+        <dolgopolovamariia@gmail.com>, git@vger.kernel.org
 References: <CAD6JL5SRvB_yXcqJ5HGADQaGtZAiKrtd447vtHLSagJqNGPChA@mail.gmail.com>
-Cc:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <2c4a6657-1a47-cfbb-21cd-04f131d2ed49@web.de>
-Date:   Sat, 4 Jul 2020 14:56:23 +0200
+Message-ID: <0c55e178-8f7c-ef84-e6eb-e50de9924ef6@web.de>
+Date:   Sat, 4 Jul 2020 14:56:32 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
@@ -47,85 +49,96 @@ In-Reply-To: <CAD6JL5SRvB_yXcqJ5HGADQaGtZAiKrtd447vtHLSagJqNGPChA@mail.gmail.com
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:vY2NdfRyc+PORZKKl3I9OGFpDyHlSE2/zErqxdIBg7mmMzvnxjZ
- GQUoQBUH7I51YGi10wjvZblp6sib1lZPJc9888CJl99qdMKaCglYmUTBnNN+1r3lcCUALZY
- 4prL/eJNBFsepoQFlPM0oN9T1kcaQ1/vh7iqrKnH+cCYvDa9JhR1RYq+IwCmo7UX/+EIKO/
- 5ZDzJfCvEU0lk1IAWXMhQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:o3IIquOlPjc=:oiMo4csjsxFZx9lKkx6wuW
- rduu3PNon5aStXu1JTlhVMuOPVF1SpwgdZB6HFc7liQP8BM2Sg9LgHrkH3x0CXWbLspxhFRXm
- LegyzzYKT1XfFRD+vR9Bre3T/OlEjVJOx8dQHBe9aV+uXoHqT3mTw/BcH6wJ1uJ2HhytwXg3Z
- DS3gG7mIjsZAIZmXgTDwjJxfsHCR8m753v7dACBwywb9pF7oxKinXI7CU6bsAq4fjOhXmDVfZ
- 6gUZCfUJ8QlxG0bEDQM++znhl/iYVZvc12aJ0I2XdgmwXcDeW9WwzhZgMpl+huN3MM55nFLmc
- SHI0hIn3wdLHj+vxbtoVWsz2BSX4RPMPRdhHJrXVzwmcBx1eIwrbxqBMRs/tuIichdZOoZVrC
- irrNJdYASIhvTBtStaLyS0d7Q5VVo72uSv4G/TgZSGmlT6MjNBaim00q7e/dbC6OCpxBzoDgN
- wpecCAPXzhy8vh20H5CGyNihh/f6FmP7K6qF4hjEP5QWXyXoNLxhw96TARbOyVz38V2lrspw0
- SuM3XB9+eCYiA2KyLHUHNMeNgwTH+JdpGOzv01B2xq+Aw3rgRGzu2npM5wzFOV6I4evpWDxFf
- /SH0syoRf01QLUGMYeLSA3OCIQiHELb+X9MZbsZWDDVQ102tWH88ZAVElC2Jqbmel8g33tz2z
- 8NfmW1KPLx6qIwbVpYJkZdtacIo/VsN9CfcfhlUvdpuZOIqvy60KkTdKOHez8Sejdhkxf5bJV
- NdcnjEtcUABENzN+qqJH5PNywNe8clEleogDwzS96tk6xzh093liNOT8gJpcbV0DLzHSNsH0U
- gMwUyqUvq0CphrYeKdDWIvAuHHBfiT4kHzvwfIBJTf8J5IJOvt9i5QKTXFhvVo/Xkrcet9vB3
- L03YUmaVkqeEgzb6U7RwT3rFCUp8UCBF7RSpmpDN9/E2jrbfCUsjrozi4+jzPZnLcgTm3U5R/
- kD66JFpFj3RL9ym5aBEcS5lria+Qy2eGhNNnfGkePbJfTtt2DrNTvYFi2JESXrIdtlZ9jfqPR
- bTKt0ApDbyoHiynDNQ0mww789R1x7mVOacw5pJtp3qw/fpbiVEzUkb8eMy3fLEzMUiAkJ5FB+
- hXOraChVjL2Q+EcDR5SbqA+1XPZwacglRJpj5f8nyoevSHBA4q2xNwBJPq8vLK+vJ57Jrv63J
- N5mp4qFpv7VU+tkc+OKGZzYI/4p30ij5WoGK0+iVTfUwVfgmig65QOgNSi485vOvB0Uaw=
+X-Provags-ID: V03:K1:uRie3PBIdkZCQBBupDOMNXyIqQpk9cgnwmGfeccE0dd3HM2zV06
+ mcC9nepnXkf/wzmQW01+zgkMLec6L/hmCYk+bsdte0j/2EFVTWF6phZWP62MgrbV6t2l8bI
+ IB+OwoDUgULoz+20yOMBRTCMGEGAqbyvQeD1Kq/16R4aPv+z0/4g82VWpLtyetP2R8H5h5c
+ 7aL3m+c1+yPuipWfwmf4g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ed9+MHn8x6E=:ANlchnyP17iqCQJQ8wzh6y
+ F+9KME0Fb57GIlNwdlkytjKk21wUt+BN+SPW2VVSXviJzT+rxkH3CLHSe6C7zYzRH8Uhwe1hs
+ iAyYu31Zzjg1eLEl71PXj3Pvb2Z002grpu34haiM3Xi/PViiDX7PNRLPaD2eVCCRUW826Xzfl
+ wwo26/pMcs8dd0x/8jyg8cTekiw74nT9c0L5zUsx+5r4msOTpTcEXntgAOCE5VyL3a17ZUeVu
+ Zefmt2C+eFMhUDn7turtOca3X8Ed6GU2Q7QDTO586jFMljGcSc4uNlDzjuqTr6KmdRTwRYp0Z
+ 2YCvC6Rmlzh66tFMgXWYVjKHYDhXNSZ7G1oCUfDEQyKceHY3hPln2sjwdZ4tNTY7A+MwU+unP
+ JPWQbPtU24J4J5N53CMQgnv29yp5jaUgD+QdC5wjV7mExduBkoe2M7OKgJijv5WVFIMU+oYQ+
+ PeeUWA4txa3RhDPwrHLSOq1H8tLDY6J13cRHJygIiyEvYyUdrcl0UyCSbLUI6SezDfivGrktM
+ W4zzXizGD2BKS6PPECuUlPokFgkQfV7kC9LwW8a/emJl8zubqVBH0/Og+3WIT01wkOfTMpIuO
+ NsBL93oJBpfvVtDQbhhKGhBqmuCVZUPLVce0R1n4xhoxzmt4kgMIi+ytqtt8v2zRSTPKX/eoR
+ f7AHHkG9SpPXsEe1H5eB08sbQSPm+jBt6uMH7BXAbFzA7jdfs1Q2MvwBPqjtLqu5K8RkXtEfo
+ 2maNe0JHs8FUPCTESO+5vboZbFnrhsaDUhS6/wZUq6wLzmjp9TM8gL4NbVJ7UEFOE5yaoXA7R
+ 6FqpSPC2NYujq1OqHMIqicz2rOcbKJfDnixG5xVhWnrlZGIhh6PGtUKFJQVnwscgEGfNvlbAn
+ 6Vo/S4Bppdi1jV96FbGcIHAD9WWtRt8ULKlma2afq8ibBJHtyhlid8o8WRV+aQGULWwd7SIgB
+ GDBxw7p2/9jo7CQ8CdyY+KRlea/Lcsr5eo5YictVG/zy3B1t8uG41zJjyP4dpyQ+PJjRak04N
+ phjadiwAd0qsbpW2fqLF7bc/h0dibmZFIgY+u/S3yuLxyt9Fg+aT5xP3Ohy2xovhCLWMe20pu
+ rFSEnRj7a4MXlaVY0HiuzMckJQeMraxGAQGGsz3MxjAKZkR/uaZek6i7idP9+QEmu423rk8mi
+ n3C+nDwaPKn07cICebMhyUxAFzn0IVvgYOsuGfHYVamcOSa8wPQRquppSQ9IZqJq4JFZs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.07.20 um 16:14 schrieb =D0=9C=D0=B0=D1=80=D0=B8=D1=8F =D0=94=D0=BE=
-=D0=BB=D0=B3=D0=BE=D0=BF=D0=BE=D0=BB=D0=BE=D0=B2=D0=B0:
-> Hi! I would like to report the bug.
->
-> I want to get commits that change specific lines in a specific file
-> and were made before a specific date.
->
-> Steps:
-> 1) I apply filtering by date: --before=3D"2016-11-18"
-> Result is in the picture FilteringByDate.png. Commit
-> 570778797effd69bd4536c51125b7d2e8f654c08 is presented.
->
-> 2) I apply filtering by lines:
-> -L33,34:src/main/java/org/toradocu/translator/Subject.java
-> Result is in the picture FilteringByLines.png . Commit
-> 570778797effd69bd4536c51125b7d2e8f654c08 is presented.
->
-> 3) Finally, I apply filtering by lines and by date:
-> --before=3D"2016-11-18"
-> -L33,34:src/main/java/org/toradocu/translator/Subject.java
-> Result is in the picture FilteringByDatesAndLines.png . Commit
-> 570778797effd69bd4536c51125b7d2e8f654c08 is NOT presented.
->
-> Expected Result: the commit is presented in filter 1 and in filter 2,
-> so it must be presented in filter =E2=80=9C1 AND 2=E2=80=9D
->
-> Actual Result: the commit is NOT presented in filter =E2=80=9C1 AND 2=E2=
-=80=9D
->
-> Environment: git version 2.27.0.windows.1
->
->  I beg you to provide me with a workaround. I am doing research work
-> on analyzing commits in open source projects. Therefore, this
-> functionality is very important to me.
+If one of the options --before, --min-age or --until is given,
+limit_list() filters out younger commits early on.  Line-log needs all
+those commits to trace the movement of line ranges, though.  Skip this
+optimization if both are used together.
 
-You could do the date filtering on the output of git log, e.g.:
+Reported-by: =D0=9C=D0=B0=D1=80=D0=B8=D1=8F =D0=94=D0=BE=D0=BB=D0=B3=D0=BE=
+=D0=BF=D0=BE=D0=BB=D0=BE=D0=B2=D0=B0 <dolgopolovamariia@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Needs careful review -- I'm not familiar with that the line-log code and
+the revision traversal machinery is a bit scary.  AFAIU the min_age
+check is done again in get_commit_action(), so this patch shouldn't
+cause underage commits to be shown, but I'm not sure.  Test coverage for
+the three options is spotty. :-/
 
-  git log -L33,34:src/main/java/org/toradocu/translator/Subject.java --dat=
-e=3Dshort --color=3Dalways |
-  awk -v before=3D2016-11-18 '
-    /^[^ ]*commit/ {state=3D1; header=3D""}
-    /^[^ ]*Date:/ {if ($2 <=3D before) {state=3D2; printf "%s", header} el=
-se {state=3D0}}
-    state =3D=3D 1 {header =3D header $0 ORS}
-    state =3D=3D 2 {print}
-  '
+ revision.c          | 3 ++-
+ t/t4211-line-log.sh | 8 ++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-This command is a bit unwieldy, so you might want to put the AWK
-script into a file, then you could use it like this:
+diff --git a/revision.c b/revision.c
+index ebb4d2a0f2..3bdc1bbf2a 100644
+=2D-- a/revision.c
++++ b/revision.c
+@@ -1410,7 +1410,8 @@ static int limit_list(struct rev_info *revs)
+ 				continue;
+ 			break;
+ 		}
+-		if (revs->min_age !=3D -1 && (commit->date > revs->min_age))
++		if (revs->min_age !=3D -1 && (commit->date > revs->min_age) &&
++		    !revs->line_level_traverse)
+ 			continue;
+ 		date =3D commit->date;
+ 		p =3D &commit_list_insert(commit, p)->next;
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 1428eae262..e186c83250 100755
+=2D-- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -240,10 +240,12 @@ test_expect_success 'setup for checking line-log and=
+ parent oids' '
+ 	EOF
+ 	git add file.c &&
+ 	test_tick &&
++	first_tick=3D$test_tick &&
+ 	git commit -m "Add func1() and func2() in file.c" &&
 
-  git log -L33,34:src/main/java/org/toradocu/translator/Subject.java --dat=
-e=3Dshort --color=3Dalways |
-  awk -v before=3D2016-11-18 -f gitlogbefore.awk
+ 	echo 1 >other-file &&
+ 	git add other-file &&
++	test_tick &&
+ 	git commit -m "Add other-file" &&
 
-Ren=C3=A9
+ 	sed -e "s/F1/F1 + 1/" file.c >tmp &&
+@@ -283,4 +285,10 @@ test_expect_success 'parent oids with parent rewritin=
+g' '
+ 	test_cmp expect actual
+ '
+
++test_expect_success 'line-log with --before' '
++	echo $root_oid >expect &&
++	git log --format=3D%h --no-patch -L:func2:file.c --before=3D$first_tick =
+>actual &&
++	test_cmp expect actual
++'
++
+ test_done
+=2D-
+2.27.0
