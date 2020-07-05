@@ -2,1029 +2,159 @@ Return-Path: <SRS0=tGm0=AR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=DATE_IN_PAST_24_48,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBF0CC433DF
-	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 11:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6407FC433E0
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 14:38:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 862F020724
-	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 11:16:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3727D206CB
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 14:38:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XcNi/CyB"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Enp1CNIr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728859AbgGFLQL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jul 2020 07:16:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728578AbgGFLQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jul 2020 07:16:10 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFCE9C061794
-        for <git@vger.kernel.org>; Mon,  6 Jul 2020 04:16:10 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id w17so751840ply.11
-        for <git@vger.kernel.org>; Mon, 06 Jul 2020 04:16:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rJflCJpeBz3lUY+Le/fc8MIM4IwuaO+8zsViL5ieVc4=;
-        b=XcNi/CyBW+8oWxO3hdyKA2UcWh09dfnataz+Pl87rFlNG6tSOV5sYtKuM4QEDJpj6r
-         tOrPp3gY52CbUqzWdVu4yIbQZcJ71R884dvJv/OU0SCM2pwZ/JeWWu197ShtPDIaYQh9
-         jzdGheodQrPeU13eA2/JaEFI+WnRutUUWw0vPWZggfTjG8t9QAGwnGCYe24LR86yqdSg
-         izsPBFVRc1pqBilzIkOi5PbCJH063bILkUG+2tRjnuBqxLgSgtFFZUVR2Meutbic/RH2
-         SncZC2FlyI4tCrGuNByeEBpqSI4U/UCHs1gqtfTl9cHrskqwYSQ1gp8TR11JF3z709rR
-         jGZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rJflCJpeBz3lUY+Le/fc8MIM4IwuaO+8zsViL5ieVc4=;
-        b=d9FWNa7KLAUreE3upJNiVSFpEhRvfFUkJNWJHJrKk8ASr1ikqCtdrcwZZiMAp4t12i
-         fzwGbyueQUugjG6i6eJfr0cCdrGm8dm4xcgaJGh1P/sL+4WaWKmoEwI/yApUK6uY8ps0
-         onmZ4sXYsuDB5kbO8Sr08zIRApOaLXFLdhHdyUTXNWM6zYl0fzTXP1AmGb2s2JfSxVxP
-         N4CHGjufaCUj+aDw/LgOnBo3Sd4b3j2Z3MSAOyaT6GJ+JJy8Q7jSQxXQWSi1LAJ4GlpI
-         j6/jpnTZBy60vRvo34m1HB59qODsHpahTNgj3Z3LPU1/GfDZbZcXzP3ixcwCej/l1J/p
-         QWlg==
-X-Gm-Message-State: AOAM530vaSIGr/Q2rafNfMeWG2Aw4DtWXcxvfwvtTVlc+3Gd6af92Xd8
-        skYbCfOxAZG9cBK5d2vol64=
-X-Google-Smtp-Source: ABdhPJweq8YTwSLGWqpSiLD27s6/d2fZx+SssBqHGgsHNigSd6AENoLmnBeWbgHHUW8sKyI/gg3Qrw==
-X-Received: by 2002:a17:902:8bc7:: with SMTP id r7mr40843787plo.174.1594034168290;
-        Mon, 06 Jul 2020 04:16:08 -0700 (PDT)
-Received: from konoha ([45.127.46.229])
-        by smtp.gmail.com with ESMTPSA id w1sm11944144pfc.55.2020.07.06.04.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2020 04:16:06 -0700 (PDT)
-Date:   Mon, 6 Jul 2020 16:45:59 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        christian.couder@gmail.com, gitster@pobox.com,
-        liu.denton@gmail.com, pc44800@gmail.com, stefanbeller@gmail.com
-Subject: Re: [PATCH 4/4] submodule: port submodule subcommand 'summary' from
- shell to C
-Message-ID: <20200706111559.GA10820@konoha>
-References: <20200702192409.21865-1-shouryashukla.oo@gmail.com>
- <20200702192409.21865-5-shouryashukla.oo@gmail.com>
- <nycvar.QRO.7.76.6.2007031712160.50@tvgsbejvaqbjf.bet>
- <20200705173458.GA5204@konoha>
- <0a2e53d4-7fc5-183d-663d-7a8f52b2a685@gmail.com>
+        id S1729201AbgGFOiD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jul 2020 10:38:03 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55967 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729148AbgGFOiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jul 2020 10:38:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1594046276;
+        bh=1OPBMF6jlswBuftco4R9H49ejXAj8mIdISDhleAurJ8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Enp1CNIrBQ/9/IBSXtkKaLHwAef8rehV/4WhPIGUY/h6TSUxfRcfj2P3zuFbO8jjs
+         qCW1kkSL9m5aXarbbqgv9taYPgntvVDVOaOOYrNeq+tLYc5KWZEV8swTTGRRyK210r
+         oB3u/E8Ytuhx0PVT+k6Guxq2908JHlYAZRulZiQ0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.26.78] ([89.1.213.199]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1wq3-1ku9hV0eHh-012K80; Mon, 06
+ Jul 2020 16:37:56 +0200
+Date:   Sun, 5 Jul 2020 04:15:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Trygve Aaberge <trygveaa@gmail.com>
+cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Heba Waly <heba.waly@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Wait for child on signal death for aliases to
+ builtins
+In-Reply-To: <20200704221839.421997-1-trygveaa@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2007050410100.50@tvgsbejvaqbjf.bet>
+References: <20200704221839.421997-1-trygveaa@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0a2e53d4-7fc5-183d-663d-7a8f52b2a685@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:xII5gfRxhOijreZB85+Cc+WXn9plTdDay+uaESJLv6kSFJ17lFN
+ /xlOWx98HTLm8NiEPhf1mZK8Z8BK/KPs0sJ00d8F/5Me2dW6k/0PCCXZ443VCdN17rM11IQ
+ VN3boYSVV3y7VEHS/Z66ANHY+QAXj9lE3emYJgpw7lwQ0SYadkalFoSL04GC9S9Isn6NifS
+ vl89OVjlB0+wJTgi08hQQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:20ub3gBH1Vs=:GIhukCM/7IUKC+RtJ5HQTL
+ xD1NE27nKMJWXtw3Pbq9wNjX4NTfjqWkh8nhtjkKI8QxIWLns41nQvdxYW6vLoFGmUqPU4lUh
+ m7nBOtz63NaP8IACWcQPXmGjv5fy8eD9+RqJ49AoxCeopo8M5mL1vFlTHFlzz8TQFoU8sWgqR
+ l17PD5Rp/N9YdrG6FiwwHfBW9hSt+udkKEq1PYHkh1gyVFOeBQ0xiYDQG8iVdLbFG5Srumzzn
+ KcF2WShXspzOW1mDx6AnBHlYmvbAZ74ysdxGsL1NcpYXlMfkO9CWPMMsQYiyNbaUAPM/zeOA1
+ FLiQPJ2sqJzh38oRW4t9z2IXNJXl33JpY6XCCNsoAoFf3CygcP6SWbpRaNkWRucAkHBE20UxJ
+ dniMdq4wot1prkC/mGALRSuVeSssKUD2B7KelYa+4nRjJ6ttf7gPRPstT29DiTfbdK0mORFzb
+ zsylje0fg915COrsyKBxAIvdAqjfUfesZ5ivujSg/0G+XvAg1qovwQjm9J+WMhJG6rGYzXP+e
+ 6BlgWG1E5Px9o11X3gsVPHu4aZ4jCqFskXAsm+OJ5RE2CfkkYfwXbihQEh184JDUS8q4tBx/n
+ VQWtBjB1yiih1wgmBV6sJmJdCYnAr2VCYjZJs7lsfJ25f00RgkdLQxKhdffGGYyQIKL6WTYTs
+ c7Sb3KX1lCFKXoXFureyQxGQ2DVtxDqk3I5DKo+SvMHhO18CIxoPd/mmLHtqV9vxjkK5RdYeF
+ KhS+iV9+A0vBnE3wiMp9fuLidt8VJD0T2OadHbj3zIG4bW30A/77lsgl2xHWUyj4WV39JqSKF
+ gQM0NsI422roNs3T2BTYnJ+06D6SGkQKDYRd9krSS1Ljn6WvwprUYsfUglZmQB14C+ypCcnSl
+ zfWalll43HqDISiItBqy8RzWbUftvQZWTkCmV+h+GRnItGmnw8ywei76UepKhUIQuEpj9eSuI
+ J9upAOAhwcKxvXv1voxVFJuNGv16RXsA9iLzQHMx/W8Es1u+N8N39Ylg2ebO2xmfSpLNAVZX4
+ TbLHZGDwfGei9l8YKNxLBeMKCVx4wQ2Gt/JOXwmc5EL0so/GJKUUV53b5YcbswdsYPCr2qEnE
+ UBxPLsi9kvZot24LX6tzN7B4ecAKPsej9Ihh/oLlNj2LVRWiskJBOcE47cn4ykgnUtsB9qe3H
+ a10mQOyhCChjfM5+wvXNHiotFIJ8e5i7NaktFO+neiwSST94hzy+QJQ7WXONqYdF+f0Mt67Ik
+ l7tnElTZB1QdWZ1K35CCQm5UCaC3uC9buSFOKZw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/07 02:46, Kaartic Sivaraam wrote:
-> Note: I've added some comment but I've not been able to address all the
-> parts due to lack of time. I'm sending it sooner hoping it would be
-> useful.
+Hi,
 
-Sure no problem
+On Sun, 5 Jul 2020, trygveaa@gmail.com wrote:
 
-> On 05-07-2020 23:04, Shourya Shukla wrote:
-> [...]
-> >> [exchanging Stefan Beller's dysfunct @google address for their private
-> >> one; I encourage you to do the same in the next iteration, probably
-> >> by editing the `Mentored-by:` line.]
-> > 
-> > I think you missed to mention it.
-> >
-> 
-> If you're looking for the private e-mail. The exachange was already done
-> and it was right there in the Cc list of the mail sent by Dscho. I've
-> added it again as you seem to have removed it.
+> From: Trygve Aaberge <trygveaa@gmail.com>
+>
+> When you hit ^C all the processes in the tree receives it. When a git
+> command uses a pager, git ignores this and waits until the pager quits.
+> However, when using an alias there is an additional process in the tree
+> which didn't ignore the signal. That caused it to exit which in turn
+> caused the pager to exit. This fixes that for aliases to builtins.
+>
+> This was originally fixed in 46df6906f3 (see that for a more in
+> explanation), but broke by a regression in b914084007.
 
-Oh I did not catch that actually. Thanks!
+Thank you for those references. I did try to make sure that b914084007
+would not regress on anything, but apparently I failed to verify the final
+form. Since all it did was to remove `#if 0`...`#endif` guards, it was
+unfortunately quite easy for this regression to slip in.
 
-> >> On Fri, 3 Jul 2020, Shourya Shukla wrote:
-> >>
-> >>> From: Prathamesh Chavan <pc44800@gmail.com>
-> >>>
-> >>> The submodule subcommand 'summary' is ported in the process of
-> >>> making git-submodule a builtin. The function cmd_summary() from
-> >>> git-submodule.sh is ported to functions module_summary(),
-> >>> compute_summary_module_list(), prepare_submodule_summary() and
-> >>> generate_submodule_summary(), print_submodule_summary().
-> >>>
-> >>> The first function module_summary() parses the options of submodule
-> >>> subcommand and also acts as the front-end of this subcommand.
-> >>> After parsing them, it calls the compute_summary_module_list()
-> >>
-> >> Missing full-stop, and probably the sentence also wanted to say "function"
-> >> at the end.
-> > 
-> > I will correct. Thanks for pointing out!
-> > 
-> >>> The functions compute_summary_module_list() runs the diff_cmd,
-> >>> and generates the modules list, as required by the subcommand.
-> >>> The generation of this module list is done by the using the
-> >>
-> >> s/the using/using/
-> > 
-> > Will amend!
-> > 
-> >>> callback function submodule_summary_callback(), and stored in the
-> >>> structure module_cb.
-> >>
-> >> This explains nicely what the patch does. But the commit message should
-> >> not really repeat what can be readily deduced from the patch; It should
-> >> focus on the motivation and on interesting background information that is
-> >> _not_ readily deduced from the patch.
-> > 
-> > I understand. I will follow your suggestions regarding my patch.
-> > 
-> >> For example, I see that `$diff_cmd` is called twice in the shell script
-> >> version, once to "get modified modules cared by user" and then _again_,
-> >> with that list of modified modules.
-> >>
-> >> I would have liked to see a reasoning in the commit message that explains
-> >> why this has to be so in the C version. I get why it is complicated in a
-> >> shell script (which lacks proper objects, after all), but I would have
-> >> expected the C version to be able to accumulate the information with a
-> >> single pass.
-> >>
-> >> (Before writing the following paragraph, I actually reviewed the patch
-> >> from bottom to top, in the caller->callee direction.)
-> >>
-> >> Ah. I see that this indeed is the case: there is only one pass in the C
-> >> version. That's a useful piece of metadata for the commit message, I
-> >> think, much more useful than describing the call tree of the functions.
-> > 
-> > Yup that it worth mentioning.
-> > 
-> >> Another thing worth mentioning in the commit message is that we use the
-> >> combination of setting a child_process' working directory to the submodule
-> >> path and then calling `prepare_submodule_repo_env()` which also sets
-> >> `GIT_DIR` to `.git`, so that we can be certain that those spawned
-> >> processes will not access the superproject's ODB by mistake.
-> >>
-> >> When reading my suggestions, please keep in mind that I reviewed the
-> >> functions in caller->callee order, i.e. I started at the end of the patch
-> >> and then worked my way up.
-> >>
-> >> All in all, I like the function structure, but I think there is still a
-> >> bit room for improvement in a v2.
-> > 
-> >>> +static int verify_submodule_object_name(const char *sm_path,
-> >>> +					  const char *sha1)
-> >>> +{
-> >>> +	struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> >>> + > > +	cp_rev_parse.git_cmd = 1;
-> >>> +	cp_rev_parse.no_stdout = 1;
-> >>> +	cp_rev_parse.dir = sm_path;
-> >>
-> >> So here we specify `sm_path` as current working directory.
-> >>
-> >>> +	prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> >>
-> >> And this implicitly sets `GIT_DIR=.git`. Good.
-> >>
-> >>> +	argv_array_pushl(&cp_rev_parse.args, "rev-parse", "-q",
-> >>> +			 "--verify", NULL);
-> >>> +	argv_array_pushf(&cp_rev_parse.args, "%s^0", sha1);
-> >>
-> >> After this, we should also append `--` to make sure that we're not parsing
-> >> this as a file name.
-> > 
-> > Will do!
-> > 
-> >> Two comments about naming: `sha1` is pretty misleading here, as we do not
-> >> require it to be a SHA-1 (especially in the future in which we switch to
-> >> SHA-256). Besides, what we're really asking for (via that `^0` suffix) is
-> >> a committish. Therefore, I would propose to use `committish` both in the
-> >> parameter name as well as the function name.
-> > 
-> > I am not aware of this change. I will take this suggestion into account.
-> > 
-> >>> +
-> >>> +	if (run_command(&cp_rev_parse))
-> >>> +		return 1;
-> >>> +
-> >>> +	return 0;
-> >>> +}
-> >>> +
-> >>> +static void print_submodule_summary(struct summary_cb *info, int errmsg,
-> >>> +				      int total_commits, int missing_src,
-> >>> +				      int missing_dst, const char *displaypath,
-> >>> +				      int is_sm_git_dir, struct module_cb *p)
-> >>> +{
-> >>> +	if (p->status == 'T') {
-> >>> +		if (S_ISGITLINK(p->mod_dst))
-> >>> +			printf(_("* %s %s(blob)->%s(submodule)"),
-> >>> +				 displaypath, find_unique_abbrev(&p->oid_src, 7),
-> >>
-> >> The shell script version does this:
-> >>
-> >>                 sha1_abbr_src=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src 2>/dev/null ||
-> >>                         echo $sha1_src | cut -c1-7)
-> >>
-> >> That is not quite the same, as it looks for the abbreviation _in the
-> >> submodule_, not in the current project. So I think `find_unique_abbrev()`
-> >> is not correct here.
-> >>
-> >> The funny thing is that we _already_ will have called `git rev-parse
-> >> --verify` for both `p->oid_src` and `p->oid_dst` in the submodule, in the
-> >> caller of this function! And while we throw away the result, and while we
-> >> do not pass `--short`, there is no reason why we shouldn't be able to do
-> >> precisely that.
-> > 
-> > Okay so you are saying that there is no need of a 'find_unique_abbrev()'
-> > since we would be easily able to obtain these values from the caller of
-> > 'print_submodule_summary()' right?
-> 
-> Yes. 'generate_submodule_summary' already does a rev-parse on
-> p->oid_src and p->oid_dst via 'verify_submodule_object_name'.
-> We should be able to get the short version of them by passing '--short'
-> to rev-parse there and make it return the short SHA1. We can then use it
-> like how Dscho mentions below.
+IIRC the original code inside those guards was modeled closely after
+`execv_dashed_external()`, but it does not really look very much like it
+anymore now, does it? (And it looks as if 2b296c93d49
+(execv_dashed_external: use child_process struct, 2017-01-06) was
+responsible for that.)
 
-Okay. That seems good. Yes, it will be cleaner to pass them as
-arguments.
+In any case, thank you for the patch, it looks good to me!
 
-> > Maybe we can pass 'oid_src' or 'oid_dst' as an argument?
-> > 
-> >>> +				 find_unique_abbrev(&p->oid_dst, 7));
-> >>> +		else
-> >>> +			printf(_("* %s %s(submodule)->%s(blob)"),
-> >>> +				 displaypath, find_unique_abbrev(&p->oid_src, 7),
-> >>> +				 find_unique_abbrev(&p->oid_dst, 7));
-> >>> +	} else {
-> >>> +		printf("* %s %s...%s",
-> >>> +			displaypath, find_unique_abbrev(&p->oid_src, 7),
-> >>> +			find_unique_abbrev(&p->oid_dst, 7));
-> >>> +	}
-> >>> +
-> >>> +	if (total_commits < 0)
-> >>> +		printf(":\n");
-> >>> +	else
-> >>> +		printf(" (%d):\n", total_commits);
-> >>> +
-> >>> +	if (errmsg) {
-> >>> +		/*
-> >>> +		 * Don't give error msg for modification whose dst is not
-> >>> +		 * submodule, i.e. deleted or changed to blob
-> >>> +		 */
-> >>> +		if (S_ISGITLINK(p->mod_src)) {
-> >>> +			if (missing_src && missing_dst) {
-> >>> +				printf(_("  Warn: %s doesn't contain commits %s and %s\n"),
-> >>> +				       displaypath, oid_to_hex(&p->oid_src),
-> >>> +				       oid_to_hex(&p->oid_dst));
-> >>> +			} else if (missing_src) {
-> >>> +				printf(_("  Warn: %s doesn't contain commit %s\n"),
-> >>> +				       displaypath, oid_to_hex(&p->oid_src));
-> >>> +			} else {
-> >>> +				printf(_("  Warn: %s doesn't contain commit %s\n"),
-> >>> +				       displaypath, oid_to_hex(&p->oid_dst));
-> >>> +			}
-> >>> +		}
-> >>> +	} else if (is_sm_git_dir) {
-> >>> +		struct child_process cp_log = CHILD_PROCESS_INIT;
-> >>> +
-> >>> +		cp_log.git_cmd = 1;
-> >>> +		cp_log.dir = p->sm_path;
-> >>> +		prepare_submodule_repo_env(&cp_log.env_array);
-> >>
-> >> Since the working directory is set to the top-level directory of the
-> >> submodule, and since `prepare_submodule_repo_env()` sets `GIT_DIR` to
-> >> `.git`, I think that the `is_sm_git_dir` condition is unnecessary. In
-> >> fact, the entire `is_sm_git_dir` parameter (and local variable in the
-> >> caller, see more on that below) can go away.
-> > 
-> > Because we already set the $GIT_DIR to .git/ so an extra check will not
-> > be necessary right?
-> > 
-> 
-> Yes. If we remove that check and we get a p->sm_path that does not point
-> to a submodule, I wonder what would happen if we run 'run_command'
-> on it. I'm also not sure if that's a possible case. Something to
-> explore.
+Ciao,
+Dscho
 
-This might take some time but would be a huge change for this patch if
-successful.
-
-> >>> +		argv_array_pushl(&cp_log.args, "log", NULL);
-> >>> +
-> >>> +		if (S_ISGITLINK(p->mod_src) && S_ISGITLINK(p->mod_dst)) {
-> >>> +			if (info->summary_limit > 0)
-> >>> +				argv_array_pushf(&cp_log.args, "-%d",
-> >>> +						 info->summary_limit);
-> >>> +
-> >>> +			argv_array_pushl(&cp_log.args, "--pretty=  %m %s",
-> >>> +					 "--first-parent", NULL);
-> >>> +			argv_array_pushf(&cp_log.args, "%s...%s",
-> >>> +					 oid_to_hex(&p->oid_src),
-> >>> +					 oid_to_hex(&p->oid_dst));
-> >>> +		} else if (S_ISGITLINK(p->mod_dst)) {
-> >>> +			argv_array_pushl(&cp_log.args, "--pretty=  > %s",
-> >>> +					 "-1", oid_to_hex(&p->oid_dst), NULL);
-> >>> +		} else {
-> >>> +			argv_array_pushl(&cp_log.args, "--pretty=  < %s",
-> >>> +					 "-1", oid_to_hex(&p->oid_src), NULL);
-> >>> +		}
-> >>> +		run_command(&cp_log);
-> >>> +	}
-> >>> +	printf("\n");
-> >>> +}
-> >>
-> >> It looks as if there is a whole lot of `oid_to_hex(&p->oid_src)` in that
-> >> function. Together with the realization that we need the abbreviated
-> >> version of that at least in one place, and the other realization that we
-> >> already call `rev-parse --verify` for both `oid_src` and `oid_dst` in the
-> >> caller of this function, it seems to suggest itself that we would actually
-> >> want to pass the `--short` option, too, and to capture the output, and
-> >> pass it down to `print_submodule_summary()` _instead of_ `missing_src` and
-> >> `missing_dst` (e.g. as `src_abbrev` and `dst_abbrev`).
-> > 
-> > Oh you have mentioned it here too. This seems quite a good approach. I
-> > will adopt this.
-> > 
-> >>> +
-> >>> +static void generate_submodule_summary(struct summary_cb *info,
-> >>> +				       struct module_cb *p)
-> >>> +{
-> >>> +	int missing_src = 0;
-> >>> +	int missing_dst = 0;
-> >>> +	char *displaypath;
-> >>> +	int errmsg = 0;
-> >>> +	int total_commits = -1;
-> >>> +	int is_sm_git_dir = 0;
-> >>> +	struct strbuf sm_git_dir_sb = STRBUF_INIT;
-> >>> +
-> >>> +	if (!info->cached && oideq(&p->oid_dst, &null_oid)) {
-> >>> +		if (S_ISGITLINK(p->mod_dst)) {
-> >>> +			/*
-> >>> +			 * NEEDSWORK: avoid using separate process with
-> >>> +			 * the help of the function head_ref_submodule()
-> >>
-> >> I don't quite understand this comment. There is no `head_ref_submodule()`
-> >> function.
-> >>
-> 
-> That NEEDSWORK was added based on Stefan's comment on a previous version
-> of Prathamesh's patch. Here it is for reference:
-> 
-> >> +       if (!info->cached && !oidcmp(&p->oid_dst, &null_oid)) {
-> >> +               if (S_ISGITLINK(p->mod_dst)) {
-> >> +                       struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> >> +                       struct strbuf sb_rev_parse = STRBUF_INIT;
-> >> +
-> >> +                       cp_rev_parse.git_cmd = 1;
-> >> +                       cp_rev_parse.no_stderr = 1;
-> >> +                       cp_rev_parse.dir = p->sm_path;
-> >> +                       prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> >> +
-> >> +                       argv_array_pushl(&cp_rev_parse.args,
-> >> +                                        "rev-parse", "HEAD", NULL);
-> >> +                       if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
-> >> +                               strbuf_strip_suffix(&sb_rev_parse, "\n");
-> >> +
-> >> +                               get_oid_hex(sb_rev_parse.buf, &p->oid_dst);
-> >> +                       }
-> >> +                       strbuf_release(&sb_rev_parse);
-> > 
-> > I think this could be replaced via
-> > head_ref_submodule(sub->path, callback function, &where_to_store)
-> > or is there some trickery going on, that this also works on
-> > non-compliant submodules?
-> > (Maybe add that as a NEEDSWORK/TODO)
-> 
-> Ref:
-> https://public-inbox.org/git/CAGZ79kaWn9z47Va=VW4R2Aswws1N5n2u4Kvatn73s0YnV0pVqQ@mail.gmail.com/
-> 
-> A quick search reveals that 'head_ref_submodule' existed during that
-> period. On further investigation it seems that 'refs_head_ref' was
-> introduced in 62f0b399e0 (refs: add refs_head_ref(), 2017-08-23) and
-> 'head_ref_submodule' was made to use it. Later on, in 419221c106 (refs:
-> remove dead for_each_*_submodule(), 2017-08-23), 'head_ref-submodule'
-> was removed with an advice to use the 'refs_' API for accessing
-> submodules.
-> 
-> > +* Use `refs_` API for accessing submodules. The submodule ref store could
-> > +  be obtained with `get_submodule_ref_store()`
-> 
-> How it applies to our code is something to be looked into, yet.
-> 
-> >>> +			 */
-> >>> +			struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> >>> +			struct strbuf sb_rev_parse = STRBUF_INIT;
-> >>> +
-> >>> +			cp_rev_parse.git_cmd = 1;
-> >>> +			cp_rev_parse.no_stderr = 1;
-> >>> +			cp_rev_parse.dir = p->sm_path;
-> >>> +			prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> >>> +
-> >>> +			argv_array_pushl(&cp_rev_parse.args, "rev-parse",
-> >>> +					 "HEAD", NULL);
-> >>> +			if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
-> >>> +				strbuf_strip_suffix(&sb_rev_parse, "\n");
-> >>> +				get_oid_hex(sb_rev_parse.buf, &p->oid_dst);
-> >>> +			}
-> >>> +			strbuf_release(&sb_rev_parse);
-> >>> +		} else if (S_ISLNK(p->mod_dst) || S_ISREG(p->mod_dst)) {
-> >>> +			struct child_process cp_hash_object = CHILD_PROCESS_INIT;
-> >>> +			struct strbuf sb_hash_object = STRBUF_INIT;
-> >>> +
-> >>> +			cp_hash_object.git_cmd = 1;
-> >>> +			argv_array_pushl(&cp_hash_object.args, "hash-object",
-> >>> +					 p->sm_path, NULL);
-> >>> +			if (!capture_command(&cp_hash_object,
-> >>> +					     &sb_hash_object, 0)) {
-> >>> +				strbuf_strip_suffix(&sb_hash_object, "\n");
-> >>> +				get_oid_hex(sb_hash_object.buf, &p->oid_dst);
-> >>> +			}
-> >>> +			strbuf_release(&sb_hash_object);
-> >>
-> >> It would probably be shorter, less error-prone, and quicker to use
-> >> `index_fd()` directly.
-> >>
-> >> BTW I am not quite sure that this code does the correct thing in case of a
-> >> symlink: it hashes the contents of the symlink target (if it is a file,
-> >> otherwise it errors out). But that is hardly an issue introduced by the
-> >> conversion, that's just copied from `git-submodule.sh`.
-> >>
-> >>> +		} else {
-> >>> +			if (p->mod_dst)
-> >>> +				die(_("unexpected mode %d\n"), p->mod_dst);
-> >>
-> >> Hmm. This does not match what the shell script version does:
-> >>
-> >>                         *)
-> >>                                 # unexpected type
-> >>                                 eval_gettextln "unexpected mode \$mod_dst" >&2
-> >>                                 continue ;;
-> >>
-> >> I think we should also just write the message to `stderr` and continue,
-> >> not `die()`.
-> >>
-> >> In addition to that, I am missing the C code for this case:
-> >>
-> >>                         000000)
-> >>                                 ;; # removed
-> >>
-> >> It is quite possible that our test suite does not cover this case (or did
-> >> the test suite fail for you?). If that is indeed the case, it would be
-> >> really good to add a test case as part of this patch series, to gain
-> >> confidence in the correctness of the conversion.
-> > 
-> > The tests passed for me actually. Whether this is covered by the test
-> > cases, I am not sure. I will have to check it.
-> > 
-> >>> +		}
-> >>> +	}
-> >>> +
-> >>> +	strbuf_addstr(&sm_git_dir_sb, p->sm_path);
-> >>
-> >> I have to admit that I am not loving the name `sm_git_dir_sb`. Why not
-> >> `submodule_git_dir`? I guess you copied it from elsewhere in
-> >> `submodule--helper.c`...
-> >>
-> >>> +	if (is_nonbare_repository_dir(&sm_git_dir_sb))
-> >>> +		is_sm_git_dir = 1;
-> >>
-> >> So here, we verify whether there is a repository at `p->sm_path`. I don't
-> >> see that in the shell script version:
-> >>
-> >>                 missing_src=
-> >>                 missing_dst=
-> >>
-> >>                 test $mod_src = 160000 &&
-> >>                 ! GIT_DIR="$name/.git" git rev-parse -q --verify $sha1_src^0 >/dev/null &&
-> >>                 missing_src=t
-> >>
-> >>                 test $mod_dst = 160000 &&
-> >>                 ! GIT_DIR="$name/.git" git rev-parse -q --verify $sha1_dst^0 >/dev/null &&
-> >>                 missing_dst=t
-> >>
-> >> Let's read a bit further.
-> >>
-> >>> +
-> >>> +	if (is_sm_git_dir && S_ISGITLINK(p->mod_src))
-> >>> +		missing_src = verify_submodule_object_name(p->sm_path,
-> >>> +							   oid_to_hex(&p->oid_src));
-> >>
-> >> Ah, and `verify_submodule_object_name()` uses `p->sm_path` as working
-> >> directory. But that's not what the shell script version did: it specified
-> >> the `GIT_DIR` explicitly.
-> >>
-> >> And by using the `prepare_submodule_repo_env()` function in
-> >> `verify_submodule_object_name()`, we specify `GIT_DIR` implicitly, as I
-> >> pointed out in my comment on that function.
-> > 
-> > Oh so you're saying that it will be better to call
-> > 'prepare_submodule_repo_env()' on some variable since we explicitly want to
-> > store the path to GIT_DIR?
-> > 
-> 
-> We already call 'prepare_submodule_repo_env' in
-> 'verify_submodule_object_name'. So, he's likely saying that
-> 'is_sm_git_dir' is unnecessary here.
-
-Understood.
-
-> > It would be of much help if you could explain this part just a little
-> > more (for my own sake).
-> > 
-> >> So I think that `is_sm_git_dir` might be
-> > 
-> 
-> ... unnecessary.
-> 
-> > I think you missed something here...
-> > 
-> 
-> That's likely what he meant based on what is mentioned above.
-
-Oh okay. Thanks!
-
-> >>> +
-> >>> +	if (is_sm_git_dir && S_ISGITLINK(p->mod_dst))
-> >>> +		missing_dst = verify_submodule_object_name(p->sm_path,
-> >>> +							   oid_to_hex(&p->oid_dst));
-> >>> +
-> >>> +	displaypath = get_submodule_displaypath(p->sm_path, info->prefix);
-> >>> +
-> >>> +	if (!missing_dst && !missing_src) {
-> >>> +		if (is_sm_git_dir) {
-> >>> +			struct child_process cp_rev_list = CHILD_PROCESS_INIT;
-> >>> +			struct strbuf sb_rev_list = STRBUF_INIT;
-> >>> +			char *range;
-> >>> +
-> >>> +			if (S_ISGITLINK(p->mod_src) && S_ISGITLINK(p->mod_dst))
-> >>> +				range = xstrfmt("%s...%s", oid_to_hex(&p->oid_src),
-> >>> +						oid_to_hex(&p->oid_dst));
-> >>> +			else if (S_ISGITLINK(p->mod_src))
-> >>> +				range = xstrdup(oid_to_hex(&p->oid_src));
-> >>> +			else
-> >>> +				range = xstrdup(oid_to_hex(&p->oid_dst));
-> >>> +
-> >>> +			cp_rev_list.git_cmd = 1;
-> >>> +			cp_rev_list.dir = p->sm_path;
-> >>> +			prepare_submodule_repo_env(&cp_rev_list.env_array);
-> >>
-> >> Again, due to setting the working directory to `p->sm_path` and
-> >> (implicitly, via `prepare_submodule_repo_env()`) `GIT_DIR` to `.git`, I do
-> >> not think that we have to guard this block beind `is_sm_git_dir`.
-> > 
-> >>> +
-> >>> +			argv_array_pushl(&cp_rev_list.args, "rev-list",
-> >>> +					 "--first-parent", range, "--", NULL);
-> >>
-> >> Since `argv_array_push()` duplicates the strings, anyway, we can totally
-> >> avoid the need for the `range` variable:
-> >>
-> >> 			if (IS_GITLINK(p->mod_src) && IS_GITLINK(p->mod_dst))
-> >> 				argv_array_pushf(&cp_rev_list.args, "%s...%s",
-> >> 						 oid_to_hex(&p->oid_src),
-> >> 						 oid_to_hex(&p->oid_dst));
-> >> 			else
-> >> 				argv_array_push(&cp_rev_list.args, IS_GITLINK(p->mod_src) ?
-> >> 						oid_to_hex(&p->oid_src) :
-> >> 						oid_to_hex(&p->oid_dst));
-> >>
-> >>> +			if (!capture_command(&cp_rev_list, &sb_rev_list, 0)) {
-> >>> +				if (sb_rev_list.len)
-> >>> +					total_commits = count_lines(sb_rev_list.buf,
-> >>> +								    sb_rev_list.len);
-> >>
-> >> That's actually not necessary. `git rev-list --count` will give you a nice
-> >> number, no need to capture a potentially large amount of memory only to
-> >> count the lines.
-> >>
-> >> This may also make the patch obsolete that makes `count_lines()` public.
-> > 
-> > Therefore we eliminate count_lines() from here and instead do a 'git
-> > rev-list --count'?
-> > 
-> 
-> Yes.
-> 
-> >>> +				else
-> >>> +					total_commits = 0;
-> >>> +			}
-> >>
-> >>> +
-> >>> +			free(range);
-> >>> +			strbuf_release(&sb_rev_list);
-> >>> +		}
-> >>> +	} else {
-> >>> +		errmsg = 1;
-> >>> +	}
-> >>
-> >> I am missing the equivalent for these lines here:
-> >>
-> >>                 t,)
-> >>                         errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commit \$sha1_src")"
-> >>                         ;;
-> >>                 ,t)
-> >>                         errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commit \$sha1_dst")"
-> >>                         ;;
-> >>                 t,t)
-> >>                         errmsg="$(eval_gettext "  Warn: \$display_name doesn't contain commits \$sha1_src and \$ ha1_dst")"
-> >>                         ;;
-> > 
-> > I will add them.
-> > 
-> 
-> I think they're already there in the 'print_submodule_summary' function
-> above.
-> 
-> >> I am not quite sure whether it is a good idea to leave it to the
-> >> `print_submodule_summary()` function to generate the `errmsg`. I think I'd
-> >> rather have it a `char *` than an `int`.
-> > 
-> > Would it be better to add these error messages in
-> > 'prepare_submodule_summary()'?
-> 
-> No. He's likely saying that instead of setting `errmsg` to 1 and
-> constructing the error message in `print_submodule_summary` we should
-> be having the error messages in `generate_submodule_summary` and pass
-> them to `print_submodule_summary` instead of passing an int.
-
-So this means that we will have to generate the above mentioned messages
-in 'generate_submodule_summary()' and then pass them as char into
-'print_submodule_summary()' rather than generating them in the latter.
-This is what we want right?
-
-> > If we have error messages as integers
-> > then we will simply
-> > 
-> 
-> You missed something here. ;)
-
-I actually don't know what I was trying to write here.
-
-> >>> +
-> >>> +	print_submodule_summary(info, errmsg, total_commits,
-> >>> +				missing_src, missing_dst,
-> >>> +		      		displaypath, is_sm_git_dir, p);
-> >>> +
-> >>> +	free(displaypath);
-> >>> +	strbuf_release(&sm_git_dir_sb);
-> >>> +}
-> >>> +
-> >>> +static void prepare_submodule_summary(struct summary_cb *info,
-> >>> +				      struct module_cb_list *list)
-> >>> +{
-> >>> +	int i;
-> >>> +	for (i = 0; i < list->nr; i++) {
-> >>> +		struct module_cb *p = list->entries[i];
-> >>> +		struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> >>> +
-> >>> +		if (p->status == 'D' || p->status == 'T') {
-> >>> +			generate_submodule_summary(info, p);
-> >>> +			continue;
-> >>> +		}
-> >>> +
-> >>> +		if (info->for_status) {
-> >>> +			char *config_key;
-> >>
-> >> Since the `config_key` is only used within the `if()` block it would be
-> >> better to declare it within that block.
-> >>
-> >>> +			const char *ignore_config = "none";
-> >>
-> >> Since the only value we ever care about is "all", how about turning this
-> >> into an `int`, setting it to `0` here, and later assigning it to
-> >> `!strcmp(value, "all")` and `!strcmp(sub->ignore, "all")`, respectively?
-> > 
-> > Alright will do!
-> > 
-> >> I mean, I get it. Unix shell scripts are all about passing around text.
-> >> And it is much easier to just translate that to C faithfully. But that
-> >> does not make it good C code. C has data types, and proper C code makes
-> >> use of that.
-> >>
-> >>> +			const char *value;
-> >>
-> >> If you want to save on lines, you can cuddle this together with other
-> >> declarations of the same type. Even so, it could be scoped more narrowly.
-> >>
-> >>> +			const struct submodule *sub = submodule_from_path(the_repository,
-> >>> +									  &null_oid,
-> >>> +									  p->sm_path);
-> >>> +
-> >>> +			if (sub && p->status != 'A') {
-> >>
-> >> Good. The shell script version _always_ retrieved the `.ignore` config
-> >> value, even if the `status` is `A`. Your version is much better.
-> >>
-> >> But why bother calling `submodule_from_path()` if the status is `A`?
-> > 
-> > What exactly does a status of 'A' or 'T' mean? I mean I know what we are
-> > doing but what exactly do these translate into?
-> > 
-> 
-> Its interesting you understood it without knowing what 'A' and 'T'
-> meant. Anyways, if you take a look at the documentation of
-> 'diff-index'[1] which provides us the `status` you'll know that:
-
-I just assumed that they must mean something to something and read on
-the rest of the code. I meant to ask the full-form of 'A', 'T', etc.
-You have provided it below and this makes things even more clear.
-Thanks!
-
-> > Possible status letters are:
-> > 
-> >     A: addition of a file
-> > 
-> >     C: copy of a file into a new one
-> > 
-> >     D: deletion of a file
-> > 
-> >     M: modification of the contents or mode of a file
-> > 
-> >     R: renaming of a file
-> > 
-> >     T: change in the type of the file
-> > 
-> >     U: file is unmerged (you must complete the merge before it can be committed)
-> > 
-> >     X: "unknown" change type (most probably a bug, please report it)
-> > 
-> 
-> [1]: https://git-scm.com/docs/git-diff-index
-> 
-> >> I could actually see the `const struct submodule *sub;` declaration be
-> >> pulled out of this scope, and combining the `if (info->for_status &&
-> >> p->status != 'A'), and the moving the assignment of `sub` into the `else
-> >> if ((sub = submodule_from_path(r, &null_oid, p->sm_path)) &&
-> >> sub->ignore)`.
-> >>
-> >> That would save us one entire indentation level.
-> > 
-> > That seems a good approach! I will try this out.
-> > 
-> >>> +				config_key = xstrfmt("submodule.%s.ignore",
-> >>> +						     sub->name);
-> >>> +				if (!git_config_get_string_const(config_key, &value))
-> >>> +					ignore_config = value;
-> >>> +				else if (sub->ignore)
-> >>> +					ignore_config = sub->ignore;
-> >>> +
-> >>> +				free(config_key);
-> >>> +				if (!strcmp(ignore_config, "all"))
-> >>> +					continue;
-> >>> +			}
-> >>> +		}
-> >>> +
-> >>> +		/* Also show added or modified modules which are checked out */
-> >>> +		cp_rev_parse.dir = p->sm_path;
-> >>> +		cp_rev_parse.git_cmd = 1;
-> >>> +		cp_rev_parse.no_stderr = 1;
-> >>> +		cp_rev_parse.no_stdout = 1;
-> >>> +
-> >>> +		argv_array_pushl(&cp_rev_parse.args, "rev-parse",
-> >>> +				 "--git-dir", NULL);
-> >>> +
-> >>> +		if (!run_command(&cp_rev_parse))
-> >>
-> >> I wonder whether we really need to waste an entire spawned process on
-> >> figuring out whether `p->sm_path` refers to an active repository. Wouldn't
-> >> `is_submodule_active(r, p->sm_path)` fulfill the same purpose?
-> > 
-> > Yep! This is correct. I will change.
-> > 
-> >>> +			generate_submodule_summary(info, p);
-> >>> +	}
-> >>> +}
-> >>> +
-> >>> +static void submodule_summary_callback(struct diff_queue_struct *q,
-> >>> +				       struct diff_options *options,
-> >>> +				       void *data)
-> >>> +{
-> >>> +	int i;
-> >>> +	struct module_cb_list *list = data;
-> >>> +	for (i = 0; i < q->nr; i++) {
-> >>> +		struct diff_filepair *p = q->queue[i];
-> >>> +		struct module_cb *temp;
-> >>> +
-> >>> +		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
-> >>> +			continue;
-> >>> +		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
-> >>> +		temp->mod_src = p->one->mode;
-> >>> +		temp->mod_dst = p->two->mode;
-> >>> +		temp->oid_src = p->one->oid;
-> >>> +		temp->oid_dst = p->two->oid;
-> >>> +		temp->status = p->status;
-> >>> +		temp->sm_path = xstrdup(p->one->path);
-> >>> +
-> >>> +		ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
-> >>> +		list->entries[list->nr++] = temp;
-> >>> +	}
-> >>> +}
-> >>> +
-> >>> +static const char *get_diff_cmd(enum diff_cmd diff_cmd)
-> >>> +{
-> >>> +	switch (diff_cmd) {
-> >>> +	case DIFF_INDEX: return "diff-index";
-> >>> +	case DIFF_FILES: return "diff-files";
-> >>> +	default: BUG("bad diff_cmd value %d", diff_cmd);
-> >>> +	}
-> >>> +}
-> >>> +
-> >>> +static int compute_summary_module_list(char *head,
-> >>> +				         struct summary_cb *info,
-> >>> +				         enum diff_cmd diff_cmd)
-> >>> +{
-> >>> +	struct argv_array diff_args = ARGV_ARRAY_INIT;
-> >>> +	struct rev_info rev;
-> >>> +	struct module_cb_list list = MODULE_CB_LIST_INIT;
-> >>> +
-> >>> +	argv_array_push(&diff_args, get_diff_cmd(diff_cmd));
-> >>> +	if (info->cached)
-> >>> +		argv_array_push(&diff_args, "--cached");
-> >>> +	argv_array_pushl(&diff_args, "--ignore-submodules=dirty", "--raw",
-> >>> +			 NULL);
-> >>> +	if (head)
-> >>> +		argv_array_push(&diff_args, head);
-> >>> +	argv_array_push(&diff_args, "--");
-> >>> +	if (info->argc)
-> >>> +		argv_array_pushv(&diff_args, info->argv);
-> >>> +
-> >>> +	git_config(git_diff_basic_config, NULL);
-> >>> +	init_revisions(&rev, info->prefix);
-> >>> +	rev.abbrev = 0;
-> >>> +	precompose_argv(diff_args.argc, diff_args.argv);
-> >>> +
-> >>> +	diff_args.argc = setup_revisions(diff_args.argc, diff_args.argv,
-> >>> +					 &rev, NULL);
-> >>> +	rev.diffopt.output_format = DIFF_FORMAT_NO_OUTPUT | DIFF_FORMAT_CALLBACK;
-> >>> +	rev.diffopt.format_callback = submodule_summary_callback;
-> >>> +	rev.diffopt.format_callback_data = &list;
-> >>> +
-> >>> +	if (!info->cached) {
-> >>> +		if (diff_cmd ==  DIFF_INDEX)
-> >>
-> >> Please substitute the double-space by a single one.
-> > 
-> > Will do!
-> > 
-> >>> +			setup_work_tree();
-> >>> +		if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
-> >>> +			perror("read_cache_preload");
-> >>> +			return -1;
-> >>> +		}
-> >>> +	} else if (read_cache() < 0) {
-> >>> +		perror("read_cache");
-> >>> +		return -1;
-> >>> +	}
-> >>> +
-> >>> +	if (diff_cmd == DIFF_INDEX)
-> >>> +		run_diff_index(&rev, info->cached);
-> >>> +	else
-> >>> +		run_diff_files(&rev, 0);
-> >>> +	prepare_submodule_summary(info, &list);
-> >>> +	return 0;
-> >>> +}
-> >>> +
-> >>> +static int module_summary(int argc, const char **argv, const char *prefix)
-> >>> +{
-> >>> +	struct summary_cb info = SUMMARY_CB_INIT;
-> >>> +	int cached = 0;
-> >>> +	int for_status = 0;
-> >>> +	int quiet = 0;
-> >>> +	int files = 0;
-> >>> +	int summary_limit = -1;
-> >>> +	struct child_process cp_rev = CHILD_PROCESS_INIT;
-> >>> +	struct strbuf sb = STRBUF_INIT;
-> >>> +	enum diff_cmd diff_cmd = DIFF_INDEX;
-> >>> +	int ret;
-> >>> +
-> >>> +	struct option module_summary_options[] = {
-> >>> +		OPT__QUIET(&quiet, N_("Suppress output of summarising submodules")),
-> >>> +		OPT_BOOL(0, "cached", &cached,
-> >>> +			 N_("Use the commit stored in the index instead of the submodule HEAD")),
-> >>> +		OPT_BOOL(0, "files", &files,
-> >>> +			 N_("To compare the commit in the index with that in the submodule HEAD")),
-> >>> +		OPT_BOOL(0, "for-status", &for_status,
-> >>> +			 N_("Skip submodules with 'ignore_config' value set to 'all'")),
-> >>> +		OPT_INTEGER('n', "summary-limit", &summary_limit,
-> >>> +			     N_("Limit the summary size")),
-> >>> +		OPT_END()
-> >>> +	};
-> >>> +
-> >>> +	const char *const git_submodule_helper_usage[] = {
-> >>> +		N_("git submodule--helper summary [<options>] [commit] [--] [<path>]"),
-> >>> +		NULL
-> >>> +	};
-> >>> +
-> >>> +	argc = parse_options(argc, argv, prefix, module_summary_options,
-> >>> +			     git_submodule_helper_usage, 0);
-> >>> +
-> >>> +	if (!summary_limit)
-> >>> +		return 0;
-> >>> +
-> >>> +	cp_rev.git_cmd = 1;
-> >>> +	argv_array_pushl(&cp_rev.args, "rev-parse", "-q", "--verify",
-> >>> +			 argc ? argv[0] : "HEAD", NULL);
-> >>
-> >> Oy. Why not simply call `get_oid()`? No need to spawn a new process.
-> > 
-> > Then everytime we need 'rev-parse', we simply call 'get_oid()'? That
-> > will save us a ton of processes?
-> > 
-> > But I think we do need to capture the output of 'git rev-parse --verify
-> > ....' so I think it will backfire to use 'get_oid()' or am I just being
-> > too dumb and not catching on something?
-> > 
-> 
-> I'll leave this for others to answer.
-
-I will resolve this one after Dscho answers then.
-
-> >>> +
-> >>> +	if (!capture_command(&cp_rev, &sb, 0)) {
-> >>> +		strbuf_strip_suffix(&sb, "\n");
-> >>> +		if (argc) {
-> >>> +			argv++;
-> >>> +			argc--;
-> >>> +		}
-> >>> +	} else if (!argc || !strcmp(argv[0], "HEAD")) {
-> >>> +		/* before the first commit: compare with an empty tree */
-> >>> +		struct stat st;
-> >>> +		struct object_id oid;
-> >>> +		if (fstat(0, &st) < 0 || index_fd(&the_index, &oid, 0, &st, 2,
-> >>> +						  prefix, 3))
-> >>> +			die("Unable to add %s to database", oid.hash);
-> >>
-> >> Umm. The original reads:
-> >>
-> >>                 # before the first commit: compare with an empty tree
-> >>                 head=$(git hash-object -w -t tree --stdin </dev/null)
-> >>
-> >> It does not actually read from `stdin`. It reads from `/dev/null`,
-> >> redirected to the input. And what it _actually_ does is to generate the
-> >> OID of the empty tree.
-> >>
-> >> But we already _have_ the OID of the empty tree! It's
-> >> `the_hash_algo->empty_tree`.
-> > 
-> > I did not know this 'the_hash_algo'. I will use it. Thanks! :)
-> > 
-> >> I hope that this is covered by the test suite. Please check that. The test
-> >> would succeed with your version, but only because tests are run with
-> >> `stdin` redirected from `/dev/null` by default.
-> > 
-> > I guess yes. My work passed because the tests are written this way.
-> > 
-> >>> +		strbuf_addstr(&sb, oid_to_hex(&oid));
-> >>> +		if (argc) {
-> >>> +			argv++;
-> >>> +			argc--;
-> >>> +		}
-> >>> +	} else {
-> >>> +		strbuf_addstr(&sb, "HEAD");
-> >>> +	}
-> >>
-> >> The conversion to C would make for a fine excuse to simplify the logic.
-> > 
-> > This was kind of like the 'shift' in shell. What equivalent do you
-> > suggest?
-> > 
-> 
-> I think that's just a general comment after the other comments found
-> just above about simplifying things.
-
-Alright. But I do have to simplify the logic right?
-
-> >>> +	if (files) {
-> >>> +		if (cached)
-> >>> +			die(_("--cached and --files are mutually exclusive"));
-> >>> +		diff_cmd = DIFF_FILES;
-> >>> +	}
-> >>> +
-> >>> +	info.argc = argc;
-> >>> +	info.argv = argv;
-> >>> +	info.prefix = prefix;
-> >>> +	info.cached = !!cached;
-> >>> +	info.for_status = !!for_status;
-> >>> +	info.quiet = quiet;
-> >>> +	info.files = files;
-> >>> +	info.summary_limit = summary_limit;
-> >>> +
-> >>> +	ret = compute_summary_module_list((diff_cmd == DIFF_FILES) ? NULL : sb.buf,
-> >>> +					   &info, diff_cmd);
-> >>
-> >> It would be better to pass the OID as `struct object_id *`, not as string.
-> > 
-> > Will do!
-> > 
-> >> Other than that, this patch nicely follows previous conversions from Unix
-> >> shell scripts to C.
-> >>
-> >> Well done,
-> >> Johannes
-> > 
-> > Thank you! It was a highly detailed review! I am still learning tons of
-> > stuff about Git's code and such a review does help a lot! :)
-> > 
-
-> Hope this helps,
-
-It surely did! Thanks Kaartic :0
+>
+> Signed-off-by: Trygve Aaberge <trygveaa@gmail.com>
+> ---
+>  git.c         | 2 +-
+>  run-command.c | 1 +
+>  run-command.h | 1 +
+>  3 files changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/git.c b/git.c
+> index a2d337eed7..c8336773e3 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -767,7 +767,7 @@ static int run_argv(int *argcp, const char ***argv)
+>  			 * OK to return. Otherwise, we just pass along the status code.
+>  			 */
+>  			i =3D run_command_v_opt_tr2(args.argv, RUN_SILENT_EXEC_FAILURE |
+> -						  RUN_CLEAN_ON_EXIT, "git_alias");
+> +						  RUN_CLEAN_ON_EXIT | RUN_WAIT_AFTER_CLEAN, "git_alias");
+>  			if (i >=3D 0 || errno !=3D ENOENT)
+>  				exit(i);
+>  			die("could not execute builtin %s", **argv);
+> diff --git a/run-command.c b/run-command.c
+> index 9b3a57d1e3..a735e380a9 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1039,6 +1039,7 @@ int run_command_v_opt_cd_env_tr2(const char **argv=
+, int opt, const char *dir,
+>  	cmd.silent_exec_failure =3D opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
+>  	cmd.use_shell =3D opt & RUN_USING_SHELL ? 1 : 0;
+>  	cmd.clean_on_exit =3D opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
+> +	cmd.wait_after_clean =3D opt & RUN_WAIT_AFTER_CLEAN ? 1 : 0;
+>  	cmd.dir =3D dir;
+>  	cmd.env =3D env;
+>  	cmd.trace2_child_class =3D tr2_class;
+> diff --git a/run-command.h b/run-command.h
+> index 191dfcdafe..ef3071a565 100644
+> --- a/run-command.h
+> +++ b/run-command.h
+> @@ -229,6 +229,7 @@ int run_auto_gc(int quiet);
+>  #define RUN_SILENT_EXEC_FAILURE 8
+>  #define RUN_USING_SHELL 16
+>  #define RUN_CLEAN_ON_EXIT 32
+> +#define RUN_WAIT_AFTER_CLEAN 64
+>
+>  /**
+>   * Convenience functions that encapsulate a sequence of
+> --
+> 2.27.0
+>
+>
