@@ -2,141 +2,118 @@ Return-Path: <SRS0=tGm0=AR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCD36C433E0
-	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 21:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1937DC433DF
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 21:34:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CE56206BE
-	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 21:14:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3ABD206B6
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 21:34:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kHpAaxww"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726779AbgGFVOF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jul 2020 17:14:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50242 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725860AbgGFVOF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jul 2020 17:14:05 -0400
-Received: (qmail 13740 invoked by uid 109); 6 Jul 2020 21:14:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 06 Jul 2020 21:14:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19931 invoked by uid 111); 6 Jul 2020 21:14:04 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jul 2020 17:14:04 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 6 Jul 2020 17:14:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     trygveaa@gmail.com
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 2/2] Wait for child on signal death for aliases to
- externals
-Message-ID: <20200706211403.GB85133@coredump.intra.peff.net>
-References: <20200704221839.421997-1-trygveaa@gmail.com>
- <20200704221839.421997-2-trygveaa@gmail.com>
+        id S1726825AbgGFVew (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jul 2020 17:34:52 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63803 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726708AbgGFVew (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jul 2020 17:34:52 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 39F2ED6274;
+        Mon,  6 Jul 2020 17:34:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qPyrHlsFuGZxCo/6lfG+UcaQbUk=; b=kHpAax
+        wwNcVwIxc/EYiNvKt1sSi/MsljnOMFiCFTbTbcL6kbryQ0HbTQ0iY/AK08mWRQTh
+        mHmYz8e7wBretpUAaRkeiL2rW/ix/WqhUVFb2DazkD2m2Wrw1AxPEcMI/1WnVz/l
+        fZnDSxwSQu80QSNHdcFSNse6f2xZDz92tzxl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iiinn53eAp4zDxj+z4vp//h4k07QezAX
+        QSbIrDCtV5f/SLEpw96sn2qTJ1bOsYmbp0vVjwg4yGVr33Pr47Fs0Au0SLytIl9o
+        fGR3mJmJWgtIUNowZLBiGW1gxVJ/Lxt86aCmgYJePNK+BS28SUJYc3DrymbLrv5K
+        Pj4MsgP8DII=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 31E49D6273;
+        Mon,  6 Jul 2020 17:34:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7C2DBD6271;
+        Mon,  6 Jul 2020 17:34:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 1/2] Documentation: clarify %(contents:XXXX) doc
+References: <20200702140845.24945-1-chriscool@tuxfamily.org>
+        <20200702140845.24945-2-chriscool@tuxfamily.org>
+Date:   Mon, 06 Jul 2020 14:34:44 -0700
+In-Reply-To: <20200702140845.24945-2-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Thu, 2 Jul 2020 16:08:44 +0200")
+Message-ID: <xmqqa70c9vkb.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200704221839.421997-2-trygveaa@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 834D9D2E-BFD0-11EA-BE53-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 05, 2020 at 12:18:38AM +0200, trygveaa@gmail.com wrote:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> From: Trygve Aaberge <trygveaa@gmail.com>
-> 
-> The previous commit fixed this only for aliases to builtins, this commit
-> does the same for aliases to external commands. While the previous
-> commit fixed a regression, I don't think this has ever worked properly.
-> 
-> Signed-off-by: Trygve Aaberge <trygveaa@gmail.com>
+> Let's avoid a big dense paragraph by using an unordered
+> list for the %(contents:XXXX) format specifiers.
+>
+> Suggested-by: Jeff King <peff@peff.net>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  Documentation/git-for-each-ref.txt | 24 ++++++++++++++++++------
+>  1 file changed, 18 insertions(+), 6 deletions(-)
 
-Usually when I find myself saying "the previous commit" and "does the
-same" in a commit message, it's a good indication that it might be worth
-combining the two commits into one. But in this case I think you're
-right to keep them separate; the other one was a regression fix, and
-this would be a change in behavior.
+Nice.
+Will queue.  Thanks.
 
-But it might be worth explaining more what the user-visible behavior
-we're trying to solve is.
-
-> I can't say for sure if this will have any unintended side effects, so
-> if someone with more knowledge about it can check/verify it, that would
-> be great.
-
-Let's try to break down what differences the user might see.
-
-The original is using the full run_command(), so we'd always be waiting
-for the alias command to finish before exiting under normal
-circumstances. The only difference is that now when die due to a signal,
-we'd wait then, too.
-
-And that only matters if:
-
-  - we've spawned a pager that doesn't die due to the signal, and we
-    want to wait until it has finished. However, that seems to work
-    already for me in a quick test of:
-
-      $ git -p -c alias.foo='!echo foo; sleep 10; echo bar' foo
-      ^C
-
-    where the pager keeps running (because it ignores the signal), and
-    the main git process doesn't exit either (because it's waiting for
-    the pager to finish)
-
-    I think this case is different than the one fixed by 46df6906f3
-    (execv_dashed_external: wait for child on signal death, 2017-01-06)
-    because the pager is spawned by the main Git process (so it knows to
-    wait), rather than the child dashed-external.
-
-    I guess to recreate that you'd need to trigger the pager inside the
-    alias itself, like:
-
-      $ git -c alias.foo='!{ echo foo; sleep 10; echo bar; } | less' foo
-      ^C
-
-    which does exhibit the annoying behavior (we exit, and pgrp loses
-    the tty session leader bit, and the pager gets EIO).
-
-  - the child for some reason decides not to respect the signal.
-    Obviously running a pager is one reason it would decide to do so,
-    and we'd be improving the behavior there. I have trouble imagining a
-    case where waiting for it would do the _wrong_ thing. I.e., if I do:
-
-      $ git -c alias.foo='!trap "echo got signal" INT; sleep 5' foo
-
-    it probably does make sense for us to continue to wait on that alias
-    to complete (I'm not sure what anyone would try to accomplish with
-    that, but waiting seems like the least-astonishing thing to me).
-
-So I think this is moving in the right direction.
-
-However, there is one weirdness worth thinking about. Because the
-wait_after_clean feature relies on actually trying to clean the child,
-Git will actually send a signal to the alias shell. For a signal, we'll
-try to pass along the same signal, so it just means the shell will get
-SIGINT twice in this case (or more likely, they'll race and we'll ignore
-the duplicate signal while the child is in its own handler).
-
-We'd likewise send a signal if we hit a normal exit(), but we shouldn't
-do so because we're already blocked waiting for the child to exit.
-
-But a more interesting case is if somebody sends the parent git process
-a signal but _not_ the child (e.g., kill -TERM). Then we'd pass SIGTERM
-along to the child. I'd venture to say that's _probably_ the right thing
-to do, if only because it's exactly what we do for a dashed external as
-well.
-
-Sorry that ended up so long-winded, but my conclusion is: this is doing
-the right thing. We should probably embed some of that discussion in the
-commit message, but I think the simplest argument is just: this is what
-we do for external commands we run, so treating shell aliases the same
-in terms of passing along signals makes things simple and consistent.
-
--Peff
+>
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index 6dcd39f6f6..2db9779d54 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -232,12 +232,24 @@ Fields that have name-email-date tuple as its value (`author`,
+>  `committer`, and `tagger`) can be suffixed with `name`, `email`,
+>  and `date` to extract the named component.
+>  
+> -The complete message in a commit and tag object is `contents`.
+> -Its first line is `contents:subject`, where subject is the concatenation
+> -of all lines of the commit message up to the first blank line.  The next
+> -line is `contents:body`, where body is all of the lines after the first
+> -blank line.  The optional GPG signature is `contents:signature`.  The
+> -first `N` lines of the message is obtained using `contents:lines=N`.
+> +The complete message of a commit or tag object is `contents`. This
+> +field can also be used in the following ways:
+> +
+> +contents:subject::
+> +	The "subject" of the commit or tag message.  It's actually the
+> +	concatenation of all lines of the commit message up to the
+> +	first blank line.
+> +
+> +contents:body::
+> +	The "body" of the commit or tag message.  It's made of the
+> +	lines after the first blank line.
+> +
+> +contents:signature::
+> +	The optional GPG signature.
+> +
+> +contents:lines=N::
+> +	The first `N` lines of the message.
+> +
+>  Additionally, the trailers as interpreted by linkgit:git-interpret-trailers[1]
+>  are obtained as `trailers` (or by using the historical alias
+>  `contents:trailers`).  Non-trailer lines from the trailer block can be omitted
