@@ -1,83 +1,100 @@
-Return-Path: <SRS0=BxWL=AF=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=tGm0=AR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 317BAC433E0
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 00:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79F76C433E0
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 18:53:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F146820C09
-	for <git@archiver.kernel.org>; Wed, 24 Jun 2020 00:38:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54C1F206B6
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 18:53:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rWgxT/sK"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OV+Let+B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387996AbgFXAiy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Jun 2020 20:38:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35788 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387643AbgFXAix (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jun 2020 20:38:53 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4541C061573
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 17:38:52 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id r12so427408wrj.13
-        for <git@vger.kernel.org>; Tue, 23 Jun 2020 17:38:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=J/hXdOtEwrncC68ZkHI72aP59SCauwS6lXnAIR8U6nE=;
-        b=rWgxT/sKQ0GxCqbNZ+1X0gMBhEkeEjNGrDm4urU839jooDG9fRssWjNVDFL7hezjc4
-         caiMjNXHlQZSLpqLgAR4fTZEI1gBMcYpx7WdmDO1oauTcYxxtzryLGG67VIuOBq5N5wN
-         OtqBzonWBhMzeSB2wIOpGmteHD/R6gffe0X6554L1Ia8PGRtN4/wZcq2r1C8EMzS74g9
-         qD9sGC3bSsMxGKTh32BsDI2Ef2j3+40W1hsU5/VCvwwp+zBernG7Rw0bTiBxWuJMnQtQ
-         dMcbtXwPdi0opyAOtexNcgqDq9qIWuGiqV4q18mPXLoGf502UtvGIbD/JPfADTZkJG+2
-         D3pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=J/hXdOtEwrncC68ZkHI72aP59SCauwS6lXnAIR8U6nE=;
-        b=brAEO/Kyym29ezDZgJxr2WetnuElWHxiNIbVNTR95uaUjylcg4/9PXbXMAP1CggPI4
-         PgIrYp/wgw5uByN8WQ81d4vbbKhfvzfomlvRLsNC0xkSRj1ooZ9lKupqES6hJCBsOCCn
-         2m/Iy4BuuhcumIDC/uNHOS9Qx6J+FOLx8zPnd3Y1+W/LYrgPDHzqPQmwRcHnWI4vwmaK
-         ZN3vjMqvTC5WVMjR6ykI1IZlUTUgYkiYgpd69WRt8QTb4892AbVCZ57nDIx4Ta4FVCRI
-         JBfDY/NHjoxYhF77Dgb0dm12TmU0twURqLBtVdItchU2m5ZrVh/KtRRpUBJqU+ADDqhl
-         xmtw==
-X-Gm-Message-State: AOAM530G6y9y6Q38uVcWZumaj8N9eNAPEr6PiLxKO0iE7XqpLVgmYLA6
-        Au80MJEUj4BW5uEPYJ3CVHwbsxlOUOp8QvOZe93caa25uoU=
-X-Google-Smtp-Source: ABdhPJw3wkBhgQeId3UsGTv9C9BXjynHXHpaCqefkCvEjLZrgUbXRqhHqeR2Z2opq20l5CTDvAu+osWr4+TGSKcAdh4=
-X-Received: by 2002:a5d:4dd0:: with SMTP id f16mr29556705wru.117.1592959131261;
- Tue, 23 Jun 2020 17:38:51 -0700 (PDT)
+        id S1729829AbgGFSxT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jul 2020 14:53:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53457 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729733AbgGFSxT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jul 2020 14:53:19 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 151B464784;
+        Mon,  6 Jul 2020 14:53:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6PXWEDbrp8ej/j/r8E/wRAAd0hs=; b=OV+Let
+        +BnuacHQMWs3Rb3LXl4uj6Qak+E/P/D/JmxUgsLTNIhSYbJ8XJM14DzTCMG5x3CA
+        zCBDjDlEQ7GlhLnBh09C55ooj61DCPTcD6G7HEn1z1c3BB8aiDt17cOK7i4+037p
+        MmXCRtRsMNsFtxUtv0fuoSaF8WXNalDxn+yJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lyYMBvVLjjZvS1s/QF8TCe0D2X+1Gnhy
+        kvwwX++mA1CXsalk3JBjGIotyoiup2I4YVOBxHbOsrWAo+JrNhVVwEiSpqVml2Wz
+        oJGVXCGMSq36OhNCyO/6RaszR7jefno2E7xT7gXnK6YwFJJ8+vLJCkEv4jswvNYn
+        EKN8MfVGSEo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0997C64782;
+        Mon,  6 Jul 2020 14:53:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D18864781;
+        Mon,  6 Jul 2020 14:53:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: Re* [PATCH v19 03/20] checkout: add '\n' to reflog message
+References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
+        <pull.539.v19.git.1593457018.gitgitgadget@gmail.com>
+        <125695ce92218ca2ddb9868880db542acb0d2a79.1593457018.git.gitgitgadget@gmail.com>
+        <xmqqmu4lfxet.fsf@gitster.c.googlers.com>
+        <CAFQ2z_MuD0e+a_r0_-GMpjr1mV==hdh2=0gyVrT7f8tDbXC6xQ@mail.gmail.com>
+        <xmqqftacds2a.fsf@gitster.c.googlers.com>
+        <CAOw_e7bcfUyumKkQRubf=zg6zso4pOtiC8-6d8qQiVL7vyfCog@mail.gmail.com>
+        <xmqqr1tvc7el.fsf_-_@gitster.c.googlers.com>
+        <CAFQ2z_MEEUHu-NnAgg-8ZV5mgOTFDvo4OApRwuCo7=3H9DQc6g@mail.gmail.com>
+Date:   Mon, 06 Jul 2020 11:53:15 -0700
+In-Reply-To: <CAFQ2z_MEEUHu-NnAgg-8ZV5mgOTFDvo4OApRwuCo7=3H9DQc6g@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Mon, 6 Jul 2020 17:56:41 +0200")
+Message-ID: <xmqqmu4ca31g.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   shejan shuza <shejan0@gmail.com>
-Date:   Tue, 23 Jun 2020 19:38:39 -0500
-Message-ID: <CABO4vy0WTYbeAiyWf7hE_4QurwH_c1wJUdU=A4FSC0uSxiEO7g@mail.gmail.com>
-Subject: 
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: F394AD82-BFB9-11EA-A7C2-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, I have a repository with about 55GB of contents, with binary files
-that are less than 100MB each (so no LFS mode) from a project which
-has almost filled up an entire hard drive. I am trying to add all of
-the contents to a git repo and push it to GitHub but every time I do
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-git add .
+> On Wed, Jul 1, 2020 at 10:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> In any case, a patch that moves the existing "squash SPs and rtrim"
+>> cleansing from the files backend to the generic layer may look like
+>> the attached patch.  We can add reftable backend on top of a change
+>> like this one and then we do not have to worry about each backend
+>> cleansing the incoming reflog messages the same way.  Nice?
+>
+> Yes, very nice!  Will you merge this, or should I make this part of
+> the reftable series?
+> The reftable code already has normalization for reflog messages, so it
+> doesn't really make a difference; either way is fine.
 
-in the folder with my contents after initializing and setting my
-remote, git starts caching all the files to .git/objects, making the
-.git folder grow in size rapidly. All the files are binaries, so git
-cannot stage changes between versions anyway, so there is no reason to
-cache versions.
+It probably fits well in the "to prepare the existing code to
+support any new backend" series you have split out of the reftable
+series and sent separately earlier, not even "part of the reftable
+series", I think.  With something like that, you may even be able
+to drop the custom reflog message munging from reftable proper,
+just like the whole point of the patch you are responding was to
+drop the custom munging from the files backend.
 
-Is there any way, such as editing the git attributes or changing
-something about how files are staged in the git repository, to only
-just add indexes or references to files in the repository rather than
-cache them into the .git folder, while also being able to push all the
-data to GitHub?
+Thanks.
+
