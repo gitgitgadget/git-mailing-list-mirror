@@ -2,159 +2,96 @@ Return-Path: <SRS0=tGm0=AR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=DATE_IN_PAST_24_48,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6407FC433E0
-	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 14:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0A14C433E0
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 15:56:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3727D206CB
-	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 14:38:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B829720715
+	for <git@archiver.kernel.org>; Mon,  6 Jul 2020 15:56:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Enp1CNIr"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tiRY3VC9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729201AbgGFOiD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jul 2020 10:38:03 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55967 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729148AbgGFOiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jul 2020 10:38:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594046276;
-        bh=1OPBMF6jlswBuftco4R9H49ejXAj8mIdISDhleAurJ8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Enp1CNIrBQ/9/IBSXtkKaLHwAef8rehV/4WhPIGUY/h6TSUxfRcfj2P3zuFbO8jjs
-         qCW1kkSL9m5aXarbbqgv9taYPgntvVDVOaOOYrNeq+tLYc5KWZEV8swTTGRRyK210r
-         oB3u/E8Ytuhx0PVT+k6Guxq2908JHlYAZRulZiQ0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.26.78] ([89.1.213.199]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1wq3-1ku9hV0eHh-012K80; Mon, 06
- Jul 2020 16:37:56 +0200
-Date:   Sun, 5 Jul 2020 04:15:56 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Trygve Aaberge <trygveaa@gmail.com>
-cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Wait for child on signal death for aliases to
- builtins
-In-Reply-To: <20200704221839.421997-1-trygveaa@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007050410100.50@tvgsbejvaqbjf.bet>
-References: <20200704221839.421997-1-trygveaa@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729403AbgGFP4x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jul 2020 11:56:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41328 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729321AbgGFP4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jul 2020 11:56:53 -0400
+Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com [IPv6:2607:f8b0:4864:20::a35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6241BC061755
+        for <git@vger.kernel.org>; Mon,  6 Jul 2020 08:56:53 -0700 (PDT)
+Received: by mail-vk1-xa35.google.com with SMTP id b205so8409281vkb.8
+        for <git@vger.kernel.org>; Mon, 06 Jul 2020 08:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TcMiMdDFCLKVVE9svjSxL1unoWnOuZRVzzx5cJuCRfE=;
+        b=tiRY3VC9cdG71Nx/ikl+AIy1QDb2cXOF3dpjXyLfb2mbDX7xmsI24KiIQe69hP7hfw
+         +k3P/Uc+oe0AoBjFz5wWhJomZ81xrZebrX7BjMDBrzahYpMw2hgCJw0rqY40ApNyFDuG
+         fSdWdrg5DAH+/nkESaVZX4hVFWfmWCM9tmZYcOVdinoxpAI1tUmjNyjSbUvhJ0tESsRQ
+         uIJezL1peeyGdC7tbTRJzWI0wwWZIxDlhjUaxuPsCB1FG6HWy/45/iYfvdzeoS+jhGax
+         oW8sLtIFtf82lIWLslKVskLxKBKTUgOPGoEga3fh/VL1gQl3siBOMe4eK8KFxuYYVMzU
+         Pd4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TcMiMdDFCLKVVE9svjSxL1unoWnOuZRVzzx5cJuCRfE=;
+        b=A2SnH4J6cmz5sAA6kYVX0YPkT6xiCUfiA+wvVJ/DukUKfHlYS5KUC071n2IRiXDw0T
+         Cxioy1Ia66aRkSN79TlbpxtkCHf4rS7yFSsZ7i4FIx1ThdhFwvAATGgPkRsgpfH7y8n4
+         hW9Z//cTr39RgvwjDbIGfZMijuCEt7g1fMrGb1jU66mL3vi6MFaGxPscRBGA4seViQM4
+         L0NtS/ghTiVlGLSRvE4ouPDeFYUvhrqvzwie+aJWAYm8lbtHv37KhiRXzgwEvvsg3vPJ
+         dT1yVU/nQIoEhdjtzoq0vdVg3D6qGZu/5WinOwPMqpz3IiTaTZKMFAFVj06KwiS2Xj8k
+         8N8Q==
+X-Gm-Message-State: AOAM533yP46mXhELZG/dwW31aVBGpEumL/nH35QhpI51TG2rXKLNN7Cp
+        OacontrJ1Mr2exOwfAQOkzHgSfhEugQhDBlJ8mgHAA==
+X-Google-Smtp-Source: ABdhPJwKc95qjuG9f4rEwinL47jIcMm4ibDSVumeumwA1+MXFGk2F+NmKu1pXeWSoBjcJJ2YLBmZoS/5h9Zspneg1Y8=
+X-Received: by 2002:a1f:2302:: with SMTP id j2mr35449037vkj.64.1594051012330;
+ Mon, 06 Jul 2020 08:56:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xII5gfRxhOijreZB85+Cc+WXn9plTdDay+uaESJLv6kSFJ17lFN
- /xlOWx98HTLm8NiEPhf1mZK8Z8BK/KPs0sJ00d8F/5Me2dW6k/0PCCXZ443VCdN17rM11IQ
- VN3boYSVV3y7VEHS/Z66ANHY+QAXj9lE3emYJgpw7lwQ0SYadkalFoSL04GC9S9Isn6NifS
- vl89OVjlB0+wJTgi08hQQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:20ub3gBH1Vs=:GIhukCM/7IUKC+RtJ5HQTL
- xD1NE27nKMJWXtw3Pbq9wNjX4NTfjqWkh8nhtjkKI8QxIWLns41nQvdxYW6vLoFGmUqPU4lUh
- m7nBOtz63NaP8IACWcQPXmGjv5fy8eD9+RqJ49AoxCeopo8M5mL1vFlTHFlzz8TQFoU8sWgqR
- l17PD5Rp/N9YdrG6FiwwHfBW9hSt+udkKEq1PYHkh1gyVFOeBQ0xiYDQG8iVdLbFG5Srumzzn
- KcF2WShXspzOW1mDx6AnBHlYmvbAZ74ysdxGsL1NcpYXlMfkO9CWPMMsQYiyNbaUAPM/zeOA1
- FLiQPJ2sqJzh38oRW4t9z2IXNJXl33JpY6XCCNsoAoFf3CygcP6SWbpRaNkWRucAkHBE20UxJ
- dniMdq4wot1prkC/mGALRSuVeSssKUD2B7KelYa+4nRjJ6ttf7gPRPstT29DiTfbdK0mORFzb
- zsylje0fg915COrsyKBxAIvdAqjfUfesZ5ivujSg/0G+XvAg1qovwQjm9J+WMhJG6rGYzXP+e
- 6BlgWG1E5Px9o11X3gsVPHu4aZ4jCqFskXAsm+OJ5RE2CfkkYfwXbihQEh184JDUS8q4tBx/n
- VQWtBjB1yiih1wgmBV6sJmJdCYnAr2VCYjZJs7lsfJ25f00RgkdLQxKhdffGGYyQIKL6WTYTs
- c7Sb3KX1lCFKXoXFureyQxGQ2DVtxDqk3I5DKo+SvMHhO18CIxoPd/mmLHtqV9vxjkK5RdYeF
- KhS+iV9+A0vBnE3wiMp9fuLidt8VJD0T2OadHbj3zIG4bW30A/77lsgl2xHWUyj4WV39JqSKF
- gQM0NsI422roNs3T2BTYnJ+06D6SGkQKDYRd9krSS1Ljn6WvwprUYsfUglZmQB14C+ypCcnSl
- zfWalll43HqDISiItBqy8RzWbUftvQZWTkCmV+h+GRnItGmnw8ywei76UepKhUIQuEpj9eSuI
- J9upAOAhwcKxvXv1voxVFJuNGv16RXsA9iLzQHMx/W8Es1u+N8N39Ylg2ebO2xmfSpLNAVZX4
- TbLHZGDwfGei9l8YKNxLBeMKCVx4wQ2Gt/JOXwmc5EL0so/GJKUUV53b5YcbswdsYPCr2qEnE
- UBxPLsi9kvZot24LX6tzN7B4ecAKPsej9Ihh/oLlNj2LVRWiskJBOcE47cn4ykgnUtsB9qe3H
- a10mQOyhCChjfM5+wvXNHiotFIJ8e5i7NaktFO+neiwSST94hzy+QJQ7WXONqYdF+f0Mt67Ik
- l7tnElTZB1QdWZ1K35CCQm5UCaC3uC9buSFOKZw==
+References: <pull.539.v18.git.1592862920.gitgitgadget@gmail.com>
+ <pull.539.v19.git.1593457018.gitgitgadget@gmail.com> <125695ce92218ca2ddb9868880db542acb0d2a79.1593457018.git.gitgitgadget@gmail.com>
+ <xmqqmu4lfxet.fsf@gitster.c.googlers.com> <CAFQ2z_MuD0e+a_r0_-GMpjr1mV==hdh2=0gyVrT7f8tDbXC6xQ@mail.gmail.com>
+ <xmqqftacds2a.fsf@gitster.c.googlers.com> <CAOw_e7bcfUyumKkQRubf=zg6zso4pOtiC8-6d8qQiVL7vyfCog@mail.gmail.com>
+ <xmqqr1tvc7el.fsf_-_@gitster.c.googlers.com>
+In-Reply-To: <xmqqr1tvc7el.fsf_-_@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 6 Jul 2020 17:56:41 +0200
+Message-ID: <CAFQ2z_MEEUHu-NnAgg-8ZV5mgOTFDvo4OApRwuCo7=3H9DQc6g@mail.gmail.com>
+Subject: Re: Re* [PATCH v19 03/20] checkout: add '\n' to reflog message
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Jul 1, 2020 at 10:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+> In any case, a patch that moves the existing "squash SPs and rtrim"
+> cleansing from the files backend to the generic layer may look like
+> the attached patch.  We can add reftable backend on top of a change
+> like this one and then we do not have to worry about each backend
+> cleansing the incoming reflog messages the same way.  Nice?
 
-On Sun, 5 Jul 2020, trygveaa@gmail.com wrote:
+Yes, very nice!  Will you merge this, or should I make this part of
+the reftable series?
+The reftable code already has normalization for reflog messages, so it
+doesn't really make a difference; either way is fine.
 
-> From: Trygve Aaberge <trygveaa@gmail.com>
->
-> When you hit ^C all the processes in the tree receives it. When a git
-> command uses a pager, git ignores this and waits until the pager quits.
-> However, when using an alias there is an additional process in the tree
-> which didn't ignore the signal. That caused it to exit which in turn
-> caused the pager to exit. This fixes that for aliases to builtins.
->
-> This was originally fixed in 46df6906f3 (see that for a more in
-> explanation), but broke by a regression in b914084007.
-
-Thank you for those references. I did try to make sure that b914084007
-would not regress on anything, but apparently I failed to verify the final
-form. Since all it did was to remove `#if 0`...`#endif` guards, it was
-unfortunately quite easy for this regression to slip in.
-
-IIRC the original code inside those guards was modeled closely after
-`execv_dashed_external()`, but it does not really look very much like it
-anymore now, does it? (And it looks as if 2b296c93d49
-(execv_dashed_external: use child_process struct, 2017-01-06) was
-responsible for that.)
-
-In any case, thank you for the patch, it looks good to me!
-
-Ciao,
-Dscho
-
->
-> Signed-off-by: Trygve Aaberge <trygveaa@gmail.com>
-> ---
->  git.c         | 2 +-
->  run-command.c | 1 +
->  run-command.h | 1 +
->  3 files changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/git.c b/git.c
-> index a2d337eed7..c8336773e3 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -767,7 +767,7 @@ static int run_argv(int *argcp, const char ***argv)
->  			 * OK to return. Otherwise, we just pass along the status code.
->  			 */
->  			i =3D run_command_v_opt_tr2(args.argv, RUN_SILENT_EXEC_FAILURE |
-> -						  RUN_CLEAN_ON_EXIT, "git_alias");
-> +						  RUN_CLEAN_ON_EXIT | RUN_WAIT_AFTER_CLEAN, "git_alias");
->  			if (i >=3D 0 || errno !=3D ENOENT)
->  				exit(i);
->  			die("could not execute builtin %s", **argv);
-> diff --git a/run-command.c b/run-command.c
-> index 9b3a57d1e3..a735e380a9 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1039,6 +1039,7 @@ int run_command_v_opt_cd_env_tr2(const char **argv=
-, int opt, const char *dir,
->  	cmd.silent_exec_failure =3D opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
->  	cmd.use_shell =3D opt & RUN_USING_SHELL ? 1 : 0;
->  	cmd.clean_on_exit =3D opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
-> +	cmd.wait_after_clean =3D opt & RUN_WAIT_AFTER_CLEAN ? 1 : 0;
->  	cmd.dir =3D dir;
->  	cmd.env =3D env;
->  	cmd.trace2_child_class =3D tr2_class;
-> diff --git a/run-command.h b/run-command.h
-> index 191dfcdafe..ef3071a565 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -229,6 +229,7 @@ int run_auto_gc(int quiet);
->  #define RUN_SILENT_EXEC_FAILURE 8
->  #define RUN_USING_SHELL 16
->  #define RUN_CLEAN_ON_EXIT 32
-> +#define RUN_WAIT_AFTER_CLEAN 64
->
->  /**
->   * Convenience functions that encapsulate a sequence of
-> --
-> 2.27.0
->
->
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
