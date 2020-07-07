@@ -6,84 +6,104 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA046C433DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63D26C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 23:54:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75C5320675
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:37:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B8602073B
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 23:54:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kw2Nnpez"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="G7gJbdoT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729341AbgGGWhp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 18:37:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62557 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728299AbgGGWhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 18:37:45 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39FE4631DB;
-        Tue,  7 Jul 2020 18:37:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KeYKcu4Jq7p/0++UMma1t81P+Wk=; b=Kw2Nnp
-        ezYTxJYaCkgp7mM0dcxCTIgxWlHIy9mTPx6EjXEi+Azy/GR6UX0fFu7vDFT9Beg9
-        bfjvff/AM9HNd1D1QFVMI8lYl3FaOUybEo+aZYvEj61ReSB65Kg8mN/UdCCbb0R9
-        AECQeXhn26KGPQ4SoIpH8EWSuuNxV3OYG0w2w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=h+T5KUvEZHGrun0IYAuU8CCXZSgfp5xL
-        cxU0ZlIjypkh5xvxXflTJUDDmUFWk/4l6nxTsQrL/RIMBh5O25gNEPd4Qt2vDmVU
-        zVJoiHg8QR2KV7+eDbOfSOVg+YYwxCfU16yU1YmSyc4H7Pd+lVsFeTIXamT2sETA
-        0joSJerywY8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 329D0631D9;
-        Tue,  7 Jul 2020 18:37:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1729309AbgGGXyp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 19:54:45 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40326 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727945AbgGGXyo (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 7 Jul 2020 19:54:44 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B4F2F631D8;
-        Tue,  7 Jul 2020 18:37:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] Make some commit hashes in tests reproducible
-References: <pull.816.git.git.1594149804313.gitgitgadget@gmail.com>
-        <xmqqfta33y0m.fsf@gitster.c.googlers.com>
-        <20200707205418.GB1396940@coredump.intra.peff.net>
-        <xmqq1rln3t4y.fsf@gitster.c.googlers.com>
-        <20200707215206.GA2300296@coredump.intra.peff.net>
-Date:   Tue, 07 Jul 2020 15:37:42 -0700
-In-Reply-To: <20200707215206.GA2300296@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 7 Jul 2020 17:52:06 -0400")
-Message-ID: <xmqqk0zf2bpl.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 679796047A;
+        Tue,  7 Jul 2020 23:54:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1594166083;
+        bh=48GesxwqJUiF6rB92Th11vEvjMI+VDJ6Bd2NW0lw3/I=;
+        h=Date:From:To:Cc:Subject:Content-Type:Content-Disposition:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=G7gJbdoT0xlm7kHCE2Uz1jCxKrlI9/uyjdaN0Bs6PkFNaDF5vbEtGkvKxfCdaW0+w
+         b/gsiWdkjcJ22kKmRXCdQs6mdDghFu4NchU0s9rGC4loOchY/X6ULVX8emQIfO92r0
+         7Lzv8qnjRfE6ameK/u/Nt8FDp9EscYk8bSN270waRRpssshQsN2Vatzh9SWSrSPAKg
+         TowYrQkP+HXe1tdZUmHImzAXPr5EZa3lzjeVU1JP6FU3Ruip79JXNm0Y6xTwXIsUat
+         AaYdrvScQMybMg6mabJXv6Rh2Mhf3Ua7jSUe8kCum6w0Daobp7TJXcGCv5fUOw4oiL
+         UhST0fLzc7QYmmxWzIan3TGT0EZyASV8eKhvrU1bjo1HOwcQXYXryS6C6qbdhg8bKA
+         Kw3eQPxCGh96l27/oHWNkE1wVTh5URzIjvYc4sM5CmX8X5/+k4O018apPzzqlZB9DU
+         l3fD8p50u/OM5d0rQY4qbUeSMpRZWEw6BGFAcQ3MfIWIhIkQXvz
+Date:   Tue, 7 Jul 2020 23:54:36 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Chris Torek <chris.torek@gmail.com>
+Subject: t4068 test failure with -fsanitize=address
+Message-ID: <20200707235436.GH9782@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7887090C-C0A2-11EA-B775-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tT3UgwmDxwvOMqfu"
+Content-Disposition: inline
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> I'm also skeptical how often we use system times anyway, because _any_
-> use of test_commit or test_tick in a script is enough to make all of the
-> subsequent commands deterministic. I'd be more inclined to let a
-> particular script say "I'm interested in random times". But then, I'd
-> think such a script would be better written to trigger its interesting
-> cases with a well-crafted set of deterministic times.
+--tT3UgwmDxwvOMqfu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, the DEVELOPER=YesPlease was a tongue-in-cheek comment.  
+I was kicking off a build on a cloud instance for the final series of my
+SHA-256 work and I noticed that t4068 fails with -fsanitize=3Daddress
+using Debian's GCC 9.3.0-14 (the version in unstable).  It has failed
+since the test was introduced and currently fails on the latest HEAD.
 
-Reproducibility would mean we see less test breakages due to
-raciness, but I do not recall a case where digging into test
-breakage due to raciness led to discovery of and fix to a real
-breakage in Git itself, so it is probably a good thing.
+I haven't had time to look at it, but I thought I'd pass the information
+on so we can get it fixed before the release.  I'll take a look if
+nobody else gets to it first, but it may be a few days.
 
-Thanks.
+Reproduction steps:
+
+  printf 'DEVELOPER=3D1\nDC_SHA1=3D1\nBLK_SHA256=3D1\nSANITIZE=3Daddress\n'=
+ >config.mak
+  make -j6 all && (cd t && ./t4068-*.sh --verbose)
+
+Output with --verbose:
+
+expecting success of 4068.4 'diff with no merge bases':
+        test_must_fail git diff br2...br3 >tmp 2>err &&
+        test_i18ngrep "fatal: br2...br3: no merge base" err
+
+test_must_fail: died by signal 6: git diff br2...br3
+not ok 4 - diff with no merge bases
+#
+#               test_must_fail git diff br2...br3 >tmp 2>err &&
+#               test_i18ngrep "fatal: br2...br3: no merge base" err
+#
+--=20
+brian m. carlson: Houston, Texas, US
+
+--tT3UgwmDxwvOMqfu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXwULOwAKCRB8DEliiIei
+gel/AP9OwSHeS7c7wxlvLJ1FrorUFwJkwGwHyaKBjbAznVPeswD9HY38BL6BUKQ7
+g74FYA2sEnLLfxv+fay+ZXxeK310PgA=
+=D9GF
+-----END PGP SIGNATURE-----
+
+--tT3UgwmDxwvOMqfu--
