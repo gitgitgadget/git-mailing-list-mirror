@@ -5,65 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC27EC433E1
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 772F4C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F79B2078D
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52D652073E
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uT+Mi4xr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nB/E8J/I"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728189AbgGGOVk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 10:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51074 "EHLO
+        id S1728210AbgGGOVn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 10:21:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbgGGOVj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 10:21:39 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21912C061755
+        with ESMTP id S1728172AbgGGOVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 10:21:40 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E824CC061755
         for <git@vger.kernel.org>; Tue,  7 Jul 2020 07:21:39 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id f18so37271822wrs.0
+Received: by mail-wr1-x442.google.com with SMTP id s10so45290605wrw.12
         for <git@vger.kernel.org>; Tue, 07 Jul 2020 07:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aEHwcqpWSzg0KFz1mN1FeZx2rBghdU7iR3zJ8maPHmk=;
-        b=uT+Mi4xrhFJkymzC6XIWNhvAk35ZfD9Ntu0QH89epuDaAohuvDjqNPc+Bo2Pu8+fiF
-         j8WQuz+wYL5VDfqLHen9tl/34ZtpIitUU72e+TmY4QQZQhAGo7KIMoXSc4PrsNtHfKSc
-         X+0N19Mev17hvE1EtAIBjXZzVWFZ7NrBjmLMKjfq5j+qUNsz8NHKj9VcBmLcknWBhT4d
-         Khi7lOlFXj1d/P73OUgUAnCaugQhtkUaZ+faf1Yyg+bqNdgX6F21XDJIE+Mx3leFZI21
-         hKXmZz2up3CzDQv9FYAN1mWspqAgZAGxxzHKIPcrvAAOWJpyPi0lzTc/msxKnmcJGTLa
-         bd5Q==
+        bh=p5g8xb98EZqONV4gRjINUh5FvFFqu5L6v0upEJJo9qY=;
+        b=nB/E8J/ILS9iwsEfCfiFtnDgBrbWEzxnyVJpp6CRw5VtyOe7X/4yhe/4omS7fPVLfi
+         YZm1ctvYCymBADigp4BAUZQg7AMMgj5d2qQRMPEEcNpqc1BL1kwvwDTcBmYepY/pcTgk
+         ptm7pZPQpJ1qR6PWmiaRNcOMGnoZrp8+lsgnaYa5E+uvZwIe7oTOAd4Z5JkCPvUI9cII
+         0J7nmrKbn46mzQTY4mHZo3INRaE+mQLHducGBkhNDNO9dVDQQK0Gbzf7fPUTpjo5P3tu
+         ZzCUPKz0ui0B/5kBGoHg05h0Emw+27AF5xnalKsPWI+8VoUmQBH+p30T8rbGT46qCb+w
+         cRAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aEHwcqpWSzg0KFz1mN1FeZx2rBghdU7iR3zJ8maPHmk=;
-        b=FQQCML0dQVW86uMJ5SRuIzuCPJlvAYTxQxh6x6mFBK388649EbKa71Hv/OdANi1fd9
-         L/5xFcSSyJOlwYrr9E5znvNoJov3ihZU3OZp6JGkunqi22ia6hkdEgk6KW+Xbona7WOy
-         /VHXsIwawhE3QcMrGruxpzPBLD3EvK0rweDsLaTmNYZl7APlQBJZZxRRBl2zFM29XibT
-         92AuNYjzeNd1DIvIlz6kobvDG1U8mn82tZFhidJT/W01csZ1y5rJ00ASi00DHGI6mv1W
-         pNKO42F5yNfToVA8i7iuZWEjGcn1N0a9Z/OWsso8Q/RV3LHsuPJr4HJ+rEcLQOU8cb56
-         imPQ==
-X-Gm-Message-State: AOAM533NZEtOIWtt321jDWiX3lLsoSVMs+ZCtJs4lKPzdAfpl0nw37Dg
-        piEMkVQw1YvXyNilqMmT4xubs4qK
-X-Google-Smtp-Source: ABdhPJxicaKASpmxolzjPCOjt+8//TRbxqhKgz5T3PO6W7+n0HlT61Qetha54SIQjv394w+pWkD+AQ==
-X-Received: by 2002:a5d:44c7:: with SMTP id z7mr57995983wrr.226.1594131697662;
-        Tue, 07 Jul 2020 07:21:37 -0700 (PDT)
+        bh=p5g8xb98EZqONV4gRjINUh5FvFFqu5L6v0upEJJo9qY=;
+        b=tz1dVYgy26dgZjgVAZbJgnxyS+Ch/ldzh7Z4gCKbjQwYblIzNH++yBuV5tZgoMRlZ2
+         tQku1mwHsU7xRXlHD8l1nLyn5o6/QUMzVyFe6lq2MPR4wuIX1IiWA2G7LxfpXCVnYvzl
+         a7ZosW+HYEsTlf0SiHBoP3WS7qrF2Jwnz7KNdBCtTxAouiuf5/HnZM91Y9XKY6I1vS+b
+         hA27iyHqYmljoL9RIb8XU/boaUwhI0QU/NC32pjJ0hL+Uk7pKlFuwMj58hDU2lhKXwdo
+         S3Wj2SCzLMOlmqexl8dP5gGyO2NB69b3zxhfc0Nd/ASdaS0WMecVmD/yvkHrLtSBptCa
+         gp+Q==
+X-Gm-Message-State: AOAM530CgRprDttXCsR3/kAgucjchlyIY5B5meS3DFdwtQnwf25eX/dV
+        f3JIGKeljUXzTU63DH7rWjvLT9ny
+X-Google-Smtp-Source: ABdhPJxpz/aqU38Uolak5WVXI7N3Ynx00MzPbSemW55R0WQqpdTzzzZOvb1MRKrnNb361BR2z3pfPg==
+X-Received: by 2002:adf:ee05:: with SMTP id y5mr56130139wrn.185.1594131698579;
+        Tue, 07 Jul 2020 07:21:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g3sm1461581wrb.59.2020.07.07.07.21.37
+        by smtp.gmail.com with ESMTPSA id r1sm1201716wrw.24.2020.07.07.07.21.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 07:21:37 -0700 (PDT)
-Message-Id: <85dda7db28ddf2099ccd35924eb168964e55cf1f.1594131695.git.gitgitgadget@gmail.com>
+        Tue, 07 Jul 2020 07:21:38 -0700 (PDT)
+Message-Id: <303ad4bdc7286522e83439b3c6bfdb408ed69407.1594131695.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.671.git.1594131695.gitgitgadget@gmail.com>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jul 2020 14:21:15 +0000
-Subject: [PATCH 01/21] gc: use the_repository less often
+Date:   Tue, 07 Jul 2020 14:21:16 +0000
+Subject: [PATCH 02/21] gc: use repository in too_many_loose_objects()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,144 +80,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In a later change, we will consume several static methods in
-builtin/gc.c for another builtin. Before doing so, let's clean up some
-uses of the_repository. These specifically are centered around accesses
-to the packed_git list.
+The previous change performed a mechanical change to swap the_repository
+for a struct repository pointer when the use of the_repository was
+obvious. However, the too_many_loose_objects() method uses git_path()
+instead of repo_git_path(), which implies a hidden dependence on
+the_repository.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ builtin/gc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 8e0b9cf41b..5c5e0df5bf 100644
+index 5c5e0df5bf..6d8267cecb 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -192,12 +192,13 @@ static int too_many_loose_objects(void)
- 	return needed;
+@@ -159,7 +159,7 @@ static void gc_config(void)
+ 	git_config(git_default_config, NULL);
  }
  
--static struct packed_git *find_base_packs(struct string_list *packs,
-+static struct packed_git *find_base_packs(struct repository *r,
-+					  struct string_list *packs,
- 					  unsigned long limit)
- {
- 	struct packed_git *p, *base = NULL;
- 
--	for (p = get_all_packs(the_repository); p; p = p->next) {
-+	for (p = get_all_packs(r); p; p = p->next) {
- 		if (!p->pack_local)
- 			continue;
- 		if (limit) {
-@@ -214,7 +215,7 @@ static struct packed_git *find_base_packs(struct string_list *packs,
- 	return base;
- }
- 
--static int too_many_packs(void)
-+static int too_many_packs(struct repository *r)
- {
- 	struct packed_git *p;
- 	int cnt;
-@@ -222,7 +223,7 @@ static int too_many_packs(void)
- 	if (gc_auto_pack_limit <= 0)
- 		return 0;
- 
--	for (cnt = 0, p = get_all_packs(the_repository); p; p = p->next) {
-+	for (cnt = 0, p = get_all_packs(r); p; p = p->next) {
- 		if (!p->pack_local)
- 			continue;
- 		if (p->pack_keep)
-@@ -334,7 +335,7 @@ static void add_repack_incremental_option(void)
- 	argv_array_push(&repack, "--no-write-bitmap-index");
- }
- 
--static int need_to_gc(void)
-+static int need_to_gc(struct repository *r)
+-static int too_many_loose_objects(void)
++static int too_many_loose_objects(struct repository *r)
  {
  	/*
- 	 * Setting gc.auto to 0 or negative can disable the
-@@ -349,18 +350,18 @@ static int need_to_gc(void)
- 	 * we run "repack -A -d -l".  Otherwise we tell the caller
- 	 * there is no need.
- 	 */
--	if (too_many_packs()) {
-+	if (too_many_packs(r)) {
- 		struct string_list keep_pack = STRING_LIST_INIT_NODUP;
+ 	 * Quickly check if a "gc" is needed, by estimating how
+@@ -174,7 +174,7 @@ static int too_many_loose_objects(void)
+ 	int needed = 0;
+ 	const unsigned hexsz_loose = the_hash_algo->hexsz - 2;
  
- 		if (big_pack_threshold) {
--			find_base_packs(&keep_pack, big_pack_threshold);
-+			find_base_packs(r, &keep_pack, big_pack_threshold);
- 			if (keep_pack.nr >= gc_auto_pack_limit) {
- 				big_pack_threshold = 0;
- 				string_list_clear(&keep_pack, 0);
--				find_base_packs(&keep_pack, 0);
-+				find_base_packs(r, &keep_pack, 0);
- 			}
- 		} else {
--			struct packed_git *p = find_base_packs(&keep_pack, 0);
-+			struct packed_git *p = find_base_packs(r, &keep_pack, 0);
- 			uint64_t mem_have, mem_want;
+-	dir = opendir(git_path("objects/17"));
++	dir = opendir(repo_git_path(r, "objects/17"));
+ 	if (!dir)
+ 		return 0;
  
- 			mem_have = total_ram();
-@@ -523,6 +524,7 @@ static void gc_before_repack(void)
- 
- int cmd_gc(int argc, const char **argv, const char *prefix)
- {
-+	struct repository *r = the_repository;
- 	int aggressive = 0;
- 	int auto_gc = 0;
- 	int quiet = 0;
-@@ -589,7 +591,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 		/*
- 		 * Auto-gc should be least intrusive as possible.
- 		 */
--		if (!need_to_gc())
-+		if (!need_to_gc(r))
- 			return 0;
- 		if (!quiet) {
- 			if (detach_auto)
-@@ -623,9 +625,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 
- 		if (keep_base_pack != -1) {
- 			if (keep_base_pack)
--				find_base_packs(&keep_pack, 0);
-+				find_base_packs(r, &keep_pack, 0);
- 		} else if (big_pack_threshold) {
--			find_base_packs(&keep_pack, big_pack_threshold);
-+			find_base_packs(r, &keep_pack, big_pack_threshold);
- 		}
+@@ -378,7 +378,7 @@ static int need_to_gc(struct repository *r)
  
  		add_repack_all_option(&keep_pack);
-@@ -652,7 +654,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 	gc_before_repack();
- 
- 	if (!repository_format_precious_objects) {
--		close_object_store(the_repository->objects);
-+		close_object_store(r->objects);
- 		if (run_command_v_opt(repack.argv, RUN_GIT_CMD))
- 			die(FAILED_RUN, repack.argv[0]);
- 
-@@ -678,15 +680,15 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
- 		die(FAILED_RUN, rerere.argv[0]);
- 
- 	report_garbage = report_pack_garbage;
--	reprepare_packed_git(the_repository);
-+	reprepare_packed_git(r);
- 	if (pack_garbage.nr > 0) {
--		close_object_store(the_repository->objects);
-+		close_object_store(r->objects);
- 		clean_pack_garbage();
- 	}
- 
--	prepare_repo_settings(the_repository);
--	if (the_repository->settings.gc_write_commit_graph == 1)
--		write_commit_graph_reachable(the_repository->objects->odb,
-+	prepare_repo_settings(r);
-+	if (r->settings.gc_write_commit_graph == 1)
-+		write_commit_graph_reachable(r->objects->odb,
+ 		string_list_clear(&keep_pack, 0);
+-	} else if (too_many_loose_objects())
++	} else if (too_many_loose_objects(r))
+ 		add_repack_incremental_option();
+ 	else
+ 		return 0;
+@@ -692,7 +692,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
  					     !quiet && !daemonized ? COMMIT_GRAPH_WRITE_PROGRESS : 0,
  					     NULL);
+ 
+-	if (auto_gc && too_many_loose_objects())
++	if (auto_gc && too_many_loose_objects(r))
+ 		warning(_("There are too many unreachable loose objects; "
+ 			"run 'git prune' to remove them."));
  
 -- 
 gitgitgadget
