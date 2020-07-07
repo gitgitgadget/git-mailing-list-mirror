@@ -2,193 +2,127 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94626C433DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 19:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3281AC433E0
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 19:50:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44095206BE
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 19:45:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06F9A206DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 19:50:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LRAtlfz6"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kPGd7yKh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728523AbgGGTps (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 15:45:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55486 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726763AbgGGTpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 15:45:47 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A19D56F8B8;
-        Tue,  7 Jul 2020 15:45:40 -0400 (EDT)
+        id S1728067AbgGGTuk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 15:50:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51857 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726951AbgGGTuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 15:50:39 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E4878DF615;
+        Tue,  7 Jul 2020 15:50:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5xs//7Q2gqSpO56ldgrN9udRJ10=; b=LRAtlf
-        z6OdpshR2GzMZVeZkaC2vc1EEh3EyDI51dFLzGxdPIo/N0DFtu+mKiAdM8u4FkbG
-        NgtXqaUtSLkoadCLDWSHYZPBsy8px2g20yz7Ynq1C7ZPdyy/1c8HkzC13HmseB4T
-        /RuRTyOHLxkTlsFBF9SlhwcYoaWHEjNuuNSlk=
+        :content-type; s=sasl; bh=hcjItgElAYHB0o2KTE/27SYAep8=; b=kPGd7y
+        KhKZ8CzXv8V7uOkpzlL49FNxt2CoN+aG0lWb0hAtG8zqvLJOJeknJ1nMq9HRcRFd
+        GYTy+YL1G0XVrzYpegWtIAax4sMBiNms/vbRKanlj3JQ6d1iwPdrfrM/T7oMSQPH
+        Wq2yLqqL9gaa1j5Pwm0Xkm4U9lbqUpPwzWH6A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Sy5LlzR99WpSX6CdW8THgt6CvBhm7DMw
-        bs89W+MX+hQ+HVlxoegy87nAQeYXhvDNdAcbR30/Y4duqaALb/toYh+YPyOq0fu0
-        Nv/cjDKGasboUBtlYlAW8dvWEhItdxZTID/IfA/GT/m9ikASzXiVKhPJsc9NV8di
-        IwZG95qiI7I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99C526F8B7;
-        Tue,  7 Jul 2020 15:45:40 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=ox0KYgjCq2NbkwQmX6EoyFlMEIDgQ+Rw
+        ugO8OCsOnIT2w2ggei07rvG4gdWsIXwjcF2cKpdXiyODmNqAq+uLVM/4I8fvFgK7
+        l8Lno+9nj/Ejfu2Oo94niNneuRjE53jBAU3tQjMnokNUEwT6igiFfXNUi6/bIHpS
+        66xntjSCwZI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA673DF614;
+        Tue,  7 Jul 2020 15:50:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
+Received: from pobox.com (unknown [35.231.104.69])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0B826F8B6;
-        Tue,  7 Jul 2020 15:45:39 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2F59EDF612;
+        Tue,  7 Jul 2020 15:50:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 4/4] ref-filter: add support for %(contents:size)
-References: <20200707174049.21714-1-chriscool@tuxfamily.org>
-        <20200707174049.21714-5-chriscool@tuxfamily.org>
-Date:   Tue, 07 Jul 2020 12:45:39 -0700
-In-Reply-To: <20200707174049.21714-5-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Tue, 7 Jul 2020 19:40:49 +0200")
-Message-ID: <xmqqk0zf3y8s.fsf@gitster.c.googlers.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH] Make some commit hashes in tests reproducible
+References: <pull.816.git.git.1594149804313.gitgitgadget@gmail.com>
+Date:   Tue, 07 Jul 2020 12:50:33 -0700
+In-Reply-To: <pull.816.git.git.1594149804313.gitgitgadget@gmail.com> (Han-Wen
+        Nienhuys via GitGitGadget's message of "Tue, 07 Jul 2020 19:23:24
+        +0000")
+Message-ID: <xmqqfta33y0m.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6F9B9E9C-C08A-11EA-A82E-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1FA4BCCE-C08B-11EA-A9EE-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> It's useful and efficient to be able to get the size of the
-> contents directly without having to pipe through `wc -c`.
+> From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> Also the result of the following:
->
-> `git for-each-ref --format='%(contents)' refs/heads/my-branch | wc -c`
->
-> is off by one as `git for-each-ref` appends a newline character
-> after the contents, which can be seen by comparing its output
-> with the output from `git cat-file`.
->
-> As with %(contents), %(contents:size) is silently ignored, if a
-> ref points to something other than a commit or a tag:
->
-> ```
-> $ git update-ref refs/mytrees/first HEAD^{tree}
-> $ git for-each-ref --format='%(contents)' refs/mytrees/first
->
-> $ git for-each-ref --format='%(contents:size)' refs/mytrees/first
->
-> ```
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> Adds test_tick to t5801-remote-helpers.sh and t3203-branch-output.sh
+
+That can be read from the patch.  Also the subject tells us a half
+of what you want to achieve with this change (by the way, your
+subject is malformatted and lacks the <area>: prefix; perhaps
+"[PATCH] tests: make commit object names reproducible" or something),
+but the readers are left hanging without knowing what motivated the
+change.  Do any test pieces in these scripts change their behaviour
+based on what exact object names are assigned to them, making them
+flaky and hard to test, and if so which one and in what way?
+
+Thanks.
+
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 > ---
->  Documentation/git-for-each-ref.txt |  3 +++
->  ref-filter.c                       |  7 ++++++-
->  t/t6300-for-each-ref.sh            | 19 +++++++++++++++++++
->  3 files changed, 28 insertions(+), 1 deletion(-)
-
-Nice.  The only questionable thing here is if we later regret for
-assuming that all sizes are always measured in bytes.  If we later
-find an application that wants an efficient access to "| wc -l"
-(instead of "| wc -c" that motivated this patch), we'd want to be
-able to say "%(contents:lines)" and at that point we may want to go
-back in time and call this "%(contents:bytes)" or something.
-
->  test_atom head contents 'Initial
->  '
-> +test_atom head contents:size '8'
-
-These two are tied together (any change to the test script that
-causes us to update the former also forces us to update the latter),
-but I do not think of a way to unify the test without writing too
-much boilerplate code, so let's say this is good enough at least for
-now (but I may change my opinion as I read along).
-
->  test_atom tag contents 'Tagging at 1151968727
->  '
-> +test_atom tag contents:size '22'
-
-Likewise.
-
-> @@ -580,6 +582,7 @@ test_atom refs/tags/subject-body contents 'the subject line
->  first body line
->  second body line
->  '
-> +test_atom refs/tags/subject-body contents:size '51'
-
-Likewise.
-
-Of course, we _could_ update the test_atom to do something magic
-only when the 'contents' atom is being asked.  We notice that $2 is
-'contents', do the usual test_expect_success for 'contents', and
-then measure the byte length of $3 ourselves and test
-'contents:size'.  That way, all the above test updates would become
-unnecessary (and the last two hunks of this patch can also go).
-
-That approach may even allow you to hide the details of sanitize-pgp
-in the updated test_atom so that the actual tests may not have to get
-updated even for signed tags.
-
-> +# We cannot use test_atom to check contents:size of signed tags due to sanitize_pgp
-> +test_tag_contents_size_pgp () {
-> +	ref="$1"
-> +	test_expect_success $PREREQ "basic atom: $ref contents:size" "
-> +		git cat-file tag $ref | tail -n +6 | wc -c >expected &&
-> +		git for-each-ref --format='%(contents:size)' $ref >actual &&
-> +		test_cmp expected actual
-> +	"
-> +}
+>     Make commit hashes in test t3203-branch-output.sh reproducible
+>     
+>     Signed-off-by: Han-Wen Nienhuys hanwen@google.com [hanwen@google.com]
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-816%2Fhanwen%2Frepro-hash-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-816/hanwen/repro-hash-v1
+> Pull-Request: https://github.com/git/git/pull/816
+>
+>  t/t3203-branch-output.sh  | 2 ++
+>  t/t5801-remote-helpers.sh | 2 ++
+>  2 files changed, 4 insertions(+)
+>
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index 71818b90f0..6b614739af 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -4,6 +4,8 @@ test_description='git branch display tests'
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-terminal.sh
+>  
+> +test_tick
 > +
->  PREREQ=GPG
->  test_atom refs/tags/signed-empty subject ''
->  test_atom refs/tags/signed-empty contents:subject ''
-> @@ -629,6 +643,7 @@ test_atom refs/tags/signed-empty body "$sig"
->  test_atom refs/tags/signed-empty contents:body ''
->  test_atom refs/tags/signed-empty contents:signature "$sig"
->  test_atom refs/tags/signed-empty contents "$sig"
-> +test_tag_contents_size_pgp refs/tags/signed-empty
+>  test_expect_success 'make commits' '
+>  	echo content >file &&
+>  	git add file &&
+> diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+> index 0f04b6cddb..de51584173 100755
+> --- a/t/t5801-remote-helpers.sh
+> +++ b/t/t5801-remote-helpers.sh
+> @@ -22,6 +22,8 @@ compare_refs() {
+>  	eval $fail test_cmp expect actual
+>  }
 >  
->  test_atom refs/tags/signed-short subject 'subject line'
->  test_atom refs/tags/signed-short contents:subject 'subject line'
-> @@ -637,6 +652,7 @@ test_atom refs/tags/signed-short contents:body ''
->  test_atom refs/tags/signed-short contents:signature "$sig"
->  test_atom refs/tags/signed-short contents "subject line
->  $sig"
-> +test_tag_contents_size_pgp refs/tags/signed-short
->  
->  test_atom refs/tags/signed-long subject 'subject line'
->  test_atom refs/tags/signed-long contents:subject 'subject line'
-> @@ -649,6 +665,7 @@ test_atom refs/tags/signed-long contents "subject line
->  
->  body contents
->  $sig"
-> +test_tag_contents_size_pgp refs/tags/signed-long
->  
->  test_expect_success 'set up refs pointing to tree and blob' '
->  	git update-ref refs/mytrees/first refs/heads/master^{tree} &&
-> @@ -664,6 +681,7 @@ test_atom refs/mytrees/first body ""
->  test_atom refs/mytrees/first contents:body ""
->  test_atom refs/mytrees/first contents:signature ""
->  test_atom refs/mytrees/first contents ""
-> +test_atom refs/mytrees/first contents:size ""
->  
->  test_atom refs/myblobs/first subject ""
->  test_atom refs/myblobs/first contents:subject ""
-> @@ -671,6 +689,7 @@ test_atom refs/myblobs/first body ""
->  test_atom refs/myblobs/first contents:body ""
->  test_atom refs/myblobs/first contents:signature ""
->  test_atom refs/myblobs/first contents ""
-> +test_atom refs/myblobs/first contents:size ""
->  
->  test_expect_success 'set up multiple-sort tags' '
->  	for when in 100000 200000
+> +test_tick
+> +
+>  test_expect_success 'setup repository' '
+>  	git init server &&
+>  	(cd server &&
+>
+> base-commit: a08a83db2bf27f015bec9a435f6d73e223c21c5e
