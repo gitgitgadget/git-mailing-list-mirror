@@ -2,68 +2,68 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D50CC433E0
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8BAC433E1
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3653C2073E
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F2A320771
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:21:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KZfKd8nr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EpYWoDxH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728267AbgGGOVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 10:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51096 "EHLO
+        id S1728318AbgGGOVw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 10:21:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbgGGOVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 10:21:44 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D359C08C5E3
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 07:21:44 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id z2so23067455wrp.2
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 07:21:44 -0700 (PDT)
+        with ESMTP id S1728190AbgGGOVq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 10:21:46 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0DBC061755
+        for <git@vger.kernel.org>; Tue,  7 Jul 2020 07:21:45 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id f139so46739858wmf.5
+        for <git@vger.kernel.org>; Tue, 07 Jul 2020 07:21:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=olS31h0DH7u13Xtqz7Dz86pUcZJw5EBVhiIhrGFQSSI=;
-        b=KZfKd8nrm5exKGL9eew+GvV9VQrNyEJFmYHbnWD996TQwXqadaThbOK8hILKncnBDu
-         CYgUWd/zYEgwAoJRCQfVYmsdWJLI/UrGDRQJhTI1mN2CDUaM1iQ/LDF7S+q8j+fk4/aw
-         u30TSsXQX/ZfiYE3T5G2Ssz4ibty5kXTFebacaGR2pIa3OsVEr+fwxPq8gTc6MmGa4PV
-         e1jnmFoZwZh/YuNJtN+mF/ZON9JcbEo3WF62YWF4K2dE2tMmRvkGMAYqA51qb34GI5xa
-         qLPUgXZrrvKZMkMMnA3q/Y37PM0qatok/ylJpHu2wghCSy1Mg46xGdherL/D/MKYpq3z
-         Y1Kw==
+        bh=BWMSOA3bUbpVVfYgI613510ZMBUh6U6Jqosu3zla9Y8=;
+        b=EpYWoDxHyK3OtD0Ht77exFPnEMGLP5V5S24yzNSSLlIZ/4E3eQwxUsq9vCZhXiuvyG
+         yWrf/Z4FbIxNulo6bq2EmzEw3dtYiinXS6bVxHH6ewPHWV7tWGUnyLirO3Vx8IIe0Ub9
+         kmHPGjElrsEXYPhtUfe1X0YZ09HuwnT2eUdTcYgFy7ylcXxDYNRePmPwu4EV3LEErJLl
+         lzBxOPdvzv4se59BlovHdsXXmOZZVP/+aJq4QAPWYoAB5umbEkp4bax5JLedSvoazLQR
+         bUJ9K5KIOqYV2/pwRYFT/Cmy1RJIcOk3boTsGhif4YKk9GCtQQgHdPmtfI9iNFol4lrh
+         2WXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=olS31h0DH7u13Xtqz7Dz86pUcZJw5EBVhiIhrGFQSSI=;
-        b=ZjQKq57laeSoR6hOsxBvxw4PmoEqKIGTBCmKBQhKUKF6N6iWV3T9EEuM/QPa1cQU1b
-         yVFBee6Ay89zKdM+zHASpn9Uc3w+SHnrJha/G0y25aX1wX43Wys0PIRhiKjGebHWXYfI
-         ZQFEb2EwFsBG78gBP1C6JhMv/LqfVDAGmPX/WV6LKxHl70gzfCIl7qls8u7NTuuXpzQ3
-         uJDD760aCy4wf/FBQbRUSAgof8o0HUoyUuTrrYb7NIHT2SYp8D3Tc9yhBPJgPv4pn36S
-         HQ/NfNEZLVu7QqEk3OHfLcal6NS2S8Z/ierq9rccKPqwSCkOhZ3hKB4Fy+oKoNWNS/ti
-         ZlJg==
-X-Gm-Message-State: AOAM530P03KX+u0yBkvFit2NRBr1SecXcK/4mw7lOC0r/caqgMKJ6qeo
-        UNqUlj4G32ksIVyOVte855UT4tXk
-X-Google-Smtp-Source: ABdhPJz4fPgXgfOUeSO/2lvoW6KDvgGAVuLzb1rIRHZQabl4kmL+BRRX4Ujh3IbKv0mUpbioFmekjw==
-X-Received: by 2002:adf:8501:: with SMTP id 1mr59480307wrh.153.1594131702548;
-        Tue, 07 Jul 2020 07:21:42 -0700 (PDT)
+        bh=BWMSOA3bUbpVVfYgI613510ZMBUh6U6Jqosu3zla9Y8=;
+        b=kDPE377A/PrFIxnlgHM4h9jvooLDIt4vZfrOOYOatueZs7gofrIcvYA65If+2xhmU/
+         uWHO2qmuBZu/SZTSeS1EP/vtq+xl9ACJv5syIkUKYpc7m1w+i9Xp4NlEZuBnaxktfaaM
+         kDAuwxWRabNMDfih6yH6+bylRsXwP4fLcelcqRwEsuN6tn7ULjQ0TNop68hKd0847965
+         X5m1yv7rNc3mR2lQsN8YxVhNcsyyg8s/TXsJGq6W3TIWzFVPdQ52ZsPosg+E/gmfa1ck
+         BZ5vDPB+HBmVaGbSgHJf3VApuC/p1IwFEALDC7aSG6UK2cARxj6rwUT9YD6mhyjeqkUS
+         l3sg==
+X-Gm-Message-State: AOAM5332BMsQUUz0RapYaxxqcMoTi+jSClkZzwUt+Isid5+5oUQEFYGv
+        pF13ufq/E4ONh5WBygXc3t7OgLhk
+X-Google-Smtp-Source: ABdhPJz+UVOEbfBdo0L/ed//ucY1rTGGXMXwHWTTCDKCWAVQViiXwZy4GVBf14YAIt5TRaSC8oDvcg==
+X-Received: by 2002:a1c:7416:: with SMTP id p22mr4425065wmc.32.1594131704216;
+        Tue, 07 Jul 2020 07:21:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 14sm1235696wmk.19.2020.07.07.07.21.41
+        by smtp.gmail.com with ESMTPSA id t16sm1323418wru.9.2020.07.07.07.21.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 07:21:42 -0700 (PDT)
-Message-Id: <335a8938c697293bf70f553dcd4b8c53b5097b3c.1594131695.git.gitgitgadget@gmail.com>
+        Tue, 07 Jul 2020 07:21:43 -0700 (PDT)
+Message-Id: <c8fbd14d41093e12905027ff628b98652cd931d0.1594131695.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.671.git.1594131695.gitgitgadget@gmail.com>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jul 2020 14:21:21 +0000
-Subject: [PATCH 07/21] maintenance: replace run_auto_gc()
+Date:   Tue, 07 Jul 2020 14:21:23 +0000
+Subject: [PATCH 09/21] maintenance: add commit-graph task
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,203 +81,258 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The run_auto_gc() method is used in several places to trigger a check
-for repo maintenance after some Git commands, such as 'git commit' or
-'git fetch'.
+The first new task in the 'git maintenance' builtin is the
+'commit-graph' job. It is based on the sequence of events in the
+'commit-graph' job in Scalar [1]. This sequence is as follows:
 
-To allow for extra customization of this maintenance activity, replace
-the 'git gc --auto [--quiet]' call with one to 'git maintenance run
---auto [--quiet]'. As we extend the maintenance builtin with other
-steps, users will be able to select different maintenance activities.
+1. git commit-graph write --reachable --split
+2. git commit-graph verify --shallow
+3. If the verify succeeds, stop.
+4. Delete the commit-graph-chain file.
+5. git commit-graph write --reachable --split
 
-Rename run_auto_gc() to run_auto_maintenance() to be clearer what is
-happening on this call, and to expose all callers in the current diff.
+By writing an incremental commit-graph file using the "--split"
+option we minimize the disruption from this operation. The default
+behavior is to merge layers until the new "top" layer is less than
+half the size of the layer below. This provides quick writes most
+of the time, with the longer writes following a power law
+distribution.
 
-Since 'git fetch' already allows disabling the 'git gc --auto'
-subprocess, add an equivalent option with a different name to be more
-descriptive of the new behavior: '--[no-]maintenance'. Update the
-documentation to include these options at the same time.
+Most importantly, concurrent Git processes only look at the
+commit-graph-chain file for a very short amount of time, so they
+will verly likely not be holding a handle to the file when we try
+to replace it. (This only matters on Windows.)
+
+If a concurrent process reads the old commit-graph-chain file, but
+our job expires some of the .graph files before they can be read,
+then those processes will see a warning message (but not fail).
+This could be avoided by a future update to use the --expire-time
+argument when writing the commit-graph.
+
+By using 'git commit-graph verify --shallow' we can ensure that
+the file we just wrote is valid. This is an extra safety precaution
+that is faster than our 'write' subcommand. In the rare situation
+that the newest layer of the commit-graph is corrupt, we can "fix"
+the corruption by deleting the commit-graph-chain file and rewrite
+the full commit-graph as a new one-layer commit graph. This does
+not completely prevent _that_ file from being corrupt, but it does
+recompute the commit-graph by parsing commits from the object
+database. In our use of this step in Scalar and VFS for Git, we
+have only seen this issue arise because our microsoft/git fork
+reverted 43d3561 ("commit-graph write: don't die if the existing
+graph is corrupt" 2019-03-25) for a while to keep commit-graph
+writes very fast. We dropped the revert when updating to v2.23.0.
+The verify still has potential for catching corrupt data across
+the layer boundary: if the new file has commit X with parent Y
+in an old file but the commit ID for Y in the old file had a
+bitswap, then we will notice that in the 'verify' command.
+
+[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/CommitGraphStep.cs
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/fetch-options.txt | 5 +++--
- Documentation/git-clone.txt     | 7 ++++---
- builtin/am.c                    | 2 +-
- builtin/commit.c                | 2 +-
- builtin/fetch.c                 | 6 ++++--
- builtin/merge.c                 | 2 +-
- builtin/rebase.c                | 4 ++--
- run-command.c                   | 7 +++++--
- run-command.h                   | 2 +-
- t/t5510-fetch.sh                | 2 +-
- 10 files changed, 23 insertions(+), 16 deletions(-)
+ Documentation/git-maintenance.txt | 18 ++++++++
+ builtin/gc.c                      | 76 ++++++++++++++++++++++++++++++-
+ commit-graph.c                    |  8 ++--
+ commit-graph.h                    |  1 +
+ t/t7900-maintenance.sh            |  2 +-
+ 5 files changed, 99 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 6e2a160a47..d73224844e 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -86,9 +86,10 @@ ifndef::git-pull[]
- 	Allow several <repository> and <group> arguments to be
- 	specified. No <refspec>s may be specified.
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 089fa4cedc..35b0be7d40 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -35,6 +35,24 @@ run::
+ TASKS
+ -----
  
-+--[no-]maintenance::
- --[no-]auto-gc::
--	Run `git gc --auto` at the end to perform garbage collection
--	if needed. This is enabled by default.
-+	Run `git maintenance run --auto` at the end to perform garbage
-+	collection if needed. This is enabled by default.
- 
- --[no-]write-commit-graph::
- 	Write a commit-graph after fetching. This overrides the config
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index c898310099..aa25aba7d9 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -78,9 +78,10 @@ repository using this option and then delete branches (or use any
- other Git command that makes any existing commit unreferenced) in the
- source repository, some objects may become unreferenced (or dangling).
- These objects may be removed by normal Git operations (such as `git commit`)
--which automatically call `git gc --auto`. (See linkgit:git-gc[1].)
--If these objects are removed and were referenced by the cloned repository,
--then the cloned repository will become corrupt.
-+which automatically call `git maintenance run --auto` and `git gc --auto`.
-+(See linkgit:git-maintenance[1] and linkgit:git-gc[1].) If these objects
-+are removed and were referenced by the cloned repository, then the cloned
-+repository will become corrupt.
- +
- Note that running `git repack` without the `--local` option in a repository
- cloned with `--shared` will copy objects from the source repository into a pack
-diff --git a/builtin/am.c b/builtin/am.c
-index 69e50de018..ff895125f6 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1795,7 +1795,7 @@ static void am_run(struct am_state *state, int resume)
- 	if (!state->rebasing) {
- 		am_destroy(state);
- 		close_object_store(the_repository->objects);
--		run_auto_gc(state->quiet);
-+		run_auto_maintenance(state->quiet);
- 	}
- }
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index d1b7396052..658b158659 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1702,7 +1702,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	git_test_write_commit_graph_or_die();
- 
- 	repo_rerere(the_repository, 0);
--	run_auto_gc(quiet);
-+	run_auto_maintenance(quiet);
- 	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
- 	if (amend && !no_post_rewrite) {
- 		commit_post_rewrite(the_repository, current_head, &oid);
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 82ac4be8a5..49a4d727d4 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -196,8 +196,10 @@ static struct option builtin_fetch_options[] = {
- 	OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
- 			N_("report that we have only objects reachable from this object")),
- 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
-+	OPT_BOOL(0, "maintenance", &enable_auto_gc,
-+		 N_("run 'maintenance --auto' after fetching")),
- 	OPT_BOOL(0, "auto-gc", &enable_auto_gc,
--		 N_("run 'gc --auto' after fetching")),
-+		 N_("run 'maintenance --auto' after fetching")),
- 	OPT_BOOL(0, "show-forced-updates", &fetch_show_forced_updates,
- 		 N_("check for forced-updates on all updated branches")),
- 	OPT_BOOL(0, "write-commit-graph", &fetch_write_commit_graph,
-@@ -1882,7 +1884,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	close_object_store(the_repository->objects);
- 
- 	if (enable_auto_gc)
--		run_auto_gc(verbosity < 0);
-+		run_auto_maintenance(verbosity < 0);
- 
- 	return result;
- }
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 7da707bf55..c068e73037 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -457,7 +457,7 @@ static void finish(struct commit *head_commit,
- 			 * user should see them.
- 			 */
- 			close_object_store(the_repository->objects);
--			run_auto_gc(verbosity < 0);
-+			run_auto_maintenance(verbosity < 0);
- 		}
- 	}
- 	if (new_head && show_diffstat) {
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 37ba76ac3d..0c4ee98f08 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -728,10 +728,10 @@ static int finish_rebase(struct rebase_options *opts)
- 	apply_autostash(state_dir_path("autostash", opts));
- 	close_object_store(the_repository->objects);
- 	/*
--	 * We ignore errors in 'gc --auto', since the
-+	 * We ignore errors in 'git maintenance run --auto', since the
- 	 * user should see them.
- 	 */
--	run_auto_gc(!(opts->flags & (REBASE_NO_QUIET|REBASE_VERBOSE)));
-+	run_auto_maintenance(!(opts->flags & (REBASE_NO_QUIET|REBASE_VERBOSE)));
- 	if (opts->type == REBASE_MERGE) {
- 		struct replay_opts replay = REPLAY_OPTS_INIT;
- 
-diff --git a/run-command.c b/run-command.c
-index 9b3a57d1e3..82ad241638 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1865,14 +1865,17 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
- 	return result;
- }
- 
--int run_auto_gc(int quiet)
-+int run_auto_maintenance(int quiet)
- {
- 	struct argv_array argv_gc_auto = ARGV_ARRAY_INIT;
- 	int status;
- 
--	argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
-+	argv_array_pushl(&argv_gc_auto, "maintenance", "run", "--auto", NULL);
- 	if (quiet)
- 		argv_array_push(&argv_gc_auto, "--quiet");
-+	else
-+		argv_array_push(&argv_gc_auto, "--no-quiet");
++commit-graph::
++	The `commit-graph` job updates the `commit-graph` files incrementally,
++	then verifies that the written data is correct. If the new layer has an
++	issue, then the chain file is removed and the `commit-graph` is
++	rewritten from scratch.
+++
++The verification only checks the top layer of the `commit-graph` chain.
++If the incremental write merged the new commits with at least one
++existing layer, then there is potential for on-disk corruption being
++carried forward into the new file. This will be noticed and the new
++commit-graph file will be clean as Git reparses the commit data from
++the object database.
+++
++The incremental write is safe to run alongside concurrent Git processes
++since it will not expire `.graph` files that were in the previous
++`commit-graph-chain` file. They will be deleted by a later run based on
++the expiration delay.
 +
- 	status = run_command_v_opt(argv_gc_auto.argv, RUN_GIT_CMD);
- 	argv_array_clear(&argv_gc_auto);
- 	return status;
-diff --git a/run-command.h b/run-command.h
-index 191dfcdafe..d9a800e700 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -221,7 +221,7 @@ int run_hook_ve(const char *const *env, const char *name, va_list args);
- /*
-  * Trigger an auto-gc
-  */
--int run_auto_gc(int quiet);
-+int run_auto_maintenance(int quiet);
+ gc::
+ 	Cleanup unnecessary files and optimize the local repository. "GC"
+ 	stands for "garbage collection," but this task performs many
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c143bf50df..a6b080627f 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -705,7 +705,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
  
- #define RUN_COMMAND_NO_STDIN 1
- #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index a66dbe0bde..9850ecde5d 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -919,7 +919,7 @@ test_expect_success 'fetching with auto-gc does not lock up' '
- 		git config fetch.unpackLimit 1 &&
- 		git config gc.autoPackLimit 1 &&
- 		git config gc.autoDetach false &&
--		GIT_ASK_YESNO="$D/askyesno" git fetch >fetch.out 2>&1 &&
-+		GIT_ASK_YESNO="$D/askyesno" git fetch --verbose >fetch.out 2>&1 &&
- 		test_i18ngrep "Auto packing the repository" fetch.out &&
- 		! grep "Should I try again" fetch.out
- 	)
+-#define MAX_NUM_TASKS 1
++#define MAX_NUM_TASKS 2
+ 
+ static const char * const builtin_maintenance_usage[] = {
+ 	N_("git maintenance run [<options>]"),
+@@ -717,6 +717,76 @@ struct maintenance_opts {
+ 	int quiet;
+ } opts;
+ 
++static int run_write_commit_graph(struct repository *r)
++{
++	int result;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++
++	argv_array_pushl(&cmd, "-C", r->worktree,
++			 "commit-graph", "write",
++			 "--split", "--reachable",
++			 NULL);
++
++	if (opts.quiet)
++		argv_array_pushl(&cmd, "--no-progress", NULL);
++
++	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++	argv_array_clear(&cmd);
++
++	return result;
++}
++
++static int run_verify_commit_graph(struct repository *r)
++{
++	int result;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++
++	argv_array_pushl(&cmd, "-C", r->worktree,
++			 "commit-graph", "verify",
++			 "--shallow", NULL);
++
++	if (opts.quiet)
++		argv_array_pushl(&cmd, "--no-progress", NULL);
++
++	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++	argv_array_clear(&cmd);
++
++	return result;
++}
++
++static int maintenance_task_commit_graph(struct repository *r)
++{
++	char *chain_path;
++
++	/* Skip commit-graph when --auto is specified. */
++	if (opts.auto_flag)
++		return 0;
++
++	close_object_store(r->objects);
++	if (run_write_commit_graph(r)) {
++		error(_("failed to write commit-graph"));
++		return 1;
++	}
++
++	if (!run_verify_commit_graph(r))
++		return 0;
++
++	warning(_("commit-graph verify caught error, rewriting"));
++
++	chain_path = get_commit_graph_chain_filename(r->objects->odb);
++	if (unlink(chain_path)) {
++		UNLEAK(chain_path);
++		die(_("failed to remove commit-graph at %s"), chain_path);
++	}
++	free(chain_path);
++
++	if (!run_write_commit_graph(r))
++		return 0;
++
++	error(_("failed to rewrite commit-graph"));
++	return 1;
++}
++
+ static int maintenance_task_gc(struct repository *r)
+ {
+ 	int result;
+@@ -790,6 +860,10 @@ static void initialize_tasks(void)
+ 	tasks[num_tasks]->enabled = 1;
+ 	num_tasks++;
+ 
++	tasks[num_tasks]->name = "commit-graph";
++	tasks[num_tasks]->fn = maintenance_task_commit_graph;
++	num_tasks++;
++
+ 	hashmap_init(&task_map, task_entry_cmp, NULL, MAX_NUM_TASKS);
+ 
+ 	for (i = 0; i < num_tasks; i++) {
+diff --git a/commit-graph.c b/commit-graph.c
+index fdd1c4fa7c..57278a9ab5 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -172,7 +172,7 @@ static char *get_split_graph_filename(struct object_directory *odb,
+ 		       oid_hex);
+ }
+ 
+-static char *get_chain_filename(struct object_directory *odb)
++char *get_commit_graph_chain_filename(struct object_directory *odb)
+ {
+ 	return xstrfmt("%s/info/commit-graphs/commit-graph-chain", odb->path);
+ }
+@@ -520,7 +520,7 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 	struct stat st;
+ 	struct object_id *oids;
+ 	int i = 0, valid = 1, count;
+-	char *chain_name = get_chain_filename(odb);
++	char *chain_name = get_commit_graph_chain_filename(odb);
+ 	FILE *fp;
+ 	int stat_res;
+ 
+@@ -1635,7 +1635,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	}
+ 
+ 	if (ctx->split) {
+-		char *lock_name = get_chain_filename(ctx->odb);
++		char *lock_name = get_commit_graph_chain_filename(ctx->odb);
+ 
+ 		hold_lock_file_for_update_mode(&lk, lock_name,
+ 					       LOCK_DIE_ON_ERROR, 0444);
+@@ -2012,7 +2012,7 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 	if (ctx->split_opts && ctx->split_opts->expire_time)
+ 		expire_time = ctx->split_opts->expire_time;
+ 	if (!ctx->split) {
+-		char *chain_file_name = get_chain_filename(ctx->odb);
++		char *chain_file_name = get_commit_graph_chain_filename(ctx->odb);
+ 		unlink(chain_file_name);
+ 		free(chain_file_name);
+ 		ctx->num_commit_graphs_after = 0;
+diff --git a/commit-graph.h b/commit-graph.h
+index 28f89cdf3e..3c202748c3 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -25,6 +25,7 @@ struct commit;
+ struct bloom_filter_settings;
+ 
+ char *get_commit_graph_filename(struct object_directory *odb);
++char *get_commit_graph_chain_filename(struct object_directory *odb);
+ int open_commit_graph(const char *graph_file, int *fd, struct stat *st);
+ 
+ /*
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index e4e4036e50..216ac0b19e 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -12,7 +12,7 @@ test_expect_success 'help text' '
+ 	test_i18ngrep "usage: git maintenance run" err
+ '
+ 
+-test_expect_success 'gc [--auto|--quiet]' '
++test_expect_success 'run [--auto|--quiet]' '
+ 	GIT_TRACE2_EVENT="$(pwd)/run-no-auto.txt" git maintenance run --no-quiet &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-auto.txt" git maintenance run --auto &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-quiet.txt" git maintenance run --quiet &&
 -- 
 gitgitgadget
 
