@@ -2,67 +2,68 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C48C433E2
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2FB0C433E3
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:22:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E0AB2073E
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:22:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A19AE2073E
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 14:22:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aMUCuKon"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qO1+y2wm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728263AbgGGOWC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 10:22:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51146 "EHLO
+        id S1728333AbgGGOWD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 10:22:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728333AbgGGOVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 10:21:53 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630D2C08C5F4
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 07:21:52 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id f18so46740185wml.3
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 07:21:52 -0700 (PDT)
+        with ESMTP id S1728232AbgGGOVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 10:21:50 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACFEBC08C5E3
+        for <git@vger.kernel.org>; Tue,  7 Jul 2020 07:21:49 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id 22so43479779wmg.1
+        for <git@vger.kernel.org>; Tue, 07 Jul 2020 07:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1PDu+vfdggb2dHGLKD9G3geDCGfHn8e+tRKoxgR8BbU=;
-        b=aMUCuKonuZ4LAaAqTwfnbstoQiSIzoBds66HL6A+VgY28FnbaYByATnifZDz6X5Rxz
-         +JDDuM19iny2Hp6AY7OlmKCZSAa6l57lgC/sLjpDH9ry2Q0/Sm0DwYOx95xo0MixCqzr
-         mOtYzoAyR99AVpaakPDxQtR8f/6bhkQ2p8sYk1eHL4F718LHBGf6+F+aTNP+VaEdMP5V
-         EWowlE8WIL8KVs45LCS/uDs1OOYaILDwOC15lzXaUAToym82uzsbJTvASJLVqg5l7E3p
-         e8PzgU0qPXDAHzQ18hzPnUBDFM8895tiTh2mFhvMuUcHcpbrZ02ovvUa//2myA+G06Kv
-         d89w==
+        bh=Cn7iyirg747zHkIaNK/XiKwYcUeQHNfHYuiko/e8JMI=;
+        b=qO1+y2wmJ2ryBAlxJ+Vb1nWfeAdNYgNlv+LksdfDVmoTkx9LwPbW49oD7FVbj0crzF
+         2Djj3FQYbFmTbxROTkhkfWRQ9Ukdt8p5JvY2hoeuux6HysR97NWeD9H/+WQrlWPiJx/e
+         n4wJvHujp1dTyE2AQMwQbq4YfXMzrFoMoUq4nZKA6OTWHU7p/7eAdUTlhbfqJ0fDW9JJ
+         UyQ1ldYhbVZqB6gt8poy8s2q7inDgg+EG3x7x31jjycFOfAJ/ynBZ3CSTaWlCUzqOJKb
+         oJnLvRKYhUZOoIZQ+nloSx89oPkx5GfJTsw9PJ+iQg60lN8W0Mug5J8POtzCoBM9+VXD
+         /NSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1PDu+vfdggb2dHGLKD9G3geDCGfHn8e+tRKoxgR8BbU=;
-        b=E+3IWIpv9xj8jHf+YpFNv1D+DjxGSeVHFvX6J4t+QXehFY92u70fxWdkL5qcjWV7l1
-         d8KXR/xKfVvBcIcrBPJzl1TJtc6dolbp5G0ybst72ts0n7UH9sAaNJNd0Adxo04qXqKR
-         ckaE4pmHW6j9UmL0DM8+M9CISVQ9w0JAQzAWyIkqoFP1JsKglGgMhTa7mupVhgB53mtM
-         PlpCEjJKYnlpIQRcjvGP3nE38uX1t6EShxN9MJ1ND2zF8/1Smr+vCkagvwL3eon7lcRx
-         BfEcXohrqwFJxPZIzZmrF/yTYATZphvOxezv7U1vnvCS+4fFWMtltP0d3neBgf+0ONXm
-         5SoA==
-X-Gm-Message-State: AOAM5306JZ7gRBI6EIlB1S4q3297Uhkn0hK73U/HEDLa2t/fcagXBDCK
-        lqpf4lpEKFviDslWAf011I2s/XnW
-X-Google-Smtp-Source: ABdhPJxf41S38AF3UhIsJHcG1FTBceSz0nXbq5+5sSPEclSb4DBz9Jvv46K4d1fTmh0Qw9E4kDZwrw==
-X-Received: by 2002:a1c:49d4:: with SMTP id w203mr4737490wma.13.1594131710997;
-        Tue, 07 Jul 2020 07:21:50 -0700 (PDT)
+        bh=Cn7iyirg747zHkIaNK/XiKwYcUeQHNfHYuiko/e8JMI=;
+        b=lCvBckq74jwd7QPvl+DgXpQmvPfcqHII+RJ3XN3eYfokgwSlu6t1uuSakjFZeVab30
+         ePd6txMCzs7lALU+pGUd3llGRchdmKd9hAjvOHAfsAoJgKjcG8HbBI8p19Siw1qSqDv8
+         n3yt49vG2DxcffGpi2x5qnyphgemvPZzgK5NfFXxfZs/LQOKWQ4DPniPYfRLZhCdx9sd
+         WTPfhCgNi2zVVb4pyPn3k3aRjjd8giv+mY+fpIa/fIRgS6qSY+gDRpuGyBYRD5XbVrPR
+         HGUaPSO/PPcPFb/HUSLnXFigTixZ/pqAU634sh4VqKb32CXW42NDMlFJBHZTyZ0uZ+h+
+         3LJg==
+X-Gm-Message-State: AOAM533nHVt+7dkOwXLrPitMqTMIEUh4B+miRT4O/LI7xHknbeGU0x8X
+        Ecc46RFPtOerZDtZghOZCYwgp7Ut
+X-Google-Smtp-Source: ABdhPJyuAtfkgd8em4WyyEQIwCiJ05usrgY3dNU5uEjdnCXJjDnoqWMHaEgwbrK5YSXWqhGmeWZp3w==
+X-Received: by 2002:a7b:c5c1:: with SMTP id n1mr4670570wmk.21.1594131707976;
+        Tue, 07 Jul 2020 07:21:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d10sm1224817wrx.66.2020.07.07.07.21.50
+        by smtp.gmail.com with ESMTPSA id p4sm1280672wrx.63.2020.07.07.07.21.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 07:21:50 -0700 (PDT)
-Message-Id: <37fa3f6157ab7799f29331e8cf11f55e7f123e49.1594131695.git.gitgitgadget@gmail.com>
+        Tue, 07 Jul 2020 07:21:47 -0700 (PDT)
+Message-Id: <f98790024f10b70cbd2d88cb09126c5a83c9c400.1594131695.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.671.git.1594131695.gitgitgadget@gmail.com>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jul 2020 14:21:32 +0000
-Subject: [PATCH 18/21] maintenance: add auto condition for commit-graph task
+Date:   Tue, 07 Jul 2020 14:21:28 +0000
+Subject: [PATCH 14/21] maintenance: add pack-files task
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,161 +81,373 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Instead of writing a new commit-graph in every 'git maintenance run
---auto' process (when maintenance.commit-graph.enalbed is configured to
-be true), only write when there are "enough" commits not in a
-commit-graph file.
+The previous change cleaned up loose objects using the
+'loose-objects' that can be run safely in the background. Add a
+similar job that performs similar cleanups for pack-files.
 
-This count is controlled by the maintenance.commit-graph.auto config
-option.
+One issue with running 'git repack' is that it is designed to
+repack all pack-files into a single pack-file. While this is the
+most space-efficient way to store object data, it is not time or
+memory efficient. This becomes extremely important if the repo is
+so large that a user struggles to store two copies of the pack on
+their disk.
 
-To compute the count, use a depth-first search starting at each ref, and
-leaving markers using the PARENT1 flag. If this count reaches the limit,
-then terminate early and start the task. Otherwise, this operation will
-peel every ref and parse the commit it points to. If these are all in
-the commit-graph, then this is typically a very fast operation. Users
-with many refs might feel a slow-down, and hence could consider updating
-their limit to be very small. A negative value will force the step to
-run every time.
+Instead, perform an "incremental" repack by collecting a few small
+pack-files into a new pack-file. The multi-pack-index facilitates
+this process ever since 'git multi-pack-index expire' was added in
+19575c7 (multi-pack-index: implement 'expire' subcommand,
+2019-06-10) and 'git multi-pack-index repack' was added in ce1e4a1
+(midx: implement midx_repack(), 2019-06-10).
+
+The 'pack-files' job runs the following steps:
+
+1. 'git multi-pack-index write' creates a multi-pack-index file if
+   one did not exist, and otherwise will update the multi-pack-index
+   with any new pack-files that appeared since the last write. This
+   is particularly relevant with the background fetch job.
+
+   When the multi-pack-index sees two copies of the same object, it
+   stores the offset data into the newer pack-file. This means that
+   some old pack-files could become "unreferenced" which I will use
+   to mean "a pack-file that is in the pack-file list of the
+   multi-pack-index but none of the objects in the multi-pack-index
+   reference a location inside that pack-file."
+
+2. 'git multi-pack-index expire' deletes any unreferenced pack-files
+   and updaes the multi-pack-index to drop those pack-files from the
+   list. This is safe to do as concurrent Git processes will see the
+   multi-pack-index and not open those packs when looking for object
+   contents. (Similar to the 'loose-objects' job, there are some Git
+   commands that open pack-files regardless of the multi-pack-index,
+   but they are rarely used. Further, a user that self-selects to
+   use background operations would likely refrain from using those
+   commands.)
+
+3. 'git multi-pack-index repack --bacth-size=<size>' collects a set
+   of pack-files that are listed in the multi-pack-index and creates
+   a new pack-file containing the objects whose offsets are listed
+   by the multi-pack-index to be in those objects. The set of pack-
+   files is selected greedily by sorting the pack-files by modified
+   time and adding a pack-file to the set if its "expected size" is
+   smaller than the batch size until the total expected size of the
+   selected pack-files is at least the batch size. The "expected
+   size" is calculated by taking the size of the pack-file divided
+   by the number of objects in the pack-file and multiplied by the
+   number of objects from the multi-pack-index with offset in that
+   pack-file. The expected size approximats how much data from that
+   pack-file will contribute to the resulting pack-file size. The
+   intention is that the resulting pack-file will be close in size
+   to the provided batch size.
+
+   The next run of the pack-files job will delete these repacked
+   pack-files during the 'expire' step.
+
+   In this version, the batch size is set to "0" which ignores the
+   size restrictions when selecting the pack-files. It instead
+   selects all pack-files and repacks all packed objects into a
+   single pack-file. This will be updated in the next change, but
+   it requires doing some calculations that are better isolated to
+   a separate change.
+
+Each of the above steps update the multi-pack-index file. After
+each step, we verify the new multi-pack-index. If the new
+multi-pack-index is corrupt, then delete the multi-pack-index,
+rewrite it from scratch, and stop doing the later steps of the
+job. This is intended to be an extra-safe check without leaving
+a repo with many pack-files without a multi-pack-index.
+
+These steps are based on a similar background maintenance step in
+Scalar (and VFS for Git) [1]. This was incredibly effective for
+users of the Windows OS repository. After using the same VFS for Git
+repository for over a year, some users had _thousands_ of pack-files
+that combined to up to 250 GB of data. We noticed a few users were
+running into the open file descriptor limits (due in part to a bug
+in the multi-pack-index fixed by af96fe3 (midx: add packs to
+packed_git linked list, 2019-04-29).
+
+These pack-files were mostly small since they contained the commits
+and trees that were pushed to the origin in a given hour. The GVFS
+protocol includes a "prefetch" step that asks for pre-computed pack-
+files containing commits and trees by timestamp. These pack-files
+were grouped into "daily" pack-files once a day for up to 30 days.
+If a user did not request prefetch packs for over 30 days, then they
+would get the entire history of commits and trees in a new, large
+pack-file. This led to a large number of pack-files that had poor
+delta compression.
+
+By running this pack-file maintenance step once per day, these repos
+with thousands of packs spanning 200+ GB dropped to dozens of pack-
+files spanning 30-50 GB. This was done all without removing objects
+from the system and using a constant batch size of two gigabytes.
+Once the work was done to reduce the pack-files to small sizes, the
+batch size of two gigabytes means that not every run triggers a
+repack operation, so the following run will not expire a pack-file.
+This has kept these repos in a "clean" state.
+
+[1] https://github.com/microsoft/scalar/blob/master/Scalar.Common/Maintenance/PackfileMaintenanceStep.cs
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/maintenance.txt | 10 ++++
- builtin/gc.c                         | 76 ++++++++++++++++++++++++++++
- object.h                             |  1 +
- 3 files changed, 87 insertions(+)
+ Documentation/git-maintenance.txt |  15 ++++
+ builtin/gc.c                      | 124 +++++++++++++++++++++++++++++-
+ midx.c                            |   2 +-
+ midx.h                            |   1 +
+ t/t7900-maintenance.sh            |  37 +++++++++
+ 5 files changed, 177 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
-index 370cbfb42f..9bd69b9df3 100644
---- a/Documentation/config/maintenance.txt
-+++ b/Documentation/config/maintenance.txt
-@@ -2,3 +2,13 @@ maintenance.<task>.enabled::
- 	This boolean config option controls whether the maintenance task
- 	with name `<task>` is run when no `--task` option is specified.
- 	By default, only `maintenance.gc.enabled` is true.
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index bf792d446f..945fda368b 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -84,6 +84,21 @@ loose-objects::
+ 	thousand objects to prevent the job from taking too long on a
+ 	repository with many loose objects.
+ 
++pack-files::
++	The `pack-files` job incrementally repacks the object directory
++	using the `multi-pack-index` feature. In order to prevent race
++	conditions with concurrent Git commands, it follows a two-step
++	process. First, it deletes any pack-files included in the
++	`multi-pack-index` where none of the objects in the
++	`multi-pack-index` reference those pack-files; this only happens
++	if all objects in the pack-file are also stored in a newer
++	pack-file. Second, it selects a group of pack-files whose "expected
++	size" is below the batch size until the group has total expected
++	size at least the batch size; see the `--batch-size` option for
++	the `repack` subcommand in linkgit:git-multi-pack-index[1]. The
++	default batch-size is zero, which is a special case that attempts
++	to repack all pack-files into a single pack-file.
 +
-+maintenance.commit-graph.auto::
-+	This integer config option controls how often the `commit-graph` task
-+	should be run as part of `git maintenance run --auto`. If zero, then
-+	the `commit-graph` task will not run with the `--auto` option. A
-+	negative value will force the task to run every time. Otherwise, a
-+	positive value implies the command should run when the number of
-+	reachable commits that are not in the commit-graph file is at least
-+	the value of `maintenance.commit-graph.auto`. The default value is
-+	100.
+ OPTIONS
+ -------
+ --auto::
 diff --git a/builtin/gc.c b/builtin/gc.c
-index dd24026b41..81b076b012 100644
+index dda71fe39c..259b0475c0 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -30,6 +30,7 @@
+@@ -29,6 +29,7 @@
+ #include "tree.h"
  #include "promisor-remote.h"
  #include "remote.h"
- #include "midx.h"
-+#include "refs.h"
++#include "midx.h"
  
  #define FAILED_RUN "failed to run %s"
  
-@@ -720,6 +721,80 @@ struct maintenance_opts {
- 	int tasks_selected;
- } opts;
+@@ -706,7 +707,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
  
-+/* Remember to update object flag allocation in object.h */
-+#define PARENT1		(1u<<16)
-+
-+static int num_commits_not_in_graph = 0;
-+static int limit_commits_not_in_graph = 100;
-+
-+static int dfs_on_ref(const char *refname,
-+		      const struct object_id *oid, int flags,
-+		      void *cb_data)
-+{
-+	int result = 0;
-+	struct object_id peeled;
-+	struct commit_list *stack = NULL;
-+	struct commit *commit;
-+
-+	if (!peel_ref(refname, &peeled))
-+		oid = &peeled;
-+	if (oid_object_info(the_repository, oid, NULL) != OBJ_COMMIT)
-+		return 0;
-+
-+	commit = lookup_commit(the_repository, oid);
-+	if (!commit)
-+		return 0;
-+	if (parse_commit(commit))
-+		return 0;
-+
-+	commit_list_append(commit, &stack);
-+
-+	while (!result && stack) {
-+		struct commit_list *parent;
-+
-+		commit = pop_commit(&stack);
-+
-+		for (parent = commit->parents; parent; parent = parent->next) {
-+			if (parse_commit(parent->item) ||
-+			    commit_graph_position(parent->item) != COMMIT_NOT_FROM_GRAPH ||
-+			    parent->item->object.flags & PARENT1)
-+				continue;
-+
-+			parent->item->object.flags |= PARENT1;
-+			num_commits_not_in_graph++;
-+
-+			if (num_commits_not_in_graph >= limit_commits_not_in_graph) {
-+				result = 1;
-+				break;
-+			}
-+
-+			commit_list_append(parent->item, &stack);
-+		}
-+	}
-+
-+	free_commit_list(stack);
-+	return result;
-+}
-+
-+static int should_write_commit_graph(struct repository *r)
+-#define MAX_NUM_TASKS 4
++#define MAX_NUM_TASKS 5
+ 
+ static const char * const builtin_maintenance_usage[] = {
+ 	N_("git maintenance run [<options>]"),
+@@ -967,6 +968,123 @@ static int maintenance_task_loose_objects(struct repository *r)
+ 	return prune_packed(r) || pack_loose(r);
+ }
+ 
++static int multi_pack_index_write(struct repository *r)
 +{
 +	int result;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	argv_array_pushl(&cmd, "-C", r->worktree,
++			 "multi-pack-index", "write", NULL);
 +
-+	repo_config_get_int(r, "maintenance.commit-graph.auto",
-+			    &limit_commits_not_in_graph);
++	if (opts.quiet)
++		argv_array_push(&cmd, "--no-progress");
 +
-+	if (!limit_commits_not_in_graph)
-+		return 0;
-+	if (limit_commits_not_in_graph < 0)
-+		return 1;
-+
-+	result = for_each_ref(dfs_on_ref, NULL);
-+
-+	clear_commit_marks_all(PARENT1);
++	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++	argv_array_clear(&cmd);
 +
 +	return result;
 +}
 +
- static int run_write_commit_graph(struct repository *r)
- {
- 	int result;
-@@ -1250,6 +1325,7 @@ static void initialize_tasks(struct repository *r)
++static int rewrite_multi_pack_index(struct repository *r)
++{
++	char *midx_name = get_midx_filename(r->objects->odb->path);
++
++	unlink(midx_name);
++	free(midx_name);
++
++	if (multi_pack_index_write(r)) {
++		error(_("failed to rewrite multi-pack-index"));
++		return 1;
++	}
++
++	return 0;
++}
++
++static int multi_pack_index_verify(struct repository *r)
++{
++	int result;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	argv_array_pushl(&cmd, "-C", r->worktree,
++			 "multi-pack-index", "verify", NULL);
++
++	if (opts.quiet)
++		argv_array_push(&cmd, "--no-progress");
++
++	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++	argv_array_clear(&cmd);
++
++	return result;
++}
++
++static int multi_pack_index_expire(struct repository *r)
++{
++	int result;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	argv_array_pushl(&cmd, "-C", r->worktree,
++			 "multi-pack-index", "expire", NULL);
++
++	if (opts.quiet)
++		argv_array_push(&cmd, "--no-progress");
++
++	close_object_store(r->objects);
++	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++	argv_array_clear(&cmd);
++
++	return result;
++}
++
++static int multi_pack_index_repack(struct repository *r)
++{
++	int result;
++	struct argv_array cmd = ARGV_ARRAY_INIT;
++	argv_array_pushl(&cmd, "-C", r->worktree,
++			 "multi-pack-index", "repack", NULL);
++
++	if (opts.quiet)
++		argv_array_push(&cmd, "--no-progress");
++
++	argv_array_push(&cmd, "--batch-size=0");
++
++	close_object_store(r->objects);
++	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
++
++	if (result && multi_pack_index_verify(r)) {
++		warning(_("multi-pack-index verify failed after repack"));
++		result = rewrite_multi_pack_index(r);
++	}
++
++	return result;
++}
++
++static int maintenance_task_pack_files(struct repository *r)
++{
++	if (multi_pack_index_write(r)) {
++		error(_("failed to write multi-pack-index"));
++		return 1;
++	}
++
++	if (multi_pack_index_verify(r)) {
++		warning(_("multi-pack-index verify failed after initial write"));
++		return rewrite_multi_pack_index(r);
++	}
++
++	if (multi_pack_index_expire(r)) {
++		error(_("multi-pack-index expire failed"));
++		return 1;
++	}
++
++	if (multi_pack_index_verify(r)) {
++		warning(_("multi-pack-index verify failed after expire"));
++		return rewrite_multi_pack_index(r);
++	}
++
++	if (multi_pack_index_repack(r)) {
++		error(_("multi-pack-index repack failed"));
++		return 1;
++	}
++
++	return 0;
++}
++
+ typedef int maintenance_task_fn(struct repository *r);
  
- 	tasks[num_tasks]->name = "commit-graph";
- 	tasks[num_tasks]->fn = maintenance_task_commit_graph;
-+	tasks[num_tasks]->auto_condition = should_write_commit_graph;
+ struct maintenance_task {
+@@ -1061,6 +1179,10 @@ static void initialize_tasks(void)
+ 	tasks[num_tasks]->fn = maintenance_task_loose_objects;
  	num_tasks++;
  
- 	hashmap_init(&task_map, task_entry_cmp, NULL, MAX_NUM_TASKS);
-diff --git a/object.h b/object.h
-index 38dc2d5a6c..4f886495d7 100644
---- a/object.h
-+++ b/object.h
-@@ -73,6 +73,7 @@ struct object_array {
-  * list-objects-filter.c:                                      21
-  * builtin/fsck.c:           0--3
-  * builtin/index-pack.c:                                     2021
-+ * builtin/maintenance.c:                           16
-  * builtin/pack-objects.c:                                   20
-  * builtin/reflog.c:                   10--12
-  * builtin/show-branch.c:    0-------------------------------------------26
++	tasks[num_tasks]->name = "pack-files";
++	tasks[num_tasks]->fn = maintenance_task_pack_files;
++	num_tasks++;
++
+ 	tasks[num_tasks]->name = "gc";
+ 	tasks[num_tasks]->fn = maintenance_task_gc;
+ 	tasks[num_tasks]->enabled = 1;
+diff --git a/midx.c b/midx.c
+index 6d1584ca51..57a8a00082 100644
+--- a/midx.c
++++ b/midx.c
+@@ -36,7 +36,7 @@
+ 
+ #define PACK_EXPIRED UINT_MAX
+ 
+-static char *get_midx_filename(const char *object_dir)
++char *get_midx_filename(const char *object_dir)
+ {
+ 	return xstrfmt("%s/pack/multi-pack-index", object_dir);
+ }
+diff --git a/midx.h b/midx.h
+index b18cf53bc4..baeecc70c9 100644
+--- a/midx.h
++++ b/midx.h
+@@ -37,6 +37,7 @@ struct multi_pack_index {
+ 
+ #define MIDX_PROGRESS     (1 << 0)
+ 
++char *get_midx_filename(const char *object_dir);
+ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local);
+ int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t pack_int_id);
+ int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32_t *result);
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 8cb33624c6..a6be8456aa 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -103,4 +103,41 @@ test_expect_success 'loose-objects task' '
+ 	test_cmp packs-between packs-after
+ '
+ 
++test_expect_success 'pack-files task' '
++	packDir=.git/objects/pack &&
++	for i in $(test_seq 1 5)
++	do
++		test_commit $i || return 1
++	done &&
++
++	# Create three disjoint pack-files with size BIG, small, small.
++	echo HEAD~2 | git pack-objects --revs $packDir/test-1 &&
++	test_tick &&
++	git pack-objects --revs $packDir/test-2 <<-\EOF &&
++	HEAD~1
++	^HEAD~2
++	EOF
++	test_tick &&
++	git pack-objects --revs $packDir/test-3 <<-\EOF &&
++	HEAD
++	^HEAD~1
++	EOF
++	rm -f $packDir/pack-* &&
++	rm -f $packDir/loose-* &&
++	ls $packDir/*.pack >packs-before &&
++	test_line_count = 3 packs-before &&
++
++	# the job repacks the two into a new pack, but does not
++	# delete the old ones.
++	git maintenance run --task=pack-files &&
++	ls $packDir/*.pack >packs-between &&
++	test_line_count = 4 packs-between &&
++
++	# the job deletes the two old packs, and does not write
++	# a new one because only one pack remains.
++	git maintenance run --task=pack-files &&
++	ls .git/objects/pack/*.pack >packs-after &&
++	test_line_count = 1 packs-after
++'
++
+ test_done
 -- 
 gitgitgadget
 
