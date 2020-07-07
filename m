@@ -6,84 +6,94 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F443C433E0
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 18:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFAAFC433E0
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 19:10:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 657A32075B
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 18:14:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 747542064C
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 19:10:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wgmzpAN4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D1VTHOfw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728149AbgGGSOl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 14:14:41 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63844 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728029AbgGGSOl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 14:14:41 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F11A16EDB5;
-        Tue,  7 Jul 2020 14:14:38 -0400 (EDT)
+        id S1728299AbgGGTKi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 15:10:38 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65251 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728029AbgGGTKi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 15:10:38 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 68DA3D3FAD;
+        Tue,  7 Jul 2020 15:10:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6gUmlFpFXnNxumpojwQHGEPh5e4=; b=wgmzpA
-        N4LP4HfDD08g9xJNOLpeAmt9R/yPTidEWRkZZArtRr9AWrmtqS70NSiOSuV6aNmn
-        MEBISPxm9vjPb2RYRL3AAvOM+njQisF183CnR30mCiPXrGQoP8fqWvMDHkkU88sL
-        vpMg+g1Dwk6PSx/tcRFcsYW3mNXBRp2CFmGT0=
+        :content-type; s=sasl; bh=EDnBQae89MTlkJBsu4O8RQQ7v6o=; b=D1VTHO
+        fwu7Gt3uWGtlm6YEp1Ktnfs2b0hv8dky3ZuqD7Vt7CkXA+lxoMh+8+WYpL3WDVnR
+        BtpTPhImhu91QoxuUeMxtnwRbIVtu8TZ7OrnY6vDgcKOJF75/dAnDgP4j1dZpFal
+        74vsW7fexV5Ee0cfmWKnJGVsKeXl+MH/PhyYE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wt6ywt2j3kqiXyaMHJIV/vyfmtJvY8GB
-        JafIWTSvTq1B9yL/jGOwg4EULpx/DTi+ESviO7L8D5XXSYrPHEAjV7yKip6ZnFSd
-        VwwqQsP4svc/0MyIt//mFWLz3ROIEiDheN+QDkMN2ZC2+2nBeEO0uLGaOpJXzEyw
-        7AQg2Bt5fjM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E8FFC6EDB4;
-        Tue,  7 Jul 2020 14:14:38 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=IJTIXkzYCc6QCtrwLb0xNesv/UVLT23h
+        CN4fzteBG1KjhCQVzHPEtVshfogphCHNkTauCVaI0ru08tFgJUIhv4Vrz0knSRvl
+        6Wk3UXirS2p4++2kFYr17T4xYy3Rd0/7PJCKzfeFlN8AcE4NDRiI+PZy1ASrEFjB
+        zjBMQxz8nvY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6194BD3FAB;
+        Tue,  7 Jul 2020 15:10:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 703176EDB0;
-        Tue,  7 Jul 2020 14:14:38 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B081BD3FA8;
+        Tue,  7 Jul 2020 15:10:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 1/2] Modify pseudo refs through ref backend storage
-References: <pull.673.git.1594056572.gitgitgadget@gmail.com>
-        <6821f57bdf326f161f152a8af0e47b54513c77b1.1594056572.git.gitgitgadget@gmail.com>
-        <xmqqimf09ypc.fsf@gitster.c.googlers.com>
-        <CAFQ2z_OPbcX9FGsFnmraAUpTu2eKuf2PZ+DO-CTWvaBZD6WQQQ@mail.gmail.com>
-        <xmqqv9iz5p2v.fsf@gitster.c.googlers.com>
-        <CAFQ2z_P37j32O71Z+NxNNU7-xLfYf-Rz-MvbYakcpaysiep9Zw@mail.gmail.com>
-Date:   Tue, 07 Jul 2020 11:14:37 -0700
-In-Reply-To: <CAFQ2z_P37j32O71Z+NxNNU7-xLfYf-Rz-MvbYakcpaysiep9Zw@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Tue, 7 Jul 2020 19:15:32 +0200")
-Message-ID: <xmqq5zaz5h0y.fsf@gitster.c.googlers.com>
+To:     Jimit Bhalavat <jimit@rams.colostate.edu>
+Cc:     git@vger.kernel.org, David Huseby <dhuseby@linuxfoundation.org>
+Subject: Re: GPG Commit Signing Project
+References: <3942AC4E-6798-442B-81E9-B3D9B10A4A56@rams.colostate.edu>
+Date:   Tue, 07 Jul 2020 12:10:31 -0700
+In-Reply-To: <3942AC4E-6798-442B-81E9-B3D9B10A4A56@rams.colostate.edu> (Jimit
+        Bhalavat's message of "Tue, 7 Jul 2020 12:01:30 -0600")
+Message-ID: <xmqq1rln5efs.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B85CAF0C-C07D-11EA-A84C-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8840D4B2-C085-11EA-9B3A-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+Jimit Bhalavat <jimit@rams.colostate.edu> writes:
 
-> I can fix this specific instance here (which is what I think you
-> want), for this commit to practice what it preaches. At the same time
-> there are probably about 100 or so other places where the tests check
-> the file system directly for ref(log) existence, so it would never be
-> totally consistent.
->
-> The only way to systematically find the offending places is to
-> introduce a new ref backend and then fix all the tests, and I think
-> that goes outside the scope of this small series.
+> When we last spoke, David Huseby, my mentor for Hyperledger Git
+> Commit Signing Project, proposed an outline of what we are trying
+> to achieve. We have come to the conclusion that me and him are
+> going to spend the rest of the summer analyzing the format signing
+> infrastructure and will have proposals and questions as we go.
 
-Good.  I think we are on the same page.  I suggested to make the
-patch internally consistent, nothing more.  And fixing everything in
-the world is outside the scope of these two patches.
+I thought the conclusion was that there is nothing to do on the git
+side as your project would wrap the non-GPG signing tool of your
+choice to have an external interface that is similar to how GPG
+looks to git and that has the added benefit that the product of your
+project to interact with tools other than git [*1*].  So...
 
-Thanks.
+> I am also going to write a technical design document which will
+> help us analyze the problem. I realize this is a larger long-term
+> project that I think deserves a topic and how would I set a topic
+> up?
+
+... your longer-term plan may very well deserve a detailed technical
+design document, but I am not sure what help our project can give
+(other than obvious things like saying "good luck").
+
+Sorry for not being able to help all that much.
+
+
+
+
+[Reference]
+
+*1* https://lore.kernel.org/git/xmqqd0642p3q.fsf@gitster.c.googlers.com/
+ 
+
