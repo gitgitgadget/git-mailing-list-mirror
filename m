@@ -2,102 +2,151 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80249C433E0
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 13:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C9FBC433E0
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 13:24:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C90A20773
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 13:12:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4264A206E2
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 13:24:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pc/l9dPQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RoG40OXW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727995AbgGGNM6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 09:12:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40484 "EHLO
+        id S1727064AbgGGNYQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 09:24:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727975AbgGGNM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 09:12:58 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE516C061755
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 06:12:57 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id a14so18768294qvq.6
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 06:12:57 -0700 (PDT)
+        with ESMTP id S1726745AbgGGNYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 09:24:16 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF494C061755
+        for <git@vger.kernel.org>; Tue,  7 Jul 2020 06:24:15 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id 95so23656205otw.10
+        for <git@vger.kernel.org>; Tue, 07 Jul 2020 06:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=0bM6tRb14zJFpbOljSa6x4TX6JcQSca9pnQKqH2+sos=;
-        b=pc/l9dPQR9xTKkrfwrrbQUNnQZmFqd3xgU8FOCrHqoCB3Wu3yz58anC2BwG1N87Rc+
-         2zkSEO73AfZSbiOPgfSEDQ6wGWTXJTrIVGkMHwuqustKibosPzIL0C9o2T61Fkiajbd/
-         E1cyClDR8bYsuc6y9WiO8kcmUnlmgJR8IdgSFPAEZ6nQdUyn8BZ54Aerqg4VoTHlqY8o
-         eLxCWN+9OCnsFyFWKaFHfKLm9L3IIV/VflsleXbyR+r9wUq9aIGczfWW+sijqjZQDNM2
-         kBKY07BiSK9V7mehUQ/GToLaEQ3ELM24Nb2GSF5QGRMnMRNToX2HGMCQjKAEe/V6Q0jV
-         Of5w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=KrXMbf9RNTfRD+tpnu6GXAx8WK9LRHL3qKuV3iVQSSU=;
+        b=RoG40OXWPIpWrqf1rZ+mQbGTrPI9xcYcuxJzAk5NgysSEtOMjJxn8czgoSspGrkfhb
+         hifxZVrYc7B2jv8ZnI0La9FntxhGh1PsRD8UMI6ienO94VncY18diu/aQhJwV7c55lS/
+         2LxLaniuK2Tk4oeZ+AbIS11gUn3nIO6Kc0QtOM7cGHEks9eDaEX7xywvoja+pGU2Fi5p
+         qXxEFH0XnKByk5jXsKVPlckZUAEAzJGhGTm82HJZA6EB/aOxNeQusPdDHzCZiW4Ut5tB
+         2Ay2Tchj1ltpEVRNpL4THbpqsnZPYHmxx8NE7Qt0YMCLrcIEB2UwpWhvvTVeAU/CVLWs
+         7LFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=0bM6tRb14zJFpbOljSa6x4TX6JcQSca9pnQKqH2+sos=;
-        b=gWznl40Gsp1mLLQZchjca8USKXO99K3gg+XH2jOH4TLjhYaRLrmKhdItCt9XOL4+/Q
-         08H1knWoA4mmrv99vcCDe/l0EeH+kF/jHXIvVju4ToRm1Ia+WG0OZU0c5yzuNV7Scdai
-         GNgEim92cUTvuyrtsk83sKgNUK1Wh9nqD7NdKy0XR+TLteLsZVKi6nwHZUD2Gx4veJfc
-         P0Ne7BSZiTn31ywAziOI8yVYsgOdnx7YJvbAqW+hnDh3T4+md/iRnD8Ms5MVlnM/ommg
-         LxMEZ0WDNzZfuvUC5+fXLL56/9J/ob1cNnLAWkzw6B9TQnwoB12R/7ARVCWyhl7GuxTb
-         5J6A==
-X-Gm-Message-State: AOAM532S+g7Zg/Arxu02XwhOOa7u3DOFridOQrqIlTEZChceAi48NNBi
-        c7XuS39m9LkRNw8UAd76+WY=
-X-Google-Smtp-Source: ABdhPJyk+M5lIclndhXi6op9fwifZNZKfVT73hL2FJz4DEjGzb6XUHqpB00c3EMELUSS3Bpr5luujw==
-X-Received: by 2002:a05:6214:8f4:: with SMTP id dr20mr49025600qvb.228.1594127577219;
-        Tue, 07 Jul 2020 06:12:57 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id m7sm25612611qti.6.2020.07.07.06.12.56
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Tue, 07 Jul 2020 06:12:56 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KrXMbf9RNTfRD+tpnu6GXAx8WK9LRHL3qKuV3iVQSSU=;
+        b=lAhDsXZduquIlqu8gNUSn5ATDMBQJ3h6AFZ+oPWQU5+9YZwV2NsuyUo2FNcvVzJIjv
+         1kpsRA62mVbYTnW8rXa7Lx6Xv7SmLxv1Q4tpMI6gP9EDd2AS9+ZhbcmtoYG1aQJsW8Cn
+         +Xo9esKJouSbPrkzKLkEq/Hbib55Hc0MWKIV7MIW3Ff03VmYg/jeUReGfPqsILgxg7kY
+         190QiP9rVpc9SW0KtWX2y8/Lv1E1vB3zgkitKt5PwuUiwSZAEXkUXrrFak0PgXufbxgK
+         /dSO9bmI49D+/J8HMgqwG8Zd8cd7Fa/ptyz/aQpCMHpUKHEl1cReyzQiV8iHxcBD5gqj
+         a2yQ==
+X-Gm-Message-State: AOAM532sthgH51kIxmbKyvz+MfFIV8LUcz1N3JRV10OMXsyVf7ZPPRKb
+        T3goHZ7AihOq/JPD5KM+cLc=
+X-Google-Smtp-Source: ABdhPJy9o/rR1Akzpl2DvPEeg84nqUYhBTAktAS04DsbZHNDkqlugv/daVYZp3vl7zZSxC9hx5Zedw==
+X-Received: by 2002:a9d:6b95:: with SMTP id b21mr24319003otq.365.1594128254905;
+        Tue, 07 Jul 2020 06:24:14 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id p18sm5747947oto.11.2020.07.07.06.24.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2020 06:24:13 -0700 (PDT)
+Subject: Re: [PATCH] experimental: default to fetch.writeCommitGraph=false
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20200707062039.GC784740@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0b7435e3-95fc-8085-9e26-6d451809faa8@gmail.com>
+Date:   Tue, 7 Jul 2020 09:24:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
+MIME-Version: 1.0
+In-Reply-To: <20200707062039.GC784740@google.com>
 Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2 4/4] rev-list-description.txt: fix Asciidoc syntax
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <xmqqeepo87hz.fsf@gitster.c.googlers.com>
-Date:   Tue, 7 Jul 2020 09:12:54 -0400
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Lawrence Siebert <lawrencesiebert@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4FEB0C20-2CDE-4110-B153-251AABD17CC4@gmail.com>
-References: <pull.590.git.1585429894378.gitgitgadget@gmail.com> <pull.590.v2.git.1593747509.gitgitgadget@gmail.com> <3b923780c1f38ee183397b5766aae65933eec4aa.1593747509.git.gitgitgadget@gmail.com> <xmqqeepo87hz.fsf@gitster.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 7/7/2020 2:20 AM, Jonathan Nieder wrote:
+> The fetch.writeCommitGraph feature makes fetches write out a commit
+> graph file for the newly downloaded pack on fetch.  This improves the
+> performance of various commands that would perform a revision walk and
+> eventually ought to be the default for everyone.  To prepare for that
+> future, it's enabled by default for users that set
+> feature.experimental=true to experience such future defaults.
+> 
+> Alas, for --unshallow fetches from a shallow clone it runs into a
+> snag: by the time Git has fetched the new objects and is writing a
+> commit graph, it has performed a revision walk and r->parsed_objects
+> contains information about the shallow boundary from *before* the
+> fetch.  The commit graph writing code is careful to avoid writing a
+> commit graph file in shallow repositories, but the new state is not
+> shallow, and the result is that from that point on, commands like "git
+> log" make use of a newly written commit graph file representing a
+> fictional history with the old shallow boundary.
+> 
+> We could fix this by making the commit graph writing code more careful
+> to avoid writing a commit graph that could have used any grafts or
+> shallow state, but it is possible that there are other pieces of
+> mutated state that fetch's commit graph writing code may be relying
+> on.  So disable it in the feature.experimental configuration.
+> 
+> Google developers have been running in this configuration (by setting
+> fetch.writeCommitGraph=false in the system config) to work around this
+> bug since it was discovered in April.  Once the fix lands, we'll
+> enable fetch.writeCommitGraph=true again to give it some early testing
+> before rolling out to a wider audience.
+> 
+> In other words:
+> 
+> - this patch only affects behavior with feature.experimental=true
+> 
+> - it makes feature.experimental match the configuration Google has
+>   been using for the last few months, meaning it would leave users in
+>   a better tested state than without it
+> 
+> - this should improve testing for other features guarded by
+>   feature.experimental, by making feature.experimental safer to use
+> 
+> Reported-by: Jay Conrod <jayconrod@google.com>
+> Helped-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> I realize this is late to send.  That said, as described above, I
+> think it's a good way to buy time by minimizing user exposure to
+> fetch.writeCommitGraph=true until a fix for it is well cooked.
 
-> Le 6 juil. 2020 =C3=A0 20:59, Junio C Hamano <gitster@pobox.com> a =
-=C3=A9crit :
->=20
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
->> From: Philippe Blain <levraiphilippeblain@gmail.com>
->>=20
->> Using '{caret}' inside double quotes and immediately following with a
->> single quoted word does not create the desired output: '<commit1>'
->> appears verbatim instead of being emphasized.
->>=20
->> Use a litteral caret ('^') instead.
->>=20
->> Also, remove the leading tabs in shell examples to bring them more in
->> line with the rest of the documentation.
->=20
-> These should be done _before_ 2/4 as a preliminary clean-up, I
-> think.
+While it would certainly be better to fix the commit_graph_compatible()
+method, I understand that that is a more complicated problem.
 
-I agree. I'll reorder that for v3.
+> In other words, I'd like to see this patch in Git 2.28-rc0.
 
+This patch is 100% correct.
 
+Normally, I would say "this is experimental, and a user can always
+disable fetch.writeCommitGraph manually if they are running into this."
+This is especially true because unshallowing a repo is (probably)
+a rare operation. At least, I expect that very few users actually do
+it, and those who do are expert users.
+
+But, it is best to reduce user pain, even in rare cases like this.
+
+Further, I hope to submit new maintenance tasks soon which can
+replace fetch.writeCommitGraph.
+
+Thanks,
+-Stolee
