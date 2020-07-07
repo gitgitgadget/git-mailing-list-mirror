@@ -6,90 +6,76 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C681C433DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 21:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 185E7C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:06:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24E2D206C3
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 21:59:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDDE2206DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729262AbgGGV7x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 17:59:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51784 "EHLO cloud.peff.net"
+        id S1728846AbgGGWG2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 18:06:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51792 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728357AbgGGV7x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 17:59:53 -0400
-Received: (qmail 23615 invoked by uid 109); 7 Jul 2020 21:59:52 -0000
+        id S1728786AbgGGWG1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 18:06:27 -0400
+Received: (qmail 23677 invoked by uid 109); 7 Jul 2020 22:06:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2020 21:59:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2020 22:06:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32151 invoked by uid 111); 7 Jul 2020 21:59:52 -0000
+Received: (qmail 32196 invoked by uid 111); 7 Jul 2020 22:06:27 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2020 17:59:52 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2020 18:06:27 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 7 Jul 2020 17:59:51 -0400
+Date:   Tue, 7 Jul 2020 18:06:26 -0400
 From:   Jeff King <peff@peff.net>
-To:     Zach Riggle <zachriggle@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git grep --threads 12 --textconv is effectively single-threaded
-Message-ID: <20200707215951.GB2300296@coredump.intra.peff.net>
-References: <CAMP9c5nUteg_HouuYJZtq7g4MrSE638mns=HeKhNpNTYgQB4=w@mail.gmail.com>
+To:     Trygve Aaberge <trygveaa@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 2/2] Wait for child on signal death for aliases to
+ externals
+Message-ID: <20200707220626.GC2300296@coredump.intra.peff.net>
+References: <20200704221839.421997-1-trygveaa@gmail.com>
+ <20200704221839.421997-2-trygveaa@gmail.com>
+ <20200706211403.GB85133@coredump.intra.peff.net>
+ <20200707101959.qsuumtuelepnxore@aaberge.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAMP9c5nUteg_HouuYJZtq7g4MrSE638mns=HeKhNpNTYgQB4=w@mail.gmail.com>
+In-Reply-To: <20200707101959.qsuumtuelepnxore@aaberge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 07, 2020 at 04:25:01PM -0500, Zach Riggle wrote:
+On Tue, Jul 07, 2020 at 12:19:59PM +0200, Trygve Aaberge wrote:
 
-> It looks like the bit of code that is responsible for performing
-> textconv conversions is single-threaded, even if git-grep is provided
-> a number of threads to use.
-
-Yes, the locking is much coarser than it could be. The issue is in
-grep.c's fill_textconv_grep():
-
-          /*
-           * fill_textconv is not remotely thread-safe; it modifies the global
-           * diff tempfile structure, writes to the_repo's odb and might
-           * internally call thread-unsafe functions such as the
-           * prepare_packed_git() lazy-initializator. Because of the last two, we
-           * must ensure mutual exclusion between this call and the object reading
-           * API, thus we use obj_read_lock() here.
-           *
-           * TODO: allowing text conversion to run in parallel with object
-           * reading operations might increase performance in the multithreaded
-           * non-worktreee git-grep with --textconv.
-           */
-          obj_read_lock();
-          size = fill_textconv(r, driver, df, &buf);
-          obj_read_unlock();
-          free_filespec(df);
-
-Note that this lock is used whether we're doing textconv's or not (i.e.,
-it also excludes reading two objects from the object database at the
-same time, because none of that code is thread-safe). But the latency
-when we're doing a textconv is _much_ higher, because it's shelling out
-to a separate process and reading/writing the contents. Note the
-much-higher system CPU in your second timing:
-
-> Note the difference in total CPU usage in the following expressions:
+> On Mon, Jul 06, 2020 at 17:14:03 -0400, Jeff King wrote:
+> >     I guess to recreate that you'd need to trigger the pager inside the
+> >     alias itself, like:
+> > 
+> >       $ git -c alias.foo='!{ echo foo; sleep 10; echo bar; } | less' foo
+> >       ^C
+> > 
+> >     which does exhibit the annoying behavior (we exit, and pgrp loses
+> >     the tty session leader bit, and the pager gets EIO).
 > 
-> $ git grep --threads 12 -e foobar --and -e fizzbuzz &> /dev/null
-> 0.24s user 0.28s system 710% cpu 0.073 total
+> Yes, that's correct. So it's a rather niche use case. The main thing for me
+> was the first commit, but I figured I should fix this too while I was at it. I
+> don't think I have any current use cases where I would need this fix, but I
+> could imagine some existing. For instance, before stash list got the -p
+> option, I had this alias:
 > 
-> $ git grep --threads 12 -e foobar --and -e fizzbuzz --textconv &> /dev/null
-> 0.90s user 1.75s system 110% cpu 2.390 total
+>   stash-p = !git show $(git stash list | cut -d: -f1)
+> 
+> And this is one use case where the pager is invoked inside the alias, so the
+> first patch doesn't help, but the second one fixes it. While this alias isn't
+> necessary anymore, there could be similar use cases.
 
-So I think implementing that TODO would help a lot (because each
-textconv could in theory proceed in parallel).
-
-As workaround in the meantime, I suspect that enabling
-diff.<driver>.cachetextconv for your particular textconv config might
-help. It would be slow on the first run, but then we'd be able to skip
-the external process entirely for subsequent runs (the results are
-cached in a git-notes tree, which are just raw object reads).
+Thanks for this real-world example. I agree that particular one isn't
+necessary anymore, but to me it provides a compelling argument. It's not
+all that far-fetched that somebody runs a git command that triggers a
+pager inside a shell alias.
 
 -Peff
