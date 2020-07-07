@@ -6,77 +6,84 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1436AC433E0
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA046C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:37:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D400B2075B
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:29:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75C5320675
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:37:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yYw293MC"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kw2Nnpez"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729132AbgGGW3o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 18:29:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55224 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727895AbgGGW3n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 18:29:43 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82D2B70BBB;
-        Tue,  7 Jul 2020 18:29:41 -0400 (EDT)
+        id S1729341AbgGGWhp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 18:37:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62557 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728299AbgGGWhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 18:37:45 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39FE4631DB;
+        Tue,  7 Jul 2020 18:37:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sfSnpcDPFJLyIUts7aFT0CP0YV4=; b=yYw293
-        MCZSVeYORdVXYqgG2Xl8QbROkJLwB7KcKWlsNMb3oAtE+PpInNXvDcHKwKXk2zpd
-        yy+Wzh0FdTI5tGrYGqdbkbEfcua57mZAHDe48A6ZX/PvNlcSB8jwx5aWsUtZbchz
-        RR2lKP04bxo1QOODMJAfokYJ1tIdAev6ctKj8=
+        :content-type; s=sasl; bh=KeYKcu4Jq7p/0++UMma1t81P+Wk=; b=Kw2Nnp
+        ezYTxJYaCkgp7mM0dcxCTIgxWlHIy9mTPx6EjXEi+Azy/GR6UX0fFu7vDFT9Beg9
+        bfjvff/AM9HNd1D1QFVMI8lYl3FaOUybEo+aZYvEj61ReSB65Kg8mN/UdCCbb0R9
+        AECQeXhn26KGPQ4SoIpH8EWSuuNxV3OYG0w2w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q72xe2YNjYz/m9wIc7FX5kvYDAfQ46br
-        z34Kz2YGvrIyZSXucE0UEtcrd1TVVDBfA2QaDIrGop+0q9gcHe3UhovteRjhbI3W
-        jNR51T2BKNjLBFmVegZgY3tnp4PtA22cEaSr3nVl6GgB7V/MJIPB/Z+SzbM/TmWZ
-        0+5yCynRcWs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7AAD070BBA;
-        Tue,  7 Jul 2020 18:29:41 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=h+T5KUvEZHGrun0IYAuU8CCXZSgfp5xL
+        cxU0ZlIjypkh5xvxXflTJUDDmUFWk/4l6nxTsQrL/RIMBh5O25gNEPd4Qt2vDmVU
+        zVJoiHg8QR2KV7+eDbOfSOVg+YYwxCfU16yU1YmSyc4H7Pd+lVsFeTIXamT2sETA
+        0joSJerywY8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 329D0631D9;
+        Tue,  7 Jul 2020 18:37:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.231.104.69])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 020E170BB8;
-        Tue,  7 Jul 2020 18:29:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B4F2F631D8;
+        Tue,  7 Jul 2020 18:37:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RESEND PATCH v2 0/5] t: replace incorrect test_must_fail usage (part 6)
-References: <cover.1593576601.git.liu.denton@gmail.com>
-        <cover.1594101831.git.liu.denton@gmail.com>
-        <xmqqblkr3x6q.fsf@gitster.c.googlers.com>
-        <xmqq7dvf3uwc.fsf@gitster.c.googlers.com>
-        <xmqqwo3f2cx6.fsf@gitster.c.googlers.com>
-        <20200707222155.GA27311@generichostname>
-Date:   Tue, 07 Jul 2020 15:29:40 -0700
-In-Reply-To: <20200707222155.GA27311@generichostname> (Denton Liu's message of
-        "Tue, 7 Jul 2020 18:21:55 -0400")
-Message-ID: <xmqqo8or2c2z.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH] Make some commit hashes in tests reproducible
+References: <pull.816.git.git.1594149804313.gitgitgadget@gmail.com>
+        <xmqqfta33y0m.fsf@gitster.c.googlers.com>
+        <20200707205418.GB1396940@coredump.intra.peff.net>
+        <xmqq1rln3t4y.fsf@gitster.c.googlers.com>
+        <20200707215206.GA2300296@coredump.intra.peff.net>
+Date:   Tue, 07 Jul 2020 15:37:42 -0700
+In-Reply-To: <20200707215206.GA2300296@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 7 Jul 2020 17:52:06 -0400")
+Message-ID: <xmqqk0zf2bpl.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 59647862-C0A1-11EA-B220-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7887090C-C0A2-11EA-B775-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Thanks. For the final version of this series, we should either queue
-> your patch or the one I just sent[0] just after the patch for t7107 so
-> that it comes before the we flip the switch on test_must_fail and also
-> so that the patches show up in increasing numerical order.
+> I'm also skeptical how often we use system times anyway, because _any_
+> use of test_commit or test_tick in a script is enough to make all of the
+> subsequent commands deterministic. I'd be more inclined to let a
+> particular script say "I'm interested in random times". But then, I'd
+> think such a script would be better written to trigger its interesting
+> cases with a well-crafted set of deterministic times.
 
-Ah, our mails crossed.  Surely the fix to cvs test must come before
-the final step that tightens the test_must_fail helper.
+Yeah, the DEVELOPER=YesPlease was a tongue-in-cheek comment.  
 
+Reproducibility would mean we see less test breakages due to
+raciness, but I do not recall a case where digging into test
+breakage due to raciness led to discovery of and fix to a real
+breakage in Git itself, so it is probably a good thing.
+
+Thanks.
