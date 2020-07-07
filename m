@@ -2,121 +2,154 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28FFFC433DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E1F0C433E0
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:19:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 026AE20739
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:17:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A5F020708
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:19:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vVTtaizr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d3xIQHFv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728020AbgGGMRa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 08:17:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
+        id S1727120AbgGGMTh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 08:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbgGGMR3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 08:17:29 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E432C061755
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 05:17:29 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id g139so24577169lfd.10
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 05:17:29 -0700 (PDT)
+        with ESMTP id S1726946AbgGGMTg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 08:19:36 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7111FC061755
+        for <git@vger.kernel.org>; Tue,  7 Jul 2020 05:19:36 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id h19so49655852ljg.13
+        for <git@vger.kernel.org>; Tue, 07 Jul 2020 05:19:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=w9H2IYhGaxUEgNljhzTlm7QlWedk4iq4anJ4DKHUYmU=;
-        b=vVTtaizr5nYHlAE1qK91EjNjxvi9w7LyvvxVYYzjPVDK+d69gUXquW799Y2MK1I4UF
-         DxS3+BEOh+1Bkwu3G72W3+ircUX7WsEmEdLSi+82YTbaYqUL5h/H16LI2v9Ic6iogvBo
-         yCB2oLZLUuaO/RK/+geZLPEFrGRzhIWHGCzSvs63ZUjBByGCsJ2mvabdf6eHD4Yelrwj
-         DkdO2UMn895+CzW+4rXZpNACFXxa1m6iNsSH3YtpUjz07VHxWktalq8UrTd4UeBr0tDQ
-         8T8nynAfscFc268P2X+KYA6NEGBgCG/Vx0FEC1V8GqDeBCQI32PniJnChelAD9mTuPDJ
-         SOuw==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=GNOKmiKDy0f993Q2FyKkjw12hmCmFqWq+ow2y+AFt6k=;
+        b=d3xIQHFvEeErYpU+TlpqLibu7SKl+GtSnzw0ylTpXlMJiSW1Xz3h+hjdZZbQtjQWxl
+         gC40J1AKlq5sLrMmmOxbDSEJ2xaAVGC4N0uvS2verRJyhkSuxvcPXvJPRpIq5y4+WEW/
+         zyOSDaX3kL4EiANMa+BHQZl4GdUG27+5CTj19J3fqQKuiwzAPTmJ2SMBqTiZM5hTLBSk
+         Q+O2DNvBkkqrXWSarkvj8hHzjATrJ2O/fALF09Lat1/Aauesl0sZwuEE6iNjtCmoRnQ/
+         lpgMn8D8VNVi3ztRc57jjqYlP6O5V4/bYkNG8JOgU8yPAgdDFxgQP11NayzwZTK3P4NX
+         UV7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=w9H2IYhGaxUEgNljhzTlm7QlWedk4iq4anJ4DKHUYmU=;
-        b=aRkXPNmWZ7EXl0Sisy/wCjtuXwwVkq+jf34eBAyIIAMl36NZqSXteer0SlGHujFaC9
-         AwEIJDWTitWIN9TwoLop9BrDYw80mfVdHlka97KOcMGHM1WIJXLtQbZyPVVDHX6NGIKx
-         0sX5lk4SrHuk/LHJDaXdlTKwy2HwdVbtGdsk1rZs4DyblHdn0SosOzi73FOW0fabTEqo
-         KFbe4knbSw3sWe1FXwss/XyTAR2OlGmrU1gMRz9UL3vrjgLTY52s1ZYVqbJM7I8or0AB
-         eYCyWq3ONTQrFPmZVjjg0fSvZmh6JdtSwkxPT3Ow2XMJYTnGwTz65B59Q4wZ+xMq/M1p
-         2xsw==
-X-Gm-Message-State: AOAM531hL+qf0SOTXciSlqww7TrTaSRuUOKvUOVSOqLzPsbHBmHSBsVW
-        acLcWiofCOTMuPHJgnN+K/yQP0y3z9A=
-X-Google-Smtp-Source: ABdhPJxgWB7dNmTHDrn1A7fzR9ReqQ27uNrZGGWpbJi9iYPJL2qwEJOOIk4NqSEBtkkN3zAH282v2w==
-X-Received: by 2002:ac2:4422:: with SMTP id w2mr32620455lfl.152.1594124247564;
-        Tue, 07 Jul 2020 05:17:27 -0700 (PDT)
-Received: from george.localdomain ([2a01:79c:cebf:1be0:aa5e:45ff:fecd:fe25])
-        by smtp.gmail.com with ESMTPSA id w4sm132724ljw.16.2020.07.07.05.17.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 05:17:27 -0700 (PDT)
-From:   trygveaa@gmail.com
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Trygve Aaberge <trygveaa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 2/2] Wait for child on signal death for aliases to externals
-Date:   Tue,  7 Jul 2020 14:17:15 +0200
-Message-Id: <20200707121716.438318-2-trygveaa@gmail.com>
-X-Mailer: git-send-email 2.26.2.2.g2208536367
-In-Reply-To: <20200707121716.438318-1-trygveaa@gmail.com>
-References: <20200704221839.421997-1-trygveaa@gmail.com>
- <20200707121716.438318-1-trygveaa@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=GNOKmiKDy0f993Q2FyKkjw12hmCmFqWq+ow2y+AFt6k=;
+        b=bBXNzLSzhi0eoNRS4DwtwftNf5jJWNwkgYsjXTXB7nuCnfMMgadrEx2ihINZRPrZAe
+         g1wVcOCyuFaKEfG3Zv0uYSOwht+6f0V3enLbc4GY1pe4EWfkrexv5bCCxYEfazQWZD+p
+         /53chTzF6JdT/177gVPPDOljrY6Ddio0TCGVuYcUDt6S+HU3BqJSVzBGIHPvA0IsB6Kw
+         j8k5lWraRAag9RfYvgWVvqeMDAuTkB/hZo9Kc3WG8Pp9uNRf6sLa18E9cPRNyZetdLT5
+         xTg38hXT0QSW4q2SsPrNUcLLRVnzDhBqaZoS5eIGaIxeIzLBHz5Em7yAArucPdXm3xM3
+         0PNA==
+X-Gm-Message-State: AOAM532SPD8FSwy+EsMOxG0XL9m+yrkGYXbTK7Xz4DaZ2VnJv7jy+5Ta
+        YicvEV68mtiOYXBOnTlfw6N4PtTn67GpI2OJYmZXHT4qwcZsMA==
+X-Google-Smtp-Source: ABdhPJyuPf4IF600BSxv82qO5zWYiTPLBOiahOyjxOxqhEAxQcSnRPiZ3W5AZ/RsDkgGZstKCxx48QmmZJe+N7cGW6o=
+X-Received: by 2002:a2e:815a:: with SMTP id t26mr8902973ljg.182.1594124374641;
+ Tue, 07 Jul 2020 05:19:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   =?UTF-8?B?576O57qxTWlzaGE=?= <mishanyo1001@gmail.com>
+Date:   Tue, 7 Jul 2020 20:19:23 +0800
+Message-ID: <CAMZHuz-Z2HGynUY0R5YDjkN1E12ZtD8h7OsZ9W6mawsxWQODgQ@mail.gmail.com>
+Subject: Bug? of gitignore pattern matching
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Trygve Aaberge <trygveaa@gmail.com>
+In document of gitignore I found
 
-When we are running an alias to an external command, we want to wait for
-that process to exit even after receiving ^C which normally kills the
-git process. This is useful when the process is ignoring SIGINT (which
-e.g. pagers often do), and then we don't want it to be killed.
+An asterisk "*" matches anything except a slash.
 
-Having an alias which invokes a pager is probably not common, but it can
-be useful e.g. if you have an alias to a git command which uses a
-subshell as one of the arguments (in which case you have to use an
-external command, not an alias to a builtin).
+This description well meets what if the asterisk is at the begging or
+in the middle of the pattern.
 
-This patch is similar to the previous commit, but the previous commit
-fixed this only for aliases to builtins, while this commit does the same
-for aliases to external commands. In addition to waiting after clean
-like the previous commit, this also enables cleaning the child (that was
-already enabled for aliases to builtins before the previous commit),
-because wait_after_clean relies on it. Lastly, while the previous commit
-fixed a regression, I don't think this has ever worked properly.
+```
+~/Code/github/test on =EE=82=A0 master!  20:01:11
+$ git check-ignore -v data/a/b/1
 
-Signed-off-by: Trygve Aaberge <trygveaa@gmail.com>
----
- git.c | 2 ++
- 1 file changed, 2 insertions(+)
+~/Code/github/test on =EE=82=A0 master!  20:01:18
+$ git check-ignore -v data/a/b/2
+.gitignore:2:data/**/2 data/a/b/2
 
-diff --git a/git.c b/git.c
-index 9b8d3c92e6..c0698c7d45 100644
---- a/git.c
-+++ b/git.c
-@@ -345,6 +345,8 @@ static int handle_alias(int *argcp, const char ***argv)
- 			commit_pager_choice();
- 
- 			child.use_shell = 1;
-+			child.clean_on_exit = 1;
-+			child.wait_after_clean = 1;
- 			child.trace2_child_class = "shell_alias";
- 			argv_array_push(&child.args, alias_string + 1);
- 			argv_array_pushv(&child.args, (*argv) + 1);
--- 
-2.26.2.2.g2208536367
+~/Code/github/test on =EE=82=A0 master!  20:01:19
+$ git check-ignore -v data/a/b/3
+.gitignore:3:data/***/3 data/a/b/3
 
+~/Code/github/test on =EE=82=A0 master!  20:01:20
+$ cat .gitignore
+data/*/1
+data/**/2
+data/***/3
+
+~/Code/github/test on =EE=82=A0 master!  20:01:21
+$ vim .gitignore
+
+~/Code/github/test on =EE=82=A0 master!  20:01:46
+$ git check-ignore -v a/b/3
+.gitignore:3:***/3 a/b/3
+
+~/Code/github/test on =EE=82=A0 master!  20:01:51
+$ git check-ignore -v a/b/2
+.gitignore:2:**/2 a/b/2
+
+~/Code/github/test on =EE=82=A0 master!  20:01:53
+$ git check-ignore -v a/b/1
+
+~/Code/github/test on =EE=82=A0 master!  20:01:54
+$ cat .gitignore
+*/1
+**/2
+***/3
+
+```
+
+```
+~/Code/github/test on =EE=82=A0 master!  20:00:13
+$ git check-ignore -v data/1/a/b
+.gitignore:1:data/1/* data/1/a/b
+
+~/Code/github/test on =EE=82=A0 master!  20:00:22
+$ git check-ignore -v data/2/a/b
+.gitignore:2:data/2/** data/2/a/b
+
+~/Code/github/test on =EE=82=A0 master!  20:00:25
+$ git check-ignore -v data/3/a/b
+.gitignore:3:data/3/*** data/3/a/b
+
+~/Code/github/test on =EE=82=A0 master!  20:00:26
+$ cat .gitignore
+data/1/*
+data/2/**
+data/3/***
+```
+
+But if this asterisk is at the end of the ignore pattern. Seems that
+"*" equals to "**"
+
+
+
+-----
+
+
+And there is another question
+
+Other consecutive asterisks are considered regular asterisks and will
+match according to the previous rules.
+
+And it seems that triple asterisks act like double ones. What do
+regular asterisks mean, I used to believe they work as a single
+asterisk before testing.  Maybe there is some ambiguity?
+
+
+Best,
+Yanxiang Gao
