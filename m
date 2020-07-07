@@ -2,119 +2,96 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DFBAC433E0
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 17:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F279C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 17:21:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 378D720738
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 17:15:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA4C620708
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 17:21:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KOdS0JJV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cHgbuBpk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728516AbgGGRPp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 13:15:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
+        id S1728208AbgGGRV3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 13:21:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728208AbgGGRPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 13:15:44 -0400
-Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A17C0C061755
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 10:15:44 -0700 (PDT)
-Received: by mail-ua1-x942.google.com with SMTP id b24so5985064uak.2
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 10:15:44 -0700 (PDT)
+        with ESMTP id S1727777AbgGGRV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 13:21:28 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7990DC061755
+        for <git@vger.kernel.org>; Tue,  7 Jul 2020 10:21:28 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id n26so33487293ejx.0
+        for <git@vger.kernel.org>; Tue, 07 Jul 2020 10:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nMCVVSyQ3OZOjUvQKDs+vh5gLeMs22VckndocDXSGfk=;
-        b=KOdS0JJVCYNju6VrURMHBIxP98Ih1Hg8QSLQHM+4HR2f3uYs5WW+9deV767n+LociP
-         aZkBuye+rUB9h3U5CswpwaeZwobgrUkhw8Wao9Y3TuwoPLc9Y6RCnh0FWH5qU4C159DI
-         s1xWmM8MUqLbPJk/oC1CgUkqk4z5asrgNembsctQyvytln0nIbQhq2pV9uKaTtp8zVo0
-         5EzSWsvik7NJ9q68tUq6B+mbta46nf7cmyt1dqg63koVeXUwBCs7wx/IKoP9ydjt/6uA
-         +unsL30tGdyX2UqhICGbopMdTA17bKcD6XAj9bgTj5WZeDoHlP/SlI3R8fWN1jyrUjVM
-         lssw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=X7TySk6G9BzID2uIDMFna+3tzgeRKrXSyNfyXysGpZA=;
+        b=cHgbuBpk+i4CNXWEaEVdwe/7mmdmYXARm4NP+OspgW1ueocy9s4yqW/L5bshNWwMYq
+         kp1+iv0T5mgEEa/KGjlRrkZMjGYvirA9CbpQoMLWG1aic4DXltqF16JuNoaGR0KZySNj
+         wgy6V/OCv3PP09Fvq6esyrpeH8fwirAl2S1d7IfoLICMlFV7GjA/Y4XA9G7RslAklYy8
+         aa1aRRZGGpuDpu0GwR6WmZNXiSLDZUi8kPyM/uEXD8zVSALYvnkIblJ656bPal2kJMXP
+         7g+pzLx3jKqG4lRj04blFgt9K99jCaThCJUi4Zbj/1uDBFSfIADkv3/8DkKUZUKqPkSh
+         mi1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nMCVVSyQ3OZOjUvQKDs+vh5gLeMs22VckndocDXSGfk=;
-        b=X3t3eXPicn6kW6PTgYTCYMvbJaWU5j+DC4JOG3JTHZ20RridICvaTANHqhvJuRNaEE
-         Hipf78PwVXpCZbDdJg2u/7at0nkRqI2J4G591jQYWK22On4std4S+614ALoP5GJZ02Ge
-         0T6Vhi+WEuvXXwT/Xwvg0OxxiJZK9ugEjB3cJBXGOIhzvr5oKQh7Ch0hHcUZFm71VvEp
-         8fHb2ludOUapijpvFgd4/3k1KeXNf0IwyUvNRHzndG+j0nPPNlXEgOIhcYJ4b81AchUw
-         72HCSC5A5qeSDiJfvtXuXneK9Geooq9NEI5lZxJ7PPbHzavcYboSy0elPzrrEkpBxBWG
-         RCAA==
-X-Gm-Message-State: AOAM531LTialgRqSqhwwmwb0csvgun3maV4G9rrppJ1wLjuN0VxmIQbi
-        hF9EP1+nNIU/NaxlJtHGbGLP9V0r0FjtpmFrd7RVzQ==
-X-Google-Smtp-Source: ABdhPJy4FQ6pyfbIf13MrqmXh/7dZnB9AeX/byLulzMBE+SeIO78Wl7/9DJKk23zUgSpfvcTR/0u1HobJgsDnv40eyM=
-X-Received: by 2002:ab0:15a4:: with SMTP id i33mr4602042uae.85.1594142143624;
- Tue, 07 Jul 2020 10:15:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.673.git.1594056572.gitgitgadget@gmail.com>
- <6821f57bdf326f161f152a8af0e47b54513c77b1.1594056572.git.gitgitgadget@gmail.com>
- <xmqqimf09ypc.fsf@gitster.c.googlers.com> <CAFQ2z_OPbcX9FGsFnmraAUpTu2eKuf2PZ+DO-CTWvaBZD6WQQQ@mail.gmail.com>
- <xmqqv9iz5p2v.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqv9iz5p2v.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 7 Jul 2020 19:15:32 +0200
-Message-ID: <CAFQ2z_P37j32O71Z+NxNNU7-xLfYf-Rz-MvbYakcpaysiep9Zw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Modify pseudo refs through ref backend storage
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=X7TySk6G9BzID2uIDMFna+3tzgeRKrXSyNfyXysGpZA=;
+        b=W/NwpXiNwzYIcaf9PysitReVkdptXNMak2OhhfMKDbbqtrhCPbjGsXAtRnpn/If3RG
+         7reA2Gu3Irs1CXwnUAfI5tmWfEmhH/w+7GJKdTuUz0+ZvDGZBjGFXVnZapVlIcjFvdJd
+         j3WTABzJlifMW4mYw4uWhm4V6HBbTeV2AaFy66XbuOAoAfBbDL6P6Ach+1oALSKP7C5H
+         qBGJWRkkHN3wmabXKsaTRjKoilaUuken2ecB5/sagO8+sTzG3AbGET6RPV4DkS9WZWgW
+         7+qtj4NKIANpBRbs3WrqMthxULAetKP1q83iwdv2xDePNyTIDnJBOIzyn5nS4Dcxz2fx
+         E3jw==
+X-Gm-Message-State: AOAM531FIDMnlZy8VmBRyAp88rLmEeaXaQFHQlnp20eAkFMT1W2vhXZN
+        e4GAjqtfQ8kPVRaIC5ecRBY=
+X-Google-Smtp-Source: ABdhPJwW17Z2PoJjHGP1NEaAnr6+6fNgfrNB1o2Tf0djhGkiOvjCzqRfhVsrwDaepdPeDHqBNWWlEg==
+X-Received: by 2002:a17:906:af6d:: with SMTP id os13mr47020848ejb.57.1594142485533;
+        Tue, 07 Jul 2020 10:21:25 -0700 (PDT)
+Received: from szeder.dev (84-236-109-193.pool.digikabel.hu. [84.236.109.193])
+        by smtp.gmail.com with ESMTPSA id y7sm642515ejd.73.2020.07.07.10.21.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Jul 2020 10:21:24 -0700 (PDT)
+Date:   Tue, 7 Jul 2020 19:21:23 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: sg/commit-graph-cleanups (was Re: What's cooking in git.git (Jul
+ 2020, #01; Mon, 6))
+Message-ID: <20200707172123.GD11341@szeder.dev>
+References: <xmqqh7uj7tqn.fsf@gitster.c.googlers.com>
+ <90cf9ac2-1ab0-1c9b-706b-6c5176ab47dd@gmail.com>
+ <xmqqzh8b5pgv.fsf@gitster.c.googlers.com>
+ <7ce9163b-eafe-20a8-bd8e-7042807c98f0@gmail.com>
+ <xmqqimez5l5q.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqimez5l5q.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 7, 2020 at 5:20 PM Junio C Hamano <gitster@pobox.com> wrote:
-
-> >> The reason why I asked what this patch thinks the definition of
-> >> pseudoref is is because of this thing.  Shouldn't this line be fixed
-> >> not to depend on the files backend?  Likewise for $(cat .git/PSEUDOREF=
-)
-> >> in the remaining two hunks.
+On Tue, Jul 07, 2020 at 09:45:21AM -0700, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+> >> Oops, I am not sure what happened here.  There I thought were issues
+> >> pointed out at least on the latter series but was I hallucinating?
 > >
-> > This patch doesn't introduce reftable yet, so both definitions are
-> > equivalent for the sake of this patch.
->
-> But at the end of the tunnel, we do want to see people stop
-> expecting that .git/PSEUDOREF file is what PSEUDOREF ref is, no?  I
-> think that is what "pseudo refs are not just files directly under
-> $GIT_DIR, but managed by the backend" means, and that in turn is a
-> valid justification for other changes introduced in this patch.
-> Expecting the effect of modifying pseudo refs _after_ the code is
-> changed that such modifications are properly done through the ref
-> API to appear on the filesystem feels like it goes against the
-> reason why we are making this change, compared to checking to see if
-> the pseudoref really got updated as desired via the ref API, at
-> least to me.
+> > I believe I have resolved all the open comments in both series.
+> 
+> OK, then I do not have to be worried.
+> 
+> Let's merge it down before -rc0.
 
-I can fix this specific instance here (which is what I think you
-want), for this commit to practice what it preaches. At the same time
-there are probably about 100 or so other places where the tests check
-the file system directly for ref(log) existence, so it would never be
-totally consistent.
+I think it was merged to next too soon.  I haven't even done with
+reporting all the issues that were already in v2.27.0, let alone
+looking through these followup series...
 
-The only way to systematically find the offending places is to
-introduce a new ref backend and then fix all the tests, and I think
-that goes outside the scope of this small series.
-
---
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
