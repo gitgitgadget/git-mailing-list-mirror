@@ -2,121 +2,88 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9635BC433DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 02:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72033C433E0
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 04:40:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7363D206F6
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 02:26:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34D0720722
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 04:40:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PbjXBQWE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QA3I6RSn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728048AbgGGC0U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jul 2020 22:26:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53710 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbgGGC0T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jul 2020 22:26:19 -0400
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF039C061755
-        for <git@vger.kernel.org>; Mon,  6 Jul 2020 19:26:19 -0700 (PDT)
-Received: by mail-pf1-x443.google.com with SMTP id 1so68376pfn.9
-        for <git@vger.kernel.org>; Mon, 06 Jul 2020 19:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BIy34BxMaUnW6J3vyf01BNzAtV+DYJ6hJ6aQk0Ss56s=;
-        b=PbjXBQWEAeDynF9OaFKZWGqo4E3HHQffKHu9J/xqgyGiJGmuYp9yGzMYgEUFQ6SiCV
-         mNbbi2YAFZJlnkIw7nOzvHXQ0uZKBCaxIMJ35tj0gqRKvGyOn6c680ukm8m8leh3+MaT
-         /maa40wNQiXYIrHGGM8hN13ldUKHGTGvjXIIhY29O9+6tA05vSM7X9vjmTH+T3wlFTHr
-         lRPDjl/H9gQqm6wFSREJZLN2DgnJXVaNyk8FKPR7PQcVjw40RZLpmmCp+xup74C7Wjw+
-         tcFxEPteALVkh1Df/DgXTsawWZrL9BTh2WQ7AxGbrBAvEj97HrdIqdoEJI+q+L6sjlPA
-         VnNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=BIy34BxMaUnW6J3vyf01BNzAtV+DYJ6hJ6aQk0Ss56s=;
-        b=A3JjdFxM6QEOeQCOthezH43GtZ+cF2aKJMpzIIF4mQbghLp1i/PDpM8+RC45JhZdLz
-         ASvihka2Jz3dQYfhZS+CnRCtTp5v391ktDRnAAobhMH5todK+YKvQlIGCPJoJZIfXWrA
-         fAiRtwdrX+tn1+Ghqa23BfLM1kPPbjTHyEXvX9BWluqI7qn6FmQqHmhhbaxos9KBeOau
-         Xncss6tgZPkg0spTpVSIk0E0BqlsoaZ9UBtFwVhygZMifvu/VzKB2ygtmQj73/CrAc9C
-         CuTmvQaiUkbyigt/m76NFKUlgyYbe6Hu/o9xazu28lk/7QLvjnYDksL6aKD5+GGnBSQ5
-         cijw==
-X-Gm-Message-State: AOAM530efTszZ1HmEc5Wjlt051FOwdA0+WkBYdCib9zXqwJ79SfVThxN
-        Cdttvvh3Faf5WpdmigXQPgg=
-X-Google-Smtp-Source: ABdhPJxXg2dm87xcI8NSjtCWwotu1CW6fs/WRnu/HuYrjypYqkkSljcdrjblmsehgJgRF6AUZ5UJ/g==
-X-Received: by 2002:a63:e60b:: with SMTP id g11mr44130821pgh.188.1594088779300;
-        Mon, 06 Jul 2020 19:26:19 -0700 (PDT)
-Received: from Abhishek-Arch ([2409:4064:2e25:1ed8:b84b:a378:b9b2:c27c])
-        by smtp.gmail.com with ESMTPSA id 129sm20846757pfv.161.2020.07.06.19.26.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2020 19:26:18 -0700 (PDT)
-Date:   Tue, 7 Jul 2020 07:54:25 +0530
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
-To:     abhishekkumar8222@gmail.com
-Cc:     git@vger.kernel.org, stolee@gmail.com, jnareb@gmail.com
-Subject: [GSOC] Blog about weeks 4, 5
-Message-ID: <20200707022425.GA1649@Abhishek-Arch>
-Reply-To: 20200617093328.GA1327@abhishek-arch
-References: <20200706182213.GA51227@Abhishek-Arch>
+        id S1727995AbgGGEkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 00:40:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54918 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725766AbgGGEkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 00:40:12 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF2E569A2B;
+        Tue,  7 Jul 2020 00:40:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=VnYsrvhK7HIO+LFibT2NdMMI1oY=; b=QA3I6R
+        SnMqyiJdbMiwLSWGVzKWiSqDWEj0Oq9DA/RW43U4m9mn8U589TQSGDC+0V1fhLCK
+        maMvMGLQyXSo5+kWw1sReExdrmL6bc2++rVFC48aGdLM4Augl8oGbJkxLmg8rngN
+        V6QKfzN0BXr6uzX0SAMM+JIRlTAHeRscN1pTM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DGMF1vg8lDWCzCmDzhDL2mJUjMAuY4PD
+        k95WR0GzXVR8ELqvtbrHo1BqtmeHdNHO4UbeWg6u0eEGDvNi8gKlbNDo7sQYwu2v
+        UboCwjNCAGZJPWIWeS465dZ1yNt1VksFNVGxIv9F4wms/JZ5kfrO8EwbnhQ4lqAm
+        x/B0CGZw9JY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9890B69A2A;
+        Tue,  7 Jul 2020 00:40:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C605969A28;
+        Tue,  7 Jul 2020 00:40:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH 0/4] Preliminary fixes for reftable support
+References: <pull.669.git.1593518738.gitgitgadget@gmail.com>
+Date:   Mon, 06 Jul 2020 21:40:07 -0700
+In-Reply-To: <pull.669.git.1593518738.gitgitgadget@gmail.com> (Han-Wen
+        Nienhuys via GitGitGadget's message of "Tue, 30 Jun 2020 12:05:34
+        +0000")
+Message-ID: <xmqqmu4c6iqg.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200706182213.GA51227@Abhishek-Arch>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EFCA8EFE-C00B-11EA-BA40-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone!
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Over the last two weeks, I have worked on refining the performance
-report on generation numbers. Here are our conclusions:
+> These are assorted small fixes split out from the reftable topic.
+>
+> Han-Wen Nienhuys (4):
+>   lib-t6000.sh: write tag using git-update-ref
+>   t3432: use git-reflog to inspect the reflog for HEAD
+>   checkout: add '\n' to reflog message
+>   Treat BISECT_HEAD as a pseudo ref
+>
+>  builtin/bisect--helper.c       | 3 +--
+>  builtin/checkout.c             | 5 +++--
+>  git-bisect.sh                  | 4 ++--
+>  t/lib-t6000.sh                 | 5 ++---
+>  t/t3432-rebase-fast-forward.sh | 7 ++++---
+>  5 files changed, 12 insertions(+), 12 deletions(-)
 
-- Corrected Commit Dates With Monotonically Offset (i.e.  generation
-  number v5) performs better than topological levels but is still walks
-  too many commits when compared with Corrected Commit Dates.
+Thanks for splitting these out, and sorry for not being able to get
+to them earlier.
 
-Number of commits walked (git merge-base v4.8 v4.9, on linux repository):
+Will queue.
 
-Topological Level                          : 635579
-Corrected Commit Date                      : 167468
-Corrected Commit Date With Monotonic Offset: 506577
-
-As such, I am expecting that we will store Corrected Commit Date in an
-additional chunk (called "generation data chunk") and store topological
-levels into CDAT. Thus, old Git clients can operate as expected, with
-new Git clients using the better generation number.
-
-- Using a new chunk does affect the locality of reference but did not
-  impact the performance appreciably.
-- This does increase the size of commit graph file by nearly 5%.
-
-You can read more in my report [1] and the pull request with
-instructions to replicate the results [2].
-
-[1]: https://lore.kernel.org/git/20200703082842.GA28027@Abhishek-Arch/T/#mda33f6e13873df55901768e8fd6d774282002146
-[2]: https://github.com/abhishekkumar2718/git/pull/1
-
-I talk a bit more about a patch I worked on, trying to improve
-performance of commit graph write using buffers which ultimately did not
-work and is dropped. Up next is actually implementing the generation
-number and take care of all little details.
-
-https://abhishekkumar2718.github.io/programming/2020/07/05/gsoc-weeks-4-5.html
-
-Feedback and suggestions welcome!
-
-Thanks
-- Abhishek
-
---------
-
-Re-sending this email as I forgot to cc git@vger.kernel.org
