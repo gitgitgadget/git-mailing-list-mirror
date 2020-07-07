@@ -2,110 +2,105 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B0BC433DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC62C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:11:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A95F4206DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:08:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C375920738
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 22:11:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zf+8/HzJ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lmIW6jHI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728851AbgGGWIU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 18:08:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726946AbgGGWIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 18:08:20 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16145C061755
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 15:08:19 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id u12so33003950qth.12
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 15:08:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bhXg8JvGtG6taWedmcWy1zky+etyMqqGVZVoTekpSow=;
-        b=Zf+8/HzJo7mePls+/El9Pnxk8AGDQxmZ0AHkBov/tTB3sK5Eb4immKjg0rSVZdm6Wr
-         hqqLxE6CDZ7yExu0cXtzvbLg5IC3hi8VkXmJo+/QM7tCbDisV0EWQwbEL19XF2F5qBdn
-         qPIEG3Q1OTclwNDHTmh6x69h52RvNBZHgKoCAIJ90rEPXodHsB8rEnAssl44OyAg8u86
-         X6pvUCyVnUe6JvxfzlgrhSELLLa4seoPpTsaKGYQ8kXB/10jdgJXWJcuys+OX03Fq+ry
-         VV/6IJWvWhjSwPHD7tlPIf6Z/Lct1sJIbk+0O0KXjANN8zEzSYuO2xB/BpJuJ48bZPxg
-         QAmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bhXg8JvGtG6taWedmcWy1zky+etyMqqGVZVoTekpSow=;
-        b=J8HhmD9krTAqDVflpzDJNqUEX5wcWc3NuTJJPOTxEr9T11m90wV19bgjNr8eKqPUMQ
-         ECg4y3SG3YCUb388LxH3qhtWClx8dSzDT/qEvfL1hdM7anvaqRYyO3m6E4SFU7zt0Jex
-         Iem4K21nm/eCFc5qo2uJQ9ByuMikn1nY4WTN7ziWjXFkA35Er6KT5ijdObAOhORUV4fg
-         b3Lrh4LRkorPzHAejF+8rpAsQqTkKj1GdhfP1yLnKtp6ZFqFQJdjhJU0UTV3KbJ3w6nU
-         aXjG0Cxz+j3kbvC5tvJLDIZn3zhUIZx9iNdF/HyDCXge/RsTEhqYs4BFQXvUCz9llN54
-         bdig==
-X-Gm-Message-State: AOAM531HN5npwuUY/+cTM5kLGJKxVNOrCVNFuGSTsVbiYYXI1OKXc0Z7
-        VF4Y4j9XWd7MAReqM+L1kkfbYJKutdc=
-X-Google-Smtp-Source: ABdhPJyPNLV/icXOTMS1uxtI2QX8TAPq58FWc5ISKrMvpdOkYWy0vufJEHLtHbO0fK7inSr9nL0mog==
-X-Received: by 2002:ac8:1809:: with SMTP id q9mr51099973qtj.107.1594159698024;
-        Tue, 07 Jul 2020 15:08:18 -0700 (PDT)
-Received: from archbookpro.phub.net.cable.rogers.com (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
-        by smtp.gmail.com with ESMTPSA id 73sm25775455qkk.38.2020.07.07.15.08.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 15:08:17 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t9400: don't use test_must_fail with cvs
-Date:   Tue,  7 Jul 2020 18:08:07 -0400
-Message-Id: <4ca5e1f9c06ed509fc3165c550d0d665dd5b69c0.1594159495.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.383.g050319c2ae
-In-Reply-To: <xmqq7dvf3uwc.fsf@gitster.c.googlers.com>
-References: <xmqq7dvf3uwc.fsf@gitster.c.googlers.com>
+        id S1729219AbgGGWLj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 18:11:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58634 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728764AbgGGWLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 18:11:39 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 99420E05F7;
+        Tue,  7 Jul 2020 18:11:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ralz75dZaWBHMrHUZW/3bhBMCto=; b=lmIW6j
+        HIMUGUlOOseHaLUw0WTa2tr0/LK7PnM/bjbTCeKgdDsf+8iw7nZA72AMCZ136l2R
+        RBLOvk+SNOSHnDnY5+TvKvhVrWGPhL44saOLWcKXJpgAJGuovHzNDtoscGLUwKeT
+        JV+HwsPm2PpPiW36ITBWi5bPSR0vwxB/MhXK4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pntd8vvAm36ZKqnPKEapzi8PTtUGjCwo
+        qkogvro2NfMx9bDNrC4qIAUPvgugw5oZuN725LT41YTkdfwoUmXAgo1VmsrX6XP3
+        vhHs/62ZkY8kU+vabMjTld9KOfHSPiLcUZ5raSOck5k6b8SSBjLKC+/BF0Etf/vq
+        ekyHKN83ONU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 913E2E05F6;
+        Tue,  7 Jul 2020 18:11:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DB223E05F5;
+        Tue,  7 Jul 2020 18:11:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [RESEND PATCH v2 0/5] t: replace incorrect test_must_fail usage (part 6)
+References: <cover.1593576601.git.liu.denton@gmail.com>
+        <cover.1594101831.git.liu.denton@gmail.com>
+        <xmqqblkr3x6q.fsf@gitster.c.googlers.com>
+        <xmqq7dvf3uwc.fsf@gitster.c.googlers.com>
+Date:   Tue, 07 Jul 2020 15:11:33 -0700
+In-Reply-To: <xmqq7dvf3uwc.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 07 Jul 2020 13:57:55 -0700")
+Message-ID: <xmqqwo3f2cx6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D2054006-C09E-11EA-BC0D-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We are using `test_must_fail cvs` to test that the cvs command fails as
-expected. However, test_must_fail() is used to ensure that commands fail
-in an expected way, not due to something like a segv. Since we are not
-in the business of verifying the sanity of the external world, replace
-`test_must_fail cvs` with `! cvs` and assume that the cvs command does
-not die unexpectedly.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-Hi Junio,
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> Changes since v1:
+>>>
+>>> * Add a code comment to force_color()
+>>>
+>>> * Do not allow nested env's in test_must_fail_acceptable()
+>>>
+>>> * Clean up the env-processing case code
+>>>
+>>> * Give an example on how to use `!`.
+>>
+>> Thanks for a resend.  Now part #5 is in 'master', I can queue these
+>> directly on top.
+>
+> It seems that the patch series lacks coverage for t9400 where we
+> have
+>
+> test_expect_success 'cvs server does not run with vanilla git-shell' '
+> 	(
+> 		cd cvswork &&
+> 		CVS_SERVER=$WORKDIR/remote-cvs &&
+> 		export CVS_SERVER &&
+> 		test_must_fail cvs log merge
+> 	)
+> '
+>
+> which obviously needs to be converted before we declare that it is a
+> hard error to feed a non-git command to test_must_fail.
 
-Thanks for pointing this out. It seems like the CI systems we use don't
-cover cvs. Is this something that we want to address or is it fine to
-leave it as a blindspot since no one really uses cvs anymore?
+For today's integration cycle, I added a fix-up at the tip of the topic
 
- t/t9400-git-cvsserver-server.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index a5e5dca753..4a46f31c41 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -603,7 +603,7 @@ test_expect_success 'cvs server does not run with vanilla git-shell' '
- 		cd cvswork &&
- 		CVS_SERVER=$WORKDIR/remote-cvs &&
- 		export CVS_SERVER &&
--		test_must_fail cvs log merge
-+		! cvs log merge
- 	)
- '
- 
--- 
-2.27.0.383.g050319c2ae
-
+https://github.com/git/git/commit/dde09ce2b7dd62eafda6339c1c31ccfeb0f39cee
