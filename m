@@ -8,70 +8,70 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E633C433E0
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28FFFC433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:17:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5125020708
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:17:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 026AE20739
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 12:17:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l9X7frwg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vVTtaizr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727064AbgGGMR0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 08:17:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60100 "EHLO
+        id S1728020AbgGGMRa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 08:17:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbgGGMRZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 08:17:25 -0400
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE9FBC061755
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 05:17:24 -0700 (PDT)
-Received: by mail-lf1-x141.google.com with SMTP id o4so24589970lfi.7
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 05:17:24 -0700 (PDT)
+        with ESMTP id S1725944AbgGGMR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 08:17:29 -0400
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E432C061755
+        for <git@vger.kernel.org>; Tue,  7 Jul 2020 05:17:29 -0700 (PDT)
+Received: by mail-lf1-x144.google.com with SMTP id g139so24577169lfd.10
+        for <git@vger.kernel.org>; Tue, 07 Jul 2020 05:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GqLI6ApJgJGqM5QomYLGeZ+hyaY70q/xlvlcE81psKs=;
-        b=l9X7frwg3PaxbsjZgBaCAHNtswnr6oS9CpxbsImpjo5NyP1d27oM2UGRq9TvYa3wSY
-         m5vW1h2pxlU6E3ctKDoYkyGZk6nUiaXGDpLUmqGOkiZ98SLXyuPyhTW+xR0RkQbHJMoT
-         FVODcrn1vDZ9JASwK1/xauo9yXwjNO+TOMKBk3HygOSk6Mhq7VM4ySZKtUzlVOOssgJY
-         yINeojSG8csYo/pXv8URmpOPGO4/JqIg/mALcQ6dt17xSEOWkGm8cNqTXLadW/4rx440
-         sVB0cBDXDH/8OR3Wp5QBgBAxsuLSNeGIYr9hrnpUiuqyyg8K0uv34AGsmpzl0rudFB6y
-         SWYg==
+        bh=w9H2IYhGaxUEgNljhzTlm7QlWedk4iq4anJ4DKHUYmU=;
+        b=vVTtaizr5nYHlAE1qK91EjNjxvi9w7LyvvxVYYzjPVDK+d69gUXquW799Y2MK1I4UF
+         DxS3+BEOh+1Bkwu3G72W3+ircUX7WsEmEdLSi+82YTbaYqUL5h/H16LI2v9Ic6iogvBo
+         yCB2oLZLUuaO/RK/+geZLPEFrGRzhIWHGCzSvs63ZUjBByGCsJ2mvabdf6eHD4Yelrwj
+         DkdO2UMn895+CzW+4rXZpNACFXxa1m6iNsSH3YtpUjz07VHxWktalq8UrTd4UeBr0tDQ
+         8T8nynAfscFc268P2X+KYA6NEGBgCG/Vx0FEC1V8GqDeBCQI32PniJnChelAD9mTuPDJ
+         SOuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GqLI6ApJgJGqM5QomYLGeZ+hyaY70q/xlvlcE81psKs=;
-        b=CUl+JSpnv6cB6xfEaR+qXHtso+RWN/km8lWHgi5UvRknMQQKj1moas9yVlnlUWrd19
-         Da1HeFGLkbA0l/cV6tvvTLryqZVka9Sq5wU8sdD9kWd9tML2hj6UlPN9/eh+T+LSaqkm
-         gX7F0jrkIVhB25y8aUFkada/7UBL6Sz/6PcUg4jbWwhJoRP/0meM/Q0EUMaxpDFP8I6d
-         XPS4QtzQQJpTXyV4F6tUWUT9CyEL1itLENRVrMcfZK8EQvaOVgSuFEc6utDmWM5Fj249
-         fYJpzuClNZmrBT2zfIb2IWyRMSsfX1/2HWTON6q0vVjtsffu7cthQPwKoPvbVT66GZwm
-         +nDQ==
-X-Gm-Message-State: AOAM532B08IKE6T62X2p0BSU4JRTfBICe0Vl1E2rbRR3k9PZQPxFsLTk
-        erBgR3MY8CafWsEecW8+io6s5IMNwY0=
-X-Google-Smtp-Source: ABdhPJw8j24YfRTcg3fm7wvQAiJ6mXvaawV93AJWjkpdQQ4GpCK5NjM5gNQo1rChntNO+4bd6jaRgQ==
-X-Received: by 2002:a19:c214:: with SMTP id l20mr32664672lfc.56.1594124243011;
-        Tue, 07 Jul 2020 05:17:23 -0700 (PDT)
+        bh=w9H2IYhGaxUEgNljhzTlm7QlWedk4iq4anJ4DKHUYmU=;
+        b=aRkXPNmWZ7EXl0Sisy/wCjtuXwwVkq+jf34eBAyIIAMl36NZqSXteer0SlGHujFaC9
+         AwEIJDWTitWIN9TwoLop9BrDYw80mfVdHlka97KOcMGHM1WIJXLtQbZyPVVDHX6NGIKx
+         0sX5lk4SrHuk/LHJDaXdlTKwy2HwdVbtGdsk1rZs4DyblHdn0SosOzi73FOW0fabTEqo
+         KFbe4knbSw3sWe1FXwss/XyTAR2OlGmrU1gMRz9UL3vrjgLTY52s1ZYVqbJM7I8or0AB
+         eYCyWq3ONTQrFPmZVjjg0fSvZmh6JdtSwkxPT3Ow2XMJYTnGwTz65B59Q4wZ+xMq/M1p
+         2xsw==
+X-Gm-Message-State: AOAM531hL+qf0SOTXciSlqww7TrTaSRuUOKvUOVSOqLzPsbHBmHSBsVW
+        acLcWiofCOTMuPHJgnN+K/yQP0y3z9A=
+X-Google-Smtp-Source: ABdhPJxgWB7dNmTHDrn1A7fzR9ReqQ27uNrZGGWpbJi9iYPJL2qwEJOOIk4NqSEBtkkN3zAH282v2w==
+X-Received: by 2002:ac2:4422:: with SMTP id w2mr32620455lfl.152.1594124247564;
+        Tue, 07 Jul 2020 05:17:27 -0700 (PDT)
 Received: from george.localdomain ([2a01:79c:cebf:1be0:aa5e:45ff:fecd:fe25])
-        by smtp.gmail.com with ESMTPSA id w4sm132724ljw.16.2020.07.07.05.17.20
+        by smtp.gmail.com with ESMTPSA id w4sm132724ljw.16.2020.07.07.05.17.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2020 05:17:21 -0700 (PDT)
+        Tue, 07 Jul 2020 05:17:27 -0700 (PDT)
 From:   trygveaa@gmail.com
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, Trygve Aaberge <trygveaa@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH v2 1/2] Wait for child on signal death for aliases to builtins
-Date:   Tue,  7 Jul 2020 14:17:14 +0200
-Message-Id: <20200707121716.438318-1-trygveaa@gmail.com>
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v2 2/2] Wait for child on signal death for aliases to externals
+Date:   Tue,  7 Jul 2020 14:17:15 +0200
+Message-Id: <20200707121716.438318-2-trygveaa@gmail.com>
 X-Mailer: git-send-email 2.26.2.2.g2208536367
-In-Reply-To: <20200704221839.421997-1-trygveaa@gmail.com>
+In-Reply-To: <20200707121716.438318-1-trygveaa@gmail.com>
 References: <20200704221839.421997-1-trygveaa@gmail.com>
+ <20200707121716.438318-1-trygveaa@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -81,59 +81,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Trygve Aaberge <trygveaa@gmail.com>
 
-When you hit ^C all the processes in the tree receives it. When a git
-command uses a pager, git ignores this and waits until the pager quits.
-However, when using an alias there is an additional process in the tree
-which didn't ignore the signal. That caused it to exit which in turn
-caused the pager to exit. This fixes that for aliases to builtins.
+When we are running an alias to an external command, we want to wait for
+that process to exit even after receiving ^C which normally kills the
+git process. This is useful when the process is ignoring SIGINT (which
+e.g. pagers often do), and then we don't want it to be killed.
 
-This was originally fixed in 46df6906f3 (see that for a more in-depth
-explanation), but broke by a regression in ee4512ed48 and b914084007.
+Having an alias which invokes a pager is probably not common, but it can
+be useful e.g. if you have an alias to a git command which uses a
+subshell as one of the arguments (in which case you have to use an
+external command, not an alias to a builtin).
+
+This patch is similar to the previous commit, but the previous commit
+fixed this only for aliases to builtins, while this commit does the same
+for aliases to external commands. In addition to waiting after clean
+like the previous commit, this also enables cleaning the child (that was
+already enabled for aliases to builtins before the previous commit),
+because wait_after_clean relies on it. Lastly, while the previous commit
+fixed a regression, I don't think this has ever worked properly.
 
 Signed-off-by: Trygve Aaberge <trygveaa@gmail.com>
 ---
- git.c         | 2 +-
- run-command.c | 1 +
- run-command.h | 1 +
- 3 files changed, 3 insertions(+), 1 deletion(-)
+ git.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/git.c b/git.c
-index 7be7ad34bd..9b8d3c92e6 100644
+index 9b8d3c92e6..c0698c7d45 100644
 --- a/git.c
 +++ b/git.c
-@@ -768,7 +768,7 @@ static int run_argv(int *argcp, const char ***argv)
- 			 * OK to return. Otherwise, we just pass along the status code.
- 			 */
- 			i = run_command_v_opt_tr2(args.argv, RUN_SILENT_EXEC_FAILURE |
--						  RUN_CLEAN_ON_EXIT, "git_alias");
-+						  RUN_CLEAN_ON_EXIT | RUN_WAIT_AFTER_CLEAN, "git_alias");
- 			if (i >= 0 || errno != ENOENT)
- 				exit(i);
- 			die("could not execute builtin %s", **argv);
-diff --git a/run-command.c b/run-command.c
-index f5e1149f9b..5d65335d13 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1039,6 +1039,7 @@ int run_command_v_opt_cd_env_tr2(const char **argv, int opt, const char *dir,
- 	cmd.silent_exec_failure = opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
- 	cmd.use_shell = opt & RUN_USING_SHELL ? 1 : 0;
- 	cmd.clean_on_exit = opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
-+	cmd.wait_after_clean = opt & RUN_WAIT_AFTER_CLEAN ? 1 : 0;
- 	cmd.dir = dir;
- 	cmd.env = env;
- 	cmd.trace2_child_class = tr2_class;
-diff --git a/run-command.h b/run-command.h
-index 0f3cc73ab6..1641ccf94b 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -224,6 +224,7 @@ int run_hook_ve(const char *const *env, const char *name, va_list args);
- #define RUN_SILENT_EXEC_FAILURE 8
- #define RUN_USING_SHELL 16
- #define RUN_CLEAN_ON_EXIT 32
-+#define RUN_WAIT_AFTER_CLEAN 64
+@@ -345,6 +345,8 @@ static int handle_alias(int *argcp, const char ***argv)
+ 			commit_pager_choice();
  
- /**
-  * Convenience functions that encapsulate a sequence of
+ 			child.use_shell = 1;
++			child.clean_on_exit = 1;
++			child.wait_after_clean = 1;
+ 			child.trace2_child_class = "shell_alias";
+ 			argv_array_push(&child.args, alias_string + 1);
+ 			argv_array_pushv(&child.args, (*argv) + 1);
 -- 
 2.26.2.2.g2208536367
 
