@@ -2,117 +2,295 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 568A6C433E1
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D683C433E1
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:18:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34C7820739
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:05:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43E9B20771
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:18:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KsMgcEXh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sV2Z57ml"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728215AbgGGGFJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 02:05:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59070 "EHLO
+        id S1727850AbgGGGSD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 02:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728204AbgGGGFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 02:05:07 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EEC0C061794
-        for <git@vger.kernel.org>; Mon,  6 Jul 2020 23:05:07 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id q198so37150395qka.2
-        for <git@vger.kernel.org>; Mon, 06 Jul 2020 23:05:07 -0700 (PDT)
+        with ESMTP id S1726661AbgGGGSC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 02:18:02 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B21C061755
+        for <git@vger.kernel.org>; Mon,  6 Jul 2020 23:18:02 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id q15so41978814wmj.2
+        for <git@vger.kernel.org>; Mon, 06 Jul 2020 23:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=S5HXV90BTLysKS2/1O+EbNfR5SQj4JWEsCACgTL/Vcw=;
-        b=KsMgcEXhKRMhP2aXh+JBhar/Q3kz6y/kaH4E3njhm7nlZS4FUGpt0jzFqETJ9EXPVZ
-         1d+0igs28g3vWh3VTbt3lb1rh8FQTWPjrDuyDC0BBRuaHcmN5fOJnahT3Hv+l1oVCOr2
-         H7UpNwlDiHLrt9UD6WOokVNkL48GklnwDktE4ToKhUFl2fCyezcyLupai9gESgd657bN
-         YylkN4TE/RnAohGhwDoBgfa9YgwimsPlK+eGjDbwLXuivpAnCUvFNctbdUUWJAHr9Bpq
-         BaSv3lNcTlF2DqbX3FRHAc1DI87GqkWHL76Tw7MOwUuaVnBICcDRFQdyOsYAOftx//Q2
-         3stw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=/lwTKF5iaQdnxI1YSpnNzlop+KN1F35+y6osIRWK/cs=;
+        b=sV2Z57mlZE2G+y9PmRtVqSAC737DkjBb9d3cltMSfjMncj5ffkSTDux4nbQZFpbYT8
+         1CUPEhYeLSHfg9bI//WKXceMlPefC+TjZ5eOSc/CysCy+DfBDeVdKQouSx6UgDsE3lCC
+         TSVAX/ykHDJLOI2QTBtEtHCj87YN5MhBK5I6mtQbe4aQ3TfF1ZAZyEJ4M4UE/mTuDlBs
+         kEOcrApSw/RHFpDRsrFUrHAnAKXhm9wEBtGnvybNUng48OULGdpse5scH1YTpTJ5rBSJ
+         le/bUpm3IOmyiCLIM4nbwiYz2Zfj93ntjSb6a2K85V9PwcJ2n2SO3QkOuZC1fJCEQVcK
+         etsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=S5HXV90BTLysKS2/1O+EbNfR5SQj4JWEsCACgTL/Vcw=;
-        b=hSvq1Fm0RuFqJiQI8FqRojnWXjF0yUBWxDGyUlueDvJqgD9W8jbC4EERO2AiA94xve
-         1AObE+q1l6aISyBSw0Q1v24p/3x+DWi3jIvL5jRNfz1SsIVKVbeaJeY2SRAcw0bFoSeR
-         sozK+SNJmRwAOj6oF5Bm8VFLv0lRNtcSwjQyJj5FYQqYkH/MxlDDPttvej76BGqfVa6c
-         WaPRKlvNHqvEU/eL/91PXwWSvXAlcJUoPOiJmh9MBzmdiyD6yscEL9ypdCbmsIC+ZiOY
-         VjPUKtmU3RwDe3RH2K272xDtXfbue5cXBV/yCVr+sha+ehxbgZcn7zRU7tQD8D7UDS+P
-         KZ/w==
-X-Gm-Message-State: AOAM533a0lwbHm3EITvg80UehjuxHnI8DGMPExam7qA+A4rbZir2kiVL
-        8OtBVLXHdF+/KV3gwgwxckUMSmu5DxM=
-X-Google-Smtp-Source: ABdhPJy/YXbpf2XuBsqaPWv2M7x9YJxifCb1k4z50ucTy2ZqATycVLfRbIGyPirAL8tNU1ztXZ8vTg==
-X-Received: by 2002:a37:aa05:: with SMTP id t5mr50178353qke.451.1594101906181;
-        Mon, 06 Jul 2020 23:05:06 -0700 (PDT)
-Received: from archbookpro.phub.net.cable.rogers.com (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
-        by smtp.gmail.com with ESMTPSA id k197sm23446778qke.133.2020.07.06.23.05.05
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=/lwTKF5iaQdnxI1YSpnNzlop+KN1F35+y6osIRWK/cs=;
+        b=IlSV6fOHvv4mxBpjWlhXQ8xfmKiYVbCVbG8xuvc4NpTuXNPoSdJCVRVfy9qp/5VeVA
+         1jCw2oSvJDsAIZikOpk2LzuTZrJ8EgiI7ir9vM0NiJ3PN7mzoZgFWx5JH4WE1pkZ4spv
+         4tmZR5LaX8b19UWWLjlEvE4nKuD4lsrZ5l5X3Za3M/I2ah52cAPdtBVuK462NnqxxyrS
+         zAbhBqgv5hlLMCZMX56yqyoWIYsl8KsqH1CoYx2U6b4PqgVhqVfPI3fQz8l6FVEqZma0
+         Mzfq1w9/cpEWHsnu6h5c5E+lHVchOMjKuLhOXdWjWNTKH7UYk1ygUeFMXebn1g3IMNUR
+         XQIQ==
+X-Gm-Message-State: AOAM5324D84H35Bk1jlrIerHJ2VgY89GmE+TwOqUQVRpbQrh7vRKsbA5
+        oWJRXtdjyeh8P6LX+1LgJOlkGdpo
+X-Google-Smtp-Source: ABdhPJxcJEDROGLszfKuGJh84x/VsbumdEpMB3bPQSyQKlD5kHyreSBzl8HVSCSqtqOocFHv0KwRDA==
+X-Received: by 2002:a1c:6308:: with SMTP id x8mr2583397wmb.92.1594102681047;
+        Mon, 06 Jul 2020 23:18:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o9sm26716945wrs.1.2020.07.06.23.18.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2020 23:05:05 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [RESEND PATCH v2 3/5] t7107: don't use test_must_fail()
-Date:   Tue,  7 Jul 2020 02:04:36 -0400
-Message-Id: <eb2052bf644cc10b5dd8975fd75542916c1749fa.1594101831.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.27.0.383.g050319c2ae
-In-Reply-To: <cover.1594101831.git.liu.denton@gmail.com>
-References: <cover.1593576601.git.liu.denton@gmail.com> <cover.1594101831.git.liu.denton@gmail.com>
+        Mon, 06 Jul 2020 23:18:00 -0700 (PDT)
+Message-Id: <pull.781.v10.git.git.1594102679750.gitgitgadget@gmail.com>
+In-Reply-To: <pull.781.v9.git.git.1594002423685.gitgitgadget@gmail.com>
+References: <pull.781.v9.git.git.1594002423685.gitgitgadget@gmail.com>
+From:   "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 07 Jul 2020 06:17:59 +0000
+Subject: [PATCH v10] Support auto-merge for meld to follow the vim-diff
+ behavior
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     sunlin <sunlin7@yahoo.com>, Lin Sun <lin.sun@zoom.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We had a `test_must_fail verify_expect`. However, the git command in
-verify_expect() was not expected to fail; the test_cmp() was the failing
-command. Be more precise about testing failure by accepting an optional
-first argument of '!' which causes the result of the file comparison to
-be negated.
+From: Lin Sun <lin.sun@zoom.us>
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
+Make the mergetool used with "meld" backend behave similarly to "vimdiff" by
+telling it to auto-merge non-conflicting parts and highlight the conflicting
+parts when `mergetool.meld.useAutoMerge` is configured with `true`, or `auto`
+for detecting the `--auto-merge` option automatically.
+
+Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Helped-by: David Aguilar <davvid@gmail.com>
+Signed-off-by: Lin Sun <lin.sun@zoom.us>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t7107-reset-pathspec-file.sh | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+    Enable auto-merge for meld to follow the vimdiff beharior
+    
+    Hi, the mergetool "meld" does NOT merge the no-conflict changes, while
+    the mergetool "vimdiff" will merge the no-conflict changes and highlight
+    the conflict parts. This patch will make the mergetool "meld" similar to
+    "vimdiff", auto-merge the no-conflict changes, highlight conflict parts.
 
-diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
-index cad3a9de9e..15ccb14f7e 100755
---- a/t/t7107-reset-pathspec-file.sh
-+++ b/t/t7107-reset-pathspec-file.sh
-@@ -22,7 +22,12 @@ restore_checkpoint () {
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-781%2Fsunlin7%2Fmaster-v10
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-781/sunlin7/master-v10
+Pull-Request: https://github.com/git/git/pull/781
+
+Range-diff vs v9:
+
+ 1:  95586fb2c2 ! 1:  a4f1b8c2fa Support auto-merge for meld to follow the vim-diff behavior
+     @@ Commit message
+          for detecting the `--auto-merge` option automatically.
+      
+          Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+     -    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Helped-by: David Aguilar <davvid@gmail.com>
+          Signed-off-by: Lin Sun <lin.sun@zoom.us>
+     +    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+      
+       ## Documentation/config/mergetool.txt ##
+      @@ Documentation/config/mergetool.txt: mergetool.meld.hasOutput::
+     @@ Documentation/config/mergetool.txt: mergetool.meld.hasOutput::
+       
+      +mergetool.meld.useAutoMerge::
+      +	When the `--auto-merge` is given, meld will merge all non-conflicting
+     -+	parts automatically, highlight the conflicting parts and waiting for
+     ++	parts automatically, highlight the conflicting parts and wait for
+      +	user decision.  Setting `mergetool.meld.useAutoMerge` to `true` tells
+      +	Git to unconditionally use the `--auto-merge` option with `meld`.
+      +	Setting this value to `auto` makes git detect whether `--auto-merge`
+     @@ mergetools/meld: diff_cmd () {
+      +		"")
+      +			meld_use_auto_merge_option=false
+      +			;;
+     -+		[Aa]uto)
+     -+			# testing the "--auto-merge" option only if config is "[Aa]uto"
+     ++		[Tt]ure|TRUE)
+     ++			meld_use_auto_merge_option=true
+     ++			;;
+     ++		[Ff]alse|FALSE)
+     ++			meld_use_auto_merge_option=false
+     ++			;;
+     ++		[Aa]uto|AUTO)
+     ++			# testing the "--auto-merge" option only if config is "auto"
+      +			init_meld_help_msg
+      +
+      +			case "$meld_help_msg" in
+     @@ mergetools/meld: diff_cmd () {
+      +			esac
+      +			;;
+      +		*)
+     ++			# try detect boolean for 'on'||'yes'||numberic value
+      +			bool_value=$(git config --bool mergetool.meld.useAutoMerge 2>/dev/null)
+      +			if test -n "$bool_value"
+      +			then
+
+
+ Documentation/config/mergetool.txt | 10 ++++
+ mergetools/meld                    | 93 +++++++++++++++++++++++++-----
+ 2 files changed, 87 insertions(+), 16 deletions(-)
+
+diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
+index 09ed31dbfa..16a27443a3 100644
+--- a/Documentation/config/mergetool.txt
++++ b/Documentation/config/mergetool.txt
+@@ -30,6 +30,16 @@ mergetool.meld.hasOutput::
+ 	to `true` tells Git to unconditionally use the `--output` option,
+ 	and `false` avoids using `--output`.
  
- verify_expect () {
- 	git status --porcelain -- fileA.t fileB.t fileC.t fileD.t >actual &&
--	test_cmp expect actual
-+	if test "x$1" = 'x!'
-+	then
-+		! test_cmp expect actual
-+	else
-+		test_cmp expect actual
-+	fi
++mergetool.meld.useAutoMerge::
++	When the `--auto-merge` is given, meld will merge all non-conflicting
++	parts automatically, highlight the conflicting parts and wait for
++	user decision.  Setting `mergetool.meld.useAutoMerge` to `true` tells
++	Git to unconditionally use the `--auto-merge` option with `meld`.
++	Setting this value to `auto` makes git detect whether `--auto-merge`
++	is supported and will only use `--auto-merge` when available.  A
++	value of `false` avoids using `--auto-merge` altogether, and is the
++	default value.
++
+ mergetool.keepBackup::
+ 	After performing a merge, the original file with conflict markers
+ 	can be saved as a file with a `.orig` extension.  If this variable
+diff --git a/mergetools/meld b/mergetools/meld
+index 7a08470f88..0250c1554a 100644
+--- a/mergetools/meld
++++ b/mergetools/meld
+@@ -3,34 +3,95 @@ diff_cmd () {
  }
  
- test_expect_success '--pathspec-from-file from stdin' '
-@@ -131,7 +136,7 @@ test_expect_success 'quotes not compatible with --pathspec-file-nul' '
- 	cat >expect <<-\EOF &&
- 	 D fileA.t
- 	EOF
--	test_must_fail verify_expect
-+	verify_expect !
- '
+ merge_cmd () {
+-	if test -z "${meld_has_output_option:+set}"
++	check_meld_for_features
++
++	option_auto_merge=
++	if test "$meld_use_auto_merge_option" = true
+ 	then
+-		check_meld_for_output_version
++		option_auto_merge="--auto-merge"
+ 	fi
  
- test_expect_success 'only touches what was listed' '
--- 
-2.27.0.383.g050319c2ae
+ 	if test "$meld_has_output_option" = true
+ 	then
+-		"$merge_tool_path" --output="$MERGED" \
++		"$merge_tool_path" $option_auto_merge --output="$MERGED" \
+ 			"$LOCAL" "$BASE" "$REMOTE"
+ 	else
+-		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
++		"$merge_tool_path" $option_auto_merge "$LOCAL" "$MERGED" "$REMOTE"
+ 	fi
+ }
+ 
+-# Check whether we should use 'meld --output <file>'
+-check_meld_for_output_version () {
+-	meld_path="$(git config mergetool.meld.path)"
+-	meld_path="${meld_path:-meld}"
++# Get meld help message
++init_meld_help_msg () {
++	if test -z "$meld_help_msg"
++	then
++		meld_path="$(git config mergetool.meld.path || echo meld)"
++		meld_help_msg=$($meld_path --help 2>&1)
++	fi
++}
+ 
+-	if meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
++# Check the features and set flags
++check_meld_for_features () {
++	# Check whether we should use 'meld --output <file>'
++	if test -z "$meld_has_output_option"
+ 	then
+-		: use configured value
+-	elif "$meld_path" --help 2>&1 |
+-		grep -e '--output=' -e '\[OPTION\.\.\.\]' >/dev/null
++		meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
++		case "$meld_has_output_option" in
++		true|false)
++			: use configured value
++			;;
++		*)
++			: empty or invalid configured value, detecting "--output" automatically
++			init_meld_help_msg
++
++			case "$meld_help_msg" in
++			*"--output="* | *'[OPTION...]'*)
++				# All version that has [OPTION...] supports --output
++				meld_has_output_option=true
++				;;
++			*)
++				meld_has_output_option=false
++				;;
++			esac
++			;;
++		esac
++	fi
++	# Check whether we should use 'meld --auto-merge ...'
++	if test -z "$meld_use_auto_merge_option"
+ 	then
+-		: old ones mention --output and new ones just say OPTION...
+-		meld_has_output_option=true
+-	else
+-		meld_has_output_option=false
++		meld_use_auto_merge_option=$(git config mergetool.meld.useAutoMerge)
++		case "$meld_use_auto_merge_option" in
++		"")
++			meld_use_auto_merge_option=false
++			;;
++		[Tt]ure|TRUE)
++			meld_use_auto_merge_option=true
++			;;
++		[Ff]alse|FALSE)
++			meld_use_auto_merge_option=false
++			;;
++		[Aa]uto|AUTO)
++			# testing the "--auto-merge" option only if config is "auto"
++			init_meld_help_msg
++
++			case "$meld_help_msg" in
++			*"--auto-merge"*)
++				meld_use_auto_merge_option=true
++				;;
++			*)
++				meld_use_auto_merge_option=false
++				;;
++			esac
++			;;
++		*)
++			# try detect boolean for 'on'||'yes'||numberic value
++			bool_value=$(git config --bool mergetool.meld.useAutoMerge 2>/dev/null)
++			if test -n "$bool_value"
++			then
++				meld_use_auto_merge_option="$bool_value"
++			else
++				meld_use_auto_merge_option=false
++			fi
++			;;
++		esac
+ 	fi
+ }
 
+base-commit: 07d8ea56f2ecb64b75b92264770c0a664231ce17
+-- 
+gitgitgadget
