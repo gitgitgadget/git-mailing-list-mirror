@@ -6,82 +6,90 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B415C433E1
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 21:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C681C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 21:59:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7772320663
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 21:52:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24E2D206C3
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 21:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729170AbgGGVwI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 17:52:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51768 "EHLO cloud.peff.net"
+        id S1729262AbgGGV7x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 17:59:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51784 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728640AbgGGVwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 17:52:08 -0400
-Received: (qmail 23499 invoked by uid 109); 7 Jul 2020 21:52:07 -0000
+        id S1728357AbgGGV7x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 17:59:53 -0400
+Received: (qmail 23615 invoked by uid 109); 7 Jul 2020 21:59:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2020 21:52:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2020 21:59:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32101 invoked by uid 111); 7 Jul 2020 21:52:07 -0000
+Received: (qmail 32151 invoked by uid 111); 7 Jul 2020 21:59:52 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2020 17:52:07 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2020 17:59:52 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 7 Jul 2020 17:52:06 -0400
+Date:   Tue, 7 Jul 2020 17:59:51 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] Make some commit hashes in tests reproducible
-Message-ID: <20200707215206.GA2300296@coredump.intra.peff.net>
-References: <pull.816.git.git.1594149804313.gitgitgadget@gmail.com>
- <xmqqfta33y0m.fsf@gitster.c.googlers.com>
- <20200707205418.GB1396940@coredump.intra.peff.net>
- <xmqq1rln3t4y.fsf@gitster.c.googlers.com>
+To:     Zach Riggle <zachriggle@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git grep --threads 12 --textconv is effectively single-threaded
+Message-ID: <20200707215951.GB2300296@coredump.intra.peff.net>
+References: <CAMP9c5nUteg_HouuYJZtq7g4MrSE638mns=HeKhNpNTYgQB4=w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1rln3t4y.fsf@gitster.c.googlers.com>
+In-Reply-To: <CAMP9c5nUteg_HouuYJZtq7g4MrSE638mns=HeKhNpNTYgQB4=w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 07, 2020 at 02:35:57PM -0700, Junio C Hamano wrote:
+On Tue, Jul 07, 2020 at 04:25:01PM -0500, Zach Riggle wrote:
 
-> Jeff King <peff@peff.net> writes:
+> It looks like the bit of code that is responsible for performing
+> textconv conversions is single-threaded, even if git-grep is provided
+> a number of threads to use.
+
+Yes, the locking is much coarser than it could be. The issue is in
+grep.c's fill_textconv_grep():
+
+          /*
+           * fill_textconv is not remotely thread-safe; it modifies the global
+           * diff tempfile structure, writes to the_repo's odb and might
+           * internally call thread-unsafe functions such as the
+           * prepare_packed_git() lazy-initializator. Because of the last two, we
+           * must ensure mutual exclusion between this call and the object reading
+           * API, thus we use obj_read_lock() here.
+           *
+           * TODO: allowing text conversion to run in parallel with object
+           * reading operations might increase performance in the multithreaded
+           * non-worktreee git-grep with --textconv.
+           */
+          obj_read_lock();
+          size = fill_textconv(r, driver, df, &buf);
+          obj_read_unlock();
+          free_filespec(df);
+
+Note that this lock is used whether we're doing textconv's or not (i.e.,
+it also excludes reading two objects from the object database at the
+same time, because none of that code is thread-safe). But the latency
+when we're doing a textconv is _much_ higher, because it's shelling out
+to a separate process and reading/writing the contents. Note the
+much-higher system CPU in your second timing:
+
+> Note the difference in total CPU usage in the following expressions:
 > 
-> > That's using the same start point as test_tick, though really it could
-> > be anything. I've intentionally _not_ called test_tick at the beginning
-> > of each script, because that would throw off all of the scripts that do
-> > use it by one tick (whereas the first test_tick will overwrite these
-> > values).
+> $ git grep --threads 12 -e foobar --and -e fizzbuzz &> /dev/null
+> 0.24s user 0.28s system 710% cpu 0.073 total
 > 
-> Yup, I think that is a sensible approach.
+> $ git grep --threads 12 -e foobar --and -e fizzbuzz --textconv &> /dev/null
+> 0.90s user 1.75s system 110% cpu 2.390 total
 
-OK, I'll see if I can polish it into a series.
+So I think implementing that TODO would help a lot (because each
+textconv could in theory proceed in parallel).
 
-> Another thing we could do is under DEVELOPER=YesPlease we can set
-> timestamps you just added here to some random time.
-> 
-> The ones that do care about reproducibility guarantee by using
-> test_tick would not be affected, and those that were happy with the
-> current time should be happy with such a random timestamp.  Or we
-> could just drop what this patch does only under DEVELOPER=YesPlease
-> which amounts to be the same as setting random time.
-
-That should be easy to do. I wonder if it's really worth the trouble to
-maintain two parallel worlds. I.e., one of the goals would be to stop
-worrying about this non-determinism. If we keep it as a requirement,
-then we might as well do so all the time (and making it random under
-DEVELOPER is effectively keeping it as a requirement, since we expect
-all tests to pass under that flag).
-
-I'm also skeptical how often we use system times anyway, because _any_
-use of test_commit or test_tick in a script is enough to make all of the
-subsequent commands deterministic. I'd be more inclined to let a
-particular script say "I'm interested in random times". But then, I'd
-think such a script would be better written to trigger its interesting
-cases with a well-crafted set of deterministic times.
+As workaround in the meantime, I suspect that enabling
+diff.<driver>.cachetextconv for your particular textconv config might
+help. It would be slow on the first run, but then we'd be able to skip
+the external process entirely for subsequent runs (the results are
+cached in a git-notes tree, which are just raw object reads).
 
 -Peff
