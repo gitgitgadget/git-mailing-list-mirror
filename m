@@ -2,88 +2,68 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72033C433E0
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 04:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24040C433DF
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 05:02:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34D0720722
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 04:40:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QA3I6RSn"
+	by mail.kernel.org (Postfix) with ESMTP id 0715720708
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 05:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727995AbgGGEkM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 00:40:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54918 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725766AbgGGEkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 00:40:12 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF2E569A2B;
-        Tue,  7 Jul 2020 00:40:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VnYsrvhK7HIO+LFibT2NdMMI1oY=; b=QA3I6R
-        SnMqyiJdbMiwLSWGVzKWiSqDWEj0Oq9DA/RW43U4m9mn8U589TQSGDC+0V1fhLCK
-        maMvMGLQyXSo5+kWw1sReExdrmL6bc2++rVFC48aGdLM4Augl8oGbJkxLmg8rngN
-        V6QKfzN0BXr6uzX0SAMM+JIRlTAHeRscN1pTM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DGMF1vg8lDWCzCmDzhDL2mJUjMAuY4PD
-        k95WR0GzXVR8ELqvtbrHo1BqtmeHdNHO4UbeWg6u0eEGDvNi8gKlbNDo7sQYwu2v
-        UboCwjNCAGZJPWIWeS465dZ1yNt1VksFNVGxIv9F4wms/JZ5kfrO8EwbnhQ4lqAm
-        x/B0CGZw9JY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9890B69A2A;
-        Tue,  7 Jul 2020 00:40:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C605969A28;
-        Tue,  7 Jul 2020 00:40:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 0/4] Preliminary fixes for reftable support
-References: <pull.669.git.1593518738.gitgitgadget@gmail.com>
-Date:   Mon, 06 Jul 2020 21:40:07 -0700
-In-Reply-To: <pull.669.git.1593518738.gitgitgadget@gmail.com> (Han-Wen
-        Nienhuys via GitGitGadget's message of "Tue, 30 Jun 2020 12:05:34
-        +0000")
-Message-ID: <xmqqmu4c6iqg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727046AbgGGFCt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 01:02:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50530 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726805AbgGGFCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 01:02:48 -0400
+Received: (qmail 16036 invoked by uid 109); 7 Jul 2020 05:02:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jul 2020 05:02:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23535 invoked by uid 111); 7 Jul 2020 05:02:48 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jul 2020 01:02:48 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 7 Jul 2020 01:02:47 -0400
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 0/2] Add support for %(contents:size) in ref-filter
+Message-ID: <20200707050247.GA105016@coredump.intra.peff.net>
+References: <20200702140845.24945-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EFCA8EFE-C00B-11EA-BA40-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200702140845.24945-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jul 02, 2020 at 04:08:43PM +0200, Christian Couder wrote:
 
-> These are assorted small fixes split out from the reftable topic.
->
-> Han-Wen Nienhuys (4):
->   lib-t6000.sh: write tag using git-update-ref
->   t3432: use git-reflog to inspect the reflog for HEAD
->   checkout: add '\n' to reflog message
->   Treat BISECT_HEAD as a pseudo ref
->
->  builtin/bisect--helper.c       | 3 +--
->  builtin/checkout.c             | 5 +++--
->  git-bisect.sh                  | 4 ++--
->  t/lib-t6000.sh                 | 5 ++---
->  t/t3432-rebase-fast-forward.sh | 7 ++++---
->  5 files changed, 12 insertions(+), 12 deletions(-)
+> This is version 2 of a very small patch series to teach ref-filter
+> about %(contents:size).
+> 
+> Version 1 consisted on a single patch which is available here:
+> 
+> https://lore.kernel.org/git/20200701132308.16691-1-chriscool@tuxfamily.org/
+> 
+> As suggested by Peff, I added a preparatory patch (1/2) to clean up
+> the documentation about the %(contents:XXXX) format specifiers.
 
-Thanks for splitting these out, and sorry for not being able to get
-to them earlier.
+Thanks, I think it looks much nicer.
 
-Will queue.
+> The other difference with V1 is that there are more tests in patch
+> 2/2. These new tests required a small helper function to be
+> introduced.
 
+I'm still not sure why %(objectsize) isn't sufficient here. Is there
+some use case that's served by %(contents:size) that it wouldn't work
+for? Or are we just trying to make it more discoverable when you're
+looking at the contents already?
+
+-Peff
