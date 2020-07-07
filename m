@@ -2,188 +2,133 @@ Return-Path: <SRS0=WOg5=AS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB27FC433DF
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3FD1C433E0
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:26:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEDF5206B6
-	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:20:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BD1B206CD
+	for <git@archiver.kernel.org>; Tue,  7 Jul 2020 06:26:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pb+BTRvz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SKh2rbrR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726869AbgGGGUn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 02:20:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726540AbgGGGUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 02:20:42 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87910C061755
-        for <git@vger.kernel.org>; Mon,  6 Jul 2020 23:20:42 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id mn17so4519102pjb.4
-        for <git@vger.kernel.org>; Mon, 06 Jul 2020 23:20:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=PWyo3UJ/HmdUs0p9WEx4oOk1xgCWX28SuTGOeypmtq8=;
-        b=pb+BTRvz36VRHt1zct2NJSOI45ABGcloERD+sb+6q/h1o4lA7M0ifBQ9Cl0wwkkdEA
-         vYD52arBdnzDW3sE8o8xP+kAH5ogMt8x/7uZrGlfD6sZhN8eCO6pU+Omo+oxSuWN3xMj
-         HHTzoHkJiCGT+3Vu1y5WxRc3p5xxg8QL7WKY02ARfw0rqw/aDPRxYOyTWRQktgrNAQSy
-         NZ5xKRUWPWhjyhYLL9sO8koVi7uVq8uHNijfKOrLNhwK7/s/Ks+0ujqLl0+f6N3S/MQQ
-         Ln9DKu/3T3W06yT8a/bPtwwj3xKRideF9lie6NVjJVQICTE2BBsnvxiRJJXo1ngZP/Ja
-         hBEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=PWyo3UJ/HmdUs0p9WEx4oOk1xgCWX28SuTGOeypmtq8=;
-        b=Ek5Oum03WbgJ8A8Mo93tpeBkFx5Gf+v+lrigEVdC8orYVAIzsOsMHqY1KStId6sjnZ
-         XGO5sNvA6c4zpKqqS0hcOKgxUNGGwhYLaTK/Hpy5d4PFEOiMVYAvxb0XvLxAUEX5nhsV
-         xPzPTrpmtS7ClYhWCgo40At103dTH8r4v1jT+0xaeShYCloq405Pdn9z4+M8793QYdZk
-         ON1Ct3pR/km7XbtgaIcfUAQ2SyY3afPAw9wu+U/ktYVi1969qIzrtK5RxRsQ44obO1zN
-         Yf80M20MMnc5Mo9QC/aWJlaIf8PxC6FrU3OKR3yRYHGDyZ5NSoRypQoaufmeflsh9OnR
-         bTkg==
-X-Gm-Message-State: AOAM533W6e4rLIYBzbZ0u5FJsufebUDDydP6F677r8fP+QWSQrNoGn/D
-        yb/LA9+qrJR6CM3I86ZtPS2dR//3
-X-Google-Smtp-Source: ABdhPJxRmqXsxUU3d48+jH8VC6ETtsh0JhuL44r08615mLvLNNJcHLX1XVJviNgHGU34RyuIdXe1zA==
-X-Received: by 2002:a17:90a:8c01:: with SMTP id a1mr2611218pjo.97.1594102841813;
-        Mon, 06 Jul 2020 23:20:41 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id 22sm21051923pfx.94.2020.07.06.23.20.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2020 23:20:41 -0700 (PDT)
-Date:   Mon, 6 Jul 2020 23:20:39 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH] experimental: default to fetch.writeCommitGraph=false
-Message-ID: <20200707062039.GC784740@google.com>
+        id S1727875AbgGGG0B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 02:26:01 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58997 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726918AbgGGG0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 02:26:01 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 18C7C73F7D;
+        Tue,  7 Jul 2020 02:25:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KK0Y4MaTAlQWxAlJIPJUz/ts4io=; b=SKh2rb
+        rRyCBXgwg0O8VrchOgsaKZXfZKREbGRrKOBAvu4Ph1iPw/qvXDrxdvkgwTyzsa1X
+        xKenc4T0T7x4wvkdCwqNh2sj/mNgTv244zDfUl3iy/vEcqreKbO8AEwZxaRR4R4H
+        Vps6EaNLAaCKmszyxSxR3HKtjqwTpAjo+xQMg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=l0b4ZcnaiTzOwuenQGSKp6simLS+c2QJ
+        ZUoL3bGOGTp14qSEKR1jXjutu6VFEgWMYU6odgWhWN8gUfoeHVTc2mMuO8R2Yn53
+        jNmrOD8PTJ2GymtPbuaNEvrpkxS862d0KyDDk8Vcq0rRGqT6rlhipaG/Rgd7U/Ys
+        jpkLAo30ENg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EF76D73F7B;
+        Tue,  7 Jul 2020 02:25:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 50C7173F7A;
+        Tue,  7 Jul 2020 02:25:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sunlin <sunlin7@yahoo.com>,
+        Lin Sun <lin.sun@zoom.us>
+Subject: Re: [PATCH v10] Support auto-merge for meld to follow the vim-diff behavior
+References: <pull.781.v9.git.git.1594002423685.gitgitgadget@gmail.com>
+        <pull.781.v10.git.git.1594102679750.gitgitgadget@gmail.com>
+Date:   Mon, 06 Jul 2020 23:25:57 -0700
+In-Reply-To: <pull.781.v10.git.git.1594102679750.gitgitgadget@gmail.com>
+        (sunlin via GitGitGadget's message of "Tue, 07 Jul 2020 06:17:59
+        +0000")
+Message-ID: <xmqqd0577sei.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID: B8644194-C01A-11EA-A85B-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fetch.writeCommitGraph feature makes fetches write out a commit
-graph file for the newly downloaded pack on fetch.  This improves the
-performance of various commands that would perform a revision walk and
-eventually ought to be the default for everyone.  To prepare for that
-future, it's enabled by default for users that set
-feature.experimental=true to experience such future defaults.
+"sunlin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Alas, for --unshallow fetches from a shallow clone it runs into a
-snag: by the time Git has fetched the new objects and is writing a
-commit graph, it has performed a revision walk and r->parsed_objects
-contains information about the shallow boundary from *before* the
-fetch.  The commit graph writing code is careful to avoid writing a
-commit graph file in shallow repositories, but the new state is not
-shallow, and the result is that from that point on, commands like "git
-log" make use of a newly written commit graph file representing a
-fictional history with the old shallow boundary.
+> +		meld_use_auto_merge_option=$(git config mergetool.meld.useAutoMerge)
+> +		case "$meld_use_auto_merge_option" in
+> +		"")
+> +			meld_use_auto_merge_option=false
+> +			;;
 
-We could fix this by making the commit graph writing code more careful
-to avoid writing a commit graph that could have used any grafts or
-shallow state, but it is possible that there are other pieces of
-mutated state that fetch's commit graph writing code may be relying
-on.  So disable it in the feature.experimental configuration.
+I somehow thought that I already pointed out that this is wrong,
+didn't I?  You cannot tell between a "[section] var" (which is
+"true") and not having any "[section] var = val" (which I think you
+are trying to treat as "not configured---do not use") from the
+output of "git config section.var".
 
-Google developers have been running in this configuration (by setting
-fetch.writeCommitGraph=false in the system config) to work around this
-bug since it was discovered in April.  Once the fix lands, we'll
-enable fetch.writeCommitGraph=true again to give it some early testing
-before rolling out to a wider audience.
+Perhaps our mails crossed?
 
-In other words:
+> +		[Tt]ure|TRUE)
+> +			meld_use_auto_merge_option=true
+> +			;;
+> +		[Ff]alse|FALSE)
+> +			meld_use_auto_merge_option=false
+> +			;;
 
-- this patch only affects behavior with feature.experimental=true
+These are probably premature optimizations.
 
-- it makes feature.experimental match the configuration Google has
-  been using for the last few months, meaning it would leave users in
-  a better tested state than without it
+> +		[Aa]uto|AUTO)
 
-- this should improve testing for other features guarded by
-  feature.experimental, by making feature.experimental safer to use
+Sigh.  I somehow thought that I already said we shouldn't do this
+"aCCEpt AnY CaSES" unless all other variables that take 'auto' take
+it case insensitively.
 
-Reported-by: Jay Conrod <jayconrod@google.com>
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-I realize this is late to send.  That said, as described above, I
-think it's a good way to buy time by minimizing user exposure to
-fetch.writeCommitGraph=true until a fix for it is well cooked.
+> +			# testing the "--auto-merge" option only if config is "auto"
+> +			init_meld_help_msg
+> +
+> +			case "$meld_help_msg" in
+> +			*"--auto-merge"*)
+> +				meld_use_auto_merge_option=true
+> +				;;
+> +			*)
+> +				meld_use_auto_merge_option=false
+> +				;;
+> +			esac
+> +			;;
+> +		*)
+> +			# try detect boolean for 'on'||'yes'||numberic value
+> +			bool_value=$(git config --bool mergetool.meld.useAutoMerge 2>/dev/null)
+> +			if test -n "$bool_value"
+> +			then
+> +				meld_use_auto_merge_option="$bool_value"
+> +			else
+> +				meld_use_auto_merge_option=false
 
-In other words, I'd like to see this patch in Git 2.28-rc0.
+I think this case (i.e. set to a non-bool value, and we do not
+recognise because it is not 'auto') should be flagged as an error,
+instead of treated as a silent "do not use", as it would leave the
+user scratching his or her head without realizing that there is a
+typo in the configuration file.
 
-Thanks of all kinds welcome, as always.  Previous discussion:
-https://lore.kernel.org/git/20200603034213.GB253041@google.com/
-
- Documentation/config/feature.txt | 8 --------
- Documentation/config/fetch.txt   | 3 +--
- repo-settings.c                  | 8 ++++----
- 3 files changed, 5 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
-index 28c33602d52..c0cbf2bb1cd 100644
---- a/Documentation/config/feature.txt
-+++ b/Documentation/config/feature.txt
-@@ -15,14 +15,6 @@ feature.experimental::
- * `fetch.negotiationAlgorithm=skipping` may improve fetch negotiation times by
- skipping more commits at a time, reducing the number of round trips.
- +
--* `fetch.writeCommitGraph=true` writes a commit-graph after every `git fetch`
--command that downloads a pack-file from a remote. Using the `--split` option,
--most executions will create a very small commit-graph file on top of the
--existing commit-graph file(s). Occasionally, these files will merge and the
--write may take longer. Having an updated commit-graph file helps performance
--of many Git commands, including `git merge-base`, `git push -f`, and
--`git log --graph`.
--+
- * `protocol.version=2` speeds up fetches from repositories with many refs by
- allowing the client to specify which refs to list before the server lists
- them.
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index b1a9b1461d3..b20394038d1 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -90,5 +90,4 @@ fetch.writeCommitGraph::
- 	the existing commit-graph file(s). Occasionally, these files will
- 	merge and the write may take longer. Having an updated commit-graph
- 	file helps performance of many Git commands, including `git merge-base`,
--	`git push -f`, and `git log --graph`. Defaults to false, unless
--	`feature.experimental` is true.
-+	`git push -f`, and `git log --graph`. Defaults to false.
-diff --git a/repo-settings.c b/repo-settings.c
-index dc6817daa95..0918408b344 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -51,14 +51,14 @@ void prepare_repo_settings(struct repository *r)
- 		UPDATE_DEFAULT_BOOL(r->settings.index_version, 4);
- 		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_WRITE);
- 	}
-+
- 	if (!repo_config_get_bool(r, "fetch.writecommitgraph", &value))
- 		r->settings.fetch_write_commit_graph = value;
--	if (!repo_config_get_bool(r, "feature.experimental", &value) && value) {
--		UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_SKIPPING);
--		UPDATE_DEFAULT_BOOL(r->settings.fetch_write_commit_graph, 1);
--	}
- 	UPDATE_DEFAULT_BOOL(r->settings.fetch_write_commit_graph, 0);
- 
-+	if (!repo_config_get_bool(r, "feature.experimental", &value) && value)
-+		UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_SKIPPING);
-+
- 	/* Hack for test programs like test-dump-untracked-cache */
- 	if (ignore_untracked_cache_config)
- 		r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
--- 
-2.27.0.383.g050319c2ae
-
+> +			fi
+> +			;;
+> +		esac
+>  	fi
+>  }
+>
+> base-commit: 07d8ea56f2ecb64b75b92264770c0a664231ce17
