@@ -2,121 +2,154 @@ Return-Path: <SRS0=LMRs=AT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA5BC433E0
-	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 01:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E02FCC433DF
+	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 01:51:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D0C320708
-	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 01:20:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5C8D20774
+	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 01:51:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=zoom.us header.i=@zoom.us header.b="ZpIA8vpn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lrthZJwt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729267AbgGHBUu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jul 2020 21:20:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40630 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729228AbgGHBUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jul 2020 21:20:49 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A08DC08C5DC
-        for <git@vger.kernel.org>; Tue,  7 Jul 2020 18:20:49 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id z5so20848611pgb.6
-        for <git@vger.kernel.org>; Tue, 07 Jul 2020 18:20:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zoom.us; s=google;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=U84+UIw1H+E2+EUmKS3hbAn53A/a7GBVMP7hg5+3Q+g=;
-        b=ZpIA8vpnHTW3p1rM/IgaKEaBDZr4RRAc7p9ftaX2tJG0zKOTX9t0Rg6dAkDV06koIZ
-         MvBz/0qtvQvKkPvoQtohPnQhxlM7VwbXWOtoB2oCKqASAK966RZjHHxuKpMRStOt+Y9N
-         rgf2JuP1jpBJw+aX4oCrqkn1Ce1S7AkRTwC40=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=U84+UIw1H+E2+EUmKS3hbAn53A/a7GBVMP7hg5+3Q+g=;
-        b=M4+FkYea2RtZwFwDQ7ZaOje0+BZCVZaGSGQ1Xxr03YhJTgR8kng0JJwk7F5ApQBy3x
-         w1kN0Q3RhWRtnpYJdHc+YciZbzgleYrWXBYlGMU4lzGH2i2RGIJGwPg6jmXCxmWkUtto
-         QHEggymBjoDAz7z/EFb7y7H93qMh6yCZX4CP/mGG1MT5e5qTroQ+ZbFSTBZCWV9UP8QE
-         pVFjB5s7rtO+xlPc1kXMIxPDj6ewm03S+K/ohoRyP4Am9cfIXUX4eXQmIzHtE4IykIW8
-         lBxfeqGfOr6abWEKkxjFSi+8pXmjDnpX0LqrpnitCek5VClOE792e712HOWRR5K3NXwp
-         TzDg==
-X-Gm-Message-State: AOAM530u90sTsxcqp4ofaYkHQQ1P4TRqWEwwOseVCZPO7wkstCql/W8s
-        YNqgbIwUiLo4qbkqDIq5cRls0FlicYXVUnJH4Qwp0CahNMF8d084D6p+lSkESwGANiMmSlcafYS
-        0p273HNrwiWKDcEX4fYSRzHg5S7WkBY0vcEkOVOnaRJ2fqZ/cYW4Ghw5UjQ==
-X-Google-Smtp-Source: ABdhPJxhU+4F6mpKEItUy4vKT2Na6JBLKLIC6HIcZ+7jJvkQSbRRfBcaWut25abif2vY5i7lNPR1qg==
-X-Received: by 2002:a62:5c03:: with SMTP id q3mr51494966pfb.58.1594171247449;
-        Tue, 07 Jul 2020 18:20:47 -0700 (PDT)
-Received: from DESKTOPLINSUN ([38.99.100.2])
-        by smtp.gmail.com with ESMTPSA id z8sm2244230pgz.7.2020.07.07.18.20.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Jul 2020 18:20:46 -0700 (PDT)
-From:   <lin.sun@zoom.us>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
+        id S1728486AbgGHBvv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jul 2020 21:51:51 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65404 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728191AbgGHBvu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jul 2020 21:51:50 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6AF16D706B;
+        Tue,  7 Jul 2020 21:51:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=S03jOD8KM4QU
+        nbKF6EBiNovja8M=; b=lrthZJwt89dvhL5gz8uw8Br5HH6GCkWR+JvBB+D0WbK4
+        o4p/uyRks+hyYvJxP8a8MyrvuWm72zGrtAOD7Ax8hO3bps0pt7UxyBmXkgKZfHrY
+        +tOV4zquXmNRgGLBWiXAk8Fqwp1PP9i/9/+IpVVEFZ4Qu5zs0uQXdRPzGWCp2GM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qg4ah/
+        9NTRaMcF6gsF7Lky0DXESJPAEuQxYK73wQL3iKS1ol0RhrUGb4nRfrtYCvEYGBig
+        j/wicq+42J3zbCk/qg7XgXKE7tgynUgA5ppEtzL6nV6XYuFUicbp8vidIC6A6A+H
+        SReh8keJYH0uP8MoU969qJBHXGugJ8ocRlB7Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6457CD7069;
+        Tue,  7 Jul 2020 21:51:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AF0A2D7067;
+        Tue,  7 Jul 2020 21:51:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     <lin.sun@zoom.us>
 Cc:     "'sunlin via GitGitGadget'" <gitgitgadget@gmail.com>,
         <git@vger.kernel.org>, "'sunlin'" <sunlin7@yahoo.com>
-References: <pull.781.v8.git.git.1593825400699.gitgitgadget@gmail.com>  <pull.781.v9.git.git.1594002423685.gitgitgadget@gmail.com>      <xmqqzh8c8eda.fsf@gitster.c.googlers.com>       <31ab701d65428$b7ca6cd0$275f4670$@zoom.us> <xmqqmu4b5l8l.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqmu4b5l8l.fsf@gitster.c.googlers.com>
-Subject: RE: [PATCH v9] Support auto-merge for meld to follow the vim-diff behavior
-Date:   Wed, 8 Jul 2020 09:20:40 +0800
-Message-ID: <04e201d654c6$016bfb40$0443f1c0$@zoom.us>
+Subject: Re: [PATCH v9] Support auto-merge for meld to follow the vim-diff behavior
+References: <pull.781.v8.git.git.1593825400699.gitgitgadget@gmail.com>
+        <pull.781.v9.git.git.1594002423685.gitgitgadget@gmail.com>
+        <xmqqzh8c8eda.fsf@gitster.c.googlers.com>
+        <31ab701d65428$b7ca6cd0$275f4670$@zoom.us>
+        <xmqqmu4b5l8l.fsf@gitster.c.googlers.com>
+        <04e201d654c6$016bfb40$0443f1c0$@zoom.us>
+Date:   Tue, 07 Jul 2020 18:51:42 -0700
+In-Reply-To: <04e201d654c6$016bfb40$0443f1c0$@zoom.us> (lin sun's message of
+        "Wed, 8 Jul 2020 09:20:40 +0800")
+Message-ID: <xmqqeepm3hap.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 93AF751E-C0BD-11EA-B96F-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQL0yMj140bttmss0MgcyFqN96deswLuUIqGAi/Ktd8BxoWcLQGsJAXcpntt0IA=
-Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+<lin.sun@zoom.us> writes:
 
-> You cannot interpret an empty output from "git config =
-section.variable"; it could be "[section] variable" (which is true), or =
-it could be a sign that there is no "[section] variable =3D value" in =
-the configuration (which you treat as false)
+> if meld_use_auto_merge_option =3D` git config --bool ...`
+> then
+> 	# success, maybe "(empty)"/true/false
+> 	if test -z "$ meld_use_auto_merge_option"
+> 	then
+> 		meld_use_auto_merge_option=3Dfalse
+> 	fi
 
-Yes, I notice that both "[section] variable " and "[section] variable =
-=3D " output empty string but have reverse Boolean value.
+The inner test does not make any sense to me; I doubt that you can
+get an empty output from a "git config --bool" that succeeds.
 
-> Catching common spellings of 'true' and 'false' in the output of the =
-string version of "git config", while checking for 'auto' at the same =
-time, may not be too bad as an optimization to save an extra call to =
-"git config --bool 2>/dev/null" (and ignoring errors)...
+     $ cat >config <<\EOF
+     [x] a
+         b=3Dtrue
+         c=3D1
+         d=3Dfalse
+         e=3Dno
+	 f=3Dbogus
+     EOF
+     $ for i in a b c d e f
+       do
+         if v=3D$(git config --file=3Dconfig --bool x.$i 2>/dev/null)
+         then
+           echo "succeeds (x.$i) =3D> '$v'"
+         else
+           echo "fails (x.$i) =3D> '$v'"
+         fi
+       done
 
-With preview point, ` git config --bool ...` would better than "not be =
-too bad"  : )
+You should see
 
-With the return code and return string from ` git config --bool ...`,=20
-follow pseudo-code maybe good for current situation.
-if meld_use_auto_merge_option =3D` git config --bool ...`
-then
-	# success, maybe "(empty)"/true/false
-	if test -z "$ meld_use_auto_merge_option"
+succeeds (x.a) =3D> 'true'
+succeeds (x.b) =3D> 'true'
+succeeds (x.c) =3D> 'true'
+succeeds (x.d) =3D> 'false'
+succeeds (x.e) =3D> 'false'
+fails (x.f) =3D> ''
+
+if you run the above.  The most interesting is how all boolean
+values are normalized to true and false regardless of how they are
+originally spelled.
+
+> else
+> 	# failed, the option is not empty or Boolean
+> 	if test "auto" =3D ` git config `
+> 	then
+> 		# detect the "--auto-merge" option
+> 	else
+> 		meld_use_auto_merge_option=3Dfalse
+
+I think review by =C4=90o=C3=A0n pointed out that we would want to warn/f=
+ail
+loudly in this "else" case, as it is likely a misspelt configuration
+value?
+
+To recap, I think something along the following lines would be the
+most readable and acceptably efficient with a short-cut for the
+common cases.
+
+    var=3Dmergetool.meld.whatever
+    val=3D$(git config $var)
+    case "$val" in
+    true | false)
+	# we can take a short-cut without asking config --bool
+        ... use $val ...
+	;;
+    auto)
+	... auto detect ...
+	;;
+    *)
+	if val=3D$(git config --bool $var 2>/dev/null)
 	then
-		meld_use_auto_merge_option=3Dfalse
-	fi
-else
-	# failed, the option is not empty or Boolean
-	if test "auto" =3D ` git config `
-	then
-		# detect the "--auto-merge" option
+		# succeeded, so val must be a normalized boolean
+		... use $val ...
 	else
-		meld_use_auto_merge_option=3Dfalse
+		die cannot parse $var
 	fi
-fi
+    easc
 
-Changes will upload with the [PATCH v12].
-I'll update to you when the patch is ready.=20
-
-Regards
-Lin
-
+Thanks.
