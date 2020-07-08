@@ -2,109 +2,118 @@ Return-Path: <SRS0=LMRs=AT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0021EC433E0
-	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 14:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 750D4C433E2
+	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 15:42:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1ED82078D
-	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 14:31:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F7E320720
+	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 15:42:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jxM44do6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMxNy+5t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729746AbgGHOb3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jul 2020 10:31:29 -0400
-Received: from mout.gmx.net ([212.227.17.21]:42359 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729486AbgGHOb3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jul 2020 10:31:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594218677;
-        bh=bm1gyA0ccskpSh28P4M8Knrz+EsVPT4AgYGZtZ7sbX4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jxM44do6vC56VO/Cid0b9uUbELUOj9KVskamKOQjVkFG4AKWpX2r/yPXRsTmJmUBL
-         ZB4MoTVJK3ig3NCflH7tIjdupfXaRLH76n0Hm96m8R/aUCdJEUkGYhbstU4qUm3E9e
-         q3CEmQpNz2HLJ+zeiOlKgT99Khnyfzq5f6c29vjc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.26.78] ([89.1.213.9]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M2f9b-1juYHa2QqV-00481J; Wed, 08
- Jul 2020 16:31:17 +0200
-Date:   Wed, 8 Jul 2020 16:31:16 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: mr/bisect-in-c-2, was Re: What's cooking in git.git (Jul 2020, #01;
- Mon, 6)
-In-Reply-To: <xmqqh7uj7tqn.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2007081630180.50@tvgsbejvaqbjf.bet>
-References: <xmqqh7uj7tqn.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730730AbgGHPm3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jul 2020 11:42:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730717AbgGHPmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jul 2020 11:42:23 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC40C061A0B
+        for <git@vger.kernel.org>; Wed,  8 Jul 2020 08:42:22 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id ch3so1381337pjb.5
+        for <git@vger.kernel.org>; Wed, 08 Jul 2020 08:42:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2XPw23l6Ffq+S2raUWS8pXFTvwMXPyQA0QUi+TTIstU=;
+        b=dMxNy+5tUzgPYpsCbI2uuAQJ9Q/2wTCDhmgIT7ZjYoNIRSht5R08dER+GSeQLg4aAk
+         kBxq1qKvCIevXLDtMiUFEJ4Gtg3EjWL/tPpMFhSih+KqWgw3N4B8JgzOVN0yZE3e5kAk
+         24XQjkJYMn3xJIR/MkS1zXzbKEIQ2c6H8raIKCjZo/D79amggqG8AW62yRy4kto3V9to
+         Ab429KroJnTypP9z3AA3M6MQewXSSI+JdVE01YhBhoeQDNXhOwjv+WoX9binN7klQIDP
+         PK63+FffFc1GEql6lyoS1uzTNnKZ0OAhiU9qeNN6YknwhlJVEb1HPpyDpSKJZ46eAlCF
+         i9Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2XPw23l6Ffq+S2raUWS8pXFTvwMXPyQA0QUi+TTIstU=;
+        b=QIP85G7f5KFMaAQSV0wq5SuOCel7EXvU+nmi7TNKlzwgM7k7J3V22SqZNsUP/gZeCu
+         S87+6EG7Oz2X6yIfr3dA0m4mKJnzX6pG6yrMy6RYY0hrDpfoYgYxHQ+KkqLazP7PCFT9
+         eFD3LtskcP3Xs5B9yBUfXIOq2bprfNHwbPvkGWt6SB4f1h8VsG8PyYKkxJGWYhMpDOEp
+         OWLPbxl0jTnekIzuw7iYAn22/IvgZXAaMT6aKaK1oArsH2/AKgR5152TBScjyjw6quJ1
+         xflYNMllrbbg2tLEW1ZKy2lV9h8mxRJri4Z6KesU8fD20UMUtDMXLfSMgdPd8zu9FXW1
+         BbGA==
+X-Gm-Message-State: AOAM531JXOUydkdMsZsu9hpmWAnbqf3jVl5BTODsH2XhsaPim8b5SlEn
+        oKIEkS5VI3FcC64QcYd+cC8=
+X-Google-Smtp-Source: ABdhPJzQ7hKlXBwxz5CI3Z2NNo7qDK0g/CLcyFQFQNtHB1LrKhgFPv7SGjScDyVua/Yw/WkIEpp9ng==
+X-Received: by 2002:a17:90a:32cb:: with SMTP id l69mr9168424pjb.205.1594222942264;
+        Wed, 08 Jul 2020 08:42:22 -0700 (PDT)
+Received: from localhost ([2402:800:6375:9968:2644:616c:71ad:c7e6])
+        by smtp.gmail.com with ESMTPSA id g3sm253099pfq.19.2020.07.08.08.42.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2020 08:42:21 -0700 (PDT)
+Date:   Wed, 8 Jul 2020 22:42:18 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     sunlin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sunlin <sunlin7@yahoo.com>,
+        Lin Sun <lin.sun@zoom.us>
+Subject: Re: [PATCH v12] Support auto-merge for meld to follow the vim-diff
+ behavior
+Message-ID: <20200708154218.GB18432@danh.dev>
+References: <pull.781.v11.git.git.1594106024078.gitgitgadget@gmail.com>
+ <pull.781.v12.git.git.1594178716840.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ya4hnfODLuCAMz3dAoG7wjGILsWP1HhLSTapcGR8P361dHq8grv
- 6wOYVcT2EW63Pd6Hnl8T6dAO7WYc0MTmfWcAsiGBfoYBOAVYu3XgY5T5RM0nQKduQYgSk4n
- mAJmZS+PJBMdJj1ZbW8jX8EGIYB7X7VJZeDXthHQb2sZC/y07bKz0OOPHXGcrsVayPZgS1f
- tzMgC1GJ4/gwrcFp9SnWg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:e3jF4qO0g4M=:ypKYQ1wFQHGX/TUARg+B6u
- xEQ/eTabwQ+ke4AqHgs3J1l1zi9kQw2hVZlaR+kYn13Dwe8BhQNnFss5ebkb+0EF1RhW2aKd3
- Ju6mToTDVa70I5VB6E3DM5KSROL3bFFYQlOlSxRYNyjvO7a5N4i7vJh42+gh1ROytPD+3zSSX
- /3+j4jvwMAFPUDUglMehLcZ99hcRHZhFdAGsZZMAr1R2gB5CR0d+fNE0N56++Q8cZh+qpMQsk
- pZDKP3vNp8VZ//wBgbGIxKL3f2IoSsCppxqm4whtA7/HN8Fenyjp/ErQMvaqPDbzldy+nYgeF
- WAemFN4INPDaOFHxcyN2GTt1GF023uAzp23D+DKv+VbcYAzKErKUADCKu2AgsM0BY66FWeVjR
- 3YJRvhm9U9UoqKZx4HomLmZ0Y4vTylkyddNU6tial9nvFX7yjR5/+pKElYFfZ6HSpDpZVDIrq
- +L+c6fhQhSeOeWuq7DjGFv3T9ycyp1ZBv1x6APgu7qW+buFLisxAnIBxGD5uaXxzln5vatGb9
- cMEM2yIDmwFA4p8YR5ziuMKdQ/zFHCoG/ZcX2XCrVQcNRIeWtpO8esWb3doiuIFiOWt0aGrU8
- 3Vh0JA8JxFDYqCvDTja3rrlR39F3OFU4gjnXqzOMqBH6TmGL6182/TDPV7ypl1Md2WITYExWl
- N6S6IhhF04EBxvmT+slOv0p83ccvTOot5lmNABfkIT7HAUuPXhwKGeJDoWKNY4dPJjDSVCD/p
- CmbCMCxRTIeW7O1nZJPTJeN1PVc/uPEWADPenHO/cD60Rs+d/IdMRn1GT9YehzHjS1nEomeW5
- /OH5nTxXjyUradjHkokxEzaWyeGcsimalNk4aflaRhVDbV5us+Nk7TKcwr6hi26U52HbZuuXO
- EZxTNwQYjQEcpfgqc6BZbZTu7kZjP9rTUKMKgVzTFLflQe51D0o2mYQvpI4KUm7lcr7Ym4g6q
- a/jiO5FYWryZ1Oi/muxbSjmzML2NH6QUv0jk9nOjZlgzbP2/l691jvtmVEUwWFWhTjOZG0Fy8
- SpP6ZYAkhBbGUqKmzoKmN3/gexCTPg7vQT1COgUhMJ/HVSqTTilnsmWycGs3CahVU5m50mYq7
- I815gCh/ZstCKJGi7Tb/ViDvsyUntdfzDTKw3Ql6Gofe9sDph7bBc7H1Oa6/CaRCvHdG7t5bT
- U4pHWYx7sItcJMRbBQmi/cmbu2fpTzNpiU7QCfkZMqy8EANAuwthykO+kvSSwopXFGyHxCj44
- AvMBBa8EAaExeB1QtpnQbiryJoPgl0sTIARSitg==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.781.v12.git.git.1594178716840.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 2020-07-08 03:25:16+0000, sunlin via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> +	# Check whether we should use 'meld --auto-merge ...'
+> +	if test -z "$meld_use_auto_merge_option"
+>  	then
+> -		: old ones mention --output and new ones just say OPTION...
+> -		meld_has_output_option=true
+> -	else
+> -		meld_has_output_option=false
+> +		meld_use_auto_merge_option=$(git config mergetool.meld.useAutoMerge)
+> +		case "$meld_use_auto_merge_option" in
+> +		true|false)
+> +			: use well formatted boolean value
+> +			;;
+> +		auto)
+> +			# testing the "--auto-merge" option only if config is "auto"
+> +			init_meld_help_msg
+> +
+> +			case "$meld_help_msg" in
+> +			*"--auto-merge"*|*'[OPTION...]')
 
-On Mon, 6 Jul 2020, Junio C Hamano wrote:
+The "*'[OPTION...]'*" part sneaks into here in v11,
+And this version drops the last "*",
+which makes it:
 
-> * mr/bisect-in-c-2 (2020-04-23) 12 commits
->  - bisect--helper: retire `--bisect-autostart` subcommand
->  - bisect--helper: retire `--write-terms` subcommand
->  - bisect--helper: retire `--check-expected-revs` subcommand
->  - bisect--helper: reimplement `bisect_state` & `bisect_head` shell func=
-tions in C
->  - bisect--helper: retire `--next-all` subcommand
->  - bisect--helper: retire `--bisect-clean-state` subcommand
->  - bisect--helper: finish porting `bisect_start()` to C
->  - bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shel=
-l functions in C
->  - bisect--helper: reimplement `bisect_autostart` shell function in C
->  - bisect--helper: introduce new `write_in_file()` function
->  - bisect--helper: use '-res' in 'cmd_bisect__helper' return
->  - bisect--helper: fix `cmd_*()` function switch default return
->
->  Rewrite of the remainder of "git bisect" script in C continues.
->
->  Expecting a response to reviews.
->  cf. <nycvar.QRO.7.76.6.2005230007260.56@tvgsbejvaqbjf.bet>
+- less correct if all versions that has "[OPTION...]" supports
+  --auto-merge, which is unlikely; and
+- less incorrect (still not correct enough) if some versions
+  that has "[OPTION...]" doesn't support --auto-merge,
+  which is more likely.
 
-Maybe you could change this to
+If we could trace all versions of meld and confirms the former
+condition, I think it's better to add back the missing "*"
 
-   Needs more reviews.
-   cf. <20200701133504.18360-1-mirucam@gmail.com>
+Otherwise, it's safer choice to remove "|*'[OPTION...]" here.
 
-?
+I'm not using meld, so, if someone asked me, I would go with the latter.
 
-Thanks,
-Dscho
+
+-- 
+Danh
