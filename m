@@ -2,101 +2,181 @@ Return-Path: <SRS0=LMRs=AT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A83B0C433E0
-	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 20:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 894D8C433E0
+	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 20:54:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9202520708
-	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 20:13:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6785B20739
+	for <git@archiver.kernel.org>; Wed,  8 Jul 2020 20:54:07 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vdbJnPhq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbgGHUNy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jul 2020 16:13:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52520 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725964AbgGHUNy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jul 2020 16:13:54 -0400
-Received: (qmail 31386 invoked by uid 109); 8 Jul 2020 20:13:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Jul 2020 20:13:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14140 invoked by uid 111); 8 Jul 2020 20:13:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Jul 2020 16:13:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 8 Jul 2020 16:13:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     Zach Riggle <zachriggle@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git grep --threads 12 --textconv is effectively single-threaded
-Message-ID: <20200708201353.GA2354599@coredump.intra.peff.net>
-References: <CAMP9c5nUteg_HouuYJZtq7g4MrSE638mns=HeKhNpNTYgQB4=w@mail.gmail.com>
- <20200707215951.GB2300296@coredump.intra.peff.net>
- <CAMP9c5mpJ9_HvEBTiEQj=vocTdH6N9uXkpLKiE8+hFbAt9p5Ow@mail.gmail.com>
+        id S1726082AbgGHUyF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jul 2020 16:54:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61929 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726006AbgGHUyF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jul 2020 16:54:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9AD85E8CDF;
+        Wed,  8 Jul 2020 16:54:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d7LvYHgaydgONNhJG8gB5EzDJ9c=; b=vdbJnP
+        hqAvrwDZTIXCeOIANzwN+YxCLYlAEU7qrI/qZwo9OtO0RZfWsheQPpxROsfE2Ddk
+        y4OWzobhUvM38PwyeIQBSxSVlyze2DcvO+0b0shDEi5GsekD1wJqyV1AY10dd0b8
+        mpg3tK14f1D7TeUVQqIcrKjL+hJBn9d6bA3NU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CCZWFBDgrT8NGLCUvuRE2myttx4+fI7I
+        tRpbdbLiho5Kswb8QTSv9kSOQ/n8FLsLoD9RvfPzzz2+vki55uyXAReIeXPTl/OL
+        S+nN513XHTUiwtkR5+yV9UuG5bAHHzohdNdWxqcKRRtRBjbKIhu9fxAjPIRbjJlW
+        ieibEm4QV2s=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 938E8E8CDE;
+        Wed,  8 Jul 2020 16:54:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DA13AE8CDD;
+        Wed,  8 Jul 2020 16:53:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin Bektchiev via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Martin Bektchiev <martinb@gmail.com>,
+        Martin Bektchiev <martin.bektchiev@progress.com>
+Subject: Re: [PATCH] commit: correctly escape @ of stashes
+References: <pull.815.git.git.1593768655179.gitgitgadget@gmail.com>
+        <xmqqv9j19mgn.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2007070114060.50@tvgsbejvaqbjf.bet>
+Date:   Wed, 08 Jul 2020 13:53:56 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2007070114060.50@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 7 Jul 2020 01:14:59 +0200 (CEST)")
+Message-ID: <xmqqo8op20ez.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAMP9c5mpJ9_HvEBTiEQj=vocTdH6N9uXkpLKiE8+hFbAt9p5Ow@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24A450A4-C15D-11EA-968C-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 08, 2020 at 12:40:49PM -0500, Zach Riggle wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> So I just need to
-> 
-> git -c "diff.c.cachetextconv=true" ...
-> 
-> And the cache should automagically work?
+>> In fact, I just tried
+>>
+>>     $ git stash show stas<TAB>
+>>
+>> in a test repository where there is only one stash entry and got it
+>> completed to
+>>
+>>     $ git stash show stash@{0}
+>>
+>> and pressing <Enter> from this state did exactly what I expected to
+>> see.
+>>
+>> > Reproducible on `GNU bash, version 3.2.57(1)-release` and
+>> > `macOS Catalina 10.15.5`.
+>>
+>> What did you reproduce?  The completion gave me "stash@{0}" (without
+>> surrounding double quotes) in my above experiment?  If so, that does
+>> seem reproducible, but I do not see "suggestions ... are broken" here.
+>
+> The problem is visible when you have more than one stash. If
+> you press TABm autocompletion stops at the `{` and if you then
+> press TAB once more for a list of all stashes instead of that
+> the completion changes to `stashstash{` and becomes broken at
+> this point.
 
-Yes, but there's a bit of subtlety with what you're grepping.
+That does not reproduce for me.
 
-Try this example setup:
+    $ git stash show stas<TAB>
 
-  git init -q repo
-  cd repo
-  echo content >file
-  echo 'file diff=foo' >.gitattributes
-  git add .
-  git commit -m base
-  git config diff.foo.textconv 'echo >&2 converting...; sleep 1; tr a-z A-Z <'
+completes to
 
-which should make it clear when the filter actually runs.
+    $ git stash show stash@{
 
-Now try this:
+and any more <TAB> changes the command line, which is what I expect,
+as it would be stupid to offer stash@{0} and stash@{1} (and others)
+as possible completion candidates.
 
-  echo >&2 "==> no textconv"
-  git grep . file
-  echo >&2 "==> with textconv"
-  git grep --textconv . file
-  echo >&2 "==> cached (one)"
-  git -c diff.foo.cachetextconv=true grep --textconv . file
-  echo >&2 "==> cached (two)"
-  git -c diff.foo.cachetextconv=true grep --textconv . file
+Also I just tried this (manually)
 
-We'd expect the final one to say "file:CONTENT" but _without_ a
-"converting" line. But it still runs the textconv script!
+    $ git stash show stash\@{<TAB>
 
-The problem is that the cache uses the blob id of the source as its key.
-But since we're grepping files in the working directory, they don't have
-an object id at all. If we grep in the tree, it works as expected:
+and did not get any more extra completion.
 
-  $ git -c diff.foo.cachetextconv=true grep --textconv . HEAD -- file
-  converting...
-  HEAD:file:CONTENT
-  $ git -c diff.foo.cachetextconv=true grep --textconv . HEAD -- file
-  HEAD:file:CONTENT
+    $ set | grep ^BASH_VERSION=
+    BASH_VERSION='5.0.16(1)-release'
 
-All of this textconv stuff was originally designed for the diff
-infrastructure. Even when it's diffing files, if they're tracked in the
-repository the diff code will pull the oid from the index (assuming the
-file is stat-clean). But the grep code doesn't do that (and I doubt that
-it matters for anything at all except this textconv caching feature).
+As long as the change does not make things worse for users of newer
+bash, it is OK to make things better for users of ancient versions
+of bash.  It might already be considered a worse end-user experience
+than what we have now to show partly-spelled stash reference as
+"stash\@{" with backslash, though.
 
-It's probably possible to teach the grep code to do the same
-check-in-the-index trick, but I'm not sure how complicated it would be.
+Another thing I noticed is that you shouldn't need two separate
+processes of "sed" to do what you want to do.
 
--Peff
+>> > @@ -2999,12 +2999,14 @@ _git_stash ()
+>> >  				__git_complete_refs
+>> >  			else
+>> >  				__gitcomp_nl "$(__git stash list \
+>> > -						| sed -n -e 's/:.*//p')"
+>> > +						| sed -n -e 's/:.*//p' \
+>> > +						| sed 's/@/\\@/')"
+
+The first and the original one -n -e "s/:.*//p" wants to show no
+lines by default, unless it finds a colon on the line and strip it
+and everything that follows.  You then further want to tweak that
+and prefix a backslash before the first '@' you find.  So perhaps
+something along the lines of...
+
+	sed -n -e '/:/{
+		s/:.*//
+		s/@/\\@/
+		p
+	}'
+
+... which is "show no lines by default, but on a line with a colon,
+strip the colon and everything that follows, and then prefix the
+first '@' on the line, if exists, with backslash, and show the result".
+
+Having said that, I am very skeptical to any "solution" that has to
+show "stash\@{" to end-users.  And with the patch, newer versions of
+bash does seem to show the stupid "all stash entries, numbered",
+i.e.
+
+    $ git stash show stas<TAB>
+    -->
+    $ git stash show stash\@{
+    
+    $ git stash show stash\@{<TAB>
+    stash\@{0}   stash\@{1}
+
+I wonder what unpleasant end-user experience I may have to endure if
+I had dozens of stash entries.  The list shows only the numbers, so
+it does not help me decide which number to type at all.
+
+A solution to allow older versions of bash to complete
+
+    $ git stash show stas<TAB>
+    -->
+    $ git stash show stash@{
+
+    $ git stash show stash@{<TAB>
+    -->
+    $ git stash show stash@{
+
+would be very much welcomed, though.
+
+Thanks.
+
+
