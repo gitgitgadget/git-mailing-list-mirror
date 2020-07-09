@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 561A4C433E1
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDEFCC433E5
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:17:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33DA4206F6
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:17:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95BBE206F6
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:17:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDT/rJOj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jtp6p4qW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726203AbgGICQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jul 2020 22:16:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46696 "EHLO
+        id S1726278AbgGICRC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jul 2020 22:17:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbgGICQx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jul 2020 22:16:53 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70332C061A0B
-        for <git@vger.kernel.org>; Wed,  8 Jul 2020 19:16:53 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id f18so642833wrs.0
-        for <git@vger.kernel.org>; Wed, 08 Jul 2020 19:16:53 -0700 (PDT)
+        with ESMTP id S1726185AbgGICQz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jul 2020 22:16:55 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560AFC061A0B
+        for <git@vger.kernel.org>; Wed,  8 Jul 2020 19:16:55 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id a6so5174924wmm.0
+        for <git@vger.kernel.org>; Wed, 08 Jul 2020 19:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3efikXJWi4yEKiNU1sfB/eB3CbWzH026rNAeS4sShpE=;
-        b=MDT/rJOjSrnR16kt4H/3NYHZu2hGlz+LJydF4vbau5HTGqSd+8R27eLAJ4EH9/Bs07
-         ikZ3h3mrLY1qFwo/tn5xX/g+B0MJ6Mp/jL9qP2J27Axn/tnoCjyUqRZwCoKSsFtOkd14
-         b33xIjUKixHws/nRFdFFCBy/wkUhtCmc9FzlPR3ZT/HPJE6eN89KM1dXNHuROB1ybQC/
-         O1Gg2wiWB83OrDUhT4Nfuc/0EVBd/jUDeLWZxo9zEtQEcK85G73Xr60PbmjMWBRno6Eg
-         zjhxHBZrNdM9470ARXg7wmNvlOmrzivs0qm5VwqXqtpkBoBosDORbakeqNUPQT28BTwz
-         CSgg==
+        bh=8/0cFyyOXa+IpXhIbJl3HbfduKhU75mE7N/JEs64XQo=;
+        b=Jtp6p4qWdVUVmoxKlFOfKSlOgzQ/XTEC8gBIAcxdhJLQvQdDFv3VuesqljdMwwB8vY
+         Vz06NHVLlaoIr0e62POM/aXjfMLX8swa0IbSG6VDF7p2w/Vy8kDbp5SDF8xB+UFvYDMZ
+         42PKN1xZdAzZf1HFH2QO3TzN+Rz6MiEyM4U6URaWk8Kf918n53Bhi/lprg2hzSnBb5iU
+         p9NZ9+6MHmG8S3NQrHsTLKdTYkEoF3fMKnjubo79//oN1vvZgMjGT29YahGpUf7GcpNY
+         GhNmjV+L5zhfoUuIVrUR3DYqDqKZeRjppqucglNpVMUTHwwRtAe7ugAti8pAJ2I/Lk2C
+         8SXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3efikXJWi4yEKiNU1sfB/eB3CbWzH026rNAeS4sShpE=;
-        b=gB5RxP+zxto2dJfafeVo0X2o8jg8OhK8tkfmRZ0mJcXVRILWpmn4RRGJHFZC9Ps34C
-         lXDoeFGAZU3XHmPpEh6obRc7BG08A3QTkY2gCxaA5Fa67nl/kQJVMa4tupL+Do01Itfw
-         OxNbQ5Jpmp2anSmA5dx8nX51tpsTjA+yfRFW2neKPtWuoGGRUmrhnyR8fCn1waAzL5/e
-         3Zsxzd08IHhwQscuwpEeSQhWlQZ4Id98X9EtJRnJSati6mZGqGG7sqKRA8TaBAfjf7OW
-         A6UUbJPymZADTCX91UkhD/+juV/vpK+2PNkcGIuJOihojjs4UoXopBpubx4XA/6TDi+Z
-         TxUA==
-X-Gm-Message-State: AOAM531UKgZ0aP4LbS5p+m+Lt1nacct9zPsb9jx+ZNquilvQTRt9lTE4
-        fWMcMGWt8cEkEy+/+4WIYDwJioeQ
-X-Google-Smtp-Source: ABdhPJykS25PJ1kjQp8dhoBDeyf8ZzFOfusD0f/zGw2H+4P/1zpB0UHM7ehYV3yN2SwvkDoJSGjv9Q==
-X-Received: by 2002:a5d:4604:: with SMTP id t4mr30785666wrq.0.1594261012018;
-        Wed, 08 Jul 2020 19:16:52 -0700 (PDT)
+        bh=8/0cFyyOXa+IpXhIbJl3HbfduKhU75mE7N/JEs64XQo=;
+        b=QoZZd0Bkw18IQSYxxddORbbkbbppmTI47tp8AjGBBf1qWCY5P9WRH1LQQYHpsfRQd7
+         /4tqd6wKEskqNaLGpFHIkTnT6yCGTC5xZdSZzgH5X0bYyZgiZ6Ex2YMubn6Rj2xLTLCS
+         EXWOaMcoNYelJ1drK5wfdmAOH1yWL6DzX+Um7Hf++jb66glyx6gueLd8cmMstp2H2uXX
+         7CbqFPzJ/s10i4mAfGebLp+prhMayMAPqHlqAzZdn7Zw/fazbtQwVpda4dEolXZlhzdC
+         RHPRDsgQ2bDxZNglq0Mtno1sJ+ltafZQ9kHGaULUFj2V1xWqvERLhEfWBDljSAAM9nwu
+         +abQ==
+X-Gm-Message-State: AOAM533Fl+Lia+eDT+da/7MycNXxdr1QPA4nuTuel6bKXUQT2l6K6hrp
+        whzOHLuM0a6c+KP9jPuVGFV3ZO13
+X-Google-Smtp-Source: ABdhPJw1yPJx+/c2uHGCOuwbVGqPFFwgHsZGm15XHFfW7pSJND9Qo+PRhzW9rbrZoyDKNegOP03Nbg==
+X-Received: by 2002:a1c:4444:: with SMTP id r65mr11396490wma.129.1594261013710;
+        Wed, 08 Jul 2020 19:16:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f186sm2516965wmf.29.2020.07.08.19.16.51
+        by smtp.gmail.com with ESMTPSA id r28sm3028116wrr.20.2020.07.08.19.16.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2020 19:16:51 -0700 (PDT)
-Message-Id: <b8ee4a743c49553ba479839a234c421876fa14a4.1594261008.git.gitgitgadget@gmail.com>
+        Wed, 08 Jul 2020 19:16:53 -0700 (PDT)
+Message-Id: <f61bbb57cbcd52144e81f093cf7c4c80249397f2.1594261008.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.590.v3.git.1594261008.gitgitgadget@gmail.com>
 References: <pull.590.v2.git.1593747509.gitgitgadget@gmail.com>
         <pull.590.v3.git.1594261008.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Jul 2020 02:16:45 +0000
-Subject: [PATCH v3 3/6] git-rev-list.txt: fix Asciidoc syntax
+Date:   Thu, 09 Jul 2020 02:16:47 +0000
+Subject: [PATCH v3 5/6] git-rev-list.txt: move description to separate file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,59 +83,112 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Using '{caret}' inside double quotes and immediately following with a
-single quoted word does not create the desired output: '<commit1>'
-appears verbatim instead of being emphasized.
+A following commit will reuse the description of the `git rev-list`
+command in the `git log` manpage.
 
-Use a litteral caret ('^') instead.
-
-Also, remove the leading tabs in shell examples to bring them more in
-line with the rest of the documentation.
+Move this description to a separate file.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/git-rev-list.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/git-rev-list.txt         | 39 +-------------------------
+ Documentation/rev-list-description.txt | 38 +++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 38 deletions(-)
+ create mode 100644 Documentation/rev-list-description.txt
 
 diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 025c911436..aa95334a79 100644
+index f2b83df2fa..b06e11ae56 100644
 --- a/Documentation/git-rev-list.txt
 +++ b/Documentation/git-rev-list.txt
-@@ -29,19 +29,19 @@ to further limit the result.
- Thus, the following command:
+@@ -14,44 +14,7 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
  
- -----------------------------------------------------------------------
--	$ git rev-list foo bar ^baz
-+$ git rev-list foo bar ^baz
- -----------------------------------------------------------------------
- 
- means "list all the commits which are reachable from 'foo' or 'bar', but
- not from 'baz'".
- 
- A special notation "'<commit1>'..'<commit2>'" can be used as a
--short-hand for "{caret}'<commit1>' '<commit2>'". For example, either of
-+short-hand for "^'<commit1>' '<commit2>'". For example, either of
- the following may be used interchangeably:
- 
- -----------------------------------------------------------------------
--	$ git rev-list origin..HEAD
--	$ git rev-list HEAD ^origin
-+$ git rev-list origin..HEAD
-+$ git rev-list HEAD ^origin
- -----------------------------------------------------------------------
- 
- Another special notation is "'<commit1>'...'<commit2>'" which is useful
-@@ -49,8 +49,8 @@ for merges.  The resulting set of commits is the symmetric difference
- between the two operands.  The following two commands are equivalent:
- 
- -----------------------------------------------------------------------
--	$ git rev-list A B --not $(git merge-base --all A B)
--	$ git rev-list A...B
-+$ git rev-list A B --not $(git merge-base --all A B)
-+$ git rev-list A...B
- -----------------------------------------------------------------------
+-List commits that are reachable by following the `parent` links from the
+-given commit(s), but exclude commits that are reachable from the one(s)
+-given with a '{caret}' in front of them.  The output is given in reverse
+-chronological order by default.
+-
+-You can think of this as a set operation. Commits reachable from any of
+-the commits given on the command line form a set, and then commits reachable
+-from any of the ones given with '{caret}' in front are subtracted from that
+-set.  The remaining commits are what comes out in the command's output.
+-Various other options and paths parameters can be used to further limit the
+-result.
+-
+-Thus, the following command:
+-
+------------------------------------------------------------------------
+-$ git rev-list foo bar ^baz
+------------------------------------------------------------------------
+-
+-means "list all the commits which are reachable from 'foo' or 'bar', but
+-not from 'baz'".
+-
+-A special notation "'<commit1>'..'<commit2>'" can be used as a
+-short-hand for "^'<commit1>' '<commit2>'". For example, either of
+-the following may be used interchangeably:
+-
+------------------------------------------------------------------------
+-$ git rev-list origin..HEAD
+-$ git rev-list HEAD ^origin
+------------------------------------------------------------------------
+-
+-Another special notation is "'<commit1>'...'<commit2>'" which is useful
+-for merges.  The resulting set of commits is the symmetric difference
+-between the two operands.  The following two commands are equivalent:
+-
+------------------------------------------------------------------------
+-$ git rev-list A B --not $(git merge-base --all A B)
+-$ git rev-list A...B
+------------------------------------------------------------------------
++include::rev-list-description.txt[]
  
  'rev-list' is a very essential Git command, since it
+ provides the ability to build and traverse commit ancestry graphs. For
+diff --git a/Documentation/rev-list-description.txt b/Documentation/rev-list-description.txt
+new file mode 100644
+index 0000000000..14d78b91aa
+--- /dev/null
++++ b/Documentation/rev-list-description.txt
+@@ -0,0 +1,38 @@
++List commits that are reachable by following the `parent` links from the
++given commit(s), but exclude commits that are reachable from the one(s)
++given with a '{caret}' in front of them.  The output is given in reverse
++chronological order by default.
++
++You can think of this as a set operation. Commits reachable from any of
++the commits given on the command line form a set, and then commits reachable
++from any of the ones given with '{caret}' in front are subtracted from that
++set.  The remaining commits are what comes out in the command's output.
++Various other options and paths parameters can be used to further limit the
++result.
++
++Thus, the following command:
++
++-----------------------------------------------------------------------
++$ git rev-list foo bar ^baz
++-----------------------------------------------------------------------
++
++means "list all the commits which are reachable from 'foo' or 'bar', but
++not from 'baz'".
++
++A special notation "'<commit1>'..'<commit2>'" can be used as a
++short-hand for "^'<commit1>' '<commit2>'". For example, either of
++the following may be used interchangeably:
++
++-----------------------------------------------------------------------
++$ git rev-list origin..HEAD
++$ git rev-list HEAD ^origin
++-----------------------------------------------------------------------
++
++Another special notation is "'<commit1>'...'<commit2>'" which is useful
++for merges.  The resulting set of commits is the symmetric difference
++between the two operands.  The following two commands are equivalent:
++
++-----------------------------------------------------------------------
++$ git rev-list A B --not $(git merge-base --all A B)
++$ git rev-list A...B
++-----------------------------------------------------------------------
 -- 
 gitgitgadget
 
