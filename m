@@ -2,129 +2,133 @@ Return-Path: <SRS0=1oE7=AU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F365C433E1
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 16:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16450C433E0
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 16:56:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19801207DA
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 16:54:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E52A2207D0
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 16:56:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kbvlGLiI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qgD9cgDW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728324AbgGIQyx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 12:54:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40980 "EHLO
+        id S1728329AbgGIQ4Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 12:56:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726339AbgGIQyw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jul 2020 12:54:52 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3954C08C5CE
-        for <git@vger.kernel.org>; Thu,  9 Jul 2020 09:54:51 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id y10so3058993eje.1
-        for <git@vger.kernel.org>; Thu, 09 Jul 2020 09:54:51 -0700 (PDT)
+        with ESMTP id S1726890AbgGIQ4P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jul 2020 12:56:15 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD278C08C5CE
+        for <git@vger.kernel.org>; Thu,  9 Jul 2020 09:56:15 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id g13so2176551qtv.8
+        for <git@vger.kernel.org>; Thu, 09 Jul 2020 09:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=zSGh7YhUUR9YJk1Nt+PcgaYa6TxQj8swLD1rX3f9098=;
-        b=kbvlGLiIjJagukwaS2YFyAlVN09UQWvNU6uKX6MAEFVOZJ3iKxRHnwnkT5JYJFqdxc
-         EXeTYmnRrh23nhzpAm8hgdrSrwE2uorLD0t1J+ptqXRA8vYbUdgZRsN0A1gn1p39n8/t
-         esRZwWE5/v+reqKDZOpT0iSGAtbzoqC2OC9h3gEl4jVN9fdxBr0lC1NOI97mr/owKcbh
-         YPnm/WzmpRPMXKJbovN8mZuQYcNdPgMXU9r6qe/vY1H4TY5xRcrJS5LLs51n1v88lD1U
-         7ryq7G0WTIpj0aOfZw4Hom91PjAL/J78iteI34R9oE2Sp6kpD76gaNhnSqi6zrICBsFX
-         MLRg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dx4yTI7ar5vDNWGsDftVmTBY8tUhNNjuJr9f2QZVbus=;
+        b=qgD9cgDWl3jI3YaLwStMQtwah0uRGBum3jMKpWxBYJvlVhgHwOATIhzgSuBDfMeZbp
+         Pe4RZsXpaHfsxMMKYf1VvmVYNFXeregJvEgvcxct4emn4BR+/80NzoEJxGNmLu29Ldgx
+         gK5dkeNzSVRPvLwwiszpj9S5YF+Msj97xEHMavVLAsk4ywI14K7i24EEuhMKEGfm0yEg
+         vV62n1LLp2imyAQQfmnYUR4Xdsojm4HITbhUrE3W3RBrIBZLFCnDZymRK2/whyIdCozO
+         yQ4rNC7BMepK12C6y6yLC/35rUEtuuURrSxZ7ltxtcG7tud0K9SlpFzGtm3WyTbxRavP
+         RrlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=zSGh7YhUUR9YJk1Nt+PcgaYa6TxQj8swLD1rX3f9098=;
-        b=pXpo8VdDa69qZWwQ6RRh/LOC+eZBw+cbpGKQ8sjUBEos48M2PIgiB8wv1BhXAbRurG
-         BUZAEB8Dtv5LUiKhDld6my+vfV6KELf9nrSw4VpwDolDiIemmBkuk64l9vsMqzWCQzCo
-         KKtEdXGyK2eJU3hvx9aMnImHr+V0W/49MaaXdB67u2jyXl7qbKu2J2lF+L8n9iJjPEFg
-         Ye7zKrIdLf/f47I7gyPxoeHD+c+0F6o/Hs60XDtESQcKEUZg0VB+Ab6C1MsBUPqWgtUz
-         7uo1q7ZyTHtlw91onITy6a377I8qRDJwUNn3+dy92tGMJe7caxvF9PQZWn1kQj88aX1B
-         P7cw==
-X-Gm-Message-State: AOAM531vZ8kMMPaycoLn88UkoGd7d0KsyUpBN1wqQAtwssakJGQCXqMD
-        mYFfu+E0E7HJIF5lPllJbuM=
-X-Google-Smtp-Source: ABdhPJy9qU2CKvJCGFUfbuYzR1611jIcemk+7VClr0YIJZEEM7+jSImF3PAwuycG6Xt58B46OgBskA==
-X-Received: by 2002:a17:906:7005:: with SMTP id n5mr38374500ejj.130.1594313690391;
-        Thu, 09 Jul 2020 09:54:50 -0700 (PDT)
-Received: from localhost.localdomain (78-131-17-27.pool.digikabel.hu. [78.131.17.27])
-        by smtp.gmail.com with ESMTPSA id h15sm2094177eja.44.2020.07.09.09.54.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Jul 2020 09:54:49 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+        bh=dx4yTI7ar5vDNWGsDftVmTBY8tUhNNjuJr9f2QZVbus=;
+        b=b8n34R7Onyfld7VcRoX1qzISvgxFEzcf07vE0RnRV2z3bJk9NODO9d+8qFWEyHDz8q
+         s901Y4MmcqMYXvbguvYf+ywreEJHvtOWkCH3T07tUMJZHO9pHdXcPpkug3A35y6d+CC0
+         nYuE+iijl6bJIZ/FzA2y7/fn8qCHbACFuTBDVHR1twrF0TmKVRLUrCWnVm7Q0PSqszG0
+         XGaDaPDvVuH8iGRz7067KP5Bu6gaHc53/qXEUlHy5R0QuIjqxByHB9W693Yte2TWxyI3
+         VtLRzIBlaPorj/prFFRHvmOGbzcyQuyTQsJXRWKOezRjiCoFYCqsd/ZdoBnfuOk8ARDe
+         vJKQ==
+X-Gm-Message-State: AOAM53109OsZV0jTxlKpeAaoCbpX3nBKf/HssgHL6zYW8hH/PR8tDZkB
+        iu/DrRUTBxIRzxBznIa+nlk=
+X-Google-Smtp-Source: ABdhPJyZC63EnB0T7bP09dCjREVr+0FQSpy+C6fUwrkW2u68Aj9IOqCzMWKOmLq7g3HoGIddZ5bWCw==
+X-Received: by 2002:ac8:2256:: with SMTP id p22mr64974864qtp.75.1594313774538;
+        Thu, 09 Jul 2020 09:56:14 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id 140sm4276194qko.98.2020.07.09.09.56.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jul 2020 09:56:14 -0700 (PDT)
+Subject: Re: [PATCH 00/21] Maintenance builtin, allowing 'gc --auto'
+ customization
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, dstolee@microsoft.com,
-        peff@peff.net, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] commit-graph: fix progress of reachable commits
-Date:   Thu,  9 Jul 2020 18:54:32 +0200
-Message-Id: <20200709165432.2688-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.27.0.547.g4ba2d26563
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
+ <20200708235719.GA3189386@google.com>
+ <ef6e2704-b122-f620-a952-75f3f9efab78@gmail.com>
+ <xmqqv9iwyeac.fsf@gitster.c.googlers.com>
+ <52715fe8-a545-5c42-2f3a-e59bcbc43497@gmail.com>
+ <xmqqmu48y7rw.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ecadda92-2290-4e96-0e3c-27fbe7e0a6e6@gmail.com>
+Date:   Thu, 9 Jul 2020 12:56:14 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqmu48y7rw.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To display a progress line while iterating over all refs,
-d335ce8f24 (commit-graph.c: show progress of finding reachable
-commits, 2020-05-13) should have added a pair of
-start_delayed_progress() and stop_progress() calls around a
-for_each_ref() invocation.  Alas, the stop_progress() call ended up at
-the wrong place, after write_commit_graph(), which does all the
-commit-graph computation and writing, and has several progress lines
-of its own.  Consequently, that new
+On 7/9/2020 12:26 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> On 7/9/2020 10:05 AM, Junio C Hamano wrote:
+>>> For existing callers, "git gc --auto" may want to be left alive,
+>>> merely as a thin wrapper around "git maintenance --auto", and as
+>>> long as the latter is done in the same spirit of the former, i.e.
+>>> perform a lightweight check to see if the repository is so out of
+>>> shape and then do a minimum cleaning, it would be welcomed by users
+>>> if it does a lot more than the current "git gc --auto".
+>>
+>> It's entirely possible that (after the 'maintenance' builtin
+>> stabilizes) that we make 'git gc --auto' become an alias of something
+>> like 'git maintenance run --task=gc --auto' (or itemize all of the
+>> sub-tasks) so that 'git gc --auto' doesn't change behavior.
+> 
+> Yes, it is possible, but I doubt it is desirable.
+> 
+> The current users of "gc --auto" do not (and should not) care the
+> details of what tasks are performed.  We surely have added more
+> stuff that need maintenance since "gc --auto" was originally
+> written, and after people have started using "gc --auto" in their
+> workflows.  For example, I think "gc --auto" predates "rerere gc"
+> and those who had "gc --auto" in their script had a moment when
+> suddenly it started to clean stale entries in the rerere database.
+> 
+> Were they got upset when it happened?  Will they get upset when it
+> starts cleaning up stale commit-graph leftover files?
+> 
+> As long as "gc --auto" kept the same spirit of doing a lightweight
+> check to see if the repository is so out of shape to require
+> cleaning and performing a minimum maintenance when it started
+> calling "rerere gc", and as long as "maintenance --auto" does the
+> same, I would think the users would be delighted without complaints.
+> 
+> So, I wouldn't worry too much about what exactly happens with the
+> future versions of "gc --auto".  The world has changed, and we have
+> more items in the repository that needs maintenance/cruft removal.
+> The command in the new world should deal with these new stuff, too.
 
-  Collecting referenced commits: 123
+Sounds good to me. The extra context around this helps a lot!
 
-progress line is overwritten by the first progress line shown by
-write_commit_graph(), and its final "done" line is shown last, after
-everything is finished:
-
-  Expanding reachable commits in commit graph: 344786, done.
-  Computing commit changed paths Bloom filters: 100% (344786/344786), done.
-  Collecting referenced commits: 154, done.
-
-Move that stop_progress() call to the right place.
-
-While at it, drop the unnecessary 'if (data.progress)' condition
-protecting the stop_progress() call, because that function is prepared
-to handle a NULL progress struct.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- commit-graph.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 5df3e08718..aaf3327ede 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1354,12 +1354,13 @@ int write_commit_graph_reachable(struct object_directory *odb,
- 			_("Collecting referenced commits"), 0);
- 
- 	for_each_ref(add_ref_to_set, &data);
-+
-+	stop_progress(&data.progress);
-+
- 	result = write_commit_graph(odb, NULL, &commits,
- 				    flags, split_opts);
- 
- 	oidset_clear(&commits);
--	if (data.progress)
--		stop_progress(&data.progress);
- 	return result;
- }
- 
--- 
-2.27.0.547.g4ba2d26563
-
+-Stolee
