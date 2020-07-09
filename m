@@ -6,90 +6,86 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9DA9C433E0
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 23:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B73D3C433E0
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 23:16:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1F8C2067D
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 23:10:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9283A2070E
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 23:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726615AbgGIXKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 19:10:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53748 "EHLO cloud.peff.net"
+        id S1726756AbgGIXQZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 19:16:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53760 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726222AbgGIXKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jul 2020 19:10:31 -0400
-Received: (qmail 6409 invoked by uid 109); 9 Jul 2020 23:10:31 -0000
+        id S1726228AbgGIXQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jul 2020 19:16:25 -0400
+Received: (qmail 6450 invoked by uid 109); 9 Jul 2020 23:16:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jul 2020 23:10:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jul 2020 23:16:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26663 invoked by uid 111); 9 Jul 2020 23:10:31 -0000
+Received: (qmail 26689 invoked by uid 111); 9 Jul 2020 23:16:25 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jul 2020 19:10:31 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jul 2020 19:16:25 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Jul 2020 19:10:30 -0400
+Date:   Thu, 9 Jul 2020 19:16:24 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Zach Riggle <zachriggle@gmail.com>, git@vger.kernel.org
-Subject: Re: git grep --threads 12 --textconv is effectively single-threaded
-Message-ID: <20200709231030.GD664420@coredump.intra.peff.net>
-References: <CAMP9c5nUteg_HouuYJZtq7g4MrSE638mns=HeKhNpNTYgQB4=w@mail.gmail.com>
- <20200707215951.GB2300296@coredump.intra.peff.net>
- <CAMP9c5mpJ9_HvEBTiEQj=vocTdH6N9uXkpLKiE8+hFbAt9p5Ow@mail.gmail.com>
- <20200708201353.GA2354599@coredump.intra.peff.net>
- <xmqqfta11zu0.fsf@gitster.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 00/21] Maintenance builtin, allowing 'gc --auto'
+ customization
+Message-ID: <20200709231624.GE664420@coredump.intra.peff.net>
+References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
+ <20200708235719.GA3189386@google.com>
+ <ef6e2704-b122-f620-a952-75f3f9efab78@gmail.com>
+ <d0d30dab-7883-199a-3beb-48c87cde3550@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqfta11zu0.fsf@gitster.c.googlers.com>
+In-Reply-To: <d0d30dab-7883-199a-3beb-48c87cde3550@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 08, 2020 at 02:06:31PM -0700, Junio C Hamano wrote:
+On Thu, Jul 09, 2020 at 08:43:48AM -0400, Derrick Stolee wrote:
 
-> Jeff King <peff@peff.net> writes:
+> >> Is it infeasible to ask for 'git maintenance' to learn something like
+> >> '--on /<path-to-repo> --on /<path-to-second-repo>'? Or better yet, some
+> >> config like "maintenance.targetRepo = /<path-to-repo>"?
 > 
-> > It's probably possible to teach the grep code to do the same
-> > check-in-the-index trick, but I'm not sure how complicated it would be.
+> Sorry that I missed this comment on my first reply.
 > 
-> I am not sure if we should even depend on the "check the object
-> database and use it instead of reading the working tree files" done
-> in diff code---somehow I thought we did the opposite for performance
-> (i.e. when we ought to be comparing two objects, taken from tree and
-> the index, if we notice that the index side is stat clean, we can
-> read/mmap the working tree file instead of going to the object layer
-> and deflating a loose object, or, worse yet, construct the blob by
-> repeatedly applying deltas on a base object in a packfile).
+> The intention is that this cron entry will be simpler after I follow up
+> with the "background" part of maintenance. The idea is to use global
+> or system config to register a list of repositories that want background
+> maintenance and have cron execute something like "git maintenance run --all-repos"
+> to span "git -C <repo> maintenance run --scheduled" for all repos in
+> the config.
 > 
-> Is this one in the opposite direction done specifically for gaining
-> performance when textconv cache is in use?  If so, kudos to whoever
-> did it---that sounds like a clever thing to do.
+> For now, this manual setup does end up a bit cluttered if you have a
+> lot of repos to maintain.
 
-No, it turns out that nobody was that clever (and I was simply
-misremembering how it worked).
+I think it might be useful to have a general command to run a subcommand
+in a bunch of repositories. Something like:
 
-For a tree-to-tree or index-to-tree comparison, both sides will have an
-oid and can use the textconv cache. Even for an index case where we
-might choose to use a stat-fresh working tree file as an optimization,
-we'll still consult the textconv cache before loading those contents.
+  git for-each-repo --recurse /path/to/repos git maintenance ...
 
-But for diffing a file in the working tree, we'll never have an oid and
-will always run the textconv command). So "git diff" against the index,
-for example, would run _one_ textconv (using the cached value for the
-index, and running one for the working tree version). And we know that
-isn't that interesting for optimizing, since by definition the file is
-stat-dirty in that case (or else we'd skip the content-level comparison
-entirely). So you'd have to compute the sha1 of the working tree file
-from scratch. Plus the lifetime of a working tree file's entry in the
-textconv cache is probably smaller, since it hasn't even been committed
-yet.
+which would root around in /path/to/repos for any git-dirs and run "git
+--git-dir=$GIT_DIR maintenance ..." on each of them.
 
-I don't think I ever noticed because the primary thing I was trying to
-speed up with the textconv cache is "git log -p", etc, which always has
-an oid to work with.
+And/or:
 
-But "grep" is a totally different story. It is frequently looking at all
-of the stat-fresh working tree files.
+  git for-each-repo --config maintenance.repos git maintenance ...
+
+which would pull the set of repos from the named config variable instead
+of looking around the filesystem.
+
+You could use either as a one-liner in the crontab (depending on which
+is easier with your repo layout).
 
 -Peff
