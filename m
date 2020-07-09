@@ -2,103 +2,147 @@ Return-Path: <SRS0=1oE7=AU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF5CFC433E0
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 11:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2442EC433E0
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 11:21:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 875D620772
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 11:14:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF4C420772
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 11:20:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vYHuJqrB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tkaWXnbR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbgGILOn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 07:14:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44750 "EHLO
+        id S1726996AbgGILU7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 07:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726387AbgGILOn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jul 2020 07:14:43 -0400
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F748C061A0B
-        for <git@vger.kernel.org>; Thu,  9 Jul 2020 04:14:43 -0700 (PDT)
-Received: by mail-qv1-xf42.google.com with SMTP id dm12so734142qvb.9
-        for <git@vger.kernel.org>; Thu, 09 Jul 2020 04:14:43 -0700 (PDT)
+        with ESMTP id S1726315AbgGILU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jul 2020 07:20:58 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A4E1C061A0B
+        for <git@vger.kernel.org>; Thu,  9 Jul 2020 04:20:58 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 22so1396239wmg.1
+        for <git@vger.kernel.org>; Thu, 09 Jul 2020 04:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=yvyAsvVi92h87cmWIRddvQIrGngCrsc3V1We/8lZRLA=;
-        b=vYHuJqrBPn3UajCHjP8hEO7c9uLEkIBQJIa2kOugbfCQ6UDvD4YskCv+mwpJWV7WlY
-         jZRjDy370rW7Hzx/dPcfrBHLbtSX8SDp2LCExj6gq2LDX5Oo3wuUyU4d8aCKeNHy5hqm
-         HrI1sujBFCdVewO8kzq9xEfYh0mFB7yGGTNLwKaOXonZzsDbKMkDcYFEKZPvsVGQ3wlf
-         KR8CSlZtLiOmGOLAVlByi7yt4S4CJIaHp4N2+5LZ++Y92mN9UTlYB3OGkmXSyP4TSB7W
-         ESlYYhfwHJmIGr2M9w6dCUKtMj8aDbzz/8u3wiSzWmtQq6Hwba2iAdswpMqctNJIofxm
-         Y/KA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Q9P5csMcdrV5XcVs5xn3/SouvJn++yM+7G3kZji4JUM=;
+        b=tkaWXnbRA1Vaorq1AVD4e9LWZjNG7/RpXXgcSlqGdqUqyLwGyRsXnCPuWncZIu4c9b
+         5UOY8NNlowOKi4X9rh5vZ832aRCkHe6Laj4Hpyg6vE4aZoj9mO10xPA1v0PPbs9K2ofR
+         chMOqnKI6PzuhKdQwgUgPhpWFU17Qp4pWjsg8MnFIxJcV74npgIczMOelxYtfcUlm4CV
+         +UvbXfyl8vqIRYH5vSAru6HfEhXJcY1WXod5WtiNQU36firedlZEIVy+lyp1K8CKf+B2
+         UWvMdw+tEXQM3V4N0n/ASSYcpQ6diD/EVeknqfzS/vWHhhVPlMPSLmjmDEYcfCQxJnrE
+         i1bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=yvyAsvVi92h87cmWIRddvQIrGngCrsc3V1We/8lZRLA=;
-        b=EUAhGCWEAaO7H3EoZ7mGARQD0oFtXQdkmm4n7DhheoV+dUUHEPxAcOAMySTbOlt8kh
-         2nJaJpNv57rRsBQO/u+SNOFwStkDk/9isSRtanLZRbw0+NfVKBm9f0kM+LbgfHGI5+Xt
-         d4Ee2ZJfI05DCl1vVhEpd+EBuA69ugbst924va6iv2T6OZ/A1cR97DGMk8ZNBYVxRgdI
-         NexYttZ6t9clvKtYKhRRxA9JPHOxnNJhAtsE/vYwmBkT1GnF1uggvh8uJe+tiHi22ne0
-         6m+RCCYjHvJpsWmnkJYMI7jWc1oUOS5m01Vxd1kXbdN69Kzt+5zDZKFpa8ryCpvnzrDW
-         H3PA==
-X-Gm-Message-State: AOAM531ybY2eVwGrhcg8V5MrYHfE+HfWCgJ9AoAN3G7YVf4tO7zaoLiY
-        bTgE78RJwN7COofTewKzqAIF/0pSZG/MYw==
-X-Google-Smtp-Source: ABdhPJzuL3Sx5e+d0cHQ7bx45uW9DdaIYMCgh3KYFYFB4qK7kQQ1zSNQ6XlHqu/iL//y3HIrbKaq7g==
-X-Received: by 2002:ad4:44a6:: with SMTP id n6mr58678008qvt.113.1594293282311;
-        Thu, 09 Jul 2020 04:14:42 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id m4sm3524991qtf.43.2020.07.09.04.14.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jul 2020 04:14:41 -0700 (PDT)
-Subject: Re: [PATCH 09/21] maintenance: add commit-graph task
-To:     Jonathan Tan <jonathantanmy@google.com>, gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, derrickstolee@github.com,
-        dstolee@microsoft.com
-References: <c8fbd14d41093e12905027ff628b98652cd931d0.1594131695.git.gitgitgadget@gmail.com>
- <20200709022942.39848-1-jonathantanmy@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8dacf017-c445-578c-c82c-f6d6f93469c9@gmail.com>
-Date:   Thu, 9 Jul 2020 07:14:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Q9P5csMcdrV5XcVs5xn3/SouvJn++yM+7G3kZji4JUM=;
+        b=KR10V39B14EyEQ1KtAaKKPers7ckLqRo7KWtjjeDvfjIdHtROiYz2772jBAVzVQo4D
+         pb9MK96eFAL0jUi0D4KJiQG90HZPvlc/5Czkl6u53StxFMrJs35ayAVToUawUSSwQtVx
+         K20tydYBFMH8O/11X4F1xdYkNgla7lKEOMrtHHrf20IHVe2EnDTXShm6cbYkZ8DqO3a6
+         SvumHqshVMA10XMyGUsNdAhFpNlvp5T9MAKORh518V4HBTP3MwHwqSnEobP9Kk030TaG
+         Sdq0t/xj9qcCRecYY/FsHPVdegDYPrMg3mlikv6rOiLOJB5dcY9AV1FHr+xraHh3O/zz
+         H1fQ==
+X-Gm-Message-State: AOAM5324GhvYssOWyEupMFgkOmiYcpKNTuqwPZK9uY7Ysl7F40LQ1Tu3
+        mKfb/IQu2nFwx7L68Rpf3gRWedXv9U/wNUpNy5gTBrJP73M=
+X-Google-Smtp-Source: ABdhPJzFA/VMzmF3m61U42gRA0VMPrdj3sXhO/43ICkwkV6Ld5jeU1JZ8kIk46o3CtvMZ7JGUquPYazjrRYgaeDSW6Q=
+X-Received: by 2002:a1c:9d0c:: with SMTP id g12mr14201456wme.107.1594293656945;
+ Thu, 09 Jul 2020 04:20:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200709022942.39848-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Sivanandan Srilakshmanan <ssrilaks@gmail.com>
+Date:   Thu, 9 Jul 2020 21:20:47 +1000
+Message-ID: <CACKP9csQxeWeKjEB8RPa=hdMpOAFtXt3_WErxk8cdR1soNu+Fw@mail.gmail.com>
+Subject: Tagging from within a worktree causes fatal: tag already exists
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/8/2020 10:29 PM, Jonathan Tan wrote:
->> +static int run_write_commit_graph(struct repository *r)
->> +{
->> +	int result;
->> +	struct argv_array cmd = ARGV_ARRAY_INIT;
->> +
->> +	argv_array_pushl(&cmd, "-C", r->worktree,
->> +			 "commit-graph", "write",
->> +			 "--split", "--reachable",
->> +			 NULL);
-> 
-> As mentioned in my reply to an earlier patch (sent a few minutes ago),
-> this won't work if there are environment variables like GIT_DIR present.
+Hi,
 
-Do we not pass GIT_DIR to the subcommand? Or does using "-C" override
-the GIT_DIR?
+I have been using git and worktree for about 8 months and getting my
+team upto speed, with absolute success. Thanks for your help during my
+initial stages.
 
-Thanks,
--Stolee
+I am in the production readiness phase and wanted to merge the branch
+into master, tag and deploy into UAT.
 
+When I run "git tag -l" on any worktree, they all list the tag created
+in proj1 (1.0.0-1).
+But when I run "git show 1.0.0-1" it is associated only with proj1
+(see listing below)
+The issue is, I am unable to create a tag 1.0.0-1 in any other worktree.
+
+In summary, I performed the following steps.  proj1 & proj2 are two
+different git repositories.
+1. Checked out master (proj1) into a local-directory-proj1-master using worktree
+2. Merged the dev-branch into master
+3. Pushed the change to central server
+4. From the local-directory-proj1-master, I created a tag (1.0.0-1)
+5. pushed the tag  to central server
+
+6.  Checked out master (proj2) into a local-directory-proj2-master
+using worktree
+     Performed steps 2 & 3 above for proj 2
+
+7.  From the local-directory-master (proj2) , I created a tag (1.0.0-1)
+     fatal: tag '1.0.0-1' already exists
+
+Your assistance is greatly appreciated.
+
+Thanks
+Lakshman
+
+
+
+Please find detail steps below
+
+proj1 => remote (origin)
+Local_proj1-DEV => Development Branch
+proj1/master    => Remote Tracking branch
+
+git worktree add --checkout c:\source\proj1-master -b
+Local-proj1-master proj1/master
+
+cd c:\source\proj1-master
+
+C:\Source\proj1-master>git merge Local_proj1-DEV
+
+C:\Source\proj1-master>git push proj1 HEAD:master
+
+C:\Source\proj1-master>git tag -a -m "Initial release candidate" 1.0.0-1
+
+C:\Source\proj1-master>git show 1.0.0-1
+tag 1.0.0-1
+Tagger: Lakshman <sadsd>
+Date:   Thu Jul 9 17:38:23 2020 +1000
+
+Initial release candidate
+
+commit 99fe92 (HEAD -> Local-proj1-master, tag: 1.0.0-1, proj1/master,
+proj1/dev, Local_proj1-DEV)
+
+git push proj1 1.0.0-1
+
+
+
+
+cd c:\source\proj2-master
+
+C:\Source\proj2-master>git tag 1.0.0-1
+fatal: tag '1.0.0-1' already exists
+
+c:\source\proj2-master>git show 1.0.0-1
+tag 1.0.0-1
+Tagger: Lakshman <sadsd>
+Date:   Thu Jul 9 17:38:23 2020 +1000
+
+Initial release candidate
+
+commit 99fe92 (tag: 1.0.0-1, proj1/master, proj1/dev, Local_proj1-DEV,
+Local-proj1-master)
