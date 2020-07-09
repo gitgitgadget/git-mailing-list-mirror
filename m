@@ -2,724 +2,527 @@ Return-Path: <SRS0=1oE7=AU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC70C433E1
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 21:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DC87C433DF
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 21:41:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C467020708
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 21:40:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED1BC20708
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 21:41:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A6V2pP9X"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qDi5pwmo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbgGIVkz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 17:40:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65106 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbgGIVky (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jul 2020 17:40:54 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26D54625BD;
-        Thu,  9 Jul 2020 17:40:47 -0400 (EDT)
+        id S1726581AbgGIVlE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 17:41:04 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52641 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726265AbgGIVlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jul 2020 17:41:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6B2B3C9C42;
+        Thu,  9 Jul 2020 17:40:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=ffCBtyIpDb4+od0kSLTD48jtL
-        jU=; b=A6V2pP9Xwjuqw41no6+eJ555Q/FPVSr70UWAn57T4wT7F8+VtmROEy94q
-        1fvp1phrWKX9xIfg3vSO8KCoC4foM/hby6vVsH8u0D/1M8e85Y5+SrT6v81gL+KC
-        jECdPc8yMnfZmrbsQrbRzCH06Brk4xvJ96Ylbwrh1rhwX9qLP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=uuTp/UP8qCspuebIvim
-        NYE5Ud7GgB2euvjq9yU28B+YhwCWA/DClUUqXWz9XZn6VTnoU1uCjZmDktg957N+
-        g4eWVHJNM5x+kQIF3ueF8FWsA8Sv+y9AopXG9mMggLixhCHkz6iddOTPiEhfHinm
-        gX1C6eWDo70EyURBfg1VZTQg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E484625BC;
-        Thu,  9 Jul 2020 17:40:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=L
+        VBfXt7ZtEECXxUr7Lge67BukC4=; b=qDi5pwmoa+b4/O4zUKHNaxmNnTh/CH2vt
+        noDoehraAbrNlAkakvM2oCrd1sPJGqQ7LBpijQAsu3navEBrOElT4Kf4l5OkDSz/
+        7lg0WleXead76sptqKV8ZibW+NlhzFMLfH0Q6HgrU6ZJBuobFhBhEiyn7RqmIkcR
+        D2KR72tvww=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=ivZ
+        3JckcsK5Er71zjUTfPPAV9FHSirLk+PIbMT3kVDp5Vd/qWNKdfBBvCkw1//SxLpn
+        oC62ULTwU9f3db7d3i2y3Px047BIjgssAp3Qn8gPeMOJQdBzKJzGghbU7lp1vKZr
+        e3Ojlh7oGoXGHURaY+BNeJHy7ypYzRG3Kcv7iu1c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 63C11C9C41;
+        Thu,  9 Jul 2020 17:40:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.231.104.69])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82FBF625BA;
-        Thu,  9 Jul 2020 17:40:46 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5022CC9C40;
+        Thu,  9 Jul 2020 17:40:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.28.0-rc0
-Date:   Thu, 09 Jul 2020 14:40:45 -0700
-Message-ID: <xmqqh7ugwen6.fsf@gitster.c.googlers.com>
+Subject: What's cooking in git.git (Jul 2020, #02; Thu, 9)
+X-master-at: bd42bbe1a46c0fe486fc33e82969275e27e4dc19
+X-next-at: f9edc3c819edc268d3a429d06d1efb8fa957866b
+Date:   Thu, 09 Jul 2020 14:40:49 -0700
+Message-ID: <xmqqa708wen2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D9234858-C22C-11EA-A339-01D9BED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: DBFD9F7E-C22C-11EA-BE48-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An early preview release Git v2.28.0-rc0 is now available for
-testing at the usual places.  It is comprised of 284 non-merge
-commits since v2.27.0, contributed by 42 people, 9 of which are
-new faces.
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'seen' (formerly 'pu'---proposed updates) while commits prefixed
+with '+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-The tarballs are found at:
+The tip of the 'master' branch has been tagged as 'v2.28.0-rc0', as
+the preview of upcoming release.  From here on, let's focus mostly
+on stabilizing what will be in the upcoming 2.28 release and less on
+polishing topics not yet in 'next' or starting new ones, so that we
+can have a solid release by the end of the month.
 
-    https://www.kernel.org/pub/software/scm/git/testing/
+You can find the changes described here in the integration branches of the
+repositories listed at
 
-The following public repositories all have a copy of the
-'v2.28.0-rc0' tag and the 'master' branch that the tag points at:
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://github.com/gitster/git
+--------------------------------------------------
+[Graduated to 'master']
 
-New contributors whose contributions weren't in v2.27.0 are as follows.
-Welcome to the Git development community!
+* cc/cat-file-usage-update (2020-07-01) 1 commit
+  (merged to 'next' on 2020-07-06 at 270769a009)
+ + cat-file: add missing [=<format>] to usage/synopsis
 
-  Andrew Ng, Chris Torek, Don Goodman-Wilson, Jiuyang Xie, Luc
-  Van Oostenryck, Marco Trevisan (Trevi=C3=B1o), Miroslav Ko=C5=A1k=C3=A1=
-r,
-  Rafael Aquini, and Srinidhi Kaushik.
+ Doc/usage update.
 
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
 
-  Abhishek Kumar, Ben Keene, brian m. carlson, Carlo Marcelo Arenas
-  Bel=C3=B3n, Christian Couder, Denton Liu, Derrick Stolee, =C4=90o=C3=A0=
-n
-  Tr=E1=BA=A7n C=C3=B4ng Danh, Elijah Newren, Emily Shaffer, Eric Sunshin=
-e,
-  Han-Wen Nienhuys, Jacob Keller, Jeff King, Johannes Schindelin,
-  John Lin, Jonathan Nieder, Jonathan Tan, Josh Steadmon, Junio C
-  Hamano, Laurent Arnoud, Martin =C3=85gren, Matheus Tavares, Paolo
-  Bonzini, Patrick Steinhardt, Ramsay Jones, Randall S. Becker,
-  Ren=C3=A9 Scharfe, Shourya Shukla, SZEDER G=C3=A1bor, Taylor Blau,
-  Ville Skytt=C3=A4, and Xin Li.
+* ct/diff-with-merge-base-clarification (2020-07-08) 1 commit
+  (merged to 'next' on 2020-07-08 at fc1ab4a479)
+ + diff: check for merge bases before assigning sym->base
 
-----------------------------------------------------------------
+ Recent update to "git diff" meant as a code clean-up introduced a
+ bug in its error handling code, which has been corrected.
 
-Git 2.28 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
 
-Updates since v2.27
--------------------
+* jn/eject-fetch-write-commit-graph-out-of-experimental (2020-07-08) 1 commit
+  (merged to 'next' on 2020-07-08 at 1f7cf947f8)
+ + experimental: default to fetch.writeCommitGraph=false
 
-Backward compatibility notes
+ "fetch.writeCommitGraph" was enabled when "feature.experimental" is
+ asked for, but it was found to be a bit too risky even for bold
+ folks in its current shape.  The configuration has been ejected, at
+ least for now, from the "experimental" feature set.
 
- * "fetch.writeCommitGraph" is deemed to be still a bit too risky and
-   is no longer part of the "feature.experimental" set.
 
- * It used to be that setting extensions.* configuration variables
-   alone, while leaving core.repositoryFormatVersion=3D0, made these
-   settings effective, which was a wrong thing to do.  In version 0,
-   there was no special meaning in extensions.* configuration
-   variables.  This has been corrected.  If you need these repository
-   extensions to be effective, the core.repositoryFormatVersion
-   variable needs to be updated to 1 after vetting these extensions.*
-   variables are set correctly.
+* ma/rebase-doc-typofix (2020-07-09) 1 commit
+  (merged to 'next' on 2020-07-09 at 6bf0e26bee)
+ + git-rebase.txt: fix description list separator
 
+ Typofix.
 
-UI, Workflows & Features
 
- * The commands in the "diff" family learned to honor "diff.relative"
-   configuration variable.
+* mt/entry-fstat-fallback-fix (2020-07-09) 1 commit
+  (merged to 'next' on 2020-07-09 at fa0dce39d2)
+ + entry: check for fstat() errors after checkout
 
- * The check in "git fsck" to ensure that the tree objects are sorted
-   still had corner cases it missed unsorted entries.
+ "git checkout" failed to catch an error from fstat() after updating
+ a path in the working tree.
 
- * The interface to redact sensitive information in the trace output
-   has been simplified.
 
- * The command line completion (in contrib/) learned to complete
-   options that the "git switch" command takes.
+* ra/send-email-in-reply-to-from-command-line-wins (2020-07-01) 1 commit
+  (merged to 'next' on 2020-07-06 at 3892a1ab88)
+ + send-email: restore --in-reply-to superseding behavior
 
- * "git diff" used to take arguments in random and nonsense range
-   notation, e.g. "git diff A..B C", "git diff A..B C...D", etc.,
-   which has been cleaned up.
+ "git send-email --in-reply-to=<msg>" did not use the In-Reply-To:
+ header with the value given from the command line, and let it be
+ overridden by the value on In-Reply-To: header in the messages
+ being sent out (if exists).
 
- * "git diff-files" has been taught to say paths that are marked as
-   intent-to-add are new files, not modified from an empty blob.
 
- * "git status" learned to report the status of sparse checkout.
+* rs/line-log-until (2020-07-06) 1 commit
+  (merged to 'next' on 2020-07-06 at 84d6bc67fa)
+ + revision: disable min_age optimization with line-log
 
- * "git difftool" has trouble dealing with paths added to the index
-   with the intent-to-add bit.
+ "git log -Lx,y:path --before=date" lost track of where the range
+ should be because it didn't take the changes made by the youngest
+ commits that are omitted from the output into account.
 
- * "git fast-export --anonymize" learned to take customized mapping to
-   allow its users to tweak its output more usable for debugging.
 
- * The command line completion support (in contrib/) used to be
-   prepared to work with "set -u" but recent changes got a bit more
-   sloppy.  This has been corrected.
+* tb/fix-persistent-shallow (2020-07-08) 1 commit
+  (merged to 'next' on 2020-07-08 at ef1709f4bb)
+ + commit.c: don't persist substituted parents when unshallowing
 
+ When "fetch.writeCommitGraph" configuration is set in a shallow
+ repository and a fetch moves the shallow boundary, we wrote out
+ broken commit-graph files that do not match the reality, which has
+ been corrected.
 
-Performance, Internal Implementation, Development Support etc.
 
- * Code optimization for a common case.
-   (merge 8777616e4d an/merge-single-strategy-optim later to maint).
+* vs/completion-with-set-u (2020-07-01) 1 commit
+  (merged to 'next' on 2020-07-06 at 72b1eca511)
+ + completion: nounset mode fixes
 
- * We've adopted a convention that any on-stack structure can be
-   initialized to have zero values in all fields with "=3D { 0 }",
-   even when the first field happens to be a pointer, but sparse
-   complained that a null pointer should be spelled NULL for a long
-   time.  Start using -Wno-universal-initializer option to squelch
-   it (the latest sparse has it on by default).
+ The command line completion support (in contrib/) used to be
+ prepared to work with "set -u" but recent changes got a bit more
+ sloppy.  This has been corrected.
 
- * "git log -L..." now takes advantage of the "which paths are touched
-   by this commit?" info stored in the commit-graph system.
+--------------------------------------------------
+[New Topics]
 
- * As FreeBSD is not the only platform whose regexp library reports
-   a REG_ILLSEQ error when fed invalid UTF-8, add logic to detect that
-   automatically and skip the affected tests.
+* dl/test-must-fail-fixes-6 (2020-07-07) 6 commits
+ - test-lib-functions: restrict test_must_fail usage
+ - t9400: don't use test_must_fail with cvs
+ - t9834: remove use of `test_might_fail p4`
+ - t7107: don't use test_must_fail()
+ - t5324: reorder `run_with_limited_open_files test_might_fail`
+ - t3701: stop using `env` in force_color()
+
+ Dev support to limit the use of test_must_fail to only git commands.
+
+
+* ds/maintenance (2020-07-07) 21 commits
+ - midx: use start_delayed_progress()
+ - maintenance: add pack-files auto condition
+ - maintenance: create auto condition for loose-objects
+ - maintenance: add auto condition for commit-graph task
+ - maintenance: use pointers to check --auto
+ - maintenance: create maintenance.<task>.enabled config
+ - maintenance: auto-size pack-files batch
+ - maintenance: add pack-files task
+ - maintenance: add loose-objects task
+ - maintenance: add fetch task
+ - maintenance: take a lock on the objects directory
+ - maintenance: add --task option
+ - maintenance: add commit-graph task
+ - maintenance: initialize task array and hashmap
+ - maintenance: replace run_auto_gc()
+ - maintenance: add --quiet option
+ - maintenance: create basic maintenance runner
+ - gc: drop the_repository in log location
+ - gc: use repo config
+ - gc: use repository in too_many_loose_objects()
+ - gc: use the_repository less often
 
- * "git bugreport" learns to report what shell is in use.
+ A "git gc"'s big brother has been introduced to take care of more
+ repository maintenance tasks, not limited to the object database
+ cleaning.
 
- * Support for GIT_CURL_VERBOSE has been rewritten in terms of
-   GIT_TRACE_CURL.
 
- * Preliminary clean-ups around refs API, plus file format
-   specification documentation for the reftable backend.
+* jk/t6000-timestamp-fix (2020-07-07) 1 commit
+  (merged to 'next' on 2020-07-09 at 633bcd552f)
+ + t6000: use test_tick consistently
 
- * Workaround breakage in MSVC build, where "curl-config --cflags"
-   gives settings appropriate for GCC build.
+ Test update.
 
- * Code clean-up of "git clean" resulted in a fix of recent
-   performance regression.
+ Will cook in 'next'.
 
- * Code clean-up in the codepath that serves "git fetch" continues.
 
- * "git merge-base --is-ancestor" is taught to take advantage of the
-   commit graph.
+* sg/commit-graph-progress-fix (2020-07-09) 2 commits
+  (merged to 'next' on 2020-07-09 at 3a9f916ca4)
+ + commit-graph: fix "Writing out commit graph" progress counter
+ + commit-graph: fix progress of reachable commits
 
- * Rewrite of parts of the scripted "git submodule" Porcelain command
-   continues; this time it is "git submodule set-branch" subcommand's
-   turn.
+ The code to produce progress output from "git commit-graph --write"
+ had a few breakages, which have been fixed.
 
- * The "fetch/clone" protocol has been updated to allow the server to
-   instruct the clients to grab pre-packaged packfile(s) in addition
-   to the packed object data coming over the wire.
+ Will merge to 'master'.
 
- * A misdesigned strbuf_write_fd() function has been retired.
+--------------------------------------------------
+[Stalled]
 
- * SHA-256 migration work continues, including CVS/SVN interface.
+* dr/push-remoteref-fix (2020-04-23) 1 commit
+ - remote.c: fix handling of %(push:remoteref)
 
- * A few fields in "struct commit" that do not have to always be
-   present have been moved to commit slabs.
+ The "%(push:remoteref)" placeholder in the "--format=" argument of
+ "git format-patch" (and friends) only showed what got explicitly
+ configured, not what ref at the receiving end would be updated when
+ "git push" was used, as it ignored the default behaviour (e.g. update
+ the same ref as the source).
 
- * API cleanup for get_worktrees()
+ Expecting a reroll.
+ cf. <20200416152145.wp2zeibxmuyas6y6@feanor>
 
- * By renumbering object flag bits, "struct object" managed to lose
-   bloated inter-field padding.
 
- * The name of the primary branch in existing repositories, and the
-   default name used for the first branch in newly created
-   repositories, is made configurable, so that we can eventually wean
-   ourselves off of the hardcoded 'master'.
+* mr/bisect-in-c-2 (2020-07-08) 13 commits
+ . bisect--helper: retire `--bisect-autostart` subcommand
+ . bisect--helper: retire `--write-terms` subcommand
+ . bisect--helper: retire `--check-expected-revs` subcommand
+ . bisect--helper: reimplement `bisect_state` & `bisect_head` shell functions in C
+ . bisect--helper: retire `--next-all` subcommand
+ . bisect--helper: retire `--bisect-clean-state` subcommand
+ . bisect--helper: finish porting `bisect_start()` to C
+ . bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell functions in C
+ . bisect: call 'clear_commit_marks_all()' in 'bisect_next_all()'
+ . bisect--helper: reimplement `bisect_autostart` shell function in C
+ . bisect--helper: introduce new `write_in_file()` function
+ . bisect--helper: use '-res' in 'cmd_bisect__helper' return
+ . bisect--helper: BUG() in cmd_*() on invalid subcommand
 
- * The effort to avoid using test_must_fail on non-git command continues.
+ Rewrite of the remainder of "git bisect" script in C continues.
 
+ Needs more work.
 
-Fixes since v2.27
------------------
 
- * The "--prepare-p4-only" option of "git p4" is supposed to stop
-   after replaying one changeset, but kept going (by mistake?)
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
 
- * The error message from "git checkout -b foo -t bar baz" was
-   confusing.
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
 
- * Some repositories in the wild have commits that record nonsense
-   committer timezone (e.g. rails.git); "git fast-import" learned an
-   option to pass these nonsense timestamps intact to allow recreating
-   existing repositories as-is.
-   (merge d42a2fb72f en/fast-import-looser-date later to maint).
+--------------------------------------------------
+[Cooking]
 
- * The command line completion script (in contrib/) tried to complete
-   "git stash -p" as if it were "git stash push -p", but it was too
-   aggressive and also affected "git stash show -p", which has been
-   corrected.
-   (merge fffd0cf520 vs/complete-stash-show-p-fix later to maint).
+* bw/fail-cloning-into-non-empty (2020-07-06) 1 commit
+ - git clone: don't clone into non-empty directory
 
- * On-the-wire protocol v2 easily falls into a deadlock between the
-   remote-curl helper and the fetch-pack process when the server side
-   prematurely throws an error and disconnects.  The communication has
-   been updated to make it more robust.
+ "git clone --separate-git-dir=$elsewhere" used to stomp on the
+ contents of the existing directory $elsewhere, which has been
+ taught to fail when $elsewhere is not an empty directory.
 
- * "git checkout -p" did not handle a newly added path at all.
-   (merge 2c8bd8471a js/checkout-p-new-file later to maint).
+ Expecting a reroll.
+ with improved commit log message.
+ cf. <xmqqv9j08dxo.fsf@gitster.c.googlers.com>
 
- * The code to parse "git bisect start" command line was lax in
-   validating the arguments.
-   (merge 4d9005ff5d cb/bisect-helper-parser-fix later to maint).
 
- * Reduce memory usage during "diff --quiet" in a worktree with too
-   many stat-unmatched paths.
-   (merge d2d7fbe129 jk/diff-memuse-optim-with-stat-unmatch later to main=
-t).
+* cc/pretty-contents-size (2020-07-07) 5 commits
+ . SQUASH???
+ . ref-filter: add support for %(contents:size)
+ . t6300: test refs pointing to tree and blob
+ . Documentation: clarify 'complete message'
+ . Documentation: clarify %(contents:XXXX) doc
 
- * The reflog entries for "git clone" and "git fetch" did not
-   anonymize the URL they operated on.
-   (merge 46da295a77 js/reflog-anonymize-for-clone-and-fetch later to mai=
-nt).
+ "git for-each-ref --format=<>" learned %(contents:size).
 
- * The behaviour of "sparse-checkout" in the state "git clone
-   --no-checkout" left was changed accidentally in 2.27, which has
-   been corrected.
-
- * Use of negative pathspec, while collecting paths including
-   untracked ones in the working tree, was broken.
-
- * The same worktree directory must be registered only once, but
-   "git worktree move" allowed this invariant to be violated, which
-   has been corrected.
-   (merge 810382ed37 es/worktree-duplicate-paths later to maint).
-
- * The effect of sparse checkout settings on submodules is documented.
-   (merge e7d7c73249 en/sparse-with-submodule-doc later to maint).
-
- * Code clean-up around "git branch" with a minor bugfix.
-   (merge dc44639904 dl/branch-cleanup later to maint).
-
- * A branch name used in a test has been clarified to match what is
-   going on.
-   (merge 08dc26061f pb/t4014-unslave later to maint).
-
- * An in-code comment in "git diff" has been updated.
-   (merge c592fd4c83 dl/diff-usage-comment-update later to maint).
-
- * The documentation and some tests have been adjusted for the recent
-   renaming of "pu" branch to "seen".
-   (merge 6dca5dbf93 js/pu-to-seen later to maint).
-
- * The code to push changes over "dumb" HTTP had a bad interaction
-   with the commit reachability code due to incorrect allocation of
-   object flag bits, which has been corrected.
-   (merge 64472d15e9 bc/http-push-flagsfix later to maint).
-
- * "git send-email --in-reply-to=3D<msg>" did not use the In-Reply-To:
-   header with the value given from the command line, and let it be
-   overridden by the value on In-Reply-To: header in the messages
-   being sent out (if exists).
-   (merge f9f60d7066 ra/send-email-in-reply-to-from-command-line-wins lat=
-er to maint).
-
- * "git log -Lx,y:path --before=3Ddate" lost track of where the range
-   should be because it didn't take the changes made by the youngest
-   commits that are omitted from the output into account.
-
- * When "fetch.writeCommitGraph" configuration is set in a shallow
-   repository and a fetch moves the shallow boundary, we wrote out
-   broken commit-graph files that do not match the reality, which has
-   been corrected.
-
- * "git checkout" failed to catch an error from fstat() after updating
-   a path in the working tree.
-   (merge 35e6e212fd mt/entry-fstat-fallback-fix later to maint).
-
- * Other code cleanup, docfix, build fix, etc.
-   (merge 2c31a7aa44 jx/pkt-line-doc-count-fix later to maint).
-   (merge d63ae31962 cb/t5608-cleanup later to maint).
-   (merge 788db145c7 dl/t-readme-spell-git-correctly later to maint).
-   (merge 45a87a83bb dl/python-2.7-is-the-floor-version later to maint).
-   (merge b75a219904 es/advertise-contribution-doc later to maint).
-   (merge 0c9a4f638a rs/pull-leakfix later to maint).
-   (merge d546fe2874 rs/commit-reach-leakfix later to maint).
-   (merge 087bf5409c mk/pb-pretty-email-without-domain-part-fix later to =
-maint).
-   (merge 5f4ee57ad9 es/worktree-code-cleanup later to maint).
-   (merge 0172f7834a cc/cat-file-usage-update later to maint).
-   (merge 81de0c01cf ma/rebase-doc-typofix later to maint).
-
-----------------------------------------------------------------
-
-Changes since v2.27.0 are as follows:
-
-Abhishek Kumar (4):
-      object: drop parsed_object_pool->commit_count
-      commit-graph: introduce commit_graph_data_slab
-      commit: move members graph_pos, generation to a slab
-      commit-graph: minimize commit_graph_data_slab access
-
-Andrew Ng (1):
-      merge: optimization to skip evaluate_result for single strategy
-
-Ben Keene (1):
-      git-p4.py: fix --prepare-p4-only error with multiple commits
-
-Carlo Marcelo Arenas Bel=C3=B3n (5):
-      t/helper: teach test-regex to report pattern errors (like REG_ILLSE=
-Q)
-      t4210: detect REG_ILLSEQ dynamically and skip affected tests
-      bisect--helper: avoid segfault with bad syntax in `start --term-*`
-      t5608: avoid say() and use "skip_all" instead for consistency
-      commit-reach: avoid is_descendant_of() shim
-
-Chris Torek (3):
-      t/t3430: avoid undefined git diff behavior
-      git diff: improve range handling
-      Documentation: usage for diff combined commits
-
-Christian Couder (40):
-      upload-pack: remove unused 'wants' from upload_pack_data
-      upload-pack: move {want,have}_obj to upload_pack_data
-      upload-pack: move 'struct upload_pack_data' around
-      upload-pack: use 'struct upload_pack_data' in upload_pack()
-      upload-pack: pass upload_pack_data to get_common_commits()
-      upload-pack: pass upload_pack_data to receive_needs()
-      upload-pack: use upload_pack_data writer in receive_needs()
-      upload-pack: move symref to upload_pack_data
-      upload-pack: pass upload_pack_data to send_ref()
-      upload-pack: pass upload_pack_data to check_non_tip()
-      upload-pack: remove static variable 'stateless_rpc'
-      upload-pack: pass upload_pack_data to create_pack_file()
-      upload-pack: use upload_pack_data fields in receive_needs()
-      upload-pack: annotate upload_pack_data fields
-      upload-pack: move static vars to upload_pack_data
-      upload-pack: move use_sideband to upload_pack_data
-      upload-pack: move filter_capability_requested to upload_pack_data
-      upload-pack: move multi_ack to upload_pack_data
-      upload-pack: change multi_ack to an enum
-      upload-pack: pass upload_pack_data to upload_pack_config()
-      upload-pack: move keepalive to upload_pack_data
-      upload-pack: move allow_filter to upload_pack_data
-      upload-pack: move allow_ref_in_want to upload_pack_data
-      upload-pack: move allow_sideband_all to upload_pack_data
-      upload-pack: move pack_objects_hook to upload_pack_data
-      upload-pack: pass upload_pack_data to send_shallow_list()
-      upload-pack: pass upload_pack_data to deepen()
-      upload-pack: pass upload_pack_data to deepen_by_rev_list()
-      upload-pack: pass upload_pack_data to send_unshallow()
-      upload-pack: move shallow_nr to upload_pack_data
-      upload-pack: move extra_edge_obj to upload_pack_data
-      upload-pack: move allow_unadvertised_object_request to upload_pack_=
-data
-      upload-pack: change allow_unadvertised_object_request to an enum
-      upload-pack: pass upload_pack_data to process_haves()
-      upload-pack: pass upload_pack_data to send_acks()
-      upload-pack: pass upload_pack_data to ok_to_give_up()
-      upload-pack: pass upload_pack_data to got_oid()
-      upload-pack: move oldest_have to upload_pack_data
-      upload-pack: refactor common code into do_got_oid()
-      cat-file: add missing [=3D<format>] to usage/synopsis
-
-Denton Liu (18):
-      lib-submodule-update: add space after function name
-      lib-submodule-update: consolidate --recurse-submodules
-      remote-curl: fix typo
-      remote-curl: remove label indentation
-      transport: extract common fetch_pack() call
-      pkt-line: extern packet_length()
-      remote-curl: error on incomplete packet
-      pkt-line: define PACKET_READ_RESPONSE_END
-      stateless-connect: send response end packet
-      t/README: avoid poor-man's small caps GIT
-      CodingGuidelines: specify Python 2.7 is the oldest version
-      lib-submodule-update: prepend "git" to $command
-      t3200: rename "expected" to "expect"
-      t3200: test for specific errors
-      branch: don't mix --edit-description
-      builtin/diff: update usage comment
-      builtin/diff: fix botched update of usage comment
-      lib-submodule-update: pass 'test_must_fail' as an argument
-
-Derrick Stolee (3):
-      line-log: integrate with changed-path Bloom filters
-      commit-reach: create repo_is_descendant_of()
-      commit-reach: use fast logic in repo_in_merge_base
-
-Don Goodman-Wilson (1):
-      init: allow setting the default for the initial branch name via the=
- config
-
-Elijah Newren (11):
-      fast-import: add new --date-format=3Draw-permissive format
-      sparse-checkout: avoid staging deletions of all files
-      dir: fix treatment of negated pathspecs
-      git-sparse-checkout: clarify interactions with submodules
-      dir: fix a few confusing comments
-      dir, clean: avoid disallowed behavior
-      clean: consolidate handling of ignored parameters
-      clean: optimize and document cases where we recurse into subdirecto=
-ries
-      wt-status: show sparse checkout status as well
-      git-prompt: document how in-progress operations affect the prompt
-      git-prompt: include sparsity state as well
-
-Emily Shaffer (3):
-      help: add shell-path to --build-options
-      bugreport: include user interactive shell
-      docs: mention MyFirstContribution in more places
-
-Eric Sunshine (10):
-      worktree: factor out repeated string literal
-      worktree: give "should be pruned?" function more meaningful name
-      worktree: make high-level pruning re-usable
-      worktree: prune duplicate entries referencing same worktree path
-      worktree: prune linked worktree referencing main worktree path
-      worktree: generalize candidate worktree path validation
-      worktree: make "move" refuse to move atop missing registered worktr=
-ee
-      worktree: drop get_worktrees() special-purpose sorting option
-      worktree: drop get_worktrees() unused 'flags' argument
-      worktree: avoid dead-code in conditional
-
-Han-Wen Nienhuys (5):
-      refs.h: clarify reflog iteration order
-      t: use update-ref and show-ref to reading/writing refs
-      refs: improve documentation for ref iterator
-      reftable: clarify how empty tables should be written
-      reftable: define version 2 of the spec to accomodate SHA256
-
-Jacob Keller (16):
-      completion: add test showing subpar git switch completion
-      completion: add tests showing subpar DWIM logic for switch/checkout
-      completion: add tests showing subar checkout --detach logic
-      completion: add tests showing subpar switch/checkout --track logic
-      completion: add tests showing subpar -c/-C startpoint completion
-      completion: add tests showing subpar -c/C argument completion
-      completion: add tests showing subpar switch/checkout --orphan logic
-      completion: replace overloaded track term for __git_complete_refs
-      completion: extract function __git_dwim_remote_heads
-      completion: perform DWIM logic directly in __git_complete_refs
-      completion: improve handling of DWIM mode for switch/checkout
-      completion: improve completion for git switch with no options
-      completion: improve handling of --detach in checkout
-      completion: improve handling of --track in switch/checkout
-      completion: improve handling of -c/-C and -b/-B in switch/checkout
-      completion: improve handling of --orphan option of switch/checkout
-
-Jeff King (14):
-      diff: discard blob data from stat-unmatched pairs
-      upload-pack: actually use some upload_pack_data bitfields
-      t9351: derive anonymized tree checks from original repo
-      fast-export: use xmemdupz() for anonymizing oids
-      fast-export: store anonymized oids as hex strings
-      fast-export: tighten anonymize_mem() interface to handle only strin=
-gs
-      fast-export: stop storing lengths in anonymized hashmaps
-      fast-export: use a flex array to store anonymized entries
-      fast-export: move global "idents" anonymize hashmap into function
-      fast-export: add a "data" callback parameter to anonymize_str()
-      fast-export: allow seeding the anonymized mapping
-      fast-export: anonymize "master" refname
-      fast-export: use local array to store anonymized oid
-      diff: check for merge bases before assigning sym->base
-
-Jiuyang Xie (1):
-      doc: fix wrong 4-byte length of pkt-line message
-
-Johannes Schindelin (16):
-      checkout -p: handle new files correctly
-      clone/fetch: anonymize URLs in the reflog
-      msvc: fix "REG_STARTEND" issue
-      fmt-merge-msg: stop treating `master` specially
-      send-pack/transport-helper: avoid mentioning a particular branch
-      submodule: fall back to remote's HEAD for missing remote.<name>.bra=
-nch
-      docs: add missing diamond brackets
-      init: allow specifying the initial branch name for the new reposito=
-ry
-      clone: use configured default branch name when appropriate
-      remote: use the configured default branch name when appropriate
-      testsvn: respect `init.defaultBranch`
-      docs: adjust for the recent rename of `pu` to `seen`
-      docs: adjust the technical overview for the rename `pu` -> `seen`
-      tests: reference `seen` wherever `pu` was referenced
-      diff-files --raw: show correct post-image of intent-to-add files
-      difftool -d: ensure that intent-to-add files are handled correctly
-
-John Lin (1):
-      bash-completion: add git-prune into bash completion
-
-Jonathan Nieder (3):
-      config: let feature.experimental imply protocol.version=3D2
-      reftable: file format documentation
-      experimental: default to fetch.writeCommitGraph=3Dfalse
-
-Jonathan Tan (12):
-      t5551: test that GIT_TRACE_CURL redacts password
-      http, imap-send: stop using CURLOPT_VERBOSE
-      http: redact all cookies, teach GIT_TRACE_REDACT=3D0
-      http: use --stdin when indexing dumb HTTP pack
-      http: refactor finish_http_pack_request()
-      http-fetch: refactor into function
-      http-fetch: support fetching packfiles by URL
-      Documentation: order protocol v2 sections
-      Documentation: add Packfile URIs design doc
-      upload-pack: refactor reading of pack-objects out
-      fetch-pack: support more than one pack lockfile
-      upload-pack: send part of packfile response as uri
-
-Josh Steadmon (1):
-      fuzz-commit-graph: properly free graph struct
-
-Junio C Hamano (8):
-      Start the post 2.27 cycle
-      The second batch
-      The third batch
-      The fourth batch
-      The fifth batch
-      The sixth batch
-      The seventh batch
-      Git 2.28-rc0
-
-Laurent Arnoud (1):
-      diff: add config option relative
-
-Luc Van Oostenryck (1):
-      sparse: allow '{ 0 }' to be used without warnings
-
-Marco Trevisan (Trevi=C3=B1o) (1):
-      completion: use native ZSH array pattern matching
-
-Martin =C3=85gren (1):
-      git-rebase.txt: fix description list separator
-
-Matheus Tavares (1):
-      entry: check for fstat() errors after checkout
-
-Miroslav Ko=C5=A1k=C3=A1r (1):
-      doc: fix author vs. committer copy/paste error
-
-Paolo Bonzini (1):
-      t4014: do not use "slave branch" nomenclature
-
-Patrick Steinhardt (1):
-      refs: implement reference transaction hook
-
-Rafael Aquini (1):
-      send-email: restore --in-reply-to superseding behavior
-
-Ramsay Jones (1):
-      upload-pack: fix a sparse '0 as NULL pointer' warning
-
-Randall S. Becker (2):
-      bugreport.c: replace strbuf_write_fd with write_in_full
-      strbuf: remove unreferenced strbuf_write_fd method.
-
-Ren=C3=A9 Scharfe (10):
-      fsck: fix a typo in a comment
-      t1450: increase test coverage of in-tree d/f detection
-      t1450: demonstrate undetected in-tree d/f conflict
-      fsck: detect more in-tree d/f conflicts
-      checkout: add tests for -b and --track
-      checkout: improve error messages for -b with extra argument
-      commit-reach: plug minor memory leak after using is_descendant_of()
-      pull: plug minor memory leak after using is_descendant_of()
-      revision: reallocate TOPO_WALK object flags
-      revision: disable min_age optimization with line-log
-
-SZEDER G=C3=A1bor (4):
-      line-log: remove unused fields from 'struct line_log_data'
-      t4211-line-log: add tests for parent oids
-      line-log: more responsive, incremental 'git log -L'
-      line-log: try to use generation number-based topo-ordering
-
-Shourya Shukla (1):
-      submodule: port subcommand 'set-branch' from shell to C
-
-Srinidhi Kaushik (1):
-      diff-files: treat "i-t-a" files as "not-in-index"
-
-Taylor Blau (11):
-      commit-graph.c: extract 'refs_cb_data'
-      commit-graph.c: show progress of finding reachable commits
-      commit-graph.c: peel refs in 'add_ref_to_set'
-      builtin/commit-graph.c: extract 'read_one_commit()'
-      builtin/commit-graph.c: dereference tags in builtin
-      commit-graph.c: simplify 'fill_oids_from_commits'
-      t5318: reorder test below 'graph_read_expect'
-      commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
-      t5318: use 'test_must_be_empty'
-      t5318: test that '--stdin-commits' respects '--[no-]progress'
-      commit.c: don't persist substituted parents when unshallowing
-
-Ville Skytt=C3=A4 (2):
-      completion: don't override given stash subcommand with -p
-      completion: nounset mode fixes
-
-Xin Li (4):
-      repository: add a helper function to perform repository format upgr=
-ade
-      fetch: allow adding a filter after initial clone
-      sparse-checkout: upgrade repository to version 1 when enabling exte=
-nsion
-      check_repository_format_gently(): refuse extensions for old reposit=
-ories
-
-brian m. carlson (61):
-      t1050: match object ID paths in a hash-insensitive way
-      Documentation: document v1 protocol object-format capability
-      builtin/checkout: simplify metadata initialization
-      t2060: add a test for switch with --orphan and --discard-changes
-      connect: have ref processing code take struct packet_reader
-      wrapper: add function to compare strings with different NUL termina=
-tion
-      remote: advertise the object-format capability on the server side
-      connect: add function to parse multiple v1 capability values
-      connect: add function to fetch value of a v2 server capability
-      pkt-line: add a member for hash algorithm
-      transport: add a hash algorithm member
-      connect: add function to detect supported v1 hash functions
-      send-pack: detect when the server doesn't support our hash
-      connect: make parse_feature_value extern
-      fetch-pack: detect when the server doesn't support our hash
-      connect: detect algorithm when fetching refs
-      builtin/receive-pack: detect when the server doesn't support our ha=
-sh
-      docs: update remote helper docs for object-format extensions
-      transport-helper: implement object-format extensions
-      remote-curl: implement object-format extensions
-      builtin/clone: initialize hash algorithm properly
-      t5562: pass object-format in synthesized test data
-      fetch-pack: parse and advertise the object-format capability
-      setup: set the_repository's hash algo when checking format
-      t3200: mark assertion with SHA1 prerequisite
-      packfile: compute and use the index CRC offset
-      t5302: modernize test formatting
-      builtin/show-index: provide options to determine hash algo
-      t1302: expect repo format version 1 for SHA-256
-      Documentation/technical: document object-format for protocol v2
-      connect: pass full packet reader when parsing v2 refs
-      connect: parse v2 refs with correct hash algorithm
-      serve: advertise object-format capability for protocol v2
-      t5500: make hash independent
-      builtin/ls-remote: initialize repository based on fetch
-      remote-curl: detect algorithm for dumb HTTP by size
-      builtin/index-pack: add option to specify hash algorithm
-      t1050: pass algorithm to index-pack when outside repo
-      remote-curl: avoid truncating refs with ls-remote
-      t/helper: initialize the repository for test-sha1-array
-      t5702: offer an object-format capability in the test
-      t5703: use object-format serve option
-      t5704: send object-format capability with SHA-256
-      t5300: pass --object-format to git index-pack
-      bundle: detect hash algorithm when reading refs
-      remote-testgit: adapt for object-format
-      t9109: make test hash independent
-      t9168: make test hash independent
-      t9108: make test hash independent
-      t9100: make test work with SHA-256
-      t9104: make hash size independent
-      t9101: make hash independent
-      t/lib-git-svn: make hash size independent
-      perl: create and switch variables for hash constants
-      perl: make Git::IndexInfo work with SHA-256
-      perl: make SVN code hash independent
-      git-svn: set the OID length based on hash algorithm
-      git-cvsserver: port to SHA-256
-      git-cvsimport: port to SHA-256
-      git-cvsexportcommit: port to SHA-256
-      http-push: ensure unforced pushes fail when data would be lost
-
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh (1):
-      contrib: subtree: adjust test to change in fmt-merge-msg
+ Expecting a reroll.
+ breaks a test on macOS
+ cf. <xmqqk0zf3y8s.fsf@gitster.c.googlers.com>
 
+
+* ls/mergetool-meld-auto-merge (2020-07-08) 1 commit
+ - mergetool: mergetool: update meld backend to allow using '--auto-merge'
+
+ The 'meld' backend of the "git mergetool" learned to give the
+ underlying 'meld' the '--auto-merge' option, which would help
+ reduce the amount of text that requires manual merging.
+
+
+* pb/log-rev-list-doc (2020-07-08) 6 commits
+ - git-log.txt: include rev-list-description.txt
+ - git-rev-list.txt: move description to separate file
+ - git-rev-list.txt: tweak wording in set operations
+ - git-rev-list.txt: fix Asciidoc syntax
+ - revisions.txt: describe 'rev1 rev2 ...' meaning for ranges
+ - git-log.txt: add links to 'rev-list' and 'diff' docs
+
+ "git help log" has been enhanced by sharing more material from the
+ documentation for the underlying "git rev-list" command.
+
+
+* ta/wait-on-aliased-commands-upon-signal (2020-07-07) 2 commits
+  (merged to 'next' on 2020-07-09 at de8bde9182)
+ + Wait for child on signal death for aliases to externals
+ + Wait for child on signal death for aliases to builtins
+
+ When an aliased command, whose output is piped to a pager by git,
+ gets killed by a signal, the pager got into a funny state, which
+ has been corrected (again).
+
+ Will merge to 'master'.
+
+
+* tb/upload-pack-filters (2020-07-06) 4 commits
+ - upload-pack.c: introduce 'uploadpack.filter.tree.maxDepth'
+ - upload-pack.c: pass 'struct list_objects_filter_options *'
+ - upload-pack.c: allow banning certain object filter(s)
+ - list_objects_filter_options: introduce 'list_object_filter_config_name'
+
+ The component to respond to "git fetch" request is made more
+ configurable to selectively allow or reject object filtering
+ specification used for partial cloning.
+
+ Waiting for reviews.
+ cf. <cover.1593720075.git.me@ttaylorr.com>
+
+
+* mt/hash-to-hex-thread-safety (2020-06-26) 2 commits
+ - hex: make hash_to_hex_algop() and friends thread-safe
+ - compat/win32/pthread: add pthread_once()
+
+ hash_to_hex() used a set of rotating static buffers, which was not
+ safe to use in a threaded environment.  This has been made safer by
+ using thread-local storage.
+
+ Expecting a reroll.
+ cf. <CAHd-oW6A2aBHg80R9kyifvF7thwzam5EYYoN9d2TaBcHJrcKWw@mail.gmail.com>
+
+
+* mf/submodule-summary-with-correct-repository (2020-06-24) 2 commits
+ - submodule: use submodule repository when preparing summary
+ - revision: use repository from rev_info when parsing commits
+
+ "git diff/show" on a change that involves a submodule used to read
+ the information on commits in the submodule from a wrong repository
+ and gave a wrong information when the commit-graph is involved.
+
+ Needs tests.
+
+
+* ds/commit-graph-bloom-updates (2020-07-01) 10 commits
+  (merged to 'next' on 2020-07-06 at 177e6b362e)
+ + commit-graph: check all leading directories in changed path Bloom filters
+ + revision: empty pathspecs should not use Bloom filters
+ + revision.c: fix whitespace
+ + commit-graph: check chunk sizes after writing
+ + commit-graph: simplify chunk writes into loop
+ + commit-graph: unify the signatures of all write_graph_chunk_*() functions
+ + commit-graph: persist existence of changed-paths
+ + bloom: fix logic in get_bloom_filter()
+ + commit-graph: change test to die on parse, not load
+ + commit-graph: place bloom_settings in context
+ (this branch uses sg/commit-graph-cleanups.)
+
+ Updates to the changed-paths bloom filter.
+
+ Will cook in 'next'.
+
+
+* ss/cmake-build (2020-06-26) 8 commits
+ - ci: modification of main.yml to use cmake for vs-build job
+ - cmake: support for building git on windows with msvc and clang.
+ - cmake: support for building git on windows with mingw
+ - cmake: support for testing git when building out of the source tree
+ - cmake: support for testing git with ctest
+ - cmake: installation support for git
+ - cmake: generate the shell/perl/python scripts and templates, translations
+ - Introduce CMake support for configuring Git
+
+ CMake support to build with MSVC for Windows bypassing the Makefile.
+
+ Waiting for a (hopefully final) review.
+
+
+* sg/commit-graph-cleanups (2020-06-08) 10 commits
+  (merged to 'next' on 2020-07-06 at 15c9d77eb9)
+ + commit-graph: simplify write_commit_graph_file() #2
+ + commit-graph: simplify write_commit_graph_file() #1
+ + commit-graph: simplify parse_commit_graph() #2
+ + commit-graph: simplify parse_commit_graph() #1
+ + commit-graph: clean up #includes
+ + diff.h: drop diff_tree_oid() & friends' return value
+ + commit-slab: add a function to deep free entries on the slab
+ + commit-graph-format.txt: all multi-byte numbers are in network byte order
+ + commit-graph: fix parsing the Chunk Lookup table
+ + tree-walk.c: don't match submodule entries for 'submod/anything'
+ (this branch is used by ds/commit-graph-bloom-updates.)
+
+ The changed-path Bloom filter is improved using ideas from an
+ independent implementation.
+
+ Will cook in 'next'.
+
+
+* es/config-hooks (2020-05-21) 4 commits
+ - hook: add --porcelain to list command
+ - hook: add list command
+ - hook: scaffolding for git-hook subcommand
+ - doc: propose hooks managed by the config
+
+ The "hooks defined in config" topic.
+
+ What's the status of this one?  Abandoned?
+
+
+* pw/rebase-i-more-options (2020-06-26) 5 commits
+ - rebase: add --reset-author-date
+ - rebase -i: support --ignore-date
+ - sequencer: rename amend_author to author_to_free
+ - rebase -i: support --committer-date-is-author-date
+ - rebase -i: add --ignore-whitespace flag
+
+ "git rebase -i" learns a bit more options.
+
+ Waiting for a (hopefully final) review.
+
+
+* mt/grep-sparse-checkout (2020-06-12) 6 commits
+ - config: add setting to ignore sparsity patterns in some cmds
+ - grep: honor sparse checkout patterns
+ - config: correctly read worktree configs in submodules
+ - t/helper/test-config: facilitate addition of new cli options
+ - t/helper/test-config: return exit codes consistently
+ - doc: grep: unify info on configuration variables
+
+ "git grep" has been tweaked to be limited to the sparse checkout
+ paths.
+
+ Review needed on 4/6; otherwise looking sane.
+ cf. <CABPp-BGdEyEeajYZj_rdxp=MyEQdszuyjVTax=hhYj3fOtRQUQ@mail.gmail.com>
+
+
+* jx/proc-receive-hook (2020-05-18) 11 commits
+ - doc: add documentation for the proc-receive hook
+ - transport: parse report options for tracking refs
+ - t5411: test updates of remote-tracking branches
+ - receive-pack: new config receive.procReceiveRefs
+ - refs.c: refactor to reuse ref_is_hidden()
+ - receive-pack: feed report options to post-receive
+ - doc: add document for capability report-status-v2
+ - New capability "report-status-v2" for git-push
+ - receive-pack: add new proc-receive hook
+ - t5411: add basic test cases for proc-receive hook
+ - transport: not report a non-head push as a branch
+
+ "git receive-pack" that accepts requests by "git push" learned to
+ outsource most of the ref updates to the new "proc-receive" hook.
+
+ Needs review.
+
+
+* hn/reftable (2020-07-06) 4 commits
+ - Treat BISECT_HEAD as a pseudo ref
+ - checkout: add '\n' to reflog message
+ - t3432: use git-reflog to inspect the reflog for HEAD
+ - lib-t6000.sh: write tag using git-update-ref
+
+ Preliminary clean-up of the refs API in preparation for adding a
+ new refs backend "reftable".
+
+ Expecting a reroll.
+ The second one should be dropped, and possibly replaced with a
+ patch that moves message normalization from backends to the more
+ generic layer.
+ cf. <xmqqmu4ca31g.fsf@gitster.c.googlers.com>
+
+--------------------------------------------------
+[Discarded]
+
+* jc/credential-store-file-format-doc (2020-04-27) 1 commit
+ . credential-store: document the file format a bit more
+
+ Now has become a part of Carlo's credential-store fix patches.
+
+
+* js/ci-skip-on-github-workflow (2020-05-02) 1 commit
+ . ci: respect the [skip ci] convention in our GitHub workflow "CI/PR"
+
+ Allow contributors to mark a branch/push that it does not have to
+ be built via GitHub actions, in a way similar to how Travis lets
+ them mark the commits with an embedded "[skip ci]" string.
+
+ Superseded by dd/ci-only-on-selective-branches topic.
+
+
+* dd/ci-only-on-selective-branches (2020-05-05) 2 commits
+ - CI: limit GitHub Actions to designated branches
+ - SubmittingPatches: advertise GitHub Actions CI
+
+ Instead of always building all branches of all forks of our project
+ at GitHub via GitHub Actions, only build when branches with known
+ and specific names are updated, and also a pull request.
+
+ Superseded by jk/ci-only-on-selected-branches
+
+
+* jk/fast-export-anonym (2020-06-22) 4 commits
+  (merged to 'next' on 2020-06-22 at b517b2f707)
+ + fast-export: allow dumping the path mapping
+ + fast-export: refactor path printing to not rely on stdout
+ + fast-export: anonymize "master" refname
+ + fast-export: allow dumping the refname mapping
+
+ The way refnames are anonymized has been updated and a way to help
+ debugging using the anonymized output hsa been added.
+
+ Superseded by 'jk/fast-export-anonym-alt'.
