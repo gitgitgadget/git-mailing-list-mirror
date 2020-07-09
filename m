@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 350C3C433DF
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 561A4C433E1
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:17:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11B86206F6
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:16:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33DA4206F6
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:17:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5ApMnFH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MDT/rJOj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbgGICQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jul 2020 22:16:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46690 "EHLO
+        id S1726203AbgGICQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jul 2020 22:16:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726124AbgGICQx (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726151AbgGICQx (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 8 Jul 2020 22:16:53 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A364AC08C5CE
-        for <git@vger.kernel.org>; Wed,  8 Jul 2020 19:16:52 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id j4so596439wrp.10
-        for <git@vger.kernel.org>; Wed, 08 Jul 2020 19:16:52 -0700 (PDT)
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70332C061A0B
+        for <git@vger.kernel.org>; Wed,  8 Jul 2020 19:16:53 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id f18so642833wrs.0
+        for <git@vger.kernel.org>; Wed, 08 Jul 2020 19:16:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Awr4aT+SbJtVzKY6f6/71JCvlB0BbqV5DvbvHwhzmM4=;
-        b=M5ApMnFH6q2TvAr8pfOiXrZEEdqt5WAgkXQij1EkBRTIW9QPzYrMkR/EEUV68E8fHc
-         VwoWoQCj+U0z1uKEJ548d0M8p8/pjwt9CCv0m91KYCqj1mNievR64DP4j3m8DElevnPr
-         i1qwbubPORTildoDjCYp1oS7XGEOIusmyN9KDk6q2gBfO3xVcOuH+dAAWiqGWf98uDim
-         oudGI6GbRzI9qpNUGJ5SYNHxS25th2BraKKuDzOD/iRqwKad4HWrqXIOiRatCPsxG1SX
-         7HHZKq/cT2Ai0vHFbyFMS1KYkiUwNFgPUTdrgg+/XyIUhgvXTYvRpVaJ+m1YY/E/eo65
-         Qeiw==
+        bh=3efikXJWi4yEKiNU1sfB/eB3CbWzH026rNAeS4sShpE=;
+        b=MDT/rJOjSrnR16kt4H/3NYHZu2hGlz+LJydF4vbau5HTGqSd+8R27eLAJ4EH9/Bs07
+         ikZ3h3mrLY1qFwo/tn5xX/g+B0MJ6Mp/jL9qP2J27Axn/tnoCjyUqRZwCoKSsFtOkd14
+         b33xIjUKixHws/nRFdFFCBy/wkUhtCmc9FzlPR3ZT/HPJE6eN89KM1dXNHuROB1ybQC/
+         O1Gg2wiWB83OrDUhT4Nfuc/0EVBd/jUDeLWZxo9zEtQEcK85G73Xr60PbmjMWBRno6Eg
+         zjhxHBZrNdM9470ARXg7wmNvlOmrzivs0qm5VwqXqtpkBoBosDORbakeqNUPQT28BTwz
+         CSgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Awr4aT+SbJtVzKY6f6/71JCvlB0BbqV5DvbvHwhzmM4=;
-        b=GcteUS1iOEgUoqO2MlF+/ijI1ZS9ec4G+SE7HMnMaRr2RnwhjruHBAwXuN8ZwMvim3
-         XBkPMi+AKhFYy0DYpGGGuD/Y7U3W6a1yGLduBfmWh0Ob742e9eQ2SI/1p+p+FtRYwaHb
-         FX+btt2iWRlOb9yUFwW9XA5HZW8QsxtDguAGkmec66zCLPt/h80j88FzFor1yw0AZl+Y
-         jYCwRQKnfqJi3JW+NjrIVMa57WsHGk7TNGTXNIOxKQdSs4HR4tobzH+dcNeC8I12pgGn
-         rgwgkDqVJxexxH/CZO2Eh3aC1z4fjgn5x7BLtdFnTbEafa+I29lBjRB8n8zYU5tH07cg
-         vE0g==
-X-Gm-Message-State: AOAM531LcMKTJn01X/2q7+HSFDlUK5ysjPU+7MmzasMzWKguLoCrGpb7
-        SF41Hc3ezXwVA/WmPjCj9RZ+GLLm
-X-Google-Smtp-Source: ABdhPJwFFpSveYEPb27FGGhmtCn6TfIFaOTx0vutg9uE49KMnSenHViJq8D2rFWIalbM3xrGw91O7Q==
-X-Received: by 2002:a5d:664a:: with SMTP id f10mr60836508wrw.300.1594261011297;
-        Wed, 08 Jul 2020 19:16:51 -0700 (PDT)
+        bh=3efikXJWi4yEKiNU1sfB/eB3CbWzH026rNAeS4sShpE=;
+        b=gB5RxP+zxto2dJfafeVo0X2o8jg8OhK8tkfmRZ0mJcXVRILWpmn4RRGJHFZC9Ps34C
+         lXDoeFGAZU3XHmPpEh6obRc7BG08A3QTkY2gCxaA5Fa67nl/kQJVMa4tupL+Do01Itfw
+         OxNbQ5Jpmp2anSmA5dx8nX51tpsTjA+yfRFW2neKPtWuoGGRUmrhnyR8fCn1waAzL5/e
+         3Zsxzd08IHhwQscuwpEeSQhWlQZ4Id98X9EtJRnJSati6mZGqGG7sqKRA8TaBAfjf7OW
+         A6UUbJPymZADTCX91UkhD/+juV/vpK+2PNkcGIuJOihojjs4UoXopBpubx4XA/6TDi+Z
+         TxUA==
+X-Gm-Message-State: AOAM531UKgZ0aP4LbS5p+m+Lt1nacct9zPsb9jx+ZNquilvQTRt9lTE4
+        fWMcMGWt8cEkEy+/+4WIYDwJioeQ
+X-Google-Smtp-Source: ABdhPJykS25PJ1kjQp8dhoBDeyf8ZzFOfusD0f/zGw2H+4P/1zpB0UHM7ehYV3yN2SwvkDoJSGjv9Q==
+X-Received: by 2002:a5d:4604:: with SMTP id t4mr30785666wrq.0.1594261012018;
+        Wed, 08 Jul 2020 19:16:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w14sm2981855wrt.55.2020.07.08.19.16.50
+        by smtp.gmail.com with ESMTPSA id f186sm2516965wmf.29.2020.07.08.19.16.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2020 19:16:50 -0700 (PDT)
-Message-Id: <3c573695a804c2103e69a2760fa28e4aa67f9f4b.1594261008.git.gitgitgadget@gmail.com>
+        Wed, 08 Jul 2020 19:16:51 -0700 (PDT)
+Message-Id: <b8ee4a743c49553ba479839a234c421876fa14a4.1594261008.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.590.v3.git.1594261008.gitgitgadget@gmail.com>
 References: <pull.590.v2.git.1593747509.gitgitgadget@gmail.com>
         <pull.590.v3.git.1594261008.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Jul 2020 02:16:44 +0000
-Subject: [PATCH v3 2/6] revisions.txt: describe 'rev1 rev2 ...' meaning for
- ranges
+Date:   Thu, 09 Jul 2020 02:16:45 +0000
+Subject: [PATCH v3 3/6] git-rev-list.txt: fix Asciidoc syntax
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,30 +83,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The "Specifying ranges" section does not mention explicitly that
-several commits can be specified to form a range.
+Using '{caret}' inside double quotes and immediately following with a
+single quoted word does not create the desired output: '<commit1>'
+appears verbatim instead of being emphasized.
 
-Add a mention to that effect.
+Use a litteral caret ('^') instead.
+
+Also, remove the leading tabs in shell examples to bring them more in
+line with the rest of the documentation.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/revisions.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/git-rev-list.txt | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 1ad95065c1..d9169c062e 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -254,6 +254,9 @@ specifying a single revision, using the notation described in the
- previous section, means the set of commits `reachable` from the given
- commit.
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 025c911436..aa95334a79 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -29,19 +29,19 @@ to further limit the result.
+ Thus, the following command:
  
-+Specifying several revisions means the set of commits reachable from
-+any of the given commits.
-+
- A commit's reachable set is the commit itself and the commits in
- its ancestry chain.
+ -----------------------------------------------------------------------
+-	$ git rev-list foo bar ^baz
++$ git rev-list foo bar ^baz
+ -----------------------------------------------------------------------
  
+ means "list all the commits which are reachable from 'foo' or 'bar', but
+ not from 'baz'".
+ 
+ A special notation "'<commit1>'..'<commit2>'" can be used as a
+-short-hand for "{caret}'<commit1>' '<commit2>'". For example, either of
++short-hand for "^'<commit1>' '<commit2>'". For example, either of
+ the following may be used interchangeably:
+ 
+ -----------------------------------------------------------------------
+-	$ git rev-list origin..HEAD
+-	$ git rev-list HEAD ^origin
++$ git rev-list origin..HEAD
++$ git rev-list HEAD ^origin
+ -----------------------------------------------------------------------
+ 
+ Another special notation is "'<commit1>'...'<commit2>'" which is useful
+@@ -49,8 +49,8 @@ for merges.  The resulting set of commits is the symmetric difference
+ between the two operands.  The following two commands are equivalent:
+ 
+ -----------------------------------------------------------------------
+-	$ git rev-list A B --not $(git merge-base --all A B)
+-	$ git rev-list A...B
++$ git rev-list A B --not $(git merge-base --all A B)
++$ git rev-list A...B
+ -----------------------------------------------------------------------
+ 
+ 'rev-list' is a very essential Git command, since it
 -- 
 gitgitgadget
 
