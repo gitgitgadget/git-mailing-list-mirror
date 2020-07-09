@@ -2,170 +2,254 @@ Return-Path: <SRS0=1oE7=AU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PLING_QUERY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D697C433E0
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 04:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE6BC433DF
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 04:28:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1171A206F6
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 04:07:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 164992070E
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 04:28:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="td4RQxw+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OCWnh/wY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbgGIEHU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 00:07:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35394 "EHLO
+        id S1726313AbgGIE23 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 00:28:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726064AbgGIEHT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jul 2020 00:07:19 -0400
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70405C061A0B
-        for <git@vger.kernel.org>; Wed,  8 Jul 2020 21:07:19 -0700 (PDT)
-Received: by mail-ot1-x343.google.com with SMTP id e90so786759ote.1
-        for <git@vger.kernel.org>; Wed, 08 Jul 2020 21:07:19 -0700 (PDT)
+        with ESMTP id S1726099AbgGIE23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jul 2020 00:28:29 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6521C061A0B
+        for <git@vger.kernel.org>; Wed,  8 Jul 2020 21:28:28 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id q5so809397wru.6
+        for <git@vger.kernel.org>; Wed, 08 Jul 2020 21:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/nBsD849uiGdABqrN09COO56GAp6j1+GeHWcGO1SAx8=;
-        b=td4RQxw+UiLa8vp9gca9ylpRlBltgvICh2osNTV0kCuT+oncti8zDq4REnn5FxVUcg
-         uja1riKWGEstI6zFWku2DHYgsz9HuEccrOBwx0S0LqVha5QCtw6pAmzDBjs52LP9nqD6
-         rvRVFpdJeIdFfN3zST245ojApxa08P6Jc7YEdIoJmmVyj0L+xNhf4DGjdlRn3pVz70hN
-         TuvV3m4b1qb5MCXocB5P0YOYvtu0RuEhcK/5nC26Wyu9J73jA2KXb8nGHsIG1xo179Ry
-         ID5bmcOakQbWvxhm+i+DRo9HO3Cjeczr1OeyE7ZUwKdIzEcAlRY2OEqCAdEAZzWUAuWi
-         fO7Q==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=PrXGV9cj1D2wB4YvUm1f25G/9FEy5zgIsB34BHh+7Cc=;
+        b=OCWnh/wYLw2Bt+EyCyMktquxDDfDSGfvnAFCLsFh0DZB6PsPzP48JDGUMgPX6j+NIa
+         vu28fV/vNoGaLX8v690liUVgR/29zel33f5Ksn0eCpHOH+TlEbA3zoVWUgshrub6eFAa
+         PeTPQD6vuFiIwCYjHcuSendmYoftNgHVjvtTvfcqSUSZ9gqmALLiWTYfa2kvj/PDI0OK
+         SmUqdxxepzVn7QQK45N9J5fX5mI8jAQY7A2Bei3LZGPS98IPhroNeU1xw21xozA09ug7
+         ll4GQQK1noGVK4RthcGYihQ5Fsyi7bqBdPddMgr0/jPMD2EHw5CwBLl2ok1dY6nLNQDK
+         Miow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/nBsD849uiGdABqrN09COO56GAp6j1+GeHWcGO1SAx8=;
-        b=rDnQj71DPO6MKWLwOOoeqB+wd7xl9micw+WT+Ty6pjXQm/Ttumsc8eYvR47H7izmtf
-         lkP0vrNKAuNFRzW5xYCmqS2J/jKvHNdQaZcj8NDqE/niKZwwt5ADkYzEy9GX8DEmt+87
-         GPUG5kZ96oNpN7zXXxaONKP+TaNETS0/+sLoNuHgp7iB0zAR5xlr9beRbARMVtzDJRNm
-         cIAMQM3sfWxp4dsTE07i8aIbidtP1k5Rg1sYGN5Qk+qyMAFrSvmkGD8Itj0VGLgjp7La
-         vwezKDmO6Ee9IvdEqfYg9VnjVh9mHMm0qDaTCLSgmPIqynDS2RBH1JNGQOIK6yopBN5Q
-         Mb8g==
-X-Gm-Message-State: AOAM530cJ1Jf7Z6CnvLmvhHk7VxPGKNYFyjEu490Gno91YTSXkFMubNJ
-        ngj45U0BkdTvoPsnHbGIA/43cGg16WZej0v0Vl8=
-X-Google-Smtp-Source: ABdhPJzvcrVWEsyPp5FVPrRqEQwL7pEwr8YoXisLAWMM2kY0R6o4bQ/Iv2Hp+3/K8mb3Zn+tn9pVXA/bav0/hXMLPkI=
-X-Received: by 2002:a05:6830:18da:: with SMTP id v26mr36167988ote.316.1594267638645;
- Wed, 08 Jul 2020 21:07:18 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=PrXGV9cj1D2wB4YvUm1f25G/9FEy5zgIsB34BHh+7Cc=;
+        b=ZOH+AbvaZmYrXliAP8gEnYUmsmRtp5n8ejyTy0nBrlGrI7ai7vmxur15jPSdKBfl8S
+         Qu81kcRLTe/GS5w+uWqUXo9uzNvn/3F0V3cnw0WQmX1KK1Ety8mI6U8hRYd7MmWh5LAR
+         34f6mXFfjVSMBYB8wXIOudTyekuauRYLq5GZH0bAjXRU7s32qn/C1pT2+Tt9EOir89zT
+         TyputjkJCYiq0pcU9D97Tl31jlOa2/rpYj/zBqAZ4CcPUVHwMif7ZKlSeB37zJ4Hb12V
+         BIIiTN2uPE1NLGtdN1cFH732GgtN+wWD0N/EnXGG1z2BKQPFe/kXNU1mt3DfANDa0aTg
+         HGkg==
+X-Gm-Message-State: AOAM531RjAFDDnV6blFV2pqgMYupLszlL6G/RV98XBPpoGrD33YeuRN1
+        8qzk1pLqWqvZ3Ls9TlaUCtrdQ6RX
+X-Google-Smtp-Source: ABdhPJys9SrKXWG2e7y4TFwy0EJCPAEioXniylzGl4WyvD6FZAOtPYedKQf/D9DYRYu2AE/boZtFpw==
+X-Received: by 2002:adf:91e1:: with SMTP id 88mr54186084wri.89.1594268907472;
+        Wed, 08 Jul 2020 21:28:27 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m9sm2691352wml.45.2020.07.08.21.28.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2020 21:28:26 -0700 (PDT)
+Message-Id: <pull.781.v14.git.git.1594268906195.gitgitgadget@gmail.com>
+In-Reply-To: <pull.781.v13.git.git.1594254906647.gitgitgadget@gmail.com>
+References: <pull.781.v13.git.git.1594254906647.gitgitgadget@gmail.com>
+From:   "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 09 Jul 2020 04:28:26 +0000
+Subject: [PATCH v14] Support auto-merge for meld to follow the vim-diff
+ behavior
 MIME-Version: 1.0
-References: <7A30EA48-72E3-47E1-9792-136D7B96DC84@gmail.com>
-In-Reply-To: <7A30EA48-72E3-47E1-9792-136D7B96DC84@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 8 Jul 2020 22:07:07 -0600
-Message-ID: <CABPp-BEu=7xSLk5AE8sQX+S-vvYXxgn+avQ8+9ttdSKDjikb9w@mail.gmail.com>
-Subject: Re: rebase - "fixup!" conflict applied at the wrong code location,
- why ?
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     sunlin <sunlin7@yahoo.com>, Lin Sun <lin.sun@zoom.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 8, 2020 at 5:07 PM Philippe Blain
-<levraiphilippeblain@gmail.com> wrote:
->
-> Hello,
->
-> I've been working on a branch for a while. I've been using `git commit --fixup`  and `git commit --squash`
-> when I noticed that I had forgotten to add something to a previous commit.
-> Today I did `git rebase --autosquash` to clean up my history, and the rebase failed at the
-> first 'fixup!' commit with a conflict. However, the conflict is not located at the right place
-> in the code (it's not in the right subroutine!). This is very surprising to me, and I would
-> like to understand why it happens.
->
-> Steps to reproduce:
->
-> git clone -b branch-to-be-rebased https://github.com/phil-blain/CICE.git cice
-> cd cice
-> git rebase -i --autosquash my-first-commit
-> # save the todo list without modifications
->   Auto-merging <file>
->   CONFLICT (content): Merge conflict in <file>
->   error: could not apply e8bfa55... fixup! <commit message of f4e1ae6>
-> # the rebase stops at f4e1ae6
-> git diff
-> # tangential question : for some reason the hunk header does not appear here, I don't know why...
-> git diff -2  # but it appears here
-> git grep -p -e '<<<<<<< HEAD' -e '>>>>>>> e8bfa55...'  # or here
-> # ok, the conflict appears in subroutine 'picard_solver'
-> git show REBASE_HEAD -U5
-> # but the original "fixup!" commit only modifies the subroutine 'anderson_solver' !!
->
-> I would have expected that the conflict be created around lines 1118-1132
-> (line numbers in f4e1ae6), in the 'anderson_solver' subroutine.
->
-> I don't know if this plays a part here, but commit f4e1ae6 (where the rebase stops)
-> is the commit where the 'anderson_solver' subroutine is added to the code...
->
-> Thanks,
->
-> Philippe.
+From: Lin Sun <lin.sun@zoom.us>
 
-If you take a look where the rebase stops, you see:
+Make the mergetool used with "meld" backend behave similarly to "vimdiff" by
+telling it to auto-merge non-conflicting parts and highlight the conflicting
+parts when `mergetool.meld.useAutoMerge` is configured with `true`, or `auto`
+for detecting the `--auto-merge` option automatically.
 
-$ git ls-files -u
-100644 ee4377f1ec6836fa05573976a473373906c37d9f 1
-cicecore/cicedynB/dynamics/ice_dyn_vp.F90
-100644 30c699ac371c2a751052fa98d04317e84a96ec47 2
-cicecore/cicedynB/dynamics/ice_dyn_vp.F90
-100644 276f224e9048fe0bbd7c25822695049547362c87 3
-cicecore/cicedynB/dynamics/ice_dyn_vp.F90
+Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Helped-by: David Aguilar <davvid@gmail.com>
+Signed-off-by: Lin Sun <lin.sun@zoom.us>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+    Enable auto-merge for meld to follow the vimdiff beharior
+    
+    Hi, the mergetool "meld" does NOT merge the no-conflict changes, while
+    the mergetool "vimdiff" will merge the no-conflict changes and highlight
+    the conflict parts. This patch will make the mergetool "meld" similar to
+    "vimdiff", auto-merge the no-conflict changes, highlight conflict parts.
 
-The difference from the merge base to "other" (index 3) is pretty
-tiny, you just moved one line in the "anderson_solver" subroutine
-about 10 lines down.  The more interesting difference is from the
-merge base to "ours" (index 2), seen with:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-781%2Fsunlin7%2Fmaster-v14
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-781/sunlin7/master-v14
+Pull-Request: https://github.com/git/git/pull/781
 
-$ git diff :1:cicecore/cicedynB/dynamics/ice_dyn_vp.F90
-:2:cicecore/cicedynB/dynamics/ice_dyn_vp.F90
+Range-diff vs v13:
 
-If you search for "anderson_solver" in that diff, you see that the
-reconstructed diff looks like "subroutine anderson_solver" is renamed
-to "subroutine picard_solver" with similar but slightly different
-arguments.  The diff routine successfully finds lots of lines common
-between these two subroutines so it seems quite logical as a way of
-representing the changes, especially since they occur near each other
-in the order of the file.  If you keep looking further in the diff, it
-says that a few hundred lines later there's another subroutine rename,
-this time from "subroutine calc_zeta_Pr" to "subroutine
-anderson_solver".  Looking at it this way, it's quite natural to apply
-the change from the rebased commit to the picard_solver since the
-other side of history "renamed" anderson_solver to picard_solver.
+ 1:  b949e5721a ! 1:  ce4e4cbfc0 Support auto-merge for meld to follow the vim-diff behavior
+     @@ mergetools/meld: diff_cmd () {
+      +			esac
+      +			;;
+      +		*)
+     -+			if meld_use_auto_merge_option=$(\
+     ++			# try other boolean value with git
+     ++			if meld_use_auto_merge_option=$(
+      +				 git config --bool mergetool.meld.useAutoMerge)
+      +			then
+      +				: use normalized boolean value
 
-This might not make as much sense to you, since you tend to think in
-terms of parse trees and "subroutines" are a high level unit.  But
-diffs work in terms of lines and have no knowledge of any kind of file
-structure or semantics.  If you have a string of functions A,B,C and
-insert a new function Z on one side of history somewhere in a file
-that happens to look a lot like existing functions (meaning several
-identical lines between the two), then diffs won't necessarily treat
-it as a contiguous block of inserted lines but instead compare
-function Z on one side to function B on the other, then function B on
-the first side to function C on the second, etc.
 
-There are alternative diff algorithms that try to minimize the number
-of changed lines shown by the diff, such as --histogram and
---patience, and they do shrink this particular diff, but they both
-yield the same treatment of comparing "subroutine anderson_solver" to
-"subroutine picard_solver" essentially treating it as a rename.  To
-get a merge like you want, you'd need some kind of higher level
-semantic merge, or at least need functions to not have so many lines
-in common between them.
+ Documentation/config/mergetool.txt | 10 ++++
+ mergetools/meld                    | 87 ++++++++++++++++++++++++------
+ 2 files changed, 81 insertions(+), 16 deletions(-)
 
-This kind of problem also causes big issues when reordering functions
-in a file.  line-by-line diffs and the diff3 merge algorithm tend to
-really struggle with those.  (See e.g.
-https://www.cis.upenn.edu/~bcpierce/papers/diff3-short.pdf if you want
-to read up more on these.)
+diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
+index 09ed31dbfa..16a27443a3 100644
+--- a/Documentation/config/mergetool.txt
++++ b/Documentation/config/mergetool.txt
+@@ -30,6 +30,16 @@ mergetool.meld.hasOutput::
+ 	to `true` tells Git to unconditionally use the `--output` option,
+ 	and `false` avoids using `--output`.
+ 
++mergetool.meld.useAutoMerge::
++	When the `--auto-merge` is given, meld will merge all non-conflicting
++	parts automatically, highlight the conflicting parts and wait for
++	user decision.  Setting `mergetool.meld.useAutoMerge` to `true` tells
++	Git to unconditionally use the `--auto-merge` option with `meld`.
++	Setting this value to `auto` makes git detect whether `--auto-merge`
++	is supported and will only use `--auto-merge` when available.  A
++	value of `false` avoids using `--auto-merge` altogether, and is the
++	default value.
++
+ mergetool.keepBackup::
+ 	After performing a merge, the original file with conflict markers
+ 	can be saved as a file with a `.orig` extension.  If this variable
+diff --git a/mergetools/meld b/mergetools/meld
+index 7a08470f88..d95b4ee630 100644
+--- a/mergetools/meld
++++ b/mergetools/meld
+@@ -3,34 +3,89 @@ diff_cmd () {
+ }
+ 
+ merge_cmd () {
+-	if test -z "${meld_has_output_option:+set}"
++	check_meld_for_features
++
++	option_auto_merge=
++	if test "$meld_use_auto_merge_option" = true
+ 	then
+-		check_meld_for_output_version
++		option_auto_merge="--auto-merge"
+ 	fi
+ 
+ 	if test "$meld_has_output_option" = true
+ 	then
+-		"$merge_tool_path" --output="$MERGED" \
++		"$merge_tool_path" $option_auto_merge --output="$MERGED" \
+ 			"$LOCAL" "$BASE" "$REMOTE"
+ 	else
+-		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
++		"$merge_tool_path" $option_auto_merge "$LOCAL" "$MERGED" "$REMOTE"
+ 	fi
+ }
+ 
+-# Check whether we should use 'meld --output <file>'
+-check_meld_for_output_version () {
+-	meld_path="$(git config mergetool.meld.path)"
+-	meld_path="${meld_path:-meld}"
++# Get meld help message
++init_meld_help_msg () {
++	if test -z "$meld_help_msg"
++	then
++		meld_path="$(git config mergetool.meld.path || echo meld)"
++		meld_help_msg=$("$meld_path" --help 2>&1)
++	fi
++}
+ 
+-	if meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
++# Check the features and set flags
++check_meld_for_features () {
++	# Check whether we should use 'meld --output <file>'
++	if test -z "$meld_has_output_option"
+ 	then
+-		: use configured value
+-	elif "$meld_path" --help 2>&1 |
+-		grep -e '--output=' -e '\[OPTION\.\.\.\]' >/dev/null
++		meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
++		case "$meld_has_output_option" in
++		true|false)
++			: use configured value
++			;;
++		*)
++			: empty or invalid configured value, detecting "--output" automatically
++			init_meld_help_msg
++
++			case "$meld_help_msg" in
++			*"--output="*|*'[OPTION...]'*)
++				# All version that has [OPTION...] supports --output
++				meld_has_output_option=true
++				;;
++			*)
++				meld_has_output_option=false
++				;;
++			esac
++			;;
++		esac
++	fi
++	# Check whether we should use 'meld --auto-merge ...'
++	if test -z "$meld_use_auto_merge_option"
+ 	then
+-		: old ones mention --output and new ones just say OPTION...
+-		meld_has_output_option=true
+-	else
+-		meld_has_output_option=false
++		meld_use_auto_merge_option=$(git config mergetool.meld.useAutoMerge)
++		case "$meld_use_auto_merge_option" in
++		true|false)
++			: use well formatted boolean value
++			;;
++		auto)
++			# testing the "--auto-merge" option only if config is "auto"
++			init_meld_help_msg
++
++			case "$meld_help_msg" in
++			*"--auto-merge"*|*'[OPTION...]'*)
++				meld_use_auto_merge_option=true
++				;;
++			*)
++				meld_use_auto_merge_option=false
++				;;
++			esac
++			;;
++		*)
++			# try other boolean value with git
++			if meld_use_auto_merge_option=$(
++				 git config --bool mergetool.meld.useAutoMerge)
++			then
++				: use normalized boolean value
++			else
++				meld_use_auto_merge_option=false
++			fi
++			;;
++		esac
+ 	fi
+ }
 
-Hope that helps,
-Elijah
+base-commit: 07d8ea56f2ecb64b75b92264770c0a664231ce17
+-- 
+gitgitgadget
