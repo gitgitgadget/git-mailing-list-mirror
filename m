@@ -2,133 +2,109 @@ Return-Path: <SRS0=1oE7=AU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08DABC433DF
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 17:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86408C433E0
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 18:02:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D02092078B
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 17:39:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6009B207DA
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 18:02:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="UvquvQ9I"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSxzVhyP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbgGIRjc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 13:39:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47870 "EHLO
+        id S1726752AbgGISB7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 14:01:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726722AbgGIRjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jul 2020 13:39:31 -0400
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C702C08C5CE
-        for <git@vger.kernel.org>; Thu,  9 Jul 2020 10:39:31 -0700 (PDT)
-Received: by mail-lf1-x142.google.com with SMTP id g2so1662108lfb.0
-        for <git@vger.kernel.org>; Thu, 09 Jul 2020 10:39:31 -0700 (PDT)
+        with ESMTP id S1726582AbgGISB7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jul 2020 14:01:59 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E127DC08C5CE
+        for <git@vger.kernel.org>; Thu,  9 Jul 2020 11:01:58 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id k18so2688770qke.4
+        for <git@vger.kernel.org>; Thu, 09 Jul 2020 11:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DmTW0dzuDf4JgluTvQ3vDzaEVoV8yQ5arU9lK7vCb50=;
-        b=UvquvQ9IuXxDpCIkkxGvhpN14aBUj9OzxKt6vAt6mrgBDED+l5NBPLgDI68nCuX2wn
-         zjzrxP/4uRtLsFzfm3OYcAU0eY0VZ2p9lldLeALDyon5fo6FINiDLoUP7bCnP4z/tKeC
-         REblpxaQ0fhwQW469d/j4Cd+pMz5yA2V8tkeV4Tbaj3bgoGilAylXZHngobyZOFkOa4I
-         nmSmEijG749dGpRUd4N8isGuqzlGL2eHs5+cXUdhHqWgeBpQuNsH+h5nKeUmOxkGKR0k
-         0033NWXNO1pBs2Wdu4bdtbfmXdsPt5FdcivyZoCRNs5g0zeMLUpex8ZXLqYljwOicAUE
-         mU2A==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mqbuMI1+BoOQl9sHzTukheBaRRVIAhgMP4o5Mr1aUJg=;
+        b=VSxzVhyPl2RPb2xOYUMGN62YHrXcEGdvMo6BbE3q13YNZnrzPY9dV//5t83r73R/Ir
+         +AVQ27X+0Ca64yu+nBI8v02Iv6zj+jlVaFKWbsBBitlE+8Q8crkHVNpK1BXaf9gDsAeJ
+         lywxX6zGvJwhYW4lL64PolVUxMv+rJTO9IfslL4Ai7D2oLI1MVnA30ZcUtNMIiJ+aYM5
+         APTcwLxMJ2OPzi+fz3/AoohOsjj9GU2ndoJaeqowuheFCCfGPNT3aRo7GDov4sSOKr0A
+         NXWfVlBS3WEjkTcwwEfQpCW+kbKYxCVccg25ZL9zaarQB6i8cJX2ffUXIhVhoGrEzDuA
+         tsKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DmTW0dzuDf4JgluTvQ3vDzaEVoV8yQ5arU9lK7vCb50=;
-        b=rGwwJ4r+TceXpk+iJ+AZOgFMTVgiAePx41Oq3vFKwJL2cc+qvFeaXxX+MDdcgGbLTF
-         5dqKiomtO+UknJrDDbnsxgB/H/48wV8UHk34gM1r5QCenyZCiJsWygUiG5nOtUnsd3WD
-         zCxGlcBhZu2hwmV97vZiFNNStHxRJsX7+vqeqGyogvBSgyVwsNtaX86f7B/1RwGRP11i
-         i8GF4kfQMw7EVIZm6hMj/9ImM0BXYfh5jl+XgOQSfIbV7T5MJw8kopr7bmH1vmnpzz3s
-         cFpN0Lo7FppyDakuHmOJPdP2IRvsVkbqLHPUa57vRMGeJ+m1DUTV0ScOV5fmT5AlLG8+
-         9QbA==
-X-Gm-Message-State: AOAM532EjAsai7THQoLICfGLx2brcqXoULHmboEN2u5cXCEtqTNw/bvr
-        c1Ma1gMFfr27LRcUNmhdczHewR+K3FhgzdnTyFcauUs7jeo=
-X-Google-Smtp-Source: ABdhPJwqUuvXUG08Kq7bB+5DbQF5dw/bOITd4mpZWwZYIuYKdAabWmVvbjJNskwxw1rYmETx9xZU6wSjD5dtPrS2m0o=
-X-Received: by 2002:a19:c50a:: with SMTP id w10mr40706906lfe.48.1594316369568;
- Thu, 09 Jul 2020 10:39:29 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mqbuMI1+BoOQl9sHzTukheBaRRVIAhgMP4o5Mr1aUJg=;
+        b=kKZYR8Byx8ORfOfdpkbmhO/Q867hpvNVcbf3qcjzMOHYYuaibL1AEkhFnk5aFDU7HX
+         VhMay2Fix6NCBdKlI6V75LnFCeR8L23EdJRc4F1lvZZxAMgNS+YOxOBrOFO+ZAgCUKVV
+         E+5L8z8iNmj5MvqhuIxGj7dNtJNSi0bGHTOHhoWDfHpHQvdsUMJ0sHwLtzwR+RZvhayy
+         EHF5qinl5TNtt+eViv5PMBcpHaDPOvwmcHnx3iLtUkgtW6Kk3VSJIej7Tvdy4goyPtzC
+         dLYErB7EM4qpBlb4pYuB6Ocl+OdTeTmsM80MoYBUSRZoD1JauCKaSyxG45O0PahUrfPP
+         +hsg==
+X-Gm-Message-State: AOAM533pZ9c1VllV6UN4n3BOdgW1jqXXGeohfe/fcCAQzytQHU1ecwHC
+        shMxG/W7fkcLBvDHLJubzHBVM84ph4J1AA==
+X-Google-Smtp-Source: ABdhPJwHF6bW43rYS8uNqayYrwteuGz/4gwoOrDSdI+r3NbDCkp9FiD5Pct++R2eB6bovtbW9sVpFw==
+X-Received: by 2002:a37:8a06:: with SMTP id m6mr59900609qkd.191.1594317717704;
+        Thu, 09 Jul 2020 11:01:57 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id b7sm4397589qkl.18.2020.07.09.11.01.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jul 2020 11:01:57 -0700 (PDT)
+Subject: Re: [PATCH] commit-graph: fix "Writing out commit graph" progress
+ counter
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        jonathantanmy@google.com,
+        Garima Singh <garima.singh@microsoft.com>, git@vger.kernel.org
+References: <ff6b96aad1e2317d3ed36c2c8b419905dea84a83.1586192395.git.gitgitgadget@gmail.com>
+ <20200709170003.3020-1-szeder.dev@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <1b683731-776b-0058-5744-094091c7db4d@gmail.com>
+Date:   Thu, 9 Jul 2020 14:01:57 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-References: <fbde5e1c9042ea06b448bc759cea9d45e300961f.1594260597.git.matheus.bernardino@usp.br>
- <xmqqd054y5t1.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqd054y5t1.fsf@gitster.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 9 Jul 2020 14:39:18 -0300
-Message-ID: <CAHd-oW7sz5nGUGZDDguz3fdeRLa+8iWRdC+vyCB2jWvFMh3aXg@mail.gmail.com>
-Subject: Re: [PATCH] entry: check for fstat() errors after checkout
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20200709170003.3020-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 9, 2020 at 2:08 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> The returned value from fstat_output() is suppsed to be "have we
-> done fstat() so that we do not need to do a lstat()?"  Don't you
-> instead want to extend it to "0 means we didn't, 1 means we did
-> successfully, and -1 means we did and failed"?  At least, the way
-> _this_ function is modified by this patch is in line with that.
+On 7/9/2020 1:00 PM, SZEDER Gábor wrote:
+> 76ffbca71a (commit-graph: write Bloom filters to commit graph file,
+> 2020-04-06) added two delayed progress lines to writing the Bloom
+> filter index and data chunk.  This is wrong, because a single common
+> progress is used while writing all chunks, which is not updated while
+> writing these two new chunks, resulting in incomplete-looking "done"
+> lines:
+> 
+>   Expanding reachable commits in commit graph: 888679, done.
+>   Computing commit changed paths Bloom filters: 100% (888678/888678), done.
+>   Writing out commit graph in 6 passes:  66% (3554712/5332068), done.
+> 
+> Use the common 'struct progress' instance while writing the Bloom
+> filter chunks as well.
 
-Makes sense, thanks for spotting this issue.
+Thanks for finding this. It's a clearly correct way to go,
+and is one of the things that did not get updated properly
+between the old prototype when applying it on the new code
+that included this ctx->progress pattern.
 
-> Which means that we'd need to update the caller(s) to match, to
-> avoid risking this change to be just half a change, very similarly
-> to how the change in 11179eb311 was just half a change.
->
-> Perhaps like this?
->
->  entry.c | 23 +++++++++++++++--------
->  1 file changed, 15 insertions(+), 8 deletions(-)
->
-> diff --git a/entry.c b/entry.c
-> index 53380bb614..f48507ca42 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -108,14 +108,21 @@ static int open_output_fd(char *path, const struct cache_entry *ce, int to_tempf
->         }
->  }
->
-> +/*
-> + * We have an open fd to a file that we may use lstat() on later.
-> + * When able, try doing a fstat(fd) instead and tell the caller it
-> + * does not have to do an extra lstat()
-> + *
-> + * Return 1 if we successfully ran fstat() and *st is valid.
-> + * Return 0 if we did not do fstat() and the caller should do lstat().
-> + * Return -1 if we got failure from fstat()---the caller can skip lstat().
-> + */
->  static int fstat_output(int fd, const struct checkout *state, struct stat *st)
->  {
->         /* use fstat() only when path == ce->name */
->         if (fstat_is_reliable() &&
-> -           state->refresh_cache && !state->base_dir_len) {
-> -               fstat(fd, st);
-> -               return 1;
-> -       }
-> +           state->refresh_cache && !state->base_dir_len)
-> +               return (fstat(fd, st) < 0) ? -1 : 1;
->         return 0;
->  }
->
-> @@ -369,10 +376,10 @@ static int write_entry(struct cache_entry *ce,
->  finish:
->         if (state->refresh_cache) {
->                 assert(state->istate);
-> -               if (!fstat_done)
-> -                       if (lstat(ce->name, &st) < 0)
-> -                               return error_errno("unable to stat just-written file %s",
-> -                                                  ce->name);
-> +               if (fstat_done < 0 ||
-> +                   (!fstat_done && lstat(ce->name, &st) < 0))
-> +                       return error_errno("unable to stat just-written file %s",
-> +                                          ce->name);
+Junio: head's up that this will conflict with the final patch
+in ds/maintenance. I'll remove my edits to these methods in
+my v2 to make that merge a bit easier.
 
-If fstat() failed or we couldn't fstat() but lstat() failed, we return
-an error. Nice! Thanks for the correction.
+Thanks,
+-Stolee
