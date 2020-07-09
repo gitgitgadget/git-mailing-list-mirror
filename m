@@ -2,94 +2,80 @@ Return-Path: <SRS0=1oE7=AU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA016C433DF
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB130C433DF
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:43:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79CBC20708
-	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 732CB205CB
+	for <git@archiver.kernel.org>; Thu,  9 Jul 2020 02:43:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iK+byDTD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bj3TkjMN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726129AbgGICfg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jul 2020 22:35:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49586 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726118AbgGICfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jul 2020 22:35:36 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E28EC061A0B
-        for <git@vger.kernel.org>; Wed,  8 Jul 2020 19:35:36 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id q89so512585pjk.5
-        for <git@vger.kernel.org>; Wed, 08 Jul 2020 19:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=TR7ohNLU4FCR+2U5LNqxZpe5X1LCuigA2KX0CmEXExA=;
-        b=iK+byDTDZZWJGd5ruTvGoFym1OMOlOSUMIAKFG9uz1O4/IXMhZf7LQGc4LAhRe8p2P
-         LpKYq51qTU5GXf6GXPPIXCfJqxLZVLDZp2nV8IXcn3xVGR/gVmQv3cgnCRV6QkoWDxxf
-         Ye+ZDFLu+5y4FAVAxjwjKXBxx9Fz3bAv71irVOpOhfmU/QYFr3S7xGkeyr1gSPtIEkz4
-         uMibxBOO1NEX0YTgSI4CB4Igv9Q1onQ96NSZEkO4IDplMoWS3hXG/j//+GWTHiuinA80
-         W6UuwbdPLIZcYbGTyq+AKgxFm0BsP8kTSOc5xDTSiqr38U4c68lYv0WJmplA0YdiLt/V
-         8kKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=TR7ohNLU4FCR+2U5LNqxZpe5X1LCuigA2KX0CmEXExA=;
-        b=KUNy65Lq2qWM8vBJKrjP3ci4iV9I97kGnzBNa4I2pm3aJTcKFyeb9AKt8D40wkwQAp
-         uZz4Oo2Ms9oDjooQKQ5PsQhIjOA3xirhZDZ1p3GMSyZWLGFKRpY5up4CbM793LTqUlXW
-         B6OwjzLe/uhqui+H2D8HEl8bUoHsXBdWskvBM+cqTNje6ieEDavuUGmyb6P/jvBbMcV0
-         MUaozWivicqWRZNkGrDqYkmkC/vWdOIab/SvCanZ44/c++kL8Lmr1Ati1xBp9pYHdW1s
-         OFVRvLW88vp/1YnpmahC/H8ccLtt3PpNFVXefOn1Mz34/YYsXniWWJlcXDWsyPv7Xj2i
-         dgHg==
-X-Gm-Message-State: AOAM531EiseltKIofUJbRIlNYPOt5HupuxRncbUv3Oz0KJ3nhsduI4Qr
-        +SWJ9zTKe8gNFq9WgjNNiV9+8GdDPH3pWg0MxIKZ
-X-Google-Smtp-Source: ABdhPJwUoaOJvBLg/b41ljOQb1JHP3kTRxNBBq+L/yzqt6kNTuKctB7iCmp/vUUHStMo6k55yzSgD2lVuRlU+Sg0WHo9
-X-Received: by 2002:a17:902:6bc5:: with SMTP id m5mr53133170plt.101.1594262133361;
- Wed, 08 Jul 2020 19:35:33 -0700 (PDT)
-Date:   Wed,  8 Jul 2020 19:35:31 -0700
-In-Reply-To: <cbaa5ecc4f23eed0823fbbb53ffef28c9f7d6913.1594131695.git.gitgitgadget@gmail.com>
-Message-Id: <20200709023531.41660-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cbaa5ecc4f23eed0823fbbb53ffef28c9f7d6913.1594131695.git.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.27.0.383.g050319c2ae-goog
-Subject: Re: [PATCH 12/21] maintenance: add fetch task
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, derrickstolee@github.com,
-        dstolee@microsoft.com, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726124AbgGICnC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jul 2020 22:43:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59676 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726081AbgGICnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jul 2020 22:43:02 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E22617B22D;
+        Wed,  8 Jul 2020 22:42:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Wo8oz5UCZZQm5PD34TcX9un6BJ4=; b=bj3Tkj
+        MNs8KGZC27TyrqPD8wwxd93pZPYm6O87A4ENYx6SKkB3YnQzO3A0msvyi88g/oGi
+        tJXCKnOUQkiMs605DMwtA3y1QJf2q5ddXfRXBAyfke+7S/LB3rAbmfHvdB8pGu3M
+        FOT+rPpKdz2Q2Z+AFrIHijCCFRZaUcWJvWoZ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UkFYX8iZr5UJNH0XBdhb3uXMxNdhEfSk
+        xBj/2HAbDfTdbpQAaRR/7YQxv0g5zG21rYObXieROpfFGwZnzJqOgaT7DgnFdGGe
+        sJYqr9hI2Kb63Eyn397KZpOkefQEh8DbyNBS1mUqerJ7qx+ypsACH5CoJUrdVXQ7
+        r1PIZrr6vVI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D92C07B22C;
+        Wed,  8 Jul 2020 22:42:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6C6927B22B;
+        Wed,  8 Jul 2020 22:42:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sunlin <sunlin7@yahoo.com>,
+        Lin Sun <lin.sun@zoom.us>
+Subject: Re: [PATCH v13] Support auto-merge for meld to follow the vim-diff behavior
+References: <pull.781.v12.git.git.1594178716840.gitgitgadget@gmail.com>
+        <pull.781.v13.git.git.1594254906647.gitgitgadget@gmail.com>
+Date:   Wed, 08 Jul 2020 19:42:58 -0700
+In-Reply-To: <pull.781.v13.git.git.1594254906647.gitgitgadget@gmail.com>
+        (sunlin via GitGitGadget's message of "Thu, 09 Jul 2020 00:35:06
+        +0000")
+Message-ID: <xmqqlfjtz9vx.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E6C7413E-C18D-11EA-A313-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> 3. By adding a new refspec "+refs/heads/*:refs/hidden/<remote>/*"
->    we can ensure that we actually load the new values somewhere in
->    our refspace while not updating refs/heads or refs/remotes. By
->    storing these refs here, the commit-graph job will update the
->    commit-graph with the commits from these hidden refs.
-> 
-> 4. --prune will delete the refs/hidden/<remote> refs that no
->    longer appear on the remote.
+"sunlin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Having a ref path where Git can place commit IDs that it needs persisted
-is useful, not only in this case but in other cases (e.g. when fetching
-a submodule commit by hash, we might not have a ref name for that commit
-but want to persist it anyway), so I look forward to having something
-like this.
+> From: Lin Sun <lin.sun@zoom.us>
+> Subject: Re: [PATCH v13] Support auto-merge for meld to follow the vim-diff behavior
 
-The name of this special ref path and its specific nature could be
-discussed further, but maybe it is sufficient for now to just say that
-the refs under this special ref path are controlled by Git, and their
-layout is experimental and subject to change (e.g. future versions of
-Git could just erase the entire path and rewrite the refs its own way).
+I'd retitle to match the recommended structure, e.g.
+
+    Subject: [PATCH] mergetool: update meld backend to allow using '--auto-merge'
+
+while queuing.
+
+Thanks.  I might have more comments later.
