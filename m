@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EBF0C433E1
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B2EAC433DF
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2AF0F20663
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E7AE20663
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NiVo6+ba"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ym/ObMWy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727907AbgGJCtQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:49:16 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40484 "EHLO
+        id S1727837AbgGJCtV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:49:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40490 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727837AbgGJCtE (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:49:04 -0400
+        by vger.kernel.org with ESMTP id S1727876AbgGJCtO (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:49:14 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 568BF60A60;
-        Fri, 10 Jul 2020 02:48:32 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9DB0D60A73;
+        Fri, 10 Jul 2020 02:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349312;
-        bh=nz4+OtGq3fE7rGU2uzYwanb+xiaiZY8Q9Rnalz28LGI=;
+        s=default; t=1594349316;
+        bh=rRMHiNx1BObyJZy0Sl4dkfBzRMv2sX2yJcxoAHcDbZ0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=NiVo6+ba3B3PD/SWEiziSXU9qAJyqMhgTZc+HkQf9SssO+wTOQ2ZLqZ/spcDc9h9+
-         po/5bKW0uHPNZwQDbS54VTaJMLPt9jwru5FCLOprtChSfZYMcyLDZvOty7EU2JlOL0
-         z8UIHM8pjb5TVe0ESDdiu4VaDrqEQZ7pPNZ+kN1gNHC389l+DNGbbPkPdwDsfZChhY
-         V1UyMx9K4wbVXy4kjLqE1tRK+0GIcNsq7MXROxX/UElNtE4jYG3JLz2FzJYdOow4Yq
-         UXVHx1zn62RP/3uzEx+sw92Gsfz6aY8vaJDNxe0Yz/6oNg62u7h9DETGP2NpfBIqHe
-         Zizqn4anIoJSfPOLQgJObMcm/SQ5BZoMTLNvUNc2YD7AWd2zTrRKR/XqNFoGjbYraG
-         vxzwXacT/yM1AL8I//i01d+XSBaSONOS8QB0++QlKXBP1Hw9tnhfG69MUAjqpqSyGQ
-         WR3bfle9f0MiQq37mALvsdkbN2nUkIF5qpW96zuXSGmxOQRlSf2
+        b=ym/ObMWyyYoEsfDKlrk5GTJP/HttjyFPF03gVDprBYDUBbMfvtgJ14twXGThDoOt9
+         jf9N0hxbsux0fTmV+bsz8rJZRsQkvnP09x9kV/BDQke3H2iX2x3K4yBT5ap94pidB8
+         O+NnfBPmHBZT5V+OEYQhzn8IFS/t+Qo8Q/BdGlb8/egPloLR/d6+JSY47sDBhs8+7V
+         NRBvCAf9azViOl4fx3y22tAp4i9oJ5MMYo9e2NnDTOEtEPT/id67YsdjcGTMv/1SrK
+         2gSLcRweSJYXWNugHLL/fL+o7GJiCCrgMGgySXrjYda29B/C6UW0S+GPOJksAy8nCz
+         AL0dUsRbeZbMZIdNFagM2Hq0mqXtjZg+uYmh5jzRku6sScpEz/4sgkAhRSLfGE55+N
+         Nlen6MS384d5WMo/lp7aN7k0fXJGBUdcVBHbJr6VgxUh8kbEUFM5XwPA3qhR0UbzU+
+         R9Nhkn5zqwA6eb9ptq0K48IFs+dIwmn2bNxnko8P/OIFb9sDQqN
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 20/38] t8011: make hash size independent
-Date:   Fri, 10 Jul 2020 02:47:10 +0000
-Message-Id: <20200710024728.3100527-21-sandals@crustytoothpaste.net>
+Subject: [PATCH 30/38] builtin/verify-pack: implement an --object-format option
+Date:   Fri, 10 Jul 2020 02:47:20 +0000
+Message-Id: <20200710024728.3100527-31-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,24 +56,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow lines which start with either a 40- or 64-character hex object ID,
-to allow for both SHA-1 and SHA-256.
+A recently added test in t5702 started using git verify-pack outside of
+a repository.  While this poses no problems with SHA-1, with SHA-256 we
+implicitly rely on the setup of the repository to initialize our hash
+algorithm settings.
+
+Since we're not in a repository here, we need to provide git verify-pack
+help to set things up properly.  git index-pack already knows an
+--object-format option, so let's accept one as well and pass it down to
+our git index-pack invocation.  Since this argument is optional, let's
+dynamically determine the proper location to insert it into the array.
+Finally, let's make t5702 pass the proper argument on down to its git
+verify-pack caller.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t8011-blame-split-file.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/verify-pack.c  | 25 +++++++++++++++++--------
+ t/t5702-protocol-v2.sh |  2 +-
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/t/t8011-blame-split-file.sh b/t/t8011-blame-split-file.sh
-index 831125047b..8a4626d496 100755
---- a/t/t8011-blame-split-file.sh
-+++ b/t/t8011-blame-split-file.sh
-@@ -54,7 +54,7 @@ test_expect_success 'setup simulated porcelain' '
- 	cat >read-porcelain.pl <<-\EOF
- 	my $field = shift;
- 	while (<>) {
--		if (/^[0-9a-f]{40} /) {
-+		if (/^[0-9a-f]{40,64} /) {
- 			flush();
- 			$hash = $&;
- 		} elsif (/^$field (.*)/) {
+diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
+index c2a1a5c504..c4090102a9 100644
+--- a/builtin/verify-pack.c
++++ b/builtin/verify-pack.c
+@@ -7,21 +7,27 @@
+ #define VERIFY_PACK_VERBOSE 01
+ #define VERIFY_PACK_STAT_ONLY 02
+ 
+-static int verify_one_pack(const char *path, unsigned int flags)
++static int verify_one_pack(const char *path, unsigned int flags, const char *hash_algo)
+ {
+ 	struct child_process index_pack = CHILD_PROCESS_INIT;
+-	const char *argv[] = {"index-pack", NULL, NULL, NULL };
+-	struct strbuf arg = STRBUF_INIT;
++	const char *argv[] = {"index-pack", NULL, NULL, NULL, NULL };
++	struct strbuf arg = STRBUF_INIT, hash_arg = STRBUF_INIT;
+ 	int verbose = flags & VERIFY_PACK_VERBOSE;
+ 	int stat_only = flags & VERIFY_PACK_STAT_ONLY;
+ 	int err;
++	int argno = 1;
+ 
+ 	if (stat_only)
+-		argv[1] = "--verify-stat-only";
++		argv[argno++] = "--verify-stat-only";
+ 	else if (verbose)
+-		argv[1] = "--verify-stat";
++		argv[argno++] = "--verify-stat";
+ 	else
+-		argv[1] = "--verify";
++		argv[argno++] = "--verify";
++
++	if (hash_algo) {
++		strbuf_addf(&hash_arg, "--object-format=%s", hash_algo);
++		argv[argno++] = hash_arg.buf;
++	}
+ 
+ 	/*
+ 	 * In addition to "foo.pack" we accept "foo.idx" and "foo";
+@@ -31,7 +37,7 @@ static int verify_one_pack(const char *path, unsigned int flags)
+ 	if (strbuf_strip_suffix(&arg, ".idx") ||
+ 	    !ends_with(arg.buf, ".pack"))
+ 		strbuf_addstr(&arg, ".pack");
+-	argv[2] = arg.buf;
++	argv[argno++] = arg.buf;
+ 
+ 	index_pack.argv = argv;
+ 	index_pack.git_cmd = 1;
+@@ -60,12 +66,15 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix)
+ {
+ 	int err = 0;
+ 	unsigned int flags = 0;
++	const char *object_format = NULL;
+ 	int i;
+ 	const struct option verify_pack_options[] = {
+ 		OPT_BIT('v', "verbose", &flags, N_("verbose"),
+ 			VERIFY_PACK_VERBOSE),
+ 		OPT_BIT('s', "stat-only", &flags, N_("show statistics only"),
+ 			VERIFY_PACK_STAT_ONLY),
++		OPT_STRING(0, "object-format", &object_format, N_("hash"),
++			   N_("specify the hash algorithm to use")),
+ 		OPT_END()
+ 	};
+ 
+@@ -75,7 +84,7 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix)
+ 	if (argc < 1)
+ 		usage_with_options(verify_pack_usage, verify_pack_options);
+ 	for (i = 0; i < argc; i++) {
+-		if (verify_one_pack(argv[i], flags))
++		if (verify_one_pack(argv[i], flags, object_format))
+ 			err = 1;
+ 	}
+ 
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 1b54c35b01..7fc22171e7 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -829,7 +829,7 @@ test_expect_success 'part of packfile response provided as URI' '
+ 	# Ensure that my-blob and other-blob are in separate packfiles.
+ 	for idx in http_child/.git/objects/pack/*.idx
+ 	do
+-		git verify-pack --verbose $idx >out &&
++		git verify-pack --object-format=$(test_oid algo) --verbose $idx >out &&
+ 		{
+ 			grep "^[0-9a-f]\{16,\} " out || :
+ 		} >out.objectlist &&
