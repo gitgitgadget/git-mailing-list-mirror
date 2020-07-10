@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8581C433DF
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EBF0C433E1
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C922120663
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2AF0F20663
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wxVccLIk"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NiVo6+ba"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727903AbgGJCtP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:49:15 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40486 "EHLO
+        id S1727907AbgGJCtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:49:16 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40484 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727873AbgGJCtN (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:49:13 -0400
+        by vger.kernel.org with ESMTP id S1727837AbgGJCtE (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:49:04 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 19AAA60A63;
-        Fri, 10 Jul 2020 02:48:34 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 568BF60A60;
+        Fri, 10 Jul 2020 02:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349314;
-        bh=UaAP0hIH8vxcehmCkzB++tkC53e5f9DbrGFPfaFhQj0=;
+        s=default; t=1594349312;
+        bh=nz4+OtGq3fE7rGU2uzYwanb+xiaiZY8Q9Rnalz28LGI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=wxVccLIkIWqzSNNXD1wjDzTNDImlCFDgiwsv930qaVxb46EVSRZTiSUjUoIUBhk1+
-         X6hkov+E7eO6WWYw4e0Jp+EhIQPvJ1qNAK635mHC18Kq4+ZWU91yBa8VxBOWud74fX
-         AHdmQ4GsgIAARQNury27nmEXnOP2EnE8I1OdEa0jLBcv3XEfCjq41NuQZMa0Y29oB1
-         QpzJkwmvPTZtXI/V5LMavO706YR4m/knoQGGvmdWsAEce4jny2kQUywNDFb8L+v4Op
-         bs0hVvXO4aQTUIO4UJQPUVoJABZ4Kuu1GvJe1mRuvN6ciXrt9LRHgHoJ9Fgx0leIWF
-         qDDpkuyq8MKmTeGfkUSWGJqLNiRtSj0mzd6VgISfAcEgowDYRzqbr87gUf6cneb5tL
-         M7414fck4YPwAfofaC2Jko5/n6jukmWrZHz0WT8Jjh/JR2RhViWQSdoAN95IdZumQv
-         TZR9EDUcYlDu3er52En1rNHgmvd99NEfgWdsvlxirprAIQ0g8Eo
+        b=NiVo6+ba3B3PD/SWEiziSXU9qAJyqMhgTZc+HkQf9SssO+wTOQ2ZLqZ/spcDc9h9+
+         po/5bKW0uHPNZwQDbS54VTaJMLPt9jwru5FCLOprtChSfZYMcyLDZvOty7EU2JlOL0
+         z8UIHM8pjb5TVe0ESDdiu4VaDrqEQZ7pPNZ+kN1gNHC389l+DNGbbPkPdwDsfZChhY
+         V1UyMx9K4wbVXy4kjLqE1tRK+0GIcNsq7MXROxX/UElNtE4jYG3JLz2FzJYdOow4Yq
+         UXVHx1zn62RP/3uzEx+sw92Gsfz6aY8vaJDNxe0Yz/6oNg62u7h9DETGP2NpfBIqHe
+         Zizqn4anIoJSfPOLQgJObMcm/SQ5BZoMTLNvUNc2YD7AWd2zTrRKR/XqNFoGjbYraG
+         vxzwXacT/yM1AL8I//i01d+XSBaSONOS8QB0++QlKXBP1Hw9tnhfG69MUAjqpqSyGQ
+         WR3bfle9f0MiQq37mALvsdkbN2nUkIF5qpW96zuXSGmxOQRlSf2
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 24/38] t9350: make hash size independent
-Date:   Fri, 10 Jul 2020 02:47:14 +0000
-Message-Id: <20200710024728.3100527-25-sandals@crustytoothpaste.net>
+Subject: [PATCH 20/38] t8011: make hash size independent
+Date:   Fri, 10 Jul 2020 02:47:10 +0000
+Message-Id: <20200710024728.3100527-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,85 +56,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test checks for several commit object sizes to verify that objects
-are encoded as expected. However, the size of a commit object differs
-between SHA-1 and SHA-256, since each contains a hex representation of
-the tree's object ID. Since these are root commits, compute the size of
-each commit by using a constant plus the size of a single hex object ID.
-
-In addition, use $ZERO_OID instead of a hard-coded object ID.
+Allow lines which start with either a 40- or 64-character hex object ID,
+to allow for both SHA-1 and SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9350-fast-export.sh | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ t/t8011-blame-split-file.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 690c90fb82..ba79db6a17 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -7,6 +7,7 @@ test_description='git fast-export'
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-+	test_oid_init &&
- 
- 	echo break it > file0 &&
- 	git add file0 &&
-@@ -132,12 +133,12 @@ test_expect_success 'reencoding iso-8859-7' '
- 	sed "s/wer/i18n/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
--		 # The commit object, if not re-encoded, would be 240 bytes.
-+		 # The commit object, if not re-encoded, would be 200 bytes plus hash.
- 		 # Removing the "encoding iso-8859-7\n" header drops 20 bytes.
- 		 # Re-encoding the Pi character from \xF0 (\360) in iso-8859-7
- 		 # to \xCF\x80 (\317\200) in UTF-8 adds a byte.  Check for
- 		 # the expected size.
--		 test 221 -eq "$(git cat-file -s i18n)" &&
-+		 test $(($(test_oid hexsz) + 181)) -eq "$(git cat-file -s i18n)" &&
- 		 # ...and for the expected translation of bytes.
- 		 git cat-file commit i18n >actual &&
- 		 grep $(printf "\317\200") actual &&
-@@ -164,12 +165,12 @@ test_expect_success 'preserving iso-8859-7' '
- 	sed "s/wer/i18n-no-recoding/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
--		 # The commit object, if not re-encoded, is 240 bytes.
-+		 # The commit object, if not re-encoded, is 200 bytes plus hash.
- 		 # Removing the "encoding iso-8859-7\n" header would drops 20
- 		 # bytes.  Re-encoding the Pi character from \xF0 (\360) in
- 		 # iso-8859-7 to \xCF\x80 (\317\200) in UTF-8 adds a byte.
- 		 # Check for the expected size...
--		 test 240 -eq "$(git cat-file -s i18n-no-recoding)" &&
-+		 test $(($(test_oid hexsz) + 200)) -eq "$(git cat-file -s i18n-no-recoding)" &&
- 		 # ...as well as the expected byte.
- 		 git cat-file commit i18n-no-recoding >actual &&
- 		 grep $(printf "\360") actual &&
-@@ -192,7 +193,7 @@ test_expect_success 'encoding preserved if reencoding fails' '
- 		 grep ^encoding actual &&
- 		 # Verify that the commit has the expected size; i.e.
- 		 # that no bytes were re-encoded to a different encoding.
--		 test 252 -eq "$(git cat-file -s i18n-invalid)" &&
-+		 test $(($(test_oid hexsz) + 212)) -eq "$(git cat-file -s i18n-invalid)" &&
- 		 # ...and check for the original special bytes
- 		 grep $(printf "\360") actual &&
- 		 grep $(printf "\377") actual)
-@@ -694,7 +695,7 @@ test_expect_success 'delete ref because entire history excluded' '
- 	git fast-export to-delete ^to-delete >actual &&
- 	cat >expected <<-EOF &&
- 	reset refs/heads/to-delete
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
- 
- 	EOF
- 	test_cmp expected actual
-@@ -704,7 +705,7 @@ test_expect_success 'delete refspec' '
- 	git fast-export --refspec :refs/heads/to-delete >actual &&
- 	cat >expected <<-EOF &&
- 	reset refs/heads/to-delete
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
- 
- 	EOF
- 	test_cmp expected actual
+diff --git a/t/t8011-blame-split-file.sh b/t/t8011-blame-split-file.sh
+index 831125047b..8a4626d496 100755
+--- a/t/t8011-blame-split-file.sh
++++ b/t/t8011-blame-split-file.sh
+@@ -54,7 +54,7 @@ test_expect_success 'setup simulated porcelain' '
+ 	cat >read-porcelain.pl <<-\EOF
+ 	my $field = shift;
+ 	while (<>) {
+-		if (/^[0-9a-f]{40} /) {
++		if (/^[0-9a-f]{40,64} /) {
+ 			flush();
+ 			$hash = $&;
+ 		} elsif (/^$field (.*)/) {
