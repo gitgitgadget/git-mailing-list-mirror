@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 411B3C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAA2CC433DF
 	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F80E2073A
+	by mail.kernel.org (Postfix) with ESMTP id A7CE120663
 	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KnXwzVm7"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zUW1ta7p"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727771AbgGJCss (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:48:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40418 "EHLO
+        id S1727777AbgGJCst (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:48:49 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40372 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726933AbgGJCse (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:34 -0400
+        by vger.kernel.org with ESMTP id S1727062AbgGJCsm (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:42 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8B24F60A6A;
-        Fri, 10 Jul 2020 02:48:30 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A7AE760A62;
+        Fri, 10 Jul 2020 02:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349310;
-        bh=uCrnGBdS9Lu9BL/q9uR2rKu9/6DjL6gl4ER0ChIeMFM=;
+        s=default; t=1594349313;
+        bh=2Uk60eVF35Xko9Fm5hChI+Nwm1x48yRPe8IdOh07YRA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=KnXwzVm7lqdu1Dg120F1gH32SaFsQdo3f82iVNOQ+iyMRYaMCZkQOiHdjhVppQSu9
-         ytdw0T/r9vsh225kAH+ZSAdopbHUGS0r7ZQbeWF2ssm9ky1vrY7YLi4a9pcYpR9BIH
-         za2Y1Jx7ra/R+G7Cp8zw5JXnPtklZLarGkECBtWrhQGZZf4ERdcP15oKN6LaWhuidm
-         kwIbNw1HOtJCFCopfm8LmYdasaQwMN9yHFoPzIgx2zyXXhT3tE0vrLw9ubwswu9Dbd
-         PD1bVFmFiT16zw6az3RC6/Vb/BFO4uLSfrgihW6jBjPKPeLW8MFa8Bina88Aj2fM7I
-         pT/I719orbRrQgD8nUkPgxzQU/HV5tpJhhwwt0SuFOzKJ1I20h8KGnIKwFF7QhbbAG
-         ddE9oRs0wizDGxpUxyvET5s8eDBAr5Ro49CJmY8cTGN1PU5Ag7BEZfxJL/iovmOIF1
-         nG6Qkyef0yk9U6EZ9QLqqrV+M3sdFpft0yTyXPh6uVsAHp3H4hc
+        b=zUW1ta7pvemU95agcNDlZP5qqoulshJICP5RrlPFtGTRmtlusPD93QijZfa4pJZkq
+         VeDCSleEcMDTTTd0z8j/gdCyTp/YfqAsV7yGmWHi6G+Bj/QIDyI0U7dlmKd9EFuQGd
+         AuUE93kLwMJWgJrPiw7LOjel81Fv7lulj2341yFyDoTC3RRv/AhZEQpm0BH0vz3+OV
+         RhwWjMbv0KehumHEDQfJ6LFtdPQ9DZAGZghZaw2nNOIQURE/xDShfkT30rsOvs1nCu
+         o1iN2wNb8DcQ+mlkTj0nakU1ASUKimc4CbN/l3CAuoOxoQVXFUhhvvWVCM+STX3YaD
+         yW8HYjqi+57W8A7yir/fRdiPdSezepbN5UGp0vXaFHw8/G4d+puTOZKi/kDwJOkB1N
+         lxiV4D51Je5raaPj0JxKAyoAI12CUGYx5diWL0E4qaNvpbKM0xn7Fsjs0gd6sjG8xb
+         buUraRtTx1CC+XlZ8U9bGL5Nq7MTsiVFv9QH6guoEB3hYxDRVdW
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 16/38] t7506: avoid checking for SHA-1-specific constants
-Date:   Fri, 10 Jul 2020 02:47:06 +0000
-Message-Id: <20200710024728.3100527-17-sandals@crustytoothpaste.net>
+Subject: [PATCH 23/38] t9301: make hash size independent
+Date:   Fri, 10 Jul 2020 02:47:13 +0000
+Message-Id: <20200710024728.3100527-24-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,63 +56,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test to sanitize the diffs and strip out object IDs from
-them, as it does for other object IDs, since we are not interested in
-the particular values used.
+Instead of using a hard-coded all-zeros object ID, use $ZERO_OID.
+Compute the length of the object IDs in use and use this instead of
+hard-coding the constant 40.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t7506-status-submodule.sh | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ t/t9301-fast-import-notes.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 08629a6e70..3fcb44767f 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -22,6 +22,10 @@ sanitize_output () {
- 	mv output2 output
- }
+diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
+index ca223dca98..9d1aaac980 100755
+--- a/t/t9301-fast-import-notes.sh
++++ b/t/t9301-fast-import-notes.sh
+@@ -71,7 +71,7 @@ EOF
+ INPUT_END
  
-+sanitize_diff () {
-+	sed -e "/^index [0-9a-f,]*\.\.[0-9a-f]*/d" "$1"
-+}
-+
- 
- test_expect_success 'setup' '
- 	test_create_repo_with_commit sub &&
-@@ -269,7 +273,6 @@ short_sha1_merge_sub1=$(cd sub1 && git rev-parse --short HEAD)
- short_sha1_merge_sub2=$(cd sub2 && git rev-parse --short HEAD)
- cat >diff_expect <<\EOF
- diff --cc .gitmodules
--index badaa4c,44f999a..0000000
- --- a/.gitmodules
- +++ b/.gitmodules
- @@@ -1,3 -1,3 +1,9 @@@
-@@ -286,7 +289,6 @@ EOF
- 
- cat >diff_submodule_expect <<\EOF
- diff --cc .gitmodules
--index badaa4c,44f999a..0000000
- --- a/.gitmodules
- +++ b/.gitmodules
- @@@ -1,3 -1,3 +1,9 @@@
-@@ -306,7 +308,8 @@ test_expect_success 'diff with merge conflict in .gitmodules' '
- 		cd super &&
- 		git diff >../diff_actual 2>&1
- 	) &&
--	test_cmp diff_expect diff_actual
-+	sanitize_diff diff_actual >diff_sanitized &&
-+	test_cmp diff_expect diff_sanitized
+ test_expect_success 'set up master branch' '
+-
++	test_oid_init &&
+ 	git fast-import <input &&
+ 	git whatchanged master
+ '
+@@ -470,12 +470,13 @@ test_expect_success 'add lots of commits and notes' '
  '
  
- test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
-@@ -314,7 +317,8 @@ test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
- 		cd super &&
- 		git diff --submodule >../diff_submodule_actual 2>&1
- 	) &&
--	test_cmp diff_submodule_expect diff_submodule_actual
-+	sanitize_diff diff_submodule_actual >diff_sanitized &&
-+	test_cmp diff_submodule_expect diff_sanitized
+ test_expect_success 'verify that lots of notes trigger a fanout scheme' '
++	hexsz=$(test_oid hexsz) &&
+ 
+ 	# None of the entries in the top-level notes tree should be a full SHA1
+ 	git ls-tree --name-only refs/notes/many_notes |
+ 	while read path
+ 	do
+-		if test $(expr length "$path") -ge 40
++		if test $(expr length "$path") -ge $hexsz
+ 		then
+ 			return 1
+ 		fi
+@@ -518,7 +519,7 @@ test_expect_success 'verify that importing a notes tree respects the fanout sche
+ 	git ls-tree --name-only refs/notes/other_notes |
+ 	while read path
+ 	do
+-		if test $(expr length "$path") -ge 40
++		if test $(expr length "$path") -ge $hexsz
+ 		then
+ 			return 1
+ 		fi
+@@ -593,7 +594,7 @@ test_expect_success 'verify that changing notes respect existing fanout' '
+ 	git ls-tree --name-only refs/notes/many_notes |
+ 	while read path
+ 	do
+-		if test $(expr length "$path") -ge 40
++		if test $(expr length "$path") -ge $hexsz
+ 		then
+ 			return 1
+ 		fi
+@@ -616,7 +617,7 @@ i=$(($num_commits - $remaining_notes))
+ for sha1 in $(git rev-list -n $i refs/heads/many_commits)
+ do
+ 	cat >>input <<INPUT_END
+-N 0000000000000000000000000000000000000000 $sha1
++N $ZERO_OID $sha1
+ INPUT_END
+ done
+ 
+@@ -646,7 +647,6 @@ test_expect_success 'remove lots of notes' '
  '
  
- # We'll setup different cases for further testing:
+ test_expect_success 'verify that removing notes trigger fanout consolidation' '
+-
+ 	# All entries in the top-level notes tree should be a full SHA1
+ 	git ls-tree --name-only -r refs/notes/many_notes |
+ 	while read path
+@@ -656,7 +656,7 @@ test_expect_success 'verify that removing notes trigger fanout consolidation' '
+ 		test "$path" = "deadbeef" && continue
+ 		test "$path" = "de/adbeef" && continue
+ 
+-		if test $(expr length "$path") -ne 40
++		if test $(expr length "$path") -ne $hexsz
+ 		then
+ 			return 1
+ 		fi
