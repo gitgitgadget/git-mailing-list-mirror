@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE079C433E0
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04D1DC433E1
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B816620663
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDA3F20663
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="V/oVi6mh"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="qUxEkH35"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727061AbgGJCsl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:48:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40392 "EHLO
+        id S1727086AbgGJCsn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:48:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40398 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726796AbgGJCsa (ORCPT
+        by vger.kernel.org with ESMTP id S1726856AbgGJCsa (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:30 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0395760A62;
-        Fri, 10 Jul 2020 02:48:27 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D415A60A64;
+        Fri, 10 Jul 2020 02:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349308;
-        bh=vM3TI4/RbUP1dFvpkiIgLxj2UZc7pmERZjdUoWlLhOs=;
+        s=default; t=1594349309;
+        bh=yISpjiYdNb20ay038vbmc40m1f3lZfeDdvoTNXqWBQM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=V/oVi6mhSYinwwocLTYnVuXtNwK8kXpVra7pD9wqHd5APFMJcLOtNzAn9U/Gm/MTz
-         EjdNPjSYuwG+p2q5wscIVvy82kd13/vwZZYxa8pFhpf+auRoGe1KYXUzngVf6lU+SJ
-         HdSOrBH74lnX+FpR4szcSSxqgrUoZV2UVZNzMV/NFvYGVkJSojL9x1W26yxESsCLaN
-         rYih5ZGozQmxLQePJSqi/j/omV8pp0n0FGyqel9OmBbYz25d6NMHrogNbDKVC5HfE9
-         W+8GSUcbVXhBhqsTgg7wnDy3QZdzcxl/mEjW8T+j+lsoCOvvnTnAiJR8O0aPHTNPeO
-         flWQMB5ZIcavmAsik2WTd5o9jSytbIcx5excbDqd0gagKkWye/7v/vRr/I+8R+HImO
-         ok9XxG5ttrXiJbW1lPi+dIo/yDgym3Pz7fqLeX6OjTOliV8xHHfIY3F801ubrImvXP
-         9/SzzFv28cMvNJHk+TLlj0ovW2ns6XI4JuWuLvswDcoCqQF5LpH
+        b=qUxEkH3598JR+dOiZG1jURe8P4/seoUerTE1ZWd77RXkM49ypsOJlVckz+uEyfKKF
+         PuI2xkeRV2tTTN3JrmfFuzsGmTHDF/8BjKoSAXQb9WWAyhoT/WajI7Qh+wChUVYWUa
+         5kaG8iGcxTJWJQ0ZX7jh8xFVt5dSNXuu0TXXjbYWf3x+BYhNrIkNN2W28oWu+Imn+G
+         zFtwD8jby5dqF6+vIqFz7jvxEPDwOoFTnfk5C4W36cMMj6yvBk6GDRX6mRPIheZyJA
+         xdTT60sYwjhxAUz5Hb3kqvpYVHmmIePieMRbuGNVL8C680/60UyYSRY1AmypBG+X0x
+         mYK7ciq3dAmUWhPyrQ0CEmaPBRro8pBAxLmgoZoilaey7gQcHj79wfwDvnyyobm6PN
+         we2F1AKZeO8B5I5cPzPME0a5FhRz3BQheNmj6zPwbN8CCMBvY48QZ0hHcq6IZoehar
+         kKiFMd4k0U3vBVqFszRgS+k6wd1ns+mem0vc4+CORdMG/afd2S9
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 10/38] t7003: compute appropriate length constant
-Date:   Fri, 10 Jul 2020 02:47:00 +0000
-Message-Id: <20200710024728.3100527-11-sandals@crustytoothpaste.net>
+Subject: [PATCH 12/38] t7201: abstract away SHA-1-specific constants
+Date:   Fri, 10 Jul 2020 02:47:02 +0000
+Message-Id: <20200710024728.3100527-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,36 +56,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using a specific invalid hard-coded object ID, look one
-up from the translation table.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t7003-filter-branch.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ t/t7201-co.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index e23de7d0b5..beeb2b855a 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -5,6 +5,7 @@ test_description='git filter-branch'
- . "$TEST_DIRECTORY/lib-gpg.sh"
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index b696bae5f5..d4fd760915 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -230,9 +230,10 @@ test_expect_success 'switch to another branch while carrying a deletion' '
+ test_expect_success 'checkout to detach HEAD (with advice declined)' '
  
- test_expect_success 'setup' '
-+	test_oid_init &&
- 	test_commit A &&
- 	GIT_COMMITTER_DATE="@0 +0000" GIT_AUTHOR_DATE="@0 +0000" &&
- 	test_commit --notick B &&
-@@ -463,10 +464,11 @@ test_expect_success 'rewrite submodule with another content' '
- '
- 
- test_expect_success 'replace submodule revision' '
-+	invalid=$(test_oid numeric) &&
- 	git reset --hard original &&
- 	git filter-branch -f --tree-filter \
- 	    "if git ls-files --error-unmatch -- submod > /dev/null 2>&1
--	     then git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 submod
-+	     then git update-index --cacheinfo 160000 $invalid submod
- 	     fi" HEAD &&
- 	test $orig_head != $(git show-ref --hash --head HEAD)
- '
+ 	git config advice.detachedHead false &&
++	rev=$(git rev-parse --short renamer^) &&
+ 	git checkout -f renamer && git clean -f &&
+ 	git checkout renamer^ 2>messages &&
+-	test_i18ngrep "HEAD is now at 7329388" messages &&
++	test_i18ngrep "HEAD is now at $rev" messages &&
+ 	test_line_count = 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
+@@ -250,7 +251,7 @@ test_expect_success 'checkout to detach HEAD' '
+ 	git config advice.detachedHead true &&
+ 	git checkout -f renamer && git clean -f &&
+ 	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
+-	grep "HEAD is now at 7329388" messages &&
++	grep "HEAD is now at $rev" messages &&
+ 	test_line_count -gt 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
