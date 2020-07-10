@@ -3,210 +3,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 946CDC433DF
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 19:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75443C433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 19:55:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6972920657
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 19:30:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CAEB2075D
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 19:55:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jrZXyC1Z"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="y+HeLfna"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728282AbgGJTal (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jul 2020 15:30:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726867AbgGJTal (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jul 2020 15:30:41 -0400
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCFBDC08C5DC
-        for <git@vger.kernel.org>; Fri, 10 Jul 2020 12:30:40 -0700 (PDT)
-Received: by mail-ej1-x641.google.com with SMTP id o18so7260463eje.7
-        for <git@vger.kernel.org>; Fri, 10 Jul 2020 12:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Cq+uj2y0BfNi9FTxnM3VM2lOHOsEMavrOB5/twyfiPw=;
-        b=jrZXyC1Zx6hTzKZaa8NfTAxmrA5B/eAbzxs+jllbFM/pDIy+Rqc5P0X6R0SbfyIqFT
-         fmSGQcmG8FBku05fUNzxVr5rItYWK0o4aV6pAY4Yy552cz79Gp9XqCT6auUyYxO0iq50
-         U+X0KvCNXsFfXKuJnHnW1JIf8oZcZebgdXeu19OH2TM4i9ab5hUWQakZgeUymAkwQjKo
-         33GvjPIe8T7lXjaLIQXDj9qfES45gwCRRk5gpixViwg6TRuKPVt1K9ow3UBlC0UCff41
-         qyh/x+nVSBghjrW6yYWhaNzw3Xezm/5VGXEgfT7hfYBkRxrm5efxWX67icqWsk4IvPtZ
-         KHGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Cq+uj2y0BfNi9FTxnM3VM2lOHOsEMavrOB5/twyfiPw=;
-        b=iGW7UEIJ3C6ZTzJVnrwx7QkV81Sbf4rFxokvz2lhEWxwOx7IMEiPlaVnfzW9X7RNLa
-         I4eJdk0u/6g+KJFr3mFC9FabxHtn2WYT+gLE4WZOwFoY/MkXds5bgOWfaxcdHcG19EAL
-         9/Mk3YlGDV3TRGZkkXJdsgZjKu39xSOYPgE90vzVoPtnY//9BVKxC4nKguUyHmkqRP/Z
-         fTKv8InuhkiBmm1wuZ0vildVuyeZgdXwOMptUsDaXviTTfk3X3TTmnDSe1wtkfmSFJR/
-         eSv+G4qHk0Kqkv6/wFeqSAO72mMq5CP7JV2NCdce+CTTygWnG5hhounUx9W2i4wMXljM
-         RzsQ==
-X-Gm-Message-State: AOAM533Wn+f/4+8zu7BfHOx9UwtyDG5pglfx0nMWdzgoPlOJw/U87jXe
-        dtsbbgQAnVcXYrOVArLNM/Y=
-X-Google-Smtp-Source: ABdhPJy20BW6aX93K7aNepM1t1yVszZzUnmCNEztIehRpMgT8XOtEBwXwjGevmag2rcVvnSletHzsA==
-X-Received: by 2002:a17:906:87c8:: with SMTP id zb8mr61650824ejb.35.1594409439556;
-        Fri, 10 Jul 2020 12:30:39 -0700 (PDT)
-Received: from ?IPv6:2a02:a210:ca2:9c00:dcd5:7799:7fa7:4588? ([2a02:a210:ca2:9c00:dcd5:7799:7fa7:4588])
-        by smtp.gmail.com with ESMTPSA id n5sm4233948eja.70.2020.07.10.12.30.38
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Jul 2020 12:30:39 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: [PATCH 00/21] Maintenance builtin, allowing 'gc --auto'
- customization
-From:   Son Luong Ngoc <sluongng@gmail.com>
-In-Reply-To: <20200710184651.GB3189386@google.com>
-Date:   Fri, 10 Jul 2020 21:30:37 +0200
-Cc:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <23F67854-B596-4728-86CD-A9927546DD43@gmail.com>
-References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
- <20200708235719.GA3189386@google.com>
- <ef6e2704-b122-f620-a952-75f3f9efab78@gmail.com>
- <d0d30dab-7883-199a-3beb-48c87cde3550@gmail.com>
- <20200709231624.GE664420@coredump.intra.peff.net>
- <28c72d69-f524-7c4f-4cc3-847ca91cad33@gmail.com>
- <20200710184651.GB3189386@google.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+        id S1728090AbgGJTzs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jul 2020 15:55:48 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40512 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726828AbgGJTzs (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Jul 2020 15:55:48 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E7F556048A;
+        Fri, 10 Jul 2020 19:55:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1594410917;
+        bh=IIeMwaCkpmUptv2+9VqS4Kjthpg9EI5aK2miO9wRUfo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=y+HeLfna8A+2JjTWAx8+EopOcfHO4zVrKR6x1NvWVDUc/pOKGCo969icOKaae02Gu
+         /VJuzg94BSfGu6xJcc5kzdOHP5pvjFr3WzAt7NygsW0Ecg7tQoPOWFIhE1pVPoxmyC
+         BAmiTN3blZ6YjrMr0jjT1xI904tBVmrQiZVyKaWuCyheGY/QuN27nYjxozcH2YAQ5C
+         jGRKMOErwTvsJdsxc7wOQN5EfLWvtJ2iq3dLg4l3M+o9DeEsQg9LAG2s+jrUNJObq+
+         Ii5iLt5cH915ZWjxl/F8lSb6MSenbmvva3ZRW7MDs6v+hucAafVeC/9RLx4qg7T8ES
+         DytlNCjWDUyzagzR6A2/tIf96qtbKWcey7yznq61hgvCuglJqjUYnNmhMcwHubdMjw
+         BDiJEoXaEToD877LDndaaJ00RM8z/nBW4LmOEpRr/DMvE1VL2YSp7w4RuyeaXvnTwI
+         /SQ0bnWsTyZ5fj6Q6EZd/514VgdEWOKFRKZ1CZeWhLHWVokIx7v
+Date:   Fri, 10 Jul 2020 19:55:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 00/38] SHA-256, part 3/3
+Message-ID: <20200710195507.GK9782@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
+ <68cc8fe8-3400-501a-ead5-a9c008605e74@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ibq+fG+Ci5ONsaof"
+Content-Disposition: inline
+In-Reply-To: <68cc8fe8-3400-501a-ead5-a9c008605e74@gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.6.0-2-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--ibq+fG+Ci5ONsaof
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Jul 10, 2020, at 20:46, Emily Shaffer <emilyshaffer@google.com> =
-wrote:
+On 2020-07-10 at 15:14:37, Derrick Stolee wrote:
+> On 7/9/2020 10:46 PM, brian m. carlson wrote:
+> > This is the final part required for the stage 4 implementation of
+> > SHA-256.
 >=20
-> On Thu, Jul 09, 2020 at 07:45:47PM -0400, Derrick Stolee wrote:
->>=20
->> On 7/9/2020 7:16 PM, Jeff King wrote:
->>> On Thu, Jul 09, 2020 at 08:43:48AM -0400, Derrick Stolee wrote:
->>>=20
->>>>>> Is it infeasible to ask for 'git maintenance' to learn something =
-like
->>>>>> '--on /<path-to-repo> --on /<path-to-second-repo>'? Or better =
-yet, some
->>>>>> config like "maintenance.targetRepo =3D /<path-to-repo>"?
->>>>=20
->>>> Sorry that I missed this comment on my first reply.
->>>>=20
->>>> The intention is that this cron entry will be simpler after I =
-follow up
->>>> with the "background" part of maintenance. The idea is to use =
-global
->>>> or system config to register a list of repositories that want =
-background
->>>> maintenance and have cron execute something like "git maintenance =
-run --all-repos"
->>>> to span "git -C <repo> maintenance run --scheduled" for all repos =
-in
->>>> the config.
->>>>=20
->>>> For now, this manual setup does end up a bit cluttered if you have =
-a
->>>> lot of repos to maintain.
->>>=20
->>> I think it might be useful to have a general command to run a =
-subcommand
->>> in a bunch of repositories. Something like:
->>>=20
->>>  git for-each-repo --recurse /path/to/repos git maintenance ...
->>>=20
->>> which would root around in /path/to/repos for any git-dirs and run =
-"git
->>> --git-dir=3D$GIT_DIR maintenance ..." on each of them.
->>>=20
->>> And/or:
->>>=20
->>>  git for-each-repo --config maintenance.repos git maintenance ...
->>>=20
->>> which would pull the set of repos from the named config variable =
-instead
->>> of looking around the filesystem.
->>=20
->> Yes! This! That's a good way to make something generic that solves
->> the problem at hand, but might also have other applications! Most
->> excellent.
->=20
-> I'm glad I wasn't the only one super geeked when I read this idea. I'd
-> use the heck out of this in my .bashrc too. Sounds awesome. I actually
-> had a short-lived fling last year with a script to summarize my
-> uncommitted changes in all repos at the beginning of every session
-> (dropped because it became one more thing to gloss over) and could =
-have
-> really used this command.
+> WOOHOO! What a milestone!
 
-I was planning to build a CLI tool that help manage multiple repos =
-maintenance
-like what was just described here.
-My experience using my poor-man-scalar [1] bash script is: For multiple =
-repositories,
-the process count could get out of control quite quickly and there are =
-probably other
-issues that I have not thought of / encountered...
+I'm also excited about this.  It's been a lot of work, but we're finally
+here.
 
-There is definitely a need to keep all the repos updated with pre-fetch=20=
+> As usual, your commits are excellently organized and clear. I could
+> not find any fault in any of them.
 
-and updated commit-graph, while staying compact / garbage free.
-Having this in Git does simplify a lot of daily operations for end =
-users.
+Thanks.
 
->=20
->>=20
->>> You could use either as a one-liner in the crontab (depending on =
-which
->>> is easier with your repo layout).
->>=20
->> The hope is that we can have such a clean layout. I'm particularly
->> fond of the config option because users may want to opt-in to
->> background maintenance only on some repos, even if they put them
->> in a consistent location.
->>=20
->> In the _far_ future, we might even want to add a repo to this
->> "maintenance.repos" list during 'git init' and 'git clone' so
->> this is automatic. It then becomes opt-out at that point, which
->> is why I saw the _far, far_ future.
->=20
-> Oh, I like this idea a lot. Then I can do something silly like
->=20
->  alias reproclone=3D"git clone --no-maintainenance"
->=20
-> and get the benefits on everything else that I plan to be using
-> frequently.
+> The proof is really in the pudding: does this pass the test suite
+> when GIT_TEST_DEFAULT_HASH=3Dsha256? You add that as a mode to the
+> CI scripts, so we will know.
 
-This started to remind me of automatic updates in some of the popular =
-OS.
-Where download/install/cleanup update of multiple software components =
-are
-managed under a single tool.
+I've seen several cases where we've accidentally regressed things with
+SHA-256, so it seemed only prudent to set up CI.  I've run it locally on
+my system and it works for me, but we'll see how it fares on the CI
+system.
 
-I wonder if this is the path git should take in the 'new world' that =
-Junio mentioned. [2]
+> I made a recommendation for a different model with how to do the CI,
+> but it's super minor and can be done later. Basically, if we create
+> a new job for SHA-256 mode, then we can more quickly identify when
+> a test failure is due to that toggle and not other optional GIT_TEST_*
+> variables.
 
-But I am also super geeked reading this. :)
+I think that's a good suggestion, and I'm familiar enough with GitHub
+Actions that I think I can set up an additional job.  If I reroll, I'll
+try to squash such a change in.
 
->=20
-> - Emily
+> I hope to play around with SHA256-enabled repos a bit later, to see
+> if I can find any issues poking around on my own. I doubt I will,
+> with how thoroughly you modified the test suite.
 
-Regards,
-Son Luong.
+For folks who are looking for a more convenient way to get patches,
+you're welcome to grab them from the transition-stage-4 branch on
+https://github.com/bk2204/git.git or
+https://git.crustytoothpaste.net/git/bmc/git.git.  The GitHub URL has
+slightly more bandwidth and a generally better uptime, since I don't
+live in a datacenter.
+--=20
+brian m. carlson: Houston, Texas, US
 
-[1]: https://github.com/sluongng/git-care
-[2]: =
-https://lore.kernel.org/git/xmqqmu48y7rw.fsf@gitster.c.googlers.com/=
+--ibq+fG+Ci5ONsaof
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXwjHmwAKCRB8DEliiIei
+gezcAQCZXe3Gk9c+wMo4u3foYvJHW47Ayzqc+d/oVhYIR5zEkQD/Q02VlCULTZrm
+387a9hiEUlqDbtjQYOeCSX8mPRx6jAY=
+=hyFd
+-----END PGP SIGNATURE-----
+
+--ibq+fG+Ci5ONsaof--
