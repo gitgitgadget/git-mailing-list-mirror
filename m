@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE59CC433E0
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF816C433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC88F20663
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A04FD20663
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xy4dJeqR"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hmK0x6u4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726789AbgGJCs1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:48:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40366 "EHLO
+        id S1726872AbgGJCs3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:48:29 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40362 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726509AbgGJCs0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:26 -0400
+        by vger.kernel.org with ESMTP id S1726496AbgGJCsZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:25 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EDE7860A5D;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 86EB360A5C;
         Fri, 10 Jul 2020 02:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349305;
-        bh=OgCPGLxbLEhOK6+oRjiyLc+hvZl35cGnjxku2gGi4NE=;
+        s=default; t=1594349304;
+        bh=kzD44krolsMhdpvZfmNLjC7VTRRu/RTNvK14D0Rz7Vo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=xy4dJeqRXTYswSpUH8nYvOYbwUG3xSwndKUtnKeYa7dPkeHzNGYNDilGmLjb4XGFK
-         7stnZ9Dgzph9AQRfdw9eQnCSgywXIA8/1I6GCPppSR6WlXzAln8ghfiUZAF+qFZWIo
-         9/3CIH8bhjM6bOQ8AFk3kv9Q6ivqgwA/q6y6aG8RFW0lNuFdw9K26m1XGD8rV9vsj3
-         kwC4s7jLF2+Z/qjKe2wbWRP2mQWH3UzqiGTJ7BSSquQCousucZGeuNPc/wWMhgcH3X
-         AdJOPSd3kj+RGDcG+Khl5pWGiamrAFM2vi7g7BnSiOoGfsJ+So+Kexqpu/honHXnav
-         YEkTHWHor+h7OQFsvOqP7qB6xbjpXYjMxqsjHBSGPCGbQ6dHCwMN4SNX0UtgAoD1bh
-         9w2Suij7+fwJp3t9vrZoundMPP1YE0ql9WqzsXbJubKa7+GrrC74DA/ySGORWsjQbd
-         28s5ybwOfL0ENrBoJta7zmieh3fAOy7DyQqWRFmFnp4L6rqVsHU
+        b=hmK0x6u44/iFg8qcAHNhyB2xHVFzf4QZzjz1metqRVfX3t4J30dquOnJ2DzdK+x0F
+         awCQM3ECA0KLs7OsOwcfCuQJm+ey5lxTs1jS+hTjFPHyWnQM5dqJfCPsQXGfihC706
+         EQ3kLjeTuWm11OKX5CMwZsv5/gOP65vDmDZ2fUEWMgrMxdduyyJAiFVLcf6pKi0rvx
+         qV46IjfOnsNuyep+S+rvCxp5vrASfpIWfvpKaxtlmjw6H1nOfQDP1NPRuBhg7An7LD
+         kqG9mZ/l8j2hrXhog757iMTyYUARo7Hm7SpZmrZNmoooRyl5yBPrVSrWuyo3+GLATy
+         INfqj7mjEfz7o7kkUf8VKnjdP9Tu7XYb0yIfYwUIwm8nkTRCBHJyOBhENDKB+w4+fa
+         kg7ui03oTPTK96gGmMptM2t2vpWcaGhDlRZ0f20shGEPq3v9tJdRfaESowDE+l13dK
+         x9QmEfyjDcEeL1j9BYL8604iGaRfN9qS7A1xvUDvbkwzDl5C23M
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 03/38] t3305: make hash agnostic
-Date:   Fri, 10 Jul 2020 02:46:53 +0000
-Message-Id: <20200710024728.3100527-4-sandals@crustytoothpaste.net>
+Subject: [PATCH 02/38] t1001: use $ZERO_OID
+Date:   Fri, 10 Jul 2020 02:46:52 +0000
+Message-Id: <20200710024728.3100527-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,32 +56,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When computing the fanout length, let's use test_oid to look up the
-hexadecimal size of the hash in question instead of hard-coding a value.
+Use $ZERO_OID to make the test hash independent.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3305-notes-fanout.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t1091-sparse-checkout-builtin.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-index 3b4753e1b4..d5a94b7174 100755
---- a/t/t3305-notes-fanout.sh
-+++ b/t/t3305-notes-fanout.sh
-@@ -7,7 +7,7 @@ test_description='Test that adding/removing many notes triggers automatic fanout
- path_has_fanout() {
- 	path=$1 &&
- 	fanout=$2 &&
--	after_last_slash=$((40 - $fanout * 2)) &&
-+	after_last_slash=$(($(test_oid hexsz) - $fanout * 2)) &&
- 	echo $path | grep -q "^\([0-9a-f]\{2\}/\)\{$fanout\}[0-9a-f]\{$after_last_slash\}$"
- }
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 7cd45fc139..84acfc48b6 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -369,7 +369,7 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with unmerged stat
+ 	git clone repo unmerged &&
  
-@@ -31,6 +31,7 @@ all_notes_have_fanout() {
- }
+ 	cat >input <<-EOF &&
+-	0 0000000000000000000000000000000000000000	folder1/a
++	0 $ZERO_OID	folder1/a
+ 	100644 $(git -C unmerged rev-parse HEAD:folder1/a) 1	folder1/a
+ 	EOF
+ 	git -C unmerged update-index --index-info <input &&
+@@ -396,7 +396,7 @@ test_expect_success 'sparse-checkout reapply' '
+ 	echo dirty >tweak/deep/deeper2/a &&
  
- test_expect_success 'tweak test environment' '
-+	test_oid_init &&
- 	git checkout -b nondeterminism &&
- 	test_commit A &&
- 	git checkout --orphan with_notes;
+ 	cat >input <<-EOF &&
+-	0 0000000000000000000000000000000000000000	folder1/a
++	0 $ZERO_OID	folder1/a
+ 	100644 $(git -C tweak rev-parse HEAD:folder1/a) 1	folder1/a
+ 	EOF
+ 	git -C tweak update-index --index-info <input &&
