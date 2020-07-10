@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAA2CC433DF
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 909C2C433E1
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7CE120663
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B02B20663
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zUW1ta7p"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LSpDSIUP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727777AbgGJCst (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:48:49 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40372 "EHLO
+        id S1727782AbgGJCsu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:48:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40398 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727062AbgGJCsm (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:42 -0400
+        by vger.kernel.org with ESMTP id S1727074AbgGJCso (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:44 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A7AE760A62;
-        Fri, 10 Jul 2020 02:48:33 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5C44760A70;
+        Fri, 10 Jul 2020 02:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349313;
-        bh=2Uk60eVF35Xko9Fm5hChI+Nwm1x48yRPe8IdOh07YRA=;
+        s=default; t=1594349315;
+        bh=pybST+Ml60xM98F42OzVvvCAYKpI2wVMt8HjANV3VuE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=zUW1ta7pvemU95agcNDlZP5qqoulshJICP5RrlPFtGTRmtlusPD93QijZfa4pJZkq
-         VeDCSleEcMDTTTd0z8j/gdCyTp/YfqAsV7yGmWHi6G+Bj/QIDyI0U7dlmKd9EFuQGd
-         AuUE93kLwMJWgJrPiw7LOjel81Fv7lulj2341yFyDoTC3RRv/AhZEQpm0BH0vz3+OV
-         RhwWjMbv0KehumHEDQfJ6LFtdPQ9DZAGZghZaw2nNOIQURE/xDShfkT30rsOvs1nCu
-         o1iN2wNb8DcQ+mlkTj0nakU1ASUKimc4CbN/l3CAuoOxoQVXFUhhvvWVCM+STX3YaD
-         yW8HYjqi+57W8A7yir/fRdiPdSezepbN5UGp0vXaFHw8/G4d+puTOZKi/kDwJOkB1N
-         lxiV4D51Je5raaPj0JxKAyoAI12CUGYx5diWL0E4qaNvpbKM0xn7Fsjs0gd6sjG8xb
-         buUraRtTx1CC+XlZ8U9bGL5Nq7MTsiVFv9QH6guoEB3hYxDRVdW
+        b=LSpDSIUPB2ckPE8nZXFAnFEzzyVzkGvTPt/zXz8Ne9KuqvEcZnFr74upib7nv3kvT
+         bE29kvZnLrCEj0LEGTxrW75Uon7GhaGItO8rxy2WLi+RKc7TssGaAOPghAauonHV9t
+         2dCi41lAq4dPl1akFUqYFCOtzbSTsM0WDbWof+Fm3L4OGVV9VZF0kbSu55MpUgUjF9
+         0OD13rlQ1Vp3cng4dD40g8dJBbwBKJJrDaxfSmsNHNODmPmmytv9Jh7nS0vTbGnbb0
+         3dx/jLREbCtfKnbmgM+DE2MHsJRdBcCp0bB+6g8B4KYdiIPs+UUxyghFvwhXDygVeT
+         TGKs2G3XFv6FaplEAhT2O5tcOHsH6jBLRbnJJr3cqohcIQ+4c1lV/JJZRgxFiHPGXC
+         lbA6DiLPveZg60GLuakau/8tLIUMbMIUkLE9yWBdUKcxwR7aLpWZRP3vVlbfuT39LN
+         W23n9a5k+HycfMGG6Z59cj+J/rU+8z6m4WIbeP4CO1IhnsiiHsH
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 23/38] t9301: make hash size independent
-Date:   Fri, 10 Jul 2020 02:47:13 +0000
-Message-Id: <20200710024728.3100527-24-sandals@crustytoothpaste.net>
+Subject: [PATCH 27/38] t5308: make test work with SHA-256
+Date:   Fri, 10 Jul 2020 02:47:17 +0000
+Message-Id: <20200710024728.3100527-28-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,84 +56,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using a hard-coded all-zeros object ID, use $ZERO_OID.
-Compute the length of the object IDs in use and use this instead of
-hard-coding the constant 40.
+This test needs multiple object IDs that have the same first byte.
+Update the pack test code to generate a suitable packed value for
+SHA-256.  Update the test to use this value when using SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9301-fast-import-notes.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ t/lib-pack.sh                     |  8 ++++++++
+ t/t5308-pack-detect-duplicates.sh | 20 ++++++++++++--------
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
-index ca223dca98..9d1aaac980 100755
---- a/t/t9301-fast-import-notes.sh
-+++ b/t/t9301-fast-import-notes.sh
-@@ -71,7 +71,7 @@ EOF
- INPUT_END
+diff --git a/t/lib-pack.sh b/t/lib-pack.sh
+index f3463170b3..0c799d53c6 100644
+--- a/t/lib-pack.sh
++++ b/t/lib-pack.sh
+@@ -93,6 +93,14 @@ pack_obj () {
+ 			;;
+ 		esac
+ 		;;
++	# blob containing "\3\326"
++	471819e8c52bf11513f100b2810a8aa0622d5cd3d1c913758a071dd4b3bad8fe)
++		case "$2" in
++		'')
++			printf '\062\170\234\143\276\006\000\000\336\000\332'
++			return
++			;;
++		esac
+ 	esac
  
- test_expect_success 'set up master branch' '
--
-+	test_oid_init &&
- 	git fast-import <input &&
- 	git whatchanged master
- '
-@@ -470,12 +470,13 @@ test_expect_success 'add lots of commits and notes' '
- '
+ 	# If it's not a delta, we can convince pack-objects to generate a pack
+diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
+index 6845c1f3c3..693b2411c8 100755
+--- a/t/t5308-pack-detect-duplicates.sh
++++ b/t/t5308-pack-detect-duplicates.sh
+@@ -4,23 +4,27 @@ test_description='handling of duplicate objects in incoming packfiles'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-pack.sh
  
- test_expect_success 'verify that lots of notes trigger a fanout scheme' '
-+	hexsz=$(test_oid hexsz) &&
+-if ! test_have_prereq SHA1
+-then
+-       skip_all='not using SHA-1 for objects'
+-       test_done
+-fi
++test_expect_success 'setup' '
++	test_oid_cache <<-EOF
++	lo_oid sha1:e68fe8129b546b101aee9510c5328e7f21ca1d18
++	lo_oid sha256:471819e8c52bf11513f100b2810a8aa0622d5cd3d1c913758a071dd4b3bad8fe
++
++	missing_oid sha1:e69d000000000000000000000000000000000000
++	missing_oid sha256:4720000000000000000000000000000000000000000000000000000000000000
++	EOF
++'
  
- 	# None of the entries in the top-level notes tree should be a full SHA1
- 	git ls-tree --name-only refs/notes/many_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -518,7 +519,7 @@ test_expect_success 'verify that importing a notes tree respects the fanout sche
- 	git ls-tree --name-only refs/notes/other_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -593,7 +594,7 @@ test_expect_success 'verify that changing notes respect existing fanout' '
- 	git ls-tree --name-only refs/notes/many_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -616,7 +617,7 @@ i=$(($num_commits - $remaining_notes))
- for sha1 in $(git rev-list -n $i refs/heads/many_commits)
- do
- 	cat >>input <<INPUT_END
--N 0000000000000000000000000000000000000000 $sha1
-+N $ZERO_OID $sha1
- INPUT_END
- done
+ # The sha1s we have in our pack. It's important that these have the same
+ # starting byte, so that they end up in the same fanout section of the index.
+ # That lets us make sure we are exercising the binary search with both sets.
+-LO_SHA1=e68fe8129b546b101aee9510c5328e7f21ca1d18
+-HI_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++LO_SHA1=$(test_oid lo_oid)
++HI_SHA1=$EMPTY_BLOB
  
-@@ -646,7 +647,6 @@ test_expect_success 'remove lots of notes' '
- '
+ # And here's a "missing sha1" which will produce failed lookups. It must also
+ # be in the same fanout section, and should be between the two (so that during
+ # our binary search, we are sure to end up looking at one or the other of the
+ # duplicate runs).
+-MISSING_SHA1='e69d000000000000000000000000000000000000'
++MISSING_SHA1=$(test_oid missing_oid)
  
- test_expect_success 'verify that removing notes trigger fanout consolidation' '
--
- 	# All entries in the top-level notes tree should be a full SHA1
- 	git ls-tree --name-only -r refs/notes/many_notes |
- 	while read path
-@@ -656,7 +656,7 @@ test_expect_success 'verify that removing notes trigger fanout consolidation' '
- 		test "$path" = "deadbeef" && continue
- 		test "$path" = "de/adbeef" && continue
- 
--		if test $(expr length "$path") -ne 40
-+		if test $(expr length "$path") -ne $hexsz
- 		then
- 			return 1
- 		fi
+ # git will never intentionally create packfiles with
+ # duplicate objects, so we have to construct them by hand.
