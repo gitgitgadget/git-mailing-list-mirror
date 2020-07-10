@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3691DC433DF
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0BD5C433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 110CD20663
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D104D20708
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="eTHwGhKR"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="aoi+v8Di"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727834AbgGJCs6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:48:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40392 "EHLO
+        id S1727840AbgGJCs7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:48:59 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40472 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727085AbgGJCsp (ORCPT
+        by vger.kernel.org with ESMTP id S1727090AbgGJCsp (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:45 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E38A660A76;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7BFEB60A74;
         Fri, 10 Jul 2020 02:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349318;
-        bh=9s046Lg3ATkwRo1CInBpkC4zm/IZy1NRAcoTYzhZTno=;
+        s=default; t=1594349317;
+        bh=GA9vs9IiyAAK95Fl2gec3JKiN39VQ/hmb0NCb5N6xQI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=eTHwGhKRJCZKGeYzvnRKAw+d6U9dsA+peHpWeQGs0HvDLxQbDulrZiptL2jLu+eR4
-         NMUQ6J8vy9j4Ziz1ALClkZiCMunDPDU9fkYaqjzSBlR8wkkIzKQElonF3BfIh8x3Zu
-         TjCjJq+iv/KJPYv8H6sSKwtD0L5YO+OUT/o6CTfl4ZCYkeMh49fl7//vGX7EIXwk6j
-         UUCML9cJWfrDhr0HY0RLuNyw3qpIcGozqwhWBtG7RLGzLugoCNacCr0MClmyotJsKt
-         Qf6awO/HvrydBu97kAfTDsf/p5G3idNxehLL4ddZiDDM2Uhaqh6M9uJebMpnAHK3Vy
-         9DMbYLw2eSoOYZm/9syTPadxEDx52eBaoOCkhig7VjE8W+ov1lwOH4ZTlXs8bNPjBu
-         OcwPc2eRPtH5llDhivxXHcMfnwnp1EMK8PXubzi81DzFvwlswouyIzdnmA74EdIAoP
-         P7gVzxPQwKxPekPyuAXToRdM2ILgLkfCyQ7ly/3i89Z8J7+bSdo
+        b=aoi+v8DiYkKvhYLwT4KpGoLNpJarOITBv2e+NcYNNyWdopJvTXAGtNPHqix4XolZH
+         N5yJHNmUEzS6MW6n5J8XCFcwf4G5vNhomMIblQIOIUefjXZrP8f/pbDsSqQl30BnJ+
+         4td0NVEovgc4IXHDaP2czi3vjSQ/x+sY/e+NHK5G2f9C2+Iur1qqGFysMUM+oe6O4X
+         SHz79kcHn3JZN2JebQrIfdPLUiUN6mC0EEEe96dNmgEw24t/k4Ke+m4JEL+Jwc6LIK
+         kzasRNv/fgEwxluluaNK6I6UxHIQ2bCzd1tuWIhCunj5iI1Lq9c1ZRzfLM8EpHbJYQ
+         HkS44xO9X0HawuMLRUxhdiA/EMAgtpamV49rX3KohaVpKk8w+dj7gDW7LjRLmGgV7S
+         ffol70CQpAzFnnDyQaOPVlt8jMWRmhiXipcxzvpXqd3kGhj57ANDuMG6N3nivzalWB
+         Wk0WQLkO08x6duTiuQbcvOMd/BoaUpczXY2v4BDCT3uMlVxo69j
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 33/38] t: add test_oid option to select hash algorithm
-Date:   Fri, 10 Jul 2020 02:47:23 +0000
-Message-Id: <20200710024728.3100527-34-sandals@crustytoothpaste.net>
+Subject: [PATCH 32/38] Enable SHA-256 support by default
+Date:   Fri, 10 Jul 2020 02:47:22 +0000
+Message-Id: <20200710024728.3100527-33-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,64 +56,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some tests, we have data files which are written with a particular
-hash algorithm. Instead of keeping two copies of the test files, we can
-keep one, and translate the value on the fly.
-
-In order to do so, we'll need to read both the source algorithm and the
-current algorithm, so add an optional flag to the test_oid helper that
-lets us read look up a value for a specified hash algorithm. This should
-not cause any conflicts with existing tests, since key arguments to
-test_oid are allowed to contains only shell identifier characters.
+Now that the we have a complete SHA-256 implementation in Git, let's
+enable it so people can use it.  Remove the ENABLE_SHA256 define
+constant everywhere it's used.  Add tests for initializing a repository
+with SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t0000-basic.sh        | 11 +++++++++++
- t/test-lib-functions.sh | 12 +++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ builtin/init-db.c |  5 -----
+ config.mak.dev    |  2 --
+ repository.c      |  4 ----
+ t/t0001-init.sh   | 31 +++++++++++++++++++++++++++++++
+ 4 files changed, 31 insertions(+), 11 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 2ff176cd5d..47d6b502c2 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -928,6 +928,17 @@ test_expect_success 'test_oid can look up data for SHA-256' '
- 	test "$hexsz" -eq 64
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index cee64823cb..f70076d38e 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -183,11 +183,6 @@ void initialize_repository_version(int hash_algo)
+ 	char repo_version_string[10];
+ 	int repo_version = GIT_REPO_VERSION;
+ 
+-#ifndef ENABLE_SHA256
+-	if (hash_algo != GIT_HASH_SHA1)
+-		die(_("The hash algorithm %s is not supported in this build."), hash_algos[hash_algo].name);
+-#endif
+-
+ 	if (hash_algo != GIT_HASH_SHA1)
+ 		repo_version = GIT_REPO_VERSION_READ;
+ 
+diff --git a/config.mak.dev b/config.mak.dev
+index cd4a82a9eb..89b218d11a 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -16,8 +16,6 @@ DEVELOPER_CFLAGS += -Wstrict-prototypes
+ DEVELOPER_CFLAGS += -Wunused
+ DEVELOPER_CFLAGS += -Wvla
+ 
+-DEVELOPER_CFLAGS += -DENABLE_SHA256
+-
+ ifndef COMPILER_FEATURES
+ COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
+ endif
+diff --git a/repository.c b/repository.c
+index 6f7f6f002b..a4174ddb06 100644
+--- a/repository.c
++++ b/repository.c
+@@ -89,10 +89,6 @@ void repo_set_gitdir(struct repository *repo,
+ void repo_set_hash_algo(struct repository *repo, int hash_algo)
+ {
+ 	repo->hash_algo = &hash_algos[hash_algo];
+-#ifndef ENABLE_SHA256
+-	if (hash_algo != GIT_HASH_SHA1)
+-		die(_("The hash algorithm %s is not supported in this build."), repo->hash_algo->name);
+-#endif
+ }
+ 
+ /*
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 6d2467995e..34d2064660 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -441,6 +441,37 @@ test_expect_success 're-init from a linked worktree' '
+ 	)
  '
  
-+test_expect_success 'test_oid can look up data a specified algorithm' '
-+	rawsz="$(test_oid --hash=sha1 rawsz)" &&
-+	hexsz="$(test_oid --hash=sha1 hexsz)" &&
-+	test "$rawsz" -eq 20 &&
-+	test "$hexsz" -eq 40 &&
-+	rawsz="$(test_oid --hash=sha256 rawsz)" &&
-+	hexsz="$(test_oid --hash=sha256 hexsz)" &&
-+	test "$rawsz" -eq 32 &&
-+	test "$hexsz" -eq 64
++test_expect_success 'init honors GIT_DEFAULT_HASH' '
++	GIT_DEFAULT_HASH=sha1 git init sha1 &&
++	git -C sha1 rev-parse --show-object-format >actual &&
++	echo sha1 >expected &&
++	test_cmp expected actual &&
++	GIT_DEFAULT_HASH=sha256 git init sha256 &&
++	git -C sha256 rev-parse --show-object-format >actual &&
++	echo sha256 >expected &&
++	test_cmp expected actual
 +'
 +
- test_expect_success 'test_bool_env' '
- 	(
- 		sane_unset envvar &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 3103be8a32..d243ff43f3 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1468,7 +1468,17 @@ test_oid_cache () {
- # Look up a per-hash value based on a key ($1).  The value must have been loaded
- # by test_oid_init or test_oid_cache.
- test_oid () {
--	local var="test_oid_${test_hash_algo}_$1" &&
-+	local algo="${test_hash_algo}" &&
++test_expect_success 'init honors --object-format' '
++	git init --object-format=sha256 explicit &&
++	git -C explicit rev-parse --show-object-format >actual &&
++	echo sha256 >expected &&
++	test_cmp expected actual
++'
 +
-+	case "$1" in
-+		--hash=*)
-+			algo="${1#--hash=}" &&
-+			shift;;
-+		*)
-+			;;
-+	esac &&
++test_expect_success 'extensions.objectFormat is not honored with repo version 0' '
++	git init --object-format=sha256 explicit-v0 &&
++	test_config -C explicit-v0 core.repositoryformatversion 0 &&
++	git -C explicit-v0 rev-parse --show-object-format >actual &&
++	echo sha1 >expected &&
++	test_cmp expected actual
++'
 +
-+	local var="test_oid_${algo}_$1" &&
- 
- 	# If the variable is unset, we must be missing an entry for this
- 	# key-hash pair, so exit with an error.
++test_expect_success 'init rejects attempts to initialize with different hash' '
++	test_must_fail git -C sha1 init --object-format=sha256 &&
++	test_must_fail git -C sha256 init --object-format=sha1
++'
++
+ test_expect_success MINGW 'core.hidedotfiles = false' '
+ 	git config --global core.hidedotfiles false &&
+ 	rm -rf newdir &&
