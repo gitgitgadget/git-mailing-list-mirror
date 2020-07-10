@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6983EC433DF
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 411B3C433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A4892073A
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F80E2073A
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:48:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zpsjEKX8"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KnXwzVm7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbgGJCsp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:48:45 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40392 "EHLO
+        id S1727771AbgGJCss (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:48:48 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40418 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726965AbgGJCsf (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:35 -0400
+        by vger.kernel.org with ESMTP id S1726933AbgGJCse (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:34 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7CA3260A69;
-        Fri, 10 Jul 2020 02:48:31 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8B24F60A6A;
+        Fri, 10 Jul 2020 02:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349311;
-        bh=RpVYnItus+HxXa/K46QzWilqF94JaaAdzDof62lZ1fU=;
+        s=default; t=1594349310;
+        bh=uCrnGBdS9Lu9BL/q9uR2rKu9/6DjL6gl4ER0ChIeMFM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=zpsjEKX8uJ8AyARAqOv3GWqGpkxttWHAEpLlO3OXH0TNOucQswF69H5hQ7mKhJ1ty
-         kLu14KTIm/phSkO3w3AoOI7WTeHFb3hb+suj0ObKTXqBgYxyjfxSDLfIOrCh3iQmFp
-         wKkvpQxITiXYfmb504IeOd3+7u5m+TQzQzAPCzRnzAEZzIClqLY3Cc1+3KiNbq7KcZ
-         BEVcJ60FD+Vtb++rvdq7plyJdHEl/T/F34b4en+Ed/eIVd1uzz59qxBMtYIupN49Sh
-         D5Q+XKSAX7aCmD0DADtbzS75+4GYD22TfD47ghAXshattys0XbdK7fMZ+4sRnjausv
-         n3tAuvFtqU1P/U3leOg7tvbSPzHkB8LTy3KLxcXV6jg2gVsTXb5dnZLmcbl/Jln2Kl
-         QPe5BSaW23DUcigUfMverLxGQHrh65L6mqqma1Z/0mYMbydSW5KhuP8m0Cf+HZ59FD
-         uNuM/LqL/sbAxKASrN7wF/T4l57qrtnhw2+BmNlRjpXJuXDUMa9
+        b=KnXwzVm7lqdu1Dg120F1gH32SaFsQdo3f82iVNOQ+iyMRYaMCZkQOiHdjhVppQSu9
+         ytdw0T/r9vsh225kAH+ZSAdopbHUGS0r7ZQbeWF2ssm9ky1vrY7YLi4a9pcYpR9BIH
+         za2Y1Jx7ra/R+G7Cp8zw5JXnPtklZLarGkECBtWrhQGZZf4ERdcP15oKN6LaWhuidm
+         kwIbNw1HOtJCFCopfm8LmYdasaQwMN9yHFoPzIgx2zyXXhT3tE0vrLw9ubwswu9Dbd
+         PD1bVFmFiT16zw6az3RC6/Vb/BFO4uLSfrgihW6jBjPKPeLW8MFa8Bina88Aj2fM7I
+         pT/I719orbRrQgD8nUkPgxzQU/HV5tpJhhwwt0SuFOzKJ1I20h8KGnIKwFF7QhbbAG
+         ddE9oRs0wizDGxpUxyvET5s8eDBAr5Ro49CJmY8cTGN1PU5Ag7BEZfxJL/iovmOIF1
+         nG6Qkyef0yk9U6EZ9QLqqrV+M3sdFpft0yTyXPh6uVsAHp3H4hc
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 18/38] t8002: make hash size independent
-Date:   Fri, 10 Jul 2020 02:47:08 +0000
-Message-Id: <20200710024728.3100527-19-sandals@crustytoothpaste.net>
+Subject: [PATCH 16/38] t7506: avoid checking for SHA-1-specific constants
+Date:   Fri, 10 Jul 2020 02:47:06 +0000
+Message-Id: <20200710024728.3100527-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,52 +56,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compute the length of an object ID instead of of hard-coding 40-based
-values.
+Adjust the test to sanitize the diffs and strip out object IDs from
+them, as it does for other object IDs, since we are not interested in
+the particular values used.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t8002-blame.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ t/t7506-status-submodule.sh | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index eea048e52c..557c886559 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -6,6 +6,10 @@ test_description='git blame'
- PROG='git blame -c'
- . "$TEST_DIRECTORY"/annotate-tests.sh
+diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+index 08629a6e70..3fcb44767f 100755
+--- a/t/t7506-status-submodule.sh
++++ b/t/t7506-status-submodule.sh
+@@ -22,6 +22,10 @@ sanitize_output () {
+ 	mv output2 output
+ }
  
-+test_expect_success 'setup' '
-+	test_oid_init
-+'
++sanitize_diff () {
++	sed -e "/^index [0-9a-f,]*\.\.[0-9a-f]*/d" "$1"
++}
 +
- test_expect_success 'blame untracked file in empty repo' '
- 	>untracked &&
- 	test_must_fail git blame untracked
-@@ -105,17 +109,18 @@ test_expect_success 'blame --abbrev=<n> works' '
+ 
+ test_expect_success 'setup' '
+ 	test_create_repo_with_commit sub &&
+@@ -269,7 +273,6 @@ short_sha1_merge_sub1=$(cd sub1 && git rev-parse --short HEAD)
+ short_sha1_merge_sub2=$(cd sub2 && git rev-parse --short HEAD)
+ cat >diff_expect <<\EOF
+ diff --cc .gitmodules
+-index badaa4c,44f999a..0000000
+ --- a/.gitmodules
+ +++ b/.gitmodules
+ @@@ -1,3 -1,3 +1,9 @@@
+@@ -286,7 +289,6 @@ EOF
+ 
+ cat >diff_submodule_expect <<\EOF
+ diff --cc .gitmodules
+-index badaa4c,44f999a..0000000
+ --- a/.gitmodules
+ +++ b/.gitmodules
+ @@@ -1,3 -1,3 +1,9 @@@
+@@ -306,7 +308,8 @@ test_expect_success 'diff with merge conflict in .gitmodules' '
+ 		cd super &&
+ 		git diff >../diff_actual 2>&1
+ 	) &&
+-	test_cmp diff_expect diff_actual
++	sanitize_diff diff_actual >diff_sanitized &&
++	test_cmp diff_expect diff_sanitized
  '
  
- test_expect_success 'blame -l aligns regular and boundary commits' '
--	check_abbrev 40 -l HEAD &&
--	check_abbrev 39 -l ^HEAD
-+	hexsz=$(test_oid hexsz) &&
-+	check_abbrev $hexsz         -l HEAD &&
-+	check_abbrev $((hexsz - 1)) -l ^HEAD
+ test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
+@@ -314,7 +317,8 @@ test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
+ 		cd super &&
+ 		git diff --submodule >../diff_submodule_actual 2>&1
+ 	) &&
+-	test_cmp diff_submodule_expect diff_submodule_actual
++	sanitize_diff diff_submodule_actual >diff_sanitized &&
++	test_cmp diff_submodule_expect diff_sanitized
  '
  
--test_expect_success 'blame --abbrev=40 behaves like -l' '
--	check_abbrev 40 --abbrev=40 HEAD &&
--	check_abbrev 39 --abbrev=40 ^HEAD
-+test_expect_success 'blame --abbrev with full length behaves like -l' '
-+	check_abbrev $hexsz         --abbrev=$hexsz HEAD &&
-+	check_abbrev $((hexsz - 1)) --abbrev=$hexsz ^HEAD
- '
- 
--test_expect_success '--no-abbrev works like --abbrev=40' '
--	check_abbrev 40 --no-abbrev
-+test_expect_success '--no-abbrev works like --abbrev with full length' '
-+	check_abbrev $hexsz --no-abbrev
- '
- 
- test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+ # We'll setup different cases for further testing:
