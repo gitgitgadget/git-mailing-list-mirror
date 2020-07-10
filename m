@@ -2,70 +2,95 @@ Return-Path: <SRS0=TxkB=AV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F6E7C433E2
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 12:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F3D9C433E7
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 12:58:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13C0120748
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 12:33:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 242E420772
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 12:58:13 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GGPNrXDk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727092AbgGJMdp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jul 2020 08:33:45 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:43837 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726664AbgGJMdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jul 2020 08:33:44 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 4B3CBt5VTsz1s8dl;
-        Fri, 10 Jul 2020 14:33:42 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 4B3CBt58qbz1r57M;
-        Fri, 10 Jul 2020 14:33:42 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id hM7SO7nUYSrz; Fri, 10 Jul 2020 14:33:42 +0200 (CEST)
-X-Auth-Info: 5ax9MwG/OS00OMtMVeHn2mbkzwqQlmYr/X1pvXrLmnRChTxW8yidUzqaR1Q9snho
-Received: from igel.home (ppp-46-244-174-178.dynamic.mnet-online.de [46.244.174.178])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Fri, 10 Jul 2020 14:33:41 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-        id 6DF542C0B4A; Fri, 10 Jul 2020 14:33:41 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Tom Browder <tom.browder@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: "git rm" could be safer and have a better help msg
-References: <CAFMGiz97fcw_nvaa=Xo-roTtB1o25qO06=PHGSrBzv4k_zGqaw@mail.gmail.com>
-X-Yow:  I will invent "TIDY BOWL"...
-Date:   Fri, 10 Jul 2020 14:33:41 +0200
-In-Reply-To: <CAFMGiz97fcw_nvaa=Xo-roTtB1o25qO06=PHGSrBzv4k_zGqaw@mail.gmail.com>
-        (Tom Browder's message of "Fri, 10 Jul 2020 07:25:29 -0500")
-Message-ID: <878sfr1rdm.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.0.91 (gnu/linux)
+        id S1727873AbgGJM6J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jul 2020 08:58:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57914 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726867AbgGJM6I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jul 2020 08:58:08 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6E31C08C5CE;
+        Fri, 10 Jul 2020 05:58:07 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id b185so5070955qkg.1;
+        Fri, 10 Jul 2020 05:58:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nQoGOpWPaVx67CKb9WI+bSalMdq4/lypurXp16g1b1g=;
+        b=GGPNrXDkUSwSxrctjlEUZJb6+6w7lNzvTb/uWHnoDjhPskiDjnuCnc0U4C4nG0ZY8b
+         j4h8/tt9Y9StkbgYYIg/5aapRmnQJ3CEPPV+iNIAAncVZFVI+DZ4eSXlV0JkYqGvgq7Y
+         Ulxxs43iS22wVMLDZGZz+qN80XK5aMsKnRDwJtQDN7Sq4Y8j2niGZD4O63WRGEuDkESH
+         IrlhlhRDcP+PLwenRiaOkDv1PHu2WVW3fuwIfAY8CBVhPA5QWOPxEeY4JgqpFLOOQo/u
+         Pb5FTfYShXurQYfXpKqGm9S9mr/vEH8TVkGFhci3l2zEGd9waIt4lyabTEsl3ZnGU2sY
+         felQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nQoGOpWPaVx67CKb9WI+bSalMdq4/lypurXp16g1b1g=;
+        b=slgYabKnWLUVTkjQy1M60h1xTngNkWWS6HFVLOoQsSS5yiK3TjVS0AeRbdyqtEyAQD
+         kihkncPx2O8zVW9jqJK5rwsVA5bpCDnm/OoPns266J6LgP0xyQY2KHOpcNn75OB/wh2c
+         ZOA+2s8NI9Utv/Q3D0FJkIixJog4ml3UPrCZ0pd4Pw6p4voao4ny+65mn3+mOiOyZ4vj
+         s0jVpQ/CbYdgHSh8bq9oF7mf6cdbsLGSgOh9NXX5eHmP2o0O5df0owHLB3yRnUWRSEdg
+         mGEo5H7VrRmq1S3OsHgtZgw6FZNrCd3202o41/5+gTxK20pwVhQJT5Zmz6Aj2Uy9wzhk
+         Ep1Q==
+X-Gm-Message-State: AOAM531YdHSmAUIBT3HygmpMt30rY2HykzRXw3GUmBUfgMWbGtbqfEvk
+        El7JZesjWdlA2lm0hA4fXLs=
+X-Google-Smtp-Source: ABdhPJwL6jPy/HTo1uBxryS0KuEkHbLOcxhgt/wsizpNMPuSjmeJil7PB3CQ4ZoCQ7c63hImqx8yAQ==
+X-Received: by 2002:a37:bcb:: with SMTP id 194mr70069602qkl.103.1594385887060;
+        Fri, 10 Jul 2020 05:58:07 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id i35sm7150803qtd.96.2020.07.10.05.58.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jul 2020 05:58:06 -0700 (PDT)
+Subject: Re: [ANNOUNCE] Git v2.28.0-rc0
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+References: <xmqqh7ugwen6.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <01e87be3-3911-afc1-e738-69446275c8c0@gmail.com>
+Date:   Fri, 10 Jul 2020 08:58:06 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqh7ugwen6.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Jul 10 2020, Tom Browder wrote:
+On 7/9/2020 5:40 PM, Junio C Hamano wrote:
+> An early preview release Git v2.28.0-rc0 is now available for
+> testing at the usual places.  
 
-> I often need to remove a file from Git but leave it as is, changed or not.
-> The only safe way to do that as far as I know is:
->
->     $ git rm -f --cached myfile   # many thanks to @jast on IRC #git
+This might be part of your new process, or it might be an
+oversight. It seems that GIT-VERSION-GEN did not update with
+this RC, so the built version will still have a 2.27 start [1].
 
-Why do you need -f?
+This differs from previous rc's [2].
 
-Andreas.
+Thanks,
+-Stolee
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+[1] https://github.com/git/git/blob/v2.28.0-rc0/GIT-VERSION-GEN#L4
+[2] https://github.com/git/git/blob/v2.27.0-rc0/GIT-VERSION-GEN#L4
