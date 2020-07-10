@@ -2,141 +2,129 @@ Return-Path: <SRS0=TxkB=AV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 342DAC433E2
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 16:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AAE2C433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 16:47:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8B5F20725
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 16:43:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 657F020767
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 16:47:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V58670iy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PLsH6LLm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727906AbgGJQnT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jul 2020 12:43:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55087 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726820AbgGJQnT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jul 2020 12:43:19 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 437747C69B;
-        Fri, 10 Jul 2020 12:43:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=243JUizjDTv6OkQ13yj4AoFaaMM=; b=V58670
-        iyxKFk7T1IwO4Tafk5Um4BWlAYmSv2ZJ0xPzCmmaZ5syB2a/Kzu1n9Ia9G+3+gBE
-        YlKHk6fdWkr2ch5oZhH7n8YyIZuf3zJvh0SFV8f4Wt3Van/iYsrMlnvAOoBA4NmG
-        an9xDvQ7xy181zkkdZenSZKdtFvZaf2Oj8kbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=f7g6GNR8z83jKBgfWVwzSg7imFRzjY3T
-        O1ACQzgfSUIqshSqSTSLqe3qQU3zJjI57gbi+qVPsW4OXcixBh/bcnSDq4jdFBBZ
-        L33W0RfEY2aRAyRdQD3ypwQttSWJpRI4ofOVf2WC7eVXmD4rSu6HOe9VbkeamhXf
-        6R/irNy/TBU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A4D07C69A;
-        Fri, 10 Jul 2020 12:43:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB3C47C699;
-        Fri, 10 Jul 2020 12:43:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Zach Riggle <zachriggle@gmail.com>, git@vger.kernel.org
-Subject: Re: git grep --threads 12 --textconv is effectively single-threaded
-References: <CAMP9c5nUteg_HouuYJZtq7g4MrSE638mns=HeKhNpNTYgQB4=w@mail.gmail.com>
-        <20200707215951.GB2300296@coredump.intra.peff.net>
-        <CAMP9c5mpJ9_HvEBTiEQj=vocTdH6N9uXkpLKiE8+hFbAt9p5Ow@mail.gmail.com>
-        <20200708201353.GA2354599@coredump.intra.peff.net>
-        <xmqqfta11zu0.fsf@gitster.c.googlers.com>
-        <20200709231030.GD664420@coredump.intra.peff.net>
-Date:   Fri, 10 Jul 2020 09:43:15 -0700
-In-Reply-To: <20200709231030.GD664420@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 9 Jul 2020 19:10:30 -0400")
-Message-ID: <xmqq5zavuxr0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727978AbgGJQrW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jul 2020 12:47:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37076 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726920AbgGJQrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jul 2020 12:47:21 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1078C08C5DC
+        for <git@vger.kernel.org>; Fri, 10 Jul 2020 09:47:21 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id ga4so6776546ejb.11
+        for <git@vger.kernel.org>; Fri, 10 Jul 2020 09:47:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=L4vE3VSTmJe50KIP8LPKbTeBre/rmrW32vvjdYrON2o=;
+        b=PLsH6LLmUh/JiF7PS2T8qGuStTHiyDQ2reExuOt22n3HG+64U1mofwkcPzyFvSi/3F
+         oqkKgsOnFWBFGTVqIm4f7ui78v0Tjd5a5qrOUy4gvRRdn8J05fX1pck6VgIJYWNRfVrk
+         eeOYqwfS7yoFlTNSO4J2goIPIQGUsLfzOghfCjSL5/J/S0xlHKCG28UM6IFm5KR1bz1x
+         KYRIY0rs/Op6+YEwV7Tnax+DgCBSQIIQwUUh4POGYYhOxU7V0TzK2Vyj6q1V1tPC3klv
+         wDftRZlV/25ymJh4mnngtXpi+DjDQWiE/1Om2HWO+K81/MAARp4y9jkMy4pkmUZDuPjc
+         MMUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=L4vE3VSTmJe50KIP8LPKbTeBre/rmrW32vvjdYrON2o=;
+        b=OnpwMGOypqhnpobenO89OOab/v85G34yt6akpWJ03AGhJfIK4/GCBzCMt4gdv2AGXM
+         SbVloJKVdNdUyRddqQq/ZHD//cwxt381VoxR6uR0QYFEJ0emZqXKBAO13zmXTGCfrHEe
+         FQwntciDAlyXhbvBjulXlu+IpgkuN0qZEZI8yNtFkumv+WbUMhMhusW2Rbidiz5DLTHS
+         bHTI67x7nBjkH8azbtBLuVvFGRsuedqCctSYzhLyFoJJ0rT/u4wmKW6f5WE5RYaQYRqt
+         +GJ1y0fQTp64pt4E7zA/aYTwf7iLf3qEbDDysYO3e464IftIGB9saxYwvlNGd/hhOiNs
+         whWA==
+X-Gm-Message-State: AOAM530x0AFhLo4708rJGILUg5qhex+W9lBZkYLH0OhHz/d3pTM9fWs0
+        xikANOairLWqvKFOPAbr+pYqK/K1JPYrCGtWM7A=
+X-Google-Smtp-Source: ABdhPJzu2xHMdwKBlmSzKXDFjh4kjZvVkn4lw75S9KlFfRo/DU6miWMohziGpqY14SuhC5L/moEQvUCDz71Ic90/weU=
+X-Received: by 2002:a17:906:e299:: with SMTP id gg25mr60635305ejb.160.1594399640356;
+ Fri, 10 Jul 2020 09:47:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 74388F0C-C2CC-11EA-B9C1-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <20200707174049.21714-1-chriscool@tuxfamily.org>
+ <20200707174049.21714-2-chriscool@tuxfamily.org> <xmqqsge33z42.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqsge33z42.fsf@gitster.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 10 Jul 2020 18:47:08 +0200
+Message-ID: <CAP8UFD2vxYHvVV8nUBArCGNJTS9K1ynZ1LCBU1BBPBi9d5L77w@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] Documentation: clarify %(contents:XXXX) doc
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tue, Jul 7, 2020 at 9:26 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
 
-> For a tree-to-tree or index-to-tree comparison, both sides will have an
-> oid and can use the textconv cache. Even for an index case where we
-> might choose to use a stat-fresh working tree file as an optimization,
-> we'll still consult the textconv cache before loading those contents.
+> > +contents:subject::
+> > +     The "subject" of the commit or tag message.  It's actually the
+> > +     concatenation of all lines of the commit message up to the
+> > +     first blank line.
+>
+> Let's avoid confusing readers by saying "A is X. It's actually Y".
+>
+>     The first paragraph of the message, which typically is a single
+>     line, is taken as the "subject" of the commit or the tag
+>     message.
 
-OK, that "we'll still consult" part does sound like sort-of
-"clever", but after thinking about the whole sentence twice,
-I realize the actual cleverness lies in the reuse of stat-fresh
-working tree file, not the use of textconv cache ;-)  The cache
-is just doing its normal thing: if we know the oid, look up the
-cached one.
+Ok.
 
-> But for diffing a file in the working tree, we'll never have an oid and
-> will always run the textconv command).
+> > +contents:body::
+> > +     The "body" of the commit or tag message.  It's made of the
+> > +     lines after the first blank line.
+>
+>     The remainder of the commit or the tag message that follows the
+>     "subject".
 
-OK.  In such a case, we need to run the clean filter on the working
-tree contents, and then finally we need to run the textconv on the
-result.  We could internally hash the result of applying the clean
-filter to see if we have the blob in the object database and use it
-as the look-up key in the textconv cache, but we are talking about
-the working tree files, which by definition is more fluid than what
-is in the index, which is likely more fluid than what is already
-committed, so the chance of finding a hit may be slim.
+Ok.
 
-We could still see if the oid in the index is correct with the stat
-check, but by definition, diff-files won't compare between a cache
-entry and a working tree file if the path is stat-clean, so that
-does not help all that much.  I wonder if diff-index comparing a
-tree and the working tree (i.e. without "--cached") can be improved,
-though.
+> > +contents:signature::
+> > +     The optional GPG signature.
+>
+> I _think_ this only applies to signed tag objects and not signed
+> commit objects, but this text does not help to decide if I am
+> right.
 
-> So "git diff" against the index,
-> for example, would run _one_ textconv (using the cached value for the
-> index, and running one for the working tree version). And we know that
-> isn't that interesting for optimizing, since by definition the file is
-> stat-dirty in that case (or else we'd skip the content-level comparison
-> entirely).
+You are right. It doesn't work for commits:
 
-Yup, we reached the same conclusion here ;-)
+---------------------------------------------------
+$ git cat-file commit refs/heads/signed_commit
+tree 9773e6a54521a5d99928685e5f62e937fc6a7593
+parent 1d1083b4c06fbb6055a2bd3d665a6d81468db5f5
+author Christian Couder <chriscool@tuxfamily.org> 1594397089 +0200
+committer Christian Couder <chriscool@tuxfamily.org> 1594397089 +0200
+gpgsig -----BEGIN PGP SIGNATURE-----
 
-> So you'd have to compute the sha1 of the working tree file
-> from scratch. Plus the lifetime of a working tree file's entry in the
-> textconv cache is probably smaller, since it hasn't even been committed
-> yet.
+ iQGzBAABCgAdFiEElaRidyyI6IQbXM36ch8PKcZMVRkFAl8IkaEACgkQch8PKcZM
+[...]
+ dkYKcRC3
+ =fRMN
+ -----END PGP SIGNATURE-----
 
-Yes again.
+Signed commit
+$ git for-each-ref --format='%(contents:signature)' refs/heads/signed_commit
 
-> I don't think I ever noticed because the primary thing I was trying to
-> speed up with the textconv cache is "git log -p", etc, which always has
-> an oid to work with.
+---------------------------------------------------
 
-Absolutely.
+So I changed the description to:
 
-> But "grep" is a totally different story. It is frequently looking at all
-> of the stat-fresh working tree files.
-
-Yeah.  Grepping in the working tree files could be optimized with
-the same technique that would be used to optimize diff-index without
-"--cached".  When we look at the working tree file, we consult the
-index and possibly learn its object name if the path is stat-clean,
-probably if and only if textconv is in use.
-
-"git grep" would divert to the "grep in a blob object" codepath from
-there, and "git diff-index" would make clever use of oid_valid bit
-in diff_filespec when running textconv (we might need a separate
-bit, though; I haven't thought it through).
-
-Or something like that.
-
+contents:signature::
+    The optional GPG signature of the tag.
