@@ -5,65 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBDBC433E3
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 17:20:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DC94C433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 17:20:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C3322078D
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 17:20:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 206352078D
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 17:20:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cm3igkpv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0w2x0JZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727989AbgGJRUB (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727976AbgGJRUB (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 10 Jul 2020 13:20:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42110 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727866AbgGJRT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jul 2020 13:19:59 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03879C08C5DC
-        for <git@vger.kernel.org>; Fri, 10 Jul 2020 10:19:59 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id q15so6922834wmj.2
+        with ESMTP id S1727782AbgGJRT6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jul 2020 13:19:58 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A76C08C5DD
+        for <git@vger.kernel.org>; Fri, 10 Jul 2020 10:19:58 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id f2so6704154wrp.7
         for <git@vger.kernel.org>; Fri, 10 Jul 2020 10:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HrYI9Mx2eeIzo3R0ewjP/R8rLxtFEodXejq8QewzwMY=;
-        b=cm3igkpvNJbC1LkGrReEqPHGocgylY5MO62DMBVfIDaYS4G41yoPqk0gQwP1SE+BG0
-         se3VkT7UxL0WHXEQY3gOk7j5OJ2CCSUBhPonnxsCEfC81Sv7zWm7DWC4LJ1uaGvMDm+G
-         TcIH1au/VhO61lzeb0YgRuB3BwvmKoZpUAqICz/nTCrhvxWVVt9weCgj7ZX+8XpNeGHw
-         ZaTwvc8RqEpfpSb0GlSBb2LjL2m30jOlgL0P4+lBgq0HQvueUSDYj5QCU078Im5hsU+i
-         0bQ3rPneIPdO+slyel1JHGJpDGGn3e+NKYj08FnVt82WiJLNzJRo1nHvZOMg9PtfiiN6
-         FJlg==
+        bh=RpRQyZ/r9Xnc+t+RGRXslDIcnmH8vlNORrhwafUBC+c=;
+        b=V0w2x0JZOUNaELv9a3yiHWj1KvYoVDEv7Bjqd4iAAa/57i+4AgvXPYx1c4oaHuZuJt
+         vmhLAKmcF2/Sp7pKRj2U8ce4BtavSeuRykxwNmDQWIrUsmleQp3pRZjs/SvWSHfgIbtQ
+         r4Yyh4VJptq+SUPY+7S1sZOUkhXpK2aLgCLd5P9LsppRM/vZCE+R4snPEKtFdHeVPr01
+         MKNOe3yewA1aw4lWgU3pFh8rYT+lOcZ7c1ij6s443pIZaEsEz5vd6r84B03RyjkxLqFx
+         sghwRs654VyqD8+QIzDu05hiEjeAui2smZ5DWoOlx7TRxcDfmgpYprrSYrDRUSdFe1dY
+         M+gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HrYI9Mx2eeIzo3R0ewjP/R8rLxtFEodXejq8QewzwMY=;
-        b=BqNC51kk+dqRVclD0TAky64isIWqt3CiXlCYE4a7pl5Tm95R8rtQKQtomEWmNe/NCL
-         xcS8rhPJYgmGAGsjJP4jlCKTnt5ASZZG6xB4TnBrgteDeDR2QGqKW/3YSamdIc6qJMZ/
-         ndWecxNMuDHQh/N/W5D8IsTGRnXDnaM9zxSb1bDq2J85KJjC4gLFWGAOj3hS1VZ3xgiE
-         /P1dD+oxRTfSNI4PO/0EZftAREhGWeWuTlDMiZZw/v8Z9+OP6QmPXBT1wdTz6Qmk4P1Q
-         jS6kj6hYG64T9bzD+AHGgaDREsHVKQiKxcUBxY4jQ4sIkKeUfkDBcIFc7DdKkxVAMGlx
-         ONLA==
-X-Gm-Message-State: AOAM533bOI0RQtyU/g7xH8nswg/LbCr6PRh8wlBFSI7cvw2MJ74RPNla
-        PcnJ1uRSkWiYwLFHclzl3vW9MoHu
-X-Google-Smtp-Source: ABdhPJy/2JydV+sSsM3FDGZAb9kviEYIUiSDvChHAISxu50kfk8MMaP4EyUex7Ek/CpwOXnI58rb2A==
-X-Received: by 2002:a1c:49d7:: with SMTP id w206mr6397464wma.181.1594401597484;
-        Fri, 10 Jul 2020 10:19:57 -0700 (PDT)
+        bh=RpRQyZ/r9Xnc+t+RGRXslDIcnmH8vlNORrhwafUBC+c=;
+        b=ZBLAV+2G50d/ybPgv1uwQaHR0lvBB6SBMkMN31gR0Qp14qAkg0U9YZ5G742+/F5j0u
+         rc7EJ7X+UW0GyrbRJ6N2BFoEver0oguQackogximi0GfGgnpGA681RfWMFfDfap9ud+C
+         E3Caz1s5cmdGpL49xJbWoUWhDXPm1RovkcAd48AwkMYE6Cn8BSHRYN8E6t9SOmNdzwBU
+         /88DpTWym7fDSBcZzDCKiirp2ZyHCBzrzQLL7Z2iW7fJx3G5yzyqSIkzfMFhbLyczmFC
+         rWPokUOZ8jCCLvMz035LVHOZ1hPfhmXM0e0Ub1IzUIp7OBzbUVSm/DE+Ee9ov+dtG3ip
+         bRaA==
+X-Gm-Message-State: AOAM532yZQqCAFqeGeo1+uiWLRlLW6Aud9M6BdtqxqL4wY6vvnaTE33e
+        36F8AS4ntsvA5LL0Wp5p9EPfWofl
+X-Google-Smtp-Source: ABdhPJyaRYspmPZpT22YD5HuhV31370cOmaavKS+JxZsnd4bxPLxnwFXc0zN5b3iivbK4T47ys7vog==
+X-Received: by 2002:adf:fd46:: with SMTP id h6mr50090744wrs.105.1594401596788;
+        Fri, 10 Jul 2020 10:19:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m16sm12134738wro.0.2020.07.10.10.19.56
+        by smtp.gmail.com with ESMTPSA id q4sm10136667wmc.1.2020.07.10.10.19.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2020 10:19:57 -0700 (PDT)
-Message-Id: <d4007c2a5b785aac54d3ce7635cd6a50225c1361.1594401593.git.gitgitgadget@gmail.com>
+        Fri, 10 Jul 2020 10:19:56 -0700 (PDT)
+Message-Id: <123d246edf9e3e40c321cfaff81fe96ae3a0c015.1594401593.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.669.v2.git.1594401593.gitgitgadget@gmail.com>
 References: <pull.669.git.1593518738.gitgitgadget@gmail.com>
         <pull.669.v2.git.1594401593.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Jul 2020 17:19:52 +0000
-Subject: [PATCH v2 3/4] Treat BISECT_HEAD as a pseudo ref
+Date:   Fri, 10 Jul 2020 17:19:51 +0000
+Subject: [PATCH v2 2/4] t3432: use git-reflog to inspect the reflog for HEAD
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,57 +79,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Both the git-bisect.sh as bisect--helper inspected the file system directly.
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- builtin/bisect--helper.c | 3 +--
- git-bisect.sh            | 4 ++--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ t/t3432-rebase-fast-forward.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index ec4996282e..73f9324ad7 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -13,7 +13,6 @@ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
- static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
--static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
- static GIT_PATH_FUNC(git_path_head_name, "head-name")
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
-@@ -164,7 +163,7 @@ static int bisect_reset(const char *commit)
- 		strbuf_addstr(&branch, commit);
- 	}
- 
--	if (!file_exists(git_path_bisect_head())) {
-+	if (!ref_exists("BISECT_HEAD")) {
- 		struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 08a6ed57dd..f03fbb18f0 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -41,7 +41,7 @@ TERM_GOOD=good
- 
- bisect_head()
- {
--	if test -f "$GIT_DIR/BISECT_HEAD"
-+	if git rev-parse --verify -q BISECT_HEAD > /dev/null
- 	then
- 		echo BISECT_HEAD
- 	else
-@@ -153,7 +153,7 @@ bisect_next() {
- 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD $TERM_GOOD|| exit
- 
- 	# Perform all bisection computation, display and checkout
--	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
-+	git bisect--helper --next-all $(git rev-parse --verify -q BISECT_HEAD > /dev/null && echo --no-checkout)
- 	res=$?
- 
- 	# Check if we should exit because bisection is finished
+diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
+index 6f0452c0ea..a29eda87e9 100755
+--- a/t/t3432-rebase-fast-forward.sh
++++ b/t/t3432-rebase-fast-forward.sh
+@@ -60,15 +60,16 @@ test_rebase_same_head_ () {
+ 		fi &&
+ 		oldhead=\$(git rev-parse HEAD) &&
+ 		test_when_finished 'git reset --hard \$oldhead' &&
+-		cp .git/logs/HEAD expect &&
++		git reflog HEAD >expect &&
+ 		git rebase$flag $* >stdout &&
++		git reflog HEAD >actual &&
+ 		if test $what = work
+ 		then
+ 			old=\$(wc -l <expect) &&
+-			test_line_count '-gt' \$old .git/logs/HEAD
++			test_line_count '-gt' \$old actual
+ 		elif test $what = noop
+ 		then
+-			test_cmp expect .git/logs/HEAD
++			test_cmp expect actual
+ 		fi &&
+ 		newhead=\$(git rev-parse HEAD) &&
+ 		if test $cmp = same
 -- 
 gitgitgadget
 
