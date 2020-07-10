@@ -3,49 +3,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,LOTS_OF_MONEY,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0D07C433DF
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E8BCC433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 979E120663
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23D8B20663
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 02:49:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ceoYDDX9"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mVgTqlAF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727935AbgGJCt3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jul 2020 22:49:29 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40398 "EHLO
+        id S1727940AbgGJCta (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jul 2020 22:49:30 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40368 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726962AbgGJCse (ORCPT
+        by vger.kernel.org with ESMTP id S1726913AbgGJCse (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 9 Jul 2020 22:48:34 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F361560A6B;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2116A60A68;
         Fri, 10 Jul 2020 02:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594349311;
-        bh=Q12wOxJbdk6gJKEFGWWzYzA596jdmVCNFoN+euD0r/w=;
+        s=default; t=1594349310;
+        bh=bkn6gRdFc3a7Wl1a2vTHql6/IoBndbcv3M9Ug3dmdYw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=ceoYDDX94JsYXe3gobKI+QVbcU1/SmlxVOYK9JzADmEfc9AX7nBRb9yhROg8VPagj
-         6PX7yaJ6Tkt5HV9/mgfSFVAXTN0Sn/EEsmp5y550YwSDHfFB0zQT+H49OLE8gqebp8
-         RkmQZJmihYp+hzSNvKPs8sBypd6W9g/wLWa8wpP/DCpABtQgoj7zEqBSEcuXQFG4RT
-         3PRTcBOni5NfHr5qFrdGKz3gQaIpS5pwsH1bm8HxY+YiC5dmbd0ZywpiW6vR36ejB4
-         JR/+sh+9U7ihRyAGwAt7zKP68NfKCgjghIl0knpMl7vEJ7oiSEueTZIB1LqEhXVTbQ
-         Zbh8N716a1ZaaYCXOYaK8pjhpu+n7hkF3V9sHKyIV7axuWd9wtaeDCZeLPmPni7s/R
-         vWpyS9NyWSubpytirOYMNxqOTU8vQwlvU/BhdCcepXrnT8oU7LqlCsXCBe2siEZrkv
-         sbldh242Wuiaoq9B/15u79EmTbZK22ZKTko+fnQmDL59acA/PbU
+        b=mVgTqlAFQO5AIr4zICr+9WiTEdMzsbyGTx7pCk42BflwKpkUtnKbt+X2w2y/+3y42
+         /hdsD+bMA5MQ9V1M97brqYARt0lfuqjLaDiYTi024hUnrSQzrCESqmB9L+iIqTP6o5
+         qLp3aE/eb7xPzjy24o/eZIsC5hXuzlgSOOrff7H+VFCxUoDwtIwUyu/Ru8lnt+XxsI
+         4oRKizZmWRBvrH91Uk9BD3e66Vnu7tiQbgXrXwE7U8gY5zAyGm1elQD2dZFKlr97h8
+         ZJ9aoLcDGQSlKeYKGb1VsL41DZsPb0Ac9xaJu4YYPGdlJhbNFmApMqOUFz7clSYDdD
+         RXv3CXr6N/9GZAFk2xlrlLqFSuAMl3+bLuV1EP9TslBZZDx7WvFC4xjTe4jLbRG1AS
+         J0/yFWB3T+uSgl65V3ZWisK62QAsKXB6pbzRcbWcJXV5fr3sKc3M7+AxmmDtaVWy57
+         hKTe5iCNhn6Q1f35sR886d40k4ZmfT//hmcOFjiqAwowDgrsuvx
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 17/38] t7508: use $ZERO_OID instead of hard-coded constant
-Date:   Fri, 10 Jul 2020 02:47:07 +0000
-Message-Id: <20200710024728.3100527-18-sandals@crustytoothpaste.net>
+Subject: [PATCH 15/38] t7405: make hash size independent
+Date:   Fri, 10 Jul 2020 02:47:05 +0000
+Message-Id: <20200710024728.3100527-16-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
 References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
@@ -56,24 +56,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the ZERO_OID variable to abbreviate the all-zeros object ID for
-maintainability and to avoid depending on a specific size for the hash.
+Use $ZERO_OID instead of hard-coding a fixed size all-zeros object ID.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t7508-status.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t7405-submodule-merge.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 8e969f3e36..e81759319f 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -837,7 +837,7 @@ EOF
- '
- 
- cat >expect <<EOF
--:100644 100644 $EMPTY_BLOB 0000000000000000000000000000000000000000 M	dir1/modified
-+:100644 100644 $EMPTY_BLOB $ZERO_OID M	dir1/modified
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index aa33978ed2..6a1e5f8232 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -195,7 +195,7 @@ test_expect_success 'git submodule status should display the merge conflict prop
+        url = $TRASH_DIRECTORY/sub
  EOF
- test_expect_success 'status refreshes the index' '
- 	touch dir2/added &&
+        cat >expect <<EOF &&
+-U0000000000000000000000000000000000000000 sub
++U$ZERO_OID sub
+ EOF
+        git submodule status > actual &&
+        test_cmp expect actual &&
+@@ -214,7 +214,7 @@ test_expect_success 'git submodule status should display the merge conflict prop
+        url = $TRASH_DIRECTORY/sub
+ EOF
+        cat >expect <<EOF &&
+-U0000000000000000000000000000000000000000 sub
++U$ZERO_OID sub
+ EOF
+        git submodule status > actual &&
+        test_cmp expect actual &&
