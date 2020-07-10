@@ -2,77 +2,120 @@ Return-Path: <SRS0=TxkB=AV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C01CC433E0
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 08:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08F22C433E0
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 08:47:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6562E2078B
-	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 08:14:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fEnnjzKx"
+	by mail.kernel.org (Postfix) with ESMTP id DFB742078D
+	for <git@archiver.kernel.org>; Fri, 10 Jul 2020 08:47:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbgGJIOn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jul 2020 04:14:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42244 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725802AbgGJIOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jul 2020 04:14:40 -0400
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9472FC08C5CE
-        for <git@vger.kernel.org>; Fri, 10 Jul 2020 01:14:40 -0700 (PDT)
-Received: by mail-vs1-xe2d.google.com with SMTP id e15so2529320vsc.7
-        for <git@vger.kernel.org>; Fri, 10 Jul 2020 01:14:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZucHI+m36qW1BQl3SIZ7q3myvU5tVvoYGmvwwCAhsWU=;
-        b=fEnnjzKx5RrNkpx1lDWU8qpVhTf//pD6m2nnwyK4U3zohw2KFHSmZWnOO4mjxvde6q
-         apnv/GIRP7PNqMWy0FmbHbtpZKnzXgUwmP14Usrb38N0P7Ar/07NzkNJcuf91KB6qXNX
-         +sGRTmPWGTUo9WOuKNYktKUewC9b887GXCC7+nnzV14/zDOTI7sVPEqdh9PE7WUtWHvH
-         cIUkIl2IMI3FRqBWnUq4rqp59+G5FJGbrs2TsEZmZYlsqhf2MMresg8IYfJe3vynvbBZ
-         59zAHvta3n2rL0vB6pF+qaUDlxg/RmyfFcm1wVM7ECjCBoIW2K4MCH7HGpMlSuSq6rdX
-         +vaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZucHI+m36qW1BQl3SIZ7q3myvU5tVvoYGmvwwCAhsWU=;
-        b=YVULyBpFFMhAAu2xFO+zQeUR9oOWDHWvhW4l+N5rqlPx7wauUITopEVeHw6peUMiSI
-         2tgYp6Y9tzDld3E6S9BbDiUhdtz3f3IjxmLMMwqWSxU9SnjIH6pCfCS6rJeF+A4zOjkf
-         GAmWNiYFXjea3uPuVUgluIgu2kSsDEBeUTPDNUmyFyOtI/WS3n3fHSHtJOqZ8D16WGZF
-         nSbIfX2cSONXvP2LhUqfIzydhVuDCBKKHz7t4/9VD5o4RGi1mML7NxK+IN+MQxdB7HA8
-         /BBw1oKTwPi1DPRT6v8CrK+gBGwoZB3fiwJfxi0ok1UmjyAysclsPVARyGhbELzq0C21
-         MsGQ==
-X-Gm-Message-State: AOAM533YfDXvOULezobbZCM2DX816ZwCOcX4mD8rfcm3j7aMcVhfj5gP
-        CNiGP+IHwDTWUfVUpITl09sTw2udOHVtQR0g5gw=
-X-Google-Smtp-Source: ABdhPJyuxSudxX1mrc8HUKTUpR/m9RotGFOO/VU7k83CfMBWLKJlDn+9bkdG9q1iI3kW5ZlsIC84M/pu739xAehWqqU=
-X-Received: by 2002:a67:e046:: with SMTP id n6mr21127971vsl.6.1594368879654;
- Fri, 10 Jul 2020 01:14:39 -0700 (PDT)
+        id S1727098AbgGJIrr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jul 2020 04:47:47 -0400
+Received: from smtp01.domein-it.com ([92.48.232.134]:50462 "EHLO
+        smtp01.domein-it.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726757AbgGJIrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jul 2020 04:47:46 -0400
+Received: by smtp01.domein-it.com (Postfix, from userid 1000)
+        id 75B35808699C; Fri, 10 Jul 2020 10:47:43 +0200 (CEST)
+Received: from ferret.domein-it.nl (ferret.domein-it.nl [84.244.139.72])
+        by smtp01.domein-it.com (Postfix) with ESMTP id CDC968086CF5;
+        Fri, 10 Jul 2020 10:47:39 +0200 (CEST)
+Received: from 80-112-22-40.cable.dynamic.v4.ziggo.nl ([80.112.22.40]:49138 helo=ben.dynamic.ziggo.nl)
+        by ferret.domein-it.nl with esmtpa (Exim 4.93)
+        (envelope-from <ben@wijen.net>)
+        id 1jtogv-0007Kb-Sg; Fri, 10 Jul 2020 10:47:33 +0200
+From:   Ben Wijen <ben@wijen.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Ben Wijen <ben@wijen.net>
+Subject: [PATCH v3 1/1] git clone: don't clone into non-empty directory
+Date:   Fri, 10 Jul 2020 10:47:32 +0200
+Message-Id: <20200710084732.5152-2-ben@wijen.net>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <xmqqv9j08dxo.fsf@gitster.c.googlers.com>
+References: <xmqqv9j08dxo.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <CAAvDm6Z2HcQkyinCD4hKTnqGR3gcXodhoo0YKSnbB-vDJcn3MQ@mail.gmail.com>
-In-Reply-To: <CAAvDm6Z2HcQkyinCD4hKTnqGR3gcXodhoo0YKSnbB-vDJcn3MQ@mail.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 10 Jul 2020 01:14:28 -0700
-Message-ID: <CAPUEspg=4HJL8iiNrNp9Wr9sVj5Gw_PciSezHV5iJ1w-ymdzdw@mail.gmail.com>
-Subject: Re: How can I search git log with ceratin keyword but without the
- other keyword?
-To:     =?UTF-8?B?5a2Z5LiW6b6ZIHN1bnNoaWxvbmc=?= <sunshilong369@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Domein-IT-MailScanner-Information: Please contact the ISP for more information
+X-Domein-IT-MailScanner-ID: 1jtogv-0007Kb-Sg
+X-Domein-IT-MailScanner: Not scanned: please contact your Internet E-Mail Service Provider for details
+X-Domein-IT-MailScanner-SpamCheck: 
+X-Domein-IT-MailScanner-From: ben@wijen.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-it is easier to write specific "not match" using PCRE syntax, but
-there are several other options to choose from combining as many
-expressions as needed from the `git log` man page:
+When using git clone with --separate-git-dir realgitdir and
+realgitdir already exists, it's content is destroyed.
 
-  git log -P --all-match --grep '12' --grep '\b(?!t123\b)\w+'
+So, make sure we don't clone into an existing non-empty directory.
 
-Carlo
+Note: #d45420c1: "clone: do not clean up directories we didn't create"
+assumed we always write into an empty directory, but missed the check
+for real_git_dir, this commit fixed it by adding the check.
+
+Signed-off-by: Ben Wijen <ben@wijen.net>
+---
+ builtin/clone.c  | 12 ++++++++++--
+ t/t5601-clone.sh |  4 +++-
+ 2 files changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index bef70745c0..a9f3312a54 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -946,7 +946,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	int is_bundle = 0, is_local;
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+ 	char *path, *dir, *display_repo = NULL;
+-	int dest_exists;
++	int dest_exists, real_dest_exists = 0;
+ 	const struct ref *refs, *remote_head;
+ 	const struct ref *remote_head_points_at;
+ 	const struct ref *our_head_points_at;
+@@ -1021,6 +1021,14 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		die(_("destination path '%s' already exists and is not "
+ 			"an empty directory."), dir);
+ 
++	if (real_git_dir) {
++		real_dest_exists = path_exists(real_git_dir);
++		if (real_dest_exists && !is_empty_dir(real_git_dir))
++			die(_("repository path '%s' already exists and is not "
++				"an empty directory."), real_git_dir);
++	}
++
++
+ 	strbuf_addf(&reflog_msg, "clone: from %s",
+ 		    display_repo ? display_repo : repo);
+ 	free(display_repo);
+@@ -1057,7 +1065,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (real_git_dir) {
+-		if (path_exists(real_git_dir))
++		if (real_dest_exists)
+ 			junk_git_dir_flags |= REMOVE_DIR_KEEP_TOPLEVEL;
+ 		junk_git_dir = real_git_dir;
+ 	} else {
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 84ea2a3eb7..eb9a093e25 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -271,7 +271,9 @@ test_expect_success 'fetch from gitfile parent' '
+ 
+ test_expect_success 'clone separate gitdir where target already exists' '
+ 	rm -rf dst &&
+-	test_must_fail git clone --separate-git-dir realgitdir src dst
++	echo foo=bar >>realgitdir/config &&
++	test_must_fail git clone --separate-git-dir realgitdir src dst &&
++	grep foo=bar realgitdir/config
+ '
+ 
+ test_expect_success 'clone --reference from original' '
+-- 
+2.27.0
+
