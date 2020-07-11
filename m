@@ -2,107 +2,105 @@ Return-Path: <SRS0=UM1m=AW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E0AAC433E0
-	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 01:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EEF3C433DF
+	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 01:59:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 219C52076A
-	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 01:06:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3BCF2078B
+	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 01:59:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LpldOO3s"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lpSHpy5X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726624AbgGKBGV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jul 2020 21:06:21 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40524 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726328AbgGKBGV (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Jul 2020 21:06:21 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8673960424;
-        Sat, 11 Jul 2020 01:06:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594429579;
-        bh=sCgQ6HZXW+b49JMvt4JDlaZJe/c6eZiHwwJorjkzSLo=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=LpldOO3s3u88ogb/nGwftwhb8xafnG9CY8cSJUxQSe9lW41uPQwybCmNy9ILqRvC2
-         eKgyz3eflbm5afG5wQda143nD+N7DtD1clv7NEt/ypMUAwQsbyyaCPsCK/wToNWAxd
-         N4gJsTIeCky9FpXIu21BS5fLol8+NSPvrjXP0AdBnPgI3X2MW+HuRjxJBNKvnVTU97
-         WKyAnvu2H/UiKRthn00u5VHrpzvDm0iYA8OHtDkvsF1sTucid5AcdUuQO8IOpGOSpe
-         rgFFkNj8+Fshda82/0svWI9E35P9Eo2unNvQ+lgQCyLIgnWSv+YIDMvQunmiUMq+Ss
-         8/dumvTWZJKaCCkJZ34ELpMc+r/mb7zlrujqZoT3yaPfRAJJr+JUSEwwY0Ep3d3SB8
-         XQpf5EteeSJLVnT9Ul2WkNd6v7N19AfT7e/JXR2U1O2IRm+v8Q8w0G1/nfPRu5QNfP
-         3Ng2FfEUdCz/7YiqmoBGTPzDfuB5QCiYFyzciSUjsgWwqGZ06dp
-Date:   Sat, 11 Jul 2020 01:06:11 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 00/38] SHA-256, part 3/3
-Message-ID: <20200711010611.GM9782@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Denton Liu <liu.denton@gmail.com>
-References: <20200710024728.3100527-1-sandals@crustytoothpaste.net>
- <68cc8fe8-3400-501a-ead5-a9c008605e74@gmail.com>
- <20200710195507.GK9782@camp.crustytoothpaste.net>
- <xmqqr1tirio5.fsf@gitster.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9Jdw4pA1x1k2W7MG"
-Content-Disposition: inline
-In-Reply-To: <xmqqr1tirio5.fsf@gitster.c.googlers.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.6.0-2-amd64)
+        id S1726709AbgGKB7K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jul 2020 21:59:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726605AbgGKB7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jul 2020 21:59:10 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0A5C08C5DC
+        for <git@vger.kernel.org>; Fri, 10 Jul 2020 18:59:10 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id k71so3353469pje.0
+        for <git@vger.kernel.org>; Fri, 10 Jul 2020 18:59:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=VQoYhipYHx5/PvplxB00MlGjvRVqaBCNWcP6GvkLLlE=;
+        b=lpSHpy5XkQyVbifLtuupgIRHkrec5rpg1HKQtWuddJyPq5YVTKaA6MFHHFaskDnnZH
+         6RbF6znAwWyquMydiEzQdS63In3fnkcEtyBhSYRtrTVFjY+px+d1YlpDilz0oG8x/6cl
+         PmF2xvAwGYxFx4pdycvOZZM7T1A3Q1XyVUu6zUMJzid9dBBzpNCAEdssyDe6BAmaCz4W
+         gEe1yz9NJg/hdU+5g/A8CH+e0bE4dIT8vHVqF4KOCdhbMQwqqr4QLGxruZTiQ0++9mEW
+         2t0YnsR18oJSNlQn942MWYkQPeJcNeOFiAfJ75ihHuRKUR/7+VObPG5yDqDTYXLeE+Qu
+         x+Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=VQoYhipYHx5/PvplxB00MlGjvRVqaBCNWcP6GvkLLlE=;
+        b=Jdzw82cZDR1d9eqUiLh1GOsxiTAxiAYaMg2It5IqN3ObeWhmv+oW1KLHbKmKaKhYlD
+         VDdoGgTv7HhhGImzvHQ2R+Y104lVODibdWoICpzqoQxI/cdNaHl0TioN1iSFA3BCp33u
+         dujNCO1/uYWieXzIa2XJpkGySl7QuxUqspHNYoXEwYHENhUVCcNSOE1/eaG8p9FLP84P
+         op4vc8T3NdP0rLMy8cOdUOH+Xi14lPon+d+lMxgwVLKY+IDbVV2FUV6UMXif10vU1m2V
+         xTShdxELqUwc8BhOZEc0Tg+ETzX9O135ar1HB/AAedTLOx61D53rxMzRk3xGoyVeqJW5
+         9EKQ==
+X-Gm-Message-State: AOAM530jC6Bjo7/5M7yezVKZAlQUZStSu4D4VGEQZgFHVf5yx7rTROW/
+        1ScvsdI/l/Ld9JQjdyLpczzGAYBp7n8=
+X-Google-Smtp-Source: ABdhPJzBcNDXjj0tVJEA87i6pX7T/S1bTpOclGMlaQ7X6rJRSGYzwR9lY+Q2lNWNEFZn0Ojn7rUUrw==
+X-Received: by 2002:a17:90a:1f06:: with SMTP id u6mr8566918pja.33.1594432749542;
+        Fri, 10 Jul 2020 18:59:09 -0700 (PDT)
+Received: from centos7.localdomain ([117.11.124.207])
+        by smtp.gmail.com with ESMTPSA id b191sm6985643pga.13.2020.07.10.18.59.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Jul 2020 18:59:09 -0700 (PDT)
+From:   simon gao <simon29rock@gmail.com>
+To:     git@vger.kernel.org
+Cc:     simon gao <simon29rock@gmail.com>
+Subject: [PATCH] libceph : client only want latest osdmap.      If the gap with the latest version exceeds the threshold, mon will send the fullosdmap instead of incremental osdmap
+Date:   Fri, 10 Jul 2020 21:59:53 -0400
+Message-Id: <1594432793-1451-1-git-send-email-simon29rock@gmail.com>
+X-Mailer: git-send-email 1.8.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Fix: https://tracker.ceph.com/issues/43421
+Signed-off-by: simon gao <simon29rock@gmail.com>
+---
+ include/linux/ceph/ceph_fs.h | 1 +
+ net/ceph/mon_client.c        | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---9Jdw4pA1x1k2W7MG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+diff --git a/include/linux/ceph/ceph_fs.h b/include/linux/ceph/ceph_fs.h
+index ebf5ba6..9dcc132 100644
+--- a/include/linux/ceph/ceph_fs.h
++++ b/include/linux/ceph/ceph_fs.h
+@@ -208,6 +208,7 @@ struct ceph_client_mount {
+ } __attribute__ ((packed));
+ 
+ #define CEPH_SUBSCRIBE_ONETIME    1  /* i want only 1 update after have */
++#define CEPH_SUBSCRIBE_LATEST_OSDMAP   2  /* i want the latest fullmap, for client */ 
+ 
+ struct ceph_mon_subscribe_item {
+ 	__le64 start;
+diff --git a/net/ceph/mon_client.c b/net/ceph/mon_client.c
+index 3d8c801..8d67671 100644
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -349,7 +349,8 @@ static bool __ceph_monc_want_map(struct ceph_mon_client *monc, int sub,
+ {
+ 	__le64 start = cpu_to_le64(epoch);
+ 	u8 flags = !continuous ? CEPH_SUBSCRIBE_ONETIME : 0;
+-
++	if (CEPH_SUB_OSDMAP == sub)
++            flags |= CEPH_SUBSCRIBE_LATEST_OSDMAP;
+ 	dout("%s %s epoch %u continuous %d\n", __func__, ceph_sub_str[sub],
+ 	     epoch, continuous);
+ 
+-- 
+1.8.3.1
 
-On 2020-07-11 at 00:37:14, Junio C Hamano wrote:
-> I do not think it was an explicit objective for Denton's series to
-> catch the use of test_might_fail with test_cmp specifically, but I
-> offhand do not think of a good use case for saying "expect and
-> actual may sometimes be the same, but they may be different", so in
-> that sense, it contributed to find a nonsensical code.  I haven't
-> read thru all the 38 patches of this series, so there may be an
-> obvious reason why we may want to have such a thing expressed that I
-> am missing, though...
-
-As mentioned upthread, my patch is definitely not correct.  I've
-squashed in a fix to remove the test_might_fail and will send out a
-reroll later this weekend.  I want to wait a little bit in case anyone
-has immediate comments on things so as not to send out patches too
-frequently.
-
-If the breakage is bothersome for you, please feel free to just remove
-those test_might_fail entries in the meantime, and the series should
-function correctly.
---=20
-brian m. carlson: Houston, Texas, US
-
---9Jdw4pA1x1k2W7MG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXwkQggAKCRB8DEliiIei
-gc+8AQCXBn6BhZWXOn5zZw31jEqgBn9idJ8ihDwjg3v3tLOYcAEA4slgSywb3K3P
-rVgsFqXjmBXglNdtaN9KjVGCRHVBjAA=
-=r4lp
------END PGP SIGNATURE-----
-
---9Jdw4pA1x1k2W7MG--
