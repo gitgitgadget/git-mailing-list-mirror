@@ -2,95 +2,94 @@ Return-Path: <SRS0=UM1m=AW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09940C433E0
-	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 05:48:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09178C433DF
+	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 20:48:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CABF9206F4
-	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 05:48:18 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zpx2JK/g"
+	by mail.kernel.org (Postfix) with ESMTP id C62A320720
+	for <git@archiver.kernel.org>; Sat, 11 Jul 2020 20:48:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=default; t=1594500534;
+	bh=XIQpCBEa99SJqHnW1wMF/WhVS5T3ErM7j4BFUecDaQ0=;
+	h=Date:From:To:Subject:List-ID:From;
+	b=mSpd3/wbNmm7RAUW6GQV8d+mjEbblwsgpeZa6NwkkKg0MN2cRIrQHzZHb0bu+1y7O
+	 gpEUXDMQnND0EopAn+XVJzCJ8Io7L/MecbbTa1cYMvxT7FMD7O9d8qqnMcT39ohlOF
+	 HDhw5a+SdzI9vQvcrhgzlq9u/QgNeOI7NlhQSnVE=
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727847AbgGKFsR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Jul 2020 01:48:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44336 "EHLO
+        id S1727785AbgGKUsx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Jul 2020 16:48:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbgGKFsR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Jul 2020 01:48:17 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5375AC08C5DD
-        for <git@vger.kernel.org>; Fri, 10 Jul 2020 22:48:17 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id b25so6224336qto.2
-        for <git@vger.kernel.org>; Fri, 10 Jul 2020 22:48:17 -0700 (PDT)
+        with ESMTP id S1726961AbgGKUsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Jul 2020 16:48:53 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6140C08C5DD
+        for <git@vger.kernel.org>; Sat, 11 Jul 2020 13:48:52 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id b185so8737382qkg.1
+        for <git@vger.kernel.org>; Sat, 11 Jul 2020 13:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BQyQS6R+U5LwAQ2fp9JYJUMtL/UHxETmO2kCVk/rnfA=;
-        b=Zpx2JK/g85MI4/tXrj3/rR7e+O9Ojz+J6Ngp6hd5uB7ZCWcP+qkjTB5cQp5hzlZLsd
-         I1PYBhgjG1iB17NL+kpbynv7eXEtEpjko47+vOg8XIMxehYWfH3QphLwyR1HhaFjxWU0
-         pXjU5mDGhpyUNJy4djxo6bNzxhSOqUdcvlL6p5NGGyj5Zc5hB4lKUkOV0XAZdAAWAIvd
-         avdgFSRwxL4c5Ba3OTX5rdljvyKllqqnSy/SAh/lxshhOXQEEo2FgS4ogKZbiOhkJ9sr
-         dM8U0ud7eZ7V9ozDkJW4Mudq24x3WQfvcZFj9hWiemk6GQVcoblrPVyft3HlHbvt1F4t
-         Cvwg==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-disposition;
+        bh=LEgTfz3xQQMEeG8udOJ7o0Iz/4Qzp4Z4DHpMLkoAzV8=;
+        b=DwHFSKQ8ctcY3aTJEnQ48Sv5Mig0rMFqvQh1UgJclxrgBO84DK87tc6d1fI19+vrEX
+         a2L21Nv56mvZIsLA56XvagQkX0Ta/WVXoBdL/B5aBcmfxwMdaEmbEjl0Yh6t+JC2pHkS
+         d1xZEwfudr5C+6FSugfyd/tjlrOAm3FGIcuks=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BQyQS6R+U5LwAQ2fp9JYJUMtL/UHxETmO2kCVk/rnfA=;
-        b=qIUkgZqS5tH6/JH9sCALCrlUAV9ImaoyV8LQLMExvF5uOTBiVP230T0NtwkbpnFbtb
-         +TXRp/18fmhmVUopVQfXcXOBQ91Q4cmv/bE7ayxqEEFVuMrSf7o+L7Ys5YVb2Es5iYpB
-         PBWHwhJrbooOCicxBgUEr/PAGCpcpvrXmbizvk1rE80I4mDlNco7ESODRjxFDGvI0kFh
-         XniUcd46qXIKljBoELwJn4U3/ToWY7rmQXLTDo4+kZbFbN1Wqsc6H0GvZrnhs2qW+oMM
-         TVgCB6FYZTTzKqbBQxYQCgHIWASKHBbZ5x9ezLVfWDUquB5eyP27Aii/S3fpIEsgyp/b
-         91lA==
-X-Gm-Message-State: AOAM532+toZW8lt7rXaDGLbuZ/KsoH0G452Q8vOubQInx20QXE9ksrjy
-        A+0wAc4fz64VGSYSvcYY/S6EaQ+RNkibrJPEOqo=
-X-Google-Smtp-Source: ABdhPJzyW1erbRdJvT3b0ySMHEfpMNqSYpaIpUpg1mNS/tqAmnVhaly7/2JBjaY/o2NwC6PVkrE5uIXmQGEZc9x6bgw=
-X-Received: by 2002:ac8:87d:: with SMTP id x58mr15725224qth.28.1594446495900;
- Fri, 10 Jul 2020 22:48:15 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
+         :mime-version:content-disposition;
+        bh=LEgTfz3xQQMEeG8udOJ7o0Iz/4Qzp4Z4DHpMLkoAzV8=;
+        b=NMbKF6aEYXcorn+afVkG5OOVtJqfEBjmWP+Vw8JhbHtB/xkelCrLDQwUk9LTj7I9VL
+         FKjRtzaqXf/k8BmbGfRsWtdLfsOtImNBwHBtJDehzNUYxnf+OxlPuUMX9G+hzfZFoGec
+         2x+6ytQZh/9BWuMbkj4DwLQA5plbFcK3ATVIitjUa1MwIRrewVGXHucDtctp14n6gnUS
+         /sQIfDI36sL/cu6IvJyj8HKtNDWvJYMMvHU5Ia6AhiyzYXyJ43Dj1NVgNEbRjSfv5uDe
+         bHmrcuj29rrYQ6EcOU38lL0Wvet/7AyQNKHkTkr75uvNhakXAZSaZ3x8cqhCZAn1AEWE
+         1kQg==
+X-Gm-Message-State: AOAM531TcWJ0vB+HoMYWO+LcEqL9foEAP3t+Xz7/9Nh8iufkHLGx+3yK
+        pFSEerEKgdMh6RD1cf1MWxP4j6Vc0xw=
+X-Google-Smtp-Source: ABdhPJyEghdd/3N6jV1J0xHU7a6vjfkp2ZIE48Q9/tTV1h2GjcQtJc24WQ+rj4GvceeVYQq/RU6wbA==
+X-Received: by 2002:a05:620a:2eb:: with SMTP id a11mr70465383qko.383.1594500531646;
+        Sat, 11 Jul 2020 13:48:51 -0700 (PDT)
+Received: from chatter.i7.local ([87.101.92.156])
+        by smtp.gmail.com with ESMTPSA id i35sm12131285qtd.96.2020.07.11.13.48.50
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Jul 2020 13:48:51 -0700 (PDT)
+Date:   Sat, 11 Jul 2020 16:48:49 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     git@vger.kernel.org
+Subject: FETCH_HEAD files and mirrored repos
+Message-ID: <20200711204849.khfbyundun7ujqzw@chatter.i7.local>
+Mail-Followup-To: git@vger.kernel.org
 MIME-Version: 1.0
-References: <CAAvDm6Z2HcQkyinCD4hKTnqGR3gcXodhoo0YKSnbB-vDJcn3MQ@mail.gmail.com>
- <CAPUEspg=4HJL8iiNrNp9Wr9sVj5Gw_PciSezHV5iJ1w-ymdzdw@mail.gmail.com>
-In-Reply-To: <CAPUEspg=4HJL8iiNrNp9Wr9sVj5Gw_PciSezHV5iJ1w-ymdzdw@mail.gmail.com>
-From:   =?UTF-8?B?5a2Z5LiW6b6ZIHN1bnNoaWxvbmc=?= <sunshilong369@gmail.com>
-Date:   Sat, 11 Jul 2020 13:48:04 +0800
-Message-ID: <CAAvDm6avvkXrU-Q8zu7C5WFqfCbf0DN=6cPMU-rOxgmdAh1Ebw@mail.gmail.com>
-Subject: Re: How can I search git log with ceratin keyword but without the
- other keyword?
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for taking the time to respond to me.
+Hi, all:
 
-When I run the said shell command, this error reported:
-# git log -P --all-match --grep '12' --grep '\b(?!t123\b)\w+'
-fatal: unrecognized argument: -P
+Are there any downsides to deleting FETCH_HEAD after performing "git 
+remote update" in repos that are only used for mirrored hosting? E.g.  
+source.codeaurora.org has thousands of repos where various Android/CAF 
+automation creates tons of refs, so FETCH_HEAD files are routinely many 
+MB in size:
 
-The version of git which I am currently using is 2.7.4.
+$ ls -ahl FETCH_HEAD
+-rw-rw-r--. 1 mricon mricon 4.4M Jul 11 04:28 FETCH_HEAD
+$ wc -l FETCH_HEAD
+29122 FETCH_HEAD
 
-One more question, could you please explain '\b(?!t123\b)\w+' in
-more detail for me?
-Or suggest some related documents for me to go through?
+As far as I know, FETCH_HEAD info is only used in local-repo operations, 
+so there should be no downside to deleting these files when git is only 
+used for mirroring -- but I wanted to check in case I'm wrong.
 
-Thank you for your help.
-Best regards.
-
-On Fri, Jul 10, 2020 at 4:14 PM Carlo Arenas <carenas@gmail.com> wrote:
->
-> it is easier to write specific "not match" using PCRE syntax, but
-> there are several other options to choose from combining as many
-> expressions as needed from the `git log` man page:
->
->   git log -P --all-match --grep '12' --grep '\b(?!t123\b)\w+'
->
-> Carlo
+TIA,
+-K
