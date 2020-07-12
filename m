@@ -2,97 +2,92 @@ Return-Path: <SRS0=l3cg=AX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D45F1C433E0
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 20:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7245DC433E0
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 20:52:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D9BA206F0
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 20:26:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1594585597;
-	bh=MhlLhW0CR0JZNB59Ltgxid8f2PjjExyvUFfBZ7nQkBg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=PKiA+VquMRdJ99i0ycSSlqqWd4l4lnRGDvp1q9WugVocMtC25LjpuVDTr0VrwXkyW
-	 ciNwoHQ+px4M6jSWXiYEtPaRBUjyseaQ56HjsqXS9YDAVG1FUnSD74CGWTtLmrHDeA
-	 Pz/O7DSEdLqxL8rvB/tyZxv4TqbX9C2iPN3PUfzo=
+	by mail.kernel.org (Postfix) with ESMTP id 48D0220674
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 20:52:40 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NjI8fCNX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729287AbgGLUZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 16:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729012AbgGLUZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jul 2020 16:25:08 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 706B0C061794
-        for <git@vger.kernel.org>; Sun, 12 Jul 2020 13:25:07 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id dm12so4927236qvb.9
-        for <git@vger.kernel.org>; Sun, 12 Jul 2020 13:25:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mHUw9mUOUyU/gKez5u/QIHVqnXVFA9AU1M60mjJpCrI=;
-        b=A8BB73jyVvRk5gK3qqqn8c8A5QSOCS3i40g7xXPR2ulscje9imrmLzB3MuzrJ5aG4G
-         MCijYiYihnB5KsVsoPFljKOo98hUg/yu/+sDYv1lCJRls2h+lxbgwkuPK9zmwZT4pMBG
-         8gU6LgFFO4uL7bNX18Czv1h2QAwzzG8huswbc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=mHUw9mUOUyU/gKez5u/QIHVqnXVFA9AU1M60mjJpCrI=;
-        b=LAQfoMtxknR4dAZvhTGBL9x/yDI1e1I1jU9EY3RMCBf1Ly2ejAdmHDwvCU/4FJGAoI
-         xyL4FODB+UuVY9+0tBDIyIvt5vQ4ynwSXEzAC+82Iz00Gi9rXzyKn4OOq5kuBredRt+X
-         kclo326i3jMC3GvVIeRENjKxQL4POfgT8IFZBzKnnQkaBXlEzSYa+eFcGDaQchWZBDHO
-         PdLAVZq0FhKhSCiXaC7ILbl66ZjxnvYZRBVjv/evlp6fkI0+U/odBZ24Rl+IHGhxQtbO
-         y7/QuUzmJhIAVHxP2/3sz4A+hZqs4zDn4NDXEpwPWm4eEvs+TLwb0RZucff3c9QWs87P
-         f5mQ==
-X-Gm-Message-State: AOAM531rWpHTMh7k3Nbx6Ufs/rL6kHZtKFVM+VJNdrApbskN552f3Wz8
-        wdP4j46OOYPYOArcfjJZSKQvaw==
-X-Google-Smtp-Source: ABdhPJx1fFOsChCDB3prlXPTZuCCYvQIsZeSALYCFEzWuL7ccC+d9QgLZYm5GYaNwjBaXU9Jjv0FAQ==
-X-Received: by 2002:a0c:bd2c:: with SMTP id m44mr79082413qvg.195.1594585505632;
-        Sun, 12 Jul 2020 13:25:05 -0700 (PDT)
-Received: from chatter.i7.local ([87.101.92.156])
-        by smtp.gmail.com with ESMTPSA id j18sm19389080qko.95.2020.07.12.13.25.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2020 13:25:04 -0700 (PDT)
-Date:   Sun, 12 Jul 2020 16:25:02 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1729415AbgGLUwY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 16:52:24 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56768 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729338AbgGLUwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jul 2020 16:52:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B584E49D4;
+        Sun, 12 Jul 2020 16:52:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m8EGYslqoYjB67obv/YDO/WIucI=; b=NjI8fC
+        NXsJTYI/lAODB3NlE3+Og2+jR7oQ8PsN1h0cYR5tFX2AwmAtWgGbQdMGzOkoSWqc
+        rWYYHw484ibWDvst+a/Ou1ztyAuL0bW69zF7tCWeAqAyjJPWfS1qcHPHN1nPsRA1
+        nDcjrefSykj22/FDIvBhuzvIWOtR3v/79DvB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=maamXH5m1KgZOcCTzcMIIzf6pNJq7AYI
+        XJk+eJ1uQjaQpYnpLwAiv42yyyryklX2tdw5DZ/kV+DeOhF9C/BJDO+WI4Ip49dT
+        XjrD2+0ZYCBC7i/oB7zOQmXAPC3cCQjMrfoUyI3a7oM3t1LrsJkfBlW15uS0/P4N
+        ecXt4z+d+d0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24542E49D3;
+        Sun, 12 Jul 2020 16:52:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 72176E49D2;
+        Sun, 12 Jul 2020 16:52:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc:     git@vger.kernel.org
 Subject: Re: FETCH_HEAD files and mirrored repos
-Message-ID: <20200712202502.x4p2c7rf6ctflt5g@chatter.i7.local>
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20200711204849.khfbyundun7ujqzw@chatter.i7.local>
- <xmqqimetrcay.fsf@gitster.c.googlers.com>
- <20200711211915.h5bdgmbkisyc23m3@chatter.i7.local>
- <xmqqblkkr63u.fsf@gitster.c.googlers.com>
+        <xmqqimetrcay.fsf@gitster.c.googlers.com>
+        <20200711211915.h5bdgmbkisyc23m3@chatter.i7.local>
+        <xmqqblkkr63u.fsf@gitster.c.googlers.com>
+        <20200712202502.x4p2c7rf6ctflt5g@chatter.i7.local>
+Date:   Sun, 12 Jul 2020 13:52:17 -0700
+In-Reply-To: <20200712202502.x4p2c7rf6ctflt5g@chatter.i7.local> (Konstantin
+        Ryabitsev's message of "Sun, 12 Jul 2020 16:25:02 -0400")
+Message-ID: <xmqqr1tgpibi.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqblkkr63u.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 93A04450-C481-11EA-B73F-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 12, 2020 at 10:33:09AM -0700, Junio C Hamano wrote:
-> >> So, unless your script depends on the presence and/or the contents
-> >> of FETCH_HEAD, you can safely remove it.
-> >
-> > Excellent, that just saved me 20G per each mirror. :)
-> 
-> Meaning that minimum 4k per file adds up that much due to 5 millions
-> of repositories, or something?
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-Gosh, no. Only 28,000 repositories, with many FETCH_HEAD files being a 
-few MB in size.
+> I also discovered that symlinking FETCH_HEAD to /dev/null works as well 
+> and thus saves a few IO cycles.
 
-I also discovered that symlinking FETCH_HEAD to /dev/null works as well 
-and thus saves a few IO cycles.
+We could teach "git fetch" a new "--write-fetch-head" option and
+teach "git pull" to pass it when calling "git fetch".  It is very
+plausible that some folks rely on "git fetch" to leave FETCH_HEAD
+without being told, so the option must default to on for a few
+development cycles before we flip the default to off, and for those
+who want to live in the future a bit earlier, we can also introduce
+fetch.writeFetchHEAD configuration variable that determines what
+happens when "git fetch" is run without "--write-fetch-head" option
+on the command line.  That way, you could drop 
 
--K
+	[fetch]
+		writeFetchHEAD = 0
+
+in say /etc/gitconfig or in ~/.gitconfig of the user that runs the
+mirroring automation.
+
+
+
