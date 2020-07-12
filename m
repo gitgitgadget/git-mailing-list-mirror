@@ -2,351 +2,298 @@ Return-Path: <SRS0=l3cg=AX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5621C433E1
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 09:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BBBDC433E3
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 11:22:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71CBF20720
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 09:08:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C0562070B
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 11:22:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpUbStF1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V//fmw7C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728535AbgGLJI1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 05:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
+        id S1728854AbgGLLWw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 07:22:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728070AbgGLJI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jul 2020 05:08:26 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83457C061794
-        for <git@vger.kernel.org>; Sun, 12 Jul 2020 02:08:26 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id l2so10037295wmf.0
-        for <git@vger.kernel.org>; Sun, 12 Jul 2020 02:08:26 -0700 (PDT)
+        with ESMTP id S1728754AbgGLLWv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jul 2020 07:22:51 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2800EC061794
+        for <git@vger.kernel.org>; Sun, 12 Jul 2020 04:22:51 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id rk21so11022870ejb.2
+        for <git@vger.kernel.org>; Sun, 12 Jul 2020 04:22:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=CVIbTbCs0wKaPXEEGW2GoDtpv/+2sIuiUx1NloKWgW8=;
-        b=CpUbStF1diK4OKsHDOHE/GBvH7Hlt7FR3WmmBmjlx1EUUL2HVh6EWXJLq/PVJqZt1z
-         lxlX/Qto8H+fTvDVhLiqeXES4LfWTE6bTvmx4n9IdliEU6G9Y+VzvkQPFP02C51aMUQb
-         F3xJZOH4xdBp/+TKYrXouarTAbt/eJ64tvTWNWRLP9O1f+8wwkFNsgOK8Wq77O/Xawt8
-         uZ6r6D2nIG7aHcdFEqRS0mFlnPRfFl7i2k8pMVpo4uP18wWzuVWbg28qa+ynqpZ91q0D
-         U4coTW6W9ub+1nb4TaaC/Lzyii/Tr/HS7zHV/G7pd5rTphL/5WZPp54sI3wu6PkcI6Ku
-         IIeg==
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version;
+        bh=jju6/31c+l3E38CmdGe7oExW7r8JIsx5LdCZm1va6lw=;
+        b=V//fmw7C4hZNwog05kOa6o/hTbW4htNFfJ5svbPlsMyLWbczY2z+Po81pPpHAXVQR+
+         lbjx79pq1LHuXLhAFBANgaVfV7GIs2UUt6lxPckjbMfhXXDvxK5j8hUmzGVFafsE+ECn
+         SOgwiDAlBkYFAbXOBgfNtxQgUlqCnA2PQemI7B31LXT/hYqJMjg2vL3dx/9jCQzSy3o3
+         AohBBorzo0msAk8liaCxADSiy62Q28NmIBXVOZUOiRP6XcwisH6T2WGEbRsUAgjKQlUd
+         MLLYAOMtKeiTJZy+qjXYaSSbYzVTYr8qvNvfCT5Hdt86ZQbHHfgFWKVjWIqPAMtOpkz7
+         RJkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=CVIbTbCs0wKaPXEEGW2GoDtpv/+2sIuiUx1NloKWgW8=;
-        b=WuGIFlQTA217fcgYyAueh4Pmzyk56Mt+j9fD16AW/ClmmhrV8UTE7XQ8EM4V+GwsCR
-         37LnTZvbXJxNwQ+Elv6vgmuGXQkacC9TSDt5HopVtXjWs+rOdJUWLnp7YPFOfw2te/Hk
-         PGPPJQnxyU+TkyUsX+Nx1iSMtTFfD8IC5WMawRu5CZQsMLZoiqMO636WXdsGY0EaGbKs
-         +iwfyYKak+wEDQtIfJEIr5jjlMph44O0a1dlzdsFfJ6cflC2UY4bP+JIQ6LR5SfFGH31
-         oGHf+Im3hiPBbI/SB3QCVIJRYFKzcXzc6rdJC+RIJipIiIqt4si1eIPlTDfSYafsvop9
-         ATtQ==
-X-Gm-Message-State: AOAM532kRm7w80x423zXazgVHG8gIouN2vFTU0ZFPhnnE2DHShU+YZUl
-        MpujZQINHuD8Q7GcLN+wGGW5NLQ3
-X-Google-Smtp-Source: ABdhPJytgPz24eUr+M2tuLftqFT4Mj8IFYYu+3pQLI7h2uikTh7ksU34Q9tfJ7ZVE57NgOK2mkvtxQ==
-X-Received: by 2002:a1c:de07:: with SMTP id v7mr13848319wmg.56.1594544904839;
-        Sun, 12 Jul 2020 02:08:24 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r28sm17705392wrr.20.2020.07.12.02.08.24
+        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version;
+        bh=jju6/31c+l3E38CmdGe7oExW7r8JIsx5LdCZm1va6lw=;
+        b=bygUYsRqX3ZbSRmck9SUCkyuC7BfVNI/vXNfiYvMF3dECbckSdUxTzbJHwC7VYqb30
+         ajzn7bnPgP3mmT2dM9saU8YGMivtFAOSERthb1aCNvcCcSNOZ/PIxPtlUcWKm/Vzz5bV
+         RjJYKSTU1bVOfdskry3j8Hx6y66PKH1MCMRYPH6a6ZHWqrz8BnMVD9gcW5p7/rF+F27L
+         oHVtXplQF+juK+W6kNafrZCi/NIb2xevYs03/n/88r0snK10pQ8mkWJB6hafi5sZnp2c
+         9w52CgSiFPRKepBe7eHXluyGyaWGewixm4G6bhLYFCllK6bweodeALTS3xikiXOGjls7
+         d1yQ==
+X-Gm-Message-State: AOAM530rRW+L0gGsOZWqcTXNXb6GKEY8E72FTSINyTTkTF9FhYw1EluH
+        hpO728GzwowONBLmy33IBh73z3hi+Q4=
+X-Google-Smtp-Source: ABdhPJwGNk4PYOKn2HfcozVbOJp1Rbz+o928nCgmaRTYSYWTRsJSH4T6xuP8mxQRloXvil2oJfOPSA==
+X-Received: by 2002:a17:906:e0c7:: with SMTP id gl7mr64985297ejb.264.1594552969831;
+        Sun, 12 Jul 2020 04:22:49 -0700 (PDT)
+Received: from andromeda.lan ([80.215.156.54])
+        by smtp.gmail.com with ESMTPSA id o16sm4794531ejj.106.2020.07.12.04.22.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2020 02:08:24 -0700 (PDT)
-Message-Id: <pull.781.v16.git.git.1594544903477.gitgitgadget@gmail.com>
-In-Reply-To: <pull.781.v15.git.git.1594543148959.gitgitgadget@gmail.com>
-References: <pull.781.v15.git.git.1594543148959.gitgitgadget@gmail.com>
-From:   "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 12 Jul 2020 09:08:23 +0000
-Subject: [PATCH v16] Support auto-merge for meld to follow the vim-diff
- behavior
+        Sun, 12 Jul 2020 04:22:48 -0700 (PDT)
+Date:   Sun, 12 Jul 2020 13:22:26 +0200 (CEST)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH v1 02/17] merge-one-file: rewrite in C
+In-Reply-To: <80af2da7-d943-94ef-999a-7035bbec0f0d@gmail.com>
+Message-ID: <alpine.LFD.2.21.2007121311490.17922@andromeda.lan>
+References: <20200625121953.16991-1-alban.gruin@gmail.com> <20200625121953.16991-3-alban.gruin@gmail.com> <80af2da7-d943-94ef-999a-7035bbec0f0d@gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     sunlin <sunlin7@yahoo.com>, Lin Sun <lin.sun@zoom.us>
+Content-Type: multipart/mixed; boundary="-1463785727-1942544268-1594552968=:17922"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lin Sun <lin.sun@zoom.us>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Make the mergetool used with "meld" backend behave similarly to "vimdiff" by
-telling it to auto-merge non-conflicting parts and highlight the conflicting
-parts when `mergetool.meld.useAutoMerge` is configured with `true`, or `auto`
-for detecting the `--auto-merge` option automatically.
+---1463785727-1942544268-1594552968=:17922
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-Helped-by: David Aguilar <davvid@gmail.com>
-Signed-off-by: Lin Sun <lin.sun@zoom.us>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-    Enable auto-merge for meld to follow the vimdiff beharior
-    
-    Hi, the mergetool "meld" does NOT merge the no-conflict changes, while
-    the mergetool "vimdiff" will merge the no-conflict changes and highlight
-    the conflict parts. This patch will make the mergetool "meld" similar to
-    "vimdiff", auto-merge the no-conflict changes, highlight conflict parts.
+Hi Phillip,
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-781%2Fsunlin7%2Fmaster-v16
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-781/sunlin7/master-v16
-Pull-Request: https://github.com/git/git/pull/781
+Phillip Wood (phillip.wood123@gmail.com) a écrit :
 
-Range-diff vs v15:
+> Hi Alban
+> 
+> I think this series is a great idea
+> 
+> On 25/06/2020 13:19, Alban Gruin wrote:
+> -%<-
+> > diff --git a/builtin/merge-one-file.c b/builtin/merge-one-file.c
+> > new file mode 100644
+> > index 0000000000..4992a6cd30
+> > --- /dev/null
+> > +++ b/builtin/merge-one-file.c
+> > @@ -0,0 +1,275 @@
+> > +/*
+> > + * Builtin "git merge-one-file"
+> > + *
+> > + * Copyright (c) 2020 Alban Gruin
+> > + *
+> > + * Based on git-merge-one-file.sh, written by Linus Torvalds.
+> > + *
+> > + * This is the git per-file merge script, called with
+> > + *
+> > + *   $1 - original file SHA1 (or empty)
+> > + *   $2 - file in branch1 SHA1 (or empty)
+> > + *   $3 - file in branch2 SHA1 (or empty)
+> > + *   $4 - pathname in repository
+> > + *   $5 - original file mode (or empty)
+> > + *   $6 - file in branch1 mode (or empty)
+> > + *   $7 - file in branch2 mode (or empty)
+> 
+> nit pick - these are now argv[1] etc rather than $1 etc
+> 
 
- 1:  02d849784f ! 1:  d235a576b4 Support auto-merge for meld to follow the vim-diff behavior
-     @@ mergetools/meld: diff_cmd () {
-      -	else
-      -		meld_has_output_option=false
-      +		meld_use_auto_merge_option=$(
-     -+			git --bool-or-str config mergetool.meld.useAutoMerge)
-     ++			git config --bool-or-str mergetool.meld.useAutoMerge)
-      +		case "$meld_use_auto_merge_option" in
-      +		true|false)
-      +			: use well formatted boolean value
+I'll change that, and replace "script" by "utility".
 
+> > + *
+> > + * Handle some trivial cases.. The _really_ trivial cases have
+> > + * been handled already by git read-tree, but that one doesn't
+> > + * do any merges that might change the tree layout.
+> > + */
+> > +
+> > +#define USE_THE_INDEX_COMPATIBILITY_MACROS
+> > +#include "cache.h"
+> > +#include "builtin.h"
+> > +#include "commit.h"
+> > +#include "dir.h"
+> > +#include "lockfile.h"
+> > +#include "object-store.h"
+> > +#include "run-command.h"
+> > +#include "xdiff-interface.h"
+> > +
+> > +static int create_temp_file(const struct object_id *oid, struct strbuf
+> > *path)
+> > +{
+> > +	struct child_process cp = CHILD_PROCESS_INIT;
+> > +	struct strbuf err = STRBUF_INIT;
+> > +	int ret;
+> > +
+> > +	cp.git_cmd = 1;
+> > +	argv_array_pushl(&cp.args, "unpack-file", oid_to_hex(oid), NULL);
+> > +	ret = pipe_command(&cp, NULL, 0, path, 0, &err, 0);
+> > +	if (!ret && path->len > 0)
+> > +		strbuf_trim_trailing_newline(path);
+> > +
+> > +	fprintf(stderr, "%.*s", (int) err.len, err.buf);
+> > +	strbuf_release(&err);
+> > +
+> > +	return ret;
+> > +}
+> 
+> I know others will disagree but personally I'm not a huge fan of rewriting
+> shell functions in C that forks other builtins and then converting the C to
+> use the internal apis, it seems a much better to just write the proper C
+> version the first time. This is especially true for simple function such as
+> the ones in this file. That way the reviewer gets a clear view of the final
+> code from the patch, rather than having to piece it together from a series of
+> additions and deletions.
+> 
 
- Documentation/config/mergetool.txt | 10 ++++
- builtin/config.c                   | 19 +++++++
- config.c                           | 14 ++++++
- config.h                           |  7 +++
- mergetools/meld                    | 81 ++++++++++++++++++++++++------
- 5 files changed, 115 insertions(+), 16 deletions(-)
+I understand -- I'll squash the "rewrite" and "use internal APIs" patches 
+together as a last step for the v2, so I'd be able to get them back with 
+all the changes made in the v2 if needed.
 
-diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
-index 09ed31dbfa..16a27443a3 100644
---- a/Documentation/config/mergetool.txt
-+++ b/Documentation/config/mergetool.txt
-@@ -30,6 +30,16 @@ mergetool.meld.hasOutput::
- 	to `true` tells Git to unconditionally use the `--output` option,
- 	and `false` avoids using `--output`.
- 
-+mergetool.meld.useAutoMerge::
-+	When the `--auto-merge` is given, meld will merge all non-conflicting
-+	parts automatically, highlight the conflicting parts and wait for
-+	user decision.  Setting `mergetool.meld.useAutoMerge` to `true` tells
-+	Git to unconditionally use the `--auto-merge` option with `meld`.
-+	Setting this value to `auto` makes git detect whether `--auto-merge`
-+	is supported and will only use `--auto-merge` when available.  A
-+	value of `false` avoids using `--auto-merge` altogether, and is the
-+	default value.
-+
- mergetool.keepBackup::
- 	After performing a merge, the original file with conflict markers
- 	can be saved as a file with a `.orig` extension.  If this variable
-diff --git a/builtin/config.c b/builtin/config.c
-index ee4aef6a35..6f2ddadc80 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -65,6 +65,7 @@ static int show_scope;
- #define TYPE_PATH		4
- #define TYPE_EXPIRY_DATE	5
- #define TYPE_COLOR		6
-+#define TYPE_BOOL_OR_STR        7
- 
- #define OPT_CALLBACK_VALUE(s, l, v, h, i) \
- 	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
-@@ -94,6 +95,8 @@ static int option_parse_type(const struct option *opt, const char *arg,
- 			new_type = TYPE_INT;
- 		else if (!strcmp(arg, "bool-or-int"))
- 			new_type = TYPE_BOOL_OR_INT;
-+		else if (!strcmp(arg, "bool-or-str"))
-+			new_type = TYPE_BOOL_OR_STR;
- 		else if (!strcmp(arg, "path"))
- 			new_type = TYPE_PATH;
- 		else if (!strcmp(arg, "expiry-date"))
-@@ -149,6 +152,7 @@ static struct option builtin_config_options[] = {
- 	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
- 	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_INT),
- 	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
-+	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string"), TYPE_BOOL_OR_STR),
- 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
- 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
- 	OPT_GROUP(N_("Other")),
-@@ -250,6 +254,13 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
- 				strbuf_addstr(buf, v ? "true" : "false");
- 			else
- 				strbuf_addf(buf, "%d", v);
-+		} else if (type == TYPE_BOOL_OR_STR) {
-+			int is_bool, v;
-+			v = git_config_bool_or_str(NULL, key_, value_, &is_bool);
-+			if (is_bool)
-+				strbuf_addstr(buf, v ? "true" : "false");
-+			else
-+				strbuf_addstr(buf, value_);
- 		} else if (type == TYPE_PATH) {
- 			const char *v;
- 			if (git_config_pathname(&v, key_, value_) < 0)
-@@ -411,6 +422,14 @@ static char *normalize_value(const char *key, const char *value)
- 		else
- 			return xstrdup(v ? "true" : "false");
- 	}
-+	if (type == TYPE_BOOL_OR_STR) {
-+		int is_bool, v;
-+		v = git_config_bool_or_str(NULL, key, value, &is_bool);
-+		if (!is_bool)
-+			return xstrdup(value);
-+		else
-+			return xstrdup(v ? "true" : "false");
-+	}
- 	if (type == TYPE_COLOR) {
- 		char v[COLOR_MAXLEN];
- 		if (git_config_color(v, key, value))
-diff --git a/config.c b/config.c
-index 8db9c77098..4c6c06d10b 100644
---- a/config.c
-+++ b/config.c
-@@ -1100,6 +1100,20 @@ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
- 	return git_config_int(name, value);
- }
- 
-+int git_config_bool_or_str(const char **dest, const char *name, const char *value, int *is_bool)
-+{
-+	int v = git_parse_maybe_bool_text(value);
-+	if (0 <= v) {
-+		*is_bool = 1;
-+		return v;
-+	}
-+	*is_bool = 0;
-+	if (dest != NULL)
-+	  return git_config_string(dest, name, value);
-+	else
-+	  return 0;
-+}
-+
- int git_config_bool(const char *name, const char *value)
- {
- 	int discard;
-diff --git a/config.h b/config.h
-index 060874488f..175b88d9c5 100644
---- a/config.h
-+++ b/config.h
-@@ -217,6 +217,13 @@ ssize_t git_config_ssize_t(const char *, const char *);
-  */
- int git_config_bool_or_int(const char *, const char *, int *);
- 
-+/**
-+ * Same as `git_config_bool`, except that `is_bool` flag is unset, then if
-+ * `dest` parameter is non-NULL, it allocates and copies the value string
-+ * into the `dest`, if `dest` is NULL and `is_bool` flag is unset it return 0.
-+ */
-+int git_config_bool_or_str(const char **, const char *, const char *, int *);
-+
- /**
-  * Parse a string into a boolean value, respecting keywords like "true" and
-  * "false". Integer values are converted into true/false values (when they
-diff --git a/mergetools/meld b/mergetools/meld
-index 7a08470f88..bc2ea894d7 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -3,34 +3,83 @@ diff_cmd () {
- }
- 
- merge_cmd () {
--	if test -z "${meld_has_output_option:+set}"
-+	check_meld_for_features
-+
-+	option_auto_merge=
-+	if test "$meld_use_auto_merge_option" = true
- 	then
--		check_meld_for_output_version
-+		option_auto_merge="--auto-merge"
- 	fi
- 
- 	if test "$meld_has_output_option" = true
- 	then
--		"$merge_tool_path" --output="$MERGED" \
-+		"$merge_tool_path" $option_auto_merge --output="$MERGED" \
- 			"$LOCAL" "$BASE" "$REMOTE"
- 	else
--		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
-+		"$merge_tool_path" $option_auto_merge "$LOCAL" "$MERGED" "$REMOTE"
- 	fi
- }
- 
--# Check whether we should use 'meld --output <file>'
--check_meld_for_output_version () {
--	meld_path="$(git config mergetool.meld.path)"
--	meld_path="${meld_path:-meld}"
-+# Get meld help message
-+init_meld_help_msg () {
-+	if test -z "$meld_help_msg"
-+	then
-+		meld_path="$(git config mergetool.meld.path || echo meld)"
-+		meld_help_msg=$("$meld_path" --help 2>&1)
-+	fi
-+}
- 
--	if meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
-+# Check the features and set flags
-+check_meld_for_features () {
-+	# Check whether we should use 'meld --output <file>'
-+	if test -z "$meld_has_output_option"
- 	then
--		: use configured value
--	elif "$meld_path" --help 2>&1 |
--		grep -e '--output=' -e '\[OPTION\.\.\.\]' >/dev/null
-+		meld_has_output_option=$(git config --bool mergetool.meld.hasOutput)
-+		case "$meld_has_output_option" in
-+		true|false)
-+			: use configured value
-+			;;
-+		*)
-+			: empty or invalid configured value, detecting "--output" automatically
-+			init_meld_help_msg
-+
-+			case "$meld_help_msg" in
-+			*"--output="*|*'[OPTION...]'*)
-+				# All version that has [OPTION...] supports --output
-+				meld_has_output_option=true
-+				;;
-+			*)
-+				meld_has_output_option=false
-+				;;
-+			esac
-+			;;
-+		esac
-+	fi
-+	# Check whether we should use 'meld --auto-merge ...'
-+	if test -z "$meld_use_auto_merge_option"
- 	then
--		: old ones mention --output and new ones just say OPTION...
--		meld_has_output_option=true
--	else
--		meld_has_output_option=false
-+		meld_use_auto_merge_option=$(
-+			git config --bool-or-str mergetool.meld.useAutoMerge)
-+		case "$meld_use_auto_merge_option" in
-+		true|false)
-+			: use well formatted boolean value
-+			;;
-+		auto)
-+			# testing the "--auto-merge" option only if config is "auto"
-+			init_meld_help_msg
-+
-+			case "$meld_help_msg" in
-+			*"--auto-merge"*|*'[OPTION...]'*)
-+				meld_use_auto_merge_option=true
-+				;;
-+			*)
-+				meld_use_auto_merge_option=false
-+				;;
-+			esac
-+			;;
-+		*)
-+			meld_use_auto_merge_option=false
-+			;;
-+		esac
- 	fi
- }
+> -%<-
+> > +static int do_merge_one_file(const struct object_id *orig_blob,
+> > +			     const struct object_id *our_blob,
+> > +			     const struct object_id *their_blob, const char
+> > *path,
+> > +			     unsigned int orig_mode, unsigned int our_mode,
+> > unsigned int their_mode)
+> > +{
+> > +	int ret, source, dest;
+> > +	struct strbuf src1 = STRBUF_INIT, src2 = STRBUF_INIT, orig =
+> > STRBUF_INIT;
+> > +	struct child_process cp_merge = CHILD_PROCESS_INIT,
+> > +		cp_checkout = CHILD_PROCESS_INIT,
+> > +		cp_update = CHILD_PROCESS_INIT;
+> > +
+> > +	if (our_mode == S_IFLNK || their_mode == S_IFLNK) {
+> > +		fprintf(stderr, "ERROR: %s: Not merging symbolic link
+> > changes.\n", path);
+> > +		return 1;
+> > +	} else if (our_mode == S_IFGITLINK || their_mode == S_IFGITLINK) {
+> > +		fprintf(stderr, "ERROR: %s: Not merging conflicting submodule
+> > changes.\n",
+> > +			path);
+> > +		return 1;
+> > +	}
+> > +
+> > +	create_temp_file(our_blob, &src1);
+> > +	create_temp_file(their_blob, &src2);
+> > +
+> > +	if (orig_blob) {
+> > +		printf("Auto-merging %s\n", path);
+> > +		create_temp_file(orig_blob, &orig);
+> > +	} else {
+> > +		printf("Added %s in both, but differently.\n", path);
+> > +		create_temp_file(the_hash_algo->empty_blob, &orig);
+> > +	}
+> > +
+> > +	cp_merge.git_cmd = 1;
+> > +	argv_array_pushl(&cp_merge.args, "merge-file", src1.buf, orig.buf,
+> > src2.buf,
+> > +			 NULL);
+> > +	ret = run_command(&cp_merge);
+> > +
+> > +	if (ret != 0)
+> > +		ret = 1;
+> > +
+> > +	cp_checkout.git_cmd = 1;
+> > +	argv_array_pushl(&cp_checkout.args, "checkout-index", "-f",
+> > "--stage=2",
+> > +			 "--", path, NULL);
+> > +	if (run_command(&cp_checkout))
+> > +		return 1;
+> > +
+> > +	source = open(src1.buf, O_RDONLY);
+> > +	dest = open(path, O_WRONLY | O_TRUNC);
+> > +
+> > +	copy_fd(source, dest);
+> > +
+> > +	close(source);
+> > +	close(dest);
+> > +
+> > +	unlink(orig.buf);
+> > +	unlink(src1.buf);
+> > +	unlink(src2.buf);
+> > +
+> > +	strbuf_release(&src1);
+> > +	strbuf_release(&src2);
+> > +	strbuf_release(&orig);
+> 
+> The whole business of creating temporary files and forking seems like a lot of
+> effort compared to calling ll_merge() which would also mean we respect any
+> merge attributes
+> 
+> > +
+> > +	if (ret) {
+> > +		fprintf(stderr, "ERROR: ");
+> > +
+> > +		if (!orig_blob) {
+> 
+> I think the original does if (ret || !orig_blob) not &&
 
-base-commit: 07d8ea56f2ecb64b75b92264770c0a664231ce17
--- 
-gitgitgadget
+Good catch.
+
+> > +			fprintf(stderr, "content conflict");
+> > +			if (our_mode != their_mode)
+> > +				fprintf(stderr, ", ");
+> 
+> sentence lego, in any case the message below should be printed regardless of
+> content conflicts. We should probably mark all these messages for translation
+> as well.
+> 
+
+Yeah, I think I will replace them with two calls to `error()'.
+
+> -%<-
+> > +int cmd_merge_one_file(int argc, const char **argv, const char *prefix)
+> > +{
+> > +	struct object_id orig_blob, our_blob, their_blob,
+> > +		*p_orig_blob = NULL, *p_our_blob = NULL, *p_their_blob = NULL;
+> > +	unsigned int orig_mode = 0, our_mode = 0, their_mode = 0;
+> > +
+> > +	if (argc != 8)
+> > +		usage(builtin_merge_one_file_usage);
+> > +
+> > +	if (!get_oid(argv[1], &orig_blob)) {
+> > +		p_orig_blob = &orig_blob;
+> > +		orig_mode = strtol(argv[5], NULL, 8);
+> 
+> It would probably make sense to check that strtol() succeeds (and the mode is
+> sensible), and also that get_oid() fails because argv[1] is empty, not because
+> it is invalid.
+> 
+
+Checking that `orig_mode' and friends are lower than 0800, and that 
+`*argv[1]' is not equal to '\0' should be enough, right?
+
+> Thanks for working on this
+
+As always, thank you for your reviews.
+
+> Best Wishes
+> 
+> Phillip
+> 
+> 
+
+Cheers,
+Alban
+
+---1463785727-1942544268-1594552968=:17922--
