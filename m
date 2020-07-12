@@ -2,166 +2,146 @@ Return-Path: <SRS0=l3cg=AX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00EFAC433E0
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 19:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADEC8C433E1
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 20:11:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D02D72067D
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 19:11:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89F4C20720
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 20:11:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GbnQmScO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729287AbgGLTL1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 15:11:27 -0400
-Received: from smtprelay07.ispgateway.de ([134.119.228.97]:17633 "EHLO
-        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729122AbgGLTL1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jul 2020 15:11:27 -0400
-X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Jul 2020 15:11:25 EDT
-Received: from [178.112.81.104] (helo=localhost.localdomain)
-        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.92.3)
-        (envelope-from <tobi@isticktoit.net>)
-        id 1juhFJ-0007kK-5Z; Sun, 12 Jul 2020 21:02:41 +0200
-From:   Tobias Girstmair <tobi@isticktoit.net>
-To:     git@vger.kernel.org
-Cc:     Tobias Girstmair <tobi@isticktoit.net>
-Subject: [PATCH v3] gitweb: Replace <base> tag with full URLs (when using PATH_INFO)
-Date:   Sun, 12 Jul 2020 20:33:30 +0200
-Message-Id: <20200712183329.3358-1-tobi@isticktoit.net>
-X-Mailer: git-send-email 2.21.3
-In-Reply-To: <20200711203947.23520-1-tobi@isticktoit.net>
-References: <20200711203947.23520-1-tobi@isticktoit.net>
+        id S1729287AbgGLULH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 16:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57020 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729012AbgGLULG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jul 2020 16:11:06 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8540CC061794
+        for <git@vger.kernel.org>; Sun, 12 Jul 2020 13:11:06 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id w3so10949656wmi.4
+        for <git@vger.kernel.org>; Sun, 12 Jul 2020 13:11:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=3Ok38qX0HDKWSfC28VyJxLlym+vx/r1HyvKAvsskjao=;
+        b=GbnQmScOi115b/x+5ncu/s+MDfctoQdWE8gGeWBbS2ptbtrWqbPEqG+ilbjyD2hsfo
+         glLX2uleV763xCSZGdJW5Cv3GJO8DBKF1BZmVWQniCl+EMBQFT9OwWZFHyCBIt5JlM5p
+         6nddodBcAFyBenjkXN/pLwhQYHdmqFMy9A6NI4svg8VUhYO3P7KgWV1NNmLW4E5Vo6E8
+         CsDQtAx9HJvKj8/1SJD0VgAD7NQ567AM4syiXEPM6kqw39cECBy4WqFw44KOywNZiMhv
+         pDDlftR4vZ0KRh/aeDb8EWdPjN1Q+n0nMmWunxrUXe9hxxUuw904yTj73FDSMSrtoOvJ
+         f18g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=3Ok38qX0HDKWSfC28VyJxLlym+vx/r1HyvKAvsskjao=;
+        b=R+4xMrtFDdOEsZY6j38NHy5HLKHXv+RjACtudfF9Ele9CZOq5fU0WyYOWp8w28PY4z
+         gIYCMZH4BIFScL5pNMl0oYxZ92xA8moQaqOjmvIwf2zv4Cf+8pJ6eo3zJs2JhScaSGNl
+         B8iNq/Z6B3+2E6UsBHQK5m9h2keFWA9BnHrG8r8nF7MDzL+bA+hbUMoPG6nHEWS1Fj45
+         ETpcdiRfR8nU/WUy6bLy+TQ5ARFwuAxTuP0lZMXlUo3q5vm8cwytWJYXdueZ3oXBoR5U
+         AFcpJL0IrL/nvULFrb8+DBDQkk1KmuhaSHv6CxrYmS4RqKWpUT82UNkaN2BQPjcwfWum
+         U3oA==
+X-Gm-Message-State: AOAM533KuEPzWkK0oaSBmS7X+JCEK/GRJKKUYbiQBiRlYVt3oJomZZRi
+        e3S5FAsi2+cAGkvRyQHYrPI=
+X-Google-Smtp-Source: ABdhPJzzhpSHJPzAXAuBoPYnNd96IHFxNFq4HnjhwOQiJxyO6rin88McmWXdOTmauErvgCMtNWwFHg==
+X-Received: by 2002:a7b:cd18:: with SMTP id f24mr16404394wmj.40.1594584665313;
+        Sun, 12 Jul 2020 13:11:05 -0700 (PDT)
+Received: from andromeda.lan (abayonne-651-1-46-3.w92-156.abo.wanadoo.fr. [92.156.151.3])
+        by smtp.gmail.com with ESMTPSA id d81sm41972367wmc.0.2020.07.12.13.11.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Jul 2020 13:11:04 -0700 (PDT)
+Date:   Sun, 12 Jul 2020 22:10:54 +0200 (CEST)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH v1 06/17] merge-index: libify merge_one_path() and
+ merge_all()
+In-Reply-To: <6f1427f7-29f3-ef77-b2a9-41264dc2fd32@gmail.com>
+Message-ID: <alpine.LFD.2.21.2007122205480.4475@andromeda.lan>
+References: <20200625121953.16991-1-alban.gruin@gmail.com> <20200625121953.16991-7-alban.gruin@gmail.com> <0e20fa12-4628-d1fe-fc6e-df83d26edda3@gmail.com> <alpine.LFD.2.21.2007121330130.17922@andromeda.lan> <6f1427f7-29f3-ef77-b2a9-41264dc2fd32@gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Df-Sender: dC5naXJzdG1haXJAaXN0aWNrdG9pdC5uZXQ=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-using a base tag has the side-effect of not just changing the few URLs
-of gitweb's static resources, but all other relative links (e.g. those
-in a README.html), too.
+Hi Phillip,
 
-Signed-off-by: Tobias Girstmair <tobi@isticktoit.net>
----
-Apologies; missed a typo.
+Phillip Wood (phillip.wood123@gmail.com) a écrit :
 
-	tobias
+> Hi Alban
+> 
+> On 12/07/2020 12:36, Alban Gruin wrote:
+> > Hi Phillip,
+> > 
+> > Phillip Wood (phillip.wood123@gmail.com) a écrit :
+> > 
+> >> Hi Alban
+> >>
+> >> On 25/06/2020 13:19, Alban Gruin wrote:
+> >> -%<-
+> >>> diff --git a/merge-strategies.c b/merge-strategies.c
+> >>> index 3a9fce9f22..f4c0b4acd6 100644
+> >>> --- a/merge-strategies.c
+> >>> +++ b/merge-strategies.c
+> >>> @@ -1,6 +1,7 @@
+> >>>  #include "cache.h"
+> >>>  #include "dir.h"
+> >>>  #include "merge-strategies.h"
+> >>> +#include "run-command.h"
+> >>>  #include "xdiff-interface.h"
+> >>>  
+> >>>  static int add_to_index_cacheinfo(struct index_state *istate,
+> >>> @@ -189,3 +190,101 @@ int merge_strategies_one_file(struct repository *r,
+> >>>  
+> >>>  	return 0;
+> >>>  }
+> >>> +
+> >>> +int merge_program_cb(const struct object_id *orig_blob,
+> >>> +		     const struct object_id *our_blob,
+> >>> +		     const struct object_id *their_blob, const char *path,
+> >>> +		     unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
+> >>> +		     void *data)
+> >>
+> >> Using void* is slightly unfortunate but it's needed later.
+> >>
+> >> It would be nice to check if the program to run is git-merge-one-file
+> >> and call the appropriate function instead in that case so all users of
+> >> merge-index get the benefit of it being builtin. That probably wants to
+> >> be done in cmd_merge_index() rather than here though.
+> >>
+> > 
+> > Dunno, I am not completely comfortable with changing a parameter that 
+> > specifically describe a program, to a parameter that may be a program, 
+> > except in one case where `merge-index' should lock the index, setup the 
+> > worktree, and call a function instead.
+> 
+> There is some previous discussion about this at
+> https://lore.kernel.org/git/xmqqblv5kr9u.fsf@gitster-ct.c.googlers.com/
+> 
 
- gitweb/gitweb.perl | 36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+Thanks.  If no-one seems really against doing that, I'll include the patch 
+below in the v2, with an additional note in the man page.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0959a78..f426060 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1616,6 +1616,19 @@ sub esc_url {
- 	return $str;
- }
- 
-+# the stylesheet, favicon etc urls won't work correctly with path_info
-+# unless we set the appropriate base URL. not using a <base> tag to not
-+# also change relative URLs inserted by the user.
-+sub esc_url_base {
-+	my $url = shift;
-+	my $prefix = $ENV{'PATH_INFO'}? esc_url($base_url)."/" : "";
-+	if ($url !~ m{^(https?:)?//?}) {
-+		return $prefix . esc_url($url);
-+	} else {
-+		return esc_url($url);
-+	}
-+}
-+
- # quote unsafe characters in HTML attributes
- sub esc_attr {
- 
-@@ -2232,7 +2245,7 @@ sub git_get_avatar {
- 		return $pre_white .
- 		       "<img width=\"$size\" " .
- 		            "class=\"avatar\" " .
--		            "src=\"".esc_url($url)."\" " .
-+		            "src=\"".esc_url_base($url)."\" " .
- 			    "alt=\"\" " .
- 		       "/>" . $post_white;
- 	} else {
-@@ -4099,17 +4112,17 @@ sub print_header_links {
- 	# print out each stylesheet that exist, providing backwards capability
- 	# for those people who defined $stylesheet in a config file
- 	if (defined $stylesheet) {
--		print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
-+		print '<link rel="stylesheet" type="text/css" href="'.esc_url_base($stylesheet).'"/>'."\n";
- 	} else {
- 		foreach my $stylesheet (@stylesheets) {
- 			next unless $stylesheet;
--			print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
-+			print '<link rel="stylesheet" type="text/css" href="'.esc_url_base($stylesheet).'"/>'."\n";
- 		}
- 	}
- 	print_feed_meta()
- 		if ($status eq '200 OK');
- 	if (defined $favicon) {
--		print qq(<link rel="shortcut icon" href=").esc_url($favicon).qq(" type="image/png" />\n);
-+		print qq(<link rel="shortcut icon" href=").esc_url_base($favicon).qq(" type="image/png" />\n);
- 	}
- }
- 
-@@ -4212,11 +4225,6 @@ sub git_header_html {
- <meta name="robots" content="index, nofollow"/>
- <title>$title</title>
- EOF
--	# the stylesheet, favicon etc urls won't work correctly with path_info
--	# unless we set the appropriate base URL
--	if ($ENV{'PATH_INFO'}) {
--		print "<base href=\"".esc_url($base_url)."\" />\n";
--	}
- 	print_header_links($status);
- 
- 	if (defined $site_html_head_string) {
-@@ -4234,7 +4242,7 @@ sub git_header_html {
- 	if (defined $logo) {
- 		print $cgi->a({-href => esc_url($logo_url),
- 		               -title => $logo_label},
--		              $cgi->img({-src => esc_url($logo),
-+		              $cgi->img({-src => esc_url_base($logo),
- 		                         -width => 72, -height => 27,
- 		                         -alt => "git",
- 		                         -class => "logo"}));
-@@ -4299,7 +4307,7 @@ sub git_footer_html {
- 		insert_file($site_footer);
- 	}
- 
--	print qq!<script type="text/javascript" src="!.esc_url($javascript).qq!"></script>\n!;
-+	print qq!<script type="text/javascript" src="!.esc_url_base($javascript).qq!"></script>\n!;
- 	if (defined $action &&
- 	    $action eq 'blame_incremental') {
- 		print qq!<script type="text/javascript">\n!.
-@@ -8273,7 +8281,7 @@ sub git_feed {
- 		if (defined $logo || defined $favicon) {
- 			# prefer the logo to the favicon, since RSS
- 			# doesn't allow both
--			my $img = esc_url($logo || $favicon);
-+			my $img = esc_url_base($logo || $favicon);
- 			print "<image>\n" .
- 			      "<url>$img</url>\n" .
- 			      "<title>$title</title>\n" .
-@@ -8299,11 +8307,11 @@ sub git_feed {
- 		      # use project owner for feed author
- 		      "<author><name>$owner</name></author>\n";
- 		if (defined $favicon) {
--			print "<icon>" . esc_url($favicon) . "</icon>\n";
-+			print "<icon>" . esc_url_base($favicon) . "</icon>\n";
- 		}
- 		if (defined $logo) {
- 			# not twice as wide as tall: 72 x 27 pixels
--			print "<logo>" . esc_url($logo) . "</logo>\n";
-+			print "<logo>" . esc_url_base($logo) . "</logo>\n";
- 		}
- 		if (! %latest_date) {
- 			# dummy date to keep the feed valid until commits trickle in:
--- 
-2.21.3
+> I'll try and have a proper look at your comments towards the end of the
+> week (or maybe the week after the way things are at the moment...)
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+
+Cheers,
+Alban
 
