@@ -7,29 +7,30 @@ X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C52BAC433E1
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 18:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00EFAC433E0
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 19:11:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADF05206F0
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 18:57:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D02D72067D
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 19:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729306AbgGLS55 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 14:57:57 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.28]:50476 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729222AbgGLS55 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jul 2020 14:57:57 -0400
+        id S1729287AbgGLTL1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 15:11:27 -0400
+Received: from smtprelay07.ispgateway.de ([134.119.228.97]:17633 "EHLO
+        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729122AbgGLTL1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jul 2020 15:11:27 -0400
+X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Jul 2020 15:11:25 EDT
 Received: from [178.112.81.104] (helo=localhost.localdomain)
-        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.92.3)
         (envelope-from <tobi@isticktoit.net>)
-        id 1juhAf-0003n3-QZ; Sun, 12 Jul 2020 20:57:53 +0200
+        id 1juhFJ-0007kK-5Z; Sun, 12 Jul 2020 21:02:41 +0200
 From:   Tobias Girstmair <tobi@isticktoit.net>
 To:     git@vger.kernel.org
 Cc:     Tobias Girstmair <tobi@isticktoit.net>
-Subject: [PATCH v2] gitweb: Replace <base> tag with full URLs (when using PATH_INFO)
-Date:   Sun, 12 Jul 2020 20:24:19 +0200
-Message-Id: <20200712182418.1696-1-tobi@isticktoit.net>
+Subject: [PATCH v3] gitweb: Replace <base> tag with full URLs (when using PATH_INFO)
+Date:   Sun, 12 Jul 2020 20:33:30 +0200
+Message-Id: <20200712183329.3358-1-tobi@isticktoit.net>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20200711203947.23520-1-tobi@isticktoit.net>
 References: <20200711203947.23520-1-tobi@isticktoit.net>
@@ -47,7 +48,7 @@ in a README.html), too.
 
 Signed-off-by: Tobias Girstmair <tobi@isticktoit.net>
 ---
-In v1 of this patch I didn't think about already absolute URLs. Fixed.
+Apologies; missed a typo.
 
 	tobias
 
@@ -55,7 +56,7 @@ In v1 of this patch I didn't think about already absolute URLs. Fixed.
  1 file changed, 22 insertions(+), 14 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0959a78..6a4f2fa 100755
+index 0959a78..f426060 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
 @@ -1616,6 +1616,19 @@ sub esc_url {
@@ -68,7 +69,7 @@ index 0959a78..6a4f2fa 100755
 +sub esc_url_base {
 +	my $url = shift;
 +	my $prefix = $ENV{'PATH_INFO'}? esc_url($base_url)."/" : "";
-+	if (url !~ m{^(https?:)?//?}) {
++	if ($url !~ m{^(https?:)?//?}) {
 +		return $prefix . esc_url($url);
 +	} else {
 +		return esc_url($url);
