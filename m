@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DC9BC433DF
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 08:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5621C433E1
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 09:08:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 654FD206F4
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 08:39:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71CBF20720
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 09:08:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPsTtedk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpUbStF1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728112AbgGLIjP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 04:39:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36030 "EHLO
+        id S1728535AbgGLJI1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 05:08:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725974AbgGLIjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jul 2020 04:39:14 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A7FC061794
-        for <git@vger.kernel.org>; Sun, 12 Jul 2020 01:39:14 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id g75so10265546wme.5
-        for <git@vger.kernel.org>; Sun, 12 Jul 2020 01:39:13 -0700 (PDT)
+        with ESMTP id S1728070AbgGLJI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jul 2020 05:08:26 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83457C061794
+        for <git@vger.kernel.org>; Sun, 12 Jul 2020 02:08:26 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id l2so10037295wmf.0
+        for <git@vger.kernel.org>; Sun, 12 Jul 2020 02:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=pVep00AE1phTcvwf8J3eWANLHbnD3oZtxvnzcFr5ZLM=;
-        b=FPsTtedkgdn+SlE4FOVCfpyiaOAwKMmIWHYNLsd1vfHJ/CIANSbh938MNrBkqDCtU9
-         NXr02Ur6yaJBN9odaMBUZQa1bbw46QfpyH3IIrRL1Ejk4IPXbBKoX3PdVdN06oSO0R4f
-         NOqaftysNyRTzs33FsIeW+tCFaOusz7BJSyNChBCofJENyb9ObNdwVjgV3slzeXTr3CV
-         wT+5FDSH0Uw6PMni8YEUNaTzbSiqFKwG0aZ4rJm+q+lXa47GAMT8/bb9K2decoFvepRQ
-         nd6evWvtZlxbJPNNxgj5ttMLt4hejdPAFH/uOUZJs8KaQYdbNc0DFnNrbhaHNI5C0FES
-         qr7Q==
+        bh=CVIbTbCs0wKaPXEEGW2GoDtpv/+2sIuiUx1NloKWgW8=;
+        b=CpUbStF1diK4OKsHDOHE/GBvH7Hlt7FR3WmmBmjlx1EUUL2HVh6EWXJLq/PVJqZt1z
+         lxlX/Qto8H+fTvDVhLiqeXES4LfWTE6bTvmx4n9IdliEU6G9Y+VzvkQPFP02C51aMUQb
+         F3xJZOH4xdBp/+TKYrXouarTAbt/eJ64tvTWNWRLP9O1f+8wwkFNsgOK8Wq77O/Xawt8
+         uZ6r6D2nIG7aHcdFEqRS0mFlnPRfFl7i2k8pMVpo4uP18wWzuVWbg28qa+ynqpZ91q0D
+         U4coTW6W9ub+1nb4TaaC/Lzyii/Tr/HS7zHV/G7pd5rTphL/5WZPp54sI3wu6PkcI6Ku
+         IIeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=pVep00AE1phTcvwf8J3eWANLHbnD3oZtxvnzcFr5ZLM=;
-        b=XMv9+eV7t1NxCcSzVTdERcgfm1gl3UuI4G20P1SDtpLBsXFGNMVvGlUI/t6UaZPKTZ
-         erfkkiAEykS4sV24OzLLR/iHsD1ZWrs3V/msCy3sj1LA8jibNKL3LT+hoYuCp6suRlRA
-         +AUJt8t5g4r5vfBn1XzzOV1MDggHeizC26DDxoROmXECY0ZM8P2YwYleT9WB0kO85ftW
-         r2kSvm+1Bm1Wowjt7qgPxZEnjUk82pIbFkUZhbGbUl3UQq6L9CxkVc6GG74kmX3VNdg3
-         +3oJV3BLFY3XskshD5WSnhNtuXUL/+Sa5A5xWebuDFv7aSz+ikRqKT9xOe0KF4pJtTeW
-         YsnQ==
-X-Gm-Message-State: AOAM531cnlp/4LbQ6lMPzoN0DySUYsC9wGu6ElajHLhA51NMaMXxOZpw
-        HC/THuW9oKeJd54mGH8Ba+UobJbz
-X-Google-Smtp-Source: ABdhPJyPhq4a5pbzGv/UQy4hbXdAfHhdkPXCRVHCkJpcuHAKJqYPLN2Ur0mDVmRHWmQySCMgzUOorQ==
-X-Received: by 2002:a1c:2d0c:: with SMTP id t12mr13238500wmt.43.1594543152037;
-        Sun, 12 Jul 2020 01:39:12 -0700 (PDT)
+        bh=CVIbTbCs0wKaPXEEGW2GoDtpv/+2sIuiUx1NloKWgW8=;
+        b=WuGIFlQTA217fcgYyAueh4Pmzyk56Mt+j9fD16AW/ClmmhrV8UTE7XQ8EM4V+GwsCR
+         37LnTZvbXJxNwQ+Elv6vgmuGXQkacC9TSDt5HopVtXjWs+rOdJUWLnp7YPFOfw2te/Hk
+         PGPPJQnxyU+TkyUsX+Nx1iSMtTFfD8IC5WMawRu5CZQsMLZoiqMO636WXdsGY0EaGbKs
+         +iwfyYKak+wEDQtIfJEIr5jjlMph44O0a1dlzdsFfJ6cflC2UY4bP+JIQ6LR5SfFGH31
+         oGHf+Im3hiPBbI/SB3QCVIJRYFKzcXzc6rdJC+RIJipIiIqt4si1eIPlTDfSYafsvop9
+         ATtQ==
+X-Gm-Message-State: AOAM532kRm7w80x423zXazgVHG8gIouN2vFTU0ZFPhnnE2DHShU+YZUl
+        MpujZQINHuD8Q7GcLN+wGGW5NLQ3
+X-Google-Smtp-Source: ABdhPJytgPz24eUr+M2tuLftqFT4Mj8IFYYu+3pQLI7h2uikTh7ksU34Q9tfJ7ZVE57NgOK2mkvtxQ==
+X-Received: by 2002:a1c:de07:: with SMTP id v7mr13848319wmg.56.1594544904839;
+        Sun, 12 Jul 2020 02:08:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e8sm18763638wrp.26.2020.07.12.01.39.09
+        by smtp.gmail.com with ESMTPSA id r28sm17705392wrr.20.2020.07.12.02.08.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2020 01:39:11 -0700 (PDT)
-Message-Id: <pull.781.v15.git.git.1594543148959.gitgitgadget@gmail.com>
-In-Reply-To: <pull.781.v14.git.git.1594268906195.gitgitgadget@gmail.com>
-References: <pull.781.v14.git.git.1594268906195.gitgitgadget@gmail.com>
+        Sun, 12 Jul 2020 02:08:24 -0700 (PDT)
+Message-Id: <pull.781.v16.git.git.1594544903477.gitgitgadget@gmail.com>
+In-Reply-To: <pull.781.v15.git.git.1594543148959.gitgitgadget@gmail.com>
+References: <pull.781.v15.git.git.1594543148959.gitgitgadget@gmail.com>
 From:   "sunlin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 12 Jul 2020 08:39:08 +0000
-Subject: [PATCH v15] Support auto-merge for meld to follow the vim-diff
+Date:   Sun, 12 Jul 2020 09:08:23 +0000
+Subject: [PATCH v16] Support auto-merge for meld to follow the vim-diff
  behavior
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -95,141 +95,22 @@ Signed-off-by: Junio C Hamano <gitster@pobox.com>
     the conflict parts. This patch will make the mergetool "meld" similar to
     "vimdiff", auto-merge the no-conflict changes, highlight conflict parts.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-781%2Fsunlin7%2Fmaster-v15
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-781/sunlin7/master-v15
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-781%2Fsunlin7%2Fmaster-v16
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-781/sunlin7/master-v16
 Pull-Request: https://github.com/git/git/pull/781
 
-Range-diff vs v14:
+Range-diff vs v15:
 
- 1:  ce4e4cbfc0 ! 1:  02d849784f Support auto-merge for meld to follow the vim-diff behavior
-     @@ Documentation/config/mergetool.txt: mergetool.meld.hasOutput::
-       	After performing a merge, the original file with conflict markers
-       	can be saved as a file with a `.orig` extension.  If this variable
-      
-     + ## builtin/config.c ##
-     +@@ builtin/config.c: static int show_scope;
-     + #define TYPE_PATH		4
-     + #define TYPE_EXPIRY_DATE	5
-     + #define TYPE_COLOR		6
-     ++#define TYPE_BOOL_OR_STR        7
-     + 
-     + #define OPT_CALLBACK_VALUE(s, l, v, h, i) \
-     + 	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
-     +@@ builtin/config.c: static int option_parse_type(const struct option *opt, const char *arg,
-     + 			new_type = TYPE_INT;
-     + 		else if (!strcmp(arg, "bool-or-int"))
-     + 			new_type = TYPE_BOOL_OR_INT;
-     ++		else if (!strcmp(arg, "bool-or-str"))
-     ++			new_type = TYPE_BOOL_OR_STR;
-     + 		else if (!strcmp(arg, "path"))
-     + 			new_type = TYPE_PATH;
-     + 		else if (!strcmp(arg, "expiry-date"))
-     +@@ builtin/config.c: static struct option builtin_config_options[] = {
-     + 	OPT_CALLBACK_VALUE(0, "bool", &type, N_("value is \"true\" or \"false\""), TYPE_BOOL),
-     + 	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_INT),
-     + 	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
-     ++	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string"), TYPE_BOOL_OR_STR),
-     + 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
-     + 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
-     + 	OPT_GROUP(N_("Other")),
-     +@@ builtin/config.c: static int format_config(struct strbuf *buf, const char *key_, const char *value
-     + 				strbuf_addstr(buf, v ? "true" : "false");
-     + 			else
-     + 				strbuf_addf(buf, "%d", v);
-     ++		} else if (type == TYPE_BOOL_OR_STR) {
-     ++			int is_bool, v;
-     ++			v = git_config_bool_or_str(NULL, key_, value_, &is_bool);
-     ++			if (is_bool)
-     ++				strbuf_addstr(buf, v ? "true" : "false");
-     ++			else
-     ++				strbuf_addstr(buf, value_);
-     + 		} else if (type == TYPE_PATH) {
-     + 			const char *v;
-     + 			if (git_config_pathname(&v, key_, value_) < 0)
-     +@@ builtin/config.c: static char *normalize_value(const char *key, const char *value)
-     + 		else
-     + 			return xstrdup(v ? "true" : "false");
-     + 	}
-     ++	if (type == TYPE_BOOL_OR_STR) {
-     ++		int is_bool, v;
-     ++		v = git_config_bool_or_str(NULL, key, value, &is_bool);
-     ++		if (!is_bool)
-     ++			return xstrdup(value);
-     ++		else
-     ++			return xstrdup(v ? "true" : "false");
-     ++	}
-     + 	if (type == TYPE_COLOR) {
-     + 		char v[COLOR_MAXLEN];
-     + 		if (git_config_color(v, key, value))
-     +
-     + ## config.c ##
-     +@@ config.c: int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
-     + 	return git_config_int(name, value);
-     + }
-     + 
-     ++int git_config_bool_or_str(const char **dest, const char *name, const char *value, int *is_bool)
-     ++{
-     ++	int v = git_parse_maybe_bool_text(value);
-     ++	if (0 <= v) {
-     ++		*is_bool = 1;
-     ++		return v;
-     ++	}
-     ++	*is_bool = 0;
-     ++	if (dest != NULL)
-     ++	  return git_config_string(dest, name, value);
-     ++	else
-     ++	  return 0;
-     ++}
-     ++
-     + int git_config_bool(const char *name, const char *value)
-     + {
-     + 	int discard;
-     +
-     + ## config.h ##
-     +@@ config.h: ssize_t git_config_ssize_t(const char *, const char *);
-     +  */
-     + int git_config_bool_or_int(const char *, const char *, int *);
-     + 
-     ++/**
-     ++ * Same as `git_config_bool`, except that `is_bool` flag is unset, then if
-     ++ * `dest` parameter is non-NULL, it allocates and copies the value string
-     ++ * into the `dest`, if `dest` is NULL and `is_bool` flag is unset it return 0.
-     ++ */
-     ++int git_config_bool_or_str(const char **, const char *, const char *, int *);
-     ++
-     + /**
-     +  * Parse a string into a boolean value, respecting keywords like "true" and
-     +  * "false". Integer values are converted into true/false values (when they
-     +
-       ## mergetools/meld ##
-      @@ mergetools/meld: diff_cmd () {
-       }
+ 1:  02d849784f ! 1:  d235a576b4 Support auto-merge for meld to follow the vim-diff behavior
      @@ mergetools/meld: diff_cmd () {
-      -		meld_has_output_option=true
       -	else
       -		meld_has_output_option=false
-     -+		meld_use_auto_merge_option=$(git config mergetool.meld.useAutoMerge)
-     ++		meld_use_auto_merge_option=$(
-     ++			git --bool-or-str config mergetool.meld.useAutoMerge)
+      +		meld_use_auto_merge_option=$(
+     -+			git --bool-or-str config mergetool.meld.useAutoMerge)
+     ++			git config --bool-or-str mergetool.meld.useAutoMerge)
       +		case "$meld_use_auto_merge_option" in
       +		true|false)
       +			: use well formatted boolean value
-     @@ mergetools/meld: diff_cmd () {
-      +			esac
-      +			;;
-      +		*)
-     -+			# try other boolean value with git
-     -+			if meld_use_auto_merge_option=$(
-     -+				 git config --bool mergetool.meld.useAutoMerge)
-     -+			then
-     -+				: use normalized boolean value
-     -+			else
-     -+				meld_use_auto_merge_option=false
-     -+			fi
-     ++			meld_use_auto_merge_option=false
-      +			;;
-      +		esac
-       	fi
 
 
  Documentation/config/mergetool.txt | 10 ++++
@@ -362,7 +243,7 @@ index 060874488f..175b88d9c5 100644
   * Parse a string into a boolean value, respecting keywords like "true" and
   * "false". Integer values are converted into true/false values (when they
 diff --git a/mergetools/meld b/mergetools/meld
-index 7a08470f88..1838a8c35b 100644
+index 7a08470f88..bc2ea894d7 100644
 --- a/mergetools/meld
 +++ b/mergetools/meld
 @@ -3,34 +3,83 @@ diff_cmd () {
@@ -441,7 +322,7 @@ index 7a08470f88..1838a8c35b 100644
 -	else
 -		meld_has_output_option=false
 +		meld_use_auto_merge_option=$(
-+			git --bool-or-str config mergetool.meld.useAutoMerge)
++			git config --bool-or-str mergetool.meld.useAutoMerge)
 +		case "$meld_use_auto_merge_option" in
 +		true|false)
 +			: use well formatted boolean value
