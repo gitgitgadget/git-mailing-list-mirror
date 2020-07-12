@@ -2,110 +2,165 @@ Return-Path: <SRS0=l3cg=AX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7956CC433E1
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 18:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C52BAC433E1
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 18:57:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4103C206F0
-	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 18:10:21 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ek37z4wW"
+	by mail.kernel.org (Postfix) with ESMTP id ADF05206F0
+	for <git@archiver.kernel.org>; Sun, 12 Jul 2020 18:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729104AbgGLSKU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 14:10:20 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56928 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728882AbgGLSKT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jul 2020 14:10:19 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 68D8AE3A95;
-        Sun, 12 Jul 2020 14:10:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Jf0K6uwiz0eF
-        N+5D9rSOXlPdhHE=; b=ek37z4wWlKzMwZy+4p49vFt73uWisUNU0r3yKPm7nyTi
-        Heqo9TS0NuWkj1qSDYm2o3shT/6gRWv69he6spT/WRcF6nN49zi2c8KShmPfdtdC
-        VjSg9JGurl7N73bdiUkdx19Zs3K3Pgz0FSEylehuIrFzBnaZAZlYk5/Jh264Kag=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KI+SPD
-        cGHQCissFdpbFcUcp61w/aszyl8yRDNoK2apkGqE56aIUQ0iIlobj+Jkj4rJLp8l
-        XSf2S3qrB2a1IGFeWny3RIqWfzayyvrvc5mhVvxCwTV/hkE81ibvI989EYrBBiKi
-        6Rtqt71u0kLqS0WSbQRLr5q88A8K+BZZ7yahE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5468DE3A94;
-        Sun, 12 Jul 2020 14:10:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8D005E3A92;
-        Sun, 12 Jul 2020 14:10:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>
-Subject: Re: [PATCH] bundle: improve message when unknown hash algorithm detected
-References: <20200712165005.705979-1-sandals@crustytoothpaste.net>
-Date:   Sun, 12 Jul 2020 11:10:11 -0700
-In-Reply-To: <20200712165005.705979-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 12 Jul 2020 16:50:05 +0000")
-Message-ID: <xmqqv9isppto.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729306AbgGLS55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 14:57:57 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.28]:50476 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729222AbgGLS55 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jul 2020 14:57:57 -0400
+Received: from [178.112.81.104] (helo=localhost.localdomain)
+        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.92.3)
+        (envelope-from <tobi@isticktoit.net>)
+        id 1juhAf-0003n3-QZ; Sun, 12 Jul 2020 20:57:53 +0200
+From:   Tobias Girstmair <tobi@isticktoit.net>
+To:     git@vger.kernel.org
+Cc:     Tobias Girstmair <tobi@isticktoit.net>
+Subject: [PATCH v2] gitweb: Replace <base> tag with full URLs (when using PATH_INFO)
+Date:   Sun, 12 Jul 2020 20:24:19 +0200
+Message-Id: <20200712182418.1696-1-tobi@isticktoit.net>
+X-Mailer: git-send-email 2.21.3
+In-Reply-To: <20200711203947.23520-1-tobi@isticktoit.net>
+References: <20200711203947.23520-1-tobi@isticktoit.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EE8BB96A-C46A-11EA-9662-843F439F7C89-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Df-Sender: dC5naXJzdG1haXJAaXN0aWNrdG9pdC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+using a base tag has the side-effect of not just changing the few URLs
+of gitweb's static resources, but all other relative links (e.g. those
+in a README.html), too.
 
-> The current code states "unknown hash algorithm length".  This is
-> slightly confusing, and moreover, we've gotten feedback that it's hard
-> to translate into other languages.  Since the case is that we cannot
-> detect the hash algorithm, let's just say that.  This is clearer and
-> more direct, reflects the intent of the code (which calls the function
-> detect_hash_algo just a few lines above), and will be easier to
-> translate.
->
-> Suggested-by: Matthias R=C3=BCster <matthias.ruester@gmail.com>
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> Matthias contacted me privately about this message and I thought since
-> we're still in the RC period, it would make sense to include this in to
-> help translators and those who aren't native speakers.
+Signed-off-by: Tobias Girstmair <tobi@isticktoit.net>
+---
+In v1 of this patch I didn't think about already absolute URLs. Fixed.
 
-Yup, and yuck.  Didn't we find any room in the bundle header to
-sneak in the actual hash algorithm name in a backward compatible
-way?  I am actually OK if we declared that v2 bundle files are SHA-1
-only and v3 bundle file has an item in the bundle header to say what
-hash algorithm is used, than using "ah this uses a hash algorithm
-that produces a 32-byte output, so it must be algorithm X", to be
-honest.
+	tobias
 
->  bundle.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/bundle.c b/bundle.c
-> index 2a0d744d3f..69c807bda9 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -66,7 +66,7 @@ static int parse_bundle_header(int fd, struct bundle_=
-header *header,
->  		if (!header->hash_algo) {
->  			header->hash_algo =3D detect_hash_algo(&buf);
->  			if (!header->hash_algo) {
-> -				error(_("unknown hash algorithm length"));
-> +				error(_("unable to detect hash algorithm"));
->  				status =3D -1;
->  				break;
->  			}
+ gitweb/gitweb.perl | 36 ++++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 14 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0959a78..6a4f2fa 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1616,6 +1616,19 @@ sub esc_url {
+ 	return $str;
+ }
+ 
++# the stylesheet, favicon etc urls won't work correctly with path_info
++# unless we set the appropriate base URL. not using a <base> tag to not
++# also change relative URLs inserted by the user.
++sub esc_url_base {
++	my $url = shift;
++	my $prefix = $ENV{'PATH_INFO'}? esc_url($base_url)."/" : "";
++	if (url !~ m{^(https?:)?//?}) {
++		return $prefix . esc_url($url);
++	} else {
++		return esc_url($url);
++	}
++}
++
+ # quote unsafe characters in HTML attributes
+ sub esc_attr {
+ 
+@@ -2232,7 +2245,7 @@ sub git_get_avatar {
+ 		return $pre_white .
+ 		       "<img width=\"$size\" " .
+ 		            "class=\"avatar\" " .
+-		            "src=\"".esc_url($url)."\" " .
++		            "src=\"".esc_url_base($url)."\" " .
+ 			    "alt=\"\" " .
+ 		       "/>" . $post_white;
+ 	} else {
+@@ -4099,17 +4112,17 @@ sub print_header_links {
+ 	# print out each stylesheet that exist, providing backwards capability
+ 	# for those people who defined $stylesheet in a config file
+ 	if (defined $stylesheet) {
+-		print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
++		print '<link rel="stylesheet" type="text/css" href="'.esc_url_base($stylesheet).'"/>'."\n";
+ 	} else {
+ 		foreach my $stylesheet (@stylesheets) {
+ 			next unless $stylesheet;
+-			print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
++			print '<link rel="stylesheet" type="text/css" href="'.esc_url_base($stylesheet).'"/>'."\n";
+ 		}
+ 	}
+ 	print_feed_meta()
+ 		if ($status eq '200 OK');
+ 	if (defined $favicon) {
+-		print qq(<link rel="shortcut icon" href=").esc_url($favicon).qq(" type="image/png" />\n);
++		print qq(<link rel="shortcut icon" href=").esc_url_base($favicon).qq(" type="image/png" />\n);
+ 	}
+ }
+ 
+@@ -4212,11 +4225,6 @@ sub git_header_html {
+ <meta name="robots" content="index, nofollow"/>
+ <title>$title</title>
+ EOF
+-	# the stylesheet, favicon etc urls won't work correctly with path_info
+-	# unless we set the appropriate base URL
+-	if ($ENV{'PATH_INFO'}) {
+-		print "<base href=\"".esc_url($base_url)."\" />\n";
+-	}
+ 	print_header_links($status);
+ 
+ 	if (defined $site_html_head_string) {
+@@ -4234,7 +4242,7 @@ sub git_header_html {
+ 	if (defined $logo) {
+ 		print $cgi->a({-href => esc_url($logo_url),
+ 		               -title => $logo_label},
+-		              $cgi->img({-src => esc_url($logo),
++		              $cgi->img({-src => esc_url_base($logo),
+ 		                         -width => 72, -height => 27,
+ 		                         -alt => "git",
+ 		                         -class => "logo"}));
+@@ -4299,7 +4307,7 @@ sub git_footer_html {
+ 		insert_file($site_footer);
+ 	}
+ 
+-	print qq!<script type="text/javascript" src="!.esc_url($javascript).qq!"></script>\n!;
++	print qq!<script type="text/javascript" src="!.esc_url_base($javascript).qq!"></script>\n!;
+ 	if (defined $action &&
+ 	    $action eq 'blame_incremental') {
+ 		print qq!<script type="text/javascript">\n!.
+@@ -8273,7 +8281,7 @@ sub git_feed {
+ 		if (defined $logo || defined $favicon) {
+ 			# prefer the logo to the favicon, since RSS
+ 			# doesn't allow both
+-			my $img = esc_url($logo || $favicon);
++			my $img = esc_url_base($logo || $favicon);
+ 			print "<image>\n" .
+ 			      "<url>$img</url>\n" .
+ 			      "<title>$title</title>\n" .
+@@ -8299,11 +8307,11 @@ sub git_feed {
+ 		      # use project owner for feed author
+ 		      "<author><name>$owner</name></author>\n";
+ 		if (defined $favicon) {
+-			print "<icon>" . esc_url($favicon) . "</icon>\n";
++			print "<icon>" . esc_url_base($favicon) . "</icon>\n";
+ 		}
+ 		if (defined $logo) {
+ 			# not twice as wide as tall: 72 x 27 pixels
+-			print "<logo>" . esc_url($logo) . "</logo>\n";
++			print "<logo>" . esc_url_base($logo) . "</logo>\n";
+ 		}
+ 		if (! %latest_date) {
+ 			# dummy date to keep the feed valid until commits trickle in:
+-- 
+2.21.3
+
