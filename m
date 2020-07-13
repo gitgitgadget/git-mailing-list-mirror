@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C244FC4345D
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CD5C4345B
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9BFB4206D9
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D057D206F4
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="U45i34NF"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="aY4LJyyp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728762AbgGMCuF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 22:50:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40624 "EHLO
+        id S1728738AbgGMCuD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 22:50:03 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40812 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728499AbgGMCtn (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:43 -0400
+        by vger.kernel.org with ESMTP id S1728721AbgGMCuB (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:50:01 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 52D8C60A76;
-        Mon, 13 Jul 2020 02:49:39 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0BC7B60A68;
+        Mon, 13 Jul 2020 02:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594608579;
-        bh=GA9vs9IiyAAK95Fl2gec3JKiN39VQ/hmb0NCb5N6xQI=;
+        s=default; t=1594608570;
+        bh=bkn6gRdFc3a7Wl1a2vTHql6/IoBndbcv3M9Ug3dmdYw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=U45i34NFtix/zkz0HNlbDF9NrhalbAAfiECl3egcH8JRNmgagfnneIDqBf7kJ+5Gf
-         ErYrzK5WqILJwbKrtDJsBIy4kxm0Qcxt6wbNfDu5nQty3qUfZmtJc3enYvE38QH5Ot
-         iPfn5sGj1lcNz7xKAVwzQ59uzW9jlY0dKOeg6C4bsPttHCDYFbGYGt0ESEF5qdBmEI
-         yOTVV77b3L40vegnAXVECeYbV54wbUU4WL8X2KLaPdsXw4Z0OAFuzs2n6YBXPLXFC3
-         7dKswIBodcMJAWH/Ys6vS9mFR+D0aXfqzTv9rp4q1mt5YE1UiU1GhWuHcPRQcn4xlb
-         Vsle9kneyKVpfZxWHtk8Jy9RxiMl0JzjRVJAscvZhZ35PAR/issBKNY8rsexXYf8Rk
-         diCler+ei4xK+h9FVVLPRxgtr81Bnbw3Cq3MHcGiHW66L9MeRNSQH7BVqD47rihOmX
-         Wi1ESQRnKOqtozCcgUKKlEGKjhe0/7xX1h+ykYjSMMGRKvf0UBb
+        b=aY4LJyypKYMzdnzDh/cBM27A+xIu/Y8XaC1YDViKfhYqFFaQo/N/3vOaGvp7vmub3
+         dcyg1zngJMkarD6QlIH5oJBk7Z2JNrPJisbW5dAuQSldQXTcGDldQPH8f1xXnlD+aI
+         l+h7UZZBiqJKN8R5izd+S2HTdSIR9Ok20rFh9xPTLz6UnvWbQJViMtxzFePCQsHvSM
+         HOICyNoDIJNfLIY6AAcyaRDw6YA11dRLhLAX6tOCkQO2bVmLdTEqg7wF0+J05LVxJw
+         2hiZF59nD3zpJ9hRd3qzAVPIK+QK9igIU1Og6wpzQzSK07Oox0zCCa5mBLEjIR/fJV
+         RI3ffr+T/v1gbGTkttMGLtlWLw+34Z5E+q2hWBS09w/sRP01J2/EYVFd2EDE8oWZUj
+         LTNLVfpRwOa5Qk7qsc6wGEYiYFE+D5Hoh8ne7bo6tVnvhUnUqJVp0Ik8JVmRaNZD2w
+         /wBn7cA9OOfADDDuYiNWrmUjUALFAUsTN48ANFqZzZOLWlqH1Yb
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 33/39] Enable SHA-256 support by default
-Date:   Mon, 13 Jul 2020 02:49:03 +0000
-Message-Id: <20200713024909.3714837-34-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 15/39] t7405: make hash size independent
+Date:   Mon, 13 Jul 2020 02:48:45 +0000
+Message-Id: <20200713024909.3714837-16-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
 References: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
@@ -57,102 +57,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that the we have a complete SHA-256 implementation in Git, let's
-enable it so people can use it.  Remove the ENABLE_SHA256 define
-constant everywhere it's used.  Add tests for initializing a repository
-with SHA-256.
+Use $ZERO_OID instead of hard-coding a fixed size all-zeros object ID.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/init-db.c |  5 -----
- config.mak.dev    |  2 --
- repository.c      |  4 ----
- t/t0001-init.sh   | 31 +++++++++++++++++++++++++++++++
- 4 files changed, 31 insertions(+), 11 deletions(-)
+ t/t7405-submodule-merge.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index cee64823cb..f70076d38e 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -183,11 +183,6 @@ void initialize_repository_version(int hash_algo)
- 	char repo_version_string[10];
- 	int repo_version = GIT_REPO_VERSION;
- 
--#ifndef ENABLE_SHA256
--	if (hash_algo != GIT_HASH_SHA1)
--		die(_("The hash algorithm %s is not supported in this build."), hash_algos[hash_algo].name);
--#endif
--
- 	if (hash_algo != GIT_HASH_SHA1)
- 		repo_version = GIT_REPO_VERSION_READ;
- 
-diff --git a/config.mak.dev b/config.mak.dev
-index cd4a82a9eb..89b218d11a 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -16,8 +16,6 @@ DEVELOPER_CFLAGS += -Wstrict-prototypes
- DEVELOPER_CFLAGS += -Wunused
- DEVELOPER_CFLAGS += -Wvla
- 
--DEVELOPER_CFLAGS += -DENABLE_SHA256
--
- ifndef COMPILER_FEATURES
- COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
- endif
-diff --git a/repository.c b/repository.c
-index 6f7f6f002b..a4174ddb06 100644
---- a/repository.c
-+++ b/repository.c
-@@ -89,10 +89,6 @@ void repo_set_gitdir(struct repository *repo,
- void repo_set_hash_algo(struct repository *repo, int hash_algo)
- {
- 	repo->hash_algo = &hash_algos[hash_algo];
--#ifndef ENABLE_SHA256
--	if (hash_algo != GIT_HASH_SHA1)
--		die(_("The hash algorithm %s is not supported in this build."), repo->hash_algo->name);
--#endif
- }
- 
- /*
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 6d2467995e..34d2064660 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -441,6 +441,37 @@ test_expect_success 're-init from a linked worktree' '
- 	)
- '
- 
-+test_expect_success 'init honors GIT_DEFAULT_HASH' '
-+	GIT_DEFAULT_HASH=sha1 git init sha1 &&
-+	git -C sha1 rev-parse --show-object-format >actual &&
-+	echo sha1 >expected &&
-+	test_cmp expected actual &&
-+	GIT_DEFAULT_HASH=sha256 git init sha256 &&
-+	git -C sha256 rev-parse --show-object-format >actual &&
-+	echo sha256 >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'init honors --object-format' '
-+	git init --object-format=sha256 explicit &&
-+	git -C explicit rev-parse --show-object-format >actual &&
-+	echo sha256 >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'extensions.objectFormat is not honored with repo version 0' '
-+	git init --object-format=sha256 explicit-v0 &&
-+	test_config -C explicit-v0 core.repositoryformatversion 0 &&
-+	git -C explicit-v0 rev-parse --show-object-format >actual &&
-+	echo sha1 >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'init rejects attempts to initialize with different hash' '
-+	test_must_fail git -C sha1 init --object-format=sha256 &&
-+	test_must_fail git -C sha256 init --object-format=sha1
-+'
-+
- test_expect_success MINGW 'core.hidedotfiles = false' '
- 	git config --global core.hidedotfiles false &&
- 	rm -rf newdir &&
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index aa33978ed2..6a1e5f8232 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -195,7 +195,7 @@ test_expect_success 'git submodule status should display the merge conflict prop
+        url = $TRASH_DIRECTORY/sub
+ EOF
+        cat >expect <<EOF &&
+-U0000000000000000000000000000000000000000 sub
++U$ZERO_OID sub
+ EOF
+        git submodule status > actual &&
+        test_cmp expect actual &&
+@@ -214,7 +214,7 @@ test_expect_success 'git submodule status should display the merge conflict prop
+        url = $TRASH_DIRECTORY/sub
+ EOF
+        cat >expect <<EOF &&
+-U0000000000000000000000000000000000000000 sub
++U$ZERO_OID sub
+ EOF
+        git submodule status > actual &&
+        test_cmp expect actual &&
