@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB03EC433E8
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9122EC433E5
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99920206D9
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71519206F4
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vtSeEv78"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dvINLmYO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728415AbgGMCte (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 22:49:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40678 "EHLO
+        id S1726491AbgGMCtc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 22:49:32 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40638 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728329AbgGMCtd (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:33 -0400
+        by vger.kernel.org with ESMTP id S1726991AbgGMCtb (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:31 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9654560A67;
-        Mon, 13 Jul 2020 02:49:31 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8566B60A67;
+        Mon, 13 Jul 2020 02:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594608571;
-        bh=RpVYnItus+HxXa/K46QzWilqF94JaaAdzDof62lZ1fU=;
+        s=default; t=1594608569;
+        bh=NUMBJgJTDnnaRbInDei/FYetn+BbdtANfNw+W3zGqkA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=vtSeEv78NQAcJ52vZYibtWfjvrlprU8KmHwpPytRRUfH+wma/t26ZDFfCbMgIefZs
-         gV0rXblMdRWjwML1g25e3GbzoUoThMefNE8Ntt0t2HDB3p9CLxt6KrFgpLmCMUAziK
-         dWkMFxEwvRZI41rwLXI0p6huKSHkMElJKLSj5NKhAn+SqNO+v+uRWiPErALyvElLqe
-         BoRwMJSXFrRTA8eS7qEhPsbmf7qTv/DoTB3i9kfnXhedL76DIm9dHDRgoIQdli4AER
-         luXgMtWoRTRfOgcPR/1dFtYQD11SjbGbtUEUaOX2fkArVvfhUJE/kW9mlRHaKTNg0e
-         /WCw1kdhKzpyWRyjhs94XvYpWrW60yA0dbFeubPFPGsDB3Llaq53MkrEPU001wXQTB
-         QnVe0R7QWe6ik3wX4xxcLw5o+saSoqlx8KPvml3TdB/dKUa1ISeIKraTRDRQJ024O7
-         7sxfzuhJN9LVo+aZb+Hvxmuw+4Gbrl+Su68hoMyWYe1czXOkdfG
+        b=dvINLmYOQtiIjvXQV/oqGCO3LQT2vq9PnW9OrmkxUGBd8QpL14WSytmt9ddMeJAvK
+         okGTF4C048rwCOo56vPmTMbC1pmy2Mv3sXEQHk+XQ/ZYCjjarfwHHI0iigNb7Ix2Xf
+         o16Ogy8GAO5HQEhIZ4c0dyHsdbX8qHw6ToFPqL1QXjHrL92wW0fmyR/zTltCqqs0i/
+         HNSfAkXqYZ2UrFKws8sd9BlrQnf8+2YrJOnr94gvYXxt0NEqUd5l1mL3xMrcw9if2U
+         8jjGi8WyIG7eu72UfC0PsDtYo4XGbLOsICkOAw3qWFNzuP/uV9fxr0HtqEh/Byp+sl
+         qOgoeBrkl6Ze+ojg3pzg9N2kYPs6GQljJARQVoJQV/H5tUNGylc6AuS4Nz5ghOJv4F
+         wUzj9GdJU+yQ35FKg7eh64irt9A+etIi+Xj/waxh1LQRaPqGJt0TmQcIKOdFkqE/cZ
+         qYzPqjiY7pl0pdKKn4C6mIMymqyjdx1ozhHeNMCUyRmaad1G35l
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 18/39] t8002: make hash size independent
-Date:   Mon, 13 Jul 2020 02:48:48 +0000
-Message-Id: <20200713024909.3714837-19-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 14/39] t7400: make hash size independent
+Date:   Mon, 13 Jul 2020 02:48:44 +0000
+Message-Id: <20200713024909.3714837-15-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
 References: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
@@ -57,52 +57,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compute the length of an object ID instead of of hard-coding 40-based
-values.
+Instead of using cut with hard-coded hash sizes, use cut with fields, or
+where that's not possible, sed with $OID_REGEX, so that the tests are
+independent of hash size.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t8002-blame.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ t/t7400-submodule-basic.sh | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index eea048e52c..557c886559 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -6,6 +6,10 @@ test_description='git blame'
- PROG='git blame -c'
- . "$TEST_DIRECTORY"/annotate-tests.sh
- 
-+test_expect_success 'setup' '
-+	test_oid_init
-+'
-+
- test_expect_success 'blame untracked file in empty repo' '
- 	>untracked &&
- 	test_must_fail git blame untracked
-@@ -105,17 +109,18 @@ test_expect_success 'blame --abbrev=<n> works' '
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 956e17abb3..fec7e0299d 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1231,7 +1231,7 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
+ 	git submodule add /dir1/b dir1/b &&
+ 	git submodule add /dir2/b dir2/b &&
+ 	git commit -m "first submodule commit" &&
+-	git submodule--helper list dir1/b |cut -c51- >actual &&
++	git submodule--helper list dir1/b | cut -f 2 >actual &&
+ 	echo "dir1/b" >expect &&
+ 	test_cmp expect actual
+ '
+@@ -1260,7 +1260,7 @@ test_expect_success 'submodule update --init with a specification' '
+ 	pwd=$(pwd) &&
+ 	git clone file://"$pwd"/multisuper multisuper_clone &&
+ 	git -C multisuper_clone submodule update --init . ":(exclude)sub0" &&
+-	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
  '
  
- test_expect_success 'blame -l aligns regular and boundary commits' '
--	check_abbrev 40 -l HEAD &&
--	check_abbrev 39 -l ^HEAD
-+	hexsz=$(test_oid hexsz) &&
-+	check_abbrev $hexsz         -l HEAD &&
-+	check_abbrev $((hexsz - 1)) -l ^HEAD
+@@ -1271,7 +1271,7 @@ test_expect_success 'submodule update --init with submodule.active set' '
+ 	git -C multisuper_clone config submodule.active "." &&
+ 	git -C multisuper_clone config --add submodule.active ":(exclude)sub0" &&
+ 	git -C multisuper_clone submodule update --init &&
+-	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
  '
  
--test_expect_success 'blame --abbrev=40 behaves like -l' '
--	check_abbrev 40 --abbrev=40 HEAD &&
--	check_abbrev 39 --abbrev=40 ^HEAD
-+test_expect_success 'blame --abbrev with full length behaves like -l' '
-+	check_abbrev $hexsz         --abbrev=$hexsz HEAD &&
-+	check_abbrev $((hexsz - 1)) --abbrev=$hexsz ^HEAD
+@@ -1290,7 +1290,7 @@ test_expect_success 'submodule update and setting submodule.<name>.active' '
+ 	-sub3
+ 	EOF
+ 	git -C multisuper_clone submodule update &&
+-	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
  '
  
--test_expect_success '--no-abbrev works like --abbrev=40' '
--	check_abbrev 40 --no-abbrev
-+test_expect_success '--no-abbrev works like --abbrev with full length' '
-+	check_abbrev $hexsz --no-abbrev
+@@ -1307,12 +1307,12 @@ test_expect_success 'clone active submodule without submodule url set' '
+ 		git submodule update &&
+ 		git submodule status >actual_raw &&
+ 
+-		cut -c 1,43- actual_raw >actual &&
++		cut -d" " -f3- actual_raw >actual &&
+ 		cat >expect <<-\EOF &&
+-		 sub0 (test2)
+-		 sub1 (test2)
+-		 sub2 (test2)
+-		 sub3 (test2)
++		sub0 (test2)
++		sub1 (test2)
++		sub2 (test2)
++		sub3 (test2)
+ 		EOF
+ 		test_cmp expect actual
+ 	)
+@@ -1328,7 +1328,7 @@ test_expect_success 'clone --recurse-submodules with a pathspec works' '
+ 	EOF
+ 
+ 	git clone --recurse-submodules="sub0" multisuper multisuper_clone &&
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expected actual
  '
  
- test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+@@ -1345,7 +1345,7 @@ test_expect_success 'clone with multiple --recurse-submodules options' '
+ 		  --recurse-submodules=":(exclude)sub0" \
+ 		  --recurse-submodules=":(exclude)sub2" \
+ 		  multisuper multisuper_clone &&
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1373,7 +1373,7 @@ test_expect_success 'clone and subsequent updates correctly auto-initialize subm
+ 		  --recurse-submodules=":(exclude)sub4" \
+ 		  multisuper multisuper_clone &&
+ 
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	git -C multisuper submodule add ../sub1 sub4 &&
+@@ -1382,7 +1382,7 @@ test_expect_success 'clone and subsequent updates correctly auto-initialize subm
+ 	# obtain the new superproject
+ 	git -C multisuper_clone pull &&
+ 	git -C multisuper_clone submodule update --init &&
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect2 actual
+ '
+ 
