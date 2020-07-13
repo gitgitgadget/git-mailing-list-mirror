@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA696C433EA
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C1EC433EC
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A644206D9
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49BA9206D9
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:49:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VWu4Rlge"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CEGcgzn/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728428AbgGMCtg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 22:49:36 -0400
+        id S1728455AbgGMCti (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 22:49:38 -0400
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:40618 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728252AbgGMCtb (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:31 -0400
+        by vger.kernel.org with ESMTP id S1728118AbgGMCta (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:30 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 84D4560A5C;
-        Mon, 13 Jul 2020 02:49:30 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 79A5F60A5C;
+        Mon, 13 Jul 2020 02:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594608570;
-        bh=uCrnGBdS9Lu9BL/q9uR2rKu9/6DjL6gl4ER0ChIeMFM=;
+        s=default; t=1594608568;
+        bh=yISpjiYdNb20ay038vbmc40m1f3lZfeDdvoTNXqWBQM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=VWu4RlgeWDsxNOfxl5Dh1SNj+/54jqocaQd33OH/l74MyzitwMtc72uVVM0M/EuC+
-         e3q6uNDX9A5OR93BFlWAj80DSCr4qephNYs6HUa4vZIFCVE4bMyryoM9tGHWFJmKTC
-         iLFPM/3kdFcieUzFzkS7PXcAp0vOqvA1CE2s7BfjFUPyoSlj7HYMAZ3HTcH5Vxs/MT
-         sRTJ2Yyabd7VtYyWBQAGVd2PtNERMrhLoafP7J+4rIS3Gdu0kKR8zLc4lOrDrfCY5Y
-         CRkClYSKchAmxUkWSbitffUE9RcEncBu9RD4rNjfg0KsqGx7cWT7SgzmmHDGzikZyr
-         eY/At9Lc6yvH3TFktptFTTm4zN59qdRW4tAS8EcFKcuaPDtyx1Azt2lpHOoqCAyROT
-         T1M3vzjYI/vszal7YVe8VDEZJsgU5lR0q94K8DVJGkjQ7l1QszTKyXPl3PpXajQooP
-         SAIdOMFtiTf4gV47SsQPMD9qmgY1Gk+nXg8uJz0dTDIwQZPXQx1
+        b=CEGcgzn/Y2q/dZG82VgQ696dB2e3KnAkWRKZiHdB4OdBTamEVrsI7coO7byyiJf7h
+         2bfWM5cv2YdhKbW04sOSGs+K5D6ttmb6BPPMaIznwmqjTFqpiyuzcOgZ7I943FHXxB
+         JB33NRQh1/rVEfr6pzqraYKhYxJQ9ju5IBpYfrORe/Wm2xddDpVr24QfTeNT3fN19d
+         HpsK3Kn6Qs1GmkZIIOQ6Ru8nErMFwmNX3oSCAfy4xSiIgGr7xUzupPxq2fnYP7wI/9
+         Sagh9qOwSFMmbK4Rkwe67CtnIxkryu4DJ8N2IP3WalujHlL7HelOwuOJ8fPYurTuqC
+         xuGwUMkCg8jwcI8s3mvwpxNb2IvaaBEA0mp2XsRqlo4j0K7idklGiXDH0OByS5GBDw
+         bW9Tk2F0RUNMHzfOBngbG4wpS6mtVjyc5HFHYCykblq0d9AFAzr47sbh4/P7UDJMX8
+         k1/1yQOe1W4dFLy7JCCZbzjGvJmcY3RE1zed9v1SuW5ftzUQnp2
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 16/39] t7506: avoid checking for SHA-1-specific constants
-Date:   Mon, 13 Jul 2020 02:48:46 +0000
-Message-Id: <20200713024909.3714837-17-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 12/39] t7201: abstract away SHA-1-specific constants
+Date:   Mon, 13 Jul 2020 02:48:42 +0000
+Message-Id: <20200713024909.3714837-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
 References: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
@@ -57,63 +57,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test to sanitize the diffs and strip out object IDs from
-them, as it does for other object IDs, since we are not interested in
-the particular values used.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t7506-status-submodule.sh | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ t/t7201-co.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 08629a6e70..3fcb44767f 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -22,6 +22,10 @@ sanitize_output () {
- 	mv output2 output
- }
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index b696bae5f5..d4fd760915 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -230,9 +230,10 @@ test_expect_success 'switch to another branch while carrying a deletion' '
+ test_expect_success 'checkout to detach HEAD (with advice declined)' '
  
-+sanitize_diff () {
-+	sed -e "/^index [0-9a-f,]*\.\.[0-9a-f]*/d" "$1"
-+}
-+
- 
- test_expect_success 'setup' '
- 	test_create_repo_with_commit sub &&
-@@ -269,7 +273,6 @@ short_sha1_merge_sub1=$(cd sub1 && git rev-parse --short HEAD)
- short_sha1_merge_sub2=$(cd sub2 && git rev-parse --short HEAD)
- cat >diff_expect <<\EOF
- diff --cc .gitmodules
--index badaa4c,44f999a..0000000
- --- a/.gitmodules
- +++ b/.gitmodules
- @@@ -1,3 -1,3 +1,9 @@@
-@@ -286,7 +289,6 @@ EOF
- 
- cat >diff_submodule_expect <<\EOF
- diff --cc .gitmodules
--index badaa4c,44f999a..0000000
- --- a/.gitmodules
- +++ b/.gitmodules
- @@@ -1,3 -1,3 +1,9 @@@
-@@ -306,7 +308,8 @@ test_expect_success 'diff with merge conflict in .gitmodules' '
- 		cd super &&
- 		git diff >../diff_actual 2>&1
- 	) &&
--	test_cmp diff_expect diff_actual
-+	sanitize_diff diff_actual >diff_sanitized &&
-+	test_cmp diff_expect diff_sanitized
- '
- 
- test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
-@@ -314,7 +317,8 @@ test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
- 		cd super &&
- 		git diff --submodule >../diff_submodule_actual 2>&1
- 	) &&
--	test_cmp diff_submodule_expect diff_submodule_actual
-+	sanitize_diff diff_submodule_actual >diff_sanitized &&
-+	test_cmp diff_submodule_expect diff_sanitized
- '
- 
- # We'll setup different cases for further testing:
+ 	git config advice.detachedHead false &&
++	rev=$(git rev-parse --short renamer^) &&
+ 	git checkout -f renamer && git clean -f &&
+ 	git checkout renamer^ 2>messages &&
+-	test_i18ngrep "HEAD is now at 7329388" messages &&
++	test_i18ngrep "HEAD is now at $rev" messages &&
+ 	test_line_count = 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
+@@ -250,7 +251,7 @@ test_expect_success 'checkout to detach HEAD' '
+ 	git config advice.detachedHead true &&
+ 	git checkout -f renamer && git clean -f &&
+ 	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
+-	grep "HEAD is now at 7329388" messages &&
++	grep "HEAD is now at $rev" messages &&
+ 	test_line_count -gt 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
