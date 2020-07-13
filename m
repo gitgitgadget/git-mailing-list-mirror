@@ -2,104 +2,193 @@ Return-Path: <SRS0=B2P3=AY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD22CC433DF
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0181FC433E1
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 20:00:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 914A0206F5
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:48:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4BDE205CB
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 20:00:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="Ma7ZI7b4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bfXupBIG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbgGMTsz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jul 2020 15:48:55 -0400
-Received: from smtp-fw-6002.amazon.com ([52.95.49.90]:48139 "EHLO
-        smtp-fw-6002.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbgGMTsz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jul 2020 15:48:55 -0400
+        id S1726435AbgGMUAJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jul 2020 16:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbgGMUAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jul 2020 16:00:08 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C62C061755
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 13:00:08 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id x9so9521695ljc.5
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 13:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1594669735; x=1626205735;
-  h=from:to:subject:date:message-id:
-   content-transfer-encoding:mime-version;
-  bh=WtmxGczbUCrTP5gADH8fUSjctlwJWWAJz7C4cv5hVzY=;
-  b=Ma7ZI7b45ZjveXzTJxOkwOyL1B9vc0sXtTCg6ZWngsnpNiJjDf2q3M0J
-   R/YVJjsZ/g73PhJhmBgwhyfw7WCOcQINZDTzc7nws7CLH68ij0qN1/O1t
-   w2iSumnvXnghhuy1wnb51Gf94483ne75MAAb0mhVkG5uycjB3zy3DrN4y
-   A=;
-IronPort-SDR: /RRfw6nYcyJo+GxMvK0MRMDPAFLi1dmJLtM3yDQc0V8QCYOVCi8b+29xgf3AWZo5rcY3DslxZ8
- ySLkqm4+Qugg==
-X-IronPort-AV: E=Sophos;i="5.75,348,1589241600"; 
-   d="scan'208";a="41647269"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-2a-1c1b5cdd.us-west-2.amazon.com) ([10.43.8.6])
-  by smtp-border-fw-out-6002.iad6.amazon.com with ESMTP; 13 Jul 2020 19:48:53 +0000
-Received: from EX13MTAUWA001.ant.amazon.com (pdx4-ws-svc-p6-lb7-vlan2.pdx.amazon.com [10.170.41.162])
-        by email-inbound-relay-2a-1c1b5cdd.us-west-2.amazon.com (Postfix) with ESMTPS id D2F23A1C54
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 19:48:52 +0000 (UTC)
-Received: from EX13D10UWA003.ant.amazon.com (10.43.160.248) by
- EX13MTAUWA001.ant.amazon.com (10.43.160.58) with Microsoft SMTP Server (TLS)
- id 15.0.1497.2; Mon, 13 Jul 2020 19:48:50 +0000
-Received: from EX13D10UWA004.ant.amazon.com (10.43.160.64) by
- EX13D10UWA003.ant.amazon.com (10.43.160.248) with Microsoft SMTP Server (TLS)
- id 15.0.1497.2; Mon, 13 Jul 2020 19:48:50 +0000
-Received: from EX13D10UWA004.ant.amazon.com ([10.43.160.64]) by
- EX13D10UWA004.ant.amazon.com ([10.43.160.64]) with mapi id 15.00.1497.006;
- Mon, 13 Jul 2020 19:48:50 +0000
-From:   "Peterson, Alex" <alexpete@amazon.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Temporary credentials timeout during long operations
-Thread-Topic: Temporary credentials timeout during long operations
-Thread-Index: AdZZS2dK0GgPJ4/xQ12KUmHdKoU5yg==
-Date:   Mon, 13 Jul 2020 19:48:50 +0000
-Message-ID: <18381efb749d43d097665960021a76ef@EX13D10UWA004.ant.amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.43.161.203]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=GK4F3BwGeAKdeGLLJvLFL4cQjOkav56POJG3CdUww24=;
+        b=bfXupBIGdzvoRXQXGTz0y6akxyJMG002hAu4smIdetLKk5MnhRHihFEQtjqCf/bJJA
+         uy9LOWAT968vlC49ltULVbtTDt3l7SVwobmR2ftPSGuAOGffzLEv+DyitVB90oTztb1R
+         WXHGjWVnF7Yvrg577wufPnzqmkdZoQlAGySXWySrIIZ6tnF4FSL7pqMLdikcRVexXR8A
+         Ptxz8q905h05WpZPRcibSX3+ZcSj7DcJgZtJR8pB4WAf9O2lCPrqUtYwGoHMDR8lJfiq
+         c6AeuuOc44yAvKKtH7272p7/kz0IDJbMrYbxuZzVxZ4fTv5sgd6Vc6uDJav2b2UnIOrI
+         6p0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=GK4F3BwGeAKdeGLLJvLFL4cQjOkav56POJG3CdUww24=;
+        b=F7d03TJZCv4dzyWD+Epo2LHKtsul4XhPpMZXv0VOxROyxEF5fr7UrJ1S2oEJPfTCL8
+         FsEJNBpJHWQvRS4eHJPHaidT5hzF5mC6jgxrU3haj5RmOAd97yeoUYj5SW5UvHS8Ehuv
+         mTZg+1Yx1GZ/SPhb+siw2mAiqHf23HUztYWtu7wVzUCrX4BoJlN3hjz0nV6397AsXH91
+         SHU5IYURZenkh8SuJzgzEjq9U2h2rrvMi+iHhf2jc3xoOjj4y5F8sRI/k+7K/SGDk3jU
+         +jAwJmuNAsI+FLooNtniQjapLgo8DrflNR758UTOkpDjDVHik012Jy83bIbYfJiBrfzh
+         PiuQ==
+X-Gm-Message-State: AOAM530LjvcoMqa0isOfSOp+VWLUukOKd7Y8IY4KWbtviEdtqgsT77eI
+        KALCCOKSnY/nZZbbS7dtODk=
+X-Google-Smtp-Source: ABdhPJyrQO3kR1Q2FrO+bsVLEXhus/mCpsgfYtML97fJCYJ03oxQJTKyRJrkiw0rpOVEL/bKTABEZA==
+X-Received: by 2002:a05:651c:554:: with SMTP id q20mr582772ljp.137.1594670406551;
+        Mon, 13 Jul 2020 13:00:06 -0700 (PDT)
+Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id r22sm4227198ljc.25.2020.07.13.13.00.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2020 13:00:05 -0700 (PDT)
+From:   Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [GSOC] Blog about weeks 4, 5
+References: <20200706182213.GA51227@Abhishek-Arch>
+        <20200707022425.GA1649@Abhishek-Arch>
+Date:   Mon, 13 Jul 2020 22:00:03 +0200
+In-Reply-To: <20200707022425.GA1649@Abhishek-Arch> (Abhishek Kumar's message
+        of "Tue, 7 Jul 2020 07:54:25 +0530")
+Message-ID: <85imerqj7g.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greetings,  recently I've run into an issue where long push operations fail=
- when using a credential helper like the AWS CodeCommit helper because it p=
-rovides time-limited credentials which expire during the operation.  Is the=
-re an existing method to enforce refreshing credentials from a credential h=
-elper on the client or should I go down the path of creating a credential.t=
-imeout feature that automatically refills credentials from helpers during l=
-ong operations to avoid this issue?
+Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
 
-Steps to reproduce:
-1. Create a repository with LFS
-2. Add a large file that will take a long time to push (long enough for the=
- credentials to expire)
-3. Enable a helper that provides temporary credentials=20
-4. Set a remote that uses HTTPS and git push
+> Hello everyone!
+>
+> Over the last two weeks, I have worked on refining the performance
+> report on generation numbers. Here are our conclusions:
+>
+> - Corrected Commit Dates With Monotonically Offset (i.e.  generation
+>   number v5) performs better than topological levels but is still walks
+>   too many commits when compared with Corrected Commit Dates.
 
-All initial HTTPS commands authenticate OK and the LFS file uploads fine bu=
-t by the time it is done, the credentials have expired so the final git-rec=
-eive-pack fails and the entire push operation fails.
+Thank you for your work examining different approaches to introducing
+generation number v2.
 
-> POST /v1/repos/example/git-receive-pack HTTP/1.1
-< HTTP/1.1 403=20
-error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403=20
-fatal: the remote end hung up unexpectedly=20
+> Number of commits walked (git merge-base v4.8 v4.9, on linux repository):
+>
+> Topological Level                          : 635579
+> Corrected Commit Date                      : 167468
+> Corrected Commit Date With Monotonic Offset: 506577
 
-For testing purposes I modified post_rpc() so that it always requests new c=
-redentials before every HTTPS request, and was able to push any number of l=
-arge files.
+It is a bit strange that requiring monotonic offsets leads to so much
+of a difference in performance (in commits walked).
 
-SSH works fine (with keepalives enabled) and so does HTTPS with a permanent=
- username/password, it's just the credential helpers that provide time-limi=
-ted credentials.
+>
+> As such, I am expecting that we will store Corrected Commit Date in an
+> additional chunk (called "generation data chunk") and store topological
+> levels into CDAT. Thus, old Git clients can operate as expected, with
+> new Git clients using the better generation number.
+>
+> - Using a new chunk does affect the locality of reference but did not
+>   impact the performance appreciably.
+> - This does increase the size of commit graph file by nearly 5%.
 
-Thoughts?
+All right, it seems like it is the way to go.
+
+> You can read more in my report [1] and the pull request with
+> instructions to replicate the results [2].
+>
+> [1]: https://lore.kernel.org/git/20200703082842.GA28027@Abhishek-Arch/T/#=
+mda33f6e13873df55901768e8fd6d774282002146
+> [2]: https://github.com/abhishekkumar2718/git/pull/1
+>
+> I talk a bit more about a patch I worked on, trying to improve
+> performance of commit graph write using buffers which ultimately did not
+> work and is dropped. Up next is actually implementing the generation
+> number and take care of all little details.
+>
+> https://abhishekkumar2718.github.io/programming/2020/07/05/gsoc-weeks-4-5=
+.html
+>
+> Feedback and suggestions welcome!
+
+Some comments about the blog entry contents:
+
+AK> Dr. Stolee pointed out ... [to] use the number of commits as a
+AK> metric instead of wall clock timing (which can be influenced by other
+AK> factors like CPU usage at the time).
+
+There are a few factors.  If we compare similar algorithms, that might
+be a good decision.
+
+First, one can try to reduce the influence of random factors on the wall
+clock timing by using statistics.  For example one can try to detect and
+remove outliers by using robust statistics measures to detect them, like
+tools like for example Dumbbench [3], hyperfine [4] or bench [5].  After
+warmup, one approach is to compute the robust estimate of value, e.g.
+median, and robust estimate of dispersion, e.g. MAD =3D median absolute
+deviation, and use those to detect outliers, e.g. rescale MAD and mark
+as outlier and remove entries that are more than "three sigma" of robust
+dispersion away from robust estimate of value.  Dumbbench [3] has good
+explanation.
+
+[3]: https://metacpan.org/pod/Dumbbench#HOW-IT-WORKS-AND-WHY-IT-DOESN'T
+[4]: https://github.com/sharkdp/hyperfine
+[5]: https://github.com/Gabriel439/bench
+
+Second, because of pecularities of current processor architecture
+(caches, data prefetching, branch prediction) performing more operations
+might in admittedly rare cases be faster than doing less operations. One
+such example can be found in the CppCon 2019 talk by Andrei Alexandrescu
+"Speed Is Found In The Minds of People" [6][7] about 'small sort', where
+doing more operations results in, on average, faster sort.  This of
+course has a possibility to happen only if difference with the number of
+operations is small enough... nevertheless it might be a good idea to at
+least check that the wall clock time agrees with conclusions from the
+number of commits walked, for at least a few examples.
+
+[6]: https://www.youtube.com/watch?v=3DFJJTYQYB1JQ
+[7]: https://github.com/CppCon/CppCon2019/blob/master/Presentations/speed_i=
+s_found_in_the_minds_of_people/speed_is_found_in_the_minds_of_people__andre=
+i_alexandrescu__cppcon_2019.pdf
+
+AK> With the second report, storing corrected commit date in GDAT as
+AK> well as computing topological levels seems like a no-brainer. I have
+AK> started working on the patch and will push to the mailing list after
+AK> some discussion on the report.
+
+Do you have any numbers how much does providing backward compatibility
+cost at `git commit-graph write`, that is how much more time it takes to
+computer topological levels during computation of corrected
+committerdate compared to storing GENERATION_NUMBER_MAX in place of
+topological level, and whether having topological level (as tie-breaker)
+helps with Git performance when using commit-graphh for querying?  Does
+having topological levels as tie-breaker or secondary negative-cut
+reachability index helps at all?
+
+
+Thank you for your work and for the report.
+
+P.S. Would it be possible to put GSoC entries into separate 'GSoC'
+category instead of generic 'Programming' one, or add a 'GSoC' tag?
+
+Best,
+--
+Jakub Nar=C4=99bski
