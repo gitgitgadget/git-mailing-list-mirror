@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 121DEC433E2
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B8D1C433E4
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:11:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D889C20758
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:10:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0281420758
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:11:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A5VJyxmk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="npcuqMOm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728883AbgGMKK4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jul 2020 06:10:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44420 "EHLO
+        id S1729519AbgGMKLB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jul 2020 06:11:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728382AbgGMKKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jul 2020 06:10:55 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4BCBC061755
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:10:54 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id l2so12595989wmf.0
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:10:54 -0700 (PDT)
+        with ESMTP id S1729390AbgGMKK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jul 2020 06:10:58 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20F2DC061755
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:10:58 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id s10so15523082wrw.12
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=9hFeyKroMXhJ4hUtuuytTGLjnzZZrnfY5FNHzGLb1AM=;
-        b=A5VJyxmkw8yYfdsBT4m6U5VVJtEn4iOMMvnOIm/RRpuFbcvpRugm0otP7t5+a2/+L4
-         gfCehSPsVoRf/rxAzUuNoHDOnkuyhTVWzXxWqoQCS5LE+GZxOn7kOxT6BLM8IRNKMxW8
-         dXz28y5TgnoXz9AG7CNe92vyxmS79MX118wJa+fsHPD7D9C+1SfbYDKKAxvzjOS8EkcS
-         3+QdPC4bxh7O9B3q39Rz2Xrvi0CxfMqN2dZdo8NozSMFVDV0lpRyng1OUyY8INCHmqTC
-         ofJoaP70JAV7QwW1aTilPH/8gURNK09gvnO3/SDw+ka2OnTRESV8nycdB3wBgkFDWST+
-         /apw==
+        bh=zh/h45WnLsGnhzpRNMSAKU4USpfSEzX8Rm38F5WEhM8=;
+        b=npcuqMOmgHQR1qYh1cGw78UyyG6JnM6gwA7orsk+r1B+MEVCxNXEOwp45lf0zGfibA
+         RHjIU9ul8QS6v7CC9NZvGweb1Enhzxt9NGM+zoBZI8DPgUJn3Z2jTplK+1BqZAmpsXGk
+         893/NDQIa2PukIhvEk1i3f3wWZ39xJUqOkPXtbwsaYZJdWD44m/rxlpLaV1W6HhGL1C+
+         hZsaCH7WyQdFxMyxCKaE16XAcni1sgCgwgyUPEm6Gu0GmCuZHOcxMsz4GmcaVqsIfAl3
+         r7h2EVlYrF5CFNYNhC74VfBtrnCCvRGF+CRJwk9NSaxXIiYAYD1DC3ozYyN5wXmscsdy
+         mPbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=9hFeyKroMXhJ4hUtuuytTGLjnzZZrnfY5FNHzGLb1AM=;
-        b=Q7NxFeJyOYTEK78RzItNGKtnycY+BCioQI04XUroU7lYjcq/D4cUIrXnHTHfdF1SY4
-         PnLA1rIlAwsVjiTXXERxrcw4fr4WtXuNJ+mksoEHPm/4ZfdyhIAwr7xms3suCy5CaTZR
-         vWJ3EL1Sni1YI9y0QO481Nm93VjX2jWYWDLJYrWhZ3mUY3lGHQw6/Q6DRIvciM9irtqn
-         /cVAgkY58G+KW2T3tswuNKOByIf9GQlhV2PW5pX3pteWz6BVFs03PHU++oEj2sScS7Oo
-         StFFGubeOaL52AfSW+u5NNuOjdXy87CcphOSZhK7+E+VfQgtXNLmjn6KDIHnlmTNXk4/
-         dDww==
-X-Gm-Message-State: AOAM531jRNc1PN0VgtuQ99zXYCU31xj0kw4/xR6dQujeLr/2bqulKHh9
-        N/k9ET4zr88u5iaeXj09/ns=
-X-Google-Smtp-Source: ABdhPJzwPzrJWozdWnf81x3TSsm0JHme/spYVwnpDgYJrRqMzSoLgJvzlNzeNHiA/nGAQuLlMW8hJw==
-X-Received: by 2002:a7b:c403:: with SMTP id k3mr17917141wmi.35.1594635053377;
-        Mon, 13 Jul 2020 03:10:53 -0700 (PDT)
+        bh=zh/h45WnLsGnhzpRNMSAKU4USpfSEzX8Rm38F5WEhM8=;
+        b=bolcqMP5H5Vw+wiGDQfB7vtfLbQkgZ37MIzMf1Am2V0vliS2RV0uRK5XI3x+f86U9p
+         /Hw8trPgqN47MoqkS5mgvZ2qZ+fmmNsgCXkVMHkLJFEwPOI90eU9p/5PnoUWxb8j72ep
+         XDtCt+xpz56CCKu5+CYejolEcwY9CUrORSwK5H7s4+pZeF3zU2V/6NRih8qpf9x4KxvS
+         zerafiR7T7Xv5vHPkaqxbKLFSKS1MokRLOw0yG1gtuH0ZzXNiqTXBYJzmx3d1Y/KBE4a
+         GSU1PtqdcZQEMGDHAT3P8s3gk0b8WX5QXnM6UOxF+WJ1E798AcUaMctljxKYnL5y5O49
+         mu+Q==
+X-Gm-Message-State: AOAM533viEUPSUQCBbJwKKULNQ0seHKtXbk4DiPLgHROLAmg5dfoy2b3
+        4Sk/1h0pJN4+1xmarndUBak=
+X-Google-Smtp-Source: ABdhPJzHCw2z8GFfhECT6m2o0a5MMKk/nvbxOLSU7MYdv/SBsF1GuJLuhIr6e1uy+g4pe+f/DoN5HA==
+X-Received: by 2002:adf:ed87:: with SMTP id c7mr76401088wro.422.1594635056810;
+        Mon, 13 Jul 2020 03:10:56 -0700 (PDT)
 Received: from localhost.localdomain (130.20.198.146.dyn.plus.net. [146.198.20.130])
-        by smtp.gmail.com with ESMTPSA id v7sm23811549wrp.45.2020.07.13.03.10.52
+        by smtp.gmail.com with ESMTPSA id v7sm23811549wrp.45.2020.07.13.03.10.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 03:10:52 -0700 (PDT)
+        Mon, 13 Jul 2020 03:10:56 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
@@ -67,9 +67,9 @@ To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v6 1/5] rebase -i: add --ignore-whitespace flag
-Date:   Mon, 13 Jul 2020 11:10:41 +0100
-Message-Id: <20200713101045.27335-2-phillip.wood123@gmail.com>
+Subject: [PATCH v6 4/5] rebase -i: support --ignore-date
+Date:   Mon, 13 Jul 2020 11:10:44 +0100
+Message-Id: <20200713101045.27335-5-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200713101045.27335-1-phillip.wood123@gmail.com>
 References: <20200407141125.30872-1-phillip.wood123@gmail.com>
@@ -82,209 +82,316 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
 Rebase is implemented with two different backends - 'apply' and
 'merge' each of which support a different set of options. In
 particular the apply backend supports a number of options implemented
 by 'git am' that are not implemented in the merge backend. This means
 that the available options are different depending on which backend is
-used which is confusing. This patch adds support for the
---ignore-whitespace option to the merge backend. This option treats
-lines with only whitespace changes as unchanged and is implemented in
-the merge backend by translating it to -Xignore-space-change.
+used which is confusing. This patch adds support for the --ignore-date
+option to the merge backend. This option uses the current time as the
+author date rather than reusing the original author date when
+rewriting commits. We take care to handle the combination of
+--ignore-date and --committer-date-is-author-date in the same way as
+the apply backend.
 
-Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Original-patch-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- Documentation/git-rebase.txt           | 19 +++++++-
- builtin/rebase.c                       | 19 ++++++--
- t/t3422-rebase-incompatible-options.sh |  1 -
- t/t3436-rebase-more-options.sh         | 60 ++++++++++++++++++++++++++
- 4 files changed, 93 insertions(+), 6 deletions(-)
- create mode 100755 t/t3436-rebase-more-options.sh
+ Documentation/git-rebase.txt   |  7 +++--
+ builtin/rebase.c               | 13 +++++---
+ sequencer.c                    | 50 ++++++++++++++++++++++++++++--
+ sequencer.h                    |  1 +
+ t/t3436-rebase-more-options.sh | 56 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 117 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f7a6033607..b003784f01 100644
+index dfa70263e6..e2717e20e6 100644
 --- a/Documentation/git-rebase.txt
 +++ b/Documentation/git-rebase.txt
-@@ -422,8 +422,23 @@ your branch contains commits which were dropped, this option can be used
- with `--keep-base` in order to drop those commits from your branch.
+@@ -450,8 +450,9 @@ See also INCOMPATIBLE OPTIONS below.
+ 	date. This option implies --force-rebase.
  
- --ignore-whitespace::
-+	Ignore whitespace differences when trying to reconcile
-+differences. Currently, each backend implements an approximation of
-+this behavior:
-++
-+apply backend: When applying a patch, ignore changes in whitespace in
-+context lines. Unfortunately, this means that if the "old" lines being
-+replaced by the patch differ only in whitespace from the existing
-+file, you will get a merge conflict instead of a successful patch
-+application.
-++
-+merge backend: Treat lines with only whitespace changes as unchanged
-+when merging. Unfortunately, this means that any patch hunks that were
-+intended to modify whitespace and nothing else will be dropped, even
-+if the other side had no changes that conflicted.
-+
- --whitespace=<option>::
--	These flags are passed to the 'git apply' program
-+	This flag is passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
- 	Implies --apply.
+ --ignore-date::
+-	This flag is passed to 'git am' to change the author date
+-	of each rebased commit (see linkgit:git-am[1]).
++	Instead of using the author date of the original commit, use
++	the current time as the	author date of the rebased commit.  This
++	option implies `--force-rebase`.
  +
-@@ -572,7 +587,6 @@ The following options:
+ See also INCOMPATIBLE OPTIONS below.
+ 
+@@ -589,7 +590,6 @@ INCOMPATIBLE OPTIONS
+ The following options:
+ 
   * --apply
-  * --committer-date-is-author-date
-  * --ignore-date
-- * --ignore-whitespace
+- * --ignore-date
   * --whitespace
   * -C
  
-@@ -598,6 +612,7 @@ In addition, the following pairs of options are incompatible:
-  * --preserve-merges and --signoff
-  * --preserve-merges and --rebase-merges
+@@ -617,6 +617,7 @@ In addition, the following pairs of options are incompatible:
   * --preserve-merges and --empty=
-+ * --preserve-merges and --ignore-whitespace
+  * --preserve-merges and --ignore-whitespace
+  * --preserve-merges and --committer-date-is-author-date
++ * --preserve-merges and --ignore-date
   * --keep-base and --onto
   * --keep-base and --root
  
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 27a07d4e78..bd93e9742c 100644
+index 2579380729..583ac96fc7 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -126,6 +126,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+@@ -89,6 +89,7 @@ struct rebase_options {
+ 	char *gpg_sign_opt;
+ 	int autostash;
+ 	int committer_date_is_author_date;
++	int ignore_date;
+ 	char *cmd;
+ 	int allow_empty_message;
+ 	int rebase_merges, rebase_cousins;
+@@ -127,6 +128,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
  	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+ 	replay.committer_date_is_author_date =
+ 					opts->committer_date_is_author_date;
++	replay.ignore_date = opts->ignore_date;
  	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
  	replay.strategy = opts->strategy;
-+
- 	if (opts->strategy_opts)
- 		parse_strategy_opts(&replay, opts->strategy_opts);
  
-@@ -1466,6 +1467,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	struct strbuf revisions = STRBUF_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct object_id merge_base;
-+	int ignore_whitespace = 0;
- 	enum action action = ACTION_NONE;
- 	const char *gpg_sign = NULL;
- 	struct string_list exec = STRING_LIST_INIT_NODUP;
-@@ -1495,16 +1497,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
- 		OPT_BOOL(0, "signoff", &options.signoff,
- 			 N_("add a Signed-off-by: line to each commit")),
--		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &options.git_am_opts,
--				  NULL, N_("passed to 'git am'"),
--				  PARSE_OPT_NOARG),
- 		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
- 				  &options.git_am_opts, NULL,
- 				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
- 		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts, NULL,
- 				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
+@@ -1503,8 +1505,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "committer-date-is-author-date",
+ 			 &options.committer_date_is_author_date,
+ 			 N_("make committer date match author date")),
+-		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts, NULL,
+-				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
++		OPT_BOOL(0, "ignore-date", &options.ignore_date,
++			 N_("ignore author date and use current date")),
  		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
  				  N_("passed to 'git apply'"), 0),
-+		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
-+			 N_("ignore changes in whitespace")),
- 		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
- 				  N_("action"), N_("passed to 'git apply'"), 0),
- 		OPT_BIT('f', "force-rebase", &options.flags,
-@@ -1850,6 +1851,18 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		imply_merge(&options, "--rebase-merges");
+ 		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
+@@ -1797,13 +1799,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	    options.autosquash) {
+ 		allow_preemptive_ff = 0;
  	}
+-	if (options.committer_date_is_author_date)
++	if (options.committer_date_is_author_date || options.ignore_date)
+ 		options.flags |= REBASE_FORCE;
  
-+	if (options.type == REBASE_APPLY) {
-+		if (ignore_whitespace)
-+			argv_array_push(&options.git_am_opts,
-+					"--ignore-whitespace");
-+	} else {
-+		/* REBASE_MERGE and PRESERVE_MERGES */
-+		if (ignore_whitespace) {
-+			string_list_append(&strategy_options,
-+					   "ignore-space-change");
-+		}
-+	}
-+
- 	if (strategy_options.nr) {
- 		int i;
- 
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index 50e7960702..55ca46786d 100755
---- a/t/t3422-rebase-incompatible-options.sh
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -61,7 +61,6 @@ test_rebase_am_only () {
+ 	for (i = 0; i < options.git_am_opts.argc; i++) {
+ 		const char *option = options.git_am_opts.argv[i], *p;
+-		if (!strcmp(option, "--ignore-date") ||
+-		    !strcmp(option, "--whitespace=fix") ||
++		if (!strcmp(option, "--whitespace=fix") ||
+ 		    !strcmp(option, "--whitespace=strip"))
+ 			allow_preemptive_ff = 0;
+ 		else if (skip_prefix(option, "-C", &p)) {
+@@ -1862,6 +1863,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		if (options.committer_date_is_author_date)
+ 			argv_array_push(&options.git_am_opts,
+ 					"--committer-date-is-author-date");
++		if (options.ignore_date)
++			argv_array_push(&options.git_am_opts, "--ignore-date");
+ 	} else {
+ 		/* REBASE_MERGE and PRESERVE_MERGES */
+ 		if (ignore_whitespace) {
+diff --git a/sequencer.c b/sequencer.c
+index 29f6d1bc39..c140162cbd 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -150,6 +150,7 @@ static GIT_PATH_FUNC(rebase_path_refs_to_delete, "rebase-merge/refs-to-delete")
+  */
+ static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
+ static GIT_PATH_FUNC(rebase_path_cdate_is_adate, "rebase-merge/cdate_is_adate")
++static GIT_PATH_FUNC(rebase_path_ignore_date, "rebase-merge/ignore_date")
+ static GIT_PATH_FUNC(rebase_path_orig_head, "rebase-merge/orig-head")
+ static GIT_PATH_FUNC(rebase_path_verbose, "rebase-merge/verbose")
+ static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
+@@ -889,6 +890,24 @@ static const char *author_date_from_env_array(const struct argv_array *env)
+ 	BUG("GIT_AUTHOR_DATE missing from author script");
  }
  
- test_rebase_am_only --whitespace=fix
--test_rebase_am_only --ignore-whitespace
- test_rebase_am_only --committer-date-is-author-date
- test_rebase_am_only -C4
++/* Construct a free()able author string with current time as the author date */
++static char *ignore_author_date(const char *author)
++{
++	int len;
++	struct ident_split ident;
++	struct strbuf new_author = STRBUF_INIT;
++
++	if (split_ident_line(&ident, author, strlen(author)) < 0) {
++		error(_("malformed ident line '%s'"), author);
++		return NULL;
++	}
++
++	len = ident.mail_end - ident.name_begin + 1;
++	strbuf_addf(&new_author, "%.*s ", len, ident.name_begin);
++	datestamp(&new_author);
++	return strbuf_detach(&new_author, NULL);
++}
++
+ static const char staged_changes_advice[] =
+ N_("you have staged changes in your working tree\n"
+ "If these changes are meant to be squashed into the previous commit, run:\n"
+@@ -957,7 +976,11 @@ static int run_git_commit(struct repository *r,
+ 
+ 	if (opts->committer_date_is_author_date)
+ 		argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=%s",
++				 opts->ignore_date ?
++				 "" :
+ 				 author_date_from_env_array(&cmd.env_array));
++	if (opts->ignore_date)
++		argv_array_push(&cmd.env_array, "GIT_AUTHOR_DATE=");
+ 
+ 	argv_array_push(&cmd.args, "commit");
+ 
+@@ -1388,7 +1411,8 @@ static int try_to_commit(struct repository *r,
+ 			    ident.date_begin,
+ 			    (int)(ident.tz_end - ident.tz_begin),
+ 			    ident.tz_begin);
+-		res = setenv("GIT_COMMITTER_DATE", date.buf, 1);
++		res = setenv("GIT_COMMITTER_DATE",
++			     opts->ignore_date ? "" : date.buf, 1);
+ 		strbuf_release(&date);
+ 
+ 		if (res)
+@@ -1454,6 +1478,16 @@ static int try_to_commit(struct repository *r,
+ 
+ 	reset_ident_date();
+ 
++	if (opts->ignore_date) {
++		author = ignore_author_date(author);
++		if (!author) {
++			res = -1;
++			goto out;
++		}
++		free(author_to_free);
++		author_to_free = (char *)author;
++	}
++
+ 	if (commit_tree_extended(msg->buf, msg->len, &tree, parents,
+ 				 oid, author, opts->gpg_sign, extra)) {
+ 		res = error(_("failed to write commit object"));
+@@ -2583,6 +2617,11 @@ static int read_populate_opts(struct replay_opts *opts)
+ 			opts->committer_date_is_author_date = 1;
+ 		}
+ 
++		if (file_exists(rebase_path_ignore_date())) {
++			opts->allow_ff = 0;
++			opts->ignore_date = 1;
++		}
++
+ 		if (file_exists(rebase_path_reschedule_failed_exec()))
+ 			opts->reschedule_failed_exec = 1;
+ 
+@@ -2675,6 +2714,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
+ 		write_file(rebase_path_keep_redundant_commits(), "%s", "");
+ 	if (opts->committer_date_is_author_date)
+ 		write_file(rebase_path_cdate_is_adate(), "%s", "");
++	if (opts->ignore_date)
++		write_file(rebase_path_ignore_date(), "%s", "");
+ 	if (opts->reschedule_failed_exec)
+ 		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
+ 
+@@ -3597,7 +3638,11 @@ static int do_merge(struct repository *r,
+ 
+ 		if (opts->committer_date_is_author_date)
+ 			argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=%s",
++					 opts->ignore_date ?
++					 "" :
+ 					 author_date_from_env_array(&cmd.env_array));
++		if (opts->ignore_date)
++			argv_array_push(&cmd.env_array, "GIT_AUTHOR_DATE=");
+ 
+ 		cmd.git_cmd = 1;
+ 		argv_array_push(&cmd.args, "merge");
+@@ -3877,7 +3922,8 @@ static int pick_commits(struct repository *r,
+ 	if (opts->allow_ff)
+ 		assert(!(opts->signoff || opts->no_commit ||
+ 				opts->record_origin || opts->edit ||
+-				opts->committer_date_is_author_date));
++				opts->committer_date_is_author_date ||
++				opts->ignore_date));
+ 	if (read_and_refresh_cache(r, opts))
+ 		return -1;
+ 
+diff --git a/sequencer.h b/sequencer.h
+index 4ab94119ae..3587878e3b 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -46,6 +46,7 @@ struct replay_opts {
+ 	int quiet;
+ 	int reschedule_failed_exec;
+ 	int committer_date_is_author_date;
++	int ignore_date;
+ 
+ 	int mainline;
  
 diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-new file mode 100755
-index 0000000000..4f8a6e51c9
---- /dev/null
+index 50a63d8ebe..0ede2b8900 100755
+--- a/t/t3436-rebase-more-options.sh
 +++ b/t/t3436-rebase-more-options.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2019 Rohit Ashiwal
-+#
+@@ -108,6 +108,62 @@ test_expect_success '--committer-date-is-author-date works when committing confl
+ 	test_ctime_is_atime -1
+ '
+ 
++# Checking for +0000 in the author date is sufficient since the
++# default timezone is UTC but the timezone used while committing is
++# +0530. The inverted logic in the grep is necessary to check all the
++# author dates in the file.
++test_ctime_is_ignored () {
++	git log $1 --format=%ai >authortime &&
++	! grep -v +0000 authortime
++}
 +
-+test_description='tests to ensure compatibility between am and interactive backends'
-+
-+. ./test-lib.sh
-+
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+# This is a special case in which both am and interactive backends
-+# provide the same output. It was done intentionally because
-+# both the backends fall short of optimal behaviour.
-+test_expect_success 'setup' '
-+	git checkout -b topic &&
-+	test_write_lines "line 1" "	line 2" "line 3" >file &&
-+	git add file &&
-+	git commit -m "add file" &&
-+
-+	test_write_lines "line 1" "new line 2" "line 3" >file &&
-+	git commit -am "update file" &&
-+	git tag side &&
-+
-+	git checkout --orphan master &&
-+	test_write_lines "line 1" "        line 2" "line 3" >file &&
-+	git commit -am "add file" &&
-+	git tag main
++test_expect_success '--ignore-date works with apply backend' '
++	git commit --amend --date="$GIT_AUTHOR_DATE" &&
++	git rebase --apply --ignore-date HEAD^ &&
++	test_ctime_is_ignored -1
 +'
 +
-+test_expect_success '--ignore-whitespace works with apply backend' '
-+	test_must_fail git rebase --apply main side &&
-+	git rebase --abort &&
-+	git rebase --apply --ignore-whitespace main side &&
-+	git diff --exit-code side
++test_expect_success '--ignore-date works with merge backend' '
++	git commit --amend --date="$GIT_AUTHOR_DATE" &&
++	git rebase --ignore-date -m HEAD^ &&
++	test_ctime_is_ignored -1
 +'
 +
-+test_expect_success '--ignore-whitespace works with merge backend' '
-+	test_must_fail git rebase --merge main side &&
-+	git rebase --abort &&
-+	git rebase --merge --ignore-whitespace main side &&
-+	git diff --exit-code side
++test_expect_success '--ignore-date works after conflict resolution' '
++	test_must_fail git rebase --ignore-date -m \
++		--onto commit2^^ commit2^ commit2 &&
++	echo resolved >foo &&
++	git add foo &&
++	git rebase --continue &&
++	test_ctime_is_ignored -1
 +'
 +
-+test_expect_success '--ignore-whitespace is remembered when continuing' '
-+	(
-+		set_fake_editor &&
-+		FAKE_LINES="break 1" git rebase -i --ignore-whitespace \
-+			main side &&
-+		git rebase --continue
-+	) &&
-+	git diff --exit-code side
++test_expect_success '--ignore-date works with rebase -r' '
++	git checkout side &&
++	git merge --no-ff commit3 &&
++	git rebase -r --root --ignore-date &&
++	test_ctime_is_ignored
 +'
 +
-+# This must be the last test in this file
-+test_expect_success '$EDITOR and friends are unchanged' '
-+	test_editor_unchanged
++test_expect_success '--ignore-date with --committer-date-is-author-date works' '
++	test_must_fail git rebase -m --committer-date-is-author-date \
++		--ignore-date --onto commit2^^ commit2^ commit3 &&
++	git checkout --theirs foo &&
++	git add foo &&
++	git rebase --continue &&
++	test_ctime_is_atime -2 &&
++	test_ctime_is_ignored -2
 +'
 +
-+test_done
++test_expect_success '--ignore-date --committer-date-is-author-date works when forking merge' '
++	GIT_SEQUENCE_EDITOR="echo \"merge -C $(git rev-parse HEAD) commit3\">" \
++		PATH="./test-bin:$PATH" git rebase -i --strategy=test \
++				--ignore-date --committer-date-is-author-date \
++				side side &&
++	test_ctime_is_atime -1 &&
++	test_ctime_is_ignored -1
++ '
++
+ # This must be the last test in this file
+ test_expect_success '$EDITOR and friends are unchanged' '
+ 	test_editor_unchanged
 -- 
 2.27.0
 
