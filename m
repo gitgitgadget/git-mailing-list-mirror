@@ -5,59 +5,59 @@ X-Spam-Level:
 X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11356C433E1
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC90EC433E3
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:11:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E046B20758
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:11:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C481720758
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 10:11:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PK3wHBrf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDMm3opO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729394AbgGMKK7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jul 2020 06:10:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44432 "EHLO
+        id S1729556AbgGMKLC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jul 2020 06:11:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728382AbgGMKK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jul 2020 06:10:57 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC288C061755
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:10:56 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id w3so12587970wmi.4
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:10:56 -0700 (PDT)
+        with ESMTP id S1729408AbgGMKLA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jul 2020 06:11:00 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9DDC061755
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:11:00 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id a6so15562292wrm.4
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 03:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=3PTj4VRENxzwWcqR4TZlHeHBhBiWUf/is80xJx6e5CY=;
-        b=PK3wHBrfvl8619ALBk7hUTzPZd0Ko4uoitBtdmADWWGJWU5X0N3jbcltbHX3myOIuO
-         5KYMR3MRFUynRmIfdLczgUw7mK38OPG9pImH5ZqsRaP8T9GTIymqdzJUHAb2FpPDqXuw
-         t8JqMiT5s+EcxLCxcQtK/kKs3WccU0So2cMqiWfdEZDojbhNbL3R1KuqIahEdUx3QJNv
-         56TSEqPAezK1U4/E8Wvme42RF/QhwTCaDRN5Oj/WI9QZOESo4ntPsNYK1x4pO77TjpGl
-         4SqiRcGfk+yYky639yVX19FwpDoJBJxzctOlalneyyyYubxHp2VvgAD/mL9REdsoyLCI
-         X5yw==
+        bh=svJ05EVtCQYdiwTXj6EcGRWszaHhcwFTfNHUnaxmh8g=;
+        b=PDMm3opOKsLx2OwEIf9GNLq9r7+YxN12An/BvF6DMFqy32cXKuxEbryzMDjP/6Qyn1
+         nOqZ3PzC92roz+P+eOcM0lZTZSKZfZRifUtDIupMChVKv3flcmh9XyYSbggrygeekjnC
+         GP8JDM/QuZh1gfpStW6lSeGVBMMq83ZMW4EbKfEzMPtNa/zjkoHEDeFd8TiF86tLGIBM
+         mjDtz084rfjP6qTXOkUsvz7MS4pGbRpBLqOLaaZkFR+gf1E99e7q+RoR/jGlz8WBSGTp
+         wmgDm9tuhUK0gc3VOTA80oEOHvP34fkS+IMu35i4FTVmA0E+feTZSnFHPWegqQKUekTt
+         uuqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=3PTj4VRENxzwWcqR4TZlHeHBhBiWUf/is80xJx6e5CY=;
-        b=HsbsnnV0HcN8NqBvmhMg7dakrjSOUv3Wj69DmKA504wopTtqM8NQiIsW3YS9WxmJmE
-         vEzYlZhzROHg5+AJ5PunuupX6waGO6VHxC+o4siLR/RTpTckmWkXJN2bsDRkDQGpGKr0
-         bF9FA6wAd3FPOAkUEsfAGq3xxBi4TcMnGiZo7zf3E3l09gKEwmo5ahz0bPnCckFb61kL
-         49Z7ptjc0njPs4WE5/qFojL/YrJcfZqq6WDfbdNMZ+ARzC8GxaE3MA3DU65H/c1YOv4L
-         hlRynmmVbbBW22BNK8RpDpbX82Me/LnNx+h6znoQJCLNT0RVLYc3dguvJEu2u2hiAiv3
-         bUnA==
-X-Gm-Message-State: AOAM533Lnjb9Ck1db4ZRHQG+g15ZACtvfXFsudAac4myE27tSH8oVcDg
-        SPqrMkDj8nbYUPYt4/WKALI=
-X-Google-Smtp-Source: ABdhPJwf7EZeojXD/zyihje4E5X51x9scJe0GfkqjPhgb5cPoHJaVk2T+curznzbQCj2x/A/sJSniQ==
-X-Received: by 2002:a1c:6805:: with SMTP id d5mr17539795wmc.19.1594635055524;
-        Mon, 13 Jul 2020 03:10:55 -0700 (PDT)
+        bh=svJ05EVtCQYdiwTXj6EcGRWszaHhcwFTfNHUnaxmh8g=;
+        b=eSMktr2LYonhlGpkRRtytTXlS4CNPWPLBomhTg9DgG6YIQBnW46UMTqUCB+A8wexfH
+         ZwsIUu+r9qLVR6OH6xuF8iHrwwrqGnfIIO/m5THJGk+vjT/V2+Lr7vKQlWHYH/gHY4iA
+         F53B/fwytiNgsJz/whgGMe3pLTH71Cdh/QNvEo/TuyxGOFZDSWemoc8pQcjvgK8QdL/z
+         d/Oj5BzU8hQ4NseseY+E/jazigXzqLlYL9smYHWeWYcA/UFiSMdAeRi7MJgZgsRkVF4s
+         fKQkM1/uiQcI10fWAGTnMYsypQWCa91mOMBPlknD6lAS/JwLA22T/5sa9OKOzlps4OWp
+         LwXw==
+X-Gm-Message-State: AOAM533jQvuDRoY3yHNmPJ/RFrxvRebXYmVbwnIQWzgtlvonHvzODsoz
+        TufIuf5s05ER1YT2Mf1Ls2M=
+X-Google-Smtp-Source: ABdhPJyNk9NM8mStsF27UqqbgqyeZJrgAbIrxYU18Qr3XXXbHpyCIqZZxqwkJHIHPMgYTwCu153LnQ==
+X-Received: by 2002:adf:cc85:: with SMTP id p5mr77842219wrj.273.1594635057873;
+        Mon, 13 Jul 2020 03:10:57 -0700 (PDT)
 Received: from localhost.localdomain (130.20.198.146.dyn.plus.net. [146.198.20.130])
-        by smtp.gmail.com with ESMTPSA id v7sm23811549wrp.45.2020.07.13.03.10.54
+        by smtp.gmail.com with ESMTPSA id v7sm23811549wrp.45.2020.07.13.03.10.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 03:10:55 -0700 (PDT)
+        Mon, 13 Jul 2020 03:10:57 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
@@ -66,9 +66,9 @@ To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH v6 3/5] sequencer: rename amend_author to author_to_free
-Date:   Mon, 13 Jul 2020 11:10:43 +0100
-Message-Id: <20200713101045.27335-4-phillip.wood123@gmail.com>
+Subject: [PATCH v6 5/5] rebase: add --reset-author-date
+Date:   Mon, 13 Jul 2020 11:10:45 +0100
+Message-Id: <20200713101045.27335-6-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200713101045.27335-1-phillip.wood123@gmail.com>
 References: <20200407141125.30872-1-phillip.wood123@gmail.com>
@@ -83,47 +83,125 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 
-The purpose of amend_author was to free() the malloc()'d string
-obtained from get_author() when amending a commit. But we can
-also use the variable to free() the author at our convenience.
-Rename it to convey this meaning.
+The previous commit introduced --ignore-date flag to rebase -i, but the
+name is rather vague as it does not say whether the author date or the
+committer date is ignored. Add an alias to convey the precise purpose.
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 ---
- sequencer.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/git-rebase.txt   |  1 +
+ builtin/rebase.c               |  4 +++-
+ t/t3436-rebase-more-options.sh | 34 +++++++++++++++++++++-------------
+ 3 files changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 368d397970..29f6d1bc39 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1335,7 +1335,7 @@ static int try_to_commit(struct repository *r,
- 	struct commit_extra_header *extra = NULL;
- 	struct strbuf err = STRBUF_INIT;
- 	struct strbuf commit_msg = STRBUF_INIT;
--	char *amend_author = NULL;
-+	char *author_to_free = NULL;
- 	const char *hook_commit = NULL;
- 	enum commit_msg_cleanup_mode cleanup;
- 	int res = 0;
-@@ -1357,7 +1357,7 @@ static int try_to_commit(struct repository *r,
- 			strbuf_addstr(msg, orig_message);
- 			hook_commit = "HEAD";
- 		}
--		author = amend_author = get_author(message);
-+		author = author_to_free = get_author(message);
- 		unuse_commit_buffer(current_head, message);
- 		if (!author) {
- 			res = error(_("unable to parse commit author"));
-@@ -1474,7 +1474,7 @@ static int try_to_commit(struct repository *r,
- 	free_commit_extra_headers(extra);
- 	strbuf_release(&err);
- 	strbuf_release(&commit_msg);
--	free(amend_author);
-+	free(author_to_free);
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index e2717e20e6..a5f82913fb 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -450,6 +450,7 @@ See also INCOMPATIBLE OPTIONS below.
+ 	date. This option implies --force-rebase.
  
- 	return res;
+ --ignore-date::
++--reset-author-date::
+ 	Instead of using the author date of the original commit, use
+ 	the current time as the	author date of the rebased commit.  This
+ 	option implies `--force-rebase`.
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 583ac96fc7..b126fbe940 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1505,8 +1505,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "committer-date-is-author-date",
+ 			 &options.committer_date_is_author_date,
+ 			 N_("make committer date match author date")),
+-		OPT_BOOL(0, "ignore-date", &options.ignore_date,
++		OPT_BOOL(0, "reset-author-date", &options.ignore_date,
+ 			 N_("ignore author date and use current date")),
++		OPT_HIDDEN_BOOL(0, "ignore-date", &options.ignore_date,
++				N_("synonym of --reset-author-date")),
+ 		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
+ 				  N_("passed to 'git apply'"), 0),
+ 		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
+diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
+index 0ede2b8900..5b8963272a 100755
+--- a/t/t3436-rebase-more-options.sh
++++ b/t/t3436-rebase-more-options.sh
+@@ -117,53 +117,61 @@ test_ctime_is_ignored () {
+ 	! grep -v +0000 authortime
  }
+ 
+-test_expect_success '--ignore-date works with apply backend' '
++test_expect_success '--reset-author-date works with apply backend' '
+ 	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+-	git rebase --apply --ignore-date HEAD^ &&
++	git rebase --apply --reset-author-date HEAD^ &&
+ 	test_ctime_is_ignored -1
+ '
+ 
+-test_expect_success '--ignore-date works with merge backend' '
++test_expect_success '--reset-author-date works with merge backend' '
+ 	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+-	git rebase --ignore-date -m HEAD^ &&
++	git rebase --reset-author-date -m HEAD^ &&
+ 	test_ctime_is_ignored -1
+ '
+ 
+-test_expect_success '--ignore-date works after conflict resolution' '
+-	test_must_fail git rebase --ignore-date -m \
++test_expect_success '--reset-author-date works after conflict resolution' '
++	test_must_fail git rebase --reset-author-date -m \
+ 		--onto commit2^^ commit2^ commit2 &&
+ 	echo resolved >foo &&
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	test_ctime_is_ignored -1
+ '
+ 
+-test_expect_success '--ignore-date works with rebase -r' '
++test_expect_success '--reset-author-date works with rebase -r' '
+ 	git checkout side &&
+ 	git merge --no-ff commit3 &&
+-	git rebase -r --root --ignore-date &&
++	git rebase -r --root --reset-author-date &&
+ 	test_ctime_is_ignored
+ '
+ 
+-test_expect_success '--ignore-date with --committer-date-is-author-date works' '
++test_expect_success '--reset-author-date with --committer-date-is-author-date works' '
+ 	test_must_fail git rebase -m --committer-date-is-author-date \
+-		--ignore-date --onto commit2^^ commit2^ commit3 &&
++		--reset-author-date --onto commit2^^ commit2^ commit3 &&
+ 	git checkout --theirs foo &&
+ 	git add foo &&
+ 	git rebase --continue &&
+ 	test_ctime_is_atime -2 &&
+ 	test_ctime_is_ignored -2
+ '
+ 
+-test_expect_success '--ignore-date --committer-date-is-author-date works when forking merge' '
++test_expect_success '--reset-author-date --committer-date-is-author-date works when forking merge' '
+ 	GIT_SEQUENCE_EDITOR="echo \"merge -C $(git rev-parse HEAD) commit3\">" \
+ 		PATH="./test-bin:$PATH" git rebase -i --strategy=test \
+-				--ignore-date --committer-date-is-author-date \
+-				side side &&
++				--reset-author-date \
++				--committer-date-is-author-date side side &&
+ 	test_ctime_is_atime -1 &&
+ 	test_ctime_is_ignored -1
+  '
+ 
++test_expect_success '--ignore-date is an alias for --reset-author-date' '
++	git commit --amend --date="$GIT_AUTHOR_DATE" &&
++	git rebase --apply --ignore-date HEAD^ &&
++	git commit --allow-empty -m empty --date="$GIT_AUTHOR_DATE" &&
++	git rebase -m --ignore-date HEAD^ &&
++	test_ctime_is_ignored -2
++'
++
+ # This must be the last test in this file
+ test_expect_success '$EDITOR and friends are unchanged' '
+ 	test_editor_unchanged
 -- 
 2.27.0
 
