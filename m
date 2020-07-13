@@ -2,51 +2,51 @@ Return-Path: <SRS0=B2P3=AY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C69C9C433E2
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C244FC4345D
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97554206D9
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BFB4206D9
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="k+QY44vm"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="U45i34NF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728720AbgGMCuA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 22:50:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40760 "EHLO
+        id S1728762AbgGMCuF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 22:50:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40624 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728479AbgGMCtn (ORCPT
+        by vger.kernel.org with ESMTP id S1728499AbgGMCtn (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:43 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 39E9C60A6E;
-        Mon, 13 Jul 2020 02:49:37 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 52D8C60A76;
+        Mon, 13 Jul 2020 02:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594608577;
-        bh=/X+wx4cEA1CTt7F4mr6dLCr9FnNmF24HxacG5rvkHf4=;
+        s=default; t=1594608579;
+        bh=GA9vs9IiyAAK95Fl2gec3JKiN39VQ/hmb0NCb5N6xQI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=k+QY44vmTiuTDRm+CnqMC+bOa7xydtg+g0xdyGNPNKEy8xjjTSpbWS10aosirdfnW
-         ATWbZALbD6xQd/JXJI6TBSUhdDjJucDe1ZFtcnsYqejnQMUVnTJNMZ0qQns7X9004c
-         KlJ/pUj1AM7nhgU0hFHvQxogTrn9ICAFhYG3Zmmq8S4Z/aoLByghxSaMs5VtBouHzv
-         WaKyiVoSj29G/nRE7Np8jk5SrvBezCE7nAYPzwtWFPFYjLfa/uIbiFL1cFs9a9SDTl
-         4m/NuzKK8F0mfopmdubzGXYDqIADtZqW8Rdi99EHRJRcBsbhygSEJK8DDAY/i1UZ0a
-         Giyum82VE2tfR9wxIW52oVJqBwYthHnGJiaRI6CYpsJfuACMU+qd6uNf5FNmFfUNRM
-         KMGl+si91L57sgJEgyQWs1T9mSsqvdWww9PYeZRwQfJMxjvIQHRcbMEyuLO2Pgo516
-         WDVU5Rrxhn5BonG6mX5w04vdkObY7zWgJsnuHSmwqLzM8+sPfJq
+        b=U45i34NFtix/zkz0HNlbDF9NrhalbAAfiECl3egcH8JRNmgagfnneIDqBf7kJ+5Gf
+         ErYrzK5WqILJwbKrtDJsBIy4kxm0Qcxt6wbNfDu5nQty3qUfZmtJc3enYvE38QH5Ot
+         iPfn5sGj1lcNz7xKAVwzQ59uzW9jlY0dKOeg6C4bsPttHCDYFbGYGt0ESEF5qdBmEI
+         yOTVV77b3L40vegnAXVECeYbV54wbUU4WL8X2KLaPdsXw4Z0OAFuzs2n6YBXPLXFC3
+         7dKswIBodcMJAWH/Ys6vS9mFR+D0aXfqzTv9rp4q1mt5YE1UiU1GhWuHcPRQcn4xlb
+         Vsle9kneyKVpfZxWHtk8Jy9RxiMl0JzjRVJAscvZhZ35PAR/issBKNY8rsexXYf8Rk
+         diCler+ei4xK+h9FVVLPRxgtr81Bnbw3Cq3MHcGiHW66L9MeRNSQH7BVqD47rihOmX
+         Wi1ESQRnKOqtozCcgUKKlEGKjhe0/7xX1h+ykYjSMMGRKvf0UBb
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 29/39] http-fetch: set up git directory before parsing pack hashes
-Date:   Mon, 13 Jul 2020 02:48:59 +0000
-Message-Id: <20200713024909.3714837-30-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 33/39] Enable SHA-256 support by default
+Date:   Mon, 13 Jul 2020 02:49:03 +0000
+Message-Id: <20200713024909.3714837-34-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
 References: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
@@ -57,39 +57,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In dd4b732df7 ("upload-pack: send part of packfile response as uri",
-2020-06-10), the git http-fetch code learned how to take  ac --packfile
-option.  This option takes an argument, which is the name of a packfile
-hash, and parses it using parse_oid_hex.  It does so before calling
-setup_git_directory.
+Now that the we have a complete SHA-256 implementation in Git, let's
+enable it so people can use it.  Remove the ENABLE_SHA256 define
+constant everywhere it's used.  Add tests for initializing a repository
+with SHA-256.
 
-However, in a SHA-256 repository this fails to work, since we have not
-set the hash algorithm in use and parse_oid_hex fails as a consequence.
-To ensure that we can parse packfile hashes of the right length, let's
-set up the git directory before we start parsing arguments.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- http-fetch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/init-db.c |  5 -----
+ config.mak.dev    |  2 --
+ repository.c      |  4 ----
+ t/t0001-init.sh   | 31 +++++++++++++++++++++++++++++++
+ 4 files changed, 31 insertions(+), 11 deletions(-)
 
-diff --git a/http-fetch.c b/http-fetch.c
-index 1df376e745..8db7eb669f 100644
---- a/http-fetch.c
-+++ b/http-fetch.c
-@@ -86,6 +86,8 @@ int cmd_main(int argc, const char **argv)
- 	int packfile = 0;
- 	struct object_id packfile_hash;
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index cee64823cb..f70076d38e 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -183,11 +183,6 @@ void initialize_repository_version(int hash_algo)
+ 	char repo_version_string[10];
+ 	int repo_version = GIT_REPO_VERSION;
  
-+	setup_git_directory();
-+
- 	while (arg < argc && argv[arg][0] == '-') {
- 		const char *p;
- 
-@@ -115,8 +117,6 @@ int cmd_main(int argc, const char **argv)
- 	if (argc != arg + 2 - (commits_on_stdin || packfile))
- 		usage(http_fetch_usage);
- 
--	setup_git_directory();
+-#ifndef ENABLE_SHA256
+-	if (hash_algo != GIT_HASH_SHA1)
+-		die(_("The hash algorithm %s is not supported in this build."), hash_algos[hash_algo].name);
+-#endif
 -
- 	git_config(git_default_config, NULL);
+ 	if (hash_algo != GIT_HASH_SHA1)
+ 		repo_version = GIT_REPO_VERSION_READ;
  
- 	if (packfile) {
+diff --git a/config.mak.dev b/config.mak.dev
+index cd4a82a9eb..89b218d11a 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -16,8 +16,6 @@ DEVELOPER_CFLAGS += -Wstrict-prototypes
+ DEVELOPER_CFLAGS += -Wunused
+ DEVELOPER_CFLAGS += -Wvla
+ 
+-DEVELOPER_CFLAGS += -DENABLE_SHA256
+-
+ ifndef COMPILER_FEATURES
+ COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
+ endif
+diff --git a/repository.c b/repository.c
+index 6f7f6f002b..a4174ddb06 100644
+--- a/repository.c
++++ b/repository.c
+@@ -89,10 +89,6 @@ void repo_set_gitdir(struct repository *repo,
+ void repo_set_hash_algo(struct repository *repo, int hash_algo)
+ {
+ 	repo->hash_algo = &hash_algos[hash_algo];
+-#ifndef ENABLE_SHA256
+-	if (hash_algo != GIT_HASH_SHA1)
+-		die(_("The hash algorithm %s is not supported in this build."), repo->hash_algo->name);
+-#endif
+ }
+ 
+ /*
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 6d2467995e..34d2064660 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -441,6 +441,37 @@ test_expect_success 're-init from a linked worktree' '
+ 	)
+ '
+ 
++test_expect_success 'init honors GIT_DEFAULT_HASH' '
++	GIT_DEFAULT_HASH=sha1 git init sha1 &&
++	git -C sha1 rev-parse --show-object-format >actual &&
++	echo sha1 >expected &&
++	test_cmp expected actual &&
++	GIT_DEFAULT_HASH=sha256 git init sha256 &&
++	git -C sha256 rev-parse --show-object-format >actual &&
++	echo sha256 >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'init honors --object-format' '
++	git init --object-format=sha256 explicit &&
++	git -C explicit rev-parse --show-object-format >actual &&
++	echo sha256 >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'extensions.objectFormat is not honored with repo version 0' '
++	git init --object-format=sha256 explicit-v0 &&
++	test_config -C explicit-v0 core.repositoryformatversion 0 &&
++	git -C explicit-v0 rev-parse --show-object-format >actual &&
++	echo sha1 >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'init rejects attempts to initialize with different hash' '
++	test_must_fail git -C sha1 init --object-format=sha256 &&
++	test_must_fail git -C sha256 init --object-format=sha1
++'
++
+ test_expect_success MINGW 'core.hidedotfiles = false' '
+ 	git config --global core.hidedotfiles false &&
+ 	rm -rf newdir &&
