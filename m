@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F473C43468
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BA56C43463
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7841E206B6
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDA2A206B6
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 02:50:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uo3CHF4F"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="o8x2eFyA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728541AbgGMCtm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jul 2020 22:49:42 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40638 "EHLO
+        id S1728833AbgGMCuU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jul 2020 22:50:20 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40684 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728408AbgGMCtf (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:35 -0400
+        by vger.kernel.org with ESMTP id S1728118AbgGMCtm (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 12 Jul 2020 22:49:42 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3286A60A67;
-        Mon, 13 Jul 2020 02:49:34 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B6F1060A73;
+        Mon, 13 Jul 2020 02:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1594608574;
-        bh=2Uk60eVF35Xko9Fm5hChI+Nwm1x48yRPe8IdOh07YRA=;
+        s=default; t=1594608578;
+        bh=rRMHiNx1BObyJZy0Sl4dkfBzRMv2sX2yJcxoAHcDbZ0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=uo3CHF4Fq6kzt7kIeChDRvRzbjWQOgWklmvDeFBtgqN+shnZmkq0huCZ8lfMxGEJS
-         NAweMA6QYUv4u3UNdNH5rQFqAq1+G1pYNKKKr7tfVrESBMIbiR3zDAiZwq6PDWVUBk
-         YrETTFk0rLXdtTbQ8V99ZM1VUnLwtQW8uTZdiHpepU0hd1wXQWlMkz/2LSd3j2KLIq
-         7QMtEvABBySKTp9ttno3pCnRfg1xFLI6LCbG4XvY9bi27f+G4QtQI2WQerwKEoSsZo
-         yDhOndw/YgjnAmVFTKOfpXa7AGWeppDBwE88pbwSdZAAfmmg+w+yKeYI9mwwEKHzGq
-         40gi9dwNmyU2EshfvJ3NdWWXC/BH+WP5ocPzuMm0GNkOnNdEECLxii9zFuVwJw/NPd
-         avzgGMYNj6e7JomPfZc2UNeJU+rCpuFhtFrCKPVzjtiKs/aPUuX3SzK+jIRGNo3S4P
-         8naGdh4TAgtDWNzjZ7aM2mIWxV3KXYHE433jw5t+wjsMsYEfHSS
+        b=o8x2eFyAxdrHl4Grp3UEjP35F5jFGMtVD8mhvD81oy6iVjAjIs4ApKa6mJnBfS/zi
+         WxVlqmcm/KMq6OTJJVu9q+LDBlAKc1Nfq6pCIDseMC7EqVz0aiV/Vk3oggDMAgtcDF
+         TYONp59Hm8BCUTNIdGWgqvb4n9cm7YD8uZ/YWrE1lVsgKzgE1QrhptTmPVQR8OQ6R5
+         Scu/Kw5oKAyqmGXkeLBgNZOM3BU+iacVgUGk5bmVdYK01CUCZx7YakkBjQcB2z7ddR
+         3el5GYgdKtNTofjiXjV4uLJ40WGPPSFcyjd1KeZpLllkVwfhOs1e/CiPaaRmSPs4R2
+         h1Ukxoe2Ba0ivsrLKppGUwiYHQ3z1txN3ckBgrbiBXJiYCbzT+i74YkxBkfKezGa5R
+         oMKQuklKPizvZL6lukuz9S8dQlp/sjK1ugWl+QBoMwCNTV7U7P+W+SmRiGMRbRzX7k
+         sf9bJN2aMEektFhuGHYPLW6Hk+Eb9ZpqJgGjUTss3uqCi8pu9y1
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 23/39] t9301: make hash size independent
-Date:   Mon, 13 Jul 2020 02:48:53 +0000
-Message-Id: <20200713024909.3714837-24-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 30/39] builtin/verify-pack: implement an --object-format option
+Date:   Mon, 13 Jul 2020 02:49:00 +0000
+Message-Id: <20200713024909.3714837-31-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.27.0.353.gb9a2d1a020
 In-Reply-To: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
 References: <20200713024909.3714837-1-sandals@crustytoothpaste.net>
@@ -57,84 +57,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using a hard-coded all-zeros object ID, use $ZERO_OID.
-Compute the length of the object IDs in use and use this instead of
-hard-coding the constant 40.
+A recently added test in t5702 started using git verify-pack outside of
+a repository.  While this poses no problems with SHA-1, with SHA-256 we
+implicitly rely on the setup of the repository to initialize our hash
+algorithm settings.
+
+Since we're not in a repository here, we need to provide git verify-pack
+help to set things up properly.  git index-pack already knows an
+--object-format option, so let's accept one as well and pass it down to
+our git index-pack invocation.  Since this argument is optional, let's
+dynamically determine the proper location to insert it into the array.
+Finally, let's make t5702 pass the proper argument on down to its git
+verify-pack caller.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9301-fast-import-notes.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/verify-pack.c  | 25 +++++++++++++++++--------
+ t/t5702-protocol-v2.sh |  2 +-
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
-index ca223dca98..9d1aaac980 100755
---- a/t/t9301-fast-import-notes.sh
-+++ b/t/t9301-fast-import-notes.sh
-@@ -71,7 +71,7 @@ EOF
- INPUT_END
+diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
+index c2a1a5c504..c4090102a9 100644
+--- a/builtin/verify-pack.c
++++ b/builtin/verify-pack.c
+@@ -7,21 +7,27 @@
+ #define VERIFY_PACK_VERBOSE 01
+ #define VERIFY_PACK_STAT_ONLY 02
  
- test_expect_success 'set up master branch' '
--
-+	test_oid_init &&
- 	git fast-import <input &&
- 	git whatchanged master
- '
-@@ -470,12 +470,13 @@ test_expect_success 'add lots of commits and notes' '
- '
+-static int verify_one_pack(const char *path, unsigned int flags)
++static int verify_one_pack(const char *path, unsigned int flags, const char *hash_algo)
+ {
+ 	struct child_process index_pack = CHILD_PROCESS_INIT;
+-	const char *argv[] = {"index-pack", NULL, NULL, NULL };
+-	struct strbuf arg = STRBUF_INIT;
++	const char *argv[] = {"index-pack", NULL, NULL, NULL, NULL };
++	struct strbuf arg = STRBUF_INIT, hash_arg = STRBUF_INIT;
+ 	int verbose = flags & VERIFY_PACK_VERBOSE;
+ 	int stat_only = flags & VERIFY_PACK_STAT_ONLY;
+ 	int err;
++	int argno = 1;
  
- test_expect_success 'verify that lots of notes trigger a fanout scheme' '
-+	hexsz=$(test_oid hexsz) &&
+ 	if (stat_only)
+-		argv[1] = "--verify-stat-only";
++		argv[argno++] = "--verify-stat-only";
+ 	else if (verbose)
+-		argv[1] = "--verify-stat";
++		argv[argno++] = "--verify-stat";
+ 	else
+-		argv[1] = "--verify";
++		argv[argno++] = "--verify";
++
++	if (hash_algo) {
++		strbuf_addf(&hash_arg, "--object-format=%s", hash_algo);
++		argv[argno++] = hash_arg.buf;
++	}
  
- 	# None of the entries in the top-level notes tree should be a full SHA1
- 	git ls-tree --name-only refs/notes/many_notes |
- 	while read path
+ 	/*
+ 	 * In addition to "foo.pack" we accept "foo.idx" and "foo";
+@@ -31,7 +37,7 @@ static int verify_one_pack(const char *path, unsigned int flags)
+ 	if (strbuf_strip_suffix(&arg, ".idx") ||
+ 	    !ends_with(arg.buf, ".pack"))
+ 		strbuf_addstr(&arg, ".pack");
+-	argv[2] = arg.buf;
++	argv[argno++] = arg.buf;
+ 
+ 	index_pack.argv = argv;
+ 	index_pack.git_cmd = 1;
+@@ -60,12 +66,15 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix)
+ {
+ 	int err = 0;
+ 	unsigned int flags = 0;
++	const char *object_format = NULL;
+ 	int i;
+ 	const struct option verify_pack_options[] = {
+ 		OPT_BIT('v', "verbose", &flags, N_("verbose"),
+ 			VERIFY_PACK_VERBOSE),
+ 		OPT_BIT('s', "stat-only", &flags, N_("show statistics only"),
+ 			VERIFY_PACK_STAT_ONLY),
++		OPT_STRING(0, "object-format", &object_format, N_("hash"),
++			   N_("specify the hash algorithm to use")),
+ 		OPT_END()
+ 	};
+ 
+@@ -75,7 +84,7 @@ int cmd_verify_pack(int argc, const char **argv, const char *prefix)
+ 	if (argc < 1)
+ 		usage_with_options(verify_pack_usage, verify_pack_options);
+ 	for (i = 0; i < argc; i++) {
+-		if (verify_one_pack(argv[i], flags))
++		if (verify_one_pack(argv[i], flags, object_format))
+ 			err = 1;
+ 	}
+ 
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 1b54c35b01..7fc22171e7 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -829,7 +829,7 @@ test_expect_success 'part of packfile response provided as URI' '
+ 	# Ensure that my-blob and other-blob are in separate packfiles.
+ 	for idx in http_child/.git/objects/pack/*.idx
  	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -518,7 +519,7 @@ test_expect_success 'verify that importing a notes tree respects the fanout sche
- 	git ls-tree --name-only refs/notes/other_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -593,7 +594,7 @@ test_expect_success 'verify that changing notes respect existing fanout' '
- 	git ls-tree --name-only refs/notes/many_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -616,7 +617,7 @@ i=$(($num_commits - $remaining_notes))
- for sha1 in $(git rev-list -n $i refs/heads/many_commits)
- do
- 	cat >>input <<INPUT_END
--N 0000000000000000000000000000000000000000 $sha1
-+N $ZERO_OID $sha1
- INPUT_END
- done
- 
-@@ -646,7 +647,6 @@ test_expect_success 'remove lots of notes' '
- '
- 
- test_expect_success 'verify that removing notes trigger fanout consolidation' '
--
- 	# All entries in the top-level notes tree should be a full SHA1
- 	git ls-tree --name-only -r refs/notes/many_notes |
- 	while read path
-@@ -656,7 +656,7 @@ test_expect_success 'verify that removing notes trigger fanout consolidation' '
- 		test "$path" = "deadbeef" && continue
- 		test "$path" = "de/adbeef" && continue
- 
--		if test $(expr length "$path") -ne 40
-+		if test $(expr length "$path") -ne $hexsz
- 		then
- 			return 1
- 		fi
+-		git verify-pack --verbose $idx >out &&
++		git verify-pack --object-format=$(test_oid algo) --verbose $idx >out &&
+ 		{
+ 			grep "^[0-9a-f]\{16,\} " out || :
+ 		} >out.objectlist &&
