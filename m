@@ -2,124 +2,104 @@ Return-Path: <SRS0=B2P3=AY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69A66C433E1
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD22CC433DF
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:48:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48267206F5
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:45:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 914A0206F5
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:48:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z4//uxum"
+	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="Ma7ZI7b4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726775AbgGMTpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jul 2020 15:45:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60200 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbgGMTpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jul 2020 15:45:54 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 974D667A09;
-        Mon, 13 Jul 2020 15:45:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=cem4rrxLGFlx
-        bu5MhZu14o80/CY=; b=Z4//uxumds88UE77gqRJMrWoO7BR0tmUCOT6DIO1rKCE
-        GayqWVIACn847+KXqec1+3GdxWVEKss3fPb57DaRUtsQOcEM1hssObinmlT3A3Ex
-        kF5OR/nHT6Xyj49Hvq89bgAw4e+in1jjDSnBLyJILU99SG20TBHuqyT1+rxHKlU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=oKEhHI
-        jsWCfhUraawnFfLsW8qLjaIM/k9W8fwaeRxDcklAXAZZp/dmj2dPjA8ofko/vHWO
-        Mc9lMOmSPnXxc5ehFsWZUM/WL1AVUnRlMSabVcEypGb9DLF/8/uObywGgOCPRqKw
-        e4gJ6aFvJcoXXRjnYb3x9X5PfeSyCfSJbxW1k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F2A267A08;
-        Mon, 13 Jul 2020 15:45:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 03CFC67A07;
-        Mon, 13 Jul 2020 15:45:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH 1/2] git-diff.txt: don't mark required argument as optional
-References: <cover.1594666410.git.martin.agren@gmail.com>
-        <77e4442ae51a968d460b2329fc39b6a5e96902b0.1594666410.git.martin.agren@gmail.com>
-Date:   Mon, 13 Jul 2020 12:45:49 -0700
-In-Reply-To: <77e4442ae51a968d460b2329fc39b6a5e96902b0.1594666410.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Mon, 13 Jul 2020 21:10:08
- +0200")
-Message-ID: <xmqq365vnqqa.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7424EC6E-C541-11EA-97BA-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1726617AbgGMTsz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jul 2020 15:48:55 -0400
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90]:48139 "EHLO
+        smtp-fw-6002.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbgGMTsz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jul 2020 15:48:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1594669735; x=1626205735;
+  h=from:to:subject:date:message-id:
+   content-transfer-encoding:mime-version;
+  bh=WtmxGczbUCrTP5gADH8fUSjctlwJWWAJz7C4cv5hVzY=;
+  b=Ma7ZI7b45ZjveXzTJxOkwOyL1B9vc0sXtTCg6ZWngsnpNiJjDf2q3M0J
+   R/YVJjsZ/g73PhJhmBgwhyfw7WCOcQINZDTzc7nws7CLH68ij0qN1/O1t
+   w2iSumnvXnghhuy1wnb51Gf94483ne75MAAb0mhVkG5uycjB3zy3DrN4y
+   A=;
+IronPort-SDR: /RRfw6nYcyJo+GxMvK0MRMDPAFLi1dmJLtM3yDQc0V8QCYOVCi8b+29xgf3AWZo5rcY3DslxZ8
+ ySLkqm4+Qugg==
+X-IronPort-AV: E=Sophos;i="5.75,348,1589241600"; 
+   d="scan'208";a="41647269"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-2a-1c1b5cdd.us-west-2.amazon.com) ([10.43.8.6])
+  by smtp-border-fw-out-6002.iad6.amazon.com with ESMTP; 13 Jul 2020 19:48:53 +0000
+Received: from EX13MTAUWA001.ant.amazon.com (pdx4-ws-svc-p6-lb7-vlan2.pdx.amazon.com [10.170.41.162])
+        by email-inbound-relay-2a-1c1b5cdd.us-west-2.amazon.com (Postfix) with ESMTPS id D2F23A1C54
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 19:48:52 +0000 (UTC)
+Received: from EX13D10UWA003.ant.amazon.com (10.43.160.248) by
+ EX13MTAUWA001.ant.amazon.com (10.43.160.58) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Mon, 13 Jul 2020 19:48:50 +0000
+Received: from EX13D10UWA004.ant.amazon.com (10.43.160.64) by
+ EX13D10UWA003.ant.amazon.com (10.43.160.248) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Mon, 13 Jul 2020 19:48:50 +0000
+Received: from EX13D10UWA004.ant.amazon.com ([10.43.160.64]) by
+ EX13D10UWA004.ant.amazon.com ([10.43.160.64]) with mapi id 15.00.1497.006;
+ Mon, 13 Jul 2020 19:48:50 +0000
+From:   "Peterson, Alex" <alexpete@amazon.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Temporary credentials timeout during long operations
+Thread-Topic: Temporary credentials timeout during long operations
+Thread-Index: AdZZS2dK0GgPJ4/xQ12KUmHdKoU5yg==
+Date:   Mon, 13 Jul 2020 19:48:50 +0000
+Message-ID: <18381efb749d43d097665960021a76ef@EX13D10UWA004.ant.amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.43.161.203]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+Greetings,  recently I've run into an issue where long push operations fail=
+ when using a credential helper like the AWS CodeCommit helper because it p=
+rovides time-limited credentials which expire during the operation.  Is the=
+re an existing method to enforce refreshing credentials from a credential h=
+elper on the client or should I go down the path of creating a credential.t=
+imeout feature that automatically refills credentials from helpers during l=
+ong operations to avoid this issue?
 
-> Commit b7e10b2ca2 ("Documentation: usage for diff combined commits",
-> 2020-06-12) modified the synopsis by adding an optional "[<commit>...]"
-> to
->
->   'git diff' [<options>] <commit> <commit> [--] [<path>...]
->
-> to effectively add
->
->   'git diff' [<options>] <commit> <commit>... <commit> [--] [<path>...]
->
-> as another valid invocation. Which makes sense.
->
-> Further down, in the description, it left the existing entry for
->
->   'git diff' [<options>] <commit> <commit> [--] [<path>...]
->
-> intact and added a new entry on
->
->   'git diff' [<options>] <commit> [<commit>...] <commit> [--] [<path>..=
-.]
->
-> where it says that "[t]his form is to view the results of a merge
-> commit" and details how "the first listed commit must be the merge
-> itself". But one possible instantiation of this form is `git diff
-> <commit> <commit>` for which the added text doesn't really apply.
->
-> Remove the brackets so that we lose this overlap between the two
-> descriptions. We can still use the more compact representation in the
-> synopsis.
->
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
->  Documentation/git-diff.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-> index 1018110ddc..c613e71ca4 100644
-> --- a/Documentation/git-diff.txt
-> +++ b/Documentation/git-diff.txt
-> @@ -69,7 +69,7 @@ files on disk.
->  	one side is omitted, it will have the same effect as
->  	using HEAD instead.
-> =20
-> -'git diff' [<options>] <commit> [<commit>...] <commit> [--] [<path>...=
-]::
-> +'git diff' [<options>] <commit> <commit>... <commit> [--] [<path>...]:=
-:
+Steps to reproduce:
+1. Create a repository with LFS
+2. Add a large file that will take a long time to push (long enough for the=
+ credentials to expire)
+3. Enable a helper that provides temporary credentials=20
+4. Set a remote that uses HTTPS and git push
 
-Thanks.
+All initial HTTPS commands authenticate OK and the LFS file uploads fine bu=
+t by the time it is done, the credentials have expired so the final git-rec=
+eive-pack fails and the entire push operation fails.
 
-> =20
->  	This form is to view the results of a merge commit.  The first
->  	listed <commit> must be the merge itself; the remaining two or
+> POST /v1/repos/example/git-receive-pack HTTP/1.1
+< HTTP/1.1 403=20
+error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403=20
+fatal: the remote end hung up unexpectedly=20
+
+For testing purposes I modified post_rpc() so that it always requests new c=
+redentials before every HTTPS request, and was able to push any number of l=
+arge files.
+
+SSH works fine (with keepalives enabled) and so does HTTPS with a permanent=
+ username/password, it's just the credential helpers that provide time-limi=
+ted credentials.
+
+Thoughts?
