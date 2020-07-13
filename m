@@ -2,137 +2,150 @@ Return-Path: <SRS0=B2P3=AY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DATE_IN_PAST_24_48,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FB58C433DF
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EF2EC433E0
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:41:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E6E82067D
-	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:38:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B8DA206F5
+	for <git@archiver.kernel.org>; Mon, 13 Jul 2020 19:41:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="DaNvStw8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vak+ZLin"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726460AbgGMTii (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jul 2020 15:38:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:42139 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726356AbgGMTii (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jul 2020 15:38:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594669105;
-        bh=2cqMFw5lS0dkMuIa/W8e072/bjvYbsG+COvB27DR3Ic=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=DaNvStw8M3XJpZP++yMUPvhav6QueKVS/mj1Of7Xkf/ip0T9VL5o1su1JLn/sbmA4
-         JMlC6crjxOcg78gHxFojegCDHx/ofL+jaqlcs7Zm6JMsBvjOII0ogs8xTWiI6in/Vv
-         w6W4nD3qBPJrHjuKg1kk/8hsAXrbr9fj1KdJpuR0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.26.78] ([89.1.215.195]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MatVb-1kSkTS04hH-00cMkb; Mon, 13
- Jul 2020 21:38:25 +0200
-Date:   Sun, 12 Jul 2020 10:19:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Edward Thomson <ethomson@edwardthomson.com>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Don Goodman-Wilson <don@goodman-wilson.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Matt Rogers <mattr94@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v4 0/9] Allow overriding the default name of the default
- branch
-In-Reply-To: <CA+WKDT2DV6ymu-AG9B2h34=K+4KW7tcCpAfTV-rTdifqfS7R=g@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007121007440.50@tvgsbejvaqbjf.bet>
-References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com> <pull.656.v4.git.1593009996.gitgitgadget@gmail.com> <20200629224113.GC9782@camp.crustytoothpaste.net> <CA+WKDT2DV6ymu-AG9B2h34=K+4KW7tcCpAfTV-rTdifqfS7R=g@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726356AbgGMTlY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jul 2020 15:41:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49758 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbgGMTlX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jul 2020 15:41:23 -0400
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1A23C061755
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 12:41:23 -0700 (PDT)
+Received: by mail-qt1-x841.google.com with SMTP id j10so10933544qtq.11
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 12:41:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=YYD8JvaqV516Pa2AZZUa6lTWu5m2yknTuDC25SnE7AI=;
+        b=vak+ZLinPZoiBFfkZZasO57K6E2d03lepXJNB1GZPwb2cIslP+zsd4coDKDbnjJkOT
+         tPWZrtBlAJ/PgBgoZPSuPTX1nJD919ApW6kwtBWhlQmP8fgMGdcwJx/CbNbHNKhlLBZB
+         HfCmAm9cEhfkTkFEXkjrjrvI6eHa60dPg4j3B61QIVqXBCEZgRgQrR1JLe3PTQpYxT+q
+         dXYmZkyDqJ2S+3/k5EwSwVOtUAdYMW3czDyn9jNDAZKiV0cHrQGUYdUynumGElhMJos2
+         5y3JW2xykaYGgMh6nRxD3TLRcMClv50/DZX7CRLu6TxG1AaabVf2TKh+/FzUnIhjB2io
+         4+PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=YYD8JvaqV516Pa2AZZUa6lTWu5m2yknTuDC25SnE7AI=;
+        b=eHcESx4kya3unpdbMLo7l+eVds4QkleZRMGGgYf4W0j229p8ns8AoyQJSziH2QtDjV
+         956pVeLU3HyBsGYKnTGy3Gvl1WhJYgXbrVJh3rCHwOgBJbooM6jkka8saNP3iPN0F0hl
+         pLANV0lGxyp3Z0iFhyDuaj/vUiLKzQoN5BKnfWBX3DjsfK2bNJgXR/7IJ8m6sg/WGjOm
+         TmehUmF2bjMYKJjf3d/+IxkpxR9dGed46So6Sj3m8G4gMeVe47M92vXLNLmhlBvfQT+r
+         iIxpBatA1m1DVQZ/l7deyDbbWYM2tFZ5Snf90bQg8zURx4MB9DzprqwEG8Hqi+0OqXbY
+         igAQ==
+X-Gm-Message-State: AOAM5300qfnhuytO3ampPsCSvlps1sOqdLBk8bQuQpGKBdGZ6u/m3uEi
+        nAuL5f8HVN8o/h4yUcgGDP4=
+X-Google-Smtp-Source: ABdhPJwWVnHZKws2j0iaFpfWvxNWD7LRBAlmv84RvMl+HLdthwLQe1tlBEm24JlnZPOyIx7U/GlsRA==
+X-Received: by 2002:aed:247a:: with SMTP id s55mr987030qtc.247.1594669282505;
+        Mon, 13 Jul 2020 12:41:22 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id t35sm21528502qth.79.2020.07.13.12.41.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jul 2020 12:41:21 -0700 (PDT)
+Subject: Re: [PATCH] setup: warn if extensions exist on old format
+To:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, delphij@google.com,
+        peff@peff.net, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.674.git.1594668051847.gitgitgadget@gmail.com>
+ <20200713193405.GC77607@syl.lan>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <95c338d0-dbf0-669d-59a3-8c2d6c87c8fc@gmail.com>
+Date:   Mon, 13 Jul 2020 15:41:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zslolk39pLEp0LpNc47II5CD45Z0U+xzg1F2WN1nqj4GCGHrpYW
- IELTLm3uTC06rQqaClva2a3lLc30nFK7rVK8C37P1T62lLxvsVr/oEio6hTFht/QTA2BUeV
- vgpgS36KaMKAZVoIs0U3I6ZXdmeJLdRC5xY/lInH/mSd6G534g7QbLRQaaPFwg3Ob+iFUOW
- JNvRq8a7nREOAhcpePhqA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tzGYA8NRsxo=:FlfI81Bye/ViLz5m3Kf3Yx
- Sh3H+ARMXQNpv1dx1skbwkaGUs7sYfLCmGjugqs0kOp3ZXzbSCgdiPoQL1QNtVtbR+gQjXLCC
- BPH1gpmfHJGX+9FOb/Nem1GlgqklEcqJ7VqtmkiW+BMFxuXMzfdLzMFbup+OZBp4elk06n2Z+
- LnGqbygmaItm2FF3lxUUjgNltY4h/8oX0K8dc/BfIbd0uvAgeNCk281kxGWkyQy3JdzIIHVli
- m2NSytUbK7jZAmB27P7rm6/2tomhksykUxLP5+YtygUs9B4AU+jCPhF4gmFhnfUE90VT3AIwf
- eO3Hia42dnl2qd+2U9xjc5xW/V/7IyteKGn9RNw2HgiY1fhcf5pE0IVfPiM12HoFn+3+fHlAZ
- pV+NDSteQNgrJT0er4TGeIG15BcN/wWPZIW0CkerluO5LAZARtOW78Ft2NnHjeAC+WXXyAavM
- r45E0hCBy/91H3W564fD34l5Cx90zMQnqh5ikpK1bgYhZpjJgQJAGhmLwtIjLR6r2V+T2Al5z
- 2AJ1Q7IX9gswn4x03TWrre2Xe6syyldy4u4WzMQWfeJhJeaZIsqJoO9/HiVMYX1KHiQnslJJV
- rhBBKTDAAFCmvvy5lD6JtCVJsinl/qNe01+n/0PPfJxidwrGTbLwJnj6lFpk5q6F3WJAl0wUE
- OGWjuWUOLd+hu5+5Lu+zJVvUe5e15WLGyZ/RV0R4ih40vGvWjYhWthPLAdRRyI8y7sCyFzU6g
- N3G+BUu3kjHRbc62tIYcwzr6K2MXDZKoh/aNm9qQ8w5co9jICjSr7ZbTNI4vUruupMG4Yb/jR
- 1p0r6W+Qkpt9A6ibWF5oH7fvY1psCUJ60lfcnxSh4VZ1d3tMmal/Zq2vco3Uhil91pgfdIRNt
- mED7biEcvpdZPBxendBpw2AcEWrA+jgssD15jXYApQF/IRIdCfCpqiJ88QXwAG7aYFAqklBSg
- wRFvuMZwWDaNmxvWoxSBaBg+LhyX0r60pmi7QhoPxagfQ10UiWoHk1RteUPWtM7kzIx2KNgSO
- EVALRi0SBK54dqzO18z8xDxUqeyvU35INuIDL5hSzYEJ1ZkvMWOZSn045E0UYOfjtnVL5c5I/
- AF0UTxSxLtGq2ct8vYjfRMK0nOfSqp1jgV6f+GS+GAcdFQwj7G8fpeIVe7Lc5A46tEN7kHPof
- UgQcghFHFjc5arOvdXmP6+QYn9d5WdEBtwi+VIHHcKv53yH38G8zb3LEZt0TPtUGWvQLjqjpp
- 89F4AiiLRuabr/6OJhWoLFgrRpmhfN/zUGiVg8A==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200713193405.GC77607@syl.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ed,
+On 7/13/2020 3:34 PM, Taylor Blau wrote:
+> s/upgrae/upgrade
+> s/ocnfigured/configured
 
-On Sun, 12 Jul 2020, Edward Thomson wrote:
+Oh man, what was going on with me when I was typing this message.
 
-> On Mon, Jun 29, 2020 at 11:42 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> >
-> > I'm very happy with this and the way it's progressed since v1.  This
-> > seems simpler than earlier designs, and I appreciate the improved focu=
-s
-> > on avoiding special-casing branches, since I think that will make it
-> > easier for folks to choose branch naming that suits them.
-> >
-> > Thanks for working on this.
->
-> I agree, this is an improvement.
->
-> One thing that isn't obvious to me, though, is why templates take
-> precedence over the command-line option.  I would expect the command-lin=
-e
-> option to be the highest priority option given, just like configuration
-> values specified on the command-line override values from configuration
-> files.
+Thanks for the thorough inspection.
 
-Side note: I have not tested this, but I trust you did, and my reading of
-the code agrees that it does this.
+>> diff --git a/setup.c b/setup.c
+>> index eb066db6d8..6ff6c54d39 100644
+>> --- a/setup.c
+>> +++ b/setup.c
+>> @@ -542,6 +542,11 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
+>>  		}
+>>  	}
+>>
+>> +	if (candidate->version == 0 && candidate->has_extensions) {
+>> +		warning(_("some extensions are enabled, but core.repositoryFormatVersion=0"));
+>> +		warning(_("if you intended to use extensions, run 'git config core.repositoryFormatVersion 1'"));
+>> +	}
+>> +
+>>  	return 0;
+>>  }
+>>
+>> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+>> index 88cdde255c..d249428f44 100755
+>> --- a/t/t1091-sparse-checkout-builtin.sh
+>> +++ b/t/t1091-sparse-checkout-builtin.sh
+>> @@ -68,6 +68,15 @@ test_expect_success 'git sparse-checkout init' '
+>>  	check_files repo a
+>>  '
+>>
+>> +test_expect_success 'warning about core.repositoryFormatVersion' '
+>> +	test_when_finished git -C repo config core.repositoryFormatVersion 1 &&
+>> +	git -C repo status 2>err &&
+>> +	test_must_be_empty err &&
+>> +	git -C repo config --local core.repositoryFormatVersion 0 &&
+> 
+> I don't think it's that difficult to see that this patch is correct, but
+> it might be worth testing this for the case that
+> 'core.repositoryFormatVersion' is unset, too.
 
-The reason why it works that way is that while the `copy_templates()`
-function is called before the `create_symref()` call that creates the
-`HEAD` symref, the latter call is guarded by the condition that `HEAD`
-does not yet exist. Here is a link that highlights both calls (and the
-code in between):
-https://github.com/git/git/blob/v2.27.0/builtin/init-db.c#L229-L270
+You were absolutely right to check this, since this diff causes
+the test to fail:
 
-Now, it is probably not the intention of the code to prohibit the
-config setting from overriding the template files, but instead it intends
-to guard against overwriting files by running `git init` in an
-_already-initialized_ repository. And I don't think that it possible,
-really, to change the logic without making the effect quite hard to
-explain.
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index d249428f44..b5de141292 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -74,6 +74,9 @@ test_expect_success 'warning about core.repositoryFormatVersion' '
+        test_must_be_empty err &&
+        git -C repo config --local core.repositoryFormatVersion 0 &&
+        git -C repo status 2>err &&
++       test_i18ngrep "some extensions are enabled, but core.repositoryFormatVersion=0" err &&
++       git -C repo config --local --unset core.repositoryFormatVersion 0 &&
++       git -C repo status 2>err &&
+        test_i18ngrep "some extensions are enabled, but core.repositoryFormatVersion=0" err
+ '
+ 
 
-The truth is that overriding the default name via editing the templates is
-just not a very good strategy, it is fraught with peril, as e.g.
-`init.templateDir` is a thing that can be easily specified via the
-command-line (`git -c init.templateDir=3D/tmp/my-templates init`).
+I'll investigate why the "unset" case is different than the "0" case.
 
-Ciao,
-Dscho
+Hopefully the "should we do this?" question can continue being discussed
+while I work on a v2.
+
+Thanks,
+-Stolee
