@@ -2,131 +2,107 @@ Return-Path: <SRS0=b2TE=AZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7A13C433DF
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 20:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E45E0C433E2
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 20:47:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 81AE42074A
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 20:38:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C11302064B
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 20:47:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Bpz4rBF4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DCiTd85D"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726649AbgGNUia (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 16:38:30 -0400
-Received: from mout.gmx.net ([212.227.15.19]:40467 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725945AbgGNUia (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 16:38:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594759105;
-        bh=HHzBOhyO8/f7iPaariHJ07EisamB5hFHBe7Q7q7ASLU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Bpz4rBF41uz2fE2Djh4bh58wQp+uOUTyQXkWu8VNZmArY1JEDiybFkYnjv/Md27Hj
-         Ii45jW1j9th8u5N7/0X61SkGMNOsj+sQx+UoL13CK1U9eaO99o91ba3MOaEBuqdf/U
-         u87aOCOVHFzav1pDLfKNev3eCedG1GLVPzyxhFGw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.94.224] ([89.1.215.93]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXp5a-1kN2B23b48-00Y9lK; Tue, 14
- Jul 2020 22:38:24 +0200
-Date:   Tue, 14 Jul 2020 22:38:23 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Denton Liu <liu.denton@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [RFC] should `git rebase --keep-base` imply `--reapply-cherry-picks`
- ?
-In-Reply-To: <9c6dff59-b204-1ace-e0aa-0885dd502214@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007142236060.52@tvgsbejvaqbjf.bet>
-References: <0EA8C067-5805-40A7-857A-55C2633B8570@gmail.com> <20200714031017.GA15143@generichostname> <9c6dff59-b204-1ace-e0aa-0885dd502214@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727794AbgGNUrc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 16:47:32 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50166 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726858AbgGNUrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 16:47:31 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E3AABD80AE;
+        Tue, 14 Jul 2020 16:47:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CGOGI2PwRRNp0Hrm/GoLZEdq3/0=; b=DCiTd8
+        5DDl/xwFOEqXdIvrEzhp4YB1qIXMtWFE2T0LwdYHvAEH/+lbdkbmxWCPM31TfjFb
+        YGK14rKOYr3sIR6wfh3BAnHePtQK/ZyIAsBTUh7rEJ07cZUPdxK4bAUJcKC6ovJo
+        EG/FaoSYEg8+2x9OL178JMyof++Uk8AZQ4ky4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=P+mEakaPHfU5zBo0Kt+ZrnuEKGPsA6Kn
+        oPoVcnrax9l8a2c6AjWtKuE607LzW+NCvXxHoVAK0bFv6oz52KerFbgHwVrIdi2z
+        mymy2i/SJZiyp5vRe8q/HbM3L/hFHwsas34ctAQI433QYwx0KRVo7/N5uDvcqKYP
+        y2FDC4VA4d0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DBCAED80AD;
+        Tue, 14 Jul 2020 16:47:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 32736D80AC;
+        Tue, 14 Jul 2020 16:47:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Xin Li <delphij@google.com>, Derrick Stolee <stolee@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [PATCH] setup: warn about un-enabled extensions
+References: <pull.675.git.1594677321039.gitgitgadget@gmail.com>
+        <0bede821-139a-d805-934a-142004abaa4c@gmail.com>
+        <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet>
+        <xmqqzh82ktgm.fsf@gitster.c.googlers.com>
+        <18c65b85-2f2a-ff96-1ea7-e16befa6928f@gmail.com>
+        <nycvar.QRO.7.76.6.2007142227280.52@tvgsbejvaqbjf.bet>
+Date:   Tue, 14 Jul 2020 13:47:25 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2007142227280.52@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 14 Jul 2020 22:30:12 +0200 (CEST)")
+Message-ID: <xmqqimeplt7m.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:blN4yEoB0fnAO3TWix+8QulpEhvyLmIjlFr6cj3JRigqkwrhPUS
- +v4yNcndHYON7KuCAKfx8hG6VG0YFKRNtsVH3z0D8LkWl3ffqKdD46VWILcN6dhQ3jUnXqk
- 32VT2Q8ctbCzNIoknurIKUnfC6zhOJ08EwK/xB6wLtkN7wh4UOAFK5GO3m+rnmiTP4K63UV
- CCe0aWSDQM3KLg2695fXw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:l7Nsm0vxxZQ=:eVTBqFf/6+RvdTexcDAGvf
- BzXgM7LsLCxvG2OVHcw81KscnMPlGHUbEqIwp5dR7idzEsEZf69PLrbjRQ3UZZZULJsuEgPe5
- EmJKnk5EaoR/sXC2fBLTmjDfbYzndYs+t7nGxRAhpvqrdMUP9rYslzdyH+mt4gfV5b6NlfGwL
- +fwtvfoqbxd2OSDesQDwSyz4U46TzXFuycV/AcFZ8b+74CgHCpCUXQQ6/TW4WbjEc3raXBDlt
- JKFfmJsiA7KgHt75o0CibrF0qwTQ6HLaRVevhzEhk0B2C454Ymb2kkDFHrPmFdjXF8z3PULjE
- soYzt+oyb3f3+5xTQo2jDfpeqFkeZgrEfu1307dVYJ/91mgwgNuNagGsaJaTS05y/z6jKsm0j
- npdM6RcDT8+Pq0djIMjB/fTMuHoowjENlRfqrGeEv1YfwC+OS8ShgBpLX/Q397KICrsL4UpvT
- 01OrYb9AVRxj2QPMBosBwX5MN7Ukri7SUKmL6JFzumBHGmxwasPi9lSiBV/ZmvDU8GWbiGumi
- fhBs5DNmGzRba+9Lzi1j4ZZNiFalolbOE7Esm7nkyQaFZHAka28dKiHA5U76LkDmniLr7G1U9
- Zwr44loiozJwgcvqIc01f96Qy9fPaNgbnndWxqbucnkcLXqKgJKv77CBt2ckyErF/t7PUj2e1
- bOJXyoWEkymnbJ5X1hr3OMUBnNfXG5tI2O5dB39mltBZIc8GouFM24C2Vf+WRXrHFOIwK1WFC
- VRr5a7AniRP/rxts4Wc6i/S/obTb+4EtIC58MLttN5cMKIgAaH6Ofdb7vjxdmjTuJ50JYuz6h
- varByIovwIxCUVm/tYu68T+V+j1OakNL4HmWLXMvcNgUcZqHDyfJh863YnALLKIEfwqGEGmED
- odTPWZ1Fsq3O1pf91ZGf5LTS/3FUIeUYEW/nWD7HdWkjrMQ75wr3RmP/ubyuhxzuAUY6Q8z56
- xytEiDgZN7KNmNoMAjqwgq3Uw8l8++iUuHnTrG+d5K5iVA723FqeMemaZ6LpfzgrpFGyLZ2vd
- KRwfTL9o3OGzBtV0keb/M7fG97irGKz9YdU3998vAn/T4PXgkUM7SNsIVj8P3QzhyKrdFKb9F
- 4NcWmcUOy/uzDFhDnEDMrL0NEJgH8FB8M71wVNazvSIKLpv8j/+sWd4ozfWEW9s2veMuoxgR9
- KGaa1ohsP6j9/JBTDDnxUMx2EAWPGuGHKlaFneqtvJ7ZTQLAdj56HJnM2ubGL5hYGBv0BzOKV
- bDkOskFuwm+5qpUg8HFWrVwuvnl6p64nOq/5iew==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3A40C43C-C613-11EA-B68D-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 14 Jul 2020, Phillip Wood wrote:
-
-> On 14/07/2020 04:10, Denton Liu wrote:
-> >
-> > On Mon, Jul 13, 2020 at 10:44:06PM -0400, Philippe Blain wrote:
-> > >
-> > > I learned today that doing `git rebase --keep-base master` will drop
-> > > commits that were cherry-picked from master to the current branch. I
-> > > was simply doing a code clean up on my feature branch (the full
-> > > command was `git rebase -i --keep-base master`), and this kind of
-> > > confused me for a moment.
-> >
-> > Glad I'm not the only one using this feature :)
-> >
-> > > Is this a sane default ? I understand that it is a good default when
-> > > we are rebasing *on top* of master, but here I'm just doing some
-> > > squashing and fixup's and I did not want the commit I had
-> > > cherry-picked from master to disappear (yet). In fact, because it
-> > > was dropped, it created a modify/delete conflict because in a
-> > > subsequent commit in my feature branch I'm modifying files that are
-> > > added in the commit I cherry-picked.
-> >
-> > So if I'm not mistaken, if we have the following graph
-> >
-> >  A - B - C - D (master)
-> >       \
-> >         - C' - D (feature)
-> >
-> > and we do `git rebase --keep-base master` from feature, C' will be
-> > dropped? Indeed, I am surprised by how this interacts with the
-> > default setting of --reapply-cherry-picks.
+> On Tue, 14 Jul 2020, Derrick Stolee wrote:
 >
-> To me the question is why are we looking at the upstream commits at all
-> with `--keep-base`? I had expected `rebase --keep-base` to be the same
-> as `rebase $(git merge-base [--fork-point] @{upstream} HEAD)` but
-> looking at the code it seems to be `rebase --onto $(git merge-base
-> @{upstream} HEAD) @{upstream}`. I didn't really follow the development
-> of this feature - is there a reason we don't just use the merge-base as
-> the upstream commit?
+>> If "v0" includes "core.repositoryFormatVersion is unset" then I
+>> would consider this to be a way to avoid all user pain, which is
+>> positive.
+>
+> I concur.
+>
+>> I'd be happy to test and review a patch that accomplishes this
+>> goal.
+>
+> Wouldn't that just be a matter of extending your patch to re-set
+> `has_unhandled_extensions` also for `preciousObjects` and `partialClone`?
 
-Those are interesting questions, indeed.
+It probably needs a bit more than that.  For example there is this
+bit in check_repository_format_gently() that clears the unwanted
+extensions that we used to honor by mistake in v0 repository
 
-And I dare to suspect that the answer is indeed: `--keep-base` really
-should not only substitute `onto` but also `upstream` with the merge base.
+	if (candidate->version >= 1) {
+		repository_format_precious_objects = candidate->precious_objects;
+		set_repository_format_partial_clone(candidate->partial_clone);
+		repository_format_worktree_config = candidate->worktree_config;
+	} else {
+		repository_format_precious_objects = 0;
+		set_repository_format_partial_clone(NULL);
+		repository_format_worktree_config = 0;
+	}
 
-Ciao,
-Dscho
+and the "different endgame" advocates to keep honoring these (and
+only these), the else clause probably needs to go.  There may be
+some other tweaks necessary.
