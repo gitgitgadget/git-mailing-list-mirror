@@ -6,61 +6,62 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E8F6C433DF
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 04:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F3B4C433E0
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 04:34:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 016BF20773
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 04:34:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF79320773
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 04:34:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nTH3LAqR"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rgNB2B8p"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725821AbgGNEek (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 00:34:40 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51494 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbgGNEek (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 00:34:40 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 48916D19DC;
-        Tue, 14 Jul 2020 00:34:40 -0400 (EDT)
+        id S1725780AbgGNEeI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 00:34:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52237 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725497AbgGNEeI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 00:34:08 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6FEDA6AFB5;
+        Tue, 14 Jul 2020 00:34:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=9sl4I0f4KncZ/R4ESMXkdHPagNc=; b=nTH3LA
-        qRvwM51Rw5YKisTPZqfQylARd3ECblOiolaTJDPo+veh9KQ0c6blL0zGvTRhUlLQ
-        CZ/5c+pN2yAWLmrSN24J6HKWpq7AZ4gwxA/fEe+goJKjuOaO63e0c8LsVRGA24xh
-        Pp0B1HFtfVdPWVO5DjPjwu7hhcsxFD24taHwY=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9sl4I0f4KncZ/R4ESMXkdHPagNc=; b=rgNB2B
+        8pS959vZRAGhCuqEXFAbSJ8okjf+3oywIkumW92Ib9szCVe5SINQDAOBbPKVTPnx
+        HuvBpJs5qimbpWJRmmEvOPh50LIrgMJCxSCxM18cRIMiaKOTKYtjb0wcXzkxbIfk
+        Pgh3ULIGcY2t8rxGGZbC+U7S6EPGwKoShFJNw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pFLER65DN8ekOtKvU04m1h4VTyYGeTjM
-        kFAjMi1nba5iyQJKnfDJgc/iE2sbQT+wkQpB3tOOv0t+ZsSmy77i6tD1GJffGAOl
-        /G+fAE0kR728kMHgloODGc+r6m/k9eUQV2azqUFOU1nh3SmHmyHIhK/Mc5xjh8RZ
-        UH54dWlNLg0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 41549D19DA;
-        Tue, 14 Jul 2020 00:34:40 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fIbQZ7/b7a/tdPTPEas1FYCYBFxsBjBN
+        NCLE/gecoXXbXsK6Qrx5R1TkuXs411nhowmHmKJfxoanXTXzgnNqzsw4FDBoLKXV
+        iEwXEAoEXA5ed+RHdcW31sf0bFg3AnFv/3uVE+h153TprRJ+WDTyHM+Oh5VBpD0+
+        ay7hn4u9tAg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6763F6AFB4;
+        Tue, 14 Jul 2020 00:34:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86538D19D9;
-        Tue, 14 Jul 2020 00:34:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E58F26AFB3;
+        Tue, 14 Jul 2020 00:34:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Jason Xu <jasonx98@gmail.com>, git@vger.kernel.org
+To:     Jason Xu <jasonx98@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
 Subject: Re: Force git diff to create a binary patch?
-In-Reply-To: <CAGPh-qPyTNidqT=K-U8iYtG3udFZVFBhE1RyA1AZ1qEqN_NnZw@mail.gmail.com>
-        (Jason Xu's message of "Tue, 14 Jul 2020 00:09:41 -0400")
 References: <CAGPh-qNrjQ5xwbPcfJdBqrqOJQsVpa2hy-XHwN-8rhPPZe4Vpg@mail.gmail.com>
         <20200713223906.GH8360@camp.crustytoothpaste.net>
         <CAGPh-qPyTNidqT=K-U8iYtG3udFZVFBhE1RyA1AZ1qEqN_NnZw@mail.gmail.com>
+Date:   Mon, 13 Jul 2020 21:34:06 -0700
+In-Reply-To: <CAGPh-qPyTNidqT=K-U8iYtG3udFZVFBhE1RyA1AZ1qEqN_NnZw@mail.gmail.com>
+        (Jason Xu's message of "Tue, 14 Jul 2020 00:09:41 -0400")
+Message-ID: <xmqq5zaqn29t.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-Date:   Mon, 13 Jul 2020 21:34:35 -0700
-Message-ID: <xmqq4kqan290.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5339C520-C58B-11EA-B023-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 40FB0F68-C58B-11EA-A9B4-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -103,3 +104,4 @@ And viewed with the knowledge of that history,
 this description is correct---the choice is not between "showing a
 binary diff and showing a useless textual diff"; the choice is
 between showing "binary files differ" and appliable "binary patch".
+
