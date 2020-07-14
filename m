@@ -3,106 +3,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E45E0C433E2
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 20:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E43FC433E1
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 21:35:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C11302064B
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 20:47:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BF0F20656
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 21:35:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DCiTd85D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WZCGVm4u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727794AbgGNUrc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 16:47:32 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50166 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbgGNUrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 16:47:31 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E3AABD80AE;
-        Tue, 14 Jul 2020 16:47:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CGOGI2PwRRNp0Hrm/GoLZEdq3/0=; b=DCiTd8
-        5DDl/xwFOEqXdIvrEzhp4YB1qIXMtWFE2T0LwdYHvAEH/+lbdkbmxWCPM31TfjFb
-        YGK14rKOYr3sIR6wfh3BAnHePtQK/ZyIAsBTUh7rEJ07cZUPdxK4bAUJcKC6ovJo
-        EG/FaoSYEg8+2x9OL178JMyof++Uk8AZQ4ky4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=P+mEakaPHfU5zBo0Kt+ZrnuEKGPsA6Kn
-        oPoVcnrax9l8a2c6AjWtKuE607LzW+NCvXxHoVAK0bFv6oz52KerFbgHwVrIdi2z
-        mymy2i/SJZiyp5vRe8q/HbM3L/hFHwsas34ctAQI433QYwx0KRVo7/N5uDvcqKYP
-        y2FDC4VA4d0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DBCAED80AD;
-        Tue, 14 Jul 2020 16:47:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 32736D80AC;
-        Tue, 14 Jul 2020 16:47:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Xin Li <delphij@google.com>, Derrick Stolee <stolee@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH] setup: warn about un-enabled extensions
-References: <pull.675.git.1594677321039.gitgitgadget@gmail.com>
-        <0bede821-139a-d805-934a-142004abaa4c@gmail.com>
-        <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet>
-        <xmqqzh82ktgm.fsf@gitster.c.googlers.com>
-        <18c65b85-2f2a-ff96-1ea7-e16befa6928f@gmail.com>
-        <nycvar.QRO.7.76.6.2007142227280.52@tvgsbejvaqbjf.bet>
-Date:   Tue, 14 Jul 2020 13:47:25 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2007142227280.52@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 14 Jul 2020 22:30:12 +0200 (CEST)")
-Message-ID: <xmqqimeplt7m.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726986AbgGNVfD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 17:35:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726831AbgGNVfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 17:35:02 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93194C061755
+        for <git@vger.kernel.org>; Tue, 14 Jul 2020 14:35:02 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id s10so211779wrw.12
+        for <git@vger.kernel.org>; Tue, 14 Jul 2020 14:35:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=LWlu1ksfQveATVd3hUAPnTm7G7iEY8CvfcbrvTHsOGw=;
+        b=WZCGVm4u0swEYDbnCnSYl2PwRlsDp3d1ci1DN/MaDjLKE0MHL8TPB8W44RO4BfrM+l
+         709FW6nSboOc0ZxxJfF5pNA3aPdz1R/zoc3UXs5oO7RW2oTkowYfNZGCbScks8WqQ9ED
+         nVZJ4Y1qrB/lMWaxMTVPjaw3BBh35p6l32v1fanfkDY+2YSsXxRZJs9XVzDshMcL3n9B
+         TkI/macSTXaRpmp8C0gDituYPHrJwLwHDMy2wEnhQy/TcuucopegmwA7lBxN+4rpeb9J
+         f9WPSJyU+v1GsJkiX62asiCMjyct7efloi2RqUsC+qOIXvUs1ANc1GznTxkWTBZa1jtc
+         N/2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=LWlu1ksfQveATVd3hUAPnTm7G7iEY8CvfcbrvTHsOGw=;
+        b=lIQPp3bNlUXwhvcr2Br8RQFVEqewcCcVDQ2EIr7mA2VRno9nnBTHgMmcMxaE1IBY2H
+         if8eevQzzWekIgLSsuew9gbwv2iYhKOFUySuYEg/59wJwAeGC7EFPMUWC9XxZgFmtHqK
+         876bunrGWwHOEK1XzHTGD99fz4DqMwIss+9qm2RnXmoK/KzidcV5tsU3njo8RBoozUyq
+         X2D1H/X7lalRI6GNz7+hO3ozktBGe68olNkVqSESHwT8vYNDrEDDOVkzD/44twKHh1dT
+         zF1TUsSUJLoiTslvMvkaSeNDiHrEM8VVSJcQqwPrJjgVrpdzsr+4go57YNPmgk/26hK4
+         Wm1A==
+X-Gm-Message-State: AOAM533ZRhq8sjzL7HL24QxSmB+ef6axKUZeX0//GWPsZ0UrPkwIT3b+
+        oMtQbDLxYFuyQrTUkkZdFb/THLrNseT5LnUrRnHy2ZC1
+X-Google-Smtp-Source: ABdhPJwjVfGfgEO5gzoziXXzOXpYYvin1CGtUgRdGFv2ED3glct8MEp/FL5IpUqtWhm4GsJYCxh4S8kmGExshD/n/oY=
+X-Received: by 2002:adf:8b18:: with SMTP id n24mr8366364wra.372.1594762500498;
+ Tue, 14 Jul 2020 14:35:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3A40C43C-C613-11EA-B68D-843F439F7C89-77302942!pb-smtp21.pobox.com
+References: <CABXAcUxw5EA6jPB93C-Cfg-tycLMQSKUgrLkLXSQUZPHeEva9Q@mail.gmail.com>
+ <CABXAcUzvZgHwsfL8VaevnDeyyce_5sWtd2istA55CgnzFE1Z6A@mail.gmail.com>
+In-Reply-To: <CABXAcUzvZgHwsfL8VaevnDeyyce_5sWtd2istA55CgnzFE1Z6A@mail.gmail.com>
+From:   Clement Moyroud <clement.moyroud@gmail.com>
+Date:   Tue, 14 Jul 2020 14:34:49 -0700
+Message-ID: <CABXAcUx9ubCi485xoawSERH4pEjAFJcfGbdNiRL7KkwAmFrMsw@mail.gmail.com>
+Subject: Re: 'git rev-parse --show-toplevel' errors out with per-worktree configs
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Tue, 14 Jul 2020, Derrick Stolee wrote:
+> > IOW, this works:
+> > git clone <url> non-bare
+> > (cd non-bare && git worktree add -b master2 ../wtree1 master)
+> > (cd wtree1 && git rev-parse --show-toplevel)
+> >
+> > This does not:
+> > git clone -c extensions.worktreeConfig=3Dtrue <url> bare.git
+> > (cd bare.git && git worktree add -b master2 ../wtree2 master)
+> > (cd wtree2 && git rev-parse --show-toplevel)
+> >
 >
->> If "v0" includes "core.repositoryFormatVersion is unset" then I
->> would consider this to be a way to avoid all user pain, which is
->> positive.
+> Sorry, I mixed up my examples.
 >
-> I concur.
+> This works:
+> git clone -c extensions.worktreeConfig=3Dtrue <url> non-bare
+> (cd non-bare && git worktree add -b master2 ../wtree1 master)
+> (cd wtree1 && git rev-parse --show-toplevel)
 >
->> I'd be happy to test and review a patch that accomplishes this
->> goal.
->
-> Wouldn't that just be a matter of extending your patch to re-set
-> `has_unhandled_extensions` also for `preciousObjects` and `partialClone`?
+> This does not:
+> git clone -c extensions.worktreeConfig=3Dtrue --mirror <url> bare.git
+> (cd bare.git && git worktree add -b master2 ../wtree2 master)
+> (cd wtree2 && git rev-parse --show-toplevel)
 
-It probably needs a bit more than that.  For example there is this
-bit in check_repository_format_gently() that clears the unwanted
-extensions that we used to honor by mistake in v0 repository
+OK, I figured it out by looking at environment.c. The issue is that
+the base mirror is bare, but the worktree isn't. This makes it work:
+(cd wtree2 && git config --worktree core.bare true)
 
-	if (candidate->version >= 1) {
-		repository_format_precious_objects = candidate->precious_objects;
-		set_repository_format_partial_clone(candidate->partial_clone);
-		repository_format_worktree_config = candidate->worktree_config;
-	} else {
-		repository_format_precious_objects = 0;
-		set_repository_format_partial_clone(NULL);
-		repository_format_worktree_config = 0;
-	}
+This is confusing - should this be set automatically, or referenced
+more clearly in the 'Configuration File' section of the git-worktree
+doc?
 
-and the "different endgame" advocates to keep honoring these (and
-only these), the else clause probably needs to go.  There may be
-some other tweaks necessary.
+Thanks,
+
+Cl=C3=A9ment
