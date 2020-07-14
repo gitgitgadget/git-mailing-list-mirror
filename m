@@ -2,134 +2,176 @@ Return-Path: <SRS0=b2TE=AZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EAEBC433E0
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 14:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21CD8C433E0
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 14:55:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7852B2065D
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 14:50:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBC4322473
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 14:55:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vK3e8ENe"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="T92EZbpP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728243AbgGNOuR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 10:50:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57186 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725945AbgGNOuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 10:50:17 -0400
-Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12907C061755
-        for <git@vger.kernel.org>; Tue, 14 Jul 2020 07:50:17 -0700 (PDT)
-Received: by mail-vk1-xa42.google.com with SMTP id v26so3731175vkn.2
-        for <git@vger.kernel.org>; Tue, 14 Jul 2020 07:50:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EJVgB96ult5qy/EyLNK51Lj4u/1uLMNYCkXGfmdmrKw=;
-        b=vK3e8ENetqTfIFGklmEGRlz0O1rsYeefHSFJlzeZVTNjEKkld5Nt0AGoDR9qdwLZBY
-         kapztnAaYZ4oQg/f3hJCPO4khC7shAtX+9a8Zz8hGGvTj/AwffDz7ZssM4ifyCvjMt8X
-         2s9iHnGRuUfvivMAJXf2pSaWB9cXa1/Swz0+ja/OHKC8Z1bTU9UKTP2bU2zu+n3X0vPZ
-         z46m8mpPh/xqJAz/kHoXPzNC3kkr7biwgUrxBRE1bymbzY7Y7FbxPpaf1vTd9vhk8qNe
-         xliyge9IWUUs0eMmIpckR70h/JV77NaI3yiDBEyyuAd38cKaZDvcbf68T0w+0ixOkhqk
-         5pnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EJVgB96ult5qy/EyLNK51Lj4u/1uLMNYCkXGfmdmrKw=;
-        b=Ex67g1jX/A7rAXClY5IH98Y16qJssEzdUtfJsFwtRpDCS3meofLObRv65XBi9KR7Sg
-         YZ4IjAC36dQVzyW2aaqo+DL0pZ4OIkxKr3524r7j/ny2pOvdbHSF1Mj5ZIFaxCanEoEA
-         kQMUEn4xsJ9gnQKwjlEuYiur8dz98z0rmUY8YFMQ+R/OpWdXrkN6UsFfkdVB6nw7YmcZ
-         he+XR1iOw9hxrHSv9rY2pudPFQnMLp4Bq6Pw6Y1RskVWIW2cSbhEp2kakRHpVZAiKw1q
-         0S6zMkCvo4qHlDjA/tbf1D+b/iiAwGheeoRPZVg0q1LPF8EsyJiKPVmoovoR83xs/j0R
-         FLTg==
-X-Gm-Message-State: AOAM531ug9qkRCf/C5NplbFbIS9u7LQHHDMJscwM5uAg2d9ATp5QeBF9
-        uClpwrof3At55EG6c84yKCWRkZGjk5AFCfNCZhjpfliV
-X-Google-Smtp-Source: ABdhPJz8Bf2lN62Pse7aPfXJq3RH6im89rBMLQ+xEZyRiozQOd/cQPVUeEf1W0UTj3zJUIU3uKZnZbrjXvjUKLL766w=
-X-Received: by 2002:a1f:30d8:: with SMTP id w207mr4068741vkw.62.1594738216218;
- Tue, 14 Jul 2020 07:50:16 -0700 (PDT)
+        id S1726358AbgGNOzm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 10:55:42 -0400
+Received: from mout.gmx.net ([212.227.17.22]:41117 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725876AbgGNOzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 10:55:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1594738540;
+        bh=88Gk47DFSU95rtcVmVhuQR9sR1O6wOagmg246iLqlC0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=T92EZbpP9rBIrH/YnTTpwAErlIFyHwr/EHmgTzWNoN01M/0krx0QUV3P9gc9inGQj
+         22ZV38NlYwmkoosNNYSdDEKgfH7nWuBzcTsUs5LesSIGzGg0IpyrqpakgECjZUGw1N
+         OKFIIueBWaHw7nr0Qebkz+3m7iqjlq/Cl+Ybbny8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.94.224] ([89.1.215.93]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrhQC-1kgZBo1l00-00nfuy; Tue, 14
+ Jul 2020 16:55:40 +0200
+Date:   Tue, 14 Jul 2020 16:55:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Edward Thomson <ethomson@edwardthomson.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 0/9] Allow overriding the default name of the default
+ branch
+In-Reply-To: <CA+WKDT1GMNTY5N862-7ui70D6-b1u6fuUkvctEYo+57aJGbjmw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2007141640430.52@tvgsbejvaqbjf.bet>
+References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com> <pull.656.v4.git.1593009996.gitgitgadget@gmail.com> <20200629224113.GC9782@camp.crustytoothpaste.net> <CA+WKDT2DV6ymu-AG9B2h34=K+4KW7tcCpAfTV-rTdifqfS7R=g@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2007121007440.50@tvgsbejvaqbjf.bet> <CA+WKDT1GMNTY5N862-7ui70D6-b1u6fuUkvctEYo+57aJGbjmw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <cover.1594666410.git.martin.agren@gmail.com> <280943ef56a2a777ab0162b8ec4ba0166cc2095c.1594666410.git.martin.agren@gmail.com>
- <CAPx1Gve7Sy5BUdRztVoVNVZgdqm14dvD=36eYzLPed5YMQeMEQ@mail.gmail.com>
-In-Reply-To: <CAPx1Gve7Sy5BUdRztVoVNVZgdqm14dvD=36eYzLPed5YMQeMEQ@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 14 Jul 2020 16:49:58 +0200
-Message-ID: <CAN0heSoNFdLzxV2GV=KDafypLkQmxc28RdKzJtHcVFHx3P97Jg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] git-diff.txt: reorder possible usages
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:alPC26nt2enJsTlsRU0iM5P4IEIcLQ1rZo0SgwStouYo9jmm1ZH
+ OB25giO7fTcTBVYA0V425T/k4sqnxyXCNg+//oRTNo1LBu4xq/8cYhiN04SRU00zXT/PWN9
+ /v6YQ6pBapkGpIGL+c3h3Xk+qtXUjS3oNhWBpeQCIWeob+Y/keFiPDP4d/lGnNTwQVtVA59
+ IINNShQvVOZrzJpQOEJHg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8MlE/H8K1wk=:N59n3pEWPYHaCD0QbHc7cl
+ tR8aRetjiNIWXFT9+neWAJ9HQvpaaJMrYHetKGOFg75FQcOd/8qKigTT16K+ZIVqlNIx4ccF+
+ 0h7i7ybss3volbynepUqtRxmesSR2MI3TeHfVWzadLYT92yaUwcefZsM+GKXHhlBVaDglH5Nj
+ g2um4eAzlMF6pqtRGNN3WUQrkGNpBi/GwetKEoU/09EjHkp/VRfOrEbXaeAHEdU4/JJO/93et
+ 5AnvL2y2cdwl2kirWqq7vM2nmEfbeKcC54raDDDhrZGVc2PPWKyOXbL5qIuhFNiTK8Ne7KmRY
+ NuYkPlhsDnyfJBYeDwxEzA2Ma9FiSZg7y0R9laJ08a0cHWyOf5RRxMpvTeOeULQMsjVsN4Ie9
+ Bko0QuyL0HH1vA2VR3fZiJkAW5XQG0tY6s5EcZEjX24eiXr9XrmZ7QhWNGtPMFIpHtl0Oavtj
+ 3YfAtKcmdvZr0ULtgezv7mZQujx5Qa/rCZq9K58eJN5K0//7yR20XKFdJ9VbJVRZ5OU6Zv+O8
+ 2HhNPhSWF1A289TCVnkcqxFoAH7PbhcpHAUFe/UGFYpgL/M5jkDPXm0VUyS7LckzNGNXLjOkD
+ uJghRO6dWTEqWOlVgLGg9k1ljrtNZ2PW+cmOeYyE4C0JpkKbkljZRBWZaLwMhFO5j6bETNdBc
+ sHx+qzzkM9Lg/Ry5tDYZlBcsmiOhYfjwhMtYV9w7KqaagYfRreLj1Ghw0H5WhJSrnuAsKd65d
+ ShQQvf0MHhp8VTQqC2qlk6pl/b1pmCoP2mjX7Y0MAmIL16P2oo8xALDAUkEt63aTc6pahRiMe
+ l4EJGvjrZZrSt8dQRAc6tTRqdJrWiMeUsMQPuJk4cZPRAhx2H96GzC3eaIhBJc5ySVAFarLeN
+ Sti/S4fbomzZRhRBq7iiDkHfI1/aWQ84PjvtI60zj/ZE6rnLsApgOEi7tfn7Kg3KiKiHNPTF5
+ 90qPjmMXMnoA9QJBQ1y6mlWSjDzpbgklfvDSLiAlvtHzqe6pBk/I5pBj9Z1leg13tPC6om8fB
+ TY57OQ+4iytNbN+8hBFThGxndJb0s191fsr24u2LbdhrhBXuq6RlSN+pkWkktYsxPIB5coiMh
+ pwaPLal7GSS8RBnRu1BPs7SxkgFZoHZh2FdcoqTSED5U/RZDMhgFTUyxXCLHboUvgqnqf5bQh
+ njE712aCj7rLjtEvfosrBSIYs0KX11cnOGpNWrq0XTgPENjf7+uafxlOBPszt4PCC5CVHGBj4
+ JY+V2ffWMm0oamARHUz8IPl5F1LyRnF06xgo+HQ==
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 14 Jul 2020 at 00:04, Chris Torek <chris.torek@gmail.com> wrote:
+Hi Ed,
+
+[re-Cc:ing the list, I hope you don't mind]
+
+On Mon, 13 Jul 2020, Edward Thomson wrote:
+
+> On Mon, Jul 13, 2020 at 8:38 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Sun, 12 Jul 2020, Edward Thomson wrote:
+> > > One thing that isn't obvious to me, though, is why templates take
+> > > precedence over the command-line option.  I would expect the
+> > > command-line option to be the highest priority option given, just
+> > > like configuration values specified on the command-line override
+> > > values from configuration files.
+> >
+> > Side note: I have not tested this, but I trust you did, and my reading
+> > of the code agrees that it does this.
 >
-> On Mon, Jul 13, 2020 at 12:10 PM Martin =C3=85gren <martin.agren@gmail.co=
-m> wrote:
-> > It then goes on to say that "all of the <commit> in the above
-> > description, except in the last two forms that use '..' notations, can
-> > be any <tree>". The "last two" actually refers to 6 and 8. This got out
-> > of sync in commit b7e10b2ca2 ("Documentation: usage for diff combined
-> > commits", 2020-06-12) which added item 7 to the mix.
+> I was speaking about the notion of configuration options specified with
+> `-c` on the command line overridding things in configuration files.
+> Like how you override `init.templateDir` on the command line:
 >
-> Moving this down (as you do in this patch) is the right thing to do,
-> but I'll note that formally, the word "that" in "forms that use ..." is
-> part of a restrictive clause, so it means "find the last two examples
-> that use dots".  (In American English at least, the unrestrictive version
-> would be set off with commas, and use "which" instead of "that".)
-
-Thanks, I hadn't read it like that, that makes sense. I'll learn to pay
-more attention to the difference between "that" and "which", which(!)
-I'm not sure I've fully appreciated before. So if one qualifies the "..
-notations" a bit, one might actually achieve something that passes,
-language-lawyer-wise, even in light of the two completely different uses
-of "..":
-
- ..., except in the last two forms that use ".." range notations, ...
-
-or, if "the last two forms" doesn't actually add anything,
-
- ..., except in the forms that use ".." range notations, ...
-
-But I'm not sure that would help users at all, even if we might be able
-to say, "well, technically, it's all correct..". ;-) "The last two"
-seems more helpful to the reader, although it does carry the risk of
-getting outdated.
-
-I'm glad you agree with the move.
-
-> > An added bonus of this commit is that we're trying to steer users away
-> > from `git diff <commit>..<commit>` and moving it further down probably
-> > doesn't hurt.
+> > The truth is that overriding the default name via editing the template=
+s is
+> > just not a very good strategy, it is fraught with peril, as e.g.
+> > `init.templateDir` is a thing that can be easily specified via the
+> > command-line (`git -c init.templateDir=3D/tmp/my-templates init`).
 >
-> Q: Just how hard should we try?  In particular, would it be good to mark
-> the two-dot form as deprecated in the documentation?
+> I agree that setting a template that contains `HEAD` is perilous.  But
+> it's an established and supported bit of peril.  I think that the questi=
+on
+> of configuration specificity is _also_ an established one (and not nearl=
+y
+> so perilous).  Just like `-cinit.defaultBranch` overrides the global
+> configuration, I would expect it to override the templates as well.
 
-In [1], Junio seems to be of the opinion that we can't rid ourselves of
-it. But yeah, I suppose we could still add something to gently get the
-reader to skip that particular paragraph and learn some other diff
-syntax or some completely different part of Git instead. The word
-"deprecated" seems to mean "old-school" to some and "slated for removal"
-to others. Maybe something along the lines of "kept for backwards
-compatibility to old habits".
+Is it really well-established? If so, it might really be worth doing
+something like this:
 
-> I anticipate
-> objections because it's not possible to omit `HEAD` without using
-> the two-dot form.
+=2D- snip --
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index cee64823cbb..9149f9e51f5 100644
+=2D-- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -210,7 +210,7 @@ static int create_default_files(const char *template_p=
+ath,
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	char *path;
+ 	char junk[2];
+-	int reinit;
++	int reinit, override_HEAD_in_templates =3D 0;
+ 	int filemode;
+ 	struct strbuf err =3D STRBUF_INIT;
 
-I always just type "HEAD". With tab-completion, I find it just as easy
-to go "<tab>H<tab>" as <tab><bksp>..".
+@@ -218,6 +218,12 @@ static int create_default_files(const char *template_=
+path,
+ 	init_db_template_dir =3D NULL; /* re-set in case it was set before */
+ 	git_config(git_init_db_config, NULL);
 
-Martin
++	if (initial_branch) {
++		path =3D git_path_buf(&buf, "HEAD");
++		override_HEAD_in_templates =3D access(path, R_OK) ||
++			readlink(path, junk, sizeof(junk)-1) < 0;
++	}
++
+ 	/*
+ 	 * First copy the templates -- we might have the default
+ 	 * config file there, in which case we would want to read
+@@ -265,7 +271,7 @@ static int create_default_files(const char *template_p=
+ath,
+ 	path =3D git_path_buf(&buf, "HEAD");
+ 	reinit =3D (!access(path, R_OK)
+ 		  || readlink(path, junk, sizeof(junk)-1) !=3D -1);
+-	if (!reinit) {
++	if (!reinit || override_HEAD_in_templates) {
+ 		char *ref;
 
-[1] https://github.blog/2020-04-07-celebrating-15-years-of-git-an-interview=
--with-git-maintainer-junio-hamano/#if-you-had-a-magic-wand-what-part-of-git=
--would-you-fix-or-change
+ 		if (!initial_branch)
+=2D- snap --
+
+Note that I initially considered moving the `reinit =3D [...]` part to bef=
+ore
+the `copy_templates()` call, but `reinit` actually does quite a bit more
+than just guard the symref creation of `HEAD`: it also guards the
+`core.filemode` test, the `core.symlinks` test and the `core.ignoreCase`
+test. There _might_ be legitimate use cases to side-step those by
+delivering a `HEAD` in the templates (which is, just as setting the
+initial branch using templates, a relatively awkward and fragile way to
+override it, but hey, we're trying to address exactly such a scenario).
+
+However, even having written the patch (which would still lack a
+regression test), I am not 100% certain that we would want to risk
+including it in v2.28.0. It strikes me as such a fringe use case (with
+relatively obvious ways out) while the patch is not completely risk free
+(I _think_ it should be safe, of course, but it touches a relatively
+central part of Git).
+
+Ciao,
+Dscho
