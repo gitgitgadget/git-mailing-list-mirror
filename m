@@ -2,239 +2,219 @@ Return-Path: <SRS0=b2TE=AZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PLING_QUERY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9A3EC433DF
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 05:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79D9BC433E0
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 06:25:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97340221EB
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 05:46:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C33B217A0
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 06:25:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DnMThJQm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLMjtIhS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725816AbgGNFqL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 01:46:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57804 "EHLO
+        id S1726414AbgGNGZj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 02:25:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725306AbgGNFqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 01:46:11 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F72EC061755
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 22:46:11 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id x83so13007640oif.10
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 22:46:11 -0700 (PDT)
+        with ESMTP id S1725788AbgGNGZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 02:25:38 -0400
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 687AFC061755
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 23:25:38 -0700 (PDT)
+Received: by mail-pj1-x1044.google.com with SMTP id md7so1050998pjb.1
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 23:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5lU61zzROiAYrB7axITLAiNdWTKDWw5PvnPgvPOxML4=;
-        b=DnMThJQmhP0JOp/WYd3//NQny/osdq549pY/jvcXHk8ZhImFFqi8S3AlGIW1m+ornL
-         vJzZim7s+uf/obPY2ZupGnMcC3bXOq59MMFhsaUEP2hl0+z3qKqwOqp//ZwAx0tuJker
-         YXwW8SQYnnPewIneH64rNlPs9gk1OmOhAATWAF+oZIDuodr5nFLfN1B+b0waNvq80GF6
-         3zvfnSX8qp8+1aYBSQ8O4di+9yC1EfLm0uUfTgNTFpHq0BQ9ZRRenBsekZR+Aqc6R+4C
-         rDr+g4NA6WROvmnEM9CRdUPwfVe8VRZ4U15MK7aMQUkCjAvskY0hXmrCZAXQy64+AcbL
-         OU6A==
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=oHS1h/vtQqWCv1/S8IA0BCA3DmklykRu8B5aqxFGnsw=;
+        b=mLMjtIhSSIEOQ+q8YMkiC6faEunq1NOlHm6Uqqq29PBT+JmAn6eDqdKPLnBYRupiU/
+         93B3y1uIvBfG7m2MdhLMNc5wTmxeETqSSaNc6qN2OHqamhbjR93v7/vgVzwznuU0oaI0
+         Gxx+FPQLIJ1lVFrO3K/fbvo/61H2dUFDpZPZ8fw1hQ5shxf2fiLLmURvHlB7eL2KtJzX
+         2l/YLhuWlmP3BOlBAtla5B7/hlB6ppTVD2FIvo7l/uhbHwBLqvd0SBL1q17QFN+ELjAn
+         hw0dlPNnwYE6Nm4UrOeLCHYlyPKoTJ3HUHYvafl3x6c43e5SnuZGeFqByR36F6BUamPm
+         sOXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5lU61zzROiAYrB7axITLAiNdWTKDWw5PvnPgvPOxML4=;
-        b=hObngoOPpNHcvJIJlxivWzGDabhEQDv8Ie4X6BAzJTMQjNEMgq5LxzyN5r3Eqp2zlr
-         NcUVzKuGS5PAVOLbe/Ys6YjPXT+a7InrbjQ1U1AQrp2pBuM7KAdyAtik20PlfUol1tt6
-         j45M1YDj8vOrpnDVhiG01rTUqKa93cVvpvvCab8m3Zwn55ERXLaSrfU1ISX2EOsj3mAL
-         6BTbeUF746GoSSJT4kgbJq22WHEsYb9rEFTLbae3Hfx6v4/4jr4fVMuzbPFWejUhj0q6
-         NSEMQ5GigBiL9+ZFsR/6cYKwz63u2jYNKHEYqXEHL3f3AOrcvNmJn1bmHNblcS2rjLCV
-         FwYQ==
-X-Gm-Message-State: AOAM533OvYn1wPdi0kuTlsAokpNfZ5XAdDsH4ljolpyBd8vr5Bz91/AO
-        HTDIsaoWkFQTrT7POOtYiXqIufu0QphgZ5MSo9E=
-X-Google-Smtp-Source: ABdhPJyNkodNcezky4ri27SkXRsRRHdxFLARwwY10vRN9l+7l6CGi+QdGZw1rdivofH34yNQHkE+DqpHygQYLsGEWvY=
-X-Received: by 2002:aca:3dd7:: with SMTP id k206mr2333638oia.31.1594705569471;
- Mon, 13 Jul 2020 22:46:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=oHS1h/vtQqWCv1/S8IA0BCA3DmklykRu8B5aqxFGnsw=;
+        b=AU5+dWZJWC9wSqn1q81Wu5mTcc49bvQu2eWtYuQ4O2gCGy64sVmZKtrCUiGCqgRbl1
+         enNM7B9kBWMw20rQyPJi7ICdVnLZxyH0+oUaiMLkrdQ8EXJiv3R5z57cf25R2bkQ94db
+         VD5zRBdj0JdlkPw7gn6usr+W+yCW8//CScnxLDxmNc19SIZA615SRAPN41DAlydKrg5K
+         DrgPI+x8/YUNkeoXbL56XDVi5WtH18orr5nupVrJJzaCubhxSN6doVkSh3ASWdYjCuOI
+         9t5OAjg3vnR5TdLve8OoH+R6sxk+Ds5R4EfnVzCdJShEuRbXXjjX0Yv1vRDc9mIrynez
+         dj2Q==
+X-Gm-Message-State: AOAM532sou090wyuR3txhp0cTTRxPbxsKeMuUeTMWZwHQC2WsOeWyl3p
+        pYC6kLeNe9cV3z3NAm44t9I=
+X-Google-Smtp-Source: ABdhPJzAzWNt0POIJmcfs22HHLz7JfQ9IKXQTEt40eCDDNzwBtbjb6xOD8vxnOOUWv7r1f6du6m2kA==
+X-Received: by 2002:a17:90a:2dcb:: with SMTP id q11mr3048305pjm.135.1594707937709;
+        Mon, 13 Jul 2020 23:25:37 -0700 (PDT)
+Received: from Abhishek-Arch ([2409:4064:e8a:69a1:3523:a8cb:2cbf:c365])
+        by smtp.gmail.com with ESMTPSA id 19sm16326676pfy.193.2020.07.13.23.25.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2020 23:25:37 -0700 (PDT)
+Date:   Tue, 14 Jul 2020 11:53:39 +0530
+From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, abhishekkumar8222@gmail.com
+Subject: Re: [GSOC] Blog about weeks 4, 5
+Message-ID: <20200714062339.GA10242@Abhishek-Arch>
+Reply-To: 85imerqj7g.fsf@gmail.com
+References: <20200706182213.GA51227@Abhishek-Arch>
+ <20200707022425.GA1649@Abhishek-Arch>
+ <85imerqj7g.fsf@gmail.com>
 MIME-Version: 1.0
-References: <7A30EA48-72E3-47E1-9792-136D7B96DC84@gmail.com>
- <CABPp-BEu=7xSLk5AE8sQX+S-vvYXxgn+avQ8+9ttdSKDjikb9w@mail.gmail.com> <D99E27A0-04BC-40B7-A073-66E1301FFE5D@gmail.com>
-In-Reply-To: <D99E27A0-04BC-40B7-A073-66E1301FFE5D@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 Jul 2020 23:45:59 -0600
-Message-ID: <CABPp-BGrSYHzf0oLHUPJOz0XQ5sSV-kXxvVAdxjuR2rVsd4oBA@mail.gmail.com>
-Subject: Re: rebase - "fixup!" conflict applied at the wrong code location,
- why ?
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: attachment
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <85imerqj7g.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
-
-On Mon, Jul 13, 2020 at 8:42 PM Philippe Blain
-<levraiphilippeblain@gmail.com> wrote:
->
-> Hi Elijah,
->
-> > Le 9 juil. 2020 =C3=A0 00:07, Elijah Newren <newren@gmail.com> a =C3=A9=
-crit :
+On Mon, Jul 13, 2020 at 10:00:03PM +0200, Jakub Narębski wrote:
+> Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
+> 
+> > Hello everyone!
 > >
-> > On Wed, Jul 8, 2020 at 5:07 PM Philippe Blain
-> > <levraiphilippeblain@gmail.com> wrote:
-> >>
-> >> Hello,
-> >>
-> >> I've been working on a branch for a while. I've been using `git commit=
- --fixup`  and `git commit --squash`
-> >> when I noticed that I had forgotten to add something to a previous com=
-mit.
-> >> Today I did `git rebase --autosquash` to clean up my history, and the =
-rebase failed at the
-> >> first 'fixup!' commit with a conflict. However, the conflict is not lo=
-cated at the right place
-> >> in the code (it's not in the right subroutine!). This is very surprisi=
-ng to me, and I would
-> >> like to understand why it happens.
-> >>
-> >> Steps to reproduce:
-> >>
-> >> git clone -b branch-to-be-rebased https://github.com/phil-blain/CICE.g=
-it cice
-> >> cd cice
-> >> git rebase -i --autosquash my-first-commit
-> >> # save the todo list without modifications
-> >>  Auto-merging <file>
-> >>  CONFLICT (content): Merge conflict in <file>
-> >>  error: could not apply e8bfa55... fixup! <commit message of f4e1ae6>
-> >> # the rebase stops at f4e1ae6
-> >> git diff
-> >> # tangential question : for some reason the hunk header does not appea=
-r here, I don't know why...
-> >> git diff -2  # but it appears here
-> >> git grep -p -e '<<<<<<< HEAD' -e '>>>>>>> e8bfa55...'  # or here
-> >> # ok, the conflict appears in subroutine 'picard_solver'
-> >> git show REBASE_HEAD -U5
-> >> # but the original "fixup!" commit only modifies the subroutine 'ander=
-son_solver' !!
-> >>
-> >> I would have expected that the conflict be created around lines 1118-1=
-132
-> >> (line numbers in f4e1ae6), in the 'anderson_solver' subroutine.
-> >>
-> >> I don't know if this plays a part here, but commit f4e1ae6 (where the =
-rebase stops)
-> >> is the commit where the 'anderson_solver' subroutine is added to the c=
-ode...
-> >>
-> >> Thanks,
-> >>
-> >> Philippe.
+> > Over the last two weeks, I have worked on refining the performance
+> > report on generation numbers. Here are our conclusions:
 > >
-> > If you take a look where the rebase stops, you see:
->
-> First, thanks a lot for your answer. I have a few questions.
->
+> > - Corrected Commit Dates With Monotonically Offset (i.e.  generation
+> >   number v5) performs better than topological levels but is still walks
+> >   too many commits when compared with Corrected Commit Dates.
+> 
+> Thank you for your work examining different approaches to introducing
+> generation number v2.
+> 
+> > Number of commits walked (git merge-base v4.8 v4.9, on linux repository):
 > >
-> > $ git ls-files -u
-> > 100644 ee4377f1ec6836fa05573976a473373906c37d9f 1
-> > cicecore/cicedynB/dynamics/ice_dyn_vp.F90
-> > 100644 30c699ac371c2a751052fa98d04317e84a96ec47 2
-> > cicecore/cicedynB/dynamics/ice_dyn_vp.F90
-> > 100644 276f224e9048fe0bbd7c25822695049547362c87 3
-> > cicecore/cicedynB/dynamics/ice_dyn_vp.F90
+> > Topological Level                          : 635579
+> > Corrected Commit Date                      : 167468
+> > Corrected Commit Date With Monotonic Offset: 506577
+> 
+> It is a bit strange that requiring monotonic offsets leads to so much
+> of a difference in performance (in commits walked).
+> 
 > >
-> > The difference from the merge base to "other" (index 3) is pretty
-> > tiny, you just moved one line in the "anderson_solver" subroutine
-> > about 10 lines down.
->
-> Yes, the output from
-> $ git diff :1:cicecore/cicedynB/dynamics/ice_dyn_vp.F90 :3:cicecore/ciced=
-ynB/dynamics/ice_dyn_vp.F90
->
-> seems to be the same as the one from
-> $ git show REBASE_HEAD
->
-> This is a little confusing to me, in the sense that I don't understand wh=
-y
-> the merge-base is what it is. At this point, I do
->
-> $ git merge-base HEAD REBASE_HEAD
-> f4e1ae67b7d6ca36c6f3ea7c9da43d81caf24067
->
-> Ok, so 'git merge-base' finds that the merge-base between HEAD and
-> REBASE_HEAD is HEAD; this makes sense to me (no previous commits
-> have been rewritten so far, so REBASE_HEAD is directly ahead of HEAD).
-> But, if I try to find the commit that contains
-> the blob ee4377f1ec6836fa05573976a473373906c37d9f (index 1), I find
-> REBASE_HEAD's parent:
->
-> $ git log --all --find-object=3Dee4377f1ec6836fa05573976a473373906c37d9f =
---format=3D'commmit %H%ntree %T%nparent %P%n%n    %s%n'
-> commmit e8bfa557d3c81b75116d6557784b0439b792a308
-> tree f6fecb8193c3b877f22bcb8f4d8d2c203e17f06f
-> parent 7a8d5a82984dfedd7fac1d7ed7c7fbd1781c1f61
->
->     fixup! Add Anderson acceleration for Picard iteration
->
-> commmit 7a8d5a82984dfedd7fac1d7ed7c7fbd1781c1f61
-> tree 11fd096851015c0c16b793d9bbb5db039776483b
-> parent 63d4c73c1dd973f620307833bd363a1d5069d090
->
->     ice_dyn_vp: introduce 'CICE_USE_LAPACK' preprocessor macro
->
-> $ blob=3Dee4377f1ec6836fa05573976a473373906c37d9f
-> $ parent=3D7a8d5a82984dfedd7fac1d7ed7c7fbd1781c1f61
-> $ git ls-tree -r $parent^{tree} | grep $blob
-> 100644 blob ee4377f1ec6836fa05573976a473373906c37d9f    cicecore/cicedynB=
-/dynamics/ice_dyn_vp.F90
->
-> I don't understand why at this point of the rebase, Git
-> determines that the merge-base between HEAD and
-> REBASE_HEAD is REBASE_HEAD's parent... this commit
-> is not even an ancestor of HEAD (or maybe I don't understand
-> what the "merge-base" is in this context?)...
+> > As such, I am expecting that we will store Corrected Commit Date in an
+> > additional chunk (called "generation data chunk") and store topological
+> > levels into CDAT. Thus, old Git clients can operate as expected, with
+> > new Git clients using the better generation number.
+> >
+> > - Using a new chunk does affect the locality of reference but did not
+> >   impact the performance appreciably.
+> > - This does increase the size of commit graph file by nearly 5%.
+> 
+> All right, it seems like it is the way to go.
+> 
+> > You can read more in my report [1] and the pull request with
+> > instructions to replicate the results [2].
+> >
+> > [1]: https://lore.kernel.org/git/20200703082842.GA28027@Abhishek-Arch/T/#mda33f6e13873df55901768e8fd6d774282002146
+> > [2]: https://github.com/abhishekkumar2718/git/pull/1
+> >
+> > I talk a bit more about a patch I worked on, trying to improve
+> > performance of commit graph write using buffers which ultimately did not
+> > work and is dropped. Up next is actually implementing the generation
+> > number and take care of all little details.
+> >
+> > https://abhishekkumar2718.github.io/programming/2020/07/05/gsoc-weeks-4-5.html
+> >
+> > Feedback and suggestions welcome!
+> 
+> Some comments about the blog entry contents:
+> 
+> AK> Dr. Stolee pointed out ... [to] use the number of commits as a
+> AK> metric instead of wall clock timing (which can be influenced by other
+> AK> factors like CPU usage at the time).
+> 
+> There are a few factors.  If we compare similar algorithms, that might
+> be a good decision.
+> 
+> First, one can try to reduce the influence of random factors on the wall
+> clock timing by using statistics.  For example one can try to detect and
+> remove outliers by using robust statistics measures to detect them, like
+> tools like for example Dumbbench [3], hyperfine [4] or bench [5].  After
+> warmup, one approach is to compute the robust estimate of value, e.g.
+> median, and robust estimate of dispersion, e.g. MAD = median absolute
+> deviation, and use those to detect outliers, e.g. rescale MAD and mark
+> as outlier and remove entries that are more than "three sigma" of robust
+> dispersion away from robust estimate of value.  Dumbbench [3] has good
+> explanation.
+> 
+> [3]: https://metacpan.org/pod/Dumbbench#HOW-IT-WORKS-AND-WHY-IT-DOESN'T
+> [4]: https://github.com/sharkdp/hyperfine
+> [5]: https://github.com/Gabriel439/bench
 
-First, remember that this is a rebase or cherry-pick, and not a merge
-(we are not creating a new merge commit, but just a commit that
-"cherry-picks" the changes from one commit).  But since the wording
-and the machinery comes from a merge, let's start by discussing how
-merge works.
+That's interesting. When you think about it, medians are a better
+measure than average because medians are robust to the outliers.
 
-When you merge two branches (e.g. 'git merge other' will merge branch
-'other' into HEAD), git determines the merge-base, i.e. the point of
-common history between two commits.  For simplicity, let's assume
-there is a common point of history and exactly one common point of
-history for these two commits.  Given these assumptions, we have a
-merge-base and two commits.  Let's label the merge-base as A, the
-commit at HEAD 'B', and the commit at 'other', 'C'.  So we are doing a
-three-way merge between A, B, and C.
+> 
+> Second, because of pecularities of current processor architecture
+> (caches, data prefetching, branch prediction) performing more operations
+> might in admittedly rare cases be faster than doing less operations. One
+> such example can be found in the CppCon 2019 talk by Andrei Alexandrescu
+> "Speed Is Found In The Minds of People" [6][7] about 'small sort', where
+> doing more operations results in, on average, faster sort.  This of
+> course has a possibility to happen only if difference with the number of
+> operations is small enough... nevertheless it might be a good idea to at
+> least check that the wall clock time agrees with conclusions from the
+> number of commits walked, for at least a few examples.
+> 
+> [6]: https://www.youtube.com/watch?v=FJJTYQYB1JQ
+> [7]: https://github.com/CppCon/CppCon2019/blob/master/Presentations/speed_is_found_in_the_minds_of_people/speed_is_found_in_the_minds_of_people__andrei_alexandrescu__cppcon_2019.pdf
+> 
+> AK> With the second report, storing corrected commit date in GDAT as
+> AK> well as computing topological levels seems like a no-brainer. I have
+> AK> started working on the patch and will push to the mailing list after
+> AK> some discussion on the report.
+> 
+> Do you have any numbers how much does providing backward compatibility
+> cost at `git commit-graph write`, that is how much more time it takes to
+> computer topological levels during computation of corrected
+> committerdate compared to storing GENERATION_NUMBER_MAX in place of
+> topological level, and whether having topological level (as tie-breaker)
+> helps with Git performance when using commit-graphh for querying?  Does
+> having topological levels as tie-breaker or secondary negative-cut
+> reachability index helps at all?
+> 
+We do have timings comparing the time to compute topological levels as
+compared to storing GENERATION_NUMBER_MAX in place [1]:
 
-The thing about a three-way merge is besides thinking of it as a
-three-way merge of A, B, and C, there are two other equivalent ways to
-look at it: applying the changes between A and B to C, or applying the
-changes between A and C to B.  These alternate ways of looking at
-things come in handy when looking at rebases and cherry-picks.
+Writing GENERATION_NUMBER_MAX to commit-graph: 14.175s
+Writing topological levels to commit-graph:    14.331s
 
-When cherry-picking or rebasing a commit, we do NOT want to use the
-normal merge-base of HEAD and the commit being picked; if we did that,
-it would merge ALL the changes in the history of the commit being
-picked into the current branch instead of just the changes from the
-one commit we want to cherry-pick/rebase.  Noting that we only want
-the changes from that one commit, we can word it similarly to above by
-stating that we want to apply the changes between REBASE_HEAD^1 and
-REBASE_HEAD to HEAD.  Looking at the above wording for three-way
-merges ("applying the changes between A and C to B"), that means we
-want to do a three-way merge of REBASE_HEAD^1, HEAD, and REBASE_HEAD.
-And when we're done and create a new commit, we do not make a merge
-commit but instead record HEAD as the only parent.  Hopefully, this
-makes it clear why we use the parent of REBASE_HEAD as the
-"merge-base" in the merge machinery; it's not really a "merge-base"
-because we're not doing a merge, but we're using the merge machinery
-with a special commit as the merge-base because it gives the results
-we want.
+That's around 160ms and 1% percent faster.
 
-Hope that helps,
-Elijah
+I do think there's a case to be made for GENERATION_NUMBER_MAX because
+the performance degradation for old Git would help in faster adoption
+(Junio was in favor of this, the last time we discussed alternatives [2]).
+It is a double-edged sword as we force people who cannot upgrade git
+into worse performance.
+
+I do not have anything for using topological level as a tie-breaker.
+Will benchmark and get back to you.
+
+[1]: https://lore.kernel.org/git/20200630150056.GA4111@Abhishek-Arch/
+[2]: https://lore.kernel.org/git/xmqq8sjp1mnz.fsf@gitster.c.googlers.com/
+
+> 
+> Thank you for your work and for the report.
+> 
+> P.S. Would it be possible to put GSoC entries into separate 'GSoC'
+> category instead of generic 'Programming' one, or add a 'GSoC' tag?
+> 
+
+Great idea! Try this out: https://abhishekkumar2718.github.io/gsoc/
+
+> Best,
+> --
+> Jakub Narębski
