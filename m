@@ -2,176 +2,139 @@ Return-Path: <SRS0=b2TE=AZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21CD8C433E0
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 14:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F50C433E0
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 15:27:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBC4322473
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 14:55:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D41BD221ED
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 15:27:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="T92EZbpP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dNCJSKgD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726358AbgGNOzm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 10:55:42 -0400
-Received: from mout.gmx.net ([212.227.17.22]:41117 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725876AbgGNOzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 10:55:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594738540;
-        bh=88Gk47DFSU95rtcVmVhuQR9sR1O6wOagmg246iLqlC0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=T92EZbpP9rBIrH/YnTTpwAErlIFyHwr/EHmgTzWNoN01M/0krx0QUV3P9gc9inGQj
-         22ZV38NlYwmkoosNNYSdDEKgfH7nWuBzcTsUs5LesSIGzGg0IpyrqpakgECjZUGw1N
-         OKFIIueBWaHw7nr0Qebkz+3m7iqjlq/Cl+Ybbny8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.94.224] ([89.1.215.93]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrhQC-1kgZBo1l00-00nfuy; Tue, 14
- Jul 2020 16:55:40 +0200
-Date:   Tue, 14 Jul 2020 16:55:39 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Edward Thomson <ethomson@edwardthomson.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 0/9] Allow overriding the default name of the default
- branch
-In-Reply-To: <CA+WKDT1GMNTY5N862-7ui70D6-b1u6fuUkvctEYo+57aJGbjmw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007141640430.52@tvgsbejvaqbjf.bet>
-References: <pull.656.v3.git.1592951611.gitgitgadget@gmail.com> <pull.656.v4.git.1593009996.gitgitgadget@gmail.com> <20200629224113.GC9782@camp.crustytoothpaste.net> <CA+WKDT2DV6ymu-AG9B2h34=K+4KW7tcCpAfTV-rTdifqfS7R=g@mail.gmail.com>
- <nycvar.QRO.7.76.6.2007121007440.50@tvgsbejvaqbjf.bet> <CA+WKDT1GMNTY5N862-7ui70D6-b1u6fuUkvctEYo+57aJGbjmw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726356AbgGNP11 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 11:27:27 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64891 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725884AbgGNP10 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 11:27:26 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 49B30D59A5;
+        Tue, 14 Jul 2020 11:27:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=P3yFXZCqW7RiIl8dGX2RKwHreaE=; b=dNCJSK
+        gDpjrW8k1rwezkEBSGIg3KkujyHtwRxcxJl5r7+PlrGlLc5eWiiE3ZOQ2ryvxqTy
+        7akJDEpBP38BTvrA5TJA/VbNZn5b6D3Kbgw3/t6PdHyoyf9EGPBXfmx5b1F5fxq3
+        77qlknt04qQ0idCQvaBDzbhMgKbiKNWnkzJfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XMI3kq5IUSZ9iE56oI42a38NDxv6uGQT
+        /VlddKh1ujF8h0lnZsILfGsLtholLhIRKntotH67BNF4WDC/Gtnu14JWsHfX415W
+        Qn2DIIu/NbeKyZHacD9mVan741zy0XYlxAqL7i6dIEGna+2ezvoF/xIIPI/Vjvqs
+        iHKdSG8iTiM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 411E5D59A4;
+        Tue, 14 Jul 2020 11:27:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 219F8D59A3;
+        Tue, 14 Jul 2020 11:27:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] setup: warn about un-enabled extensions
+References: <pull.675.git.1594677321039.gitgitgadget@gmail.com>
+        <0bede821-139a-d805-934a-142004abaa4c@gmail.com>
+        <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet>
+Date:   Tue, 14 Jul 2020 08:27:21 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 14 Jul 2020 14:21:30 +0200 (CEST)")
+Message-ID: <xmqqzh82ktgm.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:alPC26nt2enJsTlsRU0iM5P4IEIcLQ1rZo0SgwStouYo9jmm1ZH
- OB25giO7fTcTBVYA0V425T/k4sqnxyXCNg+//oRTNo1LBu4xq/8cYhiN04SRU00zXT/PWN9
- /v6YQ6pBapkGpIGL+c3h3Xk+qtXUjS3oNhWBpeQCIWeob+Y/keFiPDP4d/lGnNTwQVtVA59
- IINNShQvVOZrzJpQOEJHg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8MlE/H8K1wk=:N59n3pEWPYHaCD0QbHc7cl
- tR8aRetjiNIWXFT9+neWAJ9HQvpaaJMrYHetKGOFg75FQcOd/8qKigTT16K+ZIVqlNIx4ccF+
- 0h7i7ybss3volbynepUqtRxmesSR2MI3TeHfVWzadLYT92yaUwcefZsM+GKXHhlBVaDglH5Nj
- g2um4eAzlMF6pqtRGNN3WUQrkGNpBi/GwetKEoU/09EjHkp/VRfOrEbXaeAHEdU4/JJO/93et
- 5AnvL2y2cdwl2kirWqq7vM2nmEfbeKcC54raDDDhrZGVc2PPWKyOXbL5qIuhFNiTK8Ne7KmRY
- NuYkPlhsDnyfJBYeDwxEzA2Ma9FiSZg7y0R9laJ08a0cHWyOf5RRxMpvTeOeULQMsjVsN4Ie9
- Bko0QuyL0HH1vA2VR3fZiJkAW5XQG0tY6s5EcZEjX24eiXr9XrmZ7QhWNGtPMFIpHtl0Oavtj
- 3YfAtKcmdvZr0ULtgezv7mZQujx5Qa/rCZq9K58eJN5K0//7yR20XKFdJ9VbJVRZ5OU6Zv+O8
- 2HhNPhSWF1A289TCVnkcqxFoAH7PbhcpHAUFe/UGFYpgL/M5jkDPXm0VUyS7LckzNGNXLjOkD
- uJghRO6dWTEqWOlVgLGg9k1ljrtNZ2PW+cmOeYyE4C0JpkKbkljZRBWZaLwMhFO5j6bETNdBc
- sHx+qzzkM9Lg/Ry5tDYZlBcsmiOhYfjwhMtYV9w7KqaagYfRreLj1Ghw0H5WhJSrnuAsKd65d
- ShQQvf0MHhp8VTQqC2qlk6pl/b1pmCoP2mjX7Y0MAmIL16P2oo8xALDAUkEt63aTc6pahRiMe
- l4EJGvjrZZrSt8dQRAc6tTRqdJrWiMeUsMQPuJk4cZPRAhx2H96GzC3eaIhBJc5ySVAFarLeN
- Sti/S4fbomzZRhRBq7iiDkHfI1/aWQ84PjvtI60zj/ZE6rnLsApgOEi7tfn7Kg3KiKiHNPTF5
- 90qPjmMXMnoA9QJBQ1y6mlWSjDzpbgklfvDSLiAlvtHzqe6pBk/I5pBj9Z1leg13tPC6om8fB
- TY57OQ+4iytNbN+8hBFThGxndJb0s191fsr24u2LbdhrhBXuq6RlSN+pkWkktYsxPIB5coiMh
- pwaPLal7GSS8RBnRu1BPs7SxkgFZoHZh2FdcoqTSED5U/RZDMhgFTUyxXCLHboUvgqnqf5bQh
- njE712aCj7rLjtEvfosrBSIYs0KX11cnOGpNWrq0XTgPENjf7+uafxlOBPszt4PCC5CVHGBj4
- JY+V2ffWMm0oamARHUz8IPl5F1LyRnF06xgo+HQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 83BC7926-C5E6-11EA-AB55-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ed,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-[re-Cc:ing the list, I hope you don't mind]
-
-On Mon, 13 Jul 2020, Edward Thomson wrote:
-
-> On Mon, Jul 13, 2020 at 8:38 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Sun, 12 Jul 2020, Edward Thomson wrote:
-> > > One thing that isn't obvious to me, though, is why templates take
-> > > precedence over the command-line option.  I would expect the
-> > > command-line option to be the highest priority option given, just
-> > > like configuration values specified on the command-line override
-> > > values from configuration files.
-> >
-> > Side note: I have not tested this, but I trust you did, and my reading
-> > of the code agrees that it does this.
+>> If you don't mind, I was already going to squash Junio's commit into
+>> mine (almost completely replacing mine) but I could add a small
+>> commit on top that provides the following improvement to the error
+>> message:
 >
-> I was speaking about the notion of configuration options specified with
-> `-c` on the command line overridding things in configuration files.
-> Like how you override `init.templateDir` on the command line:
+> I don't mind at all. I'd just like to know that v2.28.0 avoids confusing
+> users in the same was as v2.28.0-rc0 confused me.
+
+In a nearby thread, Jonathan Nieder raised an interesting approach
+to avoid confusing users, which I think (if I am reading him
+correctly) makes sense (cf. <20200714040616.GA2208896@google.com>)
+
+What if we accept the extensions the code before the topic in
+question that was merged in -rc0 introduced the "confusion" accepts
+even in v0?  If we see extensions other than those handpicked and
+grandfathered ones (which are presumably the ones we add later and
+support in v1 and later repository versions) in a v0 repository, we
+keep ignoring.  Also we'd loosen the overly strict code that
+prevents upgrading from v0 to v1 in the presence of any extensions
+in -rc0, so that the grandfathered ones will not prevent the
+upgrading.
+
+The original reasoning behind the strict check was because the users
+could have used extensions.frotz for their own use with their own
+meaning, trusting that Git would simply ignore it, and an upgrade to
+later version in which Git uses extensions.frotz for a purpose that
+is unrelated to the reason why these users used would just break the
+repository.  
+
+But the ones that were (accidentally) honored in v0 couldn't have
+been used by the users for the purposes other than how Git would use
+them anyway, so there is no point to make them prevent the upgrade
+of the repository version from v0 to v1.
+
+At least, that is how I understood the world would look like in
+Jonathan's "different endgame".
+
+What do you three (Dscho, Derrick and Jonathan) think?  
+
+
+
+> Thanks,
+> Dscho
 >
-> > The truth is that overriding the default name via editing the template=
-s is
-> > just not a very good strategy, it is fraught with peril, as e.g.
-> > `init.templateDir` is a thing that can be easily specified via the
-> > command-line (`git -c init.templateDir=3D/tmp/my-templates init`).
->
-> I agree that setting a template that contains `HEAD` is perilous.  But
-> it's an established and supported bit of peril.  I think that the questi=
-on
-> of configuration specificity is _also_ an established one (and not nearl=
-y
-> so perilous).  Just like `-cinit.defaultBranch` overrides the global
-> configuration, I would expect it to override the templates as well.
-
-Is it really well-established? If so, it might really be worth doing
-something like this:
-
-=2D- snip --
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index cee64823cbb..9149f9e51f5 100644
-=2D-- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -210,7 +210,7 @@ static int create_default_files(const char *template_p=
-ath,
- 	struct strbuf buf =3D STRBUF_INIT;
- 	char *path;
- 	char junk[2];
--	int reinit;
-+	int reinit, override_HEAD_in_templates =3D 0;
- 	int filemode;
- 	struct strbuf err =3D STRBUF_INIT;
-
-@@ -218,6 +218,12 @@ static int create_default_files(const char *template_=
-path,
- 	init_db_template_dir =3D NULL; /* re-set in case it was set before */
- 	git_config(git_init_db_config, NULL);
-
-+	if (initial_branch) {
-+		path =3D git_path_buf(&buf, "HEAD");
-+		override_HEAD_in_templates =3D access(path, R_OK) ||
-+			readlink(path, junk, sizeof(junk)-1) < 0;
-+	}
-+
- 	/*
- 	 * First copy the templates -- we might have the default
- 	 * config file there, in which case we would want to read
-@@ -265,7 +271,7 @@ static int create_default_files(const char *template_p=
-ath,
- 	path =3D git_path_buf(&buf, "HEAD");
- 	reinit =3D (!access(path, R_OK)
- 		  || readlink(path, junk, sizeof(junk)-1) !=3D -1);
--	if (!reinit) {
-+	if (!reinit || override_HEAD_in_templates) {
- 		char *ref;
-
- 		if (!initial_branch)
-=2D- snap --
-
-Note that I initially considered moving the `reinit =3D [...]` part to bef=
-ore
-the `copy_templates()` call, but `reinit` actually does quite a bit more
-than just guard the symref creation of `HEAD`: it also guards the
-`core.filemode` test, the `core.symlinks` test and the `core.ignoreCase`
-test. There _might_ be legitimate use cases to side-step those by
-delivering a `HEAD` in the templates (which is, just as setting the
-initial branch using templates, a relatively awkward and fragile way to
-override it, but hey, we're trying to address exactly such a scenario).
-
-However, even having written the patch (which would still lack a
-regression test), I am not 100% certain that we would want to risk
-including it in v2.28.0. It strikes me as such a fringe use case (with
-relatively obvious ways out) while the patch is not completely risk free
-(I _think_ it should be safe, of course, but it touches a relatively
-central part of Git).
-
-Ciao,
-Dscho
+>>
+>> diff --git a/builtin/config.c b/builtin/config.c
+>> index 5e39f618854..b5de7982a93 100644
+>> --- a/builtin/config.c
+>> +++ b/builtin/config.c
+>> @@ -678,8 +678,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>>                 else if (worktrees[0] && worktrees[1])
+>>                         die(_("--worktree cannot be used with multiple "
+>>                               "working trees unless the config\n"
+>> -                             "extension worktreeConfig is enabled. "
+>> -                             "Please read \"CONFIGURATION FILE\"\n"
+>> +                             "extension worktreeConfig is enabled "
+>> +                             "and core.repositoryFormatVersion is at least\n"
+>> +                             "1. Please read \"CONFIGURATION FILE\""
+>>                               "section in \"git help worktree\" for details"));
+>>                 else
+>>                         given_config_source.file = git_pathdup("config");
+>>
+>> Thanks,
+>> -Stolee
+>>
+>>
