@@ -2,139 +2,151 @@ Return-Path: <SRS0=b2TE=AZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DAD1C433E0
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 03:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90B59C433E0
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 04:06:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4085921927
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 03:51:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6711021883
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 04:06:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="i38xUMIc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kgaqxvs3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726675AbgGNDvL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jul 2020 23:51:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40260 "EHLO
+        id S1725355AbgGNEGU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 00:06:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726432AbgGNDvK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jul 2020 23:51:10 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4EBFC061755
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 20:51:10 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id a6so1411602pjd.4
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 20:51:10 -0700 (PDT)
+        with ESMTP id S1725275AbgGNEGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 00:06:20 -0400
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D49C061755
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 21:06:20 -0700 (PDT)
+Received: by mail-pl1-x644.google.com with SMTP id w17so6457260ply.11
+        for <git@vger.kernel.org>; Mon, 13 Jul 2020 21:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=A1enaDhjmX6zJcrYsdjlQNlLUkdLZnmcyITJxFDw57U=;
-        b=i38xUMIcwbg2g8TLMeRgCBJEfu6IKhSb+0tU3dvGiV/OrGAdmtrza/A9zPpRoFsubv
-         sl+HtLhfcyLFkn+ctMJqNkRqQHuXou76VSyqKUx8Wj7nL6q40t3//gTARN0xU1gLVOE7
-         kjAQp88QTZmIIMtvLvlJYjElecwigiMh9zc4v17XSM7FooGuXeYoymiVAeAFDX5UzDSe
-         lo/aHrxmAB8HdrtoZFqHQc7s5MS6NN6OUHTQ4be662UTMA538gv1vhRKyiZ4i29dXekL
-         mrRJH1YyiRvoFuE4/9QtUkRHPjr4dPng0qATBmTRWFisT+D7ZMyN0A/pqq8sjwvlMwzO
-         kNQw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=NkXPbnQtxobZsce+A2s598DaoGpBvG5pCg2uBPwJChI=;
+        b=kgaqxvs3EMzKMCWpADjMyC4VVvpsxQYFcrgpEDu7I0dMPrvIQavJ/suD798w0lsFTw
+         fV/2fk/ZzCUrCk22qjk9TsyRSOE1WSljB0TByWyKyq2m0HQsPiB32Olp9+t2wEovXD3g
+         dGuMHxaC8sTXnyyHsTbK0yLUjooJlZIPibOV1k4vJsLOW9ou0iqZO2caLBHq957ug9K/
+         OcEyYNiTlriSVvSuxxd6Gq4dpFpOsibaZsTjSUg5Z6c3oQaeHNyREytOjrjitZ6UyzM+
+         pqv07l7lnr4YswwABqBIuoH9XGgnlp0RgE7R7YSen6jImvGcDZ6S8puyBAlX6YlJAd1H
+         fAvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=A1enaDhjmX6zJcrYsdjlQNlLUkdLZnmcyITJxFDw57U=;
-        b=WSs/5+KpJc0E0mYoMwORLEIb5m5TEOFxicC0WdQzg45jvhCYNVdJFLpXH20p/s4kjE
-         DBQ7pTUG2HLDM0wxA0MNiY0tT2AgGJe3p50Dhayn0CVC4Uqg9knjlNtu9+c8pdvU9Lja
-         kbs9CoE6ms7vOgvDid1GVtVSFlIJ3JDXn7GgTQuLxfoX4OJKn3jcW2IV11aeqt4FW8Z0
-         IywSr0Ux88asTHf7W7e6pQ0UJfgRIKSsvETcJxU/X1VMzj9dl4U7CLjneMHi57Uox0s7
-         S0vgZ3LpYhXRMsvFYJp/Pp4wGXC1w86Et/3UNhVyIfhKKMuyax8J/a1ZxbqVqU7W+qNc
-         ox+w==
-X-Gm-Message-State: AOAM532gHgXIXg6eHa5eVqODKB1iRRffAMs8uxWJiPWLAZkZNepw5jdq
-        iGjidJrNLWPn4iSAEbnMBFMta7a0DZmYbVXyqzB+
-X-Google-Smtp-Source: ABdhPJw0apI/os241XVHfzITEvrYd5J3xyTW1j6MtqIsvI0i7I9zUQsiumeTSECyEsEzK4ae3+1NlLQwGayytVO1w3cu
-X-Received: by 2002:a17:90a:2b8f:: with SMTP id u15mr2478250pjd.98.1594698670101;
- Mon, 13 Jul 2020 20:51:10 -0700 (PDT)
-Date:   Mon, 13 Jul 2020 20:51:04 -0700
-In-Reply-To: <20200714031017.GA15143@generichostname>
-Message-Id: <20200714035104.1465772-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20200714031017.GA15143@generichostname>
-X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
-Subject: Re: [RFC] should `git rebase --keep-base` imply `--reapply-cherry-picks`
- ?
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     liu.denton@gmail.com
-Cc:     levraiphilippeblain@gmail.com, git@vger.kernel.org,
-        sunshine@sunshineco.com, avarab@gmail.com,
-        Johannes.Schindelin@gmx.de, jonathantanmy@google.com,
-        newren@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NkXPbnQtxobZsce+A2s598DaoGpBvG5pCg2uBPwJChI=;
+        b=K2ByzhJ1dmXW/dfjM1YtNTsnBIkv1xqVv2xcY/Dlmo4z3R/GT1rtkqYAcpujGI/Fzr
+         QTpSh0x1K1EfMhcQ3m5nRVkGu8UPS5WCmE1NVrI2YN6TMUxeF3tzEfa5ePeLznkD/1ty
+         R3lHtE1dIJG/99Lc6E6ATAq4Q7SNGus/J+nuH81+jwCoSFuykjS0z50Mx/uZJ5b3OClr
+         tBFViD/Q7LhRZYTl9MWDH9Q7R0irA2GLZMZD6F/SkkYMOx9N5V9Nd6yFsbNeayDV6whC
+         YEgy4yFgIN94LzXkilTGrU4xr9ZvrD71KR/mQ5/KUeWAJKj8zAH9SE6nJuTxjcQZMzJf
+         ZJNQ==
+X-Gm-Message-State: AOAM531W8CqOcFrFjaQ6DNK3suE/J8vrLguF9adGambKD0YKgfbfikK7
+        4vQ6ChV014ytT3lSagGKXH4=
+X-Google-Smtp-Source: ABdhPJzHWm1ljqtQhYbUzWfPtK+AirX0Vc88M++Om3NyOBnUDdrv3wZSWUrWLWsap/nFDIheOrLMQQ==
+X-Received: by 2002:a17:90b:234f:: with SMTP id ms15mr2447643pjb.7.1594699579511;
+        Mon, 13 Jul 2020 21:06:19 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id w71sm15576868pfd.6.2020.07.13.21.06.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2020 21:06:18 -0700 (PDT)
+Date:   Mon, 13 Jul 2020 21:06:16 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, delphij@google.com,
+        peff@peff.net, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] setup: tweak upgrade policy to grandfather worktreeconfig
+Message-ID: <20200714040616.GA2208896@google.com>
+References: <pull.674.git.1594668051847.gitgitgadget@gmail.com>
+ <xmqqblkjnr5m.fsf@gitster.c.googlers.com>
+ <xmqqy2nnmbh8.fsf@gitster.c.googlers.com>
+ <xmqqpn8zmao1.fsf_-_@gitster.c.googlers.com>
+ <b8ae18f7-a0af-bd62-2553-92989e1dbe7e@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b8ae18f7-a0af-bd62-2553-92989e1dbe7e@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Is this a sane default ? I understand that it is a good default when we are rebasing 
-> > *on top* of master, but here I'm just doing some squashing and fixup's and I did not
-> > want the commit I had cherry-picked from master to disappear (yet). In fact, because it
-> > was dropped, it created a modify/delete conflict because in a subsequent commit 
-> > in my feature branch I'm modifying files that are added in the commit I cherry-picked.
-> 
-> So if I'm not mistaken, if we have the following graph
-> 
-> 	A - B - C - D (master)
-> 	     \
-> 	       - C' - D (feature)
-> 
-> and we do `git rebase --keep-base master` from feature, C' will be
-> dropped? Indeed, I am surprised by how this interacts with the
-> default setting of --reapply-cherry-picks.
+Hi,
 
-Just to clarify, the default setting is --no-reapply-cherry-picks. (I
-understand that the naming is confusing - the name was discussed quite a
-bit [1].)
+Derrick Stolee wrote:
+> On 7/13/2020 4:18 PM, Junio C Hamano wrote:
 
-[1] https://lore.kernel.org/git/20200309205523.121319-1-jonathantanmy@google.com/
+>> The "fail and warn" approach introduced in the previous step may be
+>> with smaller impact to the codebase, but
+>>
+>>  - it requires the end-user to read, understand and execute the
+>>    manual upgrade
+>>
+>>  - it encourages to follow the same procedure blindly, making the
+>>    protection even less useful
+>>
+>> Let's instead keep failing hard without teaching how to bypass the
+>> repository protection, but allow upgrading even when only the
+>> worktreeconfig extension exists in an old repository, which is
+>> likely to be set by a broke version of Git that did not update the
+>> repository version when setting the extension.
+>
+> This is a more subtle way to handle the case. In fact, it
+> silently makes extensions.worktreeConfig work as it did in 2.27,
+> which means users will not have any troubles after upgrading.
 
-> > How would a change that made '--reapply-cherry-picks' be the default when using 'keep-base'
-> > be received ?
-> 
-> I'm somewhat surprised that --no-reapply-cherry-picks is the default. I
-> would argue that it _shouldn't_ be the default at all. It's an
-> optimisation for when no --onto or --keep-base are specified but it
-> definitely can cause problems otherwise, as we've seen.
+I'd like to propose a different endgame:
 
-When I encountered this feature, it was a surprise to me too, but this
-has been documented as a feature for a long time (e.g. see the man page
-for 2.1.4 from 2014 [2] - search for "RECOVERING FROM UPSTREAM REBASE").
+Instead of looking at `extensions.*` settings one by one to see how
+various implementations handled them with repositoryFormatVersion=0,
+what if we treat repositoryFormatVersion=0 as a synonym of version=1?
 
-[2] https://git-scm.com/docs/git-rebase/2.1.4
+That is:
 
-> I think I would argue for the following in decreasing order of
-> preference:
-> 
-> 	1. Make --no-reapply-cherry-picks the default in all cases.
-> 	   (Those who need the optimisation can enable it manually and
-> 	   we can add a configuration option for it.)
+1. in new repositories, set repositoryFormatVersion = 1, since (1) Git
+   versions in the wild should all already know how to handle it and
+   (2) as we've learned, other Git implementations need to understand
+   some of extensions.* anyway
 
-I assume you mean "make --reapply-cherry-picks" the default (since
-earlier you said that you were surprised that --no-reapply-cherry-picks
-is the default)? Also what do you mean by "optimization"?
---reapply-cherry-picks is faster because it does not need to read the
-upstream commits (optimization for speed) but --no-reapply-cherry-picks
-fits some people's workflow better (optimization for workflow).
+2. whenever setting any extensions.*, automatically upgrade to
+   repositoryFormatVersion = 1
 
-> 	2. Make --no-reapply-cherry-picks only active if no --onto or
-> 	   --keep-base are given (--keep-base is a special case of --onto
-> 	   so we only have to handle it in one place).
+3. when in an existing repository with extensions.* set and
+   repositoryFormatVersion = 0, act as though repositoryFormatVersion = 1
 
-This might be confusing - I wouldn't expect "git rebase master" and "git
-rebase master --onto master" to have different behavior.
+4. document this new behavior with repositoryFormatVersion = 0 in
+   Documentation/technical/repository-version.txt
 
-> > Tangential question: in any case, would it make sense to still add the "dropped because 
-> > already upstream" commits to the todo list, in the case of an interactive rebase ? 
-> > (maybe commented out, or listed as 'drop' with some kind of comment saying those 
-> > are dropped because they appear textually upstream?)
-> 
-> That would make sense to me. I don't have a preference between either.
+This way, the result is simpler than where we started.
 
-This makes sense to me too.
+Unfortunately, we are not even that consistent about what to do with
+extensions.* settings when repositoryFormatVersion = 0 today.  So
+we'll have to exercise some care and analyze them one by one to make
+sure this is safe (and if it isn't, at *that* point we'd come up with
+a more complex variant on (2) and (3) above).
+
+It's too late to go that far for 2.28.  It would be tempting to try a
+simple revert of 14c7fa269e4 (check_repository_format_gently(): refuse
+extensions for old repositories, 2020-06-05) to get back to tried and
+true behavior but that does not do enough --- it still produces an
+error when trying to upgrade repository format when any extensions are
+set.  So how about such a revert plus Junio's patch plus the analogous
+change to Junio's patch for
+
+  extensions.preciousObjects
+  extensions.partialClone
+
+?
+
+Thanks,
+Jonathan
