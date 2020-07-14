@@ -2,94 +2,92 @@ Return-Path: <SRS0=b2TE=AZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E31C433E3
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 06:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC95BC433E2
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 07:45:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 476FC221EB
-	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 06:34:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B19120857
+	for <git@archiver.kernel.org>; Tue, 14 Jul 2020 07:45:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jfo5XL2z"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Z43mND0S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbgGNGec (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 02:34:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725306AbgGNGea (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 02:34:30 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E458AC061755
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 23:34:29 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id t6so3451010plo.3
-        for <git@vger.kernel.org>; Mon, 13 Jul 2020 23:34:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=QqWdoxPCzFIuoFeuQ03Qa+LeoBaFYBsyvQZ4ygHmAWs=;
-        b=jfo5XL2zccaaexU0f61GR9IOahexMbSHrRTw55+eNfeJk4zSavEe6p/a0cG1iCsbkq
-         Qeh8Yxe8gwcGsBM934wBSCJcRAXMGcjubyPrmDzUCYZIMeIC4z2OqkyEFMZcBh00kVWj
-         g2T0H818YF1Za1Rc5urxgsE46YoEB8XmTQy+Um+FLtg5b6GVb7no/lDdEM7C2BJ3oCzv
-         izNcEp8aLuAVu2yGGhsAXXShGrD00U+m2quvaV6UwxmdlW558kGiisaZgCiBq+tQ8S1s
-         VVphKzMKWqQDMHNderJFyqxStX0tZKdkdjPNQeu8Oa50bAGUT9s+S7suLJDbr2vf/wXd
-         TAmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=QqWdoxPCzFIuoFeuQ03Qa+LeoBaFYBsyvQZ4ygHmAWs=;
-        b=UfydLbLQyoztOBfwwyLinGyy0w+1blIng18I89bqZDW+zYgEPm38rc0CVOOQoNonWz
-         4qhM24WxzgJSfL+tQ7nJhzLd8QwcXklXz+u8dmM0q3AFxYYauijezTbmoC5/nG12xtO4
-         2X9SupeQ/2v9ivSY/JWdKMYZGiXNEE1RxtOF9VmD5X7TnnZbO+SXQczABeW1S7APSBRB
-         6DCoEH/MsXu+5zHFSLszeHYRIAdDh7/CFtXxG3geZbXHL44bkFjok+UDpEHovzHaPh/d
-         Mwt4UabxM/yOYKyLtlAbYxYxZZorRZb64NkK1dh/wlAsL3xQLCJyPcfPDhoak9mGVzAI
-         8BKA==
-X-Gm-Message-State: AOAM533pnfV03V90B/D1+TaNHT8qWk3/wXeVIjy2+DYwYumRwHKPbU8h
-        Xk2ZbPtSAHGpwwa027jjA22TN3DLsvE=
-X-Google-Smtp-Source: ABdhPJzN4NW9muBJ2mlu2Mpc7nuTREq849uT6VpMQdod0j3IVNCPJV7h5z/OehzLSE0PIXHoEIJJgQ==
-X-Received: by 2002:a17:902:a609:: with SMTP id u9mr2771764plq.5.1594708469141;
-        Mon, 13 Jul 2020 23:34:29 -0700 (PDT)
-Received: from Abhishek-Arch ([2409:4064:e8a:69a1:3523:a8cb:2cbf:c365])
-        by smtp.gmail.com with ESMTPSA id d9sm15662196pgv.45.2020.07.13.23.34.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2020 23:34:28 -0700 (PDT)
-Date:   Tue, 14 Jul 2020 12:02:36 +0530
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
+        id S1726542AbgGNHpH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 03:45:07 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:41931 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1725780AbgGNHpH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 03:45:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1594712706;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=KSiDOcYmz96KPL6hpK2DuaskU2ocj97tkOj+SHixBgs=;
+        b=Z43mND0SVbX6hizcYsaCGr2wGzh5UfLLKQthYLNbk5iaBPkt0PYREoRMHvrAMufuAE6y8B
+        tVkqv0FQVCPp5eVXjp85GIvdmAPYK6aPiHi+XoP880nmAFn+HYbp3TiOfAe5ewHqiTAITw
+        M6f0Nx5JkFpU+3LYf4eI2TduVAkFSZw=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-283-e8m5zAmUPo2b24dt7lv9Ng-1; Tue, 14 Jul 2020 03:45:03 -0400
+X-MC-Unique: e8m5zAmUPo2b24dt7lv9Ng-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com [10.5.11.16])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 463851080;
+        Tue, 14 Jul 2020 07:45:02 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.40.193.147])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 085E15FC38;
+        Tue, 14 Jul 2020 07:45:00 +0000 (UTC)
+From:   Michal Privoznik <mprivozn@redhat.com>
 To:     git@vger.kernel.org
-Cc:     jnareb@gmail.com, stolee@gmail.com
-Subject: [GSOC] Blog about week 6
-Message-ID: <20200714063236.GB10242@Abhishek-Arch>
+Cc:     matheus.bernardino@usp.br, kolyshkin@gmail.com, gitster@pobox.com
+Subject: [PATCH] completion: add show --color-moved[-ws]
+Date:   Tue, 14 Jul 2020 09:44:51 +0200
+Message-Id: <da0bef7b856388d7f4613c30d3a7c962ddba96b2.1594712582.git.mprivozn@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone!
+The completion for diff command was added in fd0bc175576 but
+missed the show command which also supports --color-moved[-ws].
 
-Over the last week, I started implementing generation number v2. Based
-on the performance numbers and subsequent discussion, we have decided to
-use generation data chunk approach, storing topological levels into CDAT
-and corrected commit date offsets into GDAT chunk. Do note that we are
-maintaining backward compatibility using topological level, not with
-monotonic offsets.
+This suffers from the very same problem [1] as the referenced
+commit: no comma-separated list completion for --color-moved-ws.
 
-I also found a performance regression with `commit-graph write
---reachable --changed_path` that sneaked in along with the patch on
-moving generation and graph positions into commit-slab.
+[1]: https://github.com/scop/bash-completion/issues/240
 
-https://abhishekkumar2718.github.io/gsoc/2020/07/12/gsoc-week-6.html
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+---
+ contrib/completion/git-completion.bash | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-https://github.com/gitgitgadget/git/pull/676
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index c21786f2fd..d23cf181ef 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2732,6 +2732,14 @@ _git_show ()
+ 		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
+ 		return
+ 		;;
++	--color-moved=*)
++		__gitcomp "$__git_color_moved_opts" "" "${cur##--color-moved=}"
++		return
++		;;
++	--color-moved-ws=*)
++		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
++		return
++		;;
+ 	--*)
+ 		__gitcomp "--pretty= --format= --abbrev-commit --no-abbrev-commit
+ 			--oneline --show-signature --patch
+-- 
+2.26.2
 
-> Yes, I pushed without signing off or a cover letter. It's still a work
-> in progress.
-
-Thanks
-Abhishek
