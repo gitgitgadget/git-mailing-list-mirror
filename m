@@ -2,106 +2,155 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F754C433DF
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 19:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1025DC433E1
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 19:42:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2382A2065D
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 19:21:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3D1C20657
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 19:42:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Eq6I8hen"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="X19Ul/vq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726634AbgGOTVh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 15:21:37 -0400
-Received: from mout.gmx.net ([212.227.15.19]:38473 "EHLO mout.gmx.net"
+        id S1726722AbgGOTmY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 15:42:24 -0400
+Received: from mout.gmx.net ([212.227.15.18]:39899 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726472AbgGOTVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 15:21:36 -0400
+        id S1726661AbgGOTmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 15:42:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594840890;
-        bh=764sO1pIZr6DwR8LolqTGUA1N0dEpsruySaJ3Tq8yEQ=;
+        s=badeba3b8450; t=1594842129;
+        bh=oQ4/3bCqM/GFg1wCTVBVDI36NRTuCj+FWZn9rI2TY/0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Eq6I8henlYUziRSronDYbj5wa1SXcIm+Yp8Q5NvAJw/VOz/n0cpgFSBAa5ZORRXsT
-         iFXv9G3jiMhOqDO3En91HCINSJT/p5RroWfHBfuEsglTNiUbeVgYU3IoPRvHtaN1Go
-         ZpXGEHF7n3H+gBp6kXLIiAXKuqByD2IH80UggFaQ=
+        b=X19Ul/vqJdy4Gf3kE6+C7nyzhrUQvlvpY4cQPLxyZrJdVL5TxjtYtmN44CQBREM6Z
+         jSy2x0QEHW6Aj0VEamQ3TnGx1AT0hOflBnmeaTF3uPenE7EnqJehmp84DXb1FPHZso
+         XvsxtbAngtIKXtcMb08nCZzYmAm6BH54QbdKQOFQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.94.224] ([213.196.212.204]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MnJlW-1kcr0v3Wwm-00jGmP; Wed, 15
- Jul 2020 21:21:29 +0200
-Date:   Wed, 15 Jul 2020 21:21:31 +0200 (CEST)
+Received: from [192.168.94.224] ([213.196.212.204]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUowV-1kLstk1jVp-00QiVk; Wed, 15
+ Jul 2020 21:42:09 +0200
+Date:   Wed, 15 Jul 2020 21:42:10 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Derrick Stolee <stolee@gmail.com>, Xin Li <delphij@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] setup: warn about un-enabled extensions
-In-Reply-To: <xmqqd04wk5kr.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2007152117310.52@tvgsbejvaqbjf.bet>
-References: <pull.675.git.1594677321039.gitgitgadget@gmail.com> <0bede821-139a-d805-934a-142004abaa4c@gmail.com> <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet> <xmqqzh82ktgm.fsf@gitster.c.googlers.com> <xmqqpn8wkben.fsf@gitster.c.googlers.com>
- <xmqqlfjkk8zv.fsf@gitster.c.googlers.com> <31f52913-8745-18b4-63fc-37d2a9aea8d0@gmail.com> <xmqqd04wk5kr.fsf@gitster.c.googlers.com>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 31/39] bundle: add new version for use with SHA-256
+In-Reply-To: <20200713155617.GF11341@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.2007152141160.52@tvgsbejvaqbjf.bet>
+References: <20200713024909.3714837-1-sandals@crustytoothpaste.net> <20200713024909.3714837-32-sandals@crustytoothpaste.net> <20200713155617.GF11341@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rXiR+KzaEWEXwDT5WVCu/hH2QoCcXJYAufmnXb+rdYm/XeyS/mi
- npM5gTUEKye/IMGL7gfZcSv8QjYkIri5LfxgJGJfJY35NbNIK5KYUxEeNVZ5W/eVYiA64Ul
- WjqrGpAczvvt5a21KERx+SM8f1RxOA4oBbdZJjhka0bJiJCW+k4aFPFY1JRDzsA107SZmk2
- D85X6HFtRjkyDcXAt5R/w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rcTdVZbgIQc=:QWPicNBzH8IfBNByr1z/VE
- 1IcuVyci2aHOs0ep971HqGRv36l3S/63lD2jthSPrKNwUsNIheub/Vbyanuqast85gJymPO4O
- 6XfskZH2qnGLOyErYVG9U+waRyReuj4LRGzY3ponlPRI5fRzxtnGzvfPQ3Y+sCm7cruLJV75t
- 7UJZYMRofuWx6AyiEqPT7GSVJDZ/8nuzzcehLBsvqQEqp3tis5GK30DGrNarXiMvz7pvMTg3D
- b2uPedw2IbzkTpnjwudd+9K5e7NHdtf/5MoW/UyDfQnFsOlXxO4MBbrjihXcoviRdjOdCGPPQ
- c+FJM2ch9214JkePU+TsMNKMqsh6vImCDCPIlr/usY9W3guRwALQv5x9FN+IeyvDOEcILz1FB
- UJb6PrBSvvLqcI5sm2Oqqlbp/9iB9lcwzx+Xo8isYm5bDjPi/h30AgGcF0L6YDktoJ3TuvM8w
- LWutMIDFi2HOy/WLiov7ReQaZIgST4xR8tAesxOsn0Ya/la+Xgv8dcQpMCus4r8GolhP+6EYj
- 45GTLxScMvLjcMpJ3eK5snF1PEWsh8rl/+Hg6JP4z1MjAjrKmpumyfZStufifLyNmUKdg/UMl
- 4oU/ewFEXGfVgJaFs11dsy6Qjpt8OWsaEjyS3fsr5GrACVDCa9TlOUXDyuw9MCIP+KCP50xRh
- uwGu0nRON18na5gv8gMk1DtIsaBOPKxmrlZh9AV8/j1Cz5XMa8PC1N2KjiKPF+Qra4LLoB+2W
- yzLZOI1ble1YBadGpP1irEusK9fNJscdhYh/gXRBJ5IEGEHjRjD3kYoixlYzHLAzQi+cHbTsq
- 5AcpQYrRXzc1ffl7CPGk7UBfUwHemlasUdshXrxCASHQn3YES2Dak1dOuQAHCuWZ0in4Jmszy
- FzJcR4LpQoOUXuBqHxD7nrzSXikUFeAK+Wu7bj0TUsthLnBGvYMHHmiNRk1MozJU7HxZDnGlF
- gFypEKrlSKCYVBQHlQ2GrfGOn6OfKQWzvrA/onkItSy+cqftutL5p9N+dkbsr1yr4FDOXyjK4
- dDlg24aefVPeqWYm4DGT6RKwNcr2l1rWn7bh3IL2ay2uddQmmfbhQSxWqRTR5zDlHgGwLBEzh
- rYcBQ/uh6J5AwVegKxvGnxLGdRCu+fL+cXGKFm0V+vtMgmFDdIhRyEl79sav/OI9NlJNn094W
- 9NvT/sNEmluO9/SRVNEoXM9IkhYxuadl9sLh06Y7PXEgbVlXPTP3Gs1CKXLYLKVNWc0xQ+hcv
- iaUdINixqiAQD3cxfcWc+GYrHe0wXjmse9nkk1Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-2102947002-1594842131=:52"
+X-Provags-ID: V03:K1:XCi+2GEPum++2ousyh1/hsTkm0YZLRYciHDaHjvSmbDUcUT+bZb
+ 1p46f/VNmt7XXSRSK+JM4KPTiSS0gi9oAJ8Gr6Fe37UzE4i6Xu6zSP+5m3cXnA6z5IrZBhn
+ 51lDZMig9vn2SjAvaTDlnDmh0gri2TR3GPrHexvpacvbpgTKdhOSVlLI88hUeCj7fcYm7uD
+ UHIHTASOpV45n2xJxG6dQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WKZnhEmnfLo=:Nr2L+Z0lPIX6f/3Y6h9HJM
+ I+tQqTj4tNEy8kGpVSw3jcZG1u1e55iCpPxsnZ8UOuFFxQgpsIvbklvKhLJnfVR5kS7keAVM5
+ ShE4+DGEo/67yIQlusvcxH+c9mjkaR3aLsjmaKw2QqU9VfUhGIxQZOdOrzLGFUxFOCh8t+/nD
+ l/1TlNt1UfTl/lrcGQVWfOOp0Z5ZAyuO1n9wFBmZYlT9l+SEW9um6WMRofSF5Vp00TdcheDs4
+ qvBEydQthuNQvGyXIwHW2QgmpBtN6HprtqInXg0ylt6B7gsCpZiGT1A0V2+J6d6e6s7/w+dBd
+ oc9vbbTTPlshJrNzpOyTFBxirh9MJDa6Pp9EUy4NAEZ6TV2xYGxNJX9edzeqkV6O0DqkWIKYR
+ y5n+mITLt8ut6bVpdX1q8BFQHCqCr0MYgJYcCWUud/rsfbajgFj3KsFa4dX15D+ApjQ0Uvo2g
+ yDVjxPPzY7u9VZcqPgYB1goLApqoUNuNkbf0XMOV7xlJ+ISUqsR5jEKYlI02vY9LL4drFPSOH
+ ck4WUwFSUy2MG1sEbMl7hKx/Xbt0zE1Eb+WcrHYi7XvjctM0vRY/ElTLpl5ItBHYsRtwi9R9u
+ 23JQgy36IfN3Wy7fEoeKDR0fhtqKFY6pRcinwqLjuieYbGgGYToIm3Lk2/dpXeXXDNWSttr3u
+ KZQbopwSpghFeCWMjp/04mXxJddEmrA8gZ4pOppwevbngyBOQNc1eMufY/3zzjFH918pQJ3B0
+ GsTyN5xvS9tf0hrOMKMm+TPJGv4P2trs1sHNEDIzwkSpiJWTGt5BGyVGDRX7TcJtzHD9Ww+m9
+ cgrtKfezgDgpfCR2bLEXnq7wWag2DkoDArfThVjVXP67q+FO98ppwaaWhuyxRLH04cPVobWnV
+ 9VMlG1LMgNk3+m+YDQWxotdmBtmwfvLNf0hVlXwQJpNBjPlDjZJLCrAoZJRzINaT1Y5sPWMYP
+ NTvfQoaIY4T9Vnh+7X7UoPEypQjpFRh8BIiKiSyFD7TlAV9VnWMS90iWI/gW2AWk5tGfKY3HN
+ t5LxfQWjiyGJcynU0cR5ANyK/QOO+VK17ZIQ8qswLyEgHTa6PDPdwufn7OUG15Cxsf/oPgu2p
+ RU4GOippdk5zahAmDxbC2ufHHq51kxV/EaspFJzGgPX9VstXHVqXw62G8yd3UCVqe8f+lFXlp
+ +KzumYe3j2SxZ4sIHCl1UTxU07QDLeRBmk3lr7dLiGModD3PZdD3vEtZZdo7oYGEkIB75f4Ow
+ NsqXXHYt5jT9jFIs8a7KGwa+o44MSA6skvIOm2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 15 Jul 2020, Junio C Hamano wrote:
+--8323328-2102947002-1594842131=:52
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Derrick Stolee <stolee@gmail.com> writes:
+Hi,
+
+On Mon, 13 Jul 2020, SZEDER G=C3=A1bor wrote:
+
+> On Mon, Jul 13, 2020 at 02:49:01AM +0000, brian m. carlson wrote:
+> > @@ -23,17 +24,20 @@ static void add_to_ref_list(const struct object_id=
+ *oid, const char *name,
+> >  	list->nr++;
+> >  }
+> >
+> > -static const struct git_hash_algo *detect_hash_algo(struct strbuf *bu=
+f)
+> > +static int parse_capability(struct bundle_header *header, const char =
+*capability)
+> >  {
+> > -	size_t len =3D strcspn(buf->buf, " \n");
+> > -	int algo;
+> > -
+> > -	algo =3D hash_algo_by_length(len / 2);
+> > -	if (algo =3D=3D GIT_HASH_UNKNOWN)
+> > -		return NULL;
+> > -	return &hash_algos[algo];
+> > +	const char *arg;
+> > +	if (skip_prefix(capability, "object-format=3D", &arg)) {
+> > +		int algo =3D hash_algo_by_name(arg);
+> > +		if (algo =3D=3D GIT_HASH_UNKNOWN)
+> > +			return error(_("unable to detect hash algorithm"));
+> > +		header->hash_algo =3D &hash_algos[algo];
+> > +		return 0;
+> > +	}
+> > +	return error(_("unknown capability '%s'"), capability);
+> >  }
 >
-> > Of course, the _other_ option is to revert xl/upgrade-repo-format
-> > from v2.28.0 and take our time resolving this issue during the
-> > 2.29 cycle. I'm not sure how disruptive that action would be.
 >
-> Yes, that is becoming very much tempting at this point, isn't it?
+> > +test_expect_success 'git bundle v3 rejects unknown extensions' '
+> > +	head -n2 bundle >new &&
+> > +	echo "@unknown=3Dsilly" >>new &&
+> > +	sed "1,2d" >>new &&
+> > +	test_must_fail git bundle verify new 2>output &&
+> > +	grep "unknown capability .unknown=3Dsilly." output
+>
+> This "unknown capability" error message is translated, so it should be
+> checked with 'test_i18ngrep'.
 
-It did cross my mind, too.
+In other words, this patch (which makes things work over here):
 
-> In any case, I've pushed out 'seen' with the "these extensions that
-> used to be honored in v0 won't interfere with repository upgrade"
-> patch I sent earlier, and I am hoping that it would be a reasonable
-> middle ground that won't regress things for users while making sure
-> we do not honor random future extensions by mistake.
+=2D- snipsnap --
+Subject: [PATCH] fixup! bundle: add new version for use with SHA-256
 
-Given that we still have -rc1 and -rc2 to make sure that things work, and
-given that your patch on top of Stolee's two patches looks like it is
-Doing The Best We Can Do, I am optimistic that your reasonable middle
-ground is the best way forward.
+=2D--
+ t/t5607-clone-bundle.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Dscho
+diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
+index 4a2a3968cc1..ca4efd88d4a 100755
+=2D-- a/t/t5607-clone-bundle.sh
++++ b/t/t5607-clone-bundle.sh
+@@ -118,7 +118,7 @@ test_expect_success 'git bundle v3 rejects unknown ext=
+ensions' '
+ 	echo "@unknown=3Dsilly" >>new &&
+ 	sed "1,2d" >>new &&
+ 	test_must_fail git bundle verify new 2>output &&
+-	grep "unknown capability .unknown=3Dsilly." output
++	test_i18ngrep "unknown capability .unknown=3Dsilly." output
+ '
+
+ test_done
+=2D-
+2.26.0.windows.1
+
+--8323328-2102947002-1594842131=:52--
