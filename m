@@ -8,147 +8,118 @@ X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B73C433E1
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 10:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D8BC433E1
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 10:12:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4980C206F4
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 10:00:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A6A0206D5
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 10:12:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OnWykxI6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="akAQAgsy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730943AbgGOKAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 06:00:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38232 "EHLO
+        id S1731037AbgGOKMC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 06:12:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726859AbgGOKAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 06:00:47 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B196C061755
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 03:00:47 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id w6so1539976ejq.6
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 03:00:47 -0700 (PDT)
+        with ESMTP id S1731024AbgGOKMB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 06:12:01 -0400
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4219DC061755
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 03:12:01 -0700 (PDT)
+Received: by mail-ej1-x643.google.com with SMTP id dp18so1564946ejc.8
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 03:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=wzCvBKnK8rhrB2QVLJxFoypAn731acS2WGXAToIIyh0=;
-        b=OnWykxI6JXy66XOWlGT1a8tSTzpSf9znJCKAkbKwxblnfoCZbChfh6lGDQpqtp2lZX
-         /tjIj4Cv1t4NufCmqUe9pSCGEgK/ZKVxLm0UUFHhEhDq5eogAJ8mh2VvXkPb+owAJNw6
-         HtOI/DhkhAMIlKOrjP28kwMta0zC6OxbcauvUTxP4JW9qklnW0mAL2AQmcBOzMVOEiuA
-         guvSB9unwHeGuSwecR4nsm9LyNt6HOlh03LNBFNjuYFbJpWTUjkJRQaTlAQf1kDjG1LG
-         ZnEscH65Q5dbEtmNCxMMuIa8hAf71QIKEWQKd8FysMlh0tfPDt7JlBkCS02wl6R98hT3
-         pglA==
+        bh=WPC5eUNzNWiaCqwOczz2PdepJQEc9w06bNkdoCRd7NA=;
+        b=akAQAgsydHWWzHnkxxmVq4BmXuTU0NV0FI6yWH4UOWEcKnEQhOmn625dmUuX22uq0a
+         MrRrOPOBlUgkld/tnkCOwENPs2DYfqGdWiqwC53Sg12AuYinEWTZ9x7S07Eg/1KW7mCP
+         Q5M0CNRxUcriOnASxY1HV2LLAUho5COrQf/gswKBt7FHkJa2v50NDNoKffvE1XyTtgRm
+         i/1fOplBMMxKDZ7ToA/sWgsWmss1p4Oi3knGM19Paa0NwY8ami1zrLr9lFGOz5j/tjVb
+         CeLprdU8Z1R/HaqSpL22/hEiEbYiVVT4hzQl31voFLxLRE3QYHoDncffQfbqSRWsLEtb
+         Nxaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wzCvBKnK8rhrB2QVLJxFoypAn731acS2WGXAToIIyh0=;
-        b=KSDeUsfh16FinG+zpj/XeOq0q153G7fvEMthP8uJT2atK3XiILNnqVrTGhQA1lv6Qq
-         o6BuvsyFmCrIvD/bdqKqgfVQP9inVNg7qM5M6++Zzcdzkyz7IakfynjbbRj4KOQWWsXu
-         43BIEFiu4m58YvaJTowfF0b38L0LLXQxIntMgjB4bT40DLvk+eNQebIlykRJ3aIaLJ0O
-         YYScpW+1u9Bgoig1OjG0VofHiislYGsmQZUvlg4C/8UFRCy8MywUSZAb/FzsDTJbzt9o
-         Y8uD9bNk8QB9KibsO4ReXbWRqHiSPNW1oKT9YF73kOrQtVLCbe4iEo0ka35zSUDpWxxL
-         f7nA==
-X-Gm-Message-State: AOAM530wNJAbZCFMyAOoreZRyQsR29yoM7j9z2q+kwLAEyTBG1xcq8z8
-        hWPqjYCdByYuQ8T9ZdKzNPg=
-X-Google-Smtp-Source: ABdhPJz0dZaKjRkhC+EfQ0FGBEM3/W09wVbyAjGk9URMpuwGPnolv12bWTFk3lOWuAicvB+YhwYC6w==
-X-Received: by 2002:a17:906:8595:: with SMTP id v21mr8706907ejx.333.1594807246185;
-        Wed, 15 Jul 2020 03:00:46 -0700 (PDT)
+        bh=WPC5eUNzNWiaCqwOczz2PdepJQEc9w06bNkdoCRd7NA=;
+        b=QDl0kusQD4ZXfPLBnGKWCcaYl3LLwftZ+dNJzrUXxtBAwNCisyoJKWR2fi1FNVbgOX
+         8k3AhnkcScKS4jaSqoklU8e38MIKcWUKVUWWWzk1AMZThS4mAyIRv8tuPUn+05HnNp1H
+         STeNHozRTbnKW3IdWPUqtcW5fI3Zc437lvN/5rpVMdnaxdOS4juhUbWe/qss18UPUlha
+         f9mihjw5fpw3wn8jruPlTG6xIS7Z3/EzxHNhPeZuMs4kGI0vAkZwz23OO/OIQGASuGW8
+         zBOKuhHWGbo1P+skT+HNKrnSF7HaOAtoix8TUYM5OhWYUdBj3dezPd5uodsXHorHex77
+         nKkQ==
+X-Gm-Message-State: AOAM533apR8MVxArAvGibVSmGlYF3+JzOiFeyVn3C5OD0qBREIAbNxAa
+        UJKfX5qYgwuCLZX+K4clBVU=
+X-Google-Smtp-Source: ABdhPJzn/zelH28PYhVS7C8MdcHJwb5Rd1HT9h3mO3r51s6MTwTj/T3VARVeKOU+Up1xhUxwJWNhHw==
+X-Received: by 2002:a17:907:20b0:: with SMTP id pw16mr8205879ejb.551.1594807919980;
+        Wed, 15 Jul 2020 03:11:59 -0700 (PDT)
 Received: from szeder.dev (78-131-17-71.pool.digikabel.hu. [78.131.17.71])
-        by smtp.gmail.com with ESMTPSA id i10sm1659620edx.42.2020.07.15.03.00.44
+        by smtp.gmail.com with ESMTPSA id h15sm1598984eja.44.2020.07.15.03.11.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Jul 2020 03:00:45 -0700 (PDT)
-Date:   Wed, 15 Jul 2020 12:00:43 +0200
+        Wed, 15 Jul 2020 03:11:59 -0700 (PDT)
+Date:   Wed, 15 Jul 2020 12:11:56 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, peff@peff.net, chriscool@tuxfamily.org
-Subject: Re: [PATCH 2/4] upload-pack.c: allow banning certain object filter(s)
-Message-ID: <20200715100043.GG11341@szeder.dev>
+Subject: Re: [PATCH 4/4] upload-pack.c: introduce
+ 'uploadpack.filter.tree.maxDepth'
+Message-ID: <20200715101156.GB22114@szeder.dev>
 References: <cover.1593720075.git.me@ttaylorr.com>
- <f0982d24e74155f6c0e405e5e3ae8c3e579f798a.1593720075.git.me@ttaylorr.com>
+ <9fa765a71d25ef3462ce81cca9754daa9b2579b6.1593720075.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f0982d24e74155f6c0e405e5e3ae8c3e579f798a.1593720075.git.me@ttaylorr.com>
+In-Reply-To: <9fa765a71d25ef3462ce81cca9754daa9b2579b6.1593720075.git.me@ttaylorr.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 02, 2020 at 04:06:32PM -0400, Taylor Blau wrote:
+On Thu, Jul 02, 2020 at 04:06:40PM -0400, Taylor Blau wrote:
 > diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-> index 8a27452a51..5dcd0b5656 100755
+> index 5dcd0b5656..8781a24cfe 100755
 > --- a/t/t5616-partial-clone.sh
 > +++ b/t/t5616-partial-clone.sh
-> @@ -235,6 +235,32 @@ test_expect_success 'implicitly construct combine: filter with repeated flags' '
->  	test_cmp unique_types.expected unique_types.actual
+> @@ -261,6 +261,14 @@ test_expect_success 'upload-pack fails banned object filters with fallback' '
+>  	test_i18ngrep "filter '\''blob:none'\'' not supported" err
 >  '
 >  
-> +test_expect_success 'upload-pack fails banned object filters' '
-> +	# Test case-insensitivity by intentional use of "blob:None" rather than
-> +	# "blob:none".
-> +	test_config -C srv.bare uploadpack.filter.blob:None.allow false &&
-> +	test_must_fail git clone --no-checkout --filter=blob:none \
-> +		"file://$(pwd)/srv.bare" pc3 2>err &&
-> +	test_i18ngrep "filter '\''blob:none'\'' not supported" err
-> +'
-> +
-> +test_expect_success 'upload-pack fails banned combine object filters' '
+> +test_expect_success 'upload-pack limits tree depth filters' '
 > +	test_config -C srv.bare uploadpack.filter.allow false &&
-> +	test_config -C srv.bare uploadpack.filter.combine.allow true &&
 > +	test_config -C srv.bare uploadpack.filter.tree.allow true &&
-> +	test_config -C srv.bare uploadpack.filter.blob:none.allow false &&
-> +	test_must_fail git clone --no-checkout --filter=tree:1 \
-> +		--filter=blob:none "file://$(pwd)/srv.bare" pc3 2>err &&
-> +	test_i18ngrep "filter '\''blob:none'\'' not supported" err
-> +'
-> +
-> +test_expect_success 'upload-pack fails banned object filters with fallback' '
-> +	test_config -C srv.bare uploadpack.filter.allow false &&
-> +	test_must_fail git clone --no-checkout --filter=blob:none \
-> +		"file://$(pwd)/srv.bare" pc3 2>err &&
-> +	test_i18ngrep "filter '\''blob:none'\'' not supported" err
+> +	test_config -C srv.bare uploadpack.filter.tree.maxDepth 0 &&
+> +	test_must_fail ok=sigpipe git clone --no-checkout --filter=tree:1 \
+> +		"file://$(pwd)/srv.bare" pc3
 > +'
 
-These three tests are very flaky: 'git upload-pack' can error out
-while clone is still sending packets (usually the 'done' line),
-resulting in SIGPIPE and frequent CI failures.  Running this test
-script with '-r 1,2,17-19 --stress' tends to fail in a couple of
-seconds.
+Unlike in the other three tests added earlier in this series, here you
+do use 'test_must_fail ok=sigpipe', but you don't check that the
+command died with the right error message.  Saving stderr and adding
 
-Using 'test_must_fail ok=sigpipe', as you did in the test in the last
-patch, avoids the test failure caused by SIGPIPE, of course, but,
-unfortunately, all three tests remain flaky, because the expected
-error message sometimes doesn't make it to 'git clone's stderr, e.g.:
+  test_i18ngrep "filter '\''tree'\'' not supported (maximum depth: 0, but got: 1)" err
 
-  expecting success of 5616.19 'upload-pack fails banned object filters with fallback': 
+makes this test flaky, too, like the other three:
+
+  expecting success of 5616.20 'upload-pack limits tree depth filters': 
           test_config -C srv.bare uploadpack.filter.allow false &&
-          test_must_fail ok=sigpipe git clone --no-checkout --filter=blob:none \
+          test_config -C srv.bare uploadpack.filter.tree.allow true &&
+          test_config -C srv.bare uploadpack.filter.tree.maxDepth 0 &&
+          test_must_fail ok=sigpipe git clone --no-checkout --filter=tree:1 \
                   "file://$(pwd)/srv.bare" pc3 2>err &&
-          test_i18ngrep "filter 'blob:none' not supported" err
+          test_i18ngrep "filter 'tree' not supported (maximum depth: 0, but got: 1)" err
   
   + test_config -C srv.bare uploadpack.filter.allow false
+  + test_config -C srv.bare uploadpack.filter.tree.allow true
+  + test_config -C srv.bare uploadpack.filter.tree.maxDepth 0
   + pwd
-  + test_must_fail ok=sigpipe git clone --no-checkout --filter=blob:none file:///home/szeder/src/git/t/trash directory.t5616-partial-clone.stress-2/srv.bare pc3
-  + test_i18ngrep filter 'blob:none' not supported err
-  error: 'grep filter 'blob:none' not supported err' didn't find a match in:
+  + test_must_fail ok=sigpipe git clone --no-checkout --filter=tree:1 file:///home/szeder/src/git/t/trash directory.t5616-partial-clone.stress-4/srv.bare pc3
+  + test_i18ngrep filter 'tree' not supported (maximum depth: 0, but got: 1) err
+  error: 'grep filter 'tree' not supported (maximum depth: 0, but got: 1) err' didn't find a match in:
   Cloning into 'pc3'...
   fatal: git upload-pack: banned object filter requested
   error: last command exited with $?=1
-  not ok 19 - upload-pack fails banned object filters with fallback
+  not ok 20 - upload-pack limits tree depth filters
 
-
-Once upon a time I had a PoC patch to deal with 'git upload-pack'
-aborting while 'git fetch' is still send_request()-ing, by catching
-the write error to the closed connection and trying read any pending
-ERR packets; Christian cleaned it up and submitted it with a proper
-commit message in
-
-  https://public-inbox.org/git/20200422163357.27056-1-chriscool@tuxfamily.org/
-
-but it haven't been picked up yet.  Disappointingly, that patch
-doesn't solve these issues...  I haven't looked what's going on
-(perhaps 'git clone' does something differently than 'git fetch'?  no
-idea)
 
