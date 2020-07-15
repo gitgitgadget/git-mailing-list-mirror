@@ -2,93 +2,106 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD5C4C433DF
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 22:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCBAC433E6
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 23:13:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7605020656
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 22:55:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B5B8206F4
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 23:13:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sbTMsr+3"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a5Sea9OS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726941AbgGOWzZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 18:55:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59762 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726765AbgGOWzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 18:55:25 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6703DE030A;
-        Wed, 15 Jul 2020 18:55:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=j/mSFL8E73LcNSuRcd+twPmPmso=; b=sbTMsr
-        +31lJjG1vNknKlPVDkUEwkLPPgZP3TccqcP95CuV7ENuotBk1tNmtX8MdMMoPWkm
-        MWSyBDOvtd/cnBUOXiLMVRXzXOvKNogFKUcVOI51Jy7ASjzhDzbERXFtym0JT+n7
-        jKA0PpIFokumyGDvJcLE4cdPT9wB5efprh+Yw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aBsKuxXijCacl6Tm/Q2xxoqLIo4wCvau
-        3cbYxlKif/cBW07NHdXZfWgDT/OYBfkbhAasRZ+BMs4+BrSTyD+wzO77/tH4c6Xk
-        pEUDOCBws/SdWUcsRgg9zi6nKF/qCeB+AyUZk5j3SkmcrF847RVZPQAviGBaYsjI
-        AOsEqxcDBFw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5DF24E0309;
-        Wed, 15 Jul 2020 18:55:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8A792E0306;
-        Wed, 15 Jul 2020 18:55:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] upload-pack: do not lazy-fetch "have" objects
-References: <20200715223112.2018556-1-jonathantanmy@google.com>
-Date:   Wed, 15 Jul 2020 15:55:18 -0700
-In-Reply-To: <20200715223112.2018556-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 15 Jul 2020 15:31:12 -0700")
-Message-ID: <xmqqpn8wie21.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727121AbgGOXNR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 19:13:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47600 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726929AbgGOXNR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 19:13:17 -0400
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAD0AC061755
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 16:13:16 -0700 (PDT)
+Received: by mail-pg1-x542.google.com with SMTP id m22so3833419pgv.9
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 16:13:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gAuLNYVQKw5NWeqeIMq6FrT6rGR8PALrrhvTCx0tPhQ=;
+        b=a5Sea9OSd+Ljo2uqJVIQ+HMno2zw27L/wV9jF4A6NMNH/k8/vUlGed/jDL8P9GsPsG
+         0I+oj+Kr1IxdaJDfUajjgugE0wN9lbFRvJuCzR0i6o5VGYk4121AZlR9NvGObRQojVtW
+         0KSRiYccU3f321bJEQqTl3phrxi3buvvJHfY8GXW+bC/Dhis2vThUPefEDQh5rXHs2mu
+         P9rgF84hD8V+tTE1G651a/MDCR86BFm8hLvoNivnmVRLtWxeSDzYbUEAnPTAVLFidK1Q
+         biMKt9YI0Gxf3Rng7Dpquh7G+SbtRsPAnhplDWdt2kybsnJIOca50GYkA4kkypa7/QCQ
+         2WzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gAuLNYVQKw5NWeqeIMq6FrT6rGR8PALrrhvTCx0tPhQ=;
+        b=kKyaf/Bmr1s2vyfvi7Ez11HsOrPRmocsOrukRWeC0Cu8vav798p/e5xgrY6RTg45Bh
+         G0XvtMIsvLDBFBfSDgFLhHQPtZJj0cNtJOiY4ZwQFOJMe13Ka1ByE3bMdc3ueNsJ5E3N
+         YfZZ2h9A1+4+PLwX8umRMJo7ppjz/93MHKDEG/xa9Mp8Ux5ewn79OBFQuVimJ9TFkSMg
+         RLOvUzcmd2I3pABkOR7sNid6ew9QQA6aW9ZH6tJKI/Uq9kf0w/VZTOnZu4W+dktWXA2G
+         o3FhWbK5vPl/sEYYdcaP3BQ3XiyaO6qL3gZMkcnQpOhfHZsFnpAiakxD2sbhiJTBvWF/
+         l1Jg==
+X-Gm-Message-State: AOAM5338Gq4UoV+m8GSn/o2fE6f0p9y0hz9FrD9YsnaBsvi0/f8Q4hvE
+        wnj+O/F6yJpEHPNL5mA+dB9U3g==
+X-Google-Smtp-Source: ABdhPJzzEzQE9JlJiY9SxPh8LHk+NuBM56y7Bt0dmNZDPEJ9bnGb7U06uOw6SUzseVeLt6Here1bDg==
+X-Received: by 2002:a65:52c2:: with SMTP id z2mr1796244pgp.419.1594854796165;
+        Wed, 15 Jul 2020 16:13:16 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
+        by smtp.gmail.com with ESMTPSA id p12sm2961193pjz.44.2020.07.15.16.13.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jul 2020 16:13:15 -0700 (PDT)
+Date:   Wed, 15 Jul 2020 16:13:11 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: es/config-hooks, was Re: What's cooking in git.git (Jul 2020,
+ #02; Thu, 9)
+Message-ID: <20200715231311.GJ3189386@google.com>
+References: <xmqqa708wen2.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2007152247210.52@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 42586130-C6EE-11EA-B886-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2007152247210.52@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Wed, Jul 15, 2020 at 10:50:49PM +0200, Johannes Schindelin wrote:
+> cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+> 
+> Hi Junio & Emily,
+> 
+> On Thu, 9 Jul 2020, Junio C Hamano wrote:
+> 
+> > * es/config-hooks (2020-05-21) 4 commits
+> >  - hook: add --porcelain to list command
+> >  - hook: add list command
+> >  - hook: scaffolding for git-hook subcommand
+> >  - doc: propose hooks managed by the config
+> >
+> >  The "hooks defined in config" topic.
+> >
+> >  What's the status of this one?  Abandoned?
+> 
+> This patch series is unfortunately still breaking on Windows, at least in
+> the version carried in `seen`. It _still_ needs the patch I provided in
+> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2005250055180.56@tvgsbejvaqbjf.bet/
+> and the patch (which I accidentally reversed) that I provided in
+> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2005250053080.56@tvgsbejvaqbjf.bet/
 
-> When upload-pack receives a request containing "have" hashes, it (among
-> other things) checks if the served repository has the corresponding
-> objects. However, it does not do so with the
-> OBJECT_INFO_SKIP_FETCH_OBJECT flag, so if serving a partial clone, a
-> lazy fetch will be triggered first.
+I haven't had time to work on it until this week (I am working on it
+now). I think I have these patches applied locally, or if not I will
+make sure to apply them before I send another round. Probably I can send
+that end of the week. I don't think there have been any new rounds of it
+since you send those two patches, right? Sorry for the inconvenience.
 
-OK.  
-
-Fixing issues hit by real users reactively is a necessary and good
-thing, but this is not the first time we patch callers of
-has_object_file() for this kind of "we are merely trying to
-determine the boundary of what we have, so that we know what we need
-to add to this repository" queries, I am afraid.
-
-Perhaps it is a good idea to sweep all the hits from "git grep -e
-has_object_file \*.c" and audit the codebase to see if there are
-other problematic ones?
-
-For example, list-objects.c::process_blob() tries to if the object
-exists when --exclude-promisor-objects is in effect so that it can
-return early if the object is missing and it is a promisor object.
-I would imagine that we would not want to lazy-fetch the object in
-this case.
-
-Thanks.  Will queue.
-
+ - Emily
