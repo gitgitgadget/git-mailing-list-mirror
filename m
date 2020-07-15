@@ -2,111 +2,104 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E027C433E3
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 08:55:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19F7AC433E1
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 09:10:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76A7420657
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 08:55:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8F9A20672
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 09:10:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/uStrwC"
+	dkim=pass (2048-bit key) header.d=nemit-fi.20150623.gappssmtp.com header.i=@nemit-fi.20150623.gappssmtp.com header.b="S5GGOmvg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729637AbgGOIzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 04:55:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56324 "EHLO
+        id S1729047AbgGOJKe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 05:10:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728145AbgGOIzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 04:55:23 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A78C061755
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 01:55:22 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id o11so1541001wrv.9
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 01:55:22 -0700 (PDT)
+        with ESMTP id S1728206AbgGOJKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 05:10:33 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5FBC061755
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 02:10:33 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id o3so1320403ilo.12
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 02:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=x3qbhL/jvswSQofI0ftKaAdocaoR/VGu7yyWnQe7lac=;
-        b=E/uStrwCkNTe0EYMKBGFhjsHv9WlHz4KIkR5JrjovVGzjN702RQU5Uv4KbtRkDJgIU
-         03uM5hURqI7D6GUU9VDbptJ6rCqKTYEl+LKrg2xX0haknsi0xIGpJGUDmw619j+4BFak
-         u8A00hqxTWuzI7aUYTNW/r9kOMg3gS2uWPIl7d8IBJc9CT9+8M+DfnCnkHuXh+v2sw7s
-         sYEVKPj5z8cVHKhCC+x0LtA+bs5u8Ue/bm7hDkoUu6ZnnLMPLMZJ8CROqb4HDpFQBNbg
-         6qxXKhzK5LPh1/cPXw6fwPC5whyY4CVXarDZq9Uk5LwsMznNGEwoYGRYQE5J62CUqrVA
-         f4wA==
+        d=nemit-fi.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=5VA7NsHLBMLrvGe3mYzli62aQnY9bufOA7gnJJqwcpM=;
+        b=S5GGOmvgNbwphoJwrsnxWVE7aivGtMdSOAUIQ3YcWmKQPMSBC4V32KdTHYUZasxTXN
+         tYU2MxfuXm1Rx2myOgIUkMpz60GzW2dAn12ugacjeo3VsdexURJH39weZEfd2gLIfvUR
+         rmMAhXrJnyLq8jEeQ1TxJERFLZNaCbz6Ts/p5Uo15k9ZzuZNpj4eWPN7ZBXYQLEyQP76
+         1PBgQBz2T3WqtBLweWJauI4SQGrSoUSZQV/iW7XggiWjegYnY73nIm7I0qnZ4wBqqYpD
+         sWOjkfjv9Jgk7YJ5hL1LxNQkWTY75kjY8zULxcn8rq/qjG/zCFeBBReqQlxPL7vDxdWQ
+         1y3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=x3qbhL/jvswSQofI0ftKaAdocaoR/VGu7yyWnQe7lac=;
-        b=d41fD2YPjHMEnvFVAjfAszgmU75wywTq/qAGnKbXY3MrUpvBdoT1K9ZGKgswu1amxC
-         pqbDo+CRvowhjkqJQ53V/Bd4AppoloGfmzgjV2qwTYvBB3UxSmsYXaAVZFw21eciTB0E
-         EyLvRZ/oaALbfG6hFIjUyL0F4aX6RumrheF3//9ZDrQNnShgG2X0+jWw/ra2eSsDlngr
-         9CfF6KCOSfzz2Jhq60gYDk+exyYFQmFUE/cLE76zUDrRJ2V76xDVDeTrBWczSpswSvxD
-         gWrifqygKCvBmtFjnKmA9zuWFdF6Vc3Yht2U82ASZAJVzyobusykH4DRjrb241VbElEe
-         LSog==
-X-Gm-Message-State: AOAM5336EMrjBFUYKHGjWomui00z6xB1JeVrtdU6zpcwqB2DbM1l1mJz
-        hVXQOsTtf/AhCrtc2Ata3SKW18vE
-X-Google-Smtp-Source: ABdhPJydh4Hyx/qsMWRz6F+XmxW4fAvCLSWHXg7RA3ZWF/bmABzGIJy5ZABXxzG95Uh7LYH62VLHTg==
-X-Received: by 2002:adf:c551:: with SMTP id s17mr9825225wrf.330.1594803321496;
-        Wed, 15 Jul 2020 01:55:21 -0700 (PDT)
-Received: from [192.168.1.240] (130.20.198.146.dyn.plus.net. [146.198.20.130])
-        by smtp.gmail.com with ESMTPSA id l1sm2792913wrb.12.2020.07.15.01.55.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jul 2020 01:55:20 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 0/5] fixup ra/rebase-i-more-options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
- <20200713101045.27335-1-phillip.wood123@gmail.com>
- <xmqqo8ojo2ml.fsf@gitster.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <e0cfe987-1b47-6b5e-b4e9-10223b73fe22@gmail.com>
-Date:   Wed, 15 Jul 2020 09:55:19 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=5VA7NsHLBMLrvGe3mYzli62aQnY9bufOA7gnJJqwcpM=;
+        b=Ctc8NfmqLz5vPwOHwVGseczge0EWjxwdyNRn6F1x13oLgizgnUVuYtQQtFMo3Bay+e
+         CUFvhqSh2yoJsEj6OnxqIMRFtKxjhK6kE+qwgzbA0z4gTg5pVNLxr+fHmV3w8Sm6iRBY
+         W8KZHZflHiCPDijS54KEBHWZgL3nAOgk6COTScvycRbaloJydLX/GA7wdphuQC2au9Hl
+         8OGZg4XgHl7ZP9w08yHFd+mMWgpNkuon2krUSzEs+dMC4O3YeH8KFWrtO5JqKcaQOyJp
+         5CeVCtg1HnJ5f7/UkzCcufAwzCJXodWtDPos+5KaPsrZd57N7JvZ/IId2/3c0zGRk8Eq
+         qGqQ==
+X-Gm-Message-State: AOAM532lyvJE/Aw0WgqyysyoGE8hzC9wDxd5081gA2wpYPU9dQyj3Fn3
+        9Mf1HVSvh0TsC69C9JjEzTBka7ftR7lbHMvD7rrH/qNwmcs=
+X-Google-Smtp-Source: ABdhPJwnZqFONIPYDHdk9P1ig+4Sm8kpUPpgzNRpR0jkx/JOTlzSZ1V3JAu34cpNMnCBJJkntciQjZKGKQahRsQl2bE=
+X-Received: by 2002:a92:c78d:: with SMTP id c13mr9050254ilk.85.1594804232159;
+ Wed, 15 Jul 2020 02:10:32 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8ojo2ml.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+From:   Frej Bjon <frej.bjon@nemit.fi>
+Date:   Wed, 15 Jul 2020 12:10:21 +0300
+Message-ID: <CAP8P1T+JQUTVDXsJbrWkiZ2AWZmoptFSRdKssANYrNSFa+Egmg@mail.gmail.com>
+Subject: Cannot delete remote branch with non-ascii name and --force-with-lease
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/07/2020 16:28, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> Phillip Wood (2):
->>    rebase -i: support --committer-date-is-author-date
->>    rebase -i: support --ignore-date
->>
->> Rohit Ashiwal (3):
->>    rebase -i: add --ignore-whitespace flag
->>    sequencer: rename amend_author to author_to_free
->>    rebase: add --reset-author-date
-> 
-> Thanks for polishing them further.
-> 
-> Will queue; with help from others, this can be one of the early
-> topics to be merged after 2.28 gets tagged, hopefully?
+What did you do before the bug happened? (Steps to reproduce your issue)
+- Create a branch with non-ascii character: testbranch-=C3=A4
+- Push to a remote with same name
+- Delete branch from remote with --force-with-lease:
+  git --force-with-lease --delete origin "testbranch-=C3=A4"
 
-Yes I hope so, I'm not aware of any outstanding issues (lets see if the 
-reviewers agree)
+What did you expect to happen? (Expected behavior)
+- The branch to be deleted.
 
-Best Wishes
+What happened instead? (Actual behavior)
+- Git fails with an error
+  error: cannot parse expected object name
+'32e33fb544d7b1147c446c60220f23a5df465eff"'
 
-Phillip
+Anything else you want to add:
+- The command works if using only --force and not --force-with-lease
+- The command works if there's no non-ascii character, e.g. "testbranch-x"
+- Tested with gitlab and github as remotes, with the same error
+- My locale in git bash is "en_US.UTF-8"
+- The same happens under Ubuntu 20.04 with git 2.25.1
 
+
+[System Info]
+git version: git version 2.27.0.windows.1
+cpu: x86_64
+built from commit: 907ab1011dce9112700498e034b974ba60f8b407
+sizeof-long: 4
+sizeof-size_t: 8
+uname: Windows 10.0 15063
+compiler info: gnuc: 10.1
+libc info: no libc information available
+
+
+[Enabled Hooks]
+None
+
+Regards,
+Frej Bjon
