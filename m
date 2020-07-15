@@ -3,132 +3,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24E76C433E4
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 02:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F231C433E3
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 03:20:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0A5B20663
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 02:45:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BB9420674
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 03:20:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R0OaQi52"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DAFxHHk+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728363AbgGOCpv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 22:45:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65312 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727071AbgGOCpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 22:45:50 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E204E69EB4;
-        Tue, 14 Jul 2020 22:45:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=RylVMK7OI6r9
-        QXrPzwBVlo0x/UU=; b=R0OaQi52vCwHV7Qgz9v4YqbbHknjA4oEN7zvkW7zHID/
-        fEXrpxKq2tjGFzp0BsXmrUioOmflDZCOKN/M+OkXwGPoOQoAJWcWhFohCosNcNFF
-        AIygJFj6O9Mm0kaW62AkbTBbARYV15i2UmyaJ+Ch03ePCfTqt00G+en9mprPD64=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=c1T1YP
-        XrBmg3LlKWDAn/8mVFC99/qDrDnD+aGnzawgs25XVBPukVHJlunASgjBeTWNX3M9
-        o0K4e9mg9mWS4+bL/wJ+rRc3sLvR6+WdKMxWkvPPs0zZq+mgczCNhhzRbU+NPhGm
-        5+Exc4lQ8Qe6JYchERVmYhSZEpcsuVZT/HcbI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D227569EB3;
-        Tue, 14 Jul 2020 22:45:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F92A69EB2;
-        Tue, 14 Jul 2020 22:45:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] git-diff.txt: reorder possible usages
-References: <cover.1594666410.git.martin.agren@gmail.com>
-        <280943ef56a2a777ab0162b8ec4ba0166cc2095c.1594666410.git.martin.agren@gmail.com>
-        <CAPx1Gve7Sy5BUdRztVoVNVZgdqm14dvD=36eYzLPed5YMQeMEQ@mail.gmail.com>
-Date:   Tue, 14 Jul 2020 19:45:45 -0700
-In-Reply-To: <CAPx1Gve7Sy5BUdRztVoVNVZgdqm14dvD=36eYzLPed5YMQeMEQ@mail.gmail.com>
-        (Chris Torek's message of "Mon, 13 Jul 2020 15:04:23 -0700")
-Message-ID: <xmqqeepdlcme.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728410AbgGODUT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 23:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725977AbgGODUS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 23:20:18 -0400
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAEE0C061755
+        for <git@vger.kernel.org>; Tue, 14 Jul 2020 20:20:17 -0700 (PDT)
+Received: by mail-qt1-x843.google.com with SMTP id b25so651514qto.2
+        for <git@vger.kernel.org>; Tue, 14 Jul 2020 20:20:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HBvkXETgPD7NvoTk+7Y1sdVzZQZJhyfLs8DyuWkunOM=;
+        b=DAFxHHk+VYR9WgS+5zsqO1sWnyIPVbUlQMfRljyMVgYEwT5BVoKsEJTZwbDey0JNm1
+         UXo19m8GbjFR2WIJOKIIM2w/phj8giXOzpkEl22wzGDzob6kJOH/wtDOoFDWRF3OPxiD
+         +C6MItbJQmqYDN3pt+pXe+sErxa9qP41jsSzyPjD/ixXjwNNqpnXOq7Hxs6lRPLKc2Cl
+         N1FwP9cnUmrf/QYMHjqZj/r4td4Xb+9IfFcs46mu335m/zhx3K46xPeLmE3DDJWJdnUN
+         l5BpeVvp5YsGPV/k4oFOjCcGvEtZdkS5oNE43Rdo1u5UNbvzIwNDaHhw0nknVrCquqvj
+         3zzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HBvkXETgPD7NvoTk+7Y1sdVzZQZJhyfLs8DyuWkunOM=;
+        b=Ozy7tloMq/K2NxditEF0xZxlI5C59TyssKvi/yuabO5GKpsP4HKGfPIGg6QyiisLBS
+         DQuMsHoiHfFIc30q8ehmKcdBrAZDj7ThsC1KR7QTX6bM5Gmerwm7+1+ph/ylBfjednQM
+         K6Fx/jbCrPEAFT9K7QVI6KDTtnzjktawLgWYKWJpGQKwwjCpvhY3P8DPg4AqIje64nJd
+         C3etfWYnmG1eApO+AvDEP2n+fSkPH2TDlanS/6TdK+XG90fElJzWDPUAlbBfVHANV6GN
+         tAzjW6A2pm9ZW+KfOz9j+iwhgxaIoxfq11yadKJUunhzNsoY3INhVz4fiv7vOE1tHtlc
+         S4uQ==
+X-Gm-Message-State: AOAM531+nuqecs25U+NjOxk0R0lr4jW4UubQwwCXHtpJZWSPWCpqWf0E
+        p9GFG7ey0F83pFH81QxHi4Q=
+X-Google-Smtp-Source: ABdhPJxw0ezewbzdqXi+A7Qm17ezCsCcM/PouFs0NBJRv85Lui8iAqh8g1q6Z9yXvEljU1m59u0dFQ==
+X-Received: by 2002:aed:2fa1:: with SMTP id m30mr8228046qtd.306.1594783217063;
+        Tue, 14 Jul 2020 20:20:17 -0700 (PDT)
+Received: from generichostname (CPEc05627352ede-CM185933998587.cpe.net.cable.rogers.com. [174.112.146.193])
+        by smtp.gmail.com with ESMTPSA id x34sm1284253qtd.44.2020.07.14.20.20.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jul 2020 20:20:16 -0700 (PDT)
+Date:   Tue, 14 Jul 2020 23:20:14 -0400
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     phillip.wood@dunelm.org.uk,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [RFC] should `git rebase --keep-base` imply
+ `--reapply-cherry-picks` ?
+Message-ID: <20200715032014.GA10818@generichostname>
+References: <0EA8C067-5805-40A7-857A-55C2633B8570@gmail.com>
+ <20200714031017.GA15143@generichostname>
+ <9c6dff59-b204-1ace-e0aa-0885dd502214@gmail.com>
+ <nycvar.QRO.7.76.6.2007142236060.52@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 48BA2314-C645-11EA-92CD-01D9BED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2007142236060.52@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Chris Torek <chris.torek@gmail.com> writes:
+Hi all,
 
-> On Mon, Jul 13, 2020 at 12:10 PM Martin =C3=85gren <martin.agren@gmail.=
-com> wrote:
->> It then goes on to say that "all of the <commit> in the above
->> description, except in the last two forms that use '..' notations, can
->> be any <tree>". The "last two" actually refers to 6 and 8. This got ou=
-t
->> of sync in commit b7e10b2ca2 ("Documentation: usage for diff combined
->> commits", 2020-06-12) which added item 7 to the mix.
->
-> Moving this down (as you do in this patch) is the right thing to do,
-> but I'll note that formally, the word "that" in "forms that use ..." is
-> part of a restrictive clause, so it means "find the last two examples
-> that use dots".  (In American English at least, the unrestrictive versi=
-on
-> would be set off with commas, and use "which" instead of "that".)
+On Tue, Jul 14, 2020 at 10:38:23PM +0200, Johannes Schindelin wrote:
+> > To me the question is why are we looking at the upstream commits at all
+> > with `--keep-base`? I had expected `rebase --keep-base` to be the same
+> > as `rebase $(git merge-base [--fork-point] @{upstream} HEAD)` but
+> > looking at the code it seems to be `rebase --onto $(git merge-base
+> > @{upstream} HEAD) @{upstream}`. I didn't really follow the development
+> > of this feature - is there a reason we don't just use the merge-base as
+> > the upstream commit?
 
-Yes, the proposed patch is an improvement, but I agree that "find
-the last two that use dots" was indeed what I meant when I wrote
-0c783f66 (Documentation/git-diff: A..B and A...B cannot take
-tree-ishes, 2007-08-28).
+It behaves this way mostly for unimportant reasons. The first is that my
+workflow before implementing this feature invoked running
+`git rebase --onto master... master` and I wanted to replicate that.
 
-But upon reading it again now, I am not sure it makes sense in the
-first place.
+More importantly, one feature of using the upstream I considered is
+documented in t3431. Essentially, if we have the following graph,
 
-    git diff seen^^{tree}..seen^{tree}
+	A---B---D---E    (master)
+	     \
+	      C*---F---G (side)
+	
+	C was formerly part of master but master was rewound to remove C
 
-uses <tree> (not commit) in the form that uses '..' notation, and it
-just works fine.  What does require commit because it depends on
-having a history to compute merge base between two objects given
-from the command line is the form that uses '...' notation.
+running `git rebase --keep-base --fork-point master` would drop C.
 
-    git diff seen^1...seen^2
+> Those are interesting questions, indeed.
+> 
+> And I dare to suspect that the answer is indeed: `--keep-base` really
+> should not only substitute `onto` but also `upstream` with the merge base.
 
-would be "what did the side branch merged at the tip of seen do
-since it forked?" and should look similar to "git diff seen^ seen",
-but it cannot use tree objects for obvious reasons
+I would be open to changing the behaviour since the commit dropping
+isn't really a feature that I use very often. However, I am worried
+about pulling the rug out from other people if they use it since this is
+a documented feature in git-rebase.txt.
 
-    git diff seen^1^{tree}...seen^2^{tree}
+Thanks,
+Denton
 
->> An added bonus of this commit is that we're trying to steer users away
->> from `git diff <commit>..<commit>` and moving it further down probably
->> doesn't hurt.
->
-> Q: Just how hard should we try?  In particular, would it be good to mar=
-k
-> the two-dot form as deprecated in the documentation?  I anticipate
-> objections because it's not possible to omit `HEAD` without using
-> the two-dot form.
-
-I am not sure why it is so important to be able to omit HEAD in the
-first place.  I do not think using two-dot form is an offence severe
-enough to deserve an extra warning or deprecation notice, but using
-the "range" notation when you meant two endpoints is a notation that
-confuses uninitiated needlessly and showing it to new people is a
-disservice.  "This notation does not make logical sense, but we keep
-using it as users, and we keep accepting it as tool makers, purely
-for convenience" has been and will be the attitude I'd take towards
-the "git diff A..B" syntax---it was a mistake we made when we were
-still young ;-)
-
-cf. https://bit.ly/3eBcyZa
+> Ciao,
+> Dscho
