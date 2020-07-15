@@ -2,108 +2,154 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 948EFC433E3
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5296DC433E2
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:33:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6CB8F2065F
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:20:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F9FE20672
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:33:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nt4YQm8m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyod1SqS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725992AbgGOSUQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 14:20:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
+        id S1726788AbgGOSdw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 14:33:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725861AbgGOSUP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 14:20:15 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC9EC061755
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:20:15 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id m22so3455266pgv.9
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:20:15 -0700 (PDT)
+        with ESMTP id S1726034AbgGOSdw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 14:33:52 -0400
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8D75C061755
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:33:51 -0700 (PDT)
+Received: by mail-ed1-x544.google.com with SMTP id g20so2363455edm.4
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:33:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ASWJFvHQgQeOvj7p2QaLxPDGDC5IFjDmVSXZ3tEko3Q=;
-        b=Nt4YQm8mFLWB9cgPvDHY8vaXmf0Xx0ZRqXqL4JaPnJHYRQ3UaZjaG2ppkpO7YwiJlv
-         X+MFBQ6kwQ2lkN991ZLI2cL0LCETP0FcgA+EsRAVKMvLV57vKiYrsCsVoMXD0TkOBfEu
-         2wz1hcgHsxls9bLB4T8HVA+7iY/WY1e1ebSBL4hLlQDZt7ytWViuLw3UvFNP7rwenu++
-         0IiGsX/xGzdc6I6+Vos8N4G6fLWqngvUoxJaq81v6plJrT5u5wo3vi9bcfHoDM6nNlcv
-         gPXkLt3YETjK3y1t6up8KxPkqSf4r68/gcswHNOzM4oGgpK45wS3CrFcVUNkrXXiL6kB
-         ELiQ==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=FW+/ZxmYoCvGe5mnuycT/61j0dKxSB92w9KDp8ofCh0=;
+        b=eyod1SqSEWq7MWLVgmScTQpZhABn4qycfLmwRQJudRZrdX3oY1k3fsaFy/Rp4vCtyq
+         uZn3gW7juihWMThYF0U1glKS3fa6PdpCvBssP9M9jWDtqYf2dPvXRZNIdI3vJGaDvPii
+         AhnnjvishrFYfANbNC4HEVR2CDQTcKn8uAL1or//VqgPshtbI1Jeqjaudp75WEv2VHZf
+         QOY4BvQtLfPb9pr8FfeGFzK/EbSLf1plU/yldwptOuSCpIYAvxTlJPGDuGkw6kN66c6D
+         2FQYkISVSQeG1LpvxUt35HbR04cdV4T1YNxVnl1wjHn+Fg0XONzD5xdltQsEqkPbt1QV
+         yh3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ASWJFvHQgQeOvj7p2QaLxPDGDC5IFjDmVSXZ3tEko3Q=;
-        b=klY/6SmdIyu5RuV3OPzf+AQbhPX7G2VC9q72/fnbEUC1wXpAJlMMtq5+PnM5SdzdcS
-         7cjOe6x8VZQHwQB2TEZKWHufXL4Zxs4ZJQtOEO+2fexb6C0RkBYx5wX5FHEx/qWNMuL+
-         2cWKNmT0p3mS9ue9rfXuCXQ+IN2VscZSJcWpqQZZQrBRwIYw8Y13kny43lY3poe6GNdB
-         3X6YGjlnbX1iC/mAPsmI7MYbuzDfCfJXJ5gbsbPSfoZZHpfonuImC6BBzPoWIOcy4XW1
-         0GRiCwLa8WeAB0KXEgJjdEkjFqgYKA7tFag87yaaT1fIEuNYh+unezQCGIUXUekgIyHS
-         zBRQ==
-X-Gm-Message-State: AOAM532SmLYl5Y3EeztAUR++RdDafAX0ApcihZpIMBimT53sDQDk8AZg
-        GrNxOStqVHFbzFFV6cC4X9o=
-X-Google-Smtp-Source: ABdhPJx1hd5ekkRo321C6TxkANO6W4SWpB1Zxj+UGB5uXEaC8rnnnnTvS4zpRLtTPbPXmU8beZfMlA==
-X-Received: by 2002:a63:8c4a:: with SMTP id q10mr834995pgn.431.1594837214624;
-        Wed, 15 Jul 2020 11:20:14 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id oc6sm2868942pjb.43.2020.07.15.11.20.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 11:20:13 -0700 (PDT)
-Date:   Wed, 15 Jul 2020 11:20:11 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=FW+/ZxmYoCvGe5mnuycT/61j0dKxSB92w9KDp8ofCh0=;
+        b=mfLxMMSdHWEwpuoR/wQhc2Vp0KzlcGUuGccWU4n/3v4WnGIEm0PUTngsDxdwkfUp4C
+         PufwDyNHnCNeIaiRyVnr4i7Z/lM4HgWPqWVbHN1UlzMQ06j0yx5tpHqE0Ue7FUwdLqmC
+         y4VA6yazqOz5MQihXtTfA1qRXvOd+uXB/1mxwPjtfafD0h9S8g9PHiuZA3b/nnLoucmb
+         fC9hGDoKbnPfKT1YJ/ni1GEZVfNjc1ly0r4rxllhLGVXsHADzd22RiTh7BvLQInEQH25
+         Ak0cE5Z8yUGT5AtQ+vS8OduxG8dVnbIpHTxRe0hfxY3ocQ6BJk95oyDnYUoSgcaYUMYy
+         sCaw==
+X-Gm-Message-State: AOAM533RM/q0CuAGaA7USxUSqQI38HuVJqTt07eG4aFdOALFxNxNHvpS
+        lSIofJWypOPW8/iCSvI6StU=
+X-Google-Smtp-Source: ABdhPJxONHz15fAWdzQIbauCMsaeuIPrunuYd8ONMz1n/IkYY8AtpccMukFZPXpAWwu9WcmUQcYQKQ==
+X-Received: by 2002:aa7:da8d:: with SMTP id q13mr914485eds.339.1594838030265;
+        Wed, 15 Jul 2020 11:33:50 -0700 (PDT)
+Received: from szeder.dev (78-131-17-71.pool.digikabel.hu. [78.131.17.71])
+        by smtp.gmail.com with ESMTPSA id x19sm2821564eds.43.2020.07.15.11.33.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Jul 2020 11:33:49 -0700 (PDT)
+Date:   Wed, 15 Jul 2020 20:33:47 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, delphij@google.com
-Subject: Re: [PATCH] setup: warn about un-enabled extensions
-Message-ID: <20200715182011.GA2950865@google.com>
-References: <pull.675.git.1594677321039.gitgitgadget@gmail.com>
- <0bede821-139a-d805-934a-142004abaa4c@gmail.com>
- <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet>
- <xmqqzh82ktgm.fsf@gitster.c.googlers.com>
- <xmqqpn8wkben.fsf@gitster.c.googlers.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, dstolee@microsoft.com,
+        peff@peff.net, git@vger.kernel.org
+Subject: Re: [PATCH] commit-graph: fix "Collecting commits from input"
+ progress line
+Message-ID: <20200715183347.GH11341@szeder.dev>
+References: <56403dd377b996d21a4da1e01ffd6e691ac120bd.1589407014.git.me@ttaylorr.com>
+ <20200710190238.16376-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqpn8wkben.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200710190238.16376-1-szeder.dev@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Junio,
 
-Junio C Hamano wrote:
+it looks like this patch hasn't been picked up, but it fixes a minor
+bug introduced in this release cycle.
 
-> It seems that there is no quick concensus to go with your "different
-> endgame" and worse yet it seems nobody is interested in helping
-> much.
 
-Sorry for the delay.  I do want to look at this this afternoon.
-
-[...]
-> I'll shift my attention to other topics that should be in the
-> release for the rest of the day, but am pessimistic that I can tag
-> the -rc1 today, which won't happen until we at least have a
-> concensus on what to do with the (apparent) regression due to the
-> "upgrade repository version" topic.
-
-Ah, I hadn't realized an -rc1 tomorrow instead of today was on the
-table. ;-)
-
-I'll do what I can (in other words, expect a patch from me; but also,
-I am very interested in analysis, proposed patches, etc from others so
-that we can end up wit ha good fix with the solution space well
-explored).
-
-Thanks,
-Jonathan
+On Fri, Jul 10, 2020 at 09:02:38PM +0200, SZEDER Gábor wrote:
+> To display a progress line while reading commits from standard input
+> and looking them up, 5b6653e523 (builtin/commit-graph.c: dereference
+> tags in builtin, 2020-05-13) should have added a pair of
+> start_delayed_progress() and stop_progress() calls around the loop
+> reading stdin.  Alas, the stop_progress() call ended up at the wrong
+> place, after write_commit_graph(), which does all the commit-graph
+> computation and writing, and has several progress lines of its own.
+> Consequintly, that new
+> 
+>   Collecting commits from input: 1234
+> 
+> progress line is overwritten by the first progress line shown by
+> write_commit_graph(), and its final "done" line is shown last, after
+> everything is finished:
+> 
+>   $ { sleep 3 ; git rev-list -3 HEAD ; sleep 1 ; } | ~/src/git/git commit-graph write --stdin-commits
+>   Expanding reachable commits in commit graph: 873402, done.
+>   Writing out commit graph in 4 passes: 100% (3493608/3493608), done.
+>   Collecting commits from input: 3, done.
+> 
+> Furthermore, that stop_progress() call was added after the 'cleanup'
+> label, where that loop reading stdin jumps in case of an error.  In
+> case of invalid input this then results in the "done" line shown after
+> the error message:
+> 
+>   $ { sleep 3 ; git rev-list -3 HEAD ; echo junk ; } | ~/src/git/git commit-graph write --stdin-commits
+>   error: unexpected non-hex object ID: junk
+>   Collecting commits from input: 3, done.
+> 
+> Move that stop_progress() call to the right place.
+> 
+> While at it, drop the unnecessary 'if (progress)' condition protecting
+> the stop_progress() call, because that function is prepared to handle
+> a NULL progress struct.
+> 
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> ---
+>  builtin/commit-graph.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> index 75455da138..796954da60 100644
+> --- a/builtin/commit-graph.c
+> +++ b/builtin/commit-graph.c
+> @@ -251,7 +251,7 @@ static int graph_write(int argc, const char **argv)
+>  			}
+>  		}
+>  
+> -
+> +		stop_progress(&progress);
+>  	}
+>  
+>  	if (write_commit_graph(odb,
+> @@ -264,8 +264,6 @@ static int graph_write(int argc, const char **argv)
+>  cleanup:
+>  	string_list_clear(&pack_indexes, 0);
+>  	strbuf_release(&buf);
+> -	if (progress)
+> -		stop_progress(&progress);
+>  	return result;
+>  }
+>  
+> -- 
+> 2.27.0.547.g4ba2d26563
+> 
