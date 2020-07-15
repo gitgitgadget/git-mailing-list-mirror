@@ -2,113 +2,133 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C64CC433E0
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 02:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24E76C433E4
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 02:45:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 037EE2074B
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 02:18:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0A5B20663
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 02:45:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WRPAmzjJ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R0OaQi52"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727953AbgGOCSE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jul 2020 22:18:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51556 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbgGOCSE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jul 2020 22:18:04 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E87DAC061755
-        for <git@vger.kernel.org>; Tue, 14 Jul 2020 19:18:03 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id w27so545641qtb.7
-        for <git@vger.kernel.org>; Tue, 14 Jul 2020 19:18:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=o4CaTWYde1aKxsFxEwTM1w5/5yJPfpGY6GApN/9hT6I=;
-        b=WRPAmzjJREGncwKlbgiNtn+lxj1U6TSFoycRKFonc4Dyf5ESHdQe7AD7sFkTWFm+Yb
-         c0fBgur0xxNnz2d+JtpPZMuYbeZLgXEIy7ObEqq2iibSIJgSEOS80Bqiurzi86+XGAe2
-         EIZZSlJScYI1Y5uGfeO3fg/6Rb9dyOC6mJ8xm3ljQynQq2teAb8X7CBOU39zIrj5nnvK
-         hD2eutyNZgIg974CxtpLKAveK+yNO+05HeaJB//ovVuboA/57qjbvuTi+NRBO2ndtApN
-         DzYLStA0J9jQBis7xqXqWHMg39URk+vnET+kz4bb3sSu5ymc+aiJsyZoX0+5MjGs1IKO
-         NSYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=o4CaTWYde1aKxsFxEwTM1w5/5yJPfpGY6GApN/9hT6I=;
-        b=W94bIRrvy9w3Y0BifPJ6gg0J88Oi3a4KdMZP4pb3pYJrqJVC2agDZWerBWFKPm2Gb9
-         UrCYtltM7gThQN7ie0D5qM4MQtf7rZWudn4juAVoMAx2aIiwiLEXih7uGDlKZhqYWSyV
-         sXmdDh4jkTmRxNM00qJHHRMpDkBHBAvHLGgNQHYg2ErIua9NHx0++D7xrHVp+GjGGuZx
-         kYLifk7KQ5I73epbEMPqtCmZle12VPKuexFbyWhKcanbAoNS3aVaTHbKNwS/mhSyNfBp
-         +lyabq29h+dyktsKdB0B7YiaTkaO1VZcQyukOoanaRe2SAVAsvJd4L73t96RfncZ39O/
-         NYCA==
-X-Gm-Message-State: AOAM533s5kfcd7hAdDrZRWODlD30v3RNY9BFVnxxJsO3H3C0AaiailOo
-        gVtXZLsnrRfP8LZSkgZVLhclnIPe+7E=
-X-Google-Smtp-Source: ABdhPJw49WKBeFPvrgdz2hT9sovdxdbk0RYjvnDsuPkDj+m56LLz+pit9LgJt0yTXSZf/q2ncjFWwA==
-X-Received: by 2002:aed:32e5:: with SMTP id z92mr7797652qtd.282.1594779482399;
-        Tue, 14 Jul 2020 19:18:02 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id a5sm1122629qtd.84.2020.07.14.19.18.01
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Tue, 14 Jul 2020 19:18:01 -0700 (PDT)
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset=us-ascii
+        id S1728363AbgGOCpv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jul 2020 22:45:51 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65312 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727071AbgGOCpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jul 2020 22:45:50 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E204E69EB4;
+        Tue, 14 Jul 2020 22:45:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=RylVMK7OI6r9
+        QXrPzwBVlo0x/UU=; b=R0OaQi52vCwHV7Qgz9v4YqbbHknjA4oEN7zvkW7zHID/
+        fEXrpxKq2tjGFzp0BsXmrUioOmflDZCOKN/M+OkXwGPoOQoAJWcWhFohCosNcNFF
+        AIygJFj6O9Mm0kaW62AkbTBbARYV15i2UmyaJ+Ch03ePCfTqt00G+en9mprPD64=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=c1T1YP
+        XrBmg3LlKWDAn/8mVFC99/qDrDnD+aGnzawgs25XVBPukVHJlunASgjBeTWNX3M9
+        o0K4e9mg9mWS4+bL/wJ+rRc3sLvR6+WdKMxWkvPPs0zZq+mgczCNhhzRbU+NPhGm
+        5+Exc4lQ8Qe6JYchERVmYhSZEpcsuVZT/HcbI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D227569EB3;
+        Tue, 14 Jul 2020 22:45:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F92A69EB2;
+        Tue, 14 Jul 2020 22:45:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] git-diff.txt: reorder possible usages
+References: <cover.1594666410.git.martin.agren@gmail.com>
+        <280943ef56a2a777ab0162b8ec4ba0166cc2095c.1594666410.git.martin.agren@gmail.com>
+        <CAPx1Gve7Sy5BUdRztVoVNVZgdqm14dvD=36eYzLPed5YMQeMEQ@mail.gmail.com>
+Date:   Tue, 14 Jul 2020 19:45:45 -0700
+In-Reply-To: <CAPx1Gve7Sy5BUdRztVoVNVZgdqm14dvD=36eYzLPed5YMQeMEQ@mail.gmail.com>
+        (Chris Torek's message of "Mon, 13 Jul 2020 15:04:23 -0700")
+Message-ID: <xmqqeepdlcme.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 48BA2314-C645-11EA-92CD-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
-Subject: [BUG?] Fetching a single tag to a local tag requires `--no-tags`
-Message-Id: <12F0A2A4-CC71-4452-B8B8-F540339F8519@gmail.com>
-Date:   Tue, 14 Jul 2020 22:17:59 -0400
-To:     Git mailing list <git@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone,
+Chris Torek <chris.torek@gmail.com> writes:
 
-If I want to fetch a single tag from a remote repository to a local tag,
-it seems I have to use `--no-tags`, or else all tags on the remote are =
-fetched:
+> On Mon, Jul 13, 2020 at 12:10 PM Martin =C3=85gren <martin.agren@gmail.=
+com> wrote:
+>> It then goes on to say that "all of the <commit> in the above
+>> description, except in the last two forms that use '..' notations, can
+>> be any <tree>". The "last two" actually refers to 6 and 8. This got ou=
+t
+>> of sync in commit b7e10b2ca2 ("Documentation: usage for diff combined
+>> commits", 2020-06-12) which added item 7 to the mix.
+>
+> Moving this down (as you do in this patch) is the right thing to do,
+> but I'll note that formally, the word "that" in "forms that use ..." is
+> part of a restrictive clause, so it means "find the last two examples
+> that use dots".  (In American English at least, the unrestrictive versi=
+on
+> would be set off with commas, and use "which" instead of "that".)
 
-git remote add ggg https://github.com/gitgitgadget/git
-# this command fetches all tags on Gitgitgadget
-git fetch ggg tag pr-590/phil-blain/doc-log-multiple-ranges-v2
-# this command fetches only the tag listed on the command line
-git fetch ggg tag pr-590/phil-blain/doc-log-multiple-ranges-v2 --no-tags
+Yes, the proposed patch is an improvement, but I agree that "find
+the last two that use dots" was indeed what I meant when I wrote
+0c783f66 (Documentation/git-diff: A..B and A...B cannot take
+tree-ishes, 2007-08-28).
 
-Am I reading the documentation correctly ?
+But upon reading it again now, I am not sure it makes sense in the
+first place.
 
-tag <tag> syntax [1]:
-"tag <tag> means the same as refs/tags/<tag>:refs/tags/<tag>;=20
-it requests fetching everything up to the given tag."
+    git diff seen^^{tree}..seen^{tree}
 
---no-tags [2] :
-"By default, tags that point at objects that are downloaded
-from the remote repository are fetched and stored locally.
-This option disables this automatic tag following."=20
+uses <tree> (not commit) in the form that uses '..' notation, and it
+just works fine.  What does require commit because it depends on
+having a history to compute merge base between two objects given
+from the command line is the form that uses '...' notation.
 
-Clearly the commits at the tips of the multiple iterations of all series =
-ever submitted using
-Gitgitgadget should not be downloaded when I'm just fetching a version =
-of=20
-my own submission, so I don't understand why these objects are fetched
-and why those local tags are created...
+    git diff seen^1...seen^2
 
-[1] =
-https://git-scm.com/docs/git-fetch#Documentation/git-fetch.txt-ltrefspecgt=
+would be "what did the side branch merged at the tip of seen do
+since it forked?" and should look similar to "git diff seen^ seen",
+but it cannot use tree objects for obvious reasons
 
-[2] =
-https://git-scm.com/docs/git-fetch#Documentation/git-fetch.txt---no-tags
+    git diff seen^1^{tree}...seen^2^{tree}
 
-Cheers,
+>> An added bonus of this commit is that we're trying to steer users away
+>> from `git diff <commit>..<commit>` and moving it further down probably
+>> doesn't hurt.
+>
+> Q: Just how hard should we try?  In particular, would it be good to mar=
+k
+> the two-dot form as deprecated in the documentation?  I anticipate
+> objections because it's not possible to omit `HEAD` without using
+> the two-dot form.
 
-Philippe.=
+I am not sure why it is so important to be able to omit HEAD in the
+first place.  I do not think using two-dot form is an offence severe
+enough to deserve an extra warning or deprecation notice, but using
+the "range" notation when you meant two endpoints is a notation that
+confuses uninitiated needlessly and showing it to new people is a
+disservice.  "This notation does not make logical sense, but we keep
+using it as users, and we keep accepting it as tool makers, purely
+for convenience" has been and will be the attitude I'd take towards
+the "git diff A..B" syntax---it was a mistake we made when we were
+still young ;-)
+
+cf. https://bit.ly/3eBcyZa
