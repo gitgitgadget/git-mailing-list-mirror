@@ -2,104 +2,97 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19F7AC433E1
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 09:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAA07C433E0
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 09:38:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8F9A20672
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 09:10:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=nemit-fi.20150623.gappssmtp.com header.i=@nemit-fi.20150623.gappssmtp.com header.b="S5GGOmvg"
+	by mail.kernel.org (Postfix) with ESMTP id 859762064C
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 09:38:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729047AbgGOJKe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 05:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58668 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728206AbgGOJKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 05:10:33 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5FBC061755
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 02:10:33 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id o3so1320403ilo.12
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 02:10:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nemit-fi.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=5VA7NsHLBMLrvGe3mYzli62aQnY9bufOA7gnJJqwcpM=;
-        b=S5GGOmvgNbwphoJwrsnxWVE7aivGtMdSOAUIQ3YcWmKQPMSBC4V32KdTHYUZasxTXN
-         tYU2MxfuXm1Rx2myOgIUkMpz60GzW2dAn12ugacjeo3VsdexURJH39weZEfd2gLIfvUR
-         rmMAhXrJnyLq8jEeQ1TxJERFLZNaCbz6Ts/p5Uo15k9ZzuZNpj4eWPN7ZBXYQLEyQP76
-         1PBgQBz2T3WqtBLweWJauI4SQGrSoUSZQV/iW7XggiWjegYnY73nIm7I0qnZ4wBqqYpD
-         sWOjkfjv9Jgk7YJ5hL1LxNQkWTY75kjY8zULxcn8rq/qjG/zCFeBBReqQlxPL7vDxdWQ
-         1y3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=5VA7NsHLBMLrvGe3mYzli62aQnY9bufOA7gnJJqwcpM=;
-        b=Ctc8NfmqLz5vPwOHwVGseczge0EWjxwdyNRn6F1x13oLgizgnUVuYtQQtFMo3Bay+e
-         CUFvhqSh2yoJsEj6OnxqIMRFtKxjhK6kE+qwgzbA0z4gTg5pVNLxr+fHmV3w8Sm6iRBY
-         W8KZHZflHiCPDijS54KEBHWZgL3nAOgk6COTScvycRbaloJydLX/GA7wdphuQC2au9Hl
-         8OGZg4XgHl7ZP9w08yHFd+mMWgpNkuon2krUSzEs+dMC4O3YeH8KFWrtO5JqKcaQOyJp
-         5CeVCtg1HnJ5f7/UkzCcufAwzCJXodWtDPos+5KaPsrZd57N7JvZ/IId2/3c0zGRk8Eq
-         qGqQ==
-X-Gm-Message-State: AOAM532lyvJE/Aw0WgqyysyoGE8hzC9wDxd5081gA2wpYPU9dQyj3Fn3
-        9Mf1HVSvh0TsC69C9JjEzTBka7ftR7lbHMvD7rrH/qNwmcs=
-X-Google-Smtp-Source: ABdhPJwnZqFONIPYDHdk9P1ig+4Sm8kpUPpgzNRpR0jkx/JOTlzSZ1V3JAu34cpNMnCBJJkntciQjZKGKQahRsQl2bE=
-X-Received: by 2002:a92:c78d:: with SMTP id c13mr9050254ilk.85.1594804232159;
- Wed, 15 Jul 2020 02:10:32 -0700 (PDT)
+        id S1730338AbgGOJic (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 05:38:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57958 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728820AbgGOJic (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 05:38:32 -0400
+Received: (qmail 10700 invoked by uid 109); 15 Jul 2020 09:38:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Jul 2020 09:38:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7905 invoked by uid 111); 15 Jul 2020 09:38:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Jul 2020 05:38:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 15 Jul 2020 05:38:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     "R. Diez" <rdiez@neanderfunk.de>
+Cc:     git@vger.kernel.org, santiago@nyu.edu
+Subject: Re: Interrupted system call
+Message-ID: <20200715093831.GA3259535@coredump.intra.peff.net>
+References: <14b3d372-f3fe-c06c-dd56-1d9799a12632@yahoo.de>
+ <c8061cce-71e4-17bd-a56a-a5fed93804da@neanderfunk.de>
+ <20200701162111.GA934052@coredump.intra.peff.net>
+ <11754dcc-3c88-04dd-d009-89da01881e5d@neanderfunk.de>
 MIME-Version: 1.0
-From:   Frej Bjon <frej.bjon@nemit.fi>
-Date:   Wed, 15 Jul 2020 12:10:21 +0300
-Message-ID: <CAP8P1T+JQUTVDXsJbrWkiZ2AWZmoptFSRdKssANYrNSFa+Egmg@mail.gmail.com>
-Subject: Cannot delete remote branch with non-ascii name and --force-with-lease
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <11754dcc-3c88-04dd-d009-89da01881e5d@neanderfunk.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-- Create a branch with non-ascii character: testbranch-=C3=A4
-- Push to a remote with same name
-- Delete branch from remote with --force-with-lease:
-  git --force-with-lease --delete origin "testbranch-=C3=A4"
+On Thu, Jul 02, 2020 at 09:07:46AM +0200, R. Diez wrote:
 
-What did you expect to happen? (Expected behavior)
-- The branch to be deleted.
+> I managed to make it fail once with:
+> 
+>   strace -f -- git fsck --progress
+> 
+> The signal involved is SIGALRM. I am guessing that Git is setting it up in
+> order to display its progress messages. This is one of the few calls to
+> rt_sigaction(SIGALRM):
+> 
+> rt_sigaction(SIGALRM, {sa_handler=0x556c8ac0fe80, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fbdca7da890}, NULL, 8) = 0
 
-What happened instead? (Actual behavior)
-- Git fails with an error
-  error: cannot parse expected object name
-'32e33fb544d7b1147c446c60220f23a5df465eff"'
+That makes sense (and likewise your "--quiet" workaround seems
+reasonable).
 
-Anything else you want to add:
-- The command works if using only --force and not --force-with-lease
-- The command works if there's no non-ascii character, e.g. "testbranch-x"
-- Tested with gitlab and github as remotes, with the same error
-- My locale in git bash is "en_US.UTF-8"
-- The same happens under Ubuntu 20.04 with git 2.25.1
+> I am not an expert in Unix signals, but I'll do my best here.
+> 
+> I do not understand why Git is getting these interruptions due to SIGALRM, because SA_RESTART is in place.
+> 
+> Interestingly, the man page signal(7) does list open() under that flag, but not openat().
 
+Yes, though since open(2) says:
 
-[System Info]
-git version: git version 2.27.0.windows.1
-cpu: x86_64
-built from commit: 907ab1011dce9112700498e034b974ba60f8b407
-sizeof-long: 4
-sizeof-size_t: 8
-uname: Windows 10.0 15063
-compiler info: gnuc: 10.1
-libc info: no libc information available
+ The openat() system call operates in exactly the same way as open(),
+ except for the differences described here.
 
+I'd expect that would include any SA_RESTART handling. Peeking at the
+Linux implementation in fs/open.c, it looks like both syscalls quickly
+end up in the same do_sys_open().
 
-[Enabled Hooks]
-None
+> The description for open() under SA_RESTART is also interesting:
+> 
+> * open(2), if it can block (e.g., when opening a FIFO; see fifo(7)).
+> 
+> I am not sure that opening a normal disk file may qualify as "can block" with that definition though.
 
-Regards,
-Frej Bjon
+Delivering EINTR on a non-blocking call seems even more confusing,
+though. I think the "if it can block" is just "you won't even get a
+signal if it's not blocking".
+
+This really _seems_ like a kernel bug, either:
+
+  - openat() does not get the same SA_RESTART treatment as open(); or
+
+  - open() on a network file can get EINTR even with SA_RESTART
+
+But it's quite possible that I'm missing some corner case or historical
+reason that it would need to behave the way you're seeing. It might be
+worth reporting to kernel folks.
+
+-Peff
