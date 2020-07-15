@@ -2,226 +2,169 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-20.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1193DC433E0
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 21:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C022BC433DF
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 22:31:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE5D7206F4
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 21:08:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9370D2065D
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 22:31:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FtcfyGRF"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mPyogKNq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726675AbgGOVIe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 17:08:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51487 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725917AbgGOVId (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 17:08:33 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6381070B16;
-        Wed, 15 Jul 2020 17:08:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vJHspEMK7vMTB64dOhW78NWlPwY=; b=FtcfyG
-        RFCq8jFY4Wn6zEcJW4bYvkouHJkAE7L0RXHapKUou+FhdtVabWQM7E2M3S3vt7Zz
-        Vh4Podw6iPP88jOTUNiirEixOoV9zDY7//ymGu304dr2GGnf0TR8OZILI1J6iyDO
-        Xso9QyERc0VLb4ShYW5IhNBNqD010ZSZAaupU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WLTJFAzKVqwP5jPCo4U6RJWreGNELZnr
-        88+eDqBBFwefnVOcsvA+KlDs/AVmtSHGJK6FxmRCzEiQd9jG5/hkkIb7oatELdCC
-        BiRQzU2G/NbpW2JVQYcD4GiwQyejY7czI900b4p/Mj2G6vxVP66TKn4B8XRju7Iq
-        4sZi5lu0Pi8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59D7C70B15;
-        Wed, 15 Jul 2020 17:08:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E0A9B70B14;
-        Wed, 15 Jul 2020 17:08:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michal Privoznik <mprivozn@redhat.com>
-Cc:     git@vger.kernel.org, matheus.bernardino@usp.br, kolyshkin@gmail.com
-Subject: Re: [PATCH] completion: add show --color-moved[-ws]
-References: <da0bef7b856388d7f4613c30d3a7c962ddba96b2.1594712582.git.mprivozn@redhat.com>
-Date:   Wed, 15 Jul 2020 14:08:30 -0700
-In-Reply-To: <da0bef7b856388d7f4613c30d3a7c962ddba96b2.1594712582.git.mprivozn@redhat.com>
-        (Michal Privoznik's message of "Tue, 14 Jul 2020 09:44:51 +0200")
-Message-ID: <xmqqtuy8ij01.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 55E5F5B4-C6DF-11EA-A8A2-01D9BED8090B-77302942!pb-smtp1.pobox.com
+        id S1726786AbgGOWbT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 18:31:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41162 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726479AbgGOWbT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 18:31:19 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA6EC061755
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 15:31:18 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id u12so4844436ybj.0
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 15:31:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=AoJrpDvgX5UJvaTGUxm5/Of5Zm4zAvKpNOnwyNLWNP4=;
+        b=mPyogKNqXhAZw+wMQ+AlDWDKKIDn8F556gEdR8zlhNF6aY0/V18gjsnebOUbuADXTK
+         MGP8I/0tUpkk0qSJkI0aox3m0DLHcYHEU4RXg2O/lKdY0TxrddL4syols95v9PDMoItu
+         Nk7RoEBFyjLiP8vbm7/7Fb/pRbt/MZ2XKYB9ndyijtSX3Szi/vZEOx1Jld4jFdCW3OVl
+         tIOSDvBoYrog9M6YVM9iO06pHB3FKLL1kp8kikPamWkXN9lmv8XuZaOWJolq1QviWuK9
+         YR0zMiw/dtmv2ZotQViIZwHnZURjYFRWB9Fhh0s65j8hs83v4ia+lla1THrY6aLeCVYB
+         nuzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=AoJrpDvgX5UJvaTGUxm5/Of5Zm4zAvKpNOnwyNLWNP4=;
+        b=NtSJsPakk0zZUqPbL3A5GMBQ0k8ICP0Wcda8KI6uScvUmIQswTRXMy/wi6eZkW5ChW
+         +LObCtQfL8nGD1SBynSkIuprOkYZjQmesbf32JT+QtgWFS7+fUjZopNynWwwhdQOifeT
+         ggzFVHBEBS7kSmZh43vQ2YM0l7XLpmrJ4VTVDRWsBnvGl8PizH07dsUV+RFeyat/4i8t
+         kTKOyr+oqQkJhn0TY4GOlXBSrUj5/Pjm82MPWX7M2cnVmjMRl3KgKeyFPqVe8lFSPp2y
+         VfRgHsFBeRoB2GpRQIFaPjodz/lLYaQBX6xtAAunHkkkTMoJO3h5ays9A6SEM605yuou
+         jZYw==
+X-Gm-Message-State: AOAM5311FulMuKz/pd1vWz3in1NG5OxuEMZUzPklZ29eUmrxDNLKBvu2
+        nQmAYa3Xr/w80WV0Ln7KZ8EspgWRxk0nhFFeRV5pjjy8Zmt6WzI2rh2nJURO0dNdM572Bq6KoRP
+        B+2GdpuMHkW0IgackLb3fZ5iM/3YCSDm9aUgDSA9BGBIgx4id08a0hgfwgEUD3C0i2WPPMZw65q
+        nK
+X-Google-Smtp-Source: ABdhPJyprv0O+VQ2p3bbm8cdzp48PgBAPFaGSN8pnI0bYKuQdUYUrM9eaV0OfMBTDYjC2zrS54lgE+2i9rJA8eH4PXJ8
+X-Received: by 2002:a25:818c:: with SMTP id p12mr1726035ybk.199.1594852278062;
+ Wed, 15 Jul 2020 15:31:18 -0700 (PDT)
+Date:   Wed, 15 Jul 2020 15:31:12 -0700
+Message-Id: <20200715223112.2018556-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
+Subject: [PATCH] upload-pack: do not lazy-fetch "have" objects
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Privoznik <mprivozn@redhat.com> writes:
+When upload-pack receives a request containing "have" hashes, it (among
+other things) checks if the served repository has the corresponding
+objects. However, it does not do so with the
+OBJECT_INFO_SKIP_FETCH_OBJECT flag, so if serving a partial clone, a
+lazy fetch will be triggered first.
 
-> The completion for diff command was added in fd0bc175576 but
-> missed the show command which also supports --color-moved[-ws].
+This was discovered at $DAYJOB when a user fetched from a partial clone
+(into another partial clone - although this would also happen if the
+repo to be fetched into is not a partial clone).
 
-A block line this
+Therefore, whenever "have" hashes are checked for existence, pass the
+OBJECT_INFO_SKIP_FETCH_OBJECT flag.
 
-> +	--color-moved=*)
-> +		__gitcomp "$__git_color_moved_opts" "" "${cur##--color-moved=}"
-> +		return
-> +		;;
-> +	--color-moved-ws=*)
-> +		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
-> +		return
-> +		;;
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+There is also the greater issue that if a lazy fetch fails, the fetch is
+usually fatal (and possibly always fatal - I haven't checked all the
+code paths) when the calling code could just as easily continue without
+the object (which is the case for upload-pack when checking "have"s),
+but I haven't addressed that here.
+---
+ t/t5616-partial-clone.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ upload-pack.c            |  5 +++--
+ 2 files changed, 41 insertions(+), 2 deletions(-)
 
-appear twice in the file, once in _git_diff and again in _git_show.
-
-It is disturbing that we need to keep duplicating these same options
-over and over again.  Granted, the duplication exists before this
-patch (the case arms for --diff-algorithm=* and --submodule=* are
-already duplicated), but this patch makes it worse X-<.
-
-And the next person who notices that this patch only added these to
-"show" would want to further duplicate them to _git_log.  Yuck X-<.
-
-Will apply as-is for now, but at some point we may want to clean
-these up.  With a new helper, along the lines of this, perhaps?
-
-Thanks.
-
-
- contrib/completion/git-completion.bash | 79 +++++++++++++++++-----------------
- 1 file changed, 39 insertions(+), 40 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0fdb5da83b..e2d6d17bfe 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1683,23 +1683,12 @@ _git_diff ()
- {
- 	__git_has_doubledash && return
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 8a27452a51..37de0afb02 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -422,6 +422,44 @@ test_expect_success 'single-branch tag following respects partial clone' '
+ 	test_must_fail git -C single rev-parse --verify refs/tags/C
+ '
  
--	case "$cur" in
--	--diff-algorithm=*)
--		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
--		return
--		;;
--	--submodule=*)
--		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
--		return
--		;;
--	--color-moved=*)
--		__gitcomp "$__git_color_moved_opts" "" "${cur##--color-moved=}"
--		return
--		;;
--	--color-moved-ws=*)
--		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
-+	if __git_complete_common_diff_option_args
-+	then
- 		return
--		;;
-+	fi
++test_expect_success 'fetch from a partial clone, protocol v0' '
++	rm -rf server client trace &&
 +
-+	case "$cur" in
- 	--*)
- 		__gitcomp "--cached --staged --pickaxe-all --pickaxe-regex
- 			--base --ours --theirs --no-index
-@@ -1949,6 +1938,29 @@ __git_log_shortlog_options="
- __git_log_pretty_formats="oneline short medium full fuller reference email raw format: tformat: mboxrd"
- __git_log_date_formats="relative iso8601 iso8601-strict rfc2822 short local default raw unix format:"
++	# Pretend that the server is a partial clone
++	git init server &&
++	git -C server remote add a_remote "file://$(pwd)/" &&
++	test_config -C server core.repositoryformatversion 1 &&
++	test_config -C server extensions.partialclone a_remote &&
++	test_config -C server protocol.version 0 &&
++	test_commit -C server foo &&
++
++	# Fetch from the server
++	git init client &&
++	test_config -C client protocol.version 0 &&
++	test_commit -C client bar &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "file://$(pwd)/server" &&
++	! grep "version 2" trace
++'
++
++test_expect_success 'fetch from a partial clone, protocol v2' '
++	rm -rf server client trace &&
++
++	# Pretend that the server is a partial clone
++	git init server &&
++	git -C server remote add a_remote "file://$(pwd)/" &&
++	test_config -C server core.repositoryformatversion 1 &&
++	test_config -C server extensions.partialclone a_remote &&
++	test_config -C server protocol.version 2 &&
++	test_commit -C server foo &&
++
++	# Fetch from the server
++	git init client &&
++	test_config -C client protocol.version 2 &&
++	test_commit -C client bar &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "file://$(pwd)/server" &&
++	grep "version 2" trace
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
  
-+__git_complete_common_diff_option_args ()
-+{
-+	case "$cur" in
-+	--diff-algorithm=*)
-+		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
-+		return 0
-+		;;
-+	--submodule=*)
-+		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
-+		return 0
-+		;;
-+	--color-moved=*)
-+		__gitcomp "$__git_color_moved_opts" "" "${cur##--color-moved=}"
-+		return 0
-+		;;
-+	--color-moved-ws=*)
-+		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
-+		return 0
-+		;;
-+	esac
-+	return 1
-+}
-+
- _git_log ()
+diff --git a/upload-pack.c b/upload-pack.c
+index 951a2b23aa..af9d621755 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -482,7 +482,7 @@ static int got_oid(struct upload_pack_data *data,
  {
- 	__git_has_doubledash && return
-@@ -1971,6 +1983,12 @@ _git_log ()
- 		return
- 		;;
- 	esac
-+
-+	if __git_complete_common_diff_option_args
-+	then
-+		return
-+	fi
-+
- 	case "$cur" in
- 	--pretty=*|--format=*)
- 		__gitcomp "$__git_log_pretty_formats $(__git_pretty_aliases)
-@@ -1985,14 +2003,6 @@ _git_log ()
- 		__gitcomp "full short no" "" "${cur##--decorate=}"
- 		return
- 		;;
--	--diff-algorithm=*)
--		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
--		return
--		;;
--	--submodule=*)
--		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
--		return
--		;;
- 	--no-walk=*)
- 		__gitcomp "sorted unsorted" "" "${cur##--no-walk=}"
- 		return
-@@ -2893,28 +2903,17 @@ _git_show ()
- {
- 	__git_has_doubledash && return
+ 	if (get_oid_hex(hex, oid))
+ 		die("git upload-pack: expected SHA1 object, got '%s'", hex);
+-	if (!has_object_file(oid))
++	if (!has_object_file_with_flags(oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
+ 		return -1;
+ 	return do_got_oid(data, oid);
+ }
+@@ -1423,7 +1423,8 @@ static int process_haves(struct upload_pack_data *data, struct oid_array *common
+ 	for (i = 0; i < data->haves.nr; i++) {
+ 		const struct object_id *oid = &data->haves.oid[i];
  
-+	if __git_complete_common_diff_option_args
-+	then
-+		return
-+	fi
-+
- 	case "$cur" in
- 	--pretty=*|--format=*)
- 		__gitcomp "$__git_log_pretty_formats $(__git_pretty_aliases)
- 			" "" "${cur#*=}"
- 		return
- 		;;
--	--diff-algorithm=*)
--		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
--		return
--		;;
--	--submodule=*)
--		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
--		return
--		;;
--	--color-moved=*)
--		__gitcomp "$__git_color_moved_opts" "" "${cur##--color-moved=}"
--		return
--		;;
--	--color-moved-ws=*)
--		__gitcomp "$__git_color_moved_ws_opts" "" "${cur##--color-moved-ws=}"
--		return
--		;;
- 	--*)
- 		__gitcomp "--pretty= --format= --abbrev-commit --no-abbrev-commit
- 			--oneline --show-signature --patch
+-		if (!has_object_file(oid))
++		if (!has_object_file_with_flags(oid,
++						OBJECT_INFO_SKIP_FETCH_OBJECT))
+ 			continue;
+ 
+ 		oid_array_append(common, oid);
+-- 
+2.27.0.389.gc38d7665816-goog
+
