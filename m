@@ -7,149 +7,106 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7258DC433DF
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 08:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E027C433E3
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 08:55:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C53420672
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 08:53:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76A7420657
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 08:55:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DAJGCk2+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/uStrwC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730463AbgGOIxY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 04:53:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56010 "EHLO
+        id S1729637AbgGOIzX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 04:55:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730440AbgGOIxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 04:53:24 -0400
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8C0C061755
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 01:53:23 -0700 (PDT)
-Received: by mail-wr1-x443.google.com with SMTP id z15so1543315wrl.8
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 01:53:23 -0700 (PDT)
+        with ESMTP id S1728145AbgGOIzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 04:55:23 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A78C061755
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 01:55:22 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id o11so1541001wrv.9
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 01:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=280SL71BP2Q/2LtgRR5FbmjddmjGS3wgfE2Hq3T9e58=;
-        b=DAJGCk2+oKFtdRkpastm9kEvtz5lbnFJshqVXcfgdSpZBFrZOjPsQ9pWFuYzRyx7oo
-         cZYNSnQdO0VtuxSH2tOGti4tWN9MKRkEh9HpA5HzLItIPS6It8hegWgQaNWOvSBIX2SP
-         kh8LnUV3jgFAc6/pgaBcx6sxVsFcL3K2KK28idqTZeKagjS2VRlDVVDq9mqaEuRP4a3l
-         SV8fXYnNM1ruFBXvBm6CvHtm4ujbzvcMN9TX+fB/VNzZiGuQG+B141ZVWK5yIGBA+urb
-         M5dzqhfLcUzOrW+m3+XF7saOoIPFTqLxrURN9jtXmttIFShtl0sK5mJlW48NAhy8vbpN
-         xOtg==
+        bh=x3qbhL/jvswSQofI0ftKaAdocaoR/VGu7yyWnQe7lac=;
+        b=E/uStrwCkNTe0EYMKBGFhjsHv9WlHz4KIkR5JrjovVGzjN702RQU5Uv4KbtRkDJgIU
+         03uM5hURqI7D6GUU9VDbptJ6rCqKTYEl+LKrg2xX0haknsi0xIGpJGUDmw619j+4BFak
+         u8A00hqxTWuzI7aUYTNW/r9kOMg3gS2uWPIl7d8IBJc9CT9+8M+DfnCnkHuXh+v2sw7s
+         sYEVKPj5z8cVHKhCC+x0LtA+bs5u8Ue/bm7hDkoUu6ZnnLMPLMZJ8CROqb4HDpFQBNbg
+         6qxXKhzK5LPh1/cPXw6fwPC5whyY4CVXarDZq9Uk5LwsMznNGEwoYGRYQE5J62CUqrVA
+         f4wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=280SL71BP2Q/2LtgRR5FbmjddmjGS3wgfE2Hq3T9e58=;
-        b=OXLchVUUUyzZZ4P2jzl/YFAxDXYcaAKJ9mVOy0pryd1Qby90g5wOEGVPZW5l/cGhmV
-         2HVzc/69LLNgqdPmOqVFWpjTdyMsXTDCJC+GcJubrw9OJNnp7YlHTg1llJ+JUSPzpYBp
-         WDPzLj9kg/2rIZvWCO3rwHL6Y3t2rMvh7idgvTS7xU4op/zNv7NjoA9qYQ5Oz2MYuS2J
-         swRCXHRbEAIhbe7oY2bnOtNGRREZgV5ema8Wk1Tpr7H9DJob/fFoH7yciUDBYyf2NILy
-         UU8+hA7FywF9WZ4GHbiqAZl3XawUrkRpylQf4mmO+nU6PxMq6DN8haYDCtxqbr5mI53F
-         Q9XA==
-X-Gm-Message-State: AOAM5308uZggm4uFuGAOI7Lfgu8rn/bral5FF768h3jE35bWGLqJNJuX
-        LwVtt+K23X0/YLuaPQVQFzY=
-X-Google-Smtp-Source: ABdhPJwzNRO8Yct4Kt4FZ9xLVvP24bkXeDY8W3V51K54Pd0d1jfr55T/aZTMr14mXMrXVG7zI5ewFg==
-X-Received: by 2002:a5d:60d0:: with SMTP id x16mr10408718wrt.5.1594803202460;
-        Wed, 15 Jul 2020 01:53:22 -0700 (PDT)
+        bh=x3qbhL/jvswSQofI0ftKaAdocaoR/VGu7yyWnQe7lac=;
+        b=d41fD2YPjHMEnvFVAjfAszgmU75wywTq/qAGnKbXY3MrUpvBdoT1K9ZGKgswu1amxC
+         pqbDo+CRvowhjkqJQ53V/Bd4AppoloGfmzgjV2qwTYvBB3UxSmsYXaAVZFw21eciTB0E
+         EyLvRZ/oaALbfG6hFIjUyL0F4aX6RumrheF3//9ZDrQNnShgG2X0+jWw/ra2eSsDlngr
+         9CfF6KCOSfzz2Jhq60gYDk+exyYFQmFUE/cLE76zUDrRJ2V76xDVDeTrBWczSpswSvxD
+         gWrifqygKCvBmtFjnKmA9zuWFdF6Vc3Yht2U82ASZAJVzyobusykH4DRjrb241VbElEe
+         LSog==
+X-Gm-Message-State: AOAM5336EMrjBFUYKHGjWomui00z6xB1JeVrtdU6zpcwqB2DbM1l1mJz
+        hVXQOsTtf/AhCrtc2Ata3SKW18vE
+X-Google-Smtp-Source: ABdhPJydh4Hyx/qsMWRz6F+XmxW4fAvCLSWHXg7RA3ZWF/bmABzGIJy5ZABXxzG95Uh7LYH62VLHTg==
+X-Received: by 2002:adf:c551:: with SMTP id s17mr9825225wrf.330.1594803321496;
+        Wed, 15 Jul 2020 01:55:21 -0700 (PDT)
 Received: from [192.168.1.240] (130.20.198.146.dyn.plus.net. [146.198.20.130])
-        by smtp.gmail.com with ESMTPSA id f17sm2545680wme.14.2020.07.15.01.53.21
+        by smtp.gmail.com with ESMTPSA id l1sm2792913wrb.12.2020.07.15.01.55.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jul 2020 01:53:21 -0700 (PDT)
+        Wed, 15 Jul 2020 01:55:20 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC] should `git rebase --keep-base` imply
- `--reapply-cherry-picks` ?
-To:     Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     phillip.wood@dunelm.org.uk,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Elijah Newren <newren@gmail.com>
-References: <0EA8C067-5805-40A7-857A-55C2633B8570@gmail.com>
- <20200714031017.GA15143@generichostname>
- <9c6dff59-b204-1ace-e0aa-0885dd502214@gmail.com>
- <nycvar.QRO.7.76.6.2007142236060.52@tvgsbejvaqbjf.bet>
- <20200715032014.GA10818@generichostname>
+Subject: Re: [PATCH v6 0/5] fixup ra/rebase-i-more-options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20200407141125.30872-1-phillip.wood123@gmail.com>
+ <20200713101045.27335-1-phillip.wood123@gmail.com>
+ <xmqqo8ojo2ml.fsf@gitster.c.googlers.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <87889c7b-b83a-8969-e40a-9bb19b7c11ae@gmail.com>
-Date:   Wed, 15 Jul 2020 09:53:20 +0100
+Message-ID: <e0cfe987-1b47-6b5e-b4e9-10223b73fe22@gmail.com>
+Date:   Wed, 15 Jul 2020 09:55:19 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200715032014.GA10818@generichostname>
+In-Reply-To: <xmqqo8ojo2ml.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all
-
-On 15/07/2020 04:20, Denton Liu wrote:
-> Hi all,
+On 13/07/2020 16:28, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> On Tue, Jul 14, 2020 at 10:38:23PM +0200, Johannes Schindelin wrote:
->>> To me the question is why are we looking at the upstream commits at all
->>> with `--keep-base`? I had expected `rebase --keep-base` to be the same
->>> as `rebase $(git merge-base [--fork-point] @{upstream} HEAD)` but
->>> looking at the code it seems to be `rebase --onto $(git merge-base
->>> @{upstream} HEAD) @{upstream}`. I didn't really follow the development
->>> of this feature - is there a reason we don't just use the merge-base as
->>> the upstream commit?
-> 
-> It behaves this way mostly for unimportant reasons. The first is that my
-> workflow before implementing this feature invoked running
-> `git rebase --onto master... master` and I wanted to replicate that.
-> 
-> More importantly, one feature of using the upstream I considered is
-> documented in t3431. Essentially, if we have the following graph,
-> 
-> 	A---B---D---E    (master)
-> 	     \
-> 	      C*---F---G (side)
-> 	
-> 	C was formerly part of master but master was rewound to remove C
-> 
-> running `git rebase --keep-base --fork-point master` would drop C.
-> 
->> Those are interesting questions, indeed.
+>> Phillip Wood (2):
+>>    rebase -i: support --committer-date-is-author-date
+>>    rebase -i: support --ignore-date
 >>
->> And I dare to suspect that the answer is indeed: `--keep-base` really
->> should not only substitute `onto` but also `upstream` with the merge base.
+>> Rohit Ashiwal (3):
+>>    rebase -i: add --ignore-whitespace flag
+>>    sequencer: rename amend_author to author_to_free
+>>    rebase: add --reset-author-date
 > 
-> I would be open to changing the behaviour since the commit dropping
-> isn't really a feature that I use very often. However, I am worried
-> about pulling the rug out from other people if they use it since this is
-> a documented feature in git-rebase.txt.
+> Thanks for polishing them further.
+> 
+> Will queue; with help from others, this can be one of the early
+> topics to be merged after 2.28 gets tagged, hopefully?
 
-I think changing it to behave like
-
-   git rebase --onto $(git merge-base @{upstream} HEAD) \
-                     $(git merge-base --fork-point @{upstream} HEAD)
-
-when --fork-point is given would keep the existing behavior of dropping 
-commits when @{upstream} has been rewound without dropping cherry-picks. 
---fork-point seems less useful when combined with --keep-base than when 
-used with a normal rebase as if @{upstream} has rewritten the commit 
-that the branch is based on rather than just dropping it we end up 
-dropping the original commit without getting the new version from 
-upstream as we would with a normal rebase. This could be surprising to 
-users if we keep --fork-point on by default with --keep-base.
+Yes I hope so, I'm not aware of any outstanding issues (lets see if the 
+reviewers agree)
 
 Best Wishes
 
 Phillip
 
-> 
-> Thanks,
-> Denton
-> 
->> Ciao,
->> Dscho
