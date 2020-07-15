@@ -2,163 +2,166 @@ Return-Path: <SRS0=3l3d=A2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5C9CC433E1
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2556EC433DF
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:43:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A52782065F
-	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:42:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 020612065F
+	for <git@archiver.kernel.org>; Wed, 15 Jul 2020 18:43:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TyDw/szD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="biYsfjjy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726977AbgGOSmC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jul 2020 14:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34050 "EHLO
+        id S1726776AbgGOSnq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jul 2020 14:43:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbgGOSmC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jul 2020 14:42:02 -0400
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D452C061755
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:42:02 -0700 (PDT)
-Received: by mail-pj1-x1041.google.com with SMTP id ch3so3494636pjb.5
-        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:42:02 -0700 (PDT)
+        with ESMTP id S1726465AbgGOSnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jul 2020 14:43:45 -0400
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C7FC061755
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:43:45 -0700 (PDT)
+Received: by mail-qk1-x742.google.com with SMTP id r22so2781950qke.13
+        for <git@vger.kernel.org>; Wed, 15 Jul 2020 11:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :in-reply-to;
-        bh=lLH/diCRhS6Apsm0Sirvsykxl4iin4XCU46kCYSk+Mw=;
-        b=TyDw/szDJsWqV/fwG+LI4yEBf0gmtHzcryQ/glZaKNxxAt/qpauz3X0kQNbyYMBUY6
-         uV2FoMvLrnVBSsoX11c8LgCI80wOMBwS4sqVPSWp53PI2gxbY1zCDK+pf3TmY5YCV/It
-         v9L56q3yGW8aBrU9cc8Y6fiXjaW2JTSzbciFRRu0p3B7qgCVlgwiWXhCfr2VXpP6Cikj
-         bsxI7w70+4saTh6dTcrQXvQl3rto7DNgLzpsgyW6zJh3I6R6u0V8RJnI4ZiWXZYp78nS
-         VUbhN7q9rw0H6o692VttkFPYQRZUA8fjXyQUN4e9H2I0Z4nnljfsLa5urOQsC16/q7Z3
-         3BdQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rZzUWVavBqR+JnnQtvz+MCt7pHjJX/zHoGIYLFtmFZg=;
+        b=biYsfjjyjihonDbxzoly/VFMjA4DTYSyith4w12smAILUK4nSHwjf1P1sK8yeS5ERs
+         wuYk7e7TRwOrmrEiRckCbdUxhXbusMMlEBa+KZod4ConPGlsfIXw8OGykRcYj6oVb2A1
+         UoDrsQEi884wgERUzQp561j22bCdoNDogXirrbYb8iqt+FJhlzoXeF7awZTZzIURJ74f
+         +J9v8+VlFji1ha8nMJ2980J0psBtLGWPyvJBSpIgOJkXErcnWEXkRfWPHVOYUT4ypltN
+         RkxJk6qDU4VWwWJ5RmJNojk3JMhufQdvjpJf6uIGAPx8rfNADZaxvlKIe5yuxnYnKtDV
+         K++w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:in-reply-to;
-        bh=lLH/diCRhS6Apsm0Sirvsykxl4iin4XCU46kCYSk+Mw=;
-        b=AFS8l86mV4sBTagDuJjptT9P/PUBhv8mgLpW4f6LZysu+vintrX8AeCiRiKDJJcnJg
-         GtfHH0K3iUiJtAM6K7AyzkAOMB4h4v/GridFAFOh5u1CJdc0NxI648fOP7H6OH24iiqz
-         PQ7IA8/bYI1zHi1Vqr8Xb+0fckif5Sfbjnc1OMBdGuwT+dWOfBoX5VNGblZ8uHDSv3Da
-         8pdS9t0XenKUznmU5zB3LqRnj8JNF1MK08/yyVt0wM6khZpH5YJvC4ABM/kYnvFLYywW
-         pdN+zBR5SeGEhst2qrL+PNVN6JR/fM+m4Daii16Vxqooht+RlYDvrQ9ZZm28PUmxhpYK
-         babA==
-X-Gm-Message-State: AOAM532AdysbIwvpUqNSipOtoikhx2gRJSZ9Cnv/GcZsluebaAAWacm0
-        SOOOIl14Ry3YLB9DIZLXYfkIEmGTF9U=
-X-Google-Smtp-Source: ABdhPJxATJid9ChZ3OdvSli2x6gqLW9aPPPeTwifhxTKA2jvShlL5tGXKiro61uvVHtPYJ49VdLYhg==
-X-Received: by 2002:a17:902:c252:: with SMTP id 18mr661892plg.39.1594838521415;
-        Wed, 15 Jul 2020 11:42:01 -0700 (PDT)
-Received: from konoha ([45.127.46.26])
-        by smtp.gmail.com with ESMTPSA id cl17sm2703016pjb.50.2020.07.15.11.41.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2020 11:42:00 -0700 (PDT)
-Date:   Thu, 16 Jul 2020 00:11:53 +0530
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     shouryashukla.oo@gmail.com
-Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, kaartic.sivaraam@gmail.com,
-        liu.denton@gmail.com, pc44800@gmail.com, stefanbeller@gmail.com
-Subject: Re: [PATCH 4/4] submodule: port submodule subcommand 'summary' from
- shell to C
-Message-ID: <20200715184153.GA52607@konoha>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rZzUWVavBqR+JnnQtvz+MCt7pHjJX/zHoGIYLFtmFZg=;
+        b=s4SlVAA/lEuMzgpJmx4ITIy1TmtQRdpO8eWK78u8Ty42//SyC/yTk0lkNbaL6WrOu0
+         2U6xfJoTS8GyPSaZRbTybuoKbvAtNPA4ARRuuSVjlkEwYehFrjw0W8RMFMIH8UFO8BzK
+         cOvXkM0+nenRyxc9JPlRy2Mj4Ga+wtgnWjPUs4Q9C5AIhJr6gwBkeRCYJcMN6CrTsK8h
+         eAweKsIiE8XeawyU+6f6ojFIYw7cp0MJY1VmduEQn9n1cuwrZvFGAdUp8jOt7QjjycjK
+         meLw535GL6zs4oOuFt3LleRAS0s68/cOP4NAAmJhxFudDWjTJ738evHXKbD3twC+WmbA
+         Rl+w==
+X-Gm-Message-State: AOAM5320myCQAPGzB7OfSQeBr5F5j8oxxYjrhs01ZhV+jT8z04IxCdy8
+        Dw40rDIXv7Bx717wmVMLNMKmhftiXzI=
+X-Google-Smtp-Source: ABdhPJz2+zJG4th+CmBEyL1AR5OlYgWDXhL3jQ6hQ3Rm6qAwQQemE74Nk5cOexoJEvfVrfRp+g/ecA==
+X-Received: by 2002:a05:620a:7d6:: with SMTP id 22mr433180qkb.311.1594838624423;
+        Wed, 15 Jul 2020 11:43:44 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id z18sm4120995qta.51.2020.07.15.11.43.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jul 2020 11:43:43 -0700 (PDT)
+Subject: Re: [PATCH] commit-graph: fix "Collecting commits from input"
+ progress line
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, dstolee@microsoft.com,
+        peff@peff.net, git@vger.kernel.org
+References: <56403dd377b996d21a4da1e01ffd6e691ac120bd.1589407014.git.me@ttaylorr.com>
+ <20200710190238.16376-1-szeder.dev@gmail.com>
+ <20200715183347.GH11341@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d343c802-bb5a-5bad-5914-5cbcd50b80e5@gmail.com>
+Date:   Wed, 15 Jul 2020 14:43:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200715145336.GA18071@konoha>
+In-Reply-To: <20200715183347.GH11341@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ignore the above mail I sent, I am a big dimwit. I have tried to do this
-and this works
+On 7/15/2020 2:33 PM, SZEDER Gábor wrote:
+> Junio,
+> 
+> it looks like this patch hasn't been picked up, but it fixes a minor
+> bug introduced in this release cycle.
 
----------------8<--------------
-module_summary() {
-struct object_id head;
-....
-....
-if (!get_oid(argc ? argv[0] : "HEAD", &head_oid)) {
-		if (argc) {
-			argv++;
-			argc--;
-		}
-	} else if (!argc || !strcmp(argv[0], "HEAD")) {
-		/* before the first commit: compare with an empty tree */
-		oidcpy(&head_oid, the_hash_algo->empty_tree);
-		if (argc) {
-			argv++;
-			argc--;
-		}
-	} else {
-		get_oid("HEAD", &head_oid);
-	}
-....
-....
-ret = compute_summary_module_list((diff_cmd == DIFF_FILES) ? NULL : &head_oid,
-					   &info, diff_cmd);
-	return ret;
-}
+Thanks for the ping. I forgot to chime in with my :+1: on
+this patch. Outside of the small typo in the commit message,
+this is ready to ship.
 
-compute_summary_module_list() {
-....
-....
-if (head_oid)
-		argv_array_push(&diff_args, oid_to_hex(head_oid));
-....
-....
-}
---------------->8--------------
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
 
-Obviousy I was making the grave mistake of declaring the aforementioned
-struct as 'struct object_id *' which caused all these weird errors.
+> On Fri, Jul 10, 2020 at 09:02:38PM +0200, SZEDER Gábor wrote:
+>> To display a progress line while reading commits from standard input
+>> and looking them up, 5b6653e523 (builtin/commit-graph.c: dereference
+>> tags in builtin, 2020-05-13) should have added a pair of
+>> start_delayed_progress() and stop_progress() calls around the loop
+>> reading stdin.  Alas, the stop_progress() call ended up at the wrong
+>> place, after write_commit_graph(), which does all the commit-graph
+>> computation and writing, and has several progress lines of its own.
+>> Consequintly, that new
 
-All tests pass now.
+s/Consequintly/Consequently/
 
-BTW in your review of my patch,
-https://lore.kernel.org/git/nycvar.QRO.7.76.6.2007031712160.50@tvgsbejvaqbjf.bet/
-you said this:
---------------->8--------------
-> +			 */
-> +			struct child_process cp_rev_parse = CHILD_PROCESS_INIT;
-> +			struct strbuf sb_rev_parse = STRBUF_INIT;
-> +
-> +			cp_rev_parse.git_cmd = 1;
-> +			cp_rev_parse.no_stderr = 1;
-> +			cp_rev_parse.dir = p->sm_path;
-> +			prepare_submodule_repo_env(&cp_rev_parse.env_array);
-> +
-> +			argv_array_pushl(&cp_rev_parse.args, "rev-parse",
-> +					 "HEAD", NULL);
-> +			if (!capture_command(&cp_rev_parse, &sb_rev_parse, 0)) {
-> +				strbuf_strip_suffix(&sb_rev_parse, "\n");
-> +				get_oid_hex(sb_rev_parse.buf, &p->oid_dst);
-> +			}
-> +			strbuf_release(&sb_rev_parse);
-> +		} else if (S_ISLNK(p->mod_dst) || S_ISREG(p->mod_dst)) {
-> +			struct child_process cp_hash_object = CHILD_PROCESS_INIT;
-> +			struct strbuf sb_hash_object = STRBUF_INIT;
-> +
-> +			cp_hash_object.git_cmd = 1;
-> +			argv_array_pushl(&cp_hash_object.args, "hash-object",
-> +					 p->sm_path, NULL);
-> +			if (!capture_command(&cp_hash_object,
-> +					     &sb_hash_object, 0)) {
-> +				strbuf_strip_suffix(&sb_hash_object, "\n");
-> +				get_oid_hex(sb_hash_object.buf, &p->oid_dst);
-> +			}
-> +			strbuf_release(&sb_hash_object);
+>>
+>>   Collecting commits from input: 1234
+>>
+>> progress line is overwritten by the first progress line shown by
+>> write_commit_graph(), and its final "done" line is shown last, after
+>> everything is finished:
+>>
+>>   $ { sleep 3 ; git rev-list -3 HEAD ; sleep 1 ; } | ~/src/git/git commit-graph write --stdin-commits
+>>   Expanding reachable commits in commit graph: 873402, done.
+>>   Writing out commit graph in 4 passes: 100% (3493608/3493608), done.
+>>   Collecting commits from input: 3, done.
+>>
+>> Furthermore, that stop_progress() call was added after the 'cleanup'
+>> label, where that loop reading stdin jumps in case of an error.  In
+>> case of invalid input this then results in the "done" line shown after
+>> the error message:
+>>
+>>   $ { sleep 3 ; git rev-list -3 HEAD ; echo junk ; } | ~/src/git/git commit-graph write --stdin-commits
+>>   error: unexpected non-hex object ID: junk
+>>   Collecting commits from input: 3, done.
+>>
+>> Move that stop_progress() call to the right place.
+>>
+>> While at it, drop the unnecessary 'if (progress)' condition protecting
+>> the stop_progress() call, because that function is prepared to handle
+>> a NULL progress struct.
+>>
+>> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+>> ---
+>>  builtin/commit-graph.c | 4 +---
+>>  1 file changed, 1 insertion(+), 3 deletions(-)
+>>
+>> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+>> index 75455da138..796954da60 100644
+>> --- a/builtin/commit-graph.c
+>> +++ b/builtin/commit-graph.c
+>> @@ -251,7 +251,7 @@ static int graph_write(int argc, const char **argv)
+>>  			}
+>>  		}
+>>  
+>> -
+>> +		stop_progress(&progress);
+>>  	}
+>>  
+>>  	if (write_commit_graph(odb,
+>> @@ -264,8 +264,6 @@ static int graph_write(int argc, const char **argv)
+>>  cleanup:
+>>  	string_list_clear(&pack_indexes, 0);
+>>  	strbuf_release(&buf);
+>> -	if (progress)
+>> -		stop_progress(&progress);
+>>  	return result;
+>>  }
+>>  
+>> -- 
+>> 2.27.0.547.g4ba2d26563
+>>
 
-It would probably be shorter, less error-prone, and quicker to use
-`index_fd()` directly.
---------------->8--------------
-
-What exactly did you mean here and where should the index_fd() be used?
-
-Regards,
-Shourya Shukla
