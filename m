@@ -3,157 +3,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C723C433FE
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7883CC433E1
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:24:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5302E2070E
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:10:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AD3C20760
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:24:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ptw3P7kn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bxvI3lGw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728236AbgGPXKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 19:10:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727930AbgGPXJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 19:09:19 -0400
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com [IPv6:2607:f8b0:4864:20::1044])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B03DEC08C5DF
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 15:37:24 -0700 (PDT)
-Received: by mail-pj1-x1044.google.com with SMTP id f16so5383513pjt.0
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 15:37:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Yvr3p9+7J1C4EGlQ5Qy+ZXAYo0ocyOOgzFavkyRFGnM=;
-        b=ptw3P7knT/WFIBy73Ct/wqQQgSCThGrDO8PQkIZ/Kw55MLlY++UIGabqr1nN5nksRi
-         ZoSSe/Bgsm6d/5pqase0wOmxPkaZTU6o0HVq4KzIIcoQIh8SA6VHh8H84kq5hLBAZabP
-         1xjB6exOlc+fBacYntK5Hidv4qbDh9A5+Ae1bFfn95uAvVHz4hDljDhbLNE+UOggfhoS
-         qeFM9sXD2w84P2Mpho1Sw/d1BNgvtEctuCYhUgv2pLP5gLHdTrQsNLJXy8jEx77AKgut
-         eQHMJ40fv+bHF1LUBJdZsnww3ukDOumFMXtZ22iLSmdDFhDtWG3q/bi8DXDjSHVAyyZI
-         lXag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Yvr3p9+7J1C4EGlQ5Qy+ZXAYo0ocyOOgzFavkyRFGnM=;
-        b=Eebw2GfDRV+sg3k8ibyJqVuwLANeQALs9RgFgKzsqFx2GQ0/fncSpc0lLnutzXk2E+
-         lCFW1qGL3GMPgStf0KEtJXqExC0uNhlz8/Fdw0//3mhD18oO8H5irlOTe9OS7fHoI/ky
-         lkthIc+JuAc1HWiW8syO8+ZmAqcgyVT/Y/JSTP63KU9SjMsE3zjVpov8jbQOD70+knlG
-         P2zsrcdsYmJwKA0zVjaeLy4qwbcm8oTwpt1DGWWU8VrzUVQp63JTEpK6o726uzNn6iMR
-         EkkUBjXEF7c14uYd+PRlVGKbexZ4kJK74cfYpmrUFOPonF1YkBz2GenHp5QCX/0hism0
-         7Vlw==
-X-Gm-Message-State: AOAM532cJ6J00hVeuPzbhwwdRAmy+lhytVSBHXwS7ht6GVefc9zIpkHB
-        QBA3fwV/Mgk8ho5HT5luiS8=
-X-Google-Smtp-Source: ABdhPJx9m0k6q8/jiMUKQdT9YiGyfqcpclBvKLy8glWNmZoOmPoBuOslOdsKozU306gITwohQK1vqQ==
-X-Received: by 2002:a17:90b:388d:: with SMTP id mu13mr6655178pjb.187.1594939044032;
-        Thu, 16 Jul 2020 15:37:24 -0700 (PDT)
-Received: from gmail.com (135.84.247.35.bc.googleusercontent.com. [35.247.84.135])
-        by smtp.gmail.com with ESMTPSA id y8sm897907pju.49.2020.07.16.15.37.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 15:37:22 -0700 (PDT)
-Date:   Thu, 16 Jul 2020 15:37:19 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, delphij@google.com,
-        Huan Huan Chen <huanhuanchen@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 2/2] repository: allow repository format upgrade with
- extensions
-Message-ID: <20200716223719.GA899@gmail.com>
-References: <pull.675.git.1594677321039.gitgitgadget@gmail.com>
- <0bede821-139a-d805-934a-142004abaa4c@gmail.com>
- <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet>
- <xmqqzh82ktgm.fsf@gitster.c.googlers.com>
- <xmqqpn8wkben.fsf@gitster.c.googlers.com>
- <20200716062054.GA3242764@google.com>
- <20200716062818.GC3242764@google.com>
- <xmqqh7u8hrka.fsf@gitster.c.googlers.com>
- <20200716110007.GD376357@coredump.intra.peff.net>
- <xmqqd04vigpy.fsf@gitster.c.googlers.com>
+        id S1726828AbgGPXYF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 19:24:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50410 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726113AbgGPXYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 19:24:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E6E18E9229;
+        Thu, 16 Jul 2020 18:27:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RMhkZhqgXbNDuoPI1DeRhVA/5eg=; b=bxvI3l
+        Gw4orN8AXYebrJR3pgFhMX+WiSsOVcIHaF63Ka6/llx8PATVbx0ViPtTP9q9RUsn
+        DXM1Duhrvgn/hpW5jmG4lycABM8pXlXQvyfJbdvLh5aZ7Pj2E7IRL43ZPSwgH+/P
+        Hl6AHwHyjuhTQ4LH8T/XiY3e9O4OSgdhAmNYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Kjp+HROmXXpOIwtCx2zH3540KNoWCX1H
+        FuJdcG+q11jKWWvXbHvAT75mlwSkfHLkdAYDwRajIfcyiunnZT3cT91rCZLflx2e
+        DHTahaV9UJ6NzxV0HOcxRhs0ST91yPtxHg1cwBPdxMpn28ppUJX98nNlxsczjMqD
+        ig1pZJd+fcY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DFC90E9228;
+        Thu, 16 Jul 2020 18:27:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AAD3E9227;
+        Thu, 16 Jul 2020 18:27:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Compressing packed-refs
+References: <20200716221026.dgduvxful32gkhwy@chatter.i7.local>
+Date:   Thu, 16 Jul 2020 15:27:15 -0700
+In-Reply-To: <20200716221026.dgduvxful32gkhwy@chatter.i7.local> (Konstantin
+        Ryabitsev's message of "Thu, 16 Jul 2020 18:10:26 -0400")
+Message-ID: <xmqqsgdrf64c.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqd04vigpy.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 81608F9A-C7B3-11EA-BA36-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(replying from vacation; back tomorrow)
-Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
->> Yeah, I agree with this line of reasoning. I'd prefer to see it
->> addressed now, so that we don't have to remember to do anything later.
->
-> Very true.  Also the documentation may need some updating,
-> e.g. "These 4 extensions are honored without adding
-> repositoryFormatVersion to your repository (as special cases)" to
-> avoid further confusion e.g. "why doesn't my objectFormat=SHA-3 does
-> not take effect by itself?".
+> I know repos with too many refs is a corner-case for most people, but 
+> it's looming large in my world, so I'm wondering if it makes sense to 
+> compress the packed-refs file when "git pack-refs" is performed?
 
-Yes, I agree, especially about documentation.
+I think the reftable is the longer term direction, but let's see if
+there is easy enough optimization opportunity that we can afford the
+development and maintenance cost for the short term.
 
-For 2.29, I would like to do or see the following:
+My .git/packed-refs file begins like so:
 
-- defining the list of repository format v0 supported extensions as
-  "these and no more", futureproofing along the lines suggested in
-  Peff's patch.  I like the general approach taken there since it
-  allows parsing the relevant config in a single pass, so I think
-  it basically takes the right approach.  (That said, it might be
-  possible to simplify a bit with further changes, e.g. by using the
-  configset API.)
+    # pack-refs with: peeled fully-peeled sorted 
+    c3808ca6982b0ad7ee9b87eca9b50b9a24ec08b0 refs/heads/maint-2.10
+    3b9e3c2cede15057af3ff8076c45ad5f33829436 refs/heads/maint-2.11
+    584f8975d2d9530a34bd0b936ae774f82fe30fed refs/heads/master
+    2cccc8116438182c988c7f26d9559a1c22e78f1c refs/heads/next
+    8300349bc1f0a0e2623d5824266bd72c1f4b5f24 refs/notes/commits
+    ...
 
-  When doing this for real, we'd want to document the set of
-  supported extensions.  That is especially useful to independent
-  implementers wanting to support Git's formats, since it tells
-  them "this is the minimum set of extensions that you must
-  either handle or error out cleanly on to maintain compatibility
-  with Git's repository format v0".
- 
-- improving the behavior when an extension not supported in v0 is
-  encountered in a v0 repository.  For extensions that are supported
-  in v1 and not v0, we should presumably error out so the user can
-  repair the repository, and we can put the "noop" extension in that
-  category for the sake of easy testing.  We can also include a check
-  in "git fsck" for repositories that request the undefined behavior
-  of v0 repositories with non-v0 extensions, for faster diagnosis.
+A few observations that can lead to easy design elements are
 
-  What about unrecognized extensions that are potentially extensions
-  yet to be defined?  Should these be silently ignored to match the
-  historical behavior, or should we error out even in repository
-  format v0?  I lean toward the latter; we'll need to be cautious,
-  though, e.g. by making this a separate patch so we can easily tweak
-  it if this ends up being disruptive in some unanticipated way.
+ - Typically more than half of each records is consumed by the
+   object name that is hard to "compress".
 
-- making "git init" use repository format v1 by default.  It's been
-  long enough that users can count on Git implementations supporting
-  it.  This way, users are less likely to run into v0+extensions
-  confusion, just because users are less likely to be using v0.
+ - The file is sorted, so it could use the prefix compression like
+   we do in the v4 index files.
 
-Does that sound like a good plan to others?  If so, are there any
-steps beyond the two first patches in jn/v0-with-extensions-fix that
-we would want in order to prepare for it in 2.28?
+So perhaps a new format could be
 
-My preference would be to move forward in 2.28 with the first two
-patches in that topic branch (i.e., *not* the third yet), since they
-don't produce any user facing behavior that would create danger for
-users or clash with this plan.  Today, the only extensions we
-recognize are in that set of extensions that we'll want to continue to
-recognize in v0 (except possibly the for-testing extension "noop").
-The steps to take with additional extensions are more subtle so it
-seems reasonable for them to bake in "next" and then "master" for a
-2.29 release.
+ - The header "# pack-refs with: " lists a new trait, "compressed";
 
-Thanks,
-Jonathan
+ - Object names will be expressed in binary, saving 20 bytes per a
+   record;
+
+ - Prefix compression of the refnames similar to v4 index would save
+   a bit more.
+
+Storing binary object names would actually be favourable for
+performance, as the in-core data structure we use to store the
+result of parsing the file uses binary.
+
+
