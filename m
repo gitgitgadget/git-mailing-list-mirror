@@ -2,128 +2,166 @@ Return-Path: <SRS0=27Fn=A3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-20.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA10CC4345C
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03C1FC4345B
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:09:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9551F21473
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:09:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1594940997;
-	bh=LUTFknJkOzevTm7PS94PtC8DvagRnni5DMm5Ik/MwGc=;
-	h=Date:From:To:Subject:References:In-Reply-To:List-ID:From;
-	b=RdeFtcEVw1Dywh3FD2u8DO6TGJfNAZ1VcPezAxfqSmDSUoGXpXqb/X6I608qX5Hzh
-	 v5XHJZeRVDZwIn8jhKc+n/wY10hI5AqS/YAJdc2cMGXYznaT3vrZtOAnk5drymtmc4
-	 s5FRXCLTqS5AMJoiI9ouiK6fghNqJ3iHHrSDr+44=
+	by mail.kernel.org (Postfix) with ESMTP id C904721473
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 23:09:50 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WFgg0YAj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728140AbgGPXJw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 19:09:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43432 "EHLO
+        id S1728106AbgGPXJn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 19:09:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728017AbgGPXJV (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728023AbgGPXJV (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 16 Jul 2020 19:09:21 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4133FC08C5F8
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 15:54:33 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id o38so6286171qtf.6
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 15:54:33 -0700 (PDT)
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF78AC08C5FA
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 15:57:30 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id x184so6538898pgb.7
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 15:57:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WgBRR3pm35tdFsCADI3yASFfTxWdRB6jDOHUgepS+RU=;
-        b=DCiuGSDEuk+6qaprsQhd7vJ02jkUarpYtp+Ts07fC2V0muPQmOLYUIpDE1d6jvYy+y
-         kZBiWMB81d+RW0FxVyeiaHh81D0ZiE9EO1BUAbWHH5MNfmWRqOV8SBsz3Emz3Yvj2ng0
-         SaG4y8krLXct2pFmhKXG9ubWs9i58oQzVF25c=
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Fs1c5WQB4p6RwJfVn/AIkLelkurUnuytZ+pXECXTTUE=;
+        b=WFgg0YAjVM+hoyOKRAGq/iZg1ssYtDGSy4t1EMvMDATDTtk17QLixG2lSKck6p/iLh
+         vB1ofZ7pXV2cKEUDT8Ij2RjVR12okpkf/vDmaLV9f3h4Jw9qL06beZiCe2+zPCWxrNGt
+         qi5S0Y5fA0QYspcml+4CQrsOQ1O/AuwWvmeo9+WK9v2H4VSp+5kGR7MrCYg8YQLTQ/hz
+         wuNgYXwsndrHzcgmzj3H8X0ujiEXOuS+YcKsYMa6jmXTduSexvWIJyIsKiG/57c/yopQ
+         CvD1gCx06ZZSFUR37cDWn/aGfURPr1+48BJmNCqulniW4ScS/AEuDK/ix7KD+DObfX+l
+         TxDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=WgBRR3pm35tdFsCADI3yASFfTxWdRB6jDOHUgepS+RU=;
-        b=pgkpcAKrqHPu+vSEQjJOxfndcFlHRlJdKDsitGvgRWzMLErxaz8vBjy8qa1GWqSmPh
-         S0OdIyB9iD7RkdBbfuMQdT8DNYzlEGb7RIlTA8CJtTSnDUM1fwocFJK5vvvq/JDIA9lq
-         YweEvCoN5GwuTQiKPV27D00CWbSVGsZl/ljQFEMfaayZrHv0ksgkHKaP3TRMSp91RMxx
-         EeaBJa9FGFBl8vP1jdlEnW5r7w9QfCtFEzWJ9CsybjKH9doxsyliXqpqQ8L+GNaruSnm
-         +Y83DP5Sc1rTEvvvMcaQNjcCDSlf9qDZogWlT8lnW/N94K2u+i7oGtgl3BBFLk/ym12j
-         SzWQ==
-X-Gm-Message-State: AOAM531ziBXduT+3gbzti13yEwBz7oIXQ2bOAejkQIjLfU2E4nTW938X
-        00hOIc9aCnGWGH/JACMNv5hj5w==
-X-Google-Smtp-Source: ABdhPJzWXkwvQpn2dlKiH7iQUGxc0ZJV/thI5TzYBCvcrZyIqMWTQJDxVSbwhfvCI5ncD8mile1sDA==
-X-Received: by 2002:aed:279d:: with SMTP id a29mr8002837qtd.112.1594940072210;
-        Thu, 16 Jul 2020 15:54:32 -0700 (PDT)
-Received: from chatter.i7.local ([87.101.92.156])
-        by smtp.gmail.com with ESMTPSA id z68sm8506769qke.113.2020.07.16.15.54.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 15:54:31 -0700 (PDT)
-Date:   Thu, 16 Jul 2020 18:54:29 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Compressing packed-refs
-Message-ID: <20200716225429.i7pb6xorkwdsf5fn@chatter.i7.local>
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20200716221026.dgduvxful32gkhwy@chatter.i7.local>
- <xmqqsgdrf64c.fsf@gitster.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsgdrf64c.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Fs1c5WQB4p6RwJfVn/AIkLelkurUnuytZ+pXECXTTUE=;
+        b=q+kFravzfCR893GI/QFE1FJWl5q6gUZpXh5Y/XEtClDg2UWNKkcPuBBQDm+Hc5spzB
+         KpQaK1fDgg5pxgTF7kAdz5Vw0EOuOodPeAObavcN/sIpqgM1Mqbku7hbCjD7cPqyDqQ5
+         pQkDKso0kJaV06fgaVsztHaZX11ztZsMYQw3vxfT0tae26ab4C7PDBUPmHrUokEvxY8/
+         d5jxnj5kNyAoxcEW2m/Em/0+AEfDp+tie6SbLe2Jku1mo7f1OQkQpcFrmtsW5WfgKvhE
+         iyaw8tYs2KAWlMl2Zrj/Ln3bTXDnCKjb+DmQ5uySXoTv2cU4HfFXqhxx6Q0jpJpmo3zk
+         GOgw==
+X-Gm-Message-State: AOAM533xxhTuTFtfqBgxeY0pr1MPaB0nIU90g5IgX/NyLVlaF3cOx4Eu
+        BdmRN+RAfgpHJTBhqJup3uOKF1LQMwQtl+K/z2AV+XWySgBTiiwYgQWgTq6C90h0KZzGAAeY4MP
+        zO3I+whtPa5q/Mrfu2+7Dvc98ppAt6E4ywKOekiPuwhurdutDYEBL9/rUVnQyLD1mIQbXJggrlP
+        n/
+X-Google-Smtp-Source: ABdhPJyVrW9B8qWgOk1B+ttgnUYmrdudcSPweonn6b5Rh+mezbRrWBsKu8uihvzXTVNSuBHF4KvClJpFBUSfxIKOMCvl
+X-Received: by 2002:a17:90a:ff09:: with SMTP id ce9mr6602948pjb.149.1594940249678;
+ Thu, 16 Jul 2020 15:57:29 -0700 (PDT)
+Date:   Thu, 16 Jul 2020 15:57:25 -0700
+In-Reply-To: <92b218ca-f2b4-db9d-9f9c-1d071ea4fa97@gmail.com>
+Message-Id: <20200716225725.4143039-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <92b218ca-f2b4-db9d-9f9c-1d071ea4fa97@gmail.com>
+X-Mailer: git-send-email 2.28.0.rc0.105.gf9edc3c819-goog
+Subject: [FYI] commit-graph: trace expiry of commit graph links
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 16, 2020 at 03:27:15PM -0700, Junio C Hamano wrote:
-> I think the reftable is the longer term direction, but let's see if
-> there is easy enough optimization opportunity that we can afford the
-> development and maintenance cost for the short term.
-> 
-> My .git/packed-refs file begins like so:
-> 
->     # pack-refs with: peeled fully-peeled sorted 
->     c3808ca6982b0ad7ee9b87eca9b50b9a24ec08b0 refs/heads/maint-2.10
->     3b9e3c2cede15057af3ff8076c45ad5f33829436 refs/heads/maint-2.11
->     584f8975d2d9530a34bd0b936ae774f82fe30fed refs/heads/master
->     2cccc8116438182c988c7f26d9559a1c22e78f1c refs/heads/next
->     8300349bc1f0a0e2623d5824266bd72c1f4b5f24 refs/notes/commits
->     ...
+When an obsolete link in the commit graph chain is deleted, and trace2
+is enabled, trace a message that it is deleted, along with the list of
+links before and after the current chain refresh.
 
-Let me offer a more special-case (but not crazy) example from 
-git.kernel.org. The newer version of grokmirror that I'm working on is 
-built to take advantage of the pack-islands feature that was added a 
-while back. We fetch all linux forks into a single "object storage" 
-repo, with each fork going into its own 
-refs/virtual/[uniquename]/(heads|tags) place. This means there's lots of 
-duplicates in packed-refs, as all the tags from torvalds/linux.git will 
-end up duplicated in almost every fork.
+The messages are emitted using trace2_data_string() and not
+trace2_printf() because the latter is not implemented for some trace
+targets.
 
-So, after running git pack-refs --all, the packed-refs file is 50-ish MB 
-in size, with a lot of same stuff like:
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+This patch is just for informational purposes for people who have the
+same problem and/or want to help diagnose.
 
-5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/virtual/00018460b026/tags/v2.6.11
-^c39ae07f393806ccf406ef966e9a15afc43cc36a
-...
-5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/virtual/00bcef8138af/tags/v2.6.11
-^c39ae07f393806ccf406ef966e9a15afc43cc36a
+I've tested that this produces the expected trace2 messages using:
 
-etc, duplicated 600 times with each fork. It compresses decently well 
-with gzip -9, and *amazingly* well with xz -9:
+  git commit-graph write --reachable --split=replace
 
-$ ls -ahl packed-refs
--rw-r--r--. 1 mirror mirror 46M Jul 16 22:37 packed-refs
-$ ls -ahl packed-refs.gz
--rw-r--r--. 1 mirror mirror 19M Jul 16 22:47 packed-refs.gz
-$ ls -ahl packed-refs.xz
--rw-r--r--. 1 mirror mirror 2.3M Jul 16 22:47 packed-refs.xz
+> It is _possible_ that something like a case switch or a symlink
+> could be causing a problem here. That's where I would look on
+> the affected systems.
 
-Which really just indicates how much duplicated data is in that file. If 
-reftables will eventually replace refs entirely, then we probably 
-shouldn't expend too much effort super-optimizing it, especially if I'm 
-one of the very few people who would benefit from it. However, I'm 
-curious if a different sorting strategy would help remove most of the 
-duplication without requiring too much engineering time.
+Indeed a symlink is present - the affected repositories are using the
+git-repo [1] local mirror feature, which causes .git/objects (among
+other things) to be a symlink - but I couldn't figure out how this
+symlink would cause problems. In particular, looking at the code, all
+relevant filenames seem to be constructed from ctx->odb->path, so no
+matter which names were used to get to the object directory, all names
+are built from those names, and this seems to be true in practice as
+well.
 
--K
+So I've added some trace2 messages (in this patch), and let's see if I
+can figure out what's going on. I'll write back if I find something.
+
+[1] https://gerrit.googlesource.com/git-repo
+---
+ commit-graph.c | 33 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 328ab06fd4..b5bd2ac6de 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2009,6 +2009,7 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 	struct dirent *de;
+ 	size_t dirnamelen;
+ 	timestamp_t expire_time = time(NULL);
++	int commit_graph_deleted = 0;
+ 
+ 	if (ctx->split_opts && ctx->split_opts->expire_time)
+ 		expire_time = ctx->split_opts->expire_time;
+@@ -2050,8 +2051,38 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 			}
+ 		}
+ 
+-		if (!found)
++		if (!found) {
++			if (trace2_is_enabled()) {
++				struct strbuf message = STRBUF_INIT;
++
++				strbuf_addf(&message, "Deleting '%s' because it is not in [", path.buf);
++				for (i = 0; i < ctx->num_commit_graphs_after; i++) {
++					if (i != 0)
++						strbuf_addstr(&message, ", ");
++					strbuf_addf(&message, "'%s'", ctx->commit_graph_filenames_after[i]);
++				}
++				strbuf_addstr(&message, "]");
++				trace2_data_string("commit-graph", the_repository, "graph-deletion", message.buf);
++				strbuf_release(&message);
++				commit_graph_deleted = 1;
++			}
+ 			unlink(path.buf);
++		}
++	}
++
++	if (commit_graph_deleted) {
++		struct strbuf message = STRBUF_INIT;
++		uint32_t i;
++
++		strbuf_addstr(&message, "The commit graphs before were [");
++		for (i = 0; i < ctx->num_commit_graphs_before; i++) {
++			if (i != 0)
++				strbuf_addstr(&message, ", ");
++			strbuf_addf(&message, "'%s'", ctx->commit_graph_filenames_before[i]);
++		}
++		strbuf_addstr(&message, "]");
++		trace2_data_string("commit-graph", the_repository, "graph-before", message.buf);
++		strbuf_release(&message);
+ 	}
+ 
+ out:
+-- 
+2.28.0.rc0.105.gf9edc3c819-goog
+
