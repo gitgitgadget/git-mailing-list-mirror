@@ -6,74 +6,104 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 834ABC433E0
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BF04C433DF
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:49:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 501082071B
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:39:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C8842071B
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:49:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IjkpCaHi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aFf4Q5Au"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728721AbgGPRjQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 13:39:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50936 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728400AbgGPRjQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 13:39:16 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EBB3D7848E;
-        Thu, 16 Jul 2020 13:39:13 -0400 (EDT)
+        id S1728707AbgGPRtF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 13:49:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63785 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725867AbgGPRtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 13:49:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 331D1E773A;
+        Thu, 16 Jul 2020 13:49:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p5wnfMxnFKP/7jKgz6ZAF2jT+Mo=; b=IjkpCa
-        HiVoliYCLuud9ZYXz0x0FCdUVE8hgMuwV6X54Z7CmPB1g9yveSWXSC4cO1+XNbzH
-        k4mkRTgw4rl2UVDxAakA4expw7EPCmYcbEQda4oNg7Tw31yzGfLl3YwktZMmw6Yg
-        qAlfQrtw3lPtG1ONRoTQdRXKj3o4O+QLubhNk=
+        :content-type; s=sasl; bh=E1JcyCng/Jut+VGMXiUgztkIWyY=; b=aFf4Q5
+        Au7jiLbQf/UHwk8Vk1wmaEm7J+dtM62zB88qditYewD2g61YQZSU5v9B7LCjMVqQ
+        kjbHAWC5rqYJbL2hu3K4h3buoevvfXQzphx6CDzYZ/7doaZ7OHg0A7dVLgtAL7+V
+        YJ9Lgmq5wvAj8LAnTpJ4iz8DurxIEV1QcvbGk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dDRA9TN2ogWrDwnhz69OP+g76lbGWUr0
-        rOKZlDnomxRd5VAoWv4dwSsiqIS1BKt/QoGqvFUwxM+9jEOSGoYFCT3Vx8XkMGaR
-        3cxiV/sc8KSAx7Ols3G6kdUVAQqh/gMpqthxwAJ+hIw9KP6dGlvCg5N1FkXSa60P
-        Y14qW6KnI4w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E31797848D;
-        Thu, 16 Jul 2020 13:39:13 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=pAzgXLJilqOy2LVd84zuThqXgFo2orHs
+        6yQcYamsw3uO0CfL1UhQCdDYrWnM1VgDXOHBCZwYOMetFjoGKbbZnuKsCPyHdSvK
+        JKKdTYtnIHSOvroK1iILdFhgfMFLv5hjDvJ2T68BrtsvFAiao0BG5xlaNitSwH7/
+        MWJRVCoicrk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D3D7E7738;
+        Thu, 16 Jul 2020 13:49:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.231.104.69])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 59BBA7848C;
-        Thu, 16 Jul 2020 13:39:13 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 60EB3E7735;
+        Thu, 16 Jul 2020 13:49:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v7 0/5] cleanup ra/rebase-i-more-options
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
-        <20200716173221.103295-1-phillip.wood123@gmail.com>
-Date:   Thu, 16 Jul 2020 10:39:12 -0700
-In-Reply-To: <20200716173221.103295-1-phillip.wood123@gmail.com> (Phillip
-        Wood's message of "Thu, 16 Jul 2020 18:32:16 +0100")
-Message-ID: <xmqqft9rgy0v.fsf@gitster.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 0/3] Add support for %(contents:size) in ref-filter
+References: <20200710164739.6616-1-chriscool@tuxfamily.org>
+        <20200716121940.21041-1-chriscool@tuxfamily.org>
+Date:   Thu, 16 Jul 2020 10:48:58 -0700
+In-Reply-To: <20200716121940.21041-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Thu, 16 Jul 2020 14:19:37 +0200")
+Message-ID: <xmqq8sfjgxkl.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 436D9F5C-C78B-11EA-A5A8-01D9BED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A1528064-C78C-11EA-A84A-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> format-patch and am could do with having their similar messages
-> updated in the future
+> The range diff is:
+>
+> 1:  f750832fc7 = 1:  f750832fc7 Documentation: clarify %(contents:XXXX) doc
+> 2:  51c72e09d2 = 2:  51c72e09d2 t6300: test refs pointing to tree and blob
+> 3:  c2ed3e228b ! 3:  cf6a60036e ref-filter: add support for %(contents:size)
+>     @@ t/t6300-for-each-ref.sh: test_atom() {
+>      +  # Automatically test "contents:size" atom after testing "contents"
+>      +  if test "$2" = "contents"
+>      +  then
+>     -+          case "$1" in
+>     -+          refs/tags/signed-*)
+>     ++          case $(git cat-file -t "$ref") in
+>     ++          tag)
+>      +                  # We cannot use $3 as it expects sanitize_pgp to run
+>      +                  expect=$(git cat-file tag $ref | tail -n +6 | wc -c) ;;
+>     -+          refs/mytrees/* | refs/myblobs/*)
+>     ++          tree | blob)
+>      +                  expect='' ;;
+>     -+          *)
+>     ++          commit)
+>      +                  expect=$(printf '%s' "$3" | wc -c) ;;
+>      +          esac
+>      +          # Leave $expect unquoted to lose possible leading whitespaces
+>      +          echo $expect >expected
+>     -+          test_expect_${4:-success} $PREREQ "basic atom: $1 $2:size" "
+>     -+                  git for-each-ref --format='%($2:size)' $ref >actual &&
+>     -+                  test_cmp expected actual
+>     -+          "
+>     ++          test_expect_${4:-sucess} $PREREQ "basic atom: $1 contents:size" '
+>     ++                  git for-each-ref --format="%(contents:size)" "$ref" >actual &&
+>     ++                  test_cmp expect actual
+>     ++          '
+>      +  fi
+>       }
 
-That's a good #leftoverbits topic.
+Ah, I almost forgot about this topic X-<, but the above reminds me
+and it does read more clearly, at least to me.
+
+Thanks, will replace.
