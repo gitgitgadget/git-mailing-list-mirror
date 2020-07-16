@@ -2,152 +2,143 @@ Return-Path: <SRS0=27Fn=A3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95FB8C433E1
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83542C433E4
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:19:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6557F20739
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:17:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5DEF520739
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:19:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qyoea3yc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qLKvHz2U"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728001AbgGPMRH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 08:17:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55336 "EHLO
+        id S1728479AbgGPMT4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 08:19:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726515AbgGPMRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 08:17:06 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DFCEC061755
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:17:06 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id g13so4639688qtv.8
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:17:06 -0700 (PDT)
+        with ESMTP id S1728093AbgGPMTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 08:19:55 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B3CEC061755
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:19:55 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id 17so11408010wmo.1
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=P8aGrK35KNAcaNJml9saGGazwGRpVMKrm0YVpL+rHt4=;
-        b=Qyoea3ycGCGHC8IVSqKH1HwOdtPuxAb7XD9jYyafxyX8LHX/Xv+JIneA1bjtX6031+
-         qRhFzm86pU2MCM0Wd5j9IzRCqjvwihhvv1iN4KcHBtB1o/4vsajR2NJ7MRtaY2s9ZXqi
-         eUivePCTYk1W5ODL2VwyTOzXVpV85RSjPXVzyLN6LUUKpnFdDbo2dfkHcezIpKKIJXJp
-         r80+CSXdOJZmYBorrA3OIfjOPqb6HZE9o8HCBOLmNcuXElUJv7P3bODglYHT2PNMrGnh
-         2aCVh8zZ0LFrfmAfyR3PGH5R5hSgZP6cvHctZbIT+KPeUoOyuyEl08XSMSeZtodccRRd
-         nqWg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=j+styKkbYPsVl913KxFpxOtNAd+ro8icYbnzqjW7sZM=;
+        b=qLKvHz2Um3TfmMMTT7Jyod8fjf7zZEQb04To51ZvPegVUejlRUwn/QG5oenb/DB/l7
+         LtHnNxUmZIHfEI8s6HsG9NnF3hEQoH0re3qMLFKgk0xOThUXjMhriIUWZ6wWaDQBIHLw
+         yxLrEats3xqTIrIGKW74IgQ7w1jj1vyhrzFWQuG+jLtgf6PalNk/pTEYWcjMmBj9hhQS
+         ustXYCjUEUdgqbHQz1RFLSaQQOW2SDFErMPDiaGJMGFfHmqpKvk28Ev0ByjzqMZrIesE
+         6IgjsAy7eAPBBI+PpqUkI4tcbLTVYK35rAYqetUdL6+OGuxM7mnjg5VU2DB84uuzP7qU
+         4DJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=P8aGrK35KNAcaNJml9saGGazwGRpVMKrm0YVpL+rHt4=;
-        b=fIpg9t+0ZBvQrqT8eEBVBRpufRPdYikHiLLa9+iehRd6FCPZ98bEVLLUOkCTN++usv
-         DZ1ITZb1h44h8royqA6346aGupSSpl6zjwzvcD+lFx0qbHn+dmQRrWAVY7frtdnSgz2l
-         Jb29+QVEZUUAr7w2BxHZxO5uYHpEaRp9Zww3yehkywQ9dXzXfSen2285xU8Mq0Y2tt04
-         XpcIL3nM1CtNDVVTnx41RULCHH4h1XM88RymfdrggYJDaVgFERWFsvhvT1pUEYqx24ch
-         9jn+tlTQ/ikBwx/l2tdZ5e9KQpy2lhSSIW6cAHeICn0cs8ZEesFrX/MJ9ailspzMI8hu
-         0gSQ==
-X-Gm-Message-State: AOAM532VnQq3rH0ZQ2u36OpSgjcccHxgycY39/9hC8kS8gxx9UAcBF1/
-        8t5vVyUVLrcIjjmQ0dVabnc=
-X-Google-Smtp-Source: ABdhPJwAw2ObzR0hcq+lFmfMGztjf9HtBnPuhRHauIgz6D0NHq1+T21kT1wYq3ddt2vm7iKdow9F/Q==
-X-Received: by 2002:ac8:3ff9:: with SMTP id v54mr4814732qtk.352.1594901825146;
-        Thu, 16 Jul 2020 05:17:05 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id p29sm7704484qtu.15.2020.07.16.05.17.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2020 05:17:04 -0700 (PDT)
-Subject: Re: [PATCH 0/2] extensions.* fixes for 2.28 (Re: [PATCH] setup: warn
- about un-enabled extensions)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>, delphij@google.com,
-        Huan Huan Chen <huanhuanchen@google.com>
-References: <pull.675.git.1594677321039.gitgitgadget@gmail.com>
- <0bede821-139a-d805-934a-142004abaa4c@gmail.com>
- <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet>
- <xmqqzh82ktgm.fsf@gitster.c.googlers.com>
- <xmqqpn8wkben.fsf@gitster.c.googlers.com>
- <20200716062054.GA3242764@google.com>
- <nycvar.QRO.7.76.6.2007161011270.54@tvgsbejvaqbjf.bet>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e32f27f4-6469-fe68-8263-bd10a101d380@gmail.com>
-Date:   Thu, 16 Jul 2020 08:17:03 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=j+styKkbYPsVl913KxFpxOtNAd+ro8icYbnzqjW7sZM=;
+        b=KImhuMWyW88H9sDHt73fAOPGBexdzYJD/7lnOP/6oHKS0AMBNDdPOh+WkR1tGKHW0f
+         8crEblob9aT+OwAzPvrBUiPqUqsct1rS4Cn1r8aHv6aBN7mpBqMAO670EmJDGtjGeZfU
+         Dd497xF977wPMP0XG9KuFAecPMWQ4uCkeRqrrru8Tm3d/pINVOLEKgCkmyeenYQjwCDp
+         /H5PJQe9lgL/YnXnA0FVHJ5odXXFzxzsAMu4Cr3dEkI0IhQZ0YjtyRVKYBGrhDH/L0WK
+         y2cLaX9qBJ/WOkWUsP96z1w40H72dt8NkkuLySEm2N5KwXOG634GsAlqdpunLNWjIYJS
+         Z2bg==
+X-Gm-Message-State: AOAM5324zkBD+PMo0yq6iBYN2DFxZ+Jlz76DDY9eVU3RMJA37/DztaYn
+        aEuXciflJQZbgLpE/ZWqc+WkTjvPCtI=
+X-Google-Smtp-Source: ABdhPJyTkWeUvadxcXiWStkakPZ7StrJMYTaiQ1JX1dO0mp9XF2k2Ht6UeNImKoCWAaLlTXKtM/weg==
+X-Received: by 2002:a1c:4846:: with SMTP id v67mr4325193wma.175.1594901993614;
+        Thu, 16 Jul 2020 05:19:53 -0700 (PDT)
+Received: from localhost.localdomain ([193.56.245.81])
+        by smtp.gmail.com with ESMTPSA id p4sm8725714wrx.63.2020.07.16.05.19.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jul 2020 05:19:52 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v5 0/3] Add support for %(contents:size) in ref-filter
+Date:   Thu, 16 Jul 2020 14:19:37 +0200
+Message-Id: <20200716121940.21041-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.27.0.227.g757ac19d14.dirty
+In-Reply-To: <20200710164739.6616-1-chriscool@tuxfamily.org>
+References: <20200710164739.6616-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2007161011270.54@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/16/2020 4:13 AM, Johannes Schindelin wrote:
-> Hi Jonathan,
-> 
-> On Wed, 15 Jul 2020, Jonathan Nieder wrote:
-> 
->> Junio C Hamano wrote:
->>
->>> Here is my quick attempt to see how far we can go with the
->>> "different endgame" approach, to be applied on top of those two
->>> patches.
->>
->> Here are patches implementing the minimal fix that I'd recommend.
->> These apply against "master" without requiring any other patches
->> as prerequisites.  Thoughts?
-> 
-> IIUC all of the existing `extensions.*` predate the reverted strict check,
-> right? And the idea is that future `extensions.*` will only work when
-> `repositoryFormatVersion` is larger than 1, right?
-> 
-> I would have been fine with Junio's patch on top of Stolee's, and I am
-> equally fine with this patch series. My main aim is not so much
-> future-proofing, though, as it is to avoid regressions in existing setups.
+This is version 5 of a small patch series to teach ref-filter about
+%(contents:size).
 
-I'm fine either way.  I think that Jonathan's patch comes from a
-more informed place than my patches, so his are probably safer.
+This patch series is based on master at 4a0fcf9f76 (The seventh batch,
+2020-07-06).
 
-The situation that caught my interest is covered by this test
-that was part of my patches:
+Previous versions and related discussions are there:
 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 7cd45fc1394..6c0b82c3930 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -68,6 +68,18 @@ test_expect_success 'git sparse-checkout init' '
-        check_files repo a
- '
- 
-+test_expect_success 'git sparse-checkout works if repository format is wrong' '
-+       test_when_finished git -C repo config core.repositoryFormatVersion 1 &&
-+       git -C repo config --unset core.repositoryFormatVersion &&
-+       git -C repo sparse-checkout init &&
-+       git -C repo config core.repositoryFormatVersion >actual &&
-+       echo 1 >expect &&
-+       git -C repo config core.repositoryFormatVersion 0 &&
-+       git -C repo sparse-checkout init &&
-+       git -C repo config core.repositoryFormatVersion >actual &&
-+       test_cmp expect actual
-+'
-+
- test_expect_success 'git sparse-checkout list after init' '
-        git -C repo sparse-checkout list >actual &&
-        cat >expect <<-\EOF &&
+V1: https://lore.kernel.org/git/20200701132308.16691-1-chriscool@tuxfamily.org/
+V2: https://lore.kernel.org/git/20200702140845.24945-1-chriscool@tuxfamily.org/
+V3: https://lore.kernel.org/git/20200707174049.21714-1-chriscool@tuxfamily.org/
+V4: https://lore.kernel.org/git/20200710164739.6616-1-chriscool@tuxfamily.org/
 
-and this test passes with Jonathan's series. I think this kind
-of behavior is covered by his change to the 'converting to partial
-clone fails with noop extension' test in t0410-partial-clone.sh,
-so a duplicate test in t1091-sparse-checkout-builtin.sh may be
-overkill.
+Thanks to Junio and Peff for their reviews of this series!
 
-Thanks, all.
+The changes compared to V4 are the following:
 
--Stolee
+  - Modified test_atom() in patch 3/3 to as suggested by Junio.
+
+The range diff is:
+
+1:  f750832fc7 = 1:  f750832fc7 Documentation: clarify %(contents:XXXX) doc
+2:  51c72e09d2 = 2:  51c72e09d2 t6300: test refs pointing to tree and blob
+3:  c2ed3e228b ! 3:  cf6a60036e ref-filter: add support for %(contents:size)
+    @@ t/t6300-for-each-ref.sh: test_atom() {
+     +  # Automatically test "contents:size" atom after testing "contents"
+     +  if test "$2" = "contents"
+     +  then
+    -+          case "$1" in
+    -+          refs/tags/signed-*)
+    ++          case $(git cat-file -t "$ref") in
+    ++          tag)
+     +                  # We cannot use $3 as it expects sanitize_pgp to run
+     +                  expect=$(git cat-file tag $ref | tail -n +6 | wc -c) ;;
+    -+          refs/mytrees/* | refs/myblobs/*)
+    ++          tree | blob)
+     +                  expect='' ;;
+    -+          *)
+    ++          commit)
+     +                  expect=$(printf '%s' "$3" | wc -c) ;;
+     +          esac
+     +          # Leave $expect unquoted to lose possible leading whitespaces
+     +          echo $expect >expected
+    -+          test_expect_${4:-success} $PREREQ "basic atom: $1 $2:size" "
+    -+                  git for-each-ref --format='%($2:size)' $ref >actual &&
+    -+                  test_cmp expected actual
+    -+          "
+    ++          test_expect_${4:-sucess} $PREREQ "basic atom: $1 contents:size" '
+    ++                  git for-each-ref --format="%(contents:size)" "$ref" >actual &&
+    ++                  test_cmp expect actual
+    ++          '
+     +  fi
+      }
+      
+Christian Couder (3):
+  Documentation: clarify %(contents:XXXX) doc
+  t6300: test refs pointing to tree and blob
+  ref-filter: add support for %(contents:size)
+
+ Documentation/git-for-each-ref.txt | 27 ++++++++++++++++-----
+ ref-filter.c                       |  7 +++++-
+ t/t6300-for-each-ref.sh            | 38 ++++++++++++++++++++++++++++++
+ 3 files changed, 65 insertions(+), 7 deletions(-)
+
+-- 
+2.27.0.227.g757ac19d14.dirty
+
