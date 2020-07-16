@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E4F1C433DF
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF7CEC433E3
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:20:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6CA4F207BB
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:19:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C64A20739
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:20:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FogAZ1b9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lsVWOiWX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728497AbgGPMT5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 08:19:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55776 "EHLO
+        id S1728516AbgGPMT7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 08:19:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728093AbgGPMT4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 08:19:56 -0400
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62616C061755
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:19:56 -0700 (PDT)
-Received: by mail-wm1-x343.google.com with SMTP id f18so11388236wml.3
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:19:56 -0700 (PDT)
+        with ESMTP id S1728093AbgGPMT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 08:19:57 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7526CC061755
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:19:57 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id 22so10099651wmg.1
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xc0Dsv5lB7H0CaX1mN5VKlas2vXO+F2kanTBCL8drGQ=;
-        b=FogAZ1b9m+za37hk+gi2MWnUmwr2ztsW38EZvp5Vd4sdrYEE6tvUB7ysR/WoF8ApwY
-         sa5/SNeKpw2oMPNYNoTN3MV+/p0+8dH8PUL05jKzthD+UzjsvK7KlxUasndYfQ9vMypN
-         BvuVLHatom00s6sny0WQng6ElPW4U7pElGnleFr28OaFCOPJyRe+cGaQWPcS2XQhl9DD
-         CI3U6UKx2pjty5qOC9ALSVGnMr+os30UzFK7IpEvgzgzNwzn5ypm/yR6EDstpBwDCsKx
-         8pHvK5ZNc/4szKoufKg5CBW7g7HU5oH23e48u/a6uWAEphEHUCYaW0fVlZvaV7luwF7M
-         xDGg==
+        bh=69Bh3UP7bjekPz5dao8yczDgOXMyxuhA/pe6g5dmdOA=;
+        b=lsVWOiWXiRrLQduR6Y/ly2iUCqqAcrV6UfujrZ4Ghyx5RaAfQ/WPZY4jacS4R4Fg15
+         BG5O5kmq/X61luIs2RPly/WP/XhDxKa0DJdIL43Zey6yGhJFxAwV0yFfpRX1UMBsEzm1
+         HuBwN/tmfYzleFhSSQDRVuMhHpsR67U4+vWf0sWGkJVTuhpZNHvvMg13SOdZ7NQMGrM3
+         uktzsy9BV0M74czi+UZ4a9nwMtEXlJ3TuOOBxbOX1THMg3cOMYywlla8qhCpWNtbuBLb
+         YmMP2dmdUxQixLN7GGd7rdXkyuVIw0Od48R7Lhloe5vAc1f30T4tsvq8CIlQTvglggsZ
+         iebA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xc0Dsv5lB7H0CaX1mN5VKlas2vXO+F2kanTBCL8drGQ=;
-        b=WjYp9gedq28eJLl/Tibmdn2zNCm+aYgFYSP9ktXqZrYpP4OQAY8x2HjWkZbN0/BICn
-         k1dyF2N96UFSj3ErCuWk/K0+gjyY9d/ZKgz3V7bGJ28qrCyCzT22MzA3bLdqtMiNkMEB
-         d5RTHDgEIiSoPbUwGv5gawgV3aQi02Ei9wal3bfphGEewlwQpzmz43uWY/7+CO0QsdvT
-         L40QVXhWwdmRlSsVElXveeelK8/YyXK5uvg/TQIYt/BohYsgE/UuGrvqsfTpJHP/roUa
-         pd20ZV/arHw6wKFLx/H4GoQX+ukQeyvR8DrVuq7zkeoZvAuTRjccXJbNFE/qFJ2jeGmM
-         I3vQ==
-X-Gm-Message-State: AOAM531tIOcISFPMyngnNOST+t2TRXcDjEUqLQiOjd8CWdZnJ6rZErhm
-        HhjVo/2IKVLf755NtDNjF9g8XtsJ5UU=
-X-Google-Smtp-Source: ABdhPJyG7gvlZ6/UHaauL1dujitBlsF/Z64guMHVp2qmwWEllE+ENP6yCW6tI5RtFKppKGG94cF1ow==
-X-Received: by 2002:a05:600c:258:: with SMTP id 24mr4286094wmj.126.1594901994637;
-        Thu, 16 Jul 2020 05:19:54 -0700 (PDT)
+        bh=69Bh3UP7bjekPz5dao8yczDgOXMyxuhA/pe6g5dmdOA=;
+        b=Yws6gdZjGECx+PI8Qve3JFdlHAtl0NehGWzdQ9Hg5K2l2aAEzvB/3N14RHkrTQNbNR
+         /GT8LWC3kOJ2NzCfxnUBGcYl7F5U2xIpvoxfTP9kmcMKyZmlRkMKYYPkjb6QPDNBDusp
+         Q+uxwRTu+107+0cOgC36wrAXwsq3TN6snHVGkv3pUVvesJgGsJTaDSHRfSmg/4VcDe7T
+         F4CyVcGeu9cB9NApUk2rkq6U4R5dzwpprpFLUg0TdvBrJp3//xUfa/wcERjiljKRI/Le
+         9T8dyaNL/wE96cDRTdGVnZnwvuI5X5L8NatycAcOgWgey4Z08OGp1V50pZlWpXnSktj/
+         Ez5Q==
+X-Gm-Message-State: AOAM533nKHSMGyD+4rgW1O+lBvJ5XFjINsvMx7xS7c7EC/JMKSIVWCPB
+        pT62xWB6ZK8Af5FrJi1S3pLXGZw0BfM=
+X-Google-Smtp-Source: ABdhPJxfqlLxluUN1VZQBSPVC1WI7s4MLCvWrHWpyYOqYgaiJAaNPtg/p8EXgnPqTjXpm2vOlywNRQ==
+X-Received: by 2002:a7b:c921:: with SMTP id h1mr3885167wml.29.1594901995852;
+        Thu, 16 Jul 2020 05:19:55 -0700 (PDT)
 Received: from localhost.localdomain ([193.56.245.81])
-        by smtp.gmail.com with ESMTPSA id p4sm8725714wrx.63.2020.07.16.05.19.53
+        by smtp.gmail.com with ESMTPSA id p4sm8725714wrx.63.2020.07.16.05.19.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 05:19:53 -0700 (PDT)
+        Thu, 16 Jul 2020 05:19:55 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 1/3] Documentation: clarify %(contents:XXXX) doc
-Date:   Thu, 16 Jul 2020 14:19:38 +0200
-Message-Id: <20200716121940.21041-2-chriscool@tuxfamily.org>
+Subject: [PATCH v5 2/3] t6300: test refs pointing to tree and blob
+Date:   Thu, 16 Jul 2020 14:19:39 +0200
+Message-Id: <20200716121940.21041-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.27.0.227.g757ac19d14.dirty
 In-Reply-To: <20200716121940.21041-1-chriscool@tuxfamily.org>
 References: <20200710164739.6616-1-chriscool@tuxfamily.org>
@@ -77,61 +77,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's avoid a big dense paragraph by using an unordered
-list for the %(contents:XXXX) format specifiers.
+Adding tests for refs pointing to tree and blob shows that
+we care about testing both positive ("see, my shiny new toy
+does work") and negative ("and it won't do nonsensical
+things when given an input it is not designed to work with")
+cases.
 
-While at it let's also make the following improvements:
-
-  - Let's not describe %(contents) using "complete message"
-    as it's not clear what an incomplete message is.
-
-  - Let's improve how the "subject" and "body" are
-    described.
-
-  - Let's state that "signature" is only available for
-    tag objects.
-
-Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-for-each-ref.txt | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ t/t6300-for-each-ref.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 6dcd39f6f6..b739412c30 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -232,12 +232,24 @@ Fields that have name-email-date tuple as its value (`author`,
- `committer`, and `tagger`) can be suffixed with `name`, `email`,
- and `date` to extract the named component.
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index da59fadc5d..e9f468d360 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -650,6 +650,25 @@ test_atom refs/tags/signed-long contents "subject line
+ body contents
+ $sig"
  
--The complete message in a commit and tag object is `contents`.
--Its first line is `contents:subject`, where subject is the concatenation
--of all lines of the commit message up to the first blank line.  The next
--line is `contents:body`, where body is all of the lines after the first
--blank line.  The optional GPG signature is `contents:signature`.  The
--first `N` lines of the message is obtained using `contents:lines=N`.
-+The message in a commit or a tag object is `contents`, from which
-+`contents:<part>` can be used to extract various parts out of:
++test_expect_success 'set up refs pointing to tree and blob' '
++	git update-ref refs/mytrees/first refs/heads/master^{tree} &&
++	git update-ref refs/myblobs/first refs/heads/master:one
++'
 +
-+contents:subject::
-+	The first paragraph of the message, which typically is a
-+	single line, is taken as the "subject" of the commit or the
-+	tag message.
++test_atom refs/mytrees/first subject ""
++test_atom refs/mytrees/first contents:subject ""
++test_atom refs/mytrees/first body ""
++test_atom refs/mytrees/first contents:body ""
++test_atom refs/mytrees/first contents:signature ""
++test_atom refs/mytrees/first contents ""
 +
-+contents:body::
-+	The remainder of the commit or the tag message that follows
-+	the "subject".
++test_atom refs/myblobs/first subject ""
++test_atom refs/myblobs/first contents:subject ""
++test_atom refs/myblobs/first body ""
++test_atom refs/myblobs/first contents:body ""
++test_atom refs/myblobs/first contents:signature ""
++test_atom refs/myblobs/first contents ""
 +
-+contents:signature::
-+	The optional GPG signature of the tag.
-+
-+contents:lines=N::
-+	The first `N` lines of the message.
-+
- Additionally, the trailers as interpreted by linkgit:git-interpret-trailers[1]
- are obtained as `trailers` (or by using the historical alias
- `contents:trailers`).  Non-trailer lines from the trailer block can be omitted
+ test_expect_success 'set up multiple-sort tags' '
+ 	for when in 100000 200000
+ 	do
 -- 
 2.27.0.227.g757ac19d14.dirty
 
