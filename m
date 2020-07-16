@@ -2,105 +2,82 @@ Return-Path: <SRS0=27Fn=A3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BCEDC433E1
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 09:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC30C433DF
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 10:41:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67A4420656
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 09:40:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="IsrAuUyg"
+	by mail.kernel.org (Postfix) with ESMTP id DB1F92074B
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 10:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726556AbgGPJkK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 05:40:10 -0400
-Received: from mout.gmx.net ([212.227.15.15]:33703 "EHLO mout.gmx.net"
+        id S1726963AbgGPKlv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 06:41:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58902 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725996AbgGPJkJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 05:40:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594892395;
-        bh=yon9e8nVczTTIzEb+om78gYaQDEEQdmcb7D6fyg0PAs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IsrAuUyg8LSmyEKgbjru00sQD6n/ttB186hVwwCevV5tYPqENrf6DooliFQ71aP2N
-         FfiJAl+wDMGx59AA5VXg3JDDnybXZpFs16BNPCgx2C/Sythat3wXcYDWwvxNueMYzm
-         NL0I9aqzEAB6IOrdaTIA/7CyRbOLAiVqwfIm0nM0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.237.98] ([213.196.212.102]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MryXH-1kb6Te0l41-00o2eW; Thu, 16
- Jul 2020 11:39:55 +0200
-Date:   Thu, 16 Jul 2020 10:13:27 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>, delphij@google.com,
-        Huan Huan Chen <huanhuanchen@google.com>
-Subject: Re: [PATCH 0/2] extensions.* fixes for 2.28 (Re: [PATCH] setup: warn
- about un-enabled extensions)
-In-Reply-To: <20200716062054.GA3242764@google.com>
-Message-ID: <nycvar.QRO.7.76.6.2007161011270.54@tvgsbejvaqbjf.bet>
-References: <pull.675.git.1594677321039.gitgitgadget@gmail.com> <0bede821-139a-d805-934a-142004abaa4c@gmail.com> <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet> <xmqqzh82ktgm.fsf@gitster.c.googlers.com> <xmqqpn8wkben.fsf@gitster.c.googlers.com>
- <20200716062054.GA3242764@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726239AbgGPKlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 06:41:50 -0400
+Received: (qmail 22486 invoked by uid 109); 16 Jul 2020 10:41:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jul 2020 10:41:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22704 invoked by uid 111); 16 Jul 2020 10:41:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Jul 2020 06:41:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 16 Jul 2020 06:41:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] upload-pack: do not lazy-fetch "have" objects
+Message-ID: <20200716104149.GA376357@coredump.intra.peff.net>
+References: <20200715223112.2018556-1-jonathantanmy@google.com>
+ <xmqqpn8wie21.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mPe8tta6r5MqXzrNTLEq8E+UIi9SgpCgL5HQgAlJmj4pXGXjp2f
- B1A/97gSW1ThAf/LlYmXPY09ILAmUrs9dOrNeYYfUus6g6u7j7eeJ/PKWVpomtp1yMvbBGQ
- ICFHdITu7/WE+VLRruVbZHU9THGmlQHnAS4tiXJUQPn+rTMgd9YGJuJxBfmbuO16bSx6WdP
- 2+B7W0TvWxUk6vywkkzUQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qgF9lZCodoU=:DtOOoGEDBbMWWs+c0fmbRV
- PBAe+DApUBoMZ5JI9TSSX7BmDYLU2i8VLfoP5avHsmY9j3+wH/SVCdxPBTTh3xJGfvMON68nL
- WlEzhhxz6xsZ2YTYZ+PesMQb5Iaw+uFURFrA3dyWJRcHCFr76sCAYSQ6A/3tLoZBeDYfMGvMh
- QpRyb0WWEkHMSgbndRzVbyGlf0v8icw0LvE3yZIPz73XUV9IRBIeW2FOozP1Eo5yvB/8hZ2cN
- cDcBFFtP0/NJHj4AE2lmNUuWxWnFWxagyVueENnnbbMF03isE50eyQnTtw50R4syRJRevNBJJ
- A+rO537Ke4emF4BDSJvFmsgtUgMVVxtQzEK8DhJKciD4klEOrPsUp4+CGojhSz90X4rVvIsxD
- vLQbvTFbK8Kh0zCH1nTJkF9kX9fpsGGrWuWhjcz+C/yEYF3gHt4Ow+lEqC1Tq6iKvl60//ltd
- DypERl5AvV+DSlLAHEJVX45AG2aQiJGBXUgT3SAbfsSPOW6PD9tdw4YtnMVSICg3KByEXyUBn
- WwPWIDK2RVo8/QimsfJBuW5GmvmdWdBSGEoExoJ2fqQh45/GYlFWJL7cV4w2GcJT+r5fboio3
- r7KrLRnZH3JWLDo076QlsjgQ3G34qTPAylsO8aNl+5zn4znEFo//C6vNvsq+iPTx8A4Z8INW6
- i2MONjrtcnIKPOxCNqwUSRYtuxdp9O9vUmqMo/EnO9IOmXN7iLVt6NQOybOz6Gk8KXSDYHAW5
- gyCOnviz7NldksB8bjGuNAP4QzGW7YLOunRlrWtv0w4TH4pSmuqH5zEXavecLSJ9pCobR9FOr
- suo8y62/ITPuNMrTEIWE4xsPZZ1994oBToPAl4uD9EBij8YCVBXOsbckrTCTQBntw5jpmJ8pR
- HJGpdA6OE3XAp5ozjaChqIDPgkk9tAIOVrd0mY2LyPuL6yrXB4f1ENev/slJ6hES/GTmWkjUw
- 87Ssh2Yd1kXJdUDSXi+7KcSrS+ITZGRYo/cGlckVSPDv7dgqEPl15Nedj/9h6adKxvMf+uIvJ
- /HmGD4F22emWyeK1aeZP66ny+rYw1xf61SNkNZUcr1e/v32iBDpv7/KhO/jIxSh/AnyqvGMHr
- 8UxFT7ENwFULD6ffmuyfP8culT7PVS4nD/dK771TaoHV7fZf/YkwrknozIqmtoHJW05PMVGBc
- Pimqb/Hjnl82+0aG/eZIluEYIE8EKCxMMyu5ek8VVfhAN8f/i9ocaidla/RzfvTsyW/ZwyonM
- ixCikSmhtDc8Sg5RkMOy6z/Kj8Z8ArQNKCnlfgw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpn8wie21.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Wed, Jul 15, 2020 at 03:55:18PM -0700, Junio C Hamano wrote:
 
-On Wed, 15 Jul 2020, Jonathan Nieder wrote:
+> Fixing issues hit by real users reactively is a necessary and good
+> thing, but this is not the first time we patch callers of
+> has_object_file() for this kind of "we are merely trying to
+> determine the boundary of what we have, so that we know what we need
+> to add to this repository" queries, I am afraid.
+> 
+> Perhaps it is a good idea to sweep all the hits from "git grep -e
+> has_object_file \*.c" and audit the codebase to see if there are
+> other problematic ones?
 
-> Junio C Hamano wrote:
->
-> > Here is my quick attempt to see how far we can go with the
-> > "different endgame" approach, to be applied on top of those two
-> > patches.
->
-> Here are patches implementing the minimal fix that I'd recommend.
-> These apply against "master" without requiring any other patches
-> as prerequisites.  Thoughts?
+Interestingly, the case fixed here was mentioned after the three-dashes
+in this patch:
 
-IIUC all of the existing `extensions.*` predate the reverted strict check,
-right? And the idea is that future `extensions.*` will only work when
-`repositoryFormatVersion` is larger than 1, right?
+  https://lore.kernel.org/git/20191127123211.GG22221@sigill.intra.peff.net/
 
-I would have been fine with Junio's patch on top of Stolee's, and I am
-equally fine with this patch series. My main aim is not so much
-future-proofing, though, as it is to avoid regressions in existing setups.
+That thread was about OBJECT_INFO_QUICK, but I think any "we are finding
+the boundary" hunt should consider whether that's appropriate, too. In
+that case they are really the same issue: we do not want to expend
+effort A on the unlikely chance P that we will find the object and save
+ourselves effort B. The magnitude of A and B, and the probability P may
+be different for the two optimizations, though.
 
-Thanks,
-Dscho
+I think the instance fixed here _probably_ could be converted to QUICK
+as well. It saves extra refreshes of the pack directory when a client
+asks for an object we don't have. That's usually not too expensive, but
+can be in some cases (many alternates, slow NFS filesystems, client has
+many objects we don't). In the worst case, using QUICK would mean we can
+get fooled by a simultaneous repack into thinking we don't have an
+object we _do_ have, and end up negotiating a worse pack for the client.
+
+> Thanks.  Will queue.
+
+That said, yeah, I think Jonathan's patch is a strict improvement by
+itself.
+
+-Peff
