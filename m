@@ -2,307 +2,184 @@ Return-Path: <SRS0=27Fn=A3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C04C433E1
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A62CEC433F7
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:56:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41DE820739
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:53:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A84620739
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 12:56:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aOur/R2f"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="YPRnYN1X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728162AbgGPMxb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 08:53:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726986AbgGPMxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 08:53:30 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D45D1C061755
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:53:29 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id j80so5360466qke.0
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 05:53:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=bWO1dGGwUAdga3ZrYWrkykEgEc7enOfFaZBrXbi7R0M=;
-        b=aOur/R2fi1VQ/siPeRLS363KiVVM4CpaqE3hVgdG1EO/jYAUW+kfdX780KUqwJhqDD
-         sYXxQ9R091FGJHKRPzCF7VTkJSBZnjBmV3D/L4+NbZYxugTgrigKPlPIfDwcypIt8aVH
-         stQeeJhPRnq1ssMxoeleN+CLdvhRX5SayVXvaF1tSN/uWBmkuOVIeWUzdv8FPEectHsg
-         KuFVFtPKq98LyYuyOwSpev5JS9ERH4IdgJ5YZN9rHvJKSrPooXP78ibLDCD21GRaKqFt
-         XaJ7pD+RilFe9L7jMpWt7udjK2I6Xy4ZlDTVaiXIWmBvCoGfaRDrCdsQ9MFPMK3dwBJE
-         /SGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=bWO1dGGwUAdga3ZrYWrkykEgEc7enOfFaZBrXbi7R0M=;
-        b=n2DPlDCKfUHH/+tY4HfQ4vTeLw8sZL+UELCbBoYrjY1Q5oWoFERKkGbqNtvFojaVMS
-         r0jc88Q7RAI+ybyfMHG55h+1ZA0OLk44VSnTJZV/FNT1x7Ps36Q2hy0hzRzK508rwlyK
-         ghkHr/YXxoI8IuCXZmHf2DqUiC40H5K4Rj6Akads/bPiJWu7Nf11IRozyyIQhRRPwoM0
-         WwaYyAymVNso0NmRtZRt528o6Rqb3bIxgq8ntVaGic0j90PSnMUcaLcbsmNI3WdvbYW9
-         5joXC8DrfmyDjp13htXpND4Mt/v1ZTc0GvKvxeiLYk30IGUmPeeDaLpdZqiR5VXnSGO2
-         qPVw==
-X-Gm-Message-State: AOAM532pnEp/FczSaHzwovXJBfbkbPESGhX4AXzoOGoh6KeTJuFdp/D2
-        w2smMLfE0m3Oh6UaC84gLEw=
-X-Google-Smtp-Source: ABdhPJxPlkDcYqSQKPHQnPamJU/hsUbumVF7cluzAEV+ddWsfmVK62EdWRVXPUVL2e6gcQ9c8Xll3w==
-X-Received: by 2002:a37:9b08:: with SMTP id d8mr3895975qke.105.1594904008832;
-        Thu, 16 Jul 2020 05:53:28 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id y22sm6551328qth.46.2020.07.16.05.53.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2020 05:53:28 -0700 (PDT)
-Subject: Re: [PATCH 2/2] repository: allow repository format upgrade with
- extensions
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, delphij@google.com,
-        Huan Huan Chen <huanhuanchen@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <pull.675.git.1594677321039.gitgitgadget@gmail.com>
- <0bede821-139a-d805-934a-142004abaa4c@gmail.com>
- <nycvar.QRO.7.76.6.2007141420300.52@tvgsbejvaqbjf.bet>
- <xmqqzh82ktgm.fsf@gitster.c.googlers.com>
- <xmqqpn8wkben.fsf@gitster.c.googlers.com>
- <20200716062054.GA3242764@google.com> <20200716062818.GC3242764@google.com>
- <xmqqh7u8hrka.fsf@gitster.c.googlers.com>
- <20200716110007.GD376357@coredump.intra.peff.net>
- <20200716122513.GA1050962@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2d5bc430-f6b3-1b79-a46f-d3d6d6b9fa89@gmail.com>
-Date:   Thu, 16 Jul 2020 08:53:27 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+        id S1728829AbgGPM4k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 08:56:40 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50403 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728822AbgGPM4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 08:56:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1594904179;
+        bh=I/IgQf+Q11/PYyMF3E+1FPOXRxJDlt8FUvfgi5S99MU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=YPRnYN1XRoxET1mmnJHCO24pnFbELmBHs0BzdaTUhDsO4jL243ocWUGwDZzsNedpw
+         +EiUJVsxCi4QJA4sHTZFxBPQS+qFdZ4qDhV/su2IgyxN1xkXLdLWAGVHRBqMPDyFhn
+         X29qvGz9W1plex8ciUYOQ1E288CCElneq2cmPBGE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.237.98] ([213.196.212.102]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3UUy-1jwbOj2Sm2-000cfu; Thu, 16
+ Jul 2020 14:56:19 +0200
+Date:   Thu, 16 Jul 2020 13:29:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+cc:     git@vger.kernel.org, sandals@crustytoothpaste.net, j6t@kdbg.org,
+        jonathantanmy@google.com, peff@peff.net,
+        christian.couder@gmail.com, Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH v2 2/2] hex: make hash_to_hex_algop() and friends
+ thread-safe
+In-Reply-To: <b47445fa1cef6d4523dd0ca336f7ee22bce89466.1593208411.git.matheus.bernardino@usp.br>
+Message-ID: <nycvar.QRO.7.76.6.2007161214270.54@tvgsbejvaqbjf.bet>
+References: <cover.1593208411.git.matheus.bernardino@usp.br> <b47445fa1cef6d4523dd0ca336f7ee22bce89466.1593208411.git.matheus.bernardino@usp.br>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20200716122513.GA1050962@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:meuWycV8Mwg6YFCMDILRZuw/djyjqiAyfDCWs5gPuKMGPgMwGNr
+ gUmkcCjEmnTqOcTBt1oxIRr+N7slKH7OI0P3XNpjsapvgUjO57/eL8UFNv5ULH6Ja0NyRlK
+ 8u2lT6VjW7M7MVlXEHZFus7s6AfIPpbABdPc1vDrb74TOY/D6YtfXazE6eUcpqlcD7kk46E
+ 7g/ZZ91oBqjBK7bJnrAfQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4r8A1KIX+kg=:DtLHjbrwnpBOnPXcjbfmxe
+ 3/DjKj4iUyNlc1jEz2BqvUK2klvzJ4QxkjxyDnG90Y1uUYXm+xKHmDs4zClefyBsUrZ/RC9tD
+ ehJGPv/4Ck8LvLWDtuKsr1evf3V5ZJItQjK+COAStZjt6tiTCKkQVy/Fmq4fvRf5ldl3eHLC9
+ cZa2fWwXGOxaBbcjkkgrNLAIoTDz0a1Q/hH/EjkIuWaMVlkc4FAD/f3HSbf19f+lyek3L2baE
+ ZJQq9dwU0mff/+tsSk9oBX6Vp6SgSMEchFxu+7G/GhNbH/N224sZVEQ3iN+tJC1pFpyDWp0Uv
+ AgMV7KKu4WhwcmT7A6aDnnEn6oycy3Hbn+YnUk3q2VY+fEZTK+l4IxtnsO4lBaaGQb2Mn3P+1
+ 5zG65mVpM9gbQBH1MA3P200GvNPNZu/SsdkXCLP8duwlim9r1idQQcB+GmAc0i/S1x9Ef2SHb
+ jUPXm5JxwxbCfLYbD9uaicWQrnXq8qS04Q6fjN/rz8PWM7OvzhzQynOqSjE31RHhXjUriX9OX
+ PBHhW3RNn8a4nHBpmfyKVsZEHmikKIsaeba8edQlM8ojMhWIeR/B6DnDqqnAb6w+nXtt+XOX8
+ VLfjDa5RDjkCAiwTyQCm9PY89LDT7NQnPeCJ1foA/x+NoA33/izDUNS00yHnuainsM4TnhyQQ
+ PIUIT+UiwNASceJ5BEvRcnF4gwxveV4IOW18mDriV+YXsdJsWQ1QsO18/r3yGsraOF11HxIsy
+ bAiFOqxIChxDrMRVNSqSwMHISfcmnR0kxBtFLJ85zwNCa9WD9VqnL+jlN8j/1sMS2Wauc+Ldg
+ bz1MivXkap0jEvFeiKkopWHCjQPIYRgIC3eBDZdzPXejoObLSCZRSpB08UoOfcjFykbIDpUDz
+ wBF1mJlnSUWnrHqb0q4D5w6zJ8q10HhH/JN1NcErurjjhoqAZXJgYcOsj/Sg2SwzxFshty2EE
+ tvg+0iJZ0Ul4vuajeZGO1q+SOA1QbMBEa8JmA+YpHpX0fNByr6efJXS0g6iGaLNVyYYTab5Mu
+ YgtDD8VFajuFnpHfrl892U6LlypDHU8trZXDf+uRfa2xk0Hz2D9pI8aSHERY1XI35Or3yLFPW
+ SjqpFsrtaxTmeh9ZqXJznqXf6BOvILKCXM9fr9EmPQXfcM2bZ47iCD4GQEluCtfOSczXOxPa+
+ JGK4KRzRPwcvRSXxkptgoqF4mxIYc01kZb4q3/DCtmbEMGuEXRjtNPQOh53Bq6wPrOfzuUnbY
+ IRiweWsvGRsdZTWLBcwAajyc0rP3/gPLPriwbZg==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/16/2020 8:25 AM, Jeff King wrote:
-> On Thu, Jul 16, 2020 at 07:00:08AM -0400, Jeff King wrote:
-> 
->>>> To avoid mistakes, continue to forbid repository format upgrades in v0
->>>> repositories with an unrecognized extension.  This way, a v0 user
->>>> using a misspelled extension field gets a chance to correct the
->>>> mistake before updating to the less forgiving v1 format.
->>>
->>> This needs to be managed carefully.  When the next extension is
->>> added to the codebase, that extension may be "known" to Git, but I
->>> do not think it is a good idea to honor it in v0 repository, or
->>> allow upgrading v0 repository to v1 with such an extension that
->>> weren't "known" to Git.  For example, a topic in flight adds
->>> objectformat extension and I do not think it should be honored in v0
->>> repository.
->>>
->>> Having said that, the approach is OK for now at the tip of tonight's
->>> master, but the point is "known" vs "unknown" must be fixed right
->>> with some means.  E.g. tell people to throw the "new" extensions to
->>> the list of "unknown extensions" in check_repo_format() when they
->>> add new ones, or something.
->>
->> Yeah, I agree with this line of reasoning. I'd prefer to see it
->> addressed now, so that we don't have to remember to do anything later.
->> I.e., for this patch to put the existing known extensions into the
->> "good" list for v0, locking it into place forever, and leaving the
->> objectformat topic with nothing particular it needs to do.
->>
->> But in the name of -rc1 expediency, I'm also OK moving forward with this
->> for now.
-> 
-> Hmm, this is actually a bit trickier than I expected because of the way
-> the code is written. It's much easier to complain about extensions in a
-> v0 repository than it is to ignore them. But I'm not sure if that isn't
-> the right way to go anyway.
-> 
-> The patch I came up with is below (and goes on top of Jonathan's). Even
-> if we decide this is the right direction, it can definitely happen
-> post-v2.28.
-> 
-> -- >8 --
-> Subject: verify_repository_format(): complain about new extensions in v0 repo
-> 
-> We made the mistake in the past of respecting extensions.* even when the
-> repository format version was set to 0. This is bad because forgetting
-> to bump the repository version means that older versions of Git (which
-> do not know about our extensions) won't complain. I.e., it's not a
-> problem in itself, but it means your repository is in a state which does
-> not give you the protection you think you're getting from older
-> versions.
-> 
-> For compatibility reasons, we are stuck with that decision for existing
-> extensions. However, we'd prefer not to extend the damage further. We
-> can do that by catching any newly-added extensions and complaining about
-> the repository format.
-> 
-> Note that this is a pretty heavy hammer: we'll refuse to work with the
-> repository at all. A lesser option would be to ignore (possibly with a
-> warning) any new extensions. But because of the way the extensions are
-> handled, that puts the burden on each new extension that is added to
-> remember to "undo" itself (because they are handled before we know
-> for sure whether we are in a v1 repo or not, since we don't insist on a
-> particular ordering of config entries).
-> 
-> So one option would be to rewrite that handling to record any new
-> extensions (and their values) during the config parse, and then only
-> after proceed to handle new ones only if we're in a v1 repository. But
-> I'm not sure if it's worth the trouble:
-> 
->   - ignoring extensions is likely to end up with broken results anyway
->     (e.g., ignoring a proposed objectformat extension means parsing any
->     object data is likely to encounter errors)
-> 
->   - this is a sign that whatever tool wrote the extension field is
->     broken. We may be better off notifying immediately and forcefully so
->     that such tools don't even appear to work accidentally.
-> 
-> The only downside is that fixing the istuation is a little tricky,
+Hi Matheus,
 
-s/istuation/situation
+On Fri, 26 Jun 2020, Matheus Tavares wrote:
 
-> because programs like "git config" won't want to work with the
-> repository. But:
-> 
->   git config --file=.git/config core.repositoryformatversion 1
-> 
-> should still suffice.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  cache.h                 |  2 +
->  setup.c                 | 96 ++++++++++++++++++++++++++++++++++-------
->  t/t1302-repo-version.sh |  3 ++
->  3 files changed, 85 insertions(+), 16 deletions(-)
-> 
-> diff --git a/cache.h b/cache.h
-> index 654426460c..0290849c19 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1044,6 +1044,7 @@ struct repository_format {
->  	int hash_algo;
->  	char *work_tree;
->  	struct string_list unknown_extensions;
-> +	struct string_list v1_only_extensions;
->  };
->  
->  /*
-> @@ -1057,6 +1058,7 @@ struct repository_format {
->  	.is_bare = -1, \
->  	.hash_algo = GIT_HASH_SHA1, \
->  	.unknown_extensions = STRING_LIST_INIT_DUP, \
-> +	.v1_only_extensions = STRING_LIST_INIT_DUP, \
+> @@ -136,12 +137,49 @@ char *oid_to_hex_r(char *buffer, const struct obje=
+ct_id *oid)
+>  	return hash_to_hex_algop_r(buffer, oid->hash, the_hash_algo);
 >  }
->  
->  /*
-> diff --git a/setup.c b/setup.c
-> index 3a81307602..c1480b2b60 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -447,6 +447,54 @@ static int read_worktree_config(const char *var, const char *value, void *vdata)
->  	return 0;
->  }
->  
-> +enum extension_result {
-> +	EXTENSION_ERROR = -1, /* compatible with error(), etc */
-> +	EXTENSION_UNKNOWN = 0,
-> +	EXTENSION_OK = 1
+>
+> +struct hexbuf_array {
+> +	int idx;
+> +	char bufs[4][GIT_MAX_HEXSZ + 1];
 > +};
 > +
-> +/*
-> + * Do not add new extensions to this function. It handles extensions which are
-> + * respected even in v0-format repositories for historical compatibility.
-> + */
-> +enum extension_result handle_extension_v0(const char *var,
-> +					  const char *value,
-> +					  const char *ext,
-> +					  struct repository_format *data)
-...
-> +/*
-> + * Record any new extensions in this function.
-> + */
-> +enum extension_result handle_extension(const char *var,
-> +				       const char *value,
-> +				       const char *ext,
-> +				       struct repository_format *data)
-
-I like the split between these two methods to make it
-really clear the difference between "v0" and "v1".
-
->  	struct repository_format *data = vdata;
-> @@ -455,23 +503,25 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
->  	if (strcmp(var, "core.repositoryformatversion") == 0)
->  		data->version = git_config_int(var, value);
->  	else if (skip_prefix(var, "extensions.", &ext)) {
-...
-> +		switch (handle_extension_v0(var, value, ext, data)) {
-> +		case EXTENSION_ERROR:
-> +			return -1;
-> +		case EXTENSION_OK:
-> +			return 0;
-> +		case EXTENSION_UNKNOWN:
-> +			break;
-> +		}
+> +#ifdef HAVE_THREADS
+> +static pthread_key_t hexbuf_array_key;
+> +static pthread_once_t hexbuf_array_once =3D PTHREAD_ONCE_INIT;
 > +
-> +		switch (handle_extension(var, value, ext, data)) {
-> +		case EXTENSION_ERROR:
-> +			return -1;
-> +		case EXTENSION_OK:
-> +			string_list_append(&data->v1_only_extensions, ext);
-> +			return 0;
-> +		case EXTENSION_UNKNOWN:
->  			string_list_append(&data->unknown_extensions, ext);
-> +			return 0;
-> +		}
->  	}
-
-And it makes this loop much cleaner.
-> @@ -613,6 +665,18 @@ int verify_repository_format(const struct repository_format *format,
->  		return -1;
->  	}
->  
-> +	if (format->version == 0 && format->v1_only_extensions.nr) {
-> +		int i;
+> +static void init_hexbuf_array_key(void)
+> +{
+> +	if (pthread_key_create(&hexbuf_array_key, free))
+> +		die(_("failed to initialize threads' key for hash to hex conversion")=
+);
+> +}
 > +
-> +		strbuf_addstr(err,
-> +			      _("repo version is 0, but v1-only extensions found:"));
+> +#else
+> +static struct hexbuf_array default_hexbuf_array;
+> +#endif
 > +
-> +		for (i = 0; i < format->v1_only_extensions.nr; i++)
-> +			strbuf_addf(err, "\n\t%s",
-> +				    format->v1_only_extensions.items[i].string);
-> +		return -1;
-> +	}
+>  char *hash_to_hex_algop(const unsigned char *hash, const struct git_has=
+h_algo *algop)
+>  {
+> -	static int bufno;
+> -	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
+> -	bufno =3D (bufno + 1) % ARRAY_SIZE(hexbuffer);
+> -	return hash_to_hex_algop_r(hexbuffer[bufno], hash, algop);
+> +	struct hexbuf_array *ha;
 > +
->  	return 0;
->  }
->  
-> diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
-> index d60c042ce8..0acabb6d11 100755
-> --- a/t/t1302-repo-version.sh
-> +++ b/t/t1302-repo-version.sh
-> @@ -87,6 +87,9 @@ allow 1
->  allow 1 noop
->  abort 1 no-such-extension
->  allow 0 no-such-extension
-> +allow 0 noop
-> +abort 0 noop-v1
-> +allow 1 noop-v1
+> +#ifdef HAVE_THREADS
+> +	void *value;
+> +
+> +	if (pthread_once(&hexbuf_array_once, init_hexbuf_array_key))
+> +		die(_("failed to initialize threads' key for hash to hex conversion")=
+);
+> +
+> +	value =3D pthread_getspecific(hexbuf_array_key);
+> +	if (value) {
+> +		ha =3D (struct hexbuf_array *) value;
+> +	} else {
+> +		ha =3D xmalloc(sizeof(*ha));
 
-LGTM.
+I just realized (while trying to debug something independent) that this
+leaves `ha->idx` uninitialized. So you will need at least this patch to
+fix a bug that currently haunts `seen`'s CI builds (you can use
+`--valgrind`, like I did, to identify the problem):
 
-Thanks,
--Stolee
+=2D- snip --
+diff --git a/hex.c b/hex.c
+index 4f2f163d5e7..365ba94ab11 100644
+=2D-- a/hex.c
++++ b/hex.c
+@@ -171,6 +171,7 @@ char *hash_to_hex_algop(const unsigned char *hash, con=
+st struct git_hash_algo *a
+ 		ha =3D (struct hexbuf_array *) value;
+ 	} else {
+ 		ha =3D xmalloc(sizeof(*ha));
++		ha->idx =3D 0;
+ 		if (pthread_setspecific(hexbuf_array_key, (void *)ha))
+ 			die(_("failed to set thread buffer for hash to hex conversion"));
+ 	}
+=2D- snap --
 
+But as I mentioned before, I would be much more in favor of abandoning
+this thread-local idea (because it is _still_ fragile, as the same thread
+could try to make use of more than four hex values in the same `printf()`,
+for example) and instead using Coccinelle to convert all those
+`oid_to_hex()` calls to `oid_to_hex_r()` calls.
 
+Now, I am _far_ from knowing what I'm doing with Coccinelle, but I think
+this here semantic patch should get you going:
+
+=2D- snipsnap --
+@@
+expression E;
+@@
+  {
+++   char hex[GIT_MAX_HEXSZ + 1];
+     ...
+-    oid_to_hex(E)
++    oid_to_hex_r(hex, E)
+     ...
+  }
+
+@@
+expression E1, E2;
+@@
+  {
+++   char hex1[GIT_MAX_HEXSZ + 1], hex2[GIT_MAX_HEXSZ + 1];
+     ...
+-    oid_to_hex(E1)
++    oid_to_hex_r(hex1, E1)
+     ...
+-    oid_to_hex(E2)
++    oid_to_hex_r(hex2, E2)
+     ...
+  }
