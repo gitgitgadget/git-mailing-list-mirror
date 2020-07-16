@@ -2,166 +2,83 @@ Return-Path: <SRS0=27Fn=A3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBE16C433E1
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D935CC433E1
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:15:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9F962076D
-	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:12:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B51D62076D
+	for <git@archiver.kernel.org>; Thu, 16 Jul 2020 17:15:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="ONFH7lOE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="erIgnzJj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728774AbgGPRMR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 13:12:17 -0400
-Received: from mout.web.de ([212.227.15.4]:40515 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727844AbgGPRMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 13:12:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1594919514;
-        bh=H2D3kBzXDW68WEIfrGuBWxCp9gidvlRuLlJnkzI+ISo=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ONFH7lOEt3cz5MzTUMgvMYjNW6eA98CxpjEw2UvQ8EhtxVWQISs1pZ8tEcEQZaVzN
-         SKZUPOFlAMZCbgUKs/8iMYR1ZUzWck9fd/CuGQj4/Y40l4oPpvzOlG8CHDHQJ+deiZ
-         gI7+Pq5VSJY4dL1bKCT5Pe/1U8h4rc2Oybn6CHac=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LyE3J-1ksg870181-015W0G; Thu, 16
- Jul 2020 19:11:54 +0200
-Subject: Re: [PATCH v12 5/5] read-cache: speed up has_dir_name (part 2)
-To:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Brandon Williams <bwilliamseng@gmail.com>
-References: <20170419170618.16535-1-git@jeffhostetler.com>
- <20170419170618.16535-6-git@jeffhostetler.com>
- <20200704172708.GC11341@szeder.dev> <xmqqr1tp9mf8.fsf@gitster.c.googlers.com>
- <be8dec3e-087e-b973-280d-3d0d2e481de6@jeffhostetler.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6d769a78-72aa-5b5d-9cc7-41b8c0ddf9d8@web.de>
-Date:   Thu, 16 Jul 2020 19:11:48 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1728237AbgGPRPx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 13:15:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45264 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727844AbgGPRPx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 13:15:53 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E65B8C061755
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 10:15:52 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id b30so1816911lfj.12
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 10:15:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=YWRWI0gnyMxqqO12mbKvokxulgfoqHWBz68mz4tHdbY=;
+        b=erIgnzJjCnxvUYRRjcj1HxIlU53zcfKqFh3D3vl2/ZePNXwKlJ57idSlSOY5j5bFNK
+         fLg874tA0QEF0nGlCIIDwpg678RcEcq8TfX9SB32pdIwfFd59+x07gVxALpAfquv6lL0
+         Dc+qwobX5dGH3/sRzS37ldgFa14pk3GI20rCCLpmpRHQxhAkKHRZ8CMvPAlUdD8oyNol
+         6fLFE3JHBGxQtVDkiGJWjkYoM0T6em405K2bJsw3UT/J/EAUhW2Kqw1MSrORWLxv5Z/y
+         xLOTzkK1j5PceACmjDxMkEQmWnq9ET9Y9mWJRu8/KJm9MXidRBvj2yGYjO8qQvpkWzZk
+         XC8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=YWRWI0gnyMxqqO12mbKvokxulgfoqHWBz68mz4tHdbY=;
+        b=Kxz3ifS3uOuXvPyMttf8DoQYylYb0vgPfvNDvPIk3NaSWrfEDLlrM1nnvh28iW8xew
+         07DDEevr4MUVr/QF9krJHMYF1Bk1rR31vMCF1cQaMZWe32B56UQe4IvNr/EEIjPE7W4l
+         1k1oMplsDrCjpny6U+V6HJe++fkgP4YyXDENDMOzzaqSwXHXVkD3zD7ouQ9Z+n+3CxVp
+         eW0NTPb3BBXQX31/lCM5ZltPWuW799x3YrbNXuR+FiHitOSC2ZXcXQL0ki77S0TeM/3P
+         +nzHkTWE/+w+odqLEMOhBgRBSTckHlJMWCYnkF+pp+wpUa08BSrR2odgvcKSd/lA8M2b
+         KGJQ==
+X-Gm-Message-State: AOAM532tGVfbEABztbeXymfgBDoQZ9o1Dq0imtkXtdcO7URVkDnFIAgM
+        EkLgeOVBj1MduFWx76OpZH5yFbp5DomIoskI6YcaQmoz3I9QJw==
+X-Google-Smtp-Source: ABdhPJy+P1E96Gboiwdz2aJoqFKLNl3cRc42y6zzdSEF9GHWaBMEd2pHs9/ftNuqnrWNGMM2yBHu9M3tsV95Ai+iJkE=
+X-Received: by 2002:ac2:46f0:: with SMTP id q16mr2638850lfo.51.1594919750619;
+ Thu, 16 Jul 2020 10:15:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <be8dec3e-087e-b973-280d-3d0d2e481de6@jeffhostetler.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Uh/sOh7dZQ6Exa/JrLWsQuHfQni8KDsShED+hsi8W/csviUGnU7
- 2iyA5SfkhO7pxwxKc8tBMrqLC4nwuOEpji8WJLeaiDD4EzxDoJt6vcP+eI72SkcPVBcu0RT
- ehHdJsGibAInWklvH5VLe98PzcELArd0vGJoMuaJBWQ2gRZIKHOaRxYp8pXtQdpVII0zozV
- Oxzja5gsc+l9R5a5bWQpQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ln4KdIIH5uA=:ftNyWx3cpTapT4N5jPyBDs
- alRmEzDL6UTuP575YPT6mpqCWuBgbDdtgqWWT38p98WteqOBHE0XEVIgPOIikKgtUX+8MJs3f
- aYcf4yBXMZOaayGPlqeP1RDwekU//y/i4s2xJZHtznQQOBQBcs3g6yhgTUUliaDGXcEUnxQdU
- JbXMz/LcNF61JIn78ZfUEP9jSRcUCFJpZNTzq+2FdElJ/NFDOswQA3WdRiDQVUE9uAbtcKfvG
- L5RYAbPmhPGBLtYjv0VmE1jUpbKgF6/v/KxG1ZBHvRjtfbYznTk08rOdNdZiAk2lz+kM2X3wX
- 5OIieDfYkg/s60EbvkaeZfSeu819+1n/jaLU0KykaN7XmfTz5dFIIOPyRINfAKD6++2bFzRm5
- 4tiScy+Z30gmxoiONNieg/G2eWH52TDcuShB1eED1Zup9lvHQfsUqU6iaousISu3PO+NLwg7G
- KOVqYct4QGOCRCYQ/CC2yqhZPMga9kDrJ7iZWKRPH0pIh4koN+TOJvPgxEH2C9eGkjLVnZEhm
- 3UKycOQFfEsSihhhuW0D7ITiJvlWmG7cCl0eDyLM650N+2bJk3md/4gofsVxb+vtSkmA4SAHW
- ErT/a9XaD7Vy46fcRNvSDPVw71xBddwaS2FtwSbwtc7qvDsqaZ7gaLTd4n39DWuCQT/kIyfn+
- s+Zrra108bPT+7a1YeUpd07rpLUqcvObWCSg/v+cMTRv6I1eI8zd3qnhzHPFnt98KuUYHwnP3
- rur+Wq8oI47145LlJEyXp5knmKe7hitQXaLlpkqmrQ44F0+8fBX7O3dHDt2NHZEC72WEuXaOT
- 4clUIUFrIUWMYB5eaRLaQX1Tbz5BoKopxsCYhpOegV4VDGGp5WWdcbs8zbqWs0kIETHlqTqXe
- /tZdhs28ZLfVh+l8kQsHP9Ngxbd1pf9JiFGfFUi/KVcBNfUr9AihHB55D9Xq5SMt2bJQmEk++
- 3YfxYz8QWxZzSimWgQSne2cIYV5jtiXlz8FRZODyWPjFroNJp4jiv4wKzPcdQCler0eJ7UGLx
- PFgk5NGhEjd0mSt7axJoemGIwzBU+zuMNlkLmLSeCA6bOfWRJLRVgivPQa3Pg2sAwCJJoVm9q
- Yz3sfsuF1wnLIpfaf5oM7WqTezeujCwjZdSnkqTKhoFg4OcecoxH4Na+WyK3RpSv9+t8iBJbe
- L4qjeH1J6+CfKMmJHo7P4LMYK6K474+uCK6mKTFsyd0AJdetTqJAZXxP54UuwwRd7ZOTL+q2g
- qswslrxVFSEMqDr7i
+From:   Alireza <rezaxm@gmail.com>
+Date:   Thu, 16 Jul 2020 21:45:24 +0430
+Message-ID: <CAD9n_qh0y84HC6sX1OxXWWv8dDMMA_tPv9zRknePVivQq_rfww@mail.gmail.com>
+Subject: Request for adding a "clean" merge strategy for a double-commit merge
+ to deal with conflicts separately
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.07.20 um 15:49 schrieb Jeff Hostetler:
->
->
-> On 7/6/20 2:39 AM, Junio C Hamano wrote:
->> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->>
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * last: xxx/yy-file (because '-' sorts befo=
-re '/')
->>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * this: xxx/yy/abc
->>>
->>> This is problematic, because the index can already contain 'xxx/yy' as
->>> a file, when adding 'xxx/yy/abc', but since 'xxx/yy' as a file sorts
->>> before 'xxx/yy-file', the short-circuiting here doesn't see it and
->>> thus leaves the d-f collision undetected.=C2=A0 Consequently, even Git
->>> porcelain commands can create tree objects with duplicate entries, as
->>> demonstrated in the tests below.
->>
->> Yeah, the "optimization" is quite bogus.=C2=A0 Thanks for catching it.
->>
->
-> yes, thanks!
+Hi,
 
-OK, so now we just need to fix it.  Like this perhaps?
+Even though the merge commit's message includes conflicted files by
+default, the *resolution* itself is lost, that is, it's hard or
+impossible to review how the author *resolved* said conflicts.
 
-=2D- >8 --
-=46rom f4b2c70a34bb612e2ccc23a31e2ba8e01dedc373 Mon Sep 17 00:00:00 2001
-Subject: [PATCH] read-cache: remove bogus shortcut
+The proposal is that an option like `-X clean` would commit a clean
+merge and leave out any conflicting hunks in the tree for a follow-up
+commit to resolve conflicts.
 
-has_dir_name() has some optimizations for the case where entries are
-added to an index in the correct order.  They kick in if the new entry
-sorts after the last one.  One of them exits early if the last entry has
-a longer name than the directory of the new entry.  Here's its comment:
+That would be extremely helpful for a code reviewer to see how a
+possibly external contributor has dealt with upstream changes e.g. in
+a long-standing branch.
 
-/*
- * The directory prefix lines up with part of
- * a longer file or directory name, but sorts
- * after it, so this sub-directory cannot
- * collide with a file.
- *
- * last: xxx/yy-file (because '-' sorts before '/')
- * this: xxx/yy/abc
- */
+Any comment would be appreciated.
 
-However, a file named xxx/yy would be sorted before xxx/yy-file because
-'-' sorts after NUL, so the length check against the last entry is not
-sufficient to rule out a collision.  Remove it.
-
-Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-Suggested-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- read-cache.c | 14 --------------
- 1 file changed, 14 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index aa427c5c17..8ed1c29b54 100644
-=2D-- a/read-cache.c
-+++ b/read-cache.c
-@@ -1171,20 +1171,6 @@ static int has_dir_name(struct index_state *istate,
- 				return retval;
- 			}
-
--			if (istate->cache_nr > 0 &&
--				ce_namelen(istate->cache[istate->cache_nr - 1]) > len) {
--				/*
--				 * The directory prefix lines up with part of
--				 * a longer file or directory name, but sorts
--				 * after it, so this sub-directory cannot
--				 * collide with a file.
--				 *
--				 * last: xxx/yy-file (because '-' sorts before '/')
--				 * this: xxx/yy/abc
--				 */
--				return retval;
--			}
--
- 			/*
- 			 * This is a possible collision. Fall through and
- 			 * let the regular search code handle it.
-=2D-
-2.27.0
+Thanks,
+Alireza
