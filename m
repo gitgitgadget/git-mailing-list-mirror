@@ -7,740 +7,335 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 249F7C433E1
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 20:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D885C433E1
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 20:28:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E634920704
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 20:25:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E274820684
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 20:28:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BabI0ERh"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nTQiGgDf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728448AbgGQUZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 16:25:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52640 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbgGQUZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 16:25:07 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CADA620F1;
-        Fri, 17 Jul 2020 16:24:58 -0400 (EDT)
+        id S1728183AbgGQU2G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jul 2020 16:28:06 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52130 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726510AbgGQU2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 16:28:05 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85DDBEF7CE;
+        Fri, 17 Jul 2020 16:27:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=WAq+JTMJh1gYc3aALl6ZXtpJi
-        mU=; b=BabI0ERhisUaIpi+eci0M47nHvBlIPKXMcXtxB3aIOVQAHF3vGKoimzQz
-        R7HFXvUWhqphSqTJSr7NX4xfY0qC4veiRofA9SIh1GqyNqacHYybz+OkH6Uz7amU
-        E1eu7QnHts1Otr4G9A4PBcf6d2IfnO0y03NvddL9Tx9MiA5DpQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=QlqyKpIbKt7HaPEcIKm
-        gFzHP6wxgmTYybfPBba4a4S7EGTvneVOZNguPx0tUJJtyhK4XYAey6Vkfi6zEuKW
-        mtnNmO4+piLaPy9SKH4VvAO7LU+MRbo5pc5iod1ldjntEVRtDWnrz+osknRxA89k
-        10vXzXBgTbTM8iAOwQrSGSCs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 551DB620F0;
-        Fri, 17 Jul 2020 16:24:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=0
+        cW9bYwBTmV6yI5xJ6wRbaVTHzg=; b=nTQiGgDfCTq0urfdj91kyv8tsAvHJ9c3h
+        X/USmS79rCPcGKK4nykeaO99xHSyFz1jyHYQrCgCPKLY5F8nXcsuD2Fe3+PbeTHN
+        E1+NyVbyaRvJc6DZIK2bwpSpBIzL62a8Mq1/yVKwziBjYTAGLVkfV0CfG3CeXSfi
+        85CWrlJhqs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=fwN
+        OtXtgLeT8X61w3kUXAcHqclKC1z44WTEMS7toOWRUBGgQvQbMRxvYGtCqisRBaIN
+        VSE7079NYWzouGhHcHA0FyK9hrk/t1ioubJ9m2i3auARHHrhwTsoZlLzbFBr7xKa
+        vggibCbs9X5clWTaM3yw9/cLFyf/I+dGKtwCzTkQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7DDCDEF7CD;
+        Fri, 17 Jul 2020 16:27:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BEA07620EF;
-        Fri, 17 Jul 2020 16:24:57 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B64DAEF7CC;
+        Fri, 17 Jul 2020 16:27:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.28.0-rc1
-Date:   Fri, 17 Jul 2020 13:24:57 -0700
-Message-ID: <xmqqv9ildh46.fsf@gitster.c.googlers.com>
+Subject: A note from the maintainer
+Date:   Fri, 17 Jul 2020 13:27:54 -0700
+Message-ID: <xmqqo8oddgz9.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 952C4164-C86B-11EA-8E01-01D9BED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: FF3EFFCE-C86B-11EA-B055-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A release candidate Git v2.28.0-rc1 is now available for testing
-at the usual places.  It is comprised of 295 non-merge commits
-since v2.27.0, contributed by 43 people, 10 of which are new faces.
+[Administrivia]
+    As I sent the latest issue of the "What's cooking" report
+    yesterday, and there is no change other than the "v0
+    repositories take any extensions known to us for now" regression
+    fixes in today's rc1, I am not sending a new "What's cooking"
+    out, even though we tagged 2.28.0-rc1 today.  Instead, I'll send
+    this one out, as it has been a while...
 
-The tarballs are found at:
 
-    https://www.kernel.org/pub/software/scm/git/testing/
+Welcome to the Git development community.
 
-The following public repositories all have a copy of the
-'v2.28.0-rc1' tag and the 'master' branch that the tag points at:
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://github.com/gitster/git
+The current maintainer is Junio C Hamano <gitster@pobox.com>; please
+do not send any private message to this address, because it is likely
+that such a message will not be seen by any human being.  Spam filters
+learned that legitimate messages to the address come only from a very
+few sender addresses that are known to be good, and messages from all
+others are likely to be spam unless they are also sent to the mailing
+list at the same time (i.e. "Reply-all" to the list message would
+reach the mailbox, but "Reply" will likely be thrown into the spam
+folder).
 
-New contributors whose contributions weren't in v2.27.0 are as follows.
-Welcome to the Git development community!
 
-  Andrew Ng, Chris Torek, Don Goodman-Wilson, Jiuyang Xie, Luc
-  Van Oostenryck, Marco Trevisan (Trevi=C3=B1o), Miroslav Ko=C5=A1k=C3=A1=
-r,
-  Rafael Aquini, Srinidhi Kaushik, and Trygve Aaberge.
+* Mailing list and the community
 
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-  Abhishek Kumar, Ben Keene, brian m. carlson, Carlo Marcelo Arenas
-  Bel=C3=B3n, Christian Couder, Denton Liu, Derrick Stolee, =C4=90o=C3=A0=
-n
-  Tr=E1=BA=A7n C=C3=B4ng Danh, Elijah Newren, Emily Shaffer, Eric Sunshin=
-e,
-  Han-Wen Nienhuys, Jacob Keller, Jeff King, Johannes Schindelin,
-  John Lin, Jonathan Nieder, Jonathan Tan, Josh Steadmon, Junio C
-  Hamano, Laurent Arnoud, Martin =C3=85gren, Matheus Tavares, Paolo
-  Bonzini, Patrick Steinhardt, Ramsay Jones, Randall S. Becker,
-  Ren=C3=A9 Scharfe, Shourya Shukla, SZEDER G=C3=A1bor, Taylor Blau,
-  Ville Skytt=C3=A4, and Xin Li.
+As an anti-spam measure, the mailing list software rejects messages
+that are not text/plain and drops them on the floor.  If you are a
+GMail user, you'd want to make sure "Plain text mode" is checked.
 
-----------------------------------------------------------------
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-Git 2.28 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
-Updates since v2.27
--------------------
+The list archive is available at a few public sites:
 
-Backward compatibility notes
+        http://lore.kernel.org/git/
+        http://marc.info/?l=git
+        http://www.spinics.net/lists/git/
 
- * "fetch.writeCommitGraph" is deemed to be still a bit too risky and
-   is no longer part of the "feature.experimental" set.
+For those who prefer to read it over NNTP:
 
+	nntp://nntp.lore.kernel.org/org.kernel.vger.git
+        nntp://news.public-inbox.org/inbox.comp.version-control.git
 
-UI, Workflows & Features
+are available.
 
- * The commands in the "diff" family learned to honor "diff.relative"
-   configuration variable.
+When you point at a message in a mailing list archive, using its
+message ID is often the most robust (if not very friendly) way to do
+so, like this:
 
- * The check in "git fsck" to ensure that the tree objects are sorted
-   still had corner cases it missed unsorted entries.
+	http://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
 
- * The interface to redact sensitive information in the trace output
-   has been simplified.
+Often these web interfaces accept the message ID with enclosing <>
+stripped (like the above example to point at one of the most important
+message in the Git list).
 
- * The command line completion (in contrib/) learned to complete
-   options that the "git switch" command takes.
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Freenode.  Their logs are
+available at:
 
- * "git diff" used to take arguments in random and nonsense range
-   notation, e.g. "git diff A..B C", "git diff A..B C...D", etc.,
-   which has been cleaned up.
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
 
- * "git diff-files" has been taught to say paths that are marked as
-   intent-to-add are new files, not modified from an empty blob.
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/).
 
- * "git status" learned to report the status of sparse checkout.
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
- * "git difftool" has trouble dealing with paths added to the index
-   with the intent-to-add bit.
+For our expectations on the behaviour of the community participants
+towards each other, see CODE_OF_CONDUCT.md at the top level of the source
+tree, or:
 
- * "git fast-export --anonymize" learned to take customized mapping to
-   allow its users to tweak its output more usable for debugging.
+    https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
 
- * The command line completion support (in contrib/) used to be
-   prepared to work with "set -u" but recent changes got a bit more
-   sloppy.  This has been corrected.
 
+* Reporting bugs
 
-Performance, Internal Implementation, Development Support etc.
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
 
- * Code optimization for a common case.
-   (merge 8777616e4d an/merge-single-strategy-optim later to maint).
+Please remember to always state
 
- * We've adopted a convention that any on-stack structure can be
-   initialized to have zero values in all fields with "=3D { 0 }",
-   even when the first field happens to be a pointer, but sparse
-   complained that a null pointer should be spelled NULL for a long
-   time.  Start using -Wno-universal-initializer option to squelch
-   it (the latest sparse has it on by default).
+ - what you wanted to achieve;
 
- * "git log -L..." now takes advantage of the "which paths are touched
-   by this commit?" info stored in the commit-graph system.
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
 
- * As FreeBSD is not the only platform whose regexp library reports
-   a REG_ILLSEQ error when fed invalid UTF-8, add logic to detect that
-   automatically and skip the affected tests.
+ - what you saw happen (X above);
 
- * "git bugreport" learns to report what shell is in use.
+ - what you expected to see (Y above); and
 
- * Support for GIT_CURL_VERBOSE has been rewritten in terms of
-   GIT_TRACE_CURL.
+ - how the last two are different.
 
- * Preliminary clean-ups around refs API, plus file format
-   specification documentation for the reftable backend.
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.
 
- * Workaround breakage in MSVC build, where "curl-config --cflags"
-   gives settings appropriate for GCC build.
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.  This is
+a closed list that is limited to people who need to know early about
+vulnerabilities, including:
 
- * Code clean-up of "git clean" resulted in a fix of recent
-   performance regression.
+  - people triaging and fixing reported vulnerabilities
+  - people operating major git hosting sites with many users
+  - people packaging and distributing git to large numbers of people
 
- * Code clean-up in the codepath that serves "git fetch" continues.
+where these issues are discussed without risk of the information
+leaking out before we're ready to make public announcements.
+
 
- * "git merge-base --is-ancestor" is taught to take advantage of the
-   commit graph.
+* Repositories and documentation.
 
- * Rewrite of parts of the scripted "git submodule" Porcelain command
-   continues; this time it is "git submodule set-branch" subcommand's
-   turn.
+My public git.git repositories are (mirrored) at:
+
+  git://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  git://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+
+This one shows not just the main integration branches, but also
+individual topics broken out:
+
+  git://github.com/gitster/git/
+
+A few web interfaces are found at:
+
+  http://git.kernel.org/pub/scm/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  git://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+The manual pages formatted in HTML for the tip of 'master' can be
+viewed online at:
 
- * The "fetch/clone" protocol has been updated to allow the server to
-   instruct the clients to grab pre-packaged packfile(s) in addition
-   to the packed object data coming over the wire.
+  https://git.github.io/htmldocs/git.html
 
- * A misdesigned strbuf_write_fd() function has been retired.
 
- * SHA-256 migration work continues, including CVS/SVN interface.
+* How various branches are used.
 
- * A few fields in "struct commit" that do not have to always be
-   present have been moved to commit slabs.
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "seen".
 
- * API cleanup for get_worktrees()
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but we have
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
 
- * By renumbering object flag bits, "struct object" managed to lose
-   bloated inter-field padding.
+The last such release was 2.27 done on Jun 1st, 2020.  You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
 
- * The name of the primary branch in existing repositories, and the
-   default name used for the first branch in newly created
-   repositories, is made configurable, so that we can eventually wean
-   ourselves off of the hardcoded 'master'.
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious and safe fixes after a feature
+release are applied to this branch and maintenance releases are cut
+from it.  Usually the fixes are merged to the "master" branch first,
+several days before merged to the "maint" branch, to reduce the chance
+of last-minute issues.  The maintenance releases used to be named with
+four dotted decimal, named after the feature release they are updates
+to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
+feature release).  These days, maintenance releases are named by
+incrementing the last digit of three-dotted decimal name (e.g. "2.26.1"
+was the first maintenance release for the "2.26" series).
 
- * The effort to avoid using test_must_fail on non-git command continues.
+New features never go to the 'maint' branch.  It is merged into "master"
+primarily to propagate the description in the release notes forward.
 
- * In 2.28-rc0, we corrected a bug that some repository extensions are
-   honored by mistake even in a version 0 repositories (these
-   configuration variables in extensions.* namespace were supposed to
-   have special meaning in repositories whose version numbers are 1 or
-   higher), but this was a bit too big a change.  The behaviour in
-   recent versions of Git where certaion extensions.* were honored by
-   mistake even in version 0 repositories has been restored.
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" (or somewhere older, especially
+when the topic is about fixing an earlier bug) and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
 
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
 
-Fixes since v2.27
------------------
+The "seen" (formerly "pu", proposed updates) branch bundles all the
+remaining topic branches the maintainer happens to have seen.  There
+is no guarantee that the maintainer has enough bandwidth to pick up any
+and all topics that are remotely promising from the list traffic, so
+please do not read too much into a topic being on (or not on) the "seen"
+branch.  This branch is mainly to remind the maintainer that the topics
+in them may turn out to be interesting when they are polished, nothing
+more.  The topics on this branch aren't usually complete, well tested,
+or well documented and they often need further work.  When a topic that
+was in "seen" proves to be in a testable shape, it is merged to "next".
 
- * The "--prepare-p4-only" option of "git p4" is supposed to stop
-   after replaying one changeset, but kept going (by mistake?)
+You can run "git log --first-parent master..seen" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "seen" in such a case.
+The output of the above "git log" talks about a "jch" branch, which is an
+early part of the "seen" branch; that branch contains all topics that
+are in "next" and a bit more (but not all of "seen") and is used by the
+maintainer for his daily work.
 
- * The error message from "git checkout -b foo -t bar baz" was
-   confusing.
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+Some topics that used to be in "next" during the previous cycle may
+get ejected from "next" when this happens.
 
- * Some repositories in the wild have commits that record nonsense
-   committer timezone (e.g. rails.git); "git fast-import" learned an
-   option to pass these nonsense timestamps intact to allow recreating
-   existing repositories as-is.
-   (merge d42a2fb72f en/fast-import-looser-date later to maint).
+A natural consequence of how "next" and "seen" bundles topics together
+is that until a topic is merged to "next", updates to it is expected
+by replacing the patch(es) in the topic with an improved version,
+and once a topic is merged to "next", updates to it needs to come as
+incremental patches, pointing out what was wrong in the previous
+patches and how the problem was corrected.
 
- * The command line completion script (in contrib/) tried to complete
-   "git stash -p" as if it were "git stash push -p", but it was too
-   aggressive and also affected "git stash show -p", which has been
-   corrected.
-   (merge fffd0cf520 vs/complete-stash-show-p-fix later to maint).
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
 
- * On-the-wire protocol v2 easily falls into a deadlock between the
-   remote-curl helper and the fetch-pack process when the server side
-   prematurely throws an error and disconnects.  The communication has
-   been updated to make it more robust.
 
- * "git checkout -p" did not handle a newly added path at all.
-   (merge 2c8bd8471a js/checkout-p-new-file later to maint).
+* Other people's trees.
 
- * The code to parse "git bisect start" command line was lax in
-   validating the arguments.
-   (merge 4d9005ff5d cb/bisect-helper-parser-fix later to maint).
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
 
- * Reduce memory usage during "diff --quiet" in a worktree with too
-   many stat-unmatched paths.
-   (merge d2d7fbe129 jk/diff-memuse-optim-with-stat-unmatch later to main=
-t).
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
 
- * The reflog entries for "git clone" and "git fetch" did not
-   anonymize the URL they operated on.
-   (merge 46da295a77 js/reflog-anonymize-for-clone-and-fetch later to mai=
-nt).
+ - git-gui/ comes from git-gui project, maintained by Pratyush Yadav:
 
- * The behaviour of "sparse-checkout" in the state "git clone
-   --no-checkout" left was changed accidentally in 2.27, which has
-   been corrected.
+        https://github.com/prati0100/git-gui.git
 
- * Use of negative pathspec, while collecting paths including
-   untracked ones in the working tree, was broken.
+ - gitk-git/ comes from Paul Mackerras's gitk project:
 
- * The same worktree directory must be registered only once, but
-   "git worktree move" allowed this invariant to be violated, which
-   has been corrected.
-   (merge 810382ed37 es/worktree-duplicate-paths later to maint).
-
- * The effect of sparse checkout settings on submodules is documented.
-   (merge e7d7c73249 en/sparse-with-submodule-doc later to maint).
-
- * Code clean-up around "git branch" with a minor bugfix.
-   (merge dc44639904 dl/branch-cleanup later to maint).
-
- * A branch name used in a test has been clarified to match what is
-   going on.
-   (merge 08dc26061f pb/t4014-unslave later to maint).
-
- * An in-code comment in "git diff" has been updated.
-   (merge c592fd4c83 dl/diff-usage-comment-update later to maint).
-
- * The documentation and some tests have been adjusted for the recent
-   renaming of "pu" branch to "seen".
-   (merge 6dca5dbf93 js/pu-to-seen later to maint).
-
- * The code to push changes over "dumb" HTTP had a bad interaction
-   with the commit reachability code due to incorrect allocation of
-   object flag bits, which has been corrected.
-   (merge 64472d15e9 bc/http-push-flagsfix later to maint).
-
- * "git send-email --in-reply-to=3D<msg>" did not use the In-Reply-To:
-   header with the value given from the command line, and let it be
-   overridden by the value on In-Reply-To: header in the messages
-   being sent out (if exists).
-   (merge f9f60d7066 ra/send-email-in-reply-to-from-command-line-wins lat=
-er to maint).
-
- * "git log -Lx,y:path --before=3Ddate" lost track of where the range
-   should be because it didn't take the changes made by the youngest
-   commits that are omitted from the output into account.
-
- * When "fetch.writeCommitGraph" configuration is set in a shallow
-   repository and a fetch moves the shallow boundary, we wrote out
-   broken commit-graph files that do not match the reality, which has
-   been corrected.
-
- * "git checkout" failed to catch an error from fstat() after updating
-   a path in the working tree.
-   (merge 35e6e212fd mt/entry-fstat-fallback-fix later to maint).
-
- * When an aliased command, whose output is piped to a pager by git,
-   gets killed by a signal, the pager got into a funny state, which
-   has been corrected (again).
-   (merge c0d73a59c9 ta/wait-on-aliased-commands-upon-signal later to mai=
-nt).
-
- * The code to produce progress output from "git commit-graph --write"
-   had a few breakages, which have been fixed.
-
- * Other code cleanup, docfix, build fix, etc.
-   (merge 2c31a7aa44 jx/pkt-line-doc-count-fix later to maint).
-   (merge d63ae31962 cb/t5608-cleanup later to maint).
-   (merge 788db145c7 dl/t-readme-spell-git-correctly later to maint).
-   (merge 45a87a83bb dl/python-2.7-is-the-floor-version later to maint).
-   (merge b75a219904 es/advertise-contribution-doc later to maint).
-   (merge 0c9a4f638a rs/pull-leakfix later to maint).
-   (merge d546fe2874 rs/commit-reach-leakfix later to maint).
-   (merge 087bf5409c mk/pb-pretty-email-without-domain-part-fix later to =
-maint).
-   (merge 5f4ee57ad9 es/worktree-code-cleanup later to maint).
-   (merge 0172f7834a cc/cat-file-usage-update later to maint).
-   (merge 81de0c01cf ma/rebase-doc-typofix later to maint).
-
-----------------------------------------------------------------
-
-Changes since v2.27.0 are as follows:
-
-Abhishek Kumar (4):
-      object: drop parsed_object_pool->commit_count
-      commit-graph: introduce commit_graph_data_slab
-      commit: move members graph_pos, generation to a slab
-      commit-graph: minimize commit_graph_data_slab access
-
-Andrew Ng (1):
-      merge: optimization to skip evaluate_result for single strategy
-
-Ben Keene (1):
-      git-p4.py: fix --prepare-p4-only error with multiple commits
-
-Carlo Marcelo Arenas Bel=C3=B3n (5):
-      t/helper: teach test-regex to report pattern errors (like REG_ILLSE=
-Q)
-      t4210: detect REG_ILLSEQ dynamically and skip affected tests
-      bisect--helper: avoid segfault with bad syntax in `start --term-*`
-      t5608: avoid say() and use "skip_all" instead for consistency
-      commit-reach: avoid is_descendant_of() shim
-
-Chris Torek (3):
-      t/t3430: avoid undefined git diff behavior
-      git diff: improve range handling
-      Documentation: usage for diff combined commits
-
-Christian Couder (40):
-      upload-pack: remove unused 'wants' from upload_pack_data
-      upload-pack: move {want,have}_obj to upload_pack_data
-      upload-pack: move 'struct upload_pack_data' around
-      upload-pack: use 'struct upload_pack_data' in upload_pack()
-      upload-pack: pass upload_pack_data to get_common_commits()
-      upload-pack: pass upload_pack_data to receive_needs()
-      upload-pack: use upload_pack_data writer in receive_needs()
-      upload-pack: move symref to upload_pack_data
-      upload-pack: pass upload_pack_data to send_ref()
-      upload-pack: pass upload_pack_data to check_non_tip()
-      upload-pack: remove static variable 'stateless_rpc'
-      upload-pack: pass upload_pack_data to create_pack_file()
-      upload-pack: use upload_pack_data fields in receive_needs()
-      upload-pack: annotate upload_pack_data fields
-      upload-pack: move static vars to upload_pack_data
-      upload-pack: move use_sideband to upload_pack_data
-      upload-pack: move filter_capability_requested to upload_pack_data
-      upload-pack: move multi_ack to upload_pack_data
-      upload-pack: change multi_ack to an enum
-      upload-pack: pass upload_pack_data to upload_pack_config()
-      upload-pack: move keepalive to upload_pack_data
-      upload-pack: move allow_filter to upload_pack_data
-      upload-pack: move allow_ref_in_want to upload_pack_data
-      upload-pack: move allow_sideband_all to upload_pack_data
-      upload-pack: move pack_objects_hook to upload_pack_data
-      upload-pack: pass upload_pack_data to send_shallow_list()
-      upload-pack: pass upload_pack_data to deepen()
-      upload-pack: pass upload_pack_data to deepen_by_rev_list()
-      upload-pack: pass upload_pack_data to send_unshallow()
-      upload-pack: move shallow_nr to upload_pack_data
-      upload-pack: move extra_edge_obj to upload_pack_data
-      upload-pack: move allow_unadvertised_object_request to upload_pack_=
-data
-      upload-pack: change allow_unadvertised_object_request to an enum
-      upload-pack: pass upload_pack_data to process_haves()
-      upload-pack: pass upload_pack_data to send_acks()
-      upload-pack: pass upload_pack_data to ok_to_give_up()
-      upload-pack: pass upload_pack_data to got_oid()
-      upload-pack: move oldest_have to upload_pack_data
-      upload-pack: refactor common code into do_got_oid()
-      cat-file: add missing [=3D<format>] to usage/synopsis
-
-Denton Liu (18):
-      lib-submodule-update: add space after function name
-      lib-submodule-update: consolidate --recurse-submodules
-      remote-curl: fix typo
-      remote-curl: remove label indentation
-      transport: extract common fetch_pack() call
-      pkt-line: extern packet_length()
-      remote-curl: error on incomplete packet
-      pkt-line: define PACKET_READ_RESPONSE_END
-      stateless-connect: send response end packet
-      t/README: avoid poor-man's small caps GIT
-      CodingGuidelines: specify Python 2.7 is the oldest version
-      lib-submodule-update: prepend "git" to $command
-      t3200: rename "expected" to "expect"
-      t3200: test for specific errors
-      branch: don't mix --edit-description
-      builtin/diff: update usage comment
-      builtin/diff: fix botched update of usage comment
-      lib-submodule-update: pass 'test_must_fail' as an argument
-
-Derrick Stolee (3):
-      line-log: integrate with changed-path Bloom filters
-      commit-reach: create repo_is_descendant_of()
-      commit-reach: use fast logic in repo_in_merge_base
-
-Don Goodman-Wilson (1):
-      init: allow setting the default for the initial branch name via the=
- config
-
-Elijah Newren (11):
-      fast-import: add new --date-format=3Draw-permissive format
-      sparse-checkout: avoid staging deletions of all files
-      dir: fix treatment of negated pathspecs
-      git-sparse-checkout: clarify interactions with submodules
-      dir: fix a few confusing comments
-      dir, clean: avoid disallowed behavior
-      clean: consolidate handling of ignored parameters
-      clean: optimize and document cases where we recurse into subdirecto=
-ries
-      wt-status: show sparse checkout status as well
-      git-prompt: document how in-progress operations affect the prompt
-      git-prompt: include sparsity state as well
-
-Emily Shaffer (3):
-      help: add shell-path to --build-options
-      bugreport: include user interactive shell
-      docs: mention MyFirstContribution in more places
-
-Eric Sunshine (10):
-      worktree: factor out repeated string literal
-      worktree: give "should be pruned?" function more meaningful name
-      worktree: make high-level pruning re-usable
-      worktree: prune duplicate entries referencing same worktree path
-      worktree: prune linked worktree referencing main worktree path
-      worktree: generalize candidate worktree path validation
-      worktree: make "move" refuse to move atop missing registered worktr=
-ee
-      worktree: drop get_worktrees() special-purpose sorting option
-      worktree: drop get_worktrees() unused 'flags' argument
-      worktree: avoid dead-code in conditional
-
-Han-Wen Nienhuys (5):
-      refs.h: clarify reflog iteration order
-      t: use update-ref and show-ref to reading/writing refs
-      refs: improve documentation for ref iterator
-      reftable: clarify how empty tables should be written
-      reftable: define version 2 of the spec to accomodate SHA256
-
-Jacob Keller (16):
-      completion: add test showing subpar git switch completion
-      completion: add tests showing subpar DWIM logic for switch/checkout
-      completion: add tests showing subar checkout --detach logic
-      completion: add tests showing subpar switch/checkout --track logic
-      completion: add tests showing subpar -c/-C startpoint completion
-      completion: add tests showing subpar -c/C argument completion
-      completion: add tests showing subpar switch/checkout --orphan logic
-      completion: replace overloaded track term for __git_complete_refs
-      completion: extract function __git_dwim_remote_heads
-      completion: perform DWIM logic directly in __git_complete_refs
-      completion: improve handling of DWIM mode for switch/checkout
-      completion: improve completion for git switch with no options
-      completion: improve handling of --detach in checkout
-      completion: improve handling of --track in switch/checkout
-      completion: improve handling of -c/-C and -b/-B in switch/checkout
-      completion: improve handling of --orphan option of switch/checkout
-
-Jeff King (14):
-      diff: discard blob data from stat-unmatched pairs
-      upload-pack: actually use some upload_pack_data bitfields
-      t9351: derive anonymized tree checks from original repo
-      fast-export: use xmemdupz() for anonymizing oids
-      fast-export: store anonymized oids as hex strings
-      fast-export: tighten anonymize_mem() interface to handle only strin=
-gs
-      fast-export: stop storing lengths in anonymized hashmaps
-      fast-export: use a flex array to store anonymized entries
-      fast-export: move global "idents" anonymize hashmap into function
-      fast-export: add a "data" callback parameter to anonymize_str()
-      fast-export: allow seeding the anonymized mapping
-      fast-export: anonymize "master" refname
-      fast-export: use local array to store anonymized oid
-      diff: check for merge bases before assigning sym->base
-
-Jiuyang Xie (1):
-      doc: fix wrong 4-byte length of pkt-line message
-
-Johannes Schindelin (16):
-      checkout -p: handle new files correctly
-      clone/fetch: anonymize URLs in the reflog
-      msvc: fix "REG_STARTEND" issue
-      fmt-merge-msg: stop treating `master` specially
-      send-pack/transport-helper: avoid mentioning a particular branch
-      submodule: fall back to remote's HEAD for missing remote.<name>.bra=
-nch
-      docs: add missing diamond brackets
-      init: allow specifying the initial branch name for the new reposito=
-ry
-      clone: use configured default branch name when appropriate
-      remote: use the configured default branch name when appropriate
-      testsvn: respect `init.defaultBranch`
-      docs: adjust for the recent rename of `pu` to `seen`
-      docs: adjust the technical overview for the rename `pu` -> `seen`
-      tests: reference `seen` wherever `pu` was referenced
-      diff-files --raw: show correct post-image of intent-to-add files
-      difftool -d: ensure that intent-to-add files are handled correctly
-
-John Lin (1):
-      bash-completion: add git-prune into bash completion
-
-Jonathan Nieder (5):
-      config: let feature.experimental imply protocol.version=3D2
-      reftable: file format documentation
-      experimental: default to fetch.writeCommitGraph=3Dfalse
-      Revert "check_repository_format_gently(): refuse extensions for old=
- repositories"
-      repository: allow repository format upgrade with extensions
-
-Jonathan Tan (12):
-      t5551: test that GIT_TRACE_CURL redacts password
-      http, imap-send: stop using CURLOPT_VERBOSE
-      http: redact all cookies, teach GIT_TRACE_REDACT=3D0
-      http: use --stdin when indexing dumb HTTP pack
-      http: refactor finish_http_pack_request()
-      http-fetch: refactor into function
-      http-fetch: support fetching packfiles by URL
-      Documentation: order protocol v2 sections
-      Documentation: add Packfile URIs design doc
-      upload-pack: refactor reading of pack-objects out
-      fetch-pack: support more than one pack lockfile
-      upload-pack: send part of packfile response as uri
-
-Josh Steadmon (1):
-      fuzz-commit-graph: properly free graph struct
-
-Junio C Hamano (10):
-      Start the post 2.27 cycle
-      The second batch
-      The third batch
-      The fourth batch
-      The fifth batch
-      The sixth batch
-      The seventh batch
-      Git 2.28-rc0
-      Hopefully the last batch before -rc1
-      Git 2.28-rc1
-
-Laurent Arnoud (1):
-      diff: add config option relative
-
-Luc Van Oostenryck (1):
-      sparse: allow '{ 0 }' to be used without warnings
-
-Marco Trevisan (Trevi=C3=B1o) (1):
-      completion: use native ZSH array pattern matching
-
-Martin =C3=85gren (3):
-      git-rebase.txt: fix description list separator
-      git-diff.txt: don't mark required argument as optional
-      git-diff.txt: reorder possible usages
-
-Matheus Tavares (1):
-      entry: check for fstat() errors after checkout
-
-Miroslav Ko=C5=A1k=C3=A1r (1):
-      doc: fix author vs. committer copy/paste error
-
-Paolo Bonzini (1):
-      t4014: do not use "slave branch" nomenclature
-
-Patrick Steinhardt (1):
-      refs: implement reference transaction hook
-
-Rafael Aquini (1):
-      send-email: restore --in-reply-to superseding behavior
-
-Ramsay Jones (1):
-      upload-pack: fix a sparse '0 as NULL pointer' warning
-
-Randall S. Becker (2):
-      bugreport.c: replace strbuf_write_fd with write_in_full
-      strbuf: remove unreferenced strbuf_write_fd method.
-
-Ren=C3=A9 Scharfe (10):
-      fsck: fix a typo in a comment
-      t1450: increase test coverage of in-tree d/f detection
-      t1450: demonstrate undetected in-tree d/f conflict
-      fsck: detect more in-tree d/f conflicts
-      checkout: add tests for -b and --track
-      checkout: improve error messages for -b with extra argument
-      commit-reach: plug minor memory leak after using is_descendant_of()
-      pull: plug minor memory leak after using is_descendant_of()
-      revision: reallocate TOPO_WALK object flags
-      revision: disable min_age optimization with line-log
-
-SZEDER G=C3=A1bor (7):
-      line-log: remove unused fields from 'struct line_log_data'
-      t4211-line-log: add tests for parent oids
-      line-log: more responsive, incremental 'git log -L'
-      line-log: try to use generation number-based topo-ordering
-      commit-graph: fix progress of reachable commits
-      commit-graph: fix "Writing out commit graph" progress counter
-      commit-graph: fix "Collecting commits from input" progress line
-
-Shourya Shukla (1):
-      submodule: port subcommand 'set-branch' from shell to C
-
-Srinidhi Kaushik (1):
-      diff-files: treat "i-t-a" files as "not-in-index"
-
-Taylor Blau (11):
-      commit-graph.c: extract 'refs_cb_data'
-      commit-graph.c: show progress of finding reachable commits
-      commit-graph.c: peel refs in 'add_ref_to_set'
-      builtin/commit-graph.c: extract 'read_one_commit()'
-      builtin/commit-graph.c: dereference tags in builtin
-      commit-graph.c: simplify 'fill_oids_from_commits'
-      t5318: reorder test below 'graph_read_expect'
-      commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
-      t5318: use 'test_must_be_empty'
-      t5318: test that '--stdin-commits' respects '--[no-]progress'
-      commit.c: don't persist substituted parents when unshallowing
-
-Trygve Aaberge (2):
-      Wait for child on signal death for aliases to builtins
-      Wait for child on signal death for aliases to externals
-
-Ville Skytt=C3=A4 (2):
-      completion: don't override given stash subcommand with -p
-      completion: nounset mode fixes
-
-Xin Li (4):
-      repository: add a helper function to perform repository format upgr=
-ade
-      fetch: allow adding a filter after initial clone
-      sparse-checkout: upgrade repository to version 1 when enabling exte=
-nsion
-      check_repository_format_gently(): refuse extensions for old reposit=
-ories
-
-brian m. carlson (61):
-      t1050: match object ID paths in a hash-insensitive way
-      Documentation: document v1 protocol object-format capability
-      builtin/checkout: simplify metadata initialization
-      t2060: add a test for switch with --orphan and --discard-changes
-      connect: have ref processing code take struct packet_reader
-      wrapper: add function to compare strings with different NUL termina=
-tion
-      remote: advertise the object-format capability on the server side
-      connect: add function to parse multiple v1 capability values
-      connect: add function to fetch value of a v2 server capability
-      pkt-line: add a member for hash algorithm
-      transport: add a hash algorithm member
-      connect: add function to detect supported v1 hash functions
-      send-pack: detect when the server doesn't support our hash
-      connect: make parse_feature_value extern
-      fetch-pack: detect when the server doesn't support our hash
-      connect: detect algorithm when fetching refs
-      builtin/receive-pack: detect when the server doesn't support our ha=
-sh
-      docs: update remote helper docs for object-format extensions
-      transport-helper: implement object-format extensions
-      remote-curl: implement object-format extensions
-      builtin/clone: initialize hash algorithm properly
-      t5562: pass object-format in synthesized test data
-      fetch-pack: parse and advertise the object-format capability
-      setup: set the_repository's hash algo when checking format
-      t3200: mark assertion with SHA1 prerequisite
-      packfile: compute and use the index CRC offset
-      t5302: modernize test formatting
-      builtin/show-index: provide options to determine hash algo
-      t1302: expect repo format version 1 for SHA-256
-      Documentation/technical: document object-format for protocol v2
-      connect: pass full packet reader when parsing v2 refs
-      connect: parse v2 refs with correct hash algorithm
-      serve: advertise object-format capability for protocol v2
-      t5500: make hash independent
-      builtin/ls-remote: initialize repository based on fetch
-      remote-curl: detect algorithm for dumb HTTP by size
-      builtin/index-pack: add option to specify hash algorithm
-      t1050: pass algorithm to index-pack when outside repo
-      remote-curl: avoid truncating refs with ls-remote
-      t/helper: initialize the repository for test-sha1-array
-      t5702: offer an object-format capability in the test
-      t5703: use object-format serve option
-      t5704: send object-format capability with SHA-256
-      t5300: pass --object-format to git index-pack
-      bundle: detect hash algorithm when reading refs
-      remote-testgit: adapt for object-format
-      t9109: make test hash independent
-      t9168: make test hash independent
-      t9108: make test hash independent
-      t9100: make test work with SHA-256
-      t9104: make hash size independent
-      t9101: make hash independent
-      t/lib-git-svn: make hash size independent
-      perl: create and switch variables for hash constants
-      perl: make Git::IndexInfo work with SHA-256
-      perl: make SVN code hash independent
-      git-svn: set the OID length based on hash algorithm
-      git-cvsserver: port to SHA-256
-      git-cvsimport: port to SHA-256
-      git-cvsexportcommit: port to SHA-256
-      http-push: ensure unforced pushes fail when data would be lost
-
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh (1):
-      contrib: subtree: adjust test to change in fmt-merge-msg
+        git://ozlabs.org/~paulus/gitk
 
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
