@@ -2,151 +2,132 @@ Return-Path: <SRS0=XbPV=A4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56C6BC433E3
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9B5FC433DF
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:19:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 285AB20775
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:18:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8588320734
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:19:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="S1+cpYET"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oz7lIUgC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726233AbgGQKSi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 06:18:38 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50505 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725864AbgGQKSg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 06:18:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594981112;
-        bh=J/h2GQ+zMSEQIT0nHCyym+bX2cffpgKPbQstOEO5l80=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=S1+cpYETX9B0QjGGLxPVNWFmXAjV5dP8UPtt3EXgzweh6EvY6FwcqmTqfKK5uyDGs
-         pCvLMOhufqWctl83XaeM+F9TcBuuhPS3wJDL81h9fMBtKuxSval1vJrVGH+xgUEbz0
-         w+lStQ3werYbPztrhiJAI4OF4PpbHOIkIr2HCqdo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.237.98] ([213.196.213.77]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTiPv-1kPh3t0b7d-00Tzdk; Fri, 17
- Jul 2020 12:18:32 +0200
-Date:   Fri, 17 Jul 2020 10:52:06 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v3 2/3] Modify pseudo refs through ref backend storage
-In-Reply-To: <79cd5dd480a4218d4563120c03046375594cc23e.1594925141.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007171042461.54@tvgsbejvaqbjf.bet>
-References: <pull.673.v2.git.1594329108.gitgitgadget@gmail.com>        <pull.673.v3.git.1594925141.gitgitgadget@gmail.com> <79cd5dd480a4218d4563120c03046375594cc23e.1594925141.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725912AbgGQKTs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jul 2020 06:19:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52822 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725864AbgGQKTr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 06:19:47 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 966F37DEE3;
+        Fri, 17 Jul 2020 06:19:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=S6er19/3eEbq2UXsTxdME0CvbvY=; b=Oz7lIU
+        gCILRmHSTun8jRnTUIpQSSBmDiKd70+kqJperVY2Qk86O8PNCxndgfR5pmLic0Dy
+        5InpXu76Orrw5aGL68lvC9p7HsFYhzp4QMXJb49LA+ZIfCh/1r6C2G5kthnaOhUc
+        BbhqeYgrN6bKxffEmJ84xKNbwbgIPaN7KuIrM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dK/+JC+9hAZHjx1WVbg55ZzWfrEgdsuQ
+        O7mkyq/4xx842THvBkDEB1zkbnpNPD9GRS0gfLHLLQ+iXGTn1tTWolmQ5RTo59sj
+        EnJ15w944SVomACVx9qFpUUy3rjz4LJ/1wz0336jF1sWQAmg/s0psgBtktOD+TGj
+        t4t92RdQuS4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DA317DEE0;
+        Fri, 17 Jul 2020 06:19:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E4A237DEDD;
+        Fri, 17 Jul 2020 06:19:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?5a2Z5LiW6b6Z?= sunshilong <sunshilong369@gmail.com>,
+        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Subject: Re: How can I search git log with ceratin keyword but without the other keyword?
+References: <CAAvDm6Z2HcQkyinCD4hKTnqGR3gcXodhoo0YKSnbB-vDJcn3MQ@mail.gmail.com>
+        <CAPUEspg=4HJL8iiNrNp9Wr9sVj5Gw_PciSezHV5iJ1w-ymdzdw@mail.gmail.com>
+        <CAAvDm6avvkXrU-Q8zu7C5WFqfCbf0DN=6cPMU-rOxgmdAh1Ebw@mail.gmail.com>
+        <20200716153159.GA1061124@coredump.intra.peff.net>
+        <CAAvDm6Z6SA8rYYHaFT=APBSx0tM+5rHseP+fRLufgDxvEthsww@mail.gmail.com>
+        <20200717063324.GB1179001@coredump.intra.peff.net>
+        <xmqqd04ufutq.fsf@gitster.c.googlers.com>
+Date:   Fri, 17 Jul 2020 03:19:44 -0700
+In-Reply-To: <xmqqd04ufutq.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 17 Jul 2020 00:45:53 -0700")
+Message-ID: <xmqq7dv2fnpb.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hTsC1ilOJuDT0ghNmCwQdgo0voP5Zbgs9CoGhbxtGxdqVbJV9V4
- 18fnzIm5Meq8WpxBqnxii/OkeZ4Bnlzb9Sk8aB9O8ONfWBaNqMpt7ETsnavFsyOq3zuRN2X
- FuPZkYayIjb5ymQ3J3pFBxjYIAGRKBlqIWwaNON5sN5LcCZDHft4OrIzoO261Xh+DtHRbe5
- AGOi+eOILr9Bn6xauo9rw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dqY426q2F2A=:DUrG6ZuebGfADfnEx40TRq
- vHhF8xlMa4o8ZuUbCV4fx37SinQ5VB+prheizf/4QtxaVjqiqLcu4R2wPORvJTlevBfdjSCNO
- ltGPUe6W5y1Z+cHuFWyEKBWIJ4u0fd31au0Y1HXdXjqC3+/fVX8a2yf68u6r/r2RuiUcrXOt0
- VrH/aepNGGNh+LkvO2wEBG4ZMOEW8Pg/9yl2/GgBtxUD0KG6/6hkuPE0yPNSxEAoHQfG/TuwW
- 3UQcWusVyC2+hnbLVUSXvjpR4ud7TfdQ66k7le0EDG1MKSmJzRoSA0vf2YI63M+q8R7bqEO7X
- jqJm5wyyTw6Twc4cd015JVSQLC7mVIlwfs6JCMAqvYCuF8e9xmRWb++galoO7jqoV8/7enOMh
- LI1MBsiD8six5ugu89iYcFq9Tjimd1wNRjrxI/1U5FZqAu0Y2kOmfAAI2In16izsw4OiKFfAF
- YENZ4cyic9gQhl7bPOE7+H+Dvlp3cbg555KQ3CEneCcwewd+H6ZgWGDBP6PjLa+UzAbkOnH3c
- MV6J5UsPeUwrPlAst1Qeqwp1KuqsnTR/1Bra6AmXDus+et1jHWgXNC4nz2DJroPjszAimt0aF
- 7R9r0Nuhkto3DTJ3qR4/UBGMDf3TS5zzsnn6hL4NqhWoZqz4l4lCJXMsPFiIU1sz7Kh4WhKg2
- mEPsAS8Cigozpm4tFl3tkH6iIaau5yRJdJ3/9OHC9wZS+JrcvZZNgCtJIhTD3Cb1Bywfn33um
- lv8ZigqJNwznfOXFxInyvpLHPZBg6a475tTXC9QwTOqF27YpoawYlZ383m5SnhIjFd/a+9Hx0
- mU/rr4IsA1l6hfup9i5w+f4M5TIuwo1fYSc60x/MUuNn3Frn/XWV+rAwgGbG+DsYLszrRP2ee
- P2bajZXMUDEoscl9yGiwr5iDR+OfjoqMVYcABxnfLSIkr+Vp1vnKc6tQnCvjcsRWlO+zxu3CN
- cGhZ4NOVz0uYQl+iAONbVDyDz6I01jJoQDg9h2a7jQez09Zihm2+GlYS/DmK67GDeg4aDCqFl
- smJRxiyjvTb9hgtt4lE4FiVU9/MtFKAcedSfxCM22r5dil1X90HzLleS9EfbVErLYCvV1Ka7k
- UZkeHjKQgUjbGgaDf+L2xzWDA6+0/2oJ7JTJoWhwXGYe7/S5wlk7x0m+1L0uc6cVulMBoFH/d
- ul/z6MGYmiVFrRxU6h7IuBO46OowEPStoYG9KUfEJBf4aKAhrDocwx0IwEh1Mf1owtmAJESQU
- WsJ8wh4IwabDQkFtetzuZl33Wt/3KPwpJ9AimMA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 09077AE0-C817-11EA-8356-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Han-Wen,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, 16 Jul 2020, Han-Wen Nienhuys via GitGitGadget wrote:
-
-> From: Han-Wen Nienhuys <hanwen@google.com>
+> Jeff King <peff@peff.net> writes:
 >
-> The previous behavior was introduced in commit 74ec19d4be
-> ("pseudorefs: create and use pseudoref update and delete functions",
-> Jul 31, 2015), with the justification "alternate ref backends still
-> need to store pseudorefs in GIT_DIR".
+>> But none of that is exposed via the command-line of "git log". I think
+>> it would be possible to do so, but I'm not sure how tricky it would be
+>> (certainly one complication is that "--not" already means something else
+>> there, but presumably we could have "--grep-and", "--grep-not", etc).
 >
-> Refs such as REBASE_HEAD are read through the ref backend. This can
-> only work consistently if they are written through the ref backend as
-> well. Tooling that works directly on files under .git should be
-> updated to use git commands to read refs instead.
+> Perhaps the definition of "distant future" is about 8 years ;-)
 >
-> The following behaviors change:
->
-> * Updates to pseudorefs (eg. ORIG_HEAD) with
->   core.logAllRefUpdates=3Dalways will create reflogs for the pseudoref.
->
-> * non-HEAD pseudoref symrefs are also dereferenced on deletion. Update
->   t1405 accordingly.
+> https://lore.kernel.org/git/7vr4q45y65.fsf@alter.siamese.dyndns.org/
 
-Unfortunately, there is still a breakage in t1405, although it only really
-shows up on Windows and macOS because of case-insensitive filesystems.
-https://github.com/gitgitgadget/git/runs/879772942?check_suite_focus=3Dtru=
-e
-shows the concrete problem: t1405.17 'delete_ref(refs/heads/foo)' will
-fail thusly:
+Having said that, I do not think our underlying grep machinery is
+equipped to answer "find every commit whose log message has X but
+not Y", even if we exposed the interface that is equivalent to that
+of "git grep" to "git log".
 
-	++ test-tool ref-store main delete-ref msg refs/heads/foo c90e4dc5e12224a=
-428dedfbd45ba11e5531706a2 0
-	error: cannot lock ref 'refs/heads/foo': is at 1e995a94b5a60488b6ebaf78ec=
-779d85a55ea700 but expected c90e4dc5e12224a428dedfbd45ba11e5531706a2
-	error: last command exited with $?=3D1
+There are two levels of boolean combination involved in running our
+"grep" machinery.  The lower level is used to determine if each line
+matches the criteria.  The main consumer of the "grep" machinery is
+of course "git grep" and because it is line oriented, we have quite
+a rich set of operations and combinations to say things like "if a
+line has X and Y on it in any order, but not Z on it, then the line
+is a match."  That is what "--not", "--and", "--or" (not exposed to
+the "git log" interface) express and we even take "(" and ")" for
+grouping, e.g. "( X --or Y ) --and --not Z".
 
-The reason is that there exists a `refs/heads/foo` _and_ the symref `FOO`
-(which points to `refs/heads/master`, which is at 1e995a).
+Another level of combination is to determine if the entire document
+matches.  It often happens that you want to find a document with
+both X and Y in it, and "grep -e X --and -e Y" is *NOT* a way to do
+so---the "--and" is a line-level combinator and tells the machinery
+to find lines that have both X and Y on them.
 
-An earlier symptom of this bug is visible on Linux, too, though: when
-you run t1405.4 'delete_refs(FOO, refs/tags/new-tag)', it shows this:
+We have a fairly ad-hoc single mechanism for boolean combination at
+this level and that is the "--all-match" option, which says "Look at
+the boolean expression you used to find each matching line, and
+separate them at the OR operator at the top level.  Now, apply the
+matching logic to all lines in a document and see if _all_ the
+clauses joined by the top-level OR operators matched at least once.
+If yes, then the document matches."  
 
-	+ git rev-parse FOO --
-	warning: ignoring dangling symref FOO
-	fatal: bad revision 'FOO'
+That is how "git grep --all-match -e X -e Y" finds documents that
+refer to both X and Y but not necessarily on the same line.
 
-(Seeing this warning suggests to me that this should probably be caught
-_by the regression test_, i.e. stderr should be redirected, and it should
-be verified via `test_i18ngrep` that that warning is not shown.)
+There is not much room for the line-level "--not" operator to
+participate in this picture.  "git grep -e X --not -e Y" would mean
+"find lines that has X, or that does not have Y", so as long as a
+document has one line with X on it and one line (which can be but
+does not have to be the same line) that does not have Y on it, the
+variant of that search with "--all-match" in it would say "yup the
+doc matches".  But that is definitely not what the user who wants to
+say "if a doc has X in it, I want to see it, but I do not want to
+see it if it also has Y" wants to see.
 
-The reason for this warning is that the symref `.git/FOO` is no longer
-removed as part of t1405.4 'delete_refs(FOO, refs/tags/new-tag)'. I've
-used this patch to bisect the breakage down to this here patch:
 
-=2D- snip --
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index a8d695cd4f1..779906d607f 100755
-=2D-- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -34,6 +34,7 @@ test_expect_success 'delete_refs(FOO, refs/tags/new-tag)=
-' '
- 	m=3D$(git rev-parse master) &&
- 	$RUN delete-refs 0 nothing FOO refs/tags/new-tag &&
- 	test_must_fail git rev-parse FOO -- &&
-+	test_path_is_missing .git/FOO &&
- 	test_must_fail git rev-parse refs/tags/new-tag --&&
- 	test_must_fail git rev-parse master -- &&
- 	git update-ref refs/heads/master $m
-=2D- snap --
 
-Hopefully you can figure out what is going wrong.
 
-Ciao,
-Dscho
+
+
