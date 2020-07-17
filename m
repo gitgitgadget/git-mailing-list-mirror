@@ -2,172 +2,151 @@ Return-Path: <SRS0=XbPV=A4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	UNWANTED_LANGUAGE_BODY,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85900C433E2
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 09:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56C6BC433E3
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:18:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6941520768
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 09:25:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 285AB20775
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:18:39 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="S1+cpYET"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726059AbgGQJZK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 05:25:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53524 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbgGQJZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 05:25:09 -0400
-X-Greylist: delayed 2009 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Jul 2020 02:25:09 PDT
-Received: from wp126.webpack.hosteurope.de (wp126.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8485::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B586CC061755
-        for <git@vger.kernel.org>; Fri, 17 Jul 2020 02:25:09 -0700 (PDT)
-Received: from p2e50faf0.dip0.t-ipconnect.de ([46.80.250.240] helo=pan.bitplan.com); authenticated
-        by wp126.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1jwM5i-0000WK-QT; Fri, 17 Jul 2020 10:51:38 +0200
-To:     git@vger.kernel.org
-From:   Wolfgang Fahl <wf@bitplan.com>
-Subject: git pull warning
-Autocrypt: addr=wf@bitplan.com; prefer-encrypt=mutual; keydata=
- mQENBE81PbUBCACX2+5dsKRdF4N5SNiqokbZekPpFPEE7oybvEt0+7I8fiJyeO3oA8qfkh2A
- xi/fEMpJqk5Rb0L9k/y+/4yd3xkXe32n9iqvraATjk0t9Aifo0V26eohRCigDGgTjLR4SjpL
- cWPjAwFZjf44g9iZuMw2oUiIPeJZb7AQnmOAw+WDj/HZoDbJMVLbsxseCef5h3oP/pzNW1qU
- tszsxgbtNfhZeKOZuRZlHqNRj3aihStVEazps/mE0bqaQhv2QGSrvZA1ApSWB1nmFGC3k0YI
- TS+zRIxtYI2K+932AiQttdYoIaObRcYqV1G9BtL7l6KClxadGMrNzIsil/PZC8Cb1fm9ABEB
- AAG0HldvbGZnYW5nIEZhaGwgPHdmQGJpdHBsYW4uY29tPokBVQQTAQIAPwIbIwYLCQgHAwIG
- FQgCCQoLBBYCAwECHgECF4AWIQSYI/xJldfKDYF+WnqQoAqcuYDxWAUCXHUFNQUJEuNiAAAK
- CRCQoAqcuYDxWMbfB/sFaKXOSGaK5NUpTZRlSkLvNrR3wc6Ega5Ts04qmhxd/5Wu4NMZMIGq
- AB/C1C0DpIwlxqbMsyFaeO28Y4D7z+LuVdhZTTNT31SEoL+fTU+S0jdKKa3WWFigtCDcIDkE
- ezmFjxfwPBMdI0k0aFNL7ACSu5tgqBLWPi8DEdI+7JeXJ6IRzxAWYB7ebThcUwyCtYK2xLr3
- j5edw84tD6s1cWR7f1tT/B/8zqH0a84iIzafhb2y+9UC9z+pGYc859rq3nWs6oxzHGQM2yB+
- NbNpTdpENjFAp6G7YwUoxU578M6KsYdYZwUnkpnwQkbdX/tDmP5zfXqZyQ15Cp2tQWbWnIvv
- uQENBE81PbUBCACjg30unuEFb2rTK6C/68IkPnJSJ2CTn0UymAglJmLY6/9z3wiPoySUKyYy
- 9+sD0G5MUiVhXmXsbJUhM5JjLx1Z2jRQopPSOKLOJFmARS57Bghm0CQAZKO/KsKsftgkhUjz
- 5RmmTZLYbgYB3BbgLCp4Sj1EXchJKTSfF++3rCHdNYJ8qG/QkqgiXexD1B10Yp1jRgi/Pkqh
- MNbgKKsI7DPyHLruNeFqp7dd2y0nmtW7AQnoz++ghqGEmITwi90x4fvH/nmaV/3qsD99rjmg
- DhZQy/XyLQaNyiU5D/gd9hD1KGKDS48YE7Z8w+8wEq/E03mQCPUQumrzl7nJV99bf29XABEB
- AAGJATwEGAECACYCGwwWIQSYI/xJldfKDYF+WnqQoAqcuYDxWAUCXHUFIAUJEuNh6wAKCRCQ
- oAqcuYDxWLnzB/9mU+9pHLMM4uHSk+NtkpcsKsG4eApkI7Y6rCyeZ9/fzwEGEX+KJRT4sOJr
- bL1ISkeqwiVsPEOyj33Uc9wi2NbRREXZR52gRM6SRQ1qUCJhyqfPrdgnHykZ2XYDqg4yDGy8
- NrCZhremEuVoXlkgx2Olpi/ZYc3Q7V5kNXT5Lj3mCb4txtSBwIy6VWckVu9TpS813wsXwjNm
- sIMEifMQ4RwimHQo43wpL0jQOX50WJ2ihupsSG7YrhJZ12nxSikNfp71YjFlhjOWUg3rRBQU
- 75IuzaXtKLRvOliXzb4xzmWFFgS+zY/wzNEtjyHMoyxITX7GnWypzr2IrR+mJac5NoKu
-Organization: BITPlan GmbH
-Message-ID: <30eadf73-689a-b5fd-6e59-bfef4f48814b@bitplan.com>
-Date:   Fri, 17 Jul 2020 10:51:38 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:68.0)
- Gecko/20100101 Thunderbird/68.10.0
+        id S1726233AbgGQKSi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jul 2020 06:18:38 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50505 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725864AbgGQKSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 06:18:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1594981112;
+        bh=J/h2GQ+zMSEQIT0nHCyym+bX2cffpgKPbQstOEO5l80=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=S1+cpYETX9B0QjGGLxPVNWFmXAjV5dP8UPtt3EXgzweh6EvY6FwcqmTqfKK5uyDGs
+         pCvLMOhufqWctl83XaeM+F9TcBuuhPS3wJDL81h9fMBtKuxSval1vJrVGH+xgUEbz0
+         w+lStQ3werYbPztrhiJAI4OF4PpbHOIkIr2HCqdo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.237.98] ([213.196.213.77]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTiPv-1kPh3t0b7d-00Tzdk; Fri, 17
+ Jul 2020 12:18:32 +0200
+Date:   Fri, 17 Jul 2020 10:52:06 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v3 2/3] Modify pseudo refs through ref backend storage
+In-Reply-To: <79cd5dd480a4218d4563120c03046375594cc23e.1594925141.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2007171042461.54@tvgsbejvaqbjf.bet>
+References: <pull.673.v2.git.1594329108.gitgitgadget@gmail.com>        <pull.673.v3.git.1594925141.gitgitgadget@gmail.com> <79cd5dd480a4218d4563120c03046375594cc23e.1594925141.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="HV3U8idu9PZmI4hVcf3kxAPjOBunPpY7Q"
-X-bounce-key: webpack.hosteurope.de;wf@bitplan.com;1594977909;bf70be14;
-X-HE-SMSGID: 1jwM5i-0000WK-QT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:hTsC1ilOJuDT0ghNmCwQdgo0voP5Zbgs9CoGhbxtGxdqVbJV9V4
+ 18fnzIm5Meq8WpxBqnxii/OkeZ4Bnlzb9Sk8aB9O8ONfWBaNqMpt7ETsnavFsyOq3zuRN2X
+ FuPZkYayIjb5ymQ3J3pFBxjYIAGRKBlqIWwaNON5sN5LcCZDHft4OrIzoO261Xh+DtHRbe5
+ AGOi+eOILr9Bn6xauo9rw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dqY426q2F2A=:DUrG6ZuebGfADfnEx40TRq
+ vHhF8xlMa4o8ZuUbCV4fx37SinQ5VB+prheizf/4QtxaVjqiqLcu4R2wPORvJTlevBfdjSCNO
+ ltGPUe6W5y1Z+cHuFWyEKBWIJ4u0fd31au0Y1HXdXjqC3+/fVX8a2yf68u6r/r2RuiUcrXOt0
+ VrH/aepNGGNh+LkvO2wEBG4ZMOEW8Pg/9yl2/GgBtxUD0KG6/6hkuPE0yPNSxEAoHQfG/TuwW
+ 3UQcWusVyC2+hnbLVUSXvjpR4ud7TfdQ66k7le0EDG1MKSmJzRoSA0vf2YI63M+q8R7bqEO7X
+ jqJm5wyyTw6Twc4cd015JVSQLC7mVIlwfs6JCMAqvYCuF8e9xmRWb++galoO7jqoV8/7enOMh
+ LI1MBsiD8six5ugu89iYcFq9Tjimd1wNRjrxI/1U5FZqAu0Y2kOmfAAI2In16izsw4OiKFfAF
+ YENZ4cyic9gQhl7bPOE7+H+Dvlp3cbg555KQ3CEneCcwewd+H6ZgWGDBP6PjLa+UzAbkOnH3c
+ MV6J5UsPeUwrPlAst1Qeqwp1KuqsnTR/1Bra6AmXDus+et1jHWgXNC4nz2DJroPjszAimt0aF
+ 7R9r0Nuhkto3DTJ3qR4/UBGMDf3TS5zzsnn6hL4NqhWoZqz4l4lCJXMsPFiIU1sz7Kh4WhKg2
+ mEPsAS8Cigozpm4tFl3tkH6iIaau5yRJdJ3/9OHC9wZS+JrcvZZNgCtJIhTD3Cb1Bywfn33um
+ lv8ZigqJNwznfOXFxInyvpLHPZBg6a475tTXC9QwTOqF27YpoawYlZ383m5SnhIjFd/a+9Hx0
+ mU/rr4IsA1l6hfup9i5w+f4M5TIuwo1fYSc60x/MUuNn3Frn/XWV+rAwgGbG+DsYLszrRP2ee
+ P2bajZXMUDEoscl9yGiwr5iDR+OfjoqMVYcABxnfLSIkr+Vp1vnKc6tQnCvjcsRWlO+zxu3CN
+ cGhZ4NOVz0uYQl+iAONbVDyDz6I01jJoQDg9h2a7jQez09Zihm2+GlYS/DmK67GDeg4aDCqFl
+ smJRxiyjvTb9hgtt4lE4FiVU9/MtFKAcedSfxCM22r5dil1X90HzLleS9EfbVErLYCvV1Ka7k
+ UZkeHjKQgUjbGgaDf+L2xzWDA6+0/2oJ7JTJoWhwXGYe7/S5wlk7x0m+1L0uc6cVulMBoFH/d
+ ul/z6MGYmiVFrRxU6h7IuBO46OowEPStoYG9KUfEJBf4aKAhrDocwx0IwEh1Mf1owtmAJESQU
+ WsJ8wh4IwabDQkFtetzuZl33Wt/3KPwpJ9AimMA==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---HV3U8idu9PZmI4hVcf3kxAPjOBunPpY7Q
-Content-Type: multipart/mixed; boundary="N3xOdnv9H5qKNYQOqHzLPjUEbjYRIpY33"
+Hi Han-Wen,
 
---N3xOdnv9H5qKNYQOqHzLPjUEbjYRIpY33
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 16 Jul 2020, Han-Wen Nienhuys via GitGitGadget wrote:
 
+> From: Han-Wen Nienhuys <hanwen@google.com>
+>
+> The previous behavior was introduced in commit 74ec19d4be
+> ("pseudorefs: create and use pseudoref update and delete functions",
+> Jul 31, 2015), with the justification "alternate ref backends still
+> need to store pseudorefs in GIT_DIR".
+>
+> Refs such as REBASE_HEAD are read through the ref backend. This can
+> only work consistently if they are written through the ref backend as
+> well. Tooling that works directly on files under .git should be
+> updated to use git commands to read refs instead.
+>
+> The following behaviors change:
+>
+> * Updates to pseudorefs (eg. ORIG_HEAD) with
+>   core.logAllRefUpdates=3Dalways will create reflogs for the pseudoref.
+>
+> * non-HEAD pseudoref symrefs are also dereferenced on deletion. Update
+>   t1405 accordingly.
 
+Unfortunately, there is still a breakage in t1405, although it only really
+shows up on Windows and macOS because of case-insensitive filesystems.
+https://github.com/gitgitgadget/git/runs/879772942?check_suite_focus=3Dtru=
+e
+shows the concrete problem: t1405.17 'delete_ref(refs/heads/foo)' will
+fail thusly:
 
-Vielen Dank f=C3=BCr das Ausf=C3=BCllen eines Git-Fehlerberichts!
-Bitte antworten Sie auf die folgenden Fragen, um uns dabei zu helfen, Ihr=
+	++ test-tool ref-store main delete-ref msg refs/heads/foo c90e4dc5e12224a=
+428dedfbd45ba11e5531706a2 0
+	error: cannot lock ref 'refs/heads/foo': is at 1e995a94b5a60488b6ebaf78ec=
+779d85a55ea700 but expected c90e4dc5e12224a428dedfbd45ba11e5531706a2
+	error: last command exited with $?=3D1
 
-Problem zu verstehen.
+The reason is that there exists a `refs/heads/foo` _and_ the symref `FOO`
+(which points to `refs/heads/master`, which is at 1e995a).
 
-Was haben Sie gemacht, bevor der Fehler auftrat? (Schritte, um Ihr Fehler=
+An earlier symptom of this bug is visible on Linux, too, though: when
+you run t1405.4 'delete_refs(FOO, refs/tags/new-tag)', it shows this:
 
-zu reproduzieren)
-git pull
-Was haben Sie erwartet, was passieren soll? (Erwartetes Verhalten)
-git pull
-Was ist stattdessen passiert? (Wirkliches Verhalten)
-a warning
+	+ git rev-parse FOO --
+	warning: ignoring dangling symref FOO
+	fatal: bad revision 'FOO'
 
-git pull
-warning: Es wird davon abgeraten zu Pullen, ohne anzugeben, wie mit
-abweichenden
-Branches umgegangen werden soll. Sie k=C3=B6nnen diese Nachricht unterdr=C3=
-=BCcken,
-indem Sie einen der folgenden Befehle ausf=C3=BChren, bevor der n=C3=A4ch=
-ste Pull
-ausgef=C3=BChrt wird:
+(Seeing this warning suggests to me that this should probably be caught
+_by the regression test_, i.e. stderr should be redirected, and it should
+be verified via `test_i18ngrep` that that warning is not shown.)
 
-=C2=A0 git config pull.rebase false=C2=A0 # Merge (Standard-Strategie)
-=C2=A0 git config pull.rebase true=C2=A0=C2=A0 # Rebase
-=C2=A0 git config pull.ff only=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # auss=
-chlie=C3=9Flich Vorspulen
+The reason for this warning is that the symref `.git/FOO` is no longer
+removed as part of t1405.4 'delete_refs(FOO, refs/tags/new-tag)'. I've
+used this patch to bisect the breakage down to this here patch:
 
-Sie k=C3=B6nnen statt "git config" auch "git config --global" nutzen, um
-einen Standard f=C3=BCr alle Repositories festzulegen. Sie k=C3=B6nnen au=
-ch die
-Option --rebase, --no-rebase oder --ff-only auf der Kommandozeile nutzen,=
+=2D- snip --
+diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
+index a8d695cd4f1..779906d607f 100755
+=2D-- a/t/t1405-main-ref-store.sh
++++ b/t/t1405-main-ref-store.sh
+@@ -34,6 +34,7 @@ test_expect_success 'delete_refs(FOO, refs/tags/new-tag)=
+' '
+ 	m=3D$(git rev-parse master) &&
+ 	$RUN delete-refs 0 nothing FOO refs/tags/new-tag &&
+ 	test_must_fail git rev-parse FOO -- &&
++	test_path_is_missing .git/FOO &&
+ 	test_must_fail git rev-parse refs/tags/new-tag --&&
+ 	test_must_fail git rev-parse master -- &&
+ 	git update-ref refs/heads/master $m
+=2D- snap --
 
-um das konfigurierte Standardverhalten pro Aufruf zu =C3=BCberschreiben.
+Hopefully you can figure out what is going wrong.
 
-Bereits aktuell.
-Was ist der Unterschied zwischen dem, was Sie erwartet haben und was
-wirklich passiert ist?
-the warning
-Sonstige Anmerkungen, die Sie hinzuf=C3=BCgen m=C3=B6chten:
-please remove the warning
-Bitte =C3=BCberpr=C3=BCfen Sie den restlichen Teil des Fehlerberichts unt=
-en.
-Sie k=C3=B6nnen jede Zeile l=C3=B6schen, die Sie nicht mitteilen m=C3=B6c=
-hten.
-
-
-[System Info]
-git Version:
-git version 2.27.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-uname: Darwin 17.7.0 Darwin Kernel Version 17.7.0: Thu Jan 23 07:05:23
-PST 2020; root:xnu-4570.71.69~1/RELEASE_X86_64 x86_64
-Compiler Info: clang: 10.0.0 (clang-1000.10.44.4)
-libc Info: keine libc Informationen verf=C3=BCgbar
-"/tmp/git-bugreport-2020-07-17-1049.txt" 33L, 1083C
-
---=20
-
-BITPlan - smart solutions
-Wolfgang Fahl
-Pater-Delp-Str. 1, D-47877 Willich Schiefbahn
-Tel. +49 2154 811-480, Fax +49 2154 811-481
-Web: http://www.bitplan.de
-BITPlan GmbH, Willich - HRB 6820 Krefeld, Steuer-Nr.: 10258040548, Gesch=C3=
-=A4ftsf=C3=BChrer: Wolfgang Fahl=20
-
-
-
---N3xOdnv9H5qKNYQOqHzLPjUEbjYRIpY33--
-
---HV3U8idu9PZmI4hVcf3kxAPjOBunPpY7Q
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEmCP8SZXXyg2Bflp6kKAKnLmA8VgFAl8RZpoACgkQkKAKnLmA
-8Vj1jQf/ZbkXzEz5Swx0qn2wTrTMbQgWE4QLffD4L+206t9G1PyVBiBy9ACJ6Eds
-MXh6fGI7wYulK4yrWsEs4rHKLseGymkWq5QPRbTR32pMe3O6wKr1bUVLnkSY21xP
-0GE1hbSPWHsxA7oVSksL2NR2XclMOCuisZZG0nGH5Y+gWy8bo8k9p4/XXuUwlAQI
-tDVI/ZdX7STA/ZUDJCkMrpAC6/S9tGBugCMMo4t7bdJPBXp4gCA5lDUdV83O2bIR
-h0gYqx99ID7kkxLsRfRujc5EONZy3WdRB70yGZwgNVFh+x7oh3/lDtzh6TjDin2I
-WT9vGCUqqqZwQaMelLJhuNaKJr3+OA==
-=Pv5M
------END PGP SIGNATURE-----
-
---HV3U8idu9PZmI4hVcf3kxAPjOBunPpY7Q--
+Ciao,
+Dscho
