@@ -2,98 +2,64 @@ Return-Path: <SRS0=XbPV=A4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45A9DC433E0
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 20:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB465C433E2
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 21:21:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DC652070E
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 20:51:38 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uzhkXdM+"
+	by mail.kernel.org (Postfix) with ESMTP id 8E21220775
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 21:21:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726453AbgGQUvh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 16:51:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53197 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726393AbgGQUvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 16:51:36 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E80B62385;
-        Fri, 17 Jul 2020 16:51:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=O
-        +Go5h5e9qisv2JHvjflAAcyvYA=; b=uzhkXdM+ebkVISCx6qE6OQAnMmQ5hVnS+
-        aGtvg3N5BIUXVJnRoGMuS9eiqyLNgTL3bIQuoQtLR46w+feXBVoj7X1FQ/8v0yMm
-        dj0Vq0m1pKABAdxNZBGyhOhjGn3zgPROls+2PQmJjbiHvDZJZ6IXDBJ0qzx+o5lq
-        WI7FHJy2FQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=Vkc
-        kQxMlj8PXU93edGYpGI6XPlZ5q7HmlkNECZYuKpeEUBaOOsdCEUuQ4E/awiYyxmZ
-        ptZnaX0vucPlgDU95pSgMsXnRyI/5BAVJSZF5l5rel2bbpMy/2zk9uNpNQ6ItmQR
-        iDaOWNDMAgHA1rLNzbja5HbTibnfnKvGtZO5rBo4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 976C662384;
-        Fri, 17 Jul 2020 16:51:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1F59962382;
-        Fri, 17 Jul 2020 16:51:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] RelNotes: update the v0 with extension situation
-Date:   Fri, 17 Jul 2020 13:51:33 -0700
-Message-ID: <xmqqk0z1dfvu.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726734AbgGQVVZ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 17 Jul 2020 17:21:25 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:60797 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726204AbgGQVVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 17:21:24 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 06HLLJkK042420
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 17 Jul 2020 17:21:20 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <xmqqv9ildh46.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqv9ildh46.fsf@gitster.c.googlers.com>
+Subject: RE: [ANNOUNCE] Git v2.28.0-rc1
+Date:   Fri, 17 Jul 2020 17:21:10 -0400
+Message-ID: <00d001d65c80$3519c960$9f4d5c20$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4CAB5D18-C86F-11EA-8E96-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJqtZpURTMUnHUe8X62Ipjt5O1rRqfjkXcQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With the two-patch series for regression fix, to the users from 2.27
-days, there is no visible behaviour change---we do not warn and fail
-use of v0 repositories with newer extensions yet, so there is nothing
-to note in the backward compatibility section.
+On July 17, 2020 4:25 PM, Junio C Hamano Wrote:
+> A release candidate Git v2.28.0-rc1 is now available for testing at the usual
+> places.  It is comprised of 295 non-merge commits since v2.27.0, contributed
+> by 43 people, 10 of which are new faces.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+The prior commit just before this one, and the rc0 commit both failed t3200.93 and t3200.97 on NonStop. This looks like a recurrence if the situation where a test was written assuming a specific error message that is different on the NonStop platform. The error in both causes is expecting "could not lock config file .git/config: File exists" which is not what the system reports. The strerror proc reports "File already exists".
 
- * I noticed that this was needed but unfortunately not before
-   tagging and tarballing.
+A similar situation was previously discussed as part of fixes to t1901 (https://public-inbox.org/git/020c01d5f880$1cf7c580$56e75080$@nexbridge.com/#r in the mail archive.
 
- Documentation/RelNotes/2.28.0.txt | 9 ---------
- 1 file changed, 9 deletions(-)
+Sincerely,
+Randall
 
-diff --git a/Documentation/RelNotes/2.28.0.txt b/Documentation/RelNotes/2.28.0.txt
-index 934f5e652b..da9cafb788 100644
---- a/Documentation/RelNotes/2.28.0.txt
-+++ b/Documentation/RelNotes/2.28.0.txt
-@@ -9,15 +9,6 @@ Backward compatibility notes
-  * "fetch.writeCommitGraph" is deemed to be still a bit too risky and
-    is no longer part of the "feature.experimental" set.
- 
-- * It used to be that setting extensions.* configuration variables
--   alone, while leaving core.repositoryFormatVersion=0, made these
--   settings effective, which was a wrong thing to do.  In version 0,
--   there was no special meaning in extensions.* configuration
--   variables.  This has been corrected.  If you need these repository
--   extensions to be effective, the core.repositoryFormatVersion
--   variable needs to be updated to 1 after vetting these extensions.*
--   variables are set correctly.
--
- 
- UI, Workflows & Features
- 
--- 
-2.28.0-rc1
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
+
+
 
