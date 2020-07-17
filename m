@@ -2,73 +2,72 @@ Return-Path: <SRS0=XbPV=A4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 613F6C433E0
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAEBCC433DF
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 12:59:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AC2420717
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:58:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B60B21744
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 12:59:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="L/u1uDfN"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PWkiLA3Q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726056AbgGQK6L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 06:58:11 -0400
-Received: from mout.gmx.net ([212.227.15.18]:45633 "EHLO mout.gmx.net"
+        id S1726401AbgGQM75 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jul 2020 08:59:57 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56581 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725950AbgGQK6K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 06:58:10 -0400
+        id S1726090AbgGQM74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 08:59:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594983488;
-        bh=wMGN+jVF/boVmaN5UbUPBStnXntsRZ/mzV05V1zunvU=;
+        s=badeba3b8450; t=1594990794;
+        bh=5fgY+ZF1TKtbSTqMhPaCB8Y40OeA1m3S2kGidVFmriM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=L/u1uDfNV18owe6b6UTlr2zTy3ZjhW9/pbyc7scaWtt8Ld1FP9tDc3owmdm7LexNi
-         I0814b2crxjlfolzmU8AUT26Wcr3fBFJljZwzOndhUPph+1LgQwU6RrYlZhXfaewJs
-         ag1GD3JAERKkfUFZh+qKcVjjPgv6u2m7J/KG8t9s=
+        b=PWkiLA3QiG5PGONNnTPDPrkaKsS/fS0pCD3kLMWMc+MmaRWC4l8fMIAgOfDq0P59g
+         xs1OliwisB30OcsFrRDJMSpf/iGD+f1QTIVezQ/kKRBClYSkMYKTratU5K7GGxVoL0
+         ZqqlFul4AlcPo4WKrNZg+VClMYYUP5/CNzvQaR5M=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.237.98] ([213.196.213.77]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MzyuS-1kkNew1sOs-00x0iz; Fri, 17
- Jul 2020 12:58:08 +0200
-Date:   Fri, 17 Jul 2020 11:31:43 +0200 (CEST)
+Received: from [172.19.237.98] ([213.196.213.77]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ml6m4-1khYUo2jro-00lTUK; Fri, 17
+ Jul 2020 14:59:54 +0200
+Date:   Fri, 17 Jul 2020 13:33:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.28.0-rc0
-In-Reply-To: <1B17D6F1-953F-476A-87A8-FA0FE5B5C2D0@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007171130050.54@tvgsbejvaqbjf.bet>
-References: <20200710135935.6416-1-johannes.schindelin@gmx.de> <1B17D6F1-953F-476A-87A8-FA0FE5B5C2D0@gmail.com>
+To:     Wolfgang Fahl <wf@bitplan.com>
+cc:     git@vger.kernel.org
+Subject: Re: git pull warning
+In-Reply-To: <30eadf73-689a-b5fd-6e59-bfef4f48814b@bitplan.com>
+Message-ID: <nycvar.QRO.7.76.6.2007171330010.54@tvgsbejvaqbjf.bet>
+References: <30eadf73-689a-b5fd-6e59-bfef4f48814b@bitplan.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-669608368-1594978304=:54"
-X-Provags-ID: V03:K1:hZE16qgMZ5qp+Y8vVHEjaAOzMZZMbrZ/YzPoVaoYiHhTDLdSrR9
- k55JRQMynPYc4GpG6/Ox/0SfIHHoCjHTB8PU4mZSVx36XasqpQGXzGL1tSMKkrxrRxFeHQG
- SThdEepu0Y2NVjK1Na7nETC5bCiB6ZGdpf+9vpXVecRANuKUJ9eQF0ufhTXrW/fJ3tI5QUA
- sVoujxRYThbTA5hDWn8ag==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+JvAEcxiVGc=:tSHp522NdB08TjwSs3NGy8
- M27t5KgloMs8WnwGQUve6Jo3ly3VRo6/VUFUgo7TCr2ud9YIEQAKHKv0CFK91+rPW+JHEncvx
- S2TmL56rJd3LVT0l2F8liSwtXjeYOKHfB7gwsngb+oJugBdqRPtyCj6UBoxgOi/fM/TqBP1H7
- r1paHHbG1/NGBk6FBtVxKyz24lyfJgUGIqFbXtMoM72OIWIfopBfxXAH10XjrW4ApHSFKtp8Y
- BBbe0Oy/XspnXILmyLaAvr74njGF8zQ+V/u4d3v3kqUrvWePPa5kJv6BZywQd4zIMTRYiY5CY
- J9ojPxd7lcqb5CzTt1QTPEHBYipu8DAKbL4kVTNu3e7FpF7NdbZojn4LVehGC3E1eE2baP5Qp
- 1VhUyFNT5CSwb05tBsRlhKJm0FcE1tPfuPqHBq0LN9bniitEDPPr/i6xGs05NcKoqnxiGzkc1
- JbtHdKuQQnhZMHt24NxqOzNTCnY6tnXkj6QCRqbh6Hds5Cyg5ajU73HYtfc0We2yk63cBHqKI
- C2s8VVdDzRVcbLOAeLFXfRHcv9F3byp5NuBHbVbQ3EA4ZR27RHnmjb+ltKYA5ypyMel9WYDBf
- hyn/QvqrINA2Zj0nsruzUnhuDDj9MdZm6lDHJhKQMo+HTPQw7O4S69ED3L5krNSQRm/Dmp4hi
- V3FHd/qCF/yStqYpZOxN3ZTKjcIgcZCVh6mFaGrAw9USs7PUW1gJZguQji8RW/Pg9Ragxg9q9
- 3NeCE+gWMKutrIJnzpAYC64PY6dj7Es8OUt3atCoX885kF6P5hbgDKbsrEzNg5E7MW+9+F4H6
- z5w+cnytXF0MwpLwQ/Wv+fh4Y9wD5ZyuF+t8BYZC1FwFthqbKNKgrCHNRqw3968NUnJy18FIU
- n87g7cVB+znK8hGQrxPea/YSLirljh2zA/AJtTzOUtSHc3LQmZVFcWvC2oRF8ElgRqPD91Qi8
- 3MYEdOtVOkkow6qg7XMraFpXpkD7To8wvTc3WXCiKiV40DA5dmQgZ6HNksQmocS59k761roba
- QKhERjg+IgGKI+zQyxS4BhGW/GCI7mMBvK58v6gtoqHAgVzIkXjEr+Ct0NhRx7lbU3bNz1cTP
- COeDw4c/Ts3fIVZdIhhVFmCDkt6oGMzWzWkecRlDYedP4eRI9cYlDIke1oa5ZC/xjZiG1ND2L
- Eyf/ejFtHWMSEbFYmjOhp+c6J7ebh31yPhZ/MEPkKzBf1PZ38tO2dvSBPJC1c6kUwRtBkaHIM
- CmxDg4QPn2WXtnTFRMQbzjMwMysQTc0rrreVqdw==
+Content-Type: multipart/mixed; boundary="8323328-233178749-1594985611=:54"
+X-Provags-ID: V03:K1:d11QRYTF2l1j/NTDuMAF5xJHB5+O0+6w9kMteapDS0xUhBiEmjE
+ mHIN9YiEXhoWRtTRcB0qC0N9JqPmTTlegoW2NnxJoy+TsW0s7iFbu72K04CAXfzGguQV3ap
+ VNQLrriHyhJAMfEymGNDV016s/gFfVP2MzpFdhYul2yROxJQ9V8KGr8Yem6arg3pKNm8cXb
+ Ly6dwtKp5jmEIdAkVRKiA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tyCbGpC98rs=:Kyv0BrjfFF/qRXV4ee+xT8
+ FNeEr3ILVXKXGbmzLZby/BLtyadHiPnmoCfgjHmjob9oW1ZB1Elq+94M2NOvksPNkCEpAqG/W
+ uWIORkFU2ls/gGvk1QramJ/iUiJKhaLnBfaRJv2XJW8YNSbw1SLx4VRMaIG+5qkDPXQB82vhk
+ Zsmqmht7FQixS3VvJw++qwcrqpdc+x4Y1xLBK5mGy7oJKI6nOMDzmfhC34dpuwvSOunFpRdVc
+ 2YctfECl34fIPnn8FYoSz8U6NgAo4cvKvU2zL3YptuoHLSumEhMSMWUO8v9rYmNbSnrw7XCjd
+ 5y25/AiKNZHBikQIczyky3/fr6VBm47DcMTtnfF2MF0jGzl+Vz6uOUmzh875+byUp1fVR/0K5
+ 8Y4VUWg1IMHJ8KtyuidYM2hq5b0TZJgW1QGwXRNCYl789nBYZ+uQ2f9GqyhCrljvuB3QkZW93
+ EAQhYwrEOM/KpopfBjpsCgCHIEa0nqQ6X5ORpxk/D7h32yq8ZQ47rV9vVTJiqH++wOzhZnEh+
+ 0Ys/yZARz4FXEo9LEU4TlKgZJvUzpVMHwsQn4r5DAHDQnDLKj1GSCPdhQxV5sO1UDXl5SovGh
+ tqR+cQcZ0GPtLS5mZzXFZpXXwbNPHbEMyBJaHtsIpbgJ7HCD0dWtk4QSyuq4R3VXlDJ9iAUCt
+ mRWxWI20WmyTUkOCnnrge7G8g+zaa+RXkzpbisKHYYHU6KluLZQ603M+knfCLIBJ9h15rz2Ed
+ XR7jDPzpCI2x9zBnuYKH8X72XwkxG1qBStQbVtSlVds6Hq8hraVf7JeXHPWr3eiGs9EQaQqQ6
+ yVcLDXEmXZpo+vQIAbbZmu6o5cFxMD7ehGsCydf2zLtSmR9tOzV+mGrwoBjfK9kOoiDoSbTaz
+ hLIYAuuPd+4MzmkAAprZMy6PIWHImdYFgOvmUa6kA42xZtI2KHiy7ssdq30OO7GPuK7YgI9q/
+ Toz6w3n+wIEi5KIzcsjBKjHoejg0OU4SYaFIfcFNbWfGQNjvhugi4nrp7KhTnf3GI7CCynwsX
+ OYJ40150R0SjzaJz6SVc7mADrFQRnHmfPMAfwq3VEpymeGcvijNpfqfhny8K8afreU+MwifUu
+ 8c7xRUDbubZ9xB7w/jLVgqPEp9iv1zupOcJHQUxrKL2pAQFyJco+Q5g5WwTcbzjgmbGVNeFgi
+ UAkFM0muNpq8SvamUUaEQA6MAI2Cw6IcZyamMIiNfOmppDdcgNoWd7I2Mbgm/paGRi/xjNaBx
+ w8R/31B4N5ZwwEwBVj53ZxmHzyad/6WsKUZVmww==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -77,43 +76,62 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-669608368-1594978304=:54
+--8323328-233178749-1594985611=:54
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Kaartic,
+Hi Wolfgang,
 
-On Fri, 17 Jul 2020, Kaartic Sivaraam wrote:
+please note that the language on this mailing list is English, it is a bit
+rude to assume that every reader on this list will learn German just to
+read your mail.
 
-> On 10 =E0=AE=9C=E0=AF=82=E0=AE=B2=E0=AF=88, 2020 7:29:35 PM IST, Johanne=
-s Schindelin <johannes.schindelin@gmx.de> wrote:
+On Fri, 17 Jul 2020, Wolfgang Fahl wrote:
+
+> [...]
+> git pull
+> warning: Es wird davon abgeraten zu Pullen, ohne anzugeben, wie mit
+> abweichenden
+> Branches umgegangen werden soll. Sie k=C3=B6nnen diese Nachricht unterdr=
+=C3=BCcken,
+> indem Sie einen der folgenden Befehle ausf=C3=BChren, bevor der n=C3=A4c=
+hste Pull
+> ausgef=C3=BChrt wird:
 >
-> >Changes since Git for Windows v2.27.0 (June 1st 2020)
-> >
-> >New Features
-> >
-> >  * Comes with Git v2.28.0-rc0.
-> >  * Comes with subversion v1.14.0.
-> >  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-> >    3.1.5.
-> >  * Comes with the designated successor of Git Credential Manager for
-> >    Windows (GCM for Windows), the cross-platform Git Credential
-> >    Manager Core. For now, this is opt-in, with the idea of eventually
-> >    retiring GCM for Windows.
-> >  * Comes with cURL v7.71.1.
-> >  * Comes with Perl v5.32.0.
-> >  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-> >    3.1.6.
-> >  * Comes with GNU Privacy Guard v2.2.21.
+> =C2=A0 git config pull.rebase false=C2=A0 # Merge (Standard-Strategie)
+> =C2=A0 git config pull.rebase true=C2=A0=C2=A0 # Rebase
+> =C2=A0 git config pull.ff only=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # aus=
+schlie=C3=9Flich Vorspulen
 >
-> The above has "Comes with MSYS2 runtime (Git for Windows flavor) based
-> on Cygwin ..." for both 3.1.5 and 3.1.6. I wonder if it really comes
-> with two MSYS2 runtimes.
+> Sie k=C3=B6nnen statt "git config" auch "git config --global" nutzen, um
+> einen Standard f=C3=BCr alle Repositories festzulegen. Sie k=C3=B6nnen a=
+uch die
+> Option --rebase, --no-rebase oder --ff-only auf der Kommandozeile nutzen=
+,
+> um das konfigurierte Standardverhalten pro Aufruf zu =C3=BCberschreiben.
+>
+> Bereits aktuell.
+> Was ist der Unterschied zwischen dem, was Sie erwartet haben und was
+> wirklich passiert ist?
+> the warning
+> Sonstige Anmerkungen, die Sie hinzuf=C3=BCgen m=C3=B6chten:
+> please remove the warning
 
-You're right, of course ;-) For the resolution of this story, see:
-https://github.com/git-for-windows/git/issues/2746
+You can, and should, remove that warning yourself by using the appropriate
+call, as indicated by the very warning you want to suppress. In your
+instance, the most likely course of action would be
+
+	git config --global pull.rebase false
+
+As this warning message was added intentionally, there is very little
+chance that Git itself will remove it; You ware expected to configure the
+behavior you desire.
 
 Ciao,
-Dscho
+Johannes
 
---8323328-669608368-1594978304=:54--
+P.S.: I wonder whether it was such a good idea to translate the bug report
+template, given that the primary purpose was most likely to allow
+reporting bugs to the Git mailing list.
+
+--8323328-233178749-1594985611=:54--
