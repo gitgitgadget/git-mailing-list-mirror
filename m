@@ -2,330 +2,134 @@ Return-Path: <SRS0=XbPV=A4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5D5DC433DF
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 00:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12826C433DF
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 01:45:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A1A520691
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 00:25:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E17162070E
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 01:45:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vbqy4L/u"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJyGA/SW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726167AbgGQAZF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jul 2020 20:25:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55256 "EHLO
+        id S1726333AbgGQBpi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jul 2020 21:45:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725958AbgGQAZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jul 2020 20:25:05 -0400
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2508C061755
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 17:25:04 -0700 (PDT)
-Received: by mail-pf1-x441.google.com with SMTP id u5so4506724pfn.7
-        for <git@vger.kernel.org>; Thu, 16 Jul 2020 17:25:04 -0700 (PDT)
+        with ESMTP id S1726130AbgGQBpi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jul 2020 21:45:38 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4ADAC061755
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 18:45:37 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id b4so7461431qkn.11
+        for <git@vger.kernel.org>; Thu, 16 Jul 2020 18:45:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=F3I7JGmzU5gvJt7SEPfUFZKZBKhuwknmkAlHO/OqcAM=;
-        b=Vbqy4L/uBULuWST4aSp/LZGymD7h7h8fS6GgnlPu0cn+S/vofKdm3H5GApci1MpBWu
-         aZ7a/1rK001sBUooKnnlQzAMQVUSDbb+EEfsmRWh27WcGVibWS5M/wmbJvw/oUWiNbVq
-         MMjY+3i0EuCSDtIsc+IuWOckEVYCwq1amVUA7QqHvtyXXdNHrbERSUg+ZZZGhd4dz6oo
-         MOP3Ma6r9tKu+T8df6Fm5+vW/LyYb7sHv8Tdcce2R/GoA1Bai9BhAYVdR2xqVyhYVaI5
-         fNsRfl88VFAwoh9eYJwXjXds1RtmGo/B2Gj0kRX5vBMxS8pqHA3pHyaw9eNVcjf/Cpil
-         50SA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GPZGi7Rzu4P26gxTuWaMswOxBiYUAyWQhGRG1W5P6rg=;
+        b=SJyGA/SW/HFtap62FlxghLsoL/8JTtENqRTkdEdkPpCvdlO0hzDX/GphlitVkcTcmG
+         jD2sS+/YuKikX8h2huzgwqYSDkv00gXZbUPOvsDPgaAWLyrO9cQRYPt8Q3bB9SwFFcnj
+         gmEa3fPBU0lQxICnHJ+Xg8gyPWh92DvLa34MwrtP/YnUhW42Gm0jmY5zBZ5me/qvebND
+         e5V9BglHUDFvhAiTEto70j2S8zh9unI7iAdYrvydLIJdecJ5JFTz3uyCKNBIKGF4KTvc
+         WqN2nwg/5Dy9JKcaWO+FksOui8ISWse4MqJXHAyFeIukYOKFLm4WfZrCSzj9RDPDvC9k
+         +iEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=F3I7JGmzU5gvJt7SEPfUFZKZBKhuwknmkAlHO/OqcAM=;
-        b=PcNjrFpDFSvqsaHGRgaLRswp4RkD7dCKOd6xx52YhFdHiqmQ/tYprcN52A334/9WCP
-         /NwGBLiYL8l3ERwQWusbDOSPfiK5jHFUNzTuIRmmT7uLWRXzb4bi+BVENtC0Q6X5SOru
-         0vWgIdaiKbrvEUMfCsa04EyLwkb49n30GswBmRxXgPYjagyfVnNQMyidzgKGM6XwN+ow
-         Nhk74HONi6Msck5kKNtInKNjGC3PWbvoXgGVD6wK81J5OLuU9Ftd99sIJ3OcuD6Jy+zL
-         kF4oTWShCQxhnD2Znqy52zWI8ZtjjhJ6Tjzwt2aYnNiwbCjY0w4POckU0yWGESP31uPe
-         PHZw==
-X-Gm-Message-State: AOAM530UoV1i9fxMpKhieHw0idI+ihoc+jxUkjmp6osnCF+2e1k8fEkC
-        dvQS9IiQF7BxLywo9W2bTA4=
-X-Google-Smtp-Source: ABdhPJyrkATOC7AgiqlABl2btW7Ck2uT64IoWKoY2S+KMvgFujTItlTRoqCb1qRjMBalFN2vukSutA==
-X-Received: by 2002:a62:19c4:: with SMTP id 187mr5713257pfz.312.1594945503647;
-        Thu, 16 Jul 2020 17:25:03 -0700 (PDT)
-Received: from localhost ([2402:800:6375:2db4:7eb6:3e8e:903a:6638])
-        by smtp.gmail.com with ESMTPSA id l9sm1001726pjy.2.2020.07.16.17.25.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2020 17:25:02 -0700 (PDT)
-Date:   Fri, 17 Jul 2020 07:25:00 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v6 2/5] rebase -i: support --committer-date-is-author-date
-Message-ID: <20200717002500.GA20467@danh.dev>
-References: <20200407141125.30872-1-phillip.wood123@gmail.com>
- <20200713101045.27335-1-phillip.wood123@gmail.com>
- <20200713101045.27335-3-phillip.wood123@gmail.com>
- <20200715142717.GA7803@danh.dev>
- <281d92d3-f901-bca1-6030-fd0c8761f214@gmail.com>
- <20200716130603.GB7803@danh.dev>
- <6f818af7-78b9-d6c8-c0fe-bcb84a4ef8ff@gmail.com>
- <640a3f1b-4e00-4b8a-9a9f-207ea76c648a@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GPZGi7Rzu4P26gxTuWaMswOxBiYUAyWQhGRG1W5P6rg=;
+        b=LqDj2cztHVRJ4dSWvH5oKSw0b3cKcOy1eqUeBEe320TCNwyZ3v0PYIhhbmcWq8u44y
+         1CX8vBbYKlYspnBUssX/h1dqM+kzz42WC39Iwf3LzVtciw6CyV+vPh6y7iMUe97XPHOW
+         aPfmCsICwLehcGlBbJ0QGWXWzL0LlbcjW7Gvke+BMkrtYyRDBWX7iUKZONByqO+ed3D+
+         eQ0DupcmQUBRNV7SNGgPl0FGMpx1WixBRKhigYBA3oXGrxVJ52wqr5+ZeC/WCK9pT0NL
+         hiyr7MeJCVRWGvCTJebfjuFoRcj8Q4oC7DJDzmEB9aekNnrpVxx09j6KzMNjdPX34DyO
+         DWUg==
+X-Gm-Message-State: AOAM5322EM+t3xif8fyckVGbARz0iOlZesSAcsidgFpkNzav6FdvEQxz
+        daq9o+KSL14nnWuj3jF30lNTCtTmXA23RF5ZJMB9p07DnB2v4w==
+X-Google-Smtp-Source: ABdhPJwGwUAtmosBphhVTFh67OF5CX8lY0F1tWqTohXhFz93NNMvpkf5uTDiDoJOw1RNik7oUML4X+gBqqEnvYyW/h8=
+X-Received: by 2002:a37:cd4:: with SMTP id 203mr6915117qkm.490.1594950337124;
+ Thu, 16 Jul 2020 18:45:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <640a3f1b-4e00-4b8a-9a9f-207ea76c648a@gmail.com>
+References: <CAAvDm6Z2HcQkyinCD4hKTnqGR3gcXodhoo0YKSnbB-vDJcn3MQ@mail.gmail.com>
+ <CAPUEspg=4HJL8iiNrNp9Wr9sVj5Gw_PciSezHV5iJ1w-ymdzdw@mail.gmail.com>
+ <CAAvDm6avvkXrU-Q8zu7C5WFqfCbf0DN=6cPMU-rOxgmdAh1Ebw@mail.gmail.com> <20200716153159.GA1061124@coredump.intra.peff.net>
+In-Reply-To: <20200716153159.GA1061124@coredump.intra.peff.net>
+From:   =?UTF-8?B?5a2Z5LiW6b6ZIHN1bnNoaWxvbmc=?= <sunshilong369@gmail.com>
+Date:   Fri, 17 Jul 2020 09:45:26 +0800
+Message-ID: <CAAvDm6Z6SA8rYYHaFT=APBSx0tM+5rHseP+fRLufgDxvEthsww@mail.gmail.com>
+Subject: Re: How can I search git log with ceratin keyword but without the
+ other keyword?
+To:     Jeff King <peff@peff.net>
+Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-07-16 18:34:51+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >> That translation isn't correct either.
-> >> It seems like it's recurring pattern.
-> >> I'll take it to the Vietnamese translation team.
-> >>
-> >> Anyway, I've checked with other translation that I can understand
-> >> in part. I think
-> >>
-> >>     invalid ident line: %s
-> >>
-> >> is better candidate for the message.
-> > 
-> > Yes I realized after sending my email that the string we're printing is
-> > NUL terminated so we don't need to specify the length with '*'. I think
-> > the best thing would be to change the message in this patch to 'invalid
-> > ident line: %s' and then have a follow up after this is merged to change
-> > all the "invalid ident line" messages to use "identity" instead. Would
-> > you be interested in taking on the follow up patch?
-> 
-> In the end I decided it was better just to change the message in this
-> patch to something more descriptive. We can update the other commands
-> separately. For format-patch we should probably update the option
-> description for `--from` as well as the error message.
+Thank you for your detailed explanation.
+My understanding of this matter is at a different level with your help.
 
-Yes, I also think we should leave the other messages there for now.
-When this topic get merged, we will come back to see which one should
-be updated/changed.
+I wonder why this command doesn't work well.
+I intend to find the comment with the keyword "12" but without "comments"
+whereas the output is something like this:
 
-All other parts look sane to me.
+git log --perl-regexp --all-match --grep=3D12 --grep '\b(?!comments\b)\w+'
+commit f5b6c3e33bd2559d6976b1d589071a5928992601
+Author: sunshilong <sunshilong369@gmail.com>
+Date:   2020-04-12 23:00:29 +0800
 
-I don't mind get my hand wet if noone steps in.
+    comments 2020.04.12 ng
 
-Thanks,
-Danh
+Thank you for your attention to this matter.
 
-> 
-> Best Wishes
-> 
-> Phillip
-> 
-> > 
-> > Best Wishes
-> > 
-> > Phillip
-> > 
-> >> Since Spanish translation also mis-translates the message:
-> >>
-> >>     es.po:9836:msgid "invalid ident line: %.*s"
-> >>     es.po-9837-msgstr "sangría no válida: %.*s"
-> >>
-> >> "sangría" also means "indentation" in this context.
-> >>
-> >> Thanks,
-> >> -Danh
-> >>
-> >>>
-> >>> Best Wishes
-> >>>
-> >>> Phillip
-> >>>
-> >>>>
-> >>>>> +            goto out;
-> >>>>> +        }
-> >>>>> +        if (!ident.date_begin) {
-> >>>>> +            res = error(_("corrupted author without date
-> >>>>> information"));
-> >>>>> +            goto out;
-> >>>>> +        }
-> >>>>> +
-> >>>>> +        strbuf_addf(&date, "@%.*s %.*s",
-> >>>>> +                (int)(ident.date_end - ident.date_begin),
-> >>>>> +                ident.date_begin,
-> >>>>> +                (int)(ident.tz_end - ident.tz_begin),
-> >>>>> +                ident.tz_begin);
-> >>>>> +        res = setenv("GIT_COMMITTER_DATE", date.buf, 1);
-> >>>>> +        strbuf_release(&date);
-> >>>>> +
-> >>>>> +        if (res)
-> >>>>> +            goto out;
-> >>>>> +    }
-> >>>>> +
-> >>>>>        if (write_index_as_tree(&tree, r->index, r->index_file, 0,
-> >>>>> NULL)) {
-> >>>>>            res = error(_("git write-tree failed to write a tree"));
-> >>>>>            goto out;
-> >>>>> @@ -2532,6 +2578,11 @@ static int read_populate_opts(struct
-> >>>>> replay_opts *opts)
-> >>>>>                opts->signoff = 1;
-> >>>>>            }
-> >>>>> +        if (file_exists(rebase_path_cdate_is_adate())) {
-> >>>>> +            opts->allow_ff = 0;
-> >>>>> +            opts->committer_date_is_author_date = 1;
-> >>>>> +        }
-> >>>>> +
-> >>>>>            if (file_exists(rebase_path_reschedule_failed_exec()))
-> >>>>>                opts->reschedule_failed_exec = 1;
-> >>>>> @@ -2622,6 +2673,8 @@ int write_basic_state(struct replay_opts
-> >>>>> *opts, const char *head_name,
-> >>>>>            write_file(rebase_path_drop_redundant_commits(), "%s", "");
-> >>>>>        if (opts->keep_redundant_commits)
-> >>>>>            write_file(rebase_path_keep_redundant_commits(), "%s", "");
-> >>>>> +    if (opts->committer_date_is_author_date)
-> >>>>> +        write_file(rebase_path_cdate_is_adate(), "%s", "");
-> >>>>>        if (opts->reschedule_failed_exec)
-> >>>>>            write_file(rebase_path_reschedule_failed_exec(), "%s", "");
-> >>>>> @@ -3542,6 +3595,10 @@ static int do_merge(struct repository *r,
-> >>>>>                goto leave_merge;
-> >>>>>            }
-> >>>>> +        if (opts->committer_date_is_author_date)
-> >>>>> +            argv_array_pushf(&cmd.env_array, "GIT_COMMITTER_DATE=%s",
-> >>>>> +                     author_date_from_env_array(&cmd.env_array));
-> >>>>> +
-> >>>>>            cmd.git_cmd = 1;
-> >>>>>            argv_array_push(&cmd.args, "merge");
-> >>>>>            argv_array_push(&cmd.args, "-s");
-> >>>>> @@ -3819,7 +3876,8 @@ static int pick_commits(struct repository *r,
-> >>>>>        setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-> >>>>>        if (opts->allow_ff)
-> >>>>>            assert(!(opts->signoff || opts->no_commit ||
-> >>>>> -                opts->record_origin || opts->edit));
-> >>>>> +                opts->record_origin || opts->edit ||
-> >>>>> +                opts->committer_date_is_author_date));
-> >>>>>        if (read_and_refresh_cache(r, opts))
-> >>>>>            return -1;
-> >>>>> diff --git a/sequencer.h b/sequencer.h
-> >>>>> index 0bee85093e..4ab94119ae 100644
-> >>>>> --- a/sequencer.h
-> >>>>> +++ b/sequencer.h
-> >>>>> @@ -45,6 +45,7 @@ struct replay_opts {
-> >>>>>        int verbose;
-> >>>>>        int quiet;
-> >>>>>        int reschedule_failed_exec;
-> >>>>> +    int committer_date_is_author_date;
-> >>>>>        int mainline;
-> >>>>> diff --git a/t/t3422-rebase-incompatible-options.sh
-> >>>>> b/t/t3422-rebase-incompatible-options.sh
-> >>>>> index 55ca46786d..c8234062c6 100755
-> >>>>> --- a/t/t3422-rebase-incompatible-options.sh
-> >>>>> +++ b/t/t3422-rebase-incompatible-options.sh
-> >>>>> @@ -61,7 +61,6 @@ test_rebase_am_only () {
-> >>>>>    }
-> >>>>>    test_rebase_am_only --whitespace=fix
-> >>>>> -test_rebase_am_only --committer-date-is-author-date
-> >>>>>    test_rebase_am_only -C4
-> >>>>>    test_expect_success REBASE_P '--preserve-merges incompatible
-> >>>>> with --signoff' '
-> >>>>> diff --git a/t/t3436-rebase-more-options.sh
-> >>>>> b/t/t3436-rebase-more-options.sh
-> >>>>> index 4f8a6e51c9..50a63d8ebe 100755
-> >>>>> --- a/t/t3436-rebase-more-options.sh
-> >>>>> +++ b/t/t3436-rebase-more-options.sh
-> >>>>> @@ -9,6 +9,9 @@ test_description='tests to ensure compatibility
-> >>>>> between am and interactive backe
-> >>>>>    . "$TEST_DIRECTORY"/lib-rebase.sh
-> >>>>> +GIT_AUTHOR_DATE="1999-04-02T08:03:20+05:30"
-> >>>>> +export GIT_AUTHOR_DATE
-> >>>>> +
-> >>>>>    # This is a special case in which both am and interactive backends
-> >>>>>    # provide the same output. It was done intentionally because
-> >>>>>    # both the backends fall short of optimal behaviour.
-> >>>>> @@ -21,11 +24,20 @@ test_expect_success 'setup' '
-> >>>>>        test_write_lines "line 1" "new line 2" "line 3" >file &&
-> >>>>>        git commit -am "update file" &&
-> >>>>>        git tag side &&
-> >>>>> +    test_commit commit1 foo foo1 &&
-> >>>>> +    test_commit commit2 foo foo2 &&
-> >>>>> +    test_commit commit3 foo foo3 &&
-> >>>>>        git checkout --orphan master &&
-> >>>>> +    rm foo &&
-> >>>>>        test_write_lines "line 1" "        line 2" "line 3" >file &&
-> >>>>>        git commit -am "add file" &&
-> >>>>> -    git tag main
-> >>>>> +    git tag main &&
-> >>>>> +
-> >>>>> +    mkdir test-bin &&
-> >>>>> +    write_script test-bin/git-merge-test <<-\EOF
-> >>>>> +    exec git-merge-recursive "$@"
-> >>>>> +    EOF
-> >>>>>    '
-> >>>>>    test_expect_success '--ignore-whitespace works with apply
-> >>>>> backend' '
-> >>>>> @@ -52,6 +64,50 @@ test_expect_success '--ignore-whitespace is
-> >>>>> remembered when continuing' '
-> >>>>>        git diff --exit-code side
-> >>>>>    '
-> >>>>> +test_ctime_is_atime () {
-> >>>>> +    git log $1 --format=%ai >authortime &&
-> >>>>> +    git log $1 --format=%ci >committertime &&
-> >>>>> +    test_cmp authortime committertime
-> >>>>> +}
-> >>>>> +
-> >>>>> +test_expect_success '--committer-date-is-author-date works with
-> >>>>> apply backend' '
-> >>>>> +    GIT_AUTHOR_DATE="@1234 +0300" git commit --amend
-> >>>>> --reset-author &&
-> >>>>> +    git rebase --apply --committer-date-is-author-date HEAD^ &&
-> >>>>> +    test_ctime_is_atime -1
-> >>>>> +'
-> >>>>> +
-> >>>>> +test_expect_success '--committer-date-is-author-date works with
-> >>>>> merge backend' '
-> >>>>> +    GIT_AUTHOR_DATE="@1234 +0300" git commit --amend
-> >>>>> --reset-author &&
-> >>>>> +    git rebase -m --committer-date-is-author-date HEAD^ &&
-> >>>>> +    test_ctime_is_atime -1
-> >>>>> +'
-> >>>>> +
-> >>>>> +test_expect_success '--committer-date-is-author-date works with
-> >>>>> rebase -r' '
-> >>>>> +    git checkout side &&
-> >>>>> +    GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
-> >>>>> +    git rebase -r --root --committer-date-is-author-date &&
-> >>>>> +    test_ctime_is_atime
-> >>>>> +'
-> >>>>> +
-> >>>>> +test_expect_success '--committer-date-is-author-date works when
-> >>>>> forking merge' '
-> >>>>> +    git checkout side &&
-> >>>>> +    GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
-> >>>>> +    PATH="./test-bin:$PATH" git rebase -r --root --strategy=test \
-> >>>>> +                    --committer-date-is-author-date &&
-> >>>>> +    test_ctime_is_atime
-> >>>>> +'
-> >>>>> +
-> >>>>> +test_expect_success '--committer-date-is-author-date works when
-> >>>>> committing conflict resolution' '
-> >>>>> +    git checkout commit2 &&
-> >>>>> +    GIT_AUTHOR_DATE="@1980 +0000" git commit --amend --only
-> >>>>> --reset-author &&
-> >>>>> +    test_must_fail git rebase -m --committer-date-is-author-date \
-> >>>>> +        --onto HEAD^^ HEAD^ &&
-> >>>>> +    echo resolved > foo &&
-> >>>>
-> >>>> Nitpick: no space after ">" :D
-> >>>>
-> >>
-> 
-
--- 
-Danh
+On Thu, Jul 16, 2020 at 11:32 PM Jeff King <peff@peff.net> wrote:
+>
+> On Sat, Jul 11, 2020 at 01:48:04PM +0800, =E5=AD=99=E4=B8=96=E9=BE=99 sun=
+shilong wrote:
+>
+> > Thank you for taking the time to respond to me.
+> >
+> > When I run the said shell command, this error reported:
+> > # git log -P --all-match --grep '12' --grep '\b(?!t123\b)\w+'
+> > fatal: unrecognized argument: -P
+> >
+> > The version of git which I am currently using is 2.7.4.
+>
+> Try replacing "-P" with "--perl-regexp"; the shorter name was added in
+> v2.14.0. You'll also need a version of Git built with libpcre support.
+> If it's not, you'll get a message like:
+>
+>   $ git log --perl-regexp --all-match --grep=3D12 --grep '\b(?!t123\b)\w+=
+'
+>   fatal: cannot use Perl-compatible regexes when not compiled with USE_LI=
+BPCRE
+>
+> > One more question, could you please explain '\b(?!t123\b)\w+' in
+> > more detail for me?
+> > Or suggest some related documents for me to go through?
+>
+> The (?!...) block is a negative lookahead assertion in perl-compatible
+> regular expressions. So it's looking for a word boundary (\b) _not_
+> followed by t123.
+>
+> I'm not sure if that solves your original problem, though. It won't
+> match "t123", but presumably there are other words in that commit
+> message.
+>
+> A negative lookbehind like:
+>
+>   git log --perl-regexp --grep=3D'(?<!t)12'
+>
+> might work, if the distinction between "b12" and "t123" is important. Or
+> if you care about "12" but not "123", then maybe just asking for a word
+> boundary at the end would work:
+>
+>   --grep=3D'12\b'
+>
+> -Peff
