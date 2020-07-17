@@ -8,111 +8,112 @@ X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F02C433E2
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 613F6C433E0
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:58:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADBC620717
-	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:56:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AC2420717
+	for <git@archiver.kernel.org>; Fri, 17 Jul 2020 10:58:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kzrJwcpR"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="L/u1uDfN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726198AbgGQKz7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 06:55:59 -0400
-Received: from mout.gmx.net ([212.227.15.18]:39017 "EHLO mout.gmx.net"
+        id S1726056AbgGQK6L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jul 2020 06:58:11 -0400
+Received: from mout.gmx.net ([212.227.15.18]:45633 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725950AbgGQKz7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 06:55:59 -0400
+        id S1725950AbgGQK6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 06:58:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1594983353;
-        bh=BaGC7ETf8GeRQYGVnEzQtqIaO8HLQu6YPcOmzbSSICM=;
+        s=badeba3b8450; t=1594983488;
+        bh=wMGN+jVF/boVmaN5UbUPBStnXntsRZ/mzV05V1zunvU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kzrJwcpRa7f/pgnV75De9d+rdFQVURM8h5OWgQMuY8G7QpYcF/dFy3adO8SBejtHo
-         8+7h5+MHS+BVOOdwkNCZD0+MwjmU/v2+c6Vnu52XNmZbfOIThB+Xt/9EI00tI6Vz8D
-         YbtkeOE1HYuAhVrZgaKjdBmNTGcjhDwdCOw+Cv+s=
+        b=L/u1uDfNV18owe6b6UTlr2zTy3ZjhW9/pbyc7scaWtt8Ld1FP9tDc3owmdm7LexNi
+         I0814b2crxjlfolzmU8AUT26Wcr3fBFJljZwzOndhUPph+1LgQwU6RrYlZhXfaewJs
+         ag1GD3JAERKkfUFZh+qKcVjjPgv6u2m7J/KG8t9s=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.237.98] ([213.196.213.77]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MqJqD-1kaAY73vON-00nUNx; Fri, 17
- Jul 2020 12:55:53 +0200
-Date:   Fri, 17 Jul 2020 11:29:27 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MzyuS-1kkNew1sOs-00x0iz; Fri, 17
+ Jul 2020 12:58:08 +0200
+Date:   Fri, 17 Jul 2020 11:31:43 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Bryan Turner <bturner@atlassian.com>
-cc:     git-for-windows <git-for-windows@googlegroups.com>,
-        Git Users <git@vger.kernel.org>,
-        git-packagers@googlegroups.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [git-for-windows] [ANNOUNCE] Git for Windows 2.28.0-rc0
-In-Reply-To: <CAGyf7-EAQ0D_fqaRNa5YdQGoTO535=45g+Hyn9Fo5JAxPMkE6A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2007171102170.54@tvgsbejvaqbjf.bet>
-References: <20200710135935.6416-1-johannes.schindelin@gmx.de> <CAGyf7-EAQ0D_fqaRNa5YdQGoTO535=45g+Hyn9Fo5JAxPMkE6A@mail.gmail.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git for Windows 2.28.0-rc0
+In-Reply-To: <1B17D6F1-953F-476A-87A8-FA0FE5B5C2D0@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2007171130050.54@tvgsbejvaqbjf.bet>
+References: <20200710135935.6416-1-johannes.schindelin@gmx.de> <1B17D6F1-953F-476A-87A8-FA0FE5B5C2D0@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:uefZzMyuC5KvjYMBt3JoKgq/vL3lhtb6IsRsV/bbeCf2hejML4C
- Ow+LiYDw54lazsPeCySTXTM0Q2WMwfIFL06OTPD6zGoCDAhGhwVbrjP9JgeWJxh6u26vM3D
- IBXPcMlLVQLY4a1N1BLSgarO1pdfKOFPuHdZ8K/m9PwztVETb1gcK6QhwcxFLl+ziD4TzGt
- TXgEkp0+SG+TfWNAiwpLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:E6+tFNtL6o8=:L26BDzjSmiiwLm8vrP+dKt
- wnDRi+bUifBF2e8A7Eq/u7U3H0djRcO77TCpruIzyAiU92+VAvCiaqQRVuOdB4tbsDmUcN+96
- EHWwHLsF98W1A2TUMCOsJdPCGb/gfYDif9Ns5KOhUL2UEFpkM4tDVDszUAl0W9rlAC3M9CpQS
- r24oOkXa9SscCdNPBJ27ow5fNFuKpXB5PiZX5s3HIXtfxomc8yHG32Wyf4anbhZsEZxOhJboY
- sQoOWMVepmWGQhJGX5tKSFBreQneWQiG+ZYbJqojCeLBAMWDK+/7t/hxSVT0FBpS9ukv6p63v
- yJLD2OeiWRmOZ4QqjNAog1H6i0FnX6Qgbq//pkL46a7lczBybmHsr4TR8tFi3X0RiLFjqPuJn
- d4+x2BpwXrb8ZmZOkHCmg+AhbYqL5DiW22JYYY/TQl/abEXjBVH2BlZSkfki0AGQYCAjd5Gbg
- RMVZ+4irJmF6jn0K6QM8ALxWcWLQnv8NPgituds3u3DR5Z11DL9FHSOSAL3HSM4US561n3juw
- 3bs9gFF4OMNG9xX3AOFxZ77gXb1hH56FklODszygcmEE3rXDFAfllVqCLKXjR01xbxG2SKUaC
- r6jtHqxBcGmaaBWi9/yrS4HoivXYg3CA7sZDOK6rNzTv9ycMDkPctRemKaojQdXC3tDFKo1Xi
- NqMPPpzjD34mrZ/S+tlXd1qTMli34eF0csLnwTr37fiIQ2JRbYJI8N9SeBzHxIWhG56ocCQMt
- /JbIX3jyHkr07RAsc8W+pq1veX3evEPtuLk60xPPsnJKTHerGyuQdxVEW+36Kv5nrTM296KhG
- d2xF4smAT+tkHHeCPFyNP47szFgpyDLTMpzLoMyU2zifTxitojbwghNiirobUf7EanpxqoAWe
- NteXudxcL/qw9lowe3xXVo0qAfYwkjs65YTm28cvXPt/7X4qZ08JCFUDANrkhTV4OK0ZG0twv
- iFEsf0OPveDRYtCwGqphtlLH/hEBAMzkbNVHoft2mBExLFp1sGlZPQeiggFCH4wgPwbLUwndQ
- b7kQyw5qm/nBmU4CWBXS7uKC3vprCtJLgj4Sx9yvR9aSmVdQyDrDD2WMhDqWXW/SalOK+UCCI
- aRvdw1esFxEO2R0O7ThiTRrjHc2vQL8cnle0BYHNWoXUw61l0LCTWnbw2rQyC5mW4H+fspwEi
- gzKNkN47LTNxam50iETyScGJ9TvZanfV+2uPArkErhNhwJ4gPFzNtWwSDRT2nE7UUOosWicBb
- aMpTe4i/5+KJ4d1xcQ1rZUKEMHqombkm0l0w9ZA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-669608368-1594978304=:54"
+X-Provags-ID: V03:K1:hZE16qgMZ5qp+Y8vVHEjaAOzMZZMbrZ/YzPoVaoYiHhTDLdSrR9
+ k55JRQMynPYc4GpG6/Ox/0SfIHHoCjHTB8PU4mZSVx36XasqpQGXzGL1tSMKkrxrRxFeHQG
+ SThdEepu0Y2NVjK1Na7nETC5bCiB6ZGdpf+9vpXVecRANuKUJ9eQF0ufhTXrW/fJ3tI5QUA
+ sVoujxRYThbTA5hDWn8ag==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+JvAEcxiVGc=:tSHp522NdB08TjwSs3NGy8
+ M27t5KgloMs8WnwGQUve6Jo3ly3VRo6/VUFUgo7TCr2ud9YIEQAKHKv0CFK91+rPW+JHEncvx
+ S2TmL56rJd3LVT0l2F8liSwtXjeYOKHfB7gwsngb+oJugBdqRPtyCj6UBoxgOi/fM/TqBP1H7
+ r1paHHbG1/NGBk6FBtVxKyz24lyfJgUGIqFbXtMoM72OIWIfopBfxXAH10XjrW4ApHSFKtp8Y
+ BBbe0Oy/XspnXILmyLaAvr74njGF8zQ+V/u4d3v3kqUrvWePPa5kJv6BZywQd4zIMTRYiY5CY
+ J9ojPxd7lcqb5CzTt1QTPEHBYipu8DAKbL4kVTNu3e7FpF7NdbZojn4LVehGC3E1eE2baP5Qp
+ 1VhUyFNT5CSwb05tBsRlhKJm0FcE1tPfuPqHBq0LN9bniitEDPPr/i6xGs05NcKoqnxiGzkc1
+ JbtHdKuQQnhZMHt24NxqOzNTCnY6tnXkj6QCRqbh6Hds5Cyg5ajU73HYtfc0We2yk63cBHqKI
+ C2s8VVdDzRVcbLOAeLFXfRHcv9F3byp5NuBHbVbQ3EA4ZR27RHnmjb+ltKYA5ypyMel9WYDBf
+ hyn/QvqrINA2Zj0nsruzUnhuDDj9MdZm6lDHJhKQMo+HTPQw7O4S69ED3L5krNSQRm/Dmp4hi
+ V3FHd/qCF/yStqYpZOxN3ZTKjcIgcZCVh6mFaGrAw9USs7PUW1gJZguQji8RW/Pg9Ragxg9q9
+ 3NeCE+gWMKutrIJnzpAYC64PY6dj7Es8OUt3atCoX885kF6P5hbgDKbsrEzNg5E7MW+9+F4H6
+ z5w+cnytXF0MwpLwQ/Wv+fh4Y9wD5ZyuF+t8BYZC1FwFthqbKNKgrCHNRqw3968NUnJy18FIU
+ n87g7cVB+znK8hGQrxPea/YSLirljh2zA/AJtTzOUtSHc3LQmZVFcWvC2oRF8ElgRqPD91Qi8
+ 3MYEdOtVOkkow6qg7XMraFpXpkD7To8wvTc3WXCiKiV40DA5dmQgZ6HNksQmocS59k761roba
+ QKhERjg+IgGKI+zQyxS4BhGW/GCI7mMBvK58v6gtoqHAgVzIkXjEr+Ct0NhRx7lbU3bNz1cTP
+ COeDw4c/Ts3fIVZdIhhVFmCDkt6oGMzWzWkecRlDYedP4eRI9cYlDIke1oa5ZC/xjZiG1ND2L
+ Eyf/ejFtHWMSEbFYmjOhp+c6J7ebh31yPhZ/MEPkKzBf1PZ38tO2dvSBPJC1c6kUwRtBkaHIM
+ CmxDg4QPn2WXtnTFRMQbzjMwMysQTc0rrreVqdw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bryan,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 16 Jul 2020, Bryan Turner wrote:
+--8323328-669608368-1594978304=:54
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, Jul 10, 2020 at 6:59 AM Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> >
-> > Dear Git users,
-> >
-> > I hereby announce that Git for Windows 2.28.0-rc0 is available from:
-> >
-> >     https://github.com/git-for-windows/git/releases/tag/v2.28.0-rc0.wi=
-ndows.1
+Hi Kaartic,
+
+On Fri, 17 Jul 2020, Kaartic Sivaraam wrote:
+
+> On 10 =E0=AE=9C=E0=AF=82=E0=AE=B2=E0=AF=88, 2020 7:29:35 PM IST, Johanne=
+s Schindelin <johannes.schindelin@gmx.de> wrote:
 >
-> We've added 2.28.0-rc0 to Bitbucket Server's test matrix for both
-> Linux and Windows, with all tests green. We've also done a manual test
-> pass on macOS, also without issues.
+> >Changes since Git for Windows v2.27.0 (June 1st 2020)
+> >
+> >New Features
+> >
+> >  * Comes with Git v2.28.0-rc0.
+> >  * Comes with subversion v1.14.0.
+> >  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+> >    3.1.5.
+> >  * Comes with the designated successor of Git Credential Manager for
+> >    Windows (GCM for Windows), the cross-platform Git Credential
+> >    Manager Core. For now, this is opt-in, with the idea of eventually
+> >    retiring GCM for Windows.
+> >  * Comes with cURL v7.71.1.
+> >  * Comes with Perl v5.32.0.
+> >  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+> >    3.1.6.
+> >  * Comes with GNU Privacy Guard v2.2.21.
+>
+> The above has "Comes with MSYS2 runtime (Git for Windows flavor) based
+> on Cygwin ..." for both 3.1.5 and 3.1.6. I wonder if it really comes
+> with two MSYS2 runtimes.
 
-Thank you for testing!
-
-> Thanks again for these early RCs!
-
-Of course!
-
-I hope that v2.28.0 will be a bit less bumpy than v2.27.0: Git for Windows
-v2.27.0 shipped with mismatching Perl/Subversion, so that `git svn` was
-completely unusable. Yet, the most reported bug (and to me it looks like
-it is the best-reported Git for Windows so far, since the project's
-inception) was the typo `fast-forard` in the installer. It has been
-independently reported well over a dozen times, via at least four
-different channels.
-
-Just a quick note: I will be offline for most of the next three weeks, but
-my colleague Dr Derrick Stolee kindly agreed to prepare the -rc1, -rc2 and
-final versions. For technical reasons, the announcement mails will still
-be going out under my name, though.
+You're right, of course ;-) For the resolution of this story, see:
+https://github.com/git-for-windows/git/issues/2746
 
 Ciao,
 Dscho
+
+--8323328-669608368-1594978304=:54--
