@@ -2,183 +2,216 @@ Return-Path: <SRS0=BQqG=A5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 196E3C433E0
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 04:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C32F1C433DF
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 06:55:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA0192076A
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 04:52:23 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HzGt34mH"
+	by mail.kernel.org (Postfix) with ESMTP id A011D20724
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 06:55:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725947AbgGREwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jul 2020 00:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725809AbgGREwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jul 2020 00:52:06 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A07DAC0619D2
-        for <git@vger.kernel.org>; Fri, 17 Jul 2020 21:52:06 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id l6so10683661qkc.6
-        for <git@vger.kernel.org>; Fri, 17 Jul 2020 21:52:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=e08+0ZTtxbAPX4gxLRAEuIMea4+ClKHjtkygkmcIl1w=;
-        b=HzGt34mHWUXjpXTIjvVmDNbluEScjy9IuwKYeDlkGzklaq1tgIqVtWVv0n9vNyILbV
-         HWzI5DlfyzXyOkjY5DH53/QcGG3Sv2o3qSq7XyZuiq9E62kt7OUWs3TNtneb0S1udnAQ
-         ImbHuln5YpU5koyMRnpU4znPr3ubxARXk/PPWMqkTnj5JLr7KbBMGcbw1kcyS2HCwh9J
-         O4TWKN/BbJl+3bj2LA1eWf7flPcwFzC0vxri76RqlyTLmt4ih6L2RFPF3w2cvukmpm92
-         An7qan/0LU+PWB4B5ruWXEzSjvCc5OtisbHOchmHCBtIX/ccvufl7HaLgHpqwKE4wFRz
-         HTIg==
+        id S1726611AbgGRGzv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jul 2020 02:55:51 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:34938 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725983AbgGRGzv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jul 2020 02:55:51 -0400
+Received: by mail-wm1-f66.google.com with SMTP id l2so20527760wmf.0
+        for <git@vger.kernel.org>; Fri, 17 Jul 2020 23:55:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=e08+0ZTtxbAPX4gxLRAEuIMea4+ClKHjtkygkmcIl1w=;
-        b=UmxK0UNKWsKYodH8isrEhoo/ihP0IofkFSzuCGpLTFQKBG3DPINmpvEqWvPicJ9IwA
-         Pv8dvSJa3VhzYclrQHORzaeyAyDauVoksOjnbkixLIS/QIkIBy9VSbPMHATddZX5qGNe
-         TchWYbFMUz6uflfn9tAkNudFLPvyiKJKBcMZNlOIwlFpEVTS9+Nv5kCliujacyN7DXeC
-         IhK1rsJssTbFbsx5ArbDisw1CffkVSif3DqMokeUDOPJVsXhbjaIhFALsrV0hGlVyNNt
-         4TkYfdxcnR0ceOA98twmo4VDIvd7Ks/kBv0nc7R6WbRzn5HTlVXcHcoljUonjafdnqk4
-         MT8g==
-X-Gm-Message-State: AOAM531Ks0AeKE9LtQ+rJE4AbwMF1nZoxtqDfk7VpP0GqFAc3ap0hMDv
-        9Q+us2HYPSBi+ll20WlJmHUKx0UEKJlYVH8pu9zts3GmLWP5Lw==
-X-Google-Smtp-Source: ABdhPJz4B40yC+sRTh4T3qzRyvFgRJ4qANm7XF67F5VBb5/EMfi9vYGbW656axjWifhx5mnfNsZwmxauUQ91INr31Bg=
-X-Received: by 2002:a05:620a:1010:: with SMTP id z16mr11673432qkj.125.1595047925229;
- Fri, 17 Jul 2020 21:52:05 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=DHF6cUiJ8U2f3lzgpjihpyjoeSWPCPmKynm/aQ/awHI=;
+        b=B6BrnsOlYMHFBxdhxo9WaDW+3GkJvxC82dLjUBky+Gn3TULPadwt7gJ9DSAp9katAT
+         VTgodJ/3vmL1NHjvREBZ4lsrbkV9wsj3XP3KtYkeRhBHC5ckzKRoFdMt7o5/CsBodv7q
+         8iDWSyeyBiWjn3szgPVLBeXKpYndEvZ1+RhQDQrHXCOqe26JpTHXBTEUBJHkfuKxAIgm
+         vGaAjuTZy+xvg7c5a4xTJSrj7TBfTYJg1jBwbpP0HDR610gKrMXU7ZLTDb/pGnCK5lQ8
+         Ge6vZHXoAduZyQ04ly8N6bRat/5HcBzjn2gd3gmS3H6pAwB9rr4PfxZ8lBINxu5/Tzvu
+         JU7A==
+X-Gm-Message-State: AOAM531h/6QWaKtpWQ6os4Fo2+QmUPZfY+WVT7CN3GsvcuqT8IcVjeCb
+        txa3lsy/2QnTcwBPuvpND8mt2/P55ax4nKHwCJY=
+X-Google-Smtp-Source: ABdhPJzEHLh/8PQyRGQqtuMqq6o187alGhtosNB54T7WX0ss/znCc+IZcQuOY9HyVPcCl69+nJnsXG7nceuC7sqGuAw=
+X-Received: by 2002:a1c:5f41:: with SMTP id t62mr12312348wmb.53.1595055348382;
+ Fri, 17 Jul 2020 23:55:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAAvDm6Z2HcQkyinCD4hKTnqGR3gcXodhoo0YKSnbB-vDJcn3MQ@mail.gmail.com>
- <CAPUEspg=4HJL8iiNrNp9Wr9sVj5Gw_PciSezHV5iJ1w-ymdzdw@mail.gmail.com>
- <CAAvDm6avvkXrU-Q8zu7C5WFqfCbf0DN=6cPMU-rOxgmdAh1Ebw@mail.gmail.com>
- <20200716153159.GA1061124@coredump.intra.peff.net> <CAAvDm6Z6SA8rYYHaFT=APBSx0tM+5rHseP+fRLufgDxvEthsww@mail.gmail.com>
- <20200717063324.GB1179001@coredump.intra.peff.net> <xmqqd04ufutq.fsf@gitster.c.googlers.com>
- <xmqq7dv2fnpb.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq7dv2fnpb.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?B?5a2Z5LiW6b6ZIHN1bnNoaWxvbmc=?= <sunshilong369@gmail.com>
-Date:   Sat, 18 Jul 2020 12:51:53 +0800
-Message-ID: <CAAvDm6bG-s2m9fGXVtuyLB7_FSDRduhb3ptrBsL3ezR9LaS-hQ@mail.gmail.com>
-Subject: Re: How can I search git log with ceratin keyword but without the
- other keyword?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Carlo Arenas <carenas@gmail.com>,
-        git@vger.kernel.org
+References: <pull.678.git.1595028293855.gitgitgadget@gmail.com>
+ <CAPig+cQaqg7MbyNZakuWVzezhPCXu=LonCVAw_p13c=0YNBdPw@mail.gmail.com> <CAPx1GvduDZw5pmfZHACDGZsMR5YYDowLw6+az+oL6oWLvDyCFA@mail.gmail.com>
+In-Reply-To: <CAPx1GvduDZw5pmfZHACDGZsMR5YYDowLw6+az+oL6oWLvDyCFA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 18 Jul 2020 02:55:37 -0400
+Message-ID: <CAPig+cQpUu2UO-+jWn1nTaDykWnxwuEitzVB7PnW2SS_b7V8Hg@mail.gmail.com>
+Subject: Re: [PATCH] git-mv: improve error message for conflicted file
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Chris Torek via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio C Hamano
+On Fri, Jul 17, 2020 at 9:35 PM Chris Torek <chris.torek@gmail.com> wrote:
+> On Fri, Jul 17, 2020 at 4:47 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > ... use literal TABs and let the here-doc provide the newlines.
+>
+> I personally hate depending on literal tabs, as they're really
+> hard to see. If q_to_tab() is OK I'll use that.
 
-Thank you for your detailed explanation.
+q_to_tab() is a good choice.
 
->There is not much room for the line-level "--not" operator to
->participate in this picture.
-After I have carefully read your explanation again and again.
-Maybe, I think there is a way to achieve this goal.
-Please point out if there is something wrong.
-For details, see below.
+> > I realize that this test script is already filled with this sort of
+> > thing where actions are performed outside of tests, however, these
+> > days we frown upon that, and there really isn't a good reason to avoid
+> > taking care of this clean up via the modern idiom of using
+> > test_when_finished(), which you would call immediately after creating
+> > the file in the test. So:
+>
+> Indeed, that's where I copied it from.
+>
+> Should I clean up other instances of separated-out `rm -f`s
+> in this file in a separate commit?
 
->"git grep -e X --not -e Y" would mean
->"find lines that has X, or that does not have Y", so as long as a
->document has one line with X on it and one line (which can be but
->does not have to be the same line) that does not have Y on it, the
->variant of that search with "--all-match" in it would say "yup the
->doc matches".  But that is definitely not what the user who wants to
->say "if a doc has X in it, I want to see it, but I do not want to
->see it if it also has Y" wants to see.
-As you said in your last email, I think it(i.e. check out if a doc has X,
-or that does not have Y) could be achieved by this way:
-(Please point out if there is something wrong)
-1. Split this goal into two parts, one is to find out whether this doc
-   has X or not, the other one is whether this doc has Y or not, i.e.
-   result =3D "doc has X" && "doc has no Y".
-   We can run the grep machinery twice to achieve this goal.
-2. As what you said in your last email, I have no much doubt about
-    how to find out whether the doc has X or not. But, maybe, we can
-    do some improvement.
-    We can record the number of each line which matches the criteria(
-    i.e. this line has X). We use "resX" to represent the result of this
-    step(e.g: line 5,6,9,10 has X).
-3. Check out whether each line matches the criteria(i.e. not have Y) or
-    not and record the number of each line.
-    We use "resY" to represent the result of this step(e.g. line 1, 5, 9,
-    has no Y).
-4. If resX is a non-empty set and resY is full set(i.e. contains all the
-    line number) ,it implies that doc "have X and not have Y".
+In general, as a reviewer, I don't mind seeing a patch or two cleaning
+up style and other violations, however, the magnitude of the fixes
+this script needs is quite significant and would end up requiring a
+fair number of patches. As such, I'm not particularly eager to see the
+improvement made by this patch -- which is nicely standalone --
+weighed down by a lengthy series of patches which aren't really
+related to it.
 
-    Thank you for your attention to this matter.
-    Best Regards.
-    Sunshilong(=E5=AD=99=E4=B8=96=E9=BE=99)
+If cleaning up the t7001 test script is something you might be
+interested in doing, then making it a separate patch series would be
+more palatable. A scan of the script reveals the following problems,
+though there may be others:
 
-On Fri, Jul 17, 2020 at 6:19 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Jeff King <peff@peff.net> writes:
-> >
-> >> But none of that is exposed via the command-line of "git log". I think
-> >> it would be possible to do so, but I'm not sure how tricky it would be
-> >> (certainly one complication is that "--not" already means something el=
-se
-> >> there, but presumably we could have "--grep-and", "--grep-not", etc).
-> >
-> > Perhaps the definition of "distant future" is about 8 years ;-)
-> >
-> > https://lore.kernel.org/git/7vr4q45y65.fsf@alter.siamese.dyndns.org/
->
-> Having said that, I do not think our underlying grep machinery is
-> equipped to answer "find every commit whose log message has X but
-> not Y", even if we exposed the interface that is equivalent to that
-> of "git grep" to "git log".
->
-> There are two levels of boolean combination involved in running our
-> "grep" machinery.  The lower level is used to determine if each line
-> matches the criteria.  The main consumer of the "grep" machinery is
-> of course "git grep" and because it is line oriented, we have quite
-> a rich set of operations and combinations to say things like "if a
-> line has X and Y on it in any order, but not Z on it, then the line
-> is a match."  That is what "--not", "--and", "--or" (not exposed to
-> the "git log" interface) express and we even take "(" and ")" for
-> grouping, e.g. "( X --or Y ) --and --not Z".
->
-> Another level of combination is to determine if the entire document
-> matches.  It often happens that you want to find a document with
-> both X and Y in it, and "grep -e X --and -e Y" is *NOT* a way to do
-> so---the "--and" is a line-level combinator and tells the machinery
-> to find lines that have both X and Y on them.
->
-> We have a fairly ad-hoc single mechanism for boolean combination at
-> this level and that is the "--all-match" option, which says "Look at
-> the boolean expression you used to find each matching line, and
-> separate them at the OR operator at the top level.  Now, apply the
-> matching logic to all lines in a document and see if _all_ the
-> clauses joined by the top-level OR operators matched at least once.
-> If yes, then the document matches."
->
-> That is how "git grep --all-match -e X -e Y" finds documents that
-> refer to both X and Y but not necessarily on the same line.
->
-> There is not much room for the line-level "--not" operator to
-> participate in this picture.  "git grep -e X --not -e Y" would mean
-> "find lines that has X, or that does not have Y", so as long as a
-> document has one line with X on it and one line (which can be but
-> does not have to be the same line) that does not have Y on it, the
-> variant of that search with "--all-match" in it would say "yup the
-> doc matches".  But that is definitely not what the user who wants to
-> say "if a doc has X in it, I want to see it, but I do not want to
-> see it if it also has Y" wants to see.
->
->
->
->
->
->
+* old style:
+
+    test_expect_success \
+        'title' \
+        'body line 1 &&
+        body line 2'
+
+  should become:
+
+    test_expect_success 'title' '
+        body line 1 &&
+        body line 2
+    '
+
+* test bodies should be indented with TAB, not spaces
+
+* some tests use a deprecated style in which there are unnecessary
+  blank lines after the opening quote of the test body and before the
+  closing quote; these blanks lines should be removed
+
+* style for `cd` in subshell is:
+
+    (
+        cd foo &&
+        ...
+    ) &&
+
+  not:
+
+    (cd foo &&
+        ...
+    ) &&
+
+* there should be no whitespace after redirect operators, so:
+
+    foo > actual &&
+
+  should become:
+
+    foo >actual &&
+
+* tests 'cd' around and expect other tests to know the current
+  directory and 'cd' relative to that; instead, any test which uses
+  'cd' should do so in a subshell to ensure the current directory is
+  restored by the time the test ends:
+
+    test_expect_success 'title' '
+        something &&
+        (
+            cd somewhere &&
+            something-else
+        )
+    '
+
+  Alternately, it may be possible to take advantage of `-C` if
+  `something-else` is a `git` command:
+
+    test_expect_success 'title' '
+        something &&
+        git -C somewhere foo
+    '
+
+* use `>` rather than `touch` to create an empty file when the
+  timestamp isn't relevant to the test
+
+* cleanup code outside of tests should be moved into the test and
+  scheduled for execution via test_when_finished()
+
+* there are several standalone "clean up" tests which invoke `git
+  reset --hard` which should be folded into the tests for which they
+  are cleaning up
+
+* multiple commands on one line:
+
+    mkdir foo && >foo/bar && git add foo/bar &&
+
+  should be split across multiple lines:
+
+    mkdir foo &&
+    >foo/bar &&
+    git add foo/bar &&
+
+* at least one test incorrectly uses single quotes within the body of
+  the test which itself is contained within single quotes; when
+  quoting is needed inside a test body, it should be using double
+  quotes instead; however, in this case, the quotes aren't even
+  needed, so:
+
+    git commit -m 'initial' &&
+
+  can just become:
+
+    git commit -m initial &&
+
+* take advantage of here-docs, so:
+
+    { echo other/a.txt; echo other/b.txt; } >expect &&
+
+  can be expressed more cleanly as:
+
+    cat >expect <<-\EOF &&
+    other/a.txt
+    other/b.txt
+    EOF
+
+* use `test` rather than `[`
+
+* optional: rename the setup test 'prepare reference tree' to 'setup'
+
+* optional modernization: use test_path_exists() and cousins instead
+  of `test -f`, etc.
+
+* optional: avoid `git` command upstream of a pipe since the pipe will
+  swallow its exit code, thus a crash won't necessarily be noticed
+
+* optional: it's unusual for tests to blast the test's ".git"
+  directory and recreate it with `git init`, however, a number of
+  tests in this script do so; for tests which really require a new
+  repository, the more common approach is to use test_create_repo() to
+  create a new repository into which the test can `cd` (in a subshell)
+  without disturbing the repository used by the other tests in the
+  script
+
+A few of the above fixes can probably be combined into a single patch,
+in particular, the style fixes in the first four bullet points. Each
+remaining bullet point, however, probably deserves its own patch
+(including the one about removing whitespace after a redirect
+operator).
