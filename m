@@ -2,97 +2,134 @@ Return-Path: <SRS0=BQqG=A5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3588AC433E0
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 00:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E23C0C433E1
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 01:10:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8F8620691
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 00:07:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A40A020717
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 01:10:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FZiHU0Pg"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="aDSDWrLK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728793AbgGRAHZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 20:07:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51906 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728001AbgGRAHY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 20:07:24 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E0EBAC8F61;
-        Fri, 17 Jul 2020 20:07:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RSjcUYe8iaHv2D4dx5i+OAJaeg0=; b=FZiHU0
-        Pg6Fjf6FvmrMFz54yHKKvpQsLH8kXxsjo9FusyX94JTUa4Mw74wMVbY2B44buxMd
-        I1QbnPOFW0/R7SjR+ndeYNAemLXaeEaXODQvQNIquFxhSTUZDrRPfnx0jdM9zho7
-        i2I2tTiE6j85nqL3j6pr9YbFnW143B+jfQpxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=n0YG2zPxEq1x35dJn4zrpPZG5pIWNclA
-        jXhsBIfhqvaFDn10t7xka2KXlAW+p04tTiHe7Va9wcs/kIjld1MryzEh/UHol+r6
-        0Baclx45Y/H38dq4+V1gjpWGDUtA8+EkWl+GMrL+/8Ky5a0/LUfxG+s9OVtVRjmn
-        xlmRGtuCCEs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C5170C8F60;
-        Fri, 17 Jul 2020 20:07:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7B44CC8F5F;
-        Fri, 17 Jul 2020 20:07:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Chris Torek via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH] git-mv: improve error message for conflicted file
-References: <pull.678.git.1595028293855.gitgitgadget@gmail.com>
-Date:   Fri, 17 Jul 2020 17:07:17 -0700
-In-Reply-To: <pull.678.git.1595028293855.gitgitgadget@gmail.com> (Chris Torek
-        via GitGitGadget's message of "Fri, 17 Jul 2020 23:24:53 +0000")
-Message-ID: <xmqqeep9d6tm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726855AbgGRBKM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jul 2020 21:10:12 -0400
+Received: from mout.gmx.net ([212.227.17.20]:40087 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726742AbgGRBKM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 21:10:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1595034610;
+        bh=XwcMviGziMrJojk3ZPrlIdjvhp0qupOqnK0WIc1U82g=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=aDSDWrLKRz4CGsRrLa+uwifykqd3gi5X9g9hdExxjeE3UQVxKk+BXhn9wRjgOxuQQ
+         TXHGYcVjW4sjAUF2gJy6RdIMBIRKxrT+u2hkM7YGmbsyQLUQ3HO0amtrkkfyeI9K3b
+         3kEW3HWd/3NcIcLqDyJ8movUkVPMiQIii+fNDkGo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az767.rnd3qlawrjlelmdafjzgqu2wbe.bx.internal.cloudapp.net
+ ([40.117.186.248]) by mail.gmx.com (mrgmx104 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MXXyJ-1kLbG23H1L-00Z2Zn; Sat, 18 Jul 2020 03:10:10 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.28.0-rc1
+Date:   Sat, 18 Jul 2020 01:10:07 +0000
+Message-Id: <20200718011007.6808-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.27.0
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5756E14-C88A-11EA-9365-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Fcc:    Sent
+X-Provags-ID: V03:K1:ssCx5OHb/PVu5VUHi4dK8zAHC5TqpcdygVLzxsPbUbuqEZEYwNn
+ onbYccsLHRWEJrp3MHVJarOGe0qLErHob94/znJM3O7tOpfSlNGoZisBDaOg6b8zi89NdUj
+ QRPinMGpDtkLbwcEv+0pN36A15/M9JdDLKisdQOM6V3UQgT7j/jGdPS4cBfuC2p2ri/fYfY
+ YxqBeiYuz22EwOmEaMZZw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Tl21GWraGsY=:fRr5qcIYE0MuCdBSRbNMcz
+ 3VsZnIeab6kLZH0vBtFwm/MAfb/FM/2faGe6FuvmdqX/7MEP6H+CAss2RMdyxUnSoZuHK5X3y
+ LW7z0Gg+xiAKXuPVj8SEBS9vcnwRyB5p7HnWAkhzqk2zQ93CasJi4ux5EJqD175SMAvai4sCz
+ oK4wXJWIyoP09dsLYDiz1YmlmLwQ2CLRGg9pbdywhU3zcfhEPNt/rjH8YEhvj0lO1gwiIboij
+ WVlPsZnyd3Cw8nLSTmvyUgnF0zkzTl/M4G9xNySIsZPPrtFdse3lyZjhTWiu70aXKWSMztTsz
+ pNmF/O0KEt+UNZxx5qs67sOewNF/8H/JqhDOnscIs0Bmo23ngnjySriEyf0lfHPtd3Cg85ZBa
+ PTqDiFlplK8iIauLF+1OC6Jzx7lv+ylV06eGpE05FwOUtEujfVnjMiX+k3XeTA/AMkf4Tyq1E
+ jUHrTmPl2xo4V1WIFrWUmmmLR29zcc9zFLItG+4AAUCX20KHrm18P7hMcGtTXVtxAlkAgZvHU
+ c4utmzuXfRC9XnWY40mAG4exHNAl25ADMx+ZiD6jVS38Hcc20x37y0evxFEuhhunRnh1rpBCx
+ qefAnp8GI6yitFRCeptyVAK42jlJaF/KAYLuqwUSotgq860JNns6jnrYZ5uKnn+k7FlPwtNnS
+ PGacuRtzE/A1BwH6qyS2bGbwE1r7d8JxiY97gRpg/D3Y1d+GKpanp8rICb2ZE0obYg26f0SSA
+ QfHxtHJl4SDGtsEEqO2a8aVjo4Xg/QHqWusq1LVB79o+Z0DG4AualUO/+kVHyRhzte433WyVZ
+ mM2feGHzYcFVpIxRK2Txlb6jXzlp4lk8UO5uTE2Vl3BE8a8UEQc6G+f/OssGRfiBP4rZpEEpN
+ BTkExWeqy+rTDFU+uUXmlf3so1BZu1OfHlSSXZADpZqQQF75DtkK1e+5RZx2hL0aVy8gxyIRz
+ zBtdNXiycSqAjE2QFP/V9J1G5x08FNJVW/vYTcb7E/Zz4EVCHtLfEi6w22tH3GaB5wLKC3GC5
+ ae/NAs1hiXpmcRhiAUWMn26STFCvjgcIdWx7dJrHKfpbxS3WlwcqRYPxDcN7+/waPgJrPO7KG
+ ysCVASKxxCjrMn6SxNb1gRwy2WHZ9xxd5tMxzCWl1FL1LSj04PTiT4JlkqcxiAh5V4Z+xWRc9
+ i1Qmrbjo5QD/NWEkxHwZpzE2Br7skCRNLixQP1Zee7r6Ky7jMEsns8mH8Qah9rwnuvqzmjHch
+ rQ8lxajL0jjs4Qh+oihpcfiug4XTNM1xbpu8jLQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Chris Torek via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Dear Git users,
 
-> -		} else if (cache_name_pos(src, length) < 0)
-> -			bad = _("not under version control");
-> -		else if (lstat(dst, &st) == 0 &&
-> +		} else if (cache_name_pos(src, length) < 0) {
-> +			/*
-> +			 * This occurs for both untracked files *and*
-> +			 * files that are in merge-conflict state, so
-> +			 * let's distinguish between those two.
-> +			 */
-> +			struct cache_entry *ce = cache_file_exists(src, length, ignore_case);
-> +			if (ce == NULL)
-> +				bad = _("not under version control");
-> +			else
-> +				bad = _("must resolve merge conflict first");
+I hereby announce that Git for Windows 2.28.0-rc1 is available from:
 
+    https://github.com/git-for-windows/git/releases/tag/v2.28.0-rc1.windows.1
 
-The original did not care about the cache entry itself, and that is
-why cache_name_pos() was used.  Now you care what cache entry is at
-that position, running both calls is quite wasteful.
+Changes since Git for Windows v2.27.0 (June 1st 2020)
 
-Would it work better to declare "struct cache_entry *ce" in the
-scope that surrounds this if/elseif cascade and then rewrite this
-part more like so:
+New Features
 
-	} else if (!(ce = cache_file_exists(...)) {
-		bad = _("not tracked");
-	} else if (ce_stage(ce)) {
-        	bad = _("conflicted");
-	} else if (lstat(...)) { ...
+  * Comes with Git v2.28.0-rc1.
+  * Comes with subversion v1.14.0.
+  * Comes with the designated successor of Git Credential Manager for
+    Windows (GCM for Windows), the cross-platform Git Credential
+    Manager Core. For now, this is opt-in, with the idea of eventually
+    retiring GCM for Windows.
+  * Comes with cURL v7.71.1.
+  * Comes with Perl v5.32.0.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.1.6 (including the improvements of Cygwin 3.1.5).
+  * Comes with GNU Privacy Guard v2.2.21.
 
+Bug Fixes
+
+  * A typo was fixed in the installer.
+  * The new git pull behavior option now records the fast-forward
+    choice correctly.
+  * In v2.27.0, git svn was broken completely, which has been fixed.
+  * Some Git operations could end up with bogus modified symbolic links
+    (where git status would report changes but git diff would not),
+    which is now fixed.
+  * When reinstalling (or upgrading) Git for Windows, the "Pseudo
+    Console Support" choice is now remembered correctly.
+  * Under certain circumstances, the Git Bash window (MinTTY) would
+    crash frequently, which has been addressed.
+  * When pseudo console support is enabled, the VIM editor sometimes
+    had troubles accepting certain keystrokes, which was fixed.
+  * Due to a bug, it was not possible to disable Pseudo Console support
+    by reinstalling with the checkbox turned off, which has been fixed.
+  * A bug with enabled Pseudo Console support, where git add -i would
+    not quit the file selection mode upon an empty input, has been
+    fixed.
+  * The cleanup mode called "scissors" in git commit now handles CR/LF
+    line endings correctly.
+  * When cloning into an existing directory, under certain
+    circumstances, the core.worktree option was set unnecessarily. This
+    has been fixed.
+
+Git-2.28.0-rc1-64-bit.exe | 15a73c06141512c93dd0ad92f0aba1628bd6294162b44fb24baba7d05e5c636c
+Git-2.28.0-rc1-32-bit.exe | 1a12463d484068e73b218a9a1d2d98b7924699fefbc7baa4a06054ea8a6597cb
+PortableGit-2.28.0-rc1-64-bit.7z.exe | 90f6bc4ba6af69375acb286c45fa2ec01d91b0e67a4d851a9e9d7507e8486437
+PortableGit-2.28.0-rc1-32-bit.7z.exe | c4e0e659e34f47e679c9882b2bc3c184e0b6ca58f850ce91764cfc19d5f002f3
+MinGit-2.28.0-rc1-64-bit.zip | 08edf0ea9f94e511eea3abcc1c3fab6967bbf6e14fe7dcf619c3218b6f038c66
+MinGit-2.28.0-rc1-32-bit.zip | ee21cc0648bf2e0f96e331fd6f8a4af4cd01375e18c8980a835baa148b0c1b81
+MinGit-2.28.0-rc1-busybox-64-bit.zip | 76b1e67705bd7ea92364e286a6d3e35a1c5b5fb47b80f4cc82a581e478464e99
+MinGit-2.28.0-rc1-busybox-32-bit.zip | 2a53b2e632e039a4ed0db3656c6d8394df4111bfcd5ca263067c62ddfff2a3f7
+Git-2.28.0-rc1-64-bit.tar.bz2 | 62b70980b712be2ff02b264b77f645d260651053d58eec0191838eaf6b1d59d5
+Git-2.28.0-rc1-32-bit.tar.bz2 | cccf7f9696945b2b471fcc4dcad296d61382205bb8d8d64b0a84e950bf1d20d9
+
+Ciao,
+Johannes
