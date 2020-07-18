@@ -2,140 +2,103 @@ Return-Path: <SRS0=BQqG=A5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3176C433E1
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 20:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 318A1C433DF
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 20:17:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 732432074B
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 20:21:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 015A520738
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 20:17:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="UnpptlsQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NaI+XxK4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727942AbgGRUVq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jul 2020 16:21:46 -0400
-Received: from mail.cmpwn.com ([45.56.77.53]:37484 "EHLO mail.cmpwn.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726801AbgGRUVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jul 2020 16:21:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
-        t=1595103704; bh=f6oh99t6XlcZna/3tjtFSIUyhcI3v/hKON+nrpG5nqY=;
-        h=From:To:Cc:Subject:Date;
-        b=UnpptlsQRVDUlRU1A66REVbwVc9m2nz+6qjdkadnsOqRPpklatGQhMp/XldSVh2N5
-         g5rD26r8fpPy0J3dNyfx9qtoQnE0zQK+rSL/yE6hINZQQjzSOa6wfj/wqJShiuzgOw
-         ipf95V6xtuUajXcAFNPwQbzioa/UxR9nqnJN/Bew=
-From:   Drew DeVault <sir@cmpwn.com>
-To:     "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>
-Subject: [PATCH v2] git-send-email: die if sendmail.* config is set
-Date:   Sat, 18 Jul 2020 16:21:42 -0400
-Message-Id: <20200718202142.111015-1-sir@cmpwn.com>
-X-Mailer: git-send-email 2.27.0
+        id S1727042AbgGRURo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jul 2020 16:17:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35692 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726801AbgGRURo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jul 2020 16:17:44 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D0EC0619D2
+        for <git@vger.kernel.org>; Sat, 18 Jul 2020 13:17:43 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id j11so16298663ljo.7
+        for <git@vger.kernel.org>; Sat, 18 Jul 2020 13:17:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pGxG88UD0QLOtq/q9LmbNGvQk2GCCnyBh37XxYKXh94=;
+        b=NaI+XxK4/J+o2i1jdZmRovfhjRbnhtgUP4noGEspLYkA1u5dm/8zHWfy9ISynIg00L
+         tdwiKI7S2zvQqUDQO6JUcQLiALrkVWaI/uXTezNMj4wcDHKEqicl0fWo8uMulgurrtUY
+         an4g+wof8b9igqXDP5WcyZl6f6oOTtWOassbAr/cq9G8HZguMnzyv8s/o1fRUgU1GREP
+         ClapHI0+MIcTuB6R8PGGLZhMqWnD0toXvIV9roHHj4G0bDYtdFFAtVKydKES+WeTKwRv
+         a4qBDl5G56qZewdb1fbzDb/a3vTPoa7D6j17sc8fesybw6w9EmT7FJutkqkpPLkIVj/9
+         qQ4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pGxG88UD0QLOtq/q9LmbNGvQk2GCCnyBh37XxYKXh94=;
+        b=noS4L+sHLRVCVrPFL3MMCjYUDJpvkzaaAoMndpSc778kXmClbU0gexGYWIfTUinQqs
+         VtlFJ9LqWURjgynsYa60zvmh4Q3thv/OgmLCk9V4fAj/rCq+G0PsuC2hfmmluWss/JNY
+         BtZLmpjkE3rlsx1Qr6CVwCiS763qukoUqdSt3A3c2j2jncr8BBPP2AbPQWrTlL3N331i
+         lVglnf+OJ7ktk26QYbbW4mWg9zTbR3JCo9pYNYrqfOSKgRmXyYAV3cBgB3YoKMHQRmTx
+         f+J4eqqu11RB3UtDKC8ToK7VJAaS5g5Iho8Xb8T2PuVhVhXWS5MzzEPd08Q8YAOP8Io8
+         mNmw==
+X-Gm-Message-State: AOAM532/3lkwoYi8HOFuLdv2ZWKL14AyLP/E+xp3T/jOwK/x6mpXbJJG
+        L8U5uakA/ZxzPOoMbDWRUGn3qbDw
+X-Google-Smtp-Source: ABdhPJzzjyd1N7rsF3JJSicAloyqnEEOGp3rQesZiVhHu+MptpyaiNc89kEseR4zedwLrPW/10QowQ==
+X-Received: by 2002:a2e:8855:: with SMTP id z21mr7303729ljj.325.1595103462216;
+        Sat, 18 Jul 2020 13:17:42 -0700 (PDT)
+Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
+        by smtp.gmail.com with ESMTPSA id x205sm454940lfa.96.2020.07.18.13.17.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Jul 2020 13:17:41 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] gitworkflows.txt: fix broken subsection underline
+Date:   Sat, 18 Jul 2020 22:17:23 +0200
+Message-Id: <20200718201723.10889-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.28.0.rc1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've seen several people mis-configure git send-email on their first
-attempt because they set the sendmail.* config options - not
-sendemail.*. This patch detects this mistake and bails out with a
-friendly warning.
+AsciiDoctor renders the "~~~~~~~~~" literally. That's not our intention:
+it is supposed to indicate a level 2 subsection. In 828197de8f ("docs:
+adjust for the recent rename of `pu` to `seen`", 2020-06-25), the length
+of this section header grew by two characters but we didn't adjust the
+number of ~ characters accordingly. AsciiDoc handles this discrepancy ok
+and still picks this up as a subsection title, but Asciidoctor is not as
+forgiving.
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/config/sendemail.txt |  5 +++++
- git-send-email.perl                |  8 ++++++++
- perl/Git.pm                        | 26 ++++++++++++++++++++++++++
- 3 files changed, 39 insertions(+)
+ Documentation/gitworkflows.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-index 0006faf800..1726d5f85e 100644
---- a/Documentation/config/sendemail.txt
-+++ b/Documentation/config/sendemail.txt
-@@ -61,3 +61,8 @@ sendemail.smtpBatchSize::
- sendemail.smtpReloginDelay::
- 	Seconds wait before reconnecting to smtp server.
- 	See also the `--relogin-delay` option of linkgit:git-send-email[1].
-+
-+sendemail.forceSendmailVariables::
-+	To avoid common misconfiguration mistakes, linkgit:git-send-email[1]
-+	will abort with a warning if any configuration options for "sendmail"
-+	exist. Set this variable to bypass the check.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 36c47bae1d..1b186bc058 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -250,6 +250,7 @@ sub do_edit {
- my $use_xmailer = 1;
- my $validate = 1;
- my $target_xfer_encoding = 'auto';
-+my $forbid_sendmail_variables = 1;
+diff --git a/Documentation/gitworkflows.txt b/Documentation/gitworkflows.txt
+index 2db7ba7842..47cf97f9be 100644
+--- a/Documentation/gitworkflows.txt
++++ b/Documentation/gitworkflows.txt
+@@ -292,7 +292,7 @@ described in the previous section.
  
- my %config_bool_settings = (
-     "thread" => \$thread,
-@@ -263,6 +264,7 @@ sub do_edit {
-     "multiedit" => \$multiedit,
-     "annotate" => \$annotate,
-     "xmailer" => \$use_xmailer,
-+    "forbidsendmailvariables" => \$forbid_sendmail_variables,
- );
  
- my %config_settings = (
-@@ -478,6 +480,12 @@ sub read_config {
-     usage();
- }
+ Branch management for next and seen after a feature release
+-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
-+if ($forbid_sendmail_variables && (scalar Git::config_regexp("sendmail.*")) != 0) {
-+	die __("fatal: found configuration options for 'sendmail'\n" .
-+		"git-send-email is configured with the sendemail.* options - note the 'e'.\n" .
-+		"Set sendemail.forbidSendmailVariables to false to disable this check.\n");
-+}
-+
- die __("Cannot run git format-patch from outside a repository\n")
- 	if $format_patch and not $repo;
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 54c9ed0dde..10df990959 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -723,6 +723,32 @@ sub config_int {
- 	return scalar _config_common({'kind' => '--int'}, @_);
- }
- 
-+=item config_regexp ( RE )
-+
-+Retrieve the list of configuration key names matching the regular
-+expression C<RE>. The return value is a list of strings matching
-+this regex.
-+
-+=cut
-+
-+sub config_regexp {
-+	my ($self, $regex) = _maybe_self(@_);
-+	try {
-+		my @cmd = ('config', '--name-only', '--get-regexp', $regex);
-+		unshift @cmd, $self if $self;
-+		my @matches = command(@cmd);
-+		return @matches;
-+	} catch Git::Error::Command with {
-+		my $E = shift;
-+		if ($E->value() == 1) {
-+			my @matches = ();
-+			return @matches;
-+		} else {
-+			throw $E;
-+		}
-+	};
-+}
-+
- # Common subroutine to implement bulk of what the config* family of methods
- # do. This currently wraps command('config') so it is not so fast.
- sub _config_common {
+ After a feature release, the integration branch 'next' may optionally be
+ rewound and rebuilt from the tip of 'master' using the surviving
 -- 
-2.27.0
+2.28.0.rc1
 
