@@ -2,124 +2,149 @@ Return-Path: <SRS0=BQqG=A5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24586C433DF
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 03:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08CB9C433DF
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 03:52:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB72D2073E
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 03:09:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D19EE2073E
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 03:52:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="eXEimM0v"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="orjazPLq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727813AbgGRDJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jul 2020 23:09:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48274 "EHLO
+        id S1727086AbgGRDwL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jul 2020 23:52:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726898AbgGRDJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jul 2020 23:09:48 -0400
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80488C0619D2
-        for <git@vger.kernel.org>; Fri, 17 Jul 2020 20:09:47 -0700 (PDT)
-Received: by mail-lj1-x243.google.com with SMTP id h22so14861041lji.9
-        for <git@vger.kernel.org>; Fri, 17 Jul 2020 20:09:47 -0700 (PDT)
+        with ESMTP id S1726923AbgGRDwL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jul 2020 23:52:11 -0400
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13632C0619D2
+        for <git@vger.kernel.org>; Fri, 17 Jul 2020 20:52:11 -0700 (PDT)
+Received: by mail-qv1-xf44.google.com with SMTP id m9so5157761qvx.5
+        for <git@vger.kernel.org>; Fri, 17 Jul 2020 20:52:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fH2VUTgrCDusXU+GwIZnYzRkaDrNqPaWZ7N2O017vmo=;
-        b=eXEimM0vFVDKLUf7WEO8YF0tr/4IYuAg1dYsSbKc3POiL/M2Xi0R7vLkVG8qx2wEDy
-         OL/b2ks1EWTW9Hxq1bmnSWyG3JPJOanBeCcK/D0AiB4n5ePM5ILs889mN21zVh0YO81F
-         IBOB0JLywfJDRTHOB1GyaMRlIucAtHhMscaiB0yDbfmIKUVbwUXF74RxBy8V0fMOgQjl
-         hTe1mDQxYra3fmDPWId3EVLE3JRcn3EETasYgBZUVi5J1ZCXOw+4L2PrslFSsGIEvL9/
-         Zhz+9UNhbIDQa3sNR5ytthkjJ/JLv8lG0kPj2RECMlD85NSEEAtvMyScRUrKBz088SRb
-         FoeQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=61qiDV7Bqi6st5SNOAzz7859gtvNmUNnMXLs43hYLhg=;
+        b=orjazPLq9CMHruqGFXvXnM37WF4PExRh5oSfs4yoltzHoMYkZSBYZBh8yJcIb77mXQ
+         xt6NGwGoZuDZatPzFuKFe9cUBtBtq4NXp7ha6u9wg0g4fkTYBz1dy9zahewlRF/SaTAv
+         5VqL9c0y0DCpoe21JW1xQa1b+toOLe6yYDdfx6EqeXOUB1TI5zyso9RqRZdOILRLUoGn
+         RlApkDkoqzgUKjL8+17f8npAjWS/zG1uywTAic2VSAoIGDNpVuhn580wWT3+hL7ZhOz+
+         qH5rJb7GQ5R4rc9pmzYdj18yyEX7YlTm9kH5T6Klb1NUiI1pak1g/GOME4hNvmBgfSuP
+         XB9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fH2VUTgrCDusXU+GwIZnYzRkaDrNqPaWZ7N2O017vmo=;
-        b=Nm5+/SqdOGLBKXYk7o29fCFJSX6cv73uKlt6izjVs0GYH5AVG5QpPTGoV8At0V+j0L
-         oFOf8nmu0hBKy2GleQvC0xc3cKkrUh4QcFS1k/cbuiLWjUqeaTKeF4h9YgdSSFJXhGaB
-         X+XkgeG2xS9g36idrIvNvqd9EKBRhr09uW8MJrhwwjyMBOERnWWyNo5hcZu3ybGWUSvY
-         RKe34SKI0LxoL6GeG7jura5IBlAVRj+DBnbTwI4ZVasM9SMyfWYXku/9iPuWmyyuVjpJ
-         JOpGV/PbBWaNHbWp4FBJ3h5Lo9zEVXk+8qgUcp4SICDB5nMlGbXQ4H84m5QNJLlrLMTr
-         bPtA==
-X-Gm-Message-State: AOAM532VRbS/Qc+BS2TSxKzaQGjLBFeVsEXlpdzfRDi/nq6Qp6LIRyRN
-        cma0zvOAR/LjeR5N9I6MWCaKIGW/Nc9B+DtG68b2EA==
-X-Google-Smtp-Source: ABdhPJyWBFrBWYZMHGobQDCaHFuOpeqoMvYiowkZ2O1Avx8xXGDzRCee5Ue9+XADgQ4ctbkrginO+LS3Yv8egFfjel8=
-X-Received: by 2002:a2e:9bd2:: with SMTP id w18mr6168463ljj.200.1595041785633;
- Fri, 17 Jul 2020 20:09:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1593208411.git.matheus.bernardino@usp.br>
- <b47445fa1cef6d4523dd0ca336f7ee22bce89466.1593208411.git.matheus.bernardino@usp.br>
- <nycvar.QRO.7.76.6.2007161214270.54@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2007161214270.54@tvgsbejvaqbjf.bet>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sat, 18 Jul 2020 00:09:34 -0300
-Message-ID: <CAHd-oW6mvaANTBX5sVEi49s_Ku71-ZXqhyePtkwbCKaTK7tm4Q@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=61qiDV7Bqi6st5SNOAzz7859gtvNmUNnMXLs43hYLhg=;
+        b=kz08hmwADC2xorG5jhVz44NSWmwQ9TJzm0RzD5vAZm0LltXMmM+Vic7e7OLi+mcA0E
+         4iqDnqWTyoVjrWtFr3Ojq1sCsA8HSQRjvIPX1ZVMIFPpBmU/4j5hBb1+7DsLIwbfcDi1
+         JfJ6WhNiiM1NSFmfz9qHgn5pM0UxjnYQzTGhijd5KZU0LhTfg2bLkxxx+WmRTu7kG/4u
+         HJaHyIi7bHZWvrxgjr8ZeyJXfTqybF06Mb1wRfQzoaPnHXq+iHSopOzdlqkdUzrvVckB
+         Dz9qc8ZaqX9lmbw/24tzdbL5UhlPCXQlI61Wb0mZI/sKyQk30jQIBtXNY1tikYp7oAf/
+         anyg==
+X-Gm-Message-State: AOAM530IMkRTFjswVCYoiNlvczMY0ZqrqSqUTEgAbbPk5Zxvp4HOibNo
+        mrTwfU46FWvXhZoYc5Bm1SU1gg==
+X-Google-Smtp-Source: ABdhPJzYDom635v+gwNu2dKtks/cYK4znAHoflsWndd/x5gnjcUUzsiJTnUPu3LWuZf9ncQ2j+IQ+g==
+X-Received: by 2002:ad4:42a5:: with SMTP id e5mr12038646qvr.67.1595044330018;
+        Fri, 17 Jul 2020 20:52:10 -0700 (PDT)
+Received: from mango.spo.virtua.com.br ([2804:14c:81:9a16::3])
+        by smtp.gmail.com with ESMTPSA id c27sm11327061qkl.125.2020.07.17.20.52.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jul 2020 20:52:08 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     johannes.schindelin@gmx.de
+Cc:     christian.couder@gmail.com, frekui@gmail.com, git@vger.kernel.org,
+        j6t@kdbg.org, jonathantanmy@google.com, matheus.bernardino@usp.br,
+        peff@peff.net, sandals@crustytoothpaste.net
 Subject: Re: [PATCH v2 2/2] hex: make hash_to_hex_algop() and friends thread-safe
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Fredrik Kuivinen <frekui@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Date:   Sat, 18 Jul 2020 00:52:01 -0300
+Message-Id: <20200718035201.42233-1-matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <nycvar.QRO.7.76.6.2007161214270.54@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.2007161214270.54@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Dscho
-
-On Thu, Jul 16, 2020 at 9:56 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Thu, Jul 16, 2020 at 9:56 AM Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 >
-> On Fri, 26 Jun 2020, Matheus Tavares wrote:
+> Now, I am _far_ from knowing what I'm doing with Coccinelle, but I think
+> this here semantic patch should get you going:
 >
-> > +     value = pthread_getspecific(hexbuf_array_key);
-> > +     if (value) {
-> > +             ha = (struct hexbuf_array *) value;
-> > +     } else {
-> > +             ha = xmalloc(sizeof(*ha));
+> -- snipsnap --
+> @@
+> expression E;
+> @@
+>   {
+> ++   char hex[GIT_MAX_HEXSZ + 1];
+>      ...
+> -    oid_to_hex(E)
+> +    oid_to_hex_r(hex, E)
+>      ...
+>   }
 >
-> I just realized (while trying to debug something independent) that this
-> leaves `ha->idx` uninitialized.
+> @@
+> expression E1, E2;
+> @@
+>   {
+> ++   char hex1[GIT_MAX_HEXSZ + 1], hex2[GIT_MAX_HEXSZ + 1];
+>      ...
+> -    oid_to_hex(E1)
+> +    oid_to_hex_r(hex1, E1)
+>      ...
+> -    oid_to_hex(E2)
+> +    oid_to_hex_r(hex2, E2)
+>      ...
+>   }
 
-Thanks for catching that! I fixed it in my local branch.
+Thanks for this nice example! This already worked very well in some of
+my tests :)
 
-> But as I mentioned before, I would be much more in favor of abandoning
-> this thread-local idea (because it is _still_ fragile, as the same thread
-> could try to make use of more than four hex values in the same `printf()`,
-> for example) and instead using Coccinelle to convert all those
-> `oid_to_hex()` calls to `oid_to_hex_r()` calls.
+However, with my _very_ limited notion of Coccinelle, I didn't
+understand why some code snippets didn't match the above rules. For
+example, the structure below:
 
-Yeah, I agree that removing oid_to_hex() in favor of oid_to_hex_r()
-would be great. Unfortunately, I only used Coccinelle for basic
-things, such as function renaming. And I won't have the time to study
-it further at the moment :( Therefore, I think I'll ask Junio to drop
-this series for now, until I or someone else finds some time to work
-on the semantic patch.
+func(...)
+{
+	if (cond)
+		func2("%s", oid_to_hex(a));
+}
 
-Alternatively, if using thread-local storage is still an option, I
-think I might have solved the problems we had in the previous
-iteration with memory leaks on Windows. I changed our
-pthread_key_create() emulation to start using the destructor callback
-on Windows, through the Fiber Local Storage (FLS) API. As the
-documentation says [1] "If no fiber switching occurs, FLS acts exactly
-the same as thread local storage". The advantage over TLS is that
-FLSAlloc() does take a callback parameter.
+I thought it could be because the `if` statement is missing the curly
+brackets (and it does work if I add the brackets), but to my surprise,
+adding another oid_to_hex() call in an `else` case also made the code
+match the rule:
 
-I also removed the ugly `#ifdef HAVE_THREADS` guards on the last
-patch, as you suggested, and added some tests for our pthread_key
-emulation. In case you want to take a look to see if it might be worth
-pursuing this route, the patches are here:
-https://github.com/matheustavares/git/commits/safe_oid_to_hex_v3
+func(...)
+{
+	if (cond)
+		func2("%s", oid_to_hex(a));
+	else
+		func2("%s", oid_to_hex(a));
+}
 
-[1]: https://docs.microsoft.com/en-us/windows/win32/procthread/fibers#fiber-local-storage
+The following snippet also correctly matches, but spatch introduces only
+one `hex` variable:
+
+	if (cond)
+		func2("%s, %s", oid_to_hex(a), oid_to_hex(b));
+	else
+		func2("%s", oid_to_hex(a));
+
+We will probably want our semantic rules to handle an arbitrary number
+of `oid_to_hex()` calls in each function, but in scenarios like the
+above one, we only really need 2 hex buffers despite having 3 calls...
+That might be a little tricky, I guess.
+
+Another thing that might be tricky in this conversion is checking for
+name conflicts with the added `hex` variable (but maybe Coccinelle
+already has a facilitator mechanism for such cases? IDK).
