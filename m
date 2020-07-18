@@ -2,111 +2,86 @@ Return-Path: <SRS0=BQqG=A5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F524C433DF
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 13:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E467CC433E0
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 17:21:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CDF0E2070E
-	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 13:33:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8F092073A
+	for <git@archiver.kernel.org>; Sat, 18 Jul 2020 17:21:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="Ih7PDT0s"
+	dkim=pass (2048-bit key) header.d=pdinc.us header.i=@pdinc.us header.b="YX3DhHx5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727052AbgGRNdP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jul 2020 09:33:15 -0400
-Received: from mail.cmpwn.com ([45.56.77.53]:37148 "EHLO mail.cmpwn.com"
+        id S1728106AbgGRRVS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jul 2020 13:21:18 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:39148 "EHLO mail1.pdinc.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726569AbgGRNdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jul 2020 09:33:15 -0400
-X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Jul 2020 09:33:15 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
-        t=1595078594; bh=uOdjjHPcvsE8xgfQSm7QpZ0H3vLzzk1w616ev4ukNh8=;
-        h=From:To:Cc:Subject:Date;
-        b=Ih7PDT0sK1kx2c2xFg1Edh/8TZIXdncQ4fcLuKXwYvfSCMuoOWjzVOp8kMLlI0QUe
-         AzSMAqwTWN2fIeS2OGtUDHZHx7XMyoOKPLWPbwUTaIiaY8JeinI2TyuSAfq0R2iHEu
-         KR0H8dKhrMAwCID1Zdbtny2npgM641bX+PjGDfOs=
-From:   Drew DeVault <sir@cmpwn.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>
-Subject: [PATCH] git-send-email: die if sendmail.* config is set
-Date:   Sat, 18 Jul 2020 09:23:11 -0400
-Message-Id: <20200718132311.27248-1-sir@cmpwn.com>
-X-Mailer: git-send-email 2.27.0
+        id S1726528AbgGRRVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jul 2020 13:21:18 -0400
+Received: from lovegrove (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id 06IHLHWn021978
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Sat, 18 Jul 2020 13:21:17 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail1.pdinc.us 06IHLHWn021978
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1595092877; bh=4iLNcHPw2Ua2JnvjYa2ngfmwGygcpkW69Zq2MUSdJp0=;
+        h=From:To:Subject:Date:From;
+        b=YX3DhHx5czWvTDisPm/BGo8tGnJJ2fpIIYMU2ZEzbhkiwHMr/VSglEI7L7agDW7so
+         RQKo5dwibrRnw4laYSVnyLEZvPKPDc6VXMF6v1Ktnn3ioe/i5v1wmvqJjEGVo/njVo
+         DgABCS4In1q8xP5mOfbLCbdnYrxcvpjFhhBZZcFqEm/CUFPG4MaQi7tSQ1F32IsoW7
+         HGhpFgKufkWMkRyHdn6jk501f1POZYozgLxsokEsF0vENvtwccKX48LeJdkv+lvYT4
+         Yt0KYzzjrfZvwzgniJRVbKGjBgINA8C9AiE+P7HtoASXgvhRvfx1DWsUg57VJV/cJA
+         CSviHf0P222Uw==
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     <git@vger.kernel.org>
+Subject: [off topic] Git hook and integration for JIRA
+Date:   Sat, 18 Jul 2020 13:21:27 -0400
+Message-ID: <015101d65d27$dee4e9a0$9caebce0$@pdinc.us>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AdZdJ6J7n8rRlrH3QEazCXLOdes6LQ==
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've seen several people mis-configure git send-email on their first
-attempt because they set the sendmail.* config options - not
-sendemail.*. This patch detects this mistake and bails out with a
-friendly warning.
+On our open source / public projects JIRA [1] instance (read as 0$ cost) =
+we would like to have our git commits show up.
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
----
- git-send-email.perl |  6 ++++++
- perl/Git.pm         | 26 ++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+If we were using Atlassian Bitbucket, this would be a seamless =
+integration. But Bitbucket is not what we are looking for. It is free =
+for our open source projects, but is just one more server to maintain.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 36c47bae1d..8e42ba00c1 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -478,6 +478,12 @@ sub read_config {
-     usage();
- }
- 
-+if ((scalar Git::config_regexp("sendmail.*")) != 0) {
-+	die __("fatal: found configuration options for 'sendmail'\n" .
-+		"git-send-email is configured with the sendemail.* options - note the 'e'.\n" .
-+		"Assuming this is a mistake and bailing out.\n");
-+}
-+
- die __("Cannot run git format-patch from outside a repository\n")
- 	if $format_patch and not $repo;
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 54c9ed0dde..10df990959 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -723,6 +723,32 @@ sub config_int {
- 	return scalar _config_common({'kind' => '--int'}, @_);
- }
- 
-+=item config_regexp ( RE )
-+
-+Retrieve the list of configuration key names matching the regular
-+expression C<RE>. The return value is a list of strings matching
-+this regex.
-+
-+=cut
-+
-+sub config_regexp {
-+	my ($self, $regex) = _maybe_self(@_);
-+	try {
-+		my @cmd = ('config', '--name-only', '--get-regexp', $regex);
-+		unshift @cmd, $self if $self;
-+		my @matches = command(@cmd);
-+		return @matches;
-+	} catch Git::Error::Command with {
-+		my $E = shift;
-+		if ($E->value() == 1) {
-+			my @matches = ();
-+			return @matches;
-+		} else {
-+			throw $E;
-+		}
-+	};
-+}
-+
- # Common subroutine to implement bulk of what the config* family of methods
- # do. This currently wraps command('config') so it is not so fast.
- sub _config_common {
--- 
-2.27.0
+An non-ideal implementation [2] looks like a comment. While the native =
+implementation [4] shows up in a nicely organized section of the issue =
+page.
+
+All roads seem to lead to the non FOSS BigBrassBand [5] git integration =
+plugin. I do not see a non-profit license and it will not fit the (lack =
+of) budget.
+
+Thoughts?
+
+On a side note, we will also like to support [3] github.com pull =
+requests in some form or fashion.
+
+1: https://www.pdinc.us/public/jira/
+2: =
+https://issues.apache.org/jira/browse/WW-5069?focusedCommentId=3D17092794=
+&page=3Dcom.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#=
+comment-17092794
+3: https://hibernate.atlassian.net/browse/HHH-13690
+4: https://www.atlassian.com/software/jira/bitbucket-integration
+5: =
+https://marketplace.atlassian.com/apps/4984/git-integration-for-jira?host=
+ing=3Dserver&tab=3Doverview
+
 
