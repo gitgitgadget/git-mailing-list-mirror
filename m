@@ -2,164 +2,101 @@ Return-Path: <SRS0=m+L4=A6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AACBDC433E1
-	for <git@archiver.kernel.org>; Sun, 19 Jul 2020 12:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58DF1C433E1
+	for <git@archiver.kernel.org>; Sun, 19 Jul 2020 17:09:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8515A21775
-	for <git@archiver.kernel.org>; Sun, 19 Jul 2020 12:40:02 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hogQlKtx"
+	by mail.kernel.org (Postfix) with ESMTP id 35CB721741
+	for <git@archiver.kernel.org>; Sun, 19 Jul 2020 17:09:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726051AbgGSMj7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Jul 2020 08:39:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44364 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbgGSMj6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Jul 2020 08:39:58 -0400
-Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F28EC0619D2
-        for <git@vger.kernel.org>; Sun, 19 Jul 2020 05:39:58 -0700 (PDT)
-Received: by mail-lj1-x241.google.com with SMTP id d17so17396968ljl.3
-        for <git@vger.kernel.org>; Sun, 19 Jul 2020 05:39:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VB/sSlvQEFMObqB3kwrj3aOOLaZY3Et9LU/5E3ckbYc=;
-        b=hogQlKtxzDgPTgs9mhMljjvKG22g6QURVbFJsbyOsKCqLY+KwtFrvD6DdvBwlJ93sM
-         jue5Mngl9FYiJafDwvXlR2PtTXQBgTOujdcBBQOydDaGR44TYwKYPfHX7Ga0st1aCvkb
-         3bM5zBOW6jv3meWU6dLEZEBleyr62HEtpAO9glCpSC2i5Urag9quIAwpLLkg23iiM2Ro
-         7Mwa4P5XJfgwE9N7Bd7ww3eBURGlDuLbQDsiOcKjaa5UBLp9MFsW6Z07Sdd9kDhCTfZe
-         zLYc5eUhDIIF01+t/QbvkCIHm77lbhSPXLLJDN1YL2xhazrFXBE8YXCE4E65Q//bC3oH
-         fhSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VB/sSlvQEFMObqB3kwrj3aOOLaZY3Et9LU/5E3ckbYc=;
-        b=ZRBa1BLKY0vmuAMf2uuOxvZcI9Sh+mZ5UhBT0Cf4LQYBksirmT/aNWKk4JJ1lVwAFA
-         jP/tU2lJt5E3e/u4S5Ocv5b2q/lSo/b89CQHtQWk0yvEmGoFdbv1RSc0eGLHFlZxQu0/
-         d3CZ+a8aF+ERg1klUB5/DNvC+h24WhpOmoxrD38Ey/tFx5eP3pPVZBqjdN96nnt1iDBM
-         4ltzCT3EJW1Iff9765FZPo34cw55zXeZq0Kof71EYKK6Zb2Y/zeftjs0xBKWDCWyIGS9
-         Q4HMdarkiThU7BbxcFw8RVqmLPJR345ehlCCfnAh1aXtZjouDpImOWP3rVLLEsS6olM1
-         AS8A==
-X-Gm-Message-State: AOAM530vhyxiJosOtEmeQx3DXZjNplM5mNaIjDAcvy32cUuIe3vnschd
-        EHECg6fyMxKQfvqhlMPzsDw=
-X-Google-Smtp-Source: ABdhPJwQcxi5EH/+aASGcAMNsHBalRti8ASQZQClxkr1ls/uaSWXFd3+a82d5bxoi/0vDGOO41F/Wg==
-X-Received: by 2002:a05:651c:1a7:: with SMTP id c7mr8689173ljn.345.1595162396771;
-        Sun, 19 Jul 2020 05:39:56 -0700 (PDT)
-Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
-        by smtp.gmail.com with ESMTPSA id y2sm3139106lfh.1.2020.07.19.05.39.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2020 05:39:56 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Martin Melka <martin.melka@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v5 11/12] Fix error-prone fill_directory() API; make it only return matches
-Date:   Sun, 19 Jul 2020 14:39:19 +0200
-Message-Id: <20200719123919.1802-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.28.0.rc1
-In-Reply-To: <87lfjg6mkn.fsf@linux-m68k.org>
-References: <87lfjg6mkn.fsf@linux-m68k.org>
+        id S1726123AbgGSRJ0 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 19 Jul 2020 13:09:26 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:35914 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725783AbgGSRJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Jul 2020 13:09:26 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [173.32.57.223])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 06JH9J87090988
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 19 Jul 2020 13:09:20 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?UTF-8?Q?'Martin_=C3=85gren'?=" <martin.agren@gmail.com>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Denton Liu'" <liu.denton@gmail.com>, <git@vger.kernel.org>
+References: <00d001d65c80$3519c960$9f4d5c20$@nexbridge.com> <20200718094840.31269-1-martin.agren@gmail.com>
+In-Reply-To: <20200718094840.31269-1-martin.agren@gmail.com>
+Subject: RE: [PATCH] t3200: don't grep for `strerror()` string
+Date:   Sun, 19 Jul 2020 13:09:09 -0400
+Message-ID: <011401d65def$54ae8a20$fe0b9e60$@nexbridge.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQKxrwJhbsUyly04+CdORB3ARF6ligFrNkMrp00mi+A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On July 18, 2020 5:49 AM, Martin Ågren Wrote:
+> In 6b7093064a ("t3200: test for specific errors", 2020-06-15), we learned to
+> grep stderr to ensure that the failing `git branch` invocations fail for the right
+> reason. In two of these tests, we grep for "File exists", expecting the string
+> to show up there since config.c calls `error_errno()`, which ends up including
+> `strerror(errno)` in the error message.
+> 
+> But as we saw in 4605a73073 ("t1091: don't grep for `strerror()` string",
+> 2020-03-08), there exists at least one implementation where `strerror()`
+> yields a slightly different string than the one we're grepping for. In particular,
+> these tests fail on the NonStop platform.
+> 
+> Similar to 4605a73073, grep for the beginning of the string instead to avoid
+> relying on `strerror()` behavior.
+> 
+> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+>  Hi Randall,
+> 
+>  Does this fix the test for you?
+> 
+>  Martin
+> 
+>  t/t3200-branch.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh index
+> b6aa04bbec..4c0734157b 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -870,7 +870,7 @@ test_expect_success '--set-upstream-to fails on
+> locked config' '
+>  	>.git/config.lock &&
+>  	git branch locked &&
+>  	test_must_fail git branch --set-upstream-to locked 2>err &&
+> -	test_i18ngrep "could not lock config file .git/config: File exists" err
+> +	test_i18ngrep "could not lock config file .git/config" err
+>  '
+> 
+>  test_expect_success 'use --set-upstream-to modify HEAD' '
+> @@ -901,7 +901,7 @@ test_expect_success '--unset-upstream should fail if
+> config is locked' '
+>  	git branch --set-upstream-to locked &&
+>  	>.git/config.lock &&
+>  	test_must_fail git branch --unset-upstream 2>err &&
+> -	test_i18ngrep "could not lock config file .git/config: File exists" err
+> +	test_i18ngrep "could not lock config file .git/config" err
+>  '
+> 
+>  test_expect_success 'test --unset-upstream on HEAD' '
 
-On Sun, 19 Jul 2020 at 08:37, Andreas Schwab <schwab@linux-m68k.org> wrote:
->
-> This breaks git status --ignored.
->
-> $ ./git status --porcelain --ignored -- a
-> !! abspath.o
-> !! add-interactive.o
-...
-> !! attr.o
-
-Thanks for bisecting. This is 95c11ecc73 ("Fix error-prone
-fill_directory() API; make it only return matches", 2020-04-01).
-
-I wonder if the below makes any sense. It seems to fix this usage and
-the tests pass, but I have no idea what else this might be breaking...
-
-Maybe Elijah has an idea whether this is roughly the right approach?
-Looking at the commit in question (95c11ecc73), there must have been
-some reason that it injected the pathspec check between the
-"path_excluded" and the "path_untracked" cases.  The diff below
-basically undoes that split, so I have a feeling I'm missing something.
-
-Martin
-
-diff --git a/dir.c b/dir.c
-index 1045cc9c6f..fe64be30ed 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2209,13 +2209,13 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 				       baselen, excluded, pathspec);
- 	case DT_REG:
- 	case DT_LNK:
--		if (excluded)
--			return path_excluded;
- 		if (pathspec &&
- 		    !match_pathspec(istate, pathspec, path->buf, path->len,
- 				    0 /* prefix */, NULL /* seen */,
- 				    0 /* is_dir */))
- 			return path_none;
-+		if (excluded)
-+			return path_excluded;
- 		return path_untracked;
- 	}
- }
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index e4cf5484f9..2f9bea9793 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -30,6 +30,31 @@ test_expect_success 'same with gitignore starting with BOM' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'status untracked files --ignored with pathspec (no match)' '
-+	git status --porcelain --ignored -- untracked/i >actual &&
-+	test_must_be_empty actual &&
-+	git status --porcelain --ignored -- untracked/u >actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success 'status untracked files --ignored with pathspec (literal match)' '
-+	git status --porcelain --ignored -- untracked/ignored >actual &&
-+	echo "!! untracked/ignored" >expected &&
-+	test_cmp expected actual &&
-+	git status --porcelain --ignored -- untracked/uncommitted >actual &&
-+	echo "?? untracked/uncommitted" >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'status untracked files --ignored with pathspec (glob match)' '
-+	git status --porcelain --ignored -- untracked/i\* >actual &&
-+	echo "!! untracked/ignored" >expected &&
-+	test_cmp expected actual &&
-+	git status --porcelain --ignored -- untracked/u\* >actual &&
-+	echo "?? untracked/uncommitted" >expected &&
-+	test_cmp expected actual
-+'
-+
- cat >expected <<\EOF
- ?? .gitignore
- ?? actual
--- 
-2.28.0.rc1.7.g31f2d237fa
+It should work, yes. You could go as far as the ':' if you were worried about the path of the .git/config file.
 
