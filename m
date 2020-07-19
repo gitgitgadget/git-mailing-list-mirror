@@ -2,67 +2,67 @@ Return-Path: <SRS0=m+L4=A6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21747C433E1
-	for <git@archiver.kernel.org>; Sun, 19 Jul 2020 04:28:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD807C433E0
+	for <git@archiver.kernel.org>; Sun, 19 Jul 2020 04:28:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA9D120724
+	by mail.kernel.org (Postfix) with ESMTP id 9A3E020724
 	for <git@archiver.kernel.org>; Sun, 19 Jul 2020 04:28:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skylittlesystem-org.20150623.gappssmtp.com header.i=@skylittlesystem-org.20150623.gappssmtp.com header.b="iGiZgRsI"
+	dkim=pass (2048-bit key) header.d=skylittlesystem-org.20150623.gappssmtp.com header.i=@skylittlesystem-org.20150623.gappssmtp.com header.b="Epot5JZj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726021AbgGSE0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Jul 2020 00:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53798 "EHLO
+        id S1725783AbgGSEZS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Jul 2020 00:25:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725272AbgGSE0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Jul 2020 00:26:11 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F538C0619D2
-        for <git@vger.kernel.org>; Sat, 18 Jul 2020 21:26:11 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 22so19225098wmg.1
-        for <git@vger.kernel.org>; Sat, 18 Jul 2020 21:26:11 -0700 (PDT)
+        with ESMTP id S1725272AbgGSEZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Jul 2020 00:25:17 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26150C0619D2
+        for <git@vger.kernel.org>; Sat, 18 Jul 2020 21:25:16 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z13so14724289wrw.5
+        for <git@vger.kernel.org>; Sat, 18 Jul 2020 21:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skylittlesystem-org.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dg2YAc9c4uqxa+eagwTGip8Taf/41hbI9Spn6qwvozM=;
-        b=iGiZgRsIBcFdvfKBLNwmcb1JCR3JlE/KL+Zf7Fo3D21CJDtFuxtMMybKHJGgvBv7br
-         BFWhLfpt2mzw84rem+HQctzEV/YrVvJkS7N1UTDQ7RmfXkn1mmEOg26zlUq7N2UdvPE8
-         hJSQd5u7p3E21cC+9ftRTbMrWhBcSz9JazKORapxX+W6eHru3OCS+VIj6R9n8s1Ga97j
-         4NHrIuzcfcxOe7n7Z4eyertV4st2pc9AAQrp5XmLV16xDCxnYRw6TQ9V4uwcdlUnC/OH
-         bIEHPeVSNxcXMyp04sYxCXFiJsLhx7oAlrOhM6FK+mEVXNUoKWHoDfwRF2yInnH9dLIT
-         Z1sg==
+        bh=pSMXPDLBGT5IP7V/aT7rRsdoQlpQF3Us+64LI4p8+Pw=;
+        b=Epot5JZjSkDAFERYdsYw1lqszVviPKPIh7uHpBxtaJZXjiR+ykUH3oTN9y9rvPs/1D
+         5uvhSisZ1VUOGKU5XxFddHLqu//tl17BUJe/5Ans5QB9MEichKEMa3px1YyIoqbm15Ui
+         h2QJWO/+EjzWh+t3/Hd1WgqCaKLAUZ0Bhmbr96Fw1/7xndD9XbsxBTHFT8//bcoW/ZQC
+         a0hu+8XTJp3frmbq3v7qcpsBqO6ebCj0J1UCQrRXLWgqFfYPXAJdSLwVdjHsORlnTNAH
+         sBQDPH1gKDPjZloBmzXxSQ4UxocMj4Fng9r+QYFr2s2dAgsMdKnXW9QMOYS7Ie6u/dUU
+         E++g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dg2YAc9c4uqxa+eagwTGip8Taf/41hbI9Spn6qwvozM=;
-        b=Xu4OQ/i2tHGHIuo/qooPRT42skReosrE0quF3wa5xpEZ5G5a1gR4xDvsa/VX+MoNE5
-         AOHUrFZCZ5HMcN+NMDln252ULD1DBnLUAzxqCyaKs7hbds1OOcX5s5ku9FrgmHLU50ZE
-         RCp9MR9JQcRrNaCiqwr6CRdGLs+URlCU4kw1plmyQLBHrPFU+4TLZ0bQ8hNe8ZLJ5oeF
-         ylLZNtINNzIwhqBJTmOq/siuoLwkXVFkbwQ4AQfJZfTDRgRNznzhH/QF1kH8FiZypkyK
-         2fRR3AANGZE0sOkYMtR2Y3O91bMV5eWRNftHcEfXrrmMFplqzlIv/ySvKyhhSW2FTFoo
-         uzyQ==
-X-Gm-Message-State: AOAM532vr5ePAap6vp3iM6MB7Xe4pegw2WNFWDz9wFr0ex7HVFQTEVsy
-        VW3fS6SdJIBWVhIkXIKrrEll31P/WGs=
-X-Google-Smtp-Source: ABdhPJzCMsAhkedB7Z4nIwwwYs3gn2hHwnPV8YICZKMbtvHsrmck2lPCkIFc4jSv94WQEWZq2eLYuw==
-X-Received: by 2002:a1c:7fd7:: with SMTP id a206mr15910104wmd.104.1595132769599;
-        Sat, 18 Jul 2020 21:26:09 -0700 (PDT)
+        bh=pSMXPDLBGT5IP7V/aT7rRsdoQlpQF3Us+64LI4p8+Pw=;
+        b=sOjnht08hb3jXCh3heW/gLPAa1CDXO8c4Lf3900Xtt19rK0R9hgWuBw0AP0M1Zh25n
+         Np0zU44/PugmXUZonWBsRhsnpy6+Mxg/j7f+OPkbUmp7MiOpUaMUn5sstCbajVEzY0t+
+         T8J+KPBYVYrUuOPtbi0PEjr7gzetY4MkdtNTxFCptRJLT/R7WD7pziXV8fkljKLhjc4O
+         uGg+l/Thlpg/7S3ubqkIq9kqJrncwSjv46ISYU1Fb50saqX1KcH2t0qgIHCqG/h1WE67
+         bykuH2JbwNTuc8bT31OZ2tmda2liawjmWe9EryE5a0GwZ0rd2AszzuWZg00CNRZeBs4t
+         nD/g==
+X-Gm-Message-State: AOAM532lsQoBgcZMkIi9JfDSa/zYvE0UKEj+NZfEw7PEMMQS2EAvzlOD
+        XBXwIDIrYziSUnQQOtlXcdiSnyO1cgc=
+X-Google-Smtp-Source: ABdhPJy9AHPJ97V6ASgLDB1gvhqeT+XI6Y5M+YFrljoP8BYSqqYPGH5/0AWW6vyGWgitInlcib7wSw==
+X-Received: by 2002:a5d:618e:: with SMTP id j14mr8302321wru.252.1595132714393;
+        Sat, 18 Jul 2020 21:25:14 -0700 (PDT)
 Received: from localhost.localdomain (cpc110667-lewi19-2-0-cust284.2-4.cable.virginm.net. [80.7.253.29])
-        by smtp.gmail.com with ESMTPSA id z16sm23571965wrr.35.2020.07.18.21.26.08
+        by smtp.gmail.com with ESMTPSA id z16sm23571965wrr.35.2020.07.18.21.25.13
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Jul 2020 21:26:09 -0700 (PDT)
+        Sat, 18 Jul 2020 21:25:13 -0700 (PDT)
 From:   pudinha <rogi@skylittlesystem.org>
 To:     git@vger.kernel.org
-Cc:     pudinha <rogi@skylittlesystem.org>
-Subject: [PATCH v2 2/2] Support nvim as merge tool
-Date:   Sun, 19 Jul 2020 05:23:38 +0100
-Message-Id: <20200719042335.3913-3-rogi@skylittlesystem.org>
+Cc:     pudinha <rogi@skylittlesystem.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/2] Support nvim as merge tool
+Date:   Sun, 19 Jul 2020 05:23:35 +0100
+Message-Id: <20200719042335.3913-1-rogi@skylittlesystem.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200718192001.27434-1-rogi@skylittlesystem.org>
 References: <20200718192001.27434-1-rogi@skylittlesystem.org>
@@ -73,109 +73,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- contrib/completion/git-completion.bash |  4 ++--
- git-mergetool--lib.sh                  |  7 +++++--
- mergetools/nvimdiff                    |  1 +
- mergetools/vimdiff                     | 15 +++++++++------
- 4 files changed, 17 insertions(+), 10 deletions(-)
- create mode 100644 mergetools/nvimdiff
+> For example, we could add another method the backends could define,
+> call it list_tool_variants, and whenever the control flow goes from
+> run_merge_tool through setup_tool for a tool whose name ends with
+> [1-9], e.g. "foomerge3", we first see if there is "foomerge" tool
+> and if there is ask it if it knows about "foomerge3" variant by
+> calling its list_tool_variants.
+>
+> That way, we probably can remove the files for vimdiff2, vimdiff3,
+> gvimdiff2 and gvimdiff3 (gvimdiff needs to stay there, as we do not
+> want to make the name derivation rule too complex) only to hold a
+> single line ". vimdiff".  Then the next person who adds yet another
+> set of backends based on a yet another reimplementation or skin of
+> vim would only have to add a single file in mergetools/ directory,
+> not three.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ee468ea3b0..aed08f8df5 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1712,8 +1712,8 @@ _git_diff ()
- }
- 
- __git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
--			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc
--			codecompare smerge
-+			tkdiff vimdiff nvimdiff gvimdiff xxdiff araxis p4merge
-+			bc codecompare smerge
- "
- 
- _git_difftool ()
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 29fecc340f..2defef28cd 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -304,11 +304,14 @@ list_merge_tool_candidates () {
- 		tools="$tools smerge"
- 	fi
- 	case "${VISUAL:-$EDITOR}" in
-+	*nvim*)
-+		tools="$tools nvimdiff vimdiff emerge"
-+		;;
- 	*vim*)
--		tools="$tools vimdiff emerge"
-+		tools="$tools vimdiff nvimdiff emerge"
- 		;;
- 	*)
--		tools="$tools emerge vimdiff"
-+		tools="$tools emerge vimdiff nvimdiff"
- 		;;
- 	esac
- }
-diff --git a/mergetools/nvimdiff b/mergetools/nvimdiff
-new file mode 100644
-index 0000000000..04a5bb0ea8
---- /dev/null
-+++ b/mergetools/nvimdiff
-@@ -0,0 +1 @@
-+. "$MERGE_TOOLS_DIR/vimdiff"
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 3925e1fc3e..abc8ce4ec4 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -5,7 +5,7 @@ diff_cmd () {
- 
- merge_cmd () {
- 	case "$1" in
--	gvimdiff|vimdiff)
-+	*vimdiff)
- 		if $base_present
- 		then
- 			"$merge_tool_path" -f -d -c '4wincmd w | wincmd J' \
-@@ -15,11 +15,11 @@ merge_cmd () {
- 				"$LOCAL" "$MERGED" "$REMOTE"
- 		fi
- 		;;
--	gvimdiff2|vimdiff2)
-+	*vimdiff2)
- 		"$merge_tool_path" -f -d -c 'wincmd l' \
- 			"$LOCAL" "$MERGED" "$REMOTE"
- 		;;
--	gvimdiff3|vimdiff3)
-+	*vimdiff3)
- 		if $base_present
- 		then
- 			"$merge_tool_path" -f -d -c 'hid | hid | hid' \
-@@ -34,10 +34,13 @@ merge_cmd () {
- 
- translate_merge_tool_path() {
- 	case "$1" in
--	gvimdiff|gvimdiff2|gvimdiff3)
-+	nvimdiff*)
-+		echo nvim
-+		;;
-+	gvimdiff*)
- 		echo gvim
- 		;;
--	vimdiff|vimdiff2|vimdiff3)
-+	vimdiff*)
- 		echo vim
- 		;;
- 	esac
-@@ -48,7 +51,7 @@ exit_code_trustable () {
- }
- 
- list_tool_variants () {
--	for prefix in '' g; do
-+	for prefix in '' g n; do
- 		for suffix in '' 2 3; do
- 			echo "${prefix}vimdiff${suffix}"
- 		done
+This is what I managed to do.
+
+pudinha (2):
+  Refactor vimdiff and bc merge tool variants
+  Support nvim as merge tool
+
+ contrib/completion/git-completion.bash |  4 +--
+ git-mergetool--lib.sh                  | 35 ++++++++++++++++++++------
+ mergetools/bc                          |  5 ++++
+ mergetools/bc3                         |  1 -
+ mergetools/gvimdiff3                   |  1 -
+ mergetools/{gvimdiff2 => nvimdiff}     |  0
+ mergetools/vimdiff                     | 21 ++++++++++++----
+ mergetools/vimdiff2                    |  1 -
+ mergetools/vimdiff3                    |  1 -
+ 9 files changed, 51 insertions(+), 18 deletions(-)
+ delete mode 100644 mergetools/bc3
+ delete mode 100644 mergetools/gvimdiff3
+ rename mergetools/{gvimdiff2 => nvimdiff} (100%)
+ delete mode 100644 mergetools/vimdiff2
+ delete mode 100644 mergetools/vimdiff3
+
 -- 
 2.27.0
 
