@@ -2,195 +2,190 @@ Return-Path: <SRS0=kUNO=A7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A13ADC433E4
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F62DC433E1
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:51:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C53322BEF
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:49:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3709322482
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:51:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FoiAvGil"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wzx6h1v9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730193AbgGTSt0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jul 2020 14:49:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39982 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbgGTSt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jul 2020 14:49:26 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28BFFC061794
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 11:49:26 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id k22so15201226oib.0
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 11:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bwLlypuMVun5LDQfNqhW8aukQ2K3/munXSMB3WYlVQo=;
-        b=FoiAvGilGNV3MX0o26IHqSUxd+GOH2BpHTouiLyeZzhz4jcRrbydG8gTl0wH0qkyz0
-         orpkQ3RiWhFjIJEABU9encojijPqXdbDQBBRyulYecQfaQgn0fRXGhrJJBfnrT6O7efS
-         WUqio232qLlmNWA+BSHJ1FX8gZ4OLM4t/laqGxt/elp5PHlQpeUb54RxGw2Y6IvTIqzK
-         +uQA77U8vJmz624k/k4gOXMXFxUArvvS1SEb0G4mF7CK9ry6oObXueKmKoegd/fv6/bd
-         ea8OXWadXjfud2o2Rhca8SlM/dOAE7uvGsHsW+3GsEaL3SGHut/wQvcRsH4Ie3ipb8YB
-         7tFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bwLlypuMVun5LDQfNqhW8aukQ2K3/munXSMB3WYlVQo=;
-        b=qLG3C8rjosESVB2Ci1EEkGLGNu37wpyt/pLYEN/RBcQgCBaXXMI+BkVxooOe2VG9Vk
-         eK1Zj99SXJNOqLYXF0umcdgIEioojWf3x8qo7NIMyOx/gn6D+swP77HAVz0NJkOdvE1S
-         lATBzzc3X1AQosR/3d9lFGvVYBMDwXQOMg3NYfrctObmUEjTZ0J192IneHJ3D7VKwk3R
-         Z+192yvOMTfKMyjD5Hd0ghekoO5eQOvF5W01Oec6mQW3evoQCd1Ktasm5r2IpxJVZN+D
-         LgXQp5TnZmcaqhY/luc1VVMcT1XkM40ZcF2MnldnhSUva5ox15LGO9oUvJGgKa0N1smG
-         ky+A==
-X-Gm-Message-State: AOAM532imd48giW+SHyz4FqVlwTEAaLGljalln+2E+vGCv1x1Mqd5bEE
-        aabGFrB8IRFxhk7XqK4R5ZjWdaPKMLPKgOseLoKhhmCW
-X-Google-Smtp-Source: ABdhPJyWZuJEKNkbbtgkvTr+rWkMZdK0z+2j9m7aSQledVF9W5aO14LP4a6rSUnmORYqssit+IYZ871YIzuI6wPgZGA=
-X-Received: by 2002:aca:5b42:: with SMTP id p63mr570027oib.39.1595270965042;
- Mon, 20 Jul 2020 11:49:25 -0700 (PDT)
+        id S1729839AbgGTSvN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jul 2020 14:51:13 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61559 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726506AbgGTSvM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jul 2020 14:51:12 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BFC89E1A74;
+        Mon, 20 Jul 2020 14:51:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Aw5KBL0q3bn0HxQdmU4arnipX0A=; b=Wzx6h1
+        v9tIc29Wb/UZ1FxU4lUV5MEamXk/Hb25slEN4q/soxATqRJNl6OUoA4WkeHkb0Tr
+        31Mho9jxWZIw4Wnc3c5ZxMtg8dY7hY6hnaAuSSC7sIv3ydellCBRgKyF6/1Q8QhZ
+        P3IOuPDfLXFx24O7TgiEE2NM0/F2DCCp/8bhc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nyncPGFMPEH/YeOihZ7LKwgJ9NoxbqdF
+        pRJfsxBfmHrFKpk4bqW/VRxWvkgpKQwleAb4H2fgHV76GBLJlGqrBMEAl1iahdY4
+        ZzXG7QN09AZK3pt3c2NMpHbjYwxkAECXetB76gG5p4PUw7Cde1Zpmbcb7UmWLocr
+        Pszzp8C5ePA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B487DE1A73;
+        Mon, 20 Jul 2020 14:51:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 035EFE1A72;
+        Mon, 20 Jul 2020 14:51:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     pudinha <rogi@skylittlesystem.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] Refactor vimdiff and bc merge tool variants
+References: <20200718192001.27434-1-rogi@skylittlesystem.org>
+        <20200719042335.3913-2-rogi@skylittlesystem.org>
+Date:   Mon, 20 Jul 2020 11:51:03 -0700
+In-Reply-To: <20200719042335.3913-2-rogi@skylittlesystem.org> (pudinha's
+        message of "Sun, 19 Jul 2020 05:23:37 +0100")
+Message-ID: <xmqqd04q9g14.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CABPp-BH6xYb8a5hkV_68vbXhH4kApCxw0WG9oveXOk5zzU==1A@mail.gmail.com>
- <20200720184529.22449-1-martin.agren@gmail.com>
-In-Reply-To: <20200720184529.22449-1-martin.agren@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 Jul 2020 11:49:13 -0700
-Message-ID: <CABPp-BESf35g2zyCUZgBdbz4RacbToX+g7N4kwSQUCLq0h0ACQ@mail.gmail.com>
-Subject: Re: [PATCH] dir: check pathspecs before returning `path_excluded`
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin Melka <martin.melka@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F7054192-CAB9-11EA-8D94-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 20, 2020 at 11:46 AM Martin =C3=85gren <martin.agren@gmail.com>=
- wrote:
->
-> On Mon, 20 Jul 2020 at 17:25, Elijah Newren <newren@gmail.com> wrote:
-> >
-> > Awesome, thanks Andreas for the bisected report and Martin for finding
-> > and fixing the bug.  As for the reason that the old patch injected the
-> > pathspec check between the path_excluded and the path_untracked cases,
-> > that appears to me to just be "I'm good at making boneheaded
-> > mistakes".  Your changes here are the right fix.
->
-> Ok, here it is as a proper patch.
->
-> > Reviewed-by: Elijah Newren <newren@gmail.com>
->
-> Thanks. I've included your reviewed-by below. The log message is
-> obviously new, but the diff is identical to what I posted earlier.
->
-> BTW, this bug first appeared in v2.27.0, so this is not a regression
-> during the v2.28.0 cycle.
+pudinha <rogi@skylittlesystem.org> writes:
 
-Looks good other than a minor typo in the new commit message.
+> Subject: Re: [PATCH v2 1/2] Refactor vimdiff and bc merge tool variants
 
-> Martin
->
-> -- >8 --
-> In 95c11ecc73 ("Fix error-prone fill_directory() API; make it only
-> return matches", 2020-04-01), we taught `fill_directory()`, or more
-> specifically `treat_path()`, to check against any pathspecs so that we
-> could simplify the callers.
->
-> But in doing so, we added a slightly-to-early return for the "excluded"
+cf. https://git-scm.com/docs/SubmittingPatches#describe-changes
 
-s/to/too/
+Two tricks to pick a good title are:
 
-> case. We end up not checking the pathspecs, meaning we return
-> `path_excluded` when maybe we should return `path_none`. As a result,
-> `git status --ignored -- pathspec` might show paths that don't actually
-> match "pathspec".
+ - Read a pageful or two of "git shortlog --no-merges" output to get
+   accustomed to the general pattern in the entire project.  It
+   would become clear why titles with "area:" prefix help the
+   patches with them easier to locate.
+
+ - Read a pageful of "git shortlog --no-merges -- mergetools"
+   (i.e. the same but limited to the files you are touching) to see
+   how the changes that contributed over time to build the subsystem
+   are called, so that the new patches can fit in the pattern.
+
+> The merge tools vimdiff2, vimdiff3, gvimdiff2, gvimdiff3 and bc3 are all
+> variants of the main tools vimdiff and bc. They are implemented in the
+> main and a one-liner script that just sources it exist for each.
 >
-> Move the "excluded" check down to after we've checked any pathspecs.
->
-> Reported-by: Andreas Schwab <schwab@linux-m68k.org>
-> Reviewed-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> This patch allows variants ending in [0-9] to be correctly wired without
+> the need for such one-liners, so instead of 5 scripts, only 1 (gvimdiff)
+> is needed.
+
+Well explained.  The final paragraph could be made more in line with
+the existing commit log messages by writing in the imperative mood
+(e.g. "Introduce a new list_tool_variants method, and when a tool
+whose name ends with a digit is asked for, and if there is no such
+script in mergetools/ directoroy, ask the tool with the name without
+the final digit, if exists, if it knows how to handle the variant.
+That way, instead of 5 scriptss, ..."), but what is written above is
+already good enough.
+
 > ---
->  dir.c                      |  4 ++--
->  t/t7061-wtstatus-ignore.sh | 25 +++++++++++++++++++++++++
->  2 files changed, 27 insertions(+), 2 deletions(-)
+
+cf. https://git-scm.com/docs/SubmittingPatches#sign-off
+
+Thanks.
+
+>  git-mergetool--lib.sh | 28 +++++++++++++++++++++++-----
+>  mergetools/bc         |  5 +++++
+>  mergetools/bc3        |  1 -
+>  mergetools/gvimdiff2  |  1 -
+>  mergetools/gvimdiff3  |  1 -
+>  mergetools/vimdiff    |  8 ++++++++
+>  mergetools/vimdiff2   |  1 -
+>  mergetools/vimdiff3   |  1 -
+>  8 files changed, 36 insertions(+), 10 deletions(-)
+>  delete mode 100644 mergetools/bc3
+>  delete mode 100644 mergetools/gvimdiff2
+>  delete mode 100644 mergetools/gvimdiff3
+>  delete mode 100644 mergetools/vimdiff2
+>  delete mode 100644 mergetools/vimdiff3
 >
-> diff --git a/dir.c b/dir.c
-> index 1045cc9c6f..fe64be30ed 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2209,13 +2209,13 @@ static enum path_treatment treat_path(struct dir_=
-struct *dir,
->                                        baselen, excluded, pathspec);
->         case DT_REG:
->         case DT_LNK:
-> -               if (excluded)
-> -                       return path_excluded;
->                 if (pathspec &&
->                     !match_pathspec(istate, pathspec, path->buf, path->le=
-n,
->                                     0 /* prefix */, NULL /* seen */,
->                                     0 /* is_dir */))
->                         return path_none;
-> +               if (excluded)
-> +                       return path_excluded;
->                 return path_untracked;
->         }
->  }
-> diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-> index e4cf5484f9..2f9bea9793 100755
-> --- a/t/t7061-wtstatus-ignore.sh
-> +++ b/t/t7061-wtstatus-ignore.sh
-> @@ -30,6 +30,31 @@ test_expect_success 'same with gitignore starting with=
- BOM' '
->         test_cmp expected actual
->  '
->
-> +test_expect_success 'status untracked files --ignored with pathspec (no =
-match)' '
-> +       git status --porcelain --ignored -- untracked/i >actual &&
-> +       test_must_be_empty actual &&
-> +       git status --porcelain --ignored -- untracked/u >actual &&
-> +       test_must_be_empty actual
-> +'
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index 204a5acd66..29fecc340f 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -43,7 +43,14 @@ show_tool_names () {
+>  
+>  	shown_any=
+>  	( cd "$MERGE_TOOLS_DIR" && ls ) | {
+> -		while read toolname
+> +		while read scriptname
+> +		do
+> +			setup_tool "$scriptname" 2>/dev/null
+> +			variants="$variants$(list_tool_variants)\n"
+> +		done
+> +		variants="$(echo "$variants" | sort | uniq)"
 > +
-> +test_expect_success 'status untracked files --ignored with pathspec (lit=
-eral match)' '
-> +       git status --porcelain --ignored -- untracked/ignored >actual &&
-> +       echo "!! untracked/ignored" >expected &&
-> +       test_cmp expected actual &&
-> +       git status --porcelain --ignored -- untracked/uncommitted >actual=
- &&
-> +       echo "?? untracked/uncommitted" >expected &&
-> +       test_cmp expected actual
-> +'
+> +		for toolname in $variants
+>  		do
+>  			if setup_tool "$toolname" 2>/dev/null &&
+>  				(eval "$condition" "$toolname")
+> @@ -157,6 +164,10 @@ setup_tool () {
+>  		echo "$1"
+>  	}
+>  
+> +	list_tool_variants () {
+> +		echo "$tool"
+> +	}
 > +
-> +test_expect_success 'status untracked files --ignored with pathspec (glo=
-b match)' '
-> +       git status --porcelain --ignored -- untracked/i\* >actual &&
-> +       echo "!! untracked/ignored" >expected &&
-> +       test_cmp expected actual &&
-> +       git status --porcelain --ignored -- untracked/u\* >actual &&
-> +       echo "?? untracked/uncommitted" >expected &&
-> +       test_cmp expected actual
-> +'
-> +
->  cat >expected <<\EOF
->  ?? .gitignore
->  ?? actual
-> --
-> 2.28.0.rc1
->
+>  	# Most tools' exit codes cannot be trusted, so By default we ignore
+>  	# their exit code and check the merged file's modification time in
+>  	# check_unchanged() to determine whether or not the merge was
+> @@ -178,19 +189,26 @@ setup_tool () {
+>  		false
+>  	}
+>  
+> -
+> -	if ! test -f "$MERGE_TOOLS_DIR/$tool"
+> +	if test -f "$MERGE_TOOLS_DIR/$tool"
+>  	then
+> +		. "$MERGE_TOOLS_DIR/$tool"
+> +	elif test -f "$MERGE_TOOLS_DIR/${tool%[0-9]}"
+> +	then
+> +		. "$MERGE_TOOLS_DIR/${tool%[0-9]}"
+> +	else
+
+Nice---if the thing has a custom script in mergetools/ then we do
+not do anything special, but if a script is missing for a tool whose
+name ends with a digit, and a script exists for a tool with the same
+name without that digit, we try to use that instead, and we make
+sure it does support the named variant or bail out later...
+
+>  		setup_user_tool
+>  		return $?
+>  	fi
+>  
+> -	# Load the redefined functions
+> -	. "$MERGE_TOOLS_DIR/$tool"
+>  	# Now let the user override the default command for the tool.  If
+>  	# they have not done so then this will return 1 which we ignore.
+>  	setup_user_tool
+>  
+> +	if ! list_tool_variants | grep -q "^$tool$"
+> +	then
+> +		return 1
+> +	fi
+
+... like this.  Excellent.
