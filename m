@@ -2,109 +2,183 @@ Return-Path: <SRS0=kUNO=A7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E3B3C433E0
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CBDFC433DF
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:46:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CD90208E4
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:28:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0413422B4E
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:46:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t07LBr10"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QNUcdM3e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729164AbgGTS20 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jul 2020 14:28:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52038 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbgGTS20 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jul 2020 14:28:26 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D36DF632FE;
-        Mon, 20 Jul 2020 14:28:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uuWupe6edQ+WdQrzDal28lbcki8=; b=t07LBr
-        10J42Fwbc8YdiKJNLWBFRwLayBPNRjk7ijaFpeskk7M8AXv4S0YDDU0Y9zukqhiA
-        4+aOxgC5etJtM7Rf4yytlgN9kwVcK6O8dE1LP/K6pPRDCW1PkTd4CckzE0neOk8m
-        nwJwCyzZ1X3Jx951jyuIVTz1cntd12JGFSaho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FrJVRCb+kA/b2VL0VhaooR0giVCf9Efy
-        +iQ0HyLWthieukr2O5LIGwThRPJ/UI5HM6tNYV/xD7L2VxUE0n4OhM+3xZIksxvl
-        mF6WWAtMCr5qvs1a5t2NJ7AmniMpbWw4cVi5pcsVgyPf/uqE/AyNDPTWdVCglKvJ
-        71M+POve2BI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA8C0632FC;
-        Mon, 20 Jul 2020 14:28:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F735632FA;
-        Mon, 20 Jul 2020 14:28:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Chris Torek via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2] git-mv: improve error message for conflicted file
-References: <pull.678.git.1595028293855.gitgitgadget@gmail.com>
-        <pull.678.v2.git.1595225873014.gitgitgadget@gmail.com>
-Date:   Mon, 20 Jul 2020 11:28:20 -0700
-In-Reply-To: <pull.678.v2.git.1595225873014.gitgitgadget@gmail.com> (Chris
-        Torek via GitGitGadget's message of "Mon, 20 Jul 2020 06:17:52 +0000")
-Message-ID: <xmqqh7u29h2z.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729390AbgGTSqG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jul 2020 14:46:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728466AbgGTSqF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jul 2020 14:46:05 -0400
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39B57C061794
+        for <git@vger.kernel.org>; Mon, 20 Jul 2020 11:46:05 -0700 (PDT)
+Received: by mail-lj1-x243.google.com with SMTP id q4so21434382lji.2
+        for <git@vger.kernel.org>; Mon, 20 Jul 2020 11:46:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Q72ldy3aS585EgXFRgQHJGhyIClWksBE+2ct16n4CGA=;
+        b=QNUcdM3eJI4C3mjiEYQxEId1hqTt/+Dn9Bgbdo2shD6SrAkA7WS/zPM5pqvkw53bxA
+         po5zkCLb0HBHHXXWPbpr6p8+HsskPFojX2a1eOR+EfoT5doLPOGa0lbiRAs9Qyd4jLLq
+         SSB86CTPkJW9GGTuLuNqDJMiPMSBBzyMQU41sVS2vthG19lsqDPMbFkxDc52rQDfJyck
+         cEW+VFA/B1c3IdMK1KO/cADgklDD+VApbDOLIefvCDRAHzlxOEjZw9GYJ3BxtrDsgL3F
+         /veIDzVt0gw8PH/xPJpxfHj8rksHVPP1IXmV2GoAhSB2fIXFEMwgitFYxYEJUaI4ROs1
+         K7Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Q72ldy3aS585EgXFRgQHJGhyIClWksBE+2ct16n4CGA=;
+        b=HYT7hVfjx3LdkzBkxAmogEuxngs2fa9XEo8h2Ad6IG/MkGpWOZzb5NFxStb2VVOu3M
+         ajIgBEiwrdMNHb6ZzGt/HB/q15X7hMD5PKFg0jlhP8VVPWrvGgs+/XGdp2JXu7xl/mW2
+         c+/h7N4GUjuvSPa3arf2sX1YkwrZLFrxPKJ6Qf0df0sIFZzh91QuD3q/FJcQSt312c8M
+         xoFveYj9OCd+6ujJ4xzdpRUxO3fmaJ8epKju+HFuwSZ8mrEBCI+5im0ui1S1bXQ+4dlm
+         hhaTzZN4SHkroYIVncrhdy0jYL1OhJRhzv/IqZjs6VL034UoK1T/uwIkQcLm+iZbxDkG
+         Lpxg==
+X-Gm-Message-State: AOAM533rsp6zT+APaCOrRVakgwFinLQNBiEMdvtgaRMVXR/E1GtMIt4Q
+        zCVyPsV2DcEzDtZ3XEbftwE=
+X-Google-Smtp-Source: ABdhPJyfmq7q0ANXfZqoFq5cmDcOEU9QqOV/Y5E2plenjxJmUPrCx4OJoeEAv4LNvRNmG8C4Ho/DUQ==
+X-Received: by 2002:a2e:a58a:: with SMTP id m10mr138086ljp.76.1595270763735;
+        Mon, 20 Jul 2020 11:46:03 -0700 (PDT)
+Received: from localhost.localdomain (92-33-153-30.customers.ownit.se. [92.33.153.30])
+        by smtp.gmail.com with ESMTPSA id v11sm3371948ljh.119.2020.07.20.11.46.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jul 2020 11:46:03 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Andreas Schwab <schwab@linux-m68k.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Martin Melka <martin.melka@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH] dir: check pathspecs before returning `path_excluded`
+Date:   Mon, 20 Jul 2020 20:45:29 +0200
+Message-Id: <20200720184529.22449-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.28.0.rc1
+In-Reply-To: <CABPp-BH6xYb8a5hkV_68vbXhH4kApCxw0WG9oveXOk5zzU==1A@mail.gmail.com>
+References: <CABPp-BH6xYb8a5hkV_68vbXhH4kApCxw0WG9oveXOk5zzU==1A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CA3345D6-CAB6-11EA-AFD7-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Chris Torek via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, 20 Jul 2020 at 17:25, Elijah Newren <newren@gmail.com> wrote:
+>
+> Awesome, thanks Andreas for the bisected report and Martin for finding
+> and fixing the bug.  As for the reason that the old patch injected the
+> pathspec check between the path_excluded and the path_untracked cases,
+> that appears to me to just be "I'm good at making boneheaded
+> mistakes".  Your changes here are the right fix.
 
->     I put in the shortened "conflicted" here but did not shorten the
->     existing "not under version control" message (to minimize the visible
->     and translations-required changes).
+Ok, here it is as a proper patch.
 
-It does not matter all that much but the message in your original
-for the new case looked better and worse at the same time ;-)
+> Reviewed-by: Elijah Newren <newren@gmail.com>
 
-"not under version control" is a statement of fact that does not
-hint what the user may want to do with that information.  Your
-original for the new case gave that hint (i.e. "must resolve first")
-but the new "the path is unmerged" (I think 'unmerged' is a more
-proper term for this than 'conflicted'; see gitglossary[7]) stops at
-stating fact without giving further hint,and in that sense the
-messages are consistent with each other.
+Thanks. I've included your reviewed-by below. The log message is
+obviously new, but the diff is identical to what I posted earlier.
 
-We could shoot for consistency in the opposite direction, by making
-"not under version control" could instead say "must add first".  But
-that leads to a fruitless comparison between "'git add' then 'git
-mv'" and "plain 'mv' then 'git add'".  For "git mv", "must resolve
-first" may be the only sane option right now, so it probably is OK.
+BTW, this bug first appeared in v2.27.0, so this is not a regression
+during the v2.28.0 cycle.
 
-So, after having thought the above through, I tend to (slightly)
-prefer to stop at stating fact, perhaps "the path is unmerged" or
-something to match "not under version control".
+Martin
 
->     I like the idea of renaming all stages and keeping them at their current
->     stages, but that's too much for this patch.
+-- >8 --
+In 95c11ecc73 ("Fix error-prone fill_directory() API; make it only
+return matches", 2020-04-01), we taught `fill_directory()`, or more
+specifically `treat_path()`, to check against any pathspecs so that we
+could simplify the callers.
 
-I totally agree, and I am not 100% convinced that the "rename all at
-their current stage" gives a better end-user experience.  For one
-thing, I suspect that it would still have to fail depending on how
-the destination path and paths that conflict with it are populated
-in the index, and that may make even harder-to-explain error case.
+But in doing so, we added a slightly-to-early return for the "excluded"
+case. We end up not checking the pathspecs, meaning we return
+`path_excluded` when maybe we should return `path_none`. As a result,
+`git status --ignored -- pathspec` might show paths that don't actually
+match "pathspec".
 
->     I'll be traveling next week and not sure if I will get to any followups
->     for a while.
+Move the "excluded" check down to after we've checked any pathspecs.
 
-That is perfectly fine.  We are in pre-release freeze and this patch
-won't go anywhere until the end of the month.
+Reported-by: Andreas Schwab <schwab@linux-m68k.org>
+Reviewed-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ dir.c                      |  4 ++--
+ t/t7061-wtstatus-ignore.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-Thanks for contributing, and safe travels.
+diff --git a/dir.c b/dir.c
+index 1045cc9c6f..fe64be30ed 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2209,13 +2209,13 @@ static enum path_treatment treat_path(struct dir_struct *dir,
+ 				       baselen, excluded, pathspec);
+ 	case DT_REG:
+ 	case DT_LNK:
+-		if (excluded)
+-			return path_excluded;
+ 		if (pathspec &&
+ 		    !match_pathspec(istate, pathspec, path->buf, path->len,
+ 				    0 /* prefix */, NULL /* seen */,
+ 				    0 /* is_dir */))
+ 			return path_none;
++		if (excluded)
++			return path_excluded;
+ 		return path_untracked;
+ 	}
+ }
+diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+index e4cf5484f9..2f9bea9793 100755
+--- a/t/t7061-wtstatus-ignore.sh
++++ b/t/t7061-wtstatus-ignore.sh
+@@ -30,6 +30,31 @@ test_expect_success 'same with gitignore starting with BOM' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'status untracked files --ignored with pathspec (no match)' '
++	git status --porcelain --ignored -- untracked/i >actual &&
++	test_must_be_empty actual &&
++	git status --porcelain --ignored -- untracked/u >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'status untracked files --ignored with pathspec (literal match)' '
++	git status --porcelain --ignored -- untracked/ignored >actual &&
++	echo "!! untracked/ignored" >expected &&
++	test_cmp expected actual &&
++	git status --porcelain --ignored -- untracked/uncommitted >actual &&
++	echo "?? untracked/uncommitted" >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'status untracked files --ignored with pathspec (glob match)' '
++	git status --porcelain --ignored -- untracked/i\* >actual &&
++	echo "!! untracked/ignored" >expected &&
++	test_cmp expected actual &&
++	git status --porcelain --ignored -- untracked/u\* >actual &&
++	echo "?? untracked/uncommitted" >expected &&
++	test_cmp expected actual
++'
++
+ cat >expected <<\EOF
+ ?? .gitignore
+ ?? actual
+-- 
+2.28.0.rc1
+
