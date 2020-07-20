@@ -2,103 +2,109 @@ Return-Path: <SRS0=kUNO=A7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41B95C433E0
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 17:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E3B3C433E0
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:28:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2492520709
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 17:54:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CD90208E4
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:28:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VfDyrVsF"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t07LBr10"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730267AbgGTRy4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jul 2020 13:54:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59832 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728571AbgGTRy4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jul 2020 13:54:56 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D85B2C061794
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 10:54:55 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id z8so289151pje.0
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 10:54:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=bs82D9NW4hogpe1ZxqFjHtiRXtg+BTmmfUoA821p770=;
-        b=VfDyrVsFBDTrSFZpMl9aYshfN19sJ4H4oeUKuLegystBK8QTWtb8lamhrV0twX+St5
-         75bbYkYAsTmaRdWvEP1FcAMhTu9bSBy1euDFOblDZIAvKlItDmSQNcdguzgHyUSekGKh
-         l53oy/2woT7dN+K6BphsjqA0k08Eh0QSeHyOj9a5GusiXAZIj6WxKg4qlJ00Massn65N
-         dH8638lMbJSK9hz9VVRXjYF1sWrMcwKhLxSJfphzaDl5XbWpJPs4nb/poPAOdFirkep3
-         RKLScTwDcno8oO5IlmnJAgatp7RiMQApisKdYmcSy6Kvj+2xubDkAvmWpXxH3cd8cr6S
-         rlMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=bs82D9NW4hogpe1ZxqFjHtiRXtg+BTmmfUoA821p770=;
-        b=Qv2LAGKMH2IXyC38SYojrrqOTioPHNEYkMpinIc+3WHozKbu0zPCo/DERbvpR2hCSe
-         8N43sKUNPfOZ3eUswgbiQEzCMe/F3Qg5iaczKpGE0g8bAF/V/r4VZ5SUDl7XB1C6faUo
-         ShrgexcGyO1tluhMu5WbNvz5vt0Vg1LI69O+ZxX4tlxJfDWN8tlTj1UgQYtX7EfaSTQ+
-         N+x8+Ov13qZH9qpXFR/6aGhJl8l0gN9YQvrJuaorVkyS3mPOIeAaHlEvjCQExTTdpjEI
-         JjElAieQlpJlToVnSIN3PlMuPcG53UrhKjWL/hKcA4Lf39teQD2d3+TKspxvTu6qbwZM
-         /Cow==
-X-Gm-Message-State: AOAM533j0lttVq4uj7VgytYdyOPjiUi4UVIdwPrS1dJHqzgLMrz1qNbL
-        /ygK4JhtmikiLL4C4WQqJdZ3pCXnCvOHvWraKcvr
-X-Google-Smtp-Source: ABdhPJyBmaaevJiBrEKCLR0pFWcMvjAdPpwha4JwI1SGKa3Ah//hkCO2dra+MHfE9ir8MFLqVT2YIDI2rX4RiaIKjWPt
-X-Received: by 2002:a65:6416:: with SMTP id a22mr18847774pgv.392.1595267695289;
- Mon, 20 Jul 2020 10:54:55 -0700 (PDT)
-Date:   Mon, 20 Jul 2020 10:54:49 -0700
-In-Reply-To: <439C1CC1-50BB-4EA1-A8F0-04D66CA430AE@gmail.com>
-Message-Id: <20200720175449.1727314-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <439C1CC1-50BB-4EA1-A8F0-04D66CA430AE@gmail.com>
-X-Mailer: git-send-email 2.28.0.rc0.105.gf9edc3c819-goog
-Subject: Re: Pushing tag from a partial clone
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sluongng@gmail.com
-Cc:     stolee@gmail.com, git@vger.kernel.org, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1729164AbgGTS20 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jul 2020 14:28:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52038 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726506AbgGTS20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jul 2020 14:28:26 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D36DF632FE;
+        Mon, 20 Jul 2020 14:28:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uuWupe6edQ+WdQrzDal28lbcki8=; b=t07LBr
+        10J42Fwbc8YdiKJNLWBFRwLayBPNRjk7ijaFpeskk7M8AXv4S0YDDU0Y9zukqhiA
+        4+aOxgC5etJtM7Rf4yytlgN9kwVcK6O8dE1LP/K6pPRDCW1PkTd4CckzE0neOk8m
+        nwJwCyzZ1X3Jx951jyuIVTz1cntd12JGFSaho=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FrJVRCb+kA/b2VL0VhaooR0giVCf9Efy
+        +iQ0HyLWthieukr2O5LIGwThRPJ/UI5HM6tNYV/xD7L2VxUE0n4OhM+3xZIksxvl
+        mF6WWAtMCr5qvs1a5t2NJ7AmniMpbWw4cVi5pcsVgyPf/uqE/AyNDPTWdVCglKvJ
+        71M+POve2BI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA8C0632FC;
+        Mon, 20 Jul 2020 14:28:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F735632FA;
+        Mon, 20 Jul 2020 14:28:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Chris Torek via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2] git-mv: improve error message for conflicted file
+References: <pull.678.git.1595028293855.gitgitgadget@gmail.com>
+        <pull.678.v2.git.1595225873014.gitgitgadget@gmail.com>
+Date:   Mon, 20 Jul 2020 11:28:20 -0700
+In-Reply-To: <pull.678.v2.git.1595225873014.gitgitgadget@gmail.com> (Chris
+        Torek via GitGitGadget's message of "Mon, 20 Jul 2020 06:17:52 +0000")
+Message-ID: <xmqqh7u29h2z.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: CA3345D6-CAB6-11EA-AFD7-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I just freshly compiled from 'next' branch:
-> 
-> 	> git version
-> 	git version 2.28.0.rc1.139.gd6b33fda9d
-> 
-> And the problem still occurring:
-> 	> mkdir scalar
-> 	> cd scalar
-> 	> git init
-> 	Initialized empty Git repository in /Users/sluongngoc/work/booking/core/scalar/.git/
-> 	# use my own fork here so that i have push permission
-> 	> git remote add origin git@github.com:sluongng/scalar.git
-> 	> git sparse-checkout init --cone
-> 	> git fetch --filter=tree:0 --no-tags --prune origin 4ba6c1c090e6e5a413e3ac2fc094205bd78f761e
-> 	remote: Enumerating objects: 2553, done.
-> 	remote: Total 2553 (delta 0), reused 0 (delta 0), pack-reused 2553
-> 	Receiving objects: 100% (2553/2553), 957.85 KiB | 1.06 MiB/s, done.
-> 	Resolving deltas: 100% (74/74), done.
-> 	From github.com:sluongng/scalar
-> 	 * branch            4ba6c1c090e6e5a413e3ac2fc094205bd78f761e -> FETCH_HEAD
-> 	> git tag -a test-tag -m 'test tag message' 4ba6c1c090e6e5a413e3ac2fc094205bd78f761e
-> 	> git push origin refs/tags/test-tag:refs/tags/test-tag
-> 	...<download start>
+"Chris Torek via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks for the reproduction steps. Is 4ba6c1c advertised as a ref by the
-remote? If not, what is probably happening is that the client doesn't
-realize that the server already has 4ba6c1c, so the client needs to
-fetch 4ba6c1c's objects to send it to the server.
+>     I put in the shortened "conflicted" here but did not shorten the
+>     existing "not under version control" message (to minimize the visible
+>     and translations-required changes).
 
-I am planning to see if I can add batch prefetching to pack-objects to
-reduce the severity of similar situations (just one batch prefetch instead
-of many one-by-one fetches), although that would work better with a blob
-filter instead of a tree filter.
+It does not matter all that much but the message in your original
+for the new case looked better and worse at the same time ;-)
+
+"not under version control" is a statement of fact that does not
+hint what the user may want to do with that information.  Your
+original for the new case gave that hint (i.e. "must resolve first")
+but the new "the path is unmerged" (I think 'unmerged' is a more
+proper term for this than 'conflicted'; see gitglossary[7]) stops at
+stating fact without giving further hint,and in that sense the
+messages are consistent with each other.
+
+We could shoot for consistency in the opposite direction, by making
+"not under version control" could instead say "must add first".  But
+that leads to a fruitless comparison between "'git add' then 'git
+mv'" and "plain 'mv' then 'git add'".  For "git mv", "must resolve
+first" may be the only sane option right now, so it probably is OK.
+
+So, after having thought the above through, I tend to (slightly)
+prefer to stop at stating fact, perhaps "the path is unmerged" or
+something to match "not under version control".
+
+>     I like the idea of renaming all stages and keeping them at their current
+>     stages, but that's too much for this patch.
+
+I totally agree, and I am not 100% convinced that the "rename all at
+their current stage" gives a better end-user experience.  For one
+thing, I suspect that it would still have to fail depending on how
+the destination path and paths that conflict with it are populated
+in the index, and that may make even harder-to-explain error case.
+
+>     I'll be traveling next week and not sure if I will get to any followups
+>     for a while.
+
+That is perfectly fine.  We are in pre-release freeze and this patch
+won't go anywhere until the end of the month.
+
+Thanks for contributing, and safe travels.
