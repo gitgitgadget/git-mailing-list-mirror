@@ -2,75 +2,76 @@ Return-Path: <SRS0=kUNO=A7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A2C2C433E4
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 13:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFAD3C433E0
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 15:25:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5152C22B4D
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 13:47:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC51120709
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 15:25:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MlNzslZA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pl3T8R4R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728151AbgGTNrN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jul 2020 09:47:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49764 "EHLO
+        id S1728423AbgGTPZc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jul 2020 11:25:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725792AbgGTNrN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jul 2020 09:47:13 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DAF4C061794
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 06:47:13 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id w9so3964601ejc.8
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 06:47:13 -0700 (PDT)
+        with ESMTP id S1726030AbgGTPZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jul 2020 11:25:32 -0400
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7423AC061794
+        for <git@vger.kernel.org>; Mon, 20 Jul 2020 08:25:32 -0700 (PDT)
+Received: by mail-oi1-x242.google.com with SMTP id w17so14664581oie.6
+        for <git@vger.kernel.org>; Mon, 20 Jul 2020 08:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=zdl1tvjweMHH5okLMv3k/VFKjc87ZRorLIKFrTmXBeY=;
-        b=MlNzslZAJ0gSaBGIxf5+o4ZZt4B4hmmfr1NZCu8d1JytIXZcTI3yJ0dzMwXTWYHi7f
-         /i06WEw4IGF+6dvCUdbPUTRpSa2hTxs/KXm9K74bptyztb8irKMphalai5HvGLGvMY6b
-         9uxic+DBdHFwDTwBFOFEGGSNeKbxh7kWkH8iXN8OOwAZhg1cC1GWcHQ1L4/zQdaRcATz
-         K+YM7q4PCnB7ZQtEl1J5BJ6FiifULTQM7Xt8/aiPgjYdStzvw+/aDmxsXxINgvpDyxZs
-         QBBnsEhrxmtq2SxJ3Hjans8tkAB0Zwubv/Vo8jsoMD8NJEs3Wn0zdg5jSpGeZGh73p50
-         50GQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8j8a5nhR6BzVRSXVc78isfmpoawSoryunPDv7unC3ec=;
+        b=Pl3T8R4RWwlqig3yWJjrN8zY90xKtvQBhE0F52Tx40QxwMy8DYH4pWzvessjErGeFz
+         kIT7jLgA1NCggZ8kAh50FZu0+GdM+z6pl8DVIqf+P05NX8qXOFUuuKU9XN8oUw7uq0U4
+         HnsXlMfzEzStlyyh1cNwIIzGBUGn/8Bq4RwdcxgH2/JoiRdn+e+9QF+aIS7f1vaS799b
+         3UQHdEkDPg3vdlesOgsizTuMrNpS/Fo/QysUNQIyYVzo60xNmoqgIZfwztDA5813sfGo
+         w1IT0hAdWJsa9TD8r4IM5tnSttsqwXc9oRfV15dp7a66TOVpQCuj/cbMGMkh1wouVeo0
+         ngNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=zdl1tvjweMHH5okLMv3k/VFKjc87ZRorLIKFrTmXBeY=;
-        b=tba52qagRf2TDxpU1MD+qb27BP1NP8wVKvx8lRKbvXbWUPVeLpkiLXrE4RsfTB4IBj
-         0q/G53nt7UFCDulqM/4OJtq9wUdo4thwb6ete2dY1oFHN2oMRkWiegBJxZCgEapaZzfn
-         I2DBPDXhMQQX7wHl6wsLTY+2fbrhW6H5P5pV53CO73LpRQmf4AbAmRFhMJj8gnRdfETi
-         2d6gfWX6pbnvFt2f7TK0fhcCodQtMzorLZ6bduF5lAOx2mHqF6qq4aT9NiogTxbPI4UW
-         hsXhuakR3ra1xL3bzPq5MI4NgNyqsShAwyBIwScHcF8oMBl/gn04Aq1eGcjKL1aI8Uwg
-         ywTw==
-X-Gm-Message-State: AOAM532kCkFhAq6t+pyB0FfuBaRX4FU83YpAGlUttFlZJVH1HPmGrKG+
-        SaQCz9MZ7AzvrkTlEF9b65k=
-X-Google-Smtp-Source: ABdhPJzXAS54qKIInE2QaTRhZoNWoPW4sk2imJ/OMkZiAfAIt74UwWZhe6Gq95zr6sX8rW8oiR/lrQ==
-X-Received: by 2002:a17:906:408c:: with SMTP id u12mr20206270ejj.162.1595252831844;
-        Mon, 20 Jul 2020 06:47:11 -0700 (PDT)
-Received: from ?IPv6:2a02:a210:ca2:9c00:410f:b6f6:852c:ec06? ([2a02:a210:ca2:9c00:410f:b6f6:852c:ec06])
-        by smtp.gmail.com with ESMTPSA id j19sm15430900edt.44.2020.07.20.06.47.10
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Jul 2020 06:47:11 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: Pushing tag from a partial clone
-From:   Son Luong Ngoc <sluongng@gmail.com>
-In-Reply-To: <3e68d3a1-01e6-4ce3-eee1-bc9fb07a1825@gmail.com>
-Date:   Mon, 20 Jul 2020 15:47:10 +0200
-Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8j8a5nhR6BzVRSXVc78isfmpoawSoryunPDv7unC3ec=;
+        b=O0Z4WbZzpoHe7yvtQm86tI8iJNEwwqO0z/7palMK7MAKNrnQTh/MTX5j56UBM+Utxv
+         s5Ry7gUPvsVE+un8LgMHNaeqHmURoZD2JtAAQ+XgX73U31GhUdeh6OnHm/bmIWSEx/2F
+         wbsCNvTwleWJWxqko/i+PAMbp+nqALspV9/dvOSSzoGu1Oml0R7T351fulTGt0ppdFWK
+         hGZYR1pSnJx70gKBl8EZVpFIphdCPlE3v0ElONB3c7JuzfBNWZvc5Bkd9wpw6kiAE5v8
+         vXt8NUyoriFA4+8beKjJTahxUhDs491J5XW1PXKYWYlfRQ72uMZRkltLSbDM4NTwL6mm
+         WxcQ==
+X-Gm-Message-State: AOAM530TVK44qB2YEBIN73cv3tA/73ZZRaf/VS4CVR/G5VkAtq9FrUV7
+        2m7brnERBN0YS2XTKf5vGoBjDG10/nZMhmACWTc=
+X-Google-Smtp-Source: ABdhPJyijckx+Fc1jaDzxBEXq//7ojAHbPMtm8BhcGxlw4KvQGpaCfGoBacUynNCWtkKTRhHEij93isRSl91gkZR7X0=
+X-Received: by 2002:aca:3dd7:: with SMTP id k206mr17173130oia.31.1595258731623;
+ Mon, 20 Jul 2020 08:25:31 -0700 (PDT)
+MIME-Version: 1.0
+References: <87lfjg6mkn.fsf@linux-m68k.org> <20200719123919.1802-1-martin.agren@gmail.com>
+In-Reply-To: <20200719123919.1802-1-martin.agren@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 20 Jul 2020 08:25:20 -0700
+Message-ID: <CABPp-BH6xYb8a5hkV_68vbXhH4kApCxw0WG9oveXOk5zzU==1A@mail.gmail.com>
+Subject: Re: [PATCH v5 11/12] Fix error-prone fill_directory() API; make it
+ only return matches
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Andreas Schwab <schwab@linux-m68k.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Martin Melka <martin.melka@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <439C1CC1-50BB-4EA1-A8F0-04D66CA430AE@gmail.com>
-References: <0DEFACA7-9D30-4DB1-9FDF-3E63945FAAB3@gmail.com>
- <3e68d3a1-01e6-4ce3-eee1-bc9fb07a1825@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -78,79 +79,109 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-> On Jul 20, 2020, at 14:18, Derrick Stolee <stolee@gmail.com> wrote:
->=20
-> On 7/20/2020 7:44 AM, Son Luong Ngoc wrote:
->> Hi folks,
->>=20
->> At $day_job, we are trying to push tags to a repo from a partial =
-clone copy.
->> However it seems like this push would requires the partial clone copy =
-to download more objects?
->> Is this intended?
->>=20
->> Reproduce:
->>=20
->> 	mkdir repo && cd repo
->> 	git init
->> 	git remote add origin git@domain.com:path/repo.git
->> 	git fetch --filter=3Dtree:0 --no-tags --prune origin <commit-id>
->> 	git sparse-checkout init --cone
->> 	git checkout --force <commit-id>
->> 	git tag -a sluongng-test -m "Test push from partial clone"
->> 	git push HEAD:refs/tags/sluongng-test
->> 	<git starts to download objects>
->>=20
->> Ideally we would like to be able to push tag from a shallow + partial =
-clone repo without=20
->> having to download extra objects if possible.
->> We would like to keep the required repo to the absolute minimum.
->> 	git fetch --depth 1 --filter=3Dtree:0 --no-tags --prune origin =
-<commit-id>
->>=20
->> Creating and pushing tags should not require local repo to have =
-trees/blobs in it?
->>=20
->> Git version: 2.27.0
->=20
-> Could you try this again with 2.28.0-rc1? I think Jonathan
-> Tan added the "no-fetch" flag in more places since 2.27.0,
-> and this might already be fixed.
+On Sun, Jul 19, 2020 at 5:39 AM Martin =C3=85gren <martin.agren@gmail.com> =
+wrote:
+>
+> On Sun, 19 Jul 2020 at 08:37, Andreas Schwab <schwab@linux-m68k.org> wrot=
+e:
+> >
+> > This breaks git status --ignored.
+> >
+> > $ ./git status --porcelain --ignored -- a
+> > !! abspath.o
+> > !! add-interactive.o
+> ...
+> > !! attr.o
+>
+> Thanks for bisecting. This is 95c11ecc73 ("Fix error-prone
+> fill_directory() API; make it only return matches", 2020-04-01).
+>
+> I wonder if the below makes any sense. It seems to fix this usage and
+> the tests pass, but I have no idea what else this might be breaking...
+>
+> Maybe Elijah has an idea whether this is roughly the right approach?
+> Looking at the commit in question (95c11ecc73), there must have been
+> some reason that it injected the pathspec check between the
+> "path_excluded" and the "path_untracked" cases.  The diff below
+> basically undoes that split, so I have a feeling I'm missing something.
 
-I just freshly compiled from 'next' branch:
+Awesome, thanks Andreas for the bisected report and Martin for finding
+and fixing the bug.  As for the reason that the old patch injected the
+pathspec check between the path_excluded and the path_untracked cases,
+that appears to me to just be "I'm good at making boneheaded
+mistakes".  Your changes here are the right fix.  As a separate
+optimization, we could maybe make simplify_away() a bit more involved
+and have it exclude a few more paths so that fewer make it to this
+final check, but that's just optimization work that is separate from
+your fix here.
 
-	> git version
-	git version 2.28.0.rc1.139.gd6b33fda9d
+Reviewed-by: Elijah Newren <newren@gmail.com>
 
-And the problem still occurring:
-	> mkdir scalar
-	> cd scalar
-	> git init
-	Initialized empty Git repository in =
-/Users/sluongngoc/work/booking/core/scalar/.git/
-	# use my own fork here so that i have push permission
-	> git remote add origin git@github.com:sluongng/scalar.git
-	> git sparse-checkout init --cone
-	> git fetch --filter=3Dtree:0 --no-tags --prune origin =
-4ba6c1c090e6e5a413e3ac2fc094205bd78f761e
-	remote: Enumerating objects: 2553, done.
-	remote: Total 2553 (delta 0), reused 0 (delta 0), pack-reused =
-2553
-	Receiving objects: 100% (2553/2553), 957.85 KiB | 1.06 MiB/s, =
-done.
-	Resolving deltas: 100% (74/74), done.
-	=46rom github.com:sluongng/scalar
-	 * branch            4ba6c1c090e6e5a413e3ac2fc094205bd78f761e -> =
-FETCH_HEAD
-	> git tag -a test-tag -m 'test tag message' =
-4ba6c1c090e6e5a413e3ac2fc094205bd78f761e
-	> git push origin refs/tags/test-tag:refs/tags/test-tag
-	...<download start>
-
->=20
-> Thanks,
-> -Stolee
->=20
-
-Thanks,
-Son Luong.=
+> Martin
+>
+> diff --git a/dir.c b/dir.c
+> index 1045cc9c6f..fe64be30ed 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2209,13 +2209,13 @@ static enum path_treatment treat_path(struct dir_=
+struct *dir,
+>                                        baselen, excluded, pathspec);
+>         case DT_REG:
+>         case DT_LNK:
+> -               if (excluded)
+> -                       return path_excluded;
+>                 if (pathspec &&
+>                     !match_pathspec(istate, pathspec, path->buf, path->le=
+n,
+>                                     0 /* prefix */, NULL /* seen */,
+>                                     0 /* is_dir */))
+>                         return path_none;
+> +               if (excluded)
+> +                       return path_excluded;
+>                 return path_untracked;
+>         }
+>  }
+> diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+> index e4cf5484f9..2f9bea9793 100755
+> --- a/t/t7061-wtstatus-ignore.sh
+> +++ b/t/t7061-wtstatus-ignore.sh
+> @@ -30,6 +30,31 @@ test_expect_success 'same with gitignore starting with=
+ BOM' '
+>         test_cmp expected actual
+>  '
+>
+> +test_expect_success 'status untracked files --ignored with pathspec (no =
+match)' '
+> +       git status --porcelain --ignored -- untracked/i >actual &&
+> +       test_must_be_empty actual &&
+> +       git status --porcelain --ignored -- untracked/u >actual &&
+> +       test_must_be_empty actual
+> +'
+> +
+> +test_expect_success 'status untracked files --ignored with pathspec (lit=
+eral match)' '
+> +       git status --porcelain --ignored -- untracked/ignored >actual &&
+> +       echo "!! untracked/ignored" >expected &&
+> +       test_cmp expected actual &&
+> +       git status --porcelain --ignored -- untracked/uncommitted >actual=
+ &&
+> +       echo "?? untracked/uncommitted" >expected &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'status untracked files --ignored with pathspec (glo=
+b match)' '
+> +       git status --porcelain --ignored -- untracked/i\* >actual &&
+> +       echo "!! untracked/ignored" >expected &&
+> +       test_cmp expected actual &&
+> +       git status --porcelain --ignored -- untracked/u\* >actual &&
+> +       echo "?? untracked/uncommitted" >expected &&
+> +       test_cmp expected actual
+> +'
+> +
+>  cat >expected <<\EOF
+>  ?? .gitignore
+>  ?? actual
+> --
+> 2.28.0.rc1.7.g31f2d237fa
+>
