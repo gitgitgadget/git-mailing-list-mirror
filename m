@@ -2,92 +2,183 @@ Return-Path: <SRS0=kUNO=A7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FCD3C433E1
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E5E2C433E0
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:52:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DA4822482
-	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:51:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56BCA22482
+	for <git@archiver.kernel.org>; Mon, 20 Jul 2020 18:52:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UQlaxlq6"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SJpCMdej"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730631AbgGTSvk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jul 2020 14:51:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40324 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbgGTSvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jul 2020 14:51:39 -0400
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com [IPv6:2607:f8b0:4864:20::941])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58342C061794
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 11:51:39 -0700 (PDT)
-Received: by mail-ua1-x941.google.com with SMTP id q15so5395947uap.4
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 11:51:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=H9a5fzeoFb3pObvicl/UUahcEQWo62Vx/e3UW8y3qqk=;
-        b=UQlaxlq6cJSdTZOgryw/6/1t/XXwqIfn2s8iGcwVv0MFlcAdthUbaTOWp2vUkkdJLi
-         A6ijz3YMvlOvMPbtvBZKZXmcSfsq+isKA00Q9vbzrx2XyhSH1hz5ZWBpf7wxC3XOPT6R
-         sCZN4AZC9dZ4iO8mW6kv6FnYDNL2DmCgE3ucD0n0khpoe+kH3mgmN/ACbOioEaLGnrhh
-         m7bWhnG68VDnDf5c7dgihjRVYg14rTkWtWFc1NNGuM5XKZjWHeCJkKejFlE2V+xXbMfJ
-         GvvtnR422YQKbTRgHmM9KbgY4/necBgibwyyT36kU2RNUQKINnHHVPHlA1OzRDvXySUs
-         SVUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=H9a5fzeoFb3pObvicl/UUahcEQWo62Vx/e3UW8y3qqk=;
-        b=sigg0zJZisK7wz+tEWfSoUYOG6F7y68nq/+xSRriYohEvfZtBmCIuvk+pi7RvjYCST
-         Nm7Psdh0MUEto/8wKqbVd8joXgwzZZ87iFpTjrxW8+KkYucHp/308H67MPk3AErkWWF2
-         Hxc6Da7qfTdoyO3NaezWetDOrO2gowVrGaVmipyzn2Of9gGz9t4zEPQ0sjupQFkEjhvP
-         JJrGhzL27AuPeY3rP/KKrhbS1b0so35bZuR/WiBMqcd0NpmFOBckEhzvaTF1wGzG3y21
-         Fl26Td8nd3iktoUPzvLuky8sxIlAySssI3r0+aprCdPyhyaF2EAOt6KIYdkIhUWYA9Ic
-         0aTw==
-X-Gm-Message-State: AOAM530lq8P8lh+nEwqmP0UUoXC54G31EhB6sCg7dA8aYlOMNbisokOM
-        JVLrxVcQne/8OzysjATv5mb+zwL9mnZGq43lRNE=
-X-Google-Smtp-Source: ABdhPJxx1X/mon+C2HR1idOe1vWDKU2R+E0zJq9InoYvRKkhHTD2BQsUi3TTQ+Qe7xEp7JkXnD/sUE9j1wsAwIVycTg=
-X-Received: by 2002:ab0:4e98:: with SMTP id l24mr17330609uah.15.1595271098561;
- Mon, 20 Jul 2020 11:51:38 -0700 (PDT)
+        id S1730692AbgGTSwY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jul 2020 14:52:24 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56265 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726506AbgGTSwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jul 2020 14:52:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A7170E8AF8;
+        Mon, 20 Jul 2020 14:52:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oeu+SKDo1GC7VStCyRUVHwfz1uk=; b=SJpCMd
+        ejCkwqHeYxhOj/vU1x3OF/e9atpoC38ioQv7tAG8xCaU07eZvGIlAYh3gICoIiZ4
+        aov7gvnEHEN+z+jAcuU59/rs95WK4uzQcPFRr/cLBvvVm5v4xMy7bBChcJKqL1Pv
+        pgXFsMdYDyroJHWc000bDV4NbueKczdy2NBGo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SW27WicoWayg1EyQRr8r656Hw/jR/6ik
+        R1K2JPII+ulqxTqjBBPssZ2+CVyhKEnlUckzZ0NXJkWPACsnMIO2BPBkSNUUuLq9
+        7LHYn9FPbSKDbwB7Glvhrd0aE7Tr4Lpc48oH2PRNVkQYin4ea0kiiFaW5ETRV3fz
+        FD+ezR8f/eU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EE18E8AF7;
+        Mon, 20 Jul 2020 14:52:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E6B64E8AF6;
+        Mon, 20 Jul 2020 14:52:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     pudinha <rogi@skylittlesystem.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] Support nvim as merge tool
+References: <20200718192001.27434-1-rogi@skylittlesystem.org>
+        <20200719042335.3913-3-rogi@skylittlesystem.org>
+Date:   Mon, 20 Jul 2020 11:52:16 -0700
+In-Reply-To: <20200719042335.3913-3-rogi@skylittlesystem.org> (pudinha's
+        message of "Sun, 19 Jul 2020 05:23:38 +0100")
+Message-ID: <xmqq8sfe9fz3.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CABPp-BH6xYb8a5hkV_68vbXhH4kApCxw0WG9oveXOk5zzU==1A@mail.gmail.com>
- <20200720184529.22449-1-martin.agren@gmail.com> <CABPp-BESf35g2zyCUZgBdbz4RacbToX+g7N4kwSQUCLq0h0ACQ@mail.gmail.com>
-In-Reply-To: <CABPp-BESf35g2zyCUZgBdbz4RacbToX+g7N4kwSQUCLq0h0ACQ@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 20 Jul 2020 20:51:26 +0200
-Message-ID: <CAN0heSo25utsXJj1qQgqz2ByB45xu_5O4uSVOV=TZq=3WU+iPQ@mail.gmail.com>
-Subject: Re: [PATCH] dir: check pathspecs before returning `path_excluded`
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin Melka <martin.melka@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 227D8FDC-CABA-11EA-9FD5-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 20 Jul 2020 at 20:49, Elijah Newren <newren@gmail.com> wrote:
->
-> On Mon, Jul 20, 2020 at 11:46 AM Martin =C3=85gren <martin.agren@gmail.co=
-m> wrote:
->
-> Looks good other than a minor typo in the new commit message.
->
-> > But in doing so, we added a slightly-to-early return for the "excluded"
->
-> s/to/too/
+pudinha <rogi@skylittlesystem.org> writes:
 
-Thanks!
+> Subject: Re: [PATCH v2 2/2] Support nvim as merge tool
 
-Martin
+Perhaps "mergetools: add support for nvimdiff family" or something
+along that line.
+
+> ---
+
+Missing sign-off.
+
+Thanks.
+
+
+>  contrib/completion/git-completion.bash |  4 ++--
+>  git-mergetool--lib.sh                  |  7 +++++--
+>  mergetools/nvimdiff                    |  1 +
+>  mergetools/vimdiff                     | 15 +++++++++------
+>  4 files changed, 17 insertions(+), 10 deletions(-)
+>  create mode 100644 mergetools/nvimdiff
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index ee468ea3b0..aed08f8df5 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1712,8 +1712,8 @@ _git_diff ()
+>  }
+>  
+>  __git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
+> -			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc
+> -			codecompare smerge
+> +			tkdiff vimdiff nvimdiff gvimdiff xxdiff araxis p4merge
+> +			bc codecompare smerge
+>  "
+>  
+>  _git_difftool ()
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index 29fecc340f..2defef28cd 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -304,11 +304,14 @@ list_merge_tool_candidates () {
+>  		tools="$tools smerge"
+>  	fi
+>  	case "${VISUAL:-$EDITOR}" in
+> +	*nvim*)
+> +		tools="$tools nvimdiff vimdiff emerge"
+> +		;;
+>  	*vim*)
+> -		tools="$tools vimdiff emerge"
+> +		tools="$tools vimdiff nvimdiff emerge"
+>  		;;
+>  	*)
+> -		tools="$tools emerge vimdiff"
+> +		tools="$tools emerge vimdiff nvimdiff"
+>  		;;
+>  	esac
+>  }
+> diff --git a/mergetools/nvimdiff b/mergetools/nvimdiff
+> new file mode 100644
+> index 0000000000..04a5bb0ea8
+> --- /dev/null
+> +++ b/mergetools/nvimdiff
+> @@ -0,0 +1 @@
+> +. "$MERGE_TOOLS_DIR/vimdiff"
+> diff --git a/mergetools/vimdiff b/mergetools/vimdiff
+> index 3925e1fc3e..abc8ce4ec4 100644
+> --- a/mergetools/vimdiff
+> +++ b/mergetools/vimdiff
+> @@ -5,7 +5,7 @@ diff_cmd () {
+>  
+>  merge_cmd () {
+>  	case "$1" in
+> -	gvimdiff|vimdiff)
+> +	*vimdiff)
+>  		if $base_present
+>  		then
+>  			"$merge_tool_path" -f -d -c '4wincmd w | wincmd J' \
+> @@ -15,11 +15,11 @@ merge_cmd () {
+>  				"$LOCAL" "$MERGED" "$REMOTE"
+>  		fi
+>  		;;
+> -	gvimdiff2|vimdiff2)
+> +	*vimdiff2)
+>  		"$merge_tool_path" -f -d -c 'wincmd l' \
+>  			"$LOCAL" "$MERGED" "$REMOTE"
+>  		;;
+> -	gvimdiff3|vimdiff3)
+> +	*vimdiff3)
+>  		if $base_present
+>  		then
+>  			"$merge_tool_path" -f -d -c 'hid | hid | hid' \
+> @@ -34,10 +34,13 @@ merge_cmd () {
+>  
+>  translate_merge_tool_path() {
+>  	case "$1" in
+> -	gvimdiff|gvimdiff2|gvimdiff3)
+> +	nvimdiff*)
+> +		echo nvim
+> +		;;
+> +	gvimdiff*)
+>  		echo gvim
+>  		;;
+> -	vimdiff|vimdiff2|vimdiff3)
+> +	vimdiff*)
+>  		echo vim
+>  		;;
+>  	esac
+> @@ -48,7 +51,7 @@ exit_code_trustable () {
+>  }
+>  
+>  list_tool_variants () {
+> -	for prefix in '' g; do
+> +	for prefix in '' g n; do
+>  		for suffix in '' 2 3; do
+>  			echo "${prefix}vimdiff${suffix}"
+>  		done
