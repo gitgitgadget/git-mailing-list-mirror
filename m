@@ -2,168 +2,82 @@ Return-Path: <SRS0=GLOD=BA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C733C433E3
-	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 00:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5092CC433E5
+	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 00:21:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7641722B4E
-	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 00:15:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23B6C22BF3
+	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 00:21:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f5KYgbad"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MKWuYUrE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728077AbgGUAPe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jul 2020 20:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33608 "EHLO
+        id S1728096AbgGUAVz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jul 2020 20:21:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbgGUAPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jul 2020 20:15:34 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E81CEC061794
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 17:15:33 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id g75so1081158wme.5
-        for <git@vger.kernel.org>; Mon, 20 Jul 2020 17:15:33 -0700 (PDT)
+        with ESMTP id S1726742AbgGUAVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jul 2020 20:21:52 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F6BC061794
+        for <git@vger.kernel.org>; Mon, 20 Jul 2020 17:21:52 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id m7so14931510pgv.12
+        for <git@vger.kernel.org>; Mon, 20 Jul 2020 17:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=8+YsBq/e0H7Zvp/XsVzS22w1DNxPG/eAqXPwRmpDHxo=;
-        b=f5KYgbads2g8VJ3CGi0qaTCUSJq//zCWzuSgtiSEhr5uHbMX8rP4HVzKXRPXGY8M5s
-         N7fmJIidfQKMWRrBwNu/u9/CSTNzNPDgBRGqekbhBSC/3ISxq78IhZqDVzXh4c6rRbYu
-         b/gdZorakCTJpt20uuyJoorp3FyPL3wvi3G7kwpnHSk79F7VmGlVXb/LSJzBFQqf1ITW
-         Emt2G1Vj38xX7wBq0tl/HJ/EngtjRdwXKPS6+r9kEEG4trKbaaIIxmUYbWAo4Cllo+4U
-         pHyvjKTFyaLREqG+Z3DAkBXc4MAONi0TMNuYLlCG7y7bsOz1gNkpAUt3TGECi4G1XCjG
-         U6sw==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=p+htQFTtY1zydhdwogRRBjTIUh+Q6ekwL/3w3gIBKVA=;
+        b=MKWuYUrEHEethjKmNxFDBx75iSH04rbAB/Khwz/bjM2DwGmrG1COBmgg+8eCJagiOR
+         rqBfIxKx+TvztUTvDJ/D2937DNC7O4JNxJ8SEWWh8bgy4I26OclKe7SEa+wW4ReOXySV
+         82b+vbqbNB8dpIETkEC41sqR/vAGarz+E9MZm19B3OBxpFOlGHSE8p/NiYRUo0LqePp4
+         MSbPDjJjTF0pgCmE113EzYcdTFuptJm7I7TGJJm4CU6gTYLxyeD+XPQlxmW6Jv2Yk/CE
+         rt65Pv7uAWaQSK/pyLU7LtoTkjD31mFELEZ+KgibMyT5d/6z5uAjz+ZiBsGcOBZq0EVb
+         22UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8+YsBq/e0H7Zvp/XsVzS22w1DNxPG/eAqXPwRmpDHxo=;
-        b=Z20CAM4xr0grBSSLOXt6Bo1/8qPcw0d7ZUV/rnlKZIOGPA0M9jmU4wk3KJ/ITmlJsP
-         gEKf79gYqxxlgkvvBEG+QIY6urvDYSPb601hMHAxHRz53xxF7GYXg2ZsYPqG8uoiykzt
-         WBEozf/j04QaVzXnYd+xiGwXVcmOe+eR0xx65aVdsVvNw4ruaPsvmae3KoBOnzddDGXi
-         bZFskVdX0aZIsxwpW3KfgzlJdk0/WP4CfnVOO0p5nVNYII+X4vP8vwlK39QBwTSgqRPx
-         Uy0lUEX16vTul/p2DqKmofbxcUOenS80MunhaUhcCBDy05KBf+Ffh6oaW6KM6E3RIRvl
-         8Taw==
-X-Gm-Message-State: AOAM530vVZ6nyQAqHlnqrK4U9IiHwVW0JIo3qpuF2/F71IaXe09Dyt5f
-        c2k33TC+D+IWFg9LsuhBSnGCKQTG
-X-Google-Smtp-Source: ABdhPJxMi52sPE5znkQ59dOvyLM59IHHCn/6FHOr/CipJy09MZF7RPjv7Rgb8x685yPwZs3Mcz5IMg==
-X-Received: by 2002:a1c:286:: with SMTP id 128mr1002012wmc.37.1595290532529;
-        Mon, 20 Jul 2020 17:15:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j145sm1417140wmj.7.2020.07.20.17.15.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2020 17:15:32 -0700 (PDT)
-Message-Id: <pull.679.v2.git.1595290531264.gitgitgadget@gmail.com>
-In-Reply-To: <pull.679.git.1595287052428.gitgitgadget@gmail.com>
-References: <pull.679.git.1595287052428.gitgitgadget@gmail.com>
-From:   "David J. Malan via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 21 Jul 2020 00:15:31 +0000
-Subject: [PATCH v2] git-prompt: change == to = for zsh's sake
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=p+htQFTtY1zydhdwogRRBjTIUh+Q6ekwL/3w3gIBKVA=;
+        b=NNjyuPFPot6NDQLv8/ex4ZXILokPvCWEPgLN4Uwg42zDIVnQpT/LUU3XbVll/LCta8
+         xq+kkLA8FjNvOP75VcTLbZKNMOyRNi2PgRYXNdFrA8vEeiPawc9e2G72dVzSZmsmJaal
+         cSkJ91cL7ExAXVKO1CTWE5aut1uQzC9zGn0NE45gepC8vq38bT1602F+Yj90gAgX9ic8
+         CWtwN9JGwcGdn9XAecZOAoiIOsHVVNNezHlTx6w8AVr3F/vZ4fm09bawP16QOpYixqry
+         YcP3My0wl0NT2HYN0zA6B/FjoDgSs6C7rfwmT5nocPs2K5YWBwMyxnDBMOVFr76Qv94y
+         lypw==
+X-Gm-Message-State: AOAM530mck582jGX/058PGBco+thZk5I2Yg/EjSR15/PZKWV8r5uF66T
+        C08eJ1iv2KChVqYRxtASTaFj33hw3vRyEhiz0Kj+0mV4Gd+otRUNNq0ber8oOVmyBrtTOup3v9k
+        Q/z1PZN2yS6bgu1PAFHxEyqmuDzwem27oi07vAaEFFcb34Xv3BbtFkMyOnnOaSyEP9em6wGKy63
+        8t
+X-Google-Smtp-Source: ABdhPJw9yQWYYe1wTww2d5DjKM9eFXm5YHH6MjHhfsJwsC2as3dV9v+ILoKWWDojvkhCTzjrOKc97Dx1Pc5bqhDJSzRc
+X-Received: by 2002:a17:90b:1106:: with SMTP id gi6mr2047221pjb.2.1595290912051;
+ Mon, 20 Jul 2020 17:21:52 -0700 (PDT)
+Date:   Mon, 20 Jul 2020 17:21:42 -0700
+Message-Id: <cover.1595290841.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.28.0.rc0.105.gf9edc3c819-goog
+Subject: [PATCH 0/2] Prefetch objects in pack-objects
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "David J. Malan" <malan@harvard.edu>,
-        "David J. Malan" <malan@harvard.edu>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, sluongng@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "David J. Malan" <malan@harvard.edu>
+Patch 1 is refactoring, and patch 2 is the main patch which introduces
+the feature.
 
-When using git-prompt.sh with zsh, __git_ps1 currently errs
-when inside a repo with:
+Jonathan Tan (2):
+  pack-objects: refactor to oid_object_info_extended
+  pack-objects: prefetch objects to be packed
 
-__git_ps1:96: = not found
+ builtin/pack-objects.c | 40 ++++++++++++++++++++++++++++++++++++----
+ t/t5300-pack-object.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 72 insertions(+), 4 deletions(-)
 
-Avoid using non-portable "==" that is only understood by bash
-and not zsh. Change to "=" so that the prompt script becomes
-usable with zsh again.
-
-Signed-off-by: David J. Malan <malan@harvard.edu>
----
-    Change == to = for zsh's sake in git-prompt.sh
-    
-    Upon installing git-prompt.sh
-    [https://github.com/gitgitgadget/git/blob/master/contrib/completion/git-prompt.sh] 
-    on macOS Catalina, I noticed that 
-    https://github.com/gitgitgadget/git/commit/afda36dbf3b4f5a489ab44c00d5210c1fa894a40 
-    seems to have introduced an issue for Zsh whereby __git_ps1 errs with
-    
-    __git_ps1:96: = not found
-    
-    when inside a repo. Changing == to = would seem to address for both Bash
-    and Zsh.
-    
-    Changes since v1:
-    
-     * Commit message rewritten to use imperative mood.
-     * Commit message rewritten to elaborate on reason for change.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-679%2Fdmalan%2Fpatch-1-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-679/dmalan/patch-1-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/679
-
-Range-diff vs v1:
-
- 1:  95be513ed1 ! 1:  f5402f1512 git-prompt: changes == to = for zsh's sake
-     @@ Metadata
-      Author: David J. Malan <malan@harvard.edu>
-      
-       ## Commit message ##
-     -    git-prompt: changes == to = for zsh's sake
-     +    git-prompt: change == to = for zsh's sake
-      
-     -    When using git-prompt.sh with Zsh, __git_ps1 currently errs
-     +    When using git-prompt.sh with zsh, __git_ps1 currently errs
-          when inside a repo with:
-      
-          __git_ps1:96: = not found
-      
-     -    This commit changes `==` to `=` for both Bash and Zsh.
-     +    Avoid using non-portable "==" that is only understood by bash
-     +    and not zsh. Change to "=" so that the prompt script becomes
-     +    usable with zsh again.
-      
-          Signed-off-by: David J. Malan <malan@harvard.edu>
-      
-
-
- contrib/completion/git-prompt.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index e6cd5464e5..16260bab73 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -433,7 +433,7 @@ __git_ps1 ()
- 	local sparse=""
- 	if [ -z "${GIT_PS1_COMPRESSSPARSESTATE}" ] &&
- 	   [ -z "${GIT_PS1_OMITSPARSESTATE}" ] &&
--	   [ "$(git config --bool core.sparseCheckout)" == "true" ]; then
-+	   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
- 		sparse="|SPARSE"
- 	fi
- 
-@@ -542,7 +542,7 @@ __git_ps1 ()
- 		fi
- 
- 		if [ -n "${GIT_PS1_COMPRESSSPARSESTATE}" ] &&
--		   [ "$(git config --bool core.sparseCheckout)" == "true" ]; then
-+		   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
- 			h="?"
- 		fi
- 
-
-base-commit: ae46588be0cd730430dded4491246dfb4eac5557
 -- 
-gitgitgadget
+2.28.0.rc0.105.gf9edc3c819-goog
+
