@@ -2,245 +2,141 @@ Return-Path: <SRS0=GLOD=BA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 570D6C433DF
-	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 01:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F7DEC433E3
+	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 01:26:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2AD292080D
-	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 01:00:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 534D220717
+	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 01:26:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vQNByrk+"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="OiNJVgq4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727955AbgGUBA6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jul 2020 21:00:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54531 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726127AbgGUBA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jul 2020 21:00:57 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 479837C233;
-        Mon, 20 Jul 2020 21:00:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LobhjN1AQaZTFPtFzMEfcDSXDtQ=; b=vQNByr
-        k+dcv40OSPaI1EmV6s37hyTcRY0zB/5ro+0z6wn90dgDOybEqy1+WbN6QtIiIHkq
-        OQrRi6fct/ZH+no5nXocM7LwVvbTtR5Y5A0cQ3Z1kF0Kx9Nzz6plyLzOzm9k18h2
-        IbSyIxcnEoXlS3wwleogfzn54iYj6lPd4O7qg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=a8LVSJTbma2AVeFE3zliRiQMravjZH/F
-        w98IfIhpt7HHRr/sSoOrtJYppYl4WX+Qe872PpKXbtPgwBcImVErIxvmGjEFW1fu
-        wvamXQJhhR2QAo7YlmpEfjtfFDLCUdk2O0c5DiNmZqFpssyaDSQU5pgwEvMJTsi4
-        yHSoo8dWoNw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E5637C232;
-        Mon, 20 Jul 2020 21:00:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726146AbgGUB0T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jul 2020 21:26:19 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40440 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726021AbgGUB0T (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Jul 2020 21:26:19 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C37FD7C231;
-        Mon, 20 Jul 2020 21:00:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sluongng@gmail.com
-Subject: Re: [PATCH 2/2] pack-objects: prefetch objects to be packed
-References: <cover.1595290841.git.jonathantanmy@google.com>
-        <b87764b711621ea3c614dbc8f9e49a8598a25cb1.1595290841.git.jonathantanmy@google.com>
-Date:   Mon, 20 Jul 2020 18:00:50 -0700
-In-Reply-To: <b87764b711621ea3c614dbc8f9e49a8598a25cb1.1595290841.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Mon, 20 Jul 2020 17:21:44 -0700")
-Message-ID: <xmqqd04p8ywt.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6B09A6044E;
+        Tue, 21 Jul 2020 01:25:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1595294747;
+        bh=ap4oDX6up55fGnIs5p4R5dPwvfBcpqPrT2cF9HQhQAg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=OiNJVgq47zeHfGCkN4emvlmIqJk4zM/tdN/LOuUEv/U3Z3VbCglFHj0/W5RuRaaHR
+         3JArqAecLOLJkb4GKdEi2Sz/wbGnh4yTXwdGdzWN3er4+usXkVAgj/rVI/JNsYYiZn
+         e4NoRWq+qOcN/IaoFpbWb9qaczHHMZTNooM885vscH4tC9axfkSG6Rv7ekLlu2gOiO
+         wM7GuEXz2BSHyF7gj61JNCWfXzu7YNscEkP2lRVHtWIzGzX97H8X7Eznfg7KfE9XuI
+         zc2mIU1nuaV8nVBmcimMhr7HDgjpzA6EMfTT1gh3n/fpfiaKeUBcWBokO77/xI0E9e
+         W0QGdTz8HxOJ7QNGLmv08bJC8rRM1LvqLPkQrp21F0oazC8fRnOJiUqFrG+CqZDJMK
+         wqRtpzg/EyrsVDqs/fd5rEJtvQXYCeAqiy64QOigzMD+6VB/OTDJezAPHi1iZ73oJ6
+         jodOXwKzk6z6twtn832HGxiCFUI+85akJjoCFHcFDwBUMHCQu+S
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Frej Bjon <frej.bjon@nemit.fi>
+Subject: [PATCH v2] remote-curl: make --force-with-lease work with non-ASCII ref names
+Date:   Tue, 21 Jul 2020 01:15:11 +0000
+Message-Id: <20200721011511.1649048-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.28.0.rc1.129.ge9626dbbb9f
+In-Reply-To: <CAP8P1T+JQUTVDXsJbrWkiZ2AWZmoptFSRdKssANYrNSFa+Egmg@mail.gmail.com>
+References: <CAP8P1T+JQUTVDXsJbrWkiZ2AWZmoptFSRdKssANYrNSFa+Egmg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9EC79B40-CAED-11EA-821D-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+When we invoke a remote transport helper and pass an option with an
+argument, we quote the argument as a C-style string if necessary.  This
+is the case for the cas option, which implements the --force-with-lease
+command-line flag, when we're passing a non-ASCII refname.
 
-> When an object to be packed is noticed to be missing, prefetch all
-> to-be-packed objects in one batch.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
+However, the remote curl helper isn't designed to parse such an
+argument, meaning that if we try to use --force-with-lease with an HTTP
+push and a non-ASCII refname, we get an error like this:
 
-Hmph, the resulting codeflow structure feels somewhat iffy.  Perhaps
-I am not reading the code correctly, but
+  error: cannot parse expected object name '0000000000000000000000000000000000000000"'
 
- * There is a loop that scans from 0..to_pack.nr_objects and calls
-   check_object() for each and every one of them;
+Note the double quote, which get_oid has reminded us is not valid in an
+hex object ID.
 
- * The called check_object(), when it notices that a missing and
-   promised (i.e. to be lazily fetched) object is in the to_pack
-   array, asks prefetch_to_pack() to scan from that point to the end
-   of that array and grabs all of them that are missing.
+Even if we had been able to parse it, we would send the wrong data to
+the server: we'd send an escaped ref, which would not behave as the user
+wanted and might accidentally result in updating or deleting a ref we
+hadn't intended.
 
-It almost feels a lot cleaner to see what is going on in the
-resulting code, instead of the way the new "loop" was added, if a
-new loop is added _before_ the loop to call check_object() on all
-objects in to_pack array as a pre-processing phase when there is a
-promisor remote.  That is, after reverting all the change this patch
-makes to check_object(), add a new loop in get_object_details() that
-looks more or less like so:
+Since we need to expect a quoted C-style string here, just check if the
+first argument is a double quote, and if so, unquote it.  Note that if
+the refname contains a double quote, then we will have double-quoted it
+already, so there is no ambiguity.
 
-	QSORT(sorted_by_offset, to_pack.nr_objects, pack_offset_sort);
+We test for this case only in the smart protocol, since the DAV-based
+protocol is not capable of handling this capability.  We use UTF-8
+because this is nicer in our tests and friendlier to Windows, but the
+code should work for all non-ASCII refs.
 
-+	if (has_promisor_remote())
-+		prefetch_to_pack(0);
+While we're at it, since the name of the option is now well established
+and isn't going to change, let's inline it instead of using the #define
+constant.
+
+Reported-by: Frej Bjon <frej.bjon@nemit.fi>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ remote-curl.c              |  6 +++++-
+ t/t5541-http-push-smart.sh | 15 +++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/remote-curl.c b/remote-curl.c
+index 5cbc6e5002..c9921c552c 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -121,7 +121,11 @@ static int set_option(const char *name, const char *value)
+ 	}
+ 	else if (!strcmp(name, "cas")) {
+ 		struct strbuf val = STRBUF_INIT;
+-		strbuf_addf(&val, "--" CAS_OPT_NAME "=%s", value);
++		strbuf_addstr(&val, "--force-with-lease=");
++		if (*value != '"')
++			strbuf_addstr(&val, value);
++		else if (unquote_c_style(&val, value, NULL))
++			return -1;
+ 		string_list_append(&cas_options, val.buf);
+ 		strbuf_release(&val);
+ 		return 0;
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 463d0f12e5..187454f5dd 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -479,6 +479,21 @@ test_expect_success 'clone/fetch scrubs password from reflogs' '
+ 	! grep "$HTTPD_URL_USER_PASS" reflog
+ '
+ 
++test_expect_success 'Non-ASCII branch name can be used with --force-with-lease' '
++	cd "$ROOT_PATH" &&
++	git clone "$HTTPD_URL_USER_PASS/smart/test_repo.git" non-ascii &&
++	cd non-ascii &&
++	git checkout -b rama-de-árbol &&
++	test_commit F &&
++	git push --force-with-lease origin rama-de-árbol &&
++	git ls-remote origin refs/heads/rama-de-árbol >actual &&
++	git ls-remote . refs/heads/rama-de-árbol >expect &&
++	test_cmp expect actual &&
++	git push --delete --force-with-lease origin rama-de-árbol &&
++	git ls-remote origin refs/heads/rama-de-árbol >actual &&
++	test_must_be_empty actual
++'
 +
-	for (i = 0; i < to_pack.nr_objects; i++) {
-
-
-Was the patch done this way because scanning the entire array twice
-is expensive?  The optimization makes sense to me if certain
-conditions are met, like...
-
- - Most of the time there is no missing object due to promisor, even
-   if has_promissor_to_remote() is true;
-
- - When there are missing objects due to promisor, pack_offset_sort
-   will keep them near the end of the array; and
-
- - Given the oid, oid_object_info_extended() on it with
-   OBJECT_INFO_FOR_PREFETCH is expensive.
-
-Only when all these conditions are met, it would avoid unnecessary
-overhead by scanning only a very later part of the array by delaying
-the point in the array where prefetch_to_pack() starts scanning.
-
-Thanks.
-
-> There have been recent discussions about using QUICK whenever we use
-> SKIP_FETCH_OBJECT. I don't think it fully applies here, since here we
-> fully expect the object to be present in the non-partial-clone case.
-> Having said that, I wouldn't be opposed to adding QUICK and then, if the
-> object read fails and if the repo is not a partial clone, to retry the
-> object load (before setting the type to -1).
-> ---
->  builtin/pack-objects.c | 36 ++++++++++++++++++++++++++++++++----
->  t/t5300-pack-object.sh | 36 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 68 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index e09d140eed..ecef5cda44 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -35,6 +35,7 @@
->  #include "midx.h"
->  #include "trace2.h"
->  #include "shallow.h"
-> +#include "promisor-remote.h"
->  
->  #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
->  #define SIZE(obj) oe_size(&to_pack, obj)
-> @@ -1704,7 +1705,26 @@ static int can_reuse_delta(const struct object_id *base_oid,
->  	return 0;
->  }
->  
-> -static void check_object(struct object_entry *entry)
-> +static void prefetch_to_pack(uint32_t object_index_start) {
-> +	struct oid_array to_fetch = OID_ARRAY_INIT;
-> +	uint32_t i;
-> +
-> +	for (i = object_index_start; i < to_pack.nr_objects; i++) {
-> +		struct object_entry *entry = to_pack.objects + i;
-> +
-> +		if (!oid_object_info_extended(the_repository,
-> +					      &entry->idx.oid,
-> +					      NULL,
-> +					      OBJECT_INFO_FOR_PREFETCH))
-> +			continue;
-> +		oid_array_append(&to_fetch, &entry->idx.oid);
-> +	}
-> +	promisor_remote_get_direct(the_repository,
-> +				   to_fetch.oid, to_fetch.nr);
-> +	oid_array_clear(&to_fetch);
-> +}
-> +
-> +static void check_object(struct object_entry *entry, uint32_t object_index)
->  {
->  	unsigned long canonical_size;
->  	enum object_type type;
-> @@ -1843,8 +1863,16 @@ static void check_object(struct object_entry *entry)
->  	}
->  
->  	if (oid_object_info_extended(the_repository, &entry->idx.oid, &oi,
-> -				     OBJECT_INFO_LOOKUP_REPLACE) < 0)
-> -		type = -1;
-> +				     OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_LOOKUP_REPLACE) < 0) {
-> +		if (has_promisor_remote()) {
-> +			prefetch_to_pack(object_index);
-> +			if (oid_object_info_extended(the_repository, &entry->idx.oid, &oi,
-> +						     OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_LOOKUP_REPLACE) < 0)
-> +				type = -1;
-> +		} else {
-> +			type = -1;
-> +		}
-> +	}
->  	oe_set_type(entry, type);
->  	if (entry->type_valid) {
->  		SET_SIZE(entry, canonical_size);
-> @@ -2065,7 +2093,7 @@ static void get_object_details(void)
->  
->  	for (i = 0; i < to_pack.nr_objects; i++) {
->  		struct object_entry *entry = sorted_by_offset[i];
-> -		check_object(entry);
-> +		check_object(entry, i);
->  		if (entry->type_valid &&
->  		    oe_size_greater_than(&to_pack, entry, big_file_threshold))
->  			entry->no_try_delta = 1;
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> index 746cdb626e..d553d0ca46 100755
-> --- a/t/t5300-pack-object.sh
-> +++ b/t/t5300-pack-object.sh
-> @@ -497,4 +497,40 @@ test_expect_success 'make sure index-pack detects the SHA1 collision (large blob
->  	)
->  '
->  
-> +test_expect_success 'prefetch objects' '
-> +	rm -rf server client &&
-> +
-> +	git init server &&
-> +	test_config -C server uploadpack.allowanysha1inwant 1 &&
-> +	test_config -C server uploadpack.allowfilter 1 &&
-> +	test_config -C server protocol.version 2 &&
-> +
-> +	echo one >server/one &&
-> +	git -C server add one &&
-> +	git -C server commit -m one &&
-> +	git -C server branch one_branch &&
-> +
-> +	echo two_a >server/two_a &&
-> +	echo two_b >server/two_b &&
-> +	git -C server add two_a two_b &&
-> +	git -C server commit -m two &&
-> +
-> +	echo three >server/three &&
-> +	git -C server add three &&
-> +	git -C server commit -m three &&
-> +	git -C server branch three_branch &&
-> +
-> +	# Clone, fetch "two" with blobs excluded, and re-push it. This requires
-> +	# the client to have the blobs of "two" - verify that these are
-> +	# prefetched in one batch.
-> +	git clone --filter=blob:none --single-branch -b one_branch \
-> +		"file://$(pwd)/server" client &&
-> +	test_config -C client protocol.version 2 &&
-> +	TWO=$(git -C server rev-parse three_branch^) &&
-> +	git -C client fetch --filter=blob:none origin "$TWO" &&
-> +	GIT_TRACE_PACKET=$(pwd)/trace git -C client push origin "$TWO":refs/heads/two_branch &&
-> +	grep "git> done" trace >donelines &&
-> +	test_line_count = 1 donelines
-> +'
-> +
->  test_done
+ test_expect_success 'colorize errors/hints' '
+ 	cd "$ROOT_PATH"/test_repo_clone &&
+ 	test_must_fail git -c color.transport=always -c color.advice=always \
