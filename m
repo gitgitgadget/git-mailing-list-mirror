@@ -2,90 +2,132 @@ Return-Path: <SRS0=GLOD=BA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C7D8C433E0
-	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 16:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B05BC433E4
+	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 16:37:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75D1B20771
-	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 16:23:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7361620720
+	for <git@archiver.kernel.org>; Tue, 21 Jul 2020 16:37:41 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TT6OxIIr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728443AbgGUQXi convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 21 Jul 2020 12:23:38 -0400
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:43972 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727955AbgGUQXi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jul 2020 12:23:38 -0400
-Received: by mail-wr1-f46.google.com with SMTP id a15so6856299wrh.10
-        for <git@vger.kernel.org>; Tue, 21 Jul 2020 09:23:37 -0700 (PDT)
+        id S1730311AbgGUQhk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jul 2020 12:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46108 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728042AbgGUQhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jul 2020 12:37:40 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A2D9C061794
+        for <git@vger.kernel.org>; Tue, 21 Jul 2020 09:37:40 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id o10so12846837plk.12
+        for <git@vger.kernel.org>; Tue, 21 Jul 2020 09:37:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=saz8TJHK+HQ3MHXzS3nsqr1qll1cUSa8sizXjipCN04=;
+        b=TT6OxIIrHQ329FyBJBrIweSQWYNmq2kaKW/643X/AYHoWgyt4x0Uli1WZpGo6tXkTJ
+         fF/TnBM+LWFgogyueGj8wAXMZ0R37cQiZXJRumj7E0Cqc5BUVMocoIjsqlyb24puFzf2
+         gS5IprQPSRpYW/f/7xCxxBmYUGXQVppyxrGMbtge+V4QZg1y5qpqle4PDuesL4dt9M4d
+         SyzaftV5Knt8zU1p/c+y1JfI7sHhVz4X5hsdPYofK4FxpYuLSvvrwrg2+QRfJXbBmZrs
+         mcw0j4G0JcmfxObnMWrcVaugbx08xbjYgCzQUsLUVdGTMsVf2IEw7b3POfVchC0C+JDs
+         MXlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=P+oXAVgyC6O7j9qhea/IREn3eggrCmhnFuTSWuFP0To=;
-        b=hZ7GbrqW8OS8o7u80UXC4Sv2JVqN5S7JS2Uh9tKbGXgOk6Pfn3GapvCcdze+POg0gL
-         2rZZ+n5safI5Tl48VbaJ/+1he74DjCQAkmN9f5jxFAcpBOKkYs08QGQU5gNbciXQ9J4y
-         stWKbaRixK5Onk4HZ1Ejmq5p58ZaX4lDic2eVShx/Epsiqf0RnwjQcabEhWnZWfvV7cD
-         e1MsbgIonywzhVeHnNvdYiVNhWQYirI2qfvFtkfYsbmE8O+VfZST7/3MzMy7TzjWA7hR
-         LK5bR7m/C8taqR3owWg1tT1RLiRNXxhrXC0cJeZhMptJRUiLJALeZChUt5BV28TMObIs
-         bndg==
-X-Gm-Message-State: AOAM530zgcd4PIOu4ivL8FEkRRps7A2QweMTLU/hs3ZHUnKyDUkfJHzJ
-        mkt1F5bqV4SNT/kgQmGiW8+2YPLcdcsFTU2O5THLZV4tWa8=
-X-Google-Smtp-Source: ABdhPJwEw6i0Fcsntxlt5yLeSJqA5GNeaTlvO7rGm99MqCtV10qLu4Wab71WVtL84N8MwXwgO8/olqEdFvJHNgggpX0=
-X-Received: by 2002:adf:e8d2:: with SMTP id k18mr18722536wrn.120.1595348616345;
- Tue, 21 Jul 2020 09:23:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200721161225.6769-1-szeder.dev@gmail.com>
-In-Reply-To: <20200721161225.6769-1-szeder.dev@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 21 Jul 2020 12:23:25 -0400
-Message-ID: <CAPig+cQmjgmWx3Y_8WwOORsjW0Q7M-xXKonFW1qfHYLW3mD4Fw@mail.gmail.com>
-Subject: Re: [PATCH] [RFC] travis-ci: remove bogus 'pyenv' in the Linux jobs
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=saz8TJHK+HQ3MHXzS3nsqr1qll1cUSa8sizXjipCN04=;
+        b=GM1YZKGHW/q8OSCnOVKzc2yiXm4cNpbPGDI+rZ3c8FaQ1vsxK+FIy4FOS9VI1VyUiM
+         ReUZXjjWSFKlmpr2o3pa59BYPPq+F9f5dQ19mBopJbZh2RTuG6o0vej1cKimoPprGWGR
+         DL4JWUY0S+8LbWUjsDIXBgVBIoGoDI+MEL+bi4TWv+6bUwBUnbZ6QmxIJsUXUPo6hOi7
+         RqitnlokPbzvaFuXf7V8Rrq/5CVbutThkl/fdVlFnvORyJr5hJRVyUR67SKKMKRiP9zz
+         CZieksF4josd3rT7FmXiBb1Hc2chmhTKi5hBpN2T39jbTLcpQ4XXofynBRBPrJu3QEWt
+         NAGg==
+X-Gm-Message-State: AOAM5311A47HtSY8z36oDaMhczSRfLo0L4PrzvdxiHgI9rYxY5QyMp+H
+        0UZLkIRcCxq+S9cqZcRAi9hDkkMwNRerdPoaEulH
+X-Google-Smtp-Source: ABdhPJz1XtgZHbMO6eDFAYblKZ0bav92LBvRJriauTThwV+Mt+gyLQpBXBkEMriIxJ+9o7neVSVpoPzHGsWTrdOhbsHW
+X-Received: by 2002:a62:1b8d:: with SMTP id b135mr25204113pfb.248.1595349459382;
+ Tue, 21 Jul 2020 09:37:39 -0700 (PDT)
+Date:   Tue, 21 Jul 2020 09:37:36 -0700
+In-Reply-To: <xmqqd04p8ywt.fsf@gitster.c.googlers.com>
+Message-Id: <20200721163736.69610-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqd04p8ywt.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.28.0.rc0.105.gf9edc3c819-goog
+Subject: Re: [PATCH 2/2] pack-objects: prefetch objects to be packed
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, sluongng@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 21, 2020 at 12:12 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> In our test suite, when 'git p4' invokes a Git command as a
-> subprocesses, then it should run the 'git' binary we are testing.
-> Unfortunately, this is not the case in the 'linux-clang' and
-> 'linux-gcc' jobs on Travis CI, where 'git p4' runs the system
-> '/usr/bin/git' instead.
->
-> Travis CI's default Linux image includes 'pyenv', and all Python
-> invocations that involve PATH lookup go through 'pyenv', e.g. our
-> 'PYTHON_PATH=$(which python3)' sets '/opt/pyenv/shims/python3' as
-> PYTHON_PATH, which in turn will invoke '/usr/bin/python3'.  Alas, the
-> 'pyenv' version included in this image is buggy, and prepends the
-> directory containing the Python binary to PATH even if that is a
-> system directory already in PATH near the end.  Consequently, 'git p4'
-> in those jobs ends up with its PATH starting with '/usr/bin', and then
-> runs '/usr/bin/git'.
->
-> So remove 'pyenv' in Travis CI's Linux jobs to prevet it from
-
-s/prevet/prevent/
-
-> interfering with our 'git p4' tests.
->
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> @@ -36,6 +36,14 @@ linux-clang|linux-gcc)
+> Hmph, the resulting codeflow structure feels somewhat iffy.  Perhaps
+> I am not reading the code correctly, but
+> 
+>  * There is a loop that scans from 0..to_pack.nr_objects and calls
+>    check_object() for each and every one of them;
+> 
+>  * The called check_object(), when it notices that a missing and
+>    promised (i.e. to be lazily fetched) object is in the to_pack
+>    array, asks prefetch_to_pack() to scan from that point to the end
+>    of that array and grabs all of them that are missing.
+> 
+> It almost feels a lot cleaner to see what is going on in the
+> resulting code, instead of the way the new "loop" was added, if a
+> new loop is added _before_ the loop to call check_object() on all
+> objects in to_pack array as a pre-processing phase when there is a
+> promisor remote.  That is, after reverting all the change this patch
+> makes to check_object(), add a new loop in get_object_details() that
+> looks more or less like so:
+> 
+> 	QSORT(sorted_by_offset, to_pack.nr_objects, pack_offset_sort);
+> 
+> +	if (has_promisor_remote())
+> +		prefetch_to_pack(0);
 > +
-> +       if test true = "$TRAVIS" &&
-> +          pyenv_root=$(pyenv root)
-> +       then
-> +               # pyenv in Travis CI's current default (xenial) Linux
-> +               # image messes up PATH for 'git p4'.
+> 	for (i = 0; i < to_pack.nr_objects; i++) {
+> 
+> 
+> Was the patch done this way because scanning the entire array twice
+> is expensive?
 
-I wonder if this comment should give more precise detail about exactly
-how it "messes up" PATH.
+Yes. If we called prefetch_to_pack(0) first (as you suggest), this first
+scan involves checking the existence of all objects in the array, so I
+thought it would be expensive. (Checking the existence of an object
+probably brings the corresponding pack index into disk cache on
+platforms like Linux, so 2 object reads might not take much more time
+than 1 object read, but I didn't want to rely on this when I could just
+avoid the extra read.)
 
-> +               sudo rm -rf "$pyenv_root"
-> +       fi
+> The optimization makes sense to me if certain
+> conditions are met, like...
+> 
+>  - Most of the time there is no missing object due to promisor, even
+>    if has_promissor_to_remote() is true;
+
+I think that optimizing for this condition makes sense - most pushes (I
+would think) are pushes of objects we create locally, and thus no
+objects are missing.
+
+>  - When there are missing objects due to promisor, pack_offset_sort
+>    will keep them near the end of the array; and
+> 
+>  - Given the oid, oid_object_info_extended() on it with
+>    OBJECT_INFO_FOR_PREFETCH is expensive.
+
+I see this as expensive since it involves checking of object existence.
+
+> Only when all these conditions are met, it would avoid unnecessary
+> overhead by scanning only a very later part of the array by delaying
+> the point in the array where prefetch_to_pack() starts scanning.
+
+Yes (and when there are no missing objects at all, there is no
+double-scanning).
