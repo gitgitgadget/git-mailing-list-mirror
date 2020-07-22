@@ -2,107 +2,98 @@ Return-Path: <SRS0=ybwr=BB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57CD9C433E4
-	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 21:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2FF9C433E0
+	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 21:45:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B45720674
-	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 21:40:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA02020825
+	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 21:45:51 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kg1NcoWj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726907AbgGVVkl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 17:40:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34356 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbgGVVkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jul 2020 17:40:40 -0400
-Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2FE9C0619DC
-        for <git@vger.kernel.org>; Wed, 22 Jul 2020 14:40:40 -0700 (PDT)
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.93)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1jyMTf-009HZR-4K; Wed, 22 Jul 2020 23:40:39 +0200
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     git@vger.kernel.org
-Cc:     bup-list@googlegroups.com,
-        Jamie Wyrick <terrifiedquack80@gmail.com>
-Subject: [PATCH v3] pack-write/docs: update regarding pack naming
-Date:   Wed, 22 Jul 2020 23:40:31 +0200
-Message-Id: <20200722214031.116161-1-johannes@sipsolutions.net>
-X-Mailer: git-send-email 2.26.2
+        id S1728129AbgGVVpu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 17:45:50 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60830 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726525AbgGVVpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jul 2020 17:45:50 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 92C00D40D0;
+        Wed, 22 Jul 2020 17:45:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3IH28G/FE7QbirlE6djtTIR5XlI=; b=Kg1Nco
+        WjvORPvvaWCggjkF2I2zpDta0ciwbd/36GHbOV6Hbf/fA8FiED4B4FUZdeULYZOf
+        vES0/YrJgRyDa7Go5yDsB12Og1bzEJ2Kdb4FHBDXpMIxJRVFwz9Wtmg82jbTs0jU
+        6M+gHZX09snms87OdR6/15RrassM7D44HO9lY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=r+srFKilemIhSYCDko2xnpg7jLhQ3fNN
+        oOxiqlpNlJ54CeH+q90iKRB+OBM3sTwdIVQHJxY1u4HlV77wn+mKdxIeTmjoFL1J
+        322xcEmGh+VYtmqQGPraRTwIlfk+2zADPbU0yzd8Gy7DpsxVlrNIi6HgxtI/VdZN
+        E11ucyz9zUU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8A2B8D40CF;
+        Wed, 22 Jul 2020 17:45:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.231.104.69])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D2499D40CE;
+        Wed, 22 Jul 2020 17:45:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sluongng@gmail.com
+Subject: Re: [PATCH 2/2] pack-objects: prefetch objects to be packed
+References: <xmqqzh7s5sv4.fsf@gitster.c.googlers.com>
+        <20200722213048.1581991-1-jonathantanmy@google.com>
+Date:   Wed, 22 Jul 2020 14:45:44 -0700
+In-Reply-To: <20200722213048.1581991-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Wed, 22 Jul 2020 14:30:48 -0700")
+Message-ID: <xmqqo8o7441j.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: B2EB1AAC-CC64-11EA-AA2F-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The index-pack documentation explicitly states that the pack
-name is derived from the sorted list of object names, but
-since commit 1190a1acf800 ("pack-objects: name pack files
-after trailer hash") that isn't true anymore.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Be less explicit in the docs as to what the exact output is,
-and just say that it's whatever goes into the pack name.
+> OK - how about:
+>
+> [start]
+> When an object to be packed is noticed to be missing, prefetch all
+> to-be-packed objects in one batch.
+>
+> Most of the time (typically, when serving a fetch or when pushing),
+> packs consist only of objects that the repo has. To maintain the
+> performance in this case, the existing object type read is made to also
+> serve as the object existence check: if the read fails, then we do the
+> prefetch.
+>
+> An alternative design is to loop over all the entries in to_pack,
+> checking the existence of each object, and prefetching if we notice any
+> missing. This would result in clearer code, but would incur some
+> performance degradation in the aforementioned most common case due to
+> the additional object existence checks.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> [end]
+>
+> The first paragraph is already in the original, and the rest are
+> additions.
 
-Also update a comment on write_idx_file() since it no longer
-modifies the sha1 variable (it's const now anyway), as noted
-by Junio.
+Sure.  
 
-Fixes: 1190a1acf800 ("pack-objects: name pack files after trailer hash")
-Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
----
-It was reported that bup writes pack files that have a name
-different from what git does, and I think it's quite possibly
-because of this documentation ... it doesn't actually really
-*matter* though, as long as the file is internally consistent
-nothing checks that the name also matches the footer.
-
-You can also take this as a bug report and fix the language in
-some other, perhaps more precise way, if you prefer :-)
-
-v2: correct bup list address, oops
-v3: don't re-indent, update the comment as well
----
- Documentation/git-index-pack.txt | 4 ++--
- pack-write.c                     | 5 ++---
- 2 files changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 9316d9a80b0d..ac74d058e01d 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -104,8 +104,8 @@ This option cannot be used with --stdin.
- NOTES
- -----
- 
--Once the index has been created, the list of object names is sorted
--and the SHA-1 hash of that list is printed to stdout. If --stdin was
-+Once the index has been created, the hash that goes into the name of
-+the pack/idx file is printed to stdout. If --stdin was
- also used then this is prefixed by either "pack\t", or "keep\t" if a
- new .keep file was successfully created. This is useful to remove a
- .keep file used as a lock to prevent the race with 'git repack'
-diff --git a/pack-write.c b/pack-write.c
-index f0017beb9dd4..685d327d800a 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -38,9 +38,8 @@ static int need_large_offset(off_t offset, const struct pack_idx_option *opts)
- }
- 
- /*
-- * On entry *sha1 contains the pack content SHA1 hash, on exit it is
-- * the SHA1 hash of sorted object names. The objects array passed in
-- * will be sorted by SHA1 on exit.
-+ * The *sha1 contains the pack content SHA1 hash.
-+ * The objects array passed in will be sorted by SHA1 on exit.
-  */
- const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects,
- 			   int nr_objects, const struct pack_idx_option *opts,
--- 
-2.26.2
+The first two paragraphs would be sufficient, although the last
+paragraph wouldn't hurt.
 
