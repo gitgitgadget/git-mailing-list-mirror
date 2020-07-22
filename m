@@ -2,185 +2,134 @@ Return-Path: <SRS0=ybwr=BB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0033FC433E0
-	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 18:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14454C433DF
+	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 19:59:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9FD220714
-	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 18:31:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E290B20771
+	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 19:59:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VOl//7s7"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="VDQ9fUW8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732058AbgGVSbA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 14:31:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33068 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726539AbgGVSa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jul 2020 14:30:59 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6369BC0619DC
-        for <git@vger.kernel.org>; Wed, 22 Jul 2020 11:30:59 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id s10so2823272wrw.12
-        for <git@vger.kernel.org>; Wed, 22 Jul 2020 11:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=RwUUO9mqmUDjAr9JhhE0sygDHYniJz3l1U4OlENywIc=;
-        b=VOl//7s76+ucdJdmg6Rna3RGM2jgk2e8UmkWr0bU6hDElR6YBK49nbHRML1yRx4lQ3
-         rR9Hp1xvBg06XKREVfwTIQXaySYHGiTEXDV05HpQhgLUaylcl93gmNXWBq8MfeNiHNkA
-         wGBxZHzGuGM3nh3dO9csv5TrZ4SOohItUM0IJkCUr47IZTQ+zNALk+7cArMBJJqwd+0c
-         xq9mN7wEg0dQGr6lihIu/FKW3oOcPrOD18dq6Y8MAa14xFUgjp7NvcojLvROe4DFBFGa
-         BGrY67XCLqNN/1rmc6tGP0kU5j1vbLAdrb97ts0GGZ4TE1aEI3b9DIIc7H+jEdMMb/3y
-         5g2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=RwUUO9mqmUDjAr9JhhE0sygDHYniJz3l1U4OlENywIc=;
-        b=MiJhc4nBiIa5rGtcwsADsOgitq/88tgEWZs3mWrd2MSGQGH2lv7qGyPqYMuePDcjng
-         lNnBEzDB/EH9SINSxMkl/u2hXgUq2X8G3Gh1NloBFCIdEaTJyEP4WFLomxUv6MxwJIxJ
-         1BJ5EtKUprybfXpaH58K8TpuOtyZ53MSZxIDG9w2rYmdBIwC9+xQyUoe9EvrvJW6m/qx
-         huhsvYLBlIJxeb5fddnCk9CxOx9IRAxAij2JBl5idnP9TbQWbr6Hy26KjnhFE8QB/v14
-         XwWXfok2Arq+dq5QzGOMOHCZY1sK3qim6Bc/kNLfeFafxzlFuRaKVd6GMz5aXyV61lW7
-         FWmQ==
-X-Gm-Message-State: AOAM532O5UcyDvv3JwEuqlIrZr1hDENcrB71RE7svxXaMDk0GkNUgjCt
-        /encBnDpXYaXwh0Parj/Vxh3v9+F
-X-Google-Smtp-Source: ABdhPJxbTsBEofBKSe2UVMXVGUV1dHU7vI2ir2GMHVB+2+sdw/yUCHll/g1X6RKwSupjULHLMtLitg==
-X-Received: by 2002:adf:b30c:: with SMTP id j12mr720526wrd.420.1595442657718;
-        Wed, 22 Jul 2020 11:30:57 -0700 (PDT)
-Received: from [192.168.1.201] (130.20.198.146.dyn.plus.net. [146.198.20.130])
-        by smtp.googlemail.com with ESMTPSA id l18sm825114wrm.52.2020.07.22.11.30.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jul 2020 11:30:57 -0700 (PDT)
-Subject: Re: Possible issue with rebase's --rebase-merges option
-To:     Joel Marshall <joelmdev@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org
-References: <CAK1xKQpUFCkv6fopEykKLxAEoG_Hf_Zz+oRR70mR3pWsN5YDDw@mail.gmail.com>
- <ac3a5871-b009-f84e-d1fe-af4bde1bbabe@gmail.com>
- <CAK1xKQr1_52n5rAhQh2awsb6SkgUYOMWoLichtBRLvtDXRQarQ@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <fc38a32f-91e2-fe49-a7b0-e2e6851271c4@gmail.com>
-Date:   Wed, 22 Jul 2020 19:30:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1726642AbgGVT7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 15:59:12 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58155 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726525AbgGVT7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jul 2020 15:59:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1595447949;
+        bh=/qXttXrNKL1pdLmIMc4pDivZC7vTnEMGVliT4tziJRQ=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=VDQ9fUW8cpcDcVJ6MkQetKcghVCuyfhNajf9p9DE5d7H99rE3cQ/pgADjC6J6ZmHb
+         bkRnmlxYLaxmFokgvceY80RFFa7P6ZohdGF6QjDKAuoSxWesAnc0heJ0I4hcNJdDAq
+         4FsXwI28oLqBhVbEBoi33sq3u/kL6NNW8oCkAQX8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az764.131idnstwpkexlobsyfpxfcyfa.dx.internal.cloudapp.net
+ ([52.160.81.20]) by mail.gmx.com (mrgmx005 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1Mzyya-1kmIaQ38z8-00x1fl; Wed, 22 Jul 2020 21:59:09 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.28.0-rc2
+Date:   Wed, 22 Jul 2020 19:59:05 +0000
+Message-Id: <20200722195905.6540-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.27.0
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-In-Reply-To: <CAK1xKQr1_52n5rAhQh2awsb6SkgUYOMWoLichtBRLvtDXRQarQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Fcc:    Sent
+X-Provags-ID: V03:K1:nWbJpdbzWMTc3peRDnuMeGZ+Wi5z6QLVpDwdNeEFom/4KlI1Pw7
+ R95+Lll8ImSueA6058+CO01BowlDSC0s+HqatjyjFgHQkOAoceSU2asjPE2A1L+B9GVatac
+ Wq9JmrmALvczThPCIHHil2MTu0vrL1NqsJpfgKI9kXAM2rWZAlD2Xxi/RV5Rqwf0A00BgPD
+ SWZYP9ybV4h+NdsP+kjhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1/zwCOh2mu4=:99MHhh2HSXLQxF1NaMjzwT
+ KriX6C0jJvje9rhy8ST60TdYrTg0jR4IRPGRbCTcazTN3iWUISQqBSwtKBOQ0Y9t0AoSon4A5
+ 2ydVTTxLPCL6/j4Ntj7aD2W4II6dbQiiiJkGXK/znEAqioCf+7J26AnEWr1mXSzFYpkbjtyy+
+ grhHPP1lKjSzTkWIChOPvEjWZFWlcpIj5C5gupCqcY2jOzSKgLfTOUMrW+lbwsOWz/UMJlNS0
+ +dRNZRXXxC6StWGrdIW3MUHaNwYODPDok5cR9aneTYyRxsdKYOaFwFyi28wSWv/7pPYmKw4AH
+ dWOBbC9kPZDs+oiHJImVHq/+CNfncCmh3hpw8j6Zc5Ymafq7P+HeEHIC2iws9v1uKdBZQtb/8
+ Rj7weX4WFN0+BMPExAkYSsi8MDuwJriDmIJyKS1xutPlbyo7nBRtG4hGXKHqkC5olGyMgzmH5
+ p1iG+CicySTuN9eYPTmRiaeX2uYroDhxGxS6Hwp0cy/jwgQKxfEjlBbhZp5f2OHy4Ud1LBF45
+ xylFgCU/ULtm+Jan5IEEe6PRTF/b4qo2EskuZLjzQYa2U/KR6vFcDJw64Jg3j0xOp0Ks/qN7I
+ 0SJIiAb8K3QIsG5dwckg0C/23tcDUTcrsyQ6tN9o5C5DvjF+e3ZQOFLbytqJuGgDjR1Ldhx0l
+ swQUs+6jcpeRKYyTafnBj5D8PDK8C+4nlB7enoru7NTpe9f637hZkOJYFg5PMexB+rfh78WX3
+ YN3wGbe2TKyt5wr01VB1HArKB8Y6xxia1BOyZE+z31+P7nm8e+F0lZtCgEb+EqO560xZQwnLE
+ H6IMr6nSPu2h2seOTsS9mj9XYg9s4EYs7umaJeoXiSeEVtQRitB/2AZrUVzKdiuj2KpAyRuGb
+ MzaaeMJDGkEEvXoiyuCevU1FDlU9DCo4LyX0Bt+wCEBpQk8zCOIsKFmoeT3TxDK4YROvVm6zq
+ h2t77FBDkjD0kFozyOyFQNXbea+0eIEYVCft8j1hBfhVZz7GKPluIuFXVXqa5+M7qmT3Q49k+
+ OeKi+unWxijQ52LM+6fyFJrgc6nFoYrnXcKQOT71iRQdOBjYPo9bGFF2s8foMmVmb6LaeAMOG
+ 7fTdLxSaBEEci1ComNEXU/yZc/mlrNMrYH79MXIc6HgmR9Jr9rIz9L2p//kqpmyBqu4cCjGWq
+ p0q1uFKAlUVmaj9/09Sk+aLtHyzyql3Ki8KVW3Zbyf+RipVaOl+ikMa5Pc/IJ+BhIcEMq5ZwI
+ A3Rp3a0EPbqcA7QVrSWNwBmTl1CHDFJs8/qLGyg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Joel
+Dear Git users,
 
-On 22/07/2020 18:09, Joel Marshall wrote:
-> I've attached a couple of screenshots from tortoisegit. The branches
-> are too long to show in their entirety, but this should give you an
-> idea of what I'm talking about. The highlighted commit is the head of
-> the branch that I'm rebasing onto. Interestingly, I just noticed that
-> while --rebase merges reports that it's rebasing 202 commits
-> intitially, upon manually reconciling the first conflict it reports
-> that it is rebasing 183 commits.
+I hereby announce that Git for Windows 2.28.0-rc2 is available from:
 
-Thanks, the rebased topologies are certainly quite different, what is
-the topology before the rebase? Looking at the --rebase-merges result it
-looks like the second parents of merges that are being rebased have
-ancestors in the upstream branch. If that is the case then I think it is
-working as intended.
+    https://github.com/git-for-windows/git/releases/tag/v2.28.0-rc2.windows.1
 
- Are you able to run
+Changes since Git for Windows v2.27.0 (June 1st 2020)
 
-  git log --format=%ad --graph $upstream..HEAD
+New Features
 
-before and after the rebase to check that?
+  * Comes with Git v2.28.0-rc2.
+  * Comes with subversion v1.14.0.
+  * Comes with the designated successor of Git Credential Manager for
+    Windows (GCM for Windows), the cross-platform Git Credential
+    Manager Core. For now, this is opt-in, with the idea of eventually
+    retiring GCM for Windows.
+  * Comes with cURL v7.71.1.
+  * Comes with Perl v5.32.0.
+  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    3.1.6 (including the improvements of Cygwin 3.1.5).
+  * Comes with GNU Privacy Guard v2.2.21.
 
-Best Wishes
+Bug Fixes
 
-Phillip
+  * A typo was fixed in the installer.
+  * The new git pull behavior option now records the fast-forward
+    choice correctly.
+  * In v2.27.0, git svn was broken completely, which has been fixed.
+  * Some Git operations could end up with bogus modified symbolic links
+    (where git status would report changes but git diff would not),
+    which is now fixed.
+  * When reinstalling (or upgrading) Git for Windows, the "Pseudo
+    Console Support" choice is now remembered correctly.
+  * Under certain circumstances, the Git Bash window (MinTTY) would
+    crash frequently, which has been addressed.
+  * When pseudo console support is enabled, the VIM editor sometimes
+    had troubles accepting certain keystrokes, which was fixed.
+  * Due to a bug, it was not possible to disable Pseudo Console support
+    by reinstalling with the checkbox turned off, which has been fixed.
+  * A bug with enabled Pseudo Console support, where git add -i would
+    not quit the file selection mode upon an empty input, has been
+    fixed.
+  * The cleanup mode called "scissors" in git commit now handles CR/LF
+    line endings correctly.
+  * When cloning into an existing directory, under certain
+    circumstances, the core.worktree option was set unnecessarily. This
+    has been fixed.
 
-> On Wed, Jul 22, 2020 at 10:22 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> Hi Joel
->>
->> On 21/07/2020 22:20, Joel Marshall wrote:
->>> Thank you for filling out a Git bug report!
->>> Please answer the following questions to help us understand your issue.
->>>
->>> What did you do before the bug happened? (Steps to reproduce your issue)
->>> This is a difficult one to give proper steps to reproduce. The issue
->>> is with rebase's --rebase-merges flag. We recently switched from using
->>> rebase with the --preserve-merges option to --rebase-merges. Most of
->>> the time the output is the same, but sometimes it is very different.
->>> I'm unable to determine whether this is by design or a bug.
->>
->> --preserve-merges is buggy if you rearrange the commits (this is way
->> --rebase-merges was added), if you're just rebasing without reordering
->> anything then I think the result should be the same though there may be
->> some corner cases I'm not aware of. Are you able to share the topology
->> before rebasing and after with --preserve-merges and --rebase-merges?
->>
->>> What did you expect to happen? (Expected behavior)
->>> Resulting graph after running rebase --rebase-merges is the same as
->>> running rebase --preserve-merges.
->>>
->>> What happened instead? (Actual behavior)
->>> Using --rebase merges tries to pick substantially more commits and
->>> results in merge commits with no parent commit when viewing log in
->>> reverse chronological order.
->>>
->>> What's different between what you expected and what actually happened?
->>> When the issue does occur (it doesn't for all rebases) it results in
->>> two completely different logs and picks commits that are apparently
->>> not part of the branch being rebased. eg, for a branch with 128
->>> commits including merges, --preserve-merges picks 128 commits and the
->>> resulting topology matches the original branch's topology.
->>> --rebase-merges picked 183(?) commits in v2.24 and 202 commits in
->>> v2.27, and in both cases resulted in a very strange topology.
->>
->> That's interesting there were some changes to how empty commits and
->> upstreamed commits are handled between v2.24 and v2.17, without seeing
->> the staring point and the results it's hard to tell what is going on though.
->>
->> Without seeing some examples it's hard to tell if there is a bug here or
->> not though it does sound a bit suspicious.
->>
->>> Anything else you want to add:
->>> Feel free to contact me at joel@tusksoft.com for additional details.
->>
->> You email me directly if there are things you don't want to share on the
->> list
->>
->> Best wishes
->>
->> Phillip
->>
->>> I
->>> would love to understand if this is by design or a legitimate bug.
->>>
->>> Please review the rest of the bug report below.
->>> You can delete any lines you don't wish to share.
->>>
->>>
->>> [System Info]
->>> git version:
->>> git version 2.27.0.windows.1
->>> cpu: x86_64
->>> built from commit: 907ab1011dce9112700498e034b974ba60f8b407
->>> sizeof-long: 4
->>> sizeof-size_t: 8
->>> uname: Windows 10.0 18363
->>> compiler info: gnuc: 10.1
->>> libc info: no libc information available
->>>
->>>
->>> [Enabled Hooks]
->>>
+Git-2.28.0-rc2-64-bit.exe | 847cbe1f10ac1b96be44778861cf8e26806ec48ca335b20f357dd5a7339dfb31
+Git-2.28.0-rc2-32-bit.exe | 75b3bdfbf558b3d9b16297e7dad46cce0fa2783853f1701dbb266a14483d7c6f
+PortableGit-2.28.0-rc2-64-bit.7z.exe | bc06dcaff14b22cfa11ce281a97e2c93291d391e3bc8234c9433b498fe6c96fe
+PortableGit-2.28.0-rc2-32-bit.7z.exe | 6e30d648fd23cffdb2610a52125823c66cb807e612ec4b4856dafe4e81656a8a
+MinGit-2.28.0-rc2-64-bit.zip | ab9aecc81c6a0ce9255f1213ba74aa933f34eb8d4a317706b5f8a8b4175c78df
+MinGit-2.28.0-rc2-32-bit.zip | 939d9bf40f0c0fa9fb7d7664aa9942916b7e9fe9b26c5cfcd14b55c651473a09
+MinGit-2.28.0-rc2-busybox-64-bit.zip | 1c72215e2d2453af243839d21e451c12b090864757f5c0e00e1a9d71d7c03c17
+MinGit-2.28.0-rc2-busybox-32-bit.zip | eac626b7d8d181b78dbd1f85322241b1333fd67286eda5c4acaa14672266d598
+Git-2.28.0-rc2-64-bit.tar.bz2 | b413877a5b6466f3f7f74ec2281ae602fce5a92c6b71d099a85a0259e225b406
+Git-2.28.0-rc2-32-bit.tar.bz2 | 2f72c7d748346cf27b5530eddc07455eb1201658b206005e590a392c17dae2ec
 
+Ciao,
+Johannes
