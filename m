@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CDF4C433E5
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 22:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCB69C433E1
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 22:15:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2310A2065E
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 22:00:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 912A620768
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 22:15:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="c+cCY+EN"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BN3jR9ky"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728089AbgGWWAT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 18:00:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65153 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726697AbgGWWAS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 18:00:18 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A4EE37FBF4;
-        Thu, 23 Jul 2020 18:00:13 -0400 (EDT)
+        id S1726735AbgGWWPa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jul 2020 18:15:30 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61051 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726417AbgGWWPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jul 2020 18:15:30 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E5FA3D52E7;
+        Thu, 23 Jul 2020 18:15:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RyUyoDoASM0kobrGO61FYLvZCSc=; b=c+cCY+
-        ENKjyS8qehRc4LjMcoNpLUbiAUIuvP4q9oxMdZVtv0u5UEP0jpph6Sy+fTd2WJLM
-        oOlnX1imNgsAZ+FwFMjYFSq6/B/61j3ezt4jyndkR0jqKspwGQfWcWoVuB1e90yd
-        c74sMZGs6lLK00fil1AmxlC+OtzQNWP7y//u4=
+        :content-type; s=sasl; bh=H1fop3rszs/IUCDyWgJUYnhCtKg=; b=BN3jR9
+        kyGMkCf+1krWTUYdYf4K9J3eo79Gs5Hb2Xgb0dX8yDLFhNwBe0YTowgnWdIAcf4r
+        uGw1fYIbn0vftLLU7X4AovBonKSerAs2Wsdkfp2LySuq6FWYIEngVVfb6r5cfZEg
+        dHfLP9V1yp71ENuPHrozvvhu2bUiaM6KGFxpU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OGVGrGPzFcNy4AOXmHzz9iCEc6O8EIq2
-        /4s6hqICHDzn3hBi3SOT8xQJJhIAOxE0rhIEjEDIqIddI1Lt5c6kpydbiQoH9j4z
-        uCLU9sLdzS1VPj5IMkU/H+rzCVi7uh85lfy7lKkL1R+oDCDk02Nmu3zwLijHOfGg
-        JD2nhHk3+cg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99CAE7FBF3;
-        Thu, 23 Jul 2020 18:00:13 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=FLOlOfCZ+w5S+Bknd3rrS9zBwevzeYYm
+        Be3xDTIQZ1MMZk1eaJ7p4vLDAdy+hOLkFVN1DXaJWtZYKkzq24Kb1t4gRFVNzPBw
+        /pUXLQ8DdME0pmwIu2TgF3SnBHHOgEEjogD9gYJgC2alSg2MpO+kglu/7lqXVFSQ
+        x/OufCjTcPc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DCD68D52E6;
+        Thu, 23 Jul 2020 18:15:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 147867FBEE;
-        Thu, 23 Jul 2020 18:00:12 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BD380D52E5;
+        Thu, 23 Jul 2020 18:15:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
@@ -55,19 +55,19 @@ Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
         sluongng@gmail.com, jonathantanmy@google.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 10/18] maintenance: add incremental-repack task
+Subject: Re: [PATCH v2 11/18] maintenance: auto-size incremental-repack batch
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
         <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
-        <b6328c210625e1ba98e2065208a2a478c2c64f94.1595527000.git.gitgitgadget@gmail.com>
-Date:   Thu, 23 Jul 2020 15:00:11 -0700
-In-Reply-To: <b6328c210625e1ba98e2065208a2a478c2c64f94.1595527000.git.gitgitgadget@gmail.com>
+        <478c7f1d0b858755c2c4b98605405214910b6f4c.1595527000.git.gitgitgadget@gmail.com>
+Date:   Thu, 23 Jul 2020 15:15:18 -0700
+In-Reply-To: <478c7f1d0b858755c2c4b98605405214910b6f4c.1595527000.git.gitgitgadget@gmail.com>
         (Derrick Stolee via GitGitGadget's message of "Thu, 23 Jul 2020
-        17:56:32 +0000")
-Message-ID: <xmqqeep1q4d0.fsf@gitster.c.googlers.com>
+        17:56:33 +0000")
+Message-ID: <xmqqa6zpq3nt.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E1A57A56-CD2F-11EA-8500-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FEAB0768-CD31-11EA-AE1A-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -75,126 +75,124 @@ X-Mailing-List: git@vger.kernel.org
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> 1. 'git multi-pack-index write' creates a multi-pack-index file if
->    one did not exist, and otherwise will update the multi-pack-index
->    with any new pack-files that appeared since the last write. This
->    is particularly relevant with the background fetch job.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
->    When the multi-pack-index sees two copies of the same object, it
->    stores the offset data into the newer pack-file. This means that
->    some old pack-files could become "unreferenced" which I will use
->    to mean "a pack-file that is in the pack-file list of the
->    multi-pack-index but none of the objects in the multi-pack-index
->    reference a location inside that pack-file."
+> When repacking during the 'incremental-repack' task, we use the
+> --batch-size option in 'git multi-pack-index repack'. The initial setting
+> used --batch-size=0 to repack everything into a single pack-file. This is
+> not sustaintable for a large repository. The amount of work required is
 
-An obvious alternative is to favor the copy in the older pack,
-right?  Is the expectation that over time, most of the objects that
-are relevant would reappear in newer packs, so that eventually by
-favoring the copies in the newer packs, we can retire and remove the
-old pack, keeping only the newer ones?
+sustainable.
 
-But would that assumption hold?  The old packs hold objects that are
-necessary for the older parts of the history, so unless you are
-cauterizing away the old history, these objects in the older packs
-are likely to stay with us longer than those used by the newer parts
-of the history, some of which may not even have been pushed out yet
-and can be rebased away?
-
-> 2. 'git multi-pack-index expire' deletes any unreferenced pack-files
->    and updaes the multi-pack-index to drop those pack-files from the
->    list. This is safe to do as concurrent Git processes will see the
->    multi-pack-index and not open those packs when looking for object
->    contents. (Similar to the 'loose-objects' job, there are some Git
->    commands that open pack-files regardless of the multi-pack-index,
->    but they are rarely used. Further, a user that self-selects to
->    use background operations would likely refrain from using those
->    commands.)
+> also likely to use too many system resources for a background job.
+>
+> Update the 'incremental-repack' task by dynamically computing a
+> --batch-size option based on the current pack-file structure.
 
 OK.
 
-> 3. 'git multi-pack-index repack --bacth-size=<size>' collects a set
->    of pack-files that are listed in the multi-pack-index and creates
->    a new pack-file containing the objects whose offsets are listed
->    by the multi-pack-index to be in those objects. The set of pack-
->    files is selected greedily by sorting the pack-files by modified
->    time and adding a pack-file to the set if its "expected size" is
->    smaller than the batch size until the total expected size of the
->    selected pack-files is at least the batch size. The "expected
->    size" is calculated by taking the size of the pack-file divided
->    by the number of objects in the pack-file and multiplied by the
->    number of objects from the multi-pack-index with offset in that
->    pack-file. The expected size approximats how much data from that
+> The dynamic default size is computed with this idea in mind for a client
+> repository that was cloned from a very large remote: there is likely one
+> "big" pack-file that was created at clone time. Thus, do not try
+> repacking it as it is likely packed efficiently by the server.
+>
+> Instead, we select the second-largest pack-file, and create a batch size
+> that is one larger than that pack-file. If there are three or more
+> pack-files, then this guarantees that at least two will be combined into
+> a new pack-file.
+>
+> Of course, this means that the second-largest pack-file size is likely
+> to grow over time and may eventually surpass the initially-cloned
+> pack-file. Recall that the pack-file batch is selected in a greedy
+> manner: the packs are considered from oldest to newest and are selected
+> if they have size smaller than the batch size until the total selected
+> size is larger than the batch size. Thus, that oldest "clone" pack will
+> be first to repack after the new data creates a pack larger than that.
+>
+> We also want to place some limits on how large these pack-files become,
+> in order to bound the amount of time spent repacking. A maximum
+> batch-size of two gigabytes means that large repositories will never be
+> packed into a single pack-file using this job, but also that repack is
+> rather expensive. This is a trade-off that is valuable to have if the
+> maintenance is being run automatically or in the background. Users who
+> truly want to optimize for space and performance (and are willing to pay
+> the upfront cost of a full repack) can use the 'gc' task to do so.
 
-approximates.
+It might be too late to ask this now, but how does the quality of
+the resulting combined pack ensured, wrt locality and deltification?
 
->    pack-file will contribute to the resulting pack-file size. The
->    intention is that the resulting pack-file will be close in size
->    to the provided batch size.
-
-> +static int maintenance_task_incremental_repack(void)
+> +#define TWO_GIGABYTES (2147483647)
+> +#define UNSET_BATCH_SIZE ((unsigned long)-1)
+> +
+> +static off_t get_auto_pack_size(void)
 > +{
-> +	if (multi_pack_index_write()) {
-> +		error(_("failed to write multi-pack-index"));
-> +		return 1;
+> +	/*
+> +	 * The "auto" value is special: we optimize for
+> +	 * one large pack-file (i.e. from a clone) and
+> +	 * expect the rest to be small and they can be
+> +	 * repacked quickly.
+> +	 *
+> +	 * The strategy we select here is to select a
+> +	 * size that is one more than the second largest
+> +	 * pack-file. This ensures that we will repack
+> +	 * at least two packs if there are three or more
+> +	 * packs.
+> +	 */
+> +	off_t max_size = 0;
+> +	off_t second_largest_size = 0;
+> +	off_t result_size;
+> +	struct packed_git *p;
+> +	struct repository *r = the_repository;
+> +
+> +	reprepare_packed_git(r);
+> +	for (p = get_all_packs(r); p; p = p->next) {
+> +		if (p->pack_size > max_size) {
+> +			second_largest_size = max_size;
+> +			max_size = p->pack_size;
+> +		} else if (p->pack_size > second_largest_size)
+> +			second_largest_size = p->pack_size;
 > +	}
 > +
-> +	if (multi_pack_index_verify()) {
-> +		warning(_("multi-pack-index verify failed after initial write"));
-> +		return rewrite_multi_pack_index();
-> +	}
-> +
-> +	if (multi_pack_index_expire()) {
-> +		error(_("multi-pack-index expire failed"));
-> +		return 1;
-> +	}
-> +
-> +	if (multi_pack_index_verify()) {
-> +		warning(_("multi-pack-index verify failed after expire"));
-> +		return rewrite_multi_pack_index();
-> +	}
-> +	if (multi_pack_index_repack()) {
-> +		error(_("multi-pack-index repack failed"));
-> +		return 1;
-> +	}
+> +	result_size = second_largest_size + 1;
 
-Hmph, I wonder if these warning should come from each helper
-functions that are static to this function anyway.
+We won't worry about this addition wrapping around; I guess we
+cannot do anything intelligent when it happens.
 
-It also makes it easier to reason about this function by eliminating
-the need for having a different pattern only for the verify helper.
-Instead, verify could call rewrite internally when it notices a
-breakage.  I.e.
+> +	/* But limit ourselves to a batch size of 2g */
+> +	if (result_size > TWO_GIGABYTES)
+> +		result_size = TWO_GIGABYTES;
 
-	if (multi_pack_index_write())
-		return 1;
-	if (multi_pack_index_verify("after initial write"))
-		return 1;
-	if (multi_pack_index_exire())
-		return 1;
-	...
+Well, when it happens, we'd cap to 2G, which must be a reasonable
+fallback value, so it would be OK.
 
-Also, it feels odd, compared to our internal API convention, that
-positive non-zero is used as an error here.
-
-> +	return 0;
+> +	return result_size;
 > +}
 > +
->  typedef int maintenance_task_fn(void);
->  
->  struct maintenance_task {
-> @@ -1037,6 +1152,10 @@ static void initialize_tasks(void)
->  	tasks[num_tasks]->fn = maintenance_task_loose_objects;
->  	num_tasks++;
->  
-> +	tasks[num_tasks]->name = "incremental-repack";
-> +	tasks[num_tasks]->fn = maintenance_task_incremental_repack;
-> +	num_tasks++;
+>  static int multi_pack_index_repack(void)
+>  {
+>  	int result;
+>  	struct argv_array cmd = ARGV_ARRAY_INIT;
+> +	struct strbuf batch_arg = STRBUF_INIT;
 > +
->  	tasks[num_tasks]->name = "gc";
->  	tasks[num_tasks]->fn = maintenance_task_gc;
->  	tasks[num_tasks]->enabled = 1;
+>  	argv_array_pushl(&cmd, "multi-pack-index", "repack", NULL);
+>  
+>  	if (opts.quiet)
+>  		argv_array_push(&cmd, "--no-progress");
+>  
+> -	argv_array_push(&cmd, "--batch-size=0");
+> +	strbuf_addf(&batch_arg, "--batch-size=%"PRIuMAX,
+> +		    (uintmax_t)get_auto_pack_size());
+> +	argv_array_push(&cmd, batch_arg.buf);
+>  
+>  	close_object_store(the_repository->objects);
+>  	result = run_command_v_opt(cmd.argv, RUN_GIT_CMD);
+> +	strbuf_release(&batch_arg);
 
-Exactly the same comment as 08/18 about natural/inherent ordering
-applies here as well.
+I think I saw a suggestion to use xstrfmt() with free()  instead of
+the sequence of strbuf_init(), strbuf_addf(), and strbuf_release()
+in a similar but different context.  Perhaps we should follow suit
+here, too?
 
-Thanks.
+
+Thanks.  That's it for today from me.
+
