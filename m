@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB431C433FC
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0604C433E4
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E08B206E3
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7DF24206E3
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kVUcjt6i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gi0lZOrF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730268AbgGWR5A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 13:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53314 "EHLO
+        id S1730272AbgGWR5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jul 2020 13:57:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730248AbgGWR44 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 13:56:56 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0E09C0619DC
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:55 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id q5so6008342wru.6
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:55 -0700 (PDT)
+        with ESMTP id S1730222AbgGWR4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jul 2020 13:56:55 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B57CBC0619DC
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:54 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id 184so6019236wmb.0
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Z6kTm1PJVREFGVitIv2AsZneQRuyQdm7G67H8YL0WrY=;
-        b=kVUcjt6ib5DCljaPd71d2S9LBHLkOtznQGuXs9PO3fzc/fjFKLyi2FBcKO+F+zssGW
-         LUGb7tnDbJFHsWkmEnXN3xE2UjKyVaRfCtW/ycE0d7ellI/CwpdivUO4N8NVcU5KOsKg
-         qDkA5D6YMuNNkDWK3dt7YErSfDiHzzYDc3QuCj7ldrYqs52SjxTg9V2cNL2mQWHiNYDJ
-         mowLUV0vFjbaiCpdPvim/3i/rPiJTIR1W7pri+dDFOwbaNFCJoFXuLfc0tzyrI2+Lew8
-         eurEvyW4+h/wBK89M+KHdLjYrCGnUPCtWZS9nZXIPPNuWiTTF2Dsk9nlcSRtNMElxvFx
-         iE2Q==
+        bh=geCGmK1+y9ASuRDRnml2TDhrv4AHYRy13S19WWdthj4=;
+        b=Gi0lZOrFfCbHWptN3Yu/2cbFmEwSoOTrUeBFgL5J7kQJFqjxppJExCY1Rz4pmIQbnG
+         xqUvvirpAW82FPeI209kbEoGVgmvkLhKxGxw+ZLt5vbmEdwlq3RBOrDLjNlBEEdnYfIl
+         dtxnzcthcFfuXRVTGy+kQso6hAm4GmOban1X3GaX7JKGm2VYlItGmG9wUDfcMeYgiEJe
+         /h0rt0Y9hXM2mAl8VtDcRNgOMlm502PiZPzSb4POtYvnlhTbWakG7HNxAlt1EGgvJsSI
+         pO9dvabWPYv/gvp5vhWOoh07XIbadT0nZHZS1e0P68P3DBHb4yMhn33sFH0hWddbwViA
+         ov9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Z6kTm1PJVREFGVitIv2AsZneQRuyQdm7G67H8YL0WrY=;
-        b=g68NOggOprg7+PZc6kjf8VEg7Rj3UqQ4sKjK9Wo4PW5ZQCFITZ5/2jRmHDZG88GKM8
-         YPEud8aqIB8/Oj4vgj004Kxk9TRi6+vbAWp0U8sFsDeabV+uP5MYhy5LKoDHtqoCsgah
-         nBdp79ec3Xggk98g+wcOHusp3DOlBzd2x/NYrqqgqCW0fk/bV5vIh73mxSXxdNTIiYu1
-         YDn5LNfHOgUeSIPUL3eO4NFQu2vd2JD24tFESeVSu7FpVHEJk4vgJByO4CFsSAO1pPB9
-         w+b1U1A4Nk2uYzmezE3neEazdKJmGolvCDXd/EI6kITHTfftOXBRTewwCvMC3viCSInj
-         eYOw==
-X-Gm-Message-State: AOAM532xGqOM/L9A/zhvCp77wlzrhxPksPAiHb00qOLQvQEJDd4vlyUa
-        XGxFzOpS5cvLmr1joCNcYxRf+CXJ
-X-Google-Smtp-Source: ABdhPJwDVLldbRmcd75v8UlbojYUJGNp6v47KPnz44TZYAlkzWCUdFpKPJyUzqXaraPjzphSMFlD4A==
-X-Received: by 2002:a5d:6cd0:: with SMTP id c16mr5159187wrc.121.1595527014183;
-        Thu, 23 Jul 2020 10:56:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s203sm4465678wms.32.2020.07.23.10.56.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=geCGmK1+y9ASuRDRnml2TDhrv4AHYRy13S19WWdthj4=;
+        b=DnOMZQvHqnvr5bn+Gn/eqsqSdwPgSdInJFGfry5VFZKEtFfHQtDYr1byi0PU/O9xJp
+         3cB2Vms5heKnYH344LCpfOBCLHytciZzdSK8EoNTVVRZxSTnRA1EMnMNwy9BP9ARQwWS
+         3RfP4PBs/98aKR9PRSeGIxlBX9uJp4M0dmTvlraq35VxQKKTfWk/Km0+dea8qPCupzKa
+         dISwRdHHaw3qbgEUst9mu+oQRlKdrXWxApAtiSBxbmmwFSmx6thzcHY92JHcLzq4DzT3
+         HENZbc+Qg9PXNwLsbWkUpetnSYrohQlgci4jwX86ApXfye+0evVGsqvBVDf1ORAAuVik
+         JnZw==
+X-Gm-Message-State: AOAM530olWHiEzpERbbZaJKjp4qNcVVspvqIcOoEvkpyx7A8/QD/hyxp
+        0cFi2uD71UGMpoNIqg3vuIGNhM5k
+X-Google-Smtp-Source: ABdhPJyoyJRi8GaUt8Qo7dGWxNlmRHDnVneXzfRBTr+a5OpiwRiIhp/41bwlFdvy38NDi+goD3xnGA==
+X-Received: by 2002:a1c:ac81:: with SMTP id v123mr4939711wme.159.1595527013224;
         Thu, 23 Jul 2020 10:56:53 -0700 (PDT)
-Message-Id: <dbacc2b76c79bfc874484bc2d1c11084569fd872.1595527000.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u10sm4114790wml.29.2020.07.23.10.56.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jul 2020 10:56:52 -0700 (PDT)
+Message-Id: <a3c64930a0947315f2ee512f9b1a11b806f00186.1595527000.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
         <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Jul 2020 17:56:35 +0000
-Subject: [PATCH v2 13/18] maintenance: use pointers to check --auto
+Date:   Thu, 23 Jul 2020 17:56:34 +0000
+Subject: [PATCH v2 12/18] maintenance: create maintenance.<task>.enabled
+ config
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,116 +85,121 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The 'git maintenance run' command has an '--auto' option. This is used
-by other Git commands such as 'git commit' or 'git fetch' to check if
-maintenance should be run after adding data to the repository.
+Currently, a normal run of "git maintenance run" will only run the 'gc'
+task, as it is the only one enabled. This is mostly for backwards-
+compatible reasons since "git maintenance run --auto" commands replaced
+previous "git gc --auto" commands after some Git processes. Users could
+manually run specific maintenance tasks by calling "git maintenance run
+--task=<task>" directly.
 
-Previously, this --auto option was only used to add the argument to the
-'git gc' command as part of the 'gc' task. We will be expanding the
-other tasks to perform a check to see if they should do work as part of
-the --auto flag, when they are enabled by config.
-
-First, update the 'gc' task to perform the auto check inside the
-maintenance process. This prevents running an extra 'git gc --auto'
-command when not needed. It also shows a model for other tasks.
-
-Second, use the 'auto_condition' function pointer as a signal for
-whether we enable the maintenance task under '--auto'. For instance, we
-do not want to enable the 'fetch' task in '--auto' mode, so that
-function pointer will remain NULL.
-
-Now that we are not automatically calling 'git gc', a test in
-t5514-fetch-multiple.sh must be changed to watch for 'git maintenance'
-instead.
-
-We continue to pass the '--auto' option to the 'git gc' command when
-necessary, because of the gc.autoDetach config option changes behavior.
-Likely, we will want to absorb the daemonizing behavior implied by
-gc.autoDetach as a maintenance.autoDetach config option.
+Allow users to customize which steps are run automatically using config.
+The 'maintenance.<task>.enabled' option then can turn on these other
+tasks (or turn off the 'gc' task).
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c              | 15 +++++++++++++++
- t/t5514-fetch-multiple.sh |  2 +-
- t/t7900-maintenance.sh    |  2 +-
- 3 files changed, 17 insertions(+), 2 deletions(-)
+ Documentation/config.txt             |  2 ++
+ Documentation/config/maintenance.txt |  4 ++++
+ Documentation/git-maintenance.txt    |  6 +++++-
+ builtin/gc.c                         | 13 +++++++++++++
+ t/t7900-maintenance.sh               | 12 ++++++++++++
+ 5 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/config/maintenance.txt
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ef0768b91a..2783b825f9 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -396,6 +396,8 @@ include::config/mailinfo.txt[]
+ 
+ include::config/mailmap.txt[]
+ 
++include::config/maintenance.txt[]
++
+ include::config/man.txt[]
+ 
+ include::config/merge.txt[]
+diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
+new file mode 100644
+index 0000000000..370cbfb42f
+--- /dev/null
++++ b/Documentation/config/maintenance.txt
+@@ -0,0 +1,4 @@
++maintenance.<task>.enabled::
++	This boolean config option controls whether the maintenance task
++	with name `<task>` is run when no `--task` option is specified.
++	By default, only `maintenance.gc.enabled` is true.
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index bda8df4aaa..4a61441bbc 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -30,7 +30,11 @@ SUBCOMMANDS
+ -----------
+ 
+ run::
+-	Run one or more maintenance tasks.
++	Run one or more maintenance tasks. If one or more `--task` options
++	are specified, then those tasks are run in that order. Otherwise,
++	the tasks are determined by which `maintenance.<task>.enabled`
++	config options are true. By default, only `maintenance.gc.enabled`
++	is true.
+ 
+ TASKS
+ -----
 diff --git a/builtin/gc.c b/builtin/gc.c
-index b6dc4b1832..31696a2595 100644
+index 889d97afe7..b6dc4b1832 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -1121,9 +1121,17 @@ static int maintenance_task_incremental_repack(void)
+@@ -1185,6 +1185,7 @@ static int maintenance_run(void)
+ static void initialize_tasks(void)
+ {
+ 	int i;
++	struct strbuf config_name = STRBUF_INIT;
+ 	num_tasks = 0;
  
- typedef int maintenance_task_fn(void);
- 
-+/*
-+ * An auto condition function returns 1 if the task should run
-+ * and 0 if the task should NOT run. See needs_to_gc() for an
-+ * example.
-+ */
-+typedef int maintenance_auto_fn(void);
-+
- struct maintenance_task {
- 	const char *name;
- 	maintenance_task_fn *fn;
-+	maintenance_auto_fn *auto_condition;
- 	int task_order;
- 	unsigned enabled:1,
- 		 selected:1;
-@@ -1175,6 +1183,11 @@ static int maintenance_run(void)
- 		if (!opts.tasks_selected && !tasks[i]->enabled)
- 			continue;
- 
-+		if (opts.auto_flag &&
-+		    (!tasks[i]->auto_condition ||
-+		     !tasks[i]->auto_condition()))
-+			continue;
-+
- 		result = tasks[i]->fn();
- 	}
- 
-@@ -1205,6 +1218,7 @@ static void initialize_tasks(void)
- 
- 	tasks[num_tasks]->name = "gc";
- 	tasks[num_tasks]->fn = maintenance_task_gc;
-+	tasks[num_tasks]->auto_condition = need_to_gc;
- 	tasks[num_tasks]->enabled = 1;
+ 	for (i = 0; i < MAX_NUM_TASKS; i++)
+@@ -1210,6 +1211,18 @@ static void initialize_tasks(void)
+ 	tasks[num_tasks]->name = "commit-graph";
+ 	tasks[num_tasks]->fn = maintenance_task_commit_graph;
  	num_tasks++;
++
++	for (i = 0; i < num_tasks; i++) {
++		int config_value;
++
++		strbuf_setlen(&config_name, 0);
++		strbuf_addf(&config_name, "maintenance.%s.enabled", tasks[i]->name);
++
++		if (!git_config_get_bool(config_name.buf, &config_value))
++			tasks[i]->enabled = config_value;
++	}
++
++	strbuf_release(&config_name);
+ }
  
-@@ -1283,6 +1297,7 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
- 				   builtin_maintenance_options);
- 
- 	opts.quiet = !isatty(2);
-+	gc_config();
- 	initialize_tasks();
- 
- 	argc = parse_options(argc, argv, prefix,
-diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
-index de8e2f1531..bd202ec6f3 100755
---- a/t/t5514-fetch-multiple.sh
-+++ b/t/t5514-fetch-multiple.sh
-@@ -108,7 +108,7 @@ test_expect_success 'git fetch --multiple (two remotes)' '
- 	 GIT_TRACE=1 git fetch --multiple one two 2>trace &&
- 	 git branch -r > output &&
- 	 test_cmp ../expect output &&
--	 grep "built-in: git gc" trace >gc &&
-+	 grep "built-in: git maintenance" trace >gc &&
- 	 test_line_count = 1 gc
- 	)
- '
+ static int task_option_parse(const struct option *opt,
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 3ee51723e0..373b8dbe04 100755
+index ab5c961eb9..3ee51723e0 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -17,7 +17,7 @@ test_expect_success 'run [--auto|--quiet]' '
- 	GIT_TRACE2_EVENT="$(pwd)/run-auto.txt" git maintenance run --auto &&
- 	GIT_TRACE2_EVENT="$(pwd)/run-quiet.txt" git maintenance run --quiet &&
- 	grep ",\"gc\"]" run-no-auto.txt  &&
--	grep ",\"gc\",\"--auto\"" run-auto.txt &&
-+	! grep ",\"gc\",\"--auto\"" run-auto.txt &&
+@@ -21,6 +21,18 @@ test_expect_success 'run [--auto|--quiet]' '
  	grep ",\"gc\",\"--quiet\"" run-quiet.txt
  '
  
++test_expect_success 'maintenance.<task>.enabled' '
++	git config maintenance.gc.enabled false &&
++	git config maintenance.commit-graph.enabled true &&
++	git config maintenance.loose-objects.enabled true &&
++	GIT_TRACE2_EVENT="$(pwd)/run-config.txt" git maintenance run &&
++	! grep ",\"fetch\"" run-config.txt &&
++	! grep ",\"gc\"" run-config.txt &&
++	! grep ",\"multi-pack-index\"" run-config.txt &&
++	grep ",\"commit-graph\"" run-config.txt &&
++	grep ",\"prune-packed\"" run-config.txt
++'
++
+ test_expect_success 'run --task=<task>' '
+ 	GIT_TRACE2_EVENT="$(pwd)/run-commit-graph.txt" git maintenance run --task=commit-graph &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-gc.txt" git maintenance run --task=gc &&
 -- 
 gitgitgadget
 
