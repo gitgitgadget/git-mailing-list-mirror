@@ -2,103 +2,132 @@ Return-Path: <SRS0=AzkS=BC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2CE0C433E0
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 21:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B35FC433E4
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 21:38:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79825207C4
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 21:39:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61B0E206E3
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 21:38:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FwLYQIpU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gE+K7yOm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726697AbgGWVjK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 17:39:10 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63230 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726033AbgGWVjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 17:39:10 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7FE53D4D37;
-        Thu, 23 Jul 2020 17:39:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yMAZX+cDyntTafnWxUxEukw+gl0=; b=FwLYQI
-        pUB2axy4yfmf1H7W9dij0Anyo/fA2Fxnoo2zbtfPXKTDnXpoDb0ihEYqv+RTVOVa
-        JuAHyxEJumALnE8Zde+pIsnsF7EcKCGZot7iU1DM0TX3uF4vJT9LLJ20v6mK8t7u
-        on5jDF+fyTVL7rTeIsD2KbNXuq9OUKbcYq0hg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YBAFkMNIqbVaHUZNGntwtf5hZlhqfGsU
-        ktsKjkRjtCWWXsYOneq6gghpM2Pf1oHw4zSF/CWObGc6JlVs87qaDoEsG5p6haFD
-        I9tmxXnNrRRtEfKRJrGCK/MiHtKTjOhvPB/2DE0hbZF1oRmirbzpvCLf+gWklFpb
-        +0UtLnp14IQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 78B32D4D36;
-        Thu, 23 Jul 2020 17:39:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.231.104.69])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C2745D4D30;
-        Thu, 23 Jul 2020 17:39:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        "B. Stebler" <bono.stebler@gmail.com>, git@vger.kernel.org
-Subject: Re: Improving merge of tricky conflicts
-References: <a0418859-c62e-c207-a1b0-1b1aaf178527@gmail.com>
-        <4df975f0-e4b1-afa1-cac1-f38e6d31a0d8@kdbg.org>
-        <874kpzmhis.fsf@osv.gnss.ru> <xmqqwo2v45hq.fsf@gitster.c.googlers.com>
-        <87tuxzl00h.fsf@osv.gnss.ru>
-        <20200723182648.GC3975154@coredump.intra.peff.net>
-        <87blk6yrlc.fsf@osv.gnss.ru>
-Date:   Thu, 23 Jul 2020 14:39:03 -0700
-In-Reply-To: <87blk6yrlc.fsf@osv.gnss.ru> (Sergey Organov's message of "Thu,
-        23 Jul 2020 22:11:11 +0300")
-Message-ID: <xmqqimedq5c8.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726567AbgGWVi4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jul 2020 17:38:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59558 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726146AbgGWVi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jul 2020 17:38:56 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA159C0619D3
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 14:38:55 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id z18so2940321wrm.12
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 14:38:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7b0gY7BZo1FVmv1FULC5Lr4YJxxFs+EoxJPNikYOEgo=;
+        b=gE+K7yOmR25/vlQ3yjjo9oMuZ2KQdfi5+3jrc/XsukHshV2GosU63+tcNuGrVgDc+v
+         JEt8PylByeKDZd7LjCWifOxxCF577+6NiSjsXNAli7EeEnJ9pmxOqekg4djthLFnKoCe
+         Jn8q2zk+FhmG4r3eockut7YOUrIEocWlOmVeI+MXMD0scG+RhMlJ+wlr1m0cBanpczbd
+         eqzeRPlDA1JnTuuWyzwtoBVSFsdn1VB446l1CW9OEskcvboGqRr7OrHRy3ddIysYlXi+
+         aW4kkzu48v+ofum4u2kZdjfQq3D3SGH3UP0oc+QjXborwDOOfs8b2TFZM9otAV5MZxc1
+         lCGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7b0gY7BZo1FVmv1FULC5Lr4YJxxFs+EoxJPNikYOEgo=;
+        b=tUvTPwRCAg9I6iX1zc0x0qnDk5MJVOvQX4a3D7158FYhmkAYUPiWCoUrFlGtE5fT5s
+         3KcKCndH93dHjCtbQ2oCg5xUhc1ZCUlW5APL5nnwvC6E1mHm0siuUjU2zpj/X7SuK8D4
+         klVcn2gZcRmH3rTLOvL6GWFNm9newgWfbz3RuIy8/wml6DJQcFTMlug/vwupqJCwNlIN
+         OEHaxYqvwVZvgQku8a+7TNKyx+MG+tsUEUddk7L4dbQb0+xfkML03fBf7Ypj6jh3Zs9j
+         4AAMjGRHXU0mtfbRAFqhOHSO3D3jHu18NtemdmlZkrMn7pA69rz7i76nX3oMvSD8hoH1
+         hJng==
+X-Gm-Message-State: AOAM532ZehjTiLRE/TGE21QPV8RgVPEQmVGi4BcvL1+HKnr3/n4XGqqQ
+        DrHJnyd4lRalV7v/6Lff5Bw=
+X-Google-Smtp-Source: ABdhPJxW4g7DD8rjAWbsClwodtMnSQ3qwx2hdJJqrT0/jMVW7d+DNJGYqRiFKVLHLgvss4x+LRnoSQ==
+X-Received: by 2002:a5d:4c82:: with SMTP id z2mr5463944wrs.287.1595540334658;
+        Thu, 23 Jul 2020 14:38:54 -0700 (PDT)
+Received: from localhost.localdomain (62-165-238-20.pool.digikabel.hu. [62.165.238.20])
+        by smtp.gmail.com with ESMTPSA id c136sm4919879wmd.10.2020.07.23.14.38.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 Jul 2020 14:38:53 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2] ci: use absolute PYTHON_PATH in the Linux jobs
+Date:   Thu, 23 Jul 2020 23:38:48 +0200
+Message-Id: <20200723213848.30032-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.28.0.rc2.319.g2e16345e2b
+In-Reply-To: <xmqqsgdk7gkq.fsf@gitster.c.googlers.com>
+References: <xmqqsgdk7gkq.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EEDFB248-CD2C-11EA-B783-843F439F7C89-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+In our test suite, when 'git p4' invokes a Git command as a
+subprocesses, then it should run the 'git' binary we are testing.
+Unfortunately, this is not the case in the 'linux-clang' and
+'linux-gcc' jobs on Travis CI, where 'git p4' runs the system
+'/usr/bin/git' instead.
 
->> You can also do it after "git merge" aborts with conflicts by running:
->>
->>   git checkout --conflict=diff3 my-file
->>
->> but do note that it will check out from the index, overwriting any
->> resolution you've already done in that file.
->
-> Though now it gets really odd "git merge" itself doesn't have this
-> option.
+Travis CI's default Linux image includes 'pyenv', and all Python
+invocations that involve PATH lookup go through 'pyenv', e.g. our
+'PYTHON_PATH=$(which python3)' sets '/opt/pyenv/shims/python3' as
+PYTHON_PATH, which in turn will invoke '/usr/bin/python3'.  Alas, the
+'pyenv' version included in this image is buggy, and prepends the
+directory containing the Python binary to PATH even if that is a
+system directory already in PATH near the end.  Consequently, 'git p4'
+in those jobs ends up with its PATH starting with '/usr/bin', and then
+runs '/usr/bin/git'.
 
-A command line option is cumbersome that you have to type it every
-time, so configuration variable makes 100% more sense than an option
-to "git merge".  
+So use the absolute paths '/usr/bin/python{2,3}' explicitly when
+setting PYTHON_PATH in those Linux jobs to avoid the PATH lookup and
+thus the bogus 'pyenv' from interfering with our 'git p4' tests.
+Don't bother with special-casing Travis CI: while this issue doesn't
+affect the corresponding Linux jobs on GitHub Actions, both CI systems
+use Ubuntu LTS-based images, so we can safely rely on these Python
+paths.
 
-If your merge used the merge (as opposed to diff3) style, and seeing
-that the resulting conflict is not easy to review and you wish you
-used diff3 style instead, it is way too late for any option to "git
-merge" to help you.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
 
-But having an option to "git checkout" lets you move forward from
-that state, so it also makes 100% more sense than an option to "git
-merge".
+Junio, I see that you picked up the first/RFC version and applied it
+on top of v2.26.2.  This patch won't work on v2.26.2, because its 'git
+p4' is not compatible with python3 yet.
 
-So, it is not odd at all.  Just compare between merge and diff3,
-think which one would often help you, configure to use it by default,
-*and* at a rare occasion where the chosen default does not work for
-you, let "checkout" help you.  The thing is, unless you first attempt
-to "git merge", you won't know what shape of conflict you would get,
-so you cannot choose the right conflict style command line option,
-even if one were available.
+ ci/lib.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ci/lib.sh b/ci/lib.sh
+index ff24c547c8..3eefec500d 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -184,9 +184,9 @@ linux-clang|linux-gcc)
+ 	if [ "$jobname" = linux-gcc ]
+ 	then
+ 		export CC=gcc-8
+-		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
++		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
+ 	else
+-		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
++		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python2"
+ 	fi
+ 
+ 	export GIT_TEST_HTTPD=true
+-- 
+2.28.0.rc2.319.g2e16345e2b
+
