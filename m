@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 658F4C43462
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF2BBC43468
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 466282053B
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFAF52053B
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xOSmbPWE"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wxDdUG+h"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387663AbgGWBKd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 21:10:33 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40534 "EHLO
+        id S2387433AbgGWBKk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 21:10:40 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40540 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387647AbgGWBK2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:10:28 -0400
+        by vger.kernel.org with ESMTP id S2387657AbgGWBKd (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:10:33 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 251A260D01
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:09:57 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7495A60AFD
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595466597;
-        bh=uCrnGBdS9Lu9BL/q9uR2rKu9/6DjL6gl4ER0ChIeMFM=;
+        s=default; t=1595466601;
+        bh=pybST+Ml60xM98F42OzVvvCAYKpI2wVMt8HjANV3VuE=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=xOSmbPWEBsd9vFGG1i7XN5lnwDiljBRqmx4tuj3rpAcqtaGl0KTLEiduVxKu7RgiZ
-         +aFb6mWRNfkEH1WHBvQbDaDc6D242vd1Xvqkp5t0LB+OKYRx1LRPrG3aKGJAxTNXyj
-         6Q+GyJdNB34rFVlfeWs3iETORtVhRbd8VRK0YGY8sTUzLjpk+TvlZ7oAMSidMxOGc7
-         4EoronNbD41/GWZhf3i7DBrAhGW3VjBbd1wbomUYoWdKaCow1k+C0GRZN56OexBYsE
-         io2UVWFYOvW26oEkfGiHs45i8s96ry7tBYxdymm7xZLMU8Ce5NiLERFfHVbWSE/FKm
-         SdG7DnaOxJhNHUA7Ux+ZaoaxcIt+xrG86odZBb4nNH59LCcUBxq2WtTKvRPYYA0yZr
-         3QScpymdWN63p+AVHyv8usiy7exa0K17i2iNxOIHh4DINUGJR31FfAtgBpJP99qYQW
-         Cfj8ohMaJ2NfZ7juc8fxbdbbqy95zQr70aAHzD5t2h4ptMEx4ve
+        b=wxDdUG+hqsD3vVRg3wBZP5I6PERjpnBc1cADkjcAWWoZaPgdD6DFgCieKV2TmPDZK
+         GtWPPkSMVno2X1jc75yU1LKE4LzSX/f8R8LQ3A12x0GITcq8JN0B1Jedmifz7tI0sG
+         jDwsJFgoErIkQpQlp/fgMHAioGHGA9WTufkKIRGXxBRm90zPAvEFj4YVTS6keOcOJ7
+         sjCT+d4/xPtbL/G1Ovx6x70ojAlqfHyKC7JrRXKUQLfsmX3c6I5p78uFT+P5mauuUB
+         YglLNmmDEoZQCAj+Ci9VfLWyGdY7cdz5PRmcJ4lf1liXET3bhjxp2m3fF1HiKowGkD
+         agp5r3XhHUJtqk/hvEmNXNjqWLxDXMPLhhNyGGbWtBK9N4dujeMg2ZJjrEMjCyVpvi
+         NVNQANWBQSrN8E/uzv/8tti1iypvNrODIeukLDFBFEn0dDZ21RK1XwomLip0Cf8j3/
+         quOM+PGn66hOlJ5StIfN4F9bhVJNz9zGOX7FpBVQ5I6fzqzE70R
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v3 16/39] t7506: avoid checking for SHA-1-specific constants
-Date:   Thu, 23 Jul 2020 01:09:20 +0000
-Message-Id: <20200723010943.2329634-17-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 27/39] t5308: make test work with SHA-256
+Date:   Thu, 23 Jul 2020 01:09:31 +0000
+Message-Id: <20200723010943.2329634-28-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc1.129.ge9626dbbb9f
 In-Reply-To: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
 References: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
@@ -55,63 +55,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test to sanitize the diffs and strip out object IDs from
-them, as it does for other object IDs, since we are not interested in
-the particular values used.
+This test needs multiple object IDs that have the same first byte.
+Update the pack test code to generate a suitable packed value for
+SHA-256.  Update the test to use this value when using SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t7506-status-submodule.sh | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ t/lib-pack.sh                     |  8 ++++++++
+ t/t5308-pack-detect-duplicates.sh | 20 ++++++++++++--------
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 08629a6e70..3fcb44767f 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -22,6 +22,10 @@ sanitize_output () {
- 	mv output2 output
- }
+diff --git a/t/lib-pack.sh b/t/lib-pack.sh
+index f3463170b3..0c799d53c6 100644
+--- a/t/lib-pack.sh
++++ b/t/lib-pack.sh
+@@ -93,6 +93,14 @@ pack_obj () {
+ 			;;
+ 		esac
+ 		;;
++	# blob containing "\3\326"
++	471819e8c52bf11513f100b2810a8aa0622d5cd3d1c913758a071dd4b3bad8fe)
++		case "$2" in
++		'')
++			printf '\062\170\234\143\276\006\000\000\336\000\332'
++			return
++			;;
++		esac
+ 	esac
  
-+sanitize_diff () {
-+	sed -e "/^index [0-9a-f,]*\.\.[0-9a-f]*/d" "$1"
-+}
+ 	# If it's not a delta, we can convince pack-objects to generate a pack
+diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
+index 6845c1f3c3..693b2411c8 100755
+--- a/t/t5308-pack-detect-duplicates.sh
++++ b/t/t5308-pack-detect-duplicates.sh
+@@ -4,23 +4,27 @@ test_description='handling of duplicate objects in incoming packfiles'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-pack.sh
+ 
+-if ! test_have_prereq SHA1
+-then
+-       skip_all='not using SHA-1 for objects'
+-       test_done
+-fi
++test_expect_success 'setup' '
++	test_oid_cache <<-EOF
++	lo_oid sha1:e68fe8129b546b101aee9510c5328e7f21ca1d18
++	lo_oid sha256:471819e8c52bf11513f100b2810a8aa0622d5cd3d1c913758a071dd4b3bad8fe
 +
++	missing_oid sha1:e69d000000000000000000000000000000000000
++	missing_oid sha256:4720000000000000000000000000000000000000000000000000000000000000
++	EOF
++'
  
- test_expect_success 'setup' '
- 	test_create_repo_with_commit sub &&
-@@ -269,7 +273,6 @@ short_sha1_merge_sub1=$(cd sub1 && git rev-parse --short HEAD)
- short_sha1_merge_sub2=$(cd sub2 && git rev-parse --short HEAD)
- cat >diff_expect <<\EOF
- diff --cc .gitmodules
--index badaa4c,44f999a..0000000
- --- a/.gitmodules
- +++ b/.gitmodules
- @@@ -1,3 -1,3 +1,9 @@@
-@@ -286,7 +289,6 @@ EOF
+ # The sha1s we have in our pack. It's important that these have the same
+ # starting byte, so that they end up in the same fanout section of the index.
+ # That lets us make sure we are exercising the binary search with both sets.
+-LO_SHA1=e68fe8129b546b101aee9510c5328e7f21ca1d18
+-HI_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++LO_SHA1=$(test_oid lo_oid)
++HI_SHA1=$EMPTY_BLOB
  
- cat >diff_submodule_expect <<\EOF
- diff --cc .gitmodules
--index badaa4c,44f999a..0000000
- --- a/.gitmodules
- +++ b/.gitmodules
- @@@ -1,3 -1,3 +1,9 @@@
-@@ -306,7 +308,8 @@ test_expect_success 'diff with merge conflict in .gitmodules' '
- 		cd super &&
- 		git diff >../diff_actual 2>&1
- 	) &&
--	test_cmp diff_expect diff_actual
-+	sanitize_diff diff_actual >diff_sanitized &&
-+	test_cmp diff_expect diff_sanitized
- '
+ # And here's a "missing sha1" which will produce failed lookups. It must also
+ # be in the same fanout section, and should be between the two (so that during
+ # our binary search, we are sure to end up looking at one or the other of the
+ # duplicate runs).
+-MISSING_SHA1='e69d000000000000000000000000000000000000'
++MISSING_SHA1=$(test_oid missing_oid)
  
- test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
-@@ -314,7 +317,8 @@ test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
- 		cd super &&
- 		git diff --submodule >../diff_submodule_actual 2>&1
- 	) &&
--	test_cmp diff_submodule_expect diff_submodule_actual
-+	sanitize_diff diff_submodule_actual >diff_sanitized &&
-+	test_cmp diff_submodule_expect diff_sanitized
- '
- 
- # We'll setup different cases for further testing:
+ # git will never intentionally create packfiles with
+ # duplicate objects, so we have to construct them by hand.
