@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11C19C43466
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA791C43464
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E59F52053B
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B87282053B
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yOjx0wdz"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xWHtx5ow"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387670AbgGWBKi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 21:10:38 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40548 "EHLO
+        id S2387669AbgGWBKh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 21:10:37 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40546 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387665AbgGWBKf (ORCPT
+        by vger.kernel.org with ESMTP id S1733221AbgGWBKf (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:10:35 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AD42061017
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 57AF061012
         for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1595466604;
-        bh=PH9Y9BybEDzEXzhugfvQ0aDzJkU9Be5O4/4VUcENJHU=;
+        bh=9s046Lg3ATkwRo1CInBpkC4zm/IZy1NRAcoTYzhZTno=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=yOjx0wdz665Wwby+M4EUiJ7XqQVvpQ9Med/NM48rLrYlYXXifP8CiE7duzY/Imgqj
-         CqJxhT0xmH5krKDwb0VYkHdw0sP8CPkVR007stDHzvYa5IO6FYvntbWOPJnNcPINdF
-         Rs+HznCBCC7zJkvd9myjWrHfMzC4ncL+Jza1oj3jmucINDcUFeHsrJyFR99DT3d3lG
-         9Kbp/sPH+khH927tUideybMrIslckVGqr9dn7pKlgBNJvEh3jeJr01FsKdP/fC9AmZ
-         9eGcpIdjDCzXBZrL/pFYCdfpcARM8X8ctOhqdwP4VQv4FeaeB4D6lpU9VLgdHmJk3w
-         zfM27nxLGSB+2NCUCHd1niPIZyfGp+MGUv1X7X6rrL2zB5nogL4rbrUwQMgbhiL9iD
-         PYokiWGZRwqlUapyqwPn4c7xsuBUhW1moK/so6RHOmKZ1I+qu3barQycX9OoskIODv
-         F6wBTTJ78Uhw8a/zkeVi9zVceADeZIQ1e/i0xk9zIj+YeM0JMMZ
+        b=xWHtx5owDFZILme+5ssFU8+gk6ch53uY7zUKKYzktriTV2fDAbsyWUf1NPhUN6vhk
+         tVSjwNoTObB763jDHxf2RLA3nRUe9r3XezoV1om5lqAkcrrObOq3dpQOyU1UWjS8D1
+         HHpriUofnzp5OblqHfKqXSOkXJ7//hPBSB5mNdqmbFLSKL/ZGCkQWCuvf+KUm8IIGS
+         eueXPtNB64371kz3RdiyTgFGjx2d7dFcPi1Sfh8YAyZEZLRY/0mbiFf81O2iQVX70+
+         LbI/Ujv+gZXpP1TwmMe32TVHMEyVWxvepea3CPEP3wr5Nk3qHk1WxXO51fOErhAgPo
+         4F42MIgIfttSox0sHeIahd6wycmaLYI73QqUDosFu6+7HfV/pdG+FwmXJu5DcDb4q+
+         6N7GcqOxyPUrerbDTlqgyBeIjBqOcNtWVV+9TS10/tFK/dLLsMVbrmI5VG0PX98cij
+         +hAhYz4U5RnDWUEYHhlx4QHSEsTy15RGrgnNi9EjQBRyxq6FGha
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v3 35/39] t: allow testing different hash algorithms via environment
-Date:   Thu, 23 Jul 2020 01:09:39 +0000
-Message-Id: <20200723010943.2329634-36-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 34/39] t: add test_oid option to select hash algorithm
+Date:   Thu, 23 Jul 2020 01:09:38 +0000
+Message-Id: <20200723010943.2329634-35-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc1.129.ge9626dbbb9f
 In-Reply-To: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
 References: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
@@ -55,44 +55,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To allow developers to run the testsuite with a different algorithm than
-the default, provide an environment variable, GIT_TEST_DEFAULT_HASH, to
-specify the algorithm to use. Compute the fixed constants using
-test_oid. Move the constant initialization down below the point where
-test-lib-functions.sh is loaded so the functions are defined.
+In some tests, we have data files which are written with a particular
+hash algorithm. Instead of keeping two copies of the test files, we can
+keep one, and translate the value on the fly.
+
+In order to do so, we'll need to read both the source algorithm and the
+current algorithm, so add an optional flag to the test_oid helper that
+lets us read look up a value for a specified hash algorithm. This should
+not cause any conflicts with existing tests, since key arguments to
+test_oid are allowed to contains only shell identifier characters.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib-functions.sh | 4 +---
- t/test-lib.sh           | 3 +++
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ t/t0000-basic.sh        | 11 +++++++++++
+ t/test-lib-functions.sh | 12 +++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 2ff176cd5d..47d6b502c2 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -928,6 +928,17 @@ test_expect_success 'test_oid can look up data for SHA-256' '
+ 	test "$hexsz" -eq 64
+ '
+ 
++test_expect_success 'test_oid can look up data a specified algorithm' '
++	rawsz="$(test_oid --hash=sha1 rawsz)" &&
++	hexsz="$(test_oid --hash=sha1 hexsz)" &&
++	test "$rawsz" -eq 20 &&
++	test "$hexsz" -eq 40 &&
++	rawsz="$(test_oid --hash=sha256 rawsz)" &&
++	hexsz="$(test_oid --hash=sha256 hexsz)" &&
++	test "$rawsz" -eq 32 &&
++	test "$hexsz" -eq 64
++'
++
+ test_expect_success 'test_bool_env' '
+ 	(
+ 		sane_unset envvar &&
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index d243ff43f3..8848ad568a 100644
+index 3103be8a32..d243ff43f3 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -1417,9 +1417,7 @@ test_set_hash () {
- 
- # Detect the hash algorithm in use.
- test_detect_hash () {
--	# Currently we only support SHA-1, but in the future this function will
--	# actually detect the algorithm in use.
--	test_hash_algo='sha1'
-+	test_hash_algo="${GIT_TEST_DEFAULT_HASH:-sha1}"
- }
- 
- # Load common hash metadata and common placeholder object IDs for use with
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 618a7c8d5b..307bb2207e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -452,6 +452,9 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
- export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
- export EDITOR
- 
-+GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-sha1}"
-+export GIT_DEFAULT_HASH
+@@ -1468,7 +1468,17 @@ test_oid_cache () {
+ # Look up a per-hash value based on a key ($1).  The value must have been loaded
+ # by test_oid_init or test_oid_cache.
+ test_oid () {
+-	local var="test_oid_${test_hash_algo}_$1" &&
++	local algo="${test_hash_algo}" &&
 +
- # Tests using GIT_TRACE typically don't want <timestamp> <file>:<line> output
- GIT_TRACE_BARE=1
- export GIT_TRACE_BARE
++	case "$1" in
++		--hash=*)
++			algo="${1#--hash=}" &&
++			shift;;
++		*)
++			;;
++	esac &&
++
++	local var="test_oid_${algo}_$1" &&
+ 
+ 	# If the variable is unset, we must be missing an entry for this
+ 	# key-hash pair, so exit with an error.
