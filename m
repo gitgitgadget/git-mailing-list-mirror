@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE4CBC43459
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71131C43463
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 968FD2053B
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 519A220771
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kY4dlREc"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HRy4LctB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387638AbgGWBKX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 21:10:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40490 "EHLO
+        id S2387666AbgGWBKf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 21:10:35 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40532 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387441AbgGWBJz (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:09:55 -0400
+        by vger.kernel.org with ESMTP id S2387645AbgGWBK2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:10:28 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9EC8B60CF4
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:09:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C343660CF8
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595466594;
-        bh=+PqxO8ska++rKIP2kfK1D/tpsnkaFSXfLGOy/Y1ZYlw=;
+        s=default; t=1595466596;
+        bh=bkn6gRdFc3a7Wl1a2vTHql6/IoBndbcv3M9Ug3dmdYw=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=kY4dlREc8574/AGsdtzmcOfwRpUP17YOHG5r5eY7KYb1OhdTy3JnrbKueAtpRnSjs
-         B39UX3hxc/1lah764diQn52vVbcTtRaTRXz8XASoJvAKmottnfDrMZ2rlNysWs9ewk
-         f1tD6hHKqaP2Vs/o5tB78vbYjLwDjO41i8ItNIMVUXDieMqC7EDD1na3ODgK3H0Yec
-         wck3JUtqn75WtyQixlVJTQVj0ZZNDXSEqHwGN6gBEz/165gSy083IAx9++TImUvJxx
-         brSRYAFgsNyJ9bG5C+xv/9dEdsbAFZmlqBu5bXqmZP2uV1yoH4iYMrwQ5FTnEl1cQK
-         Rw6hTf+DxwL1idYML00jfFuX9yKJ1nkst7uyQ0tW5pTc/++cOnDdwU8vcsvBmE3XPp
-         BrL2Wz9n9s55NGCDr+phhxMBUKjWLVIc0n/6Bl1morwa+Eo7IDN3WGDuRIJZSYOWMM
-         XLfxiPed+lpYnqzYTho1oAyN8yz/008FwIVLeAaTCkdw0qNb97v
+        b=HRy4LctBrOw4NKgu92de6EpUZRPLmeKS/KMQfuSM9XXDQCy/lkpiYsWYPWyHvuVeN
+         t8rftwmccMBychBgGUvzb2GijiGuw0mS2q5MW0i+9hre0ep3cRuOz46s79UD0x4AWV
+         vCxFvd/ci/4cT/iz4AMfY/W+Ovlr3XZa1fd7tmIOd+ILTR6LAQCXuKcOTFBdE+vu5R
+         3dXcOmSU6pEsqkZdDohF9n0aCaIkAEWRGU77fZxDld2TozLjNJbrVCEJ7kclFqdl24
+         WRkWBKIAgIXaIIr+hsqC44CM+px8N7efSoiOY6MivLb/uZRecK2ljz6z9yxb7A3h6R
+         8LYMcKqbQbrF3WZVhWs8pJg4BJOYfjxru15S2SnYqKrziBc1O3XC7U3FhfAflRWnqb
+         dLFZjVLDWJjlaZp2YfT7HDm3QTH2Zi5+q6PqvM5dSqXz9bXppAS4aEC5hTGG1Pm12r
+         uWuD9XueG8GyDDfGZ1k0OPVULvmoywSVrShCrbkkr67RrvvJMP9
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v3 09/39] t6501: avoid hard-coded objects
-Date:   Thu, 23 Jul 2020 01:09:13 +0000
-Message-Id: <20200723010943.2329634-10-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 15/39] t7405: make hash size independent
+Date:   Thu, 23 Jul 2020 01:09:19 +0000
+Message-Id: <20200723010943.2329634-16-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc1.129.ge9626dbbb9f
 In-Reply-To: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
 References: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
@@ -55,63 +55,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test contains hard-coded invalid object IDs.  Make it hash size
-independent by generating invalid object IDs using the translation
-tables.  Add a setup target to ensure the output of test_oid_init is
-checked properly.
+Use $ZERO_OID instead of hard-coding a fixed size all-zeros object ID.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t6501-freshen-objects.sh | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ t/t7405-submodule-merge.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t6501-freshen-objects.sh b/t/t6501-freshen-objects.sh
-index f30b4849b6..7416ed5ffe 100755
---- a/t/t6501-freshen-objects.sh
-+++ b/t/t6501-freshen-objects.sh
-@@ -45,6 +45,10 @@ maybe_repack () {
- 	fi
- }
- 
-+test_expect_success 'setup' '
-+	test_oid_init
-+'
-+
- for repack in '' true; do
- 	title=${repack:+repack}
- 	title=${title:-loose}
-@@ -128,9 +132,9 @@ for repack in '' true; do
- done
- 
- test_expect_success 'do not complain about existing broken links (commit)' '
--	cat >broken-commit <<-\EOF &&
--	tree 0000000000000000000000000000000000000001
--	parent 0000000000000000000000000000000000000002
-+	cat >broken-commit <<-EOF &&
-+	tree $(test_oid 001)
-+	parent $(test_oid 002)
- 	author whatever <whatever@example.com> 1234 -0000
- 	committer whatever <whatever@example.com> 1234 -0000
- 
-@@ -143,8 +147,8 @@ test_expect_success 'do not complain about existing broken links (commit)' '
- '
- 
- test_expect_success 'do not complain about existing broken links (tree)' '
--	cat >broken-tree <<-\EOF &&
--	100644 blob 0000000000000000000000000000000000000003	foo
-+	cat >broken-tree <<-EOF &&
-+	100644 blob $(test_oid 003)	foo
- 	EOF
- 	tree=$(git mktree --missing <broken-tree) &&
- 	git gc -q 2>stderr &&
-@@ -153,8 +157,8 @@ test_expect_success 'do not complain about existing broken links (tree)' '
- '
- 
- test_expect_success 'do not complain about existing broken links (tag)' '
--	cat >broken-tag <<-\EOF &&
--	object 0000000000000000000000000000000000000004
-+	cat >broken-tag <<-EOF &&
-+	object $(test_oid 004)
- 	type commit
- 	tag broken
- 	tagger whatever <whatever@example.com> 1234 -0000
+diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
+index aa33978ed2..6a1e5f8232 100755
+--- a/t/t7405-submodule-merge.sh
++++ b/t/t7405-submodule-merge.sh
+@@ -195,7 +195,7 @@ test_expect_success 'git submodule status should display the merge conflict prop
+        url = $TRASH_DIRECTORY/sub
+ EOF
+        cat >expect <<EOF &&
+-U0000000000000000000000000000000000000000 sub
++U$ZERO_OID sub
+ EOF
+        git submodule status > actual &&
+        test_cmp expect actual &&
+@@ -214,7 +214,7 @@ test_expect_success 'git submodule status should display the merge conflict prop
+        url = $TRASH_DIRECTORY/sub
+ EOF
+        cat >expect <<EOF &&
+-U0000000000000000000000000000000000000000 sub
++U$ZERO_OID sub
+ EOF
+        git submodule status > actual &&
+        test_cmp expect actual &&
