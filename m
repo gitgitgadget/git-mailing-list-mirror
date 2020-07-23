@@ -1,135 +1,86 @@
-Return-Path: <SRS0=ybwr=BB=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=AzkS=BC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9559C433E1
-	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 23:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91750C433E0
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9449720825
-	for <git@archiver.kernel.org>; Wed, 22 Jul 2020 23:50:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62B5D20888
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:09:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TEJrcpz4"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FD8XRwDz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733113AbgGVXuG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 19:50:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52427 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728607AbgGVXuG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jul 2020 19:50:06 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A0AA77EB6;
-        Wed, 22 Jul 2020 19:50:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oBZQ0x3RMiapPicd4oPKyg61MHQ=; b=TEJrcp
-        z41ynvIFdWQIHEagf95n/SuPRbHVJSQT5pmCSI0raGmXv6ofM90fYAMl3LY+yaJr
-        tlifHTOq/mAh0YmeNGOzzQrD7a9Sptr2Ko658dCi0Bo/l94uh5V7H7GSMAuZfo/8
-        rGfE3krbw//X8a6PR2OG/UVawtfLtYeHnkXSk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JGxMftVSt8rGyyh333g1I5jK0Wggj2h4
-        bK2ERQHX7zH8eIOyAEqO7PCEZ+oItPZVyi1Evgy2D+4C6fhnO5qtnSCr6CD6C3fh
-        1C912jvrl48yNN4UXLM89oSF7BCNZU5Y2n438LQXz4B3ySGTuHVVL1xFRIgklgwa
-        hyQ5R6dOhlc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 331D677EB3;
-        Wed, 22 Jul 2020 19:50:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1733275AbgGWBJx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 21:09:53 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40482 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728607AbgGWBJw (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:09:52 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B83DA77EB2;
-        Wed, 22 Jul 2020 19:50:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Berg <johannes@sipsolutions.net>
-Cc:     git@vger.kernel.org, bup-list@googlegroups.com,
-        Jamie Wyrick <terrifiedquack80@gmail.com>
-Subject: Re: [PATCH v3] pack-write/docs: update regarding pack naming
-References: <20200722214031.116161-1-johannes@sipsolutions.net>
-Date:   Wed, 22 Jul 2020 16:49:59 -0700
-In-Reply-To: <20200722214031.116161-1-johannes@sipsolutions.net> (Johannes
-        Berg's message of "Wed, 22 Jul 2020 23:40:31 +0200")
-Message-ID: <xmqqk0yv3yag.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DF1E960758
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:09:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1595466592;
+        bh=kzD44krolsMhdpvZfmNLjC7VTRRu/RTNvK14D0Rz7Vo=;
+        h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
+         Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
+         References:Content-Type:Content-Disposition;
+        b=FD8XRwDz4xyLvupTlSX0DwL+SsA6BVzo3hlhrS/2XkxQYhE1mGfsrzzmmsw8S4z1K
+         RMyWU6zoFOG2fHg7d19iecHiP23xLXYSXC7fENLsOJnyuGFOxlTJ7KA2UzzBK8wf4m
+         c0H2B2C9Ne0EMUsOiRndXQsSEj75+mSlZ/nq7G0sgNK7ZwDHFJWwobUMec8nQjUfYR
+         IyHpHnnaaWIi/rmeKvtRKsQlIV62ibDeBUqDBXKX9XvBkzFXUVgMmnKe6QtrceAejI
+         SI6o1cPvit9Fp0Y3w9RFsdqQGwnll0GPms2/dlEVAlQvmqkIChNSSvh9iVZKFGSlQS
+         ojrRqqHx4/jRA0TtVhQjkNeYRD27RHbd5mnMFtIGL5KhjuZz0Arcjm0P62rxz252AF
+         kwc78QOIM9XRHHnDNYp3je1iJM2jdKfw+3VxkX/0VtmpNf+y7J2vi8gpED2UIf9QUs
+         A8kyWQK1sS++usvgx7NgOxaFRfcQDsp1/mUXD/gkkXmu5EEOlnB
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Subject: [PATCH v3 02/39] t1001: use $ZERO_OID
+Date:   Thu, 23 Jul 2020 01:09:06 +0000
+Message-Id: <20200723010943.2329634-3-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.28.0.rc1.129.ge9626dbbb9f
+In-Reply-To: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
+References: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0E626DAC-CC76-11EA-92FF-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Berg <johannes@sipsolutions.net> writes:
+Use $ZERO_OID to make the test hash independent.
 
-> The index-pack documentation explicitly states that the pack
-> name is derived from the sorted list of object names, but
-> since commit 1190a1acf800 ("pack-objects: name pack files
-> after trailer hash") that isn't true anymore.
->
-> Be less explicit in the docs as to what the exact output is,
-> and just say that it's whatever goes into the pack name.
->
-> Also update a comment on write_idx_file() since it no longer
-> modifies the sha1 variable (it's const now anyway), as noted
-> by Junio.
->
-> Fixes: 1190a1acf800 ("pack-objects: name pack files after trailer hash")
-> Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
-> ---
-> It was reported that bup writes pack files that have a name
-> different from what git does, and I think it's quite possibly
-> because of this documentation ... it doesn't actually really
-> *matter* though, as long as the file is internally consistent
-> nothing checks that the name also matches the footer.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ t/t1091-sparse-checkout-builtin.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks.
-
->
-> You can also take this as a bug report and fix the language in
-> some other, perhaps more precise way, if you prefer :-)
->
-> v2: correct bup list address, oops
-> v3: don't re-indent, update the comment as well
-> ---
->  Documentation/git-index-pack.txt | 4 ++--
->  pack-write.c                     | 5 ++---
->  2 files changed, 4 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-> index 9316d9a80b0d..ac74d058e01d 100644
-> --- a/Documentation/git-index-pack.txt
-> +++ b/Documentation/git-index-pack.txt
-> @@ -104,8 +104,8 @@ This option cannot be used with --stdin.
->  NOTES
->  -----
->  
-> -Once the index has been created, the list of object names is sorted
-> -and the SHA-1 hash of that list is printed to stdout. If --stdin was
-> +Once the index has been created, the hash that goes into the name of
-> +the pack/idx file is printed to stdout. If --stdin was
->  also used then this is prefixed by either "pack\t", or "keep\t" if a
->  new .keep file was successfully created. This is useful to remove a
->  .keep file used as a lock to prevent the race with 'git repack'
-> diff --git a/pack-write.c b/pack-write.c
-> index f0017beb9dd4..685d327d800a 100644
-> --- a/pack-write.c
-> +++ b/pack-write.c
-> @@ -38,9 +38,8 @@ static int need_large_offset(off_t offset, const struct pack_idx_option *opts)
->  }
->  
->  /*
-> - * On entry *sha1 contains the pack content SHA1 hash, on exit it is
-> - * the SHA1 hash of sorted object names. The objects array passed in
-> - * will be sorted by SHA1 on exit.
-> + * The *sha1 contains the pack content SHA1 hash.
-> + * The objects array passed in will be sorted by SHA1 on exit.
->   */
->  const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects,
->  			   int nr_objects, const struct pack_idx_option *opts,
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 7cd45fc139..84acfc48b6 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -369,7 +369,7 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with unmerged stat
+ 	git clone repo unmerged &&
+ 
+ 	cat >input <<-EOF &&
+-	0 0000000000000000000000000000000000000000	folder1/a
++	0 $ZERO_OID	folder1/a
+ 	100644 $(git -C unmerged rev-parse HEAD:folder1/a) 1	folder1/a
+ 	EOF
+ 	git -C unmerged update-index --index-info <input &&
+@@ -396,7 +396,7 @@ test_expect_success 'sparse-checkout reapply' '
+ 	echo dirty >tweak/deep/deeper2/a &&
+ 
+ 	cat >input <<-EOF &&
+-	0 0000000000000000000000000000000000000000	folder1/a
++	0 $ZERO_OID	folder1/a
+ 	100644 $(git -C tweak rev-parse HEAD:folder1/a) 1	folder1/a
+ 	EOF
+ 	git -C tweak update-index --index-info <input &&
