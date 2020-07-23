@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70BB4C433FE
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A44AFC43446
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D85C206E3
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 844D0206E3
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:57:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qsr59m+J"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qmuJ+aH1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730281AbgGWR5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 13:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53328 "EHLO
+        id S1730286AbgGWR5I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jul 2020 13:57:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730236AbgGWR46 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 13:56:58 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A198C0619E3
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:58 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id z18so2443480wrm.12
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:58 -0700 (PDT)
+        with ESMTP id S1730257AbgGWR45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jul 2020 13:56:57 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71628C0619E2
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:57 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id a14so6012157wra.5
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZuuyvrOEbYHMb02DAbtMFB0i88wpfAnbSXGTqzJrkUQ=;
-        b=Qsr59m+JpTvgS/SCWJS3GSTc8kRioRRTJhkTeSJNGPFRKydIR/1bpMU4645tXkt8RX
-         +0KjAZ1nN01iNTvp6TpaTDcsYX0mPlSQKox/MQ/fw3ToBiIxe8lib27Cm+f4yv6YA5I4
-         1CGSe2ulDDP6V5WHrR0MGtT2bQhOpYgGmUqj3NCU6NpsTsEC1CdTy2D5fbWz6g7GN2eR
-         upXE6jHXVC8DBrTIoGTAmfhSAYR8W5vtOo/4c5BZjOx3bkUYQ78hRbLZ5P/QAeC5G0vV
-         81G4Rl570MAfqdmC9FDu3FeI7Y3bRCKVefm76HoX1Qr/PyuERXBzy/YK7FNiUWE21D7q
-         eBiw==
+        bh=tN02UvhulprvTzUPsFR91Vc5X1kfR4B2eBxD5sAVaKo=;
+        b=qmuJ+aH1QYlDT0L6vz66tnYUUhKoB23Xwh+qmimc2meg+Crg1EwfaxJMsR702wsCbx
+         +Vlue2xhLgLAu376dIx/4Ciuuss3tH774WL3T36ZVqEl359/kjQHgg9zTw1Y0YyIfu3y
+         475Mj9652MkOzmpVl+zIOBTeOnar0z2+Gyv4HMF2Lx/Sut6dMUlzZuB3Jz/584NwF1v3
+         HjeQORH1VubnEi9VWFIs9GZT/MRZaMY12PyGlv5I21boYX7Xy3qgNzgg1kXHlFdBiSOV
+         Q7W3Cem8Y7TVdlplqb3SpkPOzK8YW2HeI2Kyg9F951JEtVaQP4i8i72QFjkSnGayfd04
+         wCeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZuuyvrOEbYHMb02DAbtMFB0i88wpfAnbSXGTqzJrkUQ=;
-        b=eZ003gNwU5VxOlngKIEaUDe8HBTnU7m74DFSUKIZ+NJYbOa/mH2nPQlGcEqe/nDbd6
-         pU89yHyTClbpfTKLs8I/iuiGluaEGHLcw6FQ/5Tw1fgYLFFsSTOhtB8htd65TTHS3c2i
-         ply5kQvggzzNkljBJ7aQquUrWbgTC/h1PxrZQlrfu8kQMvdaZf21bzUcqvBVKOpgvQqG
-         4m/SgQrNdOLzmH1/+blL/O4PF+qPAJ3sI0U9hb8HCAcyWW8UnyTrpHe8hqiGWsei9tHa
-         MpOtsef6kUtNRWT8Bi4enmNJQ26gVJ+T3MD6XTVDJW02sZ5zCf5x+rZ2X3If1YK2ibxr
-         AciQ==
-X-Gm-Message-State: AOAM5305t1if3qZ4gLpmleft8CcQLLIH87t4V9h1G2aoRNxvVmqF6qsv
-        7Ca32mf8D+fCBGs/mxB3qdUyPDT4
-X-Google-Smtp-Source: ABdhPJzSqa2n8fjJx6lAXLzKOu/c0iKsvjNv31Ebx4spGDP/WrBEhGcXR87BnmQ99Gas0eA/cf+xrA==
-X-Received: by 2002:a5d:6681:: with SMTP id l1mr4809629wru.47.1595527016704;
-        Thu, 23 Jul 2020 10:56:56 -0700 (PDT)
+        bh=tN02UvhulprvTzUPsFR91Vc5X1kfR4B2eBxD5sAVaKo=;
+        b=PzeqGzwAIsuBui1z4YWiWMSbx26sgAH0dWIQWSbi4FfQ00++hK4TZ8eR8psTE0qWs1
+         Rn2de+u1Apsr3mvGVgH97hTvCFolNiwZUARr1g5FH1sJ/mhoV335j8LGNFtoLtRuHTtT
+         W0JS582RbHjnYaCPeeaRMlkIzPV/rf92Dtv94qg8eVSbq/8Zd2nOohsVO2Bxqq5aYkya
+         k8FbpoNZav6lL9mw429WlR9i8SZrBDPHNtggX9pM35u4/dFNHoKob7iJDBehiDWLB8Zp
+         /L8q+qGL91RobjpobhHR9O6ljwzS2wVPIfbzyh32UNpE0TWFGkeZ783mf3v56Ukj5VFD
+         SOkg==
+X-Gm-Message-State: AOAM533m8J5i0q7DHchhur82yLzL1xQhK2gTtO1rEui2+IoD1H7HZJyp
+        sLMszfIGhoX8DD7pZEqSO286/gy3
+X-Google-Smtp-Source: ABdhPJyu4MXJxrW+WPoYhIL+iXR9KySOEwgtBVW+s4itHQnrU+OpjGe2xhD3jVLsZfRqDlosoXwHhw==
+X-Received: by 2002:adf:fac8:: with SMTP id a8mr5084234wrs.368.1595527015962;
+        Thu, 23 Jul 2020 10:56:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t2sm4611325wmb.25.2020.07.23.10.56.56
+        by smtp.gmail.com with ESMTPSA id f15sm4355957wrx.91.2020.07.23.10.56.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jul 2020 10:56:56 -0700 (PDT)
-Message-Id: <3d527cb0dda20a5b89a9a213fbdd4a28586a4e4f.1595527000.git.gitgitgadget@gmail.com>
+        Thu, 23 Jul 2020 10:56:55 -0700 (PDT)
+Message-Id: <42e316ca5851992f29fa2658e38a08ebb7dd3e31.1595527000.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
         <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Jul 2020 17:56:38 +0000
-Subject: [PATCH v2 16/18] maintenance: add incremental-repack auto condition
+Date:   Thu, 23 Jul 2020 17:56:37 +0000
+Subject: [PATCH v2 15/18] maintenance: create auto condition for loose-objects
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,139 +84,127 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The incremental-repack task updates the multi-pack-index by deleting pack-
-files that have been replaced with new packs, then repacking a batch of
-small pack-files into a larger pack-file. This incremental repack is faster
-than rewriting all object data, but is slower than some other
-maintenance activities.
+The loose-objects task deletes loose objects that already exist in a
+pack-file, then place the remaining loose objects into a new pack-file.
+If this step runs all the time, then we risk creating pack-files with
+very few objects with every 'git commit' process. To prevent
+overwhelming the packs directory with small pack-files, place a minimum
+number of objects to justify the task.
 
-The 'maintenance.incremental-repack.auto' config option specifies how many
-pack-files should exist outside of the multi-pack-index before running
-the step. These pack-files could be created by 'git fetch' commands or
-by the loose-objects task. The default value is 10.
-
-Setting the option to zero disables the task with the '--auto' option,
-and a negative value makes the task run every time.
+The 'maintenance.loose-objects.auto' config option specifies a minimum
+number of loose objects to justify the task to run under the '--auto'
+option. This defaults to 100 loose objects. Setting the value to zero
+will prevent the step from running under '--auto' while a negative value
+will force it to run every time.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/maintenance.txt |  9 ++++++++
- builtin/gc.c                         | 31 ++++++++++++++++++++++++++++
- t/t7900-maintenance.sh               | 30 +++++++++++++++++++++++++++
- 3 files changed, 70 insertions(+)
+ Documentation/config/maintenance.txt |  9 +++++++++
+ builtin/gc.c                         | 30 ++++++++++++++++++++++++++++
+ t/t7900-maintenance.sh               | 25 +++++++++++++++++++++++
+ 3 files changed, 64 insertions(+)
 
 diff --git a/Documentation/config/maintenance.txt b/Documentation/config/maintenance.txt
-index a9442dd260..22229e7174 100644
+index 9bd69b9df3..a9442dd260 100644
 --- a/Documentation/config/maintenance.txt
 +++ b/Documentation/config/maintenance.txt
-@@ -21,3 +21,12 @@ maintenance.loose-objects.auto::
- 	positive value implies the command should run when the number of
- 	loose objects is at least the value of `maintenance.loose-objects.auto`.
- 	The default value is 100.
+@@ -12,3 +12,12 @@ maintenance.commit-graph.auto::
+ 	reachable commits that are not in the commit-graph file is at least
+ 	the value of `maintenance.commit-graph.auto`. The default value is
+ 	100.
 +
-+maintenance.incremental-repack.auto::
-+	This integer config option controls how often the `incremental-repack`
-+	task should be run as part of `git maintenance run --auto`. If zero,
-+	then the `incremental-repack` task will not run with the `--auto`
-+	option. A negative value will force the task to run every time.
-+	Otherwise, a positive value implies the command should run when the
-+	number of pack-files not in the multi-pack-index is at least the value
-+	of `maintenance.incremental-repack.auto`. The default value is 10.
++maintenance.loose-objects.auto::
++	This integer config option controls how often the `loose-objects` task
++	should be run as part of `git maintenance run --auto`. If zero, then
++	the `loose-objects` task will not run with the `--auto` option. A
++	negative value will force the task to run every time. Otherwise, a
++	positive value implies the command should run when the number of
++	loose objects is at least the value of `maintenance.loose-objects.auto`.
++	The default value is 100.
 diff --git a/builtin/gc.c b/builtin/gc.c
-index ae59a28203..b040c7d31d 100644
+index 84ad360d17..ae59a28203 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -31,6 +31,7 @@
- #include "remote.h"
- #include "midx.h"
- #include "refs.h"
-+#include "object-store.h"
+@@ -951,6 +951,35 @@ struct write_loose_object_data {
+ 	int batch_size;
+ };
  
- #define FAILED_RUN "failed to run %s"
- 
-@@ -1063,6 +1064,35 @@ static int maintenance_task_loose_objects(void)
- 	return prune_packed() || pack_loose();
- }
- 
-+static int incremental_repack_auto_condition(void)
++static int loose_object_auto_limit = 100;
++
++static int loose_object_count(const struct object_id *oid,
++			       const char *path,
++			       void *data)
 +{
-+	struct packed_git *p;
-+	int enabled;
-+	int incremental_repack_auto_limit = 10;
-+	int count = 0;
-+
-+	if (git_config_get_bool("core.multiPackIndex", &enabled) ||
-+	    !enabled)
-+		return 0;
-+
-+	git_config_get_int("maintenance.incremental-repack.auto",
-+			   &incremental_repack_auto_limit);
-+
-+	if (!incremental_repack_auto_limit)
-+		return 0;
-+	if (incremental_repack_auto_limit < 0)
++	int *count = (int*)data;
++	if (++(*count) >= loose_object_auto_limit)
 +		return 1;
-+
-+	for (p = get_packed_git(the_repository);
-+	     count < incremental_repack_auto_limit && p;
-+	     p = p->next) {
-+		if (!p->multi_pack_index)
-+			count++;
-+	}
-+
-+	return count >= incremental_repack_auto_limit;
++	return 0;
 +}
 +
- static int multi_pack_index_write(void)
- {
- 	int result;
-@@ -1319,6 +1349,7 @@ static void initialize_tasks(void)
++static int loose_object_auto_condition(void)
++{
++	int count = 0;
++
++	git_config_get_int("maintenance.loose-objects.auto",
++			   &loose_object_auto_limit);
++
++	if (!loose_object_auto_limit)
++		return 0;
++	if (loose_object_auto_limit < 0)
++		return 1;
++
++	return for_each_loose_file_in_objdir(the_repository->objects->odb->path,
++					     loose_object_count,
++					     NULL, NULL, &count);
++}
++
+ static int loose_object_exists(const struct object_id *oid,
+ 			       const char *path,
+ 			       void *data)
+@@ -1285,6 +1314,7 @@ static void initialize_tasks(void)
  
- 	tasks[num_tasks]->name = "incremental-repack";
- 	tasks[num_tasks]->fn = maintenance_task_incremental_repack;
-+	tasks[num_tasks]->auto_condition = incremental_repack_auto_condition;
+ 	tasks[num_tasks]->name = "loose-objects";
+ 	tasks[num_tasks]->fn = maintenance_task_loose_objects;
++	tasks[num_tasks]->auto_condition = loose_object_auto_condition;
  	num_tasks++;
  
- 	tasks[num_tasks]->name = "gc";
+ 	tasks[num_tasks]->name = "incremental-repack";
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index e4244d7c3c..0b29674805 100755
+index 373b8dbe04..e4244d7c3c 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -178,4 +178,34 @@ test_expect_success 'incremental-repack task' '
- 	test_line_count = 2 packs-after
+@@ -115,6 +115,31 @@ test_expect_success 'loose-objects task' '
+ 	test_cmp packs-between packs-after
  '
  
-+test_expect_success 'maintenance.incremental-repack.auto' '
++test_expect_success 'maintenance.loose-objects.auto' '
 +	git repack -adk &&
-+	git config core.multiPackIndex true &&
-+	git multi-pack-index write &&
-+	GIT_TRACE2_EVENT=1 git -c maintenance.incremental-repack.auto=1 \
-+		maintenance run --auto --task=incremental-repack >out &&
-+	! grep "\"multi-pack-index\"" out &&
++	GIT_TRACE2_EVENT="$(pwd)/trace-lo1.txt" \
++		git -c maintenance.loose-objects.auto=1 maintenance \
++		run --auto --task=loose-objects &&
++	! grep "\"prune-packed\"" trace-lo1.txt &&
 +	for i in 1 2
 +	do
-+		test_commit A-$i &&
-+		git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
-+		HEAD
-+		^HEAD~1
-+		EOF
-+		GIT_TRACE2_EVENT=$(pwd)/trace-A-$i git \
-+			-c maintenance.incremental-repack.auto=2 \
-+			maintenance run --auto --task=incremental-repack &&
-+		! grep "\"multi-pack-index\"" trace-A-$i &&
-+		test_commit B-$i &&
-+		git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
-+		HEAD
-+		^HEAD~1
-+		EOF
-+		GIT_TRACE2_EVENT=$(pwd)/trace-B-$i git \
-+			-c maintenance.incremental-repack.auto=2 \
-+			maintenance run --auto --task=incremental-repack >out &&
-+		grep "\"multi-pack-index\"" trace-B-$i >/dev/null || return 1
++		printf data-A-$i | git hash-object -t blob --stdin -w &&
++		GIT_TRACE2_EVENT="$(pwd)/trace-loA-$i" \
++			git -c maintenance.loose-objects.auto=2 \
++			maintenance run --auto --task=loose-objects &&
++		! grep "\"prune-packed\"" trace-loA-$i &&
++		printf data-B-$i | git hash-object -t blob --stdin -w &&
++		GIT_TRACE2_EVENT="$(pwd)/trace-loB-$i" \
++			git -c maintenance.loose-objects.auto=2 \
++			maintenance run --auto --task=loose-objects &&
++		grep "\"prune-packed\"" trace-loB-$i &&
++		GIT_TRACE2_EVENT="$(pwd)/trace-loC-$i" \
++			git -c maintenance.loose-objects.auto=2 \
++			maintenance run --auto --task=loose-objects &&
++		grep "\"prune-packed\"" trace-loC-$i || return 1
 +	done
 +'
 +
- test_done
+ test_expect_success 'incremental-repack task' '
+ 	packDir=.git/objects/pack &&
+ 	for i in $(test_seq 1 5)
 -- 
 gitgitgadget
 
