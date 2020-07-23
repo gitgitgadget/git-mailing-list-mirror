@@ -2,113 +2,87 @@ Return-Path: <SRS0=AzkS=BC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22535C433E1
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 22:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00AFBC433E3
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 23:10:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E818520737
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 22:32:03 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dEn19FQh"
+	by mail.kernel.org (Postfix) with ESMTP id CFFB42071A
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 23:10:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727022AbgGWWcD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 18:32:03 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57987 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726608AbgGWWcC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 18:32:02 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 032D8D5431;
-        Thu, 23 Jul 2020 18:32:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=t8BbDVvr2YPc
-        tbfOqNyr9nKPDAc=; b=dEn19FQhhc1/RfVzHsCnGEVC907wF1FaP6vXMfRWAnAi
-        Uwg3d9HGV2mE7q+TUjTZSxc0NaWl9EugVosuUo7z/44K0j/QTi+keE9g/42ljCxl
-        Ht8euZV6nma+gd4ghqkA8czt91ShyiuAQmTdpAjq6tCR4GY3epqWe5Rt5KYw6Cg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mMlklY
-        PId5u96hyBfEx5lSQd3LpWJHYM/4EYROEF9J6o9yn9HKr4hJHbmy4JiwwAagFZOS
-        79WwUJUa5GfkWkuzTFwzl6OLCK3HNz8udPISXImyDbTjAcGo697r2Wxhz6D2XyZ6
-        n1yTD8/OysVC8fXFsF0ARsgIVvLpTGY518yKM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EF031D5430;
-        Thu, 23 Jul 2020 18:32:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 39ABBD542D;
-        Thu, 23 Jul 2020 18:31:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] ci: use absolute PYTHON_PATH in the Linux jobs
-References: <xmqqsgdk7gkq.fsf@gitster.c.googlers.com>
-        <20200723213848.30032-1-szeder.dev@gmail.com>
-Date:   Thu, 23 Jul 2020 15:31:56 -0700
-In-Reply-To: <20200723213848.30032-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Thu, 23 Jul 2020 23:38:48 +0200")
-Message-ID: <xmqqwo2toobn.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726735AbgGWXKI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jul 2020 19:10:08 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55571 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726608AbgGWXKI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jul 2020 19:10:08 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 9so6363040wmj.5
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 16:10:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bL3AcsKJDiHSw7S4BoceLsO9odGTdhpSTCuf8HpDKD8=;
+        b=Frdilb1pXFm0hcqalBktogHNMjPVQL7X/BBoj1g5Ejzcc8rNTklj0YJuql8Zx05Oge
+         ZFHH8L6AddbWQTyAyg5FSwcnZMH2E2S7DwkVC2kNGLljT/xtu1XQP595gsYErHkfWiFd
+         WstG0YxC/Nr81cpoHlqCNBxl3tcg7leTf7yzQ0nI48w60/Lk98ZQsRSCyke1FGbgTe0Z
+         NLrN+4I9hN2a/B+vU7/t4udoJ/QW8PEqSSiPl91EzP6D7/40ujbNNj/oHe1/Ul5gh4ED
+         DMENWcmdc0DgqHdcOZVcY6P1vCzdZhv8qq6tn3oiynPkdiB3xLZKxQJsl0SnZHH1Cf6t
+         KCww==
+X-Gm-Message-State: AOAM531+NSBBlOh6n8uFVk7JqoQG9WbB+aM7JTXuBUks/l8e8GIo9ifu
+        gFbuZkBrJ70JUzEqdgJtMEZHe2q0XZ8neQ04CNc=
+X-Google-Smtp-Source: ABdhPJyccJc12vSPI1H5i5WP36wq0XaFcZv1HR7JWdvIlxtlJR1m9wiOaMo0BaVwe3F18SDd7ZpuHmBYWN391DT5UtM=
+X-Received: by 2002:a1c:3504:: with SMTP id c4mr6023340wma.177.1595545806557;
+ Thu, 23 Jul 2020 16:10:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 51CBA9AA-CD34-11EA-B9E8-843F439F7C89-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
+ <pull.671.v2.git.1595527000.gitgitgadget@gmail.com> <478c7f1d0b858755c2c4b98605405214910b6f4c.1595527000.git.gitgitgadget@gmail.com>
+ <xmqqa6zpq3nt.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqa6zpq3nt.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 23 Jul 2020 19:09:55 -0400
+Message-ID: <CAPig+cRXdrg6ceZV27yjV_jB58iDuMi=54SvtArV1BfxExRgMQ@mail.gmail.com>
+Subject: Re: [PATCH v2 11/18] maintenance: auto-size incremental-repack batch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        steadmon@google.com, Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Doan Tran Cong Danh <congdanhqx@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-
-> In our test suite, when 'git p4' invokes a Git command as a
-> subprocesses, then it should run the 'git' binary we are testing.
-> Unfortunately, this is not the case in the 'linux-clang' and
-> 'linux-gcc' jobs on Travis CI, where 'git p4' runs the system
-> '/usr/bin/git' instead.
+On Thu, Jul 23, 2020 at 6:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > +     struct strbuf batch_arg = STRBUF_INIT;
+> > +
+> > -     argv_array_push(&cmd, "--batch-size=0");
+> > +     strbuf_addf(&batch_arg, "--batch-size=%"PRIuMAX,
+> > +                 (uintmax_t)get_auto_pack_size());
+> > +     argv_array_push(&cmd, batch_arg.buf);
+> >
+> > +     strbuf_release(&batch_arg);
 >
-> Travis CI's default Linux image includes 'pyenv', and all Python
-> invocations that involve PATH lookup go through 'pyenv', e.g. our
-> 'PYTHON_PATH=3D$(which python3)' sets '/opt/pyenv/shims/python3' as
-> PYTHON_PATH, which in turn will invoke '/usr/bin/python3'.  Alas, the
-> 'pyenv' version included in this image is buggy, and prepends the
-> directory containing the Python binary to PATH even if that is a
-> system directory already in PATH near the end.  Consequently, 'git p4'
-> in those jobs ends up with its PATH starting with '/usr/bin', and then
-> runs '/usr/bin/git'.
->
-> So use the absolute paths '/usr/bin/python{2,3}' explicitly when
-> setting PYTHON_PATH in those Linux jobs to avoid the PATH lookup and
-> thus the bogus 'pyenv' from interfering with our 'git p4' tests.
-> Don't bother with special-casing Travis CI: while this issue doesn't
-> affect the corresponding Linux jobs on GitHub Actions, both CI systems
-> use Ubuntu LTS-based images, so we can safely rely on these Python
-> paths.
+> I think I saw a suggestion to use xstrfmt() with free()  instead of
+> the sequence of strbuf_init(), strbuf_addf(), and strbuf_release()
+> in a similar but different context.  Perhaps we should follow suit
+> here, too?
 
-Good.  This does not need to touch pyenv but take advantage of the
-fact that we know where Python 2 and 3 are.  Nice.
+Perhaps I'm missing something obvious, but wouldn't argv_array_pushf()
+be even simpler?
 
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->
-> Junio, I see that you picked up the first/RFC version and applied it
-> on top of v2.26.2.  This patch won't work on v2.26.2, because its 'git
-> p4' is not compatible with python3 yet.
-
-Thanks.  Which means that we do not need to touch maint track (not
-that we'd be merging the SHA-256 topic down to the maint track
-anyway).
-
-Will queue.
+    argv_array_pushf(&cmd, "--batch-size=%"PRIuMAX,
+        (uintmax_t)get_auto_pack_size());
