@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EB5AC433E5
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05D65C433EB
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:56:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E5A3206E3
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:56:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DACD120792
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 17:56:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mZ5jeTrW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="on8oPCtQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730240AbgGWR4y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 13:56:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53290 "EHLO
+        id S1730214AbgGWR4t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jul 2020 13:56:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730222AbgGWR4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 13:56:50 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B70DC0619E2
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:50 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id r2so918474wrs.8
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:50 -0700 (PDT)
+        with ESMTP id S1730176AbgGWR4r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jul 2020 13:56:47 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44247C0619DC
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:47 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id a14so6011761wra.5
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 10:56:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Yvp+ThwhNNGXj4tRo41TmDa3Hns/sGK8I20VbFp0Ap8=;
-        b=mZ5jeTrW9rZR6kEqeOTXpr9fFslESJ1yPBXi82K3THK9FR7B0PySJY06X+vsl3+JS4
-         zSry8UVsGumhi3Ks4Q1Uz5lDJ7jl9onLBMN3y3WHPKoSqcJm2aRdJz3DEieKh+GomnsR
-         PZWQ5kOVxTPlf55hXTmG5oaDB2Mf99ooILVAoVUI7cWWeo5uB1WolPsUJ25m+vSw55+h
-         q/Rsp2mpSqNsdLTSZVYJ6XKjGV50iv64+p4tMhcHCKn4PcLAvct2ejJQ89j0tFMILYp9
-         NuEpR5IVcoz5lsXqzGRtYf8Y7OFGvldlE5K70WfEk8Gy0KkOAWgIPPGH3DkWdXEjy34Y
-         O5Tg==
+        bh=Fp8rJJuXnVVn4Jfilg4dxj67dseptukRejeJaQfpoqM=;
+        b=on8oPCtQ9y1Uxp1nHgFMOduN/7GFHQkYza0H8ATXdHIIMnctnqTAS31y/R1O5KyWuR
+         E+Wri+E912PTAtMcd0Nq90HGXqWDTMFu4eFaQ2ZJj2O4FQJ08fxYfeJSa8y/au3CoXrA
+         7NlzPqRYtTOZUorgAqp1mNoBTj7j52PI18BUGDWQzdcC/MqwTZSvY79bZJi2T3lLUnFS
+         Bezruxencyi6Pe41TrzW3hkUM/l4rOSms1wMLsW2LJXcvtI2uSnIss5gRMXpkbPTnaYC
+         AsoXlPqTnJNhU7BWkmzQlHkvB1XGA4qyu1sE9z02uHX8kOtrac3UIt5cdBzlzHt8ULYw
+         5jwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Yvp+ThwhNNGXj4tRo41TmDa3Hns/sGK8I20VbFp0Ap8=;
-        b=LkYT2D20wHgzTXEtJBCjxqa/VGSEHIIlSU5ibxO802s9Hw0zDlDcLo/T89zfVZoLWg
-         pq+UyPbDvYpKrX+u0fQuzNL0AytPcbnHQOPoHEkqRDr5PoKsnZxpUT1QN0LB8OY3TSlY
-         QJUNNLOqp2SF8ZTvTlW5dZe6pAU6lafMpYAhdlkclKqwdXc+81IW9YrGrlIzI4YSCOhq
-         Znp/+KIsHbRKRJ8ZRQ0SBPkkljZ6akRI1ULuLWN4je/VjjsQ1xmbUWo9A21dzCHX12zY
-         oZLY33ds/Jozaj6JDOHgXghWN5tYJRqBGQSPcU7MPTHIuXP1LaaeJOmYnXYwGy04MMQB
-         HBYA==
-X-Gm-Message-State: AOAM532Ih5aTRy1I3s+qjHF+i6HdwUJ2uVvY1xSaHEuvp6Nm537AhDrK
-        MTAP5vW3XTuHanrXpt9hJfLTvcne
-X-Google-Smtp-Source: ABdhPJyJns398vV2iRuGBhpHEiA7yHtUUX/SuiVHR0qabLomOR6xbPKw+Bwu8hYhQMkKDuvaBboRzQ==
-X-Received: by 2002:adf:db86:: with SMTP id u6mr5248512wri.27.1595527008942;
-        Thu, 23 Jul 2020 10:56:48 -0700 (PDT)
+        bh=Fp8rJJuXnVVn4Jfilg4dxj67dseptukRejeJaQfpoqM=;
+        b=HSQqh8Ek1btlg3N2mUagFzA94cdv0+CUzcHUotsq0ZSL74oRRMQwab5Ln8XcMflyOp
+         R3UlogFf8qiVQWkPnoe3wvUO1lCAE3Eu8iWFBnODViN3EatSJK1FHzOBIVes2SbsHRnP
+         ub4Ikvo9CCQsq2mJ99YuNBVeS7/3twrKDwmhzIJIj5iZQLKPdyFM+Llw9tuYUluWY0f+
+         dO2NA9YlizdlDeo/8Vr2urYdZy+7UalC4cYNK1T+hsKWrDatpKXi/N4gMJ3AMU2Ia5Pa
+         s47FhovQtHOPLidTTIJWwemA0lI6nDUMA2vjPc0O+vqQXkFZ89yLguiWeYKHngvnFnGT
+         I3UQ==
+X-Gm-Message-State: AOAM533imNZ99pklYqpg7+GzRfW9InepA1nrq199sJ2eX2zvSnTRxL0N
+        +/xUEDX5gjXMeFtmO3/dDR3+pyF3
+X-Google-Smtp-Source: ABdhPJx5LhsZMdA4p1cs7l7j9FQX/8P/TO+1A4ybZ6iCrj9BagD/NVVdvRogOb1I5QTt3t7XGbXAmQ==
+X-Received: by 2002:adf:f486:: with SMTP id l6mr337375wro.265.1595527005848;
+        Thu, 23 Jul 2020 10:56:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm4476947wru.38.2020.07.23.10.56.48
+        by smtp.gmail.com with ESMTPSA id w16sm5465697wrg.95.2020.07.23.10.56.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jul 2020 10:56:48 -0700 (PDT)
-Message-Id: <e9260a9c3ffa4791f65a6690112788f681c54a16.1595527000.git.gitgitgadget@gmail.com>
+        Thu, 23 Jul 2020 10:56:45 -0700 (PDT)
+Message-Id: <8e260bccf1a0b6cd799a6bc78798b31ebed8ad7e.1595527000.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
         <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Jul 2020 17:56:29 +0000
-Subject: [PATCH v2 07/18] maintenance: take a lock on the objects directory
+Date:   Thu, 23 Jul 2020 17:56:26 +0000
+Subject: [PATCH v2 04/18] maintenance: initialize task array
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,62 +83,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Performing maintenance on a Git repository involves writing data to the
-.git directory, which is not safe to do with multiple writers attempting
-the same operation. Ensure that only one 'git maintenance' process is
-running at a time by holding a file-based lock. Simply the presence of
-the .git/maintenance.lock file will prevent future maintenance. This
-lock is never committed, since it does not represent meaningful data.
-Instead, it is only a placeholder.
+In anticipation of implementing multiple maintenance tasks inside the
+'maintenance' builtin, use a list of structs to describe the work to be
+done.
 
-If the lock file already exists, then fail silently. This will become
-very important later when we implement the 'fetch' task, as this is our
-stop-gap from creating a recursive process loop between 'git fetch' and
-'git maintenance run'.
+The struct maintenance_task stores the name of the task (as given by a
+future command-line argument) along with a function pointer to its
+implementation and a boolean for whether the step is enabled.
+
+A list of pointers to these structs are initialized with the full list
+of implemented tasks along with a default order. For now, this list only
+contains the "gc" task. This task is also the only task enabled by
+default.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ builtin/gc.c | 39 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index c58dea6fa5..5d99b4b805 100644
+index c8cde28436..c28fb0b16d 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -826,6 +826,25 @@ static int maintenance_run(void)
- {
- 	int i;
- 	int result = 0;
-+	struct lock_file lk;
-+	struct repository *r = the_repository;
-+	char *lock_path = xstrfmt("%s/maintenance", r->objects->odb->path);
+@@ -700,6 +700,8 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++#define MAX_NUM_TASKS 1
 +
-+	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0) {
-+		/*
-+		 * Another maintenance command is running.
-+		 *
-+		 * If --auto was provided, then it is likely due to a
-+		 * recursive process stack. Do not report an error in
-+		 * that case.
-+		 */
-+		if (!opts.auto_flag && !opts.quiet)
-+			error(_("lock file '%s' exists, skipping maintenance"),
-+			      lock_path);
-+		free(lock_path);
-+		return 0;
-+	}
-+	free(lock_path);
- 
- 	if (opts.tasks_selected)
- 		QSORT(tasks, num_tasks, compare_tasks_by_selection);
-@@ -840,6 +859,7 @@ static int maintenance_run(void)
- 		result = tasks[i]->fn();
- 	}
- 
-+	rollback_lock_file(&lk);
+ static const char * const builtin_maintenance_usage[] = {
+ 	N_("git maintenance run [<options>]"),
+ 	NULL
+@@ -729,9 +731,43 @@ static int maintenance_task_gc(void)
  	return result;
  }
  
++typedef int maintenance_task_fn(void);
++
++struct maintenance_task {
++	const char *name;
++	maintenance_task_fn *fn;
++	unsigned enabled:1;
++};
++
++static struct maintenance_task *tasks[MAX_NUM_TASKS];
++static int num_tasks;
++
+ static int maintenance_run(void)
+ {
+-	return maintenance_task_gc();
++	int i;
++	int result = 0;
++
++	for (i = 0; !result && i < num_tasks; i++) {
++		if (!tasks[i]->enabled)
++			continue;
++		result = tasks[i]->fn();
++	}
++
++	return result;
++}
++
++static void initialize_tasks(void)
++{
++	int i;
++	num_tasks = 0;
++
++	for (i = 0; i < MAX_NUM_TASKS; i++)
++		tasks[i] = xcalloc(1, sizeof(struct maintenance_task));
++
++	tasks[num_tasks]->name = "gc";
++	tasks[num_tasks]->fn = maintenance_task_gc;
++	tasks[num_tasks]->enabled = 1;
++	num_tasks++;
+ }
+ 
+ int cmd_maintenance(int argc, const char **argv, const char *prefix)
+@@ -751,6 +787,7 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
+ 				   builtin_maintenance_options);
+ 
+ 	opts.quiet = !isatty(2);
++	initialize_tasks();
+ 
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_maintenance_options,
 -- 
 gitgitgadget
 
