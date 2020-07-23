@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFC28C4345B
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8340C4345C
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0D442053B
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8AA62053B
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="N+Fq2ack"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="s3WxN6ME"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387530AbgGWBJ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 21:09:56 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40486 "EHLO
+        id S2387465AbgGWBJz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 21:09:55 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40490 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1733175AbgGWBJy (ORCPT
+        by vger.kernel.org with ESMTP id S1733147AbgGWBJy (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:09:54 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9C6F760AFD
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:09:52 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 59C3F60758
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595466592;
-        bh=xt7+S0YGkL78M65P52Ea3illT0Bx0Eyn9uNik2bjA/k=;
+        s=default; t=1595466593;
+        bh=YnqhRm5cXPRi/ZkOai5UFwRTufPby2S7+lcAS3bYyKE=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=N+Fq2ackoe1EjjG8a3TVoCZytyISp7+r8K7Q0u6C/Qssam6BbeS7hvUJtPVnB8LJX
-         /cpZJTpBGJct4YMp+9HWeH2cHmCZgYRN1mqyDimshtXZfJW83HZ1h86IWXuouw2R1k
-         1Qb2E4GGnpLvSfwo58fAq2fEkVMQ0kb0g3S8hCcbjTNGsg4uGnM5edjNdPnkowBPob
-         NXll2ilYDjtCslnM0luhkJRDnK5paSs5jRi7Nppbj5g78wzCKZQf5xRzzvvqjKPkll
-         9aIYphESrgCBjCwgoUwc3Z5+87sH/jfL4p0/2hbPpEcsk/ZXGBZyqA19IXq3mz7ot9
-         F+xXk/Urc/sHs6JsanmcwtPHRWeji32rCmXvvCfiDQU2nWwXDKxqqYYfewNpFs7Htc
-         XTnPXW1Ig+nPTb7B7X8/9ajbZo3z5ZsjTbdhA5Age2u5xGuYa3/s6GDykC3bPko731
-         d5Eud815t5uzqZ7pYH/svwUXRwYys0WgbwdbMkgYFveiALzzxiE
+        b=s3WxN6ME5xbE0ZE8aNABYFP+k2hE5NO0G036FfW6780su7KZoJHXCWqgB4Vmi0QMK
+         4z6Z/9xhlh46rmWVt57bRSCiKMnkYAp7HmwUUswfUHG0xfMMYjrBKcwWXU55to1DIR
+         bFxuwFIdNnOm4/S5M8IATQdlzPbqdm7weZRgJgt9gjRxUGMbF5J+MM/TYBkz214d7z
+         6K2hX2Fp9CxdroVcZi+I5JeyExpkS4BMeL6/WEwXGwUwgRAepx027MA/six0/9HSZ6
+         8STAc9gD2Jm3g4sLa3VNmxSzxsaLJpYnruMNfOepmPqBp34zJ2v/DAXzWG1xzaaXR9
+         uheBOKBqgXKsPwldg+VUIBhRj2c1ia/kGaQGm92uGr8AGsdNzQnYsb47VgFKX2Oq0V
+         UWXWj2pfon/QrdghZAlF0ctuS/99YIMrkflJrYefWLIS0zVWwlD0uvwleBpD9DKRVh
+         ZB46vEhUhO3rA62/NZbmyCHmlTgI57fG7qqbjUVkM8fdqtUmTyC
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v3 04/39] t3404: prepare 'short SHA-1 collision' tests for SHA-256
-Date:   Thu, 23 Jul 2020 01:09:08 +0000
-Message-Id: <20200723010943.2329634-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 06/39] t6101: make hash size independent
+Date:   Thu, 23 Jul 2020 01:09:10 +0000
+Message-Id: <20200723010943.2329634-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc1.129.ge9626dbbb9f
 In-Reply-To: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
 References: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
@@ -55,114 +55,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Use $OID_REGEX instead of a hard-coded regular expression.
 
-The idea of the magic value "ac4f2ee" in this test is to make the
-reworded commit `collide2` have the same shortened ID as the commit
-`collide3`.
-
-To port the same idea to the SHA-256 version of Git, we therefore need
-another magic value that causes the same collision, but this time with
-the SHA-256 version of the commit IDs.
-
-In this patch, we add code guarded by `GIT_TEST_FIND_COLLIDER` to do
-exactly that. Essentially, a large number of integers is appended to the
-commit message "collide2" to find such a collision. To make it easier to
-find such a collision, we reduce the number of digits to 4.
-
-The `t/oid-info/oid` file now lists the values found in that way, and
-the test cases are modified to use those values.
-
-As the tests are no longer dependent on SHA-1, we also rename their
-titles to talk about "commit IDs" instead of "SHA-1s".
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3404-rebase-interactive.sh | 50 ++++++++++++++++++++++++++++-------
- 1 file changed, 41 insertions(+), 9 deletions(-)
+ t/t6101-rev-parse-parents.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 4a7d21f898..2fb2c581cb 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -30,6 +30,7 @@ Initial setup:
- . "$TEST_DIRECTORY"/lib-rebase.sh
- 
- test_expect_success 'setup' '
-+	test_oid_init &&
- 	test_commit A file1 &&
- 	test_commit B file1 &&
- 	test_commit C file2 &&
-@@ -1250,7 +1251,7 @@ test_expect_success 'rebase -i error on commits with \ in message' '
- 	test_expect_code 1 grep  "	emp" error
+diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
+index 7683e4a114..7531262a5e 100755
+--- a/t/t6101-rev-parse-parents.sh
++++ b/t/t6101-rev-parse-parents.sh
+@@ -34,7 +34,7 @@ test_expect_success 'setup' '
  '
  
--test_expect_success SHA1 'short SHA-1 setup' '
-+test_expect_success 'short commit ID setup' '
- 	test_when_finished "git checkout master" &&
- 	git checkout --orphan collide &&
- 	git rm -rf . &&
-@@ -1262,23 +1263,54 @@ test_expect_success SHA1 'short SHA-1 setup' '
- 	)
+ test_expect_success 'start is valid' '
+-	git rev-parse start | grep "^[0-9a-f]\{40\}$"
++	git rev-parse start | grep "^$OID_REGEX$"
  '
  
--test_expect_success SHA1 'short SHA-1 collide' '
-+if test -n "$GIT_TEST_FIND_COLLIDER"
-+then
-+	author="$(unset test_tick; test_tick; git var GIT_AUTHOR_IDENT)"
-+	committer="$(unset test_tick; test_tick; git var GIT_COMMITTER_IDENT)"
-+	blob="$(git rev-parse collide2:collide)"
-+	from="$(git rev-parse collide1^0)"
-+	repl="commit refs/heads/collider-&\\n"
-+	repl="${repl}author $author\\ncommitter $committer\\n"
-+	repl="${repl}data <<EOF\\ncollide2 &\\nEOF\\n"
-+	repl="${repl}from $from\\nM 100644 $blob collide\\n"
-+	test_seq 1 32768 | sed "s|.*|$repl|" >script &&
-+	git fast-import <script &&
-+	git pack-refs &&
-+	git for-each-ref >refs &&
-+	grep "^$(test_oid t3404_collision)" <refs >matches &&
-+	cat matches &&
-+	test_line_count -gt 2 matches || {
-+		echo "Could not find a collider" >&2
-+		exit 1
-+	}
-+fi
-+
-+test_expect_success 'short commit ID collide' '
-+	test_oid_cache <<-EOF &&
-+	# collision-related constants
-+	t3404_collision	sha1:6bcd
-+	t3404_collision	sha256:0161
-+	t3404_collider	sha1:ac4f2ee
-+	t3404_collider	sha256:16697
-+	EOF
- 	test_when_finished "reset_rebase && git checkout master" &&
- 	git checkout collide &&
--	colliding_sha1=6bcda37 &&
--	test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
-+	colliding_id=$(test_oid t3404_collision) &&
-+	hexsz=$(test_oid hexsz) &&
-+	test $colliding_id = "$(git rev-parse HEAD | cut -c 1-4)" &&
-+	test_config core.abbrev 4 &&
- 	(
- 		unset test_tick &&
- 		test_tick &&
- 		set_fake_editor &&
--		FAKE_COMMIT_MESSAGE="collide2 ac4f2ee" \
-+		FAKE_COMMIT_MESSAGE="collide2 $(test_oid t3404_collider)" \
- 		FAKE_LINES="reword 1 break 2" git rebase -i HEAD~2 &&
--		test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
--		grep "^pick $colliding_sha1 " \
-+		test $colliding_id = "$(git rev-parse HEAD | cut -c 1-4)" &&
-+		grep "^pick $colliding_id " \
- 			.git/rebase-merge/git-rebase-todo.tmp &&
--		grep "^pick [0-9a-f]\{40\}" \
-+		grep "^pick [0-9a-f]\{$hexsz\}" \
- 			.git/rebase-merge/git-rebase-todo &&
--		grep "^pick [0-9a-f]\{40\}" \
-+		grep "^pick [0-9a-f]\{$hexsz\}" \
- 			.git/rebase-merge/git-rebase-todo.backup &&
- 		git rebase --continue
- 	) &&
+ test_expect_success 'start^0' '
