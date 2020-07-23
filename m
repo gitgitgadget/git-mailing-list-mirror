@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BE3DC433F1
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCCD7C433F2
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BC442080D
-	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC5822080D
+	for <git@archiver.kernel.org>; Thu, 23 Jul 2020 01:10:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KxW3OlNJ"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Whngn3ku"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387614AbgGWBKF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jul 2020 21:10:05 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40498 "EHLO
+        id S2387623AbgGWBKJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jul 2020 21:10:09 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40488 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387578AbgGWBKB (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:10:01 -0400
+        by vger.kernel.org with ESMTP id S2387609AbgGWBKE (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Jul 2020 21:10:04 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4397561012
-        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:10:00 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F1DE361016
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 01:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595466600;
-        bh=UaAP0hIH8vxcehmCkzB++tkC53e5f9DbrGFPfaFhQj0=;
+        s=default; t=1595466604;
+        bh=1L3gAO7sv1YzxX9bAp/mEpkHnmnDzLFbyAEjcGS9fxI=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=KxW3OlNJfvVRSAukAalFdaNXSXLrEpfy/u1klq6vE5LM413jNNeHKAkWzz+ZMhqNv
-         RotAHsXyfCrnN1ss2v82kNikAiY2QbGxkw9peUZLRnyxsAzYQ6C4wWzMXdr4D9JHpl
-         gapYoh7P0gFFwbnabLyERqY4E7jk313xV6izt61Ir8FdEXJcGS1EKtOfBrnERV9e0u
-         Wy4ZmcwIZc2WDxn5XsW5R1kB6NMPYjjL4uBTeBQ/EiG9iE0/CblhxRqXgwFqxpmYT2
-         RNQ2Ul/hmlQBoUMYWr2wiLN5T9asAgG/HhBhGUbC8FDR9l0PqfBy7CnlvjltY7wLX3
-         x0iZDeasvooN7aHr0Nn5cZkyBSi8Hq9Y0+GURYC0ee7zXWQFX/3hf/m9TQhWThbw5I
-         6YigJJkwaL0fsULuvcsh5VUR1XJmCaNp4JAaS98UQ4cuNn4Gqfb8w/U7itaeqAvfr2
-         B9pzItzxnNP3apCrXT1xsQS4+YMOu5IXa85MV64ZCcAmIst0h6J
+        b=Whngn3ku5CQiDojuGfo3V2zMLssEJ+cv4D9AP2P8r17x6Gr4sCFU/NpI3EkSv0KD2
+         b/hrHrkqFkMlVRdEf/9riVIZfRaz74snImutlVhgtBUlHMaFxY3K5VZBRFLvG/qVNm
+         MkjfaOAK6uchBzJTIlk0ppxYqd/6JnwxV0FIr6lzLSrE+8FNC2U/3yY1eXSrDstphy
+         Vr3LRJzDRWIPGLZsK5c2yW60/G1U2b/5/+Q8GL+f4HN0hDLNO1LTpNcl7KUwPpKNQ7
+         vkxUqC1fqySJCefsvHQqyJpD6iY6F93qt4oJ1qe52kHqXHKninp/7UsQdLKkDLnQ+x
+         mIwho80xlhU8y5OX3iwCc+1trTL3nBS1043IoFdizxNz9WqFYJH8qF7H3iVkdKVWy6
+         +onlTudXueq6UhDwcqMamnB9ny4r7BfVc6qzvB9m3aF75Q2uZGzYX2CMPnFhHaTYo7
+         Z/VioFQNRzqiR34Cz64IXQ1PfnQJ4hocufjSTQKo9hzxC2Y0mDu
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [PATCH v3 24/39] t9350: make hash size independent
-Date:   Thu, 23 Jul 2020 01:09:28 +0000
-Message-Id: <20200723010943.2329634-25-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 33/39] Enable SHA-256 support by default
+Date:   Thu, 23 Jul 2020 01:09:37 +0000
+Message-Id: <20200723010943.2329634-34-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc1.129.ge9626dbbb9f
 In-Reply-To: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
 References: <20200723010943.2329634-1-sandals@crustytoothpaste.net>
@@ -55,85 +55,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test checks for several commit object sizes to verify that objects
-are encoded as expected. However, the size of a commit object differs
-between SHA-1 and SHA-256, since each contains a hex representation of
-the tree's object ID. Since these are root commits, compute the size of
-each commit by using a constant plus the size of a single hex object ID.
-
-In addition, use $ZERO_OID instead of a hard-coded object ID.
+Now that the we have a complete SHA-256 implementation in Git, let's
+enable it so people can use it.  Remove the ENABLE_SHA256 define
+constant everywhere it's used.  Add tests for initializing a repository
+with SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9350-fast-export.sh | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ builtin/init-db.c |  5 -----
+ config.mak.dev    |  2 --
+ repository.c      |  4 ----
+ t/t0001-init.sh   | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 29 insertions(+), 11 deletions(-)
 
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 690c90fb82..ba79db6a17 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -7,6 +7,7 @@ test_description='git fast-export'
- . ./test-lib.sh
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index cee64823cb..f70076d38e 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -183,11 +183,6 @@ void initialize_repository_version(int hash_algo)
+ 	char repo_version_string[10];
+ 	int repo_version = GIT_REPO_VERSION;
  
- test_expect_success 'setup' '
-+	test_oid_init &&
+-#ifndef ENABLE_SHA256
+-	if (hash_algo != GIT_HASH_SHA1)
+-		die(_("The hash algorithm %s is not supported in this build."), hash_algos[hash_algo].name);
+-#endif
+-
+ 	if (hash_algo != GIT_HASH_SHA1)
+ 		repo_version = GIT_REPO_VERSION_READ;
  
- 	echo break it > file0 &&
- 	git add file0 &&
-@@ -132,12 +133,12 @@ test_expect_success 'reencoding iso-8859-7' '
- 	sed "s/wer/i18n/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
--		 # The commit object, if not re-encoded, would be 240 bytes.
-+		 # The commit object, if not re-encoded, would be 200 bytes plus hash.
- 		 # Removing the "encoding iso-8859-7\n" header drops 20 bytes.
- 		 # Re-encoding the Pi character from \xF0 (\360) in iso-8859-7
- 		 # to \xCF\x80 (\317\200) in UTF-8 adds a byte.  Check for
- 		 # the expected size.
--		 test 221 -eq "$(git cat-file -s i18n)" &&
-+		 test $(($(test_oid hexsz) + 181)) -eq "$(git cat-file -s i18n)" &&
- 		 # ...and for the expected translation of bytes.
- 		 git cat-file commit i18n >actual &&
- 		 grep $(printf "\317\200") actual &&
-@@ -164,12 +165,12 @@ test_expect_success 'preserving iso-8859-7' '
- 	sed "s/wer/i18n-no-recoding/" iso-8859-7.fi |
- 		(cd new &&
- 		 git fast-import &&
--		 # The commit object, if not re-encoded, is 240 bytes.
-+		 # The commit object, if not re-encoded, is 200 bytes plus hash.
- 		 # Removing the "encoding iso-8859-7\n" header would drops 20
- 		 # bytes.  Re-encoding the Pi character from \xF0 (\360) in
- 		 # iso-8859-7 to \xCF\x80 (\317\200) in UTF-8 adds a byte.
- 		 # Check for the expected size...
--		 test 240 -eq "$(git cat-file -s i18n-no-recoding)" &&
-+		 test $(($(test_oid hexsz) + 200)) -eq "$(git cat-file -s i18n-no-recoding)" &&
- 		 # ...as well as the expected byte.
- 		 git cat-file commit i18n-no-recoding >actual &&
- 		 grep $(printf "\360") actual &&
-@@ -192,7 +193,7 @@ test_expect_success 'encoding preserved if reencoding fails' '
- 		 grep ^encoding actual &&
- 		 # Verify that the commit has the expected size; i.e.
- 		 # that no bytes were re-encoded to a different encoding.
--		 test 252 -eq "$(git cat-file -s i18n-invalid)" &&
-+		 test $(($(test_oid hexsz) + 212)) -eq "$(git cat-file -s i18n-invalid)" &&
- 		 # ...and check for the original special bytes
- 		 grep $(printf "\360") actual &&
- 		 grep $(printf "\377") actual)
-@@ -694,7 +695,7 @@ test_expect_success 'delete ref because entire history excluded' '
- 	git fast-export to-delete ^to-delete >actual &&
- 	cat >expected <<-EOF &&
- 	reset refs/heads/to-delete
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
+diff --git a/config.mak.dev b/config.mak.dev
+index cd4a82a9eb..89b218d11a 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -16,8 +16,6 @@ DEVELOPER_CFLAGS += -Wstrict-prototypes
+ DEVELOPER_CFLAGS += -Wunused
+ DEVELOPER_CFLAGS += -Wvla
  
- 	EOF
- 	test_cmp expected actual
-@@ -704,7 +705,7 @@ test_expect_success 'delete refspec' '
- 	git fast-export --refspec :refs/heads/to-delete >actual &&
- 	cat >expected <<-EOF &&
- 	reset refs/heads/to-delete
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
+-DEVELOPER_CFLAGS += -DENABLE_SHA256
+-
+ ifndef COMPILER_FEATURES
+ COMPILER_FEATURES := $(shell ./detect-compiler $(CC))
+ endif
+diff --git a/repository.c b/repository.c
+index 6f7f6f002b..a4174ddb06 100644
+--- a/repository.c
++++ b/repository.c
+@@ -89,10 +89,6 @@ void repo_set_gitdir(struct repository *repo,
+ void repo_set_hash_algo(struct repository *repo, int hash_algo)
+ {
+ 	repo->hash_algo = &hash_algos[hash_algo];
+-#ifndef ENABLE_SHA256
+-	if (hash_algo != GIT_HASH_SHA1)
+-		die(_("The hash algorithm %s is not supported in this build."), repo->hash_algo->name);
+-#endif
+ }
  
- 	EOF
- 	test_cmp expected actual
+ /*
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 6d2467995e..10ed9d9235 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -441,6 +441,35 @@ test_expect_success 're-init from a linked worktree' '
+ 	)
+ '
+ 
++test_expect_success 'init honors GIT_DEFAULT_HASH' '
++	GIT_DEFAULT_HASH=sha1 git init sha1 &&
++	git -C sha1 rev-parse --show-object-format >actual &&
++	echo sha1 >expected &&
++	test_cmp expected actual &&
++	GIT_DEFAULT_HASH=sha256 git init sha256 &&
++	git -C sha256 rev-parse --show-object-format >actual &&
++	echo sha256 >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'init honors --object-format' '
++	git init --object-format=sha256 explicit &&
++	git -C explicit rev-parse --show-object-format >actual &&
++	echo sha256 >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'extensions.objectFormat is not allowed with repo version 0' '
++	git init --object-format=sha256 explicit-v0 &&
++	git -C explicit-v0 config core.repositoryformatversion 0 &&
++	test_must_fail git -C explicit-v0 rev-parse --show-object-format
++'
++
++test_expect_success 'init rejects attempts to initialize with different hash' '
++	test_must_fail git -C sha1 init --object-format=sha256 &&
++	test_must_fail git -C sha256 init --object-format=sha1
++'
++
+ test_expect_success MINGW 'core.hidedotfiles = false' '
+ 	git config --global core.hidedotfiles false &&
+ 	rm -rf newdir &&
