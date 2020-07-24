@@ -2,122 +2,85 @@ Return-Path: <SRS0=kKTt=BD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 721C5C433E0
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 792C9C433DF
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:48:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E14B206F6
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:47:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qfiSUuq9"
+	by mail.kernel.org (Postfix) with ESMTP id 4E9B9206F6
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726512AbgGXTrF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jul 2020 15:47:05 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55530 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726381AbgGXTrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jul 2020 15:47:05 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 890E2E545F;
-        Fri, 24 Jul 2020 15:47:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8EoLiu3Ty+Sr5Cvjqc4GnfnHvKM=; b=qfiSUu
-        q9s/SFt5yxtjbFdyw8c57pTv9fWdgUFViB9sShnCvAPWc6Yo8zMC9UoD/L/Ju51a
-        6KtWOlrBS29TAvCj9R03m1hdIyhQex1PJF5LVr+jmXeFklaM9JwXc/5MaOkor40+
-        HocrtQ4WkZ4mX6jB9LDJBeElcgndXP4G3mJDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=trkjDUlhXJ2g6+QhuNM5c6SgjQm44u4t
-        f6C+TlkbsKppzV1LCsDiTuqohgxugWgaVQHPj99fp7fBV43h0mmie4DZSsW/LWa4
-        JV+5SDw7IFiLXSfRf4/IEAqePC6Seo39lrP5EC2AL/CIc+MSaO0MWUmonjLIPGCG
-        gDqIbBanmdU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 80941E545E;
-        Fri, 24 Jul 2020 15:47:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C36ECE545B;
-        Fri, 24 Jul 2020 15:47:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 05/18] maintenance: add commit-graph task
-References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
-        <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
-        <04552b1d2ed751a11eb7c50f6898cbc078b552b4.1595527000.git.gitgitgadget@gmail.com>
-        <xmqq4kpyq8wh.fsf@gitster.c.googlers.com>
-        <b0bc5d89-52fa-e0f4-e3af-5eb6c76d312e@gmail.com>
-Date:   Fri, 24 Jul 2020 12:47:00 -0700
-In-Reply-To: <b0bc5d89-52fa-e0f4-e3af-5eb6c76d312e@gmail.com> (Derrick
-        Stolee's message of "Fri, 24 Jul 2020 09:09:25 -0400")
-Message-ID: <xmqqy2n8lmq3.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726573AbgGXTsm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jul 2020 15:48:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37472 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726562AbgGXTsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jul 2020 15:48:42 -0400
+Received: (qmail 24757 invoked by uid 109); 24 Jul 2020 19:48:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Jul 2020 19:48:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26059 invoked by uid 111); 24 Jul 2020 19:48:41 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Jul 2020 15:48:41 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 24 Jul 2020 15:48:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        "B. Stebler" <bono.stebler@gmail.com>, git@vger.kernel.org
+Subject: Re: Improving merge of tricky conflicts
+Message-ID: <20200724194840.GA4013174@coredump.intra.peff.net>
+References: <a0418859-c62e-c207-a1b0-1b1aaf178527@gmail.com>
+ <4df975f0-e4b1-afa1-cac1-f38e6d31a0d8@kdbg.org>
+ <20200722074530.GB3306468@coredump.intra.peff.net>
+ <xmqqmu3r5umr.fsf@gitster.c.googlers.com>
+ <20200723182549.GB3975154@coredump.intra.peff.net>
+ <xmqqk0ytn208.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7179C39C-CDE6-11EA-8C81-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk0ytn208.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Thu, Jul 23, 2020 at 06:19:19PM -0700, Junio C Hamano wrote:
 
-> But you are discussing here how the _behavior_ can change when
-> --auto is specified. And specifically, "git gc --auto" really
-> meant "This is running after a foreground command, so only do
-> work if necessary and do it quickly to minimize blocking time."
->
-> I'd be happy to replace "--auto" with "--quick" in the
-> maintenance builtin.
->
-> This opens up some extra design space for how the individual
-> tasks perform depending on "--quick" being specified or not.
-> My intention was to create tasks that are already in "quick"
-> mode:
->
-> * loose-objects have a maximum batch size.
-> * incremental-repack is capped in size.
-> * commit-graph uses the --split option.
->
-> But this "quick" distinction might be important for some of
-> the tasks we intend to extract from the gc builtin.
+> Unfortunately, there is no ">>>>>>>" shown with this code, as $_
+> seems to get clobbered before the sub returns, so ...
 
-Yup.  To be honest, I came to this topic from a completely different
-direction.  The field name "auto" alone (and no other field name)
-had to have an extra cruft (i.e. "_flag") attached to it, which is
-understandable but ugly.  Then I started thinking if 'auto(matic)'
-is really the right word to describe what we want out of the option,
-and came to the realization that there may be better words.
+Ah yeah, thanks for pointing it out (as you might guess I was mainly
+looking at the diff output to see if it was broken ;) ).
 
-> Since the tasks are frequently running subcommands, returning
-> 0 for success and non-zero for error matches the error codes
-> returned by those subcommands.
+Your suggested fix is probably what I'd do (I really wish perl localized
+$_ automatically when entering new blocks, but I suspect they would
+never do so because of compatibility).
 
-As long as these will _never_ be called from other helper functions
-but from the cmd_foo() top-level and their return values are only
-used directly as the top-level's return value, I do not mind too
-much.
+> >   my $pre = File::Temp->new;
+> >   print $pre @$pre_data;
+> 
+> I am debating myself if I want to see the base version between these
+> two extra diffs.  Perhaps there is no need, as either one of these
+> two extra diffs should be sufficient to see what was in the base
+> version.
 
-But whenever I am writing such a code, I find myself not brave
-enough to make such a bold promise (I saw other people call the
-helpers I wrote in unintended ways and had to adjust the semantics
-of them to accomodate the new callers too many times), so I'd rather
-see the caller do "return !!helper_fn()" to allow helper_fn() to be
-written more naturally (e.g. letting them return error(...)).
+Yeah, I didn't give too much thought to the output, but was afraid of
+making it too long and hard to read. In addition to whether to show the
+base, I also wondered whether we could omit the "---/+++" header for
+each diff. It's mostly boilerplate, and the signal of "hey, this is the
+diff between 'base' and 'ours'" could be done on the "|||||||" line
+(which also could potentially use a different character to be more
+distinct).
 
-Thanks.
+I was also tempted to remove the hunk header since the line numbers are
+fairly useless. But it is possible for the diff to have multiple hunks,
+and you'd still want to show that.
+
+My big challenge now will be remembering to try to use this next time I
+run into a conflict that could be helped by it. :)
+
+-Peff
