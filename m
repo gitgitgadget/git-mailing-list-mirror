@@ -2,128 +2,113 @@ Return-Path: <SRS0=kKTt=BD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50350C433EC
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 16:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A5BBC433E0
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 16:13:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C1D520674
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 16:09:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB36520674
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 16:13:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="daejLxZJ"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="d8MGVww1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728323AbgGXQJj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jul 2020 12:09:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34516 "EHLO
+        id S1726731AbgGXQNN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jul 2020 12:13:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728401AbgGXQJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jul 2020 12:09:25 -0400
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0BE7C0619E4
-        for <git@vger.kernel.org>; Fri, 24 Jul 2020 09:09:25 -0700 (PDT)
-Received: by mail-qt1-x844.google.com with SMTP id e7so7281755qti.1
-        for <git@vger.kernel.org>; Fri, 24 Jul 2020 09:09:25 -0700 (PDT)
+        with ESMTP id S1726636AbgGXQNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jul 2020 12:13:12 -0400
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A90D4C0619D3
+        for <git@vger.kernel.org>; Fri, 24 Jul 2020 09:13:12 -0700 (PDT)
+Received: by mail-qk1-x741.google.com with SMTP id l6so9088310qkc.6
+        for <git@vger.kernel.org>; Fri, 24 Jul 2020 09:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gQ2ZFha2q/iUKAGc5M8JnJg094jZG9H9rPhStL+VG6Q=;
-        b=daejLxZJe1zytOB8Jsll5ARFQG5S4l3C+bRLR5lwaW9ejJbhxO6sDCDPs3oZd6PPIX
-         dzevpuG4ZewMymo10nSQ1SXmlvvQ52cd8y0p6OCWHASQx6MfuMtucU7h2bfTOjGSmyp5
-         IOGgRKi3XVayj2ZI/P0kQWWQFjNgYwr6pwz2VwdfIxP6v/JBsdBOG3p+qcIAr6ygyWVU
-         O3ANE+82yygZyzV2kXTeTIDMN1LUkTgr3LRwCVz2X9JDn0MMcC87mZrvsdr6Q3pumiI0
-         VCOfaCwFtZz5TwvukNf7dGDnJASnRdto9gFErjzvB4wInHuHK3qZYxWOuWm/0WsMC3YG
-         Cq5w==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9ZnUOUMVTpg/VOurdKXhqpWV4Zbg4y+bLjZonCz1kyo=;
+        b=d8MGVww1frIWyGjAPDiHDGik6Fwl0xkG4XoeNaDjsYmU4FcKuW+CsnGkKRikQlk3Fz
+         1EODexsl3BINfzsJEFsZ9X1nLyB3HON0axyQlrXYekDhxN3ZjpX9rUf7Blx+5rUNPOn5
+         Jnt/46JbeT9q1x1Hnm+ESgGVi8sD53eVxdvUfAMVeSfOTQB5iwhTKmwNC59cgHC7L/f6
+         vRlwFXcVUlbJrMn4lIttu+zRrqs/v4HN59MFlANP0992UcklV0zzqwBRCjBWPTZhSG9H
+         d0KPE+DvkC1duTDq1MMQrFAWfKzcr8K2GpEW6KzxrkYNyqbR054lz1UcenRAaFnzfWLY
+         YdKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gQ2ZFha2q/iUKAGc5M8JnJg094jZG9H9rPhStL+VG6Q=;
-        b=f1XsieMzCMs8AjiGwBPJ+OvFxf6faxvyzfIis/F2iJaFVTKOVIufzYDyW6satcMUYo
-         qbGhaeqb08KtqN3/nfy4Va51hUqOoa1lMD/Y1jFUNyy7fES/pyTcWVmP3NFmT4UTxu97
-         1X3cSe5IZvYiU99IYlRAzuHsqwBKsUFIfYY2yEUaqanFkElKuyxtvfz5shv1e3gt5TYe
-         ZtEaZBc1EB13ElcQxBvjQyu4YnTkqH1GoAvSTWI2EDpRrZUYhylZsn+6ySJdJXnLTcG9
-         wuDtEUG2qn86+OarZSSgvQ8n1C1ItAGGtYArErSe+qS8LPxjnNUUz9Eic9Q08BLfnfaD
-         b1ZQ==
-X-Gm-Message-State: AOAM5301gVYq/tGsjooxqRJZ7ZrMYb28u6sDdf/VX4XnflEiagdFkwpy
-        MWSqXvjuBvVDEvANKPLxNpU=
-X-Google-Smtp-Source: ABdhPJywCWRf0/GlBqNMU5g9nk3BsgLUkuOwlrVten0Hrq8uYHdcTnHQYwaW7Ka19FQHL2oBxSnd2g==
-X-Received: by 2002:ac8:47c8:: with SMTP id d8mr9663196qtr.32.1595606964690;
-        Fri, 24 Jul 2020 09:09:24 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:dd66:75cb:8c22:1387? ([2600:1700:e72:80a0:dd66:75cb:8c22:1387])
-        by smtp.gmail.com with ESMTPSA id d196sm4913585qkg.96.2020.07.24.09.09.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Jul 2020 09:09:23 -0700 (PDT)
-Subject: Re: [PATCH v2 11/18] maintenance: auto-size incremental-repack batch
-To:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        steadmon@google.com, Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Doan Tran Cong Danh <congdanhqx@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
- <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
- <478c7f1d0b858755c2c4b98605405214910b6f4c.1595527000.git.gitgitgadget@gmail.com>
- <xmqqa6zpq3nt.fsf@gitster.c.googlers.com>
- <CAPig+cRXdrg6ceZV27yjV_jB58iDuMi=54SvtArV1BfxExRgMQ@mail.gmail.com>
- <xmqqsgdholvy.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ef102be6-132e-17eb-14dd-79239fdfd04b@gmail.com>
-Date:   Fri, 24 Jul 2020 12:09:22 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
- Thunderbird/79.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9ZnUOUMVTpg/VOurdKXhqpWV4Zbg4y+bLjZonCz1kyo=;
+        b=JAF4ITNx3gRW3xc3xsqJXub9r3Daiv4NZSOt3bSN2x8x+4Srx8d0GAIJugLxuFjAwU
+         DM302gfI9j/pMoqcK4aTmuW13D+oxL0nJkfLSliW8YEw64nslTGqE3r9f/XSlCfBSYtR
+         gYLPJSFLInTYdZOmtD8G2S7azpm7twUiyxiLjPLuEr/flhLgt7SNObUmPQpdWPohoNMz
+         Y09InnZJK4+sYjOuozt/sGOwrktcIY4CEbICaeWLKW6alU9iFDuzHUSKayE79YLVrnVd
+         eW7HpOKS8iiR4nM5+XcpPIr5LtVGCheWAdQlnQVAuKetAxR5/XReZ1d8Gyf++DrFB6eD
+         dlcQ==
+X-Gm-Message-State: AOAM532F1dzoH1QiHtoZeht26CiXRz6kQhwCN4dVoaD36tAvlNPnH9WA
+        vt+wCR6t/GMFvzb2VCZxggN29xbochb0tg==
+X-Google-Smtp-Source: ABdhPJx9zQYTdvBfDjcSPHyTfiLXieW3BK/0CTzrb7tFQTn2d8xyq1uUaYMOe3spNpdlDBLL7mJXig==
+X-Received: by 2002:a05:620a:b86:: with SMTP id k6mr10177440qkh.242.1595607191794;
+        Fri, 24 Jul 2020 09:13:11 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:e588:f326:57e3:7769])
+        by smtp.gmail.com with ESMTPSA id y7sm1901094qta.36.2020.07.24.09.13.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2020 09:13:11 -0700 (PDT)
+Date:   Fri, 24 Jul 2020 12:13:09 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matthew Glassman <matthewglassman78@gmail.com>, git@vger.kernel.org
+Subject: Re: Trying to update GIT in Ubuntu 18.04
+Message-ID: <20200724161309.GA13769@syl.lan>
+References: <CAO-dU=fQZ6YVk1rWw_Tc8YT-i_zH7-hw3GATXmf7hwaqqC3j4Q@mail.gmail.com>
+ <xmqqmu3pq5m5.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqsgdholvy.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqmu3pq5m5.fsf@gitster.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/23/2020 7:24 PM, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> 
->> On Thu, Jul 23, 2020 at 6:15 PM Junio C Hamano <gitster@pobox.com> wrote:
->>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>> +     struct strbuf batch_arg = STRBUF_INIT;
->>>> +
->>>> -     argv_array_push(&cmd, "--batch-size=0");
->>>> +     strbuf_addf(&batch_arg, "--batch-size=%"PRIuMAX,
->>>> +                 (uintmax_t)get_auto_pack_size());
->>>> +     argv_array_push(&cmd, batch_arg.buf);
->>>>
->>>> +     strbuf_release(&batch_arg);
->>>
->>> I think I saw a suggestion to use xstrfmt() with free()  instead of
->>> the sequence of strbuf_init(), strbuf_addf(), and strbuf_release()
->>> in a similar but different context.  Perhaps we should follow suit
->>> here, too?
->>
->> Perhaps I'm missing something obvious, but wouldn't argv_array_pushf()
->> be even simpler?
->>
->>     argv_array_pushf(&cmd, "--batch-size=%"PRIuMAX,
->>         (uintmax_t)get_auto_pack_size());
-> 
-> No, it was me who was missing an obvious and better alternative.
+On Thu, Jul 23, 2020 at 02:33:06PM -0700, Junio C Hamano wrote:
+> Matthew Glassman <matthewglassman78@gmail.com> writes:
+>
+> > My git version is listed as 2.17.1.  If I try to just do sudo apt
+> > install git..It will tell me I have the latest version and this is
+> > after running apt update.  I can not get the PPA to work because there
+> > is no GPG Key to input and thus Ubuntu will automatically keep it from
+> > use due to insecurity.  Can you please advise me on how to best update
+> > GIT to the current stable version please.
+>
+> Unless installing from the source is an option, you are at the mercy
+> of your distro packagers.
 
-Today I learned about arv_array_push. Thanks!
+...especially on a long-term support release, like Ubuntu 18.04. I was
+skimming through the changelog for their version of 2.17.1 [1], and I
+was glad to see that all of the recent security fixes that I could think
+of had been backported down to those tracks.
 
--Stolee
+It's good to be on a modern version (and Junio provided some great
+advice about how to build Git from source above), but if the best that
+your distro provides is 2.17.1 with their backports on top, that's
+pretty good, too.
 
+> But it shouldn't be hard if you are on a mainstream platforms (any
+> recent Linux certainly qualifies) to build and install from the
+> source.
+>
+>   https://github.com/git/git/blob/master/INSTALL
+>
+> Using "make --prefix=$HOME/gitstuff install install-doc" and adding
+> "$HOME/gitstuff/bin" early in the $PATH would let you use the one
+> that you built, without uninstalling what came from the distro
+> (typically in /usr/bin).
+
+Thanks,
+Taylor
+
+[1]: http://changelogs.ubuntu.com/changelogs/pool/main/g/git/git_2.17.1-1ubuntu0.7/changelog
