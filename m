@@ -2,179 +2,78 @@ Return-Path: <SRS0=kKTt=BD=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_C,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97E47C433DF
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 00:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D58C433E0
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 00:42:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72A2E206E3
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 00:44:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 366762065F
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 00:42:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cmpwn.com header.i=@cmpwn.com header.b="nSfeRgHs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GKbI1BcA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728353AbgGXAoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 20:44:34 -0400
-Received: from mail.cmpwn.com ([45.56.77.53]:52926 "EHLO mail.cmpwn.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728328AbgGXAoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 20:44:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=cmpwn.com; s=cmpwn;
-        t=1595551473; bh=Vsi25zdh6m7By1UtPW0XbPfaDu0LmrKoydFLV3ww8x0=;
-        h=From:To:Cc:Subject:Date;
-        b=nSfeRgHsyzRsL9LpUzvLST3BdMdwEG32dVCoZEFTmbNI/CeYoJMgsy6B8QpjJC/8m
-         p5VdxlSSbb25oAxNVAXeu/Ai44Bn9VPmv4P/fCZ4rH1oQpfcIMkoAZSCFTkBLnm7Km
-         AX7086mHglbtEOeiJMdjO5QGe3mrTRru36kAGMjI=
-From:   Drew DeVault <sir@cmpwn.com>
-To:     "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>, "Jeff King" <peff@peff.net>
-Subject: [PATCH v3] git-send-email: die if sendmail.* config is set
-Date:   Thu, 23 Jul 2020 20:44:32 -0400
-Message-Id: <20200724004432.185167-1-sir@cmpwn.com>
-X-Mailer: git-send-email 2.27.0
+        id S1728005AbgGXAmp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jul 2020 20:42:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65158 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727783AbgGXAmp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jul 2020 20:42:45 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59BB56E056;
+        Thu, 23 Jul 2020 20:42:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=70s5P+ZtnBEkP5+w/CitYQ5VD7I=; b=GKbI1BcAAnaKCSuvyr2E
+        yGYxz0KpoohhzXgOqH5OTDcomSSWMBAdWpJb0RxuU7qUhWngxkyrjFRAtpZQLsqy
+        116Re02FoygvyuZgNRhT+Ji/137Ved25zSQuhlvOMQXNGIlyWT9c5S7kJTNQIu79
+        ZwboiC9RFlccMC0fkE/qJcY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=xvjz8aZ2p1jTPo8lM6a64ISk3V660bsGVkT9NOgZk6aCut
+        kq+GKAwTuRBHYNjXuzgUAtrZZ1W1UpQbhYxpoVCgHDBhehG+nKyXq+TVZW3KI9fp
+        fST5w/nevyR7Y+e8OnUAUejFzmIQljfi6igZd3uYbKQw3rN2YVZmgDJAbz9R4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 51B266E055;
+        Thu, 23 Jul 2020 20:42:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DB7D46E054;
+        Thu, 23 Jul 2020 20:42:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Drew DeVault" <sir@cmpwn.com>
+Cc:     "Jeff King" <peff@peff.net>, <git@vger.kernel.org>
+Subject: Re: [PATCH v2] git-send-email: die if sendmail.* config is set
+References: <C4BMWIIK892D.25HUQKV9F98T6@homura>
+Date:   Thu, 23 Jul 2020 17:42:43 -0700
+Message-ID: <xmqq365hoi9o.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 962CDF58-CD46-11EA-A356-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've seen several people mis-configure git send-email on their first
-attempt because they set the sendmail.* config options - not
-sendemail.*. This patch detects this mistake and bails out with a
-friendly warning.
+"Drew DeVault" <sir@cmpwn.com> writes:
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
----
- Documentation/config/sendemail.txt |  5 +++++
- git-send-email.perl                |  8 ++++++++
- perl/Git.pm                        | 26 ++++++++++++++++++++++++++
- t/t9001-send-email.sh              | 29 +++++++++++++++++++++++++++++
- 4 files changed, 68 insertions(+)
+> On Mon Jul 20, 2020 at 9:33 AM EDT, Jeff King wrote:
+>> This basically claims the "sendmail.*" namespace for send-email. Not
+>> strictly, but if we're going to warn about anything set in it, it
+>> effectively shuts out other uses.
+>
+> The revised patch (v3 now) is less strict and offers an escape hatch via
+> sendmail.forbidSendmailVariables. I'd prefer that over making sendmail.*
+> just werk.
 
-diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-index 0006faf800..cbc5af42fd 100644
---- a/Documentation/config/sendemail.txt
-+++ b/Documentation/config/sendemail.txt
-@@ -61,3 +61,8 @@ sendemail.smtpBatchSize::
- sendemail.smtpReloginDelay::
- 	Seconds wait before reconnecting to smtp server.
- 	See also the `--relogin-delay` option of linkgit:git-send-email[1].
-+
-+sendemail.forbidSendmailVariables::
-+	To avoid common misconfiguration mistakes, linkgit:git-send-email[1]
-+	will abort with a warning if any configuration options for "sendmail"
-+	exist. Set this variable to bypass the check.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 36c47bae1d..1f425c0809 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -250,6 +250,7 @@ sub do_edit {
- my $use_xmailer = 1;
- my $validate = 1;
- my $target_xfer_encoding = 'auto';
-+my $forbid_sendmail_variables = 1;
- 
- my %config_bool_settings = (
-     "thread" => \$thread,
-@@ -263,6 +264,7 @@ sub do_edit {
-     "multiedit" => \$multiedit,
-     "annotate" => \$annotate,
-     "xmailer" => \$use_xmailer,
-+    "forbidsendmailvariables" => \$forbid_sendmail_variables,
- );
- 
- my %config_settings = (
-@@ -478,6 +480,12 @@ sub read_config {
-     usage();
- }
- 
-+if ($forbid_sendmail_variables && (scalar Git::config_regexp("^sendmail[.]")) != 0) {
-+	die __("fatal: found configuration options for 'sendmail'\n" .
-+		"git-send-email is configured with the sendemail.* options - note the 'e'.\n" .
-+		"Set sendemail.forbidSendmailVariables to false to disable this check.\n");
-+}
-+
- die __("Cannot run git format-patch from outside a repository\n")
- 	if $format_patch and not $repo;
- 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 54c9ed0dde..10df990959 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -723,6 +723,32 @@ sub config_int {
- 	return scalar _config_common({'kind' => '--int'}, @_);
- }
- 
-+=item config_regexp ( RE )
-+
-+Retrieve the list of configuration key names matching the regular
-+expression C<RE>. The return value is a list of strings matching
-+this regex.
-+
-+=cut
-+
-+sub config_regexp {
-+	my ($self, $regex) = _maybe_self(@_);
-+	try {
-+		my @cmd = ('config', '--name-only', '--get-regexp', $regex);
-+		unshift @cmd, $self if $self;
-+		my @matches = command(@cmd);
-+		return @matches;
-+	} catch Git::Error::Command with {
-+		my $E = shift;
-+		if ($E->value() == 1) {
-+			my @matches = ();
-+			return @matches;
-+		} else {
-+			throw $E;
-+		}
-+	};
-+}
-+
- # Common subroutine to implement bulk of what the config* family of methods
- # do. This currently wraps command('config') so it is not so fast.
- sub _config_common {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index ec261085ec..897bc6a631 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2142,4 +2142,33 @@ test_expect_success $PREREQ 'test that send-email works outside a repo' '
- 		"$(pwd)/0001-add-master.patch"
- '
- 
-+test_expect_success $PREREQ 'test that sendmail config is rejected' '
-+	test_config sendmail.program sendmail &&
-+	test_must_fail git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		HEAD^ 2>err &&
-+	test_i18ngrep "found configuration options for '"'"sendmail"'"'" err
-+'
-+
-+test_expect_success $PREREQ 'test that sendmail config rejection is specific' '
-+	test_config resendmail.program sendmail &&
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		HEAD^
-+'
-+
-+test_expect_success $PREREQ 'test forbidSendmailVariables behavior override' '
-+	test_config sendmail.program sendmail &&
-+	test_config sendemail.forbidSendmailVariables false &&
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		HEAD^
-+'
-+
- test_done
--- 
-2.27.0
+We are not in a hurry until the next cycle starts, but please send
+the updated version out to the list before everybody forgets.
 
+Thanks.
