@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DF31C433E0
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 721C5C433E0
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:47:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19E6020737
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:40:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E14B206F6
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 19:47:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mUh6nsvd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qfiSUuq9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726572AbgGXTkD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jul 2020 15:40:03 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63199 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbgGXTkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jul 2020 15:40:02 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DA9AF86CD5;
-        Fri, 24 Jul 2020 15:39:59 -0400 (EDT)
+        id S1726512AbgGXTrF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jul 2020 15:47:05 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55530 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726381AbgGXTrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jul 2020 15:47:05 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 890E2E545F;
+        Fri, 24 Jul 2020 15:47:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4bWrbKPU+GZey4XmLxH6iXrjH20=; b=mUh6ns
-        vdBeUvZCO4l1m2Y/qGQKhNhffh3aEz7omOAJ9fIaH+dgkF8Ljl1L2VbVdpmDzbHZ
-        S8cRPEjBqI0s7/kGhue+R11sTROYhshGzxtiMuk0XOYJLLMFQ76TJ/4bglnJ/rqV
-        VdXCKJWJ7DIiyUX8yt4aBxxatKJ/DQ5/Sys8k=
+        :content-type; s=sasl; bh=8EoLiu3Ty+Sr5Cvjqc4GnfnHvKM=; b=qfiSUu
+        q9s/SFt5yxtjbFdyw8c57pTv9fWdgUFViB9sShnCvAPWc6Yo8zMC9UoD/L/Ju51a
+        6KtWOlrBS29TAvCj9R03m1hdIyhQex1PJF5LVr+jmXeFklaM9JwXc/5MaOkor40+
+        HocrtQ4WkZ4mX6jB9LDJBeElcgndXP4G3mJDA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZegqGWIju8g5P7kAk1qiH1QexFCFRVm/
-        KhAszHOehkg8WWTYF0b9yDNkd+HJCPbrhAMDshPse1o0d6Z7S9KBnf3lupLkqpvg
-        KVZWOSneAAmRH/DNpmVMdbYM3hnKvuR1QfYW0KKCZGY8epEuFee0wusPvewbUFz2
-        Wn8ZHtK2c+U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE1BF86CD4;
-        Fri, 24 Jul 2020 15:39:59 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=trkjDUlhXJ2g6+QhuNM5c6SgjQm44u4t
+        f6C+TlkbsKppzV1LCsDiTuqohgxugWgaVQHPj99fp7fBV43h0mmie4DZSsW/LWa4
+        JV+5SDw7IFiLXSfRf4/IEAqePC6Seo39lrP5EC2AL/CIc+MSaO0MWUmonjLIPGCG
+        gDqIbBanmdU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 80941E545E;
+        Fri, 24 Jul 2020 15:47:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5B98586CD3;
-        Fri, 24 Jul 2020 15:39:59 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C36ECE545B;
+        Fri, 24 Jul 2020 15:47:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Derrick Stolee <stolee@gmail.com>
@@ -56,21 +56,20 @@ Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         sluongng@gmail.com, jonathantanmy@google.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 04/18] maintenance: initialize task array
+Subject: Re: [PATCH v2 05/18] maintenance: add commit-graph task
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
         <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
-        <8e260bccf1a0b6cd799a6bc78798b31ebed8ad7e.1595527000.git.gitgitgadget@gmail.com>
-        <xmqqr1t2qa1n.fsf@gitster.c.googlers.com>
-        <1501583a-0fb0-ad88-bd2f-4f64c3c66980@gmail.com>
-        <67e49b30-9a7f-8c18-3a06-96c516027c7a@gmail.com>
-Date:   Fri, 24 Jul 2020 12:39:58 -0700
-In-Reply-To: <67e49b30-9a7f-8c18-3a06-96c516027c7a@gmail.com> (Derrick
-        Stolee's message of "Fri, 24 Jul 2020 08:51:32 -0400")
-Message-ID: <xmqq365gn1m9.fsf@gitster.c.googlers.com>
+        <04552b1d2ed751a11eb7c50f6898cbc078b552b4.1595527000.git.gitgitgadget@gmail.com>
+        <xmqq4kpyq8wh.fsf@gitster.c.googlers.com>
+        <b0bc5d89-52fa-e0f4-e3af-5eb6c76d312e@gmail.com>
+Date:   Fri, 24 Jul 2020 12:47:00 -0700
+In-Reply-To: <b0bc5d89-52fa-e0f4-e3af-5eb6c76d312e@gmail.com> (Derrick
+        Stolee's message of "Fri, 24 Jul 2020 09:09:25 -0400")
+Message-ID: <xmqqy2n8lmq3.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 75B18202-CDE5-11EA-83C9-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 7179C39C-CDE6-11EA-8C81-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -78,31 +77,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <stolee@gmail.com> writes:
 
-> OK, my attempt has led to this final table:
+> But you are discussing here how the _behavior_ can change when
+> --auto is specified. And specifically, "git gc --auto" really
+> meant "This is running after a foreground command, so only do
+> work if necessary and do it quickly to minimize blocking time."
 >
-> 	const struct maintenance_task default_tasks[] = {
-> 		{
-> 			"prefetch",
-> 			maintenance_task_prefetch,
-> 		},
->...
-> 		{
-> 			"commit-graph",
-> 			maintenance_task_commit_graph,
-> 			should_write_commit_graph,
-> 		}
-> 	};
-> 	num_tasks = sizeof(default_tasks) / sizeof(struct maintenance_task);
+> I'd be happy to replace "--auto" with "--quick" in the
+> maintenance builtin.
 >
-> This is followed by allocating and copying the data to the
-> 'tasks' array, allowing it to be sorted and modified according
-> to command-line arguments and config.
+> This opens up some extra design space for how the individual
+> tasks perform depending on "--quick" being specified or not.
+> My intention was to create tasks that are already in "quick"
+> mode:
 >
-> Is this what you intended?
+> * loose-objects have a maximum batch size.
+> * incremental-repack is capped in size.
+> * commit-graph uses the --split option.
+>
+> But this "quick" distinction might be important for some of
+> the tasks we intend to extract from the gc builtin.
 
-I do not know how important it is for your overall design to keep
-the blueprint/master-copy table that is separate from the working
-copy of the table that gets sorted, enabled/chosen bit set, etc.
-IIUC, you were modifying the entries' fields at runtime, so perhaps
-a pristine copy is not all that important (in which case you can
-just lose "const" and do without extra copying)?  I dunno.
+Yup.  To be honest, I came to this topic from a completely different
+direction.  The field name "auto" alone (and no other field name)
+had to have an extra cruft (i.e. "_flag") attached to it, which is
+understandable but ugly.  Then I started thinking if 'auto(matic)'
+is really the right word to describe what we want out of the option,
+and came to the realization that there may be better words.
+
+> Since the tasks are frequently running subcommands, returning
+> 0 for success and non-zero for error matches the error codes
+> returned by those subcommands.
+
+As long as these will _never_ be called from other helper functions
+but from the cmd_foo() top-level and their return values are only
+used directly as the top-level's return value, I do not mind too
+much.
+
+But whenever I am writing such a code, I find myself not brave
+enough to make such a bold promise (I saw other people call the
+helpers I wrote in unintended ways and had to adjust the semantics
+of them to accomodate the new callers too many times), so I'd rather
+see the caller do "return !!helper_fn()" to allow helper_fn() to be
+written more naturally (e.g. letting them return error(...)).
+
+Thanks.
