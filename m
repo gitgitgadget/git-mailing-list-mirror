@@ -6,89 +6,83 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 598A0C433EA
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 20:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8624C433E8
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 20:47:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CEFD206C1
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 20:43:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83D8B206D8
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 20:47:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="auwdbnrs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C30wlQYs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgGXUnu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jul 2020 16:43:50 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64928 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726658AbgGXUnu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jul 2020 16:43:50 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 27EB2DD8A8;
-        Fri, 24 Jul 2020 16:43:48 -0400 (EDT)
+        id S1726696AbgGXUr2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jul 2020 16:47:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53514 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726493AbgGXUr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jul 2020 16:47:28 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EF71075347;
+        Fri, 24 Jul 2020 16:47:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vMoRAap9rzJySDJvhK4KKw2wksM=; b=auwdbn
-        rsFhpEYTh+GUjbjC/7GID8h2Bf8Qw4IwOjHw4EADKoNonYq8om9KO9X1/O78p7iZ
-        xPK21xe+XRGL2x2yzUuM6jAJC+vGtNG30EBL8to+AtyqKSwnPVyf3Vp6pwpRHaZ7
-        m5qYdJFjLEcGnaq7LWHfiblcpZy1ifOAWB2bQ=
+        :content-type; s=sasl; bh=k/mAyYaSF2kTu1+/VnBoWt0vMgs=; b=C30wlQ
+        YspZYj8Prg3ft/1R+xmwW3mvb08sqlus2X1LSkfZgUfMnBEse7IoJBfHkFoI1Ysh
+        pnSQaZNTscQlw4vMV2SZg9ZPFSigoVMVIVvdmxtxONugL2XsxlfRzQJTx8QPAr7P
+        FyBdg2dirGhURS2Mkum0xE/n1xIydSGhlM/vM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qx9hOLTyU9hSOo8O23WFM9nFOdNuyFbK
-        Usdav+0sOm4JX/8bznEdIa16lk7nQkfaZ1K5d70HX1lts5j3xwhzYr5Cve+PL7tL
-        OmhG/QAyIUKUjoKSxNwOTX60WnbuJWOVh7nfPL5i+XofnxuRqzwVhqONvIvQQddE
-        4GV+GpjKUog=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 20216DD8A7;
-        Fri, 24 Jul 2020 16:43:48 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Y4NP5JVNFQbU4a/I+e8WdUaDbpOi1HC4
+        +CV+wk74mpCWkvlZl3cjyToEKHRznnoRezvKjBYYT/ljHs1jyvhP7X0K4beZFB/z
+        qOKhhdhEU/WQRIM3sNnzQQRC23scb6rkJnG1ixM7fpTqeeXvu1HXwrSLAq8UY7VA
+        r7EfAr10VYU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E21C575346;
+        Fri, 24 Jul 2020 16:47:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6E447DD8A4;
-        Fri, 24 Jul 2020 16:43:45 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66CEA75345;
+        Fri, 24 Jul 2020 16:47:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Tommaso Ercole <Tommaso.Ercole@qlik.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Creation of a branch named that has a directory prefix equal to the name of another branch fail.
-References: <DM5PR1801MB2076F807C0B9F29A152DBEB7F0760@DM5PR1801MB2076.namprd18.prod.outlook.com>
-        <DM5PR1801MB20762477763E6298C7FE6315F0770@DM5PR1801MB2076.namprd18.prod.outlook.com>
-        <20200724160045.GA10590@syl.lan>
-        <20200724200042.GC4013174@coredump.intra.peff.net>
-Date:   Fri, 24 Jul 2020 13:43:43 -0700
-In-Reply-To: <20200724200042.GC4013174@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 24 Jul 2020 16:00:42 -0400")
-Message-ID: <xmqqv9ick5j4.fsf@gitster.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
+        phillip.wood123@gmail.com, emilyshaffer@google.com,
+        sluongng@gmail.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 08/18] maintenance: add prefetch task
+References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
+        <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
+        <3165b8916d2d80bf72dac6596a42c871ccd4cbe6.1595527000.git.gitgitgadget@gmail.com>
+        <xmqqwo2uosvz.fsf@gitster.c.googlers.com>
+        <52fc3f5a-281c-a0cb-d897-3866315913a1@gmail.com>
+Date:   Fri, 24 Jul 2020 13:47:24 -0700
+In-Reply-To: <52fc3f5a-281c-a0cb-d897-3866315913a1@gmail.com> (Derrick
+        Stolee's message of "Fri, 24 Jul 2020 10:25:52 -0400")
+Message-ID: <xmqqr1t0k5cz.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5E34E408-CDEE-11EA-ABDC-843F439F7C89-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: E1537D36-CDEE-11EA-9F18-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> Note that even though packed-refs does not have this limitation, we
-> still enforce it in order to avoid headaches when moving between loose
-> and packed refs.
+> I don't anticipate users specifying --task=<task> very often, as
+> it requires deep knowledge of the tasks. If a user _does_ use the
+> option, then we should trust their order as they might have a
+> good reason to choose that order.
 >
-> Likewise, we'll probably[1] continue to enforce it with reftables, at
-> least for a while, to make things less confusing when pushing and
-> pulling between repositories with different storage.
+> Generally, my philosophy is to provide expert users with flexible
+> choices while creating sensible defaults for non-expert users.
 
-Yup, that coincides with my understanding.
-
-The files backend could also learn encoding/decoding refnames and
-that could be used to transition, if/when we decide to discard the
-"refs are organized in a directory-tree like fashion" design we have
-been using, to a new world order where a branch M and branches M/A,
-M/B, and M/C can co-exist.  Encoding/decoding refname to map to the
-filename would also help those on case insensitive filesystems.
-
-Thanks to the recent preparation work for reftable, we are ensuring
-that we do not leave direct accesses to $GIT_DIR/refs/* in our
-codebase outside the files backend implementation, such a transition
-hopefully is getting much easier to do than before.
+Sounds sensible.
