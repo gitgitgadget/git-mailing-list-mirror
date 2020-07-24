@@ -3,90 +3,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A2FFC433EB
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 01:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DECFC433E8
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 05:15:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AB882086A
-	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 01:26:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE63C20714
+	for <git@archiver.kernel.org>; Fri, 24 Jul 2020 05:15:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="puo/W1qX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cr7rxEoj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727096AbgGXBZy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jul 2020 21:25:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56234 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726947AbgGXBZy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jul 2020 21:25:54 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD2BE6E464;
-        Thu, 23 Jul 2020 21:25:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xIETkcrcuTkDDHBOIwvPpyIpZwM=; b=puo/W1
-        qXPZymT4YrGaZwnxedrsfqbVt2HWNNeHtx9quYtiLNCbCgu4TpenvSnN7EGCeyyC
-        Xpu05FoDqJ4aHfBYMJthVKhJVVlduz1MPQPSttb5WA6Wa8Bz6pUzKnOxK1WRcqyf
-        L/TfqjboppM9IWD/FibGfSzXhH4+mHyiK8lWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qk17rcqKf5N/HrcXWfcMBvUaqF1dwUTO
-        78bHFoLs6aFzMEFhNMX3/5A24aQyUnCu41JRq6/MdJyPQV1uFEUf9EQPfYJsc2fT
-        IaBEYMJOWNnx+iz0xyFK/9TqSwjI1DMPCfLS9y+sNnsP9esn9tYXXh1KYTmSR2hC
-        WTBrRI7OA5M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4D606E463;
-        Thu, 23 Jul 2020 21:25:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 641A56E462;
-        Thu, 23 Jul 2020 21:25:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Casey Meijer <cmeijer@strongestfamilies.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: BUG FOLLOWUP: Case insensitivity in worktrees
-References: <EEA65ED1-2BE0-41AD-84CC-780A9F4D9215@strongestfamilies.com>
-        <8BABB6F0-517F-4AA0-9FF9-92AF8C33CD0E@strongestfamilies.com>
-        <20200724011944.GD1758454@crustytoothpaste.net>
-Date:   Thu, 23 Jul 2020 18:25:50 -0700
-In-Reply-To: <20200724011944.GD1758454@crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 24 Jul 2020 01:19:44 +0000")
-Message-ID: <xmqqft9hn1pd.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726780AbgGXFPf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jul 2020 01:15:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45424 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726001AbgGXFPe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jul 2020 01:15:34 -0400
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9A3AC0619D3
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 22:15:34 -0700 (PDT)
+Received: by mail-ua1-x92b.google.com with SMTP id h18so2569795uao.6
+        for <git@vger.kernel.org>; Thu, 23 Jul 2020 22:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6idW5og3jRRdgzwpWes7KDNblsUj/3hE7I2nFb4GvpE=;
+        b=Cr7rxEojkwQkIn4Ot9KRBSV8ns9YjxcmWy1qstJlj7WxfBh9xNWvi1LJ5s8w0gVyfv
+         Jk95bhQb9JkGCkcQPoJj+g3bV1WkDWDb9+WMhoEMOTD4xV4dh61wrE46t6x4ZuO/U65k
+         Z4eGvnWBczWZT9tTF2yNrELUX/58eQ7lC98e/oSu6T28jK9ejFNHZhmQaJfR0SOrFlQG
+         H5wnbVUDo20Xw6pudpKGsbf39KVXiXnqk83/RhdtJ4eQmVV1kBVXVh889aVe6zqDYxW8
+         ywovgKBIQeZ9cm6PYxkZA116TiEjx8n6f2QgrtwIWSy2qXVJ94NZn7xk4OyyJgBhEwsE
+         kRwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6idW5og3jRRdgzwpWes7KDNblsUj/3hE7I2nFb4GvpE=;
+        b=doOzyirSNEXyeTMG65qP33WMbAsKmUJxtHKS2gzuUz26Ic+1t31fWbtlbdSj32JwFX
+         RyKbqpbimMu+UGMV/OpY6NSHKP67RTxUulAZ41QoaAyrKlPl7+FqCeQJquobNNJu3CqL
+         HclQ0M+tAi7/ar+796HboRNsOxHDJidXvssXqLYIDuSZ2BDCP/nUkWnM3P25GAPL1rXd
+         xpiTLJLsgttWYgcuE9RsuN4iHrrh0YylUcleYKrJ00rmqfpeBwcLMAzDfvIHw1GQd1Ym
+         +IQOp4SV274EJuiwDYrgMi2kr5AILyt5JNe/zxaTDrsKCzb9B6DxWcqLcbKayCOaaVWB
+         6KbA==
+X-Gm-Message-State: AOAM531QpXOWJ3hmB3e9Qk7agf4tK5vnX5bU5Im7pQgHaUBf5LXH6sKC
+        T5zjUnRhfNKGQPkJj2zKvU0LufZ373uzR6U1K6s=
+X-Google-Smtp-Source: ABdhPJxFO1siYhPffZBSaTCO44iE1eervFE6pChcBFWyELWRpr7Umw/Dr1+55MTdHSrEi5yqcD5I2ASP1TS+56Wl0XU=
+X-Received: by 2002:ab0:76d2:: with SMTP id w18mr6479477uaq.27.1595567733624;
+ Thu, 23 Jul 2020 22:15:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9C73CD80-CD4C-11EA-BE6E-01D9BED8090B-77302942!pb-smtp1.pobox.com
+References: <a0418859-c62e-c207-a1b0-1b1aaf178527@gmail.com>
+ <4df975f0-e4b1-afa1-cac1-f38e6d31a0d8@kdbg.org> <874kpzmhis.fsf@osv.gnss.ru>
+ <xmqqwo2v45hq.fsf@gitster.c.googlers.com> <87tuxzl00h.fsf@osv.gnss.ru>
+ <20200723182648.GC3975154@coredump.intra.peff.net> <87blk6yrlc.fsf@osv.gnss.ru>
+ <xmqqimedq5c8.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqimedq5c8.fsf@gitster.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 23 Jul 2020 22:15:23 -0700
+Message-ID: <CA+P7+xpPDu900dao08wfYtZ2pqU89D9vmwQPuFT-z5S5b-DXNA@mail.gmail.com>
+Subject: Re: Improving merge of tricky conflicts
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, Jeff King <peff@peff.net>,
+        Johannes Sixt <j6t@kdbg.org>,
+        "B. Stebler" <bono.stebler@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Thu, Jul 23, 2020 at 2:43 PM Junio C Hamano <gitster@pobox.com> wrote:
+> If your merge used the merge (as opposed to diff3) style, and seeing
+> that the resulting conflict is not easy to review and you wish you
+> used diff3 style instead, it is way too late for any option to "git
+> merge" to help you.
+>
+> But having an option to "git checkout" lets you move forward from
+> that state, so it also makes 100% more sense than an option to "git
+> merge".
+>
 
-> It isn't clear to me exactly what you're suggesting.  Are you suggesting
-> that we allow "head" instead of "HEAD" in worktrees, or that we allow
-> refs in general to be case insensitive, or something else?
-
-> There is a proposal for a ref storage backend called "reftable" which
-> will not store the ref names in the file system, and work is being done
-> on it.  There has been a suggestion for an SQLite store in the past, but
-> that causes problems for certain implementations, such as JGit, which do
-> not want to have C bindings.
-
-Yes, another important thing to point out is that one shared goal of
-these efforts is so that users, even those on case insensitive
-filesystems, can name their refs foo and FOO and have the system
-treat these as two distinct refs.  IOW, wanting to enhance "support"
-for case insensitive treatment of refs will not fly---asking for
-"head" and getting contents of "HEAD" on certain platforms is a bug,
-induced by limited filesystem these platforms use, and it is being
-fixed.
-
-Thanks.
-
+Perhaps the issue is just that it's not discoverable easily because
+it's a different command.
