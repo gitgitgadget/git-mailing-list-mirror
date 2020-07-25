@@ -2,191 +2,126 @@ Return-Path: <SRS0=cPh9=BE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFE9CC433FC
-	for <git@archiver.kernel.org>; Sat, 25 Jul 2020 01:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BF27C433E1
+	for <git@archiver.kernel.org>; Sat, 25 Jul 2020 01:47:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD0942070E
-	for <git@archiver.kernel.org>; Sat, 25 Jul 2020 01:46:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13A742070E
+	for <git@archiver.kernel.org>; Sat, 25 Jul 2020 01:47:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="EsKsZQ+R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AeeXOA5a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727779AbgGYBqu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jul 2020 21:46:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39994 "EHLO
+        id S1727772AbgGYBrN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jul 2020 21:47:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726701AbgGYBqu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jul 2020 21:46:50 -0400
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AF18C0619D3
-        for <git@vger.kernel.org>; Fri, 24 Jul 2020 18:46:50 -0700 (PDT)
-Received: by mail-qt1-x841.google.com with SMTP id e12so8272696qtr.9
-        for <git@vger.kernel.org>; Fri, 24 Jul 2020 18:46:50 -0700 (PDT)
+        with ESMTP id S1726701AbgGYBrM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jul 2020 21:47:12 -0400
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB828C0619D3
+        for <git@vger.kernel.org>; Fri, 24 Jul 2020 18:47:12 -0700 (PDT)
+Received: by mail-pj1-x1041.google.com with SMTP id t15so6469389pjq.5
+        for <git@vger.kernel.org>; Fri, 24 Jul 2020 18:47:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=aRx3j/tK3K9T9WW+FPxH7Pb/GL/zv+PDCYdRuurl0gs=;
-        b=EsKsZQ+R3TDuDSKEew/L6IDIixgpnlBQeOMj7BwD4TZTXhsBBueySdSBHuoU9JwWxQ
-         feJjKmRnrDYtEFH8y25EnOabQ4PpbWQ3ZAu2wFG9NYT2Qi45HT8T1BEZ3oVdXJwZSP88
-         EUpJ0dFw42qIqo1rryjkv0vqGeCSMqvFu8uNjZBYS49HB2HObY3wabOpRBFkIXJWtGNp
-         ZCiWz/WYNO4+PFPhR45xR4vtJn375hDjaGBIq0YC6C/L/T7K6Xm/QdurZe9kQvQ1OX0i
-         WKrBAqYOWBkjjHdaBkkd2mhIfzC6MtPcpvOrLN24ob1PJEo+QU3TSwM6uYaeAXD1ICgt
-         aG/A==
+        bh=3fKPQpa2k0dp9dn5LjfJ4hDyncUYGjqMkFCDW6DTlro=;
+        b=AeeXOA5arLgm+WoaunicNTRN+orvp5frfedFylMkvGBDOHSFziw4cYku/+05secMce
+         TvsfakZOiYvSSAdjzCpKlMYpA27EgGXbWlZcLHkWBsDrehoHPhZmbxXdPt5DW0AD2cZL
+         5w7hOysLMwCPFBdAjyE3y/vUpl7tPLkmp772k+90FaMU/XDlMiHAk1p+TCxXO45kT3/e
+         kUXLOcGZUMiAqAzXHfoBm7dJQcQSdrrKQPKC2FmjuPY6yLW4Yw4c1CfQv6k1XTl1F6BM
+         Yynx5iywZq7SmCuzHntfgKzSfnQJSNjSP0dPTNEGqWXGfKzdx5ThcSq4sq8WOgVP1wOU
+         dH0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=aRx3j/tK3K9T9WW+FPxH7Pb/GL/zv+PDCYdRuurl0gs=;
-        b=el8g9Y1Pgjvr6Vq3wXXJA68x7fl0XHhgRlu1pxmq/D1QjRsqfDdii7BEWbs593S5jv
-         pPMtlfukp42SEC9ov0oJH2neS50feLIEO3zX6c0IZoeUpv/juJvNcTod2m2m2SeE9Iet
-         DUVJ/vv4H0C2ycDN7SabH/ttPPj1EPLQ734BI7fO+gp/vFDbauN6V449+dhk9o4wyerV
-         phaCTrpv6zugACCanVVMWp0M7eRfP3tCWWOB5657LgB/T3Hz+rbaqpD90vm6X/R3VfBu
-         Y0QRXySEfCbS2dGHLu3FcL26/eZI3GGFsOUatoX9Qzu0SnhPhTvGuMCjAJZTCLbRanBK
-         yX9A==
-X-Gm-Message-State: AOAM533fXFO8i/hQ95mNujquQxGflovo1ArbJS1SELUWPmWgwn0WOZDu
-        FP28ETV9wITJjs7eNpI1QPeGPQ==
-X-Google-Smtp-Source: ABdhPJwZQpCqjLIRtzm5MI1zYcdTJtp4Og16VjMWaOqRliXPSukFLfKak1Ud3wCLS0E0khuC0ulOQg==
-X-Received: by 2002:ac8:1e0e:: with SMTP id n14mr9510205qtl.109.1595641609454;
-        Fri, 24 Jul 2020 18:46:49 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:348b:af05:525a:6ad])
-        by smtp.gmail.com with ESMTPSA id f41sm3895943qtk.55.2020.07.24.18.46.48
+        bh=3fKPQpa2k0dp9dn5LjfJ4hDyncUYGjqMkFCDW6DTlro=;
+        b=RfHFjBjB7bsBxO3orGs6u0BuW7Rd2d0GM6lhjXHgO+oeo5nGO/EB3A2taF55g2Et86
+         DQ1AlNRAYH0Bd5zFEWluB3R4iZDRZj97BNFnZbfppJ1vm4Uk3IP7Dq+F9u1jpDvspbOV
+         roejQy7KRn6z7Qc7TTdj4Mf+ZVrh+sWVrCzxjwRSsyDsr+eryaFFA8hdcHW59q9gLOFZ
+         ow22m/8gFwkL5aOrfLOYK9a3iQt6QQ80QWUqBe5d3PP5M+3ELKId/bQ96c534GcvkoQz
+         2LcX0SZ9H+gw3x6h9Xtwzo+U0/2IfG1+qJhD08MrcPBnypPCCFxzfFFHtL77zykFDW9g
+         JSiw==
+X-Gm-Message-State: AOAM532LznhEXxcgqKI+G84AuAVvfAib5W5JyS/DSHLaUJJgQ6sVZ8eF
+        fZg0+vVZkGCLkITVwYLHS88=
+X-Google-Smtp-Source: ABdhPJyUvy1RZ6LlqWLE3d/8WZchgEuyx1M6/sP4cTRZj1ux74APvap3Dz8DG6QQo/NPgCMUH6+nSA==
+X-Received: by 2002:a17:90a:1342:: with SMTP id y2mr7996587pjf.98.1595641632410;
+        Fri, 24 Jul 2020 18:47:12 -0700 (PDT)
+Received: from localhost ([2402:800:6375:ea17:7ad5:df16:a252:473b])
+        by smtp.gmail.com with ESMTPSA id o2sm7620001pfh.160.2020.07.24.18.47.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2020 18:46:48 -0700 (PDT)
-Date:   Fri, 24 Jul 2020 21:46:47 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        Fri, 24 Jul 2020 18:47:11 -0700 (PDT)
+Date:   Sat, 25 Jul 2020 08:47:09 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
         sandals@crustytoothpaste.net, steadmon@google.com,
-        jrnieder@gmail.com, peff@peff.net, congdanhqx@gmail.com,
-        phillip.wood123@gmail.com, emilyshaffer@google.com,
-        sluongng@gmail.com, jonathantanmy@google.com,
+        jrnieder@gmail.com, peff@peff.net, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        jonathantanmy@google.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 04/18] maintenance: initialize task array
-Message-ID: <20200725014647.GC35171@syl.lan>
+Subject: Re: [PATCH v2 01/18] maintenance: create basic maintenance runner
+Message-ID: <20200725014709.GB2436@danh.dev>
 References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
  <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
- <8e260bccf1a0b6cd799a6bc78798b31ebed8ad7e.1595527000.git.gitgitgadget@gmail.com>
- <xmqqr1t2qa1n.fsf@gitster.c.googlers.com>
- <1501583a-0fb0-ad88-bd2f-4f64c3c66980@gmail.com>
- <67e49b30-9a7f-8c18-3a06-96c516027c7a@gmail.com>
+ <63ec602a07756a41f8ccddd745562c567a4b3ed7.1595527000.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <67e49b30-9a7f-8c18-3a06-96c516027c7a@gmail.com>
+In-Reply-To: <63ec602a07756a41f8ccddd745562c567a4b3ed7.1595527000.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 24, 2020 at 08:51:32AM -0400, Derrick Stolee wrote:
-> On 7/24/2020 8:23 AM, Derrick Stolee wrote:
-> > On 7/23/2020 3:57 PM, Junio C Hamano wrote:
-> >> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >>
-> >>> +static void initialize_tasks(void)
-> >>> +{
-> >>> +	int i;
-> >>> +	num_tasks = 0;
-> >>> +
-> >>> +	for (i = 0; i < MAX_NUM_TASKS; i++)
-> >>> +		tasks[i] = xcalloc(1, sizeof(struct maintenance_task));
-> >>> +
-> >>> +	tasks[num_tasks]->name = "gc";
-> >>> +	tasks[num_tasks]->fn = maintenance_task_gc;
-> >>> +	tasks[num_tasks]->enabled = 1;
-> >>> +	num_tasks++;
-> >>
-> >> Are we going to have 47 different tasks initialized by code like
-> >> this in the future?  I would have expected that you'd have a table
-> >> of tasks that serves as the blueprint copy and copy it to the table
-> >> to be used if there is some need to mutate the table-to-be-used.
-> >
-> > Making it a table will likely make it easier to read. I hadn't
-> > thought of it.
-> >
-> > At the start, I thought that the diff would look awful as we add
-> > members to the struct. However, the members that are not specified
-> > are set to zero, so I should be able to craft this into something
-> > not too terrible.
->
-> OK, my attempt has led to this final table:
->
-> 	const struct maintenance_task default_tasks[] = {
-> 		{
-> 			"prefetch",
-> 			maintenance_task_prefetch,
-> 		},
-> 		{
-> 			"loose-objects",
-> 			maintenance_task_loose_objects,
-> 			loose_object_auto_condition,
-> 		},
-> 		{
-> 			"incremental-repack",
-> 			maintenance_task_incremental_repack,
-> 			incremental_repack_auto_condition,
-> 		},
-> 		{
-> 			"gc",
-> 			maintenance_task_gc,
-> 			need_to_gc,
-> 			1,
-> 		},
-> 		{
-> 			"commit-graph",
-> 			maintenance_task_commit_graph,
-> 			should_write_commit_graph,
-> 		}
-> 	};
-> 	num_tasks = sizeof(default_tasks) / sizeof(struct maintenance_task);
->
-> This is followed by allocating and copying the data to the
-> 'tasks' array, allowing it to be sorted and modified according
-> to command-line arguments and config.
->
-> Is this what you intended?
+On 2020-07-23 17:56:23+0000, Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> new file mode 100755
+> index 0000000000..d00641c4dd
+> --- /dev/null
+> +++ b/t/t7900-maintenance.sh
+> @@ -0,0 +1,22 @@
+> +#!/bin/sh
+> +
+> +test_description='git maintenance builtin'
+> +
+> +GIT_TEST_COMMIT_GRAPH=0
+> +GIT_TEST_MULTI_PACK_INDEX=0
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'help text' '
+> +	test_must_fail git maintenance -h 2>err &&
+> +	test_i18ngrep "usage: git maintenance run" err
+> +'
 
-I'm not sure if Junio intended what I'm going to suggest, but I think
-that you could make looking up these "blueprint" tasks a little easier
-by using the designated index initializer. For what it's worth, I wasn't
-sure if we allow this in the codebase, but some quick perusing through
-Documentation/CodingGuidelines turns up 512f41cfac (clean.c: use
-designated initializer, 2017-07-14), which does use this style.
+I think this test has been tested better already in t0012,
+Anyway, if we would like to check the word "git maintenance run"
+explicitly here, it would be clearer to
 
-Maybe something like:
+s/test_must_fail/test_expect_code 129/
 
-  enum maintenance_task_kind {
-    TASK_PREFETCH = 0,
-    TASK_LOOSE_OBJECTS,
-    /* ... */
-    TASK__COUNT
-  };
+> +
+> +test_expect_success 'gc [--auto]' '
+> +	GIT_TRACE2_EVENT="$(pwd)/run-no-auto.txt" git maintenance run &&
+> +	GIT_TRACE2_EVENT="$(pwd)/run-auto.txt" git maintenance run --auto &&
+> +	grep ",\"gc\"]" run-no-auto.txt  &&
+> +	grep ",\"gc\",\"--auto\"]" run-auto.txt
+> +'
+> +
+> +test_done
+> -- 
+> gitgitgadget
+> 
 
-  const struct maintenance_task default_tasks[TASK__COUNT] = {
-    [TASK_PREFETCH] = {
-      "prefetch",
-      maintenance_task_prefetch,
-    },
-    [...] = ...
-  };
-
-and then you should be able to pick those out with
-'default_tasks[TASK_PREFETCH]'. I'm not sure if you are able to rely on
-those tasks appearing in a certain order in which case you can feel free
-to discard this suggestion.
-
-If nothing else, I'm glad that we can use the '[...] = '-style
-initializers :-).
-
-> Thanks,
-> -Stolee
-
-Thanks,
-Taylor
+-- 
+Danh
