@@ -2,165 +2,166 @@ Return-Path: <SRS0=BIPJ=BF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA917C433E1
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 22:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 101C8C433DF
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 22:18:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4DF0204EA
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 22:15:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RPAwrOAS"
+	by mail.kernel.org (Postfix) with ESMTP id E5BC02053B
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 22:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726835AbgGZWPM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 18:15:12 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:33883 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726253AbgGZWPM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 18:15:12 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 397135C00B0;
-        Sun, 26 Jul 2020 18:15:11 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Sun, 26 Jul 2020 18:15:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=9Y9TEwiaxUcg6WP4I4RUXLRGOG6Cfy2i+rXQs26I5
-        Ok=; b=RPAwrOASDnfrGo8oXZpnzp1Fa29G/FkwtNgMlVOMsS3DcZoGxu8XTRyfr
-        5Fx43CrCELXZMJxF4uNe+6VwOV4FMrwy4dX2NWTgDwvUQLSncTswz738Tg2j4WE6
-        MH7DzaultbjrnX/s7mB2h6wTFCPe4vKYBhL2VjBb/XP0fnivYa8hQiNKoHLPjgzj
-        1hONtlyQV8yQ6AYuUSV6iBYA0pdYljCtWyNueqsltWYr1NWn9RgaTaH/VrSdi7AS
-        DKJsJAua1keawXiI1c6pctlDVbWECLjoVjfgO5ahC3z098+pqvRnQJ4MH904Swmt
-        dI8vn+VsFTnfbtlZnkxIMTr9bGw4Q==
-X-ME-Sender: <xms:bgAeX3Ib7lOfzsLannzH4l7cdrmxmXGZ7KTqJnyRX0DLSHFwMw3tDA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrheekgddtkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggugfgjfgesthekredttderudenucfhrhhomhepfdflrdcu
-    rfgruhhlucftvggvugdfuceophhrvggvugesshhighhkihhllhdrtghomheqnecuggftrf
-    grthhtvghrnhepleetfedvkeffkeevjeefieduvdehveegieduleffudffgffgfefhveef
-    veelfedtnecuffhomhgrihhnpehjphgruhhlrhgvvggurdgtohhmnecukfhppeeiledrud
-    ekuddrfeegrddvfeegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepphhrvggvugesshhighhkihhllhdrtghomh
-X-ME-Proxy: <xmx:bgAeX7I3GBqUW7bNVEolbqz1qYrWzVnzKCnqFbqmGwmweHftSLwwbQ>
-    <xmx:bgAeX_v60YkZ75U7tMab9g3otjNXTH6C4g4VnV3vlsiaJZLZHlqhTw>
-    <xmx:bgAeXwbLLKTbLRCzsr4ygAOvf2chU5LqgWdaxpSE45wWJ6_b7HpVNQ>
-    <xmx:bwAeX9m9l7diiM3YSjadzV4iRPEWxyzCYTrH_JCJSMKhfyEbyEUZIA>
-Received: from sigkill.com (c-69-181-34-234.hsd1.ca.comcast.net [69.181.34.234])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 459C43280065;
-        Sun, 26 Jul 2020 18:15:10 -0400 (EDT)
-Date:   Sun, 26 Jul 2020 15:15:08 -0700
-From:   "J. Paul Reed" <preed@sigkill.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     "Kerry, Richard" <richard.kerry@atos.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git-gui patch staging errors
-Message-ID: <20200726221508.GA8735@sigkill.com>
-References: <20200512010750.GA7127@sigkill.com>
- <20200512121511.dyyd6n5gdfbesy2j@yadavpratyush.com>
- <AM0PR02MB371505CA3EE36FBDB44B3A409CBE0@AM0PR02MB3715.eurprd02.prod.outlook.com>
- <20200512204233.GA31807@sigkill.com>
- <20200525130807.4ydporgaeva27del@yadavpratyush.com>
+        id S1726835AbgGZWSh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 18:18:37 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35403 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726253AbgGZWSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jul 2020 18:18:36 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 184so12897448wmb.0
+        for <git@vger.kernel.org>; Sun, 26 Jul 2020 15:18:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hlnVUEsLoaD5lJpvfYJbJAMAGW/c+GaXIz60aA1MBZM=;
+        b=BymTrAJ9TkGUHNMDipXcmA/LqGahpJWGLUP5hmGIi458mIKinK7glY+a1DVtncFNxH
+         zrmPODCrpIrU2H95rNENpaR/Qlc90nmibhulbFMbBdfiCMLZHLgL9k45NuluCTgJKElK
+         8GdCF+LvOITw1Xo1LfxnttxUf3V9deDmeVMCmM7npOBm28FqUg/gPWcNORg1w/nOphXm
+         +s1EDegVOExLK1LH0bTOwo1VleU1dvPtjUZyn4CRjCNvZv9URCpERwFLW94Iw4xNYPMg
+         9NRNj05OLVjWJZ6osWMHg3t6ABU6zY5OqNv41spxR800YFTxSx3O/7oIr5yt5jKsTg80
+         UdRg==
+X-Gm-Message-State: AOAM532u7Fh+ORUnf/KFvBKg2RK1HQIB5osu3AOa9V7oYejuQeRO9tsQ
+        Tsuc1WiHfdkDjXCKPZCC5rbU+9+nZeFBUuFsdEnE9OuIMas=
+X-Google-Smtp-Source: ABdhPJxzjN2+sC6zSCY5WcMF6NP46UI00vPqgFERwGHgKgbWaM+63LYroPz68zDOAqdguSknBPqNMxYXJof2ik8OLdE=
+X-Received: by 2002:a1c:4e0d:: with SMTP id g13mr1379085wmh.177.1595801914803;
+ Sun, 26 Jul 2020 15:18:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200525130807.4ydporgaeva27del@yadavpratyush.com>
-User-Agent: Mutt/1.14.4 (2020-06-18)
+References: <20200726195424.626969-1-sandals@crustytoothpaste.net> <20200726195424.626969-32-sandals@crustytoothpaste.net>
+In-Reply-To: <20200726195424.626969-32-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 26 Jul 2020 18:18:23 -0400
+Message-ID: <CAPig+cR+e9XGNCgtDMHUsaAgbKDi=-bztwtd64fVZj7S05ppKQ@mail.gmail.com>
+Subject: Re: [PATCH v4 31/39] bundle: add new version for use with SHA-256
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jul 26, 2020 at 3:56 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> [...]
+> Since we cannot extend the v2 format in a backward-compatible way, let's
+> add a v3 format, which is identical, except for the addition of
+> capabilities, which are prefixed by an at sign.  We add "object-format"
+> as the only capability and reject unknown capabilities, since we do not
+> have a network connection and therefore cannot negotiate with the other
+> side.
+> [...]
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> diff --git a/bundle.c b/bundle.c
+> @@ -23,15 +32,30 @@ static void add_to_ref_list(const struct object_id *oid, const char *name,
+> +static int parse_capability(struct bundle_header *header, const char *capability)
+>  {
+> +       const char *arg;
+> +       if (skip_prefix(capability, "object-format=", &arg)) {
+> +               int algo = hash_algo_by_name(arg);
+> +               if (algo == GIT_HASH_UNKNOWN)
+> +                       return error(_("unable to detect hash algorithm"));
 
-Hey Pratyush,
+This error message would be more helpful if it provided more context,
+such as the name it tried looking up. For instance:
 
-Apologies for the late reply myself! Oof... been a long couple of months.
+    return error(_("unrecognized bundle header hash algorithm: "
+        "@object-format=%s"), arg);
 
-See further responses inline:
+or something.
 
-later,
-preed
--- 
-J. Paul Reed
-https://jpaulreed.com
-PGP: 0xDF8708F8
+> @@ -57,21 +83,21 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
+> +               if (header->version == 3 && *buf.buf == '@') {
+> +                       buf.buf[--buf.len] = '\0';
 
-On 25 May 2020 at 18:38:07, Pratyush Yadav arranged the bits on my disk to say:
+The reader has to think through this unconditional NUL-termination
+more carefully than would be the case if...
 
-> Hi,
-> 
-> Sorry for the late reply.
-> 
-> On 12/05/20 01:42PM, J. Paul Reed wrote:
-> > 
-> > Hey Richard,
-> 
-> You replied to the wrong person ;-)
-
-Sorry about that!
-
-> I suspect it is some encoding mismatch. Can you apply this patch below 
-> and send what the output is?
-> 
-> -- 8< --
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 871ad48..6226a89 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -851,8 +851,13 @@ proc apply_or_revert_range_or_line {x y revert} {
->  		set first_l [$ui_diff index "$next_l + 1 lines"]
->  	}
->  
-> +	puts "Diff we will send to git-apply:"
-> +	puts -nonewline "$current_diff_header"
-> +	puts -nonewline "$wholepatch"
+> +                       if (parse_capability(header, buf.buf + 1)) {
+> +                               status = -1;
+> +                               break;
+> +                       }
+> +                       continue;
+> +               }
 > +
->  	if {[catch {
->  		set enc [get_path_encoding $current_diff_path]
-> +		puts "\nEncoding: $enc"
->  		set p [eval git_write $apply_cmd]
->  		fconfigure $p -translation binary -encoding $enc
->  		puts -nonewline $p $current_diff_header
-> -- >8 --
+>                 if (*buf.buf == '-') {
+>                         is_prereq = 1;
+>                         strbuf_remove(&buf, 0, 1);
+>                 }
+>                 strbuf_rtrim(&buf);
 
-Here ya go:
+... you just moved this strbuf_rtrim() call above the capability check
+conditional.
 
-[preed@underworld aws-glacier-multipart-upload]$ ~/checkouts/git-gui/git-gui.sh 
-Diff we will send to git-apply:
-diff --git a/glacierupload.sh b/glacierupload.sh
-index 3b956c7..c83150c 100755
---- a/glacierupload.sh
-+++ b/glacierupload.sh
-@@ -58,15 +58,14 @@
- # count the number of files that begin with "$prefix"
- fileCount=$(ls -1 | grep "^$prefix" | wc -l)
- echo "ð¦ Glacier Upload with $AWS_PROFILE"
- echo "Total parts to upload: " $fileCount
- 
- # get the list of part files to upload.  Edit this if you chose a
- # different prefix in the split command
- files=$(ls | grep "^$prefix")
- 
- # initiate multipart upload connection to glacier
--echo aws glacier initiate-multipart-upload --profile $AWS_PROFILE
---account-id - --part-size $byteSize --vault-name $vaultName
---archive-description "$description"
- init=$(aws glacier initiate-multipart-upload --profile $AWS_PROFILE
---account-id - --part-size $byteSize --vault-name $vaultName
---archive-description "$description")
- 
- echo "---------------------------------------"
- # xargs trims off the quotes
- # jq pulls out the json element titled uploadId
+> @@ -449,13 +475,14 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+> +       int default_version = the_hash_algo == &hash_algos[GIT_HASH_SHA1] ? 2 : 3;
+> @@ -464,8 +491,22 @@ int create_bundle(struct repository *r, const char *path,
+> +       if (version == -1)
+> +               version = default_version;
+> +
+> +       if (version < 2 || version > 3) {
+> +               die(_("unsupported bundle version %d"), version);
+> +       } else if (version < default_version) {
+> +               die(_("cannot write bundle version %d with algorithm %s"), version, the_hash_algo->name);
 
-Encoding: utf-8
+This conditional will become fragile when bundle version v4 is
+introduced and the git-bundle invocation somehow triggers v4 to be
+assigned to 'default_version', in which case:
 
-This is probably expected, but to be clear: with this patch, I do still get
-the error popup in the gui ("Failed to stage selected line; error: patch
-failed: glacierupload:58 error: glacierupload.sh patch does not apply"
+    git bundle --version=3 ...
+
+will complain:
+
+    cannot write bundle version 3 with algorithm sha256
+
+which is clearly wrong and misleading.
+
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> @@ -281,15 +281,20 @@ test_expect_success 'create bundle 1' '
+>  test_expect_success 'header of bundle looks right' '
+>         head -n 4 "$D"/bundle1 &&
+> -       head -n 1 "$D"/bundle1 | grep "^#" &&
+> -       head -n 2 "$D"/bundle1 | grep "^-$OID_REGEX " &&
+> -       head -n 3 "$D"/bundle1 | grep "^$OID_REGEX " &&
+> -       head -n 4 "$D"/bundle1 | grep "^$"
+
+Do you still need the "head -n 4 ... &&" check at the very top of this
+list? Is that providing something that we don't get from the new code
+which uses test_cmp with 'expect' and 'actual' files?
+
+> +       cat >expect <<-EOF &&
+> +       # v3 git bundle
+> +       @object-format=$(test_oid algo)
+> +       -OID message
+> +       OID message
+> +
+> +       EOF
+> +       sed -e "s/$OID_REGEX .*/OID message/g" -e "5q" "$D"/bundle1 >actual &&
+
+In my earlier review when I suggested using an "expect" file and
+converting the object ID to some literal string such as "OID", the
+example I gave did indeed also use literal "message", though my use of
+"message" was meant as a placeholder that you would fill in with the
+real values, like this:
+
+    -OID updated by origin
+    OID refs/heads/master
+
+I probably should have been clearer about "message" being a
+placeholder (since I was too lazy to look up the actual values). I
+suppose the generic "message" you use here is no worse than the
+original code with its 'grep' invocations which didn't care about the
+message either. It makes me a bit uncomfortable for the test to
+unnecessarily be loose like this when it doesn't have to be, but it's
+not necessarily worth a re-roll.
