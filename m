@@ -2,163 +2,89 @@ Return-Path: <SRS0=BIPJ=BF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+X-Spam-Status: No, score=-13.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9585EC433E0
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 16:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF1C5C433E1
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 16:56:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7065A2065F
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 16:31:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FF5120658
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 16:56:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vS5LOeh2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QEUdvjG9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbgGZQb1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 12:31:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60914 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726044AbgGZQb1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Jul 2020 12:31:27 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03280C0619D2
-        for <git@vger.kernel.org>; Sun, 26 Jul 2020 09:31:27 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id m22so8058324pgv.9
-        for <git@vger.kernel.org>; Sun, 26 Jul 2020 09:31:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ri5ILW6looPQPw7kIlf2LTeY9Ld2ttbOC2RflUkr2nI=;
-        b=vS5LOeh2hf2RoULZQmlO+cQ0ZQ8QJiVcnQJ0KLJQe7F0jy4MHX/x5zZUUnWBGg26/l
-         c/CLX3xhagkoHbow2cciUhjVgNMcWYiQ9TDsWSl17sPnLFRVvRQydtKhpz2/cF8LUgkS
-         HDmGND3Ce3J1z0XnjSYkAafT4mNyykNZaYLNo5l9Ssa6eqH7apel+6rdrxLWJwmjKBt6
-         8QVZCNiy+33X9v0tHvP4BqeKWMGH24ismxRf1Vwi1o2DJo5x3ibPe1peV31YWZCwCz7a
-         jbDgmuDslcX7fttj0tQpJrsY6Gw5aP9lpf+Ab3W80M0Gyv6g4vNM0wK643k8naffAve9
-         FZpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ri5ILW6looPQPw7kIlf2LTeY9Ld2ttbOC2RflUkr2nI=;
-        b=ije9f/YX+hyDil5Wx8MXuDGbLPVW36lfAHbhXV7XD34LX7sRaYoSScg96IXDI6X0+r
-         eVIOxe9ah7CXg39sYaCnsmB1IsjsCxXEGh1p7a5ax+XGRRApoyzkuo4lcr3wLYQuUVBs
-         KdNEizXU7ZO/8sgpdc4r/L1NKcsPx3lPbRV+0KVK7+KldMyzUfsXyFNGAYIAeES1MuWV
-         iHnNZgx1oq98oODXiCv9vngm3sbab+qU7NjByiRSiyW/z5FhvKmeFEQ1c0mXJ06Jq/vO
-         R8uPATexhUwwv2joAlTAdSr3vNhios04hd91Zw/xRL9b5YIPLtOTqHmoeeeooI72JE9H
-         qnuA==
-X-Gm-Message-State: AOAM530K07DgLtbA9rKsvSv1gqBVrTWtsuqCWy3avsadfvOO/0q+LBPp
-        dUrQF4TDZxw6xTHydX/UaGA=
-X-Google-Smtp-Source: ABdhPJzsjXF/nxrfI3TZ0GMo+zqOxoIxIzmQL9S/xmH1gKlXfNdrp3h30Ywz87uXUkvx0/YLx87XoQ==
-X-Received: by 2002:a65:63d4:: with SMTP id n20mr17044854pgv.213.1595781086491;
-        Sun, 26 Jul 2020 09:31:26 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain ([144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 199sm12586950pgc.79.2020.07.26.09.31.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Jul 2020 09:31:25 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
+        id S1726753AbgGZQ4h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 12:56:37 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62795 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726042AbgGZQ4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jul 2020 12:56:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ADD90D3EA7;
+        Sun, 26 Jul 2020 12:56:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=95jTNFNnIVX6w3uql5vpJJ5WKBg=; b=QEUdvj
+        G91DpjcQlijGtxDMGXTB7qTAaQs6d0nRNlUFOr4lGPwxACjuhbJ249K/dRsZ4kkT
+        hSwyScP2ZXubFMb/5ifLm87n/IynmN/BZBYegNTA56koc4qj2OW7kZjGSo0kRvNi
+        JyrVTfXvTwXMsQxa1z3RtIsjnlTS+k+V+0V9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=F5QPxvIGFo7RRBks1ySox6K/fyoNM+nb
+        xdmCyG6juIDKHYdNR+4Mgyo45J+yZvtDBt7cJD+Sec6TOaMVciouwb+zdljl2z1j
+        EC1mjfUuGkeGzH023D7xfB2kpWunbCyw61c/MvremcsYEL+jSgS/vJMnq46eW0qh
+        kkfoIAG6wU0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A557AD3EA6;
+        Sun, 26 Jul 2020 12:56:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E7DD0D3EA5;
+        Sun, 26 Jul 2020 12:56:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
         Alessandro Menti <alessandro.menti@alessandromenti.it>,
         Christopher Diaz Riveros <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Emir=20Sar=C4=B1?= <bitigchi@me.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Emir =?utf-8?Q?Sar=C4=B1?= <bitigchi@me.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
         Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
         Peter Krefting <peter@softwolves.pp.se>,
         Ralf Thielow <ralf.thielow@gmail.com>,
         Tran Ngoc Quan <vnwildman@gmail.com>,
         Yi-Jyun Pan <pan93412@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        =?utf-8?B?xJBv?= =?utf-8?B?w6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.28.0 round 1
-Date:   Sun, 26 Jul 2020 12:31:19 -0400
-Message-Id: <20200726163119.21834-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
+Subject: Re: [GIT PULL] l10n updates for 2.28.0 round 1
+References: <20200726163119.21834-1-worldhello.net@gmail.com>
+Date:   Sun, 26 Jul 2020 09:56:30 -0700
+In-Reply-To: <20200726163119.21834-1-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Sun, 26 Jul 2020 12:31:19 -0400")
+Message-ID: <xmqq7duqi5a9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F4D5B720-CF60-11EA-A424-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Please pull the following l10n updates for Git 2.28.0.
+> The following changes since commit bd42bbe1a46c0fe486fc33e82969275e27e4dc19:
+>
+>   Git 2.28-rc0 (2020-07-09 14:00:45 -0700)
+>
+> are available in the Git repository at:
+>
+>   git@github.com:git-l10n/git-po.git tags/l10n-2.28.0-rnd1
 
-The following changes since commit bd42bbe1a46c0fe486fc33e82969275e27e4dc19:
-
-  Git 2.28-rc0 (2020-07-09 14:00:45 -0700)
-
-are available in the Git repository at:
-
-  git@github.com:git-l10n/git-po.git tags/l10n-2.28.0-rnd1
-
-for you to fetch changes up to 05b3a3d73048c4284361cc75242d22d9c8a20a9f:
-
-  Merge branch 'master' of github.com:Softcatala/git-po (2020-07-27 00:05:41 +0800)
-
-----------------------------------------------------------------
-l10n-2.28.0-rnd1
-
-----------------------------------------------------------------
-Alessandro Menti (1):
-      l10n: it.po: update the Italian translation for Git 2.28.0 round 1
-
-Christopher Diaz Riveros (1):
-      l10n: es: 2.28.0 round 1
-
-Emir Sarı (1):
-      l10n: tr: v2.28.0 round 1
-
-Jean-Noël Avila (1):
-      l10n: fr v2.28.0 round 1
-
-Jiang Xin (6):
-      l10n: git.pot: v2.28.0 round 1 (70 new, 14 removed)
-      Merge branch 'master' of github.com:nafmo/git-l10n-sv
-      Merge branch 'fr_v2.28.0_rnd1' of github.com:jnavila/git
-      Merge branch 'l10n/zh_TW/200716' of github.com:l10n-tw/git-po
-      l10n: zh_CN: for git v2.28.0 l10n round 1
-      Merge branch 'master' of github.com:Softcatala/git-po
-
-Jordi Mas (1):
-      l10n: Update Catalan translation
-
-Matthias Rüster (1):
-      l10n: de.po: Update German translation for Git v2.28.0
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation (4931t0f0u)
-
-Ralf Thielow (1):
-      l10n: de.po: fix grammar
-
-Trần Ngọc Quân (1):
-      l10n: vi.po(4931t): Updated translation for v2.28.0
-
-Yi-Jyun Pan (1):
-      l10n: zh_TW.po: v2.28.0 round 1 (0 untranslated)
-
-Đoàn Trần Công Danh (1):
-      l10n: vi.po: correct "ident line" translation
-
- po/ca.po    |  854 +++++++++----------
- po/de.po    | 2586 ++++++++++++++++++++++++++++++-------------------------
- po/es.po    | 2728 +++++++++++++++++++++++++++++++++--------------------------
- po/fr.po    | 2552 ++++++++++++++++++++++++++++++-------------------------
- po/git.pot  | 2452 +++++++++++++++++++++++++++++------------------------
- po/it.po    | 2536 ++++++++++++++++++++++++++++++------------------------
- po/sv.po    | 2526 ++++++++++++++++++++++++++++++------------------------
- po/tr.po    | 2505 ++++++++++++++++++++++++++++++------------------------
- po/vi.po    | 2548 ++++++++++++++++++++++++++++++-------------------------
- po/zh_CN.po | 2490 +++++++++++++++++++++++++++++------------------------
- po/zh_TW.po | 2540 +++++++++++++++++++++++++++++++------------------------
- 11 files changed, 14504 insertions(+), 11813 deletions(-)
-
---
-Jiang Xin
+Thanks.  Pulled.
