@@ -2,103 +2,91 @@ Return-Path: <SRS0=BIPJ=BF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E146FC433E4
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 23:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C552C433E1
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 23:42:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B16C52070B
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 23:41:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="e/SNX19U"
+	by mail.kernel.org (Postfix) with ESMTP id 6F8A22070B
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 23:42:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727987AbgGZXll (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 19:41:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40812 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726736AbgGZXll (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 19:41:41 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3D824607A2;
-        Sun, 26 Jul 2020 23:41:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595806900;
-        bh=Z/VkdLsj4oixw7BT8+m+UUQcNDKcANEmbTfl3SMRMIA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=e/SNX19UFVFr5CodnLHujy4VtkjQiO2h03ct7pZXG7eIzoI3kXOa7VK9+qUG5xE5G
-         BGTEYnFDR9SbzgRA1+PzR1m8oRRLv49dX4T2xRrHyPYBKTWW7WMFiLyj3M7FxA0AUJ
-         4DciVrI2U+/jmHMYNBcN5UhA7MSqye5hPYrw6XTiOrk8O7kJHW9X9S+eTtCmgAZoTZ
-         +j3V/Z/nCkxlr8JMFlt9X3Vvr1jvZYvaZCQtrc3yKXb7Xyq+qatZ51ETZ1VWs18pvW
-         alF0nnvT/sqcIG4amQQnI8covirgWH0mRqUaGQzJSrlwPRD2Mkp5wKz1qwdIyE+9LX
-         CAi5vIfc5CE5IQnnXLDgVdlROsw+JFW0iCyrt7EdHkexxh9jYDZrXaf3zWPIZuU3i9
-         AbUzHopXc7V3xSc1+tHUZAHnKrHFIzLR3SJWH5wW5fDoBUwYl8G5N6QSlyWnTtLtJX
-         /J1QOYV7qqRFak5NjeqxZqyJhXosOi7vRJzKtIvpNWT18x9V9Mu
-Date:   Sun, 26 Jul 2020 23:41:35 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v4 32/39] setup: add support for reading
- extensions.objectformat
-Message-ID: <20200726234135.GE6540@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-References: <20200726195424.626969-1-sandals@crustytoothpaste.net>
- <20200726195424.626969-33-sandals@crustytoothpaste.net>
- <CAPig+cSaqwwtOitm3_3kF+q9TaputNAnz78qBb-7PfrZcqUDVg@mail.gmail.com>
+        id S1727969AbgGZXmF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 19:42:05 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54050 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726736AbgGZXmF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jul 2020 19:42:05 -0400
+Received: by mail-wm1-f66.google.com with SMTP id g8so1336529wmk.3
+        for <git@vger.kernel.org>; Sun, 26 Jul 2020 16:42:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Nv2aDeJNIsAuqYNlPaxnujTf7nli6DbN+kN/ekqVXV4=;
+        b=T/uHyAA5kE0W9Y3R07ZbCwqsm3TruaoAnphil9gaYbPtCcOcnDhJwKEZyvwc9XT4jP
+         NvAwSnx234cjfrEmI+Tdj7OvEHNbFX2BEDqsdcD3u58ZZZXrPXaETHh7ooG9zEX6riL1
+         zhP5DRhjh+CbGPl67pwbi/JFhABD9MgceNyCDh2dPkeY7fOH6jTXdjYAKZEOcQKBC+Gf
+         LE6eAmeGCGwDXojEzV5V5zOdc527y+CefEIR4mfyuiNM28BmqV1POf3OZ15T/FSg0Uj/
+         CNWZDvzDxcfJ4jfhUWXUBlLqXgHIVqQlC0I0CgV4VW79sFVrKBIasHm8QG4qfXzhyb1a
+         IDaQ==
+X-Gm-Message-State: AOAM533olmsC75wtCjj91Do+IoQVHYsW78GxcslK3UuVUkEG8kE/EU7A
+        5tQaqGTOoJvPUpEicrgaHAT9ai54ryIRykDHrMN3dsT5tbA=
+X-Google-Smtp-Source: ABdhPJxKCKVeYrR+ak0OkbCpBCFR/Rhc0ho6TmvgK644/4GAUggt08zj3NayIR+k9oe7akXJkwVc5Zaz7j0/bR1Xzgk=
+X-Received: by 2002:a1c:c90d:: with SMTP id f13mr17854434wmb.107.1595806923498;
+ Sun, 26 Jul 2020 16:42:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/2994txjAzEdQwm5"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cSaqwwtOitm3_3kF+q9TaputNAnz78qBb-7PfrZcqUDVg@mail.gmail.com>
-User-Agent: Mutt/1.14.5 (2020-06-23)
+References: <20200726195424.626969-1-sandals@crustytoothpaste.net> <20200726195424.626969-34-sandals@crustytoothpaste.net>
+In-Reply-To: <20200726195424.626969-34-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 26 Jul 2020 19:41:52 -0400
+Message-ID: <CAPig+cSbpb_eySzumaCYRzHhLOJQa_950QDEBzRNjhS5w+HZMw@mail.gmail.com>
+Subject: Re: [PATCH v4 33/39] Enable SHA-256 support by default
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jul 26, 2020 at 3:56 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Now that the we have a complete SHA-256 implementation in Git, let's
 
---/2994txjAzEdQwm5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reader trips over "Now that the we".
 
-On 2020-07-26 at 23:34:23, Eric Sunshine wrote:
-> Not necessarily worth a re-roll, but this error message could be more
-> helpful by providing additional context:
->=20
->     return error("invalid value for extensions.objectFormat: %s", value);
->=20
-> Notice I also capitalized "Format" since this is a user-facing message.
->=20
-> Also, should this message be localizable _(...)?
+> enable it so people can use it.  Remove the ENABLE_SHA256 define
+> constant everywhere it's used.  Add tests for initializing a repository
+> with SHA-256.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> @@ -441,6 +441,35 @@ test_expect_success 're-init from a linked worktree' '
+> +test_expect_success 'init honors GIT_DEFAULT_HASH' '
+> +       GIT_DEFAULT_HASH=sha1 git init sha1 &&
+> +       git -C sha1 rev-parse --show-object-format >actual &&
+> +       echo sha1 >expected &&
+> +       test_cmp expected actual &&
+> +       GIT_DEFAULT_HASH=sha256 git init sha256 &&
+> +       git -C sha256 rev-parse --show-object-format >actual &&
+> +       echo sha256 >expected &&
+> +       test_cmp expected actual
+> +'
 
-This message is actually going away and Junio's merge into seen removes
-it entirely in favor of Peff's solution.  So I'm going to leave it as it
-is to improve conflict resolution since it won't live much longer than
-this specific series, and may not even live that long depending on the
-release and when Peff's series gets merged in.
---=20
-brian m. carlson: Houston, Texas, US
+By testing GIT_DEFAULT_HASH with two different values, this test does
+a reasonable job of convincing readers that GIT_DEFAULT_HASH is indeed
+respected.
 
---/2994txjAzEdQwm5
-Content-Type: application/pgp-signature; name="signature.asc"
+> +test_expect_success 'init honors --object-format' '
+> +       git init --object-format=sha256 explicit &&
+> +       git -C explicit rev-parse --show-object-format >actual &&
+> +       echo sha256 >expected &&
+> +       test_cmp expected actual
+> +'
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCXx4UrwAKCRB8DEliiIei
-gYLMAQCVwfb8Q2T42Gm/kCc8lubmQwbEI8eJJWSefiKa3Qxq+QD+Mq22NYTRBW4g
-pLawilD9HkPiPs5ELeqD3Iwr424BMgI=
-=pgxo
------END PGP SIGNATURE-----
-
---/2994txjAzEdQwm5--
+However, by testing only --object-format=sha256, neither the reader
+nor the test can be sure that the reported object format came from
+--object-format= or from the default value used by git-init.
