@@ -2,131 +2,102 @@ Return-Path: <SRS0=BIPJ=BF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10547C433E4
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 17:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DEDBC433E3
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 17:41:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5846206D8
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 17:41:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3A3C206D8
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 17:41:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="AnXV+s18"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="Zh6q6TAN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726973AbgGZRlT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 13:41:19 -0400
-Received: from mout.web.de ([212.227.15.4]:43155 "EHLO mout.web.de"
+        id S1726801AbgGZRlP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 13:41:15 -0400
+Received: from mout.web.de ([212.227.15.3]:59765 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726117AbgGZRlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Jul 2020 13:41:19 -0400
+        id S1726117AbgGZRlP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jul 2020 13:41:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1595785265;
-        bh=yTtMwp73pLWOt9TfeSNd71nkwsxKg9BtA6nj6TrCrsg=;
-        h=X-UI-Sender-Class:From:Subject:To:Cc:References:Date:In-Reply-To;
-        b=AnXV+s18bE6590hLn2HwjnBSKcRSz+vZnrtpadDqV+aNhuTfd2QgKF0AOmDuGIOMj
-         8aynWfm/SFA4DHGEfGf4ONZC7UsszFBr2fy1zWGNMwMAnvzp86JQ0oeC/wif7jlXT4
-         9KaCUY0C4QHGQRR9uIGptvMiJ9ZWX0LbgKI5kvXo=
+        s=dbaedf251592; t=1595785273;
+        bh=pm/rbGA9sbS5qaTTgZEdX/lMutxge5u9fcX+Xu3PLHg=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=Zh6q6TANWXX46Sdx5/3s7KMxWlIvussJvfBl7zyVJ85UzLjszp+6Dlb2pvr5HtWQa
+         1+U6DtMEgV6Ln8g77Uho5egmu5y2uYFQsI+KnZ2M4GAaZchNKD8V50rkYWjOcCzWDX
+         Xya78/HgGSShgOepaNgfYNrncN+1ikq4a7r2Xa7E=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MSry9-1kOkJ23BLx-00RnRP; Sun, 26
- Jul 2020 19:41:05 +0200
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M28WT-1jxHns1XEf-002bQD; Sun, 26
+ Jul 2020 19:41:13 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: Verbose commit message diff not showing changes from pre-commit
- hook
-To:     Junio C Hamano <gitster@pobox.com>, Maxime Louet <maxime@saumon.io>
-Cc:     git@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <CADv3qkGq3jA8iXsjhrqfsUX=gW+KOuLyeVgDzmku1tUpsMdvtw@mail.gmail.com>
- <xmqqr1sziqrm.fsf@gitster.c.googlers.com>
- <xmqqk0yripca.fsf@gitster.c.googlers.com>
-Message-ID: <a8c19b13-3f8c-6602-24dd-ef58af70d702@web.de>
-Date:   Sun, 26 Jul 2020 19:41:05 +0200
+Subject: [PATCH] bisect: use oid_to_hex_r() instead of memcpy()+oid_to_hex()
+Message-ID: <c2f9ec40-71f5-122c-add8-08d6a4bfa859@web.de>
+Date:   Sun, 26 Jul 2020 19:41:12 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqk0yripca.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:p9GYKqbHYvr4VAfGRc6UtFTZO4clowJ9KewAS0nkqtJVKryWWaf
- k7VNhTDOUPFKYdCALn/Oo/a+p7mNmZB8o9u8d6v0wOrsw9sij+7iimjVdZyr2uL3CG7Wpaq
- IPWzfVerJJ49kYKmpAxof3sWUTG4fkh+4Bw8COUag708CnGtqCZON6gTGVyrGGrGhMaVtgw
- e6Au79BoFV/eAuRHsmXxw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8rRPh3Z7ZO0=:kKY6Y0jWcQenzaOAeohz4u
- fQqOSU6sr0C9iTFmS1GB3SO7v3LgeAYlnK2UPBTzGMv9L2G2/yJVQjiaa/QrvTnCIoSou9b+4
- 48hLzlrP0afXhTQnNogeSRm70EYzV2DJGVh4vpP38q3ZHhWCkwlyOTqZ/CfkwjRzZyRStIcfR
- c20ooK+r03a5cwMdWvdN9ZmqLSIQPmZ3AMy9meHoxuyphljfVg6zc251ofeaDDYI3tIUGI85h
- f+8OVN8VDpCEbtvD5YilrNhqDRr299XYyXeW1yvfF9GqbkEajKS2XrlLY+PsFOeacfauh4aLX
- AIJAbTLdD2VPFLyqVCFf1IMZNW+eQ0pdO7XF8GTq8F4tdb7zvN1V7y1Y5YQHWX203nYHSC+kE
- 48dZrRy8MDwtMHKN/qxXPIWQjWXf3D2aicnpSV0235vRGWO3JZCWpDsQ/coUexJ2a8kpO7zdl
- B4qf3goZ+Yxw8ZSiwLDRBJL1RjLQ2zcuJtEH8324DeuyfaDXSvdYxGsr5PJeo1CbTLpmpotSO
- dM9SfnPFQ3/1EIal5yYBxfk+zK1y+vxqPrz8zCLYnNQuC1VuxwqpENuuUqmAY1lsbw2dReHwL
- VXpiwFW4LUTXtZKOHn1TOKjybH7aSD6NX/64QfpGX+luksRil8gWwuRirgUGQzujGReWb9pTc
- ccg0BYZy2Xj/kKLMD35FsjGW2qyY74lL2zP6z/tZHV2LB/a22yyRWm5ZifdREGNJGNdtbPiyC
- 0sfShFsr1OG4XtW1CGKARC0kd2V4QlPA8v+VKbzlJZ7HLNaYW9TcvonqfFi591AI6RPZtvMKW
- CDMtolGHuqw58o2EuGWfBkeBcvxAq9Za9scV3PNuE2GzwjuIb5tuPkp2nrjdUT4yq1WJkHBOu
- On5ocbDw6QHqetpSyYd5Tiw9xlgUxKM/XHms0AgoTkAYf1GodWhGi5kX1Gr+IAoF4je3Eivk+
- VUgYkfukelPHmLmeDIor0fB3WGG8RwLWRZ5PM0PwitYjA3ZdeDLljl1rLVuc1ZNnGCyO62+cb
- Ek9GLK9na0A7qGjmjP7cxZL3AnBymN7oZUApac90QrrUN7hbb4/SUBSUix0dWPhJQsc56baFv
- nEaIB/vbpj3LQ4UDNeBktUQtb3T6j/IrQqTuuwVri7isgwWjkq6xbZppDUgvNMx8iCVpJqAnS
- zk4upUJUfTcMjbjj8gXUDZtStpv6ovIFgZLdLFSSNlWUDeM8rycEgLvB6/sb0AflIa/wMegxb
- gYk9f3OEB4bEpQO/b
+X-Provags-ID: V03:K1:KdMykYGVSrPYLtbKFzogEOPo2c7OajNv04n7FdTAPAzt8Y9bLuJ
+ Z7RijhgYjQeG/dsUFqd/9304xNyDlLR0/cvZHjIa/xBaydRNtyt9fS65bGYbkXE2nolMdhY
+ dylWat2CbDkZzFOxvmmA50pNqv4iBQ3zxdY0sZPt+UAUcZr24xAX7JlsLXuF7phG48/vLfO
+ KsmoMI1deFQjOMt4QKnvg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uViBVKNY1Vg=:lsW6qxLkTCLFx0qNwT10QK
+ 9SPyu73R6Cka3ugbKSS+CUwx45kBWwDNm0qhmNycXKxmHcUv0N7TvMZkLp8+c815Zqb7hT+zT
+ RWV66mOFchJpT3ZfR/DeF6Lms16Q7/nuAeVyZ0lapgkuldZnBE10Jj2B7T7d7njmIka1JDbev
+ +vPF7Gcq410KKDpmtbC0M/22MhrrsKUvmoqh1nf8q9bh15qNnf9MuwI9XL6joxyfeN8rF7riI
+ 2B4EQSX8SC2cksnOSfXBVcYnJW4ojC3pY0FQ6n/hHTfbyU3NxpxzWEWuB3HYAA/lah2q6ebb9
+ 9cwBmKkh3/bYsP+kiWXGen9B3l492N8RRC9sbb773YdPGRHkQ79KmVWe/vec3AquOmvja5d3v
+ l2PJAspXBZEwO+MkXGailiBu+WTwtWakcwsjQyJFw9CXqrCrlxVOBmOO4iz14DkXdoDgDRW/s
+ Z0fYo62NY+C1nwDxoxeytYRK+9/gFgF3nECk8BBk3sLnzrysvr9eptJ5rcqBYJIkPM14Bt9ZT
+ ArDrUBnpc9lCt8V2ZvtgJUlDerA9WOAcz12KrfJ2BLSX+T1UuQ5cDiIdbc421kK3LkOjElB47
+ hoOXOC+/YWsCEs3Dd94gVMNljji+1u9luGsJWevKs5YyaU5Xx9ERO71m619ksvhC5qmKhPIkf
+ jFm45A+dMYagSAbKMiGBcd/kDTrzuIe4TsJb52JbKeeHCIQ5A1fhfSu58zvlDE344ZVHyYSyK
+ Kj+aeqQYMUDl3fwn+m3FqUH+kmxllp121XL+Wp/OfdExjsOm6QmvCLanP5oLntvb2vyqtXka5
+ xUEQP9k83bvFj8KIEch6HHG/9cyA6GWiNJsXcPzRc2B8J/F4kZUCrFmU/VIaaSJftibK3zOBH
+ b2fJSB3yzcIb/xEmmoO22JR0V71OG/Z0Dzs+hspe7Ds7XNPB9odZygiGObf2uGmMVEATS0CQn
+ 9mu0/Mll44IpExLxtXMxJwgckHavB3V+9ldMHgNdsU5Kj1AmWvk0zjJo53OTOLM1ezrMMp9pX
+ SbAg3X3hUWM6tE3Ycsq/FkUjmyVfAGivjNwyO/YqaGeMKIkEonRfx/UDV7ObOPP04RqzXC3oS
+ ppu8XPbNADTLeN3SvBOprVsipff2VzjRaGJGrO+Xi0dpxiQFqjilvzQD4QrW2siIbSkVZfLBh
+ FWfi+AHGMs0Wfjoxcd5eLzrRcUCX6JrF6U/z+/rnNqZ/xhbA+WG/nUMlsxpL/iiY4ploQqHQs
+ JxQkTvIfn1dZcMd6v
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.07.20 um 17:31 schrieb Junio C Hamano:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Maxime Louet <maxime@saumon.io> writes:
->>
->>> Is this expected behaviour? I find it somehow confusing that the diff
->>> in the commit message isn't the actual commit diff.
+Write the hexadecimal object ID directly into the destination buffer
+using oid_to_hex_r() instead of writing it into a static buffer first
+using oid_to_hex() and then copying it from there using memcpy().
+This is shorter, simpler and a bit more efficient.
 
-> Even before ec84bd00 (git-commit: Refactor creation of log message.,
-> 2008-02-05), the code anticipated that pre-commit may touch the index
-> and tried to cope with it.
->
-> However, ec84bd00 moved the place where we re-read the on-disk index
-> in the sequence, and updated a message that used to read:
->
-> -	/*
-> -	 * Re-read the index as pre-commit hook could have updated it,
-> -	 * and write it out as a tree.
-> -	 */
->
-> to:
->
-> +	/*
-> +	 * Re-read the index as pre-commit hook could have updated it,
-> +	 * and write it out as a tree.  We must do this before we invoke
-> +	 * the editor and after we invoke run_status above.
-> +	 */
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ bisect.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-When I read "refactor" in the title, I assume that the patch in
-question doesn't change user-visible behavior.
+diff --git a/bisect.c b/bisect.c
+index d5e830410f..be3ff1e962 100644
+=2D-- a/bisect.c
++++ b/bisect.c
+@@ -709,7 +709,7 @@ static enum bisect_error bisect_checkout(const struct =
+object_id *bisect_rev, int
+ 	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
+ 	enum bisect_error res =3D BISECT_OK;
 
-> Unfortunately there is no mention of the reason why we "must" here.
+-	memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), the_hash_algo->hexsz + 1)=
+;
++	oid_to_hex_r(bisect_rev_hex, bisect_rev);
+ 	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS=
+_DIE_ON_ERR);
 
-@Paolo: Do you perhaps remember the reason?
-
-> I think the "run_status above" is what prepared the patch in the log
-> message template, so it is quite likely that we deliberately did so
-> to exclude whatever munging pre-commit does to the index from
-> appearing in the patch in the verbose mode.  If I have to guess, I
-> think the reason is because pre-commit automation is expected to be
-> some sort of mechanical change and not part of the actual work that
-> the end-user produced, it would become easier to perform the "final
-> review" of "what have I done so far---does everything make sense?"
-> if such "extra" changes are excluded.
-
-Committers review and sign off changes.  Hiding machine-made extra
-changes from them, that they then implicitly also accept responsibility
-for sounds questionable to me.  The prepare-commit-msg hook might be
-a place for such filtering.  But git commit showing the full extent of
-changes (incl. those made by the pre-commit hook) would be a better
-default, wouldn't it?
-
-Ren=C3=A9
+ 	argv_checkout[2] =3D bisect_rev_hex;
+=2D-
+2.27.0
