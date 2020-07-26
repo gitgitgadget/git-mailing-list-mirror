@@ -2,90 +2,109 @@ Return-Path: <SRS0=BIPJ=BF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B85FFC433EA
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A907C433E1
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 21:30:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CA4620719
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:52 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cRBQlenk"
+	by mail.kernel.org (Postfix) with ESMTP id 6E37B2065F
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 21:30:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727889AbgGZTys (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 15:54:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40666 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727862AbgGZTyr (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:54:47 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E77A161013;
-        Sun, 26 Jul 2020 19:54:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595793286;
-        bh=yISpjiYdNb20ay038vbmc40m1f3lZfeDdvoTNXqWBQM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=cRBQlenkxtz8ofhgwjeGamBFWO6uONX9H4CmMmLeoOIEW97vO6ScwL+7k92nF6LpB
-         cIIHCk4Y3sXy9sJZ/l+8W/pyTqnrxfs3FsQG3hOIW3378Ymvrr6thk7V06rRVLva4n
-         OfKeFAC3d1CtyBPt0fb8gY8EnsGyJKQRr0LJK/FuLOBnqGKEBau+iTN+Vrp/VLEHrY
-         8ZgK98fsyzZvVqL5MrYQz4sJekcfxMEuMyeUKIqWsBfcqm7icQ9a0docSNmdpZDCCC
-         NZFU7QuUwbRz/BpCp5xBKwwhJPhOQzT/dEXHtC4auQiri04fhh17oUd9z/jDBLxzw7
-         pCU0YGx0zVFG5dbYvCZHP6ez3euDqSoWyr6LQfIBP8kC8ixit/rxfz7ghF8cwmffAP
-         ISDW3VEW6ocNEqSgzXrOF2zqOhUuSVDzXR9as8Rn4UYlkcQsJb/8Wqs/3DXO4xN5Zq
-         U8yvB+Y6SJJOcGOPFS5C/gRzeD+ouF/U8VYVpAkVninWGxjCPPx
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 12/39] t7201: abstract away SHA-1-specific constants
-Date:   Sun, 26 Jul 2020 19:53:57 +0000
-Message-Id: <20200726195424.626969-13-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.28.0.rc2.160.gd0b3904b262
-In-Reply-To: <20200726195424.626969-1-sandals@crustytoothpaste.net>
-References: <20200726195424.626969-1-sandals@crustytoothpaste.net>
+        id S1726753AbgGZVaA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 17:30:00 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:46508 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726082AbgGZV37 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jul 2020 17:29:59 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r12so12891173wrj.13
+        for <git@vger.kernel.org>; Sun, 26 Jul 2020 14:29:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B18NhWuuus2WoIksiS6Roy6jJoYF/EfQ6VH96os9bF8=;
+        b=q0Q0DzDj/g2AF3EQXwRY4IfCPpAxUkbiRFLEskSlJ6hgDQMNg4pXL37YMDJUH1XKNF
+         +5we5yG2YqVcJyQsTodN+FE8ffqjMHd9HLDejbv86vmkwyCd6vdbFyVD8255JzUxHeQw
+         +Cc63m4TdE7oDgsHy47DrGwg3P7WxR4w+PagOFAErBPsi6aTETKvyJROqV1Lo9mTYqiR
+         XJYNXpII8Pbt0GU66YdaeMvuZvJ8MxhdrC6cz9u0ewNWaYPW5jCG+ia1vZNpx3O/2ZCi
+         8piyqBlerktDcHQQcLqgN8A2PIsxeJCV7hEUBVhl6jYobInMf26H6qnEucFwQS7EAN+U
+         sX/g==
+X-Gm-Message-State: AOAM533o52T2dMtTBaQ4OqBhuagD+AEN4wymajfD4Qc8gD7V4+/7dMQD
+        sLNg1ArF6rmDmar57o2XeoRcraqUNkRY2p0+fq/tRFB5
+X-Google-Smtp-Source: ABdhPJw3pWiloKhmRprCb9rAPkxpWlEDueXOciBPSE9lM089k/ULlugePraBLsXq+34L8h0/4RM0PLes2ZsWcAjNnKA=
+X-Received: by 2002:a5d:540c:: with SMTP id g12mr9500682wrv.120.1595798997722;
+ Sun, 26 Jul 2020 14:29:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20200726195424.626969-1-sandals@crustytoothpaste.net> <20200726195424.626969-31-sandals@crustytoothpaste.net>
+In-Reply-To: <20200726195424.626969-31-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 26 Jul 2020 17:29:46 -0400
+Message-ID: <CAPig+cRUj2RGz1=+3EDr5G_Mq2sXPnztCr-iPDGH+WycQ2iwjA@mail.gmail.com>
+Subject: Re: [PATCH v4 30/39] builtin/verify-pack: implement an
+ --object-format option
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for object IDs instead of
-using hard-coded hashes.
+On Sun, Jul 26, 2020 at 3:56 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> A recently added test in t5702 started using git verify-pack outside of
+> a repository.  While this poses no problems with SHA-1, with SHA-256 we
+> implicitly rely on the setup of the repository to initialize our hash
+> algorithm settings.
+>
+> Since we're not in a repository here, we need to provide git verify-pack
+> help to set things up properly.  git index-pack already knows an
+> --object-format option, so let's accept one as well and pass it down to
+> our git index-pack invocation.  Since we're now dynamically adjusting
+> the elements in argv, let's switch to using struct argv_array to manage
+> them.  Finally, let's make t5702 pass the proper argument on down to its
+> git verify-pack caller.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- t/t7201-co.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+A few comments below... use your own judgment as to whether they are
+worth a re-roll.
 
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index b696bae5f5..d4fd760915 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -230,9 +230,10 @@ test_expect_success 'switch to another branch while carrying a deletion' '
- test_expect_success 'checkout to detach HEAD (with advice declined)' '
- 
- 	git config advice.detachedHead false &&
-+	rev=$(git rev-parse --short renamer^) &&
- 	git checkout -f renamer && git clean -f &&
- 	git checkout renamer^ 2>messages &&
--	test_i18ngrep "HEAD is now at 7329388" messages &&
-+	test_i18ngrep "HEAD is now at $rev" messages &&
- 	test_line_count = 1 messages &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
-@@ -250,7 +251,7 @@ test_expect_success 'checkout to detach HEAD' '
- 	git config advice.detachedHead true &&
- 	git checkout -f renamer && git clean -f &&
- 	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
--	grep "HEAD is now at 7329388" messages &&
-+	grep "HEAD is now at $rev" messages &&
- 	test_line_count -gt 1 messages &&
- 	H=$(git rev-parse --verify HEAD) &&
- 	M=$(git show-ref -s --verify refs/heads/master) &&
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
+> @@ -7,21 +7,28 @@
+> +static int verify_one_pack(const char *path, unsigned int flags, const char *hash_algo)
+>  {
+> +       struct argv_array argv = ARGV_ARRAY_INIT;
+> +       struct strbuf arg = STRBUF_INIT, hash_arg = STRBUF_INIT;
+>
+> +       if (hash_algo) {
+> +               strbuf_addf(&hash_arg, "--object-format=%s", hash_algo);
+> +               argv_array_push(&argv, hash_arg.buf);
+> +       }
+
+Rather than bothering with a separate strbuf, this would be easier:
+
+    argv_array_pushf(&argv, "--object-format=%s", hash_algo);
+
+Doing so would also fix a secondary problem that 'hash_arg' is being leaked.
+
+> @@ -31,9 +38,9 @@ static int verify_one_pack(const char *path, unsigned int flags)
+> -       index_pack.argv = argv;
+> +       index_pack.argv = argv.argv;
+
+'struct child_process' already has an 'args' member which is a 'struct
+argv_array' of which you can take advantage instead of creating your
+own local 'argv' in this function. run_command() automatically clears
+the built-in 'argv_array', which frees you the effort of having to do
+so manually.
+
+>         err = run_command(&index_pack);
+> @@ -47,6 +54,7 @@ static int verify_one_pack(const char *path, unsigned int flags)
+>         strbuf_release(&arg);
+> +       argv_array_clear(&argv);
+
+This is where 'hash_arg' is being linked. This is also where you could
+eliminate the call to argv_array_clear() if you take advantage of the
+'argv_array' already provided by 'child_process'.
