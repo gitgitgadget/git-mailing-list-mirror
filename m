@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F0AC433F2
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C3DFC433F4
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4A062065F
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1829E2065F
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vjI5swlb"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="RtrsUtWP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727956AbgGZTyx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 15:54:53 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40666 "EHLO
+        id S1727962AbgGZTyy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 15:54:54 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40716 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727898AbgGZTyu (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:54:50 -0400
+        by vger.kernel.org with ESMTP id S1726244AbgGZTyv (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:54:51 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 38C2F607A2;
-        Sun, 26 Jul 2020 19:54:49 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1C3A461013;
+        Sun, 26 Jul 2020 19:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595793289;
-        bh=RpVYnItus+HxXa/K46QzWilqF94JaaAdzDof62lZ1fU=;
+        s=default; t=1595793290;
+        bh=nz4+OtGq3fE7rGU2uzYwanb+xiaiZY8Q9Rnalz28LGI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=vjI5swlbf22BpC8zFYOMN8mYBfiztGHY+ATq9beegm5XzArRGUeOWRVRC4oyf4u02
-         AgWYzUV2vM0k9cnIFo5goKBIg3hp616VdXwmZeiABOyWaMdy0EaOOKOYc7SeqM7JC1
-         el2sZ0LoHfj7F9Vleie7U1QdtqNe9B1VxvGHpc+s/J2CjUebq6gmbHY9YCkMIRuKEp
-         OqtU4t0EAaAVcqqVi2Jx8+MaK1JJHWSr+7LvW00BndhfLco6CvlGwuRgQ27io7Nv6m
-         sESeB3la/bzFMoK0IHyFsN0ga8UwNnITEzuSOmmaiOL/lWaV/Xm0I+BXB7eN8Lg9Kp
-         sz7MxlnRMrUcVUTye34PfivL1alxOxb4wLBkJnmbDDHXFG1pg902E543G3PpJ+j8kP
-         QsENpcrTI/ICNBHUyKSAmBrYVwRatIxInnGYbrNh4O4N0JK9gXDzXEqdPh+UpGmUpx
-         LJpvkkjVKL5hjtaK+A5FHRKZ65C5jDwzmaBDD/jZ9suuXmaVPRE
+        b=RtrsUtWPNPKUqw6XC84oco++Ef0sgCwJytPL5GKdK9+64XCBWTOxtncIYdabIi5rP
+         C3BITYVlctiUvrPK7dmmy2aKbZTkkdSk0OPEz0Tgf6qRTNMGrKeqmi9T8ReMWUZ7UA
+         l5A9Y46kEyILsusy08itwWQM/bC6RrKVqeE9ztn+YHc6aXDAohnusS2yo22jke/bx/
+         reaV3JGhnoHTdQm9CF1tQCA1wg5jfg4ZAmuVIArQTqeVHoQzZERZHbmLG/ETZaDEN/
+         3qa/4UVZeL8JE9lW/3zvm6aPaTcr5IIpXRvLruG9L1afqNGGyCNC7ssKZ2O50Yovlf
+         ZKbSHqpg/GxUyHgXplYJ88bqY0LXlMCUd7VhQsEx83IZFKLWZbnONDReJkpkBVxGvq
+         6L25G1Kixn9zxxJGa+QBw0YbLpskJwH1oLyQrUIwXYZCofsanuAnNM7UHsre7PpxE7
+         +WcMI2040cO7kYTjw+ECkE9gMLdOIO/H+ZXLUC/ynZBZvYE9YV2
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 18/39] t8002: make hash size independent
-Date:   Sun, 26 Jul 2020 19:54:03 +0000
-Message-Id: <20200726195424.626969-19-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 20/39] t8011: make hash size independent
+Date:   Sun, 26 Jul 2020 19:54:05 +0000
+Message-Id: <20200726195424.626969-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc2.160.gd0b3904b262
 In-Reply-To: <20200726195424.626969-1-sandals@crustytoothpaste.net>
 References: <20200726195424.626969-1-sandals@crustytoothpaste.net>
@@ -56,52 +56,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compute the length of an object ID instead of of hard-coding 40-based
-values.
+Allow lines which start with either a 40- or 64-character hex object ID,
+to allow for both SHA-1 and SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t8002-blame.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ t/t8011-blame-split-file.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index eea048e52c..557c886559 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -6,6 +6,10 @@ test_description='git blame'
- PROG='git blame -c'
- . "$TEST_DIRECTORY"/annotate-tests.sh
- 
-+test_expect_success 'setup' '
-+	test_oid_init
-+'
-+
- test_expect_success 'blame untracked file in empty repo' '
- 	>untracked &&
- 	test_must_fail git blame untracked
-@@ -105,17 +109,18 @@ test_expect_success 'blame --abbrev=<n> works' '
- '
- 
- test_expect_success 'blame -l aligns regular and boundary commits' '
--	check_abbrev 40 -l HEAD &&
--	check_abbrev 39 -l ^HEAD
-+	hexsz=$(test_oid hexsz) &&
-+	check_abbrev $hexsz         -l HEAD &&
-+	check_abbrev $((hexsz - 1)) -l ^HEAD
- '
- 
--test_expect_success 'blame --abbrev=40 behaves like -l' '
--	check_abbrev 40 --abbrev=40 HEAD &&
--	check_abbrev 39 --abbrev=40 ^HEAD
-+test_expect_success 'blame --abbrev with full length behaves like -l' '
-+	check_abbrev $hexsz         --abbrev=$hexsz HEAD &&
-+	check_abbrev $((hexsz - 1)) --abbrev=$hexsz ^HEAD
- '
- 
--test_expect_success '--no-abbrev works like --abbrev=40' '
--	check_abbrev 40 --no-abbrev
-+test_expect_success '--no-abbrev works like --abbrev with full length' '
-+	check_abbrev $hexsz --no-abbrev
- '
- 
- test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+diff --git a/t/t8011-blame-split-file.sh b/t/t8011-blame-split-file.sh
+index 831125047b..8a4626d496 100755
+--- a/t/t8011-blame-split-file.sh
++++ b/t/t8011-blame-split-file.sh
+@@ -54,7 +54,7 @@ test_expect_success 'setup simulated porcelain' '
+ 	cat >read-porcelain.pl <<-\EOF
+ 	my $field = shift;
+ 	while (<>) {
+-		if (/^[0-9a-f]{40} /) {
++		if (/^[0-9a-f]{40,64} /) {
+ 			flush();
+ 			$hash = $&;
+ 		} elsif (/^$field (.*)/) {
