@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9DC4C433E1
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDC80C433E3
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83E9E2065F
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7E9020715
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Fyh2WNzh"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="gVKGlGPm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727103AbgGZTym (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 15:54:42 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40652 "EHLO
+        id S1727775AbgGZTyn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 15:54:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40656 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726801AbgGZTyl (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:54:41 -0400
+        by vger.kernel.org with ESMTP id S1726832AbgGZTym (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:54:42 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CE6EE607E8;
-        Sun, 26 Jul 2020 19:54:40 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 599E6609CF;
+        Sun, 26 Jul 2020 19:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1595793281;
-        bh=Ni60BVyy3697LdUPCNff0L0kAJ2/erkulVYjnf5hQSc=;
+        bh=kzD44krolsMhdpvZfmNLjC7VTRRu/RTNvK14D0Rz7Vo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Fyh2WNzhWMh79migcveGLGD851Y7iFcGi4towx4Dx2n06tLKxvP7JNx2VW5bMpbcH
-         sCpD4by17RO7D/ugJqcJehllLC992tgIR5XnO/5Xdfi1ojdu4LZ+59GxqCch6RiuS3
-         MsdNMTL1B+nDGnYzOHLbNtk+YAXpLvkWhdVqPiXMxmwI+LhwsOscGBAOi7It7sxLt4
-         oQoAA2pdUmI9XBbRGZ6qKG25SDu39ygaPUAuWUv84d+1L84uYr1ZcgxHEDcJ4yA4au
-         vI4VYACRwg+wAB2fmpWjaO1yKgZNIjVPZwH1oMRWLaS7JFybmVih+7I5ff9Z2OZUPY
-         N/8h+OwRmR+APd7HKl5gF5NffOfNOsBCS0EsfKziIGpWR1wiaBwmXC7sH5fPAzT8HS
-         uAeEONnBmSvh2bz6k5NaG2p7AK5OSMayALplJkjnAwkq+C/HBx0K8v0ARZ2dIavDo6
-         OhNWP6SS1mtp1kyKO2LwftU2fdpIFRHrSkC41ucN9FOIR771E2a
+        b=gVKGlGPmc15EOc8eseGsMHZvLrTrQ4jgf5iks6m4BYaUh4Cpbvh8Y52rLKXHuBeDQ
+         8P+HVTHfRwnl2s4IVoOMtXKKcRIi2c5lEpwGWUJ6HfKM5lHpdMC19UzHpkwlSBsBK7
+         g6oEBNRx4Bho4p+UfMPMpnQb/kb9XEKKwUfGgWrE39cBfsTry/gytUvKjmU3xzHwry
+         HAL7RGeKARpwjxuzIqdUlOiI7DJg8DmDQfVj/2HFQR28B6mBO2M040EAP+X6zDdx0a
+         q3AbfXpm0rADDYj7Ym0YkpaPhkgl1kU0E/Sa/Hm9Zf8wCIlmz6G9r2qoRE3SkVRcvK
+         /TpZ4BNL8SnfncStQjx2fMnP9S4iQfhHucF/KesbMWMUpBZSCvp2LlgcRw/0oQI7D7
+         QOPitZVnCY27R1pKSXRQrTRb5lK8rwfVSmOVJMVkqIwOVuydaBymlPZW/XZK7fMXs6
+         S+BbIQ3VMKIwh/qK5LxKOvT8aTAth4KZX0/ZC4iCFlXQ0GIlH00
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 01/39] t: make test-bloom initialize repository
-Date:   Sun, 26 Jul 2020 19:53:46 +0000
-Message-Id: <20200726195424.626969-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 02/39] t1001: use $ZERO_OID
+Date:   Sun, 26 Jul 2020 19:53:47 +0000
+Message-Id: <20200726195424.626969-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc2.160.gd0b3904b262
 In-Reply-To: <20200726195424.626969-1-sandals@crustytoothpaste.net>
 References: <20200726195424.626969-1-sandals@crustytoothpaste.net>
@@ -56,27 +56,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The bloom filter code relies on reading object IDs using parse_oid_hex.
-In order to make that work with an appropriate size, we need to have
-initialized the repository's hash algorithm.  Since the values we're
-processing depend on the repository in use, let's set up the repository
-when we run the test helper.
+Use $ZERO_OID to make the test hash independent.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/helper/test-bloom.c | 2 ++
- 1 file changed, 2 insertions(+)
+ t/t1091-sparse-checkout-builtin.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
-index f0aa80b98e..5e77d56f59 100644
---- a/t/helper/test-bloom.c
-+++ b/t/helper/test-bloom.c
-@@ -50,6 +50,8 @@ static const char *bloom_usage = "\n"
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 7cd45fc139..84acfc48b6 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -369,7 +369,7 @@ test_expect_success 'sparse-checkout (init|set|disable) warns with unmerged stat
+ 	git clone repo unmerged &&
  
- int cmd__bloom(int argc, const char **argv)
- {
-+	setup_git_directory();
-+
- 	if (argc < 2)
- 		usage(bloom_usage);
+ 	cat >input <<-EOF &&
+-	0 0000000000000000000000000000000000000000	folder1/a
++	0 $ZERO_OID	folder1/a
+ 	100644 $(git -C unmerged rev-parse HEAD:folder1/a) 1	folder1/a
+ 	EOF
+ 	git -C unmerged update-index --index-info <input &&
+@@ -396,7 +396,7 @@ test_expect_success 'sparse-checkout reapply' '
+ 	echo dirty >tweak/deep/deeper2/a &&
  
+ 	cat >input <<-EOF &&
+-	0 0000000000000000000000000000000000000000	folder1/a
++	0 $ZERO_OID	folder1/a
+ 	100644 $(git -C tweak rev-parse HEAD:folder1/a) 1	folder1/a
+ 	EOF
+ 	git -C tweak update-index --index-info <input &&
