@@ -2,50 +2,50 @@ Return-Path: <SRS0=BIPJ=BF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C87C433F7
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FBB3C433F1
 	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52BD420715
+	by mail.kernel.org (Postfix) with ESMTP id 710C920738
 	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:54:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="WzynoHaB"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mvtN5EoN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727985AbgGZTy4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 15:54:56 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40712 "EHLO
+        id S1728014AbgGZTy5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 15:54:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40746 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727937AbgGZTyw (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:54:52 -0400
+        by vger.kernel.org with ESMTP id S1726244AbgGZTyz (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:54:55 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 904226101B;
-        Sun, 26 Jul 2020 19:54:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 455B86101C;
+        Sun, 26 Jul 2020 19:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595793291;
-        bh=2Uk60eVF35Xko9Fm5hChI+Nwm1x48yRPe8IdOh07YRA=;
+        s=default; t=1595793294;
+        bh=/X+wx4cEA1CTt7F4mr6dLCr9FnNmF24HxacG5rvkHf4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=WzynoHaBhtwiWgqjmc9ur/XDfxrtfXTIEFAhtioFmGSawYuSwFEpNOSWtLI/7VSWR
-         1pFf1qn70fBb+4ep5aWIU0CrnSAe9ODWcGorae7TtZw/0LkUX8pc5mPWKlDbB6ducW
-         RkcQ0i8ZiFTY7Hm0DCY3HiG1MVyGwuccdO8HRtjxGQE76VCd6BN6MUkQjyYVWiYVnO
-         JM0RmR8KvJR764XDZjTsAAB5BeakKeB3pBuGOTVrnWgpNAUX0BLIfkXLSuBdQB8Nvm
-         V2rEdwuXBcgPsLmAqJHbVIEUN6d0LZpoxl+a+ncBPD9VE09M80JnlM9GeOikh+OW98
-         0Ef3GD2E9i1PvEVwpmhjt7G/pEf8NeGW4GoMxATskiMko4lNXIjhLjXHodEExlAcMc
-         nqyXI8P5Z3NQ0zLC0bc8cQOZBZv90CF7mIwjqD3KWA05txDkEpufvdjyAf7ZYLevyx
-         COXsaDj7VZvX/Ocls5o/0m/CUM+tRVGvdViy39e3VDLoeUOnj9B
+        b=mvtN5EoNGzuw5KH20oWYaCWOVLKAqrQ6DG//pBg8LEKvnoNOsBxiPhIQyjlyG/Fw3
+         TOJbS9WqodH0sEAR3q9ycUgoIaNiMqLTmJMk5j1ckSzMHGQEiODOBaf/hV54ivmzVx
+         QLwbYWQxjTBQ/HxDHKxxRqNupQjW6LF0mKvP+/hNsZfxJy42dWYUaAACKUnPFkteAV
+         VJnB+wsb1ZtgPGgn9jusE2SY6vp4F+lekk1wyUm3hBNug6PcvxvBwm6wy3nhk7g1BL
+         kcmU8ZuSLRj6x48DYGjD0aF/TDPyN+bhkz8cJdrw8tjIygd+1hzHu6RglYWyTKwght
+         JI20MLJ8L4zlrxuwJsaCA33hxqPGc/CcMoesbOeKfM9npm5u5271zZuWWzD6ff7XAm
+         90A5ky+FMRLjJMjj8oS72cN9Xw6Bj/d2MkC1EArBtWht85KNCicqaRUyOA026cKr3d
+         yH6cWNSVvUl475oQD24VNoJb59IaeEZ29yQ5QrIDtkTufCskMVJ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 23/39] t9301: make hash size independent
-Date:   Sun, 26 Jul 2020 19:54:08 +0000
-Message-Id: <20200726195424.626969-24-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 29/39] http-fetch: set up git directory before parsing pack hashes
+Date:   Sun, 26 Jul 2020 19:54:14 +0000
+Message-Id: <20200726195424.626969-30-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc2.160.gd0b3904b262
 In-Reply-To: <20200726195424.626969-1-sandals@crustytoothpaste.net>
 References: <20200726195424.626969-1-sandals@crustytoothpaste.net>
@@ -56,84 +56,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using a hard-coded all-zeros object ID, use $ZERO_OID.
-Compute the length of the object IDs in use and use this instead of
-hard-coding the constant 40.
+In dd4b732df7 ("upload-pack: send part of packfile response as uri",
+2020-06-10), the git http-fetch code learned how to take  ac --packfile
+option.  This option takes an argument, which is the name of a packfile
+hash, and parses it using parse_oid_hex.  It does so before calling
+setup_git_directory.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+However, in a SHA-256 repository this fails to work, since we have not
+set the hash algorithm in use and parse_oid_hex fails as a consequence.
+To ensure that we can parse packfile hashes of the right length, let's
+set up the git directory before we start parsing arguments.
 ---
- t/t9301-fast-import-notes.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ http-fetch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
-index ca223dca98..9d1aaac980 100755
---- a/t/t9301-fast-import-notes.sh
-+++ b/t/t9301-fast-import-notes.sh
-@@ -71,7 +71,7 @@ EOF
- INPUT_END
+diff --git a/http-fetch.c b/http-fetch.c
+index 1df376e745..8db7eb669f 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -86,6 +86,8 @@ int cmd_main(int argc, const char **argv)
+ 	int packfile = 0;
+ 	struct object_id packfile_hash;
  
- test_expect_success 'set up master branch' '
++	setup_git_directory();
++
+ 	while (arg < argc && argv[arg][0] == '-') {
+ 		const char *p;
+ 
+@@ -115,8 +117,6 @@ int cmd_main(int argc, const char **argv)
+ 	if (argc != arg + 2 - (commits_on_stdin || packfile))
+ 		usage(http_fetch_usage);
+ 
+-	setup_git_directory();
 -
-+	test_oid_init &&
- 	git fast-import <input &&
- 	git whatchanged master
- '
-@@ -470,12 +470,13 @@ test_expect_success 'add lots of commits and notes' '
- '
+ 	git_config(git_default_config, NULL);
  
- test_expect_success 'verify that lots of notes trigger a fanout scheme' '
-+	hexsz=$(test_oid hexsz) &&
- 
- 	# None of the entries in the top-level notes tree should be a full SHA1
- 	git ls-tree --name-only refs/notes/many_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -518,7 +519,7 @@ test_expect_success 'verify that importing a notes tree respects the fanout sche
- 	git ls-tree --name-only refs/notes/other_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -593,7 +594,7 @@ test_expect_success 'verify that changing notes respect existing fanout' '
- 	git ls-tree --name-only refs/notes/many_notes |
- 	while read path
- 	do
--		if test $(expr length "$path") -ge 40
-+		if test $(expr length "$path") -ge $hexsz
- 		then
- 			return 1
- 		fi
-@@ -616,7 +617,7 @@ i=$(($num_commits - $remaining_notes))
- for sha1 in $(git rev-list -n $i refs/heads/many_commits)
- do
- 	cat >>input <<INPUT_END
--N 0000000000000000000000000000000000000000 $sha1
-+N $ZERO_OID $sha1
- INPUT_END
- done
- 
-@@ -646,7 +647,6 @@ test_expect_success 'remove lots of notes' '
- '
- 
- test_expect_success 'verify that removing notes trigger fanout consolidation' '
--
- 	# All entries in the top-level notes tree should be a full SHA1
- 	git ls-tree --name-only -r refs/notes/many_notes |
- 	while read path
-@@ -656,7 +656,7 @@ test_expect_success 'verify that removing notes trigger fanout consolidation' '
- 		test "$path" = "deadbeef" && continue
- 		test "$path" = "de/adbeef" && continue
- 
--		if test $(expr length "$path") -ne 40
-+		if test $(expr length "$path") -ne $hexsz
- 		then
- 			return 1
- 		fi
+ 	if (packfile) {
