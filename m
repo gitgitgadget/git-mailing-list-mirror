@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A0B4C433E3
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B43C43463
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:55:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 284872065F
-	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:55:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C3D92065F
+	for <git@archiver.kernel.org>; Sun, 26 Jul 2020 19:55:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bLkBvLJk"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KwHXnPTJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728096AbgGZTzY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jul 2020 15:55:24 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40792 "EHLO
+        id S1728099AbgGZTzZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jul 2020 15:55:25 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40786 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728091AbgGZTzW (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:55:22 -0400
+        by vger.kernel.org with ESMTP id S1727862AbgGZTzT (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Jul 2020 15:55:19 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 261E660CF8;
-        Sun, 26 Jul 2020 19:54:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EBA166101A;
+        Sun, 26 Jul 2020 19:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595793291;
-        bh=6IiTjepVMmW78lRHg0aX51WFBl7W5fj6oZtc81uw/dY=;
+        s=default; t=1595793287;
+        bh=NUMBJgJTDnnaRbInDei/FYetn+BbdtANfNw+W3zGqkA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=bLkBvLJkVba9DztyQWYMr2nTUXI4ENRfjz/YyKZ/M5Fz6Q0qBD2l4HYz5NTABw3Mi
-         vpvaav8ov6Rk1aborpmkq8h2i8SOVcmvD9m27Wti32Yyt4fopTPQdlmQsciolYLsGP
-         eT8MbrXuCygL8K0ZmFtVPdXjuSk6sJkS4JGb/xGMINYhKo7c4CAFuNqL9q6sApQWlr
-         tqCCYJTHHDuylvcDYEL3jgHh+49MCrBfSZ1HZ9P/Hn8IX/jh/BVKm57PnSgjpmS7O1
-         4d3wcy0CjespHTedPYhbHXGG+pOm63GbglupOudks6TxFyder1q1Tg/xTGmX7ULTCx
-         7MbPWjS7Oc48acdyo37Vb7MkNztssYMksOZ4OdT6pjtnEZnjfnR4LkOoqH5sut4NLf
-         9onCqrc3Uv90K9Vv27EJtn18eZfeY3Yh/TnnTB30JP5MoEuBECscdr/VhM3SzpNplq
-         ySdlsJUdWH2Q/bbE3M45xSR1JwskEYtWYvhJ/h01AGMHSM3W3UO
+        b=KwHXnPTJUMv1KoAabiR7Q9NRfuH6t2Dvpzopx2ljpNsoa6nPL5nrgcjhWtjkSxArT
+         HijiLNE32obxEvlRh0OMnMgZDH9hZ9ObJV69uFOg1MNiK8V2Ua3tIy3SCJk0ooNU27
+         OJn47G6S6h6lCusPP1M2j+nABs6Yg8sj8rwkgAqK1Weo7I62sGDQw9Iwd8icboQLCz
+         9eWqtRlG92rkWnZhj+Yqt5nI+92RjKz2OLFcgzUE+F3laQyXoRESSovla3k6ea5qyE
+         Ty4qk+W6nX1RAAdFsFiXaBCxror3jyIodjfCcbDyjFkNrF2e6cMhqf0YeI1vY4KN4k
+         h03rCC6Xvhtawct4XwDuMKsq4WapW6Prg11/kAJfNdopFMif26ywzUoLl5WkJ4n+9d
+         s9GTavOtePQclX8St1PW7NL19dyWa10iWoepAxL+fUtGITcMfLnkWImK4diXe6RzZ+
+         N4+V8WI89pfDbK2LDXuG3lo3w4rYqDxlQdSUMV7l60jhsvWfKjm
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v4 22/39] t9300: use $ZERO_OID instead of hard-coded object ID
-Date:   Sun, 26 Jul 2020 19:54:07 +0000
-Message-Id: <20200726195424.626969-23-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 14/39] t7400: make hash size independent
+Date:   Sun, 26 Jul 2020 19:53:59 +0000
+Message-Id: <20200726195424.626969-15-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.rc2.160.gd0b3904b262
 In-Reply-To: <20200726195424.626969-1-sandals@crustytoothpaste.net>
 References: <20200726195424.626969-1-sandals@crustytoothpaste.net>
@@ -56,77 +56,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Instead of using cut with hard-coded hash sizes, use cut with fields, or
+where that's not possible, sed with $OID_REGEX, so that the tests are
+independent of hash size.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9300-fast-import.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ t/t7400-submodule-basic.sh | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 69d6fa4127..f4b3f5eaf9 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -92,7 +92,7 @@ test_expect_success 'A: create pack from stdin' '
- 	EOF
- 
- 	reset refs/tags/to-be-deleted
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
- 
- 	tag nested
- 	mark :6
-@@ -102,7 +102,7 @@ test_expect_success 'A: create pack from stdin' '
- 	EOF
- 
- 	reset refs/tags/nested
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
- 
- 	tag nested
- 	mark :7
-@@ -285,7 +285,7 @@ test_expect_success 'A: verify pack' '
- 
- test_expect_success 'A: verify diff' '
- 	cat >expect <<-EOF &&
--	:000000 100755 0000000000000000000000000000000000000000 $(git rev-parse --verify master:file2) A	copy-of-file2
-+	:000000 100755 $ZERO_OID $(git rev-parse --verify master:file2) A	copy-of-file2
- 	EOF
- 	git diff-tree -M -r master verify--import-marks >actual &&
- 	compare_diff_raw expect actual &&
-@@ -364,7 +364,7 @@ test_expect_success 'B: fail on invalid blob sha1' '
- 	COMMIT
- 
- 	from refs/heads/master
--	M 755 0000000000000000000000000000000000000001 zero1
-+	M 755 $(echo $ZERO_OID | sed -e "s/0$/1/") zero1
- 
- 	INPUT_END
- 
-@@ -619,8 +619,8 @@ test_expect_success 'D: validate new files added' '
- 	f5id=$(echo "$file5_data" | git hash-object --stdin) &&
- 	f6id=$(echo "$file6_data" | git hash-object --stdin) &&
- 	cat >expect <<-EOF &&
--	:000000 100755 0000000000000000000000000000000000000000 $f6id A	newdir/exec.sh
--	:000000 100644 0000000000000000000000000000000000000000 $f5id A	newdir/interesting
-+	:000000 100755 $ZERO_OID $f6id A	newdir/exec.sh
-+	:000000 100644 $ZERO_OID $f5id A	newdir/interesting
- 	EOF
- 	git diff-tree -M -r branch^ branch >actual &&
- 	compare_diff_raw expect actual
-@@ -2732,7 +2732,7 @@ test_expect_success 'R: corrupt lines do not mess marks file' '
- 	rm -f io.marks &&
- 	blob=$(echo hi | git hash-object --stdin) &&
- 	cat >expect <<-EOF &&
--	:3 0000000000000000000000000000000000000000
-+	:3 $ZERO_OID
- 	:1 $blob
- 	:2 $blob
- 	EOF
-@@ -3083,7 +3083,7 @@ test_expect_success 'T: delete branch' '
- 	git branch to-delete &&
- 	git fast-import <<-EOF &&
- 	reset refs/heads/to-delete
--	from 0000000000000000000000000000000000000000
-+	from $ZERO_OID
- 	EOF
- 	test_must_fail git rev-parse --verify refs/heads/to-delete
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 956e17abb3..fec7e0299d 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1231,7 +1231,7 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
+ 	git submodule add /dir1/b dir1/b &&
+ 	git submodule add /dir2/b dir2/b &&
+ 	git commit -m "first submodule commit" &&
+-	git submodule--helper list dir1/b |cut -c51- >actual &&
++	git submodule--helper list dir1/b | cut -f 2 >actual &&
+ 	echo "dir1/b" >expect &&
+ 	test_cmp expect actual
  '
+@@ -1260,7 +1260,7 @@ test_expect_success 'submodule update --init with a specification' '
+ 	pwd=$(pwd) &&
+ 	git clone file://"$pwd"/multisuper multisuper_clone &&
+ 	git -C multisuper_clone submodule update --init . ":(exclude)sub0" &&
+-	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1271,7 +1271,7 @@ test_expect_success 'submodule update --init with submodule.active set' '
+ 	git -C multisuper_clone config submodule.active "." &&
+ 	git -C multisuper_clone config --add submodule.active ":(exclude)sub0" &&
+ 	git -C multisuper_clone submodule update --init &&
+-	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1290,7 +1290,7 @@ test_expect_success 'submodule update and setting submodule.<name>.active' '
+ 	-sub3
+ 	EOF
+ 	git -C multisuper_clone submodule update &&
+-	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1307,12 +1307,12 @@ test_expect_success 'clone active submodule without submodule url set' '
+ 		git submodule update &&
+ 		git submodule status >actual_raw &&
+ 
+-		cut -c 1,43- actual_raw >actual &&
++		cut -d" " -f3- actual_raw >actual &&
+ 		cat >expect <<-\EOF &&
+-		 sub0 (test2)
+-		 sub1 (test2)
+-		 sub2 (test2)
+-		 sub3 (test2)
++		sub0 (test2)
++		sub1 (test2)
++		sub2 (test2)
++		sub3 (test2)
+ 		EOF
+ 		test_cmp expect actual
+ 	)
+@@ -1328,7 +1328,7 @@ test_expect_success 'clone --recurse-submodules with a pathspec works' '
+ 	EOF
+ 
+ 	git clone --recurse-submodules="sub0" multisuper multisuper_clone &&
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -1345,7 +1345,7 @@ test_expect_success 'clone with multiple --recurse-submodules options' '
+ 		  --recurse-submodules=":(exclude)sub0" \
+ 		  --recurse-submodules=":(exclude)sub2" \
+ 		  multisuper multisuper_clone &&
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1373,7 +1373,7 @@ test_expect_success 'clone and subsequent updates correctly auto-initialize subm
+ 		  --recurse-submodules=":(exclude)sub4" \
+ 		  multisuper multisuper_clone &&
+ 
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	git -C multisuper submodule add ../sub1 sub4 &&
+@@ -1382,7 +1382,7 @@ test_expect_success 'clone and subsequent updates correctly auto-initialize subm
+ 	# obtain the new superproject
+ 	git -C multisuper_clone pull &&
+ 	git -C multisuper_clone submodule update --init &&
+-	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	git -C multisuper_clone submodule status | sed "s/$OID_REGEX //" >actual &&
+ 	test_cmp expect2 actual
+ '
+ 
