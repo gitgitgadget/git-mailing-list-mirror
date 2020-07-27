@@ -2,213 +2,113 @@ Return-Path: <SRS0=S8Id=BG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AD7BC433EC
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 14:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43E24C433E8
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 14:41:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D89A2083B
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 14:25:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 219532083B
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 14:41:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="OCA/B6ty"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qchJK+rV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731441AbgG0OZR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jul 2020 10:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37532 "EHLO
+        id S1733084AbgG0Olt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jul 2020 10:41:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732390AbgG0OZP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jul 2020 10:25:15 -0400
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0005FC0619D5
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 07:25:14 -0700 (PDT)
-Received: by mail-qk1-x742.google.com with SMTP id l23so15397777qkk.0
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 07:25:14 -0700 (PDT)
+        with ESMTP id S1728899AbgG0OHy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jul 2020 10:07:54 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA920C061794
+        for <git@vger.kernel.org>; Mon, 27 Jul 2020 07:07:53 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id g26so15332821qka.3
+        for <git@vger.kernel.org>; Mon, 27 Jul 2020 07:07:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=8o6xxPLx+Qhe6CAx1om6PFV9E75Qr6BYg1JlGpXW0kU=;
-        b=OCA/B6tyYD9jBIyBSOZrWznH4bTPnekijnvD07luZ2Wihh1ZA2a1ue/d0uHQflIp0D
-         HzzHA0XlRGgeyEmyx1I+gj9ukxWvc873ijuu1E/rGHKzGxA0UkYO0Blll/jfh/2kpY+O
-         IFXb1VTdh5umBmuJGyxJXIxRhItOgYHGKx7CP7H0rnZuFbVgLmM0hbNXv0JevhwYAiEe
-         40chZMsJgRgvgEa045q7E9DwxWzVGcvwMUZntPqe93frqUS0EuYo4SDw/ZMfpr2igxwr
-         jO7iUJELYr9nFQ+08AlQHX4gEk6NzqQGgWM5OfdKWqLoy7aBGuDNHGRRKYsojEzru86Z
-         cctw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GO0ZnJzTXvg3BGZfiOeVkK+3m7s1FVX+Z/T42gSZc6I=;
+        b=qchJK+rVHdDduo5Hif5hdMX+JbqNHnpPY9sIbHUrhNrh4sZMP1l04YNQdHrrmTEaoG
+         JeKwYioCoGupHSu9yGGq1vJX4ZmcvJALVf8msceVidaCZpJvAvuSdpSZg1N6cX51ltr+
+         VtmvbL7Yrt85nM3fvdwsRs4XulbctRvVw9O412TtunUlJTPTZDyPtvDAzU4dso8nnNxR
+         VqbXTdK2UegtM/PxvMGkOwklYUUrBzu1ip7iEdXSKvokHkvq/PcmZ/of51n+fvMUxUO4
+         CdIuRn9t7vTzLVDPbWiRX/8AQUz5Vedzc6ZLT6V2IqEL1nj9+MDLNqIkXMhkW8LTOHbJ
+         j2vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=8o6xxPLx+Qhe6CAx1om6PFV9E75Qr6BYg1JlGpXW0kU=;
-        b=bZlZcRBCmA7PErsgT7msVZXboUAFBdzGqRxnoD9Ii064YEAMJ2PRjMwC8cJWlgOAR6
-         ejA4+CpGpdg8RaZnMTfF+rTqbTAD2QrU38Ch/Lvf+oJ3RiWHViPJeLBrPzSDIqc2IlnG
-         aQltEsImSMgrGddcWZFoOL6OA/a5RjAvvAt2QLq3fuYpqACX9s73f3EDNa1PY1Qbo+TO
-         T/cnOodRwrjldtDBr/ujgAVJRKy8tY5vGXBqahgsEs2p40279QGDeV0WC+fGhGlRGzre
-         hOx5BAVcaLwv/2XdcA6bIl10aZrc50kZiCTP5Ws+eoA4Ev2je8dH9yNsVJZyB9P+TPFD
-         2Ekg==
-X-Gm-Message-State: AOAM531Z8laUc/rWmb355cpS9ZwBf90wPImLWGoEy/5bDuVdc/lGvCCz
-        aZwdp4H+9zyHrtt+9AjNbyhB5gL33P+o7w==
-X-Google-Smtp-Source: ABdhPJzNRCvYFN3QrKhkmqUir7bqOMvzBJhKFYfwP6Oe2puM6vatYmN0F84sJsvKCqbH6WqXFN+e2A==
-X-Received: by 2002:a37:7b83:: with SMTP id w125mr22693069qkc.6.1595859913886;
-        Mon, 27 Jul 2020 07:25:13 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:9c58:8530:481a:f835])
-        by smtp.gmail.com with ESMTPSA id 9sm2305536qtg.4.2020.07.27.07.25.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2020 07:25:12 -0700 (PDT)
-Date:   Mon, 27 Jul 2020 10:25:11 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, chriscool@tuxfamily.org, gitster@pobox.com
-Subject: Re: [PATCH v2 0/4] upload-pack: custom allowed object filters
-Message-ID: <20200727142511.GA62919@syl.lan>
-References: <cover.1595468657.git.me@ttaylorr.com>
- <20200723204325.GM11341@szeder.dev>
- <20200724165133.GA15287@syl.lan>
- <20200724195126.GB4013174@coredump.intra.peff.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GO0ZnJzTXvg3BGZfiOeVkK+3m7s1FVX+Z/T42gSZc6I=;
+        b=nXuK1nGxnMhOFX1eU5xAx+ub0e407Y0bfYiBkkr24svLKe7OXup2xq7NbrzF8AIume
+         at1z3O++UapOe8hIBKpHzSpbXh8HTOz6MzJ+jB5GRNxcqSBpu6xlLk4iJ888VdEP2MCC
+         v1r6PoOY4lzcr06y148T112e/0zgB2Ww5OC2BvqIeJnHIwAmfDhjfOzIekk+BUHI2dFd
+         8Mhtu0jv40dJ4EU4HGhzAxiS8FE/S2xi5+ywbNsaAl1/2fHfq1k0gXC/HKIYPzV74fWS
+         mmzv5WTN87FuRNcd4U5EFWZj//18MFc1vGDnv7jjIyXlVLAROCVoxDHqnMEXacV1XR7D
+         XYvQ==
+X-Gm-Message-State: AOAM530RR9ENJVMqj0cxfPNrLrJQKXiOcLBE+vlqy4aTG9D0vEQdOWJj
+        g2tEiPP8qnr3v88mMub7/uY=
+X-Google-Smtp-Source: ABdhPJyfdgsDSYZqoxL9CQ9LPCf8275YBHcWYBe7b0AqMZ6f2kc3AsFMeo+cqsYnNTPij3A3j+wdRQ==
+X-Received: by 2002:a37:a2c2:: with SMTP id l185mr22288332qke.417.1595858873033;
+        Mon, 27 Jul 2020 07:07:53 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:5d71:9466:74af:ff71? ([2600:1700:e72:80a0:5d71:9466:74af:ff71])
+        by smtp.gmail.com with ESMTPSA id 20sm19054057qkh.110.2020.07.27.07.07.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jul 2020 07:07:52 -0700 (PDT)
+Subject: Re: [PATCH v2 08/18] maintenance: add prefetch task
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, steadmon@google.com,
+        jrnieder@gmail.com, peff@peff.net, phillip.wood123@gmail.com,
+        emilyshaffer@google.com, sluongng@gmail.com,
+        jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.671.git.1594131695.gitgitgadget@gmail.com>
+ <pull.671.v2.git.1595527000.gitgitgadget@gmail.com>
+ <3165b8916d2d80bf72dac6596a42c871ccd4cbe6.1595527000.git.gitgitgadget@gmail.com>
+ <20200725013715.GA2436@danh.dev> <xmqqv9icicvd.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <421cb856-24fc-6aa0-6ab0-f513d34ddd1a@gmail.com>
+Date:   Mon, 27 Jul 2020 10:07:50 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
+ Thunderbird/79.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqv9icicvd.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200724195126.GB4013174@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 24, 2020 at 03:51:26PM -0400, Jeff King wrote:
-> On Fri, Jul 24, 2020 at 12:51:33PM -0400, Taylor Blau wrote:
->
-> > Let me double check my understanding... I think that you are suggesting
-> > the following three things:
-> >
-> >   - Write the same message as an err packet over the wire as we do when
-> >     'die()'ing from inside of upload-pack.c
-> >
-> >   - Don't mark said message(s) for translation, matching what we do in
-> >     the rest of upload-pack.c.
-> >
-> >   - Re-introduce the 'test_must_fail ok=sigpipe' and stop grepping
-> >     stderr for the right message.
-> >
-> > Do I have that right?
->
-> I'm not Gábor, but that is the sequence I think is best.
->
-> Between the die() and the ERR, the ERR packets are way more useful in
-> practice, since they actually go back to the client. I'd even suggest we
-> do away with the die() messages entirely (since they're either redundant
-> or go nowhere, depending on the protocol), but I think it would make
-> sense to wait until the raciness issues are fixed (until then, they
-> _might_ help in the redundant cases, which is what the test here is
-> relying on).
+On 7/24/2020 9:48 PM, Junio C Hamano wrote:
+> Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
+> 
+>>> When running 'git fetch <remote> <options>' in the background, use
+>>> the following options for careful updating:
+>>
+>> Does this job interfere with FETCH_HEAD?
+>> From my quick test (by applying 01-08 on top of rc1, and messing with t7900),
+>> it looks like yes.
+>>
+>> I (and some other people, probably) rely on FETCH_HEAD for our scripts.
+>> Hence, it would be nice to not touch FETCH_HEAD with prefetch job.
+> 
+> Very good point.  For that, Derrick may want to swallow the single
+> patch from 'jc/no-update-fetch-head' topic into this series and
+> pass the new command line option.
 
-All sounds good. I'll wait for an ACK from Gábor to make sure that this
-is the direction that they want, too.
+Thanks for the pointer! I appreciate the attention to detail here.
 
-In the meantime, this is what I have locally. I'll send a series which
-has this as its range-diff if Gábor approves of the direction.
-
-1:  6a77af563e = 1:  6a77af563e list_objects_filter_options: introduce 'list_object_filter_config_name'
-2:  6dbf58441d ! 2:  80d19481d8 upload-pack.c: allow banning certain object filter(s)
-    @@ t/t5616-partial-clone.sh: test_expect_success 'implicitly construct combine: fil
-
-     +test_expect_success 'upload-pack fails banned object filters' '
-     +	test_config -C srv.bare uploadpackfilter.blob:none.allow false &&
-    -+	test_must_fail git clone --no-checkout --filter=blob:none \
-    -+		"file://$(pwd)/srv.bare" pc3 2>err &&
-    -+	test_i18ngrep "filter '\''blob:none'\'' not supported" err
-    ++	test_must_fail ok=sigpipe git clone --no-checkout --filter=blob:none \
-    ++		"file://$(pwd)/srv.bare" pc3
-     +'
-     +
-     +test_expect_success 'upload-pack fails banned combine object filters' '
-    @@ t/t5616-partial-clone.sh: test_expect_success 'implicitly construct combine: fil
-     +	test_config -C srv.bare uploadpackfilter.combine.allow true &&
-     +	test_config -C srv.bare uploadpackfilter.tree.allow true &&
-     +	test_config -C srv.bare uploadpackfilter.blob:none.allow false &&
-    -+	test_must_fail git clone --no-checkout --filter=tree:1 \
-    -+		--filter=blob:none "file://$(pwd)/srv.bare" pc3 2>err &&
-    -+	test_i18ngrep "filter '\''blob:none'\'' not supported" err
-    ++	test_must_fail ok=sigpipe git clone --no-checkout --filter=tree:1 \
-    ++		--filter=blob:none "file://$(pwd)/srv.bare" pc3
-     +'
-     +
-     +test_expect_success 'upload-pack fails banned object filters with fallback' '
-     +	test_config -C srv.bare uploadpackfilter.allow false &&
-    -+	test_must_fail git clone --no-checkout --filter=blob:none \
-    -+		"file://$(pwd)/srv.bare" pc3 2>err &&
-    -+	test_i18ngrep "filter '\''blob:none'\'' not supported" err
-    ++	test_must_fail ok=sigpipe git clone --no-checkout --filter=blob:none \
-    ++		"file://$(pwd)/srv.bare" pc3
-     +'
-     +
-      test_expect_success 'partial clone fetches blobs pointed to by refs even if normally filtered out' '
-    @@ upload-pack.c: static int process_deepen_not(const char *line, struct string_lis
-     +{
-     +	struct list_objects_filter_options *banned = banned_filter(data,
-     +								   &data->filter_options);
-    ++	struct strbuf buf = STRBUF_INIT;
-     +	if (!banned)
-     +		return;
-     +
-    -+	die(_("git upload-pack: filter '%s' not supported"),
-    -+	    list_object_filter_config_name(banned->choice));
-    ++	strbuf_addf(&buf, "git upload-pack: filter '%s' not supported",
-    ++		    list_object_filter_config_name(banned->choice));
-    ++
-    ++	packet_writer_error(&data->writer, "%s\n", buf.buf);
-    ++	die("%s", buf.buf);
-     +}
-     +
-      static void receive_needs(struct upload_pack_data *data,
-3:  bacdea47d9 = 3:  790552c7c2 upload-pack.c: pass 'struct list_objects_filter_options *'
-4:  79af94a41b ! 4:  eb9a81eb1f upload-pack.c: introduce 'uploadpackfilter.tree.maxDepth'
-    @@ Documentation/config/uploadpack.txt: uploadpackfilter.<filter>.allow::
-
-      ## t/t5616-partial-clone.sh ##
-     @@ t/t5616-partial-clone.sh: test_expect_success 'upload-pack fails banned object filters with fallback' '
-    - 	test_i18ngrep "filter '\''blob:none'\'' not supported" err
-    + 		"file://$(pwd)/srv.bare" pc3
-      '
-
-     +test_expect_success 'upload-pack limits tree depth filters' '
-    @@ upload-pack.c: static int allows_filter_choice(struct upload_pack_data *data,
-      }
-
-     @@ upload-pack.c: static void die_if_using_banned_filter(struct upload_pack_data *data)
-    - {
-    - 	struct list_objects_filter_options *banned = banned_filter(data,
-    - 								   &data->filter_options);
-    -+	struct strbuf buf = STRBUF_INIT;
-    - 	if (!banned)
-    - 		return;
-
-    --	die(_("git upload-pack: filter '%s' not supported"),
-    --	    list_object_filter_config_name(banned->choice));
-    -+	strbuf_addf(&buf, _("filter '%s' not supported"),
-    -+		    list_object_filter_config_name(banned->choice));
-    + 	strbuf_addf(&buf, "git upload-pack: filter '%s' not supported",
-    + 		    list_object_filter_config_name(banned->choice));
-     +	if (banned->choice == LOFC_TREE_DEPTH &&
-     +	    data->tree_filter_max_depth != ULONG_MAX)
-     +		strbuf_addf(&buf, _(" (maximum depth: %lu, but got: %lu)"),
-     +			    data->tree_filter_max_depth,
-     +			    banned->tree_exclude_depth);
-    -+	die("%s", buf.buf);
-    - }
-
-    - static void receive_needs(struct upload_pack_data *data,
-    + 	packet_writer_error(&data->writer, "%s\n", buf.buf);
-    + 	die("%s", buf.buf);
-     @@ upload-pack.c: static int parse_object_filter_config(const char *var, const char *value,
-      	if (!strcmp(key, "allow"))
-      		string_list_insert(&data->allowed_filters, buf.buf)->util =
-
-> -Peff
+I'll rebase onto jc/no-update-fetch-head for the next version, since
+that branch is based on v2.28.0-rc0, which is recent enough.
 
 Thanks,
-Taylor
+-Stolee
