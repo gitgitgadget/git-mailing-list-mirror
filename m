@@ -2,172 +2,106 @@ Return-Path: <SRS0=S8Id=BG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2638BC433E5
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE017C433E0
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:50:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0460120729
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:37:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB6C92078E
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:50:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SucGM0XP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fU029PIo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730056AbgG0Shk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jul 2020 14:37:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48880 "EHLO
+        id S1726861AbgG0Sue (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jul 2020 14:50:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729243AbgG0Shj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jul 2020 14:37:39 -0400
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F6FCC061794
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 11:37:39 -0700 (PDT)
-Received: by mail-ed1-x544.google.com with SMTP id di22so5715284edb.12
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 11:37:39 -0700 (PDT)
+        with ESMTP id S1726268AbgG0Sue (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jul 2020 14:50:34 -0400
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE56C061794
+        for <git@vger.kernel.org>; Mon, 27 Jul 2020 11:50:33 -0700 (PDT)
+Received: by mail-ej1-x642.google.com with SMTP id y10so18151600eje.1
+        for <git@vger.kernel.org>; Mon, 27 Jul 2020 11:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J2QAvAcJ9wSKyP4P7N9GNscGQsPW5oJjPK6pjg6grX8=;
-        b=SucGM0XPKxAtOQ8uL58P3qH8+JvWpn8N4J65L4nFRH1d3KUVq3xnMhT48TleUIsLMe
-         JPWHeE9sA3wC+h6w0oQiduzjEmw9VIqIyqCnnOhtC+62ZK4n7Qn732M9VNqwlPpsdmcP
-         owzMCqj+eWUfztryTAhnRjA7N69zLYnxmuDWhmvw7euk9wnAH/m1EX6j2TXNd4VfQLzO
-         20ORz+V18VDxTY2TDLkpMsUYisDMyUdkgty7PsofRTVbDz78wYPWDawbPnn5GY51pcbz
-         TFMELYJgR1oXdVX5osMp5gxKSfFcm3XXfMqWFBnKtiMEDZF7yJ17k1ef4371Kra35/MH
-         IqYw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=AN6WF9Crve7gd9pE2ZDGTaXKt87BjtN6tcZJbVyvWBY=;
+        b=fU029PIoCjFfDQ3XIRnNLSPVG0CroK81NY/dW12iPrupTa3hGIS5O4xHhJi9/77KxG
+         dBM9w4JiWTm9mF5Vnp1GxV2IWa7O/DQrAlwM3mAmNFXf9JXHIiMKghbZ76LPACbcz5oO
+         vVeUhRt9j2fVfjK6ZCULMZuw4MucjFejGiKHW5migKY1YOe6aBo0q/+kn9EG3XY4RkO7
+         nrxa3e1lBxxJcY8WNPMy/duwRC28mwGdXDdTfWN5jT3TS+G2Gem8RhFXiCmaQr3nH+jx
+         K0sHNHN2e9FJuhGvXK33qAOfeG1fl/Z0bUKHxtihK2myUyW1ILStxRdDYaRBUD/LwwOl
+         uf6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J2QAvAcJ9wSKyP4P7N9GNscGQsPW5oJjPK6pjg6grX8=;
-        b=JagIk0N4L3SLpLp9IHKvE93yJY8xmQQjcL+tEM2hXCz/eHnB1+XG1xOmDFXY5d4Sfa
-         BO75i5np7wxoJkDYA44NEWSSl50i0Uqpiy8RLTT3Pb47rlGYtciO7POqVLD2MZqd5y3k
-         E0526yL28J5pI+RTqshzugx3Q2JDFKpzt/bR8VFYnyhNtnn7BNC4BNZ5sfvhuLO+GZyF
-         7/QjucpE9cFxifMTlTTnL5kQofWz3UlA7qD16TLJklH907CzQ9tjl2D1tQgMwIqeZnKq
-         9tyH1PhAc2FIPUOlKw0LtN2v3s3Cv9l0SYGlqaKUCkTx9gsQMeZD/iTO/6OkfVH0EPJG
-         NgnA==
-X-Gm-Message-State: AOAM531qRW5gqDVdCFfFO5ZB11HsF+x/anCTftImN3IwgIp3zBMqmWEH
-        gSKIInFiTOiXgSi6JBeILSaj1a/9XTO/p7asmRc=
-X-Google-Smtp-Source: ABdhPJx4fmmecw4k8Db3km7bLoWfpsvRDtTC/7qBjbn2daSUKdkg1HLLup9kaf6V5fKqcKpfSF74DBogTpXFGVzEfhU=
-X-Received: by 2002:aa7:cdd2:: with SMTP id h18mr15644820edw.387.1595875058173;
- Mon, 27 Jul 2020 11:37:38 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=AN6WF9Crve7gd9pE2ZDGTaXKt87BjtN6tcZJbVyvWBY=;
+        b=iqMg8RvD+ivzKwvqU3ovhpqOfyu3ld/WDj6z07wbNjU+C3cTc2A4bwUy3ZU7KxxHik
+         h6dUrlP5RAYJg0VP2ifIPGSYyffMbR9qL7TwEcPxmagRg+J12YJulO5wzTMJ47bdtGcW
+         7CDIYibLS6e0IimOwPX3adKAJWrdrqNCQZD2UCTvOoNMKWC2ttX2MCNRZnyQ6ewYjHHy
+         uRX4AKykrl/j0lBVXiS60s0zW147oRBNJKU+9HxRIeIrnEv1gZOa4E3q9oRLBECgrtpJ
+         WA6UUZHQFGKd4TUFvObo3j3P3pr/ZPSdYAYGY0R1/ZlJtWcK9X/yC9RxSgrXXS9sZtTF
+         cU4g==
+X-Gm-Message-State: AOAM5317FvSysmTHqW2wzDzEdG3bC2wWfGqeF2BUZF9ZizYMpou+MjmU
+        gSII+A6Ovc2cwWSU0Tt7FHUvXvnfvRGan//LCgIk4kIQTcY=
+X-Google-Smtp-Source: ABdhPJy7zujmtqlX2vEAQQiQm3H8ZHl142RVL2n8yzbbHL1CNoOrVw7u8l/HnnGjDuoUJ+Cjlig4o5JvPgyATVC35JA=
+X-Received: by 2002:a17:906:6146:: with SMTP id p6mr15756184ejl.211.1595875832259;
+ Mon, 27 Jul 2020 11:50:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <87blk0rjob.fsf@0x63.nu> <xmqqr1swg9lc.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqr1swg9lc.fsf@gitster.c.googlers.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 27 Jul 2020 20:37:26 +0200
-Message-ID: <CAP8UFD1XV_jN10yOc2o4=5PtPcvT-RbxhY1H3swZz2r4g-Uzkw@mail.gmail.com>
-Subject: Re: Questions about trailer configuration semantics
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Anders Waldenborg <anders@0x63.nu>,
+Date:   Mon, 27 Jul 2020 20:50:21 +0200
+Message-ID: <CAP8UFD0X33kreC2Vf-LUQbzm0hcKMyCwjwRqboT4BU5cejE2rw@mail.gmail.com>
+Subject: Draft of Git Rev News edition 65
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Garima Singh <garimasigit@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+        Taylor Blau <me@ttaylorr.com>,
+        Brooke Kuhlmann <brooke@alchemists.io>,
+        Liz Landau <lizzie.landau@gmail.com>,
+        Carmen Andoh <candoh@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Adding Peff and Jonathan in Cc as they know also about this area of the code]
+Hi everyone!
 
-On Mon, Jul 27, 2020 at 7:18 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> [Redirecting it to the resident expert of the trailers]
+A draft of a new Git Rev News edition is available here:
 
-Thanks!
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-65.md
 
-> Anders Waldenborg <anders@0x63.nu> writes:
->
-> > I noticed some undocumented and (at least to me) surprising behavior in
-> > trailers.c.
-> >
-> > When configuring a value in trailer.<token>.key it causes the trailer to
-> > be normalized to that in "git interpret-trailers --parse".
-> > E.g:
-> >  $ printf '\naCKed: Zz\n' | \
-> >    git -c 'trailer.Acked.key=Acked' interpret-trailers --parse
-> >  will emit: "Acked: Zz"
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-Yeah, I think that's nice, as it can make sure that the key appears in
-the same way. It's true that it would be better if it would be
-documented.
+  https://github.com/git/git.github.io/issues/441
 
-> > but only if "key" is used, other config options doesn't cause it to be
-> > normalized.
-> > E.g:
-> >  $ printf '\naCKed: Zz\n' | \
-> >    git -c 'trailer.Acked.ifmissing=doNothing' interpret-trailers --parse
-> >  will emit: "aCKed: Zz" (still lowercase a and uppercase CK)
+You can also reply to this email.
 
-Yeah, in this case we are not sure if "Acked" or "aCKed" is the right
-way to spell it.
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
 
-> > Then there is the replacement by config "trailer.fix.key=Fixes" which
-> > expands "fix" to "Fixes". This happens when using "--trailer 'fix = 123'"
-> > which seems to be expected and useful behavior (albeit a bit unclear in
-> > documentation). But it also happens when parsing incoming trailers, e.g
-> > with that config
-> >  $ printf "\nFix: 1\n" | git interpret-trailers --parse
-> >  will emit: "Fixes: 1"
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-Yeah, I think it allows for shortcuts and can help with standardizing
-the keys in commit messages.
+Jakub, Markus, Kaartic and me plan to publish this edition on Wednesday
+July 29th in the evening (European time).
 
-> > (token_from_item prefers order .key, incoming token, .name)
-> >
-> >
-> > The most surprising thing is that it uses prefix matching when finding
-> > they key in configuration. If I have "trailer.reviewed.key=Reviewed-By"
-> > it is possible to just '--trailer r=XYZ' and it will find the
-> > reviewed-by trailer as "r" is a prefix of reviewedby. This also applies
-> > to the "--parse".
-
-Yeah, that's also for shortcuts and standardization.
-
-> > This in makes it impossible to have trailer keys that
-> > are prefix of each other (e.g: "Acked", "Acked-Tests", "Acked-Docs") if
-> > there is multiple matching in configuration it will just pick the one
-> > that happens to come first.
-
-That's a downside of the above. I agree that it might seem strange or
-bad. Perhaps an option could be added to implement a strict matching,
-if people really want it.
-
-Also if you configure trailers in the "Acked", "Acked-Tests",
-"Acked-Docs" order, then any common prefix will pick "Acked" which
-could be considered ok in my opinion.
-
-> > (token_matches_item uses strncasecmp with token length)
-> >
-> >
-> > I guess these are the questions for the above observations:
-> >
-> > * Should normalization of spelling happen at all?
-
-Yes, I think it can help.
-
-> > * If so should it only happen when there is a .key config?
-
-Yes, it can help too if that only happens when there is a .key config.
-
-> > * Should replacement to what is in .key happen also in --parse mode, or
-> >   only for "--trailer"
-
-I think it's more consistent if it happens in both --parse and
---trailer mode. I didn't implement --parse though.
-
-> > * The prefix matching gotta be a bug, right?
-
-No, it's a feature ;-) Seriously I agree that this could be seen as a
-downside, but I think it can be understood that the convenience is
-worth it. And in case someone is really annoyed by this, then adding
-an option for strict matching should not be very difficult.
-
-> > Here is a patch to the tests showing these things.
-
-Thanks for the patch! I would be ok to add such a patch to the test
-suite if it was sent like a regular patch (so with a commit message, a
-Signed-off-by: and so on) to the mailing list. While at it some
-documentation of the related behavior would also be very nice.
+Thanks,
+Christian.
