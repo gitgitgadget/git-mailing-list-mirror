@@ -2,227 +2,116 @@ Return-Path: <SRS0=S8Id=BG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1CC8C433E5
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 17:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89A12C433F7
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:14:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3D8520775
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 17:18:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BACF20729
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:14:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="u9Yh4ILt"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="S7XNhWeW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729925AbgG0RSr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jul 2020 13:18:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51507 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728021AbgG0RSr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jul 2020 13:18:47 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E78E36D1A5;
-        Mon, 27 Jul 2020 13:18:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7YN3zC4yZ8IUVL7UXbL9uvtotLc=; b=u9Yh4I
-        Lt/pE+t/rOrxKsPDC8DZq9ogucWae/aoZ+YR68JwbGxW2ZvFYGFLkZ6tzEmTJqQE
-        YkDEmKnoOd8IRXTkt2P34v2LwtylD25pIFUVRQ2O7SfahwCL/1WEHipR0P0O4mwb
-        h+wNAtqu6BuvquyTyX3xEgNNQFx+RlCHXun/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vpX/FdkvrWoXy/5Qu2lk6cAy3YOivVZY
-        2FQUaQmXoAPY8KFg+KO3IlCSdudBaEGHkG2WPOswy924glsztggcSeMNwBvWK6pu
-        L0x0Qwqz7T69ryH+JrkK/fvPyx+CyRoSOh6eCAlolxKKB5bX0ENAFwdrbhqBT1Ii
-        XXlylckacUw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DF6E46D1A4;
-        Mon, 27 Jul 2020 13:18:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 682576D1A3;
-        Mon, 27 Jul 2020 13:18:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Anders Waldenborg <anders@0x63.nu>
-Subject: Re: Questions about trailer configuration semantics
-References: <87blk0rjob.fsf@0x63.nu>
-Date:   Mon, 27 Jul 2020 10:18:39 -0700
-In-Reply-To: <87blk0rjob.fsf@0x63.nu> (Anders Waldenborg's message of "Mon, 27
-        Jul 2020 18:45:24 +0200")
-Message-ID: <xmqqr1swg9lc.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1731461AbgG0SOC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jul 2020 14:14:02 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:54740 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1731336AbgG0SOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jul 2020 14:14:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1595873639;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=n/e46ZMVfAO0gWsUVxolBrpHja1w2fZAR2zrQ+GF2S8=;
+        b=S7XNhWeWSwVsAq0s0LhVGRww6qNYee6KWvBUS0izg3tvdo2hhA9ZiX9lP590l4fmxweEqh
+        6ZDyF7NNLQkBwPf3H1/4tGHawbMU7LcH4Sv9HIG30AatclmG9R1gS4ZXlJmsrYwZvOiE/B
+        1SZS2H1pg6qkxPNM1L/VLE+JIEuRYaw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-459-eZHaTPmQNlmOVmXVgVc7Dg-1; Mon, 27 Jul 2020 14:13:57 -0400
+X-MC-Unique: eZHaTPmQNlmOVmXVgVc7Dg-1
+Received: by mail-wm1-f69.google.com with SMTP id l5so8116888wml.7
+        for <git@vger.kernel.org>; Mon, 27 Jul 2020 11:13:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=n/e46ZMVfAO0gWsUVxolBrpHja1w2fZAR2zrQ+GF2S8=;
+        b=QG0pVxGdy6AxR8O7MvJ8AEmcC/i4SNzuACOxBEiw5sH4JVgq5X40QxbjQtxdagglk6
+         UxBj8k1gs8XLn/DKqw1ccq6Orh1pZ/G68uKXHkzjUcndBM2QKJZHTyGeQxCoGpuOMN0c
+         ZpQU8KeyDbBaOP+E+end0LQCPq9QUOzehPqA2jBYEJiyufg6MifgTp05YUs+oA8HxoIX
+         aHOYIA0d5MQoVqXzmnpmND+5umN4xodn+/F/Li8ARbBBP++Zl3nP2xIReKISqinEAmbG
+         alJVsr0Pslx2Vm71WV7p83zQV7G6gk96rUYAqBfxCkH2bbBmTRVWrFH6wbRslBeimfxg
+         lSZA==
+X-Gm-Message-State: AOAM530QNzsgG/VuqJ7B6RLPC+ll5P+prsio9mSZm1BvE2ij/qaPFI1a
+        XUI940IGH70NNNkQQ0cT8XEMtL/FiGocOrJrD305athpS5WAM0PK49xAvMiCrylMC8W3fQ2zppf
+        FKDWFX+KNNqV4
+X-Received: by 2002:a5d:5486:: with SMTP id h6mr20439427wrv.136.1595873636321;
+        Mon, 27 Jul 2020 11:13:56 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwIhd912HOBbTzU2PJF3T7ULPo8oV2HBDgWbB8Yq27q43dNo6jAlA92rg/BTrvGDR7jDWBqtA==
+X-Received: by 2002:a5d:5486:: with SMTP id h6mr20439416wrv.136.1595873636058;
+        Mon, 27 Jul 2020 11:13:56 -0700 (PDT)
+Received: from ?IPv6:2001:b07:6468:f312:80b0:f446:bb61:1dbb? ([2001:b07:6468:f312:80b0:f446:bb61:1dbb])
+        by smtp.gmail.com with ESMTPSA id v5sm463324wmh.12.2020.07.27.11.13.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Jul 2020 11:13:55 -0700 (PDT)
+Subject: Re: Verbose commit message diff not showing changes from pre-commit
+ hook
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Maxime Louet <maxime@saumon.io>
+Cc:     git@vger.kernel.org
+References: <CADv3qkGq3jA8iXsjhrqfsUX=gW+KOuLyeVgDzmku1tUpsMdvtw@mail.gmail.com>
+ <xmqqr1sziqrm.fsf@gitster.c.googlers.com>
+ <xmqqk0yripca.fsf@gitster.c.googlers.com>
+ <a8c19b13-3f8c-6602-24dd-ef58af70d702@web.de>
+From:   Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <b5f1769d-5c60-bca4-3f46-e55962fa1805@redhat.com>
+Date:   Mon, 27 Jul 2020 20:13:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3714F1BA-D02D-11EA-ABA6-01D9BED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <a8c19b13-3f8c-6602-24dd-ef58af70d702@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Redirecting it to the resident expert of the trailers]
+On 26/07/20 19:41, René Scharfe wrote:
+>>
+>> However, ec84bd00 moved the place where we re-read the on-disk index
+>> in the sequence, and updated a message that used to read:
+>>
+>> -	/*
+>> -	 * Re-read the index as pre-commit hook could have updated it,
+>> -	 * and write it out as a tree.
+>> -	 */
+>>
+>> to:
+>>
+>> +	/*
+>> +	 * Re-read the index as pre-commit hook could have updated it,
+>> +	 * and write it out as a tree.  We must do this before we invoke
+>> +	 * the editor and after we invoke run_status above.
+>> +	 */
+> When I read "refactor" in the title, I assume that the patch in
+> question doesn't change user-visible behavior.
 
-Anders Waldenborg <anders@0x63.nu> writes:
+That was probably the intention.
 
-> I noticed some undocumented and (at least to me) surprising behavior in
-> trailers.c.
->
-> When configuring a value in trailer.<token>.key it causes the trailer to
-> be normalized to that in "git interpret-trailers --parse".
-> E.g:
->  $ printf '\naCKed: Zz\n' | \
->    git -c 'trailer.Acked.key=Acked' interpret-trailers --parse
->  will emit: "Acked: Zz"
->
-> but only if "key" is used, other config options doesn't cause it to be
-> normalized.
-> E.g:
->  $ printf '\naCKed: Zz\n' | \
->    git -c 'trailer.Acked.ifmissing=doNothing' interpret-trailers --parse
->  will emit: "aCKed: Zz" (still lowercase a and uppercase CK)
->
->
-> Then there is the replacement by config "trailer.fix.key=Fixes" which
-> expands "fix" to "Fixes". This happens when using "--trailer 'fix = 123'"
-> which seems to be expected and useful behavior (albeit a bit unclear in
-> documentation). But it also happens when parsing incoming trailers, e.g
-> with that config
->  $ printf "\nFix: 1\n" | git interpret-trailers --parse
->  will emit: "Fixes: 1"
->
-> (token_from_item prefers order .key, incoming token, .name)
->
->
-> The most surprising thing is that it uses prefix matching when finding
-> they key in configuration. If I have "trailer.reviewed.key=Reviewed-By"
-> it is possible to just '--trailer r=XYZ' and it will find the
-> reviewed-by trailer as "r" is a prefix of reviewedby. This also applies
-> to the "--parse". This in makes it impossible to have trailer keys that
-> are prefix of each other (e.g: "Acked", "Acked-Tests", "Acked-Docs") if
-> there is multiple matching in configuration it will just pick the one
-> that happens to come first.
->
-> (token_matches_item uses strncasecmp with token length)
->
->
-> I guess these are the questions for the above observations:
->
-> * Should normalization of spelling happen at all?
->
-> * If so should it only happen when there is a .key config?
->
-> * Should replacement to what is in .key happen also in --parse mode, or
->   only for "--trailer"
->
-> * The prefix matching gotta be a bug, right?
->
->
->
-> Here is a patch to the tests showing these things.
->
->
->
-> From 49a4bb64a7ebf1f2d50897a024deb86b4f8056b1 Mon Sep 17 00:00:00 2001
-> From: Anders Waldenborg <anders@0x63.nu>
-> Date: Mon, 27 Jul 2020 18:34:37 +0200
-> Subject: [PATCH] trailers: add tests for unclear/undocumented behavior
->
-> ---
->  t/t7513-interpret-trailers.sh | 70 +++++++++++++++++++++++++++++++++++
->  1 file changed, 70 insertions(+)
->
-> diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-> index 2e6d406edf..d5d19cf89b 100755
-> --- a/t/t7513-interpret-trailers.sh
-> +++ b/t/t7513-interpret-trailers.sh
-> @@ -99,6 +99,64 @@ test_expect_success 'with config option on the command line' '
->  	test_cmp expected actual
->  '
->
-> +test_expect_success 'parse normalizes spelling and separators from configs with key' '
-> +	cat >patch <<-\EOF &&
-> +		non-trailer-line
-> +
-> +		ReviEweD-bY :abc
-> +		ReviEwEd-bY) rst
-> +		ReviEweD-BY ; xyz
-> +		aCked-bY: not normalized
-> +	EOF
-> +	cat >expected <<-\EOF &&
-> +		Reviewed-By: abc
-> +		Reviewed-By: rst
-> +		Reviewed-By: xyz
-> +		aCked-bY: not normalized
-> +	EOF
-> +	git \
-> +		-c "trailer.separators=:);" \
-> +		-c "trailer.rb.key=Reviewed-By" \
-> +		-c "trailer.Acked-By.ifmissing=doNothing" \
-> +		interpret-trailers --parse patch >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +# Matching currently is prefix matching, causing "This-trailer" to be normalized too
-> +test_expect_failure 'config option matches exact only' '
-> +	cat >patch <<-\EOF &&
-> +
-> +		This-trailer: a
-> +		 b
-> +		This-trailer-exact: b
-> +		 c
-> +		This-trailer-exact-plus-some: c
-> +		 d
-> +	EOF
-> +	cat >expected <<-\EOF &&
-> +		This-trailer: a b
-> +		THIS-TRAILER-EXACT: b c
-> +		This-trailer-exact-plus-some: c d
-> +	EOF
-> +	git -c "trailer.tte.key=THIS-TRAILER-EXACT" interpret-trailers --parse patch >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +# Matching currently uses the config key even if key value is different
-> +test_expect_failure 'config option matches exact only' '
-> +	cat >patch <<-\EOF &&
-> +
-> +		Ticket: 1234
-> +		Reference-ticket: 99
-> +	EOF
-> +	cat >expected <<-\EOF &&
-> +		Ticket: 1234
-> +		Reference-Ticket: 99
-> +	EOF
-> +	git -c "trailer.ticket.key=Reference-Ticket" interpret-trailers --parse patch >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  test_expect_success 'with only a title in the message' '
->  	cat >expected <<-\EOF &&
->  		area: change
-> @@ -473,6 +531,18 @@ test_expect_success 'with config setup' '
->  	test_cmp expected actual
->  '
->
-> +# currently this matches the "Acked-by: " value in ack key set by previous test
-> +test_expect_failure 'with config setup matches key exactly' '
-> +	cat >expected <<-\EOF &&
-> +
-> +		A: B
-> +	EOF
-> +	git interpret-trailers --trailer "A=10" empty >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +
-> +
->  test_expect_success 'with config setup and ":=" as separators' '
->  	git config trailer.separators ":=" &&
->  	git config trailer.ack.key "Acked-by= " &&
-> --
-> 2.25.1
+>> Unfortunately there is no mention of the reason why we "must" here.
+> @Paolo: Do you perhaps remember the reason?
+
+I think the idea was to use run_status for the "commitable" assignment.
+
+Paolo
+
