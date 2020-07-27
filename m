@@ -7,101 +7,150 @@ X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE017C433E0
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49147C433E3
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 19:25:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB6C92078E
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 18:50:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2298220729
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 19:25:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fU029PIo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SvGuIUI8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726861AbgG0Sue (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jul 2020 14:50:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50952 "EHLO
+        id S1728641AbgG0TZD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jul 2020 15:25:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726268AbgG0Sue (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jul 2020 14:50:34 -0400
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE56C061794
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 11:50:33 -0700 (PDT)
-Received: by mail-ej1-x642.google.com with SMTP id y10so18151600eje.1
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 11:50:33 -0700 (PDT)
+        with ESMTP id S1727053AbgG0TZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jul 2020 15:25:03 -0400
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3644FC061794;
+        Mon, 27 Jul 2020 12:25:03 -0700 (PDT)
+Received: by mail-ot1-x344.google.com with SMTP id l27so6005441oti.3;
+        Mon, 27 Jul 2020 12:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=AN6WF9Crve7gd9pE2ZDGTaXKt87BjtN6tcZJbVyvWBY=;
-        b=fU029PIoCjFfDQ3XIRnNLSPVG0CroK81NY/dW12iPrupTa3hGIS5O4xHhJi9/77KxG
-         dBM9w4JiWTm9mF5Vnp1GxV2IWa7O/DQrAlwM3mAmNFXf9JXHIiMKghbZ76LPACbcz5oO
-         vVeUhRt9j2fVfjK6ZCULMZuw4MucjFejGiKHW5migKY1YOe6aBo0q/+kn9EG3XY4RkO7
-         nrxa3e1lBxxJcY8WNPMy/duwRC28mwGdXDdTfWN5jT3TS+G2Gem8RhFXiCmaQr3nH+jx
-         K0sHNHN2e9FJuhGvXK33qAOfeG1fl/Z0bUKHxtihK2myUyW1ILStxRdDYaRBUD/LwwOl
-         uf6g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TkkaEaYrW9Ou9eLGe8+HDBCdjCYlztr1vWyVAlzywno=;
+        b=SvGuIUI84PASUgAtr463yZ2TI370rAkkKu4nXEOZa0xnBKuNVIrL/7Pnv+7hIl58eO
+         9zvJ+/ZsaX9Li5bsZFWxrMdB8w+P5tAGQV2eU/rzEzqAO4lqSr6dID2cfZigcaMm+lDZ
+         TW0sVICwCNyQjECeKoETHQoSAss6R600R+2bjrxd64hnO9rsr4f92BE6fZ7ciRHrW9q0
+         EI3jg8Er2NruG7tHUX8BSdqVckgK+fVfzzWumhzdeuJ+zH/a032kErTd98/bIIxg95XY
+         +nYHNUyMac+wDAoCAzZgHEIAVPX9c+WxZJ0zI0AbQi7d4AhdID/ZB+gjlLfWxSIwuSe+
+         H2SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=AN6WF9Crve7gd9pE2ZDGTaXKt87BjtN6tcZJbVyvWBY=;
-        b=iqMg8RvD+ivzKwvqU3ovhpqOfyu3ld/WDj6z07wbNjU+C3cTc2A4bwUy3ZU7KxxHik
-         h6dUrlP5RAYJg0VP2ifIPGSYyffMbR9qL7TwEcPxmagRg+J12YJulO5wzTMJ47bdtGcW
-         7CDIYibLS6e0IimOwPX3adKAJWrdrqNCQZD2UCTvOoNMKWC2ttX2MCNRZnyQ6ewYjHHy
-         uRX4AKykrl/j0lBVXiS60s0zW147oRBNJKU+9HxRIeIrnEv1gZOa4E3q9oRLBECgrtpJ
-         WA6UUZHQFGKd4TUFvObo3j3P3pr/ZPSdYAYGY0R1/ZlJtWcK9X/yC9RxSgrXXS9sZtTF
-         cU4g==
-X-Gm-Message-State: AOAM5317FvSysmTHqW2wzDzEdG3bC2wWfGqeF2BUZF9ZizYMpou+MjmU
-        gSII+A6Ovc2cwWSU0Tt7FHUvXvnfvRGan//LCgIk4kIQTcY=
-X-Google-Smtp-Source: ABdhPJy7zujmtqlX2vEAQQiQm3H8ZHl142RVL2n8yzbbHL1CNoOrVw7u8l/HnnGjDuoUJ+Cjlig4o5JvPgyATVC35JA=
-X-Received: by 2002:a17:906:6146:: with SMTP id p6mr15756184ejl.211.1595875832259;
- Mon, 27 Jul 2020 11:50:32 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TkkaEaYrW9Ou9eLGe8+HDBCdjCYlztr1vWyVAlzywno=;
+        b=la8ebMbHej02/KiVx7Qa3pUNcDShjUFDn8mPex1hUcDJe6Rfg9y9sLOus8UG9GzdfM
+         55AXtWMN5vdZAwR4ZUQBfdZDBgsTVjy2qA6w03Ilw5/UjrFL2GEdzaM7hED012yYIWXs
+         xlKwHRvzjWJphNSoGAIqI1orqj1JHZ9d2fcwNTlqJvYFzmCvXAsSNpakEhIhl/1N0sUD
+         tWU3NWCNgCa1FlbYtskYioFzKDeiDRxEWQd5RI0YBgB/1e++tl3YNb9pGcNWzUcIzpNn
+         fCRRQl4KmlowWPW6LFpjSdoG1Yf22MYxVfaOADV7aljZJ2pe43lqJywRwCuPJLqVicZQ
+         K1rA==
+X-Gm-Message-State: AOAM531sujewsb0FWcIQaSH01QFi2HgPWBJVmJgi5P/AuYDaZcORTTu/
+        U9PIsjC/CrMVEQrfgs0y/MCwnzAEprrOCyr1KUc=
+X-Google-Smtp-Source: ABdhPJzRZUVzK9YksuDYqiN9J56vcfGtqGCG5Fxl5KpmbaYPXsmczkfESbdsaOjpVHN6OLH4Dw6NEhxh+0pjO+hPDAc=
+X-Received: by 2002:a05:6830:1db5:: with SMTP id z21mr21943641oti.162.1595877902390;
+ Mon, 27 Jul 2020 12:25:02 -0700 (PDT)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 27 Jul 2020 20:50:21 +0200
-Message-ID: <CAP8UFD0X33kreC2Vf-LUQbzm0hcKMyCwjwRqboT4BU5cejE2rw@mail.gmail.com>
-Subject: Draft of Git Rev News edition 65
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Garima Singh <garimasigit@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-        Taylor Blau <me@ttaylorr.com>,
-        Brooke Kuhlmann <brooke@alchemists.io>,
-        Liz Landau <lizzie.landau@gmail.com>,
-        Carmen Andoh <candoh@google.com>
+References: <xmqq5za8hpir.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq5za8hpir.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 27 Jul 2020 12:24:51 -0700
+Message-ID: <CABPp-BGVFKKm+n8wTN9dqbA6=HJSZ5m3bnG7fLZ5DGevXSXBAA@mail.gmail.com>
+Subject: [ANNOUNCE] git-filter-repo v2.28.0 (Was: Re: [ANNOUNCE] Git v2.28.0)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Hi,
 
-A draft of a new Git Rev News edition is available here:
+On Mon, Jul 27, 2020 at 11:54 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> The latest feature release Git v2.28.0 is now available at the
+> usual places.  It is comprised of 317 non-merge commits since
+> v2.27.0, contributed by 58 people, 13 of which are new faces.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-65.md
+The latest release of git-filter-repo, v2.28.0, is also now available.
+It is comprised of 15 non-merge commits since v2.27.1, including two
+changes from new contributors.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+The public repo of filter-repo is at
 
-  https://github.com/git/git.github.io/issues/441
+    https://github.com/newren/git-filter-repo
 
-You can also reply to this email.
+The tarballs can be found at:
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
+    https://github.com/newren/git-filter-repo/releases
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+git-filter-repo can also be installed via a variety of package managers
+across Windows, Mac OS, or Linux (and maybe others)[1].
 
-Jakub, Markus, Kaartic and me plan to publish this edition on Wednesday
-July 29th in the evening (European time).
+New contributors whose contributions weren't in v2.27.1 are as follows.
+Welcome to the git-filter-repo development community!
 
-Thanks,
-Christian.
+  * James Ramsay
+  * Jonas Bernoulli
+
+[1] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md
+
+----------------------------------------------------------------
+
+git-filter-repo 2.28 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+(Note: Additional information is available for many release notes at
+    https://github.com/newren/git-filter-repo/issues/<NUMBER>)
+
+* New features:
+  * ignore comment lines in --paths-from-file (#111)
+
+* Fixes:
+  * allow globs to match file or directory names (#114)
+  * use new --date-format=3Draw-permissive fast-import option to avoid
+    fast-import failure on malformed date timezones (#88)
+  * fix undefined variable names reported by flake8 in rare error paths (#1=
+28)
+  * fix crash from assuming parent is an int (#131)
+
+* Documentation:
+  * document mapping output (#117)
+  * ignore the generated documentation (#127)
+  * several miscellaneous doc improvements
+
+* Miscellaneous:
+  * make tests individually re-runnable
+
+
+Changes since v2.27.1 are as follows:
+
+Elijah Newren (13):
+      INSTALL.md: fix missing trailing backquote
+      t9390: make tests individually re-runnable
+      filter-repo: allow globs to match file or directory names
+      filter-repo: ignore comment lines in --paths-from-file
+      git-filter-repo.txt: point people at the generated documentation
+      git-filter-repo.txt: be more forceful on the wording of --force
+      filter-repo: make fresh clone warning scarier
+      INSTALL.md: wording clarification on what repology.org tracks
+      contrib: rename no-op-example to barebones-example
+      filter-repo: use new --date-format=3Draw-permissive fast-import optio=
+n
+      Contributing.md: link to Nicolai H=C3=A4hnle's code review comments
+      Fix undefined variable names
+      filter-repo: fix crash from assuming parent is an int
+
+James Ramsay (1):
+      git-filter-repo.txt: document mapping output
+
+Jonas Bernoulli (1):
+      .gitignore: ignore the generated documentation
