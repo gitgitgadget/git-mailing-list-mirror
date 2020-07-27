@@ -6,57 +6,62 @@ X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D9D4C433E1
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 05:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55674C433E3
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 06:46:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4189020714
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 05:42:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BC1B20759
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 06:46:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbgG0FmW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jul 2020 01:42:22 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:52361 "EHLO
+        id S1726826AbgG0GqL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jul 2020 02:46:11 -0400
+Received: from relay11.mail.gandi.net ([217.70.178.231]:41845 "EHLO
         relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726140AbgG0FmW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jul 2020 01:42:22 -0400
+        with ESMTP id S1726116AbgG0GqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jul 2020 02:46:11 -0400
 Received: from localhost (unknown [42.109.213.7])
         (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id CC1DE100002;
-        Mon, 27 Jul 2020 05:42:18 +0000 (UTC)
-Date:   Mon, 27 Jul 2020 11:12:15 +0530
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 699E9100007;
+        Mon, 27 Jul 2020 06:46:08 +0000 (UTC)
+Date:   Mon, 27 Jul 2020 12:16:05 +0530
 From:   Pratyush Yadav <me@yadavpratyush.com>
 To:     Shourya Shukla <shouryashukla.oo@gmail.com>
 Cc:     mirucam@gmail.com, chriscool@tuxfamily.org, git@vger.kernel.org,
         gitster@pobox.com
 Subject: Re: [PATCH v5 02/13] bisect--helper: use '-res' in
  'cmd_bisect__helper' return
-Message-ID: <20200727054215.4nfke6byi6m63txf@yadavpratyush.com>
+Message-ID: <20200727064605.xhgtuxh46kukpisv@yadavpratyush.com>
 References: <20200717105406.82226-3-mirucam@gmail.com>
  <20200725173118.GA614724@konoha>
+ <20200727054215.4nfke6byi6m63txf@yadavpratyush.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200725173118.GA614724@konoha>
+In-Reply-To: <20200727054215.4nfke6byi6m63txf@yadavpratyush.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/07/20 11:01PM, Shourya Shukla wrote:
-> > Following 'enum bisect_error' vocabulary, return variable 'res' is
-> > always non-positive.
-> > Let's use '-res' instead of 'abs(res)' to make the code clearer.
+On 27/07/20 11:12AM, Pratyush Yadav wrote:
+> On 25/07/20 11:01PM, Shourya Shukla wrote:
+> > > Following 'enum bisect_error' vocabulary, return variable 'res' is
+> > > always non-positive.
+> > > Let's use '-res' instead of 'abs(res)' to make the code clearer.
+> > 
+> > > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> > > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+> > > Helped-by: Junio C Hamano <gitster@pobox.com>
+> > 
+> > Although there is no set rule for this, but I think that your sign-off
+> > goes at the last generally. This is what I have seen on various patches.
 > 
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> > Helped-by: Junio C Hamano <gitster@pobox.com>
-> 
-> Although there is no set rule for this, but I think that your sign-off
-> goes at the last generally. This is what I have seen on various patches.
+> The rule of thumb I follow is to have these in chronological order. So 
+> Christian first mentored, then the patch was published so Junio helped 
+> next and finally you sign off the patch before sending it out so that 
+> comes last.
 
-The rule of thumb I follow is to have these in chronological order. So 
-Christian first mentored, then the patch was published so Junio helped 
-next and finally you sign off the patch before sending it out so that 
-comes last.
+My MUA didn't download Junio's reply earlier for some reason. Sorry for 
+the redundant message.
 
 -- 
 Regards,
