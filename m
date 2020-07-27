@@ -2,337 +2,803 @@ Return-Path: <SRS0=S8Id=BG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0C29C433F2
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 16:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26FF2C433E4
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 16:49:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AB9220719
-	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 16:25:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1B6520729
+	for <git@archiver.kernel.org>; Mon, 27 Jul 2020 16:49:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WtLZs0bV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KocpRGbz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729737AbgG0QZx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jul 2020 12:25:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56650 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728398AbgG0QZw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jul 2020 12:25:52 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D52DC061794
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 09:25:52 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id r4so12542555wrx.9
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 09:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VWyfqfXB4/2Pr3OnBVHnctPYhvvza3eSagW1E67mmyY=;
-        b=WtLZs0bViAiuNZnk4yL/BEDOS+IvutVfdIcHNupv3TBxTR0dv6OzMZbU3cEgBoc8Vr
-         FKc1ah8Q9lyZG48innn3W8TS3HnwkUoq9XQl1xgEYJXLOdRzP3KPm/UA8ORULq2LTpEg
-         +otFmmqy0hPmNgb3zE+xM9hLs+zFRD+NeABzuTYxiFOHGMQezbH3uTnW1C5FXGsQN1Hk
-         i1oGpY9No7L0R5TM757fKrhh9yMX8nwMQ/sEeJ5rAYiur2bZ1cc3YEI5Bt4JtppN7yb8
-         TVEU4YOTUE7AgqchbuNh4hnEscDB65WXPV/UHwrXgzqvWutVZFCCl+HSJvQOGc3Wb1RI
-         L68w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VWyfqfXB4/2Pr3OnBVHnctPYhvvza3eSagW1E67mmyY=;
-        b=g9qGD1Wvmvza3J5EE4AhcX+PPJhKL8h3BGpOM1WSgl3d7sZPbkzsq+tTuJwaucR5iH
-         JIIn/OqLHv+9HH8Bpdl4VhSAPr4WpJ42tqWig6GQ9u0HUCBUq9umkcMCh/o0FkVfZHBp
-         UCQ5CLeRkw7qtgVj7VNzn2RUJgXSg9F0wFFHAr5lRthsP+QvezQJbifg6CVsxywFB0tV
-         PvKsJvTGVX5sQqmQne/DlTYJytteOjxdm0psmHEjZJNeVkz8dtlbs+4kzBkhLlz9hYOg
-         55utv1k137r4JT7stZ0k3Zdfdc3dcZS8a/Xd5IqaENK77vsv8Gkg9uryaVdJ1141aC8o
-         kQnQ==
-X-Gm-Message-State: AOAM533m7+O+W11Qo5L/RO1dVpFOvpPYcOx5t+7z3hAq8r7tKHj8epud
-        KGjNqFneC/offH6ON/mlsSdhIurM
-X-Google-Smtp-Source: ABdhPJxfuM930RYPuemw1iiXFC8scQbIndNEc058Mdu88g17w9VpPIrAsXEBiJs9FGDZDwFXLbCrKA==
-X-Received: by 2002:adf:e94a:: with SMTP id m10mr8711906wrn.249.1595867150727;
-        Mon, 27 Jul 2020 09:25:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j8sm13752947wrd.85.2020.07.27.09.25.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2020 09:25:50 -0700 (PDT)
-Message-Id: <ba5f1b4d260bbe1804c54bac7ecf83acbd219a7e.1595867147.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.673.v4.git.1595867147.gitgitgadget@gmail.com>
-References: <pull.673.v3.git.1594925141.gitgitgadget@gmail.com>
-        <pull.673.v4.git.1595867147.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jul 2020 16:25:46 +0000
-Subject: [PATCH v4 2/3] Modify pseudo refs through ref backend storage
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S1728005AbgG0Qt2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jul 2020 12:49:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59687 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726620AbgG0Qt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jul 2020 12:49:27 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3462F6CD88;
+        Mon, 27 Jul 2020 12:49:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=Jls2gOVetALeCGuOLVtBP+YNI
+        Fc=; b=KocpRGbzvi5v+Fd286/1hYVe2MDOe8NFwNifJRpv0p3BC7uOlRHNVpUoG
+        jgORY11Ell/6PrW0d4YrRhKScnIPhm88g2ha369O8ncmxcaXwooMb3rl/sf6yaXd
+        k51G27gfxmJmVaZvVT2NB/AiX2JkbNup58JFnVddV300M0itaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=aw5a0DbC3j3jDdfGQcg
+        6hqxQEXtxN9id3CpO87IwYnY5s2JAX6l0eyXJFMSyYU61vD6OmxXJ11tFeJjMwv2
+        jXAdL1Hu/GBEJLCz3BhIMI7aEl5rZ/20ADe6v/0zPVXYTrFisiD1/45c9vVxzWMY
+        DAo/QdS+rDt3jgDMX+VChG2E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B7886CD87;
+        Mon, 27 Jul 2020 12:49:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 91DA56CD86;
+        Mon, 27 Jul 2020 12:49:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.28.0
+Date:   Mon, 27 Jul 2020 09:49:16 -0700
+Message-ID: <xmqq5za8hpir.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1C5AD1A4-D029-11EA-AB51-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+The latest feature release Git v2.28.0 is now available at the
+usual places.  It is comprised of 317 non-merge commits since
+v2.27.0, contributed by 58 people, 13 of which are new faces.
+It is smaller than the releases in our recent past, mostly due to
+the development cycle was near the shorter end of the spectrum (our
+cycles last 8-12 weeks and this was a rare 8-week cycle).
 
-The previous behavior was introduced in commit 74ec19d4be
-("pseudorefs: create and use pseudoref update and delete functions",
-Jul 31, 2015), with the justification "alternate ref backends still
-need to store pseudorefs in GIT_DIR".
+The tarballs are found at:
 
-Refs such as REBASE_HEAD are read through the ref backend. This can
-only work consistently if they are written through the ref backend as
-well. Tooling that works directly on files under .git should be
-updated to use git commands to read refs instead.
+    https://www.kernel.org/pub/software/scm/git/
 
-The following behaviors change:
+The following public repositories all have a copy of the 'v2.28.0'
+tag and the 'master' branch that the tag points at:
 
-* Updates to pseudorefs (eg. ORIG_HEAD) with
-  core.logAllRefUpdates=always will create reflogs for the pseudoref.
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://github.com/gitster/git
 
-* non-HEAD pseudoref symrefs are also dereferenced on deletion. Update
-  t1405 accordingly.
+New contributors whose contributions weren't in v2.27.0 are as follows.
+Welcome to the Git development community!
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- Documentation/git-update-ref.txt |  13 ++--
- refs.c                           | 120 ++-----------------------------
- t/t1400-update-ref.sh            |  10 +--
- t/t1405-main-ref-store.sh        |   5 +-
- 4 files changed, 23 insertions(+), 125 deletions(-)
+  Andrew Ng, Bojun Chen, Chris Torek, David J. Malan, Don
+  Goodman-Wilson, Jiuyang Xie, Luc Van Oostenryck, Marco Trevisan
+  (Trevi=C3=B1o), Mikhail Terekhov, Miroslav Ko=C5=A1k=C3=A1r, Rafael Aqu=
+ini,
+  Srinidhi Kaushik, and Trygve Aaberge.
 
-diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index 3e737c2360..d401234b03 100644
---- a/Documentation/git-update-ref.txt
-+++ b/Documentation/git-update-ref.txt
-@@ -148,12 +148,13 @@ still see a subset of the modifications.
- 
- LOGGING UPDATES
- ---------------
--If config parameter "core.logAllRefUpdates" is true and the ref is one under
--"refs/heads/", "refs/remotes/", "refs/notes/", or the symbolic ref HEAD; or
--the file "$GIT_DIR/logs/<ref>" exists then `git update-ref` will append
--a line to the log file "$GIT_DIR/logs/<ref>" (dereferencing all
--symbolic refs before creating the log name) describing the change
--in ref value.  Log lines are formatted as:
-+If config parameter "core.logAllRefUpdates" is true and the ref is one
-+under "refs/heads/", "refs/remotes/", "refs/notes/", or a pseudoref
-+like HEAD or ORIG_HEAD; or the file "$GIT_DIR/logs/<ref>" exists then
-+`git update-ref` will append a line to the log file
-+"$GIT_DIR/logs/<ref>" (dereferencing all symbolic refs before creating
-+the log name) describing the change in ref value.  Log lines are
-+formatted as:
- 
-     oldsha1 SP newsha1 SP committer LF
- 
-diff --git a/refs.c b/refs.c
-index 639cba93b4..d676acb1f4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -771,102 +771,6 @@ long get_files_ref_lock_timeout_ms(void)
- 	return timeout_ms;
- }
- 
--static int write_pseudoref(const char *pseudoref, const struct object_id *oid,
--			   const struct object_id *old_oid, struct strbuf *err)
--{
--	const char *filename;
--	int fd;
--	struct lock_file lock = LOCK_INIT;
--	struct strbuf buf = STRBUF_INIT;
--	int ret = -1;
--
--	if (!oid)
--		return 0;
--
--	strbuf_addf(&buf, "%s\n", oid_to_hex(oid));
--
--	filename = git_path("%s", pseudoref);
--	fd = hold_lock_file_for_update_timeout(&lock, filename, 0,
--					       get_files_ref_lock_timeout_ms());
--	if (fd < 0) {
--		strbuf_addf(err, _("could not open '%s' for writing: %s"),
--			    filename, strerror(errno));
--		goto done;
--	}
--
--	if (old_oid) {
--		struct object_id actual_old_oid;
--
--		if (read_ref(pseudoref, &actual_old_oid)) {
--			if (!is_null_oid(old_oid)) {
--				strbuf_addf(err, _("could not read ref '%s'"),
--					    pseudoref);
--				rollback_lock_file(&lock);
--				goto done;
--			}
--		} else if (is_null_oid(old_oid)) {
--			strbuf_addf(err, _("ref '%s' already exists"),
--				    pseudoref);
--			rollback_lock_file(&lock);
--			goto done;
--		} else if (!oideq(&actual_old_oid, old_oid)) {
--			strbuf_addf(err, _("unexpected object ID when writing '%s'"),
--				    pseudoref);
--			rollback_lock_file(&lock);
--			goto done;
--		}
--	}
--
--	if (write_in_full(fd, buf.buf, buf.len) < 0) {
--		strbuf_addf(err, _("could not write to '%s'"), filename);
--		rollback_lock_file(&lock);
--		goto done;
--	}
--
--	commit_lock_file(&lock);
--	ret = 0;
--done:
--	strbuf_release(&buf);
--	return ret;
--}
--
--static int delete_pseudoref(const char *pseudoref, const struct object_id *old_oid)
--{
--	const char *filename;
--
--	filename = git_path("%s", pseudoref);
--
--	if (old_oid && !is_null_oid(old_oid)) {
--		struct lock_file lock = LOCK_INIT;
--		int fd;
--		struct object_id actual_old_oid;
--
--		fd = hold_lock_file_for_update_timeout(
--				&lock, filename, 0,
--				get_files_ref_lock_timeout_ms());
--		if (fd < 0) {
--			error_errno(_("could not open '%s' for writing"),
--				    filename);
--			return -1;
--		}
--		if (read_ref(pseudoref, &actual_old_oid))
--			die(_("could not read ref '%s'"), pseudoref);
--		if (!oideq(&actual_old_oid, old_oid)) {
--			error(_("unexpected object ID when deleting '%s'"),
--			      pseudoref);
--			rollback_lock_file(&lock);
--			return -1;
--		}
--
--		unlink(filename);
--		rollback_lock_file(&lock);
--	} else {
--		unlink(filename);
--	}
--
--	return 0;
--}
--
- int refs_delete_ref(struct ref_store *refs, const char *msg,
- 		    const char *refname,
- 		    const struct object_id *old_oid,
-@@ -875,11 +779,6 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
- 
--	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
--		assert(refs == get_main_ref_store(the_repository));
--		return delete_pseudoref(refname, old_oid);
--	}
--
- 	transaction = ref_store_transaction_begin(refs, &err);
- 	if (!transaction ||
- 	    ref_transaction_delete(transaction, refname, old_oid,
-@@ -1202,18 +1101,13 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
- 	struct strbuf err = STRBUF_INIT;
- 	int ret = 0;
- 
--	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
--		assert(refs == get_main_ref_store(the_repository));
--		ret = write_pseudoref(refname, new_oid, old_oid, &err);
--	} else {
--		t = ref_store_transaction_begin(refs, &err);
--		if (!t ||
--		    ref_transaction_update(t, refname, new_oid, old_oid,
--					   flags, msg, &err) ||
--		    ref_transaction_commit(t, &err)) {
--			ret = 1;
--			ref_transaction_free(t);
--		}
-+	t = ref_store_transaction_begin(refs, &err);
-+	if (!t ||
-+	    ref_transaction_update(t, refname, new_oid, old_oid, flags, msg,
-+				   &err) ||
-+	    ref_transaction_commit(t, &err)) {
-+		ret = 1;
-+		ref_transaction_free(t);
- 	}
- 	if (ret) {
- 		const char *str = _("update_ref failed for ref '%s': %s");
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 7414b898f8..65d349fb33 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -160,10 +160,10 @@ test_expect_success 'core.logAllRefUpdates=always creates reflog by default' '
- 	git reflog exists $outside
- '
- 
--test_expect_success 'core.logAllRefUpdates=always creates no reflog for ORIG_HEAD' '
-+test_expect_success 'core.logAllRefUpdates=always creates reflog for ORIG_HEAD' '
- 	test_config core.logAllRefUpdates always &&
- 	git update-ref ORIG_HEAD $A &&
--	test_must_fail git reflog exists ORIG_HEAD
-+	git reflog exists ORIG_HEAD
- '
- 
- test_expect_success '--no-create-reflog overrides core.logAllRefUpdates=always' '
-@@ -476,7 +476,7 @@ test_expect_success 'git cat-file blob master@{2005-05-26 23:42}:F (expect OTHER
- test_expect_success 'given old value for missing pseudoref, do not create' '
- 	test_must_fail git update-ref PSEUDOREF $A $B 2>err &&
- 	test_must_fail git rev-parse PSEUDOREF &&
--	test_i18ngrep "could not read ref" err
-+	test_i18ngrep "unable to resolve reference" err
- '
- 
- test_expect_success 'create pseudoref' '
-@@ -497,7 +497,7 @@ test_expect_success 'overwrite pseudoref with correct old value' '
- test_expect_success 'do not overwrite pseudoref with wrong old value' '
- 	test_must_fail git update-ref PSEUDOREF $D $E 2>err &&
- 	test $C = $(git rev-parse PSEUDOREF) &&
--	test_i18ngrep "unexpected object ID" err
-+	test_i18ngrep "cannot lock ref.*expected" err
- '
- 
- test_expect_success 'delete pseudoref' '
-@@ -509,7 +509,7 @@ test_expect_success 'do not delete pseudoref with wrong old value' '
- 	git update-ref PSEUDOREF $A &&
- 	test_must_fail git update-ref -d PSEUDOREF $B 2>err &&
- 	test $A = $(git rev-parse PSEUDOREF) &&
--	test_i18ngrep "unexpected object ID" err
-+	test_i18ngrep "cannot lock ref.*expected" err
- '
- 
- test_expect_success 'delete pseudoref with correct old value' '
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index 331899ddc4..74af927fba 100755
---- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -31,7 +31,10 @@ test_expect_success 'create_symref(FOO, refs/heads/master)' '
- test_expect_success 'delete_refs(FOO, refs/tags/new-tag)' '
- 	git rev-parse FOO -- &&
- 	git rev-parse refs/tags/new-tag -- &&
--	$RUN delete-refs 0 nothing FOO refs/tags/new-tag &&
-+	m=$(git rev-parse master) &&
-+	REF_NO_DEREF=1 &&
-+	$RUN delete-refs $REF_NO_DEREF nothing FOO refs/tags/new-tag &&
-+	test_must_fail git rev-parse --symbolic-full-name FOO &&
- 	test_must_fail git rev-parse FOO -- &&
- 	test_must_fail git rev-parse refs/tags/new-tag --
- '
--- 
-gitgitgadget
+Returning contributors who helped this release are as follows.
+Thanks for your continued support.
+
+  Abhishek Kumar, Alessandro Menti, Ben Keene, brian m. carlson,
+  Carlo Marcelo Arenas Bel=C3=B3n, Christian Couder, Christopher
+  Diaz Riveros, Denton Liu, Derrick Stolee, =C4=90o=C3=A0n Tr=E1=BA=A7n C=
+=C3=B4ng
+  Danh, Elijah Newren, Emily Shaffer, Emir Sar=C4=B1, Eric Sunshine,
+  Han-Wen Nienhuys, Jacob Keller, Jean-No=C3=ABl Avila, Jeff King,
+  Jiang Xin, Johannes Schindelin, John Lin, Jonathan Nieder,
+  Jonathan Tan, Jordi Mas, Josh Steadmon, Junio C Hamano, Laurent
+  Arnoud, Martin =C3=85gren, Matheus Tavares, Matthias R=C3=BCster, Paolo
+  Bonzini, Patrick Steinhardt, Peter Krefting, Pratyush Yadav,
+  Ralf Thielow, Ramsay Jones, Randall S. Becker, Ren=C3=A9 Scharfe,
+  Shourya Shukla, SZEDER G=C3=A1bor, Taylor Blau, Tr=E1=BA=A7n Ng=E1=BB=8D=
+c Qu=C3=A2n,
+  Ville Skytt=C3=A4, Xin Li, and Yi-Jyun Pan.
+
+----------------------------------------------------------------
+
+Git 2.28 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Updates since v2.27
+-------------------
+
+Backward compatibility notes
+
+ * "fetch.writeCommitGraph" is deemed to be still a bit too risky and
+   is no longer part of the "feature.experimental" set.
+
+
+UI, Workflows & Features
+
+ * The commands in the "diff" family learned to honor "diff.relative"
+   configuration variable.
+
+ * The check in "git fsck" to ensure that the tree objects are sorted
+   still had corner cases it missed unsorted entries.
+
+ * The interface to redact sensitive information in the trace output
+   has been simplified.
+
+ * The command line completion (in contrib/) learned to complete
+   options that the "git switch" command takes.
+
+ * "git diff" used to take arguments in random and nonsense range
+   notation, e.g. "git diff A..B C", "git diff A..B C...D", etc.,
+   which has been cleaned up.
+
+ * "git diff-files" has been taught to say paths that are marked as
+   intent-to-add are new files, not modified from an empty blob.
+
+ * "git status" learned to report the status of sparse checkout.
+
+ * "git difftool" has trouble dealing with paths added to the index
+   with the intent-to-add bit.
+
+ * "git fast-export --anonymize" learned to take customized mapping to
+   allow its users to tweak its output more usable for debugging.
+
+ * The command line completion support (in contrib/) used to be
+   prepared to work with "set -u" but recent changes got a bit more
+   sloppy.  This has been corrected.
+
+ * "git gui" now allows opening work trees from the start-up dialog.
+
+
+Performance, Internal Implementation, Development Support etc.
+
+ * Code optimization for a common case.
+   (merge 8777616e4d an/merge-single-strategy-optim later to maint).
+
+ * We've adopted a convention that any on-stack structure can be
+   initialized to have zero values in all fields with "=3D { 0 }",
+   even when the first field happens to be a pointer, but sparse
+   complained that a null pointer should be spelled NULL for a long
+   time.  Start using -Wno-universal-initializer option to squelch
+   it (the latest sparse has it on by default).
+
+ * "git log -L..." now takes advantage of the "which paths are touched
+   by this commit?" info stored in the commit-graph system.
+
+ * As FreeBSD is not the only platform whose regexp library reports
+   a REG_ILLSEQ error when fed invalid UTF-8, add logic to detect that
+   automatically and skip the affected tests.
+
+ * "git bugreport" learns to report what shell is in use.
+
+ * Support for GIT_CURL_VERBOSE has been rewritten in terms of
+   GIT_TRACE_CURL.
+
+ * Preliminary clean-ups around refs API, plus file format
+   specification documentation for the reftable backend.
+
+ * Workaround breakage in MSVC build, where "curl-config --cflags"
+   gives settings appropriate for GCC build.
+
+ * Code clean-up of "git clean" resulted in a fix of recent
+   performance regression.
+
+ * Code clean-up in the codepath that serves "git fetch" continues.
+
+ * "git merge-base --is-ancestor" is taught to take advantage of the
+   commit graph.
+
+ * Rewrite of parts of the scripted "git submodule" Porcelain command
+   continues; this time it is "git submodule set-branch" subcommand's
+   turn.
+
+ * The "fetch/clone" protocol has been updated to allow the server to
+   instruct the clients to grab pre-packaged packfile(s) in addition
+   to the packed object data coming over the wire.
+
+ * A misdesigned strbuf_write_fd() function has been retired.
+
+ * SHA-256 migration work continues, including CVS/SVN interface.
+
+ * A few fields in "struct commit" that do not have to always be
+   present have been moved to commit slabs.
+
+ * API cleanup for get_worktrees()
+
+ * By renumbering object flag bits, "struct object" managed to lose
+   bloated inter-field padding.
+
+ * The name of the primary branch in existing repositories, and the
+   default name used for the first branch in newly created
+   repositories, is made configurable, so that we can eventually wean
+   ourselves off of the hardcoded 'master'.
+
+ * The effort to avoid using test_must_fail on non-git command continues.
+
+ * In 2.28-rc0, we corrected a bug that some repository extensions are
+   honored by mistake even in a version 0 repositories (these
+   configuration variables in extensions.* namespace were supposed to
+   have special meaning in repositories whose version numbers are 1 or
+   higher), but this was a bit too big a change.  The behaviour in
+   recent versions of Git where certain extensions.* were honored by
+   mistake even in version 0 repositories has been restored.
+
+
+Fixes since v2.27
+-----------------
+
+ * The "--prepare-p4-only" option of "git p4" is supposed to stop
+   after replaying one changeset, but kept going (by mistake?)
+
+ * The error message from "git checkout -b foo -t bar baz" was
+   confusing.
+
+ * Some repositories in the wild have commits that record nonsense
+   committer timezone (e.g. rails.git); "git fast-import" learned an
+   option to pass these nonsense timestamps intact to allow recreating
+   existing repositories as-is.
+   (merge d42a2fb72f en/fast-import-looser-date later to maint).
+
+ * The command line completion script (in contrib/) tried to complete
+   "git stash -p" as if it were "git stash push -p", but it was too
+   aggressive and also affected "git stash show -p", which has been
+   corrected.
+   (merge fffd0cf520 vs/complete-stash-show-p-fix later to maint).
+
+ * On-the-wire protocol v2 easily falls into a deadlock between the
+   remote-curl helper and the fetch-pack process when the server side
+   prematurely throws an error and disconnects.  The communication has
+   been updated to make it more robust.
+
+ * "git checkout -p" did not handle a newly added path at all.
+   (merge 2c8bd8471a js/checkout-p-new-file later to maint).
+
+ * The code to parse "git bisect start" command line was lax in
+   validating the arguments.
+   (merge 4d9005ff5d cb/bisect-helper-parser-fix later to maint).
+
+ * Reduce memory usage during "diff --quiet" in a worktree with too
+   many stat-unmatched paths.
+   (merge d2d7fbe129 jk/diff-memuse-optim-with-stat-unmatch later to main=
+t).
+
+ * The reflog entries for "git clone" and "git fetch" did not
+   anonymize the URL they operated on.
+   (merge 46da295a77 js/reflog-anonymize-for-clone-and-fetch later to mai=
+nt).
+
+ * The behaviour of "sparse-checkout" in the state "git clone
+   --no-checkout" left was changed accidentally in 2.27, which has
+   been corrected.
+
+ * Use of negative pathspec, while collecting paths including
+   untracked ones in the working tree, was broken.
+
+ * The same worktree directory must be registered only once, but
+   "git worktree move" allowed this invariant to be violated, which
+   has been corrected.
+   (merge 810382ed37 es/worktree-duplicate-paths later to maint).
+
+ * The effect of sparse checkout settings on submodules is documented.
+   (merge e7d7c73249 en/sparse-with-submodule-doc later to maint).
+
+ * Code clean-up around "git branch" with a minor bugfix.
+   (merge dc44639904 dl/branch-cleanup later to maint).
+
+ * A branch name used in a test has been clarified to match what is
+   going on.
+   (merge 08dc26061f pb/t4014-unslave later to maint).
+
+ * An in-code comment in "git diff" has been updated.
+   (merge c592fd4c83 dl/diff-usage-comment-update later to maint).
+
+ * The documentation and some tests have been adjusted for the recent
+   renaming of "pu" branch to "seen".
+   (merge 6dca5dbf93 js/pu-to-seen later to maint).
+
+ * The code to push changes over "dumb" HTTP had a bad interaction
+   with the commit reachability code due to incorrect allocation of
+   object flag bits, which has been corrected.
+   (merge 64472d15e9 bc/http-push-flagsfix later to maint).
+
+ * "git send-email --in-reply-to=3D<msg>" did not use the In-Reply-To:
+   header with the value given from the command line, and let it be
+   overridden by the value on In-Reply-To: header in the messages
+   being sent out (if exists).
+   (merge f9f60d7066 ra/send-email-in-reply-to-from-command-line-wins lat=
+er to maint).
+
+ * "git log -Lx,y:path --before=3Ddate" lost track of where the range
+   should be because it didn't take the changes made by the youngest
+   commits that are omitted from the output into account.
+
+ * When "fetch.writeCommitGraph" configuration is set in a shallow
+   repository and a fetch moves the shallow boundary, we wrote out
+   broken commit-graph files that do not match the reality, which has
+   been corrected.
+
+ * "git checkout" failed to catch an error from fstat() after updating
+   a path in the working tree.
+   (merge 35e6e212fd mt/entry-fstat-fallback-fix later to maint).
+
+ * When an aliased command, whose output is piped to a pager by git,
+   gets killed by a signal, the pager got into a funny state, which
+   has been corrected (again).
+   (merge c0d73a59c9 ta/wait-on-aliased-commands-upon-signal later to mai=
+nt).
+
+ * The code to produce progress output from "git commit-graph --write"
+   had a few breakages, which have been fixed.
+
+ * Other code cleanup, docfix, build fix, etc.
+   (merge 2c31a7aa44 jx/pkt-line-doc-count-fix later to maint).
+   (merge d63ae31962 cb/t5608-cleanup later to maint).
+   (merge 788db145c7 dl/t-readme-spell-git-correctly later to maint).
+   (merge 45a87a83bb dl/python-2.7-is-the-floor-version later to maint).
+   (merge b75a219904 es/advertise-contribution-doc later to maint).
+   (merge 0c9a4f638a rs/pull-leakfix later to maint).
+   (merge d546fe2874 rs/commit-reach-leakfix later to maint).
+   (merge 087bf5409c mk/pb-pretty-email-without-domain-part-fix later to =
+maint).
+   (merge 5f4ee57ad9 es/worktree-code-cleanup later to maint).
+   (merge 0172f7834a cc/cat-file-usage-update later to maint).
+   (merge 81de0c01cf ma/rebase-doc-typofix later to maint).
+
+----------------------------------------------------------------
+
+Changes since v2.27.0 are as follows:
+
+Abhishek Kumar (4):
+      object: drop parsed_object_pool->commit_count
+      commit-graph: introduce commit_graph_data_slab
+      commit: move members graph_pos, generation to a slab
+      commit-graph: minimize commit_graph_data_slab access
+
+Alessandro Menti (1):
+      l10n: it.po: update the Italian translation for Git 2.28.0 round 1
+
+Andrew Ng (1):
+      merge: optimization to skip evaluate_result for single strategy
+
+Ben Keene (1):
+      git-p4.py: fix --prepare-p4-only error with multiple commits
+
+Bojun Chen (1):
+      githooks.txt: use correct "reference-transaction" hook name
+
+Carlo Marcelo Arenas Bel=C3=B3n (5):
+      t/helper: teach test-regex to report pattern errors (like REG_ILLSE=
+Q)
+      t4210: detect REG_ILLSEQ dynamically and skip affected tests
+      bisect--helper: avoid segfault with bad syntax in `start --term-*`
+      t5608: avoid say() and use "skip_all" instead for consistency
+      commit-reach: avoid is_descendant_of() shim
+
+Chris Torek (3):
+      t/t3430: avoid undefined git diff behavior
+      git diff: improve range handling
+      Documentation: usage for diff combined commits
+
+Christian Couder (40):
+      upload-pack: remove unused 'wants' from upload_pack_data
+      upload-pack: move {want,have}_obj to upload_pack_data
+      upload-pack: move 'struct upload_pack_data' around
+      upload-pack: use 'struct upload_pack_data' in upload_pack()
+      upload-pack: pass upload_pack_data to get_common_commits()
+      upload-pack: pass upload_pack_data to receive_needs()
+      upload-pack: use upload_pack_data writer in receive_needs()
+      upload-pack: move symref to upload_pack_data
+      upload-pack: pass upload_pack_data to send_ref()
+      upload-pack: pass upload_pack_data to check_non_tip()
+      upload-pack: remove static variable 'stateless_rpc'
+      upload-pack: pass upload_pack_data to create_pack_file()
+      upload-pack: use upload_pack_data fields in receive_needs()
+      upload-pack: annotate upload_pack_data fields
+      upload-pack: move static vars to upload_pack_data
+      upload-pack: move use_sideband to upload_pack_data
+      upload-pack: move filter_capability_requested to upload_pack_data
+      upload-pack: move multi_ack to upload_pack_data
+      upload-pack: change multi_ack to an enum
+      upload-pack: pass upload_pack_data to upload_pack_config()
+      upload-pack: move keepalive to upload_pack_data
+      upload-pack: move allow_filter to upload_pack_data
+      upload-pack: move allow_ref_in_want to upload_pack_data
+      upload-pack: move allow_sideband_all to upload_pack_data
+      upload-pack: move pack_objects_hook to upload_pack_data
+      upload-pack: pass upload_pack_data to send_shallow_list()
+      upload-pack: pass upload_pack_data to deepen()
+      upload-pack: pass upload_pack_data to deepen_by_rev_list()
+      upload-pack: pass upload_pack_data to send_unshallow()
+      upload-pack: move shallow_nr to upload_pack_data
+      upload-pack: move extra_edge_obj to upload_pack_data
+      upload-pack: move allow_unadvertised_object_request to upload_pack_=
+data
+      upload-pack: change allow_unadvertised_object_request to an enum
+      upload-pack: pass upload_pack_data to process_haves()
+      upload-pack: pass upload_pack_data to send_acks()
+      upload-pack: pass upload_pack_data to ok_to_give_up()
+      upload-pack: pass upload_pack_data to got_oid()
+      upload-pack: move oldest_have to upload_pack_data
+      upload-pack: refactor common code into do_got_oid()
+      cat-file: add missing [=3D<format>] to usage/synopsis
+
+Christopher Diaz Riveros (1):
+      l10n: es: 2.28.0 round 1
+
+David J. Malan (1):
+      git-prompt: change =3D=3D to =3D for zsh's sake
+
+Denton Liu (18):
+      lib-submodule-update: add space after function name
+      lib-submodule-update: consolidate --recurse-submodules
+      remote-curl: fix typo
+      remote-curl: remove label indentation
+      transport: extract common fetch_pack() call
+      pkt-line: extern packet_length()
+      remote-curl: error on incomplete packet
+      pkt-line: define PACKET_READ_RESPONSE_END
+      stateless-connect: send response end packet
+      t/README: avoid poor-man's small caps GIT
+      CodingGuidelines: specify Python 2.7 is the oldest version
+      lib-submodule-update: prepend "git" to $command
+      t3200: rename "expected" to "expect"
+      t3200: test for specific errors
+      branch: don't mix --edit-description
+      builtin/diff: update usage comment
+      builtin/diff: fix botched update of usage comment
+      lib-submodule-update: pass 'test_must_fail' as an argument
+
+Derrick Stolee (3):
+      line-log: integrate with changed-path Bloom filters
+      commit-reach: create repo_is_descendant_of()
+      commit-reach: use fast logic in repo_in_merge_base
+
+Don Goodman-Wilson (1):
+      init: allow setting the default for the initial branch name via the=
+ config
+
+Elijah Newren (11):
+      fast-import: add new --date-format=3Draw-permissive format
+      sparse-checkout: avoid staging deletions of all files
+      dir: fix treatment of negated pathspecs
+      git-sparse-checkout: clarify interactions with submodules
+      dir: fix a few confusing comments
+      dir, clean: avoid disallowed behavior
+      clean: consolidate handling of ignored parameters
+      clean: optimize and document cases where we recurse into subdirecto=
+ries
+      wt-status: show sparse checkout status as well
+      git-prompt: document how in-progress operations affect the prompt
+      git-prompt: include sparsity state as well
+
+Emily Shaffer (3):
+      help: add shell-path to --build-options
+      bugreport: include user interactive shell
+      docs: mention MyFirstContribution in more places
+
+Emir Sar=C4=B1 (1):
+      l10n: tr: v2.28.0 round 1
+
+Eric Sunshine (10):
+      worktree: factor out repeated string literal
+      worktree: give "should be pruned?" function more meaningful name
+      worktree: make high-level pruning re-usable
+      worktree: prune duplicate entries referencing same worktree path
+      worktree: prune linked worktree referencing main worktree path
+      worktree: generalize candidate worktree path validation
+      worktree: make "move" refuse to move atop missing registered worktr=
+ee
+      worktree: drop get_worktrees() special-purpose sorting option
+      worktree: drop get_worktrees() unused 'flags' argument
+      worktree: avoid dead-code in conditional
+
+Han-Wen Nienhuys (5):
+      refs.h: clarify reflog iteration order
+      t: use update-ref and show-ref to reading/writing refs
+      refs: improve documentation for ref iterator
+      reftable: clarify how empty tables should be written
+      reftable: define version 2 of the spec to accomodate SHA256
+
+Jacob Keller (16):
+      completion: add test showing subpar git switch completion
+      completion: add tests showing subpar DWIM logic for switch/checkout
+      completion: add tests showing subar checkout --detach logic
+      completion: add tests showing subpar switch/checkout --track logic
+      completion: add tests showing subpar -c/-C startpoint completion
+      completion: add tests showing subpar -c/C argument completion
+      completion: add tests showing subpar switch/checkout --orphan logic
+      completion: replace overloaded track term for __git_complete_refs
+      completion: extract function __git_dwim_remote_heads
+      completion: perform DWIM logic directly in __git_complete_refs
+      completion: improve handling of DWIM mode for switch/checkout
+      completion: improve completion for git switch with no options
+      completion: improve handling of --detach in checkout
+      completion: improve handling of --track in switch/checkout
+      completion: improve handling of -c/-C and -b/-B in switch/checkout
+      completion: improve handling of --orphan option of switch/checkout
+
+Jean-No=C3=ABl Avila (1):
+      l10n: fr v2.28.0 round 1
+
+Jeff King (14):
+      diff: discard blob data from stat-unmatched pairs
+      upload-pack: actually use some upload_pack_data bitfields
+      t9351: derive anonymized tree checks from original repo
+      fast-export: use xmemdupz() for anonymizing oids
+      fast-export: store anonymized oids as hex strings
+      fast-export: tighten anonymize_mem() interface to handle only strin=
+gs
+      fast-export: stop storing lengths in anonymized hashmaps
+      fast-export: use a flex array to store anonymized entries
+      fast-export: move global "idents" anonymize hashmap into function
+      fast-export: add a "data" callback parameter to anonymize_str()
+      fast-export: allow seeding the anonymized mapping
+      fast-export: anonymize "master" refname
+      fast-export: use local array to store anonymized oid
+      diff: check for merge bases before assigning sym->base
+
+Jiang Xin (2):
+      l10n: git.pot: v2.28.0 round 1 (70 new, 14 removed)
+      l10n: zh_CN: for git v2.28.0 l10n round 1
+
+Jiuyang Xie (1):
+      doc: fix wrong 4-byte length of pkt-line message
+
+Johannes Schindelin (16):
+      checkout -p: handle new files correctly
+      clone/fetch: anonymize URLs in the reflog
+      msvc: fix "REG_STARTEND" issue
+      fmt-merge-msg: stop treating `master` specially
+      send-pack/transport-helper: avoid mentioning a particular branch
+      submodule: fall back to remote's HEAD for missing remote.<name>.bra=
+nch
+      docs: add missing diamond brackets
+      init: allow specifying the initial branch name for the new reposito=
+ry
+      clone: use configured default branch name when appropriate
+      remote: use the configured default branch name when appropriate
+      testsvn: respect `init.defaultBranch`
+      docs: adjust for the recent rename of `pu` to `seen`
+      docs: adjust the technical overview for the rename `pu` -> `seen`
+      tests: reference `seen` wherever `pu` was referenced
+      diff-files --raw: show correct post-image of intent-to-add files
+      difftool -d: ensure that intent-to-add files are handled correctly
+
+John Lin (1):
+      bash-completion: add git-prune into bash completion
+
+Jonathan Nieder (5):
+      config: let feature.experimental imply protocol.version=3D2
+      reftable: file format documentation
+      experimental: default to fetch.writeCommitGraph=3Dfalse
+      Revert "check_repository_format_gently(): refuse extensions for old=
+ repositories"
+      repository: allow repository format upgrade with extensions
+
+Jonathan Tan (12):
+      t5551: test that GIT_TRACE_CURL redacts password
+      http, imap-send: stop using CURLOPT_VERBOSE
+      http: redact all cookies, teach GIT_TRACE_REDACT=3D0
+      http: use --stdin when indexing dumb HTTP pack
+      http: refactor finish_http_pack_request()
+      http-fetch: refactor into function
+      http-fetch: support fetching packfiles by URL
+      Documentation: order protocol v2 sections
+      Documentation: add Packfile URIs design doc
+      upload-pack: refactor reading of pack-objects out
+      fetch-pack: support more than one pack lockfile
+      upload-pack: send part of packfile response as uri
+
+Jordi Mas (1):
+      l10n: Update Catalan translation
+
+Josh Steadmon (1):
+      fuzz-commit-graph: properly free graph struct
+
+Junio C Hamano (13):
+      Start the post 2.27 cycle
+      The second batch
+      The third batch
+      The fourth batch
+      The fifth batch
+      The sixth batch
+      The seventh batch
+      Git 2.28-rc0
+      Hopefully the last batch before -rc1
+      Git 2.28-rc1
+      RelNotes: update the v0 with extension situation
+      Git 2.28-rc2
+      Git 2.28
+
+Laurent Arnoud (1):
+      diff: add config option relative
+
+Luc Van Oostenryck (1):
+      sparse: allow '{ 0 }' to be used without warnings
+
+Marco Trevisan (Trevi=C3=B1o) (1):
+      completion: use native ZSH array pattern matching
+
+Martin =C3=85gren (5):
+      git-rebase.txt: fix description list separator
+      git-diff.txt: don't mark required argument as optional
+      git-diff.txt: reorder possible usages
+      gitworkflows.txt: fix broken subsection underline
+      t3200: don't grep for `strerror()` string
+
+Matheus Tavares (1):
+      entry: check for fstat() errors after checkout
+
+Matthias R=C3=BCster (1):
+      l10n: de.po: Update German translation for Git v2.28.0
+
+Mikhail Terekhov (1):
+      git-gui: allow opening work trees from the startup dialog
+
+Miroslav Ko=C5=A1k=C3=A1r (1):
+      doc: fix author vs. committer copy/paste error
+
+Paolo Bonzini (1):
+      t4014: do not use "slave branch" nomenclature
+
+Patrick Steinhardt (1):
+      refs: implement reference transaction hook
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation (4931t0f0u)
+
+Rafael Aquini (1):
+      send-email: restore --in-reply-to superseding behavior
+
+Ralf Thielow (1):
+      l10n: de.po: fix grammar
+
+Ramsay Jones (1):
+      upload-pack: fix a sparse '0 as NULL pointer' warning
+
+Randall S. Becker (2):
+      bugreport.c: replace strbuf_write_fd with write_in_full
+      strbuf: remove unreferenced strbuf_write_fd method.
+
+Ren=C3=A9 Scharfe (10):
+      fsck: fix a typo in a comment
+      t1450: increase test coverage of in-tree d/f detection
+      t1450: demonstrate undetected in-tree d/f conflict
+      fsck: detect more in-tree d/f conflicts
+      checkout: add tests for -b and --track
+      checkout: improve error messages for -b with extra argument
+      commit-reach: plug minor memory leak after using is_descendant_of()
+      pull: plug minor memory leak after using is_descendant_of()
+      revision: reallocate TOPO_WALK object flags
+      revision: disable min_age optimization with line-log
+
+SZEDER G=C3=A1bor (7):
+      line-log: remove unused fields from 'struct line_log_data'
+      t4211-line-log: add tests for parent oids
+      line-log: more responsive, incremental 'git log -L'
+      line-log: try to use generation number-based topo-ordering
+      commit-graph: fix progress of reachable commits
+      commit-graph: fix "Writing out commit graph" progress counter
+      commit-graph: fix "Collecting commits from input" progress line
+
+Shourya Shukla (1):
+      submodule: port subcommand 'set-branch' from shell to C
+
+Srinidhi Kaushik (1):
+      diff-files: treat "i-t-a" files as "not-in-index"
+
+Taylor Blau (12):
+      commit-graph.c: extract 'refs_cb_data'
+      commit-graph.c: show progress of finding reachable commits
+      commit-graph.c: peel refs in 'add_ref_to_set'
+      builtin/commit-graph.c: extract 'read_one_commit()'
+      builtin/commit-graph.c: dereference tags in builtin
+      commit-graph.c: simplify 'fill_oids_from_commits'
+      t5318: reorder test below 'graph_read_expect'
+      commit-graph: drop COMMIT_GRAPH_WRITE_CHECK_OIDS flag
+      t5318: use 'test_must_be_empty'
+      t5318: test that '--stdin-commits' respects '--[no-]progress'
+      commit.c: don't persist substituted parents when unshallowing
+      Documentation/RelNotes: fix a typo in 2.28's relnotes
+
+Trygve Aaberge (2):
+      Wait for child on signal death for aliases to builtins
+      Wait for child on signal death for aliases to externals
+
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n (1):
+      l10n: vi.po(4931t): Updated translation for v2.28.0
+
+Ville Skytt=C3=A4 (2):
+      completion: don't override given stash subcommand with -p
+      completion: nounset mode fixes
+
+Xin Li (4):
+      repository: add a helper function to perform repository format upgr=
+ade
+      fetch: allow adding a filter after initial clone
+      sparse-checkout: upgrade repository to version 1 when enabling exte=
+nsion
+      check_repository_format_gently(): refuse extensions for old reposit=
+ories
+
+Yi-Jyun Pan (1):
+      l10n: zh_TW.po: v2.28.0 round 1 (0 untranslated)
+
+brian m. carlson (61):
+      t1050: match object ID paths in a hash-insensitive way
+      Documentation: document v1 protocol object-format capability
+      builtin/checkout: simplify metadata initialization
+      t2060: add a test for switch with --orphan and --discard-changes
+      connect: have ref processing code take struct packet_reader
+      wrapper: add function to compare strings with different NUL termina=
+tion
+      remote: advertise the object-format capability on the server side
+      connect: add function to parse multiple v1 capability values
+      connect: add function to fetch value of a v2 server capability
+      pkt-line: add a member for hash algorithm
+      transport: add a hash algorithm member
+      connect: add function to detect supported v1 hash functions
+      send-pack: detect when the server doesn't support our hash
+      connect: make parse_feature_value extern
+      fetch-pack: detect when the server doesn't support our hash
+      connect: detect algorithm when fetching refs
+      builtin/receive-pack: detect when the server doesn't support our ha=
+sh
+      docs: update remote helper docs for object-format extensions
+      transport-helper: implement object-format extensions
+      remote-curl: implement object-format extensions
+      builtin/clone: initialize hash algorithm properly
+      t5562: pass object-format in synthesized test data
+      fetch-pack: parse and advertise the object-format capability
+      setup: set the_repository's hash algo when checking format
+      t3200: mark assertion with SHA1 prerequisite
+      packfile: compute and use the index CRC offset
+      t5302: modernize test formatting
+      builtin/show-index: provide options to determine hash algo
+      t1302: expect repo format version 1 for SHA-256
+      Documentation/technical: document object-format for protocol v2
+      connect: pass full packet reader when parsing v2 refs
+      connect: parse v2 refs with correct hash algorithm
+      serve: advertise object-format capability for protocol v2
+      t5500: make hash independent
+      builtin/ls-remote: initialize repository based on fetch
+      remote-curl: detect algorithm for dumb HTTP by size
+      builtin/index-pack: add option to specify hash algorithm
+      t1050: pass algorithm to index-pack when outside repo
+      remote-curl: avoid truncating refs with ls-remote
+      t/helper: initialize the repository for test-sha1-array
+      t5702: offer an object-format capability in the test
+      t5703: use object-format serve option
+      t5704: send object-format capability with SHA-256
+      t5300: pass --object-format to git index-pack
+      bundle: detect hash algorithm when reading refs
+      remote-testgit: adapt for object-format
+      t9109: make test hash independent
+      t9168: make test hash independent
+      t9108: make test hash independent
+      t9100: make test work with SHA-256
+      t9104: make hash size independent
+      t9101: make hash independent
+      t/lib-git-svn: make hash size independent
+      perl: create and switch variables for hash constants
+      perl: make Git::IndexInfo work with SHA-256
+      perl: make SVN code hash independent
+      git-svn: set the OID length based on hash algorithm
+      git-cvsserver: port to SHA-256
+      git-cvsimport: port to SHA-256
+      git-cvsexportcommit: port to SHA-256
+      http-push: ensure unforced pushes fail when data would be lost
+
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh (2):
+      contrib: subtree: adjust test to change in fmt-merge-msg
+      l10n: vi.po: correct "ident line" translation
 
