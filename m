@@ -2,259 +2,100 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED422C433ED
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47280C433DF
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:40:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF06E2053B
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:38:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FFAE2053B
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:40:49 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cCQ2uuZC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731735AbgG1Qi4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 12:38:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39912 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731713AbgG1Qiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 12:38:55 -0400
-Received: (qmail 27719 invoked by uid 109); 28 Jul 2020 16:38:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Jul 2020 16:38:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26528 invoked by uid 111); 28 Jul 2020 16:38:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 12:38:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Jul 2020 12:38:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 2/3] revision: add "--ignore-merges" option to counteract "-m"
-Message-ID: <20200728163853.GB2650252@coredump.intra.peff.net>
-References: <20200728163617.GA2649887@coredump.intra.peff.net>
+        id S1731487AbgG1Qks (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 12:40:48 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60863 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726548AbgG1Qks (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 12:40:48 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0B84EE817A;
+        Tue, 28 Jul 2020 12:40:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gjmPonw+/gG69vXOGkz6lp2kpzc=; b=cCQ2uu
+        ZCAgFpLwrOr6+pyYRBjo8dDXNLJ5HT/SXCu4exQxuXF6lZufNGZvA1jV3WBYWLMU
+        HjivRgJ5FP2DQK9XXo/tlyBB1HEzCjfHhKa4LXvpZ4U4zaiYNX+SYSwxvi3FwKIG
+        Tn+at5myKMkzNW9RczKv0FMnRQeOJZ/u2YzHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qqe7qwSPIaiB0Sqj20lAqKW1Im1xgMGM
+        g6qYm0shzSK1zDQ5Kh+rW0eSUWp4TmbuymJwU/FQxYMOS0r+t4uQqyYHcQ1kumCW
+        NFa7PAsOWCll1U43np/P5mZWRhCkpzvEVuqZ/hisjsAIFkpyZFcNdHsCe1xqIvFl
+        HzGu8dyVGgg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03AA7E8179;
+        Tue, 28 Jul 2020 12:40:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EE8B2E8177;
+        Tue, 28 Jul 2020 12:40:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Anders Waldenborg <anders@0x63.nu>, git <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: Questions about trailer configuration semantics
+References: <87blk0rjob.fsf@0x63.nu> <xmqqr1swg9lc.fsf@gitster.c.googlers.com>
+        <CAP8UFD1XV_jN10yOc2o4=5PtPcvT-RbxhY1H3swZz2r4g-Uzkw@mail.gmail.com>
+        <87a6zkr5z7.fsf@0x63.nu>
+        <CAP8UFD1JZhNVDJ=fe-FLzmBqSbAwyaJuABK-G+-keL4LanZbpA@mail.gmail.com>
+        <20200728154132.GA817108@coredump.intra.peff.net>
+Date:   Tue, 28 Jul 2020 09:40:40 -0700
+In-Reply-To: <20200728154132.GA817108@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 28 Jul 2020 11:41:32 -0400")
+Message-ID: <xmqqmu3jegon.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200728163617.GA2649887@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 136EA16A-D0F1-11EA-89F7-843F439F7C89-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "-m" option sets revs->ignore_merges to "0", but there's no way to
-undo it. This probably isn't something anybody overly cares about, since
-"1" is already the default, but it will serve as an escape hatch when we
-flip the default for ignore_merges to "0" in more situations.
+Jeff King <peff@peff.net> writes:
 
-We'll also add a few extra niceties:
+> It's inevitable that you'll have to do some data cleanup like that
+> anyway. Lumping together prefixes isn't flexible enough to coverall
+> cases. Using trailer.*.key to manually map names covers more, but again
+> not all (e.g., if the project used to use "foo" but switched to "bar",
+> but the syntax of the value fields also changed at the same time, you'd
+> need to normalize those, too).
+>
+> So to me it boils down to:
+>
+>   - returning the data as verbatim as possible when reading existing
+>     trailers would give the least surprise to most people
+>
+>   - real data collection is going to involve a separate post-processing
+>     step which is better done in a full programming language
 
-  - initialize the value to "-1" to indicate "not set", and then resolve
-    it to the normal 0/1 bool in setup_revisions(). This lets any tweak
-    functions, as well as setup_revisions() itself, avoid clobbering the
-    user's preference (which until now they couldn't actually express).
+Yeah, I agree that these are good guidelines to use when we think
+about the feature.
 
-  - since we now have --ignore-merges, let's add the matching
-    --no-ignore-merges, which is just a synonym for "-m". In fact, it's
-    simpler to just document --no-ignore-merges alongside "-m", and
-    leave it implied that its opposite countermands it.
+> The original %(trailers) was "dump the trailers block verbatim". But
+> that's not super useful for parsing individual trailers. So "only"
+> actually starts parsing the individual trailers. I'd argue that the
+> %(trailers) behavior is correct, but that %(trailers:only) should
+> probably be doing less (i.e., just parsing and reporting what it finds,
+> but not changing any names).
 
-The new test shows that this behaves just the same as the current
-behavior without "-m".
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I pulled the option name from the rev_info field name. It might be too
-broad (we are not ignoring merges during the traversal, only for the
-diff). It could be "--no-diff-merges" or something, but that would
-involve flipping the sense of the boolean (but that would just be in the
-code, not user-visible, so not that big a deal).
-
- Documentation/rev-list-options.txt            |  1 +
- builtin/log.c                                 |  4 +-
- revision.c                                    | 10 ++-
- revision.h                                    |  2 +-
- t/t4013-diff-various.sh                       |  1 +
- ...g_--ignore-merges_-p_--first-parent_master | 78 +++++++++++++++++++
- 6 files changed, 90 insertions(+), 6 deletions(-)
- create mode 100644 t/t4013/diff.log_--ignore-merges_-p_--first-parent_master
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index b01b2b6773..fbd8fa0381 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -1148,6 +1148,7 @@ options may be given. See linkgit:git-diff-files[1] for more options.
- 	rename or copy detection have been requested).
- 
- -m::
-+--no-ignore-merges::
- 	This flag makes the merge commits show the full diff like
- 	regular commits; for each merge parent, a separate log entry
- 	and diff is generated. An exception is that only diff against
-diff --git a/builtin/log.c b/builtin/log.c
-index 281d2ae8eb..39b3d773a9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -599,8 +599,8 @@ static int show_tree_object(const struct object_id *oid,
- static void show_setup_revisions_tweak(struct rev_info *rev,
- 				       struct setup_revision_opt *opt)
- {
--	if (rev->ignore_merges) {
--		/* There was no "-m" on the command line */
-+	if (rev->ignore_merges < 0) {
-+		/* There was no "-m" variant on the command line */
- 		rev->ignore_merges = 0;
- 		if (!rev->first_parent_only && !rev->combine_merges) {
- 			/* No "--first-parent", "-c", or "--cc" */
-diff --git a/revision.c b/revision.c
-index 6aa7f4f567..a36c4eaf26 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1795,7 +1795,7 @@ void repo_init_revisions(struct repository *r,
- 
- 	revs->repo = r;
- 	revs->abbrev = DEFAULT_ABBREV;
--	revs->ignore_merges = 1;
-+	revs->ignore_merges = -1;
- 	revs->simplify_history = 1;
- 	revs->pruning.repo = r;
- 	revs->pruning.flags.recursive = 1;
-@@ -2323,8 +2323,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->diff = 1;
- 		revs->diffopt.flags.recursive = 1;
- 		revs->diffopt.flags.tree_in_recursive = 1;
--	} else if (!strcmp(arg, "-m")) {
-+	} else if (!strcmp(arg, "-m") || !strcmp(arg, "--no-ignore-merges")) {
- 		revs->ignore_merges = 0;
-+	} else if (!strcmp(arg, "--ignore-merges")) {
-+		revs->ignore_merges = 1;
- 	} else if (!strcmp(arg, "-c")) {
- 		revs->diff = 1;
- 		revs->dense_combined_merges = 0;
-@@ -2834,8 +2836,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 			copy_pathspec(&revs->diffopt.pathspec,
- 				      &revs->prune_data);
- 	}
--	if (revs->combine_merges)
-+	if (revs->combine_merges && revs->ignore_merges < 0)
- 		revs->ignore_merges = 0;
-+	if (revs->ignore_merges < 0)
-+		revs->ignore_merges = 1;
- 	if (revs->combined_all_paths && !revs->combine_merges)
- 		die("--combined-all-paths makes no sense without -c or --cc");
- 
-diff --git a/revision.h b/revision.h
-index f412ae85eb..5258024743 100644
---- a/revision.h
-+++ b/revision.h
-@@ -190,11 +190,11 @@ struct rev_info {
- 			show_root_diff:1,
- 			no_commit_id:1,
- 			verbose_header:1,
--			ignore_merges:1,
- 			combine_merges:1,
- 			combined_all_paths:1,
- 			dense_combined_merges:1,
- 			always_show_header:1;
-+	int             ignore_merges:2;
- 
- 	/* Format info */
- 	int		show_notes;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 43267d6024..8f9181316f 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -297,6 +297,7 @@ log --root --patch-with-stat --summary master
- log --root -c --patch-with-stat --summary master
- # improved by Timo's patch
- log --root --cc --patch-with-stat --summary master
-+log --ignore-merges -p --first-parent master
- log -p --first-parent master
- log -m -p --first-parent master
- log -m -p master
-diff --git a/t/t4013/diff.log_--ignore-merges_-p_--first-parent_master b/t/t4013/diff.log_--ignore-merges_-p_--first-parent_master
-new file mode 100644
-index 0000000000..fa0cdc8a23
---- /dev/null
-+++ b/t/t4013/diff.log_--ignore-merges_-p_--first-parent_master
-@@ -0,0 +1,78 @@
-+$ git log --ignore-merges -p --first-parent master
-+commit 59d314ad6f356dd08601a4cd5e530381da3e3c64
-+Merge: 9a6d494 c7a2ab9
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:04:00 2006 +0000
-+
-+    Merge branch 'side' into master
-+
-+commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:02:00 2006 +0000
-+
-+    Third
-+
-+diff --git a/dir/sub b/dir/sub
-+index 8422d40..cead32e 100644
-+--- a/dir/sub
-++++ b/dir/sub
-+@@ -2,3 +2,5 @@ A
-+ B
-+ C
-+ D
-++E
-++F
-+diff --git a/file1 b/file1
-+new file mode 100644
-+index 0000000..b1e6722
-+--- /dev/null
-++++ b/file1
-+@@ -0,0 +1,3 @@
-++A
-++B
-++C
-+
-+commit 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:01:00 2006 +0000
-+
-+    Second
-+    
-+    This is the second commit.
-+
-+diff --git a/dir/sub b/dir/sub
-+index 35d242b..8422d40 100644
-+--- a/dir/sub
-++++ b/dir/sub
-+@@ -1,2 +1,4 @@
-+ A
-+ B
-++C
-++D
-+diff --git a/file0 b/file0
-+index 01e79c3..b414108 100644
-+--- a/file0
-++++ b/file0
-+@@ -1,3 +1,6 @@
-+ 1
-+ 2
-+ 3
-++4
-++5
-++6
-+diff --git a/file2 b/file2
-+deleted file mode 100644
-+index 01e79c3..0000000
-+--- a/file2
-++++ /dev/null
-+@@ -1,3 +0,0 @@
-+-1
-+-2
-+-3
-+
-+commit 444ac553ac7612cc88969031b02b3767fb8a353a
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:00:00 2006 +0000
-+
-+    Initial
-+$
--- 
-2.28.0.rc2.475.g53c7e1c7f4
-
+Yes, sounds sensible.
