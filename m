@@ -7,31 +7,31 @@ X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D03EC433EB
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBC6FC433E5
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:23:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1225420809
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:23:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B586120809
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728958AbgG1UX2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 16:23:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40196 "EHLO cloud.peff.net"
+        id S1729006AbgG1UXo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 16:23:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40198 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728437AbgG1UX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 16:23:27 -0400
-Received: (qmail 29716 invoked by uid 109); 28 Jul 2020 20:23:26 -0000
+        id S1728437AbgG1UXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 16:23:43 -0400
+Received: (qmail 29719 invoked by uid 109); 28 Jul 2020 20:23:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Jul 2020 20:23:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Jul 2020 20:23:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28496 invoked by uid 111); 28 Jul 2020 20:23:26 -0000
+Received: (qmail 28499 invoked by uid 111); 28 Jul 2020 20:23:39 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 16:23:26 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 16:23:39 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Jul 2020 16:23:25 -0400
+Date:   Tue, 28 Jul 2020 16:23:39 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 02/11] argv-array: rename to strvec
-Message-ID: <20200728202325.GB1021513@coredump.intra.peff.net>
+Subject: [PATCH 03/11] strvec: rename files from argv-array to strvec
+Message-ID: <20200728202339.GC1021513@coredump.intra.peff.net>
 References: <20200728202124.GA1021264@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,483 +42,852 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The name "argv-array" isn't very good, because it describes what the
-data type can be used for (program argument arrays), not what it
-actually is (a dynamically-growing string array that maintains a
-NULL-terminator invariant). This leads to people being hesitant to use
-it for other cases where it would actually be a good fit. The existing
-name is also clunky to use. It's overly long, and the name often leads
-to saying things like "argv.argv" (i.e., the field names overlap with
-variable names, since they're describing the use, not the type). Let's
-give it a more neutral name.
+This requires updating #include lines across the code-base, but that's
+all fairly mechanical, and was done with:
 
-I settled on "strvec" because "vector" is the name for a dynamic array
-type in many programming languages. "strarray" would work, too, but it's
-longer and a bit more awkward to say (and don't we all say these things
-in our mind as we type them?).
-
-A more extreme direction would be a generic data structure which stores
-a NULL-terminated of _any_ type. That would be easy to do with void
-pointers, but we'd lose some type safety for the existing cases. Plus it
-raises questions about memory allocation and ownership. So I limited
-myself here to changing names only, and not semantics. If we do find a
-use for that more generic data type, we could perhaps implement it at a
-lower level and then provide type-safe wrappers around it for strings.
-But that can come later.
-
-This patch does the minimum to convert the struct and function names in
-the header and implementation, leaving a few things for follow-on
-patches:
-
-  - files retain their original names for now
-
-  - struct field names are retained for now
-
-  - there's a preprocessor compat layer that lets most users remain the
-    same for now. The exception is headers which made a manual forward
-    declaration of the struct. I've converted them (and their dependent
-    function declarations) here.
+  git ls-files '*.c' '*.h' |
+  xargs perl -i -pe 's/argv-array.h/strvec.h/'
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- argv-array.c         | 44 +++++++++++++++++++-------------------
- argv-array.h         | 51 +++++++++++++++++++++++++++-----------------
- exec-cmd.h           |  4 ++--
- ls-refs.h            |  4 ++--
- quote.h              |  4 ++--
- refs.h               |  4 ++--
- refspec.h            |  4 ++--
- remote.h             |  4 ++--
- serve.h              |  4 ++--
- submodule.h          |  6 +++---
- transport-internal.h |  2 +-
- upload-pack.h        |  4 ++--
- 12 files changed, 74 insertions(+), 61 deletions(-)
+ Makefile                      | 2 +-
+ add-patch.c                   | 2 +-
+ bisect.c                      | 2 +-
+ builtin/add.c                 | 2 +-
+ builtin/annotate.c            | 2 +-
+ builtin/bisect--helper.c      | 2 +-
+ builtin/bundle.c              | 2 +-
+ builtin/describe.c            | 2 +-
+ builtin/difftool.c            | 2 +-
+ builtin/fetch.c               | 2 +-
+ builtin/gc.c                  | 2 +-
+ builtin/pack-objects.c        | 2 +-
+ builtin/rebase.c              | 2 +-
+ builtin/receive-pack.c        | 2 +-
+ builtin/remote.c              | 2 +-
+ builtin/repack.c              | 2 +-
+ builtin/show-branch.c         | 2 +-
+ builtin/stash.c               | 2 +-
+ builtin/update-ref.c          | 2 +-
+ builtin/upload-archive.c      | 2 +-
+ builtin/worktree.c            | 2 +-
+ bundle.c                      | 2 +-
+ bundle.h                      | 2 +-
+ diff.c                        | 2 +-
+ environment.c                 | 2 +-
+ exec-cmd.c                    | 2 +-
+ graph.c                       | 2 +-
+ http-backend.c                | 2 +-
+ http-push.c                   | 2 +-
+ line-log.c                    | 2 +-
+ list-objects-filter-options.c | 2 +-
+ ls-refs.c                     | 2 +-
+ parse-options-cb.c            | 2 +-
+ pathspec.c                    | 2 +-
+ quote.c                       | 2 +-
+ range-diff.c                  | 2 +-
+ range-diff.h                  | 2 +-
+ ref-filter.c                  | 2 +-
+ refs.c                        | 2 +-
+ refspec.c                     | 2 +-
+ remote-curl.c                 | 2 +-
+ remote-testsvn.c              | 2 +-
+ remote.c                      | 2 +-
+ revision.c                    | 2 +-
+ run-command.c                 | 2 +-
+ run-command.h                 | 2 +-
+ sequencer.c                   | 2 +-
+ serve.c                       | 2 +-
+ argv-array.c => strvec.c      | 2 +-
+ argv-array.h => strvec.h      | 6 +++---
+ submodule.c                   | 2 +-
+ t/helper/test-run-command.c   | 2 +-
+ t/helper/test-trace2.c        | 2 +-
+ tmp-objdir.c                  | 2 +-
+ transport-helper.c            | 2 +-
+ unpack-trees.c                | 2 +-
+ unpack-trees.h                | 2 +-
+ upload-pack.c                 | 2 +-
+ wt-status.c                   | 2 +-
+ 59 files changed, 61 insertions(+), 61 deletions(-)
+ rename argv-array.c => strvec.c (98%)
+ rename argv-array.h => strvec.h (97%)
 
-diff --git a/argv-array.c b/argv-array.c
-index 61ef8c0dfd..b7461c47e4 100644
---- a/argv-array.c
-+++ b/argv-array.c
-@@ -2,32 +2,32 @@
- #include "argv-array.h"
+diff --git a/Makefile b/Makefile
+index 372139f1f2..65f8cfb236 100644
+--- a/Makefile
++++ b/Makefile
+@@ -828,7 +828,6 @@ LIB_OBJS += apply.o
+ LIB_OBJS += archive-tar.o
+ LIB_OBJS += archive-zip.o
+ LIB_OBJS += archive.o
+-LIB_OBJS += argv-array.o
+ LIB_OBJS += attr.o
+ LIB_OBJS += base85.o
+ LIB_OBJS += bisect.o
+@@ -986,6 +985,7 @@ LIB_OBJS += sigchain.o
+ LIB_OBJS += split-index.o
+ LIB_OBJS += stable-qsort.o
+ LIB_OBJS += strbuf.o
++LIB_OBJS += strvec.o
+ LIB_OBJS += streaming.o
+ LIB_OBJS += string-list.o
+ LIB_OBJS += sub-process.o
+diff --git a/add-patch.c b/add-patch.c
+index f899389e2c..09d00c5574 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -2,7 +2,7 @@
+ #include "add-interactive.h"
  #include "strbuf.h"
+ #include "run-command.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "pathspec.h"
+ #include "color.h"
+ #include "diff.h"
+diff --git a/bisect.c b/bisect.c
+index d5e830410f..3160e82e96 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -11,7 +11,7 @@
+ #include "log-tree.h"
+ #include "bisect.h"
+ #include "oid-array.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "commit-slab.h"
+ #include "commit-reach.h"
+ #include "object-store.h"
+diff --git a/builtin/add.c b/builtin/add.c
+index 298e0114f9..6cd9a4cd77 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -18,7 +18,7 @@
+ #include "diffcore.h"
+ #include "revision.h"
+ #include "bulk-checkin.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "submodule.h"
+ #include "add-interactive.h"
  
--const char *empty_argv[] = { NULL };
-+const char *empty_strvec[] = { NULL };
+diff --git a/builtin/annotate.c b/builtin/annotate.c
+index da413ae0d1..4353448712 100644
+--- a/builtin/annotate.c
++++ b/builtin/annotate.c
+@@ -5,7 +5,7 @@
+  */
+ #include "git-compat-util.h"
+ #include "builtin.h"
+-#include "argv-array.h"
++#include "strvec.h"
  
--void argv_array_init(struct argv_array *array)
-+void strvec_init(struct strvec *array)
+ int cmd_annotate(int argc, const char **argv, const char *prefix)
  {
--	array->argv = empty_argv;
-+	array->argv = empty_strvec;
- 	array->argc = 0;
- 	array->alloc = 0;
- }
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index ec4996282e..e929315b38 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -4,7 +4,7 @@
+ #include "bisect.h"
+ #include "refs.h"
+ #include "dir.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "run-command.h"
+ #include "prompt.h"
+ #include "quote.h"
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index f049d27a14..51fc6d9739 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -1,5 +1,5 @@
+ #include "builtin.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "parse-options.h"
+ #include "cache.h"
+ #include "bundle.h"
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 21d2cb9e57..32ad6822f7 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -12,7 +12,7 @@
+ #include "revision.h"
+ #include "diff.h"
+ #include "hashmap.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "run-command.h"
+ #include "object-store.h"
+ #include "list-objects.h"
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index c280e682b2..c0608a78d9 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -18,7 +18,7 @@
+ #include "run-command.h"
+ #include "exec-cmd.h"
+ #include "parse-options.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "strbuf.h"
+ #include "lockfile.h"
+ #include "object-store.h"
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 82ac4be8a5..b183b55ee9 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -19,7 +19,7 @@
+ #include "submodule-config.h"
+ #include "submodule.h"
+ #include "connected.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "utf8.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 8e0b9cf41b..27951ee061 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -18,7 +18,7 @@
+ #include "parse-options.h"
+ #include "run-command.h"
+ #include "sigchain.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "commit.h"
+ #include "commit-graph.h"
+ #include "packfile.h"
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 7016b28485..5f18f0ee9d 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -27,7 +27,7 @@
+ #include "delta-islands.h"
+ #include "reachable.h"
+ #include "oid-array.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "list.h"
+ #include "packfile.h"
+ #include "object-store.h"
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 37ba76ac3d..38145a66ed 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -8,7 +8,7 @@
+ #include "builtin.h"
+ #include "run-command.h"
+ #include "exec-cmd.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "dir.h"
+ #include "packfile.h"
+ #include "refs.h"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index d43663bb0a..1285631481 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -15,7 +15,7 @@
+ #include "string-list.h"
+ #include "oid-array.h"
+ #include "connected.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "version.h"
+ #include "tag.h"
+ #include "gpg-interface.h"
+diff --git a/builtin/remote.c b/builtin/remote.c
+index e8377994e5..a9f35ba855 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -10,7 +10,7 @@
+ #include "refs.h"
+ #include "refspec.h"
+ #include "object-store.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "commit-reach.h"
  
--static void argv_array_push_nodup(struct argv_array *array, const char *value)
-+static void strvec_push_nodup(struct strvec *array, const char *value)
- {
--	if (array->argv == empty_argv)
-+	if (array->argv == empty_strvec)
- 		array->argv = NULL;
+ static const char * const builtin_remote_usage[] = {
+diff --git a/builtin/repack.c b/builtin/repack.c
+index df287739d9..8bccb38a28 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -7,7 +7,7 @@
+ #include "sigchain.h"
+ #include "strbuf.h"
+ #include "string-list.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "midx.h"
+ #include "packfile.h"
+ #include "prune-packed.h"
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 7e52ee9126..f0a70538c3 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -4,7 +4,7 @@
+ #include "refs.h"
+ #include "builtin.h"
+ #include "color.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "parse-options.h"
+ #include "dir.h"
+ #include "commit-slab.h"
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 0c52a3b849..1acf216254 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -7,7 +7,7 @@
+ #include "cache-tree.h"
+ #include "unpack-trees.h"
+ #include "merge-recursive.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "run-command.h"
+ #include "dir.h"
+ #include "rerere.h"
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index b74dd9a69d..8a2df4459c 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -4,7 +4,7 @@
+ #include "builtin.h"
+ #include "parse-options.h"
+ #include "quote.h"
+-#include "argv-array.h"
++#include "strvec.h"
  
- 	ALLOC_GROW(array->argv, array->argc + 2, array->alloc);
- 	array->argv[array->argc++] = value;
- 	array->argv[array->argc] = NULL;
- }
+ static const char * const git_update_ref_usage[] = {
+ 	N_("git update-ref [<options>] -d <refname> [<old-val>]"),
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index 018879737a..7fc8e0e82d 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -7,7 +7,7 @@
+ #include "pkt-line.h"
+ #include "sideband.h"
+ #include "run-command.h"
+-#include "argv-array.h"
++#include "strvec.h"
  
--const char *argv_array_push(struct argv_array *array, const char *value)
-+const char *strvec_push(struct strvec *array, const char *value)
- {
--	argv_array_push_nodup(array, xstrdup(value));
-+	strvec_push_nodup(array, xstrdup(value));
- 	return array->argv[array->argc - 1];
- }
+ static const char upload_archive_usage[] =
+ 	"git upload-archive <repo>";
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index f0cbdef718..35945096f6 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -4,7 +4,7 @@
+ #include "builtin.h"
+ #include "dir.h"
+ #include "parse-options.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "branch.h"
+ #include "refs.h"
+ #include "run-command.h"
+diff --git a/bundle.c b/bundle.c
+index 2a0d744d3f..d46a387e66 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -10,7 +10,7 @@
+ #include "list-objects.h"
+ #include "run-command.h"
+ #include "refs.h"
+-#include "argv-array.h"
++#include "strvec.h"
  
--const char *argv_array_pushf(struct argv_array *array, const char *fmt, ...)
-+const char *strvec_pushf(struct strvec *array, const char *fmt, ...)
- {
- 	va_list ap;
- 	struct strbuf v = STRBUF_INIT;
-@@ -36,28 +36,28 @@ const char *argv_array_pushf(struct argv_array *array, const char *fmt, ...)
- 	strbuf_vaddf(&v, fmt, ap);
- 	va_end(ap);
+ static const char bundle_signature[] = "# v2 git bundle\n";
  
--	argv_array_push_nodup(array, strbuf_detach(&v, NULL));
-+	strvec_push_nodup(array, strbuf_detach(&v, NULL));
- 	return array->argv[array->argc - 1];
- }
- 
--void argv_array_pushl(struct argv_array *array, ...)
-+void strvec_pushl(struct strvec *array, ...)
- {
- 	va_list ap;
- 	const char *arg;
- 
- 	va_start(ap, array);
- 	while ((arg = va_arg(ap, const char *)))
--		argv_array_push(array, arg);
-+		strvec_push(array, arg);
- 	va_end(ap);
- }
- 
--void argv_array_pushv(struct argv_array *array, const char **argv)
-+void strvec_pushv(struct strvec *array, const char **argv)
- {
- 	for (; *argv; argv++)
--		argv_array_push(array, *argv);
-+		strvec_push(array, *argv);
- }
- 
--void argv_array_pop(struct argv_array *array)
-+void strvec_pop(struct strvec *array)
- {
- 	if (!array->argc)
- 		return;
-@@ -66,7 +66,7 @@ void argv_array_pop(struct argv_array *array)
- 	array->argc--;
- }
- 
--void argv_array_split(struct argv_array *array, const char *to_split)
-+void strvec_split(struct strvec *array, const char *to_split)
- {
- 	while (isspace(*to_split))
- 		to_split++;
-@@ -78,32 +78,32 @@ void argv_array_split(struct argv_array *array, const char *to_split)
- 
- 		while (*p && !isspace(*p))
- 			p++;
--		argv_array_push_nodup(array, xstrndup(to_split, p - to_split));
-+		strvec_push_nodup(array, xstrndup(to_split, p - to_split));
- 
- 		while (isspace(*p))
- 			p++;
- 		to_split = p;
- 	}
- }
- 
--void argv_array_clear(struct argv_array *array)
-+void strvec_clear(struct strvec *array)
- {
--	if (array->argv != empty_argv) {
-+	if (array->argv != empty_strvec) {
- 		int i;
- 		for (i = 0; i < array->argc; i++)
- 			free((char *)array->argv[i]);
- 		free(array->argv);
- 	}
--	argv_array_init(array);
-+	strvec_init(array);
- }
- 
--const char **argv_array_detach(struct argv_array *array)
-+const char **strvec_detach(struct strvec *array)
- {
--	if (array->argv == empty_argv)
-+	if (array->argv == empty_strvec)
- 		return xcalloc(1, sizeof(const char *));
- 	else {
- 		const char **ret = array->argv;
--		argv_array_init(array);
-+		strvec_init(array);
- 		return ret;
- 	}
- }
-diff --git a/argv-array.h b/argv-array.h
-index 4fc57b6902..ca66a338ad 100644
---- a/argv-array.h
-+++ b/argv-array.h
-@@ -14,76 +14,89 @@
-  * it contains an item structure with a `util` field that is not compatible
-  * with the traditional argv interface.
-  *
-- * Each `argv_array` manages its own memory. Any strings pushed into the
-- * array are duplicated, and all memory is freed by argv_array_clear().
-+ * Each `strvec` manages its own memory. Any strings pushed into the
-+ * array are duplicated, and all memory is freed by strvec_clear().
-  */
- 
--extern const char *empty_argv[];
-+extern const char *empty_strvec[];
- 
- /**
-  * A single array. This should be initialized by assignment from
-- * `ARGV_ARRAY_INIT`, or by calling `argv_array_init`. The `argv`
-+ * `STRVEC_INIT`, or by calling `strvec_init`. The `argv`
-  * member contains the actual array; the `argc` member contains the
-  * number of elements in the array, not including the terminating
-  * NULL.
-  */
--struct argv_array {
-+struct strvec {
- 	const char **argv;
- 	size_t argc;
- 	size_t alloc;
- };
- 
--#define ARGV_ARRAY_INIT { empty_argv, 0, 0 }
-+#define STRVEC_INIT { empty_strvec, 0, 0 }
- 
- /**
-  * Initialize an array. This is no different than assigning from
-- * `ARGV_ARRAY_INIT`.
-+ * `STRVEC_INIT`.
-  */
--void argv_array_init(struct argv_array *);
-+void strvec_init(struct strvec *);
- 
- /* Push a copy of a string onto the end of the array. */
--const char *argv_array_push(struct argv_array *, const char *);
-+const char *strvec_push(struct strvec *, const char *);
- 
- /**
-  * Format a string and push it onto the end of the array. This is a
-- * convenience wrapper combining `strbuf_addf` and `argv_array_push`.
-+ * convenience wrapper combining `strbuf_addf` and `strvec_push`.
-  */
- __attribute__((format (printf,2,3)))
--const char *argv_array_pushf(struct argv_array *, const char *fmt, ...);
-+const char *strvec_pushf(struct strvec *, const char *fmt, ...);
- 
- /**
-  * Push a list of strings onto the end of the array. The arguments
-  * should be a list of `const char *` strings, terminated by a NULL
-  * argument.
-  */
- LAST_ARG_MUST_BE_NULL
--void argv_array_pushl(struct argv_array *, ...);
-+void strvec_pushl(struct strvec *, ...);
- 
- /* Push a null-terminated array of strings onto the end of the array. */
--void argv_array_pushv(struct argv_array *, const char **);
-+void strvec_pushv(struct strvec *, const char **);
- 
- /**
-  * Remove the final element from the array. If there are no
-  * elements in the array, do nothing.
-  */
--void argv_array_pop(struct argv_array *);
-+void strvec_pop(struct strvec *);
- 
- /* Splits by whitespace; does not handle quoted arguments! */
--void argv_array_split(struct argv_array *, const char *);
-+void strvec_split(struct strvec *, const char *);
- 
- /**
-  * Free all memory associated with the array and return it to the
-  * initial, empty state.
-  */
--void argv_array_clear(struct argv_array *);
-+void strvec_clear(struct strvec *);
- 
- /**
-- * Disconnect the `argv` member from the `argv_array` struct and
-+ * Disconnect the `argv` member from the `strvec` struct and
-  * return it. The caller is responsible for freeing the memory used
-  * by the array, and by the strings it references. After detaching,
-- * the `argv_array` is in a reinitialized state and can be pushed
-+ * the `strvec` is in a reinitialized state and can be pushed
-  * into again.
-  */
--const char **argv_array_detach(struct argv_array *);
-+const char **strvec_detach(struct strvec *);
-+
-+/* compatibility for historic argv_array interface */
-+#define argv_array strvec
-+#define ARGV_ARRAY_INIT STRVEC_INIT
-+#define argv_array_init strvec_init
-+#define argv_array_push strvec_push
-+#define argv_array_pushf strvec_pushf
-+#define argv_array_pushl strvec_pushl
-+#define argv_array_pushv strvec_pushv
-+#define argv_array_pop strvec_pop
-+#define argv_array_split strvec_split
-+#define argv_array_clear strvec_clear
-+#define argv_array_detach strvec_detach
- 
- #endif /* ARGV_ARRAY_H */
-diff --git a/exec-cmd.h b/exec-cmd.h
-index 8cd1df28d3..330b41d54d 100644
---- a/exec-cmd.h
-+++ b/exec-cmd.h
-@@ -1,13 +1,13 @@
- #ifndef GIT_EXEC_CMD_H
- #define GIT_EXEC_CMD_H
- 
--struct argv_array;
-+struct strvec;
- 
- void git_set_exec_path(const char *exec_path);
- void git_resolve_executable_dir(const char *path);
- const char *git_exec_path(void);
- void setup_path(void);
--const char **prepare_git_cmd(struct argv_array *out, const char **argv);
-+const char **prepare_git_cmd(struct strvec *out, const char **argv);
- int execv_git_cmd(const char **argv); /* NULL terminated */
- LAST_ARG_MUST_BE_NULL
- int execl_git_cmd(const char *cmd, ...);
-diff --git a/ls-refs.h b/ls-refs.h
-index 7e5646f5f6..7b33a7c6b8 100644
---- a/ls-refs.h
-+++ b/ls-refs.h
-@@ -2,9 +2,9 @@
- #define LS_REFS_H
- 
- struct repository;
--struct argv_array;
-+struct strvec;
- struct packet_reader;
--int ls_refs(struct repository *r, struct argv_array *keys,
-+int ls_refs(struct repository *r, struct strvec *keys,
- 	    struct packet_reader *request);
- 
- #endif /* LS_REFS_H */
-diff --git a/quote.h b/quote.h
-index ca8ee3144a..210d580229 100644
---- a/quote.h
-+++ b/quote.h
-@@ -60,8 +60,8 @@ int sq_dequote_to_argv(char *arg, const char ***argv, int *nr, int *alloc);
-  * still modify arg in place, but unlike sq_dequote_to_argv, the argv_array
-  * will duplicate and take ownership of the strings.
-  */
--struct argv_array;
--int sq_dequote_to_argv_array(char *arg, struct argv_array *);
-+struct strvec;
-+int sq_dequote_to_argv_array(char *arg, struct strvec *);
- 
- int unquote_c_style(struct strbuf *, const char *quoted, const char **endp);
- size_t quote_c_style(const char *name, struct strbuf *, FILE *, int no_dq);
-diff --git a/refs.h b/refs.h
-index f212f8945e..29e28124cd 100644
---- a/refs.h
-+++ b/refs.h
-@@ -145,8 +145,8 @@ int refname_match(const char *abbrev_name, const char *full_name);
-  * Given a 'prefix' expand it by the rules in 'ref_rev_parse_rules' and add
-  * the results to 'prefixes'
-  */
--struct argv_array;
--void expand_ref_prefix(struct argv_array *prefixes, const char *prefix);
-+struct strvec;
-+void expand_ref_prefix(struct strvec *prefixes, const char *prefix);
- 
- int expand_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
- int repo_dwim_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
-diff --git a/refspec.h b/refspec.h
-index 3f2bd4aaa5..23e1555b88 100644
---- a/refspec.h
-+++ b/refspec.h
-@@ -60,12 +60,12 @@ void refspec_clear(struct refspec *rs);
- 
- int valid_fetch_refspec(const char *refspec);
- 
--struct argv_array;
-+struct strvec;
- /*
-  * Determine what <prefix> values to pass to the peer in ref-prefix lines
-  * (see Documentation/technical/protocol-v2.txt).
-  */
- void refspec_ref_prefixes(const struct refspec *rs,
--			  struct argv_array *ref_prefixes);
-+			  struct strvec *ref_prefixes);
- 
- #endif /* REFSPEC_H */
-diff --git a/remote.h b/remote.h
-index 5cc26c1b3b..5e3ea5a26d 100644
---- a/remote.h
-+++ b/remote.h
-@@ -168,7 +168,7 @@ void free_refs(struct ref *ref);
- 
- struct oid_array;
- struct packet_reader;
--struct argv_array;
-+struct strvec;
- struct string_list;
- struct ref **get_remote_heads(struct packet_reader *reader,
- 			      struct ref **list, unsigned int flags,
-@@ -178,7 +178,7 @@ struct ref **get_remote_heads(struct packet_reader *reader,
- /* Used for protocol v2 in order to retrieve refs from a remote */
- struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 			     struct ref **list, int for_push,
--			     const struct argv_array *ref_prefixes,
-+			     const struct strvec *ref_prefixes,
- 			     const struct string_list *server_options,
- 			     int stateless_rpc);
- 
-diff --git a/serve.h b/serve.h
-index 42ddca7f8b..fc2683e24d 100644
---- a/serve.h
-+++ b/serve.h
-@@ -1,8 +1,8 @@
- #ifndef SERVE_H
- #define SERVE_H
- 
--struct argv_array;
--int has_capability(const struct argv_array *keys, const char *capability,
-+struct strvec;
-+int has_capability(const struct strvec *keys, const char *capability,
- 		   const char **value);
- 
- struct serve_options {
-diff --git a/submodule.h b/submodule.h
-index 4dad649f94..9ce85c03fe 100644
---- a/submodule.h
-+++ b/submodule.h
+diff --git a/bundle.h b/bundle.h
+index 2dc9442024..2cf1270092 100644
+--- a/bundle.h
++++ b/bundle.h
 @@ -1,7 +1,7 @@
- #ifndef SUBMODULE_H
- #define SUBMODULE_H
+ #ifndef BUNDLE_H
+ #define BUNDLE_H
  
--struct argv_array;
-+struct strvec;
- struct cache_entry;
- struct diff_options;
- struct index_state;
-@@ -84,7 +84,7 @@ int should_update_submodules(void);
- const struct submodule *submodule_from_ce(const struct cache_entry *ce);
- void check_for_new_submodule_commits(struct object_id *oid);
- int fetch_populated_submodules(struct repository *r,
--			       const struct argv_array *options,
-+			       const struct strvec *options,
- 			       const char *prefix,
- 			       int command_line_option,
- 			       int default_option,
-@@ -143,7 +143,7 @@ void submodule_unset_core_worktree(const struct submodule *sub);
-  * a submodule by clearing any repo-specific environment variables, but
-  * retaining any config in the environment.
-  */
--void prepare_submodule_repo_env(struct argv_array *out);
-+void prepare_submodule_repo_env(struct strvec *out);
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "cache.h"
  
- #define ABSORB_GITDIR_RECURSE_SUBMODULES (1<<0)
- void absorb_git_dir_into_superproject(const char *path,
-diff --git a/transport-internal.h b/transport-internal.h
-index 1cde6258a7..284784a2a6 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
+ struct ref_list {
+diff --git a/diff.c b/diff.c
+index d24aaa3047..ee008155e4 100644
+--- a/diff.c
++++ b/diff.c
+@@ -20,7 +20,7 @@
+ #include "hashmap.h"
+ #include "ll-merge.h"
+ #include "string-list.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "graph.h"
+ #include "packfile.h"
+ #include "parse-options.h"
+diff --git a/environment.c b/environment.c
+index aaca0e91ac..75fe5f4c56 100644
+--- a/environment.c
++++ b/environment.c
+@@ -14,7 +14,7 @@
+ #include "refs.h"
+ #include "fmt-merge-msg.h"
+ #include "commit.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "object-store.h"
+ #include "chdir-notify.h"
+ #include "shallow.h"
+diff --git a/exec-cmd.c b/exec-cmd.c
+index 7deeab3039..bb24c2f3bc 100644
+--- a/exec-cmd.c
++++ b/exec-cmd.c
+@@ -1,7 +1,7 @@
+ #include "cache.h"
+ #include "exec-cmd.h"
+ #include "quote.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ #if defined(RUNTIME_PREFIX)
+ 
+diff --git a/graph.c b/graph.c
+index 4cd9915075..96af8f605a 100644
+--- a/graph.c
++++ b/graph.c
+@@ -4,7 +4,7 @@
+ #include "color.h"
+ #include "graph.h"
+ #include "revision.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ /* Internal API */
+ 
+diff --git a/http-backend.c b/http-backend.c
+index ec3144b444..6a42badf33 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -9,7 +9,7 @@
+ #include "run-command.h"
+ #include "string-list.h"
+ #include "url.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "protocol.h"
+diff --git a/http-push.c b/http-push.c
+index 1ff1883cdd..3a47921cc3 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -11,7 +11,7 @@
+ #include "remote.h"
+ #include "list-objects.h"
+ #include "sigchain.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "commit-reach.h"
+diff --git a/line-log.c b/line-log.c
+index c53692834d..05d077b8e7 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -14,7 +14,7 @@
+ #include "graph.h"
+ #include "userdiff.h"
+ #include "line-log.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "bloom.h"
+ 
+ static void range_set_grow(struct range_set *rs, size_t extra)
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 3553ad7b0a..3667766f29 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -2,7 +2,7 @@
+ #include "commit.h"
+ #include "config.h"
+ #include "revision.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "list-objects.h"
+ #include "list-objects-filter.h"
+ #include "list-objects-filter-options.h"
+diff --git a/ls-refs.c b/ls-refs.c
+index 50d86866c6..98fb19092a 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -2,7 +2,7 @@
+ #include "repository.h"
+ #include "refs.h"
+ #include "remote.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "ls-refs.h"
+ #include "pkt-line.h"
+ #include "config.h"
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 86cd393013..7cba96454c 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -4,7 +4,7 @@
+ #include "commit.h"
+ #include "color.h"
+ #include "string-list.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "oid-array.h"
+ 
+ /*----- some often used options -----*/
+diff --git a/pathspec.c b/pathspec.c
+index 8243e06eab..57c9b58418 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -3,7 +3,7 @@
+ #include "dir.h"
+ #include "pathspec.h"
+ #include "attr.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "quote.h"
+ 
+ /*
+diff --git a/quote.c b/quote.c
+index bcc0dbc50d..dac8b4e55e 100644
+--- a/quote.c
++++ b/quote.c
+@@ -1,6 +1,6 @@
+ #include "cache.h"
+ #include "quote.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ int quote_path_fully = 1;
+ 
+diff --git a/range-diff.c b/range-diff.c
+index 40af086281..b4d1d56445 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -2,7 +2,7 @@
+ #include "range-diff.h"
+ #include "string-list.h"
+ #include "run-command.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "hashmap.h"
+ #include "xdiff-interface.h"
+ #include "linear-assignment.h"
+diff --git a/range-diff.h b/range-diff.h
+index e11976dc81..916f18bcd7 100644
+--- a/range-diff.h
++++ b/range-diff.h
+@@ -2,7 +2,7 @@
+ #define RANGE_DIFF_H
+ 
+ #include "diff.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ #define RANGE_DIFF_CREATION_FACTOR_DEFAULT 60
+ 
+diff --git a/ref-filter.c b/ref-filter.c
+index 8447cb09be..81c4399da9 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -22,7 +22,7 @@
+ #include "commit-reach.h"
+ #include "worktree.h"
+ #include "hashmap.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ static struct ref_msg {
+ 	const char *gone;
+diff --git a/refs.c b/refs.c
+index 639cba93b4..0067926262 100644
+--- a/refs.c
++++ b/refs.c
+@@ -15,7 +15,7 @@
+ #include "tag.h"
+ #include "submodule.h"
+ #include "worktree.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "repository.h"
+ #include "sigchain.h"
+ 
+diff --git a/refspec.c b/refspec.c
+index 9a9bf21934..f9fb67d295 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -1,5 +1,5 @@
+ #include "cache.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "refs.h"
+ #include "refspec.h"
+ 
+diff --git a/remote-curl.c b/remote-curl.c
+index 5cbc6e5002..05fb794ddd 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -10,7 +10,7 @@
+ #include "pkt-line.h"
+ #include "string-list.h"
+ #include "sideband.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "credential.h"
+ #include "oid-array.h"
+ #include "send-pack.h"
+diff --git a/remote-testsvn.c b/remote-testsvn.c
+index cde39b94fb..809b290d45 100644
+--- a/remote-testsvn.c
++++ b/remote-testsvn.c
+@@ -8,7 +8,7 @@
+ #include "run-command.h"
+ #include "vcs-svn/svndump.h"
+ #include "notes.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ 
+ static const char *url;
+ static int dump_from_file;
+diff --git a/remote.c b/remote.c
+index bc46413e6a..ba1a386d98 100644
+--- a/remote.c
++++ b/remote.c
+@@ -11,7 +11,7 @@
+ #include "tag.h"
+ #include "string-list.h"
+ #include "mergesort.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "commit-reach.h"
+ #include "advice.h"
+ 
+diff --git a/revision.c b/revision.c
+index 6aa7f4f567..07e16ed44b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -23,7 +23,7 @@
+ #include "bisect.h"
+ #include "packfile.h"
+ #include "worktree.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "commit-reach.h"
+ #include "commit-graph.h"
+ #include "prio-queue.h"
+diff --git a/run-command.c b/run-command.c
+index a735e380a9..8f57661d96 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -2,7 +2,7 @@
+ #include "run-command.h"
+ #include "exec-cmd.h"
+ #include "sigchain.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "thread-utils.h"
+ #include "strbuf.h"
+ #include "string-list.h"
+diff --git a/run-command.h b/run-command.h
+index ef3071a565..f5e05d38d2 100644
+--- a/run-command.h
++++ b/run-command.h
 @@ -3,7 +3,7 @@
  
- struct ref;
- struct transport;
--struct argv_array;
-+struct strvec;
+ #include "thread-utils.h"
  
- struct transport_vtable {
- 	/**
-diff --git a/upload-pack.h b/upload-pack.h
-index 4bafe16a22..27ddcdc6cb 100644
---- a/upload-pack.h
-+++ b/upload-pack.h
-@@ -11,9 +11,9 @@ struct upload_pack_options {
- void upload_pack(struct upload_pack_options *options);
+-#include "argv-array.h"
++#include "strvec.h"
  
- struct repository;
--struct argv_array;
-+struct strvec;
- struct packet_reader;
--int upload_pack_v2(struct repository *r, struct argv_array *keys,
-+int upload_pack_v2(struct repository *r, struct strvec *keys,
- 		   struct packet_reader *request);
+ /**
+  * The run-command API offers a versatile tool to run sub-processes with
+diff --git a/sequencer.c b/sequencer.c
+index fd7701c88a..9e7f868b00 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -16,7 +16,7 @@
+ #include "rerere.h"
+ #include "merge-recursive.h"
+ #include "refs.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "quote.h"
+ #include "trailer.h"
+ #include "log-tree.h"
+diff --git a/serve.c b/serve.c
+index fbd2fcdfb5..8d9a345b3d 100644
+--- a/serve.c
++++ b/serve.c
+@@ -3,7 +3,7 @@
+ #include "config.h"
+ #include "pkt-line.h"
+ #include "version.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "ls-refs.h"
+ #include "serve.h"
+ #include "upload-pack.h"
+diff --git a/argv-array.c b/strvec.c
+similarity index 98%
+rename from argv-array.c
+rename to strvec.c
+index b7461c47e4..9e76ab9295 100644
+--- a/argv-array.c
++++ b/strvec.c
+@@ -1,5 +1,5 @@
+ #include "cache.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "strbuf.h"
  
- struct strbuf;
+ const char *empty_strvec[] = { NULL };
+diff --git a/argv-array.h b/strvec.h
+similarity index 97%
+rename from argv-array.h
+rename to strvec.h
+index ca66a338ad..4be39c8a48 100644
+--- a/argv-array.h
++++ b/strvec.h
+@@ -1,5 +1,5 @@
+-#ifndef ARGV_ARRAY_H
+-#define ARGV_ARRAY_H
++#ifndef STRVEC_H
++#define STRVEC_H
+ 
+ /**
+  * The argv-array API allows one to dynamically build and store
+@@ -99,4 +99,4 @@ const char **strvec_detach(struct strvec *);
+ #define argv_array_clear strvec_clear
+ #define argv_array_detach strvec_detach
+ 
+-#endif /* ARGV_ARRAY_H */
++#endif /* STRVEC_H */
+diff --git a/submodule.c b/submodule.c
+index e2ef5698c8..874db5c4b2 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -13,7 +13,7 @@
+ #include "refs.h"
+ #include "string-list.h"
+ #include "oid-array.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "blob.h"
+ #include "thread-utils.h"
+ #include "quote.h"
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 1646aa25d8..8d3f6d5a5e 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -12,7 +12,7 @@
+ #include "git-compat-util.h"
+ #include "cache.h"
+ #include "run-command.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "strbuf.h"
+ #include "parse-options.h"
+ #include "string-list.h"
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index 197819c872..823f33ceff 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -1,6 +1,6 @@
+ #include "test-tool.h"
+ #include "cache.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "run-command.h"
+ #include "exec-cmd.h"
+ #include "config.h"
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index 91c00567f4..06924a7875 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -4,7 +4,7 @@
+ #include "sigchain.h"
+ #include "string-list.h"
+ #include "strbuf.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "quote.h"
+ #include "object-store.h"
+ 
+diff --git a/transport-helper.c b/transport-helper.c
+index c6b753bfae..441763fd7c 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -9,7 +9,7 @@
+ #include "string-list.h"
+ #include "thread-utils.h"
+ #include "sigchain.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "refs.h"
+ #include "refspec.h"
+ #include "transport-internal.h"
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 4be5fc3075..65c3395f0f 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1,5 +1,5 @@
+ #include "cache.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "repository.h"
+ #include "config.h"
+ #include "dir.h"
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 9c2f08277e..f8a904a05b 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -2,7 +2,7 @@
+ #define UNPACK_TREES_H
+ 
+ #include "cache.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "string-list.h"
+ #include "tree-walk.h"
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index 951a2b23aa..b435dae62f 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -18,7 +18,7 @@
+ #include "sigchain.h"
+ #include "version.h"
+ #include "string-list.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "prio-queue.h"
+ #include "protocol.h"
+ #include "quote.h"
+diff --git a/wt-status.c b/wt-status.c
+index c560cbe860..9817161da4 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -8,7 +8,7 @@
+ #include "diffcore.h"
+ #include "quote.h"
+ #include "run-command.h"
+-#include "argv-array.h"
++#include "strvec.h"
+ #include "remote.h"
+ #include "refs.h"
+ #include "submodule.h"
 -- 
 2.28.0.rc2.475.g53c7e1c7f4
 
