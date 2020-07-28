@@ -6,86 +6,186 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 095ECC433FB
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D9C1C433E0
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:21:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA8EF2070B
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BE722065E
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728596AbgG1UIt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 16:08:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40170 "EHLO cloud.peff.net"
+        id S1728453AbgG1UV1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 16:21:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40184 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728245AbgG1UIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 16:08:48 -0400
-Received: (qmail 29566 invoked by uid 109); 28 Jul 2020 20:08:48 -0000
+        id S1728234AbgG1UV1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 16:21:27 -0400
+Received: (qmail 29695 invoked by uid 109); 28 Jul 2020 20:21:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Jul 2020 20:08:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Jul 2020 20:21:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28378 invoked by uid 111); 28 Jul 2020 20:08:47 -0000
+Received: (qmail 28444 invoked by uid 111); 28 Jul 2020 20:21:25 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 16:08:47 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 16:21:25 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Jul 2020 16:08:47 -0400
+Date:   Tue, 28 Jul 2020 16:21:24 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [RFC PATCH] Modify fetch-pack to no longer die on error?
-Message-ID: <20200728200847.GA1019822@coredump.intra.peff.net>
-References: <xmqqft9fi4hm.fsf@gitster.c.googlers.com>
- <20200728192350.352978-1-jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/11] renaming argv_array
+Message-ID: <20200728202124.GA1021264@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200728192350.352978-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 28, 2020 at 12:23:50PM -0700, Jonathan Tan wrote:
+The argv_array data type has turned out to be useful in our code base,
+but the name isn't very good. From patch 2 of this series:
 
-> > For this particular case, with the performance and all, I agree that
-> > the stupid and robust approach would be the best.
-> 
-> I'm concerned that we will be painting ourselves into a corner here - I
-> have been appreciating the richer interface that a C call provides us,
-> compared to sub-processes where we have to communicate through a single
-> input stream and a single output stream. For example, "wanted-refs" and
-> [...]
+  The name "argv-array" isn't very good, because it describes what the
+  data type can be used for (program argument arrays), not what it
+  actually is (a dynamically-growing string array that maintains a
+  NULL-terminator invariant). This leads to people being hesitant to use
+  it for other cases where it would actually be a good fit. The existing
+  name is also clunky to use. It's overly long, and the name often leads
+  to saying things like "argv.argv" (i.e., the field names overlap with
+  variable names, since they're describing the use, not the type). Let's
+  give it a more neutral name.
 
-Yeah, that's a compelling reason. I'd have thought for this use case you
-could just say "hey, make sure these objects exist", which doesn't
-require a lot of communication. But often when I think things like that
-and start coding, it turns out to be much more complicated. So I am
-perfectly willing to believe you that it doesn't apply here. And even
-if it did, you're right that we may run into other spots that do need to
-pass back more information, but benefit from more lib-ified code that
-doesn't die().
+This has bugged me for a while, so I decided to finally fix it. It
+wasn't _too_ painful, though I'm sure there will be a little fallout
+with topics in flight.
 
-Just to play devil's advocate for a moment...
+I tried to split out the mechanical bits into their own patches to make
+reviewing easier. Patches 5-7 really could be a single patch, but
+they're too big for the mailing list. I'm OK to leave them separate, or
+they could be squashed together.
 
-> (Also, I think that debugging within a process is easier than debugging
-> across processes, but that might not be a concern that other people
-> share.)
+We could stop at patch 9 for now and allow topics in flight to catch up
+before removing the compat layers. But the struct field renaming has to
+happen as a single step, so it will be a pain whenever we do it. If
+we're going to go this route, I'd just as soon do it all now and deal
+with other topics as they get merged.
 
-This is definitely true sometimes, but I think is sometimes the
-opposite. When we push things out to a sub-process, then the interface
-between the two processes has to be well-defined (e.g., writing results
-to a file with a particular format). And that can make debugging easier,
-because you can pick up from that intermediate state (munging it in the
-middle, or even generating it from scratch for testing).
+  [01/11]: argv-array: use size_t for count and alloc
+  [02/11]: argv-array: rename to strvec
+  [03/11]: strvec: rename files from argv-array to strvec
+  [04/11]: quote: rename sq_dequote_to_argv_array to mention strvec
+  [05/11]: strvec: convert builtin/ callers away from argv_array name
+  [06/11]: strvec: convert more callers away from argv_array name
+  [07/11]: strvec: convert remaining callers away from argv_array name
+  [08/11]: strvec: fix indentation in renamed calls
+  [09/11]: strvec: update documention to avoid argv_array
+  [10/11]: strvec: drop argv_array compatibility layer
+  [11/11]: strvec: rename struct fields
 
-Likewise, that can result in a more flexible and robust system from the
-perspective of users. If we had invented "git log" first, we probably
-wouldn't have "git rev-list | git diff-tree --stdin" at all. But having
-that as two separate tools is sometimes useful for people doing things
-_besides_ log, since it gives different entry points to the code.
+ Documentation/technical/api-parse-options.txt |   4 +-
+ Makefile                                      |   2 +-
+ add-interactive.c                             |  28 +--
+ add-patch.c                                   |  48 ++--
+ argv-array.c                                  | 109 ---------
+ bisect.c                                      |  20 +-
+ builtin/add.c                                 |  18 +-
+ builtin/am.c                                  |  80 +++----
+ builtin/annotate.c                            |  10 +-
+ builtin/bisect--helper.c                      |  20 +-
+ builtin/bundle.c                              |  14 +-
+ builtin/clone.c                               |  38 +--
+ builtin/commit.c                              |   8 +-
+ builtin/describe.c                            |  44 ++--
+ builtin/difftool.c                            |  30 +--
+ builtin/fetch.c                               |  64 ++---
+ builtin/gc.c                                  |  78 +++----
+ builtin/grep.c                                |   2 +-
+ builtin/log.c                                 |  12 +-
+ builtin/ls-remote.c                           |   6 +-
+ builtin/pack-objects.c                        |  26 +--
+ builtin/pull.c                                | 160 ++++++-------
+ builtin/range-diff.c                          |   4 +-
+ builtin/rebase.c                              |  90 ++++----
+ builtin/receive-pack.c                        | 126 +++++-----
+ builtin/remote-ext.c                          |   4 +-
+ builtin/remote.c                              |  26 +--
+ builtin/repack.c                              |  72 +++---
+ builtin/replace.c                             |  18 +-
+ builtin/show-branch.c                         |  16 +-
+ builtin/stash.c                               | 162 ++++++-------
+ builtin/submodule--helper.c                   | 144 ++++++------
+ builtin/update-ref.c                          |   2 +-
+ builtin/upload-archive.c                      |  12 +-
+ builtin/worktree.c                            |  68 +++---
+ bundle.c                                      |  24 +-
+ bundle.h                                      |   4 +-
+ column.c                                      |  12 +-
+ commit.c                                      |  10 +-
+ compat/mingw.c                                |   4 +-
+ compat/terminal.c                             |  18 +-
+ connect.c                                     |  69 +++---
+ connected.c                                   |  24 +-
+ daemon.c                                      |  60 ++---
+ diff.c                                        |  32 +--
+ environment.c                                 |  12 +-
+ exec-cmd.c                                    |  18 +-
+ exec-cmd.h                                    |   4 +-
+ fast-import.c                                 |   4 +-
+ fetch-pack.c                                  |  46 ++--
+ fsmonitor.c                                   |   6 +-
+ git.c                                         |  32 +--
+ gpg-interface.c                               |  22 +-
+ graph.c                                       |  16 +-
+ http-backend.c                                |   8 +-
+ http-push.c                                   |  18 +-
+ http.c                                        |   8 +-
+ imap-send.c                                   |   2 +-
+ line-log.c                                    |   8 +-
+ list-objects-filter-options.c                 |   2 +-
+ ls-refs.c                                     |  18 +-
+ ls-refs.h                                     |   4 +-
+ merge.c                                       |  18 +-
+ midx.c                                        |  12 +-
+ pager.c                                       |   8 +-
+ parse-options-cb.c                            |   8 +-
+ pathspec.c                                    |  10 +-
+ quote.c                                       |   8 +-
+ quote.h                                       |   8 +-
+ range-diff.c                                  |  40 ++--
+ range-diff.h                                  |   4 +-
+ ref-filter.c                                  |  12 +-
+ refs.c                                        |   8 +-
+ refs.h                                        |   4 +-
+ refspec.c                                     |  10 +-
+ refspec.h                                     |   4 +-
+ remote-curl.c                                 | 102 ++++----
+ remote-testsvn.c                              |  10 +-
+ remote.c                                      |  20 +-
+ remote.h                                      |   4 +-
+ revision.c                                    |  20 +-
+ run-command.c                                 |  72 +++---
+ run-command.h                                 |  12 +-
+ send-pack.c                                   |  18 +-
+ sequencer.c                                   | 126 +++++-----
+ serve.c                                       |  20 +-
+ serve.h                                       |   4 +-
+ sha1-file.c                                   |  14 +-
+ strvec.c                                      | 109 +++++++++
+ argv-array.h => strvec.h                      |  58 ++---
+ sub-process.c                                 |   2 +-
+ submodule.c                                   | 218 +++++++++---------
+ submodule.h                                   |   6 +-
+ t/helper/test-run-command.c                   |  52 ++---
+ t/helper/test-trace2.c                        |   2 +-
+ tmp-objdir.c                                  |  20 +-
+ transport-helper.c                            |  36 +--
+ transport-internal.h                          |   4 +-
+ transport.c                                   |  12 +-
+ transport.h                                   |   2 +-
+ unpack-trees.c                                |  12 +-
+ unpack-trees.h                                |   4 +-
+ upload-pack.c                                 |  53 +++--
+ upload-pack.h                                 |   4 +-
+ wt-status.c                                   |  19 +-
+ 105 files changed, 1619 insertions(+), 1620 deletions(-)
+ delete mode 100644 argv-array.c
+ create mode 100644 strvec.c
+ rename argv-array.h => strvec.h (50%)
 
-That said, I think I could buy the argument that "fetch" works pretty
-well as a basic building block for users. It's pretty rare to actually
-use fetch-pack as a distinct operation. This is all a monolith vs module
-tradeoff question, and the tradeoff around modularity for fetch isn't
-that compelling.
-
--Peff
