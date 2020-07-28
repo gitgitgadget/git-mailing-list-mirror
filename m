@@ -2,130 +2,109 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C91C433E0
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 17:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 927D6C433E0
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 17:52:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CD9B20825
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 17:15:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 721042070B
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 17:52:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sPhzlxiO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DzFxigRr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731831AbgG1RPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 13:15:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33176 "EHLO
+        id S1728267AbgG1Rw1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 13:52:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731655AbgG1RPN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 13:15:13 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38345C061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 10:15:13 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id u185so11302392pfu.1
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 10:15:13 -0700 (PDT)
+        with ESMTP id S1727884AbgG1Rw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 13:52:27 -0400
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B95D4C061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 10:52:26 -0700 (PDT)
+Received: by mail-wm1-x341.google.com with SMTP id 3so404500wmi.1
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 10:52:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IHxTHnhtrgJ3hl0GwwjoFCK+NegSPfB4X03JijvlGpo=;
-        b=sPhzlxiOtk7CqazrkoOs/b/kFFA16yzIhnA43x/Xxno82j8BcBOwwIue7Mss2p19tU
-         nQ4QlLROqI4znbOSIQzKE5EVC0/M3O/1bIQwzGeYG7ZRTCb42BjA5PeC3hJ8hZ/mkH3c
-         Vy3Y+awIEclQVBlmsFfxxzje8U2oSm4b3fTJFzkG62S0vs76yUSQYuHAKZ8B33kxYHk3
-         R9hYhvnfNTABi0/OsBh/NCh+s5NMASgOc+zJgvC9eq8oCDJ1bctZvkgMq/v616kEtw5c
-         59jrPNsCnnzfzdEawy6dJZNwGsNbbn+GsN1/pmRnyCfQ8ZT3XVubuhcHnFkcw1vGNpqT
-         cVWA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=90xy0B4hNwXMZ+Xi4/Yzwxqq7NN/IZeLtR36ppOiOwo=;
+        b=DzFxigRrENHRBNjI7Jke3AqZj76G1JJP57/er8cyZGsweaszJNu6CPPP8GBgIhcbmO
+         kgiorJHoDo5N7Rrzmk841VfJAgfi9eNa9pmNhwxFX47mJJXsJqHfL5wNkqIiz9PiIC6t
+         cJOgiS48n0x4qfJmze4RhBIc+HGMsHQva5Uu0QLfPnCf105a6scOJ2GutIV5dOCz8Pp9
+         b9hJ2ciCMmbJ8d9Y3Frw8+HS9gSBiws09b5AIZS1sl3wM6M1FGrk1xVtPCcY1VFV08+i
+         XE8QcMri2vJEwq5SMGah7BiGQdzl8IWvzEA6OnboqRptiutPrnkPnKV1mWILc1+gFNy2
+         nlFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=IHxTHnhtrgJ3hl0GwwjoFCK+NegSPfB4X03JijvlGpo=;
-        b=gu/U88wLTrJVUCDoxbyeqmeeQO5YpE0Kzx7HO8dnEs/vC7N31QV9AdNz370sj2r1tx
-         /RmazrtbGCDoGTboRqj4pIsxkbI6dH8JmCDnTQCahGVqMmgQGKyQovpWvhKz25pkxtWl
-         bVXUDaOebk6LD0ebVZFPMSVWDFv449l0NogTWRSZdQcPVDVgdBsVtIG5+w8XGN1I9kEy
-         AkmfPleo3jy2VCbXVw1WeL+mWbl3rZWpwWXSduvEfY3WLgge7UlyPNjaVX7auD5JlgGD
-         OZBkvohpsNULvoz3tdaOIhncBEVFd7dScF2wSjEnOCcS7+g4vNrf5fG4EedKKY6iFwUB
-         CkAQ==
-X-Gm-Message-State: AOAM533Q1fUO3xX6Ed5mTTymh6KnlslBJNOaLYP+zENxfRhtd54U8mMS
-        zXcKrxZ2dgZkilExcaa7Lungzyh6
-X-Google-Smtp-Source: ABdhPJyQy0lvE68zjRWnY7c8LtKIEh08OWQXsxpMdjh32YCJ+cVm1IUkndMg2BoPtBNaOlJ15l8Y/Q==
-X-Received: by 2002:a62:2b85:: with SMTP id r127mr24348116pfr.239.1595956512745;
-        Tue, 28 Jul 2020 10:15:12 -0700 (PDT)
-Received: from [192.168.208.44] ([49.207.128.54])
-        by smtp.gmail.com with ESMTPSA id z9sm18989309pgh.94.2020.07.28.10.15.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jul 2020 10:15:12 -0700 (PDT)
-Subject: Re: Git Inclusion Summit
-To:     Taylor Blau <me@ttaylorr.com>, Eric Wong <e@80x24.org>
-Cc:     Carmen Andoh <candoh@google.com>, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <CA+TwhoKBYwUKmtQTyiocPWJD=KeZQryS+6Q8JKxKgLEy0qJwAw@mail.gmail.com>
- <20200726040226.GA19030@dcvr> <20200727151023.GB62919@syl.lan>
- <20200728100726.GA24408@dcvr> <20200728162528.GH87373@syl.lan>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <6b4b3f77-a479-4d7b-d7c2-e3e35e658ac7@gmail.com>
-Date:   Tue, 28 Jul 2020 22:45:08 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=90xy0B4hNwXMZ+Xi4/Yzwxqq7NN/IZeLtR36ppOiOwo=;
+        b=XGGCv2TWUV7awtuQmDol5JQCqe8CYiiBhfYHBW6iT6NIXe6aQDrFVZVtYvYeQei1yh
+         MvKfQNOgEYQGnr8iwKf5r5WgTp+BNyGG67/sC5gkRMc4RSUvAjbc1Z6cuMh0W2D4L9lH
+         Wy1BuukCYCeJXPn/VJUSTHoIi1BjmNGXsDiODFFThI9FlwDxpYX6mM7BR0SEcTg2szDN
+         iPDsEGFvZZlR5mczahxvfGr5/m4l4Zin16UjraFrdLD5CaSnISOyhn+AHLOFsf3Wwtdq
+         qOCYl/vEgAp/xJnlgrUuvcgVhg/moqoYDnYl0fJ6hr4qUiabfQP7hICb5UhyyiUyeAyB
+         067Q==
+X-Gm-Message-State: AOAM5309nJRHHeAumIL3FYX/hYYW07dNqsMAJ78FazxZyZE/SVO0pfbM
+        d+SLmFsYNtwpHcc5QSLLpqU6m/gjNLqEdSviLO9Rz/MqONk=
+X-Google-Smtp-Source: ABdhPJz2kAsQX5j9hFfYwnKUJPqR21kbhjB8Ad3P4XNN+pd7dQ9/li0s312JPDsnFX7BqgOAPQnKEqJ9iwCUY9P1QHs=
+X-Received: by 2002:a1c:3102:: with SMTP id x2mr5295026wmx.171.1595958745467;
+ Tue, 28 Jul 2020 10:52:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200728162528.GH87373@syl.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200728163617.GA2649887@coredump.intra.peff.net> <20200728163853.GB2650252@coredump.intra.peff.net>
+In-Reply-To: <20200728163853.GB2650252@coredump.intra.peff.net>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Tue, 28 Jul 2020 10:52:14 -0700
+Message-ID: <CAPx1Gvf7d5kdPqYVvruStZuXTySBFZEWMx_1O2MtWJatUM3j+w@mail.gmail.com>
+Subject: Re: [PATCH 2/3] revision: add "--ignore-merges" option to counteract "-m"
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28-07-2020 21:55, Taylor Blau wrote:
-> On Tue, Jul 28, 2020 at 10:07:26AM +0000, Eric Wong wrote:
->>
->> Jitsi w/ audio-only certainly seems to be a step in the right
->> direction and would be more inclusive.
->>
->> Is there any speech-to-text transcription done for the hearing
->> (or extremely bandwidth) impaired?
-> 
-> It looks like such a thing exists:
-> https://jitsi.org/blog/a-speech-to-text-prototype/.
-> 
+First, not that anyone should particularly care: I heartily
+approve. :-)
 
-Yeah. A link with current information appears to be:
+On Tue, Jul 28, 2020 at 9:40 AM Jeff King <peff@peff.net> wrote:
+> I pulled the option name from the rev_info field name. It might be too
+> broad (we are not ignoring merges during the traversal, only for the
+> diff). It could be "--no-diff-merges" or something, but that would
+> involve flipping the sense of the boolean (but that would just be in the
+> code, not user-visible, so not that big a deal).
 
-https://github.com/jitsi/jigasi#using-jigasi-to-transcribe-a-jitsi-meet-conference
+Perhaps a bit bikesheddy, but I would suggest some clarifying
+notes in the documentation.  The fact that `git log` *follows*
+merges by default is pretty obvious, but the fact that it doesn't
+*diff them at all* by default appears to be surprising to most Git
+newcomers.  (It was to me, so many years ago, and I see this all
+the time on stackoverflow.)
 
->> It'd ideally go to #git on IRC (or something that doesn't
->> require a browser to trigger swap storms on old systems).
->>
->> Even for people with good hearing, acceptable audio quality for
->> speech seems tricky to get right, being dependent on mics,
->> bandwidth, codecs, background noise, speaker/earphone quality,
->> etc.
-> 
-> I haven't look hard enough to see if it supports redirecting its output
-> to an IRC channel, but my guess is that it probably doesn't.
+  Note that --ignore-merges / --no-ignore-merges affect
+  only diff generation, not commit traversal.  Note
+  also that by default, "git log -p" does not generate
+  diffs for merges except when using --first-parent.
+  See also the -c and --cc options and note that the
+  default for "git show" is "--cc".
 
-I believe you're right. From the link above:
+(The "except when using --first-parent" is of course new here.)
 
-> Currently Jigasi can send speech-to-text results to the chat of a
-> Jitsi Meet room as either plain text or JSON. If it's send in JSON,
-> Jitsi Meet will provide subtitles in the left corner of the video,
-> while plain text will just be posted in the chat.
+This probably needs a bit of tweaking, but the big idea is
+to communicate and emphasize three things:
 
-> In either
-> case, hopefully disabling audio and video is possible within Jitsi's web
-> UI, and you should be able to read or write in the chat as well as read
-> the transcription.
-> 
+ 1. "git log -p" and "git show" behave differently by default.
+    It's a surprise, so we should call it out separately.
 
-I think there's just one catch. The transcription as of now appears to
-use Google Cloud speech-to-text API. Well, its Google. I'll let you make
-your own inferences. In any case, it hopefully wouldn't be a concern for
-people who _read_ the transcription.
+ 2. The default for "git log -p" is no diff at all for merge
+    commits, so see -c / --cc when you're looking at -m.
 
--- 
-Sivaraam
+ 3. The default for "git show" is "--cc".  (This note doesn't
+    really belong here; perhaps it should be separately
+    listed under the -c and --cc options?)
+
+Chris
