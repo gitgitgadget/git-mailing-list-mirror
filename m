@@ -2,292 +2,267 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29332C433E4
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26336C433EA
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:55:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 031862083B
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:44:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3B9F2075A
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:55:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eex6FFAy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SANEkTlL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731056AbgG1PoX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 11:44:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47214 "EHLO
+        id S1731196AbgG1PzQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 11:55:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730872AbgG1PoW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 11:44:22 -0400
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6078CC061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:44:22 -0700 (PDT)
-Received: by mail-wm1-x342.google.com with SMTP id 3so11014wmi.1
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:44:22 -0700 (PDT)
+        with ESMTP id S1730679AbgG1PzP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 11:55:15 -0400
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979ABC061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:55:15 -0700 (PDT)
+Received: by mail-qk1-x743.google.com with SMTP id b79so19078354qkg.9
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:55:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=04pVhIE7rulKmlNaL88UGkH/yedXgnUffFzeAVg7aIc=;
-        b=eex6FFAyF41wdTjUO9dQiYtAOaXUqzKVOlQM6YcUpTF+X/k6Tg2F65e0riKtp7AIc8
-         yR8Rwsq7bPX84+OSxDDCmjDeFTE/MyPQ5EEhsANWuCcsi2lMrc4+ge3473ndBFTVD7+9
-         OTumhrPn8eNGsTu6sSI9iqt5/WElcmqeYVbhzwvnQGWIfacM04OGLwQuHa3eeo8E+etv
-         CZeK0YKcOkbIP/laD4aKFMat+dPcJOAQeh1bV+Wn9yAx4ONmfi/RSijy4veAW7K9hgZ1
-         caCGTZXsKISG2sdEsUZ3SMIvV8O9pcF40WuLIA16HvEyIXa1+W1Xa5fF0ateFPGKC4ja
-         nFSg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3rukE96uo+AtyXw/Z1actxsNGfFSPy62nd5hE0BB2GI=;
+        b=SANEkTlL3XwWhKRmKQ8PVA2trZY+/NHEgqeZUI/Gu0JIVq3zOQTUAryhB1sWst54+x
+         NcK9oXbkWGmGIb2ZYIkdDMz947t2IUO4NpB9Q651oGKf/rAylpJTvr/VvFW3yDYNp5g9
+         w2hbcorlqLvHK+7Wu54FtpOxfPca3EK9GKBADcPI0o3KkqGLlRa8f7S/1cfdMU5c5HxI
+         i1Rba9/wKhJIBIAqYQwpgCtQoNiessF58UmaaEYsog1svJP2NSJRyZQV7u0cpC5lhnbu
+         oVfRsPmrEMK7od/ChJpJNoslutRdgxaxWzVf8wQlPO84z0d/DoieZ77e3Pv7I/3FxHQx
+         mUug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=04pVhIE7rulKmlNaL88UGkH/yedXgnUffFzeAVg7aIc=;
-        b=dFbmAjyjtg6PSWY2rS6yHt8p97rFiOLNb/NbbQdEySYZUex/jEQdhGGLGkAwa5emJk
-         zDcPWZGcFKgsRrMybPlCEpN/vsnw+EBFFCfilMLQwOHEEJ29qicRqpYiitFXlJ/Z3NdA
-         uZw9HHZVT+kCaQOlARw20seHtzs2mxm6yFBa+ghjdQVS8VuSWP3x6laZW5h9RBjY4TDJ
-         fuGDLdsez5n2KNecRUbqIHL2qXr80l53SXNkdpNk/zC379TFhmLruJ/0zw6qqsDFVdqn
-         LKjYxIasjECkeR+HEcdH3bN4DSqEvej8g9O4dHbb3tiQ/7Ypr6NJJGsouyB/+o+sirtT
-         9CxA==
-X-Gm-Message-State: AOAM530juTnW9ErT5ubKc9UwSZyRBUsxmUDjiTDWpOajdVhGFAoqD1Aa
-        eeqQO/5nmcVYTKbkXRWPSE+vYavT
-X-Google-Smtp-Source: ABdhPJx8THuo6AyXKd01vTJujSk7b0F+Fzaz9KroHn5tMlrI18svzpXwb+xv9+UX5+LSspP2/hCq6Q==
-X-Received: by 2002:a1c:3b06:: with SMTP id i6mr4599010wma.42.1595951060590;
-        Tue, 28 Jul 2020 08:44:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c15sm4658548wme.23.2020.07.28.08.44.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 08:44:19 -0700 (PDT)
-Message-Id: <66720c6425d7e497832f9291804de1e433909535.1595951056.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.686.git.1595951056.gitgitgadget@gmail.com>
-References: <pull.686.git.1595951056.gitgitgadget@gmail.com>
-From:   "Aaron Lipman via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jul 2020 15:44:15 +0000
-Subject: [PATCH 2/3] bisect: introduce first-parent flag
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3rukE96uo+AtyXw/Z1actxsNGfFSPy62nd5hE0BB2GI=;
+        b=VWf3pY0a32ir++eWpkDEAYgmUcWJzTo7iwMqCyszPh20GB9UjfAWWOjVWamWcnSdHq
+         /Kebz10SuFk9sdr7W0XDvYlPFpkaEn/KIGq88glhld7IlxXD37x1hnERnk1oZ5ejJ6Jb
+         15SSxx7S2Wc6hpe9DBhuIsw1mMKIOt132Phiufkwcysux8yLEueGA4kzOL14BK4GuMpd
+         jfEQ3dTbaJNLKLw2nj0F2Tveipht7ZDgk5bMyPdbG8m2U8bnsBJKrHhmSHxhi9RGowbo
+         FgwHN5zXJnHwqTRbAVAXkV9kFF7FE0JKBgMhgPzvUtIxDumjX2bSfjvRHtxOKxUQc8mV
+         axbg==
+X-Gm-Message-State: AOAM531AzVmqPT+GKY4qhX1cxBK4VVkCtckDQvLaE4LVR0soePdpLdbe
+        67WWwHR7Ynbmq4RirqRoLf8=
+X-Google-Smtp-Source: ABdhPJynLV1bGVCGCt8MP5pn4+yx21Bdefxtoxu5+4rj/J2YGdGyYzz/a/+8X7sR3RT2l7H2uGx7eA==
+X-Received: by 2002:a37:9507:: with SMTP id x7mr21804161qkd.253.1595951714615;
+        Tue, 28 Jul 2020 08:55:14 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:4854:557c:a990:d78e? ([2600:1700:e72:80a0:4854:557c:a990:d78e])
+        by smtp.gmail.com with ESMTPSA id n81sm23193952qke.11.2020.07.28.08.55.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Jul 2020 08:55:13 -0700 (PDT)
+Subject: Re: [PATCH 6/6] commit-graph: implement corrected commit date offset
+To:     Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>
+References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
+ <647290d0368e385227614dd1822aa9083b0dba5e.1595927632.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e8646aaa-667f-b7d8-f8f2-efbaaeb8877d@gmail.com>
+Date:   Tue, 28 Jul 2020 11:55:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
+ Thunderbird/79.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Aaron Lipman <alipman88@gmail.com>,
-        Aaron Lipman <alipman88@gmail.com>
+In-Reply-To: <647290d0368e385227614dd1822aa9083b0dba5e.1595927632.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Aaron Lipman <alipman88@gmail.com>
+On 7/28/2020 5:13 AM, Abhishek Kumar via GitGitGadget wrote:
+> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> 
+> With preparations done,...
 
-Upon seeing a merge commit when bisecting, this option may be used to
-follow only the first parent.
+I feel like this commit could have been made smaller by doing the
+uint32_t -> timestamp_t conversion in a separate patch. That would
+make it easier to focus on the changes to the generation number v2
+logic.
 
-In detecting regressions introduced through the merging of a branch, the
-merge commit will be identified as introduction of the bug and its
-ancestors will be ignored.
+> let's implement corrected commit date offset.
+> We add a new commit-slab to store topological levels while writing
 
-This option is particularly useful in avoiding false positives when a
-merged branch contained broken or non-buildable commits, but the merge
-itself was OK.
+It's important to add: we store topological levels to ensure that older
+versions of Git will still have the performance benefits from generation
+number v1.
 
-Signed-off-by: Aaron Lipman <alipman88@gmail.com>
----
- Documentation/git-bisect.txt | 13 ++++++++++++-
- bisect.c                     | 10 +++++++++-
- bisect.h                     |  2 ++
- builtin/bisect--helper.c     | 16 ++++++++++++----
- t/t6030-bisect-porcelain.sh  | 17 +++++++++++++++++
- 5 files changed, 52 insertions(+), 6 deletions(-)
+> commit graph and upgrade number of struct commit_graph_data to 64-bits.
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 7586c5a843..0e993e4587 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -17,7 +17,7 @@ The command takes various subcommands, and different options depending
- on the subcommand:
- 
-  git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
--		  [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
-+		  [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]
-  git bisect (bad|new|<term-new>) [<rev>]
-  git bisect (good|old|<term-old>) [<rev>...]
-  git bisect terms [--term-good | --term-bad]
-@@ -365,6 +365,17 @@ does not require a checked out tree.
- +
- If the repository is bare, `--no-checkout` is assumed.
- 
-+--first-parent::
-++
-+Follow only the first parent commit upon seeing a merge commit.
-++
-+In detecting regressions introduced through the merging of a branch, the merge
-+commit will be identified as introduction of the bug and its ancestors will be
-+ignored.
-++
-+This option is particularly useful in avoiding false positives when a merged
-+branch contained broken or non-buildable commits, but the merge itself was OK.
-+
- EXAMPLES
- --------
- 
-diff --git a/bisect.c b/bisect.c
-index 762f68c8e9..eee1f6f138 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -463,6 +463,7 @@ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
-+static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- static GIT_PATH_FUNC(git_path_head_name, "head-name")
- 
- static void read_bisect_paths(struct argv_array *array)
-@@ -984,6 +985,12 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
- 	fclose(fp);
- }
- 
-+int read_first_parent_option(void)
-+{
-+	const char *filename = git_path_bisect_first_parent();
-+	return !access(filename, F_OK);
-+}
-+
- /*
-  * We use the convention that return BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND (-10) means
-  * the bisection process finished successfully.
-@@ -1000,7 +1007,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix, int
- 	enum bisect_error res = BISECT_OK;
- 	struct object_id *bisect_rev;
- 	char *steps_msg;
--	int first_parent_only = 0; /* TODO: pass --first-parent flag from git bisect start */
-+	int first_parent_only = read_first_parent_option();
- 
- 	read_bisect_terms(&term_bad, &term_good);
- 	if (read_bisect_refs())
-@@ -1144,6 +1151,7 @@ int bisect_clean_state(void)
- 	unlink_or_warn(git_path_bisect_names());
- 	unlink_or_warn(git_path_bisect_run());
- 	unlink_or_warn(git_path_bisect_terms());
-+	unlink_or_warn(git_path_bisect_first_parent());
- 	/* Cleanup head-name if it got left by an old version of git-bisect */
- 	unlink_or_warn(git_path_head_name());
- 	/*
-diff --git a/bisect.h b/bisect.h
-index a63af0505f..8ee80f5b48 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -66,6 +66,8 @@ int estimate_bisect_steps(int all);
- 
- void read_bisect_terms(const char **bad, const char **good);
- 
-+int read_first_parent_option(void);
-+
- int bisect_clean_state(void);
- 
- #endif
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index ec4996282e..1236f5df1d 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -17,6 +17,7 @@ static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
- static GIT_PATH_FUNC(git_path_head_name, "head-name")
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
-+static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
-@@ -28,7 +29,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
- 	N_("git bisect--helper --bisect-start [--term-{old,good}=<term> --term-{new,bad}=<term>]"
--					     "[--no-checkout] [<bad> [<good>...]] [--] [<paths>...]"),
-+					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
- 	NULL
- };
- 
-@@ -422,7 +423,7 @@ static int bisect_append_log_quoted(const char **argv)
- }
- 
- static int bisect_start(struct bisect_terms *terms, int no_checkout,
--			const char **argv, int argc)
-+			int first_parent_only, const char **argv, int argc)
- {
- 	int i, has_double_dash = 0, must_write_terms = 0, bad_seen = 0;
- 	int flags, pathspec_pos, res = 0;
-@@ -453,6 +454,8 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
- 			break;
- 		} else if (!strcmp(arg, "--no-checkout")) {
- 			no_checkout = 1;
-+		} else if (!strcmp(arg, "--first-parent")) {
-+			first_parent_only = 1;
- 		} else if (!strcmp(arg, "--term-good") ||
- 			 !strcmp(arg, "--term-old")) {
- 			i++;
-@@ -577,6 +580,9 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
- 	 */
- 	write_file(git_path_bisect_start(), "%s\n", start_head.buf);
- 
-+	if (first_parent_only)
-+		write_file(git_path_bisect_first_parent(), "\n");
-+
- 	if (no_checkout) {
- 		if (get_oid(start_head.buf, &oid) < 0) {
- 			res = error(_("invalid ref: '%s'"), start_head.buf);
-@@ -632,7 +638,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_TERMS,
- 		BISECT_START
- 	} cmdmode = 0;
--	int no_checkout = 0, res = 0, nolog = 0;
-+	int no_checkout = 0, first_parent_only = 0, res = 0, nolog = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "next-all", &cmdmode,
- 			 N_("perform 'git bisect next'"), NEXT_ALL),
-@@ -656,6 +662,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("start the bisect session"), BISECT_START),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
-+		OPT_BOOL(0, "first-parent", &first_parent_only,
-+			 N_("only trace the first parent of merge commits")),
- 		OPT_BOOL(0, "no-log", &nolog,
- 			 N_("no log for BISECT_WRITE")),
- 		OPT_END()
-@@ -713,7 +721,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		break;
- 	case BISECT_START:
- 		set_terms(&terms, "bad", "good");
--		res = bisect_start(&terms, no_checkout, argv, argc);
-+		res = bisect_start(&terms, no_checkout, first_parent_only, argv, argc);
- 		break;
- 	default:
- 		return error("BUG: unknown subcommand '%d'", cmdmode);
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 36d9b2b2e4..7965698310 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -458,6 +458,23 @@ test_expect_success 'many merge bases creation' '
- 	grep "$SIDE_HASH5" merge_bases.txt
- '
- 
-+# We want to automatically find the merge that
-+# introduced "line" into hello.
-+test_expect_success \
-+    '"git bisect run --first-parent" simple case' \
-+    'echo "#"\!"/bin/sh" > test_script.sh &&
-+     echo "grep line hello > /dev/null" >> test_script.sh &&
-+     echo "test \$? -ne 0" >> test_script.sh &&
-+     chmod +x test_script.sh &&
-+     git bisect start --first-parent &&
-+     test_path_is_file ".git/BISECT_FIRST_PARENT" &&
-+     git bisect good $HASH4 &&
-+     git bisect bad $B_HASH &&
-+     git bisect run ./test_script.sh > my_bisect_log.txt &&
-+     grep "$B_HASH is the first bad commit" my_bisect_log.txt &&
-+     git bisect reset &&
-+     test_path_is_missing ".git/BISECT_FIRST_PARENT"'
-+
- test_expect_success 'good merge bases when good and bad are siblings' '
- 	git bisect start "$B_HASH" "$A_HASH" > my_bisect_log.txt &&
- 	test_i18ngrep "merge base must be tested" my_bisect_log.txt &&
--- 
-gitgitgadget
+Do you mean "update the generation member in struct commit_graph_data
+to a 64-bit timestamp"? The struct itself also has the 32-bit graph_pos
+member.
+
+> We have to touch many files, upgrading generation number from uint32_t
+> to timestamp_t.
+
+Yes, that's why I recommend doing that in a different step.
+
+> We drop 'detect incorrect generation number' from t5318-commit-graph.sh,
+> which tests if verify can detect if a commit graph have
+> GENERATION_NUMBER_ZERO for a commit, followed by a non-zero generation.
+> With corrected commit dates, GENERATION_NUMBER_ZERO is possible only if
+> one of dates is Unix epoch zero.
+
+What about the topological levels? Are we caring about verifying the data
+that we start to ignore in this new version? I'm hesitant to drop this
+right now, but I'm open to it if we really don't see it as a valuable test.
+
+> Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+> ---
+>  blame.c                 |   2 +-
+>  commit-graph.c          | 109 ++++++++++++++++++++++------------------
+>  commit-graph.h          |   4 +-
+>  commit-reach.c          |  32 ++++++------
+>  commit-reach.h          |   2 +-
+>  commit.h                |   3 ++
+>  revision.c              |  14 +++---
+>  t/t5318-commit-graph.sh |   2 +-
+>  upload-pack.c           |   2 +-
+>  9 files changed, 93 insertions(+), 77 deletions(-)
+> 
+> diff --git a/blame.c b/blame.c
+> index 82fa16d658..48aa632461 100644
+> --- a/blame.c
+> +++ b/blame.c
+> @@ -1272,7 +1272,7 @@ static int maybe_changed_path(struct repository *r,
+>  	if (!bd)
+>  		return 1;
+>  
+> -	if (commit_graph_generation(origin->commit) == GENERATION_NUMBER_INFINITY)
+> +	if (commit_graph_generation(origin->commit) == GENERATION_NUMBER_V2_INFINITY)
+>  		return 1;
+
+I don't see value in changing the name of this macro. It
+is only used as the default value for a commit not in the
+commit-graph. Changing its value to 0xFFFFFFFF works for
+both versions when the type is updated to timestamp_t.
+
+The actually-important change in this patch (not just the
+type change) is here:
+
+> -static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+> +static void compute_corrected_commit_date_offsets(struct write_commit_graph_context *ctx)
+>  {
+>  	int i;
+>  	struct commit_list *list = NULL;
+> @@ -1326,11 +1334,11 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+>  					_("Computing commit graph generation numbers"),
+>  					ctx->commits.nr);
+>  	for (i = 0; i < ctx->commits.nr; i++) {
+> -		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
+> +		uint32_t topo_level = *topo_level_slab_at(ctx->topo_levels, ctx->commits.list[i]);
+>  
+>  		display_progress(ctx->progress, i + 1);
+> -		if (generation != GENERATION_NUMBER_INFINITY &&
+> -		    generation != GENERATION_NUMBER_ZERO)
+> +		if (topo_level != GENERATION_NUMBER_INFINITY &&
+> +		    topo_level != GENERATION_NUMBER_ZERO)
+>  			continue;
+
+Here, our "skip" condition is that the topo_level has been computed.
+This should be fine, as we are never reading that out of the commit-graph.
+We will never be in a mode where topo_level is computed but corrected
+commit-date is not.
+
+>  		commit_list_insert(ctx->commits.list[i], &list);
+> @@ -1338,29 +1346,38 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+>  			struct commit *current = list->item;
+>  			struct commit_list *parent;
+>  			int all_parents_computed = 1;
+> -			uint32_t max_generation = 0;
+> +			uint32_t max_level = 0;
+> +			timestamp_t max_corrected_commit_date = current->date;
+
+Later you assign data->generation to be "max_corrected_commit_date + 1",
+which made me think this should be "current->date - 1". Is that so? Or,
+do we want most offsets to be one instead of zero? Is there value there?
+
+>  
+>  			for (parent = current->parents; parent; parent = parent->next) {
+> -				generation = commit_graph_data_at(parent->item)->generation;
+> +				topo_level = *topo_level_slab_at(ctx->topo_levels, parent->item);
+>  
+> -				if (generation == GENERATION_NUMBER_INFINITY ||
+> -				    generation == GENERATION_NUMBER_ZERO) {
+> +				if (topo_level == GENERATION_NUMBER_INFINITY ||
+> +				    topo_level == GENERATION_NUMBER_ZERO) {
+>  					all_parents_computed = 0;
+>  					commit_list_insert(parent->item, &list);
+>  					break;
+> -				} else if (generation > max_generation) {
+> -					max_generation = generation;
+> +				} else {
+> +					struct commit_graph_data *data = commit_graph_data_at(parent->item);
+> +
+> +					if (topo_level > max_level)
+> +						max_level = topo_level;
+> +
+> +					if (data->generation > max_corrected_commit_date)
+> +						max_corrected_commit_date = data->generation;
+>  				}
+>  			}
+>  
+>  			if (all_parents_computed) {
+>  				struct commit_graph_data *data = commit_graph_data_at(current);
+>  
+> -				data->generation = max_generation + 1;
+> -				pop_commit(&list);
+> +				if (max_level > GENERATION_NUMBER_MAX - 1)
+> +					max_level = GENERATION_NUMBER_MAX - 1;
+> +
+> +				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
+> +				data->generation = max_corrected_commit_date + 1;
+>  
+> -				if (data->generation > GENERATION_NUMBER_MAX)
+> -					data->generation = GENERATION_NUMBER_MAX;
+> +				pop_commit(&list);
+>  			}
+>  		}
+>  	}
+
+This looks correct, and I've done a tiny bit of perf tests locally.
+
+> @@ -2085,6 +2102,7 @@ int write_commit_graph(struct object_directory *odb,
+>  	uint32_t i, count_distinct = 0;
+>  	int res = 0;
+>  	int replace = 0;
+> +	struct topo_level_slab topo_levels;
+>  
+>  	if (!commit_graph_compatible(the_repository))
+>  		return 0;
+> @@ -2099,6 +2117,9 @@ int write_commit_graph(struct object_directory *odb,
+>  	ctx->changed_paths = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
+>  	ctx->total_bloom_filter_data_size = 0;
+>  
+> +	init_topo_level_slab(&topo_levels);
+> +	ctx->topo_levels = &topo_levels;
+> +
+>  	if (ctx->split) {
+>  		struct commit_graph *g;
+>  		prepare_commit_graph(ctx->r);
+> @@ -2197,7 +2218,7 @@ int write_commit_graph(struct object_directory *odb,
+>  	} else
+>  		ctx->num_commit_graphs_after = 1;
+>  
+> -	compute_generation_numbers(ctx);
+> +	compute_corrected_commit_date_offsets(ctx);
+
+This rename might not be necessary. You are computing both
+versions (v1 and v2) so the name change is actually less
+accurate than the old name.
+
+Thanks,
+-Stolee
 
