@@ -5,64 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B207C433DF
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29332C433E4
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:44:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAA2F20825
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:44:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 031862083B
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:44:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kz2iJW25"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eex6FFAy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731059AbgG1Po0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 11:44:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47222 "EHLO
+        id S1731056AbgG1PoX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 11:44:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730872AbgG1PoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 11:44:25 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD446C061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:44:24 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id g8so6607633wmk.3
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:44:24 -0700 (PDT)
+        with ESMTP id S1730872AbgG1PoW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 11:44:22 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6078CC061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:44:22 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id 3so11014wmi.1
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 08:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5v3fEUfnLwd1LsUrFDfDyscbyisA6/VmX+6x+9gitYQ=;
-        b=kz2iJW25V5ZQ7qUB0BRkKk/+4FJhdXLMqKrmT/Ow/qrfSKC178f/DbpcshVZaulxAc
-         CZUzw0Wnvc6fzx74b9im65yHLvVNx+M50BbnOKGpUCujw9Sg5Z80iAY1j/dCBat5A22B
-         4LL9Khm9LZ/RtVxkf9lDukayd9zXIpFx83uGe1g0+vqXXfmQ/nK7SCm5gOUcqpCgy0NA
-         9l+t7r0yttjTP/TmXKA6t6/I8I+flrUc0vt5bE6QAzzG71AikzUSuD4/qIh82izO8l/4
-         xT6v8SXEO7zaVg9GTVMyEZ8Fdf5U+B1EVVpib4LaUYXzKOjc0EeWG1wOboOPXNG/VEga
-         mLIQ==
+        bh=04pVhIE7rulKmlNaL88UGkH/yedXgnUffFzeAVg7aIc=;
+        b=eex6FFAyF41wdTjUO9dQiYtAOaXUqzKVOlQM6YcUpTF+X/k6Tg2F65e0riKtp7AIc8
+         yR8Rwsq7bPX84+OSxDDCmjDeFTE/MyPQ5EEhsANWuCcsi2lMrc4+ge3473ndBFTVD7+9
+         OTumhrPn8eNGsTu6sSI9iqt5/WElcmqeYVbhzwvnQGWIfacM04OGLwQuHa3eeo8E+etv
+         CZeK0YKcOkbIP/laD4aKFMat+dPcJOAQeh1bV+Wn9yAx4ONmfi/RSijy4veAW7K9hgZ1
+         caCGTZXsKISG2sdEsUZ3SMIvV8O9pcF40WuLIA16HvEyIXa1+W1Xa5fF0ateFPGKC4ja
+         nFSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5v3fEUfnLwd1LsUrFDfDyscbyisA6/VmX+6x+9gitYQ=;
-        b=WEqqKCTg1lMisleRMs3EQ8wbbzZX3HDSDsfEZsMpNPzyTXes/TdIh6yP7OMf5yCm2H
-         Tu8oPY7aEWR4CsWnZbXDgnv3h5qyN6Peu8bBCBilMutD6IJ8QHKGStgHdOCcrZZ1k8sa
-         YkCF6bQ/5LuhHCPbNnstPgp6MRrehf/LcnBl0CEphkEF9O2Otop5W6SUYzT17NtT0v+Z
-         bBjbzmoDbU+FJDN4ygE+LUn2ctd5mFkzD38hq70OZQPx9kUO4F73H46vTjqaNjuVLuBo
-         s4BFqdigLPsRS0c4MbViH93OHQ9aH8ezn8csAIxUEE0o7f4UXlZwMc2bh5CVgei5pEVu
-         S6vw==
-X-Gm-Message-State: AOAM5307HecxiNMuEBzyVgPOj0rGLa+rcf5+MP8wOMG2r1XZGMJa8qP7
-        vvy+up5rmf6jtLSkCJd44hRzEPLC
-X-Google-Smtp-Source: ABdhPJz/kvPGQiQSll8vyHWjRHDhGq1sF8X297t72uHv94gFdami/YwJBrHJG7v/3BnlTPyp/3eReA==
-X-Received: by 2002:a1c:a942:: with SMTP id s63mr4386320wme.19.1595951061957;
-        Tue, 28 Jul 2020 08:44:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c16sm18421111wrx.73.2020.07.28.08.44.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=04pVhIE7rulKmlNaL88UGkH/yedXgnUffFzeAVg7aIc=;
+        b=dFbmAjyjtg6PSWY2rS6yHt8p97rFiOLNb/NbbQdEySYZUex/jEQdhGGLGkAwa5emJk
+         zDcPWZGcFKgsRrMybPlCEpN/vsnw+EBFFCfilMLQwOHEEJ29qicRqpYiitFXlJ/Z3NdA
+         uZw9HHZVT+kCaQOlARw20seHtzs2mxm6yFBa+ghjdQVS8VuSWP3x6laZW5h9RBjY4TDJ
+         fuGDLdsez5n2KNecRUbqIHL2qXr80l53SXNkdpNk/zC379TFhmLruJ/0zw6qqsDFVdqn
+         LKjYxIasjECkeR+HEcdH3bN4DSqEvej8g9O4dHbb3tiQ/7Ypr6NJJGsouyB/+o+sirtT
+         9CxA==
+X-Gm-Message-State: AOAM530juTnW9ErT5ubKc9UwSZyRBUsxmUDjiTDWpOajdVhGFAoqD1Aa
+        eeqQO/5nmcVYTKbkXRWPSE+vYavT
+X-Google-Smtp-Source: ABdhPJx8THuo6AyXKd01vTJujSk7b0F+Fzaz9KroHn5tMlrI18svzpXwb+xv9+UX5+LSspP2/hCq6Q==
+X-Received: by 2002:a1c:3b06:: with SMTP id i6mr4599010wma.42.1595951060590;
         Tue, 28 Jul 2020 08:44:20 -0700 (PDT)
-Message-Id: <24d116870e5c9ae03b585737a197f38d679fedb3.1595951056.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c15sm4658548wme.23.2020.07.28.08.44.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jul 2020 08:44:19 -0700 (PDT)
+Message-Id: <66720c6425d7e497832f9291804de1e433909535.1595951056.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.686.git.1595951056.gitgitgadget@gmail.com>
 References: <pull.686.git.1595951056.gitgitgadget@gmail.com>
 From:   "Aaron Lipman via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jul 2020 15:44:16 +0000
-Subject: [PATCH 3/3] bisect: combine args passed to find_bisection()
+Date:   Tue, 28 Jul 2020 15:44:15 +0000
+Subject: [PATCH 2/3] bisect: introduce first-parent flag
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,217 +78,216 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Aaron Lipman <alipman88@gmail.com>
 
-Now that find_bisection() accepts multiple boolean arguments, these may
-be combined into a single unsigned integer in order to declutter some of
-the code in bisect.c
+Upon seeing a merge commit when bisecting, this option may be used to
+follow only the first parent.
+
+In detecting regressions introduced through the merging of a branch, the
+merge commit will be identified as introduction of the bug and its
+ancestors will be ignored.
+
+This option is particularly useful in avoiding false positives when a
+merged branch contained broken or non-buildable commits, but the merge
+itself was OK.
 
 Signed-off-by: Aaron Lipman <alipman88@gmail.com>
-Based-on-patch-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- bisect.c           | 43 +++++++++++++++++++++++++------------------
- bisect.h           |  5 ++++-
- builtin/rev-list.c |  9 ++++++++-
- 3 files changed, 37 insertions(+), 20 deletions(-)
+ Documentation/git-bisect.txt | 13 ++++++++++++-
+ bisect.c                     | 10 +++++++++-
+ bisect.h                     |  2 ++
+ builtin/bisect--helper.c     | 16 ++++++++++++----
+ t/t6030-bisect-porcelain.sh  | 17 +++++++++++++++++
+ 5 files changed, 52 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index 7586c5a843..0e993e4587 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -17,7 +17,7 @@ The command takes various subcommands, and different options depending
+ on the subcommand:
+ 
+  git bisect start [--term-{old,good}=<term> --term-{new,bad}=<term>]
+-		  [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
++		  [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]
+  git bisect (bad|new|<term-new>) [<rev>]
+  git bisect (good|old|<term-old>) [<rev>...]
+  git bisect terms [--term-good | --term-bad]
+@@ -365,6 +365,17 @@ does not require a checked out tree.
+ +
+ If the repository is bare, `--no-checkout` is assumed.
+ 
++--first-parent::
+++
++Follow only the first parent commit upon seeing a merge commit.
+++
++In detecting regressions introduced through the merging of a branch, the merge
++commit will be identified as introduction of the bug and its ancestors will be
++ignored.
+++
++This option is particularly useful in avoiding false positives when a merged
++branch contained broken or non-buildable commits, but the merge itself was OK.
++
+ EXAMPLES
+ --------
+ 
 diff --git a/bisect.c b/bisect.c
-index eee1f6f138..9599c58fd8 100644
+index 762f68c8e9..eee1f6f138 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -37,7 +37,7 @@ static const char *term_good;
-  * We care just barely enough to avoid recursing for
-  * non-merge entries.
-  */
--static int count_distance(struct commit_list *entry, int first_parent_only)
-+static int count_distance(struct commit_list *entry, unsigned bisect_flags)
- {
- 	int nr = 0;
+@@ -463,6 +463,7 @@ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+ static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
++static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+ static GIT_PATH_FUNC(git_path_head_name, "head-name")
  
-@@ -52,10 +52,10 @@ static int count_distance(struct commit_list *entry, int first_parent_only)
- 		commit->object.flags |= COUNTED;
- 		p = commit->parents;
- 		entry = p;
--		if (p && !first_parent_only) {
-+		if (p && !(bisect_flags & BISECT_FIRST_PARENT)) {
- 			p = p->next;
- 			while (p) {
--				nr += count_distance(p, first_parent_only);
-+				nr += count_distance(p, bisect_flags);
- 				p = p->next;
- 			}
- 		}
-@@ -88,7 +88,7 @@ static inline void weight_set(struct commit_list *elem, int weight)
- 	**commit_weight_at(&commit_weight, elem->item) = weight;
+ static void read_bisect_paths(struct argv_array *array)
+@@ -984,6 +985,12 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
+ 	fclose(fp);
  }
  
--static int count_interesting_parents(struct commit *commit, int first_parent_only)
-+static int count_interesting_parents(struct commit *commit, unsigned bisect_flags)
- {
- 	struct commit_list *p;
- 	int count;
-@@ -96,7 +96,7 @@ static int count_interesting_parents(struct commit *commit, int first_parent_onl
- 	for (count = 0, p = commit->parents; p; p = p->next) {
- 		if (!(p->item->object.flags & UNINTERESTING))
- 			count++;
--		if (first_parent_only)
-+		if (bisect_flags & BISECT_FIRST_PARENT)
- 			break;
- 	}
- 	return count;
-@@ -260,7 +260,7 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
-  */
- static struct commit_list *do_find_bisection(struct commit_list *list,
- 					     int nr, int *weights,
--					     int find_all, int first_parent_only)
-+					     unsigned bisect_flags)
- {
- 	int n, counted;
- 	struct commit_list *p;
-@@ -272,7 +272,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 		unsigned flags = commit->object.flags;
- 
- 		*commit_weight_at(&commit_weight, p->item) = &weights[n++];
--		switch (count_interesting_parents(commit, first_parent_only)) {
-+		switch (count_interesting_parents(commit, bisect_flags)) {
- 		case 0:
- 			if (!(flags & TREESAME)) {
- 				weight_set(p, 1);
-@@ -315,11 +315,11 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			continue;
- 		if (weight(p) != -2)
- 			continue;
--		weight_set(p, count_distance(p, first_parent_only));
-+		weight_set(p, count_distance(p, bisect_flags));
- 		clear_distance(list);
- 
- 		/* Does it happen to be at exactly half-way? */
--		if (!find_all && halfway(p, nr))
-+		if (!(bisect_flags & BISECT_FIND_ALL) && halfway(p, nr))
- 			return p;
- 		counted++;
- 	}
-@@ -342,7 +342,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 			for (q = p->item->parents; q; q = q->next) {
- 				if (!(q->item->object.flags & UNINTERESTING) && 0 <= weight(q)) {
- 					break;
--				} else if (first_parent_only) {
-+				} else if (bisect_flags & BISECT_FIRST_PARENT) {
- 					q = NULL;
- 					break;
- 				}
-@@ -365,21 +365,21 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
- 				weight_set(p, weight(q));
- 
- 			/* Does it happen to be at exactly half-way? */
--			if (!find_all && halfway(p, nr))
-+			if (!(bisect_flags & BISECT_FIND_ALL) && halfway(p, nr))
- 				return p;
- 		}
- 	}
- 
- 	show_list("bisection 2 counted all", counted, nr, list);
- 
--	if (!find_all)
-+	if (!(bisect_flags & BISECT_FIND_ALL))
- 		return best_bisection(list, nr);
- 	else
- 		return best_bisection_sorted(list, nr);
- }
- 
- void find_bisection(struct commit_list **commit_list, int *reaches,
--		    int *all, int find_all, int first_parent_only)
-+		    int *all, unsigned bisect_flags)
- {
- 	int nr, on_list;
- 	struct commit_list *list, *p, *best, *next, *last;
-@@ -415,9 +415,9 @@ void find_bisection(struct commit_list **commit_list, int *reaches,
- 	weights = xcalloc(on_list, sizeof(*weights));
- 
- 	/* Do the real work of finding bisection commit. */
--	best = do_find_bisection(list, nr, weights, find_all, first_parent_only);
-+	best = do_find_bisection(list, nr, weights, bisect_flags);
- 	if (best) {
--		if (!find_all) {
-+		if (!(bisect_flags & BISECT_FIND_ALL)) {
- 			list->item = best->item;
- 			free_commit_list(list->next);
- 			best = list;
-@@ -1007,23 +1007,30 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix, int
++int read_first_parent_option(void)
++{
++	const char *filename = git_path_bisect_first_parent();
++	return !access(filename, F_OK);
++}
++
+ /*
+  * We use the convention that return BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND (-10) means
+  * the bisection process finished successfully.
+@@ -1000,7 +1007,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix, int
  	enum bisect_error res = BISECT_OK;
  	struct object_id *bisect_rev;
  	char *steps_msg;
--	int first_parent_only = read_first_parent_option();
-+	unsigned bisect_flags = 0;
+-	int first_parent_only = 0; /* TODO: pass --first-parent flag from git bisect start */
++	int first_parent_only = read_first_parent_option();
  
  	read_bisect_terms(&term_bad, &term_good);
  	if (read_bisect_refs())
- 		die(_("reading bisect refs failed"));
- 
-+	if (read_first_parent_option())
-+		bisect_flags |= BISECT_FIRST_PARENT;
-+
-+	if (!!skipped_revs.nr)
-+		bisect_flags |= BISECT_FIND_ALL;
-+
- 	res = check_good_are_ancestors_of_bad(r, prefix, no_checkout);
- 	if (res)
- 		return res;
- 
- 	bisect_rev_setup(r, &revs, prefix, "%s", "^%s", 1);
--	revs.first_parent_only = first_parent_only;
-+
-+	revs.first_parent_only = !!(bisect_flags & BISECT_FIRST_PARENT);
- 	revs.limited = 1;
- 
- 	bisect_common(&revs);
- 
--	find_bisection(&revs.commits, &reaches, &all, !!skipped_revs.nr, first_parent_only);
-+	find_bisection(&revs.commits, &reaches, &all, bisect_flags);
- 	revs.commits = managed_skipped(revs.commits, &tried);
- 
- 	if (!revs.commits) {
+@@ -1144,6 +1151,7 @@ int bisect_clean_state(void)
+ 	unlink_or_warn(git_path_bisect_names());
+ 	unlink_or_warn(git_path_bisect_run());
+ 	unlink_or_warn(git_path_bisect_terms());
++	unlink_or_warn(git_path_bisect_first_parent());
+ 	/* Cleanup head-name if it got left by an old version of git-bisect */
+ 	unlink_or_warn(git_path_head_name());
+ 	/*
 diff --git a/bisect.h b/bisect.h
-index 8ee80f5b48..402ddcfb5e 100644
+index a63af0505f..8ee80f5b48 100644
 --- a/bisect.h
 +++ b/bisect.h
-@@ -12,7 +12,7 @@ struct repository;
-  * best commit, as chosen by `find_all`.
-  */
- void find_bisection(struct commit_list **list, int *reaches, int *all,
--		    int find_all, int first_parent_only);
-+		    unsigned bisect_flags);
+@@ -66,6 +66,8 @@ int estimate_bisect_steps(int all);
  
- struct commit_list *filter_skipped(struct commit_list *list,
- 				   struct commit_list **tried,
-@@ -23,6 +23,9 @@ struct commit_list *filter_skipped(struct commit_list *list,
- #define BISECT_SHOW_ALL		(1<<0)
- #define REV_LIST_QUIET		(1<<1)
+ void read_bisect_terms(const char **bad, const char **good);
  
-+#define BISECT_FIND_ALL		(1u<<0)
-+#define BISECT_FIRST_PARENT	(1u<<1)
++int read_first_parent_option(void);
 +
- struct rev_list_info {
- 	struct rev_info *revs;
- 	int flags;
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index d1a14596b2..1536ea6f28 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -637,8 +637,15 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ int bisect_clean_state(void);
  
- 	if (bisect_list) {
- 		int reaches, all;
-+		unsigned bisect_flags = 0;
+ #endif
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index ec4996282e..1236f5df1d 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -17,6 +17,7 @@ static GIT_PATH_FUNC(git_path_bisect_head, "BISECT_HEAD")
+ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+ static GIT_PATH_FUNC(git_path_head_name, "head-name")
+ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
++static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
  
--		find_bisection(&revs.commits, &reaches, &all, bisect_find_all, revs.first_parent_only);
-+		if (bisect_find_all)
-+			bisect_flags |= BISECT_FIND_ALL;
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
+@@ -28,7 +29,7 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
+ 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
+ 	N_("git bisect--helper --bisect-start [--term-{old,good}=<term> --term-{new,bad}=<term>]"
+-					     "[--no-checkout] [<bad> [<good>...]] [--] [<paths>...]"),
++					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
+ 	NULL
+ };
+ 
+@@ -422,7 +423,7 @@ static int bisect_append_log_quoted(const char **argv)
+ }
+ 
+ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+-			const char **argv, int argc)
++			int first_parent_only, const char **argv, int argc)
+ {
+ 	int i, has_double_dash = 0, must_write_terms = 0, bad_seen = 0;
+ 	int flags, pathspec_pos, res = 0;
+@@ -453,6 +454,8 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 			break;
+ 		} else if (!strcmp(arg, "--no-checkout")) {
+ 			no_checkout = 1;
++		} else if (!strcmp(arg, "--first-parent")) {
++			first_parent_only = 1;
+ 		} else if (!strcmp(arg, "--term-good") ||
+ 			 !strcmp(arg, "--term-old")) {
+ 			i++;
+@@ -577,6 +580,9 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 	 */
+ 	write_file(git_path_bisect_start(), "%s\n", start_head.buf);
+ 
++	if (first_parent_only)
++		write_file(git_path_bisect_first_parent(), "\n");
 +
-+		if (revs.first_parent_only)
-+			bisect_flags |= BISECT_FIRST_PARENT;
-+
-+		find_bisection(&revs.commits, &reaches, &all, bisect_flags);
+ 	if (no_checkout) {
+ 		if (get_oid(start_head.buf, &oid) < 0) {
+ 			res = error(_("invalid ref: '%s'"), start_head.buf);
+@@ -632,7 +638,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_TERMS,
+ 		BISECT_START
+ 	} cmdmode = 0;
+-	int no_checkout = 0, res = 0, nolog = 0;
++	int no_checkout = 0, first_parent_only = 0, res = 0, nolog = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "next-all", &cmdmode,
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
+@@ -656,6 +662,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("start the bisect session"), BISECT_START),
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
++		OPT_BOOL(0, "first-parent", &first_parent_only,
++			 N_("only trace the first parent of merge commits")),
+ 		OPT_BOOL(0, "no-log", &nolog,
+ 			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+@@ -713,7 +721,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	case BISECT_START:
+ 		set_terms(&terms, "bad", "good");
+-		res = bisect_start(&terms, no_checkout, argv, argc);
++		res = bisect_start(&terms, no_checkout, first_parent_only, argv, argc);
+ 		break;
+ 	default:
+ 		return error("BUG: unknown subcommand '%d'", cmdmode);
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 36d9b2b2e4..7965698310 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -458,6 +458,23 @@ test_expect_success 'many merge bases creation' '
+ 	grep "$SIDE_HASH5" merge_bases.txt
+ '
  
- 		if (bisect_show_vars)
- 			return show_bisect_vars(&info, reaches, all);
++# We want to automatically find the merge that
++# introduced "line" into hello.
++test_expect_success \
++    '"git bisect run --first-parent" simple case' \
++    'echo "#"\!"/bin/sh" > test_script.sh &&
++     echo "grep line hello > /dev/null" >> test_script.sh &&
++     echo "test \$? -ne 0" >> test_script.sh &&
++     chmod +x test_script.sh &&
++     git bisect start --first-parent &&
++     test_path_is_file ".git/BISECT_FIRST_PARENT" &&
++     git bisect good $HASH4 &&
++     git bisect bad $B_HASH &&
++     git bisect run ./test_script.sh > my_bisect_log.txt &&
++     grep "$B_HASH is the first bad commit" my_bisect_log.txt &&
++     git bisect reset &&
++     test_path_is_missing ".git/BISECT_FIRST_PARENT"'
++
+ test_expect_success 'good merge bases when good and bad are siblings' '
+ 	git bisect start "$B_HASH" "$A_HASH" > my_bisect_log.txt &&
+ 	test_i18ngrep "merge base must be tested" my_bisect_log.txt &&
 -- 
 gitgitgadget
+
