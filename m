@@ -5,64 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 286C6C433EB
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F66C433EA
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05DD92065E
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DEF8207F5
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UReGNmNT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K6CdPCLu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729247AbgG1Upu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 16:45:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37700 "EHLO
+        id S1729226AbgG1Upp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 16:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729165AbgG1Upo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 16:45:44 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A740C061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:44 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id b6so19546668wrs.11
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:44 -0700 (PDT)
+        with ESMTP id S1729195AbgG1Upn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 16:45:43 -0400
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490A7C0619D2
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:43 -0700 (PDT)
+Received: by mail-wr1-x442.google.com with SMTP id f7so19573290wrw.1
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4cE8lBxgbX2JgAX3nPzWkcziKNqXxmfSxxXXSEaTiJA=;
-        b=UReGNmNTS42dYQZ/lSPWmN4LB2IMKDRgr+xUpfjLokiVZ3wsdoLrpUK6njhXMfjh1m
-         wX5Jdw1C9ASlYRZMWhgdsYQ2j7jArqnu+Y7xV9fKKM73mYMt+XAile0kkmjy8Jk+mwwZ
-         DKoglIY0aVSr8oNWtp2hQvoCOEKoSilU87MVPemRdjpVxNZpmfVxWQcPx91FLvbNRsdp
-         GOGjP8yzb/yzrRMyhgVa6F81+4XaLra/nhl5jh4eGSKbjQYEOho5avI1FqiNj/HL3QA3
-         wQmaY/55C+6u/2vgJEw31OwiK+PDlIptYDL/XsPqSSpVKzaGOvxTyMKeE3of1ri0ajtS
-         cLRQ==
+        bh=9vQZ4ifXHtx/wRNoLsdQs2xlgnxyqNe13TYnGQaQWtI=;
+        b=K6CdPCLuTh3S90HvhspB3AOCmaFZN3vv9ThDMCPZS+rGMKxKYGBp+h4EURRroBSr4O
+         a9UTLatj2bikZoNi1fBdIBciYoBcg+mdxLRE07trI18IbiuBuKe/60yNGJZ28n4x9oUR
+         jgKM2mxYeC+9+BDy1W3hbsgOngQcjW3P/JS9CdJnfE53vxdGbbLhuU8AzN3dLUTaO8KP
+         /I6V8czzJAbfm4LTjjh7oZv75mNHNdCL7VgJvPDDK6ANI6dqdYztdJ8gb1JDYYBudLSh
+         sDZH8vIw5tmrf9TDR6wmbspSacSL52sE/vtuTs2+KOLnI5/yaXLafjBXdKAnM/Ae76Pn
+         MFJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4cE8lBxgbX2JgAX3nPzWkcziKNqXxmfSxxXXSEaTiJA=;
-        b=pVFnB2r8JaM0BjwvwduHDbE/f4015gh+4AM8qaS0GVPo1R02itluLj/n6NtftyiLJB
-         pwWPTTrHqEvPAgKkPsIVaVI5MCAdicczge358jbamHMJJznHJICabdIBWY6RPd2si9FQ
-         hGp1H0A8cJmxIYsUuDTk5Zz6YWBBR3CPzav+ufqUi954x1gAxlDtpjRcLiX8lsSmExwy
-         2sLGlq9l6B5d6DQqUcNAlRLpZ9GKn9KH4G4JGPraFFfpazyuqPI6ATI7hHDIS67yLSqK
-         VtO1mD9Pfh1kytsHXvPs3SNkjbMRSBBqWaQOWHmwiet6cshcUqI/Ga//KHYfMXoVKTxk
-         XMLw==
-X-Gm-Message-State: AOAM532pji+aXuXBR5m/uw9Jy2xyEzeScJ0TX1ZHkhHGbUlPQCCev4E6
-        f/RxJQaOFvjyOAO+5zBVqJyicsHc
-X-Google-Smtp-Source: ABdhPJzefClXpezYbh0q52/3cxSgQmifSRcdj4+45QatIub0p6cMDpszCHPMO3/Qi3MgSJGhT3vfWA==
-X-Received: by 2002:a5d:4e81:: with SMTP id e1mr25166739wru.22.1595969142563;
-        Tue, 28 Jul 2020 13:45:42 -0700 (PDT)
+        bh=9vQZ4ifXHtx/wRNoLsdQs2xlgnxyqNe13TYnGQaQWtI=;
+        b=Yke9NZmoK7QDc6eOe5W+bXESWntqqNH2ldooszcZKJKFQFSkEYaKq5Kl2AYk06038c
+         KlVnDJfbEP7gSTzNsKlsbMIaWp6RCuO43p6ZhQubcQDKn49rS2LjjPYOZ+KS8z2yFWgc
+         ofc2pulZTJSJBAXpDzyktw8fdQ4pN0KxBzZMi/jxyvUxJB8Nd6pCooTCmF8SU07VUy+b
+         GZwKxIvT+WnHKw0JNYSFu1TVVk11H1jor/ZisRF2zWIpyzCzcBTtApO8KAYfaU4metr1
+         TSbfh2F7BJYyT8JXHP8E9nxmH08DfL7r5oBKgc9kLjP6B9kosZA6uXdQPkYvFS0jaSTf
+         MRag==
+X-Gm-Message-State: AOAM532dDI1w8AfAKE0aWs8vEl3HJGZfI3J6YSWCDOIqhnQhIZbPv0Vu
+        llaQtuzLTgAKS8+7K2rHzbbFPxq/
+X-Google-Smtp-Source: ABdhPJxF3JOEX6AbxQKO9vurjnd/SS6YCdd8n3HcA2NFIycC5E2ssFY0SllVE3QDdROuY/PWJuHxVQ==
+X-Received: by 2002:adf:fe05:: with SMTP id n5mr19081951wrr.237.1595969141785;
+        Tue, 28 Jul 2020 13:45:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b139sm4448wmd.19.2020.07.28.13.45.41
+        by smtp.gmail.com with ESMTPSA id m16sm18791325wrr.71.2020.07.28.13.45.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 13:45:42 -0700 (PDT)
-Message-Id: <cd9e69a910eebfaa8fd7866326d60a5c9733f1c8.1595969140.git.gitgitgadget@gmail.com>
+        Tue, 28 Jul 2020 13:45:41 -0700 (PDT)
+Message-Id: <bbb8db27024298ed7264cee71e92376f62ac1073.1595969140.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
 References: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jul 2020 20:45:39 +0000
-Subject: [PATCH 2/2] hashmap: fix typo in usage docs
+Date:   Tue, 28 Jul 2020 20:45:38 +0000
+Subject: [PATCH 1/2] Remove doubled words in various comments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,21 +79,78 @@ From: Elijah Newren <newren@gmail.com>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- hashmap.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fsmonitor.c                            | 2 +-
+ t/t5510-fetch.sh                       | 2 +-
+ t/t6046-merge-skip-unneeded-updates.sh | 2 +-
+ t/t8014-blame-ignore-fuzzy.sh          | 2 +-
+ wt-status.c                            | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hashmap.h b/hashmap.h
-index 79ae9f80de..ef220de4c6 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -168,7 +168,7 @@ struct hashmap_entry {
-  * argument `keydata`, respectively. Otherwise, `keydata` is NULL.
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 932bd9012d..ed796e3e03 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -217,7 +217,7 @@ void refresh_fsmonitor(struct index_state *istate)
+ 				 * Need to use a char * variable because static
+ 				 * analysis was suggesting to use strbuf_addbuf
+ 				 * but we don't want to copy the entire strbuf
+-				 * only the the chars up to the first NUL
++				 * only the chars up to the first NUL
+ 				 */
+ 				buf = query_result.buf;
+ 				strbuf_addstr(&last_update_token, buf);
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index a66dbe0bde..7456c567cd 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -797,7 +797,7 @@ test_configured_prune true  true  unset unset pruned pruned \
+ 	"--prune origin refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*"
+ 
+ # --prune-tags on its own does nothing, needs --prune as well, same
+-# for for fetch.pruneTags without fetch.prune
++# for fetch.pruneTags without fetch.prune
+ test_configured_prune unset unset unset unset kept kept     "--prune-tags"
+ test_configured_prune unset unset true unset  kept kept     ""
+ test_configured_prune unset unset unset true  kept kept     ""
+diff --git a/t/t6046-merge-skip-unneeded-updates.sh b/t/t6046-merge-skip-unneeded-updates.sh
+index 1ddc9e6626..5a2d07e516 100755
+--- a/t/t6046-merge-skip-unneeded-updates.sh
++++ b/t/t6046-merge-skip-unneeded-updates.sh
+@@ -661,7 +661,7 @@ test_setup_4a () {
+ }
+ 
+ # NOTE: For as long as we continue using unpack_trees() without index_only
+-#   set to true, it will error out on a case like this claiming the the locally
++#   set to true, it will error out on a case like this claiming that the locally
+ #   modified file would be overwritten by the merge.  Getting this testcase
+ #   correct requires doing the merge in-memory first, then realizing that no
+ #   updates to the file are necessary, and thus that we can just leave the path
+diff --git a/t/t8014-blame-ignore-fuzzy.sh b/t/t8014-blame-ignore-fuzzy.sh
+index 6e61882b6f..e68e6115a6 100755
+--- a/t/t8014-blame-ignore-fuzzy.sh
++++ b/t/t8014-blame-ignore-fuzzy.sh
+@@ -248,7 +248,7 @@ Final
+ EOF
+ 
+ # The first line of b matches best with the last line of a, but the overall
+-# match is better if we match it with the the first line of a.
++# match is better if we match it with the first line of a.
+ title11="Piggy in the middle"
+ cat <<EOF >a11
+ abcdefg
+diff --git a/wt-status.c b/wt-status.c
+index c560cbe860..20f2075868 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2035,7 +2035,7 @@ static void wt_porcelain_print(struct wt_status *s)
+  *   [# branch.upstream <upstream><eol>
+  *   [# branch.ab +<ahead> -<behind><eol>]]
   *
-  * When it is too expensive to allocate a user entry (either because it is
-- * large or varialbe sized, such that it is not on the stack), then the
-+ * large or variable sized, such that it is not on the stack), then the
-  * relevant data to check for equality should be passed via `keydata`.
-  * In this case `key` can be a stripped down version of the user key data
-  * or even just a hashmap_entry having the correct hash.
+- *      <commit> ::= the current commit hash or the the literal
++ *      <commit> ::= the current commit hash or the literal
+  *                   "(initial)" to indicate an initialized repo
+  *                   with no commits.
+  *
 -- 
 gitgitgadget
+
