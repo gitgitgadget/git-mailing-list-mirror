@@ -2,159 +2,205 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19E9EC433E1
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 13:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00175C433E4
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 14:55:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5EEB2074F
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 13:58:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5F73206D8
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 14:55:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mJk2cU/T"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="YQ+dAxEP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730248AbgG1N6H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 09:58:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59032 "EHLO
+        id S1730554AbgG1OzD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 10:55:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726764AbgG1N6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 09:58:06 -0400
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360D6C061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 06:58:06 -0700 (PDT)
-Received: by mail-pl1-x644.google.com with SMTP id x9so9936382plr.2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 06:58:06 -0700 (PDT)
+        with ESMTP id S1730455AbgG1OzC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 10:55:02 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F689C061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 07:55:02 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id l23so18929642qkk.0
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 07:55:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=bYlkt8ldpqcWk8T0SL7s+fcmXoeXXaWgH6TalrdGcHo=;
-        b=mJk2cU/TNpLWHISCvvJW/KWVGAf6adKb8260CClKii1fq7vIFUKygsEr7hAg6qLh9o
-         xM8XwU8/taOwOuSdCkZvOyKEMabvJ4/D7xGEeZ9aJ9IvheV0zE9D3nYTo9AStLptPwrj
-         oC5E0bXqXS/vp5sOh2AaJFLyv6IMJw9Ygy40QaZvHkg95/SVbfCTjDbs9zwn5HggirKG
-         C+rvZXISNbKOvhy1rTA2yyW5FiHqKl9BWoqV0AF3QJ6FJ0EzlLYf63e9NCKA5z/D5kDY
-         d1MyDtC58MolfvhcxGEAnpHh87VxBbSXvVYkOVgBAdQENJqtVHipfxdW8guRQJj0WgSQ
-         q4xA==
+        bh=sXpPHlVzA8YmBIWC7gEhnWw2U01D01jCBqsRTXI1/2w=;
+        b=YQ+dAxEP6zxJmLhcL0gdX+ecXTk3KiwDYTg/vnApxCAbfP6nLcEY3tfGf1Nn62Il3E
+         IwCiNXbPa3Ki1YHeqH4D6vsEeRfJObFRwZUwmxO4nzWx2Om75j1gr26kCDIqsjOT/OUo
+         guz0CdH9aOI40Cz7de6JA46AcrVMxtnW9zKb9y7Atb9HtQuup0QZpFYyTuBNmMGa7205
+         CDMoytmqblPfZ/ebbvZ9+40XkivAORwIzPIy6H2t5bkxyPw9W8hoLmM31aMIolmVeF1F
+         GCSZGYnHYNA5NT8j87w3S3ERsBK2AnKS8x67fXK0mPKXDaeSjhlI90OPEHhHABXsNVAf
+         VxbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=bYlkt8ldpqcWk8T0SL7s+fcmXoeXXaWgH6TalrdGcHo=;
-        b=ZbF9N74O2jQb8wkvvHCIkTgcBHUo1utoQbMx56ROjeACxWLiT53vydpByhvaFCjlVD
-         idC/KIy/viN72zQ3rgH2QIWqfFSDRpNR3Vt4rcHLwcgAErhj/DgbJHOSoOUWETUCw056
-         f2XF5IMXbulhsGh6oXBpowBPwe1aU74P3AuD13w3fzzKIWqGvZqgGLuS+YqmJfVZTBxV
-         Z9EvpFbkAQIDrEVumdm1vsOaDt3/Hl/o8BNl4hsxQUm29Q2BwS8Ge9eB3kUzXkUVnChj
-         ILvhFe7GWZL9Ezs+Vs5MAbig6c9fP62bRXlIvoPkDJi+DqW4+EDb3bS4aZRY+owwNqXl
-         IowQ==
-X-Gm-Message-State: AOAM533DYyAifWpjC+1quRDuxL5A2m41DHmdN0FW5EwYS6I+sdsGMf1j
-        FSAsyZyNNICMX+4mHKxIPJo+Nzpq
-X-Google-Smtp-Source: ABdhPJy1KpFfUztCmfeHhIaZwgb+NSMwNP3E/dM3Cl5qWVXcZJTh+Q9ruQBlgmvkaGnc1nmTgcg1zg==
-X-Received: by 2002:a17:902:ea8a:: with SMTP id x10mr23037125plb.95.1595944685742;
-        Tue, 28 Jul 2020 06:58:05 -0700 (PDT)
-Received: from localhost ([2402:800:6375:ea17:7ad5:df16:a252:473b])
-        by smtp.gmail.com with ESMTPSA id i13sm3134548pjd.33.2020.07.28.06.58.04
+        bh=sXpPHlVzA8YmBIWC7gEhnWw2U01D01jCBqsRTXI1/2w=;
+        b=Baw0vUU90AY5F2zadQxEeDXRPwhcs3Nirqb0hGZoGKibFbv4/Dyh4OWyltMIimuYKV
+         OJ9sik7rK9pAEwdcgwnewTlt+CkQtGcA1PL+smmcioUYzlJjVyG3f6EopggLMW8W1NkB
+         yZC+H27EmNq+G27xMlvfqkxyz+wab/qjET+fGKCu/OSsnSt44PItC8ANjArocDc9DIWg
+         c+puQbgs6hiQ7hkmZ3z6H8kLgOwFV//fxn83dnT1VtlVmb9NIqFCPRF41nNrbsIzHV9I
+         dFTXhvbw/N+HEc8KNSG17xQE9+RHEZfEXClHXxNFHeZHZuNJnS+rPC4zLxXQchXt4POK
+         OUFA==
+X-Gm-Message-State: AOAM533W6HLLizKgowFmBTpnCFWOe83ENBRcMgnKVMfjf6W4jhNzCNyQ
+        lEXzMJ3XfSQb/O4urKT+zdyc2mknS5stPg==
+X-Google-Smtp-Source: ABdhPJwBZLzyKQmGS/5uAIqWTHdy0cx5Pu36xI8lUm+5UVAYldOlgvacUvRlLKXYpOER6L0ROSetlg==
+X-Received: by 2002:a05:620a:240a:: with SMTP id d10mr6325785qkn.209.1595948100832;
+        Tue, 28 Jul 2020 07:55:00 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:9c58:8530:481a:f835])
+        by smtp.gmail.com with ESMTPSA id v184sm24248278qki.12.2020.07.28.07.54.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 06:58:05 -0700 (PDT)
-Date:   Tue, 28 Jul 2020 20:58:03 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH 1/5] ref-filter: support different email formats
-Message-ID: <20200728135803.GD24134@danh.dev>
-References: <pull.684.git.1595882588.gitgitgadget@gmail.com>
- <aeb116c5aaaa23dfefbc7a6f4ac743a6f5a3ade8.1595882588.git.gitgitgadget@gmail.com>
+        Tue, 28 Jul 2020 07:55:00 -0700 (PDT)
+Date:   Tue, 28 Jul 2020 10:54:58 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>
+Subject: Re: [PATCH 0/6] [GSoC] Implement Corrected Commit Date
+Message-ID: <20200728145458.GA87373@syl.lan>
+References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aeb116c5aaaa23dfefbc7a6f4ac743a6f5a3ade8.1595882588.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.676.git.1595927632.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[this is a resent, my previous mail couldn't reach the archive]
+Hi Abhishek,
 
-On 2020-07-27 20:43:04+0000, Hariom Verma via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Hariom Verma <hariom18599@gmail.com>
-> 
-> Currently, ref-filter only supports printing email with arrow brackets.
-> 
-> Let's add support for two more email options.
-> - trim : print email without arrow brackets.
-> - localpart : prints the part before the @ sign
-> 
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Heba Waly <heba.waly@gmail.com>
-> Signed-off-by: Hariom Verma <hariom18599@gmail.com>
-> ---
->  ref-filter.c            | 36 ++++++++++++++++++++++++++++++++----
->  t/t6300-for-each-ref.sh | 16 ++++++++++++++++
->  2 files changed, 48 insertions(+), 4 deletions(-)
-> 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 8447cb09be..8563088eb1 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -102,6 +102,10 @@ static struct ref_to_worktree_map {
->  	struct worktree **worktrees;
->  } ref_to_worktree_map;
->  
-> +static struct email_option{
-> +	enum { EO_INVALID, EO_RAW, EO_TRIM, EO_LOCALPART } option;
-> +} email_option;
-> +
->  /*
->   * An atom is a valid field atom listed below, possibly prefixed with
->   * a "*" to denote deref_tag().
-> @@ -1040,10 +1044,26 @@ static const char *copy_email(const char *buf)
->  	const char *eoemail;
->  	if (!email)
->  		return xstrdup("");
-> -	eoemail = strchr(email, '>');
-> +	switch (email_option.option) {
-> +	case EO_RAW:
-> +		eoemail = strchr(email, '>') + 1;
-> +		break;
-> +	case EO_TRIM:
-> +		email++;
-> +		eoemail = strchr(email, '>');
-> +		break;
-> +	case EO_LOCALPART:
-> +		email++;
-> +		eoemail = strchr(email, '@');
-> +		break;
+On Tue, Jul 28, 2020 at 09:13:45AM +0000, Abhishek Kumar via GitGitGadget wrote:
+> This patch series implements the corrected commit date offsets as generation
+> number v2, along with other pre-requisites.
 
+Very exciting. I have been eagerly following your blog and asking
+Stolee about your progress, so I am excited to read these patches.
 
-This is not correct.
-RFC-822 allows @ in local part,
-albeit, that localpart must be quoted:
+> Git uses topological levels in the commit-graph file for commit-graph
+> traversal operations like git log --graph. Unfortunately, using topological
+> levels can result in a worse performance than without them when compared
+> with committer date as a heuristics. For example, git merge-base v4.8 v4.9
+> on the Linux repository walks 635,579 commits using topological levels and
+> walks 167,468 using committer date.
+>
+> Thus, the need for generation number v2 was born. New generation number
+> needed to provide good performance, increment updates, and backward
+> compatibility. Due to an unfortunate problem, we also needed a way to
+> distinguish between the old and new generation number without incrementing
+> graph version.
+>
+> Various candidates were examined (https://github.com/derrickstolee/gen-test,
+> https://github.com/abhishekkumar2718/git/pull/1). The proposed generation
+> number v2, Corrected Commit Date with Mononotically Increasing Offsets
+> performed much worse than committer date (506,577 vs. 167,468 commits walked
+> for git merge-base v4.8 v4.9) and was dropped.
+>
+> Using Generation Data chunk (GDAT) relieves the requirement of backward
+> compatibility as we would continue to store topological levels in Commit
+> Data (CDAT) chunk. Thus, Corrected Commit Date was chosen as generation
+> number v2. The Corrected Commit Date is defined as:
+>
+> For a commit C, let its corrected commit date be the maximum of the commit
+> date of C and the corrected commit dates of its parents. Then corrected
+> commit date offset is the difference between corrected commit date of C and
+> commit date of C.
 
-        addr-spec       =       local-part "@" domain
-        local-part      =       dot-atom / quoted-string / obs-local-part
-        quoted-string   =       [CFWS]
-                                DQUOTE *([FWS] qcontent) [FWS] DQUOTE
-                                [CFWS]
-        qcontent        =       qtext / quoted-pair
-        qtext           =       NO-WS-CTL /     ; Non white space
-        qtext           =       NO-WS-CTL /     ; Non white space controls
-                                %d33 /          ; The rest of the US-ASCII
-                                %d35-91 /       ;  characters not including "\"
-                                %d93-126        ;  or the quote character
-        quoted-pair     =       ("\" text) / obs-qp
+Interestingly, we use a very similar metric at GitHub to sort commits in
+various UI views which have lots of existing machinery that sorts
+an abstract collection by each element's "date". Since that sort is
+stable, and we want to respect the order that Git delivered, we take the
+pairwise max of each successive pair of commits.
 
-IOW, those below email addresses are valid email address,
-and the local part is `quoted@local'
+> We will introduce an additional commit-graph chunk, Generation Data chunk,
+> and store corrected commit date offsets in GDAT chunk while storing
+> topological levels in CDAT chunk. The old versions of Git would ignore GDAT
+> chunk, using topological levels from CDAT chunk. In contrast, new versions
+> of Git would use corrected commit dates, falling back to topological level
+> if the generation data chunk is absent in the commit-graph file.
 
-        "quoted@local"@example.com
-        quoted\@local@example.com
+I'm sure that I'll learn more when I get to this point, but I would like
+to hear more about why you want to store the offset rather than the
+corrected commit date itself. It seems that the offset could be either
+positive or negative, so you'd only have the range of a signed integer
+(rather than storing 8 bytes of a time_t for the full breadth of
+possibilities).
 
-Anyway, it seems like current Git strips first `"'
-from `"quoted@local"@example.com'
+I know also that Peff is working on negative timestamp support, so I
+would want to hear about what he thinks of this, too.
 
+> Here's what left for the PR (which I intend to take on with the second
+> version of pull request):
+>
+>  1. Add an option to skip writing generation data chunk (to test whether new
+>     Git works without GDAT as intended).
 
--- 
-Danh
+This will be good to gradually roll-out the new chunk. Another thought
+is to control whether or not the commit-graph machinery _reads_ this
+chunk if it's present. That can be useful for debugging too (eg., I have
+a commit-graph with a GDAT chunk that is broken in some way, what
+happens if I don't read that chunk?)
+
+Maybe something like `commitgraph.readsGenerationData`? Incidentally,
+I'm preparing a `commitgraph.readsChangedPaths` to control whether or
+not we read the Bloom index and data chunks. I'll send that to the list
+shortly (it's in my fork somewhere if you want an earlier look), but
+that may be a useful reference for you.
+
+>  2. Handle writing to commit-graph for mismatched version (that is, merging
+>     all graphs into a new graph with a GDAT chunk).
+>  3. Update technical documentation.
+>
+> I look forward to everyone's reviews!
+>
+> Thanks
+>
+>  * Abhishek
+>
+>
+> ----------------------------------------------------------------------------
+>
+> The build fails for t9807-git-p4-submit.sh on osx-clang, which I feel is
+> unrelated to my code changes. Still need to investigate further.
+>
+> Abhishek Kumar (6):
+>   commit-graph: fix regression when computing bloom filter
+>   revision: parse parent in indegree_walk_step()
+>   commit-graph: consolidate fill_commit_graph_info
+>   commit-graph: consolidate compare_commits_by_gen
+>   commit-graph: implement generation data chunk
+>   commit-graph: implement corrected commit date offset
+>
+>  blame.c                       |   2 +-
+>  commit-graph.c                | 181 +++++++++++++++++++++-------------
+>  commit-graph.h                |   7 +-
+>  commit-reach.c                |  47 +++------
+>  commit-reach.h                |   2 +-
+>  commit.c                      |   9 +-
+>  commit.h                      |   3 +
+>  revision.c                    |  17 ++--
+>  t/helper/test-read-graph.c    |   2 +
+>  t/t4216-log-bloom.sh          |   4 +-
+>  t/t5000-tar-tree.sh           |   4 +-
+>  t/t5318-commit-graph.sh       |  21 ++--
+>  t/t5324-split-commit-graph.sh |  12 +--
+>  upload-pack.c                 |   2 +-
+>  14 files changed, 178 insertions(+), 135 deletions(-)
+>
+>
+> base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-676%2Fabhishekkumar2718%2Fcorrected_commit_date-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-676/abhishekkumar2718/corrected_commit_date-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/676
+> --
+> gitgitgadget
+
+Thanks,
+Taylor
