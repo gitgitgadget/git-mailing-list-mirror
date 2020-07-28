@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D51BC433ED
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C9D1C433F4
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 758C920829
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D7692075D
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="jc1Rga8b"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="M5cKEWmu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730202AbgG1XfI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 19:35:08 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40862 "EHLO
+        id S1730239AbgG1XfM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 19:35:12 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40926 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730149AbgG1XfG (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:06 -0400
+        by vger.kernel.org with ESMTP id S1730203AbgG1XfJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:09 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0304560AFD;
-        Tue, 28 Jul 2020 23:35:03 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BC0156101E;
+        Tue, 28 Jul 2020 23:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595979304;
-        bh=L4ikSk2ksF5tOP+JVJ03gA5CEshYrAarLzuzOB/wnpw=;
+        s=default; t=1595979307;
+        bh=kxZYNK6Va1MuOmXfxizmLHhju9aeB8cDRgPk/U5hImM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=jc1Rga8bbOAY39LAIv4ZtZdIuSeN1aTtr8HaY2NaHAh6aCaFrcW4JpCczpX2UolQH
-         //IR/3claMnOxgs6YZ/JxfeujuqVfmsymMVsoUJJuk7EY43sLCGYvDM7RvzLCt3R65
-         5rwKjzVeVzzzZWMi6k0RIDUrSAzCfW8H4998/sy27pXVT8Zhn/4QcdgsrISX3s6QhC
-         z0OPHwHd4M1EH+Syj1j/qHa/rRwrkx9keLDgRuC2i+lNI6KzaG3QEFS+TiNUN2Xc7C
-         WbZbKLvau8ENIeXhtVuxVkKRs4JrsFlXcstbwy5iACsY8Q3Di3Vv7euYIVzaDC5W8p
-         7zgRKbd2atUjoTJOikVRA6RSzAjujoCI37JavgaT2EkPKynASSeH99uFRiUxuxwtRs
-         x7/sPt+P4BqhyRpeVIkYoOzWV5Aoff2kmJRII9CNLIrq9tEWOIpk+O4TgcaPUFSE75
-         DQcvNEWkiyay1I53/iOXfEWIA4X8x/8wOBkExoklo0pYu1r24Mc
+        b=M5cKEWmuZBCPjzzVVhVXKKf25PToAmcVOwplUY9djpthXSFccXqHhp5sTHIDvkOPp
+         iYGLVnUggUZd35La6HKP9xBduNwdtxVfPf+QlT45E97uEETlygmtOypm8JdogISSRi
+         pEgd9awkczmGbHeEMWcloo4R38cpyAgYEMgz0P3dqRalyJy0XjJ8geCG70vSSCaCYL
+         urKXnVJQvMJZtXJ1k+/tMGs4ZpPFgRzGxmhO7hVCjy4GpwdUjSB6p77+9Qz538z0qq
+         35V15pMEidL6upVrzYWkBJgHg78H8lnlSVyaNV9OTlOefC+8XaeawCRyy/C0SCgfvI
+         w9y1Ie7Git2eisRn+x8G2cxf1Ze3t7DoNb7kFPGpsZ3d01ZL7DbTS0iVWH3iqvgWhu
+         qEDWSDuVXDwCgxFh5MflqzBfPicxcFO1HdemQ6CUpb0dCKZF6f2mIPt+qB+eUNjQzH
+         tM7Dvt8jH5kmhX3X1sPHH1Quh9LXKJhf9zDWnILVl+S+YpWDHIb
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 20/39] t8011: make hash size independent
-Date:   Tue, 28 Jul 2020 23:34:27 +0000
-Message-Id: <20200728233446.3066485-21-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 26/39] t9700: make hash size independent
+Date:   Tue, 28 Jul 2020 23:34:33 +0000
+Message-Id: <20200728233446.3066485-27-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -56,24 +56,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow lines which start with either a 40- or 64-character hex object ID,
-to allow for both SHA-1 and SHA-256.
+The Perl test script for t9700 was matching on exactly 40 hex
+characters.  With SHA-256, we'll have 64 hex-character object IDs.
+Create a variable with a regex which matches exactly 40 or 64 hex
+characters and use that to match the output.  Note that both of the uses
+of this can be anchored, which makes the code simpler, so do that as
+well.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t8011-blame-split-file.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t9700/test.pl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t8011-blame-split-file.sh b/t/t8011-blame-split-file.sh
-index 831125047b..bdda0c03fe 100755
---- a/t/t8011-blame-split-file.sh
-+++ b/t/t8011-blame-split-file.sh
-@@ -54,7 +54,7 @@ test_expect_success 'setup simulated porcelain' '
- 	cat >read-porcelain.pl <<-\EOF
- 	my $field = shift;
- 	while (<>) {
--		if (/^[0-9a-f]{40} /) {
-+		if (/^[0-9a-f]{40,} /) {
- 			flush();
- 			$hash = $&;
- 		} elsif (/^$field (.*)/) {
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index 34cd01366f..071ff6d82a 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -23,6 +23,8 @@ sub adjust_dirsep {
+ 	return $path;
+ }
+ 
++my $oid_re = qr/^[0-9a-fA-F]{40}(?:[0-9a-fA-F]{24})?$/;
++
+ BEGIN { use_ok('Git') }
+ 
+ # set up
+@@ -93,7 +95,7 @@ sub adjust_dirsep {
+ open TEMPFILE, ">$tmpfile" or die "Can't open $tmpfile: $!";
+ print TEMPFILE my $test_text = "test blob, to be inserted\n";
+ close TEMPFILE or die "Failed writing to $tmpfile: $!";
+-like(our $newhash = $r->hash_and_insert_object($tmpfile), qr/[0-9a-fA-F]{40}/,
++like(our $newhash = $r->hash_and_insert_object($tmpfile), $oid_re,
+      "hash_and_insert_object: returns hash");
+ open TEMPFILE, "+>$tmpfile" or die "Can't open $tmpfile: $!";
+ is($r->cat_blob($newhash, \*TEMPFILE), length $test_text, "cat_blob: roundtrip size");
+@@ -119,7 +121,7 @@ sub adjust_dirsep {
+ 
+ # commands in sub directory
+ my $last_commit = $r2->command_oneline(qw(rev-parse --verify HEAD));
+-like($last_commit, qr/^[0-9a-fA-F]{40}$/, 'rev-parse returned hash');
++like($last_commit, $oid_re, 'rev-parse returned hash');
+ my $dir_commit = $r2->command_oneline('log', '-n1', '--pretty=format:%H', '.');
+ isnt($last_commit, $dir_commit, 'log . does not show last commit');
+ 
