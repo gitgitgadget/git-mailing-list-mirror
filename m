@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82B5AC433E0
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA1DC4345A
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 592DC2083B
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C1AD2075D
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lQFKu+yR"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JR7T5R5z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730343AbgG1Xf3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 19:35:29 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40958 "EHLO
+        id S1730288AbgG1XfY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 19:35:24 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40942 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730305AbgG1Xf0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:26 -0400
+        by vger.kernel.org with ESMTP id S1730240AbgG1XfO (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:14 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6BF88607E8;
-        Tue, 28 Jul 2020 23:34:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 883B16101E;
+        Tue, 28 Jul 2020 23:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595979295;
-        bh=Ni60BVyy3697LdUPCNff0L0kAJ2/erkulVYjnf5hQSc=;
+        s=default; t=1595979311;
+        bh=PXksA9t4Mk9dgBX8Q6mV6mHGt+DBKXcHNHfaGS2lp9Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=lQFKu+yRofRzWcSY3guSjYDRPKYIc+4OzmqKTdZREa0iESkHEhKrMLhxQ2zp9Om/O
-         oUD5zIy4tPdDSrpcpggZhvfFKcNtKIjygXH+LCv9gQLrpcmAI7+h4yBtl+cSKyPvgd
-         r+iYL1w36FGhZU+6QjALJKjnnPFSa+h5opIJubKWTrMmDCUXpPQ78ZarkciDo+ijpM
-         ZQhUAKBt0QuAm6hERcTdvpayvDy3RpEKvF4BhbAoeNjsAxDKL92HzBEu01GtSo7lyv
-         Zs7uIX/eYw+7tbtYT0bgtAI/Jhftw6FQdQPkLqV6u1A7EIW0yaS2Wd9Ky7hIVM9yz0
-         2dOmxSXBmtsbDO9Gx0qi+6d842xHak9UCG7vL2gaXPlrbYlrG3/M90oJFYRQ1wPuPe
-         NUQKhi23AFavIANAon93o9R4QX5gImSdkoRWneK+xyJOrIoazm4I5HjaNukTLZ3G3q
-         V4wYkR2JKLiPZa6Sl0jngmnq/SFunuTFtgEuoE6XYJnYvss1/Q/
+        b=JR7T5R5zge/oB1oMavmu1CZS1jFsjZ67y8QtLLojtG3kYY9RgFKz1KKvh6Oo758ON
+         qJLArZQbmrGJnYQLtMK8isI2UlAJN7+W8TKhUdeJV3wfoySVOZsdEuXnCeV1YjHhvU
+         URTCQVs759SGqMI1dXJF9yNBjbhumOVXNoXy0qXOuYzhxdYlKpgOxEXKSw1EMn2/Li
+         Pb251IqIS1KNzqHFmNCC+uPKYidqzhirz5d4I+/C4U7ZE/qZNHVnzxda3lyDogOLBR
+         0CxUJ5iPb6hbPpHJyySAABY00yRgwUN/n4A8+8yTnSRwCF242MoI20WnyXih3G7f7J
+         vdgQbI5+0iNqqRHRW34N5VqiN9QpVvQeIRxNfgO+9P7kCn10uFbXZBDwRHCuhb9nQO
+         VosUuEzAdSqluuikoXE4ue/5EeFLzzWAEzX/Q+Wast4CjQo3l/PYsdzEL1GP7CStfK
+         l5VUm0PWo8R+gKDx6oaz+0FE7y/T530s18iiM6ehqL9RQrXAYA1
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 01/39] t: make test-bloom initialize repository
-Date:   Tue, 28 Jul 2020 23:34:08 +0000
-Message-Id: <20200728233446.3066485-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 37/39] ci: run tests with SHA-256
+Date:   Tue, 28 Jul 2020 23:34:44 +0000
+Message-Id: <20200728233446.3066485-38-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -56,27 +56,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The bloom filter code relies on reading object IDs using parse_oid_hex.
-In order to make that work with an appropriate size, we need to have
-initialized the repository's hash algorithm.  Since the values we're
-processing depend on the repository in use, let's set up the repository
-when we run the test helper.
+Now that we have Git supporting SHA-256, we'd like to make sure that we
+don't regress that state.  Unfortunately, it's easy to do so, so to
+help, let's add code to run one of our CI jobs with SHA-256 as the
+default hash.  This will help us detect any problems that may occur.
+
+We pick the linux-clang job because it's relatively fast and the
+linux-gcc job already runs the testsuite twice.  We want our tests to
+run as fast as possible, so we wouldn't want to add a third run to the
+linux-gcc job.  To make sure we properly exercise the code, let's run
+the tests in the default mode (SHA-1) first and then run a second time
+with SHA-256.  We explicitly specify SHA-1 for the first run so that if
+we change the default in the future, we make sure to test both cases.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/helper/test-bloom.c | 2 ++
- 1 file changed, 2 insertions(+)
+ ci/run-build-and-tests.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
-index f0aa80b98e..5e77d56f59 100644
---- a/t/helper/test-bloom.c
-+++ b/t/helper/test-bloom.c
-@@ -50,6 +50,8 @@ static const char *bloom_usage = "\n"
- 
- int cmd__bloom(int argc, const char **argv)
- {
-+	setup_git_directory();
-+
- 	if (argc < 2)
- 		usage(bloom_usage);
- 
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 17e25aade9..6c27b886b8 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -24,6 +24,12 @@ linux-gcc)
+ 	export GIT_TEST_ADD_I_USE_BUILTIN=1
+ 	make test
+ 	;;
++linux-clang)
++	export GIT_TEST_DEFAULT_HASH=sha1
++	make test
++	export GIT_TEST_DEFAULT_HASH=sha256
++	make test
++	;;
+ linux-gcc-4.8)
+ 	# Don't run the tests; we only care about whether Git can be
+ 	# built with GCC 4.8, as it errors out on some undesired (C99)
