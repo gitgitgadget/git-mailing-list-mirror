@@ -2,107 +2,85 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76214C433E0
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 22:23:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64AF8C433E8
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 22:36:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4697F2074F
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 22:23:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3CCF520774
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 22:36:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xpDA0LMY"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="icVvoQzE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729781AbgG1WXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 18:23:52 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60121 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729428AbgG1WXw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 18:23:52 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 32D32D9D54;
-        Tue, 28 Jul 2020 18:23:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0ndpzGfyU8yNZgyFj3iRrorsYY8=; b=xpDA0L
-        MYqbjuyMci+1ak74A03TkuFWIGe2cnotciJIVTsDouiiCLY2WDYL6Wt76jVOogHO
-        lGAW8E/+hbeIEKTgajG5iuLsz8TyzEEDyKxnhc9zG3fT5cvb4nD89gwCNJXrWuNo
-        wMNRdIelCTaGpISRxS8aafmSVBcH1bTljNvKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tRgJDBgogI+QCBRuXgl5BKel5EEpsxrD
-        n30/OnTGwXsTLF6VYfaN4rgpkm5Ld7M8h4mmZAR8A8kD6wBKVpDGXlOwPTGhxNMy
-        FQ1TehGY+m3MPK3pgabHAaUlSyDqj6J3cnqFysRg+UBvsJDdako0xNO9Ptdt7ZRw
-        NcfOlAocOoc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 26C13D9D52;
-        Tue, 28 Jul 2020 18:23:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 700EAD9D46;
-        Tue, 28 Jul 2020 18:23:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 10/11] strvec: drop argv_array compatibility layer
-References: <20200728202124.GA1021264@coredump.intra.peff.net>
-        <20200728202709.GJ1021513@coredump.intra.peff.net>
-Date:   Tue, 28 Jul 2020 15:23:45 -0700
-In-Reply-To: <20200728202709.GJ1021513@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 28 Jul 2020 16:27:09 -0400")
-Message-ID: <xmqq5za7cm8e.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729857AbgG1WgE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 18:36:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54712 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729223AbgG1WgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 18:36:03 -0400
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EB5C061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 15:36:03 -0700 (PDT)
+Received: by mail-lj1-x244.google.com with SMTP id t6so9984564ljk.9
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 15:36:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uPtnkXGW7PEUkdctrUEhaxBT5L5YT5Qpt4+keQlBSno=;
+        b=icVvoQzEXJOcHKA5uVKuz9ZQPlGrNrXgrXoXOwutxJrbd/VJdpS/ZcNpcJIVL3UpPV
+         UUlGvesJURyhKMer4CXLy0CKoFARFL7fE+RIi/q1ccHHQFbmraq5qv7fCfTdwmZkcFng
+         i5K2OLkJd5YFMz5wpP0JFaX3v9vw5p4ZUmmWvXFQg/xtjet/E8eUEwM6tbP7cHajn7Ix
+         jsFnf/YR1De34TnGSsT3pt+pFLMIB4RW5Wb5GpwYIN3kIYEA2z5RxU/Hw4+p6+7nfrR/
+         gDRhOE8+hFeuaYAGBB9kGuCVIcCaQVqQjKJhQTLm/OaDb8mOH/IgoeZbIyUVXJsC1HeU
+         lIew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uPtnkXGW7PEUkdctrUEhaxBT5L5YT5Qpt4+keQlBSno=;
+        b=UbVak1V4Zd1s2QL82uZt5cw/IIU5Ffz+6JoWdFmagonJrh3ACn7D/D2YNlysqb4M2d
+         nlB4L2yDVEfqvGxEBaiDXn3j37lJeU/YXFTu2iJJK6DVmip1U2WDhvBR6brRKMw/rFVd
+         bnrE8UbNNHIJ0T4KPrQQ4U1cnIVppKceyKzaJc4+B5+nRMb/OTD9fZYc6wWoK5nBzqpA
+         d672qJP5inhh9pCRp3i46Nspos7zDTDpn10M4JgF88tK6rZBaoYFjo6os5FrsL80PPvV
+         Aa0/Iz1Yt+5/R+fdWQdshW7KFSHdpqptwuUA0vwb9ydJZZ+HOlkLcE+q06xEVj1HeuDj
+         hVkw==
+X-Gm-Message-State: AOAM530WWBgkqGpx4lHnGkSUGjbGAFw6c/rUC1WH/VNlze/VKBDBISzV
+        RZpfdIzsqMCP1RfoePnS+7uwAE+j4yvdhAgx1bKULg==
+X-Google-Smtp-Source: ABdhPJxtJuLF6kBFlwuFP3dftYhKZrIBwl65AEZEJxXNL0Vu75Zu1igHLnhCgsyS1pwrVAU1OHKhpmPiIQ+LlQ/85kU=
+X-Received: by 2002:a05:651c:2006:: with SMTP id s6mr12603523ljo.74.1595975761402;
+ Tue, 28 Jul 2020 15:36:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0155B83A-D121-11EA-AE84-F0EA2EB3C613-77302942!pb-smtp20.pobox.com
+References: <551da4ae-c75a-0f2b-7786-2fee32939b2b@web.de>
+In-Reply-To: <551da4ae-c75a-0f2b-7786-2fee32939b2b@web.de>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 28 Jul 2020 19:35:50 -0300
+Message-ID: <CAHd-oW68nGch8b3tfas4AUUgA8so-ihwazAf8-W-xQNPi31=Mw@mail.gmail.com>
+Subject: Re: [PATCH] grep: avoid using oid_to_hex() with parse_object_or_die()
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> There are no callers which need it anymore. Any topics in flight will
-> need to be updated as they get merged in (but the compiler will make
-> that quite clear).
+On Tue, Jul 28, 2020 at 6:40 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  strvec.h | 13 -------------
->  1 file changed, 13 deletions(-)
+> parse_object_or_die() is passed an object ID and a name to show if the
+> object cannot be parsed.  If the name is NULL then it shows the
+> hexadecimal object ID.  Use that feature instead of preparing and
+> passing the hexadecimal representation to the function proactively.
+> That's shorter and a bit more efficient.
 >
-> diff --git a/strvec.h b/strvec.h
-> index 4be39c8a48..bd35de1ce4 100644
-> --- a/strvec.h
-> +++ b/strvec.h
-> @@ -86,17 +86,4 @@ void strvec_clear(struct strvec *);
->   */
->  const char **strvec_detach(struct strvec *);
->  
-> -/* compatibility for historic argv_array interface */
-> -#define argv_array strvec
-> -#define ARGV_ARRAY_INIT STRVEC_INIT
-> -#define argv_array_init strvec_init
-> -#define argv_array_push strvec_push
-> -#define argv_array_pushf strvec_pushf
-> -#define argv_array_pushl strvec_pushl
-> -#define argv_array_pushv strvec_pushv
-> -#define argv_array_pop strvec_pop
-> -#define argv_array_split strvec_split
-> -#define argv_array_clear strvec_clear
-> -#define argv_array_detach strvec_detach
-> -
->  #endif /* STRVEC_H */
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 
-It was more painful than I would have thought to merge this topic,
-as we seem to have gained quite a few new calling sites (it shows
-how popular and useful this API is).  Hopefully some of the merge
-conflict resolutions would be resurrected automatically from the
-rerere database ;-)
+Good catch. And this seems to be the only place where we use
+`parse_object_or_die(oid, oid_to_hex(oid))`.
 
+Reviewed-by: Matheus Tavares <matheus.bernardino@usp.br>
