@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A220C4346B
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AE32C43468
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F9CC2075D
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39C592075D
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="qTRF1boS"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="awSWd15Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730479AbgG1Xfu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 19:35:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40976 "EHLO
+        id S1730435AbgG1Xfj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 19:35:39 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40964 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730419AbgG1Xfh (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:37 -0400
+        by vger.kernel.org with ESMTP id S1730328AbgG1Xfa (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:30 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8C74860CF4;
-        Tue, 28 Jul 2020 23:35:03 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9DBD260D01;
+        Tue, 28 Jul 2020 23:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595979303;
-        bh=ESSekoAdRTmOfsf7qIhpt9ZyM67fkWjpVvr9uTkNfYg=;
+        s=default; t=1595979298;
+        bh=hWcmAlf36LEgH0FqH3pnOO/cZSi2N6MHIq2qyXaXDWc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=qTRF1boSmyXmiLnvsqUEvqdc7BXZsRxBb6i9uZ2vz5QE3IYp2/y45WAY8CKmlAb8T
-         KR6Mvjh8UQPlNLq0BxwvjeHU4lomtAprzVW6cKn/rumOHyjlZFFIY5s/dDfjp8PJDo
-         tWErp1TCiix7T8kg+/Im5mOSGL9B/yYOOgBlQ0vi4KCOIEtxwTdDwRTSz2oxbcQ3Jt
-         dt0SCSgM3xq7+2XnY98iTg3eyOaj4BPZwdRxsZE0E1DfyZoNizo4AZbda7CmoyXk7e
-         d08lq05o6IZ6MAiCmgX6eiOQhuzf48g8FOLjYCpk7PJASXTB7AiRA/fikzJJpWX8FI
-         pljsaxAFEl6jXdV3kHfaUfUIhzkj32Hu6IsrweW684vqp+Jf3iAEAnLsKPvZdJsmpC
-         laiIBRjD5C5ls0MF0zYb2BHDbJlPwB8AE2pJNpdUqo+aZvoWKzz4LHVIA336G80uoh
-         Fd8BJgWS6nhf25XgaGf5wYRYKW66GnHqtLKlohdZ2svZhAWkWmG
+        b=awSWd15Yd/en6+MVwRPhZXx77BBSJuMRsBh/lrESOXjopGGHGrzRRKpPpC9poFQSM
+         dlrXynghmB5OuMCStncorBXYsz3NiA/3guFDy/+321c5lqCpgW5u0U9hbBBmdqU9m2
+         gXuUiNoag35D9q7Erqdb8ymrkEUE6Fvh/MN8k1n+nJrpw8UBQ5Wi3gM2inFXNq2oWi
+         8+rjhzwk78SEkIODaBBQqrp1IQiYEZJIhlkA03E1isqTJAnGkHEErA/8f6w0IBkcDS
+         9c7NQHDJScgDS80j//qXLD2Nenqn73MuYoKVcw7j3LFI0VYmgqduRiUvqa0zw9VXfX
+         t1Ewts0a9HaDjFuyIVDatrqCZYAchBjZzjd1JPHSdbLJd9SwkKdAXkVl6pJlReX4Ko
+         Fmy0OhCoVz9liPi3So+DFQj/XIHwQ/4oLpCeqYwMAnDLjQnw9GNRKJU7jtbZzl/dB7
+         etCmuAFcP3oO9NEDSHGIk18DbPbLNv9X1fc1m43yzRJQFg+RMxL
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 19/39] t8003: make hash size independent
-Date:   Tue, 28 Jul 2020 23:34:26 +0000
-Message-Id: <20200728233446.3066485-20-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 08/39] t6500: specify test values for SHA-256
+Date:   Tue, 28 Jul 2020 23:34:15 +0000
+Message-Id: <20200728233446.3066485-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -56,33 +56,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One assertion in this test invokes git with core.abbrev set to "40".
-Since we're expecting the full hash length, use test_oid to look up the
-full hash length for the hash in use.
+In this test, we want to produce several blobs whose first two hex
+characters are "17", since we look at this object directory as a proxy
+for how many loose objects there are before we need to GC.  Use
+test_oid_cache to specify strings that will hash to the right values
+when turned into blobs.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t8003-blame-corner-cases.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t6500-gc.sh | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-index 9130b887d2..ebe79aa4ea 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -6,6 +6,7 @@ test_description='git blame corner cases'
- pick_fc='s/^[0-9a-f^]* *\([^ ]*\) *(\([^ ]*\) .*/\1-\2/'
- 
- test_expect_success setup '
-+	test_oid_init &&
- 
- 	echo A A A A A >one &&
- 	echo B B B B B >two &&
-@@ -306,7 +307,7 @@ test_expect_success 'blame coalesce' '
- 	$oid 1) ABC
- 	$oid 2) DEF
- 	EOF
--	git -c core.abbrev=40 blame -s giraffe >actual &&
-+	git -c core.abbrev=$(test_oid hexsz) blame -s giraffe >actual &&
- 	test_cmp expect actual
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 0a69a67117..4a3b8f48ac 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -10,7 +10,24 @@ test_expect_success 'setup' '
+ 	# do not let the amount of physical memory affects gc
+ 	# behavior, make sure we always pack everything to one pack by
+ 	# default
+-	git config gc.bigPackThreshold 2g
++	git config gc.bigPackThreshold 2g &&
++
++	# These are simply values which, when hashed as a blob with a newline,
++	# produce a hash where the first byte is 0x17 in their respective
++	# algorithms.
++	test_oid_cache <<-EOF
++	obj1 sha1:263
++	obj1 sha256:34
++
++	obj2 sha1:410
++	obj2 sha256:174
++
++	obj3 sha1:523
++	obj3 sha256:313
++
++	obj4 sha1:790
++	obj4 sha256:481
++	EOF
  '
  
+ test_expect_success 'gc empty repository' '
+@@ -85,13 +102,13 @@ test_expect_success 'auto gc with too many loose objects does not attempt to cre
+ 	# We need to create two object whose sha1s start with 17
+ 	# since this is what git gc counts.  As it happens, these
+ 	# two blobs will do so.
+-	test_commit 263 &&
+-	test_commit 410 &&
++	test_commit "$(test_oid obj1)" &&
++	test_commit "$(test_oid obj2)" &&
+ 	# Our first gc will create a pack; our second will create a second pack
+ 	git gc --auto &&
+ 	ls .git/objects/pack | sort >existing_packs &&
+-	test_commit 523 &&
+-	test_commit 790 &&
++	test_commit "$(test_oid obj3)" &&
++	test_commit "$(test_oid obj4)" &&
+ 
+ 	git gc --auto 2>err &&
+ 	test_i18ngrep ! "^warning:" err &&
