@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8520EC43463
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3C4AC4345F
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61FD820829
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CB612075D
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="gMC1E9Su"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="TReko0oS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730438AbgG1Xfk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 19:35:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40962 "EHLO
+        id S1730407AbgG1Xfe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 19:35:34 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40968 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730303AbgG1Xf3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:29 -0400
+        by vger.kernel.org with ESMTP id S1728364AbgG1Xfc (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:32 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 34B3760CF8;
-        Tue, 28 Jul 2020 23:34:58 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EA44C61012;
+        Tue, 28 Jul 2020 23:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595979298;
-        bh=GOwWURZWcS80hrBtH5tnhZJpLhQbfrdP5Wk4iblxXNY=;
+        s=default; t=1595979300;
+        bh=eIQvm60Oj7JsGGMhk9Joi/xuIDtV9T/uP4vMss0aCBA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=gMC1E9SukentgxQn+lsCa9Ogs1Fym3V7Tasnif+0D5/cwGb/1RePAbjWzk4lCTxSi
-         Fb2mm9YgH+m3l3Q7ZmC+9MrQhZXeNouRX/5dgghNnfkmXUq7ZpLgHJjuGY6kaq2k57
-         Ci7c5ZJZb7ctPE9FULi2nZdcS51RtrL8010ZiqAqEKAO+fKTlg30JJ8Sninhh0NTWF
-         Ax7hbzn9ZurNbUEkqJAxIN/M0R1yvAChpdu9GCzovADluuo/w026dQN+iUJtSYPNi2
-         Tta8Jzakw4NlsfwT44om0ytq3pdLxNGvZnOXnwfmMr/C8K+pPKNGRIAyDHaOnacyh9
-         tb//wwmy2Ug8hy4lP4PA2bGfzpr2T80jX76Ujc1dHEDaa2mU3f4AYGxNIf5qHWTZZq
-         2i8ep92nXO1CbAp1ciYlPVOReiIrCDY+412YAN8hY+kgJLmePVFeEtDkngJXjuZpcu
-         HTOyDq+u+xsuhKboR6QKw8P4YXH411AxcKUtH8nzYC//5AjKpbD
+        b=TReko0oSlquHkYwNicY0nZ+Sqawg028XJhYJAmi/G9dXvLtbcXuxoaPA5SBapvs//
+         PoNREdpSf7l9wZG9ct2BhoRSYePBT9d+TkWTL0u0GssZ8Sjqewh0p8TOngl5VdCJWg
+         Cy+bKfZvx0o0OzxbQguJf6QC38FuYncR8JpIRD8iglmMZBmrovecQhrVoYp6Fj720Y
+         FIQ7n4W/TnNZIFtd0HacxEJY16nx8l1yidvJ43DDT2lLq5S+IvSHi3f9EPgd9BOX+E
+         r6Kn8t/RrbXrpTOU2ZDmMUmxOZNAQ1dRzG1QWNsC8Zf7BEqGl08OsBV9+P+4gYua65
+         CD56ZFY0d6RJY9RiN6UoHlPs1E0XwpmCOXwhC64Z9Sz+uo4SIz7ciI4qVeuPcbBEnr
+         EFylfjitooOaY9duFaQG/23JeqO8V+mKUq0wgwfs8oPhWqyph8QZDcEFIwckEN2wre
+         ETcqtVcKMtEeZ/fhCxws0usm/MJdZh2VVcmmnVOVCgjuHU1qXc/
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 07/39] t6301: make hash size independent
-Date:   Tue, 28 Jul 2020 23:34:14 +0000
-Message-Id: <20200728233446.3066485-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 11/39] t7063: make hash size independent
+Date:   Tue, 28 Jul 2020 23:34:18 +0000
+Message-Id: <20200728233446.3066485-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -56,29 +56,315 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of hard-coding a fixed length example object ID in the test,
-compute one using the translation tables.  Move a variable into the
-setup block so that we can ensure the exit status of test_oid_init is
-checked.
+Use test_oid instead of hard-coding algorithm-specific constants and
+all-zero values.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t6301-for-each-ref-errors.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t7063-status-untracked-cache.sh | 150 ++++++++++++++++--------------
+ 1 file changed, 80 insertions(+), 70 deletions(-)
 
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index 49cc65bb58..d545a725a5 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -5,9 +5,10 @@ test_description='for-each-ref errors for broken refs'
- . ./test-lib.sh
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 428cff9cf3..a682a3d826 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -75,14 +75,24 @@ test_expect_success 'setup' '
+ 	touch one two three done/one dtwo/two dthree/three &&
+ 	git add one two done/one &&
+ 	: >.git/info/exclude &&
+-	git update-index --untracked-cache
++	git update-index --untracked-cache &&
++	test_oid_cache <<-EOF
++	root sha1:e6fcc8f2ee31bae321d66afd183fcb7237afae6e
++	root sha256:b90c672088c015b9c83876e919da311bad4cd39639fb139f988af6a11493b974
++
++	exclude sha1:13263c0978fb9fad16b2d580fb800b6d811c3ff0
++	exclude sha256:fe4aaa1bbbbce4cb8f73426748a14c5ad6026b26f90505a0bf2494b165a5b76c
++
++	done sha1:1946f0437f90c5005533cbe1736a6451ca301714
++	done sha256:7f079501d79f665b3acc50f5e0e9e94509084d5032ac20113a37dd5029b757cc
++	EOF
+ '
  
- ZEROS=$ZERO_OID
--MISSING=abababababababababababababababababababab
+ test_expect_success 'untracked cache is empty' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect-empty <<EOF &&
+-info/exclude 0000000000000000000000000000000000000000
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $ZERO_OID
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+ EOF
+@@ -100,17 +110,17 @@ EOF
  
- test_expect_success setup '
-+	test_oid_init &&
-+	MISSING=$(test_oid deadbeef) &&
- 	git commit --allow-empty -m "Initial" &&
- 	git tag testtag &&
- 	git for-each-ref >full-list &&
+ cat >../dump.expect <<EOF &&
+ info/exclude $EMPTY_BLOB
+-core.excludesfile 0000000000000000000000000000000000000000
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ 0000000000000000000000000000000000000000 recurse valid
++/ $ZERO_OID recurse valid
+ dthree/
+ dtwo/
+ three
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
+ three
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 
+@@ -190,18 +200,18 @@ test_expect_success 'verify untracked cache dump' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+ info/exclude $EMPTY_BLOB
+-core.excludesfile 0000000000000000000000000000000000000000
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ 0000000000000000000000000000000000000000 recurse valid
++/ $ZERO_OID recurse valid
+ dthree/
+ dtwo/
+ four
+ three
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
+ three
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -239,18 +249,18 @@ test_expect_success 'verify untracked cache dump' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+ info/exclude $EMPTY_BLOB
+-core.excludesfile 0000000000000000000000000000000000000000
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++/ $(test_oid root) recurse valid
+ .gitignore
+ dthree/
+ dtwo/
+ three
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
+ three
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -284,16 +294,16 @@ EOF
+ test_expect_success 'verify untracked cache dump' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++/ $(test_oid root) recurse valid
+ .gitignore
+ dtwo/
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -303,14 +313,14 @@ test_expect_success 'move two from tracked to untracked' '
+ 	git rm --cached two &&
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/ $(test_oid root) recurse
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -342,17 +352,17 @@ EOF
+ test_expect_success 'verify untracked cache dump' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++/ $(test_oid root) recurse valid
+ .gitignore
+ dtwo/
+ two
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -362,14 +372,14 @@ test_expect_success 'move two from untracked to tracked' '
+ 	git add two &&
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/ $(test_oid root) recurse
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -401,16 +411,16 @@ EOF
+ test_expect_success 'verify untracked cache dump' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++/ $(test_oid root) recurse valid
+ .gitignore
+ dtwo/
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -447,16 +457,16 @@ EOF
+ test_expect_success 'untracked cache correct after commit' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++/ $(test_oid root) recurse valid
+ .gitignore
+ dtwo/
+-/done/ 0000000000000000000000000000000000000000 recurse valid
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/ $ZERO_OID recurse valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -508,17 +518,17 @@ EOF
+ test_expect_success 'untracked cache correct after status' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++/ $(test_oid root) recurse valid
+ .gitignore
+ dtwo/
+-/done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
++/done/ $(test_oid done) recurse valid
+ five
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect ../actual
+@@ -580,22 +590,22 @@ EOF
+ test_expect_success 'verify untracked cache dump (sparse/subdirs)' '
+ 	test-tool dump-untracked-cache >../actual &&
+ 	cat >../expect-from-test-dump <<EOF &&
+-info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
+-core.excludesfile 0000000000000000000000000000000000000000
++info/exclude $(test_oid exclude)
++core.excludesfile $ZERO_OID
+ exclude_per_dir .gitignore
+ flags 00000006
+-/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++/ $(test_oid root) recurse valid
+ .gitignore
+ dtwo/
+-/done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
++/done/ $(test_oid done) recurse valid
+ five
+ sub/
+-/done/sub/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/sub/ $ZERO_OID recurse check_only valid
+ sub/
+-/done/sub/sub/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/sub/sub/ $ZERO_OID recurse check_only valid
+ file
+-/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dthree/ $ZERO_OID recurse check_only valid
++/dtwo/ $ZERO_OID recurse check_only valid
+ two
+ EOF
+ 	test_cmp ../expect-from-test-dump ../actual
+@@ -806,8 +816,8 @@ test_expect_success '"status" after file replacement should be clean with UC=tru
+ 	test-tool dump-untracked-cache >../actual &&
+ 	grep -F "recurse valid" ../actual >../actual.grep &&
+ 	cat >../expect.grep <<EOF &&
+-/ 0000000000000000000000000000000000000000 recurse valid
+-/two/ 0000000000000000000000000000000000000000 recurse valid
++/ $ZERO_OID recurse valid
++/two/ $ZERO_OID recurse valid
+ EOF
+ 	status_is_clean &&
+ 	test_cmp ../expect.grep ../actual.grep
