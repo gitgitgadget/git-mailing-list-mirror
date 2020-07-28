@@ -2,76 +2,86 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A240C433DF
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9712C433DF
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:45:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 304CB207FC
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:44:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 794F8207F5
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:45:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="phzG81Uj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731531AbgG1Qo4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 12:44:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39934 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726548AbgG1Qo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 12:44:56 -0400
-Received: (qmail 27778 invoked by uid 109); 28 Jul 2020 16:44:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Jul 2020 16:44:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26619 invoked by uid 111); 28 Jul 2020 16:44:55 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jul 2020 12:44:55 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Jul 2020 12:44:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Taylor Blau <me@ttaylorr.com>, Carmen Andoh <candoh@google.com>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Git Inclusion Summit
-Message-ID: <20200728164454.GA2650362@coredump.intra.peff.net>
-References: <CA+TwhoKBYwUKmtQTyiocPWJD=KeZQryS+6Q8JKxKgLEy0qJwAw@mail.gmail.com>
- <20200726040226.GA19030@dcvr>
- <20200727151023.GB62919@syl.lan>
- <20200728100726.GA24408@dcvr>
+        id S1731502AbgG1Qpn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 12:45:43 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65083 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731436AbgG1Qpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 12:45:43 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5740476700;
+        Tue, 28 Jul 2020 12:45:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=o/lTW6diNpQJ
+        xTpif+Ua6+CBpZ4=; b=phzG81Ujo9MZ2Mr7sJceFbkAogHOSFAHMl+LUUwFzcWe
+        3QgAtysBD78savUezeIcPsZuE6CQt5drQWazIgVnEkF3jYlW0MY8OTQeXDiEA6go
+        4Zsv8RDltHfZg7VQ4aFBMPTroRD5hAoVqPLD6z058e/ZoL6HMc7sbMFSkRQLbgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kkKpfn
+        HXCHHyxtYsoKhFeOtxwPw4cSi8TGUhAdEreFkW5SH7J3EW3X2TuQYrAIN3THlkVh
+        KWXEagA2nMubq92Hsul8Y00P78zAUIUhK6f5D594kesrW4nYSb4GuaTzkbRVnNZo
+        9ukEY/QmjVhYpJSO+Ei1mJaI2zClu77cxZ7UI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C9BE766FF;
+        Tue, 28 Jul 2020 12:45:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B0A8C766FD;
+        Tue, 28 Jul 2020 12:45:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH 1/5] ref-filter: support different email formats
+References: <pull.684.git.1595882588.gitgitgadget@gmail.com>
+        <aeb116c5aaaa23dfefbc7a6f4ac743a6f5a3ade8.1595882588.git.gitgitgadget@gmail.com>
+        <20200728135803.GD24134@danh.dev>
+Date:   Tue, 28 Jul 2020 09:45:40 -0700
+In-Reply-To: <20200728135803.GD24134@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcg==?=
+ =?utf-8?B?4bqnbiBDw7RuZw==?= Danh"'s
+        message of "Tue, 28 Jul 2020 20:58:03 +0700")
+Message-ID: <xmqqime7eggb.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200728100726.GA24408@dcvr>
+X-Pobox-Relay-ID: C5805088-D0F1-11EA-AA05-01D9BED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 28, 2020 at 10:07:26AM +0000, Eric Wong wrote:
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-> > Hopefully everybody should have a good-enough internet connection to
-> > stream a low-quality audio-only feed so that they can listen in and
-> > participate via the chat feature. This is what we did at the
-> > Contributor's Summit in March (I know we had a number of text-only
-> > participants in time-zones where it was late, etc.).
-> > 
-> > What are your thoughts?
-> 
-> Jitsi w/ audio-only certainly seems to be a step in the right
-> direction and would be more inclusive.
-> 
-> Is there any speech-to-text transcription done for the hearing
-> (or extremely bandwidth) impaired?
-> 
-> It'd ideally go to #git on IRC (or something that doesn't
-> require a browser to trigger swap storms on old systems).
+> This is not correct.
+> RFC-822 allows @ in local part,
+> albeit, that localpart must be quoted:
 
-Whether we have automatic speech-to-text conversion or not, I think it
-would be good for people involved to take and publish notes summarizing
-the conversation. One of the important things about our usual async
-written communication is that it gives people time to organize their
-thoughts and say what they want succinctly. Live conversations are often
-full of false starts and rambling. That's OK, and a necessary part of
-the process. But if you want a wider audience to follow along, it helps
-to turn that into something more time efficient for readers.
+We do care about truly local e-mail addresses, without '@' anywhere
+inside <braket>, simply because they are common in the result of SCM
+conversion from CVS/SVN.
 
--Peff
+But I do not think we are pedantic/academic enough to have cared
+about any local part that is unusual enough to require quoting; we
+instead relied on the fact that we live in real world with practical
+people who would avoid such an address ;-).
