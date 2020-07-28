@@ -2,155 +2,105 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F66C433EA
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E38BFC433E5
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:48:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DEF8207F5
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B08EC2065C
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:48:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K6CdPCLu"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="j2vig/XA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729226AbgG1Upp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 16:45:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37696 "EHLO
+        id S1729092AbgG1UsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 16:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729195AbgG1Upn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 16:45:43 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490A7C0619D2
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:43 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id f7so19573290wrw.1
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:43 -0700 (PDT)
+        with ESMTP id S1728490AbgG1UsH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 16:48:07 -0400
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B4FC061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:48:07 -0700 (PDT)
+Received: by mail-qk1-x744.google.com with SMTP id e13so20111400qkg.5
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=9vQZ4ifXHtx/wRNoLsdQs2xlgnxyqNe13TYnGQaQWtI=;
-        b=K6CdPCLuTh3S90HvhspB3AOCmaFZN3vv9ThDMCPZS+rGMKxKYGBp+h4EURRroBSr4O
-         a9UTLatj2bikZoNi1fBdIBciYoBcg+mdxLRE07trI18IbiuBuKe/60yNGJZ28n4x9oUR
-         jgKM2mxYeC+9+BDy1W3hbsgOngQcjW3P/JS9CdJnfE53vxdGbbLhuU8AzN3dLUTaO8KP
-         /I6V8czzJAbfm4LTjjh7oZv75mNHNdCL7VgJvPDDK6ANI6dqdYztdJ8gb1JDYYBudLSh
-         sDZH8vIw5tmrf9TDR6wmbspSacSL52sE/vtuTs2+KOLnI5/yaXLafjBXdKAnM/Ae76Pn
-         MFJA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GFUuw73+LeWNIHlAZ4Je9CenLLhtR55ro4kv5v5tOX0=;
+        b=j2vig/XAL7HJweCiZ1gCuOV0hxsTTTdKR6iPwlALVMQz8Npcq2NeGDi9gPgsa8Fec/
+         UBzvVmxcO4xBdcZ49u6KsceG9MKuW+4RooXAU+e9+2SYwiR7N8BGE0xFV4KhkN3OyYT/
+         vFv3qx1fp13j4wDI7kWMguhAN2omjaTvXt/+FbsAzp3boEtg1+z0CV8bA8uvDnxzc+rE
+         f4FxI6l5whSTCNqPpxReVOiCYdSH/eL4rnvcrcsgJhKVzA6G2woSd0Dv9R+N16sgL3vp
+         KvW08UwafmSGhACKrKQkhve71ZZmLewXipL51eWYhoOHx8X4ynnvk94JwtLoElh7G06D
+         zBLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9vQZ4ifXHtx/wRNoLsdQs2xlgnxyqNe13TYnGQaQWtI=;
-        b=Yke9NZmoK7QDc6eOe5W+bXESWntqqNH2ldooszcZKJKFQFSkEYaKq5Kl2AYk06038c
-         KlVnDJfbEP7gSTzNsKlsbMIaWp6RCuO43p6ZhQubcQDKn49rS2LjjPYOZ+KS8z2yFWgc
-         ofc2pulZTJSJBAXpDzyktw8fdQ4pN0KxBzZMi/jxyvUxJB8Nd6pCooTCmF8SU07VUy+b
-         GZwKxIvT+WnHKw0JNYSFu1TVVk11H1jor/ZisRF2zWIpyzCzcBTtApO8KAYfaU4metr1
-         TSbfh2F7BJYyT8JXHP8E9nxmH08DfL7r5oBKgc9kLjP6B9kosZA6uXdQPkYvFS0jaSTf
-         MRag==
-X-Gm-Message-State: AOAM532dDI1w8AfAKE0aWs8vEl3HJGZfI3J6YSWCDOIqhnQhIZbPv0Vu
-        llaQtuzLTgAKS8+7K2rHzbbFPxq/
-X-Google-Smtp-Source: ABdhPJxF3JOEX6AbxQKO9vurjnd/SS6YCdd8n3HcA2NFIycC5E2ssFY0SllVE3QDdROuY/PWJuHxVQ==
-X-Received: by 2002:adf:fe05:: with SMTP id n5mr19081951wrr.237.1595969141785;
-        Tue, 28 Jul 2020 13:45:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m16sm18791325wrr.71.2020.07.28.13.45.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GFUuw73+LeWNIHlAZ4Je9CenLLhtR55ro4kv5v5tOX0=;
+        b=W/1NKefcf2/fkU+32deIcnLcg4eklpuGZZ0Iqyd9YOpb8gB9mkWvlBdrWqlomD95k1
+         Ai9I+lhkL9+8QbI5oFGVWDFT+78dn/0fV7WlpN/s0K07nTy6TsTtvKf5OHGMKft4gNw+
+         09r8ESb+/lltBTU8//dXpPE+Pq2PVIoHoMS0z2to6aakHjhZYfv9x6/RD0yWm3436hii
+         GN8jvla1WoJY1szbUgS8Yo7IWrL52/r3sM1MExhbbecXANjcuE8uyt0SGO44KAdbX28i
+         Vrme/zrJNeCa+xxKbe8qerl2JpSjKzprSP80ZUBJXXkrHCNSZAUO8L5GgiBgcMBTv89s
+         6dIA==
+X-Gm-Message-State: AOAM532ClxcFV3EOUMmUZpoCuDmXixIB8eWH75Txl5JUr43J58BPhk/S
+        XvR0LWSXASOIUgtEsXmjT4vGXmbAPCcus7AR
+X-Google-Smtp-Source: ABdhPJy1L8J5Km/+pOf6YAtH8+N4wy+zdiW2CjGv8j5MHE12fnBwZgyDBBhT/72rZBAvApNKqLupag==
+X-Received: by 2002:a37:b206:: with SMTP id b6mr29891046qkf.22.1595969286524;
+        Tue, 28 Jul 2020 13:48:06 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:9c58:8530:481a:f835])
+        by smtp.gmail.com with ESMTPSA id 103sm14424965qta.31.2020.07.28.13.48.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 13:45:41 -0700 (PDT)
-Message-Id: <bbb8db27024298ed7264cee71e92376f62ac1073.1595969140.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
+        Tue, 28 Jul 2020 13:48:05 -0700 (PDT)
+Date:   Tue, 28 Jul 2020 16:48:04 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/2] Typo fixes
+Message-ID: <20200728204804.GA94132@syl.lan>
 References: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jul 2020 20:45:38 +0000
-Subject: [PATCH 1/2] Remove doubled words in various comments
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Tue, Jul 28, 2020 at 08:45:37PM +0000, Elijah Newren via GitGitGadget wrote:
+> Fix some simple typos: doubled words, and character swapping
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- fsmonitor.c                            | 2 +-
- t/t5510-fetch.sh                       | 2 +-
- t/t6046-merge-skip-unneeded-updates.sh | 2 +-
- t/t8014-blame-ignore-fuzzy.sh          | 2 +-
- wt-status.c                            | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+Far be it from me--since I seem to always be making these mistakes
+myself--to be an authoritative reviewer on this series, but it looks
+obviously good to me ;-).
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 932bd9012d..ed796e3e03 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -217,7 +217,7 @@ void refresh_fsmonitor(struct index_state *istate)
- 				 * Need to use a char * variable because static
- 				 * analysis was suggesting to use strbuf_addbuf
- 				 * but we don't want to copy the entire strbuf
--				 * only the the chars up to the first NUL
-+				 * only the chars up to the first NUL
- 				 */
- 				buf = query_result.buf;
- 				strbuf_addstr(&last_update_token, buf);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index a66dbe0bde..7456c567cd 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -797,7 +797,7 @@ test_configured_prune true  true  unset unset pruned pruned \
- 	"--prune origin refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*"
- 
- # --prune-tags on its own does nothing, needs --prune as well, same
--# for for fetch.pruneTags without fetch.prune
-+# for fetch.pruneTags without fetch.prune
- test_configured_prune unset unset unset unset kept kept     "--prune-tags"
- test_configured_prune unset unset true unset  kept kept     ""
- test_configured_prune unset unset unset true  kept kept     ""
-diff --git a/t/t6046-merge-skip-unneeded-updates.sh b/t/t6046-merge-skip-unneeded-updates.sh
-index 1ddc9e6626..5a2d07e516 100755
---- a/t/t6046-merge-skip-unneeded-updates.sh
-+++ b/t/t6046-merge-skip-unneeded-updates.sh
-@@ -661,7 +661,7 @@ test_setup_4a () {
- }
- 
- # NOTE: For as long as we continue using unpack_trees() without index_only
--#   set to true, it will error out on a case like this claiming the the locally
-+#   set to true, it will error out on a case like this claiming that the locally
- #   modified file would be overwritten by the merge.  Getting this testcase
- #   correct requires doing the merge in-memory first, then realizing that no
- #   updates to the file are necessary, and thus that we can just leave the path
-diff --git a/t/t8014-blame-ignore-fuzzy.sh b/t/t8014-blame-ignore-fuzzy.sh
-index 6e61882b6f..e68e6115a6 100755
---- a/t/t8014-blame-ignore-fuzzy.sh
-+++ b/t/t8014-blame-ignore-fuzzy.sh
-@@ -248,7 +248,7 @@ Final
- EOF
- 
- # The first line of b matches best with the last line of a, but the overall
--# match is better if we match it with the the first line of a.
-+# match is better if we match it with the first line of a.
- title11="Piggy in the middle"
- cat <<EOF >a11
- abcdefg
-diff --git a/wt-status.c b/wt-status.c
-index c560cbe860..20f2075868 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2035,7 +2035,7 @@ static void wt_porcelain_print(struct wt_status *s)
-  *   [# branch.upstream <upstream><eol>
-  *   [# branch.ab +<ahead> -<behind><eol>]]
-  *
-- *      <commit> ::= the current commit hash or the the literal
-+ *      <commit> ::= the current commit hash or the literal
-  *                   "(initial)" to indicate an initialized repo
-  *                   with no commits.
-  *
--- 
-gitgitgadget
+  Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
+> Elijah Newren (2):
+>   Remove doubled words in various comments
+>   hashmap: fix typo in usage docs
+>
+>  fsmonitor.c                            | 2 +-
+>  hashmap.h                              | 2 +-
+>  t/t5510-fetch.sh                       | 2 +-
+>  t/t6046-merge-skip-unneeded-updates.sh | 2 +-
+>  t/t8014-blame-ignore-fuzzy.sh          | 2 +-
+>  wt-status.c                            | 2 +-
+>  6 files changed, 6 insertions(+), 6 deletions(-)
+>
+>
+> base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-824%2Fnewren%2Ftypo-fixes-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-824/newren/typo-fixes-v1
+> Pull-Request: https://github.com/git/git/pull/824
+> --
+> gitgitgadget
+
+Thanks,
+Taylor
