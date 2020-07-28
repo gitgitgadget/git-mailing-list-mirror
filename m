@@ -2,105 +2,165 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E38BFC433E5
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D46D4C433E0
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 21:01:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B08EC2065C
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:48:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC87D2075D
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 21:01:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="j2vig/XA"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WZhPmWxR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729092AbgG1UsI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 16:48:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38070 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728490AbgG1UsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 16:48:07 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B4FC061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:48:07 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id e13so20111400qkg.5
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:48:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GFUuw73+LeWNIHlAZ4Je9CenLLhtR55ro4kv5v5tOX0=;
-        b=j2vig/XAL7HJweCiZ1gCuOV0hxsTTTdKR6iPwlALVMQz8Npcq2NeGDi9gPgsa8Fec/
-         UBzvVmxcO4xBdcZ49u6KsceG9MKuW+4RooXAU+e9+2SYwiR7N8BGE0xFV4KhkN3OyYT/
-         vFv3qx1fp13j4wDI7kWMguhAN2omjaTvXt/+FbsAzp3boEtg1+z0CV8bA8uvDnxzc+rE
-         f4FxI6l5whSTCNqPpxReVOiCYdSH/eL4rnvcrcsgJhKVzA6G2woSd0Dv9R+N16sgL3vp
-         KvW08UwafmSGhACKrKQkhve71ZZmLewXipL51eWYhoOHx8X4ynnvk94JwtLoElh7G06D
-         zBLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GFUuw73+LeWNIHlAZ4Je9CenLLhtR55ro4kv5v5tOX0=;
-        b=W/1NKefcf2/fkU+32deIcnLcg4eklpuGZZ0Iqyd9YOpb8gB9mkWvlBdrWqlomD95k1
-         Ai9I+lhkL9+8QbI5oFGVWDFT+78dn/0fV7WlpN/s0K07nTy6TsTtvKf5OHGMKft4gNw+
-         09r8ESb+/lltBTU8//dXpPE+Pq2PVIoHoMS0z2to6aakHjhZYfv9x6/RD0yWm3436hii
-         GN8jvla1WoJY1szbUgS8Yo7IWrL52/r3sM1MExhbbecXANjcuE8uyt0SGO44KAdbX28i
-         Vrme/zrJNeCa+xxKbe8qerl2JpSjKzprSP80ZUBJXXkrHCNSZAUO8L5GgiBgcMBTv89s
-         6dIA==
-X-Gm-Message-State: AOAM532ClxcFV3EOUMmUZpoCuDmXixIB8eWH75Txl5JUr43J58BPhk/S
-        XvR0LWSXASOIUgtEsXmjT4vGXmbAPCcus7AR
-X-Google-Smtp-Source: ABdhPJy1L8J5Km/+pOf6YAtH8+N4wy+zdiW2CjGv8j5MHE12fnBwZgyDBBhT/72rZBAvApNKqLupag==
-X-Received: by 2002:a37:b206:: with SMTP id b6mr29891046qkf.22.1595969286524;
-        Tue, 28 Jul 2020 13:48:06 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:9c58:8530:481a:f835])
-        by smtp.gmail.com with ESMTPSA id 103sm14424965qta.31.2020.07.28.13.48.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 13:48:05 -0700 (PDT)
-Date:   Tue, 28 Jul 2020 16:48:04 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/2] Typo fixes
-Message-ID: <20200728204804.GA94132@syl.lan>
-References: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
+        id S1729281AbgG1VBd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 17:01:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59949 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728728AbgG1VBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 17:01:33 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6298F784BB;
+        Tue, 28 Jul 2020 17:01:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=o6hMjp/ZnGhlrGuC7ah/x9w2WG4=; b=WZhPmW
+        xR5IlwzhuFyHVIFMvQbR2fM529FDhfCBp8qa8WzuIbHrfUmam7xCNzsce4J8V27w
+        KZIpGGmm/q+IX9dpvvaJJZcoPimBVUssGU/tRkEUMOC22g+AP0Z8YgbTjAJypyTv
+        xshuuDsr/lTBtU62Fur3OmmNWdDQ/zVZ+DqJw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UYAKRW4jGINVbVHkot/BVvH4U0klI7Td
+        +aB6RgX/gu9g5ctxBdVETP+JSjtgc9nPC1/TpR8I2w/cUDyitI8TdxN7B/UBWkCn
+        AqXX2a6XJBQTEqAr+Qkg2NUjVo/LmLRaIi9Ln9C8SASr3ikpubh8LD9X7wwALyfp
+        CbVBWyVFEH4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59F45784BA;
+        Tue, 28 Jul 2020 17:01:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DCA59784B9;
+        Tue, 28 Jul 2020 17:01:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/3] revision: add "--ignore-merges" option to counteract "-m"
+References: <20200728163617.GA2649887@coredump.intra.peff.net>
+        <20200728163853.GB2650252@coredump.intra.peff.net>
+Date:   Tue, 28 Jul 2020 14:01:27 -0700
+In-Reply-To: <20200728163853.GB2650252@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 28 Jul 2020 12:38:53 -0400")
+Message-ID: <xmqqv9i7cq1k.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 812123A8-D115-11EA-862C-01D9BED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 28, 2020 at 08:45:37PM +0000, Elijah Newren via GitGitGadget wrote:
-> Fix some simple typos: doubled words, and character swapping
+Jeff King <peff@peff.net> writes:
 
-Far be it from me--since I seem to always be making these mistakes
-myself--to be an authoritative reviewer on this series, but it looks
-obviously good to me ;-).
-
-  Reviewed-by: Taylor Blau <me@ttaylorr.com>
-
-> Elijah Newren (2):
->   Remove doubled words in various comments
->   hashmap: fix typo in usage docs
+> The "-m" option sets revs->ignore_merges to "0", but there's no way to
+> undo it. This probably isn't something anybody overly cares about, since
+> "1" is already the default, but it will serve as an escape hatch when we
+> flip the default for ignore_merges to "0" in more situations.
 >
->  fsmonitor.c                            | 2 +-
->  hashmap.h                              | 2 +-
->  t/t5510-fetch.sh                       | 2 +-
->  t/t6046-merge-skip-unneeded-updates.sh | 2 +-
->  t/t8014-blame-ignore-fuzzy.sh          | 2 +-
->  wt-status.c                            | 2 +-
->  6 files changed, 6 insertions(+), 6 deletions(-)
+> We'll also add a few extra niceties:
 >
+>   - initialize the value to "-1" to indicate "not set", and then resolve
+>     it to the normal 0/1 bool in setup_revisions(). This lets any tweak
+>     functions, as well as setup_revisions() itself, avoid clobbering the
+>     user's preference (which until now they couldn't actually express).
 >
-> base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-824%2Fnewren%2Ftypo-fixes-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-824/newren/typo-fixes-v1
-> Pull-Request: https://github.com/git/git/pull/824
-> --
-> gitgitgadget
+>   - since we now have --ignore-merges, let's add the matching
+>     --no-ignore-merges, which is just a synonym for "-m". In fact, it's
+>     simpler to just document --no-ignore-merges alongside "-m", and
+>     leave it implied that its opposite countermands it.
+>
+> The new test shows that this behaves just the same as the current
+> behavior without "-m".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I pulled the option name from the rev_info field name. It might be too
+> broad (we are not ignoring merges during the traversal, only for the
+> diff). It could be "--no-diff-merges" or something, but that would
+> involve flipping the sense of the boolean (but that would just be in the
+> code, not user-visible, so not that big a deal).
+>
+>  Documentation/rev-list-options.txt            |  1 +
+>  builtin/log.c                                 |  4 +-
+>  revision.c                                    | 10 ++-
+>  revision.h                                    |  2 +-
+>  t/t4013-diff-various.sh                       |  1 +
+>  ...g_--ignore-merges_-p_--first-parent_master | 78 +++++++++++++++++++
+>  6 files changed, 90 insertions(+), 6 deletions(-)
+>  create mode 100644 t/t4013/diff.log_--ignore-merges_-p_--first-parent_master
+>
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index b01b2b6773..fbd8fa0381 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -1148,6 +1148,7 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+>  	rename or copy detection have been requested).
+>  
+>  -m::
+> +--no-ignore-merges::
 
-Thanks,
-Taylor
+This invites a natural "does --ignore-merges exist, and if so what
+does it do?"  Why not to have "--[no-]ignore-merges" as a separate
+entry immediately after the existing "-m" instead?
+
+>  	This flag makes the merge commits show the full diff like
+>  	regular commits; for each merge parent, a separate log entry
+>  	and diff is generated. An exception is that only diff against
+
+That is,
+
+	--[no-]ignore-merges::
+
+		`--no-ignore-merges` is a synonym to `-m`.
+		`--ignore-merges` countermands an earlier `-m` that
+		is either explicitly or implicitly given.
+
+or something along the line, perhaps?
+
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 43267d6024..8f9181316f 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -297,6 +297,7 @@ log --root --patch-with-stat --summary master
+>  log --root -c --patch-with-stat --summary master
+>  # improved by Timo's patch
+>  log --root --cc --patch-with-stat --summary master
+> +log --ignore-merges -p --first-parent master
+
+This explicitly says "I do not want to see diff for merges" ...
+
+>  log -p --first-parent master
+>  log -m -p --first-parent master
+>  log -m -p master
+> diff --git a/t/t4013/diff.log_--ignore-merges_-p_--first-parent_master b/t/t4013/diff.log_--ignore-merges_-p_--first-parent_master
+> new file mode 100644
+> index 0000000000..fa0cdc8a23
+> --- /dev/null
+> +++ b/t/t4013/diff.log_--ignore-merges_-p_--first-parent_master
+> @@ -0,0 +1,78 @@
+> +$ git log --ignore-merges -p --first-parent master
+> +commit 59d314ad6f356dd08601a4cd5e530381da3e3c64
+> +Merge: 9a6d494 c7a2ab9
+> +Author: A U Thor <author@example.com>
+> +Date:   Mon Jun 26 00:04:00 2006 +0000
+> +
+> +    Merge branch 'side' into master
+
+... and that is honored here?  Good.
+
