@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9994BC433E4
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBC24C433EA
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 783C9207E8
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FEB2207E8
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VpWI7+NS"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nVXvDrtt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730100AbgG1XfA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 19:35:00 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40848 "EHLO
+        id S1730140AbgG1XfD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 19:35:03 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40862 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729597AbgG1Xe5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:34:57 -0400
+        by vger.kernel.org with ESMTP id S1730024AbgG1XfB (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:01 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C8FA860CF4;
-        Tue, 28 Jul 2020 23:34:56 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 60F1F61013;
+        Tue, 28 Jul 2020 23:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595979297;
-        bh=LBJkcbdMRVrtsKuuwM+SGB+Ckv2QE3QhwqZnQ2Qnhaw=;
+        s=default; t=1595979300;
+        bh=zmmreqcVssM8fklRR8fjcy4ONQ0aizZ1+4lGjEODa9A=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=VpWI7+NSGBnjpixq+z8KpVM0M9CCmYP9g0+CgaPvUSvREZ4lBGECQOCAg//u1FthO
-         SrBcZU8qIo+hKOIxfUbo3Vx95t3Pm002+OuCV7fx23AGywGvg3qL8ZeadLmW3FERRT
-         q9saUQcEVV3n+0vDjOKoFG8SoKWQJSk10kNVMBzF2219nN92299dSZSCxGcXowBgQV
-         DN//fQmQTydB4yjmbpGCzFggZv31DgCp9BtduISIxm7ZhfF7xt0cTPRoJwXaVXZ8w9
-         qgMwzwP7yLt1jRWykBjcutsTcVNXI30SCSMmI2uEXocADHEVWiIruIAHsbRtF7lb88
-         8K9SRdLucVW0qJDswjRAPWOHIIze/wDh9KMjfuZINk/TcttpLz7lkFNZrVsjf9Hzyx
-         puK1pQg9RAXwQMXgEfG1qgdCryrms+yfiGsAug+g7yxpG1cbvJ4bLqMKlzpopOW3Ay
-         Zi7GIekSOwQv5uqkeT7s4HtIXcTJClPHK2s2MjxHLRi7zPUDnVn
+        b=nVXvDrttKfjG80VKgE6H6dNppsaUxwnIu6kxaE49a0wRuGe1NbWdboSNi6crRpId0
+         lIKLFd7t1+W13WB5aMFVyBh4LRvKR3YrY47XTeJCMmwR/Pylo5wG6wRaiV4BlJCVUJ
+         NTNf0AZqC8Jze0cSmwa8564TYKfRdtqUKvPFYAjF/VZzOxpL6c2hHRS3+nOOkpHYYW
+         MEeZUsGo7H8wQrpOyBKSHzvasWtrpfJF90PoflX27FHPxSu4sF7lMl7REB/AgngLKk
+         7DKE9qXHFbhQvvw6j1BV1JXxBvb1kymzYCgO0zYarQRuD3IMmo1GyyVx64Kd+axi6m
+         cIxN9u2YB7iHYfiVWPjho/LVUCdLM4dwVpKkNqEarIuxJxypBZmSKmFwC3dkn+4pjg
+         ngW3HEhQoXtC8y7/603DQzrlRCT0o5CzPCotjxTeHQSa6Kwy6P1uxKwN0b6dOvaNns
+         Czkr/SeW2rNvO0hjWDQXaD6Lz2a2qzrQoiCBy89wAJX2HhLkkll
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 04/39] t3404: prepare 'short SHA-1 collision' tests for SHA-256
-Date:   Tue, 28 Jul 2020 23:34:11 +0000
-Message-Id: <20200728233446.3066485-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 12/39] t7201: abstract away SHA-1-specific constants
+Date:   Tue, 28 Jul 2020 23:34:19 +0000
+Message-Id: <20200728233446.3066485-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -56,111 +56,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
-The idea of the magic value "ac4f2ee" in this test is to make the
-reworded commit `collide2` have the same shortened ID as the commit
-`collide3`.
-
-To port the same idea to the SHA-256 version of Git, we therefore need
-another magic value that causes the same collision, but this time with
-the SHA-256 version of the commit IDs.
-
-In this patch, we add code guarded by `GIT_TEST_FIND_COLLIDER` to do
-exactly that. Essentially, a large number of integers is appended to the
-commit message "collide2" to find such a collision. To make it easier to
-find such a collision, we reduce the number of digits to 4.
-
-As the tests are no longer dependent on SHA-1, we also rename their
-titles to talk about "commit IDs" instead of "SHA-1s".
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3404-rebase-interactive.sh | 50 ++++++++++++++++++++++++++++-------
- 1 file changed, 41 insertions(+), 9 deletions(-)
+ t/t7201-co.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 4a7d21f898..2fb2c581cb 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -30,6 +30,7 @@ Initial setup:
- . "$TEST_DIRECTORY"/lib-rebase.sh
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index b696bae5f5..4d62b9b00f 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -230,9 +230,10 @@ test_expect_success 'switch to another branch while carrying a deletion' '
+ test_expect_success 'checkout to detach HEAD (with advice declined)' '
  
- test_expect_success 'setup' '
-+	test_oid_init &&
- 	test_commit A file1 &&
- 	test_commit B file1 &&
- 	test_commit C file2 &&
-@@ -1250,7 +1251,7 @@ test_expect_success 'rebase -i error on commits with \ in message' '
- 	test_expect_code 1 grep  "	emp" error
- '
+ 	git config advice.detachedHead false &&
++	rev=$(git rev-parse --short renamer^) &&
+ 	git checkout -f renamer && git clean -f &&
+ 	git checkout renamer^ 2>messages &&
+-	test_i18ngrep "HEAD is now at 7329388" messages &&
++	test_i18ngrep "HEAD is now at $rev" messages &&
+ 	test_line_count = 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
+@@ -248,9 +249,10 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
  
--test_expect_success SHA1 'short SHA-1 setup' '
-+test_expect_success 'short commit ID setup' '
- 	test_when_finished "git checkout master" &&
- 	git checkout --orphan collide &&
- 	git rm -rf . &&
-@@ -1262,23 +1263,54 @@ test_expect_success SHA1 'short SHA-1 setup' '
- 	)
- '
- 
--test_expect_success SHA1 'short SHA-1 collide' '
-+if test -n "$GIT_TEST_FIND_COLLIDER"
-+then
-+	author="$(unset test_tick; test_tick; git var GIT_AUTHOR_IDENT)"
-+	committer="$(unset test_tick; test_tick; git var GIT_COMMITTER_IDENT)"
-+	blob="$(git rev-parse collide2:collide)"
-+	from="$(git rev-parse collide1^0)"
-+	repl="commit refs/heads/collider-&\\n"
-+	repl="${repl}author $author\\ncommitter $committer\\n"
-+	repl="${repl}data <<EOF\\ncollide2 &\\nEOF\\n"
-+	repl="${repl}from $from\\nM 100644 $blob collide\\n"
-+	test_seq 1 32768 | sed "s|.*|$repl|" >script &&
-+	git fast-import <script &&
-+	git pack-refs &&
-+	git for-each-ref >refs &&
-+	grep "^$(test_oid t3404_collision)" <refs >matches &&
-+	cat matches &&
-+	test_line_count -gt 2 matches || {
-+		echo "Could not find a collider" >&2
-+		exit 1
-+	}
-+fi
-+
-+test_expect_success 'short commit ID collide' '
-+	test_oid_cache <<-EOF &&
-+	# collision-related constants
-+	t3404_collision	sha1:6bcd
-+	t3404_collision	sha256:0161
-+	t3404_collider	sha1:ac4f2ee
-+	t3404_collider	sha256:16697
-+	EOF
- 	test_when_finished "reset_rebase && git checkout master" &&
- 	git checkout collide &&
--	colliding_sha1=6bcda37 &&
--	test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
-+	colliding_id=$(test_oid t3404_collision) &&
-+	hexsz=$(test_oid hexsz) &&
-+	test $colliding_id = "$(git rev-parse HEAD | cut -c 1-4)" &&
-+	test_config core.abbrev 4 &&
- 	(
- 		unset test_tick &&
- 		test_tick &&
- 		set_fake_editor &&
--		FAKE_COMMIT_MESSAGE="collide2 ac4f2ee" \
-+		FAKE_COMMIT_MESSAGE="collide2 $(test_oid t3404_collider)" \
- 		FAKE_LINES="reword 1 break 2" git rebase -i HEAD~2 &&
--		test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
--		grep "^pick $colliding_sha1 " \
-+		test $colliding_id = "$(git rev-parse HEAD | cut -c 1-4)" &&
-+		grep "^pick $colliding_id " \
- 			.git/rebase-merge/git-rebase-todo.tmp &&
--		grep "^pick [0-9a-f]\{40\}" \
-+		grep "^pick [0-9a-f]\{$hexsz\}" \
- 			.git/rebase-merge/git-rebase-todo &&
--		grep "^pick [0-9a-f]\{40\}" \
-+		grep "^pick [0-9a-f]\{$hexsz\}" \
- 			.git/rebase-merge/git-rebase-todo.backup &&
- 		git rebase --continue
- 	) &&
+ test_expect_success 'checkout to detach HEAD' '
+ 	git config advice.detachedHead true &&
++	rev=$(git rev-parse --short renamer^) &&
+ 	git checkout -f renamer && git clean -f &&
+ 	GIT_TEST_GETTEXT_POISON=false git checkout renamer^ 2>messages &&
+-	grep "HEAD is now at 7329388" messages &&
++	grep "HEAD is now at $rev" messages &&
+ 	test_line_count -gt 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+ 	M=$(git show-ref -s --verify refs/heads/master) &&
