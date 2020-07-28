@@ -2,206 +2,113 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85359C433DF
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 01:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39088C433EA
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 01:19:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 554C7206D7
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 01:04:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E8E220714
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 01:19:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MKglNZd+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WsAZaZK8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbgG1BEK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jul 2020 21:04:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52374 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbgG1BEK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jul 2020 21:04:10 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E05B7C061794
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 18:04:09 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id i1so14170672pgn.13
-        for <git@vger.kernel.org>; Mon, 27 Jul 2020 18:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=eSqKmXG3ZWXDi4UMmsGfehPG5mszYGfWt4SdSzAu/vM=;
-        b=MKglNZd+rg8SkkfRrgTNgpALTIMuZJbB8TmlYopfLdh83b8WuL89XXpXZ9P869vJyX
-         xaD2dJ8lIjOZ2MovjlV+oCXxUMUkvBloIslrWwbnCb0XfUx94MnmB3BpB/07Byzp3dRX
-         IB6K2BV6/ljPX8+Em6RzaUBedlF756emikVwl/T5/RJjb2FQMDPL5EWLSc4vAHWuHS+a
-         aiWAZYE0aZd4TSlXd24tTx+HnhxYySBaCdY0Gq7ASgXEbfJZ1smrh2zCrhuDf3mECxA4
-         c+k59S0q8NdYx1tJ56q3adBQTqN2Z7nyFkHe1bhYRKGlfDSTre/hWmSy+kT95Oz7umDM
-         9ltw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=eSqKmXG3ZWXDi4UMmsGfehPG5mszYGfWt4SdSzAu/vM=;
-        b=h/Uwrd8YwdK1zDv5/MEBlL+ZQr1vnDvDyvGIfU8okcAGzPUwV2WO2pjmjOTunH9o29
-         w+md2vVozL7bev2xYlWYbDdkE84HKngLBAdLlHvibp8hyfOEjDUP6E+gqCQ923z0q86+
-         l7/rlzKjKwls3S7bWaRgynMoyLZtNIOzXNIVlnc/HJvD/wJzYsrQoZjYlDePSqVldRlV
-         arHQxMbR5F5AaNsO+HkF0iec5u7EOohQj8ycIOEulKSktn95w31QfGtp3ElwTeQMDmxh
-         AW+jiz7gIvD7rFVfqFoKMp512X8EM1GWd7WRPmPzvkRxEyH+ZkQohhnxRgtkYsKKt9xD
-         J2Gg==
-X-Gm-Message-State: AOAM533BBk///5IE9wstlTsyZFRXpjNSeFoTTNEPW7b5NzKkdPaCV0/5
-        FqmukkBwmo3BIKM4OcwPTxfRN9byC0AFNvOP6/T5j4kxgoe/gVQYTanEbv4d1DZZb2ShCHYYQl0
-        UbsY2cERza3dtSvT90tz+BL4TgJevaVrQg/BT2Co0d0xnUtgngs6CZSuRWf/BpJyzhFVJvddgyv
-        +i
-X-Google-Smtp-Source: ABdhPJxIVimAXFH8FX8meI3hKYKVgvowk/YQeQ4WxxnDDq6wJtY0r7fyfKEugD2WQEtb4TivlkI4DCp/adamJLGG/DM2
-X-Received: by 2002:a17:902:8693:: with SMTP id g19mr12662024plo.66.1595898249133;
- Mon, 27 Jul 2020 18:04:09 -0700 (PDT)
-Date:   Mon, 27 Jul 2020 18:04:03 -0700
-Message-Id: <20200728010403.95142-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.28.0.rc0.142.g3c755180ce-goog
-Subject: [PATCH] apply: do not fetch when checking object existence
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726759AbgG1BTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jul 2020 21:19:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54980 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbgG1BTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jul 2020 21:19:41 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 934237B33B;
+        Mon, 27 Jul 2020 21:19:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=94AUT6GZF2RTPAsEvLh03+NIxkg=; b=WsAZaZ
+        K8BMNgbzopMo0Ta8bA+lT+7fb3onV/1Rq44Lz/n7RL5RwTfdgrPUXBRneXoMfmq1
+        j2dAmgzeHrhaZk0lGwW+aS7IUeOZK3SV8YoSKVghMaStcJYHHajq2B05xmvxbE0X
+        n4C+VxnulwS3Y8FubGVQWzO2yh4eIhFMvHOyk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TUu0LhaTN9Y+JDkQkILJDd3YDZHJWL4J
+        YtCdq/Q1CK4+Qn5JAznY9vyIe/xbko7BWb51B2rvffW1hWl4UsJSdeRY4vakKzRV
+        mbHYPvJqcHasfNgvH+RndqJi7d/ZZ+SERnp9V1AfnqVcdxlnUr+7Liu1kchmzSwO
+        zeURTN1lEQY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78FE97B33A;
+        Mon, 27 Jul 2020 21:19:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE88D7B338;
+        Mon, 27 Jul 2020 21:19:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] apply: do not fetch when checking object existence
+References: <20200728010403.95142-1-jonathantanmy@google.com>
+Date:   Mon, 27 Jul 2020 18:19:38 -0700
+In-Reply-To: <20200728010403.95142-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Mon, 27 Jul 2020 18:04:03 -0700")
+Message-ID: <xmqqwo2oe8r9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 681DA78C-D070-11EA-BF8F-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There have been a few bugs wherein Git fetches missing objects whenever
-the existence of an object is checked, even though it does not need to
-perform such a fetch. To resolve these bugs, we could look at all the
-places that has_object_file() (or a similar function) is used. As a
-first step, introduce a new function has_object() that checks for the
-existence of an object, with a default behavior of not fetching if the
-object is missing and the repository is a partial clone. As we verify
-each has_object_file() (or similar) usage, we can replace it with
-has_object(), and we will know that we are done when we can delete
-has_object_file() (and the other similar functions).
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Also, the new function has_object() has more appropriate defaults:
-besides not fetching, it also does not recheck packed storage.
+> There have been a few bugs wherein Git fetches missing objects whenever
+> the existence of an object is checked, even though it does not need to
+> perform such a fetch. To resolve these bugs, we could look at all the
+> places that has_object_file() (or a similar function) is used. As a
+> first step, introduce a new function has_object() that checks for the
+> existence of an object, with a default behavior of not fetching if the
+> object is missing and the repository is a partial clone. As we verify
+> each has_object_file() (or similar) usage, we can replace it with
+> has_object(), and we will know that we are done when we can delete
+> has_object_file() (and the other similar functions).
 
-Then, use this new function to fix a bug in apply.c.
+I wonder if we want to name the two (i.e. one variant that refuses
+to go to network because it is trying to see if a lazy fetch is
+needed, and the other that goes to network behind caller's back for
+ease of use in a lazy clone) a bit more distinctly so that which one
+could potentially go outside.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-I mentioned the idea for this change here:
-https://lore.kernel.org/git/20200721225020.1352772-1-jonathantanmy@google.com/
+Depending on one's view which one is _normal_ access pattern, giving
+an explicit adverb to one variant while leaving the other one bland
+might be sufficient.  For example, I _think_ most of the places do
+not want to handle the details of lazily fetching themselves, and I
+suspect that the traditional has_object_file() semantics without "do
+not trigger lazy fetch" option would be the normal access pattern.
 
-I included the same have_repository check introduced in 3e8b7d3c77
-("has_sha1_file: don't bother if we are not in a repository",
-2017-04-13), but I couldn't verify if it is still needed. In particular,
-even at that commit, all the tests pass (after I make a small change
-to an irrelevant test about the order of entries in a cookie file).
----
- apply.c        |  2 +-
- object-store.h | 25 +++++++++++++++++++++++--
- sha1-file.c    | 12 ++++++++++++
- t/t4150-am.sh  | 16 ++++++++++++++++
- 4 files changed, 52 insertions(+), 3 deletions(-)
+In which case, renaming your new "has_object" to something like
+"has_object_locally()" would be a good name for a special case
+codepath that wants to care---if the object does not exist locally
+and needs to be obtained lazily from elsewhere, the function would
+say "no".
 
-diff --git a/apply.c b/apply.c
-index 8bff604dbe..402d80602a 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3178,7 +3178,7 @@ static int apply_binary(struct apply_state *state,
- 		return 0; /* deletion patch */
- 	}
- 
--	if (has_object_file(&oid)) {
-+	if (has_object(the_repository, &oid, 0)) {
- 		/* We already have the postimage */
- 		enum object_type type;
- 		unsigned long size;
-diff --git a/object-store.h b/object-store.h
-index f439d47af8..c4fc9dd74e 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -239,12 +239,33 @@ int read_loose_object(const char *path,
- 		      unsigned long *size,
- 		      void **contents);
- 
-+/* Retry packed storage after checking packed and loose storage */
-+#define HAS_OBJECT_RECHECK_PACKED 1
-+
-+/*
-+ * Returns 1 if the object exists. This function will not lazily fetch objects
-+ * in a partial clone.
-+ */
-+int has_object(struct repository *r, const struct object_id *oid,
-+	       unsigned flags);
-+
-+/*
-+ * These macros and functions are deprecated. If checking existence for an
-+ * object that is likely to be missing and/or whose absence is relatively
-+ * inconsequential (or is consequential but the caller is prepared to handle
-+ * it), use has_object(), which has better defaults (no lazy fetch in a partial
-+ * clone and no rechecking of packed storage). In the unlikely event that a
-+ * caller needs to assert existence of an object that it fully expects to
-+ * exist, and wants to trigger a lazy fetch in a partial clone, use
-+ * oid_object_info_extended() with a NULL struct object_info.
-+ *
-+ * These functions can be removed once all callers have migrated to
-+ * has_object() and/or oid_object_info_extended().
-+ */
- #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
- #define has_sha1_file_with_flags(sha1, flags) repo_has_sha1_file_with_flags(the_repository, sha1, flags)
- #define has_sha1_file(sha1) repo_has_sha1_file(the_repository, sha1)
- #endif
--
--/* Same as the above, except for struct object_id. */
- int repo_has_object_file(struct repository *r, const struct object_id *oid);
- int repo_has_object_file_with_flags(struct repository *r,
- 				    const struct object_id *oid, int flags);
-diff --git a/sha1-file.c b/sha1-file.c
-index ccd34dd9e8..ff444d7abb 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -1988,6 +1988,18 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
- 	return ret;
- }
- 
-+int has_object(struct repository *r, const struct object_id *oid,
-+	       unsigned flags)
-+{
-+	int quick = !(flags & HAS_OBJECT_RECHECK_PACKED);
-+	unsigned object_info_flags = OBJECT_INFO_SKIP_FETCH_OBJECT |
-+		(quick ? OBJECT_INFO_QUICK : 0);
-+
-+	if (!startup_info->have_repository)
-+		return 0;
-+	return oid_object_info_extended(r, oid, NULL, object_info_flags) >= 0;
-+}
-+
- int repo_has_object_file_with_flags(struct repository *r,
- 				    const struct object_id *oid, int flags)
- {
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index bda4586a79..94a2c76522 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -1133,4 +1133,20 @@ test_expect_success 'am and .gitattibutes' '
- 	)
- '
- 
-+test_expect_success 'apply binary blob in partial clone' '
-+	printf "\\000" >binary &&
-+	git add binary &&
-+	git commit -m "binary blob" &&
-+	git format-patch --stdout -m HEAD^ >patch &&
-+
-+	test_create_repo server &&
-+	test_config -C server uploadpack.allowfilter 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	git clone --filter=blob:none "file://$(pwd)/server" client &&
-+	test_when_finished "rm -rf client" &&
-+
-+	# Exercise to make sure that it works
-+	git -C client am ../patch
-+'
-+
- test_done
--- 
-2.28.0.rc0.142.g3c755180ce-goog
+And all the other names like has_object_file() that by default gives
+callers a transparent access to lazily fetched objects can stay the
+same.
 
+> I mentioned the idea for this change here:
+> https://lore.kernel.org/git/20200721225020.1352772-1-jonathantanmy@google.com/
+
+Yup, I think that is going in a good direction.  I suspect that
+apply will not be the only remaining case we need to "fix", and
+using the new helper function, codepaths that have already been
+"fixed" by passing "do not lazily fetch" option to the traditional
+API functions would become easier to read.  And if that is the case,
+let's have the introduction of the helper function as a separate
+patch, with each of [PATCH 2-N/N] be a fix for separate codepaths.
+
+Thanks.
