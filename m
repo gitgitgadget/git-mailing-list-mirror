@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A372AC433E3
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CF4BC433EC
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82021207E8
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:34:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E42E207E8
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 23:35:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pdu570UI"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mtBJkSKf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730005AbgG1Xe6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 19:34:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40844 "EHLO
+        id S1730175AbgG1XfG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 19:35:06 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40852 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729844AbgG1Xe5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:34:57 -0400
+        by vger.kernel.org with ESMTP id S1729844AbgG1XfC (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Jul 2020 19:35:02 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 605FA60AFD;
-        Tue, 28 Jul 2020 23:34:56 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CB4D661016;
+        Tue, 28 Jul 2020 23:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1595979296;
-        bh=OgCPGLxbLEhOK6+oRjiyLc+hvZl35cGnjxku2gGi4NE=;
+        s=default; t=1595979301;
+        bh=goOwrFKT3jIZZ5OGkgBL3vofX/12AmAlVGsYY+lDvfU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=pdu570UIV0Tma621rs0fUFa/ZwXCrNRjMTAFruDpxlCMel81Tg41GwzjVYupgaNUd
-         sgiSEQUk4j3jbQLiv5UghnfwnbUEeuoZwYb5TwwKmZ+19RFMp/ms5KosgzZwaRIkLB
-         TqGZiPtLuhjlRegFjAxWlCcQgBKG5YYnwI02JN8CrJIRlhI9BUvU79zP1LjoLEpVzL
-         s3vK7r1ic6hfg2HH7FK4rxp/jAUkT7dc5i55rrGxtghZnvgkl7LY0BVrlikdzk7EMh
-         9JWMp4AefdDD4qRYRvJHJ6GohWRx7uKdPu/Xs91dVZA+7c5jVvucp6YOZceyOK5wpQ
-         r4cHG2+hHr+uapo7BuBI1IVxZktF6wIBQWxO/rZSOkH18OgsV2M63mavrZn24t4Xg8
-         0CZF2xVGq3Jb7pHqjV0sT0KhO+k27nroZB3kno4NtLdzSCQT3m7d5dQ0e7d8MQw4Gg
-         YMBoilloUQu5biLA3EKgbrBUqHcEtmQiWJneNrSae1rpvLSB56r
+        b=mtBJkSKfdqjPmMol09aQ1jPLuujFofUH4GNQ4Kf7laLVVIs2Zg+X5/CHlmtgZWHJ+
+         m+tgKU3h2BJKahMeBahZwE19Vh3wtcU/2vJkp+06wCQG4aHHKl40KpfiLeIjjQD77W
+         hHklZnEczDMmlM2NJFosJXuAzb+YAT6I/hkwuVKvzg9bOGvE5hxZYMaEX/VSP666UH
+         zTDD44nIfWAvaMAv4pTN2Ry36IxIUHgXDKrx5K/Y0mU5NZe4Qkl8eBkmQLSRyABQHh
+         mh6ZiyI4oogX2eozqdO8OilyUj6Dgix8JPw2ANZLML0FtZ0i9YFlQuTdNvNAILk4BY
+         jIcliOux9soAJLEF9iC5n3UjFgxWsn2R/st6K4MPWQGH1pJfbxa0AW/DYbLY75c+A+
+         ATIF4uPJu1Dyi658sbmNkVrO+myG7QpmPUPrzvzkNwaVdOVhueo6h/KiUE+g5f7oGf
+         yPQ2pd/QccqovuGJrlNtQfsDDsEqsxb+fa1g5b+pIdI+JCUb39n
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 03/39] t3305: make hash agnostic
-Date:   Tue, 28 Jul 2020 23:34:10 +0000
-Message-Id: <20200728233446.3066485-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 13/39] t7102: abstract away SHA-1-specific constants
+Date:   Tue, 28 Jul 2020 23:34:20 +0000
+Message-Id: <20200728233446.3066485-14-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -56,32 +56,229 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When computing the fanout length, let's use test_oid to look up the
-hexadecimal size of the hash in question instead of hard-coding a value.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3305-notes-fanout.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t7102-reset.sh | 93 +++++++++++++++++++++++++++---------------------
+ 1 file changed, 53 insertions(+), 40 deletions(-)
 
-diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-index 3b4753e1b4..d5a94b7174 100755
---- a/t/t3305-notes-fanout.sh
-+++ b/t/t3305-notes-fanout.sh
-@@ -7,7 +7,7 @@ test_description='Test that adding/removing many notes triggers automatic fanout
- path_has_fanout() {
- 	path=$1 &&
- 	fanout=$2 &&
--	after_last_slash=$((40 - $fanout * 2)) &&
-+	after_last_slash=$(($(test_oid hexsz) - $fanout * 2)) &&
- 	echo $path | grep -q "^\([0-9a-f]\{2\}/\)\{$fanout\}[0-9a-f]\{$after_last_slash\}$"
- }
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index 97be0d968d..22161b3b2d 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -37,17 +37,23 @@ test_expect_success 'creating initial files and commits' '
  
-@@ -31,6 +31,7 @@ all_notes_have_fanout() {
- }
+ 	echo "2nd line 1st file" >>first &&
+ 	git commit -a -m "modify 1st file" &&
++	head5p2=$(git rev-parse --verify HEAD) &&
++	head5p2f=$(git rev-parse --short HEAD:first) &&
  
- test_expect_success 'tweak test environment' '
-+	test_oid_init &&
- 	git checkout -b nondeterminism &&
- 	test_commit A &&
- 	git checkout --orphan with_notes;
+ 	git rm first &&
+ 	git mv second secondfile &&
+ 	git commit -a -m "remove 1st and rename 2nd" &&
++	head5p1=$(git rev-parse --verify HEAD) &&
++	head5p1s=$(git rev-parse --short HEAD:secondfile) &&
+ 
+ 	echo "1st line 2nd file" >secondfile &&
+ 	echo "2nd line 2nd file" >>secondfile &&
+ 	# "git commit -m" would break MinGW, as Windows refuse to pass
+ 	# $test_encoding encoded parameter to git.
+ 	commit_msg $test_encoding | git -c "i18n.commitEncoding=$test_encoding" commit -a -F - &&
+-	head5=$(git rev-parse --verify HEAD)
++	head5=$(git rev-parse --verify HEAD) &&
++	head5s=$(git rev-parse --short HEAD:secondfile) &&
++	head5sl=$(git rev-parse HEAD:secondfile)
+ '
+ # git log --pretty=oneline # to see those SHA1 involved
+ 
+@@ -94,7 +100,7 @@ test_expect_success 'giving a non existing revision should fail' '
+ 
+ test_expect_success 'reset --soft with unmerged index should fail' '
+ 	touch .git/MERGE_HEAD &&
+-	echo "100644 44c5b5884550c17758737edcced463447b91d42b 1	un" |
++	echo "100644 $head5sl 1	un" |
+ 		git update-index --index-info &&
+ 	test_must_fail git reset --soft HEAD &&
+ 	rm .git/MERGE_HEAD &&
+@@ -192,7 +198,7 @@ test_expect_success \
+ >.diff_expect
+ cat >.cached_expect <<EOF
+ diff --git a/secondfile b/secondfile
+-index 1bbba79..44c5b58 100644
++index $head5p1s..$head5s 100644
+ --- a/secondfile
+ +++ b/secondfile
+ @@ -1 +1,2 @@
+@@ -207,7 +213,7 @@ secondfile:
+ EOF
+ test_expect_success '--soft reset only should show changes in diff --cached' '
+ 	git reset --soft HEAD^ &&
+-	check_changes d1a4bc3abce4829628ae2dcb0d60ef3d1a78b1c4 &&
++	check_changes $head5p1 &&
+ 	test "$(git rev-parse ORIG_HEAD)" = \
+ 			$head5
+ '
+@@ -242,7 +248,7 @@ EOF
+ test_expect_success \
+ 	'--hard reset should change the files and undo commits permanently' '
+ 	git reset --hard HEAD~2 &&
+-	check_changes ddaefe00f1da16864591c61fdc7adb5d7cd6b74e &&
++	check_changes $head5p2 &&
+ 	test "$(git rev-parse ORIG_HEAD)" = \
+ 			$head4
+ '
+@@ -251,7 +257,7 @@ test_expect_success \
+ cat >.cached_expect <<EOF
+ diff --git a/first b/first
+ deleted file mode 100644
+-index 8206c22..0000000
++index $head5p2f..0000000
+ --- a/first
+ +++ /dev/null
+ @@ -1,2 +0,0 @@
+@@ -259,14 +265,14 @@ index 8206c22..0000000
+ -2nd line 1st file
+ diff --git a/second b/second
+ deleted file mode 100644
+-index 1bbba79..0000000
++index $head5p1s..0000000
+ --- a/second
+ +++ /dev/null
+ @@ -1 +0,0 @@
+ -2nd file
+ diff --git a/secondfile b/secondfile
+ new file mode 100644
+-index 0000000..44c5b58
++index 0000000..$head5s
+ --- /dev/null
+ +++ b/secondfile
+ @@ -0,0 +1,2 @@
+@@ -286,13 +292,13 @@ test_expect_success \
+ 	echo "1st line 2nd file" >secondfile &&
+ 	echo "2nd line 2nd file" >>secondfile &&
+ 	git add secondfile &&
+-	check_changes ddaefe00f1da16864591c61fdc7adb5d7cd6b74e
++	check_changes $head5p2
+ '
+ 
+ cat >.diff_expect <<EOF
+ diff --git a/first b/first
+ deleted file mode 100644
+-index 8206c22..0000000
++index $head5p2f..0000000
+ --- a/first
+ +++ /dev/null
+ @@ -1,2 +0,0 @@
+@@ -300,7 +306,7 @@ index 8206c22..0000000
+ -2nd line 1st file
+ diff --git a/second b/second
+ deleted file mode 100644
+-index 1bbba79..0000000
++index $head5p1s..0000000
+ --- a/second
+ +++ /dev/null
+ @@ -1 +0,0 @@
+@@ -314,9 +320,8 @@ secondfile:
+ EOF
+ test_expect_success '--mixed reset to HEAD should unadd the files' '
+ 	git reset &&
+-	check_changes ddaefe00f1da16864591c61fdc7adb5d7cd6b74e &&
+-	test "$(git rev-parse ORIG_HEAD)" = \
+-			ddaefe00f1da16864591c61fdc7adb5d7cd6b74e
++	check_changes $head5p2 &&
++	test "$(git rev-parse ORIG_HEAD)" = $head5p2
+ '
+ 
+ >.diff_expect
+@@ -328,7 +333,7 @@ secondfile:
+ EOF
+ test_expect_success 'redoing the last two commits should succeed' '
+ 	git add secondfile &&
+-	git reset --hard ddaefe00f1da16864591c61fdc7adb5d7cd6b74e &&
++	git reset --hard $head5p2 &&
+ 
+ 	git rm first &&
+ 	git mv second secondfile &&
+@@ -389,47 +394,55 @@ test_expect_success \
+ 	check_changes $head5
+ '
+ 
+-cat > expect << EOF
+-diff --git a/file1 b/file1
+-index d00491f..7ed6ff8 100644
+---- a/file1
+-+++ b/file1
+-@@ -1 +1 @@
+--1
+-+5
+-diff --git a/file2 b/file2
+-deleted file mode 100644
+-index 0cfbf08..0000000
+---- a/file2
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--2
+-EOF
+-cat > cached_expect << EOF
+-diff --git a/file4 b/file4
+-new file mode 100644
+-index 0000000..b8626c4
+---- /dev/null
+-+++ b/file4
+-@@ -0,0 +1 @@
+-+4
+-EOF
+ test_expect_success 'test --mixed <paths>' '
+ 	echo 1 > file1 &&
+ 	echo 2 > file2 &&
+ 	git add file1 file2 &&
+ 	test_tick &&
+ 	git commit -m files &&
++	before1=$(git rev-parse --short HEAD:file1) &&
++	before2=$(git rev-parse --short HEAD:file2) &&
+ 	git rm file2 &&
+ 	echo 3 > file3 &&
+ 	echo 4 > file4 &&
+ 	echo 5 > file1 &&
++	after1=$(git rev-parse --short $(git hash-object file1)) &&
++	after4=$(git rev-parse --short $(git hash-object file4)) &&
+ 	git add file1 file3 file4 &&
+ 	git reset HEAD -- file1 file2 file3 &&
+ 	test_must_fail git diff --quiet &&
+ 	git diff > output &&
++
++	cat > expect <<-EOF &&
++	diff --git a/file1 b/file1
++	index $before1..$after1 100644
++	--- a/file1
++	+++ b/file1
++	@@ -1 +1 @@
++	-1
++	+5
++	diff --git a/file2 b/file2
++	deleted file mode 100644
++	index $before2..0000000
++	--- a/file2
++	+++ /dev/null
++	@@ -1 +0,0 @@
++	-2
++	EOF
++
+ 	test_cmp expect output &&
+ 	git diff --cached > output &&
++
++	cat > cached_expect <<-EOF &&
++	diff --git a/file4 b/file4
++	new file mode 100644
++	index 0000000..$after4
++	--- /dev/null
++	+++ b/file4
++	@@ -0,0 +1 @@
++	+4
++	EOF
++
+ 	test_cmp cached_expect output
+ '
+ 
