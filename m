@@ -2,95 +2,97 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02249C433E8
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 286C6C433EB
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C41AD2065E
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 05DD92065E
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 20:45:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMs0S8EK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UReGNmNT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729214AbgG1Upo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 16:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37692 "EHLO
+        id S1729247AbgG1Upu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 16:45:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729165AbgG1Upm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 16:45:42 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65044C061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:42 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id a14so19573131wra.5
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:42 -0700 (PDT)
+        with ESMTP id S1729165AbgG1Upo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 16:45:44 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A740C061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:44 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id b6so19546668wrs.11
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 13:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Z/R8khSVpm6EZBUGXJXbw6UpSUVN0768UI+WY5RGhgU=;
-        b=VMs0S8EKtw7tSykItPqQfUaCUft4jV3BNs2bgQUt4/w7ADkf7AC4lsHFJCNcAj8sh3
-         1SIt47WAKPgxrEeNNjkKPtTcAHmR2V3u6Dnpj0U0EUyJooCopokMUL0Sjb2osWAXSa++
-         mUHU1iSzcjA86LRgtapYhyV5tRs5D4S3t9lljthZojYMFNyFGuTqso7gBNZc21xSyPav
-         jApts6vFJz5zO1rNt6MIYmYZ4GeYaMwRQ40x3AeaYCFwZ9J9KAI9Bl8Kb7b18fWF4A89
-         6VB5rie+u85qC+hMSwiu6YAgmaxu/YFm2xUomzIHCam+NM8MWgTyh2VbtTZfBQ2hzHZg
-         0b0Q==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4cE8lBxgbX2JgAX3nPzWkcziKNqXxmfSxxXXSEaTiJA=;
+        b=UReGNmNTS42dYQZ/lSPWmN4LB2IMKDRgr+xUpfjLokiVZ3wsdoLrpUK6njhXMfjh1m
+         wX5Jdw1C9ASlYRZMWhgdsYQ2j7jArqnu+Y7xV9fKKM73mYMt+XAile0kkmjy8Jk+mwwZ
+         DKoglIY0aVSr8oNWtp2hQvoCOEKoSilU87MVPemRdjpVxNZpmfVxWQcPx91FLvbNRsdp
+         GOGjP8yzb/yzrRMyhgVa6F81+4XaLra/nhl5jh4eGSKbjQYEOho5avI1FqiNj/HL3QA3
+         wQmaY/55C+6u/2vgJEw31OwiK+PDlIptYDL/XsPqSSpVKzaGOvxTyMKeE3of1ri0ajtS
+         cLRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Z/R8khSVpm6EZBUGXJXbw6UpSUVN0768UI+WY5RGhgU=;
-        b=AJUmWaDR6KE60rU4iJsVvAZMV3usQQemJpdyJChMPOZPM6IZaWv+EOh0qclo/8OStB
-         VVBvHc8UaJo2z2OFK6Kmx9D/n+lh8VmxvcSdLz8URX694UFelvE7Kbg61LQQdJL/yc0S
-         vCLw/JxH12kcYUTsAUw5wBAd+/hhLL9xjhay2oToqY+5f5v9twuHgpI2yM1c/XEk7avM
-         JM0h6Cbml+beYOnMC9NoG7gbCioVwoccGQn2xTdVSjglqCyjSQvdOHiPmM4+FsaKKYW2
-         J3jXStUl5lOhZsd45ien4hfCDyRcBNTnC7pht3YFspSSG0EeuQeb/cRuFKqbJkCjfbZo
-         0PLw==
-X-Gm-Message-State: AOAM531kN063M6LpIjSCwCr8ZC5qXHpGoUlwMD69AYb/BvYV2aXE7NEq
-        M+C/ZQhqKDOH62nNWPuM78CPSBr/
-X-Google-Smtp-Source: ABdhPJzq1nLUJmxkuR/fQOfGhz4ySu+2yShfwQfBoTNPX8YhurGnwYK+wr39yTIZ8fi2orVwO586OA==
-X-Received: by 2002:adf:e9cd:: with SMTP id l13mr28469767wrn.340.1595969140944;
-        Tue, 28 Jul 2020 13:45:40 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4cE8lBxgbX2JgAX3nPzWkcziKNqXxmfSxxXXSEaTiJA=;
+        b=pVFnB2r8JaM0BjwvwduHDbE/f4015gh+4AM8qaS0GVPo1R02itluLj/n6NtftyiLJB
+         pwWPTTrHqEvPAgKkPsIVaVI5MCAdicczge358jbamHMJJznHJICabdIBWY6RPd2si9FQ
+         hGp1H0A8cJmxIYsUuDTk5Zz6YWBBR3CPzav+ufqUi954x1gAxlDtpjRcLiX8lsSmExwy
+         2sLGlq9l6B5d6DQqUcNAlRLpZ9GKn9KH4G4JGPraFFfpazyuqPI6ATI7hHDIS67yLSqK
+         VtO1mD9Pfh1kytsHXvPs3SNkjbMRSBBqWaQOWHmwiet6cshcUqI/Ga//KHYfMXoVKTxk
+         XMLw==
+X-Gm-Message-State: AOAM532pji+aXuXBR5m/uw9Jy2xyEzeScJ0TX1ZHkhHGbUlPQCCev4E6
+        f/RxJQaOFvjyOAO+5zBVqJyicsHc
+X-Google-Smtp-Source: ABdhPJzefClXpezYbh0q52/3cxSgQmifSRcdj4+45QatIub0p6cMDpszCHPMO3/Qi3MgSJGhT3vfWA==
+X-Received: by 2002:a5d:4e81:: with SMTP id e1mr25166739wru.22.1595969142563;
+        Tue, 28 Jul 2020 13:45:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t2sm7131410wmb.28.2020.07.28.13.45.40
+        by smtp.gmail.com with ESMTPSA id b139sm4448wmd.19.2020.07.28.13.45.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 13:45:40 -0700 (PDT)
-Message-Id: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
+        Tue, 28 Jul 2020 13:45:42 -0700 (PDT)
+Message-Id: <cd9e69a910eebfaa8fd7866326d60a5c9733f1c8.1595969140.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
+References: <pull.824.git.git.1595969139.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jul 2020 20:45:37 +0000
-Subject: [PATCH 0/2] Typo fixes
+Date:   Tue, 28 Jul 2020 20:45:39 +0000
+Subject: [PATCH 2/2] hashmap: fix typo in usage docs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix some simple typos: doubled words, and character swapping
+From: Elijah Newren <newren@gmail.com>
 
-Elijah Newren (2):
-  Remove doubled words in various comments
-  hashmap: fix typo in usage docs
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ hashmap.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- fsmonitor.c                            | 2 +-
- hashmap.h                              | 2 +-
- t/t5510-fetch.sh                       | 2 +-
- t/t6046-merge-skip-unneeded-updates.sh | 2 +-
- t/t8014-blame-ignore-fuzzy.sh          | 2 +-
- wt-status.c                            | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
-
-
-base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-824%2Fnewren%2Ftypo-fixes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-824/newren/typo-fixes-v1
-Pull-Request: https://github.com/git/git/pull/824
+diff --git a/hashmap.h b/hashmap.h
+index 79ae9f80de..ef220de4c6 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -168,7 +168,7 @@ struct hashmap_entry {
+  * argument `keydata`, respectively. Otherwise, `keydata` is NULL.
+  *
+  * When it is too expensive to allocate a user entry (either because it is
+- * large or varialbe sized, such that it is not on the stack), then the
++ * large or variable sized, such that it is not on the stack), then the
+  * relevant data to check for equality should be passed via `keydata`.
+  * In this case `key` can be a stripped down version of the user key data
+  * or even just a hashmap_entry having the correct hash.
 -- 
 gitgitgadget
