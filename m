@@ -2,56 +2,83 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_50,
-	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E66DAC433E1
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FE10C433E3
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:48:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C73D9207F5
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:48:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E720207F5
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:48:26 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AJyEGtu8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731531AbgG1QsY (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1731478AbgG1QsY (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 28 Jul 2020 12:48:24 -0400
-Received: from in01-tec.fasttelco.net ([78.159.162.5]:35844 "EHLO
-        in01-tec.fasttelco.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731268AbgG1QsX (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56727 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731367AbgG1QsX (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 28 Jul 2020 12:48:23 -0400
-X-Greylist: delayed 938 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Jul 2020 12:48:22 EDT
-Received: from sonemx5.com ([62.215.195.91])
-        by in01-tec.fasttelco.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id 06SGWVD2004902
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 19:32:35 +0300
-Message-Id: <202007281632.06SGWVD2004902@in01-tec.fasttelco.net>
-From:   "UNHA" <afarah@fasttelco.com>
-Subject: United Nations Office for the Coordination of Humanitarian Affairs
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=us-ascii
-Reply-To: "UNHA" <almeermariam39@hotmail.com>, almeermariam39@hotmail.com
-Date:   Tue, 28 Jul 2020 17:32:36 +0100
-X-Priority: 3
-X-Bayes-Prob: 0.0001 (Score 0, tokens from: corp_smtp, base:default, @@RPTN)
-X-CanIt-Geo: ip=62.215.195.91; country=KW; latitude=29.3375; longitude=47.6581; http://maps.google.com/maps?q=29.3375,47.6581&z=6
-X-CanItPRO-Stream: base:corp_smtp (inherits from base:makc.com.kw,base:default)
-X-Canit-Stats-ID: 0438EwyVj - 33d661d044f6 - 20200728
-X-Antispam-Training-Forget: https://spam.fasttelco.com/canit/b.php?c=f&i=0438EwyVj&m=33d661d044f6&rlm=base&t=20200728
-X-Antispam-Training-Nonspam: https://spam.fasttelco.com/canit/b.php?c=n&i=0438EwyVj&m=33d661d044f6&rlm=base&t=20200728
-X-Antispam-Training-Phish: https://spam.fasttelco.com/canit/b.php?c=p&i=0438EwyVj&m=33d661d044f6&rlm=base&t=20200728
-X-Antispam-Training-Spam: https://spam.fasttelco.com/canit/b.php?c=s&i=0438EwyVj&m=33d661d044f6&rlm=base&t=20200728
-X-Scanned-By: CanIt (www . roaringpenguin . com) on 78.159.162.5
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 72AA880CE5;
+        Tue, 28 Jul 2020 12:48:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XTUfZPLzg5WEypGhS1sy6aE71D4=; b=AJyEGt
+        u8HWHCEiWSU1muc2EcBTmWJv7Zsb2TBSVJnV60FhqSDlPtRgaoKYPYnUVCNSsh6V
+        ue+BNsMuUfnt0Li/y6H1N5DZO3yV43hqIHqr6YOOdZIxcSMuxtsF4ox9/xwaa7WP
+        N4mAY8RyPo8RHatxyAG4PRDFAxG62VE4iL2Z8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ewm6nRbADsnFcI8PX/mNunvs0lVzG28Z
+        FZIQ30jRPtP4RKP20dUTrLO29J+eGKMN3WVt5reF4Gbnr0YV1MP0LrxXKsPtZ9uC
+        bKwhSrRZcuEANKCJ958DDgS8PVfCb47YBuS+CHlVxnamWthHTnLYvBgzl+7qL/cW
+        onbB4vM6ieA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B24E80CE4;
+        Tue, 28 Jul 2020 12:48:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED79A80CE3;
+        Tue, 28 Jul 2020 12:48:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/3] making --first-parent imply -m
+References: <20200728163617.GA2649887@coredump.intra.peff.net>
+Date:   Tue, 28 Jul 2020 09:48:20 -0700
+In-Reply-To: <20200728163617.GA2649887@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 28 Jul 2020 12:36:17 -0400")
+Message-ID: <xmqqeeovegbv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2503792C-D0F2-11EA-AE36-2F5D23BA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Congratulations,
+Jeff King <peff@peff.net> writes:
 
+> For some projects, it's useful to walk the first parent history, looking
+> at each merge commit as a normal commit introducing all of the changes
+> no its side branch. E.g.:
+>
+>   git log --first-parent -m -Sfoo -p
+>
+> might show you the topic or pull request that introduced code "foo". But
+> I quite often forget to add "-m", and get confused that it doesn't
+> return any results.
 
-Your email was randomly selected for the COVID 19 Relief Package for Second Quarter Reimbursement via certified ATM CARD. Please reach Mrs. Mariam AlMeer with your code:U.N.O/W.B.O/06/2020/1002 for more information.
+Yes.  I agree that --first-parent should imply -m when combined with
+diff options like -p, --raw, etc.  I am not sure if -m should kick
+in without any diff options, though.  Doesn't it have side effects?
 
-Contact Name: Mrs. Mariam AlMeer
-Email: almeermariam39@hotmail.com
+Thanks.
 
-
-Mark Lowcock
-United Nations Office for the Coordination of Humanitarian Affairs
