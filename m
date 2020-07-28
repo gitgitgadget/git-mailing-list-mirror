@@ -2,273 +2,130 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D9DC433DF
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDFEEC433E5
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:25:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BBCF2074F
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:23:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 999A920663
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 16:25:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="E3ocQ5Ij"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="hQWEFf1A"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731268AbgG1QXT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 12:23:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53266 "EHLO
+        id S1731324AbgG1QZc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 12:25:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730679AbgG1QXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 12:23:19 -0400
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4183C061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 09:23:18 -0700 (PDT)
-Received: by mail-qt1-x843.google.com with SMTP id c12so6245741qtn.9
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 09:23:18 -0700 (PDT)
+        with ESMTP id S1730679AbgG1QZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 12:25:32 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC386C061794
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 09:25:31 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id y11so6415948qvl.4
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 09:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Hi8xqih1OvSQ2Zpzw6ndXuCEFBhR/Ys8kvrT9zxNk18=;
-        b=E3ocQ5IjEF4pxXxaRSphIdCV8UaY1y9Fs+dfspeLE1o9s4/gWZzdAu4dhLl+ULIrxk
-         JnQ1sPStIsW+pfNKGtFDr7tobqFZn5acNIzetrAjJVRsTIBLC6gGMhPS2314qG5c5JLc
-         MpWXkyEYTTqcxw7P0Dwn6INnl0hbaa2dPUjWmqMyitEdGtJwUEULa2xeMOj2C4EnNJVZ
-         zxnqIrP28i92fI475Djbd0MXWPXDJl4gk7zRwn6TQT2sn7Wu8YdMNbh7pDIP8Xplb1m0
-         gfNba1rd9aRuM7vouZYuN8wDzmiJzcdnSxhXA47sXaDUAM76vihksYmlOMqpbXPTdbTB
-         fnbw==
+        bh=IcDR+fC+wd5gBdgKKz49mt094rmjjieQdK8vyrV4WpE=;
+        b=hQWEFf1AG/hBeakq7wMglxHXVb9KTPHdULpxcVvAw0ymcWZl2qlM4B2MtIX3BP67Ho
+         HrtgFm+ZzJocgxkERa2pIwqEHBN4RcRThFaKfR5a7m9H3yn/3Rd+KgoiJba0anwXB5QU
+         v0GGeRHg1f0OK5a+3ZP0cN47E7rXhGqifgsMlf+6/WCesdpq8vprEXhu22ybQ7zabq22
+         8A2Ow1nRcacvWDfkQG/nni+fDmyfTRC4Yt7WgKDmNxp9x9oMkam+M8UZnRUiTIUg/ZJu
+         1ycAmg/iQASUi+ip39PiDQWnHXtTNQZRjHaskgdPU8kX2n4NqwzFAwJjk2ouKvqh21lI
+         86bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Hi8xqih1OvSQ2Zpzw6ndXuCEFBhR/Ys8kvrT9zxNk18=;
-        b=dR1U1168P2HIi8/mwnJRKouOOMF/WbRU+hm9l25lq4RFkKPXTH54ce3HOUOWD5L8/2
-         DXFdtB57wy9fX0ZS9Lu8e68UZR/ZSje3aCYd4jjT6x58WTMlcyQcM7CFm4quKeS0zDW4
-         e4uQxvVefH4cTTaJd7R4CT4MaoB4wKIQPoItQ5wy46GX3/RAJvuK8g5cNi3ayrDttoB9
-         2A4RZeCK9lfQlwY8iD5MRk4AfiwlN4DzQY3Kc8i5Ps25vy+iOuoTjeEoVrRqT3Ihfaq+
-         uVTcfUFn8pq/1oCI7BPpCwu0B+H952dt15xOfIAf5PZWILGO+N2U48IxWCUz7ZaGiUTB
-         aL9g==
-X-Gm-Message-State: AOAM530xZhMJIFnowwJTsuGiVjPRJEGxSoU2xZHV9ip6hGUcL7UAJ2hv
-        5VOiZFzXtNwFMyK80XtyUA2kPg==
-X-Google-Smtp-Source: ABdhPJz90jIHhoS/G+OZ1JOs/jK49o+Q5FTMZV5QAyhu/Zy4yAFhe7VO+v0ksrvDLct0fr0/r+U8Xw==
-X-Received: by 2002:ac8:24cf:: with SMTP id t15mr13746646qtt.270.1595953397826;
-        Tue, 28 Jul 2020 09:23:17 -0700 (PDT)
+        bh=IcDR+fC+wd5gBdgKKz49mt094rmjjieQdK8vyrV4WpE=;
+        b=rgHtbcRV+vbGGHg4n7g9fUGjfjWB1654uFa6PWnh8Px9Hmzj8vjPhpyhHwjMt1i3JB
+         iYLMDI7umU1kQ8x/LH7QH+jfPKrqWVf1chFYW/+h2LdY1aJfA5XJaxPYX78TAg3ei7RV
+         8fheOxef9akOUtg8VSzeja8kfHD2ueIJ9bcXD4j3tw/DBEb988q46mal5/a9DzwBzLy6
+         76f9TW1TRfi3qN8nq89g2Npl0YAr8leMZF6TrOG0+OP+Jye5S/qP+JWkBUMLvTfLEuhv
+         BlNdiH3naYbbjwoNMEY+oaHAO4GPuNr9f9s5AQGp2DSXTAcVQnHUabp4hvEFPIX4uRJt
+         I6Ag==
+X-Gm-Message-State: AOAM5336amYu/Zfa8l4wvIBrDeIgPB1NsbJ04tPxWSmaeKJPUd6DUQe0
+        ZRVP8lWnlvtitKInqMtROvCaLg==
+X-Google-Smtp-Source: ABdhPJzOygA2NJ07qKzxDO9sxGjnpSO1+t1Y251w3gKkdJBvtq8Qkq74HP3h/Uw8YrgTHLi7JtsUfg==
+X-Received: by 2002:ad4:4744:: with SMTP id c4mr28571217qvx.126.1595953530540;
+        Tue, 28 Jul 2020 09:25:30 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:9c58:8530:481a:f835])
-        by smtp.gmail.com with ESMTPSA id v184sm24522084qki.12.2020.07.28.09.23.16
+        by smtp.gmail.com with ESMTPSA id q16sm22730232qkn.115.2020.07.28.09.25.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 09:23:17 -0700 (PDT)
-Date:   Tue, 28 Jul 2020 12:23:15 -0400
+        Tue, 28 Jul 2020 09:25:29 -0700 (PDT)
+Date:   Tue, 28 Jul 2020 12:25:28 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
-Subject: Re: [PATCH 6/6] commit-graph: implement corrected commit date offset
-Message-ID: <20200728162315.GG87373@syl.lan>
-References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
- <647290d0368e385227614dd1822aa9083b0dba5e.1595927632.git.gitgitgadget@gmail.com>
- <e8646aaa-667f-b7d8-f8f2-efbaaeb8877d@gmail.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Taylor Blau <me@ttaylorr.com>, Carmen Andoh <candoh@google.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git Inclusion Summit
+Message-ID: <20200728162528.GH87373@syl.lan>
+References: <CA+TwhoKBYwUKmtQTyiocPWJD=KeZQryS+6Q8JKxKgLEy0qJwAw@mail.gmail.com>
+ <20200726040226.GA19030@dcvr>
+ <20200727151023.GB62919@syl.lan>
+ <20200728100726.GA24408@dcvr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e8646aaa-667f-b7d8-f8f2-efbaaeb8877d@gmail.com>
+In-Reply-To: <20200728100726.GA24408@dcvr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 28, 2020 at 11:55:12AM -0400, Derrick Stolee wrote:
-> On 7/28/2020 5:13 AM, Abhishek Kumar via GitGitGadget wrote:
-> > From: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> >
-> > With preparations done,...
+On Tue, Jul 28, 2020 at 10:07:26AM +0000, Eric Wong wrote:
+> Taylor Blau <me@ttaylorr.com> wrote:
 >
-> I feel like this commit could have been made smaller by doing the
-> uint32_t -> timestamp_t conversion in a separate patch. That would
-> make it easier to focus on the changes to the generation number v2
-> logic.
+> <snip>
+>
+> > I think that it's tough to make individuals on both sides of this feel
+> > comfortable. On the one hand, folks such as yourself may feel
+> > uncomfortable with this format for the reasons that you posted above. On
+> > the other hand, some folks may prefer audio or video instead of text
+> > because they find it easier to express themselves with their body
+> > language, intonation, etc.
+>
+> I can understand that.  However most coding nowadays (especially
+> for this project) is text, so that's already the lowest common
+> denominator.
+>
+> > A bare minimum seems to be using a free service (I know that Jitsi Meet
+> > is an often-recommended alternative) with support for joining without
+> > video (either using audio only, or participating over chat).
+> >
+> > Hopefully everybody should have a good-enough internet connection to
+> > stream a low-quality audio-only feed so that they can listen in and
+> > participate via the chat feature. This is what we did at the
+> > Contributor's Summit in March (I know we had a number of text-only
+> > participants in time-zones where it was late, etc.).
+> >
+> > What are your thoughts?
+>
+> Jitsi w/ audio-only certainly seems to be a step in the right
+> direction and would be more inclusive.
+>
+> Is there any speech-to-text transcription done for the hearing
+> (or extremely bandwidth) impaired?
 
-Yep, agreed.
+It looks like such a thing exists:
+https://jitsi.org/blog/a-speech-to-text-prototype/.
 
-> > let's implement corrected commit date offset.
-> > We add a new commit-slab to store topological levels while writing
+> It'd ideally go to #git on IRC (or something that doesn't
+> require a browser to trigger swap storms on old systems).
 >
-> It's important to add: we store topological levels to ensure that older
-> versions of Git will still have the performance benefits from generation
-> number v1.
->
-> > commit graph and upgrade number of struct commit_graph_data to 64-bits.
->
-> Do you mean "update the generation member in struct commit_graph_data
-> to a 64-bit timestamp"? The struct itself also has the 32-bit graph_pos
-> member.
->
-> > We have to touch many files, upgrading generation number from uint32_t
-> > to timestamp_t.
->
-> Yes, that's why I recommend doing that in a different step.
->
-> > We drop 'detect incorrect generation number' from t5318-commit-graph.sh,
-> > which tests if verify can detect if a commit graph have
-> > GENERATION_NUMBER_ZERO for a commit, followed by a non-zero generation.
-> > With corrected commit dates, GENERATION_NUMBER_ZERO is possible only if
-> > one of dates is Unix epoch zero.
->
-> What about the topological levels? Are we caring about verifying the data
-> that we start to ignore in this new version? I'm hesitant to drop this
-> right now, but I'm open to it if we really don't see it as a valuable test.
->
-> > Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
-> > ---
-> >  blame.c                 |   2 +-
-> >  commit-graph.c          | 109 ++++++++++++++++++++++------------------
-> >  commit-graph.h          |   4 +-
-> >  commit-reach.c          |  32 ++++++------
-> >  commit-reach.h          |   2 +-
-> >  commit.h                |   3 ++
-> >  revision.c              |  14 +++---
-> >  t/t5318-commit-graph.sh |   2 +-
-> >  upload-pack.c           |   2 +-
-> >  9 files changed, 93 insertions(+), 77 deletions(-)
-> >
-> > diff --git a/blame.c b/blame.c
-> > index 82fa16d658..48aa632461 100644
-> > --- a/blame.c
-> > +++ b/blame.c
-> > @@ -1272,7 +1272,7 @@ static int maybe_changed_path(struct repository *r,
-> >  	if (!bd)
-> >  		return 1;
-> >
-> > -	if (commit_graph_generation(origin->commit) == GENERATION_NUMBER_INFINITY)
-> > +	if (commit_graph_generation(origin->commit) == GENERATION_NUMBER_V2_INFINITY)
-> >  		return 1;
->
-> I don't see value in changing the name of this macro. It
-> is only used as the default value for a commit not in the
-> commit-graph. Changing its value to 0xFFFFFFFF works for
-> both versions when the type is updated to timestamp_t.
->
-> The actually-important change in this patch (not just the
-> type change) is here:
->
-> > -static void compute_generation_numbers(struct write_commit_graph_context *ctx)
-> > +static void compute_corrected_commit_date_offsets(struct write_commit_graph_context *ctx)
-> >  {
-> >  	int i;
-> >  	struct commit_list *list = NULL;
-> > @@ -1326,11 +1334,11 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
-> >  					_("Computing commit graph generation numbers"),
-> >  					ctx->commits.nr);
-> >  	for (i = 0; i < ctx->commits.nr; i++) {
-> > -		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
-> > +		uint32_t topo_level = *topo_level_slab_at(ctx->topo_levels, ctx->commits.list[i]);
-> >
-> >  		display_progress(ctx->progress, i + 1);
-> > -		if (generation != GENERATION_NUMBER_INFINITY &&
-> > -		    generation != GENERATION_NUMBER_ZERO)
-> > +		if (topo_level != GENERATION_NUMBER_INFINITY &&
-> > +		    topo_level != GENERATION_NUMBER_ZERO)
-> >  			continue;
->
-> Here, our "skip" condition is that the topo_level has been computed.
-> This should be fine, as we are never reading that out of the commit-graph.
-> We will never be in a mode where topo_level is computed but corrected
-> commit-date is not.
->
-> >  		commit_list_insert(ctx->commits.list[i], &list);
-> > @@ -1338,29 +1346,38 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
-> >  			struct commit *current = list->item;
-> >  			struct commit_list *parent;
-> >  			int all_parents_computed = 1;
-> > -			uint32_t max_generation = 0;
-> > +			uint32_t max_level = 0;
-> > +			timestamp_t max_corrected_commit_date = current->date;
->
-> Later you assign data->generation to be "max_corrected_commit_date + 1",
-> which made me think this should be "current->date - 1". Is that so? Or,
-> do we want most offsets to be one instead of zero? Is there value there?
->
-> >
-> >  			for (parent = current->parents; parent; parent = parent->next) {
-> > -				generation = commit_graph_data_at(parent->item)->generation;
-> > +				topo_level = *topo_level_slab_at(ctx->topo_levels, parent->item);
-> >
-> > -				if (generation == GENERATION_NUMBER_INFINITY ||
-> > -				    generation == GENERATION_NUMBER_ZERO) {
-> > +				if (topo_level == GENERATION_NUMBER_INFINITY ||
-> > +				    topo_level == GENERATION_NUMBER_ZERO) {
-> >  					all_parents_computed = 0;
-> >  					commit_list_insert(parent->item, &list);
-> >  					break;
-> > -				} else if (generation > max_generation) {
-> > -					max_generation = generation;
-> > +				} else {
-> > +					struct commit_graph_data *data = commit_graph_data_at(parent->item);
-> > +
-> > +					if (topo_level > max_level)
-> > +						max_level = topo_level;
-> > +
-> > +					if (data->generation > max_corrected_commit_date)
-> > +						max_corrected_commit_date = data->generation;
-> >  				}
-> >  			}
-> >
-> >  			if (all_parents_computed) {
-> >  				struct commit_graph_data *data = commit_graph_data_at(current);
-> >
-> > -				data->generation = max_generation + 1;
-> > -				pop_commit(&list);
-> > +				if (max_level > GENERATION_NUMBER_MAX - 1)
-> > +					max_level = GENERATION_NUMBER_MAX - 1;
-> > +
-> > +				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
-> > +				data->generation = max_corrected_commit_date + 1;
-> >
-> > -				if (data->generation > GENERATION_NUMBER_MAX)
-> > -					data->generation = GENERATION_NUMBER_MAX;
-> > +				pop_commit(&list);
-> >  			}
-> >  		}
-> >  	}
->
-> This looks correct, and I've done a tiny bit of perf tests locally.
->
-> > @@ -2085,6 +2102,7 @@ int write_commit_graph(struct object_directory *odb,
-> >  	uint32_t i, count_distinct = 0;
-> >  	int res = 0;
-> >  	int replace = 0;
-> > +	struct topo_level_slab topo_levels;
-> >
-> >  	if (!commit_graph_compatible(the_repository))
-> >  		return 0;
-> > @@ -2099,6 +2117,9 @@ int write_commit_graph(struct object_directory *odb,
-> >  	ctx->changed_paths = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
-> >  	ctx->total_bloom_filter_data_size = 0;
-> >
-> > +	init_topo_level_slab(&topo_levels);
-> > +	ctx->topo_levels = &topo_levels;
-> > +
-> >  	if (ctx->split) {
-> >  		struct commit_graph *g;
-> >  		prepare_commit_graph(ctx->r);
-> > @@ -2197,7 +2218,7 @@ int write_commit_graph(struct object_directory *odb,
-> >  	} else
-> >  		ctx->num_commit_graphs_after = 1;
-> >
-> > -	compute_generation_numbers(ctx);
-> > +	compute_corrected_commit_date_offsets(ctx);
->
-> This rename might not be necessary. You are computing both
-> versions (v1 and v2) so the name change is actually less
-> accurate than the old name.
->
-> Thanks,
-> -Stolee
+> Even for people with good hearing, acceptable audio quality for
+> speech seems tricky to get right, being dependent on mics,
+> bandwidth, codecs, background noise, speaker/earphone quality,
+> etc.
 
-I don't have anything to add that Stolee hasn't already pointed out.
-Thanks for your work on this series, and I'm looking forward to another
-reroll.
+I haven't look hard enough to see if it supports redirecting its output
+to an IRC channel, but my guess is that it probably doesn't. In either
+case, hopefully disabling audio and video is possible within Jitsi's web
+UI, and you should be able to read or write in the chat as well as read
+the transcription.
 
 Thanks,
 Taylor
