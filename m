@@ -2,205 +2,132 @@ Return-Path: <SRS0=DRt7=BH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00175C433E4
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 14:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A67DC433DF
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:19:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5F73206D8
-	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 14:55:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FF37206D8
+	for <git@archiver.kernel.org>; Tue, 28 Jul 2020 15:19:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="YQ+dAxEP"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="GpD25KHZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730554AbgG1OzD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 10:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730455AbgG1OzC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 10:55:02 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F689C061794
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 07:55:02 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id l23so18929642qkk.0
-        for <git@vger.kernel.org>; Tue, 28 Jul 2020 07:55:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sXpPHlVzA8YmBIWC7gEhnWw2U01D01jCBqsRTXI1/2w=;
-        b=YQ+dAxEP6zxJmLhcL0gdX+ecXTk3KiwDYTg/vnApxCAbfP6nLcEY3tfGf1Nn62Il3E
-         IwCiNXbPa3Ki1YHeqH4D6vsEeRfJObFRwZUwmxO4nzWx2Om75j1gr26kCDIqsjOT/OUo
-         guz0CdH9aOI40Cz7de6JA46AcrVMxtnW9zKb9y7Atb9HtQuup0QZpFYyTuBNmMGa7205
-         CDMoytmqblPfZ/ebbvZ9+40XkivAORwIzPIy6H2t5bkxyPw9W8hoLmM31aMIolmVeF1F
-         GCSZGYnHYNA5NT8j87w3S3ERsBK2AnKS8x67fXK0mPKXDaeSjhlI90OPEHhHABXsNVAf
-         VxbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sXpPHlVzA8YmBIWC7gEhnWw2U01D01jCBqsRTXI1/2w=;
-        b=Baw0vUU90AY5F2zadQxEeDXRPwhcs3Nirqb0hGZoGKibFbv4/Dyh4OWyltMIimuYKV
-         OJ9sik7rK9pAEwdcgwnewTlt+CkQtGcA1PL+smmcioUYzlJjVyG3f6EopggLMW8W1NkB
-         yZC+H27EmNq+G27xMlvfqkxyz+wab/qjET+fGKCu/OSsnSt44PItC8ANjArocDc9DIWg
-         c+puQbgs6hiQ7hkmZ3z6H8kLgOwFV//fxn83dnT1VtlVmb9NIqFCPRF41nNrbsIzHV9I
-         dFTXhvbw/N+HEc8KNSG17xQE9+RHEZfEXClHXxNFHeZHZuNJnS+rPC4zLxXQchXt4POK
-         OUFA==
-X-Gm-Message-State: AOAM533W6HLLizKgowFmBTpnCFWOe83ENBRcMgnKVMfjf6W4jhNzCNyQ
-        lEXzMJ3XfSQb/O4urKT+zdyc2mknS5stPg==
-X-Google-Smtp-Source: ABdhPJwBZLzyKQmGS/5uAIqWTHdy0cx5Pu36xI8lUm+5UVAYldOlgvacUvRlLKXYpOER6L0ROSetlg==
-X-Received: by 2002:a05:620a:240a:: with SMTP id d10mr6325785qkn.209.1595948100832;
-        Tue, 28 Jul 2020 07:55:00 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:9c58:8530:481a:f835])
-        by smtp.gmail.com with ESMTPSA id v184sm24248278qki.12.2020.07.28.07.54.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2020 07:55:00 -0700 (PDT)
-Date:   Tue, 28 Jul 2020 10:54:58 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        id S1730692AbgG1PTb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 11:19:31 -0400
+Received: from mout.web.de ([212.227.15.3]:50559 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730637AbgG1PTa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 11:19:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1595949566;
+        bh=EdjBpbhOh742v2dkud7qOzDEWxU9dXRL/WijgHFIe0g=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=GpD25KHZGEtLGYmqnBbqfg6tVxOWxnzPd3dXJqWS5h5AVjUSn436ZMIzyvf5z6Qu9
+         2P5Z7Ezt+p9eY+lb0pWypbdlhy3fgTfudZm4xcgrt+FZvxfXw+5++Bn/VxuEJCH008
+         xCqDtYmWlIEwPRxl4uo9MhKBdd5WQx7M7WUAecN0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.26.151]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lnmpz-1kiKZt2p3f-00hsnt; Tue, 28
+ Jul 2020 17:19:26 +0200
+Subject: Re: [PATCH 3/6] commit-graph: consolidate fill_commit_graph_info
+To:     Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Cc:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
         Abhishek Kumar <abhishekkumar8222@gmail.com>
-Subject: Re: [PATCH 0/6] [GSoC] Implement Corrected Commit Date
-Message-ID: <20200728145458.GA87373@syl.lan>
 References: <pull.676.git.1595927632.gitgitgadget@gmail.com>
+ <701f5912369c0fcc07cf604c3129cb5017a125ce.1595927632.git.gitgitgadget@gmail.com>
+ <a9d50995-566d-cad2-ff67-8b8604b52eed@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <d4a613c1-f3e8-3789-2548-8344c4b976e9@web.de>
+Date:   Tue, 28 Jul 2020 17:19:26 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <a9d50995-566d-cad2-ff67-8b8604b52eed@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.676.git.1595927632.gitgitgadget@gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:0ai8Ynhq+NqQCsNUhUX7O4TCkYgtrIjpSBQTCXxLuw/C40fDc9M
+ Kjz/yaYrSdNAMPaNYrto9s6Ts0WSaZjMumntqdEpHD1Nc9mbhyT4fSeTgv+dRQgagZeXGyF
+ 7wHOzz16aQOxLE4PQT/xnQ5y9+Rp69qLDORvvI7w2OJuq5OHT51lOHaVZvpzZIbiKvSVHi/
+ XyKGkc/BszMWkM4SmJhrA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:k1lviylg1DM=:Q0r04YSdrRC2fEu/SOnB0k
+ 8YMe0EPLdfeyvfazp/VVw0drrTrFWqAkyqPVZx3AIimCNqguVKfvO+1zbPTMK8JaL63XpbglX
+ lfobPLTfU4v3t+WP+GMvyd6xNENKUAlvem7FYItvKKbdaNsVv6qpb4y6ObOuuNealhrBLpVTe
+ bzNYCKS+9wV2hDIz75Xsi8QjHju9HmSVtwrLTQdb1putID/GmZvdRR86WlFl2DY45GDxYGXVb
+ iHM+x6mxmrZFbdM7c44YyCz6bDjopA1ajJn6lD5XWDG61yv2Sgk/hLyGkDtEq7JDjD1j1vS/6
+ MECITuEbeoWgaV1OI0WyXODIJVLI2kWk6nx/U+LUmWxuwOYGHxHScoLrOll2R6ZPWyuGum1QK
+ x7FIKfj5xKFudToKHnvrhhXawVbiv2yfNFl6CS3mOg1spnIlBoHpoPdmm6rgZTsg4BTgk63Cs
+ VvzMdpFRJseW94mDube5y2q7ltC7oSQF1APjz+JZAbwAjihkj/i818Wxg0LjAQ8IlHbL88Hdq
+ 1QZv4w4NDLBzLv53yEaPc0OQwG52dh+pl1P1gHV7iVFpGzl6OuHH/7JIMiP4BeDJFMoUA4Y9u
+ BREGThoDviKJek4YfYkILL98KvfKcvE7A3/8prh4Y1j2uVFF0TKHIuYuCubsd0jb/ufXDYbdG
+ cxnRrbnoG1yBKujxjTJyOdS7k7yICBqhl7Z4/JeKAAv2Fq1O53iDcWOCWqpzbegOmY2F0gcTt
+ cUK9VK+HgsKakjIcSZxUhNzELIQzWFtuh5yMv0xD9ubaRBHnIxORrRT92GcLc9miizzYY/q6/
+ 2D88wsNzZjNYValBskhwekf+k6M5y04lnKCotyxf30Ml/w04gU1ZTm//BLdAZijjfNW0V7e+w
+ liEZP7YKhLut16PbYOD3HlwAxP307jU3uW/YqxdXnzYowJBK0Vhu6flKMCj10AfIxdU/csPnp
+ cDQ5T1gggv7yEyMDYWs21eEU9h1uVQIw673BE0IoMrbB9svd5LPYAV+6aY1e+oNsML6sawXAa
+ pOoEpxPp/bndfyHuRZ38ySDtB49bIhFLc/ntVGWm00NSy2fP1IqauZfd4C72ghx81vThDkKGy
+ 9t2KQXC81lT+y/e8bM2iKqI5am3Ve+X9O0DrzsBevrhWNzQ8g8s8xjW+XqgAweefcPFISVNJT
+ fz85BxAxBU5ALROWSWKVHqDRg+bZKrrbPZkU5gG9hsx86obEDnpqDpAqUFhdkthaHKUa5rk3I
+ X9gWmVBPPq+HXryLZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Abhishek,
+[Had to remove stolee@gmail.com because with it my mail provider
+ rejected this email with the following error message:
 
-On Tue, Jul 28, 2020 at 09:13:45AM +0000, Abhishek Kumar via GitGitGadget wrote:
-> This patch series implements the corrected commit date offsets as generation
-> number v2, along with other pre-requisites.
+   Requested action not taken: mailbox unavailable
+   invalid DNS MX or A/AAAA resource record.]
 
-Very exciting. I have been eagerly following your blog and asking
-Stolee about your progress, so I am excited to read these patches.
+Am 28.07.20 um 15:14 schrieb Derrick Stolee:
+> On 7/28/2020 5:13 AM, Abhishek Kumar via GitGitGadget wrote:
+>> From: Abhishek Kumar <abhishekkumar8222@gmail.com>
+>>
+>> Both fill_commit_graph_info() and fill_commit_in_graph() parse
+>> information present in commit data chunk. Let's simplify the
+>> implementation by calling fill_commit_graph_info() within
+>> fill_commit_in_graph().
+>>
+>> The test 'generate tar with future mtime' creates a commit with commit
+>> time of (2 ^ 36 + 1) seconds since EPOCH. The commit time overflows int=
+o
+>> generation number and has undefined behavior. The test used to pass as
+>> fill_commit_in_graph() did not read commit time from commit graph,
+>> reading commit date from odb instead.
+>
+> I was first confused as to why fill_commit_graph_info() did not
+> load the timestamp, but the reason is that it is only used by
+> two methods:
+>
+> 1. fill_commit_in_graph(): this actually leaves the commit in a
+>    "parsed" state, so the date must be correct. Thus, it parses
+>    the date out of the commit-graph.
+>
+> 2. load_commit_graph_info(): this only helps to guarantee we
+>    know the graph_pos and generation number values.
+>
+> Perhaps add this extra context: you will _need_ the commit date
+> from the commit-graph in order to populate the generation number
+> v2 in fill_commit_graph_info().
+>
+>> Let's fix that by setting commit time of (2 ^ 34 - 1) seconds.
+>
+> The timestamp limit placed in the commit-graph is more restrictive
+> than 64-bit timestamps, but as your test points out, the maximum
+> timestamp allowed takes place in the year 2514. That is far enough
+> away for all real data.
 
-> Git uses topological levels in the commit-graph file for commit-graph
-> traversal operations like git log --graph. Unfortunately, using topological
-> levels can result in a worse performance than without them when compared
-> with committer date as a heuristics. For example, git merge-base v4.8 v4.9
-> on the Linux repository walks 635,579 commits using topological levels and
-> walks 167,468 using committer date.
->
-> Thus, the need for generation number v2 was born. New generation number
-> needed to provide good performance, increment updates, and backward
-> compatibility. Due to an unfortunate problem, we also needed a way to
-> distinguish between the old and new generation number without incrementing
-> graph version.
->
-> Various candidates were examined (https://github.com/derrickstolee/gen-test,
-> https://github.com/abhishekkumar2718/git/pull/1). The proposed generation
-> number v2, Corrected Commit Date with Mononotically Increasing Offsets
-> performed much worse than committer date (506,577 vs. 167,468 commits walked
-> for git merge-base v4.8 v4.9) and was dropped.
->
-> Using Generation Data chunk (GDAT) relieves the requirement of backward
-> compatibility as we would continue to store topological levels in Commit
-> Data (CDAT) chunk. Thus, Corrected Commit Date was chosen as generation
-> number v2. The Corrected Commit Date is defined as:
->
-> For a commit C, let its corrected commit date be the maximum of the commit
-> date of C and the corrected commit dates of its parents. Then corrected
-> commit date offset is the difference between corrected commit date of C and
-> commit date of C.
+We all may feel like the end of the world is imminent, but do we really
+need to set such an arbitrary limit?  OK, that limit was already set two
+years ago, and I'm really late.  But still: It's sad to see anything
+else than signed 64-bit timestamps to be used in fresh code (after Y2K).
+The extra four bytes would fatten up the structures less than the
+transition from SHA-1 to SHA-256 will, and no bit twiddling would be
+required.  *sigh*
 
-Interestingly, we use a very similar metric at GitHub to sort commits in
-various UI views which have lots of existing machinery that sorts
-an abstract collection by each element's "date". Since that sort is
-stable, and we want to respect the order that Git delivered, we take the
-pairwise max of each successive pair of commits.
-
-> We will introduce an additional commit-graph chunk, Generation Data chunk,
-> and store corrected commit date offsets in GDAT chunk while storing
-> topological levels in CDAT chunk. The old versions of Git would ignore GDAT
-> chunk, using topological levels from CDAT chunk. In contrast, new versions
-> of Git would use corrected commit dates, falling back to topological level
-> if the generation data chunk is absent in the commit-graph file.
-
-I'm sure that I'll learn more when I get to this point, but I would like
-to hear more about why you want to store the offset rather than the
-corrected commit date itself. It seems that the offset could be either
-positive or negative, so you'd only have the range of a signed integer
-(rather than storing 8 bytes of a time_t for the full breadth of
-possibilities).
-
-I know also that Peff is working on negative timestamp support, so I
-would want to hear about what he thinks of this, too.
-
-> Here's what left for the PR (which I intend to take on with the second
-> version of pull request):
->
->  1. Add an option to skip writing generation data chunk (to test whether new
->     Git works without GDAT as intended).
-
-This will be good to gradually roll-out the new chunk. Another thought
-is to control whether or not the commit-graph machinery _reads_ this
-chunk if it's present. That can be useful for debugging too (eg., I have
-a commit-graph with a GDAT chunk that is broken in some way, what
-happens if I don't read that chunk?)
-
-Maybe something like `commitgraph.readsGenerationData`? Incidentally,
-I'm preparing a `commitgraph.readsChangedPaths` to control whether or
-not we read the Bloom index and data chunks. I'll send that to the list
-shortly (it's in my fork somewhere if you want an earlier look), but
-that may be a useful reference for you.
-
->  2. Handle writing to commit-graph for mismatched version (that is, merging
->     all graphs into a new graph with a GDAT chunk).
->  3. Update technical documentation.
->
-> I look forward to everyone's reviews!
->
-> Thanks
->
->  * Abhishek
->
->
-> ----------------------------------------------------------------------------
->
-> The build fails for t9807-git-p4-submit.sh on osx-clang, which I feel is
-> unrelated to my code changes. Still need to investigate further.
->
-> Abhishek Kumar (6):
->   commit-graph: fix regression when computing bloom filter
->   revision: parse parent in indegree_walk_step()
->   commit-graph: consolidate fill_commit_graph_info
->   commit-graph: consolidate compare_commits_by_gen
->   commit-graph: implement generation data chunk
->   commit-graph: implement corrected commit date offset
->
->  blame.c                       |   2 +-
->  commit-graph.c                | 181 +++++++++++++++++++++-------------
->  commit-graph.h                |   7 +-
->  commit-reach.c                |  47 +++------
->  commit-reach.h                |   2 +-
->  commit.c                      |   9 +-
->  commit.h                      |   3 +
->  revision.c                    |  17 ++--
->  t/helper/test-read-graph.c    |   2 +
->  t/t4216-log-bloom.sh          |   4 +-
->  t/t5000-tar-tree.sh           |   4 +-
->  t/t5318-commit-graph.sh       |  21 ++--
->  t/t5324-split-commit-graph.sh |  12 +--
->  upload-pack.c                 |   2 +-
->  14 files changed, 178 insertions(+), 135 deletions(-)
->
->
-> base-commit: 47ae905ffb98cc4d4fd90083da6bc8dab55d9ecc
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-676%2Fabhishekkumar2718%2Fcorrected_commit_date-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-676/abhishekkumar2718/corrected_commit_date-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/676
-> --
-> gitgitgadget
-
-Thanks,
-Taylor
+Ren=C3=A9
