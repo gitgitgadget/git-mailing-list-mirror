@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3094EC433E1
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B13D4C433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CD1E207F5
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FAA6207F5
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oh/1+xzT"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Gnw8B5iX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728144AbgG2XPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 19:15:13 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41120 "EHLO
+        id S1728037AbgG2XPP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 19:15:15 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41130 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728103AbgG2XPE (ORCPT
+        by vger.kernel.org with ESMTP id S1727072AbgG2XPE (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:04 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7192E6101A;
-        Wed, 29 Jul 2020 23:15:01 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2A25A60CF7;
+        Wed, 29 Jul 2020 23:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596064501;
-        bh=2wb0pxNxxHB8AyR/+6fbiG1mvbjofu/+IuiJcIxweiA=;
+        s=default; t=1596064500;
+        bh=HkneMgZLTAdXgA8gNNuOhVNAwlHJ7abUKjddmrETEQ0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=oh/1+xzT1l/WrBR7bHCBuDa3D1GcemEQXSvcMBUv97xe6Zm/aM5kg3/TZhuVFnn01
-         1pjntMHJPXQJDIZIwMy1e6gQeo7ZvR/Mk1KdW3B92RmKE0qCWwhzCv4p/MmBF9GGv1
-         gf86WYaB4QENZ9jepAPkPVu74LgfVsMAxuUUyhfzQV3gp5FrokN5BkvLRpPkE+PFJX
-         WS9DOuyvgaMY+0wb0YeqGgzfAaRcXpzycxhX9QlHIJWFi5zxpKaspkTI4MVi1MreqG
-         vbh2VNp8DRm1YRTlwoVGQjse+dk/8QrR7novmTm6EW6SnsskIPxPVaRWrCyldmFbzg
-         d7K1+VkwjtaTi7dEdOhWdA9LxSgeomkzXsX+K7EiNWZyqMAEmyfWU63OXxMTGbSzjn
-         XSK05oVxBiBACZ2MqDHdvojQ38KWwZCC2v/4AKFFwSIxFGeIfthbWmslN3MTZdGwiU
-         Qd5aCBisNdOXJqCmkp/8uEFFAf3SWBtkZk/Dict+gh5v1CIKaF+
+        b=Gnw8B5iXiNXCw7t8Ks3Yo6XeQmEWDfekLzsDwbkIUIDTWlAZWYaTLKNWTVL+REQ+4
+         J28cab+ea/NPz0pZRfLOs88MNW9y60xoEag7WecBs+SmamPnavDSSEYwKl4H8YUKHe
+         7diE1Q2Jpnz1VjdXKBoV9FJq7YGwHf6aYRw0XAJiWcDOienn6zX8hV9i3rsE1FMXXV
+         V3cTjYf9oXfcpVZk7ave93HrXzCAWkmmM2vEZO1hTUiUrfdFavysdFQXXBawIY0WXV
+         mxVOFGiOkhX8ZRJcCs1eV9n7oul57SBGIJJ3UlSrKrW37BI0oIGbuYgkx27ZDnPScc
+         VyzBIWJsb5Ojqkwe2roJ/oNV4ZF5p0vJ7h59oZasvC/f9goUIspdNaiw9VHflVV5BI
+         Muo2wk6QHlMNTnK71XaYBCT3aqDbutdjpxkHMRDKOQnsG9uaNXXQUwtwNWd2oRjkJP
+         /tbP8Pv3ObdZH8m31KPjSJsBPvCM4ZkpWcBDbHiTFTl74pBKO6M
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 35/39] t: allow testing different hash algorithms via environment
-Date:   Wed, 29 Jul 2020 23:14:24 +0000
-Message-Id: <20200729231428.3658647-36-sandals@crustytoothpaste.net>
+Subject: [PATCH v6 32/39] setup: add support for reading extensions.objectformat
+Date:   Wed, 29 Jul 2020 23:14:21 +0000
+Message-Id: <20200729231428.3658647-33-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200729231428.3658647-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -57,44 +57,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To allow developers to run the testsuite with a different algorithm than
-the default, provide an environment variable, GIT_TEST_DEFAULT_HASH, to
-specify the algorithm to use. Compute the fixed constants using
-test_oid. Move the constant initialization down below the point where
-test-lib-functions.sh is loaded so the functions are defined.
+The transition plan specifies extensions.objectFormat as the indication
+that we're using a given hash in a certain repo.  Read this as one of
+the extensions we support.  If the user has specified an invalid value,
+fail.
+
+Ensure that we reject the extension if the repository format version is
+0.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib-functions.sh | 4 +---
- t/test-lib.sh           | 3 +++
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ setup.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 2608e80f11..2e01bb2c2b 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1417,9 +1417,7 @@ test_set_hash () {
+diff --git a/setup.c b/setup.c
+index 3a81307602..94e68bb4f4 100644
+--- a/setup.c
++++ b/setup.c
+@@ -470,7 +470,16 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
+ 			data->partial_clone = xstrdup(value);
+ 		} else if (!strcmp(ext, "worktreeconfig"))
+ 			data->worktree_config = git_config_bool(var, value);
+-		else
++		else if (!strcmp(ext, "objectformat")) {
++			int format;
++
++			if (!value)
++				return config_error_nonbool(var);
++			format = hash_algo_by_name(value);
++			if (format == GIT_HASH_UNKNOWN)
++				return error("invalid value for 'extensions.objectformat'");
++			data->hash_algo = format;
++		} else
+ 			string_list_append(&data->unknown_extensions, ext);
+ 	}
  
- # Detect the hash algorithm in use.
- test_detect_hash () {
--	# Currently we only support SHA-1, but in the future this function will
--	# actually detect the algorithm in use.
--	test_hash_algo='sha1'
-+	test_hash_algo="${GIT_TEST_DEFAULT_HASH:-sha1}"
+@@ -613,6 +622,11 @@ int verify_repository_format(const struct repository_format *format,
+ 		return -1;
+ 	}
+ 
++	if (format->version <= 0 && format->hash_algo != GIT_HASH_SHA1) {
++		strbuf_addstr(err, _("extensions.objectFormat is not valid in repo v0"));
++		return -1;
++	}
++
+ 	return 0;
  }
  
- # Load common hash metadata and common placeholder object IDs for use with
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 618a7c8d5b..307bb2207e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -452,6 +452,9 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
- export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
- export EDITOR
- 
-+GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-sha1}"
-+export GIT_DEFAULT_HASH
-+
- # Tests using GIT_TRACE typically don't want <timestamp> <file>:<line> output
- GIT_TRACE_BARE=1
- export GIT_TRACE_BARE
