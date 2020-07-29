@@ -2,89 +2,82 @@ Return-Path: <SRS0=QOHA=BI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFDFBC433E4
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 01:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E013C433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 02:24:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB84020829
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 01:09:29 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pdinc.us header.i=@pdinc.us header.b="t0Lhguw8"
+	by mail.kernel.org (Postfix) with ESMTP id F1C422070B
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 02:24:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730193AbgG2BJ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jul 2020 21:09:28 -0400
-Received: from mail2.pdinc.us ([67.90.184.28]:38606 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726004AbgG2BJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jul 2020 21:09:28 -0400
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 06T19Pfd015098
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 28 Jul 2020 21:09:25 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 06T19Pfd015098
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1595984965; bh=OsCgZUJKXVF0eVaJrqNmJ4HMpTuX3azX5cxZLCu+pMM=;
-        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=t0Lhguw8HIi+1XwcexefHPss5hC8yBzMTmei3B3BnFHImkJGdtlDwaNTjEaT21aYg
-         54IyOHjB5vR2BnUtaIc4KpPRhif1hBl1qcVXSMpboWIZEj2IluBKKK9a2/ipb1GoWx
-         CGClu4oyS3/uonI2pQ7KKYRbGhlFx6AQhl3rabdcEcgU9n0D5Q8dvX/wDyQWgx31+k
-         DQe3Uvg82qhxDy1oe26wugcVbCTGv9p04k3dsfrUsZ6KnFvPsC+TSsdyv55eY8uPnM
-         +AXbjN6ZcNZ+H76NWy6ryE9PlfyM8CkiOQ1w9omb00BZIYfLKOFI/+gbp3Po3BqgSC
-         MdsU/eW0JyG6Q==
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>
-References: <19ca801d66541$cf872af0$6e9580d0$@pdinc.us> <xmqqh7trb0sr.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqh7trb0sr.fsf@gitster.c.googlers.com>
-Subject: RE: I have gone and done a bad thing - malformed tree objects
-Date:   Tue, 28 Jul 2020 21:09:35 -0400
-Organization: PD Inc
-Message-ID: <19cab01d66544$ecb402d0$c61c0870$@pdinc.us>
+        id S1731120AbgG2CY4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jul 2020 22:24:56 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46554 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730901AbgG2CYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jul 2020 22:24:55 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r12so20039494wrj.13
+        for <git@vger.kernel.org>; Tue, 28 Jul 2020 19:24:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PTMz0nG/9tEuIkeUm2+PEIYRERjyWf4W71h1yjeeKYw=;
+        b=n6DyVLgJd29+Le2UyRuQsXMYVzFV/khM3cACdUqVvu0n5OH7xMe+mJr5VD9ncieegk
+         n5q+K/4ER7aGpKWCrj3TTB685FAMZGEV3BQ5PcBxxRAEdcEpAoYavOEFPfYof5ZlUzIK
+         deSFaUbGuMSe2qD9AUskU+Z04Ro4f9zAOdWDcOHqbiPWwuHEvYPde16aLYhXHusD8Xnm
+         7wux/mBkAP7souDV/IRw12gqQ2drMqu9RImvN96a+PRZ/uP5lto91ypdvDYwdJGcqdvM
+         Z5hd0BuPpmcQJ1dTePwbEJ+M7L6Vonu2VLDFfxIIQbLNYGsxNl34Q/zxthjbspc8ov//
+         PaYQ==
+X-Gm-Message-State: AOAM530Eck4fpzRyLaqSfKBxS1tUZyfHq6UgOua1gyhDSJT+ABhtVpw5
+        0rgfo7oY1r7Kn7pYLLnle+mU3Dmv3CGWnQzBpBK/thJh848=
+X-Google-Smtp-Source: ABdhPJzKkCw8k6yn1iiH1QpmnlAp3A3poORI5lWltzTmqzkXODOjLk7bu+7dI4pixdmOETZnitv7JnF7Bc9PSrWGu58=
+X-Received: by 2002:a5d:540c:: with SMTP id g12mr19134515wrv.120.1595989493510;
+ Tue, 28 Jul 2020 19:24:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKHJ3iYXck3tZcTjZrfcxic8TWr/wHXy0UBp618OBA=
-Content-Language: en-us
+References: <20200728233446.3066485-1-sandals@crustytoothpaste.net> <20200728233446.3066485-19-sandals@crustytoothpaste.net>
+In-Reply-To: <20200728233446.3066485-19-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 28 Jul 2020 22:24:42 -0400
+Message-ID: <CAPig+cTw0XXNcKp5vVLhPtV5jH9d9gwfuYGuLqpSXsGmpn_fqw@mail.gmail.com>
+Subject: Re: [PATCH v5 18/39] t8002: make hash size independent
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Junio C Hamano
-> Sent: Tuesday, July 28, 2020 8:52 PM
->=20
-> "Jason Pyeron" writes:
->=20
-> > I was trying to "do stuff" using hash-object -t tree --stdin -w,
-> > but I accidentally created trees where other trees were marked as
-> > blobs. They were dangling and not connected to any actual commits
-> > on my branches.
-> >
-> > After gc and fsck clean ups, everything reports well...
-> >
-> > Except:
-> >
-> > $ GIT_TRACE=3D1 git cat-file --batch-all-objects =
---batch=3Dobjecttype
->=20
-> gc and fsck may not have pruned the dangling object yet, but
-> --batch-all-objects is a request to enumerate objects that exist in
-> the repository, regardless of their reachability from any ref.
->=20
-> Perhaps "git prune --expire=3Dnow" would get rid of it?
+On Tue, Jul 28, 2020 at 7:35 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Compute the length of an object ID instead of hard-coding 40-based
+> values.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+> @@ -6,6 +6,10 @@ test_description='git blame'
+> +test_expect_success 'setup' '
+> +       hexsz=$(test_oid hexsz)
+> +'
 
-Both that and
+In the previous version of this series, the "setup" test  invoked
+test_oid_init() as its very first step. This version doesn't. As a
+reviewer, I was caught off-guard by this unexpected and unexplained
+difference between versions. The script works fine without
+test_oid_init() anyhow since test-lib.sh invokes test_oid_init(), so
+the test_oid_init() call introduced here by the previous version was
+redundant.
 
-git -c gc.reflogExpire=3Dnow -c gc.reflogExpireUnreachable=3Dnow   -c =
-gc.rerereresolved=3Dnow -c gc.rerereunresolved=3Dnow   -c =
-gc.pruneExpire=3Dnow -c gc.worktreePruneExpire=3Dnow gc --prune=3Dnow =
---aggressive
-
-leave it in.
-
+Some of the patches in this series add test_oid_init() calls to their
+"setup" tests, while others don't, which makes for a somewhat
+confusing impression as one reads the series. In general, it would be
+nice for the patches to paint a consistent picture (i.e either
+uniformly employ test_oid_init() or don't), however, I would not want
+to see a re-roll just for that. Also, since the final patch of the
+series ends up removing all those test_oid_init() calls anyhow, it's
+all straightened out in the end.
