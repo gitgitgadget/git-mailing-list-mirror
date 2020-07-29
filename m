@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9ED4C433E1
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68738C433E0
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A86C2067D
-	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 476592067D
+	for <git@archiver.kernel.org>; Wed, 29 Jul 2020 23:15:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MFr75La0"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mzrreOp5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728096AbgG2XPD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jul 2020 19:15:03 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41044 "EHLO
+        id S1728121AbgG2XPF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jul 2020 19:15:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41116 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728091AbgG2XPA (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:00 -0400
+        by vger.kernel.org with ESMTP id S1728098AbgG2XPC (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Jul 2020 19:15:02 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 269C66101C;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0635F61020;
         Wed, 29 Jul 2020 23:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1596064497;
-        bh=e0GG4MGDDPBIn8sVOpdBt+JTBrciFKCG4qAUcFp9kSg=;
+        s=default; t=1596064498;
+        bh=pybST+Ml60xM98F42OzVvvCAYKpI2wVMt8HjANV3VuE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=MFr75La0cPEX7m5heOa07K9g9txzdnpYlcSW0TVNI7sa9fq1NpFdhu3W5OcLZD51m
-         +udQLfsncmJtWdT9HeWEDqcCXG0lHoj+SyDlMCVqYhsIty4G6pcJuE2EJda9DVHCLy
-         g37QRDiacP4XllmRerbtNdeLSltMmUETeGBEDXXfbkqc6AGOAAeQyFv8AVzrodMg4l
-         9iA/7eTVUjHS1SaXpOHDRwFVazBds7GHGaRoPrkUTiMYyHneRiRYFlA4XNNXg56uhL
-         Pa74Ip/y2V+QRO34Pa2hMtN05jBN6lLADoee7kQKXs8xQy9p62y+id28Vcph+HONQZ
-         CUF6GrXSafGmM0OBwrCjRl2gmhPz9VLUCA6bINC2U2fa1rQU/XeoSq+whhEvX/Ugoy
-         5hUws35tJUGIrSQSzLGxewxvnrLLVwvTnDt5eCDnqS/91JSSx67f3a+C5/bYhY4vl5
-         DI1iRtaf8Ft5k9PMTRZlDrcF0Me5idEC3idqiBz42MQlX5b9+Sf
+        b=mzrreOp5xnHD0EepQ7MbJSutFwck8m2Vok5ZxcxyIXmcMFZkebmRF4vrQ78jwAU28
+         bQyQYoUEMAFzdwHxxtaNVE18HGZ0jsqoxOIcpLJEVzeL7YB8MwMnNNcbvarUdrOSYD
+         jOum99AuyOA+INh+ApXlI4/CH8Ee72trMr9BZIVrdxRS02w/RMDtF+N5Q0O3r8k9dw
+         KRpXaWOssT26TxyDNEwFeCwa/pMaQEi4Zm1r35xCrwSGpvCzrT9OcwFI/2miKcSA49
+         XwFAxPvV+MGap/D1PHajpe1KniyIPQtfb+qv9kZ5M0ztU79W6r/zpsYzbMBsrGG8k+
+         IY1N/OZAes1H8hUiviH0zSvNboTZAH+UySul0X0w1bq7KioIz60Z9F9FQLoVqpFT7W
+         2uIWlr1Ge1WlAPcDIrVQeVRaB7FuENR7HCMhCKkY/cbQqoyhlcyRag0cLn4npu9ON0
+         Sc9r3bmDdK+D1LhyXaGlgpjH3EIumY490volxCCqjwmBcrtspSr
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v6 25/39] t9500: ensure that algorithm info is preserved in config
-Date:   Wed, 29 Jul 2020 23:14:14 +0000
-Message-Id: <20200729231428.3658647-26-sandals@crustytoothpaste.net>
+Subject: [PATCH v6 27/39] t5308: make test work with SHA-256
+Date:   Wed, 29 Jul 2020 23:14:16 +0000
+Message-Id: <20200729231428.3658647-28-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.28.0.163.g6104cc2f0b6
 In-Reply-To: <20200729231428.3658647-1-sandals@crustytoothpaste.net>
 References: <20200728233446.3066485-1-sandals@crustytoothpaste.net>
@@ -57,51 +57,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we use a hash algorithm other than SHA-1, it's important to
-preserve the hash-related values in the config file, but this test
-overwrites the config file with a new one. Ensure we copy these values
-properly from the old config to the new one so that the repository can
-be read if it's using SHA-256.
-
-Note that if there is no extensions.objectFormat value set, git config
-will return unsuccessfully if we try to read it; since this is not an
-error for us, use test_might_fail.
+This test needs multiple object IDs that have the same first byte.
+Update the pack test code to generate a suitable packed value for
+SHA-256.  Update the test to use this value when using SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t9500-gitweb-standalone-no-errors.sh | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ t/lib-pack.sh                     |  8 ++++++++
+ t/t5308-pack-detect-duplicates.sh | 20 ++++++++++++--------
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 267ddc997d..b484e3e250 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -621,12 +621,22 @@ test_expect_success \
- 	 git config gitweb.snapshot "zip,tgz, tbz2" &&
- 	 gitweb_run "p=.git;a=tree"'
+diff --git a/t/lib-pack.sh b/t/lib-pack.sh
+index f3463170b3..0c799d53c6 100644
+--- a/t/lib-pack.sh
++++ b/t/lib-pack.sh
+@@ -93,6 +93,14 @@ pack_obj () {
+ 			;;
+ 		esac
+ 		;;
++	# blob containing "\3\326"
++	471819e8c52bf11513f100b2810a8aa0622d5cd3d1c913758a071dd4b3bad8fe)
++		case "$2" in
++		'')
++			printf '\062\170\234\143\276\006\000\000\336\000\332'
++			return
++			;;
++		esac
+ 	esac
  
--cat >.git/config <<\EOF
--# testing noval and alternate separator
--[gitweb]
--	blame
--	snapshot = zip tgz
--EOF
+ 	# If it's not a delta, we can convince pack-objects to generate a pack
+diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
+index 6845c1f3c3..693b2411c8 100755
+--- a/t/t5308-pack-detect-duplicates.sh
++++ b/t/t5308-pack-detect-duplicates.sh
+@@ -4,23 +4,27 @@ test_description='handling of duplicate objects in incoming packfiles'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-pack.sh
+ 
+-if ! test_have_prereq SHA1
+-then
+-       skip_all='not using SHA-1 for objects'
+-       test_done
+-fi
 +test_expect_success 'setup' '
-+	version=$(git config core.repositoryformatversion) &&
-+	algo=$(test_might_fail git config extensions.objectformat) &&
-+	cat >.git/config <<-\EOF &&
-+	# testing noval and alternate separator
-+	[gitweb]
-+		blame
-+		snapshot = zip tgz
-+	EOF
-+	git config core.repositoryformatversion "$version" &&
-+	if test -n "$algo"
-+	then
-+		git config extensions.objectformat "$algo"
-+	fi
-+'
++	test_oid_cache <<-EOF
++	lo_oid sha1:e68fe8129b546b101aee9510c5328e7f21ca1d18
++	lo_oid sha256:471819e8c52bf11513f100b2810a8aa0622d5cd3d1c913758a071dd4b3bad8fe
 +
- test_expect_success \
- 	'config override: tree view, features enabled in repo config (2)' \
- 	'gitweb_run "p=.git;a=tree"'
++	missing_oid sha1:e69d000000000000000000000000000000000000
++	missing_oid sha256:4720000000000000000000000000000000000000000000000000000000000000
++	EOF
++'
+ 
+ # The sha1s we have in our pack. It's important that these have the same
+ # starting byte, so that they end up in the same fanout section of the index.
+ # That lets us make sure we are exercising the binary search with both sets.
+-LO_SHA1=e68fe8129b546b101aee9510c5328e7f21ca1d18
+-HI_SHA1=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++LO_SHA1=$(test_oid lo_oid)
++HI_SHA1=$EMPTY_BLOB
+ 
+ # And here's a "missing sha1" which will produce failed lookups. It must also
+ # be in the same fanout section, and should be between the two (so that during
+ # our binary search, we are sure to end up looking at one or the other of the
+ # duplicate runs).
+-MISSING_SHA1='e69d000000000000000000000000000000000000'
++MISSING_SHA1=$(test_oid missing_oid)
+ 
+ # git will never intentionally create packfiles with
+ # duplicate objects, so we have to construct them by hand.
